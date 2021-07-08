@@ -3190,7 +3190,7 @@ class PlayState extends MusicBeatState
 							return arrayIDs[i];
 						}
 					case 9:
-						if(ratingPercent >= 1) {
+						if(ratingPercent >= 1 && !usedPractice) {
 							Achievements.unlockAchievement(arrayIDs[i]);
 							return arrayIDs[i];
 						}
@@ -3200,7 +3200,7 @@ class PlayState extends MusicBeatState
 							return arrayIDs[i];
 						}
 					case 11:
-						if(boyfriend.holdTimer >= 20) {
+						if(boyfriend.holdTimer >= 20 && !usedPractice) {
 							Achievements.unlockAchievement(arrayIDs[i]);
 							return arrayIDs[i];
 						}
