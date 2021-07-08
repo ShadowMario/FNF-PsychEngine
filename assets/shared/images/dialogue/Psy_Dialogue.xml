@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Psy_Dialogue.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="PSYtalk 0000" x="4" y="4" width="687" height="792" pivotX="-69" pivotY="-30.7" frameX="-13" frameY="0" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSYtalk 0001" x="4" y="4" width="687" height="792" frameX="-13" frameY="0" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSYtalk 0002" x="691" y="4" width="686" height="779" frameX="-14" frameY="-13" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSYtalk 0003" x="691" y="4" width="686" height="779" frameX="-14" frameY="-13" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSYtalk 0004" x="1377" y="4" width="700" height="786" frameX="0" frameY="-6" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSYtalk 0005" x="1377" y="4" width="700" height="786" frameX="0" frameY="-6" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSYtalk 0006" x="2077" y="4" width="693" height="786" frameX="-7" frameY="-6" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSYtalk 0007" x="2077" y="4" width="693" height="786" frameX="-7" frameY="-6" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY ANGRY loop0000" x="2770" y="4" width="684" height="804" pivotX="-69" pivotY="-18.05" frameX="-5" frameY="0" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY ANGRY loop0001" x="2770" y="4" width="684" height="804" frameX="-5" frameY="0" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY ANGRY loop0002" x="4" y="808" width="684" height="784" frameX="-12" frameY="-20" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY ANGRY loop0003" x="4" y="808" width="684" height="784" frameX="-12" frameY="-20" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY ANGRY loop0004" x="4" y="1612" width="700" height="786" frameX="0" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY ANGRY loop0005" x="4" y="1612" width="700" height="786" frameX="0" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY UNAMUSED loop0000" x="688" y="808" width="684" height="804" pivotX="-69" pivotY="-18.05" frameX="-5" frameY="0" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY UNAMUSED loop0001" x="688" y="808" width="684" height="804" frameX="-5" frameY="0" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY UNAMUSED loop0002" x="1372" y="808" width="684" height="784" frameX="-12" frameY="-20" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY UNAMUSED loop0003" x="1372" y="808" width="684" height="784" frameX="-12" frameY="-20" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY UNAMUSED loop0004" x="690" y="2416" width="700" height="786" frameX="0" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY UNAMUSED loop0005" x="690" y="2416" width="700" height="786" frameX="0" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY angry0000" x="2056" y="808" width="687" height="792" pivotX="-69" pivotY="-30.7" frameX="-13" frameY="-12" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY angry0001" x="2056" y="808" width="687" height="792" frameX="-13" frameY="-12" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY angry0002" x="2743" y="808" width="686" height="779" frameX="-14" frameY="-25" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY angry0003" x="2743" y="808" width="686" height="779" frameX="-14" frameY="-25" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY angry0004" x="4" y="1612" width="700" height="786" frameX="0" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY angry0005" x="4" y="1612" width="700" height="786" frameX="0" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY angry0006" x="704" y="1612" width="693" height="786" frameX="-7" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY angry0007" x="704" y="1612" width="693" height="786" frameX="-7" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY loop0000" x="1397" y="1612" width="684" height="804" pivotX="-69" pivotY="-18.05" frameX="-5" frameY="12" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY loop0001" x="1397" y="1612" width="684" height="804" frameX="-5" frameY="12" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY loop0002" x="2081" y="1612" width="684" height="784" frameX="-12" frameY="-8" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY loop0003" x="2081" y="1612" width="684" height="784" frameX="-12" frameY="-8" frameWidth="700" frameHeight="804"/>
+	<SubTexture name="PSY loop0004" x="1377" y="4" width="700" height="786" frameX="0" frameY="-6" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY loop0005" x="1377" y="4" width="700" height="786" frameX="0" frameY="-6" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY unamused0000" x="2765" y="1612" width="687" height="792" pivotX="-69" pivotY="-30.7" frameX="-13" frameY="-12" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY unamused0001" x="2765" y="1612" width="687" height="792" frameX="-13" frameY="-12" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY unamused0002" x="4" y="2416" width="686" height="779" frameX="-14" frameY="-25" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY unamused0003" x="4" y="2416" width="686" height="779" frameX="-14" frameY="-25" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY unamused0004" x="690" y="2416" width="700" height="786" frameX="0" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY unamused0005" x="690" y="2416" width="700" height="786" frameX="0" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY unamused0006" x="1390" y="2416" width="693" height="786" frameX="-7" frameY="-18" frameWidth="700" frameHeight="792"/>
+	<SubTexture name="PSY unamused0007" x="1390" y="2416" width="693" height="786" frameX="-7" frameY="-18" frameWidth="700" frameHeight="792"/>
+</TextureAtlas>

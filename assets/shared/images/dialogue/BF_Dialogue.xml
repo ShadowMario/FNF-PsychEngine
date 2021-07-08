@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="BF_Dialogue.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="BFTalk0000" x="4" y="4" width="534" height="537" frameX="-1" frameY="-18" frameWidth="530" frameHeight="537"/>
+	<SubTexture name="bftalkloop0000" x="538" y="4" width="534" height="555" pivotX="1.55" pivotY="18.25"/>
+	<SubTexture name="bftalkloop0001" x="538" y="4" width="534" height="555"/>
+	<SubTexture name="bftalkloop0002" x="1074" y="4" width="534" height="547" frameX="-1" frameY="-8" frameWidth="532" frameHeight="555"/>
+	<SubTexture name="bftalkloop0003" x="1074" y="4" width="534" height="547" frameX="-1" frameY="-8" frameWidth="532" frameHeight="555"/>
+	<SubTexture name="bftalkloop0004" x="4" y="4" width="534" height="537" frameX="-1" frameY="-18" frameWidth="530" frameHeight="537"/>
+	<SubTexture name="bftalkloop0005" x="4" y="4" width="534" height="537" frameX="-1" frameY="-18" frameWidth="530" frameHeight="537"/>
+</TextureAtlas>
