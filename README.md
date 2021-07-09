@@ -2,8 +2,8 @@
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107)
 
 **Credits:**
-Shadow Mario - Coding
-RiverOaken - Arts and Animations
+* Shadow Mario - Coding
+* RiverOaken - Arts and Animations
 
 WARNING: This engine is still very early in development! You can request new features though
 _____________________________________
