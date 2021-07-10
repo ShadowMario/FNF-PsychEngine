@@ -1008,7 +1008,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Hide HUD':
 						daValue = ClientPrefs.hideHud;
 				}
-				checkbox.set_daValue(daValue);
+				checkbox.daValue = daValue;
 			}
 		}
 		for (i in 0...grpTexts.members.length) {

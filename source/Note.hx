@@ -32,10 +32,6 @@ class Note extends FlxSprite
 
 	public var colorSwap:ColorSwap;
 
-	#if debug
-	public var noteRandomizer:Int = 0;
-	#end
-
 	public static var swagWidth:Float = 160 * 0.7;
 	public static var PURP_NOTE:Int = 0;
 	public static var GREEN_NOTE:Int = 2;
@@ -186,10 +182,6 @@ class Note extends FlxSprite
 				// prevNote.setGraphicSize();
 			}
 		}
-		#if debug
-		else
-			noteRandomizer = Math.round(FlxG.random.float(-90 * (1.0 / PlayState.SONG.speed), 60 * (1.0 / PlayState.SONG.speed)));
-		#end
 	}
 
 	override function update(elapsed:Float)

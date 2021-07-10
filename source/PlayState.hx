@@ -68,7 +68,7 @@ class PlayState extends MusicBeatState
 
 	private var notes:FlxTypedGroup<Note>;
 	private var unspawnNotes:Array<Note> = [];
-	private var psychicNotes:Array<Dynamic> = [];
+	private var eventNotes:Array<Dynamic> = [];
 
 	private var strumLine:FlxSprite;
 	private var curSection:Int = 0;
@@ -1292,8 +1292,7 @@ class PlayState extends MusicBeatState
 				for (songNotes in section.sectionNotes)
 				{
 					if(songNotes[1] < 0) {
-						psychicNotes.push(songNotes.copy());
-						psychicNoteCheck();
+						eventNotes.push(songNotes);
 					}
 				}
 			}
@@ -1330,19 +1329,22 @@ class PlayState extends MusicBeatState
 					susLength = susLength / Conductor.stepCrochet;
 					unspawnNotes.push(swagNote);
 
-					for (susNote in 0...Math.floor(susLength))
-					{
-						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-
-						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true);
-						sustainNote.scrollFactor.set();
-						unspawnNotes.push(sustainNote);
-
-						sustainNote.mustPress = gottaHitNote;
-
-						if (sustainNote.mustPress)
+					var floorSus:Int = Math.floor(susLength);
+					if(floorSus > 0) {
+						for (susNote in 0...floorSus+1)
 						{
-							sustainNote.x += FlxG.width / 2; // general offset
+							oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
+
+							var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(SONG.speed, 2)), daNoteData, oldNote, true);
+							sustainNote.scrollFactor.set();
+							unspawnNotes.push(sustainNote);
+
+							sustainNote.mustPress = gottaHitNote;
+
+							if (sustainNote.mustPress)
+							{
+								sustainNote.x += FlxG.width / 2; // general offset
+							}
 						}
 					}
 
@@ -1354,8 +1356,7 @@ class PlayState extends MusicBeatState
 					}
 					else {}
 				} else { //Event Notes
-					psychicNotes.push(songNotes.copy());
-					psychicNoteCheck();
+					eventNotes.push(songNotes);
 				}
 			}
 			daBeats += 1;
@@ -1365,8 +1366,8 @@ class PlayState extends MusicBeatState
 		// playerCounter += 1;
 
 		unspawnNotes.sort(sortByShit);
-		if(psychicNotes.length > 1) { //No need to sort if there's a single one or none at all
-			psychicNotes.sort(sortByTime);
+		if(eventNotes.length > 1) { //No need to sort if there's a single one or none at all
+			eventNotes.sort(sortByTime);
 		}
 
 		/*if(unspawnNotes.length > 1) { //Removes duplicated notes
@@ -1408,15 +1409,13 @@ class PlayState extends MusicBeatState
 		generatedMusic = true;
 	}
 
-	function psychicNoteCheck() {
-		var value:Int = psychicNotes.length-1;
-		switch(psychicNotes[value][2]) {
+	function eventNoteEarlyTrigger(obj:Array<Dynamic>):Float {
+		switch(obj[2]) {
 			case 'Kill Henchmen': //Better timing so that the kill sound matches the beat intended
-				psychicNotes[value][0] -= 280; //Plays 280ms before the actual position
+				return 280; //Plays 280ms before the actual position
 		}
-		psychicNotes[value][0] += ClientPrefs.noteOffset;
+		return 0;
 	}
-
 
 	function sortByShit(Obj1:Note, Obj2:Note):Int
 	{
@@ -1425,7 +1424,9 @@ class PlayState extends MusicBeatState
 
 	function sortByTime(Obj1:Array<Dynamic>, Obj2:Array<Dynamic>):Int
 	{
-		return FlxSort.byValues(FlxSort.ASCENDING, Obj1[0], Obj2[0]);
+		var earlyTime1:Float = eventNoteEarlyTrigger(Obj1);
+		var earlyTime2:Float = eventNoteEarlyTrigger(Obj2);
+		return FlxSort.byValues(FlxSort.ASCENDING, Obj1[0] - earlyTime1, Obj2[0] - earlyTime2);
 	}
 
 	private function generateStaticArrows(player:Int):Void
@@ -2089,21 +2090,22 @@ class PlayState extends MusicBeatState
 		}
 
 
-		while(psychicNotes.length > 0) {
-			var leStrumTime:Float = psychicNotes[0][0];
-			if(Conductor.songPosition < leStrumTime) {
+		while(eventNotes.length > 0) {
+			var early:Float = eventNoteEarlyTrigger(eventNotes[0]);
+			var leStrumTime:Float = eventNotes[0][0];
+			if(Conductor.songPosition < leStrumTime - early) {
 				break;
 			}
 
 			var value1:String = '';
-			if(psychicNotes[0][3] != null)
-				value1 = psychicNotes[0][3];
+			if(eventNotes[0][3] != null)
+				value1 = eventNotes[0][3];
 
 			var value2:String = '';
-			if(psychicNotes[0][4] != null)
-				value2 = psychicNotes[0][4];
+			if(eventNotes[0][4] != null)
+				value2 = eventNotes[0][4];
 
-			switch(psychicNotes[0][2]) {
+			switch(eventNotes[0][2]) {
 				case 'Hey!':
 					var value:Int = Std.parseInt(value1);
 					var time:Float = Std.parseFloat(value2);
@@ -2230,7 +2232,7 @@ class PlayState extends MusicBeatState
 					dad.playAnim(value1, true);
 					dad.specialAnim = true;
 			}
-			psychicNotes.shift();
+			eventNotes.shift();
 		}
 
 		if (!inCutscene)
@@ -2470,7 +2472,7 @@ class PlayState extends MusicBeatState
 			daNote.destroy();
 		}
 		unspawnNotes = [];
-		psychicNotes = [];
+		eventNotes = [];
 	}
 
 	private function popUpScore(note:Note = null):Void

@@ -15,6 +15,7 @@ import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import lime.utils.Assets;
 import flixel.system.FlxSound;
+import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 
@@ -38,7 +39,7 @@ class FreeplayState extends MusicBeatState
 	private var curPlaying:Bool = false;
 
 	private var iconArray:Array<HealthIcon> = [];
-	public static var coolColors:Array<Int> = [0xFF9271FD, 0xFF9271FD, 0xFF223344, 0xFF941653, 0xFFFC96D7, 0xFFA0D1FF, 0xFFFF78BF]; //To do: Make the values configurable on a .txt file inside data/ folder
+	public static var coolColors:Array<Int> = [];
 
 	var bg:FlxSprite;
 	private var intendedColor:Int;
@@ -48,10 +49,16 @@ class FreeplayState extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
-
 		for (i in 0...initSonglist.length)
 		{
-			songs.push(new SongMetadata(initSonglist[i], 1, 'gf'));
+			var songArray:Array<String> = initSonglist[i].split(":");
+			addSong(songArray[0], 0, songArray[1]);
+			songs[songs.length-1].color = Std.parseInt(songArray[2]);
+		}
+		var colorsList = CoolUtil.coolTextFile(Paths.txt('freeplayColors'));
+		for (i in 0...colorsList.length)
+		{
+			coolColors.push(Std.parseInt(colorsList[i]));
 		}
 
 		/* 
@@ -160,7 +167,12 @@ class FreeplayState extends MusicBeatState
 		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
 		add(textBG);
-		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, "Press SPACE to listen to this Song / Press RESET to Reset your Score and Accuracy.", 18);
+		#if PRELOAD_ALL
+		var leText:String = "Press SPACE to listen to this Song / Press RESET to Reset your Score and Accuracy.";
+		#else
+		var leText:String = "Press RESET to Reset your Score and Accuracy.";
+		#end
+		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, 18);
 		text.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
@@ -237,6 +249,7 @@ class FreeplayState extends MusicBeatState
 			FlxG.switchState(new MainMenuState());
 		}
 
+		#if PRELOAD_ALL
 		if(space && instPlaying != curSelected)
 		{
 			destroyFreeplayVocals();
@@ -255,13 +268,18 @@ class FreeplayState extends MusicBeatState
 			vocals.volume = 0.7;
 			instPlaying = curSelected;
 		}
-		else if (accepted)
+		else #end if (accepted)
 		{
-			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-
+			var songLowercase:String = songs[curSelected].songName.toLowerCase();
+			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
+			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
+				poop = songLowercase;
+				curDifficulty = 1;
+				trace('Couldnt find file');
+			}
 			trace(poop);
 
-			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
 
