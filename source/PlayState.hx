@@ -53,6 +53,19 @@ class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;
 
+	public static var ratingStuff:Array<Dynamic> = [
+		['You Suck!', 0.2], //From 0% to 19%
+		['Shit', 0.4], //From 20% to 39%
+		['Bad', 0.5], //From 40% to 49%
+		['Bruh', 0.6], //From 50% to 59%
+		['Meh', 0.69], //From 60% to 68%
+		['Nice', 0.7], //69%
+		['Good', 0.8], //From 70% to 79%
+		['Great', 0.9], //From 80% to 89%
+		['Sick!', 1], //From 90% to 99%
+		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+	]; 
+
 	public static var curStage:String = '';
 	public static var SONG:SwagSong = null;
 	public static var isStoryMode:Bool = false;
@@ -3166,11 +3179,11 @@ class PlayState extends MusicBeatState
 		if(Math.isNaN(ratingPercent)) {
 			ratingString = '?';
 		} else if(ratingPercent >= 1) {
-			ratingString = CoolUtil.ratingStuff[CoolUtil.ratingStuff.length-1][0]; //Uses last string
+			ratingString = ratingStuff[ratingStuff.length-1][0]; //Uses last string
 		} else {
-			for (i in 0...CoolUtil.ratingStuff.length-1) {
-				if(ratingPercent < CoolUtil.ratingStuff[i][1]) {
-					ratingString = CoolUtil.ratingStuff[i][0];
+			for (i in 0...ratingStuff.length-1) {
+				if(ratingPercent < ratingStuff[i][1]) {
+					ratingString = ratingStuff[i][0];
 					break;
 				}
 			}

@@ -11,14 +11,6 @@ using StringTools;
 class CoolUtil
 {
 	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
-	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2],
-		['Shit', 0.4],
-		['Bad', 0.6],
-		['Meh', 0.8],
-		['Good', 1],
-		['Perfect!', 1] //The value on this one isn't used actually, since Perfect is always "1"
-	]; 
 
 	public static function difficultyString():String
 	{
