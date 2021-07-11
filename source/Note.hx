@@ -119,20 +119,21 @@ class Note extends FlxSprite
 				colorSwap.update(ClientPrefs.arrowHSV[noteData % 4][i], i);
 			}
 		}
-		switch (noteData)
-		{
-			case 0:
-				x += swagWidth * 0;
-				animation.play('purpleScroll');
-			case 1:
-				x += swagWidth * 1;
-				animation.play('blueScroll');
-			case 2:
-				x += swagWidth * 2;
-				animation.play('greenScroll');
-			case 3:
-				x += swagWidth * 3;
-				animation.play('redScroll');
+		x += swagWidth * (noteData % 4);
+		if(!isSustainNote) { //Doing this 'if' check to fix the warnings on Senpai songs
+			var animToPlay:String = '';
+			switch (noteData)
+			{
+				case 0:
+					animToPlay = 'purple';
+				case 1:
+					animToPlay = 'blue';
+				case 2:
+					animToPlay = 'green';
+				case 3:
+					animToPlay = 'red';
+			}
+			animation.play(animToPlay + 'Scroll');
 		}
 
 		// trace(prevNote);
