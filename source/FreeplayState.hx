@@ -42,7 +42,8 @@ class FreeplayState extends MusicBeatState
 	public static var coolColors:Array<Int> = [];
 
 	var bg:FlxSprite;
-	private var intendedColor:Int;
+	var intendedColor:Int;
+	var colorTween:FlxTween;
 
 	override function create()
 	{
@@ -245,7 +246,9 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			FlxTween.cancelTweensOf(bg);
+			if(colorTween != null) {
+				colorTween.cancel();
+			}
 			FlxG.switchState(new MainMenuState());
 		}
 
@@ -285,7 +288,9 @@ class FreeplayState extends MusicBeatState
 
 			PlayState.storyWeek = songs[curSelected].week;
 			trace('CUR WEEK' + PlayState.storyWeek);
-			FlxTween.cancelTweensOf(bg);
+			if(colorTween != null) {
+				colorTween.cancel();
+			}
 			LoadingState.loadAndSwitchState(new PlayState());
 
 			FlxG.sound.music.volume = 0;
@@ -340,9 +345,14 @@ class FreeplayState extends MusicBeatState
 
 		var newColor:Int = songs[curSelected].color;
 		if(newColor != intendedColor) {
-			FlxTween.cancelTweensOf(bg);
+			if(colorTween != null) {
+				colorTween.cancel();
+			}
 			intendedColor = newColor;
-			FlxTween.color(bg, 1, bg.color, intendedColor);
+			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {onComplete: function(twn:FlxTween) {
+					colorTween = null;
+				}
+			});
 		}
 
 		// selector.y = (70 * curSelected) + 30;

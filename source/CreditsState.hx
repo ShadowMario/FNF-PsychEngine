@@ -37,7 +37,8 @@ class CreditsState extends MusicBeatState
 
 	var bg:FlxSprite;
 	var descText:FlxText;
-	private var intendedColor:Int;
+	var intendedColor:Int;
+	var colorTween:FlxTween;
 
 	override function create()
 	{
@@ -110,7 +111,9 @@ class CreditsState extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			FlxTween.cancelTweensOf(bg);
+			if(colorTween != null) {
+				colorTween.cancel();
+			}
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			FlxG.switchState(new MainMenuState());
 		}
@@ -133,9 +136,11 @@ class CreditsState extends MusicBeatState
 
 		var newColor:Int = creditsStuff[curSelected][4];
 		if(newColor != intendedColor) {
-			FlxTween.cancelTweensOf(bg);
+			if(colorTween != null) {
+				colorTween.cancel();
+			}
 			intendedColor = newColor;
-			FlxTween.color(bg, 1, bg.color, intendedColor);
+			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor);
 		}
 
 		var bullShit:Int = 0;

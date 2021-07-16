@@ -20,15 +20,16 @@ class Note extends FlxSprite
 	public var canBeHit:Bool = false;
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
+	public var ignoreNote:Bool = false;
 	public var prevNote:Note;
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
 	public var noteType:Int = 0;
 
-	public var psychicAbility:String = '';
-	public var psychicVal1:String = '';
-	public var psychicVal2:String = '';
+	public var eventName:String = '';
+	public var eventVal1:String = '';
+	public var eventVal2:String = '';
 
 	public var colorSwap:ColorSwap;
 
@@ -118,22 +119,23 @@ class Note extends FlxSprite
 			for (i in 0...3) {
 				colorSwap.update(ClientPrefs.arrowHSV[noteData % 4][i], i);
 			}
-		}
-		x += swagWidth * (noteData % 4);
-		if(!isSustainNote) { //Doing this 'if' check to fix the warnings on Senpai songs
-			var animToPlay:String = '';
-			switch (noteData)
-			{
-				case 0:
-					animToPlay = 'purple';
-				case 1:
-					animToPlay = 'blue';
-				case 2:
-					animToPlay = 'green';
-				case 3:
-					animToPlay = 'red';
+
+			x += swagWidth * (noteData % 4);
+			if(!isSustainNote) { //Doing this 'if' check to fix the warnings on Senpai songs
+				var animToPlay:String = '';
+				switch (noteData % 4)
+				{
+					case 0:
+						animToPlay = 'purple';
+					case 1:
+						animToPlay = 'blue';
+					case 2:
+						animToPlay = 'green';
+					case 3:
+						animToPlay = 'red';
+				}
+				animation.play(animToPlay + 'Scroll');
 			}
-			animation.play(animToPlay + 'Scroll');
 		}
 
 		// trace(prevNote);

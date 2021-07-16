@@ -397,7 +397,7 @@ class StoryMenuState extends MusicBeatState
 		var stringThing:Array<String> = weekData[curWeek];
 
 		txtTracklist.text = "";
-		for (i in 0...stringThing.length+1)
+		for (i in 0...stringThing.length+1) //Why??? Why do i have to add a +1 to it????
 		{
 			txtTracklist.text += "\n" + stringThing[i];
 		}

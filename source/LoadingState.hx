@@ -19,6 +19,12 @@ import haxe.io.Path;
 class LoadingState extends MusicBeatState
 {
 	inline static var MIN_TIME = 1.0;
+
+	// Browsers will load create(), you can make your song load a custom directory there
+	// If you're compiling to desktop (or something that doesn't use NO_PRELOAD_ALL), search for getNextState instead
+	// I'd recommend doing it on both actually lol
+	
+	// TO DO: Make this easier
 	
 	var target:FlxState;
 	var stopMusic = false;
@@ -63,15 +69,14 @@ class LoadingState extends MusicBeatState
 						checkLoadSong(getVocalPath());
 				}
 				checkLibrary("shared");
-				if (PlayState.storyWeek > 0) {
-					checkLibrary("week" + PlayState.storyWeek);
-					checkLibrary("week" + PlayState.storyWeek + "_high", true);
-				} else if(PlayState.storyWeek == -99) { //Psychic week
-					checkLibrary("psychic");
-					checkLibrary("psychic_high", true);
-				} else {
-					checkLibrary("tutorial");
-					checkLibrary("tutorial_high", true);
+				switch(PlayState.storyWeek) {
+					case 0:
+						checkLibrary("tutorial");
+						checkLibrary("tutorial_high", true);
+
+					default:
+						checkLibrary("week" + PlayState.storyWeek);
+						checkLibrary("week" + PlayState.storyWeek + "_high", true);
 				}
 
 				var fadeTime = 0.5;
@@ -153,10 +158,10 @@ class LoadingState extends MusicBeatState
 	
 	static function getNextState(target:FlxState, stopMusic = false):FlxState
 	{
-		if(PlayState.storyWeek == -99)
-			Paths.setCurrentLevel("psychic");
-		else
-			Paths.setCurrentLevel("week" + PlayState.storyWeek);
+		switch(PlayState.storyWeek) {
+			default:
+				Paths.setCurrentLevel("week" + PlayState.storyWeek);
+		}
 
 		#if NO_PRELOAD_ALL
 		var loaded:Bool = false;

@@ -10,26 +10,23 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.FlxSubState;
-import flixel.FlxCamera;
 
 using StringTools;
 
 // TO DO: Clean code? Maybe? idk
-class DialogueBoxPsych extends MusicBeatSubstate
+class DialogueBoxPsych extends FlxSpriteGroup
 {
 	var dialogue:Alphabet;
 	var dialogueList:Array<String> = [];
 
-	public static var finishThing:Void->Void;
+	public var finishThing:Void->Void;
 	var bgFade:FlxSprite = null;
-	var bgWhite:FlxSprite = null;
 	var box:FlxSprite;
 	var textToType:String = '';
 
 	var arrayCharacters:Array<FlxSprite> = [];
 	var arrayStartX:Array<Float> = [];
 
-	public static var cam:FlxCamera = null;
 	var currentText:Int = 1;
 	var offsetPos:Float = 600;
 
@@ -40,7 +37,6 @@ class DialogueBoxPsych extends MusicBeatSubstate
 				char.frames = Paths.getSparrowAtlas('dialogue/BF_Dialogue');
 				char.animation.addByPrefix('talkIdle', 'BFTalk', 24, true); //Dialogue ended
 				char.animation.addByPrefix('talk', 'bftalkloop', 24, true); //During dialogue
-				char.animation.play('talkIdle', true);
 
 			case 'psychic':
 				char.frames = Paths.getSparrowAtlas('dialogue/Psy_Dialogue'); //oppa gangnam style xddddd kill me
@@ -50,21 +46,29 @@ class DialogueBoxPsych extends MusicBeatSubstate
 				char.animation.addByPrefix('angry', 'PSY ANGRY loop', 24, true);
 				char.animation.addByPrefix('unamusedIdle', 'PSY unamused', 24, true);
 				char.animation.addByPrefix('unamused', 'PSY UNAMUSED loop', 24, true);
-				char.animation.play('talkIdle', true);
 				char.y -= 140;
 		}
+		char.animation.play('talkIdle', true);
 	}
 
 
-
-	public function new(?dialogueList:Array<String>, song:String, black:FlxSprite, white:FlxSprite)
+	var doFadeOut:Bool = false;
+	public function new(?dialogueList:Array<String>, ?song:String = null)
 	{
 		super();
 
-		if(song != '') {
+		if(song != null) {
 			FlxG.sound.playMusic(Paths.music(song), 0);
 			FlxG.sound.music.fadeIn(2, 0, 1);
+			doFadeOut = true;
 		}
+		
+		bgFade = new FlxSprite(-500, -500).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.WHITE);
+		bgFade.scrollFactor.set();
+		bgFade.visible = true;
+		bgFade.alpha = 0;
+		add(bgFade);
+
 		this.dialogueList = dialogueList;
 		var splitName:Array<String> = dialogueList[0].split(":");
 		spawnCharacters(splitName);
@@ -78,16 +82,13 @@ class DialogueBoxPsych extends MusicBeatSubstate
 		box.animation.addByPrefix('angry', 'AHH speech bubble', 24);
 		box.animation.addByPrefix('angryOpen', 'speech bubble loud open', 24, false);
 		box.visible = false;
-		box.cameras = [cam];
 		box.setGraphicSize(Std.int(box.width * 0.9));
 		box.updateHitbox();
 		add(box);
 
-		bgFade = black;
-		bgWhite = white;
+		startNextDialog();
 	}
 
-	var dialogueOpened:Bool = false;
 	var dialogueStarted:Bool = false;
 	var dialogueEnded:Bool = false;
 
@@ -114,8 +115,7 @@ class DialogueBoxPsych extends MusicBeatSubstate
 			}
 			char.antialiasing = ClientPrefs.globalAntialiasing;
 			char.scrollFactor.set();
-			char.cameras = [cam];
-			char.visible = false;
+			char.alpha = 0;
 			add(char);
 			arrayCharacters.push(char);
 			arrayStartX.push(x);
@@ -128,25 +128,7 @@ class DialogueBoxPsych extends MusicBeatSubstate
 	var daText:Alphabet = null;
 	override function update(elapsed:Float)
 	{
-		if(!dialogueOpened) {
-			bgFade.alpha -= 0.5 * elapsed;
-			if(bgFade.alpha <= 0) {
-				remove(bgFade);
-				bgWhite.visible = true;
-				bgWhite.alpha = 0;
-				bgFade = bgWhite;
-				for (i in 0...arrayCharacters.length) {
-					var char:FlxSprite = arrayCharacters[i];
-					if(char != null) {
-						char.visible = true;
-						char.alpha = 0;
-					}
-				}
-
-				dialogueOpened = true;
-				startNextDialog();
-			}
-		} else if(!dialogueEnded) {
+		if(!dialogueEnded) {
 			bgFade.alpha += 0.5 * elapsed;
 			if(bgFade.alpha > 0.5) bgFade.alpha = 0.5;
 
@@ -159,7 +141,6 @@ class DialogueBoxPsych extends MusicBeatSubstate
 					daText = new Alphabet(0, 0, textToType, false, true, 0.0, 0.7);
 					daText.x = textX;
 					daText.y = textY;
-					daText.cameras = [cam];
 					add(daText);
 				} else if(currentText >= dialogueList.length) {
 					dialogueEnded = true;
@@ -174,7 +155,7 @@ class DialogueBoxPsych extends MusicBeatSubstate
 					remove(daText);
 					daText = null;
 					updateBoxOffsets();
-					FlxG.sound.music.fadeOut(1, 0);
+					if(doFadeOut) FlxG.sound.music.fadeOut(1, 0);
 				} else {
 					startNextDialog();
 				}
@@ -259,7 +240,7 @@ class DialogueBoxPsych extends MusicBeatSubstate
 					}
 				}
 				finishThing();
-				close();
+				kill();
 			}
 		}
 		super.update(elapsed);
@@ -310,7 +291,6 @@ class DialogueBoxPsych extends MusicBeatSubstate
 			remove(daText);
 		}
 		daText = new Alphabet(textX, textY, textToType, false, true, speed, 0.7);
-		daText.cameras = [cam];
 		add(daText);
 
 		var char:FlxSprite = arrayCharacters[character];

@@ -48,17 +48,19 @@ class ChartingState extends MusicBeatState
 		'Hey!'
 	];
 
-	var psychicEvents:Array<Dynamic> =
+	var eventStuff:Array<Dynamic> =
 	[
 		['', "Nothing. Yep, that's right."],
 		['Hey!', "Plays the \"Hey!\" animation from Bopeebo,\nValue 1: 0 = Only Boyfriend, 1 = Only Girlfriend,\nSomething else = Both.\nValue 2: Custom animation duration,\nleave it blank for 0.6s"],
-		['Set GF Speed', "Sets GF head bopping speed,\nValue 1: 1 = Normal speed, 2 = Half speed.\nOther values weren't tested\nUsed on Fresh during the beatbox parts.\nWarning: Value must be integer!"],
+		['Set GF Speed', "Sets GF head bopping speed,\nValue 1: 1 = Normal speed,\n2 = 1/2 speed, 4 = 1/4 speed etc.\nUsed on Fresh during the beatbox parts.\n\nWarning: Value must be integer!"],
 		['Blammed Lights', "Value 1: 0 = Turn off, 1 = Blue, 2 = Green,\n3 = Pink, 4 = Red, 5 = Orange, Anything else = Random."],
 		['Kill Henchmen', "For Mom's songs, don't use this please, i love them :("],
 		['Add Camera Zoom', "Used on MILF on that one \"hard\" part\nValue 1: Camera zoom add (Default: 0.015)\nValue 2: UI zoom add (Default: 0.03)\nLeave the values blank if you want to use Default."],
 		['Trigger BG Ghouls', "Used on Thorns for the \"Hey!\"s"],
 		['Play Animation', "Plays an animation on Dad,\nonce the animation is completed,\nthe animation changes to Idle\n\nValue 1: Animation to play."]
 	];
+
+	private var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
 
 	var _file:FileReference;
 
@@ -113,7 +115,14 @@ class ChartingState extends MusicBeatState
 
 	var value1InputText:FlxUIInputText;
 	var value2InputText:FlxUIInputText;
-	var selectedPsychic:Int = 0;
+	var selectedEvent:Int = 0;
+
+	function createUIInputTextsArray() {
+		blockPressWhileTypingOn.push(value1InputText);
+		blockPressWhileTypingOn.push(value2InputText);
+		blockPressWhileTypingOn.push(UI_songTitle);
+		blockPressWhileTypingOn.push(strumTimeInputText);
+	}
 
 	override function create()
 	{
@@ -217,7 +226,7 @@ class ChartingState extends MusicBeatState
 		addSongUI();
 		addSectionUI();
 		addNoteUI();
-		addPsychicUI();
+		addEventsUI();
 		updateHeads();
 
 		add(curRenderedSustains);
@@ -229,9 +238,10 @@ class ChartingState extends MusicBeatState
 
 	var check_mute_inst:FlxUICheckBox = null;
 	var metronome:FlxUICheckBox = null;
+	var UI_songTitle:FlxUIInputText;
 	function addSongUI():Void
 	{
-		var UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
+		UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
 		typingShit = UI_songTitle;
 
 		var check_voices = new FlxUICheckBox(10, 25, null, null, "Has voice track", 100);
@@ -546,25 +556,25 @@ class ChartingState extends MusicBeatState
 		UI_box.addGroup(tab_group_note);
 	}
 
-	function addPsychicUI():Void
+	function addEventsUI():Void
 	{
 		var tab_group_event = new FlxUI(null, UI_box);
 		tab_group_event.name = 'Events';
 
-		var descText:FlxText = new FlxText(20, 200, 0, psychicEvents[0][0]);
+		var descText:FlxText = new FlxText(20, 200, 0, eventStuff[0][0]);
 
 		var leEvents:Array<String> = [];
-		for (i in 0...psychicEvents.length) {
-			leEvents.push(psychicEvents[i][0]);
+		for (i in 0...eventStuff.length) {
+			leEvents.push(eventStuff[i][0]);
 		}
 
 		var text:FlxText = new FlxText(20, 30, 0, "Event:");
 		tab_group_event.add(text);
 		var eventDropDown = new FlxUIDropDownMenu(20, 50, FlxUIDropDownMenu.makeStrIdLabelArray(leEvents, true), function(pressed:String) {
-			selectedPsychic = Std.parseInt(pressed);
-			descText.text = psychicEvents[selectedPsychic][1];
+			selectedEvent = Std.parseInt(pressed);
+			descText.text = eventStuff[selectedEvent][1];
 			if(curSelectedNote != null) {
-				curSelectedNote[2] = psychicEvents[selectedPsychic][0];
+				curSelectedNote[2] = eventStuff[selectedEvent][0];
 			}
 		});
 
@@ -845,7 +855,16 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
-		if (!typingShit.hasFocus && !value1InputText.hasFocus && !value2InputText.hasFocus)
+		
+		var isTyping:Bool = false;
+		for (i in 0...blockPressWhileTypingOn.length) {
+			if(blockPressWhileTypingOn[i].hasFocus) {
+				isTyping = true;
+				break;
+			}
+		}
+
+		if (!isTyping)
 		{
 			if (FlxG.keys.justPressed.SPACE)
 			{
@@ -1180,9 +1199,9 @@ class ChartingState extends MusicBeatState
 			}
 		} else { //Event note
 			note.loadGraphic(Paths.image('eventArrow'));
-			note.psychicAbility = daSus;
-			note.psychicVal1 = i[3];
-			note.psychicVal2 = i[4];
+			note.eventName = daSus;
+			note.eventVal1 = i[3];
+			note.eventVal2 = i[4];
 			note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 		}
 		note.updateHitbox();
@@ -1272,7 +1291,7 @@ class ChartingState extends MusicBeatState
 		if(noteData > -1) {
 			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, daType]);
 		} else {
-			var psych = psychicEvents[selectedPsychic][0];
+			var psych = eventStuff[selectedEvent][0];
 			var text1 = value1InputText.text;
 			var text2 = value2InputText.text;
 			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, psych, text1, text2]);

@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import Section.SwagSection;
 
@@ -17,6 +18,7 @@ class Character extends FlxSprite
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
 
+	public var colorTween:FlxTween;
 	public var holdTimer:Float = 0;
 	public var heyTimer:Float = 0;
 	public var specialAnim:Bool = false;
@@ -447,7 +449,8 @@ class Character extends FlxSprite
 							playAnim('danceLeft');
 
 					default:
-						playAnim('idle');
+						if(!curCharacter.endsWith('-dead'))
+							playAnim('idle');
 				}
 			}
 		}

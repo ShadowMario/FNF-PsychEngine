@@ -43,9 +43,7 @@ import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 import openfl.media.Video;
 import Achievements;
-#if !sys
 import openfl.utils.Assets as OpenFlAssets;
-#end
 
 using StringTools;
 
@@ -132,6 +130,7 @@ class PlayState extends MusicBeatState
 	var phillyCityLights:FlxTypedGroup<FlxSprite>;
 	var phillyTrain:FlxSprite;
 	var phillyBlack:FlxSprite;
+	var phillyBlackTween:FlxTween;
 	var phillyCityLightsEvent:FlxTypedGroup<FlxSprite>;
 	var trainSound:FlxSound;
 
@@ -161,6 +160,7 @@ class PlayState extends MusicBeatState
 	var songMisses:Int = 0;
 	var scoreTxt:FlxText;
 	var timeTxt:FlxText;
+	var scoreTxtTween:FlxTween;
 
 	public static var campaignScore:Int = 0;
 	public static var campaignMisses:Int = 0;
@@ -206,7 +206,6 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(camAchievement);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
-		DialogueBoxPsych.cam = camHUD;
 
 		FlxCamera.defaultCameras = [camGame];
 		//FlxG.cameras.setDefaultDrawTarget(camGame, true);
@@ -777,10 +776,9 @@ class PlayState extends MusicBeatState
 		}
 
 		var lowercaseSong:String = SONG.song.toLowerCase();
-		switch (lowercaseSong)
-		{
-			case 'senpai' | 'roses' | 'thorns':
-				dialogue = CoolUtil.coolTextFile(Paths.txt(lowercaseSong + '/' + lowercaseSong + 'Dialogue'));
+		var file:String = lowercaseSong + '/' + lowercaseSong + 'Dialogue';
+		if (OpenFlAssets.exists(file)) {
+			dialogue = CoolUtil.coolTextFile(Paths.txt(file));
 		}
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
@@ -991,29 +989,18 @@ class PlayState extends MusicBeatState
 		super.create();
 	}
 
-	function dialogueIntro(dialogue:Array<String>, ?song:String = '', ?doBlack:Bool = true):Void
+	//You don't have to add a song, just saying. You can just do "dialogueIntro(dialogue);" and it should work
+	function dialogueIntro(dialogue:Array<String>, ?song:String = null):Void
 	{
-		// TO DO: Make this more flexible
+		// TO DO: Make this more flexible, maybe?
 		inCutscene = true;
-		var black:FlxSprite = new FlxSprite(-500, -500).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
-		if(!doBlack) {
-			black.alpha = 0.25; //Faster transition to dialogue
-			black.visible = false;
-		}
-		black.scrollFactor.set();
-
-		var white:FlxSprite = new FlxSprite(-500, -500).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.WHITE);
-		white.scrollFactor.set();
-		white.visible = false;
-		add(white);
-		add(black);
-
 		CoolUtil.precacheSound('dialogue');
 		CoolUtil.precacheSound('dialogueClose');
-		new FlxTimer().start(0.5, function(tmr:FlxTimer) {
-			openSubState(new DialogueBoxPsych(dialogue, song, black, white));
-			DialogueBoxPsych.finishThing = startCountdown;
-		});
+		var doof:DialogueBoxPsych = new DialogueBoxPsych(dialogue, song);
+		doof.scrollFactor.set();
+		doof.finishThing = startCountdown;
+		doof.cameras = [camHUD];
+		add(doof);
 	}
 
 	function schoolIntro(?dialogueBox:DialogueBox):Void
@@ -1565,6 +1552,16 @@ class PlayState extends MusicBeatState
 				startTimer.active = false;
 			if (finishTimer != null && !finishTimer.finished)
 				finishTimer.active = false;
+
+			if(phillyBlackTween != null)
+				phillyBlackTween.active = false;
+
+			var chars:Array<Character> = [boyfriend, gf, dad];
+			for (i in 0...chars.length) {
+				if(chars[i].colorTween != null) {
+					chars[i].colorTween.active = false;
+				}
+			}
 		}
 
 		super.openSubState(SubState);
@@ -1583,6 +1580,16 @@ class PlayState extends MusicBeatState
 				startTimer.active = true;
 			if (finishTimer != null && !finishTimer.finished)
 				finishTimer.active = true;
+
+			if(phillyBlackTween != null)
+				phillyBlackTween.active = true;
+
+			var chars:Array<Character> = [boyfriend, gf, dad];
+			for (i in 0...chars.length) {
+				if(chars[i].colorTween != null) {
+					chars[i].colorTween.active = true;
+				}
+			}
 			paused = false;
 
 			#if desktop
@@ -1804,8 +1811,13 @@ class PlayState extends MusicBeatState
 				// gitaroo man easter egg
 				FlxG.switchState(new GitarooPause());
 			}
-			else
+			else {
+				if(FlxG.sound.music != null) {
+					FlxG.sound.music.pause();
+					vocals.pause();
+				}
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+			}
 		
 			#if desktop
 			DiscordClient.changePresence(detailsPausedText, displaySongName + " (" + storyDifficultyText + ")", iconRPC);
@@ -2016,7 +2028,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 
-				if (!daNote.mustPress && daNote.wasGoodHit)
+				if (!daNote.mustPress && daNote.wasGoodHit && !daNote.ignoreNote)
 				{
 					if (SONG.song != 'Tutorial')
 						camZooming = true;
@@ -2063,11 +2075,14 @@ class PlayState extends MusicBeatState
 						time += 0.15;
 					}
 					DadStrumPlayAnim(daNote.noteData % 4, time);
+					daNote.ignoreNote = true;
 
-					FlxTween.cancelTweensOf(daNote);
-					daNote.kill();
-					notes.remove(daNote, true);
-					daNote.destroy();
+					if (!daNote.isSustainNote)
+					{
+						daNote.kill();
+						notes.remove(daNote, true);
+						daNote.destroy();
+					}
 				}
 
 				// WIP interpolation shit? Need to fix the pause issue
@@ -2094,7 +2109,6 @@ class PlayState extends MusicBeatState
 					daNote.active = false;
 					daNote.visible = false;
 
-					FlxTween.cancelTweensOf(daNote);
 					daNote.kill();
 					notes.remove(daNote, true);
 					daNote.destroy();
@@ -2175,11 +2189,22 @@ class PlayState extends MusicBeatState
 							curLightEvent = lightId;
 
 							if(phillyBlack.alpha != 1) {
-								FlxTween.cancelTweensOf(phillyBlack);
-								FlxTween.tween(phillyBlack, {alpha: 1}, 1, {ease: FlxEase.quadInOut});
-								FlxTween.color(dad, 1, 0xffffffff, color, {ease: FlxEase.quadInOut});
-								FlxTween.color(boyfriend, 1, 0xffffffff, color, {ease: FlxEase.quadInOut});
-								FlxTween.color(gf, 1, 0xffffffff, color, {ease: FlxEase.quadInOut});
+								if(phillyBlackTween != null) {
+									phillyBlackTween.cancel();
+								}
+								phillyBlackTween = FlxTween.tween(phillyBlack, {alpha: 1}, 1, {ease: FlxEase.quadInOut,
+									onComplete: function(twn:FlxTween) {
+										phillyBlackTween = null;
+									}
+								});
+
+								var chars:Array<Character> = [boyfriend, gf, dad];
+								for (i in 0...chars.length) {
+									if(chars[i].colorTween != null) {
+										chars[i].colorTween.cancel();
+									}
+									chars[i].colorTween = FlxTween.color(chars[i], 1, FlxColor.WHITE, color, {ease: FlxEase.quadInOut});
+								}
 							} else {
 								dad.color = color;
 								boyfriend.color = color;
@@ -2193,8 +2218,14 @@ class PlayState extends MusicBeatState
 							phillyCityLightsEvent.members[lightId - 1].alpha = 1;
 						} else {
 							if(phillyBlack.alpha != 0) {
-								FlxTween.cancelTweensOf(phillyBlack);
-								FlxTween.tween(phillyBlack, {alpha: 0}, 1, {ease: FlxEase.quadInOut});
+								if(phillyBlackTween != null) {
+									phillyBlackTween.cancel();
+								}
+								phillyBlackTween = FlxTween.tween(phillyBlack, {alpha: 0}, 1, {ease: FlxEase.quadInOut,
+									onComplete: function(twn:FlxTween) {
+										phillyBlackTween = null;
+									}
+								});
 							}
 
 							phillyCityLights.forEach(function(spr:FlxSprite) {
@@ -2211,9 +2242,13 @@ class PlayState extends MusicBeatState
 								FlxTween.tween(memb, {alpha: 0}, 1, {ease: FlxEase.quadInOut});
 							}
 
-							FlxTween.color(dad, 1, dad.color, 0xffffffff, {ease: FlxEase.quadInOut});
-							FlxTween.color(boyfriend, 1, boyfriend.color, 0xffffffff, {ease: FlxEase.quadInOut});
-							FlxTween.color(gf, 1, gf.color, 0xffffffff, {ease: FlxEase.quadInOut});
+							var chars:Array<Character> = [boyfriend, gf, dad];
+							for (i in 0...chars.length) {
+								if(chars[i].colorTween != null) {
+									chars[i].colorTween.cancel();
+								}
+								chars[i].colorTween = FlxTween.color(chars[i], 1, chars[i].color, FlxColor.WHITE, {ease: FlxEase.quadInOut});
+							}
 
 							curLight = 0;
 							curLightEvent = 0;
@@ -2259,6 +2294,30 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.pause();
 				vocals.pause();
 				Conductor.songPosition += 10000;
+				notes.forEachAlive(function(daNote:Note)
+				{
+					if(daNote.strumTime + 800 < Conductor.songPosition) {
+						daNote.active = false;
+						daNote.visible = false;
+
+						daNote.kill();
+						notes.remove(daNote, true);
+						daNote.destroy();
+					}
+				});
+				for (i in 0...unspawnNotes.length) {
+					var daNote:Note = unspawnNotes[0];
+					if(daNote.strumTime + 800 >= Conductor.songPosition) {
+						break;
+					}
+
+					daNote.active = false;
+					daNote.visible = false;
+
+					daNote.kill();
+					unspawnNotes.splice(unspawnNotes.indexOf(daNote), 1);
+					daNote.destroy();
+				}
 
 				FlxG.sound.music.time = Conductor.songPosition;
 				FlxG.sound.music.play();
@@ -2286,8 +2345,8 @@ class PlayState extends MusicBeatState
 				case 'bf-pixel':
 					camFollow.y = dad.getMidpoint().y - 200;
 			}
-
-			if (dad.curCharacter == 'mom')
+			
+			if (dad.curCharacter.startsWith('mom'))
 				vocals.volume = 1;
 
 			if (SONG.song.toLowerCase() == 'tutorial')
@@ -2479,7 +2538,6 @@ class PlayState extends MusicBeatState
 			daNote.active = false;
 			daNote.visible = false;
 
-			FlxTween.cancelTweensOf(daNote);
 			daNote.kill();
 			notes.remove(daNote, true);
 			daNote.destroy();
@@ -2533,10 +2591,16 @@ class PlayState extends MusicBeatState
 			songScore += score;
 			songHits++;
 			RecalculateRating();
-			FlxTween.cancelTweensOf(scoreTxt.scale);
+			if(scoreTxtTween != null) {
+				scoreTxtTween.cancel();
+			}
 			scoreTxt.scale.x = 1.1;
 			scoreTxt.scale.y = 1.1;
-			FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2);
+			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					scoreTxtTween = null;
+				}
+			});
 		}
 
 		/* if (combo > 60)
@@ -2888,7 +2952,6 @@ class PlayState extends MusicBeatState
 
 			if (!note.isSustainNote)
 			{
-				FlxTween.cancelTweensOf(note);
 				note.kill();
 				notes.remove(note, true);
 				note.destroy();
@@ -2994,7 +3057,6 @@ class PlayState extends MusicBeatState
 		}
 
 		if(ClientPrefs.flashing) {
-			FlxTween.cancelTweensOf(halloweenWhite);
 			halloweenWhite.alpha = 0.45;
 			FlxTween.tween(halloweenWhite, {alpha: 0.6}, 0.075);
 			FlxTween.tween(halloweenWhite, {alpha: 0}, 0.25, {startDelay: 0.15});

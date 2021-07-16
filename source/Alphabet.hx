@@ -413,7 +413,7 @@ class AlphaCharacter extends FlxSprite
 			case "'":
 				y -= 20 * textSize;
 			case '-':
-				x -= 35 * textSize;
+				x -= 35 - (90 * (1.0 - textSize));
 				y -= 16 * textSize;
 			case '(':
 				x -= 65 * textSize;
@@ -484,7 +484,7 @@ class AlphaCharacter extends FlxSprite
 			case "'":
 				y -= 20;
 			case '-':
-				x -= 35;
+				x -= 35 - (90 * (1.0 - textSize));
 				y -= 16;
 		}
 	}
