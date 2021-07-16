@@ -12,25 +12,29 @@ class NoteSplash extends FlxSprite
 		super(x, y);
 
 		frames = Paths.getSparrowAtlas('noteSplashes');
-		animation.addByPrefix("note1-0", "note impact 1  blue", 24, false);
-		animation.addByPrefix("note2-0", "note impact 1 green", 24, false);
-		animation.addByPrefix("note0-0", "note impact 1 purple", 24, false);
-		animation.addByPrefix("note3-0", "note impact 1 red", 24, false);
-		animation.addByPrefix("note1-1", "note impact 2 blue", 24, false);
-		animation.addByPrefix("note2-1", "note impact 2 green", 24, false);
-		animation.addByPrefix("note0-1", "note impact 2 purple", 24, false);
-		animation.addByPrefix("note3-1", "note impact 2 red", 24, false);
+		for (i in 1...3) {
+			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
+			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);
+			animation.addByPrefix("note0-" + i, "note splash purple " + i, 24, false);
+			animation.addByPrefix("note3-" + i, "note splash red " + i, 24, false);
+		}
 		setupNoteSplash(x, y, note);
 		antialiasing = ClientPrefs.globalAntialiasing;
 	}
 
 	public function setupNoteSplash(x:Float, y:Float, ?note:Int = 0) {
-		setPosition(x, y);
+		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
 		alpha = 0.6;
-		animation.play('note' + note + '-' + FlxG.random.int(0, 1), true);
+		var animNum:Int = FlxG.random.int(1, 2);
+		if(animNum == 2) {
+			offset.set(20, 20);
+		} else {
+			offset.set(10, 10);
+		}
+
+		animation.play('note' + note + '-' + animNum, true);
 		animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
 		updateHitbox();
-		offset.set(Std.int(0.3 * width), Std.int(0.3 * height));
 		if(colorSwap == null) {
 			colorSwap = new ColorSwap();
 			shader = colorSwap.shader;

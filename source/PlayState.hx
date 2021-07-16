@@ -1979,6 +1979,9 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
+			var roundedSpeed:Float = FlxMath.roundDecimal(SONG.speed, 2);
+			var center:Float = strumLine.y + Note.swagWidth / 2;
+			var leScale:Float = (Conductor.stepCrochet / 100) * 1.5 * roundedSpeed;
 			notes.forEachAlive(function(daNote:Note)
 			{
 				if (daNote.y > FlxG.height)
@@ -1993,15 +1996,16 @@ class PlayState extends MusicBeatState
 				}
 
 				// i am so fucking sorry for this if condition
-				var center:Float = strumLine.y + Note.swagWidth / 2;
 				if (ClientPrefs.downScroll) {
-					daNote.y = (strumLine.y + 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2));
+					daNote.y = (strumLine.y + 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
 					if (daNote.isSustainNote) {
-						if (daNote.animation.curAnim.name.endsWith('end') && daNote.prevNote != null) {
-							daNote.y += daNote.prevNote.height;
-						} else {
-							daNote.y += daNote.height / 2;
-						}
+						//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
+						if (daNote.animation.curAnim.name.endsWith('end')) {
+							daNote.y += 10.25 * leScale + (46 * (roundedSpeed - 1));
+							daNote.y -= 23 * ((SONG.bpm / 100) - 1) * roundedSpeed;
+						} 
+						daNote.y += (Note.swagWidth / 2) - (68 * (roundedSpeed - 1));
+						daNote.y += 27.5 * ((SONG.bpm / 100) - 1) * (roundedSpeed - 1);
 
 						if(daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= center
 							&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
@@ -2014,7 +2018,7 @@ class PlayState extends MusicBeatState
 						}
 					}
 				} else {
-					daNote.y = (strumLine.y - 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2));
+					daNote.y = (strumLine.y - 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
 
 					if (daNote.isSustainNote
 						&& daNote.y + daNote.offset.y * daNote.scale.y <= center
@@ -2582,9 +2586,12 @@ class PlayState extends MusicBeatState
 
 		if(daRating == 'sick' && ClientPrefs.noteSplashes && note != null)
 		{
-			var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-			splash.setupNoteSplash(note.x, note.y, note.noteData);
-			grpNoteSplashes.add(splash);
+			var strum:StrumNote = playerStrums.members[note.noteData];
+			if(strum != null) {
+				var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+				splash.setupNoteSplash(strum.x, strum.y, note.noteData);
+				grpNoteSplashes.add(splash);
+			}
 		}
 
 		if(!practiceMode) {
