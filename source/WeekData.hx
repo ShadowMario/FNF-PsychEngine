@@ -10,8 +10,8 @@ class WeekData {
 		['Spookeez', 'South', 'Monster'],			//Week 2
 		['Pico', 'Philly-Nice', 'Blammed'],			//Week 3
 		['Satin-Panties', 'High', 'Milf'],			//Week 4
-		['Cocoa', 'Eggnog', 'Winter-Horrorland'],	//Week 5
-		['Senpai', 'Roses', 'Thorns'],				//Week 6
+		['Cocoa', 'Eggnog', 'Winter-Horrorland'],		//Week 5
+		['Senpai', 'Roses', 'Thorns']				//Week 6
 	];
 
 	// Custom week number, used for your week's score not being overwritten by a new vanilla week when the game updates
