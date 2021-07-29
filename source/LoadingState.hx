@@ -69,15 +69,10 @@ class LoadingState extends MusicBeatState
 						checkLoadSong(getVocalPath());
 				}
 				checkLibrary("shared");
-				switch(PlayState.storyWeek) {
-					case 0:
-						checkLibrary("tutorial");
-						checkLibrary("tutorial_high", true);
 
-					default:
-						checkLibrary("week" + PlayState.storyWeek);
-						checkLibrary("week" + PlayState.storyWeek + "_high", true);
-				}
+				var directory:String = WeekData.getWeekDirectory();
+				checkLibrary(directory);
+				checkLibrary(directory + "_high", true);
 
 				var fadeTime = 0.5;
 				FlxG.camera.fade(FlxG.camera.bgColor, fadeTime, true);
@@ -158,10 +153,7 @@ class LoadingState extends MusicBeatState
 	
 	static function getNextState(target:FlxState, stopMusic = false):FlxState
 	{
-		switch(PlayState.storyWeek) {
-			default:
-				Paths.setCurrentLevel("week" + PlayState.storyWeek);
-		}
+		Paths.setCurrentLevel(WeekData.getWeekDirectory());
 
 		#if NO_PRELOAD_ALL
 		var loaded:Bool = false;

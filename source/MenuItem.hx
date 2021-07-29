@@ -16,10 +16,8 @@ class MenuItem extends FlxSpriteGroup
 	public function new(x:Float, y:Float, weekNum:Int = 0)
 	{
 		super(x, y);
-		if(weekNum == -99)
-			week = new FlxSprite().loadGraphic(Paths.image('storymenu/weekpsychic'));
-		else
-			week = new FlxSprite().loadGraphic(Paths.image('storymenu/week' + weekNum));
+		week = new FlxSprite().loadGraphic(Paths.image('storymenu/week' + WeekData.getWeekNumber(weekNum)));
+		trace('Test added: ' + WeekData.getWeekNumber(weekNum) + ' (' + weekNum + ')');
 		week.antialiasing = ClientPrefs.globalAntialiasing;
 		add(week);
 	}

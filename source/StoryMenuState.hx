@@ -21,21 +21,22 @@ using StringTools;
 
 class StoryMenuState extends MusicBeatState
 {
-	var scoreText:FlxText;
-
-	var weekData:Array<Dynamic> = [
-		['Tutorial'],
-		['Bopeebo', 'Fresh', 'Dad-Battle'],
-		['Spookeez', 'South', 'Monster'],
-		['Pico', 'Philly-Nice', 'Blammed'],
-		['Satin-Panties', 'High', 'Milf'],
-		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
-		['Senpai', 'Roses', 'Thorns']
+	// Wether you have to beat the previous week for playing this one
+	// Not recommended, as people usually download your mod for, you know,
+	// playing just the modded week then delete it.
+	// defaults to True
+	public static var weekUnlocked:Array<Bool> = [
+		true,	//Tutorial
+		true,	//Week 1
+		true,	//Week 2
+		true,	//Week 3
+		true,	//Week 4
+		true,	//Week 5
+		true	//Week 6
 	];
-	private static var curDifficulty:Int = 1;
 
-	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
-
+	//It works like this:
+	// ['Left character', 'Center character', 'Right character']
 	var weekCharacters:Array<Dynamic> = [
 		['dad', 'bf', 'gf'],
 		['dad', 'bf', 'gf'],
@@ -46,6 +47,7 @@ class StoryMenuState extends MusicBeatState
 		['senpai', 'bf', 'gf']
 	];
 
+	//The week's name, displayed on top-right
 	var weekNames:Array<String> = [
 		"",
 		"Daddy Dearest",
@@ -56,8 +58,9 @@ class StoryMenuState extends MusicBeatState
 		"hating simulator ft. moawling"
 	];
 
+	//Background asset name, the background files are stored on assets/preload/menubackgrounds/
 	var weekBackground:Array<String> = [
-		'stage',
+		'stage',		
 		'stage',
 		'halloween',
 		'philly',
@@ -65,6 +68,10 @@ class StoryMenuState extends MusicBeatState
 		'christmas',
 		'school'
 	];
+	
+	var scoreText:FlxText;
+
+	private static var curDifficulty:Int = 1;
 
 	var txtWeekTitle:FlxText;
 	var bgSprite:FlxSprite;
@@ -104,7 +111,7 @@ class StoryMenuState extends MusicBeatState
 		rankText.screenCenter(X);
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
-		bgSprite = new FlxSprite(0, 56).loadGraphic(Paths.image('menubackgrounds/menu_stage'));
+		bgSprite = new FlxSprite(0, 56);
 		bgSprite.antialiasing = ClientPrefs.globalAntialiasing;
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
@@ -123,9 +130,9 @@ class StoryMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		for (i in 0...weekData.length)
+		for (i in 0...WeekData.songsNames.length)
 		{
-			var weekThing:MenuItem = new MenuItem(0, bgSprite.y + bgSprite.height + 10, i);
+			var weekThing:MenuItem = new MenuItem(0, bgSprite.y + 396, i);
 			weekThing.y += ((weekThing.height + 20) * i);
 			weekThing.targetY = i;
 			grpWeekText.add(weekThing);
@@ -135,7 +142,7 @@ class StoryMenuState extends MusicBeatState
 			// weekThing.updateHitbox();
 
 			// Needs an offset thingie
-			if (!weekUnlocked[i])
+			if (i < weekUnlocked.length && !weekUnlocked[i])
 			{
 				var lock:FlxSprite = new FlxSprite(weekThing.width + 10 + weekThing.x);
 				lock.frames = ui_tex;
@@ -185,11 +192,11 @@ class StoryMenuState extends MusicBeatState
 		add(bgSprite);
 		add(grpWeekCharacters);
 
-		var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.x + bgSprite.height + 100).loadGraphic(Paths.image('Menu_Tracks'));
+		var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 435).loadGraphic(Paths.image('Menu_Tracks'));
 		tracksSprite.antialiasing = ClientPrefs.globalAntialiasing;
 		add(tracksSprite);
 
-		txtTracklist = new FlxText(FlxG.width * 0.05, bgSprite.x + bgSprite.height + 140, 0, "", 32);
+		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 40, 0, "", 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.font = rankText.font;
 		txtTracklist.color = 0xFFe55777;
@@ -216,9 +223,6 @@ class StoryMenuState extends MusicBeatState
 
 		scoreText.text = "WEEK SCORE:" + lerpScore;
 
-		txtWeekTitle.text = weekNames[curWeek].toUpperCase();
-		txtWeekTitle.x = FlxG.width - (txtWeekTitle.width + 10);
-
 		// FlxG.watch.addQuick('font', scoreText.font);
 
 		difficultySelectors.visible = weekUnlocked[curWeek];
@@ -228,42 +232,41 @@ class StoryMenuState extends MusicBeatState
 			lock.y = grpWeekText.members[lock.ID].y;
 		});
 
-		if (!movedBack)
+		if (!movedBack && !selectedWeek)
 		{
-			if (!selectedWeek)
+			if (controls.UI_UP_P)
 			{
-				if (controls.UI_UP_P)
-				{
-					changeWeek(-1);
-					FlxG.sound.play(Paths.sound('scrollMenu'));
-				}
-
-				if (controls.UI_DOWN_P)
-				{
-					changeWeek(1);
-					FlxG.sound.play(Paths.sound('scrollMenu'));
-				}
-
-				if (controls.UI_RIGHT)
-					rightArrow.animation.play('press')
-				else
-					rightArrow.animation.play('idle');
-
-				if (controls.UI_LEFT)
-					leftArrow.animation.play('press');
-				else
-					leftArrow.animation.play('idle');
-
-				if (controls.UI_RIGHT_P)
-					changeDifficulty(1);
-				if (controls.UI_LEFT_P)
-					changeDifficulty(-1);
+				changeWeek(-1);
+				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
+
+			if (controls.UI_DOWN_P)
+			{
+				changeWeek(1);
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+			}
+
+			if (controls.UI_RIGHT)
+				rightArrow.animation.play('press')
+			else
+				rightArrow.animation.play('idle');
+
+			if (controls.UI_LEFT)
+				leftArrow.animation.play('press');
+			else
+				leftArrow.animation.play('idle');
+
+			if (controls.UI_RIGHT_P)
+				changeDifficulty(1);
+			if (controls.UI_LEFT_P)
+				changeDifficulty(-1);
 
 			if (controls.ACCEPT)
 			{
 				selectWeek();
-			} else if(controls.RESET) {
+			}
+			else if(controls.RESET)
+			{
 				persistentUpdate = false;
 				openSubState(new ResetScoreSubState('', curDifficulty, '', curWeek));
 				FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -286,7 +289,7 @@ class StoryMenuState extends MusicBeatState
 
 	function selectWeek()
 	{
-		if (weekUnlocked[curWeek])
+		if (curWeek >= weekUnlocked.length || weekUnlocked[curWeek])
 		{
 			if (stopspamming == false)
 			{
@@ -297,7 +300,15 @@ class StoryMenuState extends MusicBeatState
 				stopspamming = true;
 			}
 
-			PlayState.storyPlaylist = weekData[curWeek];
+			// We can't use Dynamic Array .copy() because that crashes HTML5, here's a workaround.
+			var songArray:Array<String> = [];
+			var leWeek:Array<Dynamic> = WeekData.songsNames[curWeek];
+			for (i in 0...leWeek.length) {
+				songArray.push(leWeek[i]);
+			}
+
+			// I'm a motherfucking genious
+			PlayState.storyPlaylist = songArray;
 			PlayState.isStoryMode = true;
 			selectedWeek = true;
 
@@ -355,7 +366,7 @@ class StoryMenuState extends MusicBeatState
 		sprDifficulty.y = leftArrow.y - 15;
 
 		#if !switch
-		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
+		intendedScore = Highscore.getWeekScore(WeekData.getWeekNumber(curWeek), curDifficulty);
 		#end
 
 		FlxTween.tween(sprDifficulty, {y: leftArrow.y + 15, alpha: 1}, 0.07);
@@ -368,10 +379,18 @@ class StoryMenuState extends MusicBeatState
 	{
 		curWeek += change;
 
-		if (curWeek >= weekData.length)
+		if (curWeek >= WeekData.songsNames.length)
 			curWeek = 0;
 		if (curWeek < 0)
-			curWeek = weekData.length - 1;
+			curWeek = WeekData.songsNames.length - 1;
+
+		var leName:String = '';
+		if(curWeek < weekNames.length) {
+			leName = weekNames[curWeek];
+		}
+
+		txtWeekTitle.text = leName.toUpperCase();
+		txtWeekTitle.x = FlxG.width - (txtWeekTitle.width + 10);
 
 		var bullShit:Int = 0;
 
@@ -384,17 +403,24 @@ class StoryMenuState extends MusicBeatState
 				item.alpha = 0.6;
 			bullShit++;
 		}
-		bgSprite.loadGraphic(Paths.image('menubackgrounds/menu_' + weekBackground[curWeek]));
+
+		var assetName:String = weekBackground[0];
+		if(curWeek < weekBackground.length) assetName = weekBackground[curWeek];
+
+		bgSprite.loadGraphic(Paths.image('menubackgrounds/menu_' + assetName));
 		updateText();
 	}
 
 	function updateText()
 	{
+		var weekArray:Array<String> = weekCharacters[0];
+		if(curWeek < weekCharacters.length) weekArray = weekCharacters[curWeek];
+
 		for (i in 0...grpWeekCharacters.length) {
-			grpWeekCharacters.members[i].changeCharacter(weekCharacters[curWeek][i]);
+			grpWeekCharacters.members[i].changeCharacter(weekArray[i]);
 		}
 
-		var stringThing:Array<String> = weekData[curWeek];
+		var stringThing:Array<String> = WeekData.songsNames[curWeek];
 
 		txtTracklist.text = "";
 		for (i in 0...stringThing.length+1) //Why??? Why do i have to add a +1 to it????
@@ -409,7 +435,7 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist.x -= FlxG.width * 0.35;
 
 		#if !switch
-		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
+		intendedScore = Highscore.getWeekScore(WeekData.getWeekNumber(curWeek), curDifficulty);
 		#end
 	}
 }

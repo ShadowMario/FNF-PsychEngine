@@ -21,6 +21,16 @@ using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
+	//Character head icons for your songs
+	static var songsHeads:Array<Dynamic> = [
+		['dad'],							//Week 1
+		['spooky', 'spooky', 'monster'],	//Week 2
+		['pico'],							//Week 3
+		['mom'],							//Week 4
+		['parents', 'parents', 'monster'],	//Week 5
+		['senpai', 'senpai', 'spirit']		//Week 6
+	];
+
 	var songs:Array<SongMetadata> = [];
 
 	var selector:FlxText;
@@ -75,29 +85,12 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		var isDebug:Bool = false;
-
-		#if debug
-		isDebug = true;
-		#end
-
-		if (StoryMenuState.weekUnlocked[2] || isDebug)
-			addWeek(['Bopeebo', 'Fresh', 'Dad-Battle'], 1, ['dad']);
-
-		if (StoryMenuState.weekUnlocked[2] || isDebug)
-			addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky', 'spooky', 'monster-christmas']);
-
-		if (StoryMenuState.weekUnlocked[3] || isDebug)
-			addWeek(['Pico', 'Philly-Nice', 'Blammed'], 3, ['pico']);
-
-		if (StoryMenuState.weekUnlocked[4] || isDebug)
-			addWeek(['Satin-Panties', 'High', 'Milf'], 4, ['mom']);
-
-		if (StoryMenuState.weekUnlocked[5] || isDebug)
-			addWeek(['Cocoa', 'Eggnog', 'Winter-Horrorland'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
-
-		if (StoryMenuState.weekUnlocked[6] || isDebug)
-			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
+		for (i in 1...WeekData.songsNames.length) {
+			#if !debug
+			if (StoryMenuState.weekUnlocked[i])
+			#end
+				addWeek(WeekData.songsNames[i], i, songsHeads[i-1]);
+		}
 
 		// LOAD MUSIC
 
@@ -287,7 +280,7 @@ class FreeplayState extends MusicBeatState
 			PlayState.storyDifficulty = curDifficulty;
 
 			PlayState.storyWeek = songs[curSelected].week;
-			trace('CUR WEEK' + PlayState.storyWeek);
+			trace('CURRENT WEEK: ' + WeekData.getCurrentWeekNumber());
 			if(colorTween != null) {
 				colorTween.cancel();
 			}
@@ -349,7 +342,8 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			intendedColor = newColor;
-			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {onComplete: function(twn:FlxTween) {
+			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
+				onComplete: function(twn:FlxTween) {
 					colorTween = null;
 				}
 			});
@@ -410,6 +404,8 @@ class SongMetadata
 		this.songName = song;
 		this.week = week;
 		this.songCharacter = songCharacter;
-		this.color = FreeplayState.coolColors[week];
+		if(week < FreeplayState.coolColors.length) {
+			this.color = FreeplayState.coolColors[week];
+		}
 	}
 }

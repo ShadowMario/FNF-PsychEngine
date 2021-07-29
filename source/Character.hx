@@ -7,6 +7,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import Section.SwagSection;
+import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 
@@ -499,7 +500,12 @@ class Character extends FlxSprite
 
 	function loadOffsetFile(fileName:String, library:String = null)
 	{
-		var file:Array<String> = CoolUtil.coolTextFile(Paths.getPath('images/characters/' + fileName + 'Offsets.txt', TEXT, library));
+		var path:String = Paths.getPath('images/characters/' + fileName + 'Offsets.txt', TEXT, library);
+		if (!OpenFlAssets.exists(path)) {
+			return;
+		}
+
+		var file:Array<String> = CoolUtil.coolTextFile(path);
 		for (i in 0...file.length) {
 			var offset:Array<String> = file[i].split(' ');
 			addOffset(offset[0], Std.parseInt(offset[1]), Std.parseInt(offset[2]));

@@ -64,6 +64,9 @@ class PlayState extends MusicBeatState
 		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	]; 
 
+	//event variables
+	private var isCameraOnForcedPos:Bool = false;
+
 	public static var curStage:String = '';
 	public static var SONG:SwagSong = null;
 	public static var isStoryMode:Bool = false;
@@ -132,6 +135,7 @@ class PlayState extends MusicBeatState
 	var phillyBlack:FlxSprite;
 	var phillyBlackTween:FlxTween;
 	var phillyCityLightsEvent:FlxTypedGroup<FlxSprite>;
+	var phillyCityLightsEventTween:FlxTween;
 	var trainSound:FlxSound;
 
 	var limoKillingState:Int = 0;
@@ -219,6 +223,9 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
+		var songName:String = SONG.song;
+		displaySongName = StringTools.replace(songName, '-', ' ');
+
 		#if desktop
 		// Making difficulty text for Discord Rich Presence.
 		switch (storyDifficulty)
@@ -258,8 +265,6 @@ class PlayState extends MusicBeatState
 		detailsPausedText = "Paused - " + detailsText;
 		
 		// Updating Discord Rich Presence.
-		var songName:String = SONG.song;
-		displaySongName = StringTools.replace(songName, '-', ' ');
 		DiscordClient.changePresence(detailsText, displaySongName + " (" + storyDifficultyText + ")", iconRPC);
 		#end
 
@@ -776,9 +781,9 @@ class PlayState extends MusicBeatState
 		}
 
 		var lowercaseSong:String = SONG.song.toLowerCase();
-		var file:String = lowercaseSong + '/' + lowercaseSong + 'Dialogue';
+		var file:String = Paths.txt(lowercaseSong + '/' + lowercaseSong + 'Dialogue');
 		if (OpenFlAssets.exists(file)) {
-			dialogue = CoolUtil.coolTextFile(Paths.txt(file));
+			dialogue = CoolUtil.coolTextFile(file);
 		}
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
 		// doof.x += 70;
@@ -1005,6 +1010,7 @@ class PlayState extends MusicBeatState
 
 	function schoolIntro(?dialogueBox:DialogueBox):Void
 	{
+		inCutscene = true;
 		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
 		black.scrollFactor.set();
 		add(black);
@@ -1044,8 +1050,6 @@ class PlayState extends MusicBeatState
 			{
 				if (dialogueBox != null)
 				{
-					inCutscene = true;
-
 					if (SONG.song.toLowerCase() == 'thorns')
 					{
 						add(senpaiEvil);
@@ -1555,6 +1559,8 @@ class PlayState extends MusicBeatState
 
 			if(phillyBlackTween != null)
 				phillyBlackTween.active = false;
+			if(phillyCityLightsEventTween != null)
+				phillyCityLightsEventTween.active = false;
 
 			var chars:Array<Character> = [boyfriend, gf, dad];
 			for (i in 0...chars.length) {
@@ -1583,6 +1589,8 @@ class PlayState extends MusicBeatState
 
 			if(phillyBlackTween != null)
 				phillyBlackTween.active = true;
+			if(phillyCityLightsEventTween != null)
+				phillyCityLightsEventTween.active = true;
 
 			var chars:Array<Character> = [boyfriend, gf, dad];
 			for (i in 0...chars.length) {
@@ -1910,7 +1918,7 @@ class PlayState extends MusicBeatState
 			// Conductor.lastSongPos = FlxG.sound.music.time;
 		}
 
-		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null && !endingSong)
+		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null && !endingSong && !isCameraOnForcedPos)
 		{
 			moveCamera(Std.int(curStep / 16));
 		}
@@ -2207,7 +2215,9 @@ class PlayState extends MusicBeatState
 									if(chars[i].colorTween != null) {
 										chars[i].colorTween.cancel();
 									}
-									chars[i].colorTween = FlxTween.color(chars[i], 1, FlxColor.WHITE, color, {ease: FlxEase.quadInOut});
+									chars[i].colorTween = FlxTween.color(chars[i], 1, FlxColor.WHITE, color, {onComplete: function(twn:FlxTween) {
+										chars[i].colorTween = null;
+									}, ease: FlxEase.quadInOut});
 								}
 							} else {
 								dad.color = color;
@@ -2243,7 +2253,12 @@ class PlayState extends MusicBeatState
 							if(memb != null) {
 								memb.visible = true;
 								memb.alpha = 1;
-								FlxTween.tween(memb, {alpha: 0}, 1, {ease: FlxEase.quadInOut});
+								if(phillyCityLightsEventTween != null)
+									phillyCityLightsEventTween.cancel();
+
+								phillyCityLightsEventTween = FlxTween.tween(memb, {alpha: 0}, 1, {onComplete: function(twn:FlxTween) {
+									phillyCityLightsEventTween = null;
+								}, ease: FlxEase.quadInOut});
 							}
 
 							var chars:Array<Character> = [boyfriend, gf, dad];
@@ -2251,7 +2266,9 @@ class PlayState extends MusicBeatState
 								if(chars[i].colorTween != null) {
 									chars[i].colorTween.cancel();
 								}
-								chars[i].colorTween = FlxTween.color(chars[i], 1, chars[i].color, FlxColor.WHITE, {ease: FlxEase.quadInOut});
+								chars[i].colorTween = FlxTween.color(chars[i], 1, chars[i].color, FlxColor.WHITE, {onComplete: function(twn:FlxTween) {
+									chars[i].colorTween = null;
+								}, ease: FlxEase.quadInOut});
 							}
 
 							curLight = 0;
@@ -2283,6 +2300,19 @@ class PlayState extends MusicBeatState
 					trace('Anim to play: ' + value1);
 					dad.playAnim(value1, true);
 					dad.specialAnim = true;
+
+				case 'Camera Follow Pos':
+					var val1:Float = Std.parseFloat(value1);
+					var val2:Float = Std.parseFloat(value2);
+					if(Math.isNaN(val1)) val1 = 0;
+					if(Math.isNaN(val2)) val2 = 0;
+
+					isCameraOnForcedPos = false;
+					if(!Math.isNaN(Std.parseFloat(value1)) || !Math.isNaN(Std.parseFloat(value2))) {
+						camFollow.x = val1;
+						camFollow.y = val2;
+						isCameraOnForcedPos = true;
+					}
 			}
 			eventNotes.shift();
 		}
@@ -2460,7 +2490,7 @@ class PlayState extends MusicBeatState
 
 				if (SONG.validScore)
 				{
-					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
+					Highscore.saveWeekScore(WeekData.getCurrentWeekNumber(), campaignScore, storyDifficulty);
 				}
 
 				FlxG.save.data.weekUnlocked = StoryMenuState.weekUnlocked;
@@ -3264,7 +3294,7 @@ class PlayState extends MusicBeatState
 			if(!Achievements.achievementsUnlocked[arrayIDs[i]][1]) {
 				switch(arrayIDs[i]) {
 					case 1 | 2 | 3 | 4 | 5 | 6 | 7:
-						if(isStoryMode && campaignMisses < 1 && songMisses < 1 && storyPlaylist.length <= 1 && storyWeek == arrayIDs[i] && !changedDifficulty && !usedPractice) {
+						if(isStoryMode && campaignMisses < 1 && songMisses < 1 && storyPlaylist.length <= 1 && WeekData.getCurrentWeekNumber() == arrayIDs[i] && !changedDifficulty && !usedPractice) {
 							Achievements.unlockAchievement(arrayIDs[i]);
 							return arrayIDs[i];
 						}

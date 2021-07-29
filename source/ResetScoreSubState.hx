@@ -29,9 +29,10 @@ class ResetScoreSubState extends MusicBeatSubstate
 
 		var name:String = song;
 		if(week != -1) {
-			name = 'Week ' + week;
-			switch(week) {
-				case 0: name = 'Tutorial';
+			name = 'Week ' + WeekData.getWeekNumber(week);
+			var leName:String = WeekData.weekResetName[week];
+			if(leName != null) {
+				name = leName;
 			}
 		}
 		name += ' (' + CoolUtil.difficultyArray[difficulty] + ')?';
