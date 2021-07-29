@@ -5,6 +5,9 @@ Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107)
 * Shadow Mario - Coding
 * RiverOaken - Arts and Animations
 
+**Special Thanks**
+* Keoiki - Note Splash Animations
+
 WARNING: This engine is still very early in development! You can request new features though
 _____________________________________
 
