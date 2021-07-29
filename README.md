@@ -35,7 +35,7 @@ Atleast one change to every week:
   * Also there's the Background girls being spooky during the "Hey!" parts of the Instrumental
 
 Cool new Chart Editor changes and multiple bug fixes
-![](https://i.imgur.com/tNY2A03.png)
+![](https://i.imgur.com/h6Ja7eT.png)
 * You can now chart "Event" notes, which are bookmarks that trigger specific actions that usually were hardcoded on the vanilla version of the game.
 * Your song's BPM can now have decimal values
 * You can manually adjust a Note's strum time if you're really going for milisecond precision
@@ -65,27 +65,30 @@ Other gameplay features:
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
 * You can listen to a song on Freeplay by pressing Space once.
 
-Dialogue file (This is still slightly experimental, so i might make it easier to work with later, i don't know):
+Dialogue file:
 * Example:
 ```
-psychic:bf
-:0:talk:0.05:0:What brings you here so late at night?
-:1:talk:0.05:0:Beep.
-:0:angry:0.05:1:Drop the act already.
-:0:unamused:0.05:0:I could feel your malicious intent the\nmoment you stepped foot in here.
-:1:talk:0.05:0:Bep bee aa skoo dep?
-:0:talk:0.05:0:I wouldn't try the door if I were you.
-:0:unamused:0.05:0:Now...
-:0:talk:0.05:0:I have a couple of questions to ask you...
-:0:angry:0.1:0:And you WILL answer them.
+psychic:left bf:right
+:0:talk:0.05:normal:What brings you here so late at night?
+:1:talk:0.05:normal:Beep.
+:0:angry:0.05:angry:Drop the act already.
+:0:unamused:0.05:normal:I could feel your malicious intent the\nmoment you stepped foot in here.
+:1:talk:0.05:normal:Bep bee aa skoo dep?
+:0:talk:0.05:normal:I wouldn't try the door if I were you.
+:0:unamused:0.05:normal:Now...
+:0:talk:0.05:normal:I have a couple of questions to ask you...
+:0:angry:0.1:normal:And you WILL answer them.
 ```
 
-* The first line has only two values as you can see, "Psychic" and "BF", in this case, Psychic will be the character on the left, while "BF" is the character on the right.
-  * You can change characters at any time during the dialogue, by doing the same thing as on the first line.
+* The first line will define the characters you will use on the dialogue
+  * First value is the character
+  * Second value is the character's position ("left", "center" or "right")
+  * You separate the characters by adding a space between them
+  * It's important that you keep in mind their creation order, as it will be used on the dialogue lines's first value
 
 * Dialogue lines must start with a `:` and every value is separated by another `:`, the values are in the respective order:
-  * Character speaking (0 = Character on the left, 1 = Character on the right)
+  * Character speaking's ID (Based on character creation order)
   * Animation to use during this line
   * Text speed, default is 0.05 (20 characters per second)
-  * Speech bubble type (0 = Normal, 1 = Screaming/Angry bubble)
-  * Text. Warning! Don't use this: `’`, use this instead: `'`
+  * Speech bubble type ("normal" or "angry")
+  * Text. Warning! Don't use this kind of quote: `’`, use this instead: `'`
