@@ -62,7 +62,7 @@ Awards/Achievements
 
 Options menu:
 * You can change Note colors, Controls and Preferences there.
- * On Preferences you can set Anti-Aliasing, change Graphics quality, toggle Note Splashes, hide Hud elements etc.
+ * On Preferences you can toggle Downscroll, Anti-Aliasing, Framerate, Low Quality, Note Splashes, Hide Hud elements, Flashing Lights, etc.
 
 Other gameplay features:
 * When the enemy hits a note, it plays the note hit animation on their strum, just like when the player hits a note.
