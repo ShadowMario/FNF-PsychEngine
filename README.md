@@ -13,6 +13,11 @@ _____________________________________
 
 **Features:**
 
+Attractive animated dialogue boxes:
+
+![](https://user-images.githubusercontent.com/44785097/127706669-71cd5cdb-5c2a-4ecc-871b-98a276ae8070.gif)
+
+
 Atleast one change to every week:
 * Week 1:
   * New Dad Left sing sprite 
@@ -56,7 +61,8 @@ Awards/Achievements
 * The engine comes with 16 example achievements that you can mess with and learn how it works (Check Achievements.hx and search for "checkForAchievement" on PlayState.hx)
 
 Options menu:
-* You can change Note colors, Controls and Preferences there, not much to say about it. Go check it yourself k?
+* You can change Note colors, Controls and Preferences there.
+ * On Preferences you can set Anti-Aliasing, change Graphics quality, toggle Note Splashes, hide Hud elements etc.
 
 Other gameplay features:
 * When the enemy hits a note, it plays the note hit animation on their strum, just like when the player hits a note.
@@ -64,31 +70,3 @@ Other gameplay features:
 * Some stuff based on Week 7's changes has been put in (Background colors on Freeplay, Note splashes)
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
 * You can listen to a song on Freeplay by pressing Space once.
-
-Dialogue file:
-* Example:
-```
-psychic:left bf:right
-:0:talk:0.05:normal:What brings you here so late at night?
-:1:talk:0.05:normal:Beep.
-:0:angry:0.05:angry:Drop the act already.
-:0:unamused:0.05:normal:I could feel your malicious intent the\nmoment you stepped foot in here.
-:1:talk:0.05:normal:Bep bee aa skoo dep?
-:0:talk:0.05:normal:I wouldn't try the door if I were you.
-:0:unamused:0.05:normal:Now...
-:0:talk:0.05:normal:I have a couple of questions to ask you...
-:0:angry:0.1:normal:And you WILL answer them.
-```
-
-* The first line will define the characters you will use on the dialogue
-  * First value is the character
-  * Second value is the character's position ("left", "center" or "right")
-  * You separate the characters by adding a space between them
-  * It's important that you keep in mind their creation order, as it will be used on the dialogue lines's first value
-
-* Dialogue lines must start with a `:` and every value is separated by another `:`, the values are in the respective order:
-  * Character speaking's ID (Based on character creation order)
-  * Animation to use during this line
-  * Text speed, default is 0.05 (20 characters per second)
-  * Speech bubble type ("normal" or "angry")
-  * Text. Warning! Don't use this kind of quote: `’`, use this instead: `'`
