@@ -227,17 +227,9 @@ class PlayState extends MusicBeatState
 		displaySongName = StringTools.replace(songName, '-', ' ');
 
 		#if desktop
-		// Making difficulty text for Discord Rich Presence.
-		switch (storyDifficulty)
-		{
-			case 0:
-				storyDifficultyText = "Easy";
-			case 1:
-				storyDifficultyText = "Normal";
-			case 2:
-				storyDifficultyText = "Hard";
-		}
+		storyDifficultyText = '' + CoolUtil.difficultyStuff[storyDifficulty][0];
 
+		// Making difficulty text for Discord Rich Presence.
 		iconRPC = SONG.player2;
 
 		// To avoid having duplicate images in Discord assets
@@ -2500,13 +2492,7 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				var difficulty:String = "";
-
-				if (storyDifficulty == 0)
-					difficulty = '-easy';
-
-				if (storyDifficulty == 2)
-					difficulty = '-hard';
+				var difficulty:String = '' + CoolUtil.difficultyStuff[storyDifficulty][1];
 
 				trace('LOADING NEXT SONG');
 				trace(PlayState.storyPlaylist[0].toLowerCase() + difficulty);

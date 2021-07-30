@@ -19,7 +19,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	var menuItems:Array<String> = [];
 	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Exit to menu'];
-	var difficultyChoices = ['EASY', 'NORMAL', 'HARD', 'BACK'];
+	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -29,6 +29,12 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 		menuItems = menuItemsOG;
+
+		for (i in 0...CoolUtil.difficultyStuff.length) {
+			var diff:String = '' + CoolUtil.difficultyStuff[i][0];
+			difficultyChoices.push(diff);
+		}
+		difficultyChoices.push('BACK');
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
@@ -122,6 +128,18 @@ class PauseSubState extends MusicBeatSubstate
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];
+			for (i in 0...difficultyChoices.length-1) {
+				if(difficultyChoices[i] == daSelected) {
+					var name:String = PlayState.SONG.song.toLowerCase();
+					var poop = Highscore.formatSong(name, curSelected);
+					PlayState.SONG = Song.loadFromJson(poop, name);
+					PlayState.storyDifficulty = curSelected;
+					FlxG.resetState();
+					FlxG.sound.music.volume = 0;
+					PlayState.changedDifficulty = true;
+					return;
+				}
+			} 
 
 			switch (daSelected)
 			{
@@ -149,14 +167,6 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.usedPractice = false;
 					PlayState.changedDifficulty = false;
 
-				case 'EASY' | 'NORMAL' | 'HARD':
-					var name:String = PlayState.SONG.song.toLowerCase();
-					var poop = Highscore.formatSong(name, curSelected);
-					PlayState.SONG = Song.loadFromJson(poop, name);
-					PlayState.storyDifficulty = curSelected;
-					FlxG.resetState();
-					FlxG.sound.music.volume = 0;
-					PlayState.changedDifficulty = true;
 				case 'BACK':
 					menuItems = menuItemsOG;
 					regenMenu();

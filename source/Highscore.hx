@@ -76,14 +76,7 @@ class Highscore
 
 	public static function formatSong(song:String, diff:Int):String
 	{
-		var daSong:String = song;
-
-		if (diff == 0)
-			daSong += '-easy';
-		else if (diff == 2)
-			daSong += '-hard';
-
-		return daSong;
+		return song + CoolUtil.difficultyStuff[diff][1];
 	}
 
 	public static function getScore(song:String, diff:Int):Int

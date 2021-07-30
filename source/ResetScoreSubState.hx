@@ -35,7 +35,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 				name = leName;
 			}
 		}
-		name += ' (' + CoolUtil.difficultyArray[difficulty] + ')?';
+		name += ' (' + CoolUtil.difficultyStuff[difficulty][0] + ')?';
 
 		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0;

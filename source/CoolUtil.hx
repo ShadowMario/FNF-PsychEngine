@@ -10,11 +10,16 @@ using StringTools;
 
 class CoolUtil
 {
-	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
+	// [Difficulty name, Chart file suffix]
+	public static var difficultyStuff:Array<Dynamic> = [
+		['Easy', '-easy'],
+		['Normal', ''],
+		['Hard', '-hard']
+	];
 
 	public static function difficultyString():String
 	{
-		return difficultyArray[PlayState.storyDifficulty];
+		return difficultyStuff[PlayState.storyDifficulty][0].toUpperCase();
 	}
 
 	public static function boundTo(value:Float, min:Float, max:Float):Float {
