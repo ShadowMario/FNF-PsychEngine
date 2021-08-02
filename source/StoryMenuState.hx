@@ -203,7 +203,7 @@ class StoryMenuState extends MusicBeatState
 		tracksSprite.antialiasing = ClientPrefs.globalAntialiasing;
 		add(tracksSprite);
 
-		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 40, 0, "", 32);
+		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, "", 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.font = rankText.font;
 		txtTracklist.color = 0xFFe55777;
@@ -410,10 +410,10 @@ class StoryMenuState extends MusicBeatState
 
 		var stringThing:Array<String> = WeekData.songsNames[curWeek];
 
-		txtTracklist.text = "";
-		for (i in 0...stringThing.length+1) //Why??? Why do i have to add a +1 to it????
+		txtTracklist.text = '';
+		for (i in 0...stringThing.length)
 		{
-			txtTracklist.text += "\n" + stringThing[i];
+			txtTracklist.text += stringThing[i] + '\n';
 		}
 
 		txtTracklist.text = StringTools.replace(txtTracklist.text, '-', ' ');

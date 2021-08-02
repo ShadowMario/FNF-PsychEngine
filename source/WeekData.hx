@@ -46,6 +46,8 @@ class WeekData {
 
 	//The only use for this is to display a different name for the Week when you're on the score reset menu.
 	//Set it to null to make the Week be automatically called "Week (Number)"
+
+	//Edit: This now also messes with Discord Rich Presence, so it's kind of relevant.
 	public static var weekResetName:Array<String> = [
 		"Tutorial",
 		null,	//Week 1

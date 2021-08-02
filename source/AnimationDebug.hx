@@ -16,7 +16,6 @@ import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
-import flixel.addons.ui.FlxUIDropDownMenu;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
@@ -178,6 +177,7 @@ class AnimationDebug extends FlxState
 		UI_box.addGroup(tab_group);
 	}
 
+	var charDropDown:FlxUIDropDownMenuCustom;
 	function addCharacterUI() {
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Character";
@@ -191,7 +191,7 @@ class AnimationDebug extends FlxState
 		};
 
 		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterList'));
-		var charDropDown = new FlxUIDropDownMenu(10, 30, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+		charDropDown = new FlxUIDropDownMenuCustom(10, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			remove(char);
 			daAnim = characters[Std.parseInt(character)];
@@ -267,7 +267,7 @@ class AnimationDebug extends FlxState
 			if(FlxG.keys.justPressed.ENTER) {
 				animationInputText.hasFocus = false;
 			}
-		} else {
+		} else if(!charDropDown.dropPanel.visible) {
 			if (FlxG.keys.justPressed.ESCAPE) {
 				FlxG.switchState(new PlayState());
 				FlxG.mouse.visible = false;

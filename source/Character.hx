@@ -26,6 +26,7 @@ class Character extends FlxSprite
 	public var animationNotes:Array<Dynamic> = [];
 	public var stunned:Bool = false;
 	public var singDuration:Float = 4; //Multiplier of how long a character holds the sing pose
+	public var canUseAlt:Bool = false; //Character can use idle-alt, danceLeft-alt and danceRight-alt
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -428,15 +429,18 @@ class Character extends FlxSprite
 	{
 		if (!debugMode && !specialAnim)
 		{
+			var altString:String = '';
+			if(canUseAlt) altString = PlayState.idleAltSuffix;
+
 			if(curCharacter.startsWith('gf')) {
 				if (!animation.curAnim.name.startsWith('hair'))
 				{
 					danced = !danced;
 
 					if (danced)
-						playAnim('danceRight');
+						playAnim('danceRight' + altString);
 					else
-						playAnim('danceLeft');
+						playAnim('danceLeft' + altString);
 				}
 			} else {
 				switch (curCharacter)
@@ -445,13 +449,13 @@ class Character extends FlxSprite
 						danced = !danced;
 
 						if (danced)
-							playAnim('danceRight');
+							playAnim('danceRight' + altString);
 						else
-							playAnim('danceLeft');
+							playAnim('danceLeft' + altString);
 
 					default:
 						if(!curCharacter.endsWith('-dead'))
-							playAnim('idle');
+							playAnim('idle' + altString);
 				}
 			}
 		}
