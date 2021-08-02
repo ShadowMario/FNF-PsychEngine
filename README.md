@@ -1,5 +1,5 @@
 # FNF-PsychEngine
-Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107)
+Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 **Credits:**
 * Shadow Mario - Coding
@@ -11,9 +11,14 @@ Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107)
 WARNING: This engine is still very early in development! You can request new features though
 _____________________________________
 
-**Features:**
+**FEATURES:**
 
-Atleast one change to every week:
+Attractive animated dialogue boxes:
+
+![](https://user-images.githubusercontent.com/44785097/127706669-71cd5cdb-5c2a-4ecc-871b-98a276ae8070.gif)
+
+
+**Atleast one change to every week:**
 * Week 1:
   * New Dad Left sing sprite 
   * Unused stage lights are now used
@@ -34,7 +39,7 @@ Atleast one change to every week:
   * On Thorns, the HUD is hidden during the cutscene
   * Also there's the Background girls being spooky during the "Hey!" parts of the Instrumental
 
-Cool new Chart Editor changes and multiple bug fixes
+**Cool new Chart Editor changes and countless bug fixes**
 ![](https://i.imgur.com/h6Ja7eT.png)
 * You can now chart "Event" notes, which are bookmarks that trigger specific actions that usually were hardcoded on the vanilla version of the game.
 * Your song's BPM can now have decimal values
@@ -43,52 +48,32 @@ Cool new Chart Editor changes and multiple bug fixes
   * Alt Animation: Forces an alt animation to play, useful for songs like Ugh/Stress
   * Hey: Forces a "Hey" animation instead of the base Sing animation, if Boyfriend hits this note, Girlfriend will do a "Hey!" too.
 
-Story mode menu rework:
+**Improved Animation Debug menu (Press 8 in-game on a Debug build)**
+![](https://user-images.githubusercontent.com/44785097/127721062-f912853c-2513-41b8-bd66-fd80d9d4ee0f.png)
+* You can now press Save Offsets to save a .txt file with the editted offsets
+* You can also now change the characters while on the Menu
+* Go back to the game by pressing Escape
+NOTE: This should be used for fixing your character floating or being slightly under the ground! It's not for texture editting.
+
+**Story mode menu rework:**
 ![](https://i.imgur.com/UB2EKpV.png)
 * Added a different BG to every song (less Tutorial)
 * All menu characters are now in individual spritesheets, makes modding it easier.
 
-A Credits menu
+**Credits menu**
 ![](https://i.imgur.com/NdIQt3d.png)
 * You can add a head icon, name, description and a Redirect link for when the player presses Enter while the item is currently selected.
 
-Awards/Achievements
+**Awards/Achievements**
 * The engine comes with 16 example achievements that you can mess with and learn how it works (Check Achievements.hx and search for "checkForAchievement" on PlayState.hx)
 
-Options menu:
-* You can change Note colors, Controls and Preferences there, not much to say about it. Go check it yourself k?
+**Options menu:**
+* You can change Note colors, Controls and Preferences there.
+ * On Preferences you can toggle Downscroll, Anti-Aliasing, Framerate, Low Quality, Note Splashes, Hide Hud elements, Flashing Lights, etc.
 
-Other gameplay features:
+**Other gameplay features:**
 * When the enemy hits a note, it plays the note hit animation on their strum, just like when the player hits a note.
 * Lag doesn't impact the camera movement and player icon scaling anymore.
 * Some stuff based on Week 7's changes has been put in (Background colors on Freeplay, Note splashes)
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
 * You can listen to a song on Freeplay by pressing Space once.
-
-Dialogue file:
-* Example:
-```
-psychic:left bf:right
-:0:talk:0.05:normal:What brings you here so late at night?
-:1:talk:0.05:normal:Beep.
-:0:angry:0.05:angry:Drop the act already.
-:0:unamused:0.05:normal:I could feel your malicious intent the\nmoment you stepped foot in here.
-:1:talk:0.05:normal:Bep bee aa skoo dep?
-:0:talk:0.05:normal:I wouldn't try the door if I were you.
-:0:unamused:0.05:normal:Now...
-:0:talk:0.05:normal:I have a couple of questions to ask you...
-:0:angry:0.1:normal:And you WILL answer them.
-```
-
-* The first line will define the characters you will use on the dialogue
-  * First value is the character
-  * Second value is the character's position ("left", "center" or "right")
-  * You separate the characters by adding a space between them
-  * It's important that you keep in mind their creation order, as it will be used on the dialogue lines's first value
-
-* Dialogue lines must start with a `:` and every value is separated by another `:`, the values are in the respective order:
-  * Character speaking's ID (Based on character creation order)
-  * Animation to use during this line
-  * Text speed, default is 0.05 (20 characters per second)
-  * Speech bubble type ("normal" or "angry")
-  * Text. Warning! Don't use this kind of quote: `’`, use this instead: `'`
