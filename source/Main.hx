@@ -74,16 +74,10 @@ class Main extends Sprite
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
-		#end
-
-		ClientPrefs.loadPrefs();
-		if(Main.fpsVar != null) {
-			if(ClientPrefs.showFPS) {
-				Main.fpsVar.x = 10;
-			} else {
-				Main.fpsVar.x = -100;
-			}
+		if(fpsVar != null) {
+			fpsVar.visible = ClientPrefs.showFPS;
 		}
+		#end
 
 		#if html5
 		FlxG.autoPause = false;

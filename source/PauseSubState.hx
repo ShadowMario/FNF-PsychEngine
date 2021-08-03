@@ -134,7 +134,7 @@ class PauseSubState extends MusicBeatSubstate
 					var poop = Highscore.formatSong(name, curSelected);
 					PlayState.SONG = Song.loadFromJson(poop, name);
 					PlayState.storyDifficulty = curSelected;
-					FlxG.resetState();
+					MusicBeatState.resetState();
 					FlxG.sound.music.volume = 0;
 					PlayState.changedDifficulty = true;
 					return;
@@ -153,15 +153,15 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.usedPractice = true;
 					practiceText.visible = PlayState.practiceMode;
 				case "Restart Song":
-					FlxG.resetState();
+					MusicBeatState.resetState();
 					FlxG.sound.music.volume = 0;
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 					if(PlayState.isStoryMode) {
-						FlxG.switchState(new StoryMenuState());
+						MusicBeatState.switchState(new StoryMenuState());
 					} else {
-						FlxG.switchState(new FreeplayState());
+						MusicBeatState.switchState(new FreeplayState());
 					}
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					PlayState.usedPractice = false;

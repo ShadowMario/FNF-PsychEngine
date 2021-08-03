@@ -59,15 +59,16 @@ class GitarooPause extends MusicBeatState
 		{
 			if (replaySelect)
 			{
-				FlxG.switchState(new PlayState());
+				MusicBeatState.switchState(new PlayState());
 			}
 			else
 			{
-				FlxG.switchState(new MainMenuState());
 				PlayState.usedPractice = false;
 				PlayState.changedDifficulty = false;
 				PlayState.seenCutscene = false;
 				PlayState.deathCounter = 0;
+				MusicBeatState.switchState(new MainMenuState());
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
 		}
 

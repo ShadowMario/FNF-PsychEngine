@@ -22,6 +22,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
+import flixel.graphics.FlxGraphic;
 import Controls;
 
 using StringTools;
@@ -79,7 +80,7 @@ class OptionsState extends MusicBeatState
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			FlxG.switchState(new MainMenuState());
+			MusicBeatState.switchState(new MainMenuState());
 		}
 
 		if (controls.ACCEPT) {
@@ -664,6 +665,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		unselectableOptions[0],
 		'Low Quality',
 		'Anti-Aliasing',
+		'Persistent Cached Data',
 		#if !html5
 		noCheckbox[0], //Apparently 120FPS isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		#end
@@ -847,6 +849,10 @@ class PreferencesSubstate extends MusicBeatSubstate
 
 					case 'Hide HUD':
 						ClientPrefs.hideHud = !ClientPrefs.hideHud;
+
+					case 'Persistent Cached Data':
+						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
+						FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
 				}
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				reloadValues();
@@ -916,6 +922,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If unchecked, hides FPS Counter.";
 			case 'Low Quality':
 				daText = "If checked, disables some background details,\ndecreases loading times and improves performance.";
+			case 'Persistent Cached Data':
+				daText = "If checked, images loaded will stay in memory\nuntil the game is closed, this increases memory usage,\nbut basically makes reloading times instant.";
 			case 'Anti-Aliasing':
 				daText = "If unchecked, disables anti-aliasing, increases performance\nat the cost of the graphics not looking as smooth.";
 			case 'Downscroll':
@@ -1007,6 +1015,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.camZooms;
 					case 'Hide HUD':
 						daValue = ClientPrefs.hideHud;
+					case 'Persistent Cached Data':
+						daValue = ClientPrefs.imagesPersist;
 				}
 				checkbox.daValue = daValue;
 			}

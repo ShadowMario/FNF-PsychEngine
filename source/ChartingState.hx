@@ -223,6 +223,12 @@ class ChartingState extends MusicBeatState
 			{name: "Events", label: 'Events'}
 		];
 
+		UI_box = new FlxUITabMenu(null, tabs, true);
+
+		UI_box.resize(300, 400);
+		UI_box.x = FlxG.width / 2 + GRID_SIZE / 2;
+		UI_box.y = 25;
+
 		var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 30, 0,
 			"W/S or Mouse Wheel - Change Conductor's strum time
 			\nA or Left/D or Right - Go to the previous/next section
@@ -237,12 +243,6 @@ class ChartingState extends MusicBeatState
 		//tipText.borderSize = 2;
 		tipText.scrollFactor.set();
 		add(tipText);
-
-		UI_box = new FlxUITabMenu(null, tabs, true);
-
-		UI_box.resize(300, 400);
-		UI_box.x = FlxG.width / 2 + GRID_SIZE / 2;
-		UI_box.y = 25;
 		add(UI_box);
 
 		addSongUI();
@@ -332,7 +332,7 @@ class ChartingState extends MusicBeatState
 		var loadAutosaveBtn:FlxButton = new FlxButton(reloadSongJson.x, reloadSongJson.y + 30, 'Load Autosave', function()
 		{
 			PlayState.SONG = Song.parseJSONshit(FlxG.save.data.autosave);
-			FlxG.resetState();
+			MusicBeatState.resetState();
 		});
 
 		var loadEventJson:FlxButton = new FlxButton(loadAutosaveBtn.x, loadAutosaveBtn.y + 30, 'Load Events', function()
@@ -346,7 +346,7 @@ class ChartingState extends MusicBeatState
 			#end
 			{
 				PlayState.SONG = Song.loadFromJson('events', songName);
-				FlxG.resetState();
+				MusicBeatState.resetState();
 			}
 		});
 
@@ -1506,7 +1506,7 @@ class ChartingState extends MusicBeatState
 	function loadJson(song:String):Void
 	{
 		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
-		FlxG.resetState();
+		MusicBeatState.resetState();
 	}
 
 	function autosaveSong():Void

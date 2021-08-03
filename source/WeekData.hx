@@ -69,10 +69,8 @@ class WeekData {
 	public static function getWeekNumber(num:Int):Int {
 		var value:Int = 0;
 		if(num < weekNumber.length) {
-			if(weekNumber[num] == null) {
-				value = num;
-				//trace('Value was invalid, new value: ' + value);
-			} else {
+			value = num;
+			if(weekNumber[num] != null) {
 				value = weekNumber[num];
 				//trace('Cur value: ' + value);
 			}
@@ -83,7 +81,9 @@ class WeekData {
 	//Used on LoadingState, nothing really too relevant
 	public static function getWeekDirectory():String {
 		var value:String = loadDirectory[PlayState.storyWeek];
-		if(value == null) value = "week" + PlayState.storyWeek;
+		if(value == null) {
+			value = "week" + getCurrentWeekNumber();
+		}
 		return value;
 	}
 }

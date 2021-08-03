@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
+import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs {
@@ -20,6 +21,7 @@ class ClientPrefs {
 	public static var hideHud:Bool = false;
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
+	public static var imagesPersist:Bool = false;
 
 	public static var defaultKeys:Array<FlxKey> = [
 		A, LEFT,			//Note Left
@@ -71,6 +73,7 @@ class ClientPrefs {
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
+		FlxG.save.data.imagesPersist = imagesPersist;
 
 		var achieves:Array<String> = [];
 		for (i in 0...Achievements.achievementsUnlocked.length) {
@@ -96,11 +99,7 @@ class ClientPrefs {
 		if(FlxG.save.data.showFPS != null) {
 			showFPS = FlxG.save.data.showFPS;
 			if(Main.fpsVar != null) {
-				if(showFPS) {
-					Main.fpsVar.x = 10;
-				} else {
-					Main.fpsVar.x = -100;
-				}
+				Main.fpsVar.visible = showFPS;
 			}
 		}
 		if(FlxG.save.data.flashing != null) {
@@ -142,6 +141,10 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.arrowHSV != null) {
 			arrowHSV = FlxG.save.data.arrowHSV;
+		}
+		if(FlxG.save.data.imagesPersist != null) {
+			imagesPersist = FlxG.save.data.imagesPersist;
+			FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
 		}
 
 		var save:FlxSave = new FlxSave();

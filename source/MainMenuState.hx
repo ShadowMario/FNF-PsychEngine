@@ -58,7 +58,7 @@ class MainMenuState extends MusicBeatState
 
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
 		bg.scrollFactor.set(0, 0.15);
-		bg.setGraphicSize(Std.int(bg.width * 1.25));
+		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
@@ -71,7 +71,7 @@ class MainMenuState extends MusicBeatState
 
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.scrollFactor.set(0, 0.15);
-		magenta.setGraphicSize(Std.int(magenta.width * 1.25));
+		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
 		magenta.updateHitbox();
 		magenta.screenCenter();
 		magenta.visible = false;
@@ -142,7 +142,7 @@ class MainMenuState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
-		var lerpVal:Float = CoolUtil.boundTo(elapsed * 3.6, 0, 1);
+		var lerpVal:Float = CoolUtil.boundTo(elapsed * 4.8, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
 		if (!selectedSomethin)
@@ -161,7 +161,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.BACK)
 			{
-				FlxG.switchState(new TitleState());
+				MusicBeatState.switchState(new TitleState());
 			}
 
 			if (controls.ACCEPT)
@@ -198,15 +198,15 @@ class MainMenuState extends MusicBeatState
 								switch (daChoice)
 								{
 									case 'story_mode':
-										FlxG.switchState(new StoryMenuState());
+										MusicBeatState.switchState(new StoryMenuState());
 									case 'freeplay':
-										FlxG.switchState(new FreeplayState());
+										MusicBeatState.switchState(new FreeplayState());
 									case 'awards':
-										FlxG.switchState(new AchievementsMenuState());
+										MusicBeatState.switchState(new AchievementsMenuState());
 									case 'credits':
-										FlxG.switchState(new CreditsState());
+										MusicBeatState.switchState(new CreditsState());
 									case 'options':
-										FlxG.switchState(new OptionsState());
+										MusicBeatState.switchState(new OptionsState());
 								}
 							});
 						}

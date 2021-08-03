@@ -269,7 +269,7 @@ class AnimationDebug extends FlxState
 			}
 		} else if(!charDropDown.dropPanel.visible) {
 			if (FlxG.keys.justPressed.ESCAPE) {
-				FlxG.switchState(new PlayState());
+				MusicBeatState.switchState(new PlayState());
 				FlxG.mouse.visible = false;
 			}
 
