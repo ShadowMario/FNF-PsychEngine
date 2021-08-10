@@ -234,10 +234,10 @@ class Character extends FlxSprite
 			}
 		}
 
-		if(animation.getByName('idleHair') != null && animation.curAnim.finished)
+		if(animation.getByName('idleHair' + idleSuffix) != null && animation.curAnim.finished)
 		{
-			if(animation.curAnim.name == 'idle')
-				playAnim('idleHair');
+			if(animation.curAnim.name == 'idle' + idleSuffix)
+				playAnim('idleHair' + idleSuffix);
 			else if(animation.curAnim.name.startsWith('sing') && !animation.curAnim.name.startsWith('miss'))
 				playAnim(animation.curAnim.name, false, false, animation.curAnim.frames.length - hairFramesLoop);
 		}
