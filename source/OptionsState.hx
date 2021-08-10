@@ -931,7 +931,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 			case 'Downscroll':
 				daText = "If checked, notes go Down instead of Up, simple enough.";
 			case 'Button Mashing':
-				daText = "If checked, you only get misses from notes that get offscreen.\nAlso called Ghost Tapping.";
+				daText = "If checked, you only get misses from notes that get offscreen, also called as Ghost Tapping.";
 			case 'Swearing':
 				daText = "If unchecked, your mom won't be angry at you.";
 			case 'Violence':
