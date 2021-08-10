@@ -29,7 +29,7 @@ class Achievements {
 		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",		 true]
 	];
 
-	public static var achievementsUnlocked:Array<Dynamic> = [ //Save string + is it unlocked?
+	public static var achievementsUnlocked:Array<Dynamic> = [ //Save string and Achievement tag + is it unlocked?
 		['friday_night_play', false],	//0
 		['week1_nomiss', false],		//1
 		['week2_nomiss', false],		//2

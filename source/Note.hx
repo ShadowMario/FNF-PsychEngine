@@ -25,19 +25,36 @@ class Note extends FlxSprite
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
-	public var noteType:Int = 0;
+	public var noteType(default, set):Int = 0;
 
 	public var eventName:String = '';
 	public var eventVal1:String = '';
 	public var eventVal2:String = '';
 
 	public var colorSwap:ColorSwap;
+	public var inEditor:Bool = false;
 
 	public static var swagWidth:Float = 160 * 0.7;
 	public static var PURP_NOTE:Int = 0;
 	public static var GREEN_NOTE:Int = 2;
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
+
+	private function set_noteType(value:Int):Int {
+		if(noteData > -1 && noteType != value) {
+			switch(value) {
+				case 3: //Hurt note
+					switch(PlayState.curStage) {
+						case 'school' | 'schoolEvil':
+
+						default:
+							reloadNote('HURT');
+					}
+			}
+			noteType = value;
+		}
+		return value;
+	}
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false)
 	{
@@ -48,6 +65,7 @@ class Note extends FlxSprite
 
 		this.prevNote = prevNote;
 		isSustainNote = sustainNote;
+		this.inEditor = inEditor;
 
 		x += PlayState.STRUM_X + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
@@ -59,6 +77,7 @@ class Note extends FlxSprite
 
 		var daStage:String = PlayState.curStage;
 
+		var isPixel:Bool = false;
 		switch (daStage)
 		{
 			case 'school' | 'schoolEvil':
@@ -86,30 +105,11 @@ class Note extends FlxSprite
 
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
+				isPixel = true;
 
 			default:
 				frames = Paths.getSparrowAtlas('NOTE_assets');
-
-				animation.addByPrefix('greenScroll', 'green0');
-				animation.addByPrefix('redScroll', 'red0');
-				animation.addByPrefix('blueScroll', 'blue0');
-				animation.addByPrefix('purpleScroll', 'purple0');
-
-				if (isSustainNote)
-				{
-					animation.addByPrefix('purpleholdend', 'pruple end hold');
-					animation.addByPrefix('greenholdend', 'green hold end');
-					animation.addByPrefix('redholdend', 'red hold end');
-					animation.addByPrefix('blueholdend', 'blue hold end');
-
-					animation.addByPrefix('purplehold', 'purple hold piece');
-					animation.addByPrefix('greenhold', 'green hold piece');
-					animation.addByPrefix('redhold', 'red hold piece');
-					animation.addByPrefix('bluehold', 'blue hold piece');
-				}
-
-				setGraphicSize(Std.int(width * 0.7));
-				updateHitbox();
+				loadNoteAnims();
 				antialiasing = ClientPrefs.globalAntialiasing;
 		}
 
@@ -143,7 +143,7 @@ class Note extends FlxSprite
 		if (isSustainNote && prevNote != null)
 		{
 			alpha = 0.6;
-			if(ClientPrefs.downScroll) angle = 180;
+			if(ClientPrefs.downScroll) flipY = true;
 
 			x += width / 2;
 
@@ -185,6 +185,55 @@ class Note extends FlxSprite
 				// prevNote.setGraphicSize();
 			}
 		}
+
+		if(!isPixel && noteData > -1) reloadNote();
+	}
+
+	function reloadNote(?prefix:String = '', ?suffix:String = '') {
+		var skin:String = PlayState.SONG.arrowSkin;
+		if(skin == null || skin.length < 1) {
+			skin = 'NOTE_assets';
+		}
+
+		var animName:String = null;
+		if(animation.curAnim != null) {
+			animName = animation.curAnim.name;
+		}
+
+		frames = Paths.getSparrowAtlas(prefix + skin + suffix);
+		loadNoteAnims();
+		animation.play(animName, true);
+
+		if(inEditor) {
+			setGraphicSize(ChartingState.GRID_SIZE, ChartingState.GRID_SIZE);
+			updateHitbox();
+		}
+		for (i in 0...3) {
+			colorSwap.update(0, i);
+		}
+	}
+
+	function loadNoteAnims() {
+		animation.addByPrefix('greenScroll', 'green0');
+		animation.addByPrefix('redScroll', 'red0');
+		animation.addByPrefix('blueScroll', 'blue0');
+		animation.addByPrefix('purpleScroll', 'purple0');
+
+		if (isSustainNote)
+		{
+			animation.addByPrefix('purpleholdend', 'pruple end hold');
+			animation.addByPrefix('greenholdend', 'green hold end');
+			animation.addByPrefix('redholdend', 'red hold end');
+			animation.addByPrefix('blueholdend', 'blue hold end');
+
+			animation.addByPrefix('purplehold', 'purple hold piece');
+			animation.addByPrefix('greenhold', 'green hold piece');
+			animation.addByPrefix('redhold', 'red hold piece');
+			animation.addByPrefix('bluehold', 'blue hold piece');
+		}
+
+		setGraphicSize(Std.int(width * 0.7));
+		updateHitbox();
 	}
 
 	override function update(elapsed:Float)

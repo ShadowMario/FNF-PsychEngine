@@ -156,11 +156,13 @@ class LoadingState extends MusicBeatState
 		Paths.setCurrentLevel(WeekData.getWeekDirectory());
 
 		#if NO_PRELOAD_ALL
+		var directory:String = WeekData.getWeekDirectory();
 		var loaded:Bool = false;
 		if (PlayState.SONG != null) {
 			loaded = isSoundLoaded(getSongPath())
 				&& (!PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath()))
-				&& isLibraryLoaded("shared");
+				&& isLibraryLoaded("shared") && isLibraryLoaded(directory) &&
+				(ClientPrefs.lowQuality || isLibraryLoaded(directory + '_high'));
 		}
 		
 		if (!loaded)

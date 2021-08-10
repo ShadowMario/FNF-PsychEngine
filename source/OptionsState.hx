@@ -53,8 +53,9 @@ class OptionsState extends MusicBeatState
 
 		for (i in 0...options.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, (100 * i) + 210, options[i], true, false);
-			optionText.screenCenter(X);
+			var optionText:Alphabet = new Alphabet(0, 0, options[i], true, false);
+			optionText.screenCenter();
+			optionText.y += (100 * (i - (options.length / 2))) + 50;
 			grpOptions.add(optionText);
 		}
 		changeSelection();
@@ -671,6 +672,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		#end
 		unselectableOptions[1],
 		'Downscroll',
+		'Button Mashing',
 		noCheckbox[1],
 		'Note Splashes',
 		'Hide HUD',
@@ -807,10 +809,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'FPS Counter':
 						ClientPrefs.showFPS = !ClientPrefs.showFPS;
 						if(Main.fpsVar != null)
-							if(ClientPrefs.showFPS)
-								Main.fpsVar.x = 10;
-							else
-								Main.fpsVar.x = -100;
+							Main.fpsVar.visible = ClientPrefs.showFPS;
 
 					case 'Low Quality':
 						ClientPrefs.lowQuality = !ClientPrefs.lowQuality;
@@ -843,6 +842,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 
 					case 'Downscroll':
 						ClientPrefs.downScroll = !ClientPrefs.downScroll;
+
+					case 'Button Mashing':
+						ClientPrefs.buttonMashing = !ClientPrefs.buttonMashing;
 
 					case 'Camera Zooms':
 						ClientPrefs.camZooms = !ClientPrefs.camZooms;
@@ -928,6 +930,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If unchecked, disables anti-aliasing, increases performance\nat the cost of the graphics not looking as smooth.";
 			case 'Downscroll':
 				daText = "If checked, notes go Down instead of Up, simple enough.";
+			case 'Button Mashing':
+				daText = "If checked, you only get misses from notes that get offscreen.\nAlso called Ghost Tapping.";
 			case 'Swearing':
 				daText = "If unchecked, your mom won't be angry at you.";
 			case 'Violence':
@@ -1007,6 +1011,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.flashing;
 					case 'Downscroll':
 						daValue = ClientPrefs.downScroll;
+					case 'Button Mashing':
+						daValue = ClientPrefs.buttonMashing;
 					case 'Swearing':
 						daValue = ClientPrefs.cursing;
 					case 'Violence':

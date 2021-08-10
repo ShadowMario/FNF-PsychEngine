@@ -43,7 +43,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 		} else {
 			transGradient.y = -transGradient.height;
 			transBlack.y = transGradient.y - transBlack.height + 50;
-			leTween = FlxTween.tween(transGradient, {y: transGradient.height - 50}, duration, {onUpdate: function(twn:FlxTween) {
+			leTween = FlxTween.tween(transGradient, {y: transGradient.height + 50}, duration, {onUpdate: function(twn:FlxTween) {
 				transBlack.y = transBlack.y = transGradient.y - transBlack.height + 50;
 				if(transBlack.y > 0) transBlack.y = 0;
 			}, onComplete: function(twn:FlxTween) {
@@ -54,7 +54,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 
 	override function destroy() {
 		if(leTween != null) {
-			finishCallback();
+			//finishCallback();
 			leTween.cancel();
 		}
 		super.destroy();

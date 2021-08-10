@@ -50,7 +50,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		add(text);
 		var text:Alphabet = new Alphabet(0, text.y + 90, name, true, false, 0.05, tooLong);
 		text.screenCenter(X);
-		if(week != -1) text.x += 60 * tooLong;
+		if(week == -1) text.x += 60 * tooLong;
 		alphabetArray.push(text);
 		text.alpha = 0;
 		add(text);

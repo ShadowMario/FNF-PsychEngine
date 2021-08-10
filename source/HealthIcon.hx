@@ -12,6 +12,12 @@ class HealthIcon extends FlxSprite
 	private var isPlayer:Bool = false;
 	private var char:String = '';
 
+	// This is made for allowing these icons to be used without having their suffix deleted
+	var ignoreSplit:Array<String> = ['bf-pixel', 'bf-old'];
+
+	// The following icons have antialiasing forced to be disabled
+	var noAntialiasing:Array<String> = ['bf-pixel', 'senpai', 'spirit'];
+
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
@@ -35,26 +41,39 @@ class HealthIcon extends FlxSprite
 	}
 
 	public function changeIcon(char:String) {
-		if(char != 'bf-pixel' && char != 'bf-old') {
+		var doSplit:Bool = true;
+		for (i in 0...ignoreSplit.length) {
+			if(char == ignoreSplit[i]) {
+				doSplit = false;
+				break;
+			}
+		}
+
+		if(doSplit) {
 			char = (char.split('-')[0]).trim();
 		}
 
 		if(this.char != char) {
-			var file:String = Paths.image('icons/icon-' + char);
-			if(!OpenFlAssets.exists(file)) file = Paths.image('icons/icon-face'); //Prevents crash from missing icon
+			var name:String = 'icons/icon-' + char;
+			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
+			var file:Dynamic = Paths.image(name);
 
 			loadGraphic(file, true, 150, 150);
 			animation.add(char, [0, 1], 0, false, isPlayer);
 			animation.play(char);
 			this.char = char;
 
-			switch(char) {
-				case 'bf-pixel' | 'senpai' | 'spirit':
+			antialiasing = ClientPrefs.globalAntialiasing;
+			for (i in 0...noAntialiasing.length) {
+				if(char == noAntialiasing[i]) {
 					antialiasing = false;
-
-				default:
-					antialiasing = ClientPrefs.globalAntialiasing;
+					break;
+				}
 			}
 		}
+	}
+
+	public function getCharacter():String {
+		return char;
 	}
 }

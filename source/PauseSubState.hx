@@ -18,12 +18,13 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Exit to menu'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Botplay', 'Exit to menu'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
 	var practiceText:FlxText;
+	var botplayText:FlxText;
 
 	public function new(x:Float, y:Float)
 	{
@@ -75,6 +76,14 @@ class PauseSubState extends MusicBeatSubstate
 		practiceText.updateHitbox();
 		practiceText.visible = PlayState.practiceMode;
 		add(practiceText);
+
+		botplayText = new FlxText(20, FlxG.height - 40, 0, "BOTPLAY", 32);
+		botplayText.scrollFactor.set();
+		botplayText.setFormat(Paths.font('vcr.ttf'), 32);
+		botplayText.x = FlxG.width - (botplayText.width + 20);
+		botplayText.updateHitbox();
+		botplayText.visible = PlayState.cpuControlled;
+		add(botplayText);
 
 		blueballedTxt.alpha = 0;
 		levelDifficulty.alpha = 0;
@@ -137,6 +146,7 @@ class PauseSubState extends MusicBeatSubstate
 					MusicBeatState.resetState();
 					FlxG.sound.music.volume = 0;
 					PlayState.changedDifficulty = true;
+					PlayState.cpuControlled = false;
 					return;
 				}
 			} 
@@ -155,6 +165,10 @@ class PauseSubState extends MusicBeatSubstate
 				case "Restart Song":
 					MusicBeatState.resetState();
 					FlxG.sound.music.volume = 0;
+				case 'Botplay':
+					PlayState.cpuControlled = !PlayState.cpuControlled;
+					PlayState.usedPractice = true;
+					botplayText.visible = PlayState.cpuControlled;
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
@@ -166,6 +180,7 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					PlayState.usedPractice = false;
 					PlayState.changedDifficulty = false;
+					PlayState.cpuControlled = false;
 
 				case 'BACK':
 					menuItems = menuItemsOG;
