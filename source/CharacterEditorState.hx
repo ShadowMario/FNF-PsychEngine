@@ -29,6 +29,7 @@ import openfl.events.IOErrorEvent;
 import haxe.Json;
 import Character;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
+import lime.system.Clipboard;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -783,6 +784,11 @@ class CharacterEditorState extends MusicBeatState
 		var inputTexts:Array<FlxUIInputText> = [animationInputText, imageInputText, healthIconInputText, animationNameInputText, animationIndicesInputText];
 		for (i in 0...inputTexts.length) {
 			if(inputTexts[i].hasFocus) {
+				if(FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.V && lime.system.Clipboard.text != null) { //Copy paste
+					inputTexts[i].text = ClipboardAdd(inputTexts[i].text);
+					inputTexts[i].caretIndex = inputTexts[i].text.length;
+					getEvent(FlxUIInputText.CHANGE_EVENT, inputTexts[i], null, []);
+				}
 				if(FlxG.keys.justPressed.ENTER) {
 					inputTexts[i].hasFocus = false;
 				}
@@ -965,5 +971,15 @@ class CharacterEditorState extends MusicBeatState
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data, daAnim + ".json");
 		}
+	}
+
+	function ClipboardAdd(prefix:String = ''):String {
+		if(prefix.toLowerCase().endsWith('v')) //probably copy paste attempt
+		{
+			prefix = prefix.substring(0, prefix.length-1);
+		}
+
+		var text:String = prefix + lime.system.Clipboard.text.replace('\n', '');
+		return text;
 	}
 }
