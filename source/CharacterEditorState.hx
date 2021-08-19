@@ -961,7 +961,7 @@ class CharacterEditorState extends MusicBeatState
 			"no_antialiasing": char.noAntialiasing
 		};
 
-		var data:String = Json.stringify(json);
+		var data:String = Json.stringify(json, "\t");
 
 		if (data.length > 0)
 		{
