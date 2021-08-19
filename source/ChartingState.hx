@@ -1632,7 +1632,7 @@ class ChartingState extends MusicBeatState
 			"song": _song
 		};
 
-		var data:String = Json.stringify(json);
+		var data:String = Json.stringify(json,"\t");
 
 		if ((data != null) && (data.length > 0))
 		{
@@ -1688,7 +1688,7 @@ class ChartingState extends MusicBeatState
 			"song": eventsSong
 		}
 
-		var data:String = Json.stringify(json);
+		var data:String = Json.stringify(json,"\t");
 
 		if ((data != null) && (data.length > 0))
 		{
