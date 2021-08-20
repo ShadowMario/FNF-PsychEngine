@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxSprite;
+import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 
@@ -34,13 +35,15 @@ class HealthIcon extends FlxSprite
 	}
 
 	public function changeIcon(char:String) {
-		if(char == 'sussy-tower') char = 'face';
 		if(char != 'bf-pixel' && char != 'bf-old') {
 			char = (char.split('-')[0]).trim();
 		}
 
 		if(this.char != char) {
-			loadGraphic(Paths.image('icons/icon-' + char), true, 150, 150);
+			var file:String = Paths.image('icons/icon-' + char);
+			if(!OpenFlAssets.exists(file)) file = Paths.image('icons/icon-face'); //Prevents crash from missing icon
+
+			loadGraphic(file, true, 150, 150);
 			animation.add(char, [0, 1], 0, false, isPlayer);
 			animation.play(char);
 			this.char = char;

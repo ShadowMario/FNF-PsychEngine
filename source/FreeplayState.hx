@@ -34,6 +34,8 @@ class FreeplayState extends MusicBeatState
 	var lerpRating:Float = 0;
 	var intendedScore:Int = 0;
 	var intendedRating:Float = 0;
+	var hardScore:Int = 0;
+	var icon:HealthIcon;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -43,6 +45,8 @@ class FreeplayState extends MusicBeatState
 
 	var bg:FlxSprite;
 	private var intendedColor:Int;
+	
+	var harmonyScore = Highscore.getScore('Harmony', 2);
 
 	override function create()
 	{
@@ -55,13 +59,14 @@ class FreeplayState extends MusicBeatState
 			addSong(songArray[0], 0, songArray[1]);
 			songs[songs.length-1].color = Std.parseInt(songArray[2]);
 		}
+		
 		var colorsList = CoolUtil.coolTextFile(Paths.txt('freeplayColors'));
 		for (i in 0...colorsList.length)
 		{
 			coolColors.push(Std.parseInt(colorsList[i]));
 		}
 
-		/* 
+		/*
 			if (FlxG.sound.music != null)
 			{
 				if (!FlxG.sound.music.playing)
@@ -80,11 +85,11 @@ class FreeplayState extends MusicBeatState
 		isDebug = true;
 		#end
 
-		if (StoryMenuState.weekUnlocked[2] || isDebug)
+		if (StoryMenuState.weekUnlocked[1] || isDebug)
 			addWeek(['Bopeebo', 'Fresh', 'Dad-Battle'], 1, ['dad']);
 
 		if (StoryMenuState.weekUnlocked[2] || isDebug)
-			addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky', 'spooky', 'monster-christmas']);
+			addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky', 'spooky', 'monster']);
 
 		if (StoryMenuState.weekUnlocked[3] || isDebug)
 			addWeek(['Pico', 'Philly-Nice', 'Blammed'], 3, ['pico']);
@@ -97,6 +102,30 @@ class FreeplayState extends MusicBeatState
 
 		if (StoryMenuState.weekUnlocked[6] || isDebug)
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
+
+		addSong('Bwehehe', -99, 'violastro');
+		addSong('Stupefy', -99, 'violastro');
+		addSong('Supernova', -99, 'violastro');
+		
+		var weekV0 = Highscore.getWeekScore(-99, 0); // Easy
+		var weekV1 = Highscore.getWeekScore(-99, 1); // Normal
+		var weekV2 = Highscore.getWeekScore(-99, 2); // Hard
+		var weekVTotal = weekV0 + weekV1 + weekV2;
+		var tuadScore = Highscore.getScore('The-Ups-and-Downs', 2); // Hard Difficulty Only
+
+		if (weekVTotal > 0) {
+			addSong('The-Ups-and-Downs', -99, 'violastrobot');
+		}
+
+		if (tuadScore > 0) {
+			if (harmonyScore > 0) {
+				addSong('Harmony', -99, 'venturers');
+			} else {
+				addSong('Harmony', -99, 'mystery');
+			}
+		}
+
+		//	addSong('Psychic', -99, 'psychic'); // Star Notes wink wink
 
 		// LOAD MUSIC
 
@@ -115,8 +144,9 @@ class FreeplayState extends MusicBeatState
 			songText.targetY = i;
 			grpSongs.add(songText);
 
-			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
+			icon = new HealthIcon(songs[i].songCharacter);
 			icon.sprTracker = songText;
+
 
 			// using a FlxGroup is too much fuss!
 			iconArray.push(icon);
@@ -317,13 +347,18 @@ class FreeplayState extends MusicBeatState
 		if (curDifficulty > 2)
 			curDifficulty = 0;
 
+		if (songs[curSelected].songName == 'Harmony')
+			curDifficulty = 2;
+
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
 		#end
 
 		PlayState.storyDifficulty = curDifficulty;
-		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
+		if (songs[curSelected].songName == 'Harmony')
+			diffText.text = 'VIBRANT';
+		else diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
 		positionHighscore();
 	}
 
@@ -337,6 +372,9 @@ class FreeplayState extends MusicBeatState
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
 			curSelected = 0;
+
+		if (songs[curSelected].songName == 'Harmony')
+			changeDiff();
 
 		var newColor:Int = songs[curSelected].color;
 		if(newColor != intendedColor) {
@@ -400,6 +438,10 @@ class SongMetadata
 		this.songName = song;
 		this.week = week;
 		this.songCharacter = songCharacter;
-		this.color = FreeplayState.coolColors[week];
+		if(week == -99) {
+			this.color = FreeplayState.coolColors[FreeplayState.coolColors.length-1];
+		} else {
+			this.color = FreeplayState.coolColors[week];
+		}
 	}
 }

@@ -24,15 +24,30 @@ class CreditsState extends MusicBeatState
 	private var iconArray:Array<AttachedSprite> = [];
 
 	private static var creditsStuff:Array<Dynamic> = [ //Name - Icon name - Description - Link - BG Color
-		['Psych Engine Team'],
-		['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',					'https://twitter.com/Shadow_Mario_',	0xFFFFDD33],
-		['RiverOaken',			'riveroaken',		'Artist/Animator of Psych Engine',					'https://twitter.com/river_oaken',		0xFFC30085],
+		['Violastro Mod Team'],
+		['Keoiki',				'keoiki',			'Main Programmer & Additional Art\n"Right... What was I doing again?"',
+		'https://twitter.com/Keoiki_',			0xFFFFFFFF],
+		['Jurl',				'jurl',				'Main Artist\n"I stared at a chair and laughed at it for 30 minutes,\nmy sense of humor is truly superior."',
+		'https://twitter.com/JurrieDroogman',	0xFFFF2538],
+		['huntertron',			'huntertron',		'Main Composer\n"Wahoo! The cabbit did the music!"',	'https://twitter.com/huntertrongames',	0xFF00A1F9],
+		['burgerworm',			'burgerworm',		'Song Charting\n"What the fuck is Vibrant Venture?"',
+		'https://www.youtube.com/channel/UC5eF5Zeg0iiqxSFG-UJb_wA',										0xFFF7206A],
 		[''],
-		["Funkin' Crew"],
-		['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",				'https://twitter.com/ninja_muffin99',	0xFFF73838],
-		['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",					'https://twitter.com/PhantomArcade3K',	0xFFFFBB1B],
-		['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",					'https://twitter.com/evilsk8r',			0xFF53E52C],
-		['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",					'https://twitter.com/kawaisprite',		0xFF6475F3]
+		['Special Thanks'],
+		['Pattrigue',			'pattrigue',		'Creator of Vibrant Venture\n"video games, i love em"',
+		'https://twitter.com/Pattrigue',		0xFFE8BD57],
+		[''],
+		['Psych Engine Team'],	
+		['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine\n"WikiHow: How to handle fame."',
+		'https://twitter.com/Shadow_Mario_',	0xFFFFDD33],
+		['RiverOaken',			'riveroaken',		'Artist/Animator of Psych Engine\n"Wait, I made this???"',
+		'https://twitter.com/river_oaken',		0xFFC30085],
+		[''],	
+		["Funkin' Crew"],	
+		['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",					'https://twitter.com/ninja_muffin99',	0xFFF73838],
+		['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",						'https://twitter.com/PhantomArcade3K',	0xFFFFBB1B],
+		['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",						'https://twitter.com/evilsk8r',			0xFF53E52C],
+		['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",						'https://twitter.com/kawaisprite',		0xFF6475F3]
 	];
 
 	var bg:FlxSprite;

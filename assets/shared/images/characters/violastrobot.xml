@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="violastrobot.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="VioBot Idle0000" x="0" y="0" width="566" height="786" frameX="-62" frameY="-20" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0001" x="571" y="0" width="579" height="810" frameX="-77" frameY="-38" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0002" x="1155" y="0" width="598" height="792" frameX="-64" frameY="-51" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0003" x="1758" y="0" width="641" height="784" frameX="-21" frameY="-53" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0004" x="2404" y="0" width="646" height="821" frameX="-15" frameY="-38" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0005" x="3055" y="0" width="668" height="833" frameX="-4" frameY="-16" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0006" x="3728" y="0" width="673" height="818" frameX="0" frameY="0" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0007" x="4406" y="0" width="621" height="811" frameX="-27" frameY="-5" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0008" x="5032" y="0" width="621" height="811" frameX="-27" frameY="-5" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0009" x="5658" y="0" width="621" height="811" frameX="-27" frameY="-5" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0010" x="5032" y="0" width="621" height="811" frameX="-27" frameY="-5" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0011" x="4406" y="0" width="621" height="811" frameX="-27" frameY="-5" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0012" x="5032" y="0" width="621" height="811" frameX="-27" frameY="-5" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Idle0013" x="5658" y="0" width="621" height="811" frameX="-27" frameY="-5" frameWidth="673" frameHeight="859"/>
+	<SubTexture name="VioBot Note Down0000" x="6284" y="0" width="716" height="966" frameX="-14" frameY="0" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0001" x="7005" y="0" width="716" height="966" frameX="-14" frameY="0" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0002" x="0" y="971" width="766" height="816" frameX="-5" frameY="-72" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0003" x="771" y="971" width="766" height="816" frameX="-5" frameY="-72" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0004" x="1542" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0005" x="2338" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0006" x="3134" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0007" x="2338" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0008" x="1542" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0009" x="2338" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0010" x="3134" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0011" x="2338" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0012" x="1542" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Down0013" x="2338" y="971" width="791" height="820" frameX="0" frameY="-9" frameWidth="791" frameHeight="966"/>
+	<SubTexture name="VioBot Note Left0000" x="3930" y="971" width="740" height="722" frameX="0" frameY="-70" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0001" x="4675" y="971" width="740" height="722" frameX="0" frameY="-70" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0002" x="5420" y="971" width="646" height="769" frameX="-17" frameY="-29" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0003" x="6071" y="971" width="646" height="769" frameX="-17" frameY="-29" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0004" x="6722" y="971" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0005" x="7302" y="971" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0006" x="0" y="1796" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0007" x="7302" y="971" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0008" x="6722" y="971" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0009" x="7302" y="971" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0010" x="0" y="1796" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0011" x="7302" y="971" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0012" x="6722" y="971" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Left0013" x="7302" y="971" width="575" height="800" frameX="-51" frameY="0" frameWidth="740" frameHeight="800"/>
+	<SubTexture name="VioBot Note Right0000" x="580" y="1796" width="955" height="714" frameX="-6" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0001" x="1540" y="1796" width="955" height="717" frameX="-6" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0002" x="2500" y="1796" width="897" height="730" frameX="-17" frameY="-11" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0003" x="3402" y="1796" width="897" height="725" frameX="-17" frameY="-11" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0004" x="4304" y="1796" width="825" height="741" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0005" x="5134" y="1796" width="825" height="745" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0006" x="5964" y="1796" width="825" height="746" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0007" x="5134" y="1796" width="825" height="745" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0008" x="4304" y="1796" width="825" height="741" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0009" x="5134" y="1796" width="825" height="745" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0010" x="5964" y="1796" width="825" height="746" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0011" x="5134" y="1796" width="825" height="745" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0012" x="4304" y="1796" width="825" height="741" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Right0013" x="5134" y="1796" width="825" height="745" frameX="0" frameY="0" frameWidth="961" frameHeight="746"/>
+	<SubTexture name="VioBot Note Up0000" x="6794" y="1796" width="637" height="885" frameX="0" frameY="0" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0001" x="7436" y="1796" width="637" height="885" frameX="0" frameY="0" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0002" x="0" y="2686" width="623" height="797" frameX="-28" frameY="-67" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0003" x="628" y="2686" width="623" height="803" frameX="-28" frameY="-67" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0004" x="1256" y="2686" width="657" height="815" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0005" x="1918" y="2686" width="657" height="811" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0006" x="2580" y="2686" width="657" height="804" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0007" x="1918" y="2686" width="657" height="811" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0008" x="1256" y="2686" width="657" height="815" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0009" x="1918" y="2686" width="657" height="811" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0010" x="2580" y="2686" width="657" height="804" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0011" x="1918" y="2686" width="657" height="811" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0012" x="1256" y="2686" width="657" height="815" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+	<SubTexture name="VioBot Note Up0013" x="1918" y="2686" width="657" height="811" frameX="-18" frameY="-95" frameWidth="675" frameHeight="910"/>
+</TextureAtlas>

@@ -1,0 +1,13 @@
+idle 0 0
+singUP 0 0
+singUP-start 0 0
+singUP-loop 0 0
+singDOWN 0 0
+singDOWN-start 0 0
+singDOWN-loop 0 0
+singLEFT 0 0
+singLEFT-start 0 0
+singLEFT-loop 0 0
+singRIGHT 0 0
+singRIGHT-start 0 0
+singRIGHT-loop 0 0

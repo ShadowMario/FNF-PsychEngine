@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="NOTE_assets_star.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="star note0000" x="0" y="0" width="241" height="345" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0001" x="251" y="0" width="241" height="356" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0002" x="502" y="0" width="241" height="366" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0003" x="753" y="0" width="241" height="376" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0004" x="1004" y="0" width="241" height="387" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0005" x="1255" y="0" width="241" height="397" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0006" x="1506" y="0" width="241" height="365" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0007" x="1757" y="0" width="241" height="376" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0008" x="0" y="407" width="241" height="386" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0009" x="251" y="407" width="241" height="398" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0010" x="502" y="407" width="241" height="409" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0011" x="753" y="407" width="241" height="354" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0012" x="1004" y="407" width="241" height="363" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0013" x="1255" y="407" width="241" height="375" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0014" x="1506" y="407" width="241" height="385" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0015" x="1757" y="407" width="241" height="314" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0016" x="0" y="826" width="241" height="325" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+	<SubTexture name="star note0017" x="251" y="826" width="241" height="336" frameX="0" frameY="90" frameWidth="241" frameHeight="409"/>
+</TextureAtlas>

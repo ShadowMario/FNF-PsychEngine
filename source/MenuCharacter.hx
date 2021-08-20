@@ -54,6 +54,10 @@ class MenuCharacter extends FlxSprite
 				frames = Paths.getSparrowAtlas('menucharacters/Menu_Senpai');
 				animation.addByPrefix('idle', "M Senpai Idle", 24);
 
+			case 'violastro':
+				frames = Paths.getSparrowAtlas('menucharacters/Menu_Violastro');
+				animation.addByPrefix('idle', 'M Violastro Idle', 24);
+
 			case 'tankman':
 				frames = Paths.getSparrowAtlas('menucharacters/Menu_Tankman');
 				animation.addByPrefix('idle', 'M Tankman Idle', 24);
@@ -70,7 +74,7 @@ class MenuCharacter extends FlxSprite
 				offset.set(15, -40);
 
 			case 'gf':
-				offset.set(0, -25);
+				offset.set(-40, -25);
 
 			case 'spooky':
 				offset.set(0, -80);
@@ -87,8 +91,8 @@ class MenuCharacter extends FlxSprite
 			case 'parents-christmas':
 				offset.set(110, 10);
 
-			case 'senpai':
-				offset.set(60, 130);
+			case 'violastro':
+				offset.set(60, 10);
 
 			case 'tankman':
 				offset.set(0, -100);

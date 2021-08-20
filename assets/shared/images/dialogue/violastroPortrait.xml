@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="violastroPortrait.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Violastro Normal0000" x="0" y="0" width="600" height="400"/>
+	<SubTexture name="Violastro Serious0000" x="0" y="401" width="600" height="400"/>
+	<SubTexture name="Violastro Laugh0000" x="0" y="801" width="600" height="400"/>
+	<SubTexture name="Violastro Hmm0000" x="0" y="1201" width="600" height="400"/>
+	<SubTexture name="Violastro Troll0000" x="0" y="1601" width="600" height="400"/>
+</TextureAtlas>

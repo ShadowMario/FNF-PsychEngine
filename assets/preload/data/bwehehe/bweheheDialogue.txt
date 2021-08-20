@@ -1,0 +1,15 @@
+violastro:left gf:center bf-vio:right
+:0:talk:0.05:normal:Welcome to my stage Boyfriend..
+:1:cheer:0.05:normal:And me too~
+:2:talk:0.05:normal:Beep bop?
+:0:talk:0.05:normal:Yer might've been wondering why I've\nbrought yer here in front of hundreds,
+:0:laugh:0.025:normal:if not THOUSANDS of live spectators\nhere and at home.
+:2:talk:0.05:normal:Beep skee bop?
+:0:talk:0.05:normal:Well, yer've made a colender into a bowl\nusing flex seal,
+:0:serious:0.025:angry:which is from what I've looked up on Bing\nis the worst crime in Australia!
+:1:talk:0.05:normal:B-but this isn't Australi-
+:2:talk:0.025:normal:Bop skop skee sko ska!
+:0:talk:0.05:normal:'Nd for that, yer must win in front of me,
+:0:think:0.075:normal:or yer gonna be locked up behind bars\nfor a long time.
+:2:scared:0.025:normal:..!
+:0:serious:0.0675:normal:Better watch out which notes\nyer hit 'tho!

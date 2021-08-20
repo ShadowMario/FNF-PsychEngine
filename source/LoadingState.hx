@@ -66,9 +66,9 @@ class LoadingState extends MusicBeatState
 				if (PlayState.storyWeek > 0) {
 					checkLibrary("week" + PlayState.storyWeek);
 					checkLibrary("week" + PlayState.storyWeek + "_high", true);
-				} else if(PlayState.storyWeek == -99) { //Psychic week
-					checkLibrary("psychic");
-					checkLibrary("psychic_high", true);
+				} else if(PlayState.storyWeek == -99) {
+					checkLibrary("violastro");
+					checkLibrary("violastro_high", true);
 				} else {
 					checkLibrary("tutorial");
 					checkLibrary("tutorial_high", true);
@@ -154,7 +154,7 @@ class LoadingState extends MusicBeatState
 	static function getNextState(target:FlxState, stopMusic = false):FlxState
 	{
 		if(PlayState.storyWeek == -99)
-			Paths.setCurrentLevel("psychic");
+			Paths.setCurrentLevel("violastro");
 		else
 			Paths.setCurrentLevel("week" + PlayState.storyWeek);
 

@@ -11,22 +11,26 @@ using StringTools;
 
 class Achievements {
 	public static var achievementsStuff:Array<Dynamic> = [ //Name, Description, Hidden achievement
-		["Freaky on a Friday Night",	"Play on a Friday... Night.",							 true],
+		["Freaky on a Friday Night",	"Play on a Friday... Night.",							true],
 		["She Calls Me Daddy Too",		"Beat Week 1 on Hard with no Misses.",					false],
 		["No More Tricks",				"Beat Week 2 on Hard with no Misses.",					false],
 		["Call Me The Hitman",			"Beat Week 3 on Hard with no Misses.",					false],
 		["Lady Killer",					"Beat Week 4 on Hard with no Misses.",					false],
 		["Missless Christmas",			"Beat Week 5 on Hard with no Misses.",					false],
 		["Highscore!!",					"Beat Week 6 on Hard with no Misses.",					false],
-		["You'll Pay For That...",		"Beat Week 7 on Hard with no Misses.",					true],
+		["Showstopper",					"Beat Week V on Hard.",									false],
+		["Spectacular Play!",			"Beat Week V on Hard with no Misses.",					true],
 		["What a Funkin' Disaster!",	"Complete a Song with a rating lower than 20%.",		false],
 		["Perfectionist",				"Complete a Song with a rating of 100%.",				false],
+		["Skill Issue",					"Complete a Song with 350 misses or more.",				false],
 		["Roadkill Enthusiast",			"Watch the Henchmen die over 100 times.",				false],
 		["Oversinging Much...?",		"Hold down a note for 20 seconds.",						false],
 		["Hyperactive",					"Finish a Song without going Idle.",					false],
 		["Just the Two of Us",			"Finish a Song pressing only two keys.",				false],
 		["Toaster Gamer",				"Have you tried to run the game on a toaster?",			false],
-		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",		 true]
+		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",		true],
+		["*Synthetic Bwehehe*", 		"Beat \"The Ups and Downs\" on Hard.",					true],
+		["Onto the Venture!",			"Beat \"Harmony\" on Hard.",							true]
 	];
 
 	public static var achievementsUnlocked:Array<Dynamic> = [ //Save string + is it unlocked?
@@ -37,15 +41,19 @@ class Achievements {
 		['week4_nomiss', false],		//4
 		['week5_nomiss', false],		//5
 		['week6_nomiss', false],		//6
-		['week7_nomiss', false],		//7
-		['ur_bad', false],				//8
-		['ur_good', false],				//9
-		['roadkill_enthusiast', false],	//10
-		['oversinging', false],			//11
-		['hype', false],				//12
-		['two_keys', false],			//13
-		['toastie', false],				//14
-		['debugger', false], 			//15
+		['weekv_clear', false],			//7
+		['weekv_nomiss', false],		//8
+		['ur_bad', false],				//9
+		['ur_good', false],				//10
+		['skill_issue', false],			//11
+		['roadkill_enthusiast', false],	//12
+		['oversinging', false],			//13
+		['hype', false],				//14
+		['two_keys', false],			//15
+		['toastie', false],				//16
+		['debugger', false], 			//17
+		['upsdowns', false], 			//18
+		['vibrant', false], 			//19
 	];
 
 	public static var henchmenDeath:Int = 0;

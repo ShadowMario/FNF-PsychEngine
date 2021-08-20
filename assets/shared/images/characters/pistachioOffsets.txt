@@ -1,0 +1,10 @@
+singDOWN 123 -142
+singUP 163 -46
+singLeaf0 152 -127
+glance 164 -82
+idle 180 -85
+singLeaf1 123 -142
+singRIGHT 62 -92
+singLeaf2 163 -46
+singLeaf3 62 -92
+singLEFT 152 -127

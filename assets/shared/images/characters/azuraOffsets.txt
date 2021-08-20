@@ -1,0 +1,10 @@
+singWater0 -224 -143
+singDOWN -280 -160
+singWater1 -280 -160
+singUP -226 -103
+singWater2 -226 -103
+singWater3 -262 -142
+glance -236 -131
+idle -260 -150
+singRIGHT -262 -142
+singLEFT -224 -143

@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="banana_assets.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Banana Idle0000" x="0" y="0" width="303" height="364" frameX="0" frameY="-16" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0001" x="0" y="0" width="303" height="364" frameX="0" frameY="-16" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0002" x="308" y="0" width="296" height="375" frameX="0" frameY="-5" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0003" x="308" y="0" width="296" height="375" frameX="0" frameY="-5" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0004" x="609" y="0" width="313" height="380" frameX="0" frameY="0" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0005" x="609" y="0" width="313" height="380" frameX="0" frameY="0" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0006" x="927" y="0" width="329" height="380"/>
+	<SubTexture name="Banana Idle0007" x="927" y="0" width="329" height="380"/>
+	<SubTexture name="Banana Idle0008" x="927" y="0" width="329" height="380"/>
+	<SubTexture name="Banana Idle0009" x="927" y="0" width="329" height="380"/>
+	<SubTexture name="Banana Idle0010" x="927" y="0" width="329" height="380"/>
+	<SubTexture name="Banana Idle0011" x="927" y="0" width="329" height="380"/>
+	<SubTexture name="Banana Idle0012" x="927" y="0" width="329" height="380"/>
+	<SubTexture name="Banana Idle0013" x="927" y="0" width="329" height="380"/>
+	<SubTexture name="Banana Look Up0000" x="1261" y="0" width="302" height="380" frameX="-5" frameY="0" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0001" x="1261" y="0" width="302" height="380" frameX="-5" frameY="0" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0002" x="1568" y="0" width="283" height="380" frameX="-5" frameY="0" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0003" x="1568" y="0" width="283" height="380" frameX="-5" frameY="0" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0004" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0005" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0006" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0007" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0008" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0009" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0010" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0011" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0012" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0013" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0014" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0015" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0016" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0017" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0018" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0019" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0020" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0021" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0022" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0023" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0024" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0025" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0026" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0027" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0028" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0029" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0030" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0031" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0032" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0033" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0034" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0035" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0036" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0037" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0038" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0039" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0040" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0041" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0042" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0043" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0044" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0045" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0046" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0047" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0048" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0049" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0050" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0051" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0052" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0053" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0054" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0055" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0056" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0057" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0058" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0059" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0060" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0061" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0062" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0063" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0064" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0065" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0066" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0067" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0068" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0069" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0070" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0071" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0072" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0073" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0074" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0075" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0076" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0077" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0078" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0079" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0080" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0081" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0082" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0083" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0084" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0085" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0086" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0087" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0088" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0089" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0090" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0091" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0092" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0093" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0094" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0095" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0096" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0097" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0098" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0099" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0100" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0101" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0102" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0103" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0104" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0105" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0106" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0107" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0108" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0109" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0110" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0111" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0112" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0113" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0114" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0115" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0116" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0117" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0118" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0119" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0120" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0121" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0122" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0123" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0124" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0125" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0126" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0127" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0128" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0129" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0130" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0131" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0132" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0133" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0134" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0135" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0136" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0137" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0138" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0139" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0140" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0141" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0142" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Look Up0143" x="0" y="385" width="289" height="375" frameX="0" frameY="-5" frameWidth="307" frameHeight="380"/>
+	<SubTexture name="Banana Sing Down0000" x="294" y="385" width="366" height="321" frameX="0" frameY="-50" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0001" x="294" y="385" width="366" height="321" frameX="0" frameY="-50" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0002" x="665" y="385" width="343" height="348" frameX="-7" frameY="-23" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0003" x="665" y="385" width="343" height="348" frameX="-7" frameY="-23" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0004" x="1013" y="385" width="411" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0005" x="1013" y="385" width="411" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0006" x="1429" y="385" width="419" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0007" x="1429" y="385" width="419" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0008" x="0" y="765" width="345" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0009" x="0" y="765" width="345" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0010" x="0" y="765" width="345" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0011" x="0" y="765" width="345" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0012" x="0" y="765" width="345" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Down0013" x="0" y="765" width="345" height="371" frameX="-9" frameY="0" frameWidth="428" frameHeight="371"/>
+	<SubTexture name="Banana Sing Left0000" x="350" y="765" width="333" height="403" frameX="0" frameY="-9" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0001" x="350" y="765" width="333" height="403" frameX="0" frameY="-9" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0002" x="688" y="765" width="319" height="397" frameX="-14" frameY="-2" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0003" x="688" y="765" width="319" height="397" frameX="-14" frameY="-2" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0004" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0005" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0006" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0007" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0008" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0009" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0010" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0011" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0012" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Left0013" x="1012" y="765" width="305" height="382" frameX="-29" frameY="0" frameWidth="334" frameHeight="412"/>
+	<SubTexture name="Banana Sing Right0000" x="1322" y="765" width="366" height="381" frameX="-5" frameY="0" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0001" x="1322" y="765" width="366" height="381" frameX="-5" frameY="0" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0002" x="0" y="1173" width="379" height="381" frameX="-2" frameY="0" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0003" x="0" y="1173" width="379" height="381" frameX="-2" frameY="0" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0004" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0005" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0006" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0007" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0008" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0009" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0010" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0011" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0012" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Right0013" x="384" y="1173" width="390" height="380" frameX="0" frameY="-1" frameWidth="390" frameHeight="381"/>
+	<SubTexture name="Banana Sing Up0000" x="779" y="1173" width="347" height="405"/>
+	<SubTexture name="Banana Sing Up0001" x="779" y="1173" width="347" height="405"/>
+	<SubTexture name="Banana Sing Up0002" x="1131" y="1173" width="331" height="388" frameX="0" frameY="-17" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0003" x="1131" y="1173" width="331" height="388" frameX="0" frameY="-17" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0004" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0005" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0006" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0007" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0008" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0009" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0010" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0011" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0012" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+	<SubTexture name="Banana Sing Up0013" x="1467" y="1173" width="338" height="370" frameX="0" frameY="-35" frameWidth="347" frameHeight="405"/>
+</TextureAtlas>

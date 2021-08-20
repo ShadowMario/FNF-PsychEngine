@@ -1,0 +1,10 @@
+violastro:left gf:center bf-vio:right
+:1:talk:0.05:normal:Can you listen to me for thr-
+:0:talk:0.05:normal:Well, Boyfriend, it seems as if you've won.
+:0:talk:0.1:normal:...
+:0:laugh:0.05:normal:Not quite! Time for me to go into my\nsecond phase!
+:0:serious:0.15:normal:...
+:0:think:0.05:normal:Crap uuhh, did this mod break?
+:0:serious:0.025:angry:Argh, I guess I'll just put on another\nshow for the audience!
+:2:talk:0.05:normal:Bop?
+:0:think:0.04:normal:Gotta tell Jurl about this!

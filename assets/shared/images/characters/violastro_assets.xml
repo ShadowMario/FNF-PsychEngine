@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="violastro_assets.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Violastro Down Note0000" x="0" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0001" x="0" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0002" x="1060" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0003" x="1060" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0004" x="2120" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0005" x="2120" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0006" x="1060" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0007" x="1060" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0008" x="2120" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0009" x="2120" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0010" x="1060" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0011" x="1060" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0012" x="2120" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Down Note0013" x="2120" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0000" x="3180" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0001" x="3180" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0002" x="4240" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0003" x="4240" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0004" x="5300" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0005" x="5300" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0006" x="6360" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0007" x="6360" y="0" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0008" x="0" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0009" x="0" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0010" x="1060" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0011" x="1060" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0012" x="2120" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Idle0013" x="2120" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0000" x="3180" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0001" x="3180" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0002" x="4240" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0003" x="4240" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0004" x="5300" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0005" x="5300" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0006" x="4240" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0007" x="4240" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0008" x="5300" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0009" x="5300" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0010" x="4240" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0011" x="4240" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0012" x="5300" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Left Note0013" x="5300" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0000" x="6360" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0001" x="6360" y="1060" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0002" x="0" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0003" x="0" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0004" x="1060" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0005" x="1060" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0006" x="0" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0007" x="0" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0008" x="1060" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0009" x="1060" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0010" x="0" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0011" x="0" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0012" x="1060" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Right Note0013" x="1060" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0000" x="2120" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0001" x="2120" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0002" x="3180" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0003" x="3180" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0004" x="4240" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0005" x="4240" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0006" x="3180" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0007" x="3180" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0008" x="4240" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0009" x="4240" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0010" x="3180" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0011" x="3180" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0012" x="4240" y="2120" width="1060" height="1060"/>
+	<SubTexture name="Violastro Up Note0013" x="4240" y="2120" width="1060" height="1060"/>
+</TextureAtlas>

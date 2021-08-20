@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="violastroLights.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="lightsFlash0000" x="0" y="0" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0001" x="0" y="0" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0002" x="3260" y="0" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0003" x="3260" y="0" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0004" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0005" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0006" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0007" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0008" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0009" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0010" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0011" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="lightsFlash0012" x="0" y="2000" width="3260" height="2000"/>
+</TextureAtlas>

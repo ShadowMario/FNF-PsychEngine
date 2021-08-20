@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="vibrants_assets.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Azura Idle0000" x="0" y="0" width="344" height="459" frameX="0" frameY="-26" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0001" x="0" y="0" width="344" height="459" frameX="0" frameY="-26" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0002" x="349" y="0" width="326" height="469" frameX="-5" frameY="-16" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0003" x="349" y="0" width="326" height="469" frameX="-5" frameY="-16" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0004" x="680" y="0" width="303" height="481" frameX="-15" frameY="-4" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0005" x="680" y="0" width="303" height="481" frameX="-15" frameY="-4" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0006" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0007" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0008" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0009" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0010" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0011" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0012" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0013" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Sing0000" x="1288" y="0" width="354" height="445" frameX="-1" frameY="-45" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0001" x="1288" y="0" width="354" height="445" frameX="-1" frameY="-45" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0002" x="1647" y="0" width="330" height="472" frameX="0" frameY="-18" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0003" x="1647" y="0" width="330" height="472" frameX="0" frameY="-18" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0004" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0005" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0006" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0007" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0008" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0009" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0010" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0011" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0012" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing0013" x="1982" y="0" width="308" height="490" frameX="-6" frameY="0" frameWidth="355" frameHeight="490"/>
+	<SubTexture name="Azura Sing Alt0000" x="2295" y="0" width="319" height="445" frameX="0" frameY="-29" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0001" x="2295" y="0" width="319" height="445" frameX="0" frameY="-29" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0002" x="2619" y="0" width="300" height="458" frameX="-5" frameY="-16" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0003" x="2619" y="0" width="300" height="458" frameX="-5" frameY="-16" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0004" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0005" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0006" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0007" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0008" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0009" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0010" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0011" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0012" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Alt0013" x="2924" y="0" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Banana Idle0000" x="3196" y="0" width="303" height="364" frameX="0" frameY="-16" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0001" x="3196" y="0" width="303" height="364" frameX="0" frameY="-16" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0002" x="3504" y="0" width="296" height="375" frameX="0" frameY="-5" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0003" x="3504" y="0" width="296" height="375" frameX="0" frameY="-5" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0004" x="0" y="495" width="313" height="380" frameX="0" frameY="0" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0005" x="0" y="495" width="313" height="380" frameX="0" frameY="0" frameWidth="329" frameHeight="380"/>
+	<SubTexture name="Banana Idle0006" x="318" y="495" width="329" height="380"/>
+	<SubTexture name="Banana Idle0007" x="318" y="495" width="329" height="380"/>
+	<SubTexture name="Banana Idle0008" x="318" y="495" width="329" height="380"/>
+	<SubTexture name="Banana Idle0009" x="318" y="495" width="329" height="380"/>
+	<SubTexture name="Banana Idle0010" x="318" y="495" width="329" height="380"/>
+	<SubTexture name="Banana Idle0011" x="318" y="495" width="329" height="380"/>
+	<SubTexture name="Banana Idle0012" x="318" y="495" width="329" height="380"/>
+	<SubTexture name="Banana Idle0013" x="318" y="495" width="329" height="380"/>
+	<SubTexture name="Banana Sing0000" x="652" y="495" width="296" height="399" frameX="0" frameY="-12" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0001" x="652" y="495" width="296" height="399" frameX="0" frameY="-12" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0002" x="953" y="495" width="282" height="404" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0003" x="953" y="495" width="282" height="404" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0004" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0005" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0006" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0007" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0008" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0009" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0010" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0011" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0012" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing0013" x="1240" y="495" width="289" height="398" frameX="-10" frameY="0" frameWidth="299" frameHeight="411"/>
+	<SubTexture name="Banana Sing Alt0000" x="1534" y="495" width="327" height="372" frameX="-11" frameY="0" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0001" x="1534" y="495" width="327" height="372" frameX="-11" frameY="0" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0002" x="1866" y="495" width="328" height="372" frameX="-5" frameY="0" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0003" x="1866" y="495" width="328" height="372" frameX="-5" frameY="0" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0004" x="2199" y="495" width="411" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0005" x="2199" y="495" width="411" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0006" x="2615" y="495" width="419" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0007" x="2615" y="495" width="419" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0008" x="3039" y="495" width="345" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0009" x="3039" y="495" width="345" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0010" x="3039" y="495" width="345" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0011" x="3039" y="495" width="345" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0012" x="3039" y="495" width="345" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Banana Sing Alt0013" x="3039" y="495" width="345" height="371" frameX="0" frameY="-1" frameWidth="419" frameHeight="372"/>
+	<SubTexture name="Cardinal Idle0000" x="3389" y="495" width="389" height="621" frameX="0" frameY="-22" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0001" x="3389" y="495" width="389" height="621" frameX="0" frameY="-22" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0002" x="0" y="1121" width="388" height="631" frameX="0" frameY="-12" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0003" x="0" y="1121" width="388" height="631" frameX="0" frameY="-12" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0004" x="393" y="1121" width="380" height="642" frameX="0" frameY="-1" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0005" x="393" y="1121" width="380" height="642" frameX="0" frameY="-1" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0006" x="778" y="1121" width="378" height="643" frameX="0" frameY="0" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0007" x="778" y="1121" width="378" height="643" frameX="0" frameY="0" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0008" x="778" y="1121" width="378" height="643" frameX="0" frameY="0" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0009" x="778" y="1121" width="378" height="643" frameX="0" frameY="0" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0010" x="778" y="1121" width="378" height="643" frameX="0" frameY="0" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0011" x="778" y="1121" width="378" height="643" frameX="0" frameY="0" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0012" x="778" y="1121" width="378" height="643" frameX="0" frameY="0" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Idle0013" x="778" y="1121" width="378" height="643" frameX="0" frameY="0" frameWidth="389" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing0000" x="1161" y="1121" width="423" height="682" frameX="-14" frameY="-15" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0001" x="1589" y="1121" width="421" height="697" frameX="-14" frameY="0" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0002" x="2015" y="1121" width="427" height="665" frameX="-4" frameY="-32" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0003" x="2447" y="1121" width="424" height="651" frameX="-4" frameY="-46" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0004" x="2876" y="1121" width="411" height="648" frameX="0" frameY="-49" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0005" x="3292" y="1121" width="416" height="644" frameX="0" frameY="-53" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0006" x="0" y="1823" width="386" height="644" frameX="0" frameY="-53" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0007" x="391" y="1823" width="385" height="644" frameX="0" frameY="-53" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0008" x="391" y="1823" width="385" height="644" frameX="0" frameY="-53" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0009" x="391" y="1823" width="385" height="644" frameX="0" frameY="-53" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0010" x="391" y="1823" width="385" height="644" frameX="0" frameY="-53" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0011" x="391" y="1823" width="385" height="644" frameX="0" frameY="-53" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0012" x="391" y="1823" width="385" height="644" frameX="0" frameY="-53" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing0013" x="391" y="1823" width="385" height="644" frameX="0" frameY="-53" frameWidth="437" frameHeight="697"/>
+	<SubTexture name="Cardinal Sing Alt0000" x="781" y="1823" width="377" height="607" frameX="-31" frameY="-36" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0001" x="781" y="1823" width="377" height="607" frameX="-31" frameY="-36" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0002" x="1163" y="1823" width="372" height="622" frameX="-18" frameY="-21" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0003" x="1163" y="1823" width="372" height="622" frameX="-18" frameY="-21" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0004" x="1540" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0005" x="1540" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0006" x="1903" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0007" x="1903" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0008" x="1903" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0009" x="1903" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0010" x="1903" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0011" x="1903" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0012" x="1903" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Cardinal Sing Alt0013" x="1903" y="1823" width="358" height="643" frameX="0" frameY="0" frameWidth="408" frameHeight="643"/>
+	<SubTexture name="Pistachio Idle0000" x="2266" y="1823" width="400" height="539" frameX="0" frameY="-20" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0001" x="2266" y="1823" width="400" height="539" frameX="0" frameY="-20" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0002" x="2671" y="1823" width="389" height="547" frameX="-15" frameY="-12" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0003" x="2671" y="1823" width="389" height="547" frameX="-15" frameY="-12" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0004" x="3065" y="1823" width="387" height="559" frameX="-25" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0005" x="3065" y="1823" width="387" height="559" frameX="-25" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0006" x="3457" y="1823" width="403" height="559" frameX="-8" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0007" x="3457" y="1823" width="403" height="559" frameX="-8" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0008" x="0" y="2472" width="400" height="559" frameX="-11" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0009" x="0" y="2472" width="400" height="559" frameX="-11" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0010" x="405" y="2472" width="395" height="559" frameX="-16" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0011" x="405" y="2472" width="395" height="559" frameX="-16" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0012" x="405" y="2472" width="395" height="559" frameX="-16" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Idle0013" x="405" y="2472" width="395" height="559" frameX="-16" frameY="0" frameWidth="412" frameHeight="559"/>
+	<SubTexture name="Pistachio Sing0000" x="805" y="2472" width="398" height="647" frameX="0" frameY="-6" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0001" x="805" y="2472" width="398" height="647" frameX="0" frameY="-6" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0002" x="1208" y="2472" width="374" height="652" frameX="-25" frameY="-1" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0003" x="1208" y="2472" width="374" height="652" frameX="-25" frameY="-1" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0004" x="1587" y="2472" width="397" height="642" frameX="-3" frameY="-11" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0005" x="1587" y="2472" width="397" height="642" frameX="-3" frameY="-11" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0006" x="1989" y="2472" width="374" height="647" frameX="-26" frameY="-6" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0007" x="1989" y="2472" width="374" height="647" frameX="-26" frameY="-6" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0008" x="2368" y="2472" width="372" height="653" frameX="-28" frameY="0" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0009" x="2368" y="2472" width="372" height="653" frameX="-28" frameY="0" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0010" x="2368" y="2472" width="372" height="653" frameX="-28" frameY="0" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0011" x="2368" y="2472" width="372" height="653" frameX="-28" frameY="0" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0012" x="2368" y="2472" width="372" height="653" frameX="-28" frameY="0" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing0013" x="2368" y="2472" width="372" height="653" frameX="-28" frameY="0" frameWidth="400" frameHeight="653"/>
+	<SubTexture name="Pistachio Sing Alt0000" x="2745" y="2472" width="303" height="486" frameX="-36" frameY="-12" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0001" x="2745" y="2472" width="303" height="486" frameX="-36" frameY="-12" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0002" x="3053" y="2472" width="322" height="492" frameX="-27" frameY="-6" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0003" x="3053" y="2472" width="322" height="492" frameX="-27" frameY="-6" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0004" x="3380" y="2472" width="357" height="498" frameX="-7" frameY="0" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0005" x="3380" y="2472" width="357" height="498" frameX="-7" frameY="0" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0006" x="3742" y="2472" width="342" height="492" frameX="-11" frameY="-6" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0007" x="3742" y="2472" width="342" height="492" frameX="-11" frameY="-6" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0008" x="0" y="3130" width="359" height="492" frameX="0" frameY="-6" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0009" x="0" y="3130" width="359" height="492" frameX="0" frameY="-6" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0010" x="364" y="3130" width="351" height="492" frameX="-8" frameY="-6" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0011" x="364" y="3130" width="351" height="492" frameX="-8" frameY="-6" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0012" x="364" y="3130" width="351" height="492" frameX="-8" frameY="-6" frameWidth="364" frameHeight="498"/>
+	<SubTexture name="Pistachio Sing Alt0013" x="364" y="3130" width="351" height="492" frameX="-8" frameY="-6" frameWidth="364" frameHeight="498"/>
+</TextureAtlas>

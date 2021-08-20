@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="powerCrystalStar.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Power Crystal Star0000" x="0" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0001" x="0" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0002" x="782" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0003" x="782" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0004" x="1564" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0005" x="1564" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0006" x="2346" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0007" x="2346" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0008" x="3128" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0009" x="3128" y="0" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0010" x="0" y="781" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0011" x="0" y="781" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0012" x="782" y="781" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0013" x="782" y="781" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0014" x="1564" y="781" width="777" height="776"/>
+	<SubTexture name="Power Crystal Star0015" x="1564" y="781" width="777" height="776"/>
+</TextureAtlas>

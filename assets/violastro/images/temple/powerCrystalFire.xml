@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="powerCrystalFire.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Power Crystal Fire0000" x="0" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0001" x="0" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0002" x="780" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0003" x="780" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0004" x="1560" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0005" x="1560" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0006" x="2340" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0007" x="2340" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0008" x="3120" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0009" x="3120" y="0" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0010" x="0" y="779" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0011" x="0" y="779" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0012" x="780" y="779" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0013" x="780" y="779" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0014" x="1560" y="779" width="775" height="774"/>
+	<SubTexture name="Power Crystal Fire0015" x="1560" y="779" width="775" height="774"/>
+</TextureAtlas>

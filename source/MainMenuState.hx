@@ -57,8 +57,8 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
-		bg.scrollFactor.set(0, 0.15);
-		bg.setGraphicSize(Std.int(bg.width * 1.25));
+		bg.scrollFactor.set(0, 0.1);
+		bg.setGraphicSize(Std.int(bg.width * 1.15));
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
@@ -70,8 +70,8 @@ class MainMenuState extends MusicBeatState
 		add(camFollowPos);
 
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		magenta.scrollFactor.set(0, 0.15);
-		magenta.setGraphicSize(Std.int(magenta.width * 1.25));
+		magenta.scrollFactor.set(0, 0.1);
+		magenta.setGraphicSize(Std.int(magenta.width * 1.15));
 		magenta.updateHitbox();
 		magenta.screenCenter();
 		magenta.visible = false;
@@ -109,6 +109,11 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+
+		var modCreators:FlxText = new FlxText(FlxG.width - 213, FlxG.height - 158, 0, "Special Thanks:\nAJTweety\nMarkositta\nPepperMint\nTheFluxWizard\nviralbox\nBri The Cookie Monster\nTreejog\nBowtie Boy\nJecket\n", 12);
+		modCreators.scrollFactor.set();
+		modCreators.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(modCreators);
 
 		// NG.core.calls.event.logEvent('swag').send();
 

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Menu_Violastro.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="M Violastro Idle0000" x="0" y="0" width="297" height="381" frameX="-18" frameY="0" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0001" x="0" y="0" width="297" height="381" frameX="-18" frameY="0" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0002" x="302" y="0" width="298" height="366" frameX="-13" frameY="-15" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0003" x="302" y="0" width="298" height="366" frameX="-13" frameY="-15" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0004" x="605" y="0" width="301" height="364" frameX="-1" frameY="-17" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0005" x="605" y="0" width="301" height="364" frameX="-1" frameY="-17" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0006" x="911" y="0" width="300" height="375" frameX="0" frameY="-6" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0007" x="911" y="0" width="300" height="375" frameX="0" frameY="-6" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0008" x="1216" y="0" width="302" height="379" frameX="-3" frameY="-2" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0009" x="1216" y="0" width="302" height="379" frameX="-3" frameY="-2" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0010" x="1523" y="0" width="306" height="380" frameX="-6" frameY="-1" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0011" x="1523" y="0" width="306" height="380" frameX="-6" frameY="-1" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0012" x="0" y="386" width="305" height="380" frameX="-9" frameY="-1" frameWidth="315" frameHeight="381"/>
+	<SubTexture name="M Violastro Idle0013" x="0" y="386" width="305" height="380" frameX="-9" frameY="-1" frameWidth="315" frameHeight="381"/>
+</TextureAtlas>

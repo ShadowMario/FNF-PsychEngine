@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="violastroDisc.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="discSpin0000" x="0" y="0" width="818" height="378" frameX="-22" frameY="-10" frameWidth="840" frameHeight="388"/>
+	<SubTexture name="discSpin0001" x="823" y="0" width="819" height="380" frameX="-18" frameY="-8" frameWidth="840" frameHeight="388"/>
+	<SubTexture name="discSpin0002" x="0" y="385" width="836" height="388" frameX="0" frameY="0" frameWidth="840" frameHeight="388"/>
+	<SubTexture name="discSpin0003" x="841" y="385" width="810" height="387" frameX="-16" frameY="-1" frameWidth="840" frameHeight="388"/>
+</TextureAtlas>

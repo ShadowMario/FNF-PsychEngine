@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="stageCrowd.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="crowdBop0000" x="0" y="0" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0001" x="0" y="0" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0002" x="3265" y="0" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0003" x="3265" y="0" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0004" x="0" y="2005" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0005" x="0" y="2005" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0006" x="3265" y="2005" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0007" x="3265" y="2005" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0008" x="3265" y="2005" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0009" x="3265" y="2005" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0010" x="3265" y="2005" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0011" x="3265" y="2005" width="3260" height="2000"/>
+	<SubTexture name="crowdBop0012" x="3265" y="2005" width="3260" height="2000"/>
+</TextureAtlas>

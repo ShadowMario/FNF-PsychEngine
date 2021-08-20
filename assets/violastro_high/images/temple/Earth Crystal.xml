@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Earth Crystal.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Power Crystal Earth0000" x="0" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0001" x="0" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0002" x="778" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0003" x="778" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0004" x="1556" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0005" x="1556" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0006" x="2334" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0007" x="2334" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0008" x="3112" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0009" x="3112" y="0" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0010" x="0" y="779" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0011" x="0" y="779" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0012" x="778" y="779" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0013" x="778" y="779" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0014" x="1556" y="779" width="773" height="774"/>
+	<SubTexture name="Power Crystal Earth0015" x="1556" y="779" width="773" height="774"/>
+</TextureAtlas>

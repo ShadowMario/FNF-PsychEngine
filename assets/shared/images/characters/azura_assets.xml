@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="azura_assets.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Azura Idle0000" x="0" y="0" width="344" height="459" frameX="0" frameY="-26" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0001" x="0" y="0" width="344" height="459" frameX="0" frameY="-26" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0002" x="349" y="0" width="326" height="469" frameX="-5" frameY="-16" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0003" x="349" y="0" width="326" height="469" frameX="-5" frameY="-16" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0004" x="680" y="0" width="303" height="481" frameX="-15" frameY="-4" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0005" x="680" y="0" width="303" height="481" frameX="-15" frameY="-4" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0006" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0007" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0008" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0009" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0010" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0011" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0012" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Idle0013" x="988" y="0" width="295" height="485" frameX="-17" frameY="0" frameWidth="344" frameHeight="485"/>
+	<SubTexture name="Azura Look Up0000" x="1288" y="0" width="303" height="481" frameX="-42" frameY="-23" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0001" x="1288" y="0" width="303" height="481" frameX="-42" frameY="-23" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0002" x="1596" y="0" width="313" height="492" frameX="-17" frameY="-12" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0003" x="1596" y="0" width="313" height="492" frameX="-17" frameY="-12" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0004" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0005" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0006" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0007" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0008" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0009" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0010" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0011" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0012" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0013" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0014" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0015" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0016" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0017" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0018" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0019" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0020" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0021" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0022" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0023" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0024" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0025" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0026" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0027" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0028" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0029" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0030" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0031" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0032" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0033" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0034" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0035" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0036" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0037" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0038" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0039" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0040" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0041" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0042" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0043" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0044" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0045" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0046" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0047" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0048" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0049" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0050" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0051" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0052" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0053" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0054" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0055" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0056" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0057" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0058" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0059" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0060" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0061" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0062" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0063" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0064" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0065" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0066" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0067" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0068" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0069" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0070" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0071" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0072" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0073" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0074" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0075" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0076" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0077" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0078" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0079" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0080" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0081" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0082" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0083" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0084" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0085" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0086" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0087" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0088" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0089" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0090" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0091" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0092" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0093" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0094" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0095" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0096" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0097" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0098" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0099" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0100" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0101" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0102" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0103" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0104" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0105" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0106" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0107" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0108" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0109" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0110" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0111" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0112" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0113" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0114" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0115" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0116" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0117" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0118" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0119" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0120" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0121" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0122" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0123" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0124" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0125" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0126" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0127" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0128" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0129" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0130" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0131" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0132" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0133" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0134" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0135" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0136" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0137" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0138" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0139" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0140" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0141" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0142" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Look Up0143" x="0" y="497" width="311" height="504" frameX="0" frameY="0" frameWidth="345" frameHeight="504"/>
+	<SubTexture name="Azura Sing Down0000" x="316" y="497" width="319" height="445" frameX="0" frameY="-29" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0001" x="316" y="497" width="319" height="445" frameX="0" frameY="-29" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0002" x="640" y="497" width="300" height="458" frameX="-5" frameY="-16" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0003" x="640" y="497" width="300" height="458" frameX="-5" frameY="-16" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0004" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0005" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0006" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0007" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0008" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0009" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0010" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0011" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0012" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Down0013" x="945" y="497" width="267" height="474" frameX="-12" frameY="0" frameWidth="319" frameHeight="474"/>
+	<SubTexture name="Azura Sing Left0000" x="1217" y="497" width="242" height="480" frameX="-18" frameY="-12" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0001" x="1217" y="497" width="242" height="480" frameX="-18" frameY="-12" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0002" x="1464" y="497" width="252" height="491" frameX="-21" frameY="-1" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0003" x="1464" y="497" width="252" height="491" frameX="-21" frameY="-1" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0004" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0005" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0006" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0007" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0008" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0009" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0010" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0011" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0012" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Left0013" x="1721" y="497" width="270" height="492" frameX="0" frameY="0" frameWidth="273" frameHeight="492"/>
+	<SubTexture name="Azura Sing Right0000" x="0" y="1006" width="334" height="449" frameX="0" frameY="-44" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0001" x="0" y="1006" width="334" height="449" frameX="0" frameY="-44" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0002" x="339" y="1006" width="320" height="481" frameX="-7" frameY="-12" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0003" x="339" y="1006" width="320" height="481" frameX="-7" frameY="-12" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0004" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0005" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0006" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0007" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0008" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0009" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0010" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0011" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0012" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Right0013" x="664" y="1006" width="294" height="493" frameX="-13" frameY="0" frameWidth="334" frameHeight="493"/>
+	<SubTexture name="Azura Sing Up0000" x="963" y="1006" width="271" height="532"/>
+	<SubTexture name="Azura Sing Up0001" x="963" y="1006" width="271" height="532"/>
+	<SubTexture name="Azura Sing Up0002" x="1239" y="1006" width="270" height="527" frameX="-1" frameY="-5" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0003" x="1239" y="1006" width="270" height="527" frameX="-1" frameY="-5" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0004" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0005" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0006" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0007" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0008" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0009" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0010" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0011" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0012" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+	<SubTexture name="Azura Sing Up0013" x="1514" y="1006" width="253" height="521" frameX="-13" frameY="-11" frameWidth="271" frameHeight="532"/>
+</TextureAtlas>

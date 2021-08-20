@@ -1,0 +1,9 @@
+violastro:left bf-vio:right
+:0:laugh:0.05:normal:Bwehehe!
+:0:talk:0.05:normal:Thank ye Boyfriend for coming on\nstage for this amazing show!
+:1:talk:0.05:normal:Beep!
+:0:serious:0.05:normal:We'll be right back for our special number!
+:1:talk:0.05:normal:Bop?
+:0:laugh:0.04:normal:So don't turn to another channel just yet!
+:0:talk:0.05:normal:See yer soon!
+:1:empty:0.05:normal:*Extra song unlocked in Freeplay!*

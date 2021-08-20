@@ -3,7 +3,6 @@ dad
 gf
 spooky
 pico
-mom
 mom-car
 bf-car
 gf-car
@@ -17,3 +16,14 @@ gf-pixel
 senpai
 senpai-angry
 spirit
+violastro
+gf-viobot
+bf-shades
+violastrobot
+venturers
+azura
+banana
+cardinal
+pistachio
+bf-vio
+gf-vio

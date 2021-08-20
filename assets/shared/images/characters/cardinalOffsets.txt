@@ -1,0 +1,10 @@
+singDOWN -15 1
+singUP -23 154
+singFire0 43 -3
+glance 0 4
+idle 2 2
+singFire1 -15 1
+singRIGHT -61 -10
+singFire2 -23 154
+singFire3 -61 -10
+singLEFT 43 -3

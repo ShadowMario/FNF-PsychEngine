@@ -1,0 +1,14 @@
+idle 0 0
+idleHair 0 0
+singLEFT 160 0
+singLEFT-start 160 0
+singLEFT-loop 160 0
+singDOWN 15 10
+singDOWN-start 15 10
+singDOWN-loop 15 10
+singUP -40 160
+singUP-start -40 160
+singUP-loop -40 160
+singRIGHT -45 -45
+singRIGHT-start -45 -45
+singRIGHT-loop -45 -45

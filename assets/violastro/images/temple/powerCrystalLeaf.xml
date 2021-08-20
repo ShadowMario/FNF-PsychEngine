@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="powerCrystalLeaf.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Power Crystal Leaf0000" x="0" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0001" x="0" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0002" x="780" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0003" x="780" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0004" x="1560" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0005" x="1560" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0006" x="2340" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0007" x="2340" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0008" x="3120" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0009" x="3120" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0010" x="0" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0011" x="0" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0012" x="780" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0013" x="780" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0014" x="1560" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Leaf0015" x="1560" y="781" width="775" height="776"/>
+</TextureAtlas>

@@ -1,0 +1,10 @@
+singEarth3 -109 -270
+singDOWN -75 -279
+singUP -85 -245
+glance -90 -270
+idle -90 -270
+singRIGHT -109 -270
+singEarth0 -43 -268
+singEarth1 -75 -279
+singLEFT -43 -268
+singEarth2 -85 -245

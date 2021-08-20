@@ -1,0 +1,15 @@
+violastro:left gf:center bf-vio:right
+:0:troll:0.05:normal:I am now at my THIRD phase!
+:0:troll:0.1:angry:I AM TROLLING!
+:1:talk:0.05:normal:Shut up with your "trolling".
+:0:think:0.05:normal:Alright then I guess.
+:0:talk:0.05:normal:Just the same thing again and again...
+:0:talk:0.05:normal:Can I at least cut the stage in half?
+:1:talk:0.05:normal:Wha- no!
+:0:think:0.075:normal:Arr man...
+:0:talk:0.05:normal:Well in that case...
+:0:laugh:0.03:angry:ViolastroBot, it's yer time to help me!
+:2:talk:0.05:normal:Beep bop?
+:0:serious:0.05:normal:Huh? No, this isn't Hex,\nhow dumb can you be?
+:0:think:0.05:normal:What even made you think of that?
+:2:talk:0.5:normal:burger

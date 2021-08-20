@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Cardinal_Dialogue.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Cardinal Talk Idle0000" x="1684" y="0" width="416" height="513"/>
+	<SubTexture name="Cardinal Talk Loop0000" x="0" y="0" width="416" height="513"/>
+	<SubTexture name="Cardinal Talk Loop0001" x="421" y="0" width="416" height="513"/>
+	<SubTexture name="Cardinal Talk Loop0002" x="842" y="0" width="416" height="513"/>
+	<SubTexture name="Cardinal Talk Loop0003" x="1263" y="0" width="416" height="513"/>
+	<SubTexture name="Cardinal Talk Loop0004" x="1684" y="0" width="416" height="513"/>
+	<SubTexture name="Cardinal Talk Loop0005" x="1684" y="0" width="416" height="513"/>
+	<SubTexture name="Cardinal mic hit0000" x="2105" y="0" width="554" height="453" frameX="-89" frameY="-4" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0001" x="2664" y="0" width="417" height="453" frameX="-89" frameY="-4" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0002" x="3086" y="0" width="458" height="384" frameX="0" frameY="-3" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0003" x="3549" y="0" width="413" height="409" frameX="-26" frameY="-3" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0004" x="0" y="518" width="413" height="409" frameX="-26" frameY="-3" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0005" x="418" y="518" width="417" height="433" frameX="-64" frameY="0" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0006" x="840" y="518" width="460" height="449" frameX="-75" frameY="-31" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0007" x="1305" y="518" width="480" height="449" frameX="-75" frameY="-31" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0008" x="1790" y="518" width="529" height="449" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0009" x="2324" y="518" width="543" height="548" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0010" x="2872" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0011" x="3225" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0012" x="2872" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0013" x="3225" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0014" x="2872" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0015" x="3225" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0016" x="2872" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0017" x="3225" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0018" x="2872" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0019" x="3225" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0020" x="2872" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0021" x="3225" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0022" x="2872" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0023" x="3225" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0024" x="2872" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0025" x="3225" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0026" x="2872" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+	<SubTexture name="Cardinal mic hit0027" x="3225" y="518" width="348" height="441" frameX="-89" frameY="-23" frameWidth="643" frameHeight="571"/>
+</TextureAtlas>

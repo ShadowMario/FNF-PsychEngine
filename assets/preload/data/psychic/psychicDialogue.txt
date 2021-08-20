@@ -1,0 +1,16 @@
+cardinal:left bf:right
+:0:talk:0.05:normal:The FitnessGram Pacer Test is a multistage\naerobic capacity test...
+:0:talk:0.05:normal:that progressively gets more difficult\nas it continues.
+:0:talk:0.05:normal:The 20 meter pacer test will being in\n30 seconds.
+:0:talk:0.05:normal:Line up at the start.
+:0:talk:0.05:normal:The running speed starts slowly, but\ngets faster each minute...
+:0:talk:0.05:normal:after you hear this signal *beep*.
+:0:talk:0.05:normal:A single lap should be completed each\ntime you hear this sound.
+:0:talk:0.05:normal:*Ding*
+:0:talk:0.05:normal:Remember to run in a straight line, and\nrun as long as possible.
+:0:talk:0.05:normal:The second time you fail to complete a lap\nbefore the sound...
+:0:talk:0.05:normal:your test is over.
+:0:talk:0.05:normal:The test will begin on the word start.
+:0:talk:0.075:normal:On your mark...
+:0:talk:0.09:normal:get ready...
+:0:talk:0.035:angry:start!

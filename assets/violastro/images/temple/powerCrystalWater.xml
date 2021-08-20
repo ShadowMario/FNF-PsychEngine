@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="powerCrystalWater.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Power Crystal Water0000" x="0" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0001" x="0" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0002" x="780" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0003" x="780" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0004" x="1560" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0005" x="1560" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0006" x="2340" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0007" x="2340" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0008" x="3120" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0009" x="3120" y="0" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0010" x="0" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0011" x="0" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0012" x="780" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0013" x="780" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0014" x="1560" y="781" width="775" height="776"/>
+	<SubTexture name="Power Crystal Water0015" x="1560" y="781" width="775" height="776"/>
+</TextureAtlas>

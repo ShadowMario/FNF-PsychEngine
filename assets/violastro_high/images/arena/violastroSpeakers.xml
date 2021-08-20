@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="violastroSpeakers.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="speakersBounce0000" x="0" y="0" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0001" x="0" y="0" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0002" x="3260" y="0" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0003" x="3260" y="0" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0004" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0005" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0006" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0007" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0008" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0009" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0010" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0011" x="0" y="2000" width="3260" height="2000"/>
+	<SubTexture name="speakersBounce0012" x="0" y="2000" width="3260" height="2000"/>
+</TextureAtlas>
