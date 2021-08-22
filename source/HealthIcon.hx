@@ -12,9 +12,6 @@ class HealthIcon extends FlxSprite
 	private var isPlayer:Bool = false;
 	private var char:String = '';
 
-	// This is made for allowing these icons to be used without having their suffix deleted
-	var ignoreSplit:Array<String> = ['bf-pixel', 'bf-old'];
-
 	// The following icons have antialiasing forced to be disabled
 	var noAntialiasing:Array<String> = ['bf-pixel', 'senpai', 'spirit'];
 
@@ -41,18 +38,6 @@ class HealthIcon extends FlxSprite
 	}
 
 	public function changeIcon(char:String) {
-		var doSplit:Bool = true;
-		for (i in 0...ignoreSplit.length) {
-			if(char == ignoreSplit[i]) {
-				doSplit = false;
-				break;
-			}
-		}
-
-		if(doSplit) {
-			char = (char.split('-')[0]).trim();
-		}
-
 		if(this.char != char) {
 			var name:String = 'icons/icon-' + char;
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon

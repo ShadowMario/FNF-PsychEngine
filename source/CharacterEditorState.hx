@@ -8,6 +8,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxCamera;
+import flixel.input.keyboard.FlxKey;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.graphics.FlxGraphic;
@@ -788,6 +789,9 @@ class CharacterEditorState extends MusicBeatState
 					inputTexts[i].text = ClipboardAdd(inputTexts[i].text);
 					inputTexts[i].caretIndex = inputTexts[i].text.length;
 					getEvent(FlxUIInputText.CHANGE_EVENT, inputTexts[i], null, []);
+					FlxG.sound.muteKeys = [];
+					FlxG.sound.volumeDownKeys = [];
+					FlxG.sound.volumeUpKeys = [];
 				}
 				if(FlxG.keys.justPressed.ENTER) {
 					inputTexts[i].hasFocus = false;
@@ -796,19 +800,13 @@ class CharacterEditorState extends MusicBeatState
 				return;
 			}
 		}
+		FlxG.sound.muteKeys = TitleState.muteKeys;
+		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 
 		if(!charDropDown.dropPanel.visible) {
 			if (FlxG.keys.justPressed.ESCAPE) {
-				var songName:String = PlayState.SONG.song.toLowerCase();
-				for (week in 0...WeekData.songsNames.length) {
-					var weekSongs:Array<String> = WeekData.songsNames[week];
-					for (i in 0...weekSongs.length) {
-						if(weekSongs[i].toLowerCase() == songName) {
-							PlayState.storyWeek = week;
-						}
-					}
-				}
-				LoadingState.loadAndSwitchState(new PlayState());
+				MusicBeatState.switchState(new PlayState());
 				FlxG.mouse.visible = false;
 				return;
 			}
@@ -961,7 +959,7 @@ class CharacterEditorState extends MusicBeatState
 			"no_antialiasing": char.noAntialiasing
 		};
 
-		var data:String = Json.stringify(json);
+		var data:String = Json.stringify(json, "\t");
 
 		if (data.length > 0)
 		{

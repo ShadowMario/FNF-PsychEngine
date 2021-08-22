@@ -14,7 +14,6 @@ class StrumNote extends FlxSprite
 	public function new(x:Float, y:Float, leData:Int) {
 		colorSwap = new ColorSwap();
 		shader = colorSwap.shader;
-		colorSwap.update(0);
 		noteData = leData;
 		super(x, y);
 	}
@@ -35,13 +34,14 @@ class StrumNote extends FlxSprite
 		animation.play(anim, force);
 		centerOffsets();
 		if(animation.curAnim.name == 'static') {
-			for (i in 0...3) {
-				colorSwap.update(0, i);
-			}
+			colorSwap.hue = 0;
+			colorSwap.saturation = 0;
+			colorSwap.brightness = 0;
 		} else {
-			for (i in 0...3) {
-				colorSwap.update(ClientPrefs.arrowHSV[noteData][i], i);
-			}
+			colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
+			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
+			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
+
 			if(animation.curAnim.name == 'confirm' && !PlayState.curStage.startsWith('school')) {
 				offset.x -= 13;
 				offset.y -= 13;

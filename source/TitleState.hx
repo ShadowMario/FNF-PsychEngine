@@ -32,6 +32,10 @@ using StringTools;
 
 class TitleState extends MusicBeatState
 {
+	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
+	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
+	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
+
 	static var initialized:Bool = false;
 
 	var blackScreen:FlxSprite;
@@ -62,7 +66,9 @@ class TitleState extends MusicBeatState
 		//Gonna finish this later, probably
 		#end
 		FlxG.game.focusLostFramerate = 60;
-		FlxG.sound.muteKeys = [FlxKey.ZERO];
+		FlxG.sound.muteKeys = muteKeys;
+		FlxG.sound.volumeDownKeys = volumeDownKeys;
+		FlxG.sound.volumeUpKeys = volumeUpKeys;
 
 		PlayerSettings.init();
 
@@ -312,8 +318,8 @@ class TitleState extends MusicBeatState
 
 		if(swagShader != null)
 		{
-			if(controls.UI_LEFT) swagShader.updateAdd(36 * -elapsed);
-			if(controls.UI_RIGHT) swagShader.updateAdd(36 * elapsed);
+			if(controls.UI_LEFT) swagShader.hue -= elapsed * 0.1;
+			if(controls.UI_RIGHT) swagShader.hue += elapsed * 0.1;
 		}
 
 		super.update(elapsed);

@@ -22,7 +22,7 @@ class ClientPrefs {
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var imagesPersist:Bool = false;
-	public static var buttonMashing:Bool = false;
+	public static var ghostTapping:Bool = true;
 
 	public static var defaultKeys:Array<FlxKey> = [
 		A, LEFT,			//Note Left
@@ -75,7 +75,7 @@ class ClientPrefs {
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.imagesPersist = imagesPersist;
-		FlxG.save.data.buttonMashing = buttonMashing;
+		FlxG.save.data.ghostTapping = ghostTapping;
 
 		var achieves:Array<String> = [];
 		for (i in 0...Achievements.achievementsUnlocked.length) {
@@ -148,8 +148,8 @@ class ClientPrefs {
 			imagesPersist = FlxG.save.data.imagesPersist;
 			FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
 		}
-		if(FlxG.save.data.buttonMashing != null) {
-			buttonMashing = FlxG.save.data.buttonMashing;
+		if(FlxG.save.data.ghostTapping != null) {
+			ghostTapping = FlxG.save.data.ghostTapping;
 		}
 
 		var save:FlxSave = new FlxSave();

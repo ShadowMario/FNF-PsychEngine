@@ -5,9 +5,7 @@ import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
-#if polymod
-import polymod.format.ParseRules.TargetSignatureElement;
-#end
+import flash.display.BitmapData;
 
 using StringTools;
 
@@ -44,18 +42,22 @@ class Note extends FlxSprite
 		if(noteData > -1 && noteType != value) {
 			switch(value) {
 				case 3: //Hurt note
-					switch(PlayState.curStage) {
-						case 'school' | 'schoolEvil':
+					reloadNote('HURT');
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
 
-						default:
-							reloadNote('HURT');
-					}
+				default:
+					colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
+					colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
+					colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
 			}
 			noteType = value;
 		}
 		return value;
 	}
 
+	var isPixel:Bool = false;
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false)
 	{
 		super();
@@ -77,31 +79,22 @@ class Note extends FlxSprite
 
 		var daStage:String = PlayState.curStage;
 
-		var isPixel:Bool = false;
 		switch (daStage)
 		{
 			case 'school' | 'schoolEvil':
-				loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels'), true, 17, 17);
-
-				animation.add('greenScroll', [GREEN_NOTE + 4]);
-				animation.add('redScroll', [RED_NOTE + 4]);
-				animation.add('blueScroll', [BLUE_NOTE + 4]);
-				animation.add('purpleScroll', [PURP_NOTE + 4]);
-
 				if (isSustainNote)
 				{
-					loadGraphic(Paths.image('weeb/pixelUI/arrowEnds'), true, 7, 6);
-
-					animation.add('purpleholdend', [PURP_NOTE + 4]);
-					animation.add('greenholdend', [GREEN_NOTE + 4]);
-					animation.add('redholdend', [RED_NOTE + 4]);
-					animation.add('blueholdend', [BLUE_NOTE + 4]);
-
-					animation.add('purplehold', [PURP_NOTE]);
-					animation.add('greenhold', [GREEN_NOTE]);
-					animation.add('redhold', [RED_NOTE]);
-					animation.add('bluehold', [BLUE_NOTE]);
+					loadGraphic(Paths.image('weeb/pixelUI/NOTE_assetsENDS'));
+					width = width / 4;
+					height = height / 2;
+					loadGraphic(Paths.image('weeb/pixelUI/NOTE_assetsENDS'), true, Math.floor(width), Math.floor(height));
+				} else {
+					loadGraphic(Paths.image('weeb/pixelUI/NOTE_assets'));
+					width = width / 4;
+					height = height / 5;
+					loadGraphic(Paths.image('weeb/pixelUI/NOTE_assets'), true, Math.floor(width), Math.floor(height));
 				}
+				loadPixelNoteAnims();
 
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
@@ -116,9 +109,10 @@ class Note extends FlxSprite
 		if(noteData > -1) {
 			colorSwap = new ColorSwap();
 			shader = colorSwap.shader;
-			for (i in 0...3) {
-				colorSwap.update(ClientPrefs.arrowHSV[noteData % 4][i], i);
-			}
+			
+			colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
+			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
+			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
 
 			x += swagWidth * (noteData % 4);
 			if(!isSustainNote) { //Doing this 'if' check to fix the warnings on Senpai songs
@@ -200,16 +194,29 @@ class Note extends FlxSprite
 			animName = animation.curAnim.name;
 		}
 
-		frames = Paths.getSparrowAtlas(prefix + skin + suffix);
-		loadNoteAnims();
+		var blahblah:String = prefix + skin + suffix;
+		if(isPixel) {
+			if(isSustainNote) {
+				loadGraphic(Paths.image('weeb/pixelUI/' + blahblah + 'ENDS'));
+				width = width / 4;
+				height = height / 2;
+				loadGraphic(Paths.image('weeb/pixelUI/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
+			} else {
+				loadGraphic(Paths.image('weeb/pixelUI/' + blahblah));
+				width = width / 4;
+				height = height / 5;
+				loadGraphic(Paths.image('weeb/pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
+			}
+			loadPixelNoteAnims();
+		} else {
+			frames = Paths.getSparrowAtlas(blahblah);
+			loadNoteAnims();
+		}
 		animation.play(animName, true);
 
 		if(inEditor) {
 			setGraphicSize(ChartingState.GRID_SIZE, ChartingState.GRID_SIZE);
 			updateHitbox();
-		}
-		for (i in 0...3) {
-			colorSwap.update(0, i);
 		}
 	}
 
@@ -234,6 +241,25 @@ class Note extends FlxSprite
 
 		setGraphicSize(Std.int(width * 0.7));
 		updateHitbox();
+	}
+
+	function loadPixelNoteAnims() {
+		if(isSustainNote) {
+			animation.add('purpleholdend', [PURP_NOTE + 4]);
+			animation.add('greenholdend', [GREEN_NOTE + 4]);
+			animation.add('redholdend', [RED_NOTE + 4]);
+			animation.add('blueholdend', [BLUE_NOTE + 4]);
+
+			animation.add('purplehold', [PURP_NOTE]);
+			animation.add('greenhold', [GREEN_NOTE]);
+			animation.add('redhold', [RED_NOTE]);
+			animation.add('bluehold', [BLUE_NOTE]);
+		} else {
+			animation.add('greenScroll', [GREEN_NOTE + 4]);
+			animation.add('redScroll', [RED_NOTE + 4]);
+			animation.add('blueScroll', [BLUE_NOTE + 4]);
+			animation.add('purpleScroll', [PURP_NOTE + 4]);
+		}
 	}
 
 	override function update(elapsed:Float)
