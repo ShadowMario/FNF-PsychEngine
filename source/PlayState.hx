@@ -2029,7 +2029,6 @@ class PlayState extends MusicBeatState
 		{
 			var roundedSpeed:Float = FlxMath.roundDecimal(SONG.speed, 2);
 			var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
-			var center:Float = strumLine.y + Note.swagWidth / 2;
 			notes.forEachAlive(function(daNote:Note)
 			{
 				if (daNote.y > FlxG.height)
@@ -2044,8 +2043,16 @@ class PlayState extends MusicBeatState
 				}
 
 				// i am so fucking sorry for this if condition
+				var strumY:Float = 0;
+				if(daNote.mustPress) {
+					strumY = playerStrums.members[daNote.noteData].y;
+				} else {
+					strumY = opponentStrums.members[daNote.noteData].y;
+				}
+				var center:Float = strumY + Note.swagWidth / 2;
+
 				if (ClientPrefs.downScroll) {
-					daNote.y = (strumLine.y + 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
+					daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
 					if (daNote.isSustainNote) {
 						//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
 						if (daNote.animation.curAnim.name.endsWith('end')) {
@@ -2069,7 +2076,7 @@ class PlayState extends MusicBeatState
 						}
 					}
 				} else {
-					daNote.y = (strumLine.y - 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
+					daNote.y = (strumY - 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
 
 					if (daNote.isSustainNote
 						&& daNote.y + daNote.offset.y * daNote.scale.y <= center
