@@ -789,13 +789,13 @@ class CharacterEditorState extends MusicBeatState
 					inputTexts[i].text = ClipboardAdd(inputTexts[i].text);
 					inputTexts[i].caretIndex = inputTexts[i].text.length;
 					getEvent(FlxUIInputText.CHANGE_EVENT, inputTexts[i], null, []);
-					FlxG.sound.muteKeys = [];
-					FlxG.sound.volumeDownKeys = [];
-					FlxG.sound.volumeUpKeys = [];
 				}
 				if(FlxG.keys.justPressed.ENTER) {
 					inputTexts[i].hasFocus = false;
 				}
+				FlxG.sound.muteKeys = [];
+				FlxG.sound.volumeDownKeys = [];
+				FlxG.sound.volumeUpKeys = [];
 				super.update(elapsed);
 				return;
 			}
