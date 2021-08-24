@@ -47,20 +47,18 @@ _____________________________________
   * Also there's the Background girls being spooky during the "Hey!" parts of the Instrumental
 
 ## Cool new Chart Editor changes and countless bug fixes
-![](https://i.imgur.com/h6Ja7eT.png)
+![an](https://user-images.githubusercontent.com/44785097/130653801-3bdaf3e0-3499-4bc5-ba95-95225567c445.jpg)
 * You can now chart "Event" notes, which are bookmarks that trigger specific actions that usually were hardcoded on the vanilla version of the game.
 * Your song's BPM can now have decimal values
 * You can manually adjust a Note's strum time if you're really going for milisecond precision
 * You can change a note's type on the Editor, it comes with two example types:
   * Alt Animation: Forces an alt animation to play, useful for songs like Ugh/Stress
   * Hey: Forces a "Hey" animation instead of the base Sing animation, if Boyfriend hits this note, Girlfriend will do a "Hey!" too.
+  * Hurt Note: Hitting this note will make you take damage equivalent to 15% of your health (5% if it's a sustain note piece).
 
-## Improved Animation Debug menu (Press 8 in-game on a Debug build)
-![](https://user-images.githubusercontent.com/44785097/127721062-f912853c-2513-41b8-bd66-fd80d9d4ee0f.png)
-* You can now press Save Offsets to save a .txt file with the editted offsets
-* You can also now change the characters while on the Menu
-* Go back to the game by pressing Escape
-NOTE: This should be used for fixing your character floating or being slightly under the ground! It's not for texture editting.
+## Character Editor menu (Press 8 during a song)
+![611204265433b](https://user-images.githubusercontent.com/44785097/130653956-3b15d82e-328c-4a59-8cf7-1d2b17c05f9a.jpg)
+
 
 ## Story mode menu rework:
 ![](https://i.imgur.com/UB2EKpV.png)
