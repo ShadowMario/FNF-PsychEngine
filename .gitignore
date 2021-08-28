@@ -2,3 +2,4 @@ export/
 .vscode/
 APIStuff.hx
 server/node_modules
+server/.env
