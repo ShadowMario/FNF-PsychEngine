@@ -219,5 +219,5 @@ app.post("/postImg", function(req, res) {
 var server = app.listen(2000, function()
 { 
     console.log('Listening on port %d', server.address().port);
-    //console.log(require('crypto').randomBytes(64).toString('hex'));
+    console.log(require('crypto').randomBytes(64).toString('hex'));
 });
