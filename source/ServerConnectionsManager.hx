@@ -9,6 +9,7 @@ class ServerConnectionsManager
     var serverPort:String = "2000";
 
     // i dont recommend editing this file :)
+    // if you do why you would do it
 
     private function serverConnection(action:String, data:String, ?contentType:String = "application/json")
     {

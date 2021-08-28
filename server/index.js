@@ -202,7 +202,13 @@ app.post("/register", function(req, res)
     });
 });
 
-app.post("/rateLevel", function(req, res) {
+app.post("/publishLevel", function(req, res) 
+{
+    // TODO: Post levels
+})
+
+app.post("/rateLevel", function(req, res) 
+{
     // TODO: Rate Levels
 });
 
@@ -219,5 +225,5 @@ app.post("/postImg", function(req, res) {
 var server = app.listen(2000, function()
 { 
     console.log('Listening on port %d', server.address().port);
-    console.log(require('crypto').randomBytes(64).toString('hex'));
+    //console.log(require('crypto').randomBytes(64).toString('hex'));
 });
