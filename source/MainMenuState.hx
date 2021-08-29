@@ -210,7 +210,8 @@ class MainMenuState extends MusicBeatState
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
 									case 'awards':
-										MusicBeatState.switchState(new AchievementsMenuState());
+										//MusicBeatState.switchState(new AchievementsMenuState());
+										MusicBeatState.switchState(new LoginState());
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
