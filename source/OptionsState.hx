@@ -684,8 +684,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 		noCheckbox[1],
 		'Note Splashes',
 		'Hide HUD',
-		'Flashing Lights',
 		'Hide Song Length',
+		'Flashing Lights',
 		'Camera Zooms'
 		#if !mobile
 		,'FPS Counter'
