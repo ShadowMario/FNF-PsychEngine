@@ -865,8 +865,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
 						FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
 
-					case 'Show Song Length':
-						ClientPrefs.songLength = !ClientPrefs.songLength;
+					case 'Hide Song Length':
+						ClientPrefs.hideTime = !ClientPrefs.hideTime;
 				}
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				reloadValues();
@@ -956,8 +956,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If unchecked, the camera won't zoom in on a beat hit.";
 			case 'Hide HUD':
 				daText = "If checked, hides most HUD elements.";
-			case 'Show Song Length':
-				daText = "If checked, the HUD will display a bar showing how much\nof the song is left.";
+			case 'Hide Song Length':
+				daText = "If checked, the HUD will hide the bar showing how much\nof the song is left.";
 		}
 		descText.text = daText;
 
@@ -1037,8 +1037,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.hideHud;
 					case 'Persistent Cached Data':
 						daValue = ClientPrefs.imagesPersist;
-					case 'Show Song Length':
-						daValue = ClientPrefs.songLength;
+					case 'Hide Song Length':
+						daValue = ClientPrefs.hideTime;
 				}
 				checkbox.daValue = daValue;
 			}
