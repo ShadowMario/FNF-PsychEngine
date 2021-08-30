@@ -710,12 +710,14 @@ class PlayState extends MusicBeatState
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
 		timeTxt.visible = !ClientPrefs.hideHud;
+		timeTxt.visible = !ClientPrefs.songLength;
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 45;
 
 		timeBarBG = new FlxSprite(timeTxt.x, timeTxt.y + (timeTxt.height / 4)).loadGraphic(Paths.image('timeBar'));
 		timeBarBG.scrollFactor.set();
 		timeBarBG.alpha = 0;
 		timeBarBG.visible = !ClientPrefs.hideHud;
+		timeBarBG.visible = !ClientPrefs.songLength;
 		timeBarBG.color = FlxColor.BLACK;
 		add(timeBarBG);
 
@@ -726,6 +728,7 @@ class PlayState extends MusicBeatState
 		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.alpha = 0;
 		timeBar.visible = !ClientPrefs.hideHud;
+		timeBar.visible = !ClientPrefs.songLength;
 		add(timeBar);
 		add(timeTxt);
 
