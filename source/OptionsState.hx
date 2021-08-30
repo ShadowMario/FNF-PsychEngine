@@ -685,7 +685,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Note Splashes',
 		'Hide HUD',
 		'Flashing Lights',
-		'Show Song Length',
+		'Hide Song Length',
 		'Camera Zooms'
 		#if !mobile
 		,'FPS Counter'
