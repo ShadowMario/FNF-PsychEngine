@@ -172,9 +172,9 @@ class NotesSubstate extends MusicBeatSubstate
 
 			var newShader:ColorSwap = new ColorSwap();
 			note.shader = newShader.shader;
-			for (type in 0...3) {
-				newShader.update(ClientPrefs.arrowHSV[i][type], type);
-			}
+			newShader.hue = ClientPrefs.arrowHSV[i][0] / 360;
+			newShader.saturation = ClientPrefs.arrowHSV[i][1] / 100;
+			newShader.brightness = ClientPrefs.arrowHSV[i][2] / 100;
 			shaderArray.push(newShader);
 		}
 		hsvText = new Alphabet(0, 0, "Hue    Saturation  Brightness", false, false, 0, 0.65);
@@ -358,7 +358,11 @@ class NotesSubstate extends MusicBeatSubstate
 	function resetValue(selected:Int, type:Int) {
 		curValue = 0;
 		ClientPrefs.arrowHSV[selected][type] = 0;
-		shaderArray[selected].update(0, type);
+		switch(type) {
+			case 0: shaderArray[selected].hue = 0;
+			case 1: shaderArray[selected].saturation = 0;
+			case 2: shaderArray[selected].brightness = 0;
+		}
 		grpNumbers.members[(selected * 3) + type].changeText('0');
 	}
 	function updateValue(change:Float = 0) {
@@ -375,9 +379,13 @@ class NotesSubstate extends MusicBeatSubstate
 			curValue = max;
 		}
 		roundedValue = Math.round(curValue);
-
 		ClientPrefs.arrowHSV[curSelected][typeSelected] = roundedValue;
-		shaderArray[curSelected].update(roundedValue, typeSelected);
+
+		switch(typeSelected) {
+			case 0: shaderArray[curSelected].hue = roundedValue / 360;
+			case 1: shaderArray[curSelected].saturation = roundedValue / 100;
+			case 2: shaderArray[curSelected].brightness = roundedValue / 100;
+		}
 		grpNumbers.members[(curSelected * 3) + typeSelected].changeText(Std.string(roundedValue));
 	}
 }
@@ -672,10 +680,11 @@ class PreferencesSubstate extends MusicBeatSubstate
 		#end
 		unselectableOptions[1],
 		'Downscroll',
-		'Button Mashing',
+		'Ghost Tapping',
 		noCheckbox[1],
 		'Note Splashes',
 		'Hide HUD',
+		'Hide Song Length',
 		'Flashing Lights',
 		'Camera Zooms'
 		#if !mobile
@@ -843,8 +852,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Downscroll':
 						ClientPrefs.downScroll = !ClientPrefs.downScroll;
 
-					case 'Button Mashing':
-						ClientPrefs.buttonMashing = !ClientPrefs.buttonMashing;
+					case 'Ghost Tapping':
+						ClientPrefs.ghostTapping = !ClientPrefs.ghostTapping;
 
 					case 'Camera Zooms':
 						ClientPrefs.camZooms = !ClientPrefs.camZooms;
@@ -855,6 +864,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
 						FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
+
+					case 'Hide Song Length':
+						ClientPrefs.hideTime = !ClientPrefs.hideTime;
 				}
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				reloadValues();
@@ -930,8 +942,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If unchecked, disables anti-aliasing, increases performance\nat the cost of the graphics not looking as smooth.";
 			case 'Downscroll':
 				daText = "If checked, notes go Down instead of Up, simple enough.";
-			case 'Button Mashing':
-				daText = "If checked, you only get misses from notes that get offscreen, also called as Ghost Tapping.";
+			case 'Ghost Tapping':
+				daText = "If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.";
 			case 'Swearing':
 				daText = "If unchecked, your mom won't be angry at you.";
 			case 'Violence':
@@ -944,6 +956,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If unchecked, the camera won't zoom in on a beat hit.";
 			case 'Hide HUD':
 				daText = "If checked, hides most HUD elements.";
+			case 'Hide Song Length':
+				daText = "If checked, the bar showing how much time is left\nwill be hidden.";
 		}
 		descText.text = daText;
 
@@ -1011,8 +1025,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.flashing;
 					case 'Downscroll':
 						daValue = ClientPrefs.downScroll;
-					case 'Button Mashing':
-						daValue = ClientPrefs.buttonMashing;
+					case 'Ghost Tapping':
+						daValue = ClientPrefs.ghostTapping;
 					case 'Swearing':
 						daValue = ClientPrefs.cursing;
 					case 'Violence':
@@ -1023,6 +1037,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.hideHud;
 					case 'Persistent Cached Data':
 						daValue = ClientPrefs.imagesPersist;
+					case 'Hide Song Length':
+						daValue = ClientPrefs.hideTime;
 				}
 				checkbox.daValue = daValue;
 			}

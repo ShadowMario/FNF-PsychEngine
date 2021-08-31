@@ -71,7 +71,7 @@ class CreditsState extends MusicBeatState
 			grpOptions.add(optionText);
 
 			if(isSelectable) {
-				var icon:AttachedSprite = new AttachedSprite(Paths.image('credits/' + creditsStuff[i][1]));
+				var icon:AttachedSprite = new AttachedSprite('credits/' + creditsStuff[i][1]);
 				icon.xAdd = optionText.width + 10;
 				icon.sprTracker = optionText;
 	
@@ -161,14 +161,6 @@ class CreditsState extends MusicBeatState
 				item.alpha = 0.6;
 				if (item.targetY == 0) {
 					item.alpha = 1;
-				}
-
-				for (j in 0...iconArray.length) {
-					var tracker:FlxSprite = iconArray[j].sprTracker;
-					if(tracker == item) {
-						iconArray[j].alpha = item.alpha;
-						break;
-					}
 				}
 			}
 		}

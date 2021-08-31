@@ -73,14 +73,11 @@ class MenuCharacter extends FlxSprite
 			case 'mom':
 				offset.set(0, 10);
 
-			case 'senpai':
-				offset.set(60, -70);
-
 			case 'parents-christmas':
 				offset.set(110, 10);
 
 			case 'senpai':
-				offset.set(60, 130);
+				offset.set(60, -70);
 		}
 	}
 }

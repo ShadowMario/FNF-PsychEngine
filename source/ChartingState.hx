@@ -9,6 +9,7 @@ import Song.SwagSong;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxObject;
+import flixel.input.keyboard.FlxKey;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUI9SliceSprite;
@@ -28,6 +29,7 @@ import flixel.ui.FlxButton;
 import flixel.ui.FlxSpriteButton;
 import flixel.util.FlxColor;
 import haxe.Json;
+import haxe.format.JsonParser;
 import lime.utils.Assets;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
@@ -35,12 +37,16 @@ import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.ByteArray;
 import openfl.utils.Assets as OpenFlAssets;
+#if MODS_ALLOWED
+import sys.io.File;
+import sys.FileSystem;
+#end
 
 using StringTools;
 
 class ChartingState extends MusicBeatState
 {
-	var noteTypeList:Array<String> =
+	private static var noteTypeList:Array<String> =
 	[
 		'',
 		'1 - Alt Animation',
@@ -48,7 +54,7 @@ class ChartingState extends MusicBeatState
 		'3 - Hurt Note'
 	];
 
-	var eventStuff:Array<Dynamic> =
+	private static var eventStuff:Array<Dynamic> =
 	[
 		['', "Nothing. Yep, that's right."],
 		['Hey!', "Plays the \"Hey!\" animation from Bopeebo,\nValue 1: 0 = Only Boyfriend, 1 = Only Girlfriend,\nSomething else = Both.\nValue 2: Custom animation duration,\nleave it blank for 0.6s"],
@@ -297,7 +303,7 @@ class ChartingState extends MusicBeatState
 			saveLevel();
 		});
 
-		var reloadSong:FlxButton = new FlxButton(saveButton.x + saveButton.width + 10, saveButton.y, "Reload Audio", function()
+		var reloadSong:FlxButton = new FlxButton(saveButton.x + 90, saveButton.y, "Reload Audio", function()
 		{
 			currentSongName = UI_songTitle.text.toLowerCase();
 			loadSong();
@@ -541,7 +547,7 @@ class ChartingState extends MusicBeatState
 			}
 			updateGrid();
 		});
-		copyLastButton.setGraphicSize(Std.int(copyLastButton.width), Std.int(copyLastButton.height + 12));
+		copyLastButton.setGraphicSize(80, 30);
 		copyLastButton.updateHitbox();
 
 		tab_group_section.add(stepperLength);
@@ -644,6 +650,8 @@ class ChartingState extends MusicBeatState
 	var metronome:FlxUICheckBox;
 	var metronomeStepper:FlxUINumericStepper;
 	var metronomeOffsetStepper:FlxUINumericStepper;
+	var instVolume:FlxUINumericStepper;
+	var voicesVolume:FlxUINumericStepper;
 	function addChartingUI() {
 		var tab_group_chart = new FlxUI(null, UI_box);
 		tab_group_chart.name = 'Charting';
@@ -680,14 +688,25 @@ class ChartingState extends MusicBeatState
 		playSoundDad.checked = false;
 
 		metronome = new FlxUICheckBox(15, 15, null, null, "Metronome Enabled", 100);
-		metronomeStepper = new FlxUINumericStepper(15, 60, 5, _song.bpm, 1, 1500, 1);
+		metronomeStepper = new FlxUINumericStepper(15, 55, 5, _song.bpm, 1, 1500, 1);
 		metronomeOffsetStepper = new FlxUINumericStepper(metronomeStepper.x + 100, metronomeStepper.y, 25, 0, 0, 1000, 1);
+
+		instVolume = new FlxUINumericStepper(metronomeStepper.x, metronomeStepper.y + 50, 0.1, 1, 0, 1, 1);
+		instVolume.value = FlxG.sound.music.volume;
+		instVolume.name = 'inst_volume';
+		voicesVolume = new FlxUINumericStepper(instVolume.x + 100, instVolume.y, 0.1, 1, 0, 1, 1);
+		voicesVolume.value = vocals.volume;
+		voicesVolume.name = 'voices_volume';
 
 		tab_group_chart.add(metronome);
 		tab_group_chart.add(new FlxText(metronomeStepper.x, metronomeStepper.y - 15, 0, 'BPM:'));
 		tab_group_chart.add(new FlxText(metronomeOffsetStepper.x, metronomeOffsetStepper.y - 15, 0, 'Offset (ms):'));
+		tab_group_chart.add(new FlxText(instVolume.x, instVolume.y - 15, 0, 'Inst Volume'));
+		tab_group_chart.add(new FlxText(voicesVolume.x, voicesVolume.y - 15, 0, 'Voices Volume'));
 		tab_group_chart.add(metronomeStepper);
 		tab_group_chart.add(metronomeOffsetStepper);
+		tab_group_chart.add(instVolume);
+		tab_group_chart.add(voicesVolume);
 		tab_group_chart.add(check_mute_inst);
 		tab_group_chart.add(check_mute_vocals);
 		tab_group_chart.add(playSoundBf);
@@ -717,6 +736,7 @@ class ChartingState extends MusicBeatState
 
 	function generateSong() {
 		FlxG.sound.playMusic(Paths.inst(currentSongName), 0.6, false);
+		if (instVolume != null) FlxG.sound.music.volume = instVolume.value;
 		if (check_mute_inst != null && check_mute_inst.checked) FlxG.sound.music.volume = 0;
 
 		FlxG.sound.music.onComplete = function()
@@ -810,6 +830,14 @@ class ChartingState extends MusicBeatState
 				_song.notes[curSection].bpm = nums.value;
 				updateGrid();
 			}
+			else if (wname == 'inst_volume')
+			{
+				FlxG.sound.music.volume = nums.value;
+			}
+			else if (wname == 'voices_volume')
+			{
+				vocals.volume = nums.value;
+			}
 		}
 		else if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
 			if(sender == noteSplashesInputText) {
@@ -895,7 +923,7 @@ class ChartingState extends MusicBeatState
 			}
 
 			changeSection(curSection + 1, false);
-		} else if(strumLine.y < -5) {
+		} else if(strumLine.y < -10) {
 			changeSection(curSection - 1, false);
 		}
 
@@ -950,11 +978,17 @@ class ChartingState extends MusicBeatState
 		var blockInput:Bool = false;
 		for (inputText in blockPressWhileTypingOn) {
 			if(inputText.hasFocus) {
+				FlxG.sound.muteKeys = [];
+				FlxG.sound.volumeDownKeys = [];
+				FlxG.sound.volumeUpKeys = [];
 				blockInput = true;
 				break;
 			}
 		}
 		if(!blockInput) {
+			FlxG.sound.muteKeys = TitleState.muteKeys;
+			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 			for (dropDownMenu in blockPressWhileScrolling) {
 				if(dropDownMenu.dropPanel.visible) {
 					blockInput = true;
@@ -1111,6 +1145,7 @@ class ChartingState extends MusicBeatState
 		}
 		Conductor.songPosition = FlxG.sound.music.time;
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) / curZoom % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
+		camPos.y = strumLine.y;
 
 		bpmTxt.text = 
 		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
@@ -1121,6 +1156,7 @@ class ChartingState extends MusicBeatState
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents earrape GF ahegao sounds
 		curRenderedNotes.forEachAlive(function(note:Note) {
 			note.alpha = 1;
+			#if !html5 //Fixes issues where notes would disappear while a note is selected
 			if(curSelectedNote != null) {
 				var noteDataToCheck:Int = note.noteData;
 				if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSection].mustHitSection) noteDataToCheck += 4;
@@ -1133,6 +1169,7 @@ class ChartingState extends MusicBeatState
 					note.alpha = 0.999; //Alpha can't be 100% or the color won't be updated for some reason, guess i will die
 				}
 			}
+			#end
 
 			if(note.strumTime <= Conductor.songPosition) {
 				note.alpha = 0.4;
@@ -1302,16 +1339,46 @@ class ChartingState extends MusicBeatState
 
 	function updateHeads():Void
 	{
+		var healthIconP1:String = loadHealthIconFromCharacter(_song.player1);
+		var healthIconP2:String = loadHealthIconFromCharacter(_song.player2);
+
 		if (_song.notes[curSection].mustHitSection)
 		{
-			leftIcon.changeIcon(_song.player1);
-			rightIcon.changeIcon(_song.player2);
+			leftIcon.changeIcon(healthIconP1);
+			rightIcon.changeIcon(healthIconP2);
 		}
 		else
 		{
-			leftIcon.changeIcon(_song.player2);
-			rightIcon.changeIcon(_song.player1);
+			leftIcon.changeIcon(healthIconP2);
+			rightIcon.changeIcon(healthIconP1);
 		}
+	}
+
+	function loadHealthIconFromCharacter(char:String) {
+		var characterPath:String = 'characters/' + char + '.json';
+		#if MODS_ALLOWED
+		var path:String = Paths.mods(characterPath);
+		if (!FileSystem.exists(path)) {
+			path = Paths.getPreloadPath(characterPath);
+		}
+
+		if (!FileSystem.exists(path))
+		#else
+		var path:String = Paths.getPreloadPath(characterPath);
+		if (!OpenFlAssets.exists(path))
+		#end
+		{
+			path = Paths.getPreloadPath('characters/' + Character.DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
+		}
+
+		#if MODS_ALLOWED
+		var rawJson = File.getContent(path);
+		#else
+		var rawJson = OpenFlAssets.getText(path);
+		#end
+
+		var json:Character.CharacterFile = cast Json.parse(rawJson);
+		return json.healthicon;
 	}
 
 	function updateNoteUI():Void
@@ -1632,7 +1699,7 @@ class ChartingState extends MusicBeatState
 			"song": _song
 		};
 
-		var data:String = Json.stringify(json,"\t");
+    var data:String = Json.stringify(json, "\t");
 
 		if ((data != null) && (data.length > 0))
 		{
@@ -1688,7 +1755,7 @@ class ChartingState extends MusicBeatState
 			"song": eventsSong
 		}
 
-		var data:String = Json.stringify(json,"\t");
+		var data:String = Json.stringify(json, "\t");
 
 		if ((data != null) && (data.length > 0))
 		{

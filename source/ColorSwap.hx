@@ -5,27 +5,32 @@ import flixel.system.FlxAssets.FlxShader;
 
 class ColorSwap {
 	public var shader(default, null):ColorSwapShader = new ColorSwapShader();
+	public var hue(default, set):Float = 0;
+	public var saturation(default, set):Float = 0;
+	public var brightness(default, set):Float = 0;
+
+	private function set_hue(value:Float) {
+		hue = value;
+		shader.uTime.value[0] = hue;
+		return hue;
+	}
+
+	private function set_saturation(value:Float) {
+		saturation = value;
+		shader.uTime.value[1] = saturation;
+		return saturation;
+	}
+
+	private function set_brightness(value:Float) {
+		brightness = value;
+		shader.uTime.value[2] = brightness;
+		return brightness;
+	}
 
 	public function new()
 	{
 		shader.uTime.value = [0, 0, 0];
-		shader.money.value = [0];
 		shader.awesomeOutline.value = [false];
-	}
-
-	public function update(value:Float, ?type:Int = 0) {
-		var divide:Float = 360;
-		switch(type) {
-			case 1 | 2: divide = 100;
-		}
-		shader.uTime.value[type] = value / divide;
-	}
-	public function updateAdd(value:Float, ?type:Int = 0) {
-		var divide:Float = 360;
-		switch(type) {
-			case 1 | 2: divide = 100;
-		}
-		shader.uTime.value[type] += value / divide;
 	}
 }
 
@@ -79,7 +84,6 @@ class ColorSwapShader extends FlxShader {
 		}
 
 		uniform vec3 uTime;
-		uniform float money;
 		uniform bool awesomeOutline;
 
 		const float offset = 1.0 / 128.0;

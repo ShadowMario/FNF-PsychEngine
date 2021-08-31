@@ -5,6 +5,9 @@ import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
+#if sys
+import sys.io.File;
+#end
 
 using StringTools;
 
@@ -31,7 +34,11 @@ class CoolUtil
 
 	public static function coolTextFile(path:String):Array<String>
 	{
+		#if sys
+		var daList:Array<String> = File.getContent(path).trim().split('\n');
+		#else
 		var daList:Array<String> = Assets.getText(path).trim().split('\n');
+		#end
 
 		for (i in 0...daList.length)
 		{
