@@ -29,7 +29,7 @@ class RegisterState extends MusicBeatState
     private function submitCredentials(username:String, password:String)
         {
             var register:Dynamic = ServerConnectionsManager.register(username, password);
-            if(!register.success)
+            if(register.success)
             {
                 errorText.setFormat("VCR OSD Mono", 20, 0xFF03FC07, CENTER, FlxTextBorderStyle.OUTLINE, 0xFF008C02);
                 errorTimer.cancel();

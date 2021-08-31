@@ -16,11 +16,6 @@ import haxe.Json;
 
 using StringTools;
 
-typedef Credentials = {
-    var username:String;
-    var password:String;
-}
-
 class LoginState extends MusicBeatState
 {
     var usernameBox:FlxInputText;
@@ -28,14 +23,13 @@ class LoginState extends MusicBeatState
     var loginButton:FlxButton;
     var camFollow:FlxObject;
     var zoomShit:Bool;
-    var creds:Credentials;
     var errorText:FlxText;
     var errorTimer:FlxTimer = new FlxTimer();
 
     private function submitCredentials(username:String, password:String)
         {
             var login:Dynamic = ServerConnectionsManager.login(username, password);
-            if(!login.success)
+            if(login.success)
             {
                 errorText.setFormat("VCR OSD Mono", 20, 0xFF03FC07, CENTER, FlxTextBorderStyle.OUTLINE, 0xFF008C02);
                 errorTimer.cancel();

@@ -11,16 +11,16 @@ class ServerConnectionsManager
     // i dont recommend editing this file :)
     // if you do why you would do it
 
-    private static function serverConnection(action:String, data:String, ?contentType:String = "application/json"):Dynamic
+    private static function serverConnection(action:String, data:String, ?contentType:String = "application/json")
     {
-        var req = new haxe.Http('localhost:2000/' + action);
+        var req = new haxe.Http(serverIp + ':' +  serverPort + '/' + action);
         req.setHeader ("Content-type", contentType);
         req.setPostData(data);
         trace(data);
         req.onData = function (res:String)
         {
             var response:Dynamic = Json.parse(res);
-            return Json.parse(response);
+            return response;
         }
         req.onError = function (error)
         {
@@ -29,7 +29,7 @@ class ServerConnectionsManager
             return {success:false,error:error};
         }
         req.request(true);
-        return {success:false};
+        return {success:false,error:"Unknown"};
     }
 
     private static function checkTokenValid(token:String):Bool
