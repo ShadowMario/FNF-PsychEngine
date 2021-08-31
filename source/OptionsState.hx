@@ -957,7 +957,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 			case 'Hide HUD':
 				daText = "If checked, hides most HUD elements.";
 			case 'Hide Song Length':
-				daText = "If checked, the HUD will hide the bar showing how much\nof the song is left.";
+				daText = "If checked, the bar showing how much time is left\nwill be hidden.";
 		}
 		descText.text = daText;
 
