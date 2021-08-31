@@ -684,6 +684,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		noCheckbox[1],
 		'Note Splashes',
 		'Hide HUD',
+		'Hide Song Length',
 		'Flashing Lights',
 		'Camera Zooms'
 		#if !mobile
@@ -863,6 +864,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
 						FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
+
+					case 'Hide Song Length':
+						ClientPrefs.hideTime = !ClientPrefs.hideTime;
 				}
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				reloadValues();
@@ -952,6 +956,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If unchecked, the camera won't zoom in on a beat hit.";
 			case 'Hide HUD':
 				daText = "If checked, hides most HUD elements.";
+			case 'Hide Song Length':
+				daText = "If checked, the bar showing how much time is left\nwill be hidden.";
 		}
 		descText.text = daText;
 
@@ -1031,6 +1037,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.hideHud;
 					case 'Persistent Cached Data':
 						daValue = ClientPrefs.imagesPersist;
+					case 'Hide Song Length':
+						daValue = ClientPrefs.hideTime;
 				}
 				checkbox.daValue = daValue;
 			}
