@@ -72,7 +72,6 @@ class LoadingState extends MusicBeatState
 
 				var directory:String = WeekData.getWeekDirectory();
 				checkLibrary(directory);
-				checkLibrary(directory + "_high", true);
 
 				var fadeTime = 0.5;
 				FlxG.camera.fade(FlxG.camera.bgColor, fadeTime, true);
@@ -161,8 +160,7 @@ class LoadingState extends MusicBeatState
 		if (PlayState.SONG != null) {
 			loaded = isSoundLoaded(getSongPath())
 				&& (!PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath()))
-				&& isLibraryLoaded("shared") && isLibraryLoaded(directory) &&
-				(ClientPrefs.lowQuality || isLibraryLoaded(directory + '_high'));
+				&& isLibraryLoaded("shared") && isLibraryLoaded(directory);
 		}
 		
 		if (!loaded)
