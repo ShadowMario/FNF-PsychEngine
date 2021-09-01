@@ -670,18 +670,20 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Framerate',
 		'Note Delay'
 	];
+
 	static var options:Array<String> = [
-		unselectableOptions[0],
+		'GRAPHICS',
 		'Low Quality',
 		'Anti-Aliasing',
 		'Persistent Cached Data',
 		#if !html5
-		noCheckbox[0], //Apparently 120FPS isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
+		'Framerate', //Apparently 120FPS isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		#end
-		unselectableOptions[1],
+		'GAMEPLAY',
 		'Downscroll',
+		'Middlescroll',
 		'Ghost Tapping',
-		noCheckbox[1],
+		'Note Delay',
 		'Note Splashes',
 		'Hide HUD',
 		'Hide Song Length',
@@ -852,6 +854,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Downscroll':
 						ClientPrefs.downScroll = !ClientPrefs.downScroll;
 
+					case 'Middlescroll':
+						ClientPrefs.middleScroll = !ClientPrefs.middleScroll;
+
 					case 'Ghost Tapping':
 						ClientPrefs.ghostTapping = !ClientPrefs.ghostTapping;
 
@@ -942,6 +947,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If unchecked, disables anti-aliasing, increases performance\nat the cost of the graphics not looking as smooth.";
 			case 'Downscroll':
 				daText = "If checked, notes go Down instead of Up, simple enough.";
+			case 'Middlescroll':
+				daText = "If checked, hides Opponent's notes and your notes get centered.";
 			case 'Ghost Tapping':
 				daText = "If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.";
 			case 'Swearing':
@@ -1025,6 +1032,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.flashing;
 					case 'Downscroll':
 						daValue = ClientPrefs.downScroll;
+					case 'Middlescroll':
+						daValue = ClientPrefs.middleScroll;
 					case 'Ghost Tapping':
 						daValue = ClientPrefs.ghostTapping;
 					case 'Swearing':

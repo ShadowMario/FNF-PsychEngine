@@ -119,14 +119,15 @@ class FunkinLua {
 
 		// Some settings, no jokes
 		set('downscroll', ClientPrefs.downScroll);
+		set('middlescroll', ClientPrefs.middleScroll);
 		set('framerate', ClientPrefs.framerate);
 		set('ghostTapping', ClientPrefs.ghostTapping);
 		set('hideHud', ClientPrefs.hideHud);
+		set('hideTime', ClientPrefs.hideTime);
 		set('cameraZoomOnBeat', ClientPrefs.camZooms);
 		set('flashingLights', ClientPrefs.flashing);
 		set('noteOffset', ClientPrefs.noteOffset);
 		set('lowQuality', ClientPrefs.lowQuality);
-		set('flashingLights', ClientPrefs.flashing);
 
 		//stuff 4 noobz like you B)
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
@@ -355,7 +356,7 @@ class FunkinLua {
 				}));
 			}
 		});
-		Lua_helper.add_callback(lua, "cancelTween", function(tag:String, time:Float = 1, loops:Int = 1) {
+		Lua_helper.add_callback(lua, "cancelTween", function(tag:String) {
 			cancelTween(tag);
 		});
 
@@ -368,7 +369,7 @@ class FunkinLua {
 				call('onTimerCompleted', [tag, tmr.loops, tmr.loopsLeft]);
 			}, loops));
 		});
-		Lua_helper.add_callback(lua, "cancelTimer", function(tag:String, time:Float = 1, loops:Int = 1) {
+		Lua_helper.add_callback(lua, "cancelTimer", function(tag:String) {
 			cancelTimer(tag);
 		});
 
@@ -455,10 +456,6 @@ class FunkinLua {
 				case 'down': key = lePlayState.getControl('NOTE_DOWN');
 				case 'up': key = lePlayState.getControl('NOTE_UP');
 				case 'right': key = lePlayState.getControl('NOTE_RIGHT');
-				case 'accept': key = lePlayState.getControl('ACCEPT');
-				case 'back': key = lePlayState.getControl('BACK');
-				case 'pause': key = lePlayState.getControl('PAUSE');
-				case 'reset': key = lePlayState.getControl('RESET');
 			}
 			return key;
 		});
