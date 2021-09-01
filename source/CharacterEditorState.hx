@@ -105,7 +105,7 @@ class CharacterEditorState extends MusicBeatState
 			onPixelBG = !onPixelBG;
 			reloadBGs();
 		});
-		changeBGbutton.cameras = [camHUD];
+		changeBGbutton.cameras = [camMenu];
 
 		loadChar(!daAnim.startsWith('bf'), false);
 
@@ -121,6 +121,7 @@ class CharacterEditorState extends MusicBeatState
 
 		dumbTexts = new FlxTypedGroup<FlxText>();
 		add(dumbTexts);
+		dumbTexts.cameras = [camHUD];
 
 		textAnim = new FlxText(300, 16);
 		textAnim.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -160,7 +161,7 @@ class CharacterEditorState extends MusicBeatState
 		];
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
-		UI_box.cameras = [camHUD];
+		UI_box.cameras = [camMenu];
 
 		UI_box.resize(250, 120);
 		UI_box.x = FlxG.width - 275;
@@ -172,7 +173,7 @@ class CharacterEditorState extends MusicBeatState
 			{name: 'Animations', label: 'Animations'},
 		];
 		UI_characterbox = new FlxUITabMenu(null, tabs, true);
-		UI_characterbox.cameras = [camHUD];
+		UI_characterbox.cameras = [camMenu];
 
 		UI_characterbox.resize(350, 250);
 		UI_characterbox.x = UI_box.x - 100;
@@ -846,13 +847,13 @@ class CharacterEditorState extends MusicBeatState
 					inputTexts[i].text = ClipboardAdd(inputTexts[i].text);
 					inputTexts[i].caretIndex = inputTexts[i].text.length;
 					getEvent(FlxUIInputText.CHANGE_EVENT, inputTexts[i], null, []);
-					FlxG.sound.muteKeys = [];
-					FlxG.sound.volumeDownKeys = [];
-					FlxG.sound.volumeUpKeys = [];
 				}
 				if(FlxG.keys.justPressed.ENTER) {
 					inputTexts[i].hasFocus = false;
 				}
+				FlxG.sound.muteKeys = [];
+				FlxG.sound.volumeDownKeys = [];
+				FlxG.sound.volumeUpKeys = [];
 				super.update(elapsed);
 				return;
 			}
@@ -947,7 +948,7 @@ class CharacterEditorState extends MusicBeatState
 				}
 			}
 		}
-		camHUD.zoom = FlxG.camera.zoom;
+		camMenu.zoom = FlxG.camera.zoom;
 		super.update(elapsed);
 	}
 
@@ -1013,7 +1014,8 @@ class CharacterEditorState extends MusicBeatState
 			"camera_position": char.cameraPosition,
 		
 			"flip_x": char.originalFlipX,
-			"no_antialiasing": char.noAntialiasing
+			"no_antialiasing": char.noAntialiasing,
+			"healthbar_colors": char.healthColorArray
 		};
 
 		var data:String = Json.stringify(json, "\t");

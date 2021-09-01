@@ -404,6 +404,7 @@ class PlayState extends MusicBeatState
 				limo = new BGSprite('limo/limoDrive', -120, 550, 1, 1, ['Limo stage'], true);
 
 				fastCar = new BGSprite('limo/fastCarLol', -300, 160);
+				fastCar.active = true;
 				limoKillingState = 0;
 
 			case 'cocoa' | 'eggnog':
@@ -419,6 +420,7 @@ class PlayState extends MusicBeatState
 				if(!ClientPrefs.lowQuality) {
 					upperBoppers = new BGSprite('christmas/upperBop', -240, -90, 0.33, 0.33, ['Upper Crowd Bob']);
 					upperBoppers.setGraphicSize(Std.int(upperBoppers.width * 0.85));
+					upperBoppers.updateHitbox();
 					add(upperBoppers);
 
 					var bgEscalator:BGSprite = new BGSprite('christmas/bgEscalator', -1100, -600, 0.3, 0.3);
