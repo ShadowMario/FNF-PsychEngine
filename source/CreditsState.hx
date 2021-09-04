@@ -24,12 +24,18 @@ class CreditsState extends MusicBeatState
 	private var iconArray:Array<AttachedSprite> = [];
 
 	private static var creditsStuff:Array<Dynamic> = [ //Name - Icon name - Description - Link - BG Color
+		['Octo Expansion Team'],
+		['Danky', 				'danky',			'Charter of Octo Expansion', 						'https://twitter.com/dankypoyo',		0xFF9EC5F3],
+		['Poman', 				'poman',			'Animator of Octo Expansion', 						'https://twitter.com/Poman_dot_avi',	0xFF63D220],
+		['GenoX', 				'genox',			'Main Coder of Octo Expansion', 					'https://twitter.com/GenoXACT2',		0xFFFD5E62],
+		['volv', 				'volv',				'Main Artist and Programmer of Octo Expansion', 	'https://twitter.com/_volved',			0xFF37B563],
+		['Axolotl', 			'axolotl',			'Artist of Octo Expansion', 						'https://twitter.com/_AxolotlM_',		0xFF37B563],
+		['Rareblin', 			'rareblin',			'Lead Composer of Octo Expansion', 					'https://twitter.com/RareWubboxer',		0xFFE98932],
+		['Biddle3', 			'biddle3',			'Composer of Octo Expansion', 						'https://twitter.com/TheBiddleMoment',	0xFFF0ECBD],
+		[''],
 		['Psych Engine Team'],
 		['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',					'https://twitter.com/Shadow_Mario_',	0xFFFFDD33],
 		['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',				'https://twitter.com/river_oaken',		0xFFC30085],
-		[''],
-		['Special Thanks'],
-		['Keoiki',				'keoiki',			'Note Splash Animations',							'https://twitter.com/Keoiki_',			0xFFFFFFFF],
 		[''],
 		["Funkin' Crew"],
 		['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",				'https://twitter.com/ninja_muffin99',	0xFFF73838],

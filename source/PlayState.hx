@@ -90,6 +90,7 @@ class PlayState extends MusicBeatState
 
 	public static var curStage:String = '';
 	public static var SONG:SwagSong = null;
+	public static var usesDrums:Bool = false;
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
@@ -104,6 +105,7 @@ class PlayState extends MusicBeatState
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<Dynamic> = [];
+	public var drumNotes:Array<Dynamic> = [];
 
 	private var strumLine:FlxSprite;
 	private var curSection:Int = 0;
@@ -1341,6 +1343,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
+		
 
 		for (section in noteData)
 		{
@@ -1363,7 +1366,7 @@ class PlayState extends MusicBeatState
 					else
 						oldNote = null;
 
-					var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+					var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false);
 					swagNote.sustainLength = songNotes[2];
 					swagNote.noteType = songNotes[3];
 					swagNote.scrollFactor.set();
@@ -2576,6 +2579,24 @@ class PlayState extends MusicBeatState
 						}
 
 				}
+			case 'Drums':
+			var drumType:Int = Std.parseInt(value1);
+			
+			switch(drumType) {
+				case 0:
+					gf.playAnim('singLEFT');
+					trace('kick');
+				case 1:
+					gf.playAnim('singDOWN');
+					trace('snare');
+				case 2:
+					gf.playAnim('singUP');
+					trace('clap');
+				case 3:
+					gf.playAnim('singRIGHT');
+					trace('hat');
+			}
+
 		}
 		if(!onLua) {
 			callOnLuas('onEvent', [eventName, value1, value2]);
@@ -2749,6 +2770,10 @@ class PlayState extends MusicBeatState
 				prevCamFollowPos = camFollowPos;
 
 				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
+				if (PlayState.storyPlaylist[0].toLowerCase() == 'drumstest') 
+				{
+					PlayState.usesDrums = true;
+				}
 				FlxG.sound.music.stop();
 
 				if(winterHorrorlandNext) {

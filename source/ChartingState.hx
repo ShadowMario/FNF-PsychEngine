@@ -67,7 +67,8 @@ class ChartingState extends MusicBeatState
 		['Camera Follow Pos', "Value 1: X\nValue 2: Y\n\nThe camera won't change the follow point\nafter using this, for getting it back\nto normal, leave both values blank."],
 		['Alt Idle Animation', "Sets a speciied suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (0 = Dad, 1 = BF, 2 = GF)\nValue 2: New suffix (Leave it blank to disable)"],
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.1\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
-		['Change Character', "Value 1: Character to change\nValue 2: New character's name\n\nOn Value 1, Boyfriend is 0,\nDad is 1 and Girlfriend is 2"]
+		['Change Character', "Value 1: Character to change\nValue 2: New character's name\n\nOn Value 1, Boyfriend is 0,\nDad is 1 and Girlfriend is 2"],
+		['Drums', "GF plays a custom drum animation :)\nValue 1: 0 = kick, 1 = snare, 2 = clap, 3 = hat"]
 	];
 
 	var _file:FileReference;
@@ -81,6 +82,9 @@ class ChartingState extends MusicBeatState
 	public static var curSection:Int = 0;
 	public static var lastSection:Int = 0;
 	private static var lastSong:String = '';
+
+	var noteTypeChosen:Int = 0;
+	var styles:Array<String> = ['default', 'inkBlue', 'inkPink'];
 
 	var bpmTxt:FlxText;
 
@@ -1124,6 +1128,7 @@ class ChartingState extends MusicBeatState
 					changeSection(curSection - shiftThing);
 				}
 			}
+				
 		} else if (FlxG.keys.justPressed.ENTER) {
 			for (i in 0...blockPressWhileTypingOn.length) {
 				if(blockPressWhileTypingOn[i].hasFocus) {
@@ -1492,9 +1497,9 @@ class ChartingState extends MusicBeatState
 		var daNoteInfo = i[1];
 		var daStrumTime = i[0];
 		var daSus:Dynamic = i[2];
-		var daType:Dynamic = i[3];
+		var daType:Dynamic = i[4];
 
-		var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, null, true);
+		var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, null);
 		if(daNoteInfo > -1) { //Common note
 			note.sustainLength = daSus;
 			note.noteType = daType;
@@ -1596,6 +1601,7 @@ class ChartingState extends MusicBeatState
 		var noteStrum = getStrumTime(dummyArrow.y, false) + sectionStartTime();
 		var noteData = Math.floor((FlxG.mouse.x - GRID_SIZE) / GRID_SIZE);
 		var noteSus = 0;
+		var noteStyle = styles[this.noteTypeChosen];
 		var daAlt = false;
 		var daType = currentType;
 
@@ -1614,7 +1620,7 @@ class ChartingState extends MusicBeatState
 			_song.notes[curSection].sectionNotes.push([noteStrum, (noteData + 4) % 8, noteSus, daType]);
 		}
 
-		trace(noteData + ', ' + noteStrum + ', ' + curSection);
+		trace(noteData + ', ' + noteStrum + ', ' + curSection );
 		strumTimeInputText.text = curSelectedNote[0];
 
 		updateGrid();

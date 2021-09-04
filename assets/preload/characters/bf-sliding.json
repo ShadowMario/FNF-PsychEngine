@@ -1,0 +1,158 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "BF idle dance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				12,
+				-6
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "BF left dance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				11,
+				15
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "BF down not",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				26
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "BF up dance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				11,
+				15
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "BF right note",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [
+				10,
+				11,
+				12,
+				13
+			],
+			"fps": 24,
+			"anim": "idle-loop",
+			"loop": true,
+			"name": "BF idle dance"
+		},
+		{
+			"loop": true,
+			"offsets": [
+				12,
+				-6
+			],
+			"anim": "singLEFT-loop",
+			"fps": 24,
+			"name": "BF left dance",
+			"indices": [
+				12,
+				13,
+				14,
+				15
+            ]
+		},
+		{
+			"loop": true,
+			"offsets": [
+				11,
+				15
+			],
+			"anim": "singDOWN-loop",
+			"fps": 24,
+			"name": "BF down not",
+			"indices": [
+				26,
+				27,
+				28,
+				29
+            ]
+		},
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				26
+			],
+			"anim": "singUP-loop",
+			"fps": 24,
+			"name": "BF up dance",
+			"indices": [
+				11,
+				12,
+				13,
+				14
+            ]
+		},
+		{
+			"loop": true,
+			"offsets": [
+				11,
+				15
+			],
+			"anim": "singRIGHT-loop",
+			"fps": 24,
+			"name": "BF right note",
+			"indices": [
+				58,
+				59,
+				60,
+				61
+            ]
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/bfSliding",
+	"position": [
+		0,
+		350
+	],
+	"healthicon": "bf",
+	"flip_x": true,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

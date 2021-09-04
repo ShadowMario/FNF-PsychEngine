@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="NOTE_INK_PINK.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="blue0000" x="0" y="0" width="205" height="218"/>
+	<SubTexture name="blue hold0000" x="645" y="0" width="50" height="44"/>
+	<SubTexture name="blue tail0000" x="705" y="0" width="50" height="64"/>
+	<SubTexture name="green0000" x="215" y="0" width="205" height="219"/>
+	<SubTexture name="green hold0000" x="645" y="0" width="50" height="44"/>
+	<SubTexture name="green tail0000" x="705" y="0" width="50" height="64"/>
+	<SubTexture name="purple0000" x="430" y="0" width="205" height="218"/>
+	<SubTexture name="purple hold0000" x="645" y="0" width="50" height="44"/>
+	<SubTexture name="purple tail0000" x="705" y="0" width="50" height="64"/>
+	<SubTexture name="red0000" x="765" y="0" width="206" height="218"/>
+	<SubTexture name="red hold0000" x="645" y="0" width="50" height="44"/>
+	<SubTexture name="red tail0000" x="705" y="0" width="50" height="64"/>
+</TextureAtlas>
