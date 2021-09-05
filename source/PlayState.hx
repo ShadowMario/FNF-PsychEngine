@@ -105,6 +105,9 @@ class PlayState extends MusicBeatState
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<Dynamic> = [];
 
+	public static var curNoteSpeed:Float;
+	var speedChangeEvent:Bool = false;
+
 	private var strumLine:FlxSprite;
 	private var curSection:Int = 0;
 
@@ -229,6 +232,7 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.stop();
 
 		practiceMode = false;
+		curNoteSpeed = ClientPrefs.noteSpeed;
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -2023,8 +2027,11 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		var noteSpeed = ClientPrefs.noteSpeed;
-		var roundedSpeed:Float = FlxMath.roundDecimal((noteSpeed != 1 ? noteSpeed : SONG.speed), 2);
+		var noteSpeed = curNoteSpeed;
+		var roundedSpeed:Float;
+		if (!speedChangeEvent) roundedSpeed = FlxMath.roundDecimal((noteSpeed != 1 ? noteSpeed : SONG.speed), 2);
+		else roundedSpeed = noteSpeed;
+		curNoteSpeed = roundedSpeed;
 		if (unspawnNotes[0] != null)
 		{
 			var time:Float = 1500;
@@ -2577,6 +2584,17 @@ class PlayState extends MusicBeatState
 						}
 
 				}
+			case 'Set Note Speed':
+				speedChangeEvent = true;
+				if (value1.rtrim() == '')
+				{
+					speedChangeEvent = false;
+					FlxTween.num(curNoteSpeed, ClientPrefs.noteSpeed, 1, function(num:Float) {curNoteSpeed = num;});
+					return;
+				}
+				var values = value2.split(',');
+				var isMultiplier:Bool = (Std.parseInt(value1) == 0 ? true : false);
+				FlxTween.num(curNoteSpeed, (isMultiplier ? curNoteSpeed * Std.parseFloat(values[0]) : Std.parseFloat(values[0])), Std.parseFloat(values[1]), function(num:Float) {curNoteSpeed = num;});
 		}
 		if(!onLua) {
 			callOnLuas('onEvent', [eventName, value1, value2]);
