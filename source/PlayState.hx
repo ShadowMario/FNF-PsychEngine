@@ -2023,7 +2023,8 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		var roundedSpeed:Float = FlxMath.roundDecimal(SONG.speed, 2);
+		var noteSpeed = ClientPrefs.noteSpeed;
+		var roundedSpeed:Float = FlxMath.roundDecimal((noteSpeed != 1 ? noteSpeed : SONG.speed), 2);
 		if (unspawnNotes[0] != null)
 		{
 			var time:Float = 1500;

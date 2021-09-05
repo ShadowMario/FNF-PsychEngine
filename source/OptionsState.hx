@@ -668,7 +668,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 	];
 	static var noCheckbox:Array<String> = [
 		'Framerate',
-		'Note Delay'
+		'Note Delay',
+		'Note Speed'
 	];
 
 	static var options:Array<String> = [
@@ -684,6 +685,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Middlescroll',
 		'Ghost Tapping',
 		'Note Delay',
+		'Note Speed',
 		'Note Splashes',
 		'Hide HUD',
 		'Hide Song Length',
@@ -901,6 +903,11 @@ class PreferencesSubstate extends MusicBeatSubstate
 						ClientPrefs.noteOffset += add * mult;
 						if(ClientPrefs.noteOffset < 0) ClientPrefs.noteOffset = 0;
 						else if(ClientPrefs.noteOffset > 500) ClientPrefs.noteOffset = 500;
+					case 'Note Speed':
+						var speed:Float = 0.1;
+						ClientPrefs.noteSpeed += add * speed;
+						if (ClientPrefs.noteSpeed < 0.1) ClientPrefs.noteSpeed = 0.1;
+						else if (ClientPrefs.noteSpeed > 4) ClientPrefs.noteSpeed = 4;
 				}
 				reloadValues();
 
@@ -937,6 +944,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "Pretty self explanatory, isn't it?\nDefault value is 60.";
 			case 'Note Delay':
 				daText = "Changes how late a note is spawned.\nUseful for preventing audio lag from wireless earphones.";
+			case 'Note Speed':
+				daText = 'Speed of the notes that are coming at ya \n(1 is chart dependant)';
 			case 'FPS Counter':
 				daText = "If unchecked, hides FPS Counter.";
 			case 'Low Quality':
@@ -1061,6 +1070,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daText = '' + ClientPrefs.framerate;
 					case 'Note Delay':
 						daText = ClientPrefs.noteOffset + 'ms';
+					case 'Note Speed':
+						daText = Std.string(ClientPrefs.noteSpeed);
 				}
 				var lastTracker:FlxSprite = text.sprTracker;
 				text.sprTracker = null;
