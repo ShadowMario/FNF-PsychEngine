@@ -3065,7 +3065,9 @@ class PlayState extends MusicBeatState
 					for (i in 0...controlArray.length) {
 						if(controlArray[i] && notesDatas.indexOf(i) == -1) {
 							if(canMiss) {
-								badNoteHit();
+								noteMiss(i);
+								callOnLuas('noteMissPress', [i]);
+								break;
 							}
 						}
 					}
