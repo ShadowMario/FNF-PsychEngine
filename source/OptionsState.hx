@@ -34,6 +34,7 @@ class OptionsState extends MusicBeatState
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
+	private var showCharacter:Character;
 
 	override function create() {
 		#if desktop
@@ -47,6 +48,10 @@ class OptionsState extends MusicBeatState
 		menuBG.screenCenter();
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
+
+		showCharacter = new Character(840, 170, 'bf', true);
+		showCharacter.setGraphicSize(Std.int(showCharacter.width * 0.8));
+		showCharacter.updateHitbox();
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -97,7 +102,7 @@ class OptionsState extends MusicBeatState
 					openSubState(new ControlsSubstate());
 
 				case 'Preferences':
-					openSubState(new PreferencesSubstate());
+					openSubState(new PreferencesSubstate(showCharacter));
 			}
 		}
 	}
@@ -683,9 +688,11 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Downscroll',
 		'Middlescroll',
 		'Ghost Tapping',
+		'Disable Reset Button',
 		'Note Delay',
 		'Note Splashes',
 		'Hide HUD',
+		'Disable HUD Bopping',
 		'Hide Song Length',
 		'Flashing Lights',
 		'Camera Zooms'
@@ -701,14 +708,20 @@ class PreferencesSubstate extends MusicBeatSubstate
 	private var textNumber:Array<Int> = [];
 
 	private var characterLayer:FlxTypedGroup<Character>;
-	private var showCharacter:Character = null;
+	private var showCharacter:Character;
 	private var descText:FlxText;
 
-	public function new()
+	public function new(showCharacter:Character)
 	{
 		super();
 		characterLayer = new FlxTypedGroup<Character>();
 		add(characterLayer);
+
+		// avoids lagspikes while scrolling through menus!
+		characterLayer.add(showCharacter);
+		characterLayer.visible = false;
+		this.showCharacter = showCharacter;
+		showCharacter.dance();
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -860,11 +873,17 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Ghost Tapping':
 						ClientPrefs.ghostTapping = !ClientPrefs.ghostTapping;
 
+					case 'Disable Reset Button':
+						ClientPrefs.disableReset = !ClientPrefs.disableReset;
+
 					case 'Camera Zooms':
 						ClientPrefs.camZooms = !ClientPrefs.camZooms;
 
 					case 'Hide HUD':
 						ClientPrefs.hideHud = !ClientPrefs.hideHud;
+
+					case 'Disable HUD Bopping':
+						ClientPrefs.disableHudBop = !ClientPrefs.disableHudBop;
 
 					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
@@ -951,6 +970,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If checked, hides Opponent's notes and your notes get centered.";
 			case 'Ghost Tapping':
 				daText = "If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.";
+			case 'Disable Reset Button':
+				daText = "If checked, disables resetting when in gameplay. \nUseful for accidental Resets.";
 			case 'Swearing':
 				daText = "If unchecked, your mom won't be angry at you.";
 			case 'Violence':
@@ -961,6 +982,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "Uncheck this if you're sensitive to flashing lights!";
 			case 'Camera Zooms':
 				daText = "If unchecked, the camera won't zoom in on a beat hit.";
+			case 'Disable HUD Bopping':
+				daText = "If checked, disables the HUD from stretching when notes are hit.";
 			case 'Hide HUD':
 				daText = "If checked, hides most HUD elements.";
 			case 'Hide Song Length':
@@ -999,18 +1022,11 @@ class PreferencesSubstate extends MusicBeatSubstate
 			}
 		}
 
-		if(options[curSelected] == 'Anti-Aliasing') {
-			if(showCharacter == null) {
-				showCharacter = new Character(840, 170, 'bf', true);
-				showCharacter.setGraphicSize(Std.int(showCharacter.width * 0.8));
-				showCharacter.updateHitbox();
-				showCharacter.dance();
-				characterLayer.add(showCharacter);
-			}
-		} else if(showCharacter != null) {
-			characterLayer.clear();
-			showCharacter = null;
-		}
+		if(options[curSelected] == 'Anti-Aliasing')
+			characterLayer.visible = true;
+	 	else
+			characterLayer.visible = false;
+
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 
@@ -1036,12 +1052,16 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.middleScroll;
 					case 'Ghost Tapping':
 						daValue = ClientPrefs.ghostTapping;
+					case 'Disable Reset Button':
+						daValue = ClientPrefs.disableReset;
 					case 'Swearing':
 						daValue = ClientPrefs.cursing;
 					case 'Violence':
 						daValue = ClientPrefs.violence;
 					case 'Camera Zooms':
 						daValue = ClientPrefs.camZooms;
+					case 'Disable HUD Bopping':
+						daValue = ClientPrefs.disableHudBop;
 					case 'Hide HUD':
 						daValue = ClientPrefs.hideHud;
 					case 'Persistent Cached Data':
