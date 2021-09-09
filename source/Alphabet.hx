@@ -235,6 +235,16 @@ class Alphabet extends FlxSpriteGroup
 			xPos = 0;
 			curRow += 1;
 		}
+		else if (textSize == 0.7 && loopNum <= splitWords.length - 2 && xPos >= FlxG.width * 0.65 && (splitWords[loopNum] == ' ' || splitWords[loopNum] == '-' || splitWords[loopNum] == splitWords[loopNum - 1]))
+		{
+			if (tmr != null)
+				tmr.loops -= 2;
+			loopNum += 1;
+			yMulti += 1;
+			xPosResetted = true;
+			xPos = 0;
+			curRow += 1;
+		}
 
 		if(loopNum <= splitWords.length) {
 			var spaceChar:Bool = (splitWords[loopNum] == " " || splitWords[loopNum] == "-" || splitWords[loopNum] == "_");

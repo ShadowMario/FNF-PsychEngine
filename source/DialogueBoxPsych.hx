@@ -139,7 +139,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 	}
 
 	var textX = 90;
-	var textY = 430;
+	var textY = 410;
 	var scrollSpeed = 4500;
 	var daText:Alphabet = null;
 	override function update(elapsed:Float)
@@ -147,8 +147,8 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		if(!dialogueEnded) {
 			bgFade.alpha += 0.5 * elapsed;
 			if(bgFade.alpha > 0.5) bgFade.alpha = 0.5;
-
-			if(FlxG.keys.justPressed.ANY) {
+			
+			if(PlayerSettings.player1.controls.ACCEPT) {
 				if(!daText.finishedText) {
 					if(daText != null) {
 						daText.killTheTimer();
