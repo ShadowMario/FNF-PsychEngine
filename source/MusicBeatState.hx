@@ -1,5 +1,7 @@
 package;
 
+import flixel.text.FlxText;
+import flixel.FlxBasic;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -42,6 +44,9 @@ class MusicBeatState extends FlxUIState
 
 	override function update(elapsed:Float)
 	{
+		if(!ClientPrefs.globalAntialiasing)forEach((spr:FlxBasic) -> {
+			if(Std.isOfType(spr, FlxSprite) || Std.isOfType(spr, FlxText)) Reflect.setProperty(spr, "antialiasing", false);
+		});
 		//everyStep();
 		var oldStep:Int = curStep;
 
