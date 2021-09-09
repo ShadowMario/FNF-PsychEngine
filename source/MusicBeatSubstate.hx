@@ -2,6 +2,7 @@ package;
 
 import flixel.text.FlxText;
 import flixel.FlxBasic;
+import flixel.FlxSprite;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
@@ -25,9 +26,6 @@ class MusicBeatSubstate extends FlxSubState
 
 	override function update(elapsed:Float)
 	{
-		if(!ClientPrefs.globalAntialiasing)forEach((spr:FlxBasic) -> {
-			if(Std.isOfType(spr, FlxSprite) || Std.isOfType(spr, FlxText)) Reflect.setProperty(spr, "antialiasing", false);
-		});
 		//everyStep();
 		var oldStep:Int = curStep;
 
@@ -41,6 +39,12 @@ class MusicBeatSubstate extends FlxSubState
 		super.update(elapsed);
 	}
 
+	override function add(spr:FlxBasic):FlxBasic {
+		if(!ClientPrefs.globalAntialiasing)
+			if(Std.isOfType(spr, FlxSprite) || Std.isOfType(spr, FlxText)) Reflect.setProperty(spr, "antialiasing", false);
+		return super.add(spr);
+	}
+	
 	private function updateCurStep():Void
 	{
 		var lastChange:BPMChangeEvent = {
