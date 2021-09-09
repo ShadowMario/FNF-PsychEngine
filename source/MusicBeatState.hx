@@ -44,9 +44,6 @@ class MusicBeatState extends FlxUIState
 
 	override function update(elapsed:Float)
 	{
-		if(!ClientPrefs.globalAntialiasing)forEach((spr:FlxBasic) -> {
-			if(Std.isOfType(spr, FlxSprite) || Std.isOfType(spr, FlxText)) Reflect.setProperty(spr, "antialiasing", false);
-		});
 		//everyStep();
 		var oldStep:Int = curStep;
 
@@ -78,6 +75,12 @@ class MusicBeatState extends FlxUIState
 		}
 
 		curStep = lastChange.stepTime + Math.floor(((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / Conductor.stepCrochet);
+	}
+
+	override function add(spr:FlxBasic):FlxBasic {
+		if(!ClientPrefs.globalAntialiasing)
+			if(Std.isOfType(spr, FlxSprite) || Std.isOfType(spr, FlxText)) Reflect.setProperty(spr, "antialiasing", false);
+		return super.add(spr);
 	}
 
 	public static function switchState(nextState:FlxState) {
