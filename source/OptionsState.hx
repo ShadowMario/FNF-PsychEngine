@@ -688,11 +688,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Downscroll',
 		'Middlescroll',
 		'Ghost Tapping',
-		'Disable Reset Button',
 		'Note Delay',
 		'Note Splashes',
 		'Hide HUD',
-		'Disable HUD Bopping',
 		'Hide Song Length',
 		'Flashing Lights',
 		'Camera Zooms'
@@ -873,17 +871,11 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Ghost Tapping':
 						ClientPrefs.ghostTapping = !ClientPrefs.ghostTapping;
 
-					case 'Disable Reset Button':
-						ClientPrefs.disableReset = !ClientPrefs.disableReset;
-
 					case 'Camera Zooms':
 						ClientPrefs.camZooms = !ClientPrefs.camZooms;
 
 					case 'Hide HUD':
 						ClientPrefs.hideHud = !ClientPrefs.hideHud;
-
-					case 'Disable HUD Bopping':
-						ClientPrefs.disableHudBop = !ClientPrefs.disableHudBop;
 
 					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
@@ -970,8 +962,6 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If checked, hides Opponent's notes and your notes get centered.";
 			case 'Ghost Tapping':
 				daText = "If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.";
-			case 'Disable Reset Button':
-				daText = "If checked, disables resetting when in gameplay. \nUseful for accidental Resets.";
 			case 'Swearing':
 				daText = "If unchecked, your mom won't be angry at you.";
 			case 'Violence':
@@ -982,8 +972,6 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "Uncheck this if you're sensitive to flashing lights!";
 			case 'Camera Zooms':
 				daText = "If unchecked, the camera won't zoom in on a beat hit.";
-			case 'Disable HUD Bopping':
-				daText = "If checked, disables the HUD from stretching when notes are hit.";
 			case 'Hide HUD':
 				daText = "If checked, hides most HUD elements.";
 			case 'Hide Song Length':
@@ -1052,16 +1040,12 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.middleScroll;
 					case 'Ghost Tapping':
 						daValue = ClientPrefs.ghostTapping;
-					case 'Disable Reset Button':
-						daValue = ClientPrefs.disableReset;
 					case 'Swearing':
 						daValue = ClientPrefs.cursing;
 					case 'Violence':
 						daValue = ClientPrefs.violence;
 					case 'Camera Zooms':
 						daValue = ClientPrefs.camZooms;
-					case 'Disable HUD Bopping':
-						daValue = ClientPrefs.disableHudBop;
 					case 'Hide HUD':
 						daValue = ClientPrefs.hideHud;
 					case 'Persistent Cached Data':
