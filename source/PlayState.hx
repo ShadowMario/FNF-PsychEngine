@@ -188,7 +188,6 @@ class PlayState extends MusicBeatState
 	public var songHits:Int = 0;
 
 	public var songMisses:Int = 0;
-	public var ghostMisses:Int = 0;
 
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
@@ -1995,7 +1994,7 @@ class PlayState extends MusicBeatState
 		// better streaming of shit
 
 		// RESET = Quick Game Over Screen
-		if (controls.RESET && !inCutscene && !endingSong && !ClientPrefs.disableReset)
+		if (controls.RESET && !inCutscene && !endingSong)
 		{
 			health = 0;
 			trace("RESET = True");
@@ -2851,19 +2850,16 @@ class PlayState extends MusicBeatState
 			songHits++;
 			RecalculateRating();
 
-			// this is a very selfish commit but I dislike the hud bop oops
-			if (!ClientPrefs.disableHudBop) {
-				if(scoreTxtTween != null) {
-					scoreTxtTween.cancel();
-				}
-				scoreTxt.scale.x = 1.1;
-				scoreTxt.scale.y = 1.1;
-				scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
-					onComplete: function(twn:FlxTween) {
-						scoreTxtTween = null;
-					}
-				});
+			if(scoreTxtTween != null) {
+				scoreTxtTween.cancel();
 			}
+			scoreTxt.scale.x = 1.1;
+			scoreTxt.scale.y = 1.1;
+			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					scoreTxtTween = null;
+				}
+			});
 		}
 
 		/* if (combo > 60)
@@ -3132,9 +3128,7 @@ class PlayState extends MusicBeatState
 			combo = 0;
 
 			if(!practiceMode) songScore -= 10;
-			if(!endingSong) {
-				if (ghostMiss)
-					ghostMisses++;
+			if(!endingSong && !ghostMiss)
 				songMisses++;
 			}
 			RecalculateRating();
@@ -3639,7 +3633,7 @@ class PlayState extends MusicBeatState
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', []);
 		if(ret != FunkinLua.Function_Stop) {
-			ratingPercent = songScore / ((songHits + songMisses - ghostMisses) * 350);
+			ratingPercent = songScore / ((songHits + songMisses) * 350);
 			if(!Math.isNaN(ratingPercent) && ratingPercent < 0) ratingPercent = 0;
 
 			if(Math.isNaN(ratingPercent)) {
