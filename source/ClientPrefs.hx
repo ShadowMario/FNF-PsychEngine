@@ -25,9 +25,6 @@ class ClientPrefs {
 	public static var imagesPersist:Bool = false;
 	public static var ghostTapping:Bool = true;
 	public static var hideTime:Bool = false;
-	// whoops I'm adding on to the problem haha
-	public static var disableHudBop:Bool = false;
-	public static var disableReset:Bool = false;
 
 	public static var defaultKeys:Array<FlxKey> = [
 		A, LEFT,			//Note Left
