@@ -1839,7 +1839,11 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed); //TEST
 
-		scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString + ((ratingString == '?') ? '' : ' (' + Math.floor(ratingPercent * 100) + '%)');
+		if(ratingString == '?') {
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString;
+		} else {
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString + ' (' + Math.floor(ratingPercent * 100) + '%)';
+		}
 
 		if(cpuControlled) {
 			botplaySine += 180 * elapsed;
