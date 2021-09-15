@@ -186,7 +186,9 @@ class PlayState extends MusicBeatState
 
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
+
 	public var songMisses:Int = 0;
+
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -2804,6 +2806,7 @@ class PlayState extends MusicBeatState
 
 	private function popUpScore(note:Note = null):Void
 	{
+		// why + 8?
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + 8); 
 
 		// boyfriend.playAnim('hey');
@@ -2846,6 +2849,7 @@ class PlayState extends MusicBeatState
 			songScore += score;
 			songHits++;
 			RecalculateRating();
+
 			if(scoreTxtTween != null) {
 				scoreTxtTween.cancel();
 			}
@@ -3065,7 +3069,7 @@ class PlayState extends MusicBeatState
 					for (i in 0...controlArray.length) {
 						if(controlArray[i] && notesDatas.indexOf(i) == -1) {
 							if(canMiss) {
-								noteMiss(i);
+								noteMiss(i, true);
 								callOnLuas('noteMissPress', [i]);
 								break;
 							}
@@ -3106,13 +3110,13 @@ class PlayState extends MusicBeatState
 		var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
 		for (i in 0...controlArray.length) {
 			if(controlArray[i]) {
-				noteMiss(i);
+				noteMiss(i, true);
 				callOnLuas('noteMissPress', [i]);
 			}
 		}
 	}
 
-	function noteMiss(direction:Int = 1):Void
+	function noteMiss(direction:Int = 1, ?ghostMiss:Bool = false):Void
 	{
 		if (!boyfriend.stunned)
 		{
@@ -3124,7 +3128,9 @@ class PlayState extends MusicBeatState
 			combo = 0;
 
 			if(!practiceMode) songScore -= 10;
-			if(!endingSong) songMisses++;
+			if(!endingSong && !ghostMiss) {
+				songMisses++;
+			}
 			RecalculateRating();
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
