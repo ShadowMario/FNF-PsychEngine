@@ -8,7 +8,7 @@ class NoteSplash extends FlxSprite
 {
 	public var colorSwap:ColorSwap = null;
 	private var idleAnim:String;
-	private var lastNoteType:Int = -1;
+	private var textureLoaded:String = null;
 
 	public function new(x:Float = 0, y:Float = 0, ?note:Int = 0) {
 		super(x, y);
@@ -25,35 +25,21 @@ class NoteSplash extends FlxSprite
 		antialiasing = ClientPrefs.globalAntialiasing;
 	}
 
-	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, noteType:Int = 0) {
+	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) {
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
 		alpha = 0.6;
 
-		if(lastNoteType != noteType) {
-			var skin:String = 'noteSplashes';
-			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
-
-			switch(noteType) {
-				case 3: //Hurt note
-					loadAnims('HURT' + skin);
-
-				default:
-					loadAnims(skin);
-			}
-			lastNoteType = noteType;
+		if(texture == null) {
+			texture = 'noteSplashes';
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		}
 
-		switch(noteType) {
-			case 3:
-				colorSwap.hue = 0;
-				colorSwap.saturation = 0;
-				colorSwap.brightness = 0;
-			
-			default:
-				colorSwap.hue = ClientPrefs.arrowHSV[note % 4][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[note % 4][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[note % 4][2] / 100;
+		if(textureLoaded != texture) {
+			loadAnims(texture);
 		}
+		colorSwap.hue = hueColor;
+		colorSwap.saturation = satColor;
+		colorSwap.brightness = brtColor;
 		offset.set(10, 10);
 
 		var animNum:Int = FlxG.random.int(1, 2);

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="psykaDanceTitle.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="psykaDance0000" x="4" y="4" width="717" height="672" pivotX="0" pivotY="0" frameX="-2" frameY="-11" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0001" x="725" y="4" width="721" height="672" frameX="0" frameY="-11" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0002" x="1450" y="4" width="717" height="670" frameX="-2" frameY="-13" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0003" x="2171" y="4" width="717" height="670" frameX="-2" frameY="-13" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0004" x="2892" y="4" width="717" height="674" frameX="-2" frameY="-9" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0005" x="4" y="682" width="717" height="674" frameX="-2" frameY="-9" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0006" x="725" y="682" width="717" height="675" frameX="-2" frameY="-8" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0007" x="1446" y="682" width="717" height="683" frameX="-2" frameY="0" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0008" x="1446" y="682" width="717" height="683" frameX="-2" frameY="0" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0009" x="1446" y="682" width="717" height="683" frameX="-2" frameY="0" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0010" x="2167" y="682" width="717" height="683" frameX="-2" frameY="0" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0011" x="2167" y="682" width="717" height="683" frameX="-2" frameY="0" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0012" x="2167" y="682" width="717" height="683" frameX="-2" frameY="0" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0013" x="2888" y="682" width="717" height="682" frameX="-2" frameY="-1" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0014" x="2888" y="682" width="717" height="682" frameX="-2" frameY="-1" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0015" x="4" y="1369" width="717" height="675" frameX="-2" frameY="-8" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0016" x="725" y="1369" width="721" height="675" frameX="0" frameY="-8" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0017" x="1450" y="1369" width="717" height="674" frameX="-2" frameY="-9" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0018" x="2171" y="1369" width="717" height="674" frameX="-2" frameY="-9" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0019" x="2892" y="1369" width="717" height="672" frameX="-2" frameY="-11" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0020" x="4" y="2048" width="717" height="672" frameX="-2" frameY="-11" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0021" x="725" y="2048" width="717" height="673" frameX="-2" frameY="-10" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0022" x="1446" y="2048" width="717" height="681" frameX="-2" frameY="-2" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0023" x="1446" y="2048" width="717" height="681" frameX="-2" frameY="-2" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0024" x="1446" y="2048" width="717" height="681" frameX="-2" frameY="-2" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0025" x="2167" y="2048" width="717" height="681" frameX="-2" frameY="-2" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0026" x="2167" y="2048" width="717" height="681" frameX="-2" frameY="-2" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0027" x="2167" y="2048" width="717" height="681" frameX="-2" frameY="-2" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0028" x="2888" y="2048" width="717" height="680" frameX="-2" frameY="-3" frameWidth="721" frameHeight="683"/>
+	<SubTexture name="psykaDance0029" x="2888" y="2048" width="717" height="680" frameX="-2" frameY="-3" frameWidth="721" frameHeight="683"/>
+</TextureAtlas>

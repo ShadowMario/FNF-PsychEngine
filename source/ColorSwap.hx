@@ -123,14 +123,6 @@ class ColorSwapShader extends FlxShader {
 			// [0] is the hue???
 			swagColor[0] += uTime[0];
 			swagColor[1] += uTime[1];
-			if(swagColor[1] < 0.0)
-			{
-				swagColor[1] = 0.0;
-			}
-			else if(swagColor[1] > 1.0)
-			{
-				swagColor[1] = 1.0;
-			}
 			swagColor[2] *= 1.0 + uTime[2];
 
 			color = vec4(hsv2rgb(vec3(swagColor[0], swagColor[1], swagColor[2])), swagColor[3]);

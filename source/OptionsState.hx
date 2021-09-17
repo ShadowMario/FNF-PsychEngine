@@ -670,20 +670,23 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Framerate',
 		'Note Delay'
 	];
+
 	static var options:Array<String> = [
-		unselectableOptions[0],
+		'GRAPHICS',
 		'Low Quality',
 		'Anti-Aliasing',
 		'Persistent Cached Data',
 		#if !html5
-		noCheckbox[0], //Apparently 120FPS isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
+		'Framerate', //Apparently 120FPS isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		#end
-		unselectableOptions[1],
+		'GAMEPLAY',
 		'Downscroll',
+		'Middlescroll',
 		'Ghost Tapping',
-		noCheckbox[1],
+		'Note Delay',
 		'Note Splashes',
 		'Hide HUD',
+		'Hide Song Length',
 		'Flashing Lights',
 		'Camera Zooms'
 		#if !mobile
@@ -851,6 +854,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Downscroll':
 						ClientPrefs.downScroll = !ClientPrefs.downScroll;
 
+					case 'Middlescroll':
+						ClientPrefs.middleScroll = !ClientPrefs.middleScroll;
+
 					case 'Ghost Tapping':
 						ClientPrefs.ghostTapping = !ClientPrefs.ghostTapping;
 
@@ -863,6 +869,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
 						FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
+					
+					case 'Hide Song Length':
+						ClientPrefs.hideTime = !ClientPrefs.hideTime;
 				}
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				reloadValues();
@@ -938,6 +947,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If unchecked, disables anti-aliasing, increases performance\nat the cost of the graphics not looking as smooth.";
 			case 'Downscroll':
 				daText = "If checked, notes go Down instead of Up, simple enough.";
+			case 'Middlescroll':
+				daText = "If checked, hides Opponent's notes and your notes get centered.";
 			case 'Ghost Tapping':
 				daText = "If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.";
 			case 'Swearing':
@@ -952,6 +963,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If unchecked, the camera won't zoom in on a beat hit.";
 			case 'Hide HUD':
 				daText = "If checked, hides most HUD elements.";
+			case 'Hide Song Length':
+				daText = "If checked, the bar showing how much time is left\nwill be hidden.";
 		}
 		descText.text = daText;
 
@@ -1019,6 +1032,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.flashing;
 					case 'Downscroll':
 						daValue = ClientPrefs.downScroll;
+					case 'Middlescroll':
+						daValue = ClientPrefs.middleScroll;
 					case 'Ghost Tapping':
 						daValue = ClientPrefs.ghostTapping;
 					case 'Swearing':
@@ -1031,6 +1046,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.hideHud;
 					case 'Persistent Cached Data':
 						daValue = ClientPrefs.imagesPersist;
+					case 'Hide Song Length':
+						daValue = ClientPrefs.hideTime;
 				}
 				checkbox.daValue = daValue;
 			}

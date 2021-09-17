@@ -30,7 +30,6 @@ class Alphabet extends FlxSpriteGroup
 	public var text:String = "";
 
 	var _finalText:String = "";
-	var _curText:String = "";
 	var yMulti:Float = 1;
 
 	// custom shit
@@ -82,7 +81,6 @@ class Alphabet extends FlxSpriteGroup
 		}
 		lettersArray = [];
 		splitWords = [];
-		_curText = "";
 		loopNum = 0;
 		xPos = 0;
 		curRow = 0;
@@ -123,7 +121,7 @@ class Alphabet extends FlxSpriteGroup
 			// {
 			// }
 
-			var spaceChar:Bool = (character == " " || character == "-" || character == "_");
+			var spaceChar:Bool = (character == " " || character == "_");
 			if (spaceChar)
 			{
 				consecutiveSpaces++;
@@ -156,8 +154,7 @@ class Alphabet extends FlxSpriteGroup
 					}
 					else if (isSymbol)
 					{
-						if(character != '-')
-							letter.createBoldSymbol(character);
+						letter.createBoldSymbol(character);
 					}
 					else
 					{
@@ -197,7 +194,7 @@ class Alphabet extends FlxSpriteGroup
 
 	var loopNum:Int = 0;
 	var xPos:Float = 0;
-	var curRow:Int = 0;
+	public var curRow:Int = 0;
 	var dialogueSound:FlxSound = null;
 	var consecutiveSpaces:Int = 0;
 
@@ -210,10 +207,9 @@ class Alphabet extends FlxSpriteGroup
 		// trace(arrayShit);
 
 		if(speed <= 0) {
-			while(loopNum < splitWords.length) {
+			while(!finishedText) { 
 				timerCheck();
 			}
-			finishedText = true;
 			if(dialogueSound != null) dialogueSound.stop();
 			dialogueSound = FlxG.sound.play(Paths.sound('dialogue'));
 		} else {
@@ -225,19 +221,28 @@ class Alphabet extends FlxSpriteGroup
 		}
 	}
 
+	var LONG_TEXT_ADD:Float = -24; //text is over 2 rows long, make it go up a bit
 	public function timerCheck(?tmr:FlxTimer = null) {
-		if (loopNum <= splitWords.length - 2 && splitWords[loopNum] == "\\" && splitWords[loopNum+1] == "n")
+		var autoBreak:Bool = false;
+		if ((loopNum <= splitWords.length - 2 && splitWords[loopNum] == "\\" && splitWords[loopNum+1] == "n") ||
+			((autoBreak = true) && xPos >= FlxG.width * 0.65 && splitWords[loopNum] == ' ' ))
 		{
-			if(tmr != null) tmr.loops -= 2;
-			loopNum += 2;
+			if(autoBreak) {
+				if(tmr != null) tmr.loops -= 1;
+				loopNum += 1;
+			} else {
+				if(tmr != null) tmr.loops -= 2;
+				loopNum += 2;
+			}
 			yMulti += 1;
 			xPosResetted = true;
 			xPos = 0;
 			curRow += 1;
+			if(curRow == 2) y += LONG_TEXT_ADD;
 		}
 
-		if(loopNum <= splitWords.length) {
-			var spaceChar:Bool = (splitWords[loopNum] == " " || splitWords[loopNum] == "-" || splitWords[loopNum] == "_");
+		if(loopNum <= splitWords.length && splitWords[loopNum] != null) {
+			var spaceChar:Bool = (splitWords[loopNum] == " " || splitWords[loopNum] == "_");
 			if (spaceChar)
 			{
 				consecutiveSpaces++;
@@ -313,11 +318,13 @@ class Alphabet extends FlxSpriteGroup
 			}
 		}
 
-		loopNum += 1;
-		if(loopNum >= splitWords.length && tmr != null) {
-			typeTimer = null;
-			tmr.cancel();
-			tmr.destroy();
+		loopNum++;
+		if(loopNum >= splitWords.length) {
+			if(tmr != null) {
+				typeTimer = null;
+				tmr.cancel();
+				tmr.destroy();
+			}
 			finishedText = true;
 		}
 	}
@@ -413,8 +420,8 @@ class AlphaCharacter extends FlxSprite
 			case "'":
 				y -= 20 * textSize;
 			case '-':
-				x -= 35 - (90 * (1.0 - textSize));
-				y -= 16 * textSize;
+				//x -= 35 - (90 * (1.0 - textSize));
+				y += 20 * textSize;
 			case '(':
 				x -= 65 * textSize;
 				y -= 5 * textSize;
@@ -484,7 +491,7 @@ class AlphaCharacter extends FlxSprite
 			case "'":
 				y -= 20;
 			case '-':
-				x -= 35 - (90 * (1.0 - textSize));
+				//x -= 35 - (90 * (1.0 - textSize));
 				y -= 16;
 		}
 	}

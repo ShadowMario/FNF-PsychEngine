@@ -182,7 +182,7 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if(FlxG.keys.justPressed.ANY)
+		if(PlayerSettings.player1.controls.ACCEPT)
 		{
 			if (dialogueEnded)
 			{
@@ -219,12 +219,12 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					dialogueList.remove(dialogueList[0]);
 					startDialogue();
-					FlxG.sound.play(Paths.sound('clickText'), 0.8);	
+					FlxG.sound.play(Paths.sound('clickText'), 0.8);
 				}
 			}
 			else if (dialogueStarted)
 			{
-				FlxG.sound.play(Paths.sound('clickText'), 0.8);	
+				FlxG.sound.play(Paths.sound('clickText'), 0.8);
 				swagDialogue.skip();
 			}
 		}

@@ -12,9 +12,6 @@ class HealthIcon extends FlxSprite
 	private var isPlayer:Bool = false;
 	private var char:String = '';
 
-	// The following icons have antialiasing forced to be disabled
-	var noAntialiasing:Array<String> = ['bf-pixel', 'senpai', 'spirit'];
-
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
@@ -39,7 +36,8 @@ class HealthIcon extends FlxSprite
 
 	public function changeIcon(char:String) {
 		if(this.char != char) {
-			var name:String = 'icons/icon-' + char;
+			var name:String = 'icons/' + char;
+			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-' + char; //Older versions of psych engine's support
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
 			var file:Dynamic = Paths.image(name);
 
@@ -49,11 +47,8 @@ class HealthIcon extends FlxSprite
 			this.char = char;
 
 			antialiasing = ClientPrefs.globalAntialiasing;
-			for (i in 0...noAntialiasing.length) {
-				if(char == noAntialiasing[i]) {
-					antialiasing = false;
-					break;
-				}
+			if(char.endsWith('-pixel')) {
+				antialiasing = false;
 			}
 		}
 	}

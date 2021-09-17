@@ -1,0 +1,10 @@
+{
+	"idle_anim": "M Spooky Kids Idle",
+	"image": "Menu_Spooky_Kids",
+	"position": [
+		0,
+		-80
+	],
+	"scale": 1,
+	"confirm_anim": "M Dad Idle"
+}

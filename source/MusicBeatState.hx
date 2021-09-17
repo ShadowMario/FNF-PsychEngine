@@ -12,6 +12,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
+import flixel.FlxBasic;
 
 class MusicBeatState extends FlxUIState
 {
@@ -39,6 +40,20 @@ class MusicBeatState extends FlxUIState
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 	}
+	
+	#if (VIDEOS_ALLOWED && windows)
+	override public function onFocus():Void
+	{
+		FlxVideo.onFocus();
+		super.onFocus();
+	}
+	
+	override public function onFocusLost():Void
+	{
+		FlxVideo.onFocusLost();
+		super.onFocusLost();
+	}
+	#end
 
 	override function update(elapsed:Float)
 	{

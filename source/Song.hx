@@ -5,6 +5,11 @@ import haxe.Json;
 import haxe.format.JsonParser;
 import lime.utils.Assets;
 
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#end
+
 using StringTools;
 
 typedef SwagSong =
@@ -18,6 +23,7 @@ typedef SwagSong =
 	var player1:String;
 	var player2:String;
 	var player3:String;
+	var stage:String;
 
 	var arrowSkin:String;
 	var splashSkin:String;
@@ -33,6 +39,7 @@ class Song
 	public var arrowSkin:String;
 	public var splashSkin:String;
 	public var speed:Float = 1;
+	public var stage:String;
 
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
@@ -47,15 +54,23 @@ class Song
 
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
-		var rawJson;
-		if(jsonInput == 'events') { //Makes the game not crash while trying to load an events chart, doesn't work on HTML tho
+		var rawJson = null;
+		
+		var formattedFolder:String = Paths.formatToSongPath(folder);
+		var formattedSong:String = Paths.formatToSongPath(jsonInput);
+		#if MODS_ALLOWED
+		var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
+		if(FileSystem.exists(moddyFile)) {
+			rawJson = File.getContent(moddyFile).trim();
+		}
+		#end
+
+		if(rawJson == null) {
 			#if sys
-			rawJson = sys.io.File.getContent(Paths.json(folder.toLowerCase() + '/events')).trim();
+			rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
 			#else
-			rawJson = Assets.getText(Paths.json(folder.toLowerCase() + '/events')).trim();
+			rawJson = Assets.getText(Paths.json(formattedFolder + '/' + formattedSong)).trim();
 			#end
-		} else {
-			rawJson = Assets.getText(Paths.json(folder.toLowerCase() + '/' + jsonInput.toLowerCase())).trim();
 		}
 
 		while (!rawJson.endsWith("}"))
@@ -80,7 +95,9 @@ class Song
 				daSong = songData.song;
 				daBpm = songData.bpm; */
 
-		return parseJSONshit(rawJson);
+		var songJson:SwagSong = parseJSONshit(rawJson);
+		if(jsonInput != 'events') StageData.loadDirectory(songJson);
+		return songJson;
 	}
 
 	public static function parseJSONshit(rawJson:String):SwagSong

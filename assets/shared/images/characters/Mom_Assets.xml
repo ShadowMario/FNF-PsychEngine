@@ -15,8 +15,6 @@
 	<SubTexture name="MOM DOWN POSE0010" x="1246" y="0" width="403" height="600" frameX="0" frameY="-13" frameWidth="414" frameHeight="613"/>
 	<SubTexture name="MOM DOWN POSE0011" x="1246" y="0" width="403" height="600" frameX="0" frameY="-13" frameWidth="414" frameHeight="613"/>
 	<SubTexture name="MOM DOWN POSE0012" x="833" y="0" width="403" height="600" frameX="0" frameY="-13" frameWidth="414" frameHeight="613"/>
-	<SubTexture name="MOM DOWN POSE0013" x="1659" y="0" width="403" height="600" frameX="0" frameY="-13" frameWidth="414" frameHeight="613"/>
-	<SubTexture name="MOM DOWN POSE0014" x="1659" y="0" width="403" height="600" frameX="0" frameY="-13" frameWidth="414" frameHeight="613"/>
 	<SubTexture name="Mom Idle0000" x="2072" y="0" width="386" height="826" frameX="-4" frameY="-2" frameWidth="390" frameHeight="829"/>
 	<SubTexture name="Mom Idle0001" x="2072" y="0" width="386" height="826" frameX="-4" frameY="-2" frameWidth="390" frameHeight="829"/>
 	<SubTexture name="Mom Idle0002" x="2468" y="0" width="386" height="815" frameX="-4" frameY="-14" frameWidth="390" frameHeight="829"/>

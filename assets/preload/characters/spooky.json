@@ -1,1 +1,109 @@
-{"animations":[{"offsets":[58,-20],"loop":false,"fps":24,"anim":"hey","indices":[],"name":"spooky kids YEAH!!"},{"offsets":[130,-10],"loop":false,"fps":24,"anim":"singLEFT","indices":[],"name":"note sing left"},{"offsets":[-130,-14],"loop":false,"fps":24,"anim":"singRIGHT","indices":[],"name":"spooky sing right"},{"offsets":[-50,-130],"loop":false,"fps":24,"anim":"singDOWN","indices":[],"name":"spooky DOWN note"},{"offsets":[0,0],"loop":false,"anim":"danceLeft","fps":12,"name":"spooky dance idle","indices":[0,2,6]},{"offsets":[0,0],"loop":false,"anim":"danceRight","fps":12,"name":"spooky dance idle","indices":[8,10,12,14]},{"offsets":[-20,26],"loop":false,"anim":"singUP","fps":24,"name":"spooky UP NOTE","indices":[]}],"no_antialiasing":false,"image":"characters/spooky_kids_assets","position":[0,200],"healthicon":"spooky","flip_x":false,"camera_position":[0,0],"sing_duration":4,"scale":1}
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				59,
+				-20
+			],
+			"anim": "hey",
+			"fps": 24,
+			"name": "spooky kids YEAH!!",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				130,
+				-10
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "note sing left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-130,
+				-14
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "spooky sing right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-50,
+				-130
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "spooky DOWN note",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "danceLeft",
+			"indices": [
+				0,
+				2,
+				6
+			],
+			"name": "spooky dance idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 12,
+			"anim": "danceRight",
+			"indices": [
+				8,
+				10,
+				12,
+				14
+			],
+			"name": "spooky dance idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-20,
+				26
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "spooky UP NOTE"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/spooky_kids_assets",
+	"position": [
+		0,
+		200
+	],
+	"healthicon": "spooky",
+	"flip_x": false,
+	"healthbar_colors": [
+		213,
+		126,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}
