@@ -1,15 +1,10 @@
 {
 	"animations": [
 		{
-<<<<<<< HEAD
-=======
-			"loop": false,
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				-218,
 				-280
 			],
-<<<<<<< HEAD
 			"loop": false,
 			"anim": "idle",
 			"fps": 24,
@@ -17,20 +12,10 @@
 			"indices": []
 		},
 		{
-=======
-			"fps": 24,
-			"anim": "idle",
-			"indices": [],
-			"name": "idle spirit_"
-		},
-		{
-			"loop": false,
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				-200,
 				-280
 			],
-<<<<<<< HEAD
 			"loop": false,
 			"anim": "singLEFT",
 			"fps": 24,
@@ -38,20 +23,10 @@
 			"indices": []
 		},
 		{
-=======
-			"fps": 24,
-			"anim": "singLEFT",
-			"indices": [],
-			"name": "left_"
-		},
-		{
-			"loop": false,
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				170,
 				110
 			],
-<<<<<<< HEAD
 			"loop": false,
 			"anim": "singDOWN",
 			"fps": 24,
@@ -59,20 +34,10 @@
 			"indices": []
 		},
 		{
-=======
-			"fps": 24,
-			"anim": "singDOWN",
-			"indices": [],
-			"name": "spirit down_"
-		},
-		{
-			"loop": false,
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				-220,
 				-280
 			],
-<<<<<<< HEAD
 			"loop": false,
 			"anim": "singRIGHT",
 			"fps": 24,
@@ -80,31 +45,15 @@
 			"indices": []
 		},
 		{
-=======
-			"fps": 24,
-			"anim": "singRIGHT",
-			"indices": [],
-			"name": "right_"
-		},
-		{
-			"loop": false,
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				-220,
 				-240
 			],
-<<<<<<< HEAD
 			"loop": false,
 			"anim": "singUP",
 			"fps": 24,
 			"name": "up_",
 			"indices": []
-=======
-			"fps": 24,
-			"anim": "singUP",
-			"indices": [],
-			"name": "up_"
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 		}
 	],
 	"no_antialiasing": true,
@@ -113,11 +62,7 @@
 		-150,
 		100
 	],
-<<<<<<< HEAD
 	"healthicon": "spirit-pixel",
-=======
-	"healthicon": "spirit",
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 	"flip_x": false,
 	"healthbar_colors": [
 		255,

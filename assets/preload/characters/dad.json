@@ -118,7 +118,6 @@
 				59
 			],
 			"name": "Dad Sing Note UP"
-<<<<<<< HEAD
 		},
 		{
 			"loop": false,
@@ -130,8 +129,6 @@
 			"fps": 24,
 			"name": "WhatYouKnowAboutRollingDownInTheDeep",
 			"indices": []
-=======
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 		}
 	],
 	"no_antialiasing": false,

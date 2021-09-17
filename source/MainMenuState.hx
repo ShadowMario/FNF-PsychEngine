@@ -24,11 +24,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-<<<<<<< HEAD
 	public static var psychEngineVersion:String = '0.4'; //This is also used for Discord RPC
-=======
-	public static var psychEngineVersion:String = '0.3.2'; //This is also used for Discord RPC
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -174,10 +170,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.BACK)
 			{
-<<<<<<< HEAD
 				selectedSomethin = true;
-=======
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new TitleState());
 			}

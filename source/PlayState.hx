@@ -206,13 +206,8 @@ class PlayState extends MusicBeatState
 
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
-
 	public var songMisses:Int = 0;
-<<<<<<< HEAD
 	public var ghostMisses:Int = 0;
-=======
-
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -1007,12 +1002,6 @@ class PlayState extends MusicBeatState
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
 		super.create();
-	}
-	
-	public function reloadHealthBarColors() {
-		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
-			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
-		healthBar.updateBar();
 	}
 
 	public function addTextToDebug(text:String) {
@@ -2150,34 +2139,6 @@ class PlayState extends MusicBeatState
 		}
 		doDeathCheck();
 
-<<<<<<< HEAD
-=======
-		if (health <= 0 && !practiceMode)
-		{
-			var ret:Dynamic = callOnLuas('onGameOver', []);
-			if(ret != FunkinLua.Function_Stop) {
-				boyfriend.stunned = true;
-				deathCounter++;
-
-				persistentUpdate = false;
-				persistentDraw = false;
-				paused = true;
-
-				vocals.stop();
-				FlxG.sound.music.stop();
-
-				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, camFollowPos.x, camFollowPos.y));
-
-				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-				
-				#if desktop
-				// Game Over doesn't get his own variable because it's only used here
-				DiscordClient.changePresence("Game Over - " + detailsText, displaySongName + " (" + storyDifficultyText + ")", iconP2.getCharacter());
-				#end
-			}
-		}
-
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 		var roundedSpeed:Float = FlxMath.roundDecimal(SONG.speed, 2);
 		if (unspawnNotes[0] != null)
 		{
@@ -3021,10 +2982,6 @@ class PlayState extends MusicBeatState
 
 	private function popUpScore(note:Note = null):Void
 	{
-<<<<<<< HEAD
-=======
-		// why + 8?
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + 8); 
 
 		// boyfriend.playAnim('hey');
@@ -3067,7 +3024,6 @@ class PlayState extends MusicBeatState
 			songScore += score;
 			songHits++;
 			RecalculateRating();
-
 			if(scoreTxtTween != null) {
 				scoreTxtTween.cancel();
 			}
@@ -3349,12 +3305,8 @@ class PlayState extends MusicBeatState
 			combo = 0;
 
 			if(!practiceMode) songScore -= 10;
-<<<<<<< HEAD
 			if(!endingSong) {
 				if(ghostMiss) ghostMisses++;
-=======
-			if(!endingSong && !ghostMiss) {
->>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 				songMisses++;
 			}
 			RecalculateRating();
