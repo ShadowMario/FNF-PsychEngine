@@ -34,6 +34,7 @@ class OptionsState extends MusicBeatState
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
+	private var showCharacter:Character;
 
 	override function create() {
 		#if desktop
@@ -47,6 +48,10 @@ class OptionsState extends MusicBeatState
 		menuBG.screenCenter();
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
+
+		showCharacter = new Character(840, 170, 'bf', true);
+		showCharacter.setGraphicSize(Std.int(showCharacter.width * 0.8));
+		showCharacter.updateHitbox();
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -97,7 +102,7 @@ class OptionsState extends MusicBeatState
 					openSubState(new ControlsSubstate());
 
 				case 'Preferences':
-					openSubState(new PreferencesSubstate());
+					openSubState(new PreferencesSubstate(showCharacter));
 			}
 		}
 	}
@@ -701,14 +706,20 @@ class PreferencesSubstate extends MusicBeatSubstate
 	private var textNumber:Array<Int> = [];
 
 	private var characterLayer:FlxTypedGroup<Character>;
-	private var showCharacter:Character = null;
+	private var showCharacter:Character;
 	private var descText:FlxText;
 
-	public function new()
+	public function new(showCharacter:Character)
 	{
 		super();
 		characterLayer = new FlxTypedGroup<Character>();
 		add(characterLayer);
+
+		// avoids lagspikes while scrolling through menus!
+		characterLayer.add(showCharacter);
+		characterLayer.visible = false;
+		this.showCharacter = showCharacter;
+		showCharacter.dance();
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -869,7 +880,11 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
 						FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
+<<<<<<< HEAD
 					
+=======
+
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 					case 'Hide Song Length':
 						ClientPrefs.hideTime = !ClientPrefs.hideTime;
 				}
@@ -999,18 +1014,11 @@ class PreferencesSubstate extends MusicBeatSubstate
 			}
 		}
 
-		if(options[curSelected] == 'Anti-Aliasing') {
-			if(showCharacter == null) {
-				showCharacter = new Character(840, 170, 'bf', true);
-				showCharacter.setGraphicSize(Std.int(showCharacter.width * 0.8));
-				showCharacter.updateHitbox();
-				showCharacter.dance();
-				characterLayer.add(showCharacter);
-			}
-		} else if(showCharacter != null) {
-			characterLayer.clear();
-			showCharacter = null;
-		}
+		if(options[curSelected] == 'Anti-Aliasing')
+			characterLayer.visible = true;
+	 	else
+			characterLayer.visible = false;
+
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 

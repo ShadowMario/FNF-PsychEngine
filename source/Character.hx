@@ -142,6 +142,9 @@ class Character extends FlxSprite
 				if(json.healthbar_colors != null && json.healthbar_colors.length > 2)
 					healthColorArray = json.healthbar_colors;
 
+				if(json.healthbar_colors != null && json.healthbar_colors.length > 2)
+					healthColorArray = json.healthbar_colors;
+
 				antialiasing = !noAntialiasing;
 				if(!ClientPrefs.globalAntialiasing) antialiasing = false;
 
@@ -177,8 +180,13 @@ class Character extends FlxSprite
 		{
 			flipX = !flipX;
 
+<<<<<<< HEAD
 			/*// Doesn't flip for BF, since his are already in the right place???
 			if (!curCharacter.startsWith('bf'))
+=======
+			// Doesn't flip for BF, since his are already in the right place???
+			/*if (!curCharacter.startsWith('bf'))
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			{
 				// var animArray
 				if(animation.getByName('singLEFT') != null && animation.getByName('singRIGHT') != null)
@@ -201,6 +209,10 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 		if(!debugMode && animation.curAnim != null)
 		{
 			if(heyTimer > 0)

@@ -23,12 +23,20 @@ class Paths
 	inline public static var VIDEO_EXT = "mp4";
 
 	#if MODS_ALLOWED
+<<<<<<< HEAD
 	#if (haxe >= "4.0.0")
 	public static var customImagesLoaded:Map<String, FlxGraphic> = new Map();
 	public static var customSoundsLoaded:Map<String, Sound> = new Map();
 	#else
 	public static var customImagesLoaded:Map<String, FlxGraphic> = new Map<String, FlxGraphic>();
 	public static var customSoundsLoaded:Map<String, Sound> = new Map<String, Sound>();
+=======
+		#if (haxe >= "4.0.0")
+		public static var customImagesLoaded:Map<String, FlxGraphic> = new Map();
+		#else
+		public static var customImagesLoaded:Map<String, FlxGraphic> = new Map<String, FlxGraphic>();
+		#end
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 	#end
 	#end
 
@@ -170,6 +178,7 @@ class Paths
 	#if MODS_ALLOWED
 	inline static private function returnSongFile(file:String):Sound
 	{
+<<<<<<< HEAD
 		if(FileSystem.exists(file)) {
 			if(!customSoundsLoaded.exists(file)) {
 				customSoundsLoaded.set(file, Sound.fromFile(file));
@@ -182,6 +191,8 @@ class Paths
 
 	inline static public function image(key:String, ?library:String):Dynamic
 	{
+=======
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 		#if MODS_ALLOWED
 		var imageToReturn:FlxGraphic = addCustomGraphic(key);
 		if(imageToReturn != null) return imageToReturn;

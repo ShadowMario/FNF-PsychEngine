@@ -1,10 +1,15 @@
 {
 	"animations": [
 		{
+<<<<<<< HEAD
+=======
+			"loop": false,
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				2,
 				0
 			],
+<<<<<<< HEAD
 			"loop": false,
 			"anim": "idle",
 			"fps": 24,
@@ -12,10 +17,20 @@
 			"indices": []
 		},
 		{
+=======
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "Angry Senpai Idle"
+		},
+		{
+			"loop": false,
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				5,
 				37
 			],
+<<<<<<< HEAD
 			"loop": false,
 			"anim": "singUP",
 			"fps": 24,
@@ -23,10 +38,20 @@
 			"indices": []
 		},
 		{
+=======
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "Angry Senpai UP NOTE"
+		},
+		{
+			"loop": false,
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				40,
 				0
 			],
+<<<<<<< HEAD
 			"loop": false,
 			"anim": "singLEFT",
 			"fps": 24,
@@ -34,10 +59,20 @@
 			"indices": []
 		},
 		{
+=======
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Angry Senpai LEFT NOTE"
+		},
+		{
+			"loop": false,
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				0,
 				0
 			],
+<<<<<<< HEAD
 			"loop": false,
 			"anim": "singRIGHT",
 			"fps": 24,
@@ -45,15 +80,31 @@
 			"indices": []
 		},
 		{
+=======
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Angry Senpai RIGHT NOTE"
+		},
+		{
+			"loop": false,
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			"offsets": [
 				14,
 				0
 			],
+<<<<<<< HEAD
 			"loop": false,
 			"anim": "singDOWN",
 			"fps": 24,
 			"name": "Angry Senpai DOWN NOTE",
 			"indices": []
+=======
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Angry Senpai DOWN NOTE"
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 		}
 	],
 	"no_antialiasing": true,
@@ -62,7 +113,11 @@
 		150,
 		360
 	],
+<<<<<<< HEAD
 	"healthicon": "senpai-pixel",
+=======
+	"healthicon": "senpai",
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 	"flip_x": false,
 	"healthbar_colors": [
 		255,

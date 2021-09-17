@@ -71,9 +71,15 @@ class LoadingState extends MusicBeatState
 						checkLoadSong(getVocalPath());
 				}
 				checkLibrary("shared");
+<<<<<<< HEAD
 				if(directory != null && directory.length > 0 && directory != 'shared') {
 					checkLibrary(directory);
 				}
+=======
+
+				var directory:String = WeekData.getWeekDirectory();
+				checkLibrary(directory);
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 
 				var fadeTime = 0.5;
 				FlxG.camera.fade(FlxG.camera.bgColor, fadeTime, true);
@@ -164,7 +170,13 @@ class LoadingState extends MusicBeatState
 		#if NO_PRELOAD_ALL
 		var loaded:Bool = false;
 		if (PlayState.SONG != null) {
+<<<<<<< HEAD
 			loaded = isSoundLoaded(getSongPath()) && (!PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath())) && isLibraryLoaded("shared") && isLibraryLoaded(directory);
+=======
+			loaded = isSoundLoaded(getSongPath())
+				&& (!PlayState.SONG.needsVoices || isSoundLoaded(getVocalPath()))
+				&& isLibraryLoaded("shared") && isLibraryLoaded(directory);
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 		}
 		
 		if (!loaded)

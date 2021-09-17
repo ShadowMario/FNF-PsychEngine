@@ -171,6 +171,12 @@ class Note extends FlxSprite
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
 			}
+<<<<<<< HEAD
+=======
+		} else if(!isSustainNote) {
+			earlyHitMult = 1;
+		}
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 
 			if(PlayState.isPixelStage) {
 				scale.y *= PlayState.daPixelZoom;
@@ -286,7 +292,10 @@ class Note extends FlxSprite
 
 		if (mustPress)
 		{
+<<<<<<< HEAD
 			// ok river
+=======
+>>>>>>> 29e4152c41e8da6e2374bb82777dfb484c07499b
 			if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset
 				&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * earlyHitMult))
 				canBeHit = true;
