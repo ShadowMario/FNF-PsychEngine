@@ -624,7 +624,6 @@ class PlayState extends MusicBeatState
 
 		if(curStage == 'philly') {
 			phillyCityLightsEvent = new FlxTypedGroup<BGSprite>();
-			add(phillyCityLightsEvent);
 			for (i in 0...5)
 			{
 				var light:BGSprite = new BGSprite('philly/win' + i, -10, 0, 0.3, 0.3);
@@ -667,6 +666,8 @@ class PlayState extends MusicBeatState
 		}
 		
 		add(backgroundGroup);
+
+		if(curStage == 'philly') add(phillyCityLightsEvent);
 
 		boyfriendGroup = new FlxTypedGroup<Boyfriend>();
 		dadGroup = new FlxTypedGroup<Character>();
