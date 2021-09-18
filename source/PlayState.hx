@@ -3186,89 +3186,82 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('asdfa', upP);
 		if (!boyfriend.stunned && generatedMusic)
 		{
-			if((left || down || up || right) && !endingSong) {
-				notes.forEachAlive(function(daNote:Note) {
-					if(daNote.isSustainNote && controlHoldArray[daNote.noteData] && daNote.canBeHit && daNote.mustPress) {
+			// rewritten inputs???
+			if ((controlHoldArray.contains(true) || controlArray.contains(true)) && !endingSong) {
+
+				var canMiss:Bool = !ClientPrefs.ghostTapping;
+				if (controlArray.contains(true)) {
+					for (i in 0...controlArray.length) {
+						// heavily based on my own code LOL if it aint broke dont fix it
+						var pressNotes:Array<Note> = [];
+						var notesDatas:Array<Int> = [];
+						var notesStopped:Bool = false;
+
+						var sortedNotesList:Array<Note> = [];
+						notes.forEachAlive(function(daNote:Note)
+						{
+							if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
+							&& !daNote.wasGoodHit && daNote.noteData == i) {
+								sortedNotesList.push(daNote);
+								notesDatas.push(daNote.noteData);
+								canMiss = true;
+							}
+						});
+						sortedNotesList.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
+
+						if (sortedNotesList.length > 0) {
+							for (epicNote in sortedNotesList)
+							{
+								for (doubleNote in pressNotes) {
+									if (Math.abs(doubleNote.strumTime - epicNote.strumTime) < 10) {
+										doubleNote.kill();
+										notes.remove(doubleNote, true);
+										doubleNote.destroy();
+									} else
+										notesStopped = true;
+								}
+									
+								// eee jack detection before was not super good
+								if (controlArray[epicNote.noteData] && !notesStopped) {
+									goodNoteHit(epicNote);
+									if (ClientPrefs.ghostTapping)
+										boyfriend.holdTimer = 0;
+
+									pressNotes.push(epicNote);
+								}
+
+							}
+						}
+						else if (canMiss) 
+							ghostMiss(controlArray[i], i, true);
+
+						// I dunno what you need this for but here you go
+						if (!keysPressed[i] && controlArray[i]) 
+							keysPressed[i] = true;
+						//
+
+					}
+				}
+				
+				// go through all hold notes now lolll
+				notes.forEachAlive(function(daNote:Note)
+				{
+					// hold note functions
+					if (daNote.isSustainNote && controlHoldArray[daNote.noteData] && daNote.canBeHit 
+					&& daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit) {
 						goodNoteHit(daNote);
 					}
 				});
 
 				#if ACHIEVEMENTS_ALLOWED
 				var achieve:Int = checkForAchievement([11]);
-				if(achieve > -1) {
+				if (achieve > -1) {
 					startAchievement(achieve);
 				}
 				#end
-			} else if(boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing')
-			&& !boyfriend.animation.curAnim.name.endsWith('miss')) {
+			} else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing')
+			&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
-			}
-
-			if((leftP || downP || upP || rightP) && !endingSong) {
-				if(!ClientPrefs.ghostTapping)
-					boyfriend.holdTimer = 0;
-
-				var canMiss:Bool = !ClientPrefs.ghostTapping;
-
-				var notesHitArray:Array<Note> = [];
-				var notesDatas:Array<Int> = [];
-				var dupeNotes:Array<Note> = [];
-				notes.forEachAlive(function(daNote:Note) {
-					if (!daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit) {
-						if (notesDatas.indexOf(daNote.noteData) != -1) {
-							for (i in 0...notesHitArray.length) {
-								var prevNote = notesHitArray[i];
-								if (prevNote.noteData == daNote.noteData && Math.abs(daNote.strumTime - prevNote.strumTime) < 10) {
-									dupeNotes.push(daNote);
-								} else if (prevNote.noteData == daNote.noteData && daNote.strumTime < prevNote.strumTime) {
-									notesHitArray.remove(prevNote);
-									notesHitArray.push(daNote);
-								}
-							}
-						} else {
-							notesHitArray.push(daNote);
-							notesDatas.push(daNote.noteData);
-						}
-						canMiss = true;
-					}
-				});
-
-				for (i in 0...dupeNotes.length) {
-					var daNote = dupeNotes[i];
-					daNote.kill();
-					notes.remove(daNote, true);
-					daNote.destroy();
-				}
-				notesHitArray.sort(sortByShit);
-
-				if (perfectMode)
-					goodNoteHit(notesHitArray[0]);
-				else if (notesHitArray.length > 0) {
-					for (i in 0...controlArray.length) {
-						if(controlArray[i] && notesDatas.indexOf(i) == -1) {
-							if(canMiss) {
-								noteMiss(i, true);
-								callOnLuas('noteMissPress', [i]);
-								break;
-							}
-						}
-					}
-					for (i in 0...notesHitArray.length) {
-						var daNote = notesHitArray[i];
-						if(controlArray[daNote.noteData]) {
-							goodNoteHit(daNote);
-							if(ClientPrefs.ghostTapping)
-								boyfriend.holdTimer = 0;
-						}
-					}
-				} else if(canMiss) {
-					badNoteHit();
-				}
-
-				for (i in 0...keysPressed.length) {
-					if(!keysPressed[i] && controlArray[i]) keysPressed[i] = true;
-				}
-			}
 		}
 
 		playerStrums.forEach(function(spr:StrumNote)
@@ -3284,13 +3277,10 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	function badNoteHit():Void {
-		var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
-		for (i in 0...controlArray.length) {
-			if(controlArray[i]) {
-				noteMiss(i, true);
-				callOnLuas('noteMissPress', [i]);
-			}
+	function ghostMiss(statement:Bool = false, direction:Int = 0, ?ghostMiss:Bool = false) {
+		if (statement) {
+			noteMiss(direction, ghostMiss);
+			callOnLuas('noteMissPress', [direction]);
 		}
 	}
 
