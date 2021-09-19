@@ -36,7 +36,7 @@ class DiscordClient
 	static function onReady()
 	{
 		DiscordRpc.presence({
-			details: "In the Menus",
+			details: "In the Menus - Psych Engine",
 			state: null,
 			largeImageKey: 'icon',
 			largeImageText: "Psych Engine"
