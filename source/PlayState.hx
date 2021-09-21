@@ -3187,8 +3187,16 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.stunned && generatedMusic)
 		{
 			// rewritten inputs???
-			if ((controlHoldArray.contains(true) || controlArray.contains(true)) && !endingSong) {
+			notes.forEachAlive(function(daNote:Note)
+			{
+				// hold note functions
+				if (daNote.isSustainNote && controlHoldArray[daNote.noteData] && daNote.canBeHit 
+				&& daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit) {
+					goodNoteHit(daNote);
+				}
+			});
 
+			if ((controlHoldArray.contains(true) || controlArray.contains(true)) && !endingSong) {
 				var canMiss:Bool = !ClientPrefs.ghostTapping;
 				if (controlArray.contains(true)) {
 					for (i in 0...controlArray.length) {
@@ -3236,22 +3244,14 @@ class PlayState extends MusicBeatState
 							ghostMiss(controlArray[i], i, true);
 
 						// I dunno what you need this for but here you go
+						//									- Shubs
+
+						// Shubs, this is for the "Just the Two of Us" achievement lol
+						//									- Shadow Mario
 						if (!keysPressed[i] && controlArray[i]) 
 							keysPressed[i] = true;
-						//
-
 					}
 				}
-				
-				// go through all hold notes now lolll
-				notes.forEachAlive(function(daNote:Note)
-				{
-					// hold note functions
-					if (daNote.isSustainNote && controlHoldArray[daNote.noteData] && daNote.canBeHit 
-					&& daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit) {
-						goodNoteHit(daNote);
-					}
-				});
 
 				#if ACHIEVEMENTS_ALLOWED
 				var achieve:Int = checkForAchievement([11]);
