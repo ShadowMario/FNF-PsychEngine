@@ -670,8 +670,14 @@ class DialogueCharacterEditorState extends MusicBeatState
 					trace("Successfully loaded file: " + cutName);
 					character.jsonFile = loadedChar;
 					reloadCharacter();
+					reloadAnimationsDropDown();
+					updateCharTypeBox();
 					updateTextBox();
 					reloadText();
+					imageInputText.text = character.jsonFile.image;
+					scaleStepper.value = character.jsonFile.scale;
+					xStepper.value = character.jsonFile.position[0];
+					yStepper.value = character.jsonFile.position[1];
 					_file = null;
 					return;
 				}

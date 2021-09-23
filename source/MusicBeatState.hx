@@ -27,11 +27,6 @@ class MusicBeatState extends FlxUIState
 		return PlayerSettings.player1.controls;
 
 	override function create() {
-		#if MODS_ALLOWED
-		if(!ClientPrefs.imagesPersist) {
-			Paths.customImagesLoaded.clear();
-		}
-		#end
 		super.create();
 
 		// Custom made Trans out

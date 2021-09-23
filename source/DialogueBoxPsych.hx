@@ -85,7 +85,7 @@ class DialogueCharacter extends FlxSprite
 		var rawJson = null;
 
 		#if MODS_ALLOWED
-		var path:String = Paths.mods(characterPath);
+		var path:String = Paths.modFolders(characterPath);
 		if (!FileSystem.exists(path)) {
 			path = Paths.getPreloadPath(characterPath);
 		}
@@ -125,6 +125,13 @@ class DialogueCharacter extends FlxSprite
 				leAnim = arrayAnims[FlxG.random.int(0, arrayAnims.length-1)];
 			}
 		}
+
+		if(dialogueAnimations.exists(leAnim) &&
+		(dialogueAnimations.get(leAnim).loop_name == null ||
+		dialogueAnimations.get(leAnim).loop_name.length < 1 ||
+		dialogueAnimations.get(leAnim).loop_name == dialogueAnimations.get(leAnim).idle_name)) {
+			playIdle = true;
+		}
 		animation.play(playIdle ? leAnim + IDLE_SUFFIX : leAnim, false);
 
 		if(dialogueAnimations.exists(leAnim)) {
@@ -156,6 +163,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 
 	public var finishThing:Void->Void;
 	public var nextDialogueThing:Void->Void = null;
+	public var skipDialogueThing:Void->Void = null;
 	var bgFade:FlxSprite = null;
 	var box:FlxSprite;
 	var textToType:String = '';
@@ -253,6 +261,8 @@ class DialogueBoxPsych extends FlxSpriteGroup
 					x = FlxG.width - char.width + RIGHT_CHAR_X;
 					char.x = x - offsetPos;
 			}
+			x += char.jsonFile.position[0];
+			y += char.jsonFile.position[1];
 			char.x += char.jsonFile.position[0];
 			char.y += char.jsonFile.position[1];
 			char.startingPos = (saveY ? y : x);
@@ -280,6 +290,10 @@ class DialogueBoxPsych extends FlxSpriteGroup
 					}
 					daText = new Alphabet(DEFAULT_TEXT_X, DEFAULT_TEXT_Y, textToType, false, true, 0.0, 0.7);
 					add(daText);
+					
+					if(skipDialogueThing != null) {
+						skipDialogueThing();
+					}
 				} else if(currentText >= dialogueList.dialogue.length) {
 					dialogueEnded = true;
 					for (i in 0...textBoxTypes.length) {
@@ -340,7 +354,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 									if(char.x < char.startingPos + offsetPos) char.x = char.startingPos + offsetPos;
 								case 'center':
 									char.y += scrollSpeed * elapsed;
-									if(char.y > FlxG.height + 50) char.y = FlxG.height + 50;
+									if(char.y > char.startingPos + FlxG.height) char.y = char.startingPos + FlxG.height;
 								case 'right':
 									char.x += scrollSpeed * elapsed;
 									if(char.x > char.startingPos - offsetPos) char.x = char.startingPos - offsetPos;
@@ -428,7 +442,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		if(curDialogue.boxState == null) curDialogue.boxState = 'normal';
 		if(curDialogue.speed == null || Math.isNaN(curDialogue.speed)) curDialogue.speed = 0.05;
 
-		var animName:String = curDialogue.expression;
+		var animName:String = curDialogue.boxState;
 		var boxType:String = textBoxTypes[0];
 		for (i in 0...textBoxTypes.length) {
 			if(textBoxTypes[i] == animName) {

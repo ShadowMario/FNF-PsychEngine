@@ -700,15 +700,19 @@ class PreferencesSubstate extends MusicBeatSubstate
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 	private var textNumber:Array<Int> = [];
 
-	private var characterLayer:FlxTypedGroup<Character>;
 	private var showCharacter:Character = null;
 	private var descText:FlxText;
 
 	public function new()
 	{
 		super();
-		characterLayer = new FlxTypedGroup<Character>();
-		add(characterLayer);
+		// avoids lagspikes while scrolling through menus!
+		showCharacter = new Character(840, 170, 'bf', true);
+		showCharacter.setGraphicSize(Std.int(showCharacter.width * 0.8));
+		showCharacter.updateHitbox();
+		showCharacter.dance();
+		add(showCharacter);
+		showCharacter.visible = false;
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -999,18 +1003,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 			}
 		}
 
-		if(options[curSelected] == 'Anti-Aliasing') {
-			if(showCharacter == null) {
-				showCharacter = new Character(840, 170, 'bf', true);
-				showCharacter.setGraphicSize(Std.int(showCharacter.width * 0.8));
-				showCharacter.updateHitbox();
-				showCharacter.dance();
-				characterLayer.add(showCharacter);
-			}
-		} else if(showCharacter != null) {
-			characterLayer.clear();
-			showCharacter = null;
-		}
+		showCharacter.visible = (options[curSelected] == 'Anti-Aliasing');
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 

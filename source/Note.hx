@@ -20,6 +20,8 @@ class Note extends FlxSprite
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
 	public var ignoreNote:Bool = false;
+	public var hitByOpponent:Bool = false;
+	public var noteWasHit:Bool = false;
 	public var prevNote:Note;
 
 	public var sustainLength:Float = 0;
@@ -40,11 +42,25 @@ class Note extends FlxSprite
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
 
+	// Lua shit
 	public var noteSplashDisabled:Bool = false;
 	public var noteSplashTexture:String = null;
 	public var noteSplashHue:Float = 0;
 	public var noteSplashSat:Float = 0;
 	public var noteSplashBrt:Float = 0;
+
+	public var offsetX:Float = 0;
+	public var offsetY:Float = 0;
+	public var offsetAngle:Float = 0;
+	public var multAlpha:Float = 1;
+
+	public var copyX:Bool = true;
+	public var copyY:Bool = true;
+	public var copyAngle:Bool = true;
+	public var copyAlpha:Bool = true;
+
+	public var hitHealth:Float = 0.023;
+	public var missHealth:Float = 0.0475;
 
 	public var texture(default, set):String = null;
 
@@ -65,7 +81,7 @@ class Note extends FlxSprite
 		if(noteData > -1 && noteType != value) {
 			switch(value) {
 				case 'Hurt Note':
-					ignoreNote = true;
+					ignoreNote = mustPress;
 					reloadNote('HURT');
 					noteSplashTexture = 'HURTnoteSplashes';
 					colorSwap.hue = 0;
@@ -127,9 +143,11 @@ class Note extends FlxSprite
 		if (isSustainNote && prevNote != null)
 		{
 			alpha = 0.6;
+			multAlpha = 0.6;
 			if(ClientPrefs.downScroll) flipY = true;
 
-			x += width / 2;
+			offsetX += width / 2;
+			copyAngle = false;
 
 			switch (noteData)
 			{
@@ -145,10 +163,10 @@ class Note extends FlxSprite
 
 			updateHitbox();
 
-			x -= width / 2;
+			offsetX -= width / 2;
 
 			if (PlayState.isPixelStage)
-				x += 30;
+				offsetX += 30;
 
 			if (prevNote.isSustainNote)
 			{
