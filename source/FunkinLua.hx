@@ -535,14 +535,14 @@ class FunkinLua {
 						char.x = lePlayState.DAD_X + char.positionArray[0];
 					});
 				case 'gf' | 'girlfriend':
-					lePlayState.BF_X = value;
-					lePlayState.boyfriendGroup.forEachAlive(function (char:Boyfriend) {
-						char.x = lePlayState.BF_X + char.positionArray[0];
-					});
-				default:
 					lePlayState.GF_X = value;
 					lePlayState.gfGroup.forEachAlive(function (char:Character) {
 						char.x = lePlayState.GF_X + char.positionArray[0];
+					});
+				default:
+					lePlayState.BF_X = value;
+					lePlayState.boyfriendGroup.forEachAlive(function (char:Boyfriend) {
+						char.x = lePlayState.BF_X + char.positionArray[0];
 					});
 			}
 		});
