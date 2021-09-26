@@ -308,12 +308,8 @@ class WeekEditorState extends MusicBeatState
 
 		var isMissing:Bool = true;
 		if(assetName != null && assetName.length > 0) {
-			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modsImages('menubackgrounds/menu_' + assetName))) {
-				bgSprite.loadGraphic(Paths.modsImages('menubackgrounds/menu_' + assetName));
-				isMissing = false;
-			}
-			else #end if(Assets.exists(Paths.image('menubackgrounds/menu_' + assetName), IMAGE)) {
+			if( #if MODS_ALLOWED FileSystem.exists(Paths.modsImages('menubackgrounds/menu_' + assetName)) || #end
+			Assets.exists(Paths.image('menubackgrounds/menu_' + assetName), IMAGE)) {
 				bgSprite.loadGraphic(Paths.image('menubackgrounds/menu_' + assetName));
 				isMissing = false;
 			}
@@ -331,12 +327,8 @@ class WeekEditorState extends MusicBeatState
 		
 		var isMissing:Bool = true;
 		if(assetName != null && assetName.length > 0) {
-			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modsImages('storymenu/' + assetName))) {
-				weekThing.loadGraphic(Paths.image('storymenu/' + assetName));
-				isMissing = false;
-			}
-			else #end if(Assets.exists(Paths.image('storymenu/' + assetName), IMAGE)) {
+			if( #if MODS_ALLOWED FileSystem.exists(Paths.modsImages('storymenu/' + assetName)) || #end
+			Assets.exists(Paths.image('storymenu/' + assetName), IMAGE)) {
 				weekThing.loadGraphic(Paths.image('storymenu/' + assetName));
 				isMissing = false;
 			}

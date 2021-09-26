@@ -376,7 +376,7 @@ class FunkinLua {
 					lePlayState.modchartTimers.remove(tag);
 				}
 				lePlayState.callOnLuas('onTimerCompleted', [tag, tmr.loops, tmr.loopsLeft]);
-				trace('Timer Completed: ' + tag);
+				//trace('Timer Completed: ' + tag);
 			}, loops));
 		});
 		Lua_helper.add_callback(lua, "cancelTimer", function(tag:String) {

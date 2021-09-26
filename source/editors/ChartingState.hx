@@ -606,6 +606,7 @@ class ChartingState extends MusicBeatState
 		var copyButton:FlxButton = new FlxButton(10, 150, "Copy Section", function()
 		{
 			notesCopied = [];
+			sectionToCopy = curSection;
 			for (i in 0..._song.notes[curSection].sectionNotes.length)
 			{
 				var note:Array<Dynamic> = _song.notes[curSection].sectionNotes[i];
@@ -615,13 +616,16 @@ class ChartingState extends MusicBeatState
 
 		var pasteButton:FlxButton = new FlxButton(10, 180, "Paste Section", function()
 		{
+			var addToTime:Float = Conductor.stepCrochet * (_song.notes[curSection].lengthInSteps * (curSection - sectionToCopy));
+			trace('Time to add: ' + addToTime);
+
 			for (note in notesCopied)
 			{
-				var copiedNote:Array<Dynamic>;
+				var copiedNote:Array<Dynamic> = [];
 				if(note[4] != null) {
-					copiedNote = [note[0] + Conductor.stepCrochet * (_song.notes[sectionToCopy].lengthInSteps * (curSection - sectionToCopy)), note[1], note[2], note[3], note[4]];
+					copiedNote = [note[0] + addToTime, note[1], note[2], note[3], note[4]];
 				} else {
-					copiedNote = [note[0] + Conductor.stepCrochet * (_song.notes[sectionToCopy].lengthInSteps * (curSection - sectionToCopy)), note[1], note[2], note[3]];
+					copiedNote = [note[0] + addToTime, note[1], note[2], note[3]];
 				}
 				_song.notes[curSection].sectionNotes.push(copiedNote);
 			}

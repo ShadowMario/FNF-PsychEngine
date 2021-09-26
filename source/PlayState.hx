@@ -134,6 +134,7 @@ class PlayState extends MusicBeatState
 	private var camFollowPos:FlxObject;
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
+	private static var resetSpriteCache:Bool = false;
 
 	public var strumLineNotes:FlxTypedGroup<StrumNote>;
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
@@ -247,8 +248,9 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		#if MODS_ALLOWED
-		Paths.destroyLoadedImages();
+		Paths.destroyLoadedImages(resetSpriteCache);
 		#end
+		resetSpriteCache = false;
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -671,7 +673,7 @@ class PlayState extends MusicBeatState
 			blammedLightsBlack.wasAdded = true;
 			modchartSprites.set('blammedLightsBlack', blammedLightsBlack);
 		}
-		if(curStage == 'philly') insert(members.indexOf(blammedLightsBlack), phillyCityLightsEvent);
+		if(curStage == 'philly') insert(members.indexOf(blammedLightsBlack) + 1, phillyCityLightsEvent);
 		blammedLightsBlack = modchartSprites.get('blammedLightsBlack');
 		blammedLightsBlack.alpha = 0.0;
 		#end
@@ -2152,19 +2154,6 @@ class PlayState extends MusicBeatState
 		FlxG.watch.addQuick("beatShit", curBeat);
 		FlxG.watch.addQuick("stepShit", curStep);
 
-		/*if (curSong == 'Bopeebo')
-		{
-			switch (curBeat)
-			{
-				case 128, 129, 130:
-					//vocals.volume = 0;
-					// FlxG.sound.music.stop();
-					//CustomFadeTransition.nextCamera = camOther;
-					// MusicBeatState.switchState(new PlayState());
-			}
-		}*/
-		// better streaming of shit
-
 		// RESET = Quick Game Over Screen
 		if (controls.RESET && !inCutscene && !endingSong)
 		{
@@ -3011,10 +3000,12 @@ class PlayState extends MusicBeatState
 					if(winterHorrorlandNext) {
 						new FlxTimer().start(1.5, function(tmr:FlxTimer) {
 							cancelFadeTween();
+							resetSpriteCache = true;
 							LoadingState.loadAndSwitchState(new PlayState());
 						});
 					} else {
 						cancelFadeTween();
+						resetSpriteCache = true;
 						LoadingState.loadAndSwitchState(new PlayState());
 					}
 				}
