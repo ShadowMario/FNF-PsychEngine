@@ -25,11 +25,11 @@ class Paths
 	#if MODS_ALLOWED
 	#if (haxe >= "4.0.0")
 	public static var ignoreModFolders:Map<String, Bool> = new Map();
-	public static var customImagesLoaded:Map<String, FlxGraphic> = new Map();
+	public static var customImagesLoaded:Map<String, Bool> = new Map();
 	public static var customSoundsLoaded:Map<String, Sound> = new Map();
 	#else
 	public static var ignoreModFolders:Map<String, Bool> = new Map<String, Bool>();
-	public static var customImagesLoaded:Map<String, FlxGraphic> = new Map<String, FlxGraphic>();
+	public static var customImagesLoaded:Map<String, Bool> = new Map<String, Bool>();
 	public static var customSoundsLoaded:Map<String, Sound> = new Map<String, Sound>();
 	#end
 	#end
@@ -38,9 +38,13 @@ class Paths
 		#if MODS_ALLOWED
 		if(!ignoreCheck && ClientPrefs.imagesPersist) return; //If there's 20+ images loaded, do a cleanup just for preventing a crash
 
-		for (key => graphic in customImagesLoaded) {
-			graphic.bitmap.dispose();
-			graphic.destroy();
+		for (key in customImagesLoaded.keys()) {
+			var graphic:FlxGraphic = FlxG.bitmap.get(key);
+			if(graphic != null) {
+				graphic.bitmap.dispose();
+				graphic.destroy();
+				FlxG.bitmap.removeByKey(key);
+			}
 		}
 		Paths.customImagesLoaded.clear();
 		#end
@@ -303,11 +307,13 @@ class Paths
 	static public function addCustomGraphic(key:String):FlxGraphic {
 		if(FileSystem.exists(modsImages(key))) {
 			if(!customImagesLoaded.exists(key)) {
-				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(BitmapData.fromFile(modsImages(key)));
+				var newBitmap:BitmapData = BitmapData.fromFile(modsImages(key));
+				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, key);
 				newGraphic.persist = true;
-				customImagesLoaded.set(key, newGraphic);
+				FlxG.bitmap.addGraphic(newGraphic);
+				customImagesLoaded.set(key, true);
 			}
-			return customImagesLoaded.get(key);
+			return FlxG.bitmap.get(key);
 		}
 		return null;
 	}

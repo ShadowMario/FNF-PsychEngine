@@ -779,6 +779,9 @@ class CharacterEditorState extends MusicBeatState
 		ghostChar.alpha = 0.6;
 
 		char = new Character(0, 0, daAnim, !isDad);
+		if(char.animationsArray[0] != null) {
+			char.playAnim(char.animationsArray[0].anim, true);
+		}
 		char.screenCenter();
 		char.debugMode = true;
 
@@ -854,7 +857,7 @@ class CharacterEditorState extends MusicBeatState
 			anims.push(anim.anim);
 			ghostAnims.push(anim.anim);
 		}
-		if(anims.length < 1) anims.push(''); //Prevents crash
+		if(anims.length < 1) anims.push('NO ANIMATIONS'); //Prevents crash
 
 		animationDropDown.setData(FlxUIDropDownMenuCustom.makeStrIdLabelArray(anims, true));
 		ghostDropDown.setData(FlxUIDropDownMenuCustom.makeStrIdLabelArray(ghostAnims, true));
@@ -1049,7 +1052,6 @@ class CharacterEditorState extends MusicBeatState
 						var negaMult:Int = 1;
 						if(i % 2 == 1) negaMult = -1;
 						char.animationsArray[curAnim].offsets[arrayVal] += negaMult * multiplier;
-						ghostChar.animationsArray[curAnim].offsets[arrayVal] += negaMult * multiplier;
 						char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
 						ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
 						

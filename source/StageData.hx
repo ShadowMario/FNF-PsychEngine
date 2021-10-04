@@ -52,7 +52,12 @@ class StageData {
 			stage = 'stage';
 		}
 
-		forceNextDirectory = getStageFile(stage).directory;
+		var stageFile:StageFile = getStageFile(stage);
+		if(stageFile == null) { //preventing crashes
+			forceNextDirectory = '';
+		} else {
+			forceNextDirectory = stageFile.directory;
+		}
 	}
 
 	public static function getStageFile(stage:String):StageFile {
@@ -63,12 +68,18 @@ class StageData {
 		var modPath:String = Paths.modFolders('stages/' + stage + '.json');
 		if(FileSystem.exists(modPath)) {
 			rawJson = File.getContent(modPath);
-		} else {
+		} else if(FileSystem.exists(path)) {
 			rawJson = File.getContent(path);
 		}
 		#else
-		rawJson = Assets.getText(path);
+		if(Assets.exists(path)) {
+			rawJson = Assets.getText(path);
+		}
 		#end
+		else
+		{
+			return null;
+		}
 		return cast Json.parse(rawJson);
 	}
 }

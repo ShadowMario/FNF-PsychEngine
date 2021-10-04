@@ -19,6 +19,7 @@ import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
@@ -55,7 +56,9 @@ class ChartingState extends MusicBeatState
 		'',
 		'Alt Animation',
 		'Hey!',
-		'Hurt Note'
+		'Hurt Note',
+		'GF Sing',
+		'No Animation'
 	];
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
@@ -63,18 +66,18 @@ class ChartingState extends MusicBeatState
 	var eventStuff:Array<Dynamic> =
 	[
 		['', "Nothing. Yep, that's right."],
-		['Hey!', "Plays the \"Hey!\" animation from Bopeebo,\nValue 1: 0 = Only Boyfriend, 1 = Only Girlfriend,\nSomething else = Both.\nValue 2: Custom animation duration,\nleave it blank for 0.6s"],
+		['Hey!', "Plays the \"Hey!\" animation from Bopeebo,\nValue 1: BF = Only Boyfriend, GF = Only Girlfriend,\nSomething else = Both.\nValue 2: Custom animation duration,\nleave it blank for 0.6s"],
 		['Set GF Speed', "Sets GF head bopping speed,\nValue 1: 1 = Normal speed,\n2 = 1/2 speed, 4 = 1/4 speed etc.\nUsed on Fresh during the beatbox parts.\n\nWarning: Value must be integer!"],
 		['Blammed Lights', "Value 1: 0 = Turn off, 1 = Blue, 2 = Green,\n3 = Pink, 4 = Red, 5 = Orange, Anything else = Random."],
 		['Kill Henchmen', "For Mom's songs, don't use this please, i love them :("],
 		['Add Camera Zoom', "Used on MILF on that one \"hard\" part\nValue 1: Camera zoom add (Default: 0.015)\nValue 2: UI zoom add (Default: 0.03)\nLeave the values blank if you want to use Default."],
 		['BG Freaks Expression', "Should be used only in \"school\" Stage!"],
 		['Trigger BG Ghouls', "Should be used only in \"schoolEvil\" Stage!"],
-		['Play Animation', "Plays an animation on a Character,\nonce the animation is completed,\nthe animation changes to Idle\n\nValue 1: Animation to play.\nValue 2: Character (0 = Dad, 1 = BF, 2 = GF)"],
+		['Play Animation', "Plays an animation on a Character,\nonce the animation is completed,\nthe animation changes to Idle\n\nValue 1: Animation to play.\nValue 2: Character (Dad, BF, GF)"],
 		['Camera Follow Pos', "Value 1: X\nValue 2: Y\n\nThe camera won't change the follow point\nafter using this, for getting it back\nto normal, leave both values blank."],
-		['Alt Idle Animation', "Sets a speciied suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (0 = Dad, 1 = BF, 2 = GF)\nValue 2: New suffix (Leave it blank to disable)"],
+		['Alt Idle Animation', "Sets a speciied suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (Dad, BF or GF)\nValue 2: New suffix (Leave it blank to disable)"],
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
-		['Change Character', "Value 1: Character to change\nValue 2: New character's name\n\nOn Value 1, Boyfriend is 0,\nDad is 1 and Girlfriend is 2"]
+		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"]
 	];
 
 	var _file:FileReference;
@@ -113,7 +116,6 @@ class ChartingState extends MusicBeatState
 
 	var gridBG:FlxSprite;
 	var gridMult:Int = 2;
-	var curZoom:Float = 1;
 
 	var _song:SwagSong;
 	/*
@@ -131,8 +133,31 @@ class ChartingState extends MusicBeatState
 	var value1InputText:FlxUIInputText;
 	var value2InputText:FlxUIInputText;
 	var currentSongName:String;
-	var zoomMult:Int = 1; //0 = 0.5 actually lmao
+	
 	var zoomTxt:FlxText;
+	var curZoom:Int = 1;
+
+	#if !html5
+	var zoomList:Array<Float> = [
+		0.5,
+		1,
+		2,
+		4,
+		8,
+		12,
+		16,
+		24
+	];
+	#else //The grid gets all black when over 1/12 snap
+	var zoomList:Array<Float> = [
+		0.5,
+		1,
+		2,
+		4,
+		8,
+		12
+	];
+	#end
 
 	private var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
 	private var blockPressWhileScrolling:Array<FlxUIDropDownMenuCustom> = [];
@@ -252,21 +277,27 @@ class ChartingState extends MusicBeatState
 		UI_box.x = FlxG.width / 2 + GRID_SIZE / 2;
 		UI_box.y = 25;
 
-		var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 6, 0,
-			"W/S or Mouse Wheel - Change Conductor's strum time
-			\nA or Left/D or Right - Go to the previous/next section
-			\nHold Shift to move 4x faster
-			\nHold Control and click on an arrow to select it
-			\nZ/X - Zoom in/out
-			\n
-			\nEnter - Test your chart
-			\nQ/E - Decrease/Increase Note Sustain Length
-			\nSpace - Stop/Resume song
-			\nR - Reset section\n", 16);
-		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
-		//tipText.borderSize = 2;
-		tipText.scrollFactor.set();
-		add(tipText);
+		var text:String =
+		"W/S or Mouse Wheel - Change Conductor's strum time
+		\nA or Left/D or Right - Go to the previous/next section
+		\nHold Shift to move 4x faster
+		\nHold Control and click on an arrow to select it
+		\nZ/X - Zoom in/out
+		\n
+		\nEsc - Test your chart inside Chart Editor
+		\nEnter - Play your chart
+		\nQ/E - Decrease/Increase Note Sustain Length
+		\nSpace - Stop/Resume song";
+
+		var tipTextArray:Array<String> = text.split('\n');
+		for (i in 0...tipTextArray.length) {
+			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
+			tipText.y += i * 14;
+			tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+			//tipText.borderSize = 2;
+			tipText.scrollFactor.set();
+			add(tipText);
+		}
 		add(UI_box);
 
 		addSongUI();
@@ -327,6 +358,8 @@ class ChartingState extends MusicBeatState
 		{
 			currentSongName = Paths.formatToSongPath(UI_songTitle.text);
 			loadSong();
+			loadAudioBuffer();
+			updateWaveform();
 		});
 
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
@@ -458,34 +491,15 @@ class ChartingState extends MusicBeatState
 		#end
 
 		tempMap.clear();
-		var stages:Array<String> = CoolUtil.coolTextFile(Paths.txt('stageList'));
-		var i:Int = 0;
-		var stageLength:Int = stages.length;
-		while(i < stageLength) {
-			var removeStage:Bool = true;
-			for (j in 0...directories.length) {
-				var file:String = directories[j] + stages[i] + '.json';
-				//trace('Checking file: ' + file);
-
-				#if MODS_ALLOWED
-				if(FileSystem.exists(file))
-				#else
-				if(OpenFlAssets.exists(file))
-				#end
-				{
-					removeStage = false;
-					tempMap.set(stages[i], true);
-					i++;
-					break;
-				}
+		var stageFile:Array<String> = CoolUtil.coolTextFile(Paths.txt('stageList'));
+		var stages:Array<String> = [];
+		for (i in 0...stageFile.length) { //Prevent duplicates
+			var stageToCheck:String = stageFile[i];
+			if(!tempMap.exists(stageToCheck)) {
+				stages.push(stageToCheck);
 			}
-
-			if(removeStage) {
-				stages.remove(stages[i]);
-				stageLength = stages.length;
-			}
+			tempMap.set(stageToCheck, true);
 		}
-
 		#if MODS_ALLOWED
 		for (i in 0...directories.length) {
 			var directory:String = directories[i];
@@ -1115,11 +1129,11 @@ class ChartingState extends MusicBeatState
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = UI_songTitle.text;
 
-		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) / curZoom % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
+		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) / zoomList[curZoom] % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
 		camPos.y = strumLine.y;
 
 		if(!disableAutoScrolling.checked) {
-			if (curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
+			if (strumLine.y > (gridBG.height / 2))
 			{
 				trace(curStep);
 				trace((_song.notes[curSection].lengthInSteps) * (curSection + 1));
@@ -1164,7 +1178,7 @@ class ChartingState extends MusicBeatState
 				if (FlxG.mouse.x > gridBG.x
 					&& FlxG.mouse.x < gridBG.x + gridBG.width
 					&& FlxG.mouse.y > gridBG.y
-					&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps) * curZoom)
+					&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps) * zoomList[curZoom])
 				{
 					FlxG.log.add('added note');
 					addNote();
@@ -1175,7 +1189,7 @@ class ChartingState extends MusicBeatState
 		if (FlxG.mouse.x > gridBG.x
 			&& FlxG.mouse.x < gridBG.x + gridBG.width
 			&& FlxG.mouse.y > gridBG.y
-			&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps) * curZoom)
+			&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps) * zoomList[curZoom])
 		{
 			dummyArrow.x = Math.floor(FlxG.mouse.x / GRID_SIZE) * GRID_SIZE;
 			if (FlxG.keys.pressed.SHIFT)
@@ -1208,6 +1222,11 @@ class ChartingState extends MusicBeatState
 
 		if (!blockInput)
 		{
+			if (FlxG.keys.justPressed.ESCAPE)
+			{
+				autosaveSong();
+				LoadingState.loadAndSwitchState(new editors.EditorPlayState(sectionStartTime()));
+			}
 			if (FlxG.keys.justPressed.ENTER)
 			{
 				autosaveSong();
@@ -1232,12 +1251,12 @@ class ChartingState extends MusicBeatState
 				}
 			}
 
-			if(FlxG.keys.justPressed.Z && zoomMult > 0) {
-				--zoomMult;
+			if(FlxG.keys.justPressed.Z && curZoom > 0) {
+				--curZoom;
 				updateZoom();
 			}
-			if(FlxG.keys.justPressed.X && zoomMult < 4) {
-				zoomMult++;
+			if(FlxG.keys.justPressed.X && curZoom < zoomList.length-1) {
+				curZoom++;
 				updateZoom();
 			}
 
@@ -1298,7 +1317,10 @@ class ChartingState extends MusicBeatState
 			{
 				FlxG.sound.music.pause();
 
-				var holdingShift:Float = FlxG.keys.pressed.SHIFT ? 3 : 1;
+				var holdingShift:Float = 1;
+				if (FlxG.keys.pressed.CONTROL) holdingShift = 0.25;
+				else if (FlxG.keys.pressed.SHIFT) holdingShift = 4;
+
 				var daTime:Float = 700 * FlxG.elapsed * holdingShift;
 
 				if (FlxG.keys.pressed.W)
@@ -1347,7 +1369,7 @@ class ChartingState extends MusicBeatState
 			changeSection();
 		}
 		Conductor.songPosition = FlxG.sound.music.time;
-		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) / curZoom % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
+		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) / zoomList[curZoom] % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
 		camPos.y = strumLine.y;
 
 		bpmTxt.text = 
@@ -1368,8 +1390,7 @@ class ChartingState extends MusicBeatState
 				{
 					colorSine += 180 * elapsed;
 					var colorVal:Float = 0.7 + Math.sin((Math.PI * colorSine) / 180) * 0.3;
-					note.color.lightness = colorVal;
-					note.alpha = 0.999; //Alpha can't be 100% or the color won't be updated for some reason, guess i will die
+					note.color = FlxColor.fromRGBFloat(colorVal, colorVal, colorVal, 0.999); //Alpha can't be 100% or the color won't be updated for some reason, guess i will die
 				}
 			}
 			#end
@@ -1404,15 +1425,14 @@ class ChartingState extends MusicBeatState
 	}
 
 	function updateZoom() {
-		curZoom = 0.5;
-		if(zoomMult > 0) {
-			curZoom = (1 << (zoomMult - 1));
-		}
-		zoomTxt.text = 'Zoom: ' + curZoom + 'x';
+		zoomTxt.text = 'Zoom: ' + zoomList[curZoom] + 'x';
 		reloadGridLayer();
 	}
 
 	function loadAudioBuffer() {
+		if(audioBuffers[0] != null) {
+			audioBuffers[0].dispose();
+		}
 		audioBuffers[0] = null;
 		#if MODS_ALLOWED
 		if(FileSystem.exists(Paths.modFolders('songs/' + currentSongName + '/Inst.ogg'))) {
@@ -1429,6 +1449,9 @@ class ChartingState extends MusicBeatState
 		}
 		#end
 
+		if(audioBuffers[1] != null) {
+			audioBuffers[1].dispose();
+		}
 		audioBuffers[1] = null;
 		#if MODS_ALLOWED
 		if(FileSystem.exists(Paths.modFolders('songs/' + currentSongName + '/Voices.ogg'))) {
@@ -1447,7 +1470,7 @@ class ChartingState extends MusicBeatState
 
 	function reloadGridLayer() {
 		gridLayer.clear();
-		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, Std.int(GRID_SIZE * 32 * curZoom));
+		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, Std.int(GRID_SIZE * 32 * zoomList[curZoom]));
 		gridLayer.add(gridBG);
 
 		#if desktop
@@ -1490,14 +1513,9 @@ class ChartingState extends MusicBeatState
 		var index:Int = Std.int(sectionStartTime() * 44.0875 * sampleMult);
 		var drawIndex:Int = 0;
 
-		var curZoom:Float = 0.5;
-		if(zoomMult > 0) {
-			curZoom = (1 << (zoomMult - 1));
-		}
-
 		var steps:Int = _song.notes[curSection].lengthInSteps;
 		if(Math.isNaN(steps) || steps < 1) steps = 16;
-		var samplesPerRow:Int = Std.int(((Conductor.stepCrochet * steps * 1.1 * sampleMult) / 16) / curZoom);
+		var samplesPerRow:Int = Std.int(((Conductor.stepCrochet * steps * 1.1 * sampleMult) / 16) / zoomList[curZoom]);
 		if(samplesPerRow < 1) samplesPerRow = 1;
 		var waveBytes:Bytes = audioBuffers[checkForVoices].data.toBytes();
 		
@@ -1857,13 +1875,13 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
-		note.y = (GRID_SIZE * (isNextSection ? 16 : 0)) * curZoom + Math.floor(getYfromStrum((daStrumTime - sectionStartTime(isNextSection ? 1 : 0)) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps), false));
+		note.y = (GRID_SIZE * (isNextSection ? 16 : 0)) * zoomList[curZoom] + Math.floor(getYfromStrum((daStrumTime - sectionStartTime(isNextSection ? 1 : 0)) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps), false));
 		return note;
 	}
 
 	function setupSusNote(note:Note):FlxSprite {
-		var height:Int = Math.floor(FlxMath.remapToRange(note.sustainLength, 0, Conductor.stepCrochet * 16, 0, (gridBG.height / gridMult)) + (GRID_SIZE * curZoom) - GRID_SIZE / 2);
-		var minHeight:Int = Std.int((GRID_SIZE * curZoom / 2) + GRID_SIZE / 2);
+		var height:Int = Math.floor(FlxMath.remapToRange(note.sustainLength, 0, Conductor.stepCrochet * 16, 0, (gridBG.height / gridMult)) + (GRID_SIZE * zoomList[curZoom]) - GRID_SIZE / 2);
+		var minHeight:Int = Std.int((GRID_SIZE * zoomList[curZoom] / 2) + GRID_SIZE / 2);
 		if(height < minHeight) height = minHeight;
 		if(height < 1) height = 1; //Prevents error of invalid height
 
@@ -1965,14 +1983,14 @@ class ChartingState extends MusicBeatState
 
 	function getStrumTime(yPos:Float, doZoomCalc:Bool = true):Float
 	{
-		var leZoom:Float = curZoom;
+		var leZoom:Float = zoomList[curZoom];
 		if(!doZoomCalc) leZoom = 1;
 		return FlxMath.remapToRange(yPos, gridBG.y, gridBG.y + (gridBG.height / gridMult) * leZoom, 0, 16 * Conductor.stepCrochet);
 	}
 
 	function getYfromStrum(strumTime:Float, doZoomCalc:Bool = true):Float
 	{
-		var leZoom:Float = curZoom;
+		var leZoom:Float = zoomList[curZoom];
 		if(!doZoomCalc) leZoom = 1;
 		return FlxMath.remapToRange(strumTime, 0, 16 * Conductor.stepCrochet, gridBG.y, gridBG.y + (gridBG.height / gridMult) * leZoom);
 	}

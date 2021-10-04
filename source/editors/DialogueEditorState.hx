@@ -286,7 +286,13 @@ class DialogueEditorState extends MusicBeatState
 	var curSelected:Int = 0;
 	var curAnim:Int = 0;
 	var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
+	var transitioning:Bool = false;
 	override function update(elapsed:Float) {
+		if(transitioning) {
+			super.update(elapsed);
+			return;
+		}
+
 		if(character.animation.curAnim != null) {
 			if(daText.finishedText) {
 				if(character.animationIsLoop() && character.animation.curAnim.finished) {
@@ -332,6 +338,7 @@ class DialogueEditorState extends MusicBeatState
 			if(FlxG.keys.justPressed.ESCAPE) {
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
+				transitioning = true;
 			}
 			var negaMult:Array<Int> = [1, -1];
 			var controlAnim:Array<Bool> = [FlxG.keys.justPressed.W, FlxG.keys.justPressed.S];
