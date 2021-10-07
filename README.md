@@ -2,11 +2,12 @@
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
-Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
+Follow a Friday Night Funkin' source code compilation tutorial, such as the one on [the base game's GitHub page](https://github.com/ninjamuffin99/Funkin/blob/master/README.md).
+After you're done with that, you will need to install LuaJIT.
 
 You can do this with: `haxelib install linc_luajit` on a Command prompt/PowerShell
 
-...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
+...Or if you don't want your mod to be able to run .lua scripts, delete or comment out the "LUA_ALLOWED" line on Project.xml
 
 ## Credits:
 * Shadow Mario - Coding
