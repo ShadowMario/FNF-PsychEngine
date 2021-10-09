@@ -676,6 +676,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Low Quality',
 		'Anti-Aliasing',
 		'Persistent Cached Data',
+		'Instant Respawn',
 		#if !html5
 		'Framerate', //Apparently 120FPS isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		#end
@@ -873,6 +874,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
 						FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
+
+					case 'Instant Respawn':
+						ClientPrefs.instantRespawn = !ClientPrefs.instantRespawn;
 					
 					case 'Hide Song Length':
 						ClientPrefs.hideTime = !ClientPrefs.hideTime;
@@ -947,6 +951,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If checked, disables some background details,\ndecreases loading times and improves performance.";
 			case 'Persistent Cached Data':
 				daText = "If checked, images loaded will stay in memory\nuntil the game is closed, this increases memory usage,\nbut basically makes reloading times instant.";
+			case 'Instant Respawn':
+				daText = "If checked, you will be respawn automaticly, without pressing any key.";
 			case 'Anti-Aliasing':
 				daText = "If unchecked, disables anti-aliasing, increases performance\nat the cost of the graphics not looking as smooth.";
 			case 'Downscroll':
@@ -1039,6 +1045,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.hideHud;
 					case 'Persistent Cached Data':
 						daValue = ClientPrefs.imagesPersist;
+					case 'Instant Respawn': 
+						daValue = ClientPrefs.instantRespawn;
 					case 'Hide Song Length':
 						daValue = ClientPrefs.hideTime;
 				}
