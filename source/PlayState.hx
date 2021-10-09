@@ -2383,7 +2383,10 @@ class PlayState extends MusicBeatState
 				vocals.stop();
 				FlxG.sound.music.stop();
 
-				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, camFollowPos.x, camFollowPos.y, this));
+				if (!ClientPrefs.instantRespawn)
+					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, camFollowPos.x, camFollowPos.y, this));
+				else
+					MusicBeatState.resetState();
 				for (tween in modchartTweens) {
 					tween.active = true;
 				}
