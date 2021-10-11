@@ -2741,29 +2741,30 @@ class PlayState extends MusicBeatState
 						
 			case 'Change Alpha':
 				var char:Character = dad;
+				var icon:HealthIcon = null;
+				var time:Float = 1;
+				var alpha:Float = 1;
 				switch(value1.toLowerCase().trim()) {
 					case 'bf' | 'boyfriend':
 						char = boyfriend;
+						icon = iconP1;
 					case 'gf' | 'girlfriend':
 						char = gf;
+					case 'dad':
+						icon = iconP2;
 				}
 				if (value2.split(",").length == 2) {
-					var alpha:Float = Std.parseFloat(value2.split(",")[0]);
-					if(Math.isNaN(alpha)) alpha = 1;
-
-					var time:Float = Std.parseFloat(value2.split(",")[1]);
-					if(Math.isNaN(time)) time = 1;
-
-					FlxTween.tween(char, {alpha: alpha}, time);
-				} else if (value2.split(",").length == 1) {
-					if (!Math.isNaN(value2.split(",")[0])) {
-						var alpha:Float = Std.parseFloat(value2.split(",")[0]);
-						if(Math.isNaN(alpha)) alpha = 1;
-						char.alpha = alpha;
+					if(!Math.isNaN(Std.parseFloat(value2.split(",")[0]))) alpha = Std.parseFloat(value2.split(",")[0]);
+					if(!Math.isNaN(Std.parseFloat(value2.split(",")[1]))) time = Std.parseFloat(value2.split(",")[1]);
+				} else if(value2.split(",").length == 1) {
+					if(!Math.isNaN(Std.parseFloat(value2.split(",")[0]))) {
+						if(!Math.isNaN(Std.parseFloat(value2.split(",")[0]))) alpha = Std.parseFloat(value2.split(",")[0]);
 					} else {
-						// man, you are stupid and forget about... uhm.. EVERYTHING
+						// man, you are stupid and forget about... uhm.. EVERYTHING!
 					}
 				}
+				FlxTween.tween(char, {alpha: alpha}, time);
+				if(icon != null) FlxTween.tween(icon, {alpha: alpha}, time);
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
