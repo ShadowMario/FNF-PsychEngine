@@ -2738,6 +2738,32 @@ class PlayState extends MusicBeatState
 			
 			case 'BG Freaks Expression':
 				if(bgGirls != null) bgGirls.swapDanceType();
+						
+			case 'Change Alpha':
+				var char:Character = dad;
+				switch(value1.toLowerCase().trim()) {
+					case 'bf' | 'boyfriend':
+						char = boyfriend;
+					case 'gf' | 'girlfriend':
+						char = gf;
+				}
+				if (value2.split(",").length == 2) {
+					var alpha:Float = Std.parseFloat(value2.split(",")[0]);
+					if(Math.isNaN(alpha)) alpha = 1;
+
+					var time:Float = Std.parseFloat(value2.split(",")[1]);
+					if(Math.isNaN(time)) time = 1;
+
+					FlxTween.tween(char, {alpha: alpha}, time);
+				} else if (value2.split(",").length == 1) {
+					if (!Math.isNaN(value2.split(",")[0])) {
+						var alpha:Float = Std.parseFloat(value2.split(",")[0]);
+						if(Math.isNaN(alpha)) alpha = 1;
+						char.alpha = alpha;
+					} else {
+						// man, you are stupid and forget about... uhm.. EVERYTHING
+					}
+				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
