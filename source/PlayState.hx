@@ -2071,10 +2071,7 @@ class PlayState extends MusicBeatState
 					var secondsTotal:Int = Math.floor((songLength - curTime) / 1000);
 					if(secondsTotal < 0) secondsTotal = 0;
 
-					var minutesRemaining:Int = Math.floor(secondsTotal / 60);
-					var secondsRemaining:String = '' + secondsTotal % 60;
-					if(secondsRemaining.length < 2) secondsRemaining = '0' + secondsRemaining; //Dunno how to make it display a zero first in Haxe lol
-					timeTxt.text = minutesRemaining + ':' + secondsRemaining;
+					timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
 				}
 			}
 
