@@ -634,22 +634,33 @@ class Controls extends FlxActionSet
 			removeKeyboard();
 
 		keyboardScheme = scheme;
+		var keysMap = ClientPrefs.keyBinds;
 		
 		#if (haxe >= "4.0.0")
 		switch (scheme)
 		{
 			case Solo:
-				inline bindKeys(Control.UI_UP, [W, FlxKey.UP]);
-				inline bindKeys(Control.UI_DOWN, [S, FlxKey.DOWN]);
-				inline bindKeys(Control.UI_LEFT, [A, FlxKey.LEFT]);
-				inline bindKeys(Control.UI_RIGHT, [D, FlxKey.RIGHT]);
-				inline bindKeys(Control.NOTE_UP, [W, FlxKey.UP]);
-				inline bindKeys(Control.NOTE_DOWN, [S, FlxKey.DOWN]);
-				inline bindKeys(Control.NOTE_LEFT, [A, FlxKey.LEFT]);
-				inline bindKeys(Control.NOTE_RIGHT, [D, FlxKey.RIGHT]);
-				inline bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
-				inline bindKeys(Control.BACK, [X, BACKSPACE, ESCAPE]);
-				inline bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
+				inline bindKeys(Control.UI_UP, keysMap.get('ui_up'));
+				inline bindKeys(Control.UI_DOWN, keysMap.get('ui_down'));
+				inline bindKeys(Control.UI_LEFT, keysMap.get('ui_left'));
+				inline bindKeys(Control.UI_RIGHT, keysMap.get('ui_right'));
+				inline bindKeys(Control.NOTE_UP, keysMap.get('note_up'));
+				inline bindKeys(Control.NOTE_DOWN, keysMap.get('note_down'));
+				inline bindKeys(Control.NOTE_LEFT, keysMap.get('note_left'));
+				inline bindKeys(Control.NOTE_RIGHT, keysMap.get('note_right'));
+
+				var acceptKeys:Array<FlxKey> = keysMap.get('accept').copy();
+				acceptKeys.push(ENTER); //Add "Enter" to the keys for Accept
+				inline bindKeys(Control.ACCEPT, acceptKeys);
+
+				var backKeys:Array<FlxKey> = keysMap.get('back').copy();
+				backKeys.push(ESCAPE); //Add "ESC" to the keys for Back
+				inline bindKeys(Control.BACK, backKeys);
+
+				var resetKeys:Array<FlxKey> = keysMap.get('reset').copy();
+				resetKeys.push(ESCAPE); //Add "ESC" to the keys for Pause
+				inline bindKeys(Control.PAUSE, resetKeys);
+
 				inline bindKeys(Control.RESET, [R]);
 			case Duo(true):
 				inline bindKeys(Control.UI_UP, [W]);

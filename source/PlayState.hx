@@ -2676,8 +2676,16 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'Change Character':
-				var charType:Int = Std.parseInt(value1);
-				if(Math.isNaN(charType)) charType = 0;
+				var charType:Int = 0;
+				switch(value1) {
+					case 'gf' | 'girlfriend':
+						charType = 2;
+					case 'dad' | 'opponent':
+						charType = 1;
+					default:
+						charType = Std.parseInt(value1);
+						if(Math.isNaN(charType)) charType = 0;
+				}
 
 				switch(charType) {
 					case 0:
@@ -3318,7 +3326,7 @@ class PlayState extends MusicBeatState
 		});
 
 		health -= daNote.missHealth; //For testing purposes
-		trace(daNote.missHealth);
+		//trace(daNote.missHealth);
 		songMisses++;
 		vocals.volume = 0;
 		RecalculateRating();

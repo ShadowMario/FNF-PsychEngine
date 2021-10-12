@@ -191,6 +191,14 @@ class FunkinLua {
 				if(Type.typeof(variable) == ValueType.TInt) {
 					return leArray[variable];
 				}
+				var killMe:Array<String> = variable.split('.');
+				if(killMe.length > 1) {
+					var coverMeInPiss:Dynamic = Reflect.getProperty(leArray, killMe[0]);
+					for (i in 1...killMe.length-1) {
+						coverMeInPiss = Reflect.getProperty(coverMeInPiss, killMe[i]);
+					}
+					return Reflect.getProperty(coverMeInPiss, killMe[killMe.length-1]);
+				}
 				return Reflect.getProperty(leArray, variable);
 			}
 			luaTrace("Object #" + index + " from group: " + obj + " doesn't exist!");
@@ -205,6 +213,14 @@ class FunkinLua {
 			if(leArray != null) {
 				if(Type.typeof(variable) == ValueType.TInt) {
 					return leArray[variable] = value;
+				}
+				var killMe:Array<String> = variable.split('.');
+				if(killMe.length > 1) {
+					var coverMeInPiss:Dynamic = Reflect.getProperty(leArray, killMe[0]);
+					for (i in 1...killMe.length-1) {
+						coverMeInPiss = Reflect.getProperty(coverMeInPiss, killMe[i]);
+					}
+					return Reflect.setProperty(coverMeInPiss, killMe[killMe.length-1], value);
 				}
 				return Reflect.setProperty(leArray, variable, value);
 			}
