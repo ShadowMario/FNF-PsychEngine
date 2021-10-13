@@ -18,7 +18,6 @@ class Achievements {
 		["Lady Killer",					"Beat Week 4 on Hard with no Misses.",					false],
 		["Missless Christmas",			"Beat Week 5 on Hard with no Misses.",					false],
 		["Highscore!!",					"Beat Week 6 on Hard with no Misses.",					false],
-		["You'll Pay For That...",		"Beat Week 7 on Hard with no Misses.",					true],
 		["What a Funkin' Disaster!",	"Complete a Song with a rating lower than 20%.",		false],
 		["Perfectionist",				"Complete a Song with a rating of 100%.",				false],
 		["Roadkill Enthusiast",			"Watch the Henchmen die over 100 times.",				false],
@@ -37,7 +36,6 @@ class Achievements {
 		['week4_nomiss', false],		//4
 		['week5_nomiss', false],		//5
 		['week6_nomiss', false],		//6
-		['week7_nomiss', false],		//7
 		['ur_bad', false],				//8
 		['ur_good', false],				//9
 		['roadkill_enthusiast', false],	//10
