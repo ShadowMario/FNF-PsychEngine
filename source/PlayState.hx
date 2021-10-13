@@ -2265,6 +2265,11 @@ class PlayState extends MusicBeatState
 					}
 					StrumPlayAnim(true, Std.int(Math.abs(daNote.noteData)) % 4, time);
 					daNote.hitByOpponent = true;
+					
+					if (daNote.hitByOpponent && dad.curCharacter.startsWith('monster'))
+					{
+						gf.playAnim('scared');
+					}
 
 					callOnLuas('opponentNoteHit', [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
 
