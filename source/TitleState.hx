@@ -52,6 +52,9 @@ class TitleState extends MusicBeatState
 	var easterEggKeyCombination:Array<FlxKey> = [FlxKey.B, FlxKey.B]; //bb stands for bbpanzu cuz he wanted this lmao
 	var lastKeysPressed:Array<FlxKey> = [];
 
+	var mustUpdate:Bool = false;
+	public static var updateVersion:String = '';
+
 	override public function create():Void
 	{
 		#if (polymod && !html5)
@@ -67,9 +70,32 @@ class TitleState extends MusicBeatState
 				polymod.Polymod.init({modRoot: "mods", dirs: folders});
 			}
 		}
-
-		//Gonna finish this later, probably
 		#end
+		
+		#if CHECK_FOR_UPDATES
+		if(!closedState) {
+			trace('checking for update');
+			var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
+			
+			http.onData = function (data:String)
+			{
+				updateVersion = data.split('\n')[0].trim();
+				var curVersion:String = MainMenuState.psychEngineVersion.trim();
+				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
+				if(updateVersion != curVersion) {
+					trace('versions arent matching!');
+					mustUpdate = true;
+				}
+			}
+			
+			http.onError = function (error) {
+				trace('error: $error');
+			}
+			
+			http.request();
+		}
+		#end
+
 		FlxG.game.focusLostFramerate = 60;
 		FlxG.sound.muteKeys = muteKeys;
 		FlxG.sound.volumeDownKeys = volumeDownKeys;
@@ -314,7 +340,11 @@ class TitleState extends MusicBeatState
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
-					MusicBeatState.switchState(new MainMenuState());
+					if (mustUpdate) {
+						MusicBeatState.switchState(new OutdatedState());
+					} else {
+						MusicBeatState.switchState(new MainMenuState());
+					}
 					closedState = true;
 				});
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
