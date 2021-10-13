@@ -463,11 +463,13 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 1:
-					createCoolText(['Psych Engine by'], 45);
+					createCoolText(['FNF BY], 45);
 				// credTextShit.visible = true;
 				case 3:
-					addMoreText('Shadow Mario', 45);
-					addMoreText('RiverOaken', 45);
+					addMoreText('Ninjamuffin', 45);
+                                        addMoreText('EvilSker', 45);
+                                        addMoreText('Pthantom Arcade', 45);
+                                        addMoreText('Kawai sprite', 45);
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
 				case 4:
@@ -500,13 +502,15 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
 				case 13:
-					addMoreText('Friday');
+					addMoreText('Psych Engine');
 				// credTextShit.visible = true;
 				case 14:
-					addMoreText('Night');
-				// credTextShit.text += '\nNight';
+					addMoreText('by');
+				// credTextShit.text += '\nby';
 				case 15:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+					addMoreText('Shadow mario ');
+					addMoreText('RiverOaken ');
+                                        // credTextShit.text += '\nFunkin';
 
 				case 16:
 					skipIntro();
