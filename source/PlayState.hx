@@ -1275,6 +1275,7 @@ class PlayState extends MusicBeatState
 		if(ret != FunkinLua.Function_Stop) {
 			generateStaticArrows(0);
 			generateStaticArrows(1);
+			ShaderFilters();
 			for (i in 0...playerStrums.length) {
 				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
