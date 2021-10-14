@@ -30,11 +30,16 @@ using StringTools;
 // TO DO: Redo the menu creation system for not being as dumb
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Notes', 'Controls', 'Preferences'];
+	var options:Array<String> = ['Notes', 'Controls', 'Preferences', 'Deuteranopia', 'Protanopia', 'Tritanopia'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
 
+	public static var Deuteranopiabool:Bool = false;
+	public static var Protanopiabool:Bool = false;
+	public static var Tritanopiabool:Bool = false;
+
+	
 	override function create() {
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
@@ -98,6 +103,26 @@ class OptionsState extends MusicBeatState
 
 				case 'Preferences':
 					openSubState(new PreferencesSubstate());
+					
+					
+				case "Deuteranopia":
+					OptionsSubState.Deuteranopiabool = true;
+					OptionsSubState.Protanopiabool = false;
+					OptionsSubState.Tritanopiabool = false;
+					trace("Deuteranopia");
+					
+				case "Protanopia":
+					OptionsSubState.Protanopiabool = true;
+					OptionsSubState.Deuteranopiabool = false;
+					OptionsSubState.Tritanopiabool = false;
+					trace("Protanopia");
+					
+				case "Tritanopia":
+					OptionsSubState.Tritanopiabool = true;
+					OptionsSubState.Protanopiabool = false;
+					OptionsSubState.Deuteranopiabool = false;
+					trace("Tritanopia");	
+					
 			}
 		}
 	}
