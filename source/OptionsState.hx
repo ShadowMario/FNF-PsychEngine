@@ -30,7 +30,7 @@ using StringTools;
 // TO DO: Redo the menu creation system for not being as dumb
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Notes', 'Controls', 'Preferences', 'Deuteranopia', 'Protanopia', 'Tritanopia'];
+	var options:Array<String> = ['Notes', 'Controls', 'Preferences', 'Deuteranopia', 'Protanopia', 'Tritanopia' 'no filter'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -121,8 +121,13 @@ class OptionsState extends MusicBeatState
 					OptionsSubState.Tritanopiabool = true;
 					OptionsSubState.Protanopiabool = false;
 					OptionsSubState.Deuteranopiabool = false;
-					trace("Tritanopia");	
+					trace("Tritanopia");
 					
+				case "No filter":
+					OptionsSubState.Tritanopiabool = false;
+					OptionsSubState.Protanopiabool = false;
+					OptionsSubState.Deuteranopiabool = false;
+					trace("No Filter");
 			}
 		}
 	}
