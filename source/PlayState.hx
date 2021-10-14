@@ -49,6 +49,8 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
+import openfl.filters.ColorMatrixFilter;
+import openfl.filters.BitmapFilter;
 
 #if sys
 import sys.FileSystem;
@@ -213,6 +215,9 @@ class PlayState extends MusicBeatState
 	public var songMisses:Int = 0;
 	public var ghostMisses:Int = 0;
 	public var scoreTxt:FlxText;
+	var filters:Array<BitmapFilter> = [];
+	
+	var optionsubstate:OptionsSubState;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
