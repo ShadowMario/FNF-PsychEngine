@@ -3858,6 +3858,47 @@ class PlayState extends MusicBeatState
 		{
 			lightningStrikeShit();
 		}
+			function ShaderFilters():Void
+	{
+		//Matrix shaders:
+		if (OptionsSubState.Deuteranopiabool)
+		{
+			var matrix:Array<Float> = [
+						0.43, 0.72, -.15, 0, 0,
+						0.34, 0.57, 0.09, 0, 0,
+						-.02, 0.03,    1, 0, 0,
+						   0,    0,    0, 1, 0,
+					];
+			filters.push(new ColorMatrixFilter(matrix));
+		}
+
+		if (OptionsSubState.Protanopiabool)
+		{
+			var matrix:Array<Float> = [
+						0.20, 0.99, -.19, 0, 0,
+						0.16, 0.79, 0.04, 0, 0,
+						0.01, -.01,    1, 0, 0,
+						   0,    0,    0, 1, 0,
+					];
+			filters.push(new ColorMatrixFilter(matrix));
+		}
+
+		if (OptionsSubState.Tritanopiabool)
+		{
+			var matrix:Array<Float> = [
+						0.20, 0.99, -.19, 0, 0,
+						0.16, 0.79, 0.04, 0, 0,
+						0.01, -.01,    1, 0, 0,
+						   0,    0,    0, 1, 0,
+					];
+			filters.push(new ColorMatrixFilter(matrix));
+		}
+			camHUD.setFilters(filters);
+			camGame.setFilters(filters);
+			camHUD.filtersEnabled = true;
+			camGame.filtersEnabled = true;
+	}
+
 		lastBeatHit = curBeat;
 
 		setOnLuas('curBeat', curBeat);
