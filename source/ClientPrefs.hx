@@ -41,10 +41,10 @@ class ClientPrefs {
 		keyBinds.set('ui_up', [W, UP]);
 		keyBinds.set('ui_right', [D, RIGHT]);
 		
-		keyBinds.set('reset', [R, NONE]);
 		keyBinds.set('accept', [SPACE, ENTER]);
 		keyBinds.set('back', [BACKSPACE, ESCAPE]);
 		keyBinds.set('pause', [ENTER, ESCAPE]);
+		keyBinds.set('reset', [R, NONE]);
 
 
 		// Don't delete this
@@ -69,14 +69,7 @@ class ClientPrefs {
 		FlxG.save.data.imagesPersist = imagesPersist;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.hideTime = hideTime;
-
-		var achieves:Array<String> = [];
-		for (i in 0...Achievements.achievementsUnlocked.length) {
-			if(Achievements.achievementsUnlocked[i][1]) {
-				achieves.push(Achievements.achievementsUnlocked[i][0]);
-			}
-		}
-		FlxG.save.data.achievementsUnlocked = achieves;
+		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 		FlxG.save.flush();
 

@@ -38,13 +38,9 @@ class OutdatedState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if(!leftState) {
-			var accept:Bool = controls.ACCEPT;
 			if (controls.ACCEPT || controls.BACK) {
 				leftState = true;
-				if(controls.ACCEPT) {
-					CoolUtil.browserLoad("https://github.com/ShadowMario/FNF-PsychEngine/releases");
-				}
-
+				CoolUtil.browserLoad("https://github.com/ShadowMario/FNF-PsychEngine/releases");
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				FlxTween.tween(warnText, {alpha: 0}, 1, {
 					onComplete: function (twn:FlxTween) {
