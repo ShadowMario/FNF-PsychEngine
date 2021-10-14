@@ -3861,7 +3861,7 @@ class PlayState extends MusicBeatState
 			function ShaderFilters():Void
 	{
 		//Matrix shaders:
-		if (OptionsSubState.Deuteranopiabool)
+		if (OptionsState.Deuteranopiabool)
 		{
 			var matrix:Array<Float> = [
 						0.43, 0.72, -.15, 0, 0,
@@ -3872,7 +3872,7 @@ class PlayState extends MusicBeatState
 			filters.push(new ColorMatrixFilter(matrix));
 		}
 
-		if (OptionsSubState.Protanopiabool)
+		if (OptionsState.Protanopiabool)
 		{
 			var matrix:Array<Float> = [
 						0.20, 0.99, -.19, 0, 0,
