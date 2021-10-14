@@ -217,7 +217,7 @@ class PlayState extends MusicBeatState
 	public var scoreTxt:FlxText;
 	var filters:Array<BitmapFilter> = [];
 	
-	var optionsubstate:OptionsSubState;
+	var optionstate:OptionsState;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
