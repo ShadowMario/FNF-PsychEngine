@@ -106,27 +106,27 @@ class OptionsState extends MusicBeatState
 					
 					
 				case "Deuteranopia":
-					OptionsSubState.Deuteranopiabool = true;
-					OptionsSubState.Protanopiabool = false;
-					OptionsSubState.Tritanopiabool = false;
+					OptionsState.Deuteranopiabool = true;
+					OptionsState.Protanopiabool = false;
+					OptionsState.Tritanopiabool = false;
 					trace("Deuteranopia");
 					
 				case "Protanopia":
-					OptionsSubState.Protanopiabool = true;
-					OptionsSubState.Deuteranopiabool = false;
-					OptionsSubState.Tritanopiabool = false;
+					OptionsState.Protanopiabool = true;
+					OptionsState.Deuteranopiabool = false;
+					OptionsState.Tritanopiabool = false;
 					trace("Protanopia");
 					
 				case "Tritanopia":
-					OptionsSubState.Tritanopiabool = true;
-					OptionsSubState.Protanopiabool = false;
-					OptionsSubState.Deuteranopiabool = false;
+					OptionsState.Tritanopiabool = true;
+					OptionsState.Protanopiabool = false;
+					OptionsState.Deuteranopiabool = false;
 					trace("Tritanopia");
 					
 				case "No filter":
-					OptionsSubState.Tritanopiabool = false;
-					OptionsSubState.Protanopiabool = false;
-					OptionsSubState.Deuteranopiabool = false;
+					OptionsState.Tritanopiabool = false;
+					OptionsState.Protanopiabool = false;
+					OptionsState.Deuteranopiabool = false;
 					trace("No Filter");
 			}
 		}
