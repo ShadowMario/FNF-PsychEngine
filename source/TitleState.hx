@@ -158,7 +158,6 @@ class TitleState extends MusicBeatState
 			/*var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
 			diamond.persist = true;
 			diamond.destroyOnNoUse = false;
-
 			FlxTransitionableState.defaultTransIn = new TransitionData(FADE, FlxColor.BLACK, 1, new FlxPoint(0, -1), {asset: diamond, width: 32, height: 32},
 				new FlxRect(-300, -300, FlxG.width * 1.8, FlxG.height * 1.8));
 			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, new FlxPoint(0, 1),
@@ -463,13 +462,11 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 1:
-					createCoolText(['FNF BY], 45);
+					createCoolText(['Psych Engine by'], 45);
 				// credTextShit.visible = true;
 				case 3:
-					addMoreText('Ninjamuffin', 45);
-                                        addMoreText('EvilSker', 45);
-                                        addMoreText('Pthantom Arcade', 45);
-                                        addMoreText('Kawai sprite', 45);
+					addMoreText('Shadow Mario', 45);
+					addMoreText('RiverOaken', 45);
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
 				case 4:
@@ -502,15 +499,13 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
 				case 13:
-					addMoreText('Psych Engine');
+					addMoreText('Friday');
 				// credTextShit.visible = true;
 				case 14:
-					addMoreText('by');
-				// credTextShit.text += '\nby';
+					addMoreText('Night');
+				// credTextShit.text += '\nNight';
 				case 15:
-					addMoreText('Shadow mario ');
-					addMoreText('RiverOaken ');
-                                        // credTextShit.text += '\nFunkin';
+					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
 
 				case 16:
 					skipIntro();
