@@ -1,0 +1,19 @@
+name: Help wanted
+description: If you need help using the engine.
+labels: [help wanted]
+body:
+
+  - type: dropdown
+    attributes:
+      label: Are you trying to code on Source Code (Haxe) or on the Downloaded Build (Lua)?
+      options:
+        - Source Code
+        - Downloaded Build
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Show an screenshot/video of your problem.
+      description: Put down here an screenshot of your compiling issue or whatever is happening to you.
+    validations:
+      required: true

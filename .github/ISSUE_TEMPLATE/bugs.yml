@@ -1,0 +1,16 @@
+name: Bug report
+description: Report bugs with the engine here
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: Bug report
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Did you edit anything? If so, mention or summarize your changes.
+      description: 'For example: "Yes, i edited PlayState.hx and tried to mess with how health icon animation frames are handled" or "No, everything is the same as the base engine!"'
+    validations:
+      required: true
