@@ -1,0 +1,10 @@
+name: Missing Documentation
+description: Ask for documentation if something is missing.
+labels: [documentation]
+body:
+  - type: textarea
+    attributes:
+      label: What needs to be documented?
+      description: 'For example: "There is no page explaining how to create an Achievement!"'
+    validations:
+      required: true

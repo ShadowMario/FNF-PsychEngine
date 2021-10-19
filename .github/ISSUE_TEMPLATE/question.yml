@@ -1,0 +1,9 @@
+name: Question
+description: Ask about something here.
+labels: [question]
+body:
+  - type: textarea
+    attributes:
+      label: What is your question?
+    validations:
+      required: true
