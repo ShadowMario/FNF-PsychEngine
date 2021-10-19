@@ -751,6 +751,13 @@ class PlayState extends MusicBeatState
 			dialogueJson = DialogueBoxPsych.parseDialogue(file);
 		}
 
+		#if MODS_ALLOWED
+		var file:String = Paths.modsJson(songName + '/dialogue'); //Checks for json/Psych Engine dialogue in mod folder
+		if(dialogueJson == null && FileSystem.exists(file)) { // Only check if dialogue has not already been found
+			dialogueJson = DialogueBoxPsych.parseDialogue(file);
+		}
+		#end
+
 		var file:String = Paths.txt(songName + '/' + songName + 'Dialogue'); //Checks for vanilla/Senpai dialogue
 		if (OpenFlAssets.exists(file)) {
 			dialogue = CoolUtil.coolTextFile(file);
@@ -1009,7 +1016,8 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 
 				default:
-					startCountdown();
+					if(dialogueJson != null) startDialogue(dialogueJson)
+					else startCountdown();
 			}
 			seenCutscene = true;
 		} else {
