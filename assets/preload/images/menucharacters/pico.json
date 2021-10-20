@@ -3,8 +3,8 @@
 	"image": "Menu_Pico",
 	"position": [
 		0,
-		-120
+		-78
 	],
-	"scale": 1,
+	"scale": 1.6,
 	"confirm_anim": "M Dad Idle"
 }
