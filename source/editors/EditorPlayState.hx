@@ -116,13 +116,13 @@ class EditorPlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 		
-		beatTxt = new FlxText(10, 630, FlxG.width, "Beat: 0", 20);
+		beatTxt = new FlxText(10, 610, FlxG.width, "Beat: 0", 20);
 		beatTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		beatTxt.scrollFactor.set();
 		beatTxt.borderSize = 1.25;
 		add(beatTxt);
 
-		stepTxt = new FlxText(10, 660, FlxG.width, "Step: 0", 20);
+		stepTxt = new FlxText(10, 640, FlxG.width, "Step: 0", 20);
 		stepTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		stepTxt.scrollFactor.set();
 		stepTxt.borderSize = 1.25;
