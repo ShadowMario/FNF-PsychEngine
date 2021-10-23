@@ -101,7 +101,7 @@ class OptionsState extends MusicBeatState
 			}
 		}
 	}
-	
+
 	function changeSelection(change:Int = 0) {
 		curSelected += change;
 		if (curSelected < 0)
@@ -549,7 +549,7 @@ class ControlsSubstate extends MusicBeatSubstate {
 		}
 		return num;
 	}
-	
+
 	function changeSelection(change:Int = 0) {
 		do {
 			curSelected += change;
@@ -717,6 +717,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Low Quality',
 		'Anti-Aliasing',
 		'Persistent Cached Data',
+		'Max Optimization',
 		#if !html5
 		'Framerate', //Apparently 120FPS isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		#end
@@ -724,6 +725,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Downscroll',
 		'Middlescroll',
 		'Ghost Tapping',
+		'Info Bar Bounces',
 		'Note Delay',
 		'Note Splashes',
 		'Hide HUD',
@@ -914,9 +916,15 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
 						FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
-					
+
 					case 'Hide Song Length':
 						ClientPrefs.hideTime = !ClientPrefs.hideTime;
+
+					case 'Info Bar Bounces':
+						ClientPrefs.infoBarBounces = !ClientPrefs.infoBarBounces;
+
+					case 'Max Optimization':
+						ClientPrefs.maxOptimization = !ClientPrefs.maxOptimization;
 				}
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				reloadValues();
@@ -965,7 +973,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 		}
 		super.update(elapsed);
 	}
-	
+
 	function changeSelection(change:Int = 0)
 	{
 		do {
@@ -1010,6 +1018,10 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If checked, hides most HUD elements.";
 			case 'Hide Song Length':
 				daText = "If checked, the bar showing how much time is left\nwill be hidden.";
+			case 'Info Bar Bounces':
+				daText = "If checked, the info bar will bounce when you hit a note";
+			case 'Max Optimization':
+				daText = "If checked, everything except the HUD will not be rendered";
 		}
 		descText.text = daText;
 
@@ -1082,6 +1094,10 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.imagesPersist;
 					case 'Hide Song Length':
 						daValue = ClientPrefs.hideTime;
+					case 'Info Bar Bounces':
+						daValue = ClientPrefs.infoBarBounces;
+					case 'Max Optimization':
+						daValue = ClientPrefs.maxOptimization;
 				}
 				checkbox.daValue = daValue;
 			}
