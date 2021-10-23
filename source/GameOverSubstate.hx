@@ -41,7 +41,12 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		Conductor.songPosition = 0;
 
-		bf = new Boyfriend(x, y, characterName);
+		if (state.boyfriend.animation.getByName('firstDeath') != null 
+			&& state.boyfriend.animation.getByName('deathLoop') != null 
+				&& state.boyfriend.animation.getByName('deathConfirm') != null)
+			bf = new Boyfriend(x, y, state.boyfriend.curCharacter);
+		else
+			bf = new Boyfriend(x, y, characterName);
 		add(bf);
 
 		camFollow = new FlxPoint(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y);
