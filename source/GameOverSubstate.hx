@@ -9,6 +9,9 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+#if sys
+import sys.FileSystem;
+#end
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -50,6 +53,13 @@ class GameOverSubstate extends MusicBeatSubstate
 		add(bf);
 
 		camFollow = new FlxPoint(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y);
+
+		#if MODS_ALLOWED
+			if (Paths.sound(deathSoundName).length < 100
+				|| Paths.music(loopSoundName).length < 100
+					|| Paths.music(endSoundName).length < 100) //Why less than 100: https://imgur.com/a/no7EaAB -Spelo
+				resetVariables();
+		#end
 
 		FlxG.sound.play(Paths.sound(deathSoundName));
 		Conductor.changeBPM(100);

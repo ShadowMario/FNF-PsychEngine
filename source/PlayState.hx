@@ -531,9 +531,6 @@ class PlayState extends MusicBeatState
 				add(evilSnow);
 
 			case 'school': //Week 6 - Senpai, Roses
-				GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pixel';
-				GameOverSubstate.loopSoundName = 'gameOver-pixel';
-				GameOverSubstate.endSoundName = 'gameOverEnd-pixel';
 				GameOverSubstate.characterName = 'bf-pixel-dead';
 
 				var bgSky:BGSprite = new BGSprite('weeb/weebSky', 0, 0, 0.1, 0.1);
@@ -595,10 +592,8 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'schoolEvil': //Week 6 - Thorns
-				GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pixel';
-				GameOverSubstate.loopSoundName = 'gameOver-pixel';
-				GameOverSubstate.endSoundName = 'gameOverEnd-pixel';
 				GameOverSubstate.characterName = 'bf-pixel-dead';
+				// Should be possible to unhardcode this too by changing week editor layout a bit and/or adding separate text box -Spelo
 
 				/*if(!ClientPrefs.lowQuality) { //Does this even do something?
 					var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
@@ -626,6 +621,10 @@ class PlayState extends MusicBeatState
 					add(bg);
 				}
 		}
+
+		GameOverSubstate.deathSoundName = 'fnf_loss_sfx-' + WeekData.getWeekFileName();
+		GameOverSubstate.loopSoundName = 'gameOver-' + WeekData.getWeekFileName();
+		GameOverSubstate.endSoundName = 'gameOverEnd-' + WeekData.getWeekFileName();
 
 		if(isPixelStage) {
 			introSoundsSuffix = '-pixel';
