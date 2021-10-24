@@ -19,8 +19,6 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	var stageSuffix:String = "";
 
-	var lePlayState:PlayState;
-
 	public static var characterName:String = 'bf';
 	public static var deathSoundName:String = 'fnf_loss_sfx';
 	public static var loopSoundName:String = 'gameOver';
@@ -33,10 +31,9 @@ class GameOverSubstate extends MusicBeatSubstate
 		endSoundName = 'gameOverEnd';
 	}
 
-	public function new(x:Float, y:Float, camX:Float, camY:Float, state:PlayState)
+	public function new(x:Float, y:Float, camX:Float, camY:Float)
 	{
-		lePlayState = state;
-		state.setOnLuas('inGameOver', true);
+		PlayState.STATE.setOnLuas('inGameOver', true);
 		super();
 
 		Conductor.songPosition = 0;
@@ -66,7 +63,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
-		lePlayState.callOnLuas('onUpdate', [elapsed]);
+		PlayState.STATE.setOnLuas('onUpdate', [elapsed]);
 		if(updateCamera) {
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 0.6, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
@@ -82,7 +79,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
 			PlayState.seenCutscene = false;
-			PlayState.setOnLuas('seenCutscene', false);
+			PlayState.STATE.setOnLuas('seenCutscene', false);
 
 			if (PlayState.isStoryMode)
 				MusicBeatState.switchState(new StoryMenuState());
@@ -90,7 +87,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				MusicBeatState.switchState(new FreeplayState());
 
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			lePlayState.callOnLuas('onGameOverConfirm', [false]);
+			PlayState.STATE.setOnLuas('onGameOverConfirm', [false]);
 		}
 
 		if (bf.animation.curAnim.name == 'firstDeath')
@@ -112,7 +109,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			Conductor.songPosition = FlxG.sound.music.time;
 		}
-		lePlayState.callOnLuas('onUpdatePost', [elapsed]);
+		PlayState.STATE.setOnLuas('onUpdatePost', [elapsed]);
 	}
 
 	override function beatHit()
@@ -144,7 +141,7 @@ class GameOverSubstate extends MusicBeatSubstate
 					MusicBeatState.resetState();
 				});
 			});
-			lePlayState.callOnLuas('onGameOverConfirm', [true]);
+			PlayState.STATE.setOnLuas('onGameOverConfirm', [true]);
 		}
 	}
 }
