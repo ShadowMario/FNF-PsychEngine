@@ -1157,7 +1157,7 @@ class PlayState extends MusicBeatState
 			inCutscene = true;
 			CoolUtil.precacheSound('dialogue');
 			CoolUtil.precacheSound('dialogueClose');
-			var doof:DialogueBoxPsych = new DialogueBoxPsych(dialogueFile, song);
+			var doof:DialogueBoxPsych = new DialogueBoxPsych(dialogueFile, (dialogueFile.song != null ? dialogueFile.song : song));
 			doof.scrollFactor.set();
 			if(endingSong) {
 				doof.finishThing = endSong;
