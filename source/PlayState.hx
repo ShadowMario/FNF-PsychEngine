@@ -1020,6 +1020,7 @@ class PlayState extends MusicBeatState
 					else startCountdown();
 			}
 			seenCutscene = true;
+			setOnLuas('seenCutscene', true);
 		} else {
 			startCountdown();
 		}
@@ -2868,6 +2869,7 @@ class PlayState extends MusicBeatState
 
 		deathCounter = 0;
 		seenCutscene = false;
+		setOnLuas('seenCutscene', false);
 
 		#if ACHIEVEMENTS_ALLOWED
 		if(achievementObj != null) {
