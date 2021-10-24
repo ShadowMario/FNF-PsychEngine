@@ -26,25 +26,46 @@ class ClientPrefs {
 	public static var hideTime:Bool = false;
 
 	//Every key has two binds, these binds are defined on defaultKeys! If you want your control to be changeable, you have to add it on ControlsSubState (inside OptionsState.hx)'s list
-	public static var keyBinds:Map<String, Dynamic> = new Map<String, Dynamic>();
-	public static var defaultKeys:Map<String, Dynamic>;
+	public static var keyBinds:Map<Control, Dynamic> = new Map<Control, Dynamic>();
+	public static var defaultKeys:Map<Control, Dynamic>;
 
 	public static function startControls() {
 		//Key Bind, Name for ControlsSubState
-		keyBinds.set('note_left', [A, LEFT]);
-		keyBinds.set('note_down', [S, DOWN]);
-		keyBinds.set('note_up', [W, UP]);
-		keyBinds.set('note_right', [D, RIGHT]);
-		
-		keyBinds.set('ui_left', [A, LEFT]);
-		keyBinds.set('ui_down', [S, DOWN]);
-		keyBinds.set('ui_up', [W, UP]);
-		keyBinds.set('ui_right', [D, RIGHT]);
-		
-		keyBinds.set('accept', [SPACE, ENTER]);
-		keyBinds.set('back', [BACKSPACE, ESCAPE]);
-		keyBinds.set('pause', [ENTER, ESCAPE]);
-		keyBinds.set('reset', [R, NONE]);
+		keyBinds.set(Control.NOTE_LEFT, [A, LEFT]);
+		keyBinds.set(Control.NOTE_DOWN, [S, DOWN]);
+		keyBinds.set(Control.NOTE_CENTER_5k, [SPACE, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_UP, [W, UP]);
+		keyBinds.set(Control.NOTE_RIGHT, [D, RIGHT]);
+
+		// 6k 7k
+		keyBinds.set(Control.NOTE_1_6k, [S, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_2_6k, [D, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_3_6k, [F, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_CENTER_7k, [SPACE, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_4_6k, [H, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_5_6k, [J, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_6_6k, [K, FlxKey.NONE]);
+
+		// 8k 9k
+		keyBinds.set(Control.NOTE_1_8k, [A, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_2_8k, [S, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_3_8k, [D, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_4_8k, [F, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_CENTER_9k, [SPACE, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_5_8k, [H, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_6_8k, [J, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_7_8k, [K, FlxKey.NONE]);
+		keyBinds.set(Control.NOTE_8_8k, [L, FlxKey.NONE]);
+
+		keyBinds.set(Control.UI_LEFT, [A, LEFT]);
+		keyBinds.set(Control.UI_DOWN, [S, DOWN]);
+		keyBinds.set(Control.UI_UP, [W, UP]);
+		keyBinds.set(Control.UI_RIGHT, [D, RIGHT]);
+
+		keyBinds.set(Control.ACCEPT, [SPACE, ENTER]);
+		keyBinds.set(Control.BACK, [BACKSPACE, ESCAPE]);
+		keyBinds.set(Control.PAUSE, [ENTER, ESCAPE]);
+		keyBinds.set(Control.RESET, [R, FlxKey.NONE]);
 
 
 		// Don't delete this
@@ -147,11 +168,13 @@ class ClientPrefs {
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', 'ninjamuffin99');
 		if(save != null && save.data.customControls != null) {
-			var loadedControls:Map<String, Dynamic> = save.data.customControls;
-			for (control => keys in loadedControls) {
-				keyBinds.set(control, keys);
+			var loadedControls:Map<Control, Dynamic> = save.data.customControls;
+			if(loadedControls != null) { // Old format check
+				for (control => keys in loadedControls) {
+					keyBinds.set(control, keys);
+				}
+				reloadControls();
 			}
-			reloadControls();
 		}
 	}
 

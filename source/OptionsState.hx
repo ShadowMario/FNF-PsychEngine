@@ -3,6 +3,7 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
+import flixel.input.keyboard.FlxKey;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -401,27 +402,47 @@ class ControlsSubstate extends MusicBeatSubstate {
 
 	var optionShit:Array<Dynamic> = [
 		['NOTES'],
-		['Left', 'note_left'],
-		['Down', 'note_down'],
-		['Up', 'note_up'],
-		['Right', 'note_right'],
+		['4k 5k'],
+		['Left', Control.NOTE_LEFT],
+		['Down', Control.NOTE_DOWN],
+		['Center', Control.NOTE_CENTER_5k],
+		['Up', Control.NOTE_UP],
+		['Right', Control.NOTE_RIGHT],
+		['6k 7k'],
+		['Left', Control.NOTE_1_6k],
+		['Up', Control.NOTE_2_6k],
+		['Right', Control.NOTE_3_6k],
+		['Center', Control.NOTE_CENTER_7k],
+		['Left', Control.NOTE_4_6k],
+		['Up', Control.NOTE_5_6k],
+		['Right', Control.NOTE_6_6k],
+		['8k 9k'],
+		['Left', Control.NOTE_1_8k],
+		['Up', Control.NOTE_2_8k],
+		['Down', Control.NOTE_3_8k],
+		['Right', Control.NOTE_4_8k],
+		['Center', Control.NOTE_CENTER_9k],
+		['Left', Control.NOTE_5_8k],
+		['Up', Control.NOTE_6_8k],
+		['Down', Control.NOTE_7_8k],
+		['Right', Control.NOTE_8_8k],
 		[''],
 		['UI'],
-		['Left', 'ui_left'],
-		['Down', 'ui_down'],
-		['Up', 'ui_up'],
-		['Right', 'ui_right'],
+		['Left', Control.UI_LEFT],
+		['Down', Control.UI_DOWN],
+		['Up', Control.UI_UP],
+		['Right', Control.UI_RIGHT],
 		[''],
-		['Reset', 'reset'],
-		['Accept', 'accept'],
-		['Back', 'back'],
-		['Pause', 'pause'],
+		['Reset', Control.RESET],
+		['Accept', Control.ACCEPT],
+		['Back', Control.BACK],
+		['Pause', Control.PAUSE],
 	];
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var grpInputs:Array<AttachedText> = [];
 	private var grpInputsAlt:Array<AttachedText> = [];
-	private var controlMap:Map<String, Dynamic>;
+	private var controlMap:Map<Control, Dynamic>;
 	var rebindingKey:Bool = false;
 	var nextAccept:Int = 5;
 

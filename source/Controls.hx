@@ -11,7 +11,6 @@ import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
-#if (haxe >= "4.0.0")
 enum abstract Action(String) to String from String
 {
 	var UI_UP = "ui_up";
@@ -38,45 +37,64 @@ enum abstract Action(String) to String from String
 	var NOTE_LEFT_R = "note_left-release";
 	var NOTE_RIGHT_R = "note_right-release";
 	var NOTE_DOWN_R = "note_down-release";
+
+	var NOTE_CENTER_5k = "NOTE_CENTER_5k";
+	var NOTE_CENTER_5k_P = "NOTE_CENTER_5k-press";
+	var NOTE_CENTER_5k_R = "NOTE_CENTER_5k-release";
+	var NOTE_1_6k = "NOTE_1_6k";
+	var NOTE_1_6k_P = "NOTE_1_6k-press";
+	var NOTE_1_6k_R = "NOTE_1_6k-release";
+	var NOTE_2_6k = "NOTE_2_6k";
+	var NOTE_2_6k_P = "NOTE_2_6k-press";
+	var NOTE_2_6k_R = "NOTE_2_6k-release";
+	var NOTE_3_6k = "NOTE_3_6k";
+	var NOTE_3_6k_P = "NOTE_3_6k-press";
+	var NOTE_3_6k_R = "NOTE_3_6k-release";
+	var NOTE_CENTER_7k = "NOTE_CENTER_7k";
+	var NOTE_CENTER_7k_P = "NOTE_CENTER_7k-press";
+	var NOTE_CENTER_7k_R = "NOTE_CENTER_7k-release";
+	var NOTE_4_6k = "NOTE_4_6k";
+	var NOTE_4_6k_P = "NOTE_4_6k-press";
+	var NOTE_4_6k_R = "NOTE_4_6k-release";
+	var NOTE_5_6k = "NOTE_5_6k";
+	var NOTE_5_6k_P = "NOTE_5_6k-press";
+	var NOTE_5_6k_R = "NOTE_5_6k-release";
+	var NOTE_6_6k = "NOTE_6_6k";
+	var NOTE_6_6k_P = "NOTE_6_6k-press";
+	var NOTE_6_6k_R = "NOTE_6_6k-release";
+	var NOTE_1_8k = "NOTE_1_8k";
+	var NOTE_1_8k_P = "NOTE_1_8k-press";
+	var NOTE_1_8k_R = "NOTE_1_8k-release";
+	var NOTE_2_8k = "NOTE_2_8k";
+	var NOTE_2_8k_P = "NOTE_2_8k-press";
+	var NOTE_2_8k_R = "NOTE_2_8k-release";
+	var NOTE_3_8k = "NOTE_3_8k";
+	var NOTE_3_8k_P = "NOTE_3_8k-press";
+	var NOTE_3_8k_R = "NOTE_3_8k-release";
+	var NOTE_4_8k = "NOTE_4_8k";
+	var NOTE_4_8k_P = "NOTE_4_8k-press";
+	var NOTE_4_8k_R = "NOTE_4_8k-release";
+	var NOTE_CENTER_9k = "NOTE_CENTER_9k";
+	var NOTE_CENTER_9k_P = "NOTE_CENTER_9k-press";
+	var NOTE_CENTER_9k_R = "NOTE_CENTER_9k-release";
+	var NOTE_5_8k = "NOTE_5_8k";
+	var NOTE_5_8k_P = "NOTE_5_8k-press";
+	var NOTE_5_8k_R = "NOTE_5_8k-release";
+	var NOTE_6_8k = "NOTE_6_8k";
+	var NOTE_6_8k_P = "NOTE_6_8k-press";
+	var NOTE_6_8k_R = "NOTE_6_8k-release";
+	var NOTE_7_8k = "NOTE_7_8k";
+	var NOTE_7_8k_P = "NOTE_7_8k-press";
+	var NOTE_7_8k_R = "NOTE_7_8k-release";
+	var NOTE_8_8k = "NOTE_8_8k";
+	var NOTE_8_8k_P = "NOTE_8_8k-press";
+	var NOTE_8_8k_R = "NOTE_8_8k-release";
+
 	var ACCEPT = "accept";
 	var BACK = "back";
 	var PAUSE = "pause";
 	var RESET = "reset";
 }
-#else
-@:enum
-abstract Action(String) to String from String
-{
-	var UI_UP = "ui_up";
-	var UI_LEFT = "ui_left";
-	var UI_RIGHT = "ui_right";
-	var UI_DOWN = "ui_down";
-	var UI_UP_P = "ui_up-press";
-	var UI_LEFT_P = "ui_left-press";
-	var UI_RIGHT_P = "ui_right-press";
-	var UI_DOWN_P = "ui_down-press";
-	var UI_UP_R = "ui_up-release";
-	var UI_LEFT_R = "ui_left-release";
-	var UI_RIGHT_R = "ui_right-release";
-	var UI_DOWN_R = "ui_down-release";
-	var NOTE_UP = "note_up";
-	var NOTE_LEFT = "note_left";
-	var NOTE_RIGHT = "note_right";
-	var NOTE_DOWN = "note_down";
-	var NOTE_UP_P = "note_up-press";
-	var NOTE_LEFT_P = "note_left-press";
-	var NOTE_RIGHT_P = "note_right-press";
-	var NOTE_DOWN_P = "note_down-press";
-	var NOTE_UP_R = "note_up-release";
-	var NOTE_LEFT_R = "note_left-release";
-	var NOTE_RIGHT_R = "note_right-release";
-	var NOTE_DOWN_R = "note_down-release";
-	var ACCEPT = "accept";
-	var BACK = "back";
-	var PAUSE = "pause";
-	var RESET = "reset";
-}
-#end
 
 enum Device
 {
@@ -95,10 +113,31 @@ enum Control
 	UI_LEFT;
 	UI_RIGHT;
 	UI_DOWN;
+
 	NOTE_UP;
 	NOTE_LEFT;
+	NOTE_CENTER_5k; // SPACE
 	NOTE_RIGHT;
 	NOTE_DOWN;
+
+	NOTE_1_6k; // S
+	NOTE_2_6k; // D
+	NOTE_3_6k; // F
+	NOTE_CENTER_7k; // SPACE
+	NOTE_4_6k; // H
+	NOTE_5_6k; // J
+	NOTE_6_6k; // K
+
+	NOTE_1_8k; // A
+	NOTE_2_8k; // S
+	NOTE_3_8k; // D
+	NOTE_4_8k; // F
+	NOTE_CENTER_9k; // SPACE
+	NOTE_5_8k; // H
+	NOTE_6_8k; // J
+	NOTE_7_8k; // K
+	NOTE_8_8k; // L
+
 	RESET;
 	ACCEPT;
 	BACK;
@@ -147,6 +186,59 @@ class Controls extends FlxActionSet
 	var _back = new FlxActionDigital(Action.BACK);
 	var _pause = new FlxActionDigital(Action.PAUSE);
 	var _reset = new FlxActionDigital(Action.RESET);
+
+	var _NOTE_CENTER_5k = new FlxActionDigital(Action.NOTE_CENTER_5k);
+	var _NOTE_CENTER_5k_P = new FlxActionDigital(Action.NOTE_CENTER_5k_P);
+	var _NOTE_CENTER_5k_R = new FlxActionDigital(Action.NOTE_CENTER_5k_R);
+	var _NOTE_1_6k = new FlxActionDigital(Action.NOTE_1_6k);
+	var _NOTE_1_6k_P = new FlxActionDigital(Action.NOTE_1_6k_P);
+	var _NOTE_1_6k_R = new FlxActionDigital(Action.NOTE_1_6k_R);
+	var _NOTE_2_6k = new FlxActionDigital(Action.NOTE_2_6k);
+	var _NOTE_2_6k_P = new FlxActionDigital(Action.NOTE_2_6k_P);
+	var _NOTE_2_6k_R = new FlxActionDigital(Action.NOTE_2_6k_R);
+	var _NOTE_3_6k = new FlxActionDigital(Action.NOTE_3_6k);
+	var _NOTE_3_6k_P = new FlxActionDigital(Action.NOTE_3_6k_P);
+	var _NOTE_3_6k_R = new FlxActionDigital(Action.NOTE_3_6k_R);
+	var _NOTE_CENTER_7k = new FlxActionDigital(Action.NOTE_CENTER_7k);
+	var _NOTE_CENTER_7k_P = new FlxActionDigital(Action.NOTE_CENTER_7k_P);
+	var _NOTE_CENTER_7k_R = new FlxActionDigital(Action.NOTE_CENTER_7k_R);
+	var _NOTE_4_6k = new FlxActionDigital(Action.NOTE_4_6k);
+	var _NOTE_4_6k_P = new FlxActionDigital(Action.NOTE_4_6k_P);
+	var _NOTE_4_6k_R = new FlxActionDigital(Action.NOTE_4_6k_R);
+	var _NOTE_5_6k = new FlxActionDigital(Action.NOTE_5_6k);
+	var _NOTE_5_6k_P = new FlxActionDigital(Action.NOTE_5_6k_P);
+	var _NOTE_5_6k_R = new FlxActionDigital(Action.NOTE_5_6k_R);
+	var _NOTE_6_6k = new FlxActionDigital(Action.NOTE_6_6k);
+	var _NOTE_6_6k_P = new FlxActionDigital(Action.NOTE_6_6k_P);
+	var _NOTE_6_6k_R = new FlxActionDigital(Action.NOTE_6_6k_R);
+	var _NOTE_1_8k = new FlxActionDigital(Action.NOTE_1_8k);
+	var _NOTE_1_8k_P = new FlxActionDigital(Action.NOTE_1_8k_P);
+	var _NOTE_1_8k_R = new FlxActionDigital(Action.NOTE_1_8k_R);
+	var _NOTE_2_8k = new FlxActionDigital(Action.NOTE_2_8k);
+	var _NOTE_2_8k_P = new FlxActionDigital(Action.NOTE_2_8k_P);
+	var _NOTE_2_8k_R = new FlxActionDigital(Action.NOTE_2_8k_R);
+	var _NOTE_3_8k = new FlxActionDigital(Action.NOTE_3_8k);
+	var _NOTE_3_8k_P = new FlxActionDigital(Action.NOTE_3_8k_P);
+	var _NOTE_3_8k_R = new FlxActionDigital(Action.NOTE_3_8k_R);
+	var _NOTE_4_8k = new FlxActionDigital(Action.NOTE_4_8k);
+	var _NOTE_4_8k_P = new FlxActionDigital(Action.NOTE_4_8k_P);
+	var _NOTE_4_8k_R = new FlxActionDigital(Action.NOTE_4_8k_R);
+	var _NOTE_CENTER_9k = new FlxActionDigital(Action.NOTE_CENTER_9k);
+	var _NOTE_CENTER_9k_P = new FlxActionDigital(Action.NOTE_CENTER_9k_P);
+	var _NOTE_CENTER_9k_R = new FlxActionDigital(Action.NOTE_CENTER_9k_R);
+	var _NOTE_5_8k = new FlxActionDigital(Action.NOTE_5_8k);
+	var _NOTE_5_8k_P = new FlxActionDigital(Action.NOTE_5_8k_P);
+	var _NOTE_5_8k_R = new FlxActionDigital(Action.NOTE_5_8k_R);
+	var _NOTE_6_8k = new FlxActionDigital(Action.NOTE_6_8k);
+	var _NOTE_6_8k_P = new FlxActionDigital(Action.NOTE_6_8k_P);
+	var _NOTE_6_8k_R = new FlxActionDigital(Action.NOTE_6_8k_R);
+	var _NOTE_7_8k = new FlxActionDigital(Action.NOTE_7_8k);
+	var _NOTE_7_8k_P = new FlxActionDigital(Action.NOTE_7_8k_P);
+	var _NOTE_7_8k_R = new FlxActionDigital(Action.NOTE_7_8k_R);
+	var _NOTE_8_8k = new FlxActionDigital(Action.NOTE_8_8k);
+	var _NOTE_8_8k_P = new FlxActionDigital(Action.NOTE_8_8k_P);
+	var _NOTE_8_8k_R = new FlxActionDigital(Action.NOTE_8_8k_R);
+
 
 	#if (haxe >= "4.0.0")
 	var byName:Map<String, FlxActionDigital> = [];
@@ -297,6 +389,211 @@ class Controls extends FlxActionSet
 	inline function get_RESET()
 		return _reset.check();
 
+	public var NOTE_CENTER_5k(get, never):Bool;
+	inline function get_NOTE_CENTER_5k()
+		return _NOTE_CENTER_5k.check();
+
+	public var NOTE_CENTER_5k_P(get, never):Bool;
+	inline function get_NOTE_CENTER_5k_P()
+		return _NOTE_CENTER_5k_P.check();
+
+	public var NOTE_CENTER_5k_R(get, never):Bool;
+	inline function get_NOTE_CENTER_5k_R()
+		return _NOTE_CENTER_5k_R.check();
+
+	public var NOTE_1_6k(get, never):Bool;
+	inline function get_NOTE_1_6k()
+		return _NOTE_1_6k.check();
+
+	public var NOTE_1_6k_P(get, never):Bool;
+	inline function get_NOTE_1_6k_P()
+		return _NOTE_1_6k_P.check();
+
+	public var NOTE_1_6k_R(get, never):Bool;
+	inline function get_NOTE_1_6k_R()
+		return _NOTE_1_6k_R.check();
+
+	public var NOTE_2_6k(get, never):Bool;
+	inline function get_NOTE_2_6k()
+		return _NOTE_2_6k.check();
+
+	public var NOTE_2_6k_P(get, never):Bool;
+	inline function get_NOTE_2_6k_P()
+		return _NOTE_2_6k_P.check();
+
+	public var NOTE_2_6k_R(get, never):Bool;
+	inline function get_NOTE_2_6k_R()
+		return _NOTE_2_6k_R.check();
+
+	public var NOTE_3_6k(get, never):Bool;
+	inline function get_NOTE_3_6k()
+		return _NOTE_3_6k.check();
+
+	public var NOTE_3_6k_P(get, never):Bool;
+	inline function get_NOTE_3_6k_P()
+		return _NOTE_3_6k_P.check();
+
+	public var NOTE_3_6k_R(get, never):Bool;
+	inline function get_NOTE_3_6k_R()
+		return _NOTE_3_6k_R.check();
+
+	public var NOTE_CENTER_7k(get, never):Bool;
+	inline function get_NOTE_CENTER_7k()
+		return _NOTE_CENTER_7k.check();
+
+	public var NOTE_CENTER_7k_P(get, never):Bool;
+	inline function get_NOTE_CENTER_7k_P()
+		return _NOTE_CENTER_7k_P.check();
+
+	public var NOTE_CENTER_7k_R(get, never):Bool;
+	inline function get_NOTE_CENTER_7k_R()
+		return _NOTE_CENTER_7k_R.check();
+
+	public var NOTE_4_6k(get, never):Bool;
+	inline function get_NOTE_4_6k()
+		return _NOTE_4_6k.check();
+
+	public var NOTE_4_6k_P(get, never):Bool;
+	inline function get_NOTE_4_6k_P()
+		return _NOTE_4_6k_P.check();
+
+	public var NOTE_4_6k_R(get, never):Bool;
+	inline function get_NOTE_4_6k_R()
+		return _NOTE_4_6k_R.check();
+
+	public var NOTE_5_6k(get, never):Bool;
+	inline function get_NOTE_5_6k()
+		return _NOTE_5_6k.check();
+
+	public var NOTE_5_6k_P(get, never):Bool;
+	inline function get_NOTE_5_6k_P()
+		return _NOTE_5_6k_P.check();
+
+	public var NOTE_5_6k_R(get, never):Bool;
+	inline function get_NOTE_5_6k_R()
+		return _NOTE_5_6k_R.check();
+
+	public var NOTE_6_6k(get, never):Bool;
+	inline function get_NOTE_6_6k()
+		return _NOTE_6_6k.check();
+
+	public var NOTE_6_6k_P(get, never):Bool;
+	inline function get_NOTE_6_6k_P()
+		return _NOTE_6_6k_P.check();
+
+	public var NOTE_6_6k_R(get, never):Bool;
+	inline function get_NOTE_6_6k_R()
+		return _NOTE_6_6k_R.check();
+
+	public var NOTE_1_8k(get, never):Bool;
+	inline function get_NOTE_1_8k()
+		return _NOTE_1_8k.check();
+
+	public var NOTE_1_8k_P(get, never):Bool;
+	inline function get_NOTE_1_8k_P()
+		return _NOTE_1_8k_P.check();
+
+	public var NOTE_1_8k_R(get, never):Bool;
+	inline function get_NOTE_1_8k_R()
+		return _NOTE_1_8k_R.check();
+
+	public var NOTE_2_8k(get, never):Bool;
+	inline function get_NOTE_2_8k()
+		return _NOTE_2_8k.check();
+
+	public var NOTE_2_8k_P(get, never):Bool;
+	inline function get_NOTE_2_8k_P()
+		return _NOTE_2_8k_P.check();
+
+	public var NOTE_2_8k_R(get, never):Bool;
+	inline function get_NOTE_2_8k_R()
+		return _NOTE_2_8k_R.check();
+
+	public var NOTE_3_8k(get, never):Bool;
+	inline function get_NOTE_3_8k()
+		return _NOTE_3_8k.check();
+
+	public var NOTE_3_8k_P(get, never):Bool;
+	inline function get_NOTE_3_8k_P()
+		return _NOTE_3_8k_P.check();
+
+	public var NOTE_3_8k_R(get, never):Bool;
+	inline function get_NOTE_3_8k_R()
+		return _NOTE_3_8k_R.check();
+
+	public var NOTE_4_8k(get, never):Bool;
+	inline function get_NOTE_4_8k()
+		return _NOTE_4_8k.check();
+
+	public var NOTE_4_8k_P(get, never):Bool;
+	inline function get_NOTE_4_8k_P()
+		return _NOTE_4_8k_P.check();
+
+	public var NOTE_4_8k_R(get, never):Bool;
+	inline function get_NOTE_4_8k_R()
+		return _NOTE_4_8k_R.check();
+
+	public var NOTE_CENTER_9k(get, never):Bool;
+	inline function get_NOTE_CENTER_9k()
+		return _NOTE_CENTER_9k.check();
+
+	public var NOTE_CENTER_9k_P(get, never):Bool;
+	inline function get_NOTE_CENTER_9k_P()
+		return _NOTE_CENTER_9k_P.check();
+
+	public var NOTE_CENTER_9k_R(get, never):Bool;
+	inline function get_NOTE_CENTER_9k_R()
+		return _NOTE_CENTER_9k_R.check();
+
+	public var NOTE_5_8k(get, never):Bool;
+	inline function get_NOTE_5_8k()
+		return _NOTE_5_8k.check();
+
+	public var NOTE_5_8k_P(get, never):Bool;
+	inline function get_NOTE_5_8k_P()
+		return _NOTE_5_8k_P.check();
+
+	public var NOTE_5_8k_R(get, never):Bool;
+	inline function get_NOTE_5_8k_R()
+		return _NOTE_5_8k_R.check();
+
+	public var NOTE_6_8k(get, never):Bool;
+	inline function get_NOTE_6_8k()
+		return _NOTE_6_8k.check();
+
+	public var NOTE_6_8k_P(get, never):Bool;
+	inline function get_NOTE_6_8k_P()
+		return _NOTE_6_8k_P.check();
+
+	public var NOTE_6_8k_R(get, never):Bool;
+	inline function get_NOTE_6_8k_R()
+		return _NOTE_6_8k_R.check();
+
+	public var NOTE_7_8k(get, never):Bool;
+	inline function get_NOTE_7_8k()
+		return _NOTE_7_8k.check();
+
+	public var NOTE_7_8k_P(get, never):Bool;
+	inline function get_NOTE_7_8k_P()
+		return _NOTE_7_8k_P.check();
+
+	public var NOTE_7_8k_R(get, never):Bool;
+	inline function get_NOTE_7_8k_R()
+		return _NOTE_7_8k_R.check();
+
+	public var NOTE_8_8k(get, never):Bool;
+	inline function get_NOTE_8_8k()
+		return _NOTE_8_8k.check();
+
+	public var NOTE_8_8k_P(get, never):Bool;
+	inline function get_NOTE_8_8k_P()
+		return _NOTE_8_8k_P.check();
+
+	public var NOTE_8_8k_R(get, never):Bool;
+	inline function get_NOTE_8_8k_R()
+		return _NOTE_8_8k_R.check();
+
+
 	#if (haxe >= "4.0.0")
 	public function new(name, scheme = None)
 	{
@@ -330,6 +627,25 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
+
+		add(_NOTE_CENTER_5k);
+		add(_NOTE_1_6k);
+		add(_NOTE_2_6k);
+		add(_NOTE_3_6k);
+		add(_NOTE_CENTER_7k);
+		add(_NOTE_4_6k);
+		add(_NOTE_5_6k);
+		add(_NOTE_6_6k);
+		add(_NOTE_1_8k);
+		add(_NOTE_2_8k);
+		add(_NOTE_3_8k);
+		add(_NOTE_4_8k);
+		add(_NOTE_CENTER_9k);
+		add(_NOTE_5_8k);
+		add(_NOTE_6_8k);
+		add(_NOTE_7_8k);
+		add(_NOTE_8_8k);
+
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -369,6 +685,25 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
+
+		add(_NOTE_CENTER_5k);
+		add(_NOTE_1_6k);
+		add(_NOTE_2_6k);
+		add(_NOTE_3_6k);
+		add(_NOTE_CENTER_7k);
+		add(_NOTE_4_6k);
+		add(_NOTE_5_6k);
+		add(_NOTE_6_6k);
+		add(_NOTE_1_8k);
+		add(_NOTE_2_8k);
+		add(_NOTE_3_8k);
+		add(_NOTE_4_8k);
+		add(_NOTE_CENTER_9k);
+		add(_NOTE_5_8k);
+		add(_NOTE_6_8k);
+		add(_NOTE_7_8k);
+		add(_NOTE_8_8k);
+
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -426,6 +761,23 @@ class Controls extends FlxActionSet
 			case BACK: _back;
 			case PAUSE: _pause;
 			case RESET: _reset;
+			case NOTE_CENTER_5k: _NOTE_CENTER_5k;
+			case NOTE_1_6k: _NOTE_1_6k;
+			case NOTE_2_6k: _NOTE_2_6k;
+			case NOTE_3_6k: _NOTE_3_6k;
+			case NOTE_CENTER_7k: _NOTE_CENTER_7k;
+			case NOTE_4_6k: _NOTE_4_6k;
+			case NOTE_5_6k: _NOTE_5_6k;
+			case NOTE_6_6k: _NOTE_6_6k;
+			case NOTE_1_8k: _NOTE_1_8k;
+			case NOTE_2_8k: _NOTE_2_8k;
+			case NOTE_3_8k: _NOTE_3_8k;
+			case NOTE_4_8k: _NOTE_4_8k;
+			case NOTE_CENTER_9k: _NOTE_CENTER_9k;
+			case NOTE_5_8k: _NOTE_5_8k;
+			case NOTE_6_8k: _NOTE_6_8k;
+			case NOTE_7_8k: _NOTE_7_8k;
+			case NOTE_8_8k: _NOTE_8_8k;
 		}
 	}
 
@@ -477,6 +829,74 @@ class Controls extends FlxActionSet
 				func(_note_down, PRESSED);
 				func(_note_downP, JUST_PRESSED);
 				func(_note_downR, JUST_RELEASED);
+			case NOTE_CENTER_5k:
+				func(_NOTE_CENTER_5k, PRESSED);
+				func(_NOTE_CENTER_5k_P, JUST_PRESSED);
+				func(_NOTE_CENTER_5k_R, JUST_RELEASED);
+			case NOTE_1_6k:
+				func(_NOTE_1_6k, PRESSED);
+				func(_NOTE_1_6k_P, JUST_PRESSED);
+				func(_NOTE_1_6k_R, JUST_RELEASED);
+			case NOTE_2_6k:
+				func(_NOTE_2_6k, PRESSED);
+				func(_NOTE_2_6k_P, JUST_PRESSED);
+				func(_NOTE_2_6k_R, JUST_RELEASED);
+			case NOTE_3_6k:
+				func(_NOTE_3_6k, PRESSED);
+				func(_NOTE_3_6k_P, JUST_PRESSED);
+				func(_NOTE_3_6k_R, JUST_RELEASED);
+			case NOTE_CENTER_7k:
+				func(_NOTE_CENTER_7k, PRESSED);
+				func(_NOTE_CENTER_7k_P, JUST_PRESSED);
+				func(_NOTE_CENTER_7k_R, JUST_RELEASED);
+			case NOTE_4_6k:
+				func(_NOTE_4_6k, PRESSED);
+				func(_NOTE_4_6k_P, JUST_PRESSED);
+				func(_NOTE_4_6k_R, JUST_RELEASED);
+			case NOTE_5_6k:
+				func(_NOTE_5_6k, PRESSED);
+				func(_NOTE_5_6k_P, JUST_PRESSED);
+				func(_NOTE_5_6k_R, JUST_RELEASED);
+			case NOTE_6_6k:
+				func(_NOTE_6_6k, PRESSED);
+				func(_NOTE_6_6k_P, JUST_PRESSED);
+				func(_NOTE_6_6k_R, JUST_RELEASED);
+			case NOTE_1_8k:
+				func(_NOTE_1_8k, PRESSED);
+				func(_NOTE_1_8k_P, JUST_PRESSED);
+				func(_NOTE_1_8k_R, JUST_RELEASED);
+			case NOTE_2_8k:
+				func(_NOTE_2_8k, PRESSED);
+				func(_NOTE_2_8k_P, JUST_PRESSED);
+				func(_NOTE_2_8k_R, JUST_RELEASED);
+			case NOTE_3_8k:
+				func(_NOTE_3_8k, PRESSED);
+				func(_NOTE_3_8k_P, JUST_PRESSED);
+				func(_NOTE_3_8k_R, JUST_RELEASED);
+			case NOTE_4_8k:
+				func(_NOTE_4_8k, PRESSED);
+				func(_NOTE_4_8k_P, JUST_PRESSED);
+				func(_NOTE_4_8k_R, JUST_RELEASED);
+			case NOTE_CENTER_9k:
+				func(_NOTE_CENTER_9k, PRESSED);
+				func(_NOTE_CENTER_9k_P, JUST_PRESSED);
+				func(_NOTE_CENTER_9k_R, JUST_RELEASED);
+			case NOTE_5_8k:
+				func(_NOTE_5_8k, PRESSED);
+				func(_NOTE_5_8k_P, JUST_PRESSED);
+				func(_NOTE_5_8k_R, JUST_RELEASED);
+			case NOTE_6_8k:
+				func(_NOTE_6_8k, PRESSED);
+				func(_NOTE_6_8k_P, JUST_PRESSED);
+				func(_NOTE_6_8k_R, JUST_RELEASED);
+			case NOTE_7_8k:
+				func(_NOTE_7_8k, PRESSED);
+				func(_NOTE_7_8k_P, JUST_PRESSED);
+				func(_NOTE_7_8k_R, JUST_RELEASED);
+			case NOTE_8_8k:
+				func(_NOTE_8_8k, PRESSED);
+				func(_NOTE_8_8k_P, JUST_PRESSED);
+				func(_NOTE_8_8k_R, JUST_RELEASED);
 			case ACCEPT:
 				func(_accept, JUST_PRESSED);
 			case BACK:
@@ -486,6 +906,7 @@ class Controls extends FlxActionSet
 			case RESET:
 				func(_reset, JUST_PRESSED);
 		}
+		trace("registering " + control);
 	}
 
 	public function replaceBinding(control:Control, device:Device, ?toAdd:Int, ?toRemove:Int)
@@ -640,19 +1061,39 @@ class Controls extends FlxActionSet
 		switch (scheme)
 		{
 			case Solo:
-				inline bindKeys(Control.UI_UP, keysMap.get('ui_up'));
-				inline bindKeys(Control.UI_DOWN, keysMap.get('ui_down'));
-				inline bindKeys(Control.UI_LEFT, keysMap.get('ui_left'));
-				inline bindKeys(Control.UI_RIGHT, keysMap.get('ui_right'));
-				inline bindKeys(Control.NOTE_UP, keysMap.get('note_up'));
-				inline bindKeys(Control.NOTE_DOWN, keysMap.get('note_down'));
-				inline bindKeys(Control.NOTE_LEFT, keysMap.get('note_left'));
-				inline bindKeys(Control.NOTE_RIGHT, keysMap.get('note_right'));
+				inline bindKeys(Control.UI_UP, keysMap.get(Control.UI_UP));
+				inline bindKeys(Control.UI_DOWN, keysMap.get(Control.UI_DOWN));
+				inline bindKeys(Control.UI_LEFT, keysMap.get(Control.UI_LEFT));
+				inline bindKeys(Control.UI_RIGHT, keysMap.get(Control.UI_RIGHT));
+				inline bindKeys(Control.NOTE_UP, keysMap.get(Control.NOTE_UP));
+				inline bindKeys(Control.NOTE_DOWN, keysMap.get(Control.NOTE_DOWN));
+				inline bindKeys(Control.NOTE_LEFT, keysMap.get(Control.NOTE_LEFT));
+				inline bindKeys(Control.NOTE_RIGHT, keysMap.get(Control.NOTE_RIGHT));
 
-				inline bindKeys(Control.ACCEPT, keysMap.get('accept'));
-				inline bindKeys(Control.BACK, keysMap.get('back'));
-				inline bindKeys(Control.PAUSE, keysMap.get('pause'));
-				inline bindKeys(Control.RESET, keysMap.get('reset'));
+				inline bindKeys(Control.NOTE_CENTER_5k, keysMap.get(Control.NOTE_CENTER_5k));
+
+				inline bindKeys(Control.NOTE_1_6k, keysMap.get(Control.NOTE_1_6k));
+				inline bindKeys(Control.NOTE_2_6k, keysMap.get(Control.NOTE_2_6k));
+				inline bindKeys(Control.NOTE_3_6k, keysMap.get(Control.NOTE_3_6k));
+				inline bindKeys(Control.NOTE_CENTER_7k, keysMap.get(Control.NOTE_CENTER_7k));
+				inline bindKeys(Control.NOTE_4_6k, keysMap.get(Control.NOTE_4_6k));
+				inline bindKeys(Control.NOTE_5_6k, keysMap.get(Control.NOTE_5_6k));
+				inline bindKeys(Control.NOTE_6_6k, keysMap.get(Control.NOTE_6_6k));
+
+				inline bindKeys(Control.NOTE_1_8k, keysMap.get(Control.NOTE_1_8k));
+				inline bindKeys(Control.NOTE_2_8k, keysMap.get(Control.NOTE_2_8k));
+				inline bindKeys(Control.NOTE_3_8k, keysMap.get(Control.NOTE_3_8k));
+				inline bindKeys(Control.NOTE_4_8k, keysMap.get(Control.NOTE_4_8k));
+				inline bindKeys(Control.NOTE_CENTER_9k, keysMap.get(Control.NOTE_CENTER_9k));
+				inline bindKeys(Control.NOTE_5_8k, keysMap.get(Control.NOTE_5_8k));
+				inline bindKeys(Control.NOTE_6_8k, keysMap.get(Control.NOTE_6_8k));
+				inline bindKeys(Control.NOTE_7_8k, keysMap.get(Control.NOTE_7_8k));
+				inline bindKeys(Control.NOTE_8_8k, keysMap.get(Control.NOTE_8_8k));
+
+				inline bindKeys(Control.ACCEPT, keysMap.get(Control.ACCEPT));
+				inline bindKeys(Control.BACK, keysMap.get(Control.BACK));
+				inline bindKeys(Control.PAUSE, keysMap.get(Control.PAUSE));
+				inline bindKeys(Control.RESET, keysMap.get(Control.RESET));
 			case Duo(true):
 				inline bindKeys(Control.UI_UP, [W]);
 				inline bindKeys(Control.UI_DOWN, [S]);
@@ -686,18 +1127,39 @@ class Controls extends FlxActionSet
 		switch (scheme)
 		{
 			case Solo:
-				bindKeys(Control.UI_UP, [W, FlxKey.UP]);
-				bindKeys(Control.UI_DOWN, [S, FlxKey.DOWN]);
-				bindKeys(Control.UI_LEFT, [A, FlxKey.LEFT]);
-				bindKeys(Control.UI_RIGHT, [D, FlxKey.RIGHT]);
-				bindKeys(Control.NOTE_UP, [W, FlxKey.UP]);
-				bindKeys(Control.NOTE_DOWN, [S, FlxKey.DOWN]);
-				bindKeys(Control.NOTE_LEFT, [A, FlxKey.LEFT]);
-				bindKeys(Control.NOTE_RIGHT, [D, FlxKey.RIGHT]);
-				bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
-				bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
-				bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
-				bindKeys(Control.RESET, [R]);
+				bindKeys(Control.UI_UP, keysMap.get(Control.UI_UP));
+				bindKeys(Control.UI_DOWN, keysMap.get(Control.UI_DOWN));
+				bindKeys(Control.UI_LEFT, keysMap.get(Control.UI_LEFT));
+				bindKeys(Control.UI_RIGHT, keysMap.get(Control.UI_RIGHT));
+				bindKeys(Control.NOTE_UP, keysMap.get(Control.NOTE_UP));
+				bindKeys(Control.NOTE_DOWN, keysMap.get(Control.NOTE_DOWN));
+				bindKeys(Control.NOTE_LEFT, keysMap.get(Control.NOTE_LEFT));
+				bindKeys(Control.NOTE_RIGHT, keysMap.get(Control.NOTE_RIGHT));
+
+				bindKeys(Control.NOTE_CENTER_5k, keysMap.get(Control.NOTE_CENTER_5k));
+
+				bindKeys(Control.NOTE_1_6k, keysMap.get(Control.NOTE_1_6k));
+				bindKeys(Control.NOTE_2_6k, keysMap.get(Control.NOTE_2_6k));
+				bindKeys(Control.NOTE_3_6k, keysMap.get(Control.NOTE_3_6k));
+				bindKeys(Control.NOTE_CENTER_7k, keysMap.get(Control.NOTE_CENTER_7k));
+				bindKeys(Control.NOTE_4_6k, keysMap.get(Control.NOTE_4_6k));
+				bindKeys(Control.NOTE_5_6k, keysMap.get(Control.NOTE_5_6k));
+				bindKeys(Control.NOTE_6_6k, keysMap.get(Control.NOTE_6_6k));
+
+				bindKeys(Control.NOTE_1_8k, keysMap.get(Control.NOTE_1_8k));
+				bindKeys(Control.NOTE_2_8k, keysMap.get(Control.NOTE_2_8k));
+				bindKeys(Control.NOTE_3_8k, keysMap.get(Control.NOTE_3_8k));
+				bindKeys(Control.NOTE_4_8k, keysMap.get(Control.NOTE_4_8k));
+				bindKeys(Control.NOTE_CENTER_9k, keysMap.get(Control.NOTE_CENTER_9k));
+				bindKeys(Control.NOTE_5_8k, keysMap.get(Control.NOTE_5_8k));
+				bindKeys(Control.NOTE_6_8k, keysMap.get(Control.NOTE_6_8k));
+				bindKeys(Control.NOTE_7_8k, keysMap.get(Control.NOTE_7_8k));
+				bindKeys(Control.NOTE_8_8k, keysMap.get(Control.NOTE_8_8k));
+
+				bindKeys(Control.ACCEPT, keysMap.get(Control.ACCEPT));
+				bindKeys(Control.BACK, keysMap.get(Control.BACK));
+				bindKeys(Control.PAUSE, keysMap.get(Control.PAUSE));
+				bindKeys(Control.RESET, keysMap.get(Control.RESET));
 			case Duo(true):
 				bindKeys(Control.UI_UP, [W]);
 				bindKeys(Control.UI_DOWN, [S]);
