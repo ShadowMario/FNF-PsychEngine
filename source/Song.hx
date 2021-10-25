@@ -15,6 +15,7 @@ using StringTools;
 typedef SwagSong =
 {
 	var song:String;
+	var songKeys:Null<Int>;
 	var notes:Array<SwagSection>;
 	var bpm:Float;
 	var needsVoices:Bool;
