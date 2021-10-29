@@ -95,6 +95,7 @@ class Note extends FlxSprite
 					} else {
 						missHealth = 0.3;
 					}
+					//this still needs to be enabled, coz if it wasn't enabled, the hurt note would become a normal note, and we don't want that -nintendofan44
 					hitCausesMiss = true;
 				case 'No Animation':
 					noAnimation = true;
