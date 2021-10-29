@@ -886,6 +886,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 							}
 						}
 						OptionsState.menuBG.antialiasing = ClientPrefs.globalAntialiasing;
+					
+					case 'Note Splashes':
+						ClientPrefs.noteSplashes = !ClientPrefs.noteSplashes;
 
 					case 'Flashing Lights':
 						ClientPrefs.flashing = !ClientPrefs.flashing;
