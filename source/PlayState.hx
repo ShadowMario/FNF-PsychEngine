@@ -3325,11 +3325,17 @@ class PlayState extends MusicBeatState
 			}
 		});
 
-		health -= daNote.missHealth; //For testing purposes
-		//trace(daNote.missHealth);
-		songMisses++;
-		vocals.volume = 0;
-		RecalculateRating();
+		//if the note is a hurt note, only deal damage and don't count it as a miss -nintendofan44
+		switch(daNote.noteType) {
+			case 'Hurt Note':
+				health -= daNote.missHealth;
+			default:
+				health -= daNote.missHealth; //For testing purposes
+				//trace(daNote.missHealth);
+				songMisses++;
+				vocals.volume = 0;
+				RecalculateRating();
+		}
 
 		var animToPlay:String = '';
 		switch (Math.abs(daNote.noteData) % 4)
