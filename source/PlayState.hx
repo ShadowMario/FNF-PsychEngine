@@ -1553,7 +1553,7 @@ class PlayState extends MusicBeatState
 						{
 							oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-							var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(SONG.speed, 2)), daNoteData, oldNote, true);
+							var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal((ClientPrefs.noteSpeed == 1 ? SONG.speed : ClientPrefs.noteSpeed), 2)), daNoteData, oldNote, true);
 							sustainNote.mustPress = gottaHitNote;
 							sustainNote.noteType = swagNote.noteType;
 							sustainNote.scrollFactor.set();
@@ -2095,7 +2095,7 @@ class PlayState extends MusicBeatState
 		}
 		doDeathCheck();
 
-		var roundedSpeed:Float = FlxMath.roundDecimal(SONG.speed, 2);
+		var roundedSpeed:Float = FlxMath.roundDecimal((ClientPrefs.noteSpeed == 1 ? SONG.speed : ClientPrefs.noteSpeed), 2);
 		if (unspawnNotes[0] != null)
 		{
 			var time:Float = 1500;
@@ -3437,7 +3437,9 @@ class PlayState extends MusicBeatState
 				if(combo > 9999) combo = 9999;
 			}
 			health += note.hitHealth;
-
+			if (ClientPrefs.noteTick) {
+				FlxG.sound.play(Paths.sound("ChartingTick"), 0.6, false);
+			}
 			if(!note.noAnimation) {
 				var daAlt = '';
 				if(note.noteType == 'Alt Animation') daAlt = '-alt';

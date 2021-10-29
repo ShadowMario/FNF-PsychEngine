@@ -709,7 +709,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 	];
 	static var noCheckbox:Array<String> = [
 		'Framerate',
-		'Note Delay'
+		'Note Delay',
+		'Note Speed'
 	];
 
 	static var options:Array<String> = [
@@ -725,7 +726,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Middlescroll',
 		'Ghost Tapping',
 		'Note Delay',
+		'Note Speed',
 		'Note Splashes',
+		'Note Tick',
 		'Hide HUD',
 		'Hide Song Length',
 		'Flashing Lights',
@@ -884,9 +887,6 @@ class PreferencesSubstate extends MusicBeatSubstate
 						}
 						OptionsState.menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 
-					case 'Note Splashes':
-						ClientPrefs.noteSplashes = !ClientPrefs.noteSplashes;
-
 					case 'Flashing Lights':
 						ClientPrefs.flashing = !ClientPrefs.flashing;
 
@@ -901,6 +901,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 
 					case 'Middlescroll':
 						ClientPrefs.middleScroll = !ClientPrefs.middleScroll;
+
+					case 'Note Tick':
+						ClientPrefs.noteTick = !ClientPrefs.noteTick;
 
 					case 'Ghost Tapping':
 						ClientPrefs.ghostTapping = !ClientPrefs.ghostTapping;
@@ -946,6 +949,14 @@ class PreferencesSubstate extends MusicBeatSubstate
 						ClientPrefs.noteOffset += add * mult;
 						if(ClientPrefs.noteOffset < 0) ClientPrefs.noteOffset = 0;
 						else if(ClientPrefs.noteOffset > 500) ClientPrefs.noteOffset = 500;
+					case 'Note Speed':
+						var mult:Float = 0.1;
+						if(holdTime > 1.5) { //Double speed after 1.5 seconds holding
+							mult = 0.2;
+						}
+						ClientPrefs.noteSpeed += add * mult;
+						if(ClientPrefs.noteSpeed < 1) ClientPrefs.noteSpeed = 1;
+						else if(ClientPrefs.noteSpeed > 4) ClientPrefs.noteSpeed = 4;
 				}
 				reloadValues();
 
@@ -982,6 +993,10 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "Pretty self explanatory, isn't it?\nDefault value is 60.";
 			case 'Note Delay':
 				daText = "Changes how late a note is spawned.\nUseful for preventing audio lag from wireless earphones.";
+			case 'Note Tick':
+				daText = "Note makes a sound when hit.\nUseful for checking note delay.";
+			case 'Note Speed':
+				daText = "Override note speed.\n 1 = Chart default, 1.1+ = custom speed";
 			case 'FPS Counter':
 				daText = "If unchecked, hides FPS Counter.";
 			case 'Low Quality':
@@ -1062,6 +1077,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.globalAntialiasing;
 					case 'Note Splashes':
 						daValue = ClientPrefs.noteSplashes;
+					case 'Note Tick':
+						daValue = ClientPrefs.noteTick;
 					case 'Flashing Lights':
 						daValue = ClientPrefs.flashing;
 					case 'Downscroll':
@@ -1093,6 +1110,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				switch(options[textNumber[i]]) {
 					case 'Framerate':
 						daText = '' + ClientPrefs.framerate;
+					case 'Note Speed':
+						daText = '' + ClientPrefs.noteSpeed;
 					case 'Note Delay':
 						daText = ClientPrefs.noteOffset + 'ms';
 				}
