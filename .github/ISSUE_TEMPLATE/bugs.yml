@@ -32,12 +32,12 @@ body:
     attributes:
       label: "What is your build target?"
       options:
-        - Windows
-        - Linux
-        - !SOURCE ONLY! Mac
-        - !SOURCE ONLY! HTML5
-        - !SOURCE ONLY! Flash/Air-based target
-        - !SOURCE ONLY! Neko, HashLink, or other build system
+        - "Windows"
+        - "Linux"
+        - "!SOURCE ONLY! Mac"
+        - "!SOURCE ONLY! HTML5"
+        - "!SOURCE ONLY! Flash/Air-based target"
+        - "!SOURCE ONLY! Neko, HashLink, or other build system"
     validations:
       required: true
 
