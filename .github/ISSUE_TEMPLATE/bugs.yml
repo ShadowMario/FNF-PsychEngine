@@ -5,14 +5,14 @@ body:
   - type: textarea
     id: description
     attributes:
-      label: Describe your bug here.
+      label: "Describe your bug here."
     validations:
       required: true
 
   - type: textarea
     id: terminal
     attributes:
-      label: Command Prompt/Terminal logs (if existing)
+      label: "Command Prompt/Terminal logs (if existing)"
       render: bash
     validations:
       required: false
@@ -20,7 +20,7 @@ body:
   - type: checkboxes
     id: modding
     attributes:
-      label: Are you modding a build from source or with Lua?
+      label: "Are you modding a build from source or with Lua?"
       options:
         - Lua
         - Source
@@ -30,7 +30,7 @@ body:
   - type: checkboxes
     id: modding
     attributes:
-      label: What is your build target?
+      label: "What is your build target?"
       options:
         - Windows
         - Linux
@@ -44,7 +44,7 @@ body:
   - type: input
     id: buildsummary
     attributes:
-      label: Did you edit anything in this build? If so, mention or summarize your changes.
+      label: "Did you edit anything in this build? If so, mention or summarize your changes."
       placeholder: "Yes, I edited ClientPrefs.hx and tried to add a new setting"
     validations:
       required: true
