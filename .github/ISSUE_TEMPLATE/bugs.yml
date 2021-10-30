@@ -34,10 +34,10 @@ body:
       options:
         - "Windows"
         - "Linux"
-        - "!SOURCE ONLY! Mac"
-        - "!SOURCE ONLY! HTML5"
-        - "!SOURCE ONLY! Flash/Air-based target"
-        - "!SOURCE ONLY! Neko, HashLink, or other build system"
+        - "Mac"
+        - "HTML5"
+        - "Flash/Air-based target"
+        - "Neko, HashLink, or other build system"
     validations:
       required: true
 
