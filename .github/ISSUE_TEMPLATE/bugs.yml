@@ -28,7 +28,7 @@ body:
       required: true
 
   - type: checkboxes
-    id: modding
+    id: btarget
     attributes:
       label: "What is your build target?"
       options:
