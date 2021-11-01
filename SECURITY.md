@@ -4,8 +4,7 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | ✅ Fully Supported |
-| 0.4.x   | :x:                |
-| 4.0.x   | ✔️ Not Fully Supported |
+| 0.4.2   | ✅ Fully Supported |
 | < 0.3   | :x:                |
+| < 0.4.1   | ✔️ Not Fully Supported |
 
