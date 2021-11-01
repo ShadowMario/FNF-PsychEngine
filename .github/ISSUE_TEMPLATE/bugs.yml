@@ -17,7 +17,7 @@ body:
     validations:
       required: false
 
-  - type: checkboxes
+  - type: dropdown
     id: modding
     attributes:
       label: "Are you modding a build from source or with Lua?"
@@ -27,7 +27,7 @@ body:
     validations:
       required: true
 
-  - type: checkboxes
+  - type: dropdown
     id: btarget
     attributes:
       label: "What is your build target?"
