@@ -17,27 +17,27 @@ body:
     validations:
       required: false
 
-  - type: checkboxes
+  - type: dropdown
     id: modding
     attributes:
       label: "Are you modding a build from source or with Lua?"
       options:
-        - label: Lua
-        - label: Source
+        - Lua
+        - Source
     validations:
       required: true
 
-  - type: checkboxes
+  - type: dropdown
     id: btarget
     attributes:
       label: "What is your build target?"
       options:
-        - label: "Windows"
-        - label: "Linux"
-        - label: "Mac"
-        - label: "HTML5"
-        - label: "Flash/Air-based target"
-        - label: "Neko, HashLink, or other build system"
+        - "Windows"
+        - "Linux"
+        - "Mac"
+        - "HTML5"
+        - "Flash/Air-based target"
+        - "Neko, HashLink, or other build system"
     validations:
       required: true
 
