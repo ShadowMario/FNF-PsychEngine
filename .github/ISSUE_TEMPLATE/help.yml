@@ -1,19 +1,42 @@
-name: Help wanted
+name: Help me!
 description: If you need help using the engine.
 labels: [help wanted]
 body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "Describe your problem here."
+    validations:
+      required: true
 
   - type: dropdown
+    id: modding
     attributes:
-      label: Are you trying to code on Source Code (Haxe) or on the Downloaded Build (Lua)?
+      label: "Are you modding a build from source or with Lua?"
       options:
-        - Source Code
-        - Downloaded Build
+        - Lua
+        - Source
     validations:
       required: true
-  - type: textarea
+
+  - type: dropdown
+    id: btarget
     attributes:
-      label: Show an screenshot/video of your problem.
-      description: Put down here an screenshot of your compiling issue or whatever is happening to you.
+      label: "What is your build target?"
+      options:
+        - "Windows"
+        - "Linux"
+        - "Mac"
+        - "HTML5"
+        - "Flash/Air-based target"
+        - "Neko, HashLink, or other build system"
     validations:
       required: true
+
+  - type: input
+    id: buildsummary
+    attributes:
+      label: "Did you edit anything in this build? If so, mention or summarize your changes."
+      placeholder: "Yes, I edited ClientPrefs.hx and tried to add a new setting"
+    validations:
+      required: false
