@@ -318,15 +318,6 @@ class NoteGraphic {
 
 	private static var direction:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT', 'UP'];
 
-	private static var widths:Array<Int> = [
-		160,  // 4
-		160,  // 5
-		120, // 6
-		110, // 7
-		110, // 8
-		90  // 9
-	];
-
 	private static var offsets:Array<Int> = [
 		0,  // 4
 		0,  // 5
@@ -347,10 +338,6 @@ class NoteGraphic {
 
 	public static function getScale() {
 		return scales[PlayState.SONG.songKeys - 4];
-	}
-
-	public static function getWidth() {
-		return widths[PlayState.SONG.songKeys - 4];
 	}
 
 	public static function getOffset() {
