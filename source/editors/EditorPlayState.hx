@@ -1,5 +1,6 @@
 package editors;
 
+import PlayState;
 import Section.SwagSection;
 import Song.SwagSong;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -84,7 +85,7 @@ class EditorPlayState extends MusicBeatState
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		add(grpNoteSplashes);
 
-		var splash:NoteSplash = new NoteSplash(100, 100, 0);
+		var splash:NoteSplash = new NoteSplash(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, strumLine.y, 0);
 		grpNoteSplashes.add(splash);
 		splash.alpha = 0.0;
 		
@@ -193,11 +194,11 @@ class EditorPlayState extends MusicBeatState
 				if(songNotes[1] > -1) { //Real notes
 					var daStrumTime:Float = songNotes[0];
 					if(daStrumTime >= startPos) {
-						var daNoteData:Int = Std.int(songNotes[1] % 4);
+						var daNoteData:Int = Std.int(songNotes[1] % PlayState.SONG.songKeys);
 
 						var gottaHitNote:Bool = section.mustHitSection;
 
-						if (songNotes[1] > 3)
+						if (songNotes[1] > PlayState.SONG.songKeys - 1)
 						{
 							gottaHitNote = !section.mustHitSection;
 						}
@@ -409,7 +410,7 @@ class EditorPlayState extends MusicBeatState
 					if(daNote.isSustainNote && !daNote.animation.curAnim.name.endsWith('end')) {
 						time += 0.15;
 					}
-					StrumPlayAnim(true, Std.int(Math.abs(daNote.noteData)) % 4, time);
+					StrumPlayAnim(true, Std.int(Math.abs(daNote.noteData)) % PlayState.SONG.songKeys, time);
 					daNote.hitByOpponent = true;
 
 					if (!daNote.isSustainNote)
@@ -491,26 +492,39 @@ class EditorPlayState extends MusicBeatState
 		vocals.play();
 	}
 
-	function keyShit() {
-		// HOLDING
-		var up = controls.NOTE_UP;
-		var right = controls.NOTE_RIGHT;
-		var down = controls.NOTE_DOWN;
-		var left = controls.NOTE_LEFT;
+	private function keyShit():Void {
 
-		var upP = controls.NOTE_UP_P;
-		var rightP = controls.NOTE_RIGHT_P;
-		var downP = controls.NOTE_DOWN_P;
-		var leftP = controls.NOTE_LEFT_P;
+		var controlArray:Array<Bool>;
+		var controlReleaseArray:Array<Bool>;
+		var controlHoldArray:Array<Bool>;
 
-		var upR = controls.NOTE_UP_R;
-		var rightR = controls.NOTE_RIGHT_R;
-		var downR = controls.NOTE_DOWN_R;
-		var leftR = controls.NOTE_LEFT_R;
-
-		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
-		var controlReleaseArray:Array<Bool> = [leftR, downR, upR, rightR];
-		var controlHoldArray:Array<Bool> = [left, down, up, right];
+		switch(PlayState.SONG.songKeys) {
+			case 4:
+				controlArray = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
+				controlReleaseArray = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R];
+				controlHoldArray = [controls.NOTE_LEFT, controls.NOTE_DOWN, controls.NOTE_UP, controls.NOTE_RIGHT];
+			case 5:
+				controlArray = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_CENTER_5k_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
+				controlReleaseArray = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_CENTER_5k_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R];
+				controlHoldArray = [controls.NOTE_LEFT, controls.NOTE_DOWN, controls.NOTE_CENTER_5k, controls.NOTE_UP, controls.NOTE_RIGHT];
+			case 6:
+				controlArray = [controls.NOTE_1_6k_P, controls.NOTE_2_6k_P, controls.NOTE_3_6k_P, controls.NOTE_4_6k_P, controls.NOTE_5_6k_P, controls.NOTE_6_6k_P];
+				controlReleaseArray = [controls.NOTE_1_6k_R, controls.NOTE_2_6k_R, controls.NOTE_3_6k_R, controls.NOTE_4_6k_R, controls.NOTE_5_6k_R, controls.NOTE_6_6k_R];
+				controlHoldArray = [controls.NOTE_1_6k, controls.NOTE_2_6k, controls.NOTE_3_6k, controls.NOTE_4_6k, controls.NOTE_5_6k, controls.NOTE_6_6k];
+			case 7:
+				controlArray = [controls.NOTE_1_6k_P, controls.NOTE_2_6k_P, controls.NOTE_3_6k_P, controls.NOTE_CENTER_7k_P, controls.NOTE_4_6k_P, controls.NOTE_5_6k_P, controls.NOTE_6_6k_P];
+				controlReleaseArray = [controls.NOTE_1_6k_R, controls.NOTE_2_6k_R, controls.NOTE_3_6k_R, controls.NOTE_CENTER_7k_R, controls.NOTE_4_6k_R, controls.NOTE_5_6k_R, controls.NOTE_6_6k_R];
+				controlHoldArray = [controls.NOTE_1_6k, controls.NOTE_2_6k, controls.NOTE_3_6k, controls.NOTE_CENTER_7k_P, controls.NOTE_4_6k, controls.NOTE_5_6k, controls.NOTE_6_6k];
+			case 8:
+				controlArray = [controls.NOTE_1_8k_P, controls.NOTE_2_8k_P, controls.NOTE_3_8k_P, controls.NOTE_4_8k_P, controls.NOTE_5_8k_P, controls.NOTE_6_8k_P, controls.NOTE_7_8k_P, controls.NOTE_8_8k_P];
+				controlReleaseArray = [controls.NOTE_1_8k_R, controls.NOTE_2_8k_R, controls.NOTE_3_8k_R, controls.NOTE_4_8k_R, controls.NOTE_5_8k_R, controls.NOTE_6_8k_R, controls.NOTE_7_8k_R, controls.NOTE_8_8k_R];
+				controlHoldArray = [controls.NOTE_1_8k, controls.NOTE_2_8k, controls.NOTE_3_8k, controls.NOTE_4_8k, controls.NOTE_5_8k, controls.NOTE_6_8k, controls.NOTE_7_8k, controls.NOTE_8_8k];
+			case 9:
+				controlArray = [controls.NOTE_1_8k_P, controls.NOTE_2_8k_P, controls.NOTE_3_8k_P, controls.NOTE_4_8k_P, controls.NOTE_CENTER_9k_P, controls.NOTE_5_8k_P, controls.NOTE_6_8k_P, controls.NOTE_7_8k_P, controls.NOTE_8_8k_P];
+				controlReleaseArray = [controls.NOTE_1_8k_R, controls.NOTE_2_8k_R, controls.NOTE_3_8k_R, controls.NOTE_4_8k_R, controls.NOTE_CENTER_9k_R, controls.NOTE_5_8k_R, controls.NOTE_6_8k_R, controls.NOTE_7_8k_R, controls.NOTE_8_8k_R];
+				controlHoldArray = [controls.NOTE_1_8k, controls.NOTE_2_8k, controls.NOTE_3_8k, controls.NOTE_4_8k, controls.NOTE_CENTER_9k, controls.NOTE_5_8k, controls.NOTE_6_8k, controls.NOTE_7_8k, controls.NOTE_8_8k];
+			default: return;
+		}
 
 		// FlxG.watch.addQuick('asdfa', upP);
 		if (generatedMusic)
@@ -819,7 +833,7 @@ class EditorPlayState extends MusicBeatState
 
 	private function generateStaticArrows(player:Int):Void
 	{
-		for (i in 0...4)
+		for (i in 0...PlayState.SONG.songKeys)
 		{
 			// FlxG.log.add(i);
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, strumLine.y, i, player);
@@ -871,9 +885,9 @@ class EditorPlayState extends MusicBeatState
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		
-		var hue:Float = ClientPrefs.arrowHSV[data % 4][0] / 360;
-		var sat:Float = ClientPrefs.arrowHSV[data % 4][1] / 100;
-		var brt:Float = ClientPrefs.arrowHSV[data % 4][2] / 100;
+		var hue:Float = ClientPrefs.arrowHSV[data % PlayState.SONG.songKeys][0] / 360;
+		var sat:Float = ClientPrefs.arrowHSV[data % PlayState.SONG.songKeys][1] / 100;
+		var brt:Float = ClientPrefs.arrowHSV[data % PlayState.SONG.songKeys][2] / 100;
 		if(note != null) {
 			skin = note.noteSplashTexture;
 			hue = note.noteSplashHue;

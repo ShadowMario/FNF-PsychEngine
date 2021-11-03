@@ -25,6 +25,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import Note;
 
 using StringTools;
 
@@ -152,21 +153,13 @@ class NotesSubstate extends MusicBeatSubstate
 			for (j in 0...3) {
 				var optionText:Alphabet = new Alphabet(0, yPos, Std.string(ClientPrefs.arrowHSV[i][j]));
 				optionText.x = posX + (225 * j) + 100 - ((optionText.lettersArray.length * 90) / 2);
+				optionText.targetY = i;
 				grpNumbers.add(optionText);
 			}
 
 			var note:FlxSprite = new FlxSprite(posX - 70, yPos);
 			note.frames = Paths.getSparrowAtlas('NOTE_assets');
-			switch(i) {
-				case 0:
-					note.animation.addByPrefix('idle', 'purple0');
-				case 1:
-					note.animation.addByPrefix('idle', 'blue0');
-				case 2:
-					note.animation.addByPrefix('idle', 'green0');
-				case 3:
-					note.animation.addByPrefix('idle', 'red0');
-			}
+			note.animation.addByPrefix('idle', NoteGraphic.fromIndexWithoutConvert(i) + '0');
 			note.animation.play('idle');
 			note.antialiasing = ClientPrefs.globalAntialiasing;
 			grpNotes.add(note);
@@ -236,7 +229,7 @@ class NotesSubstate extends MusicBeatSubstate
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
 			if(controls.RESET) {
-				for (i in 0...3) {
+				for (i in 0...8) {
 					resetValue(curSelected, i);
 				}
 				FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -317,16 +310,24 @@ class NotesSubstate extends MusicBeatSubstate
 		curValue = ClientPrefs.arrowHSV[curSelected][typeSelected];
 		updateValue();
 
+		var bullShit:Int = 0;
+
 		for (i in 0...grpNumbers.length) {
 			var item = grpNumbers.members[i];
+			if(i % 3 == 0 && i != 0) bullShit++;
+			item.y = (165 * (bullShit - (curSelected))) + 35;
 			item.alpha = 0.6;
 			if ((curSelected * 3) + typeSelected == i) {
 				item.alpha = 1;
 			}
 		}
+
+		bullShit = 0;
 		for (i in 0...grpNotes.length) {
 			var item = grpNotes.members[i];
 			item.alpha = 0.6;
+			item.setPosition(posX - 70, (165 * (bullShit - curSelected)) + 35);
+			bullShit++;
 			item.scale.set(1, 1);
 			if (curSelected == i) {
 				item.alpha = 1;

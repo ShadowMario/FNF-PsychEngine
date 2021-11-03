@@ -36,11 +36,7 @@ class Note extends FlxSprite
 	public var inEditor:Bool = false;
 	private var earlyHitMult:Float = 0.5;
 
-	public static var swagWidth:Float = 160 * 0.7;
-	public static var PURP_NOTE:Int = 0;
-	public static var GREEN_NOTE:Int = 2;
-	public static var BLUE_NOTE:Int = 1;
-	public static var RED_NOTE:Int = 3;
+	public static var swagWidth(get, null):Float;
 
 	// Lua shit
 	public var noteSplashDisabled:Bool = false;
@@ -75,11 +71,15 @@ class Note extends FlxSprite
 		return value;
 	}
 
+	private static function get_swagWidth() {
+		return 160 * NoteGraphic.getScale();
+	}
+
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
-		colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-		colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-		colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
+		colorSwap.hue = ClientPrefs.arrowHSV[NoteGraphic.convertForKeys(noteData) % PlayState.SONG.songKeys][0] / 360;
+		colorSwap.saturation = ClientPrefs.arrowHSV[NoteGraphic.convertForKeys(noteData) % PlayState.SONG.songKeys][1] / 100;
+		colorSwap.brightness = ClientPrefs.arrowHSV[NoteGraphic.convertForKeys(noteData) % PlayState.SONG.songKeys][2] / 100;
 
 		if(noteData > -1 && noteType != value) {
 			switch(value) {
@@ -118,7 +118,7 @@ class Note extends FlxSprite
 		isSustainNote = sustainNote;
 		this.inEditor = inEditor;
 
-		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
+		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50 - NoteGraphic.getOffset();
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime;
@@ -126,25 +126,15 @@ class Note extends FlxSprite
 
 		this.noteData = noteData;
 
+		var animToPlay:String = NoteGraphic.fromIndex(noteData % PlayState.SONG.songKeys);
+		trace(strumTime + "Note: " + animToPlay + " Data: " + noteData);
 		if(noteData > -1) {
 			texture = '';
 			colorSwap = new ColorSwap();
 			shader = colorSwap.shader;
 
-			x += swagWidth * (noteData % 4);
+			x += swagWidth * (noteData % PlayState.SONG.songKeys);
 			if(!isSustainNote) { //Doing this 'if' check to fix the warnings on Senpai songs
-				var animToPlay:String = '';
-				switch (noteData % 4)
-				{
-					case 0:
-						animToPlay = 'purple';
-					case 1:
-						animToPlay = 'blue';
-					case 2:
-						animToPlay = 'green';
-					case 3:
-						animToPlay = 'red';
-				}
 				animation.play(animToPlay + 'Scroll');
 			}
 		}
@@ -160,17 +150,7 @@ class Note extends FlxSprite
 			offsetX += width / 2;
 			copyAngle = false;
 
-			switch (noteData)
-			{
-				case 0:
-					animation.play('purpleholdend');
-				case 1:
-					animation.play('blueholdend');
-				case 2:
-					animation.play('greenholdend');
-				case 3:
-					animation.play('redholdend');
-			}
+			animation.play(animToPlay + 'holdend');
 
 			updateHitbox();
 
@@ -181,18 +161,7 @@ class Note extends FlxSprite
 
 			if (prevNote.isSustainNote)
 			{
-				switch (prevNote.noteData)
-				{
-					case 0:
-						prevNote.animation.play('purplehold');
-					case 1:
-						prevNote.animation.play('bluehold');
-					case 2:
-						prevNote.animation.play('greenhold');
-					case 3:
-						prevNote.animation.play('redhold');
-				}
-
+				prevNote.animation.play(NoteGraphic.fromIndex(prevNote.noteData % PlayState.SONG.songKeys) + 'hold');
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.05 * PlayState.SONG.speed;
 				if(PlayState.isPixelStage) {
 					prevNote.scale.y *= 1.19;
@@ -233,24 +202,24 @@ class Note extends FlxSprite
 		arraySkin[arraySkin.length-1] = prefix + arraySkin[arraySkin.length-1] + suffix;
 
 		var lastScaleY:Float = scale.y;
-		var blahblah:String = arraySkin.join('/');
+		var notePath:String = arraySkin.join('/');
 		if(PlayState.isPixelStage) {
 			if(isSustainNote) {
-				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'));
-				width = width / 4;
+				loadGraphic(Paths.image('pixelUI/' + notePath + 'ENDS'));
+				width = width / 9;
 				height = height / 2;
-				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
+				loadGraphic(Paths.image('pixelUI/' + notePath + 'ENDS'), true, Math.floor(width), Math.floor(height));
 			} else {
-				loadGraphic(Paths.image('pixelUI/' + blahblah));
-				width = width / 4;
+				loadGraphic(Paths.image('pixelUI/' + notePath));
+				width = width / 9;
 				height = height / 5;
-				loadGraphic(Paths.image('pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
+				loadGraphic(Paths.image('pixelUI/' + notePath), true, Math.floor(width), Math.floor(height));
 			}
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 			loadPixelNoteAnims();
 			antialiasing = false;
 		} else {
-			frames = Paths.getSparrowAtlas(blahblah);
+			frames = Paths.getSparrowAtlas(notePath);
 			loadNoteAnims();
 			antialiasing = ClientPrefs.globalAntialiasing;
 		}
@@ -269,44 +238,26 @@ class Note extends FlxSprite
 	}
 
 	function loadNoteAnims() {
-		animation.addByPrefix('greenScroll', 'green0');
-		animation.addByPrefix('redScroll', 'red0');
-		animation.addByPrefix('blueScroll', 'blue0');
-		animation.addByPrefix('purpleScroll', 'purple0');
-
-		if (isSustainNote)
-		{
-			animation.addByPrefix('purpleholdend', 'pruple end hold');
-			animation.addByPrefix('greenholdend', 'green hold end');
-			animation.addByPrefix('redholdend', 'red hold end');
-			animation.addByPrefix('blueholdend', 'blue hold end');
-
-			animation.addByPrefix('purplehold', 'purple hold piece');
-			animation.addByPrefix('greenhold', 'green hold piece');
-			animation.addByPrefix('redhold', 'red hold piece');
-			animation.addByPrefix('bluehold', 'blue hold piece');
+		var color:String = "";
+		for (e in Type.allEnums(Color)) {
+			color = NoteGraphic.fromColor(e);
+			animation.addByPrefix(color + 'Scroll', color + '0');
+			animation.addByPrefix(color + 'hold', color + ' hold piece');
+			animation.addByPrefix(color + 'holdend', color + ' hold end');
 		}
-
-		setGraphicSize(Std.int(width * 0.7));
+		setGraphicSize(Std.int(width * NoteGraphic.getScale()));
 		updateHitbox();
 	}
 
 	function loadPixelNoteAnims() {
-		if(isSustainNote) {
-			animation.add('purpleholdend', [PURP_NOTE + 4]);
-			animation.add('greenholdend', [GREEN_NOTE + 4]);
-			animation.add('redholdend', [RED_NOTE + 4]);
-			animation.add('blueholdend', [BLUE_NOTE + 4]);
-
-			animation.add('purplehold', [PURP_NOTE]);
-			animation.add('greenhold', [GREEN_NOTE]);
-			animation.add('redhold', [RED_NOTE]);
-			animation.add('bluehold', [BLUE_NOTE]);
-		} else {
-			animation.add('greenScroll', [GREEN_NOTE + 4]);
-			animation.add('redScroll', [RED_NOTE + 4]);
-			animation.add('blueScroll', [BLUE_NOTE + 4]);
-			animation.add('purpleScroll', [PURP_NOTE + 4]);
+		var color:String = "";
+		var i:Int = 0;
+		for (e in Type.allEnums(Color)) {
+			i = NoteGraphic.ColorToInt(e);
+			color = NoteGraphic.fromColor(e);
+			animation.add(color + 'Scroll', [i + 9]);
+			animation.add(color + 'holdend', [i + 9]);
+			animation.add(color + 'hold', [i]);
 		}
 	}
 
@@ -338,6 +289,130 @@ class Note extends FlxSprite
 		{
 			if (alpha > 0.3)
 				alpha = 0.3;
+		}
+	}
+}
+
+enum Color {
+	purple;
+	blue;
+	green;
+	red;
+	grey;
+	yellow;
+	sapphire;
+	crimson;
+	violet;
+}
+
+class NoteGraphic {
+
+	private static var keySet:Array<Dynamic> = [
+		[0, 1, 2, 3],				// 4
+		[0, 1, 4, 2, 3],			// 5
+		[0, 1, 3, 5, 7, 8],			// 6
+		[0, 1, 3, 4, 5, 7, 8],		// 7
+		[0, 1, 2, 3, 5, 6, 7, 8],	// 8
+		[0, 1, 2, 3, 4, 5, 6, 7, 8]	// 9
+	];
+
+	private static var direction:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT', 'UP'];
+
+	private static var widths:Array<Int> = [
+		160,  // 4
+		160,  // 5
+		120, // 6
+		110, // 7
+		110, // 8
+		90  // 9
+	];
+
+	private static var offsets:Array<Int> = [
+		0,  // 4
+		0,  // 5
+		35, // 6
+		70, // 7
+		80, // 8
+		90  // 9
+	];
+
+	private static var scales:Array<Float> = [
+		0.70, // 4
+		0.65, // 5
+		0.60, // 6
+		0.55, // 7
+		0.45, // 8
+		0.43  // 9
+	];
+
+	public static function getScale() {
+		return scales[PlayState.SONG.songKeys - 4];
+	}
+
+	public static function getWidth() {
+		return widths[PlayState.SONG.songKeys - 4];
+	}
+
+	public static function getOffset() {
+		return offsets[PlayState.SONG.songKeys - 4];
+	}
+
+	public static function getDirection(i: Int) {
+		return direction[convertForKeys(i) % 5];
+	}
+
+	public static function convertForKeys(i: Int) {
+		return keySet[PlayState.SONG.songKeys - 4][i];
+	}
+
+	public static function fromIndex(i: Int) {
+		return fromColor(IntToColor(convertForKeys(i)));
+	}
+
+	public static function fromIndexWithoutConvert(i: Int) {
+		return fromColor(IntToColor(i));
+	}
+
+	public static function fromColor(c: Color) {
+		return switch(c) {
+			case Color.purple: 'purple';
+			case Color.blue: 'blue';
+			case Color.green: 'green';
+			case Color.red: 'red';
+			case Color.grey: 'grey';
+			case Color.yellow: 'yellow';
+			case Color.sapphire: 'sapphire';
+			case Color.crimson: 'crimson';
+			case Color.violet: 'violet';
+		}
+	}
+
+	public static function ColorToInt(c: Color) {
+		return switch(c) {
+			case purple: 0;
+			case blue: 1;
+			case green: 2;
+			case red: 3;
+			case grey: 4;
+			case yellow: 5;
+			case sapphire: 6;
+			case crimson: 7;
+			case violet: 8;
+		}
+	}
+
+	public static function IntToColor(i: Int) {
+		return switch(i) {
+			case 0: purple;
+			case 1: blue;
+			case 2: green;
+			case 3: red;
+			case 4: grey;
+			case 5: yellow;
+			case 6: sapphire;
+			case 7: crimson;
+			case 8: violet;
+			default: grey;
 		}
 	}
 }

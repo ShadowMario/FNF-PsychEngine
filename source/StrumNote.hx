@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import Note;
 
 using StringTools;
 
@@ -28,67 +29,38 @@ class StrumNote extends FlxSprite
 		if(PlayState.isPixelStage)
 		{
 			loadGraphic(Paths.image('pixelUI/' + skin));
-			width = width / 4;
+			width = width / 9;
 			height = height / 5;
 			loadGraphic(Paths.image('pixelUI/' + skin), true, Math.floor(width), Math.floor(height));
-			animation.add('green', [6]);
-			animation.add('red', [7]);
-			animation.add('blue', [5]);
-			animation.add('purple', [4]);
+			var color:String = "";
+			for (e in Type.allEnums(Color)) {
+				var i:Int = NoteGraphic.ColorToInt(e);
+				color = NoteGraphic.fromColor(e);
+				animation.add(color, [9 + i]);
+			}
 
 			antialiasing = false;
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 
-			switch (Math.abs(leData))
-			{
-				case 0:
-					animation.add('static', [0]);
-					animation.add('pressed', [4, 8], 12, false);
-					animation.add('confirm', [12, 16], 24, false);
-				case 1:
-					animation.add('static', [1]);
-					animation.add('pressed', [5, 9], 12, false);
-					animation.add('confirm', [13, 17], 24, false);
-				case 2:
-					animation.add('static', [2]);
-					animation.add('pressed', [6, 10], 12, false);
-					animation.add('confirm', [14, 18], 12, false);
-				case 3:
-					animation.add('static', [3]);
-					animation.add('pressed', [7, 11], 12, false);
-					animation.add('confirm', [15, 19], 24, false);
-			}
+			var laData = NoteGraphic.convertForKeys(leData);
+
+			animation.add('static', [laData]);
+			animation.add('pressed', [9 + laData, 18 + laData], 12, false);
+			animation.add('confirm', [27 + laData, 36 + laData], 24, false);
 		}
 		else
 		{
 			frames = Paths.getSparrowAtlas(skin);
-			animation.addByPrefix('green', 'arrowUP');
-			animation.addByPrefix('blue', 'arrowDOWN');
-			animation.addByPrefix('purple', 'arrowLEFT');
-			animation.addByPrefix('red', 'arrowRIGHT');
+			var direction = NoteGraphic.getDirection(leData);
+			animation.addByPrefix(NoteGraphic.fromIndex(leData), 'arrow' + direction);
+			if(NoteGraphic.convertForKeys(leData) == 4) animation.addByPrefix('static', 'arrowSPACE');
+			else animation.addByPrefix('static', 'arrow' + direction);
 
 			antialiasing = ClientPrefs.globalAntialiasing;
-			setGraphicSize(Std.int(width * 0.7));
+			setGraphicSize(Std.int(width * NoteGraphic.getScale()));
 
-			switch (Math.abs(leData))
-			{
-				case 0:
-					animation.addByPrefix('static', 'arrowLEFT');
-					animation.addByPrefix('pressed', 'left press', 24, false);
-					animation.addByPrefix('confirm', 'left confirm', 24, false);
-				case 1:
-					animation.addByPrefix('static', 'arrowDOWN');
-					animation.addByPrefix('pressed', 'down press', 24, false);
-					animation.addByPrefix('confirm', 'down confirm', 24, false);
-				case 2:
-					animation.addByPrefix('static', 'arrowUP');
-					animation.addByPrefix('pressed', 'up press', 24, false);
-					animation.addByPrefix('confirm', 'up confirm', 24, false);
-				case 3:
-					animation.addByPrefix('static', 'arrowRIGHT');
-					animation.addByPrefix('pressed', 'right press', 24, false);
-					animation.addByPrefix('confirm', 'right confirm', 24, false);
-			}
+			animation.addByPrefix('pressed', NoteGraphic.fromIndex(leData) + ' press', 24, false);
+			animation.addByPrefix('confirm', NoteGraphic.fromIndex(leData) + ' confirm', 24, false);
 		}
 
 		updateHitbox();
@@ -100,6 +72,7 @@ class StrumNote extends FlxSprite
 		x += Note.swagWidth * noteData;
 		x += 50;
 		x += ((FlxG.width / 2) * player);
+		x -= NoteGraphic.getOffset();
 		ID = noteData;
 	}
 
@@ -127,9 +100,9 @@ class StrumNote extends FlxSprite
 			colorSwap.saturation = 0;
 			colorSwap.brightness = 0;
 		} else {
-			colorSwap.hue = ClientPrefs.arrowHSV[noteData % 4][0] / 360;
-			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % 4][1] / 100;
-			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
+			colorSwap.hue = ClientPrefs.arrowHSV[noteData % PlayState.SONG.songKeys][0] / 360;
+			colorSwap.saturation = ClientPrefs.arrowHSV[noteData % PlayState.SONG.songKeys][1] / 100;
+			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % PlayState.SONG.songKeys][2] / 100;
 
 			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
 				updateConfirmOffset();

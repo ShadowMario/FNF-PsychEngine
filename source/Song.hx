@@ -105,6 +105,7 @@ class Song
 	{
 		var swagShit:SwagSong = cast Json.parse(rawJson).song;
 		swagShit.validScore = true;
+		if(swagShit.songKeys == null) swagShit.songKeys = 4;
 		return swagShit;
 	}
 }

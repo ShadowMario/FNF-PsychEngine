@@ -1045,6 +1045,7 @@ class ChartingState extends MusicBeatState
 			{
 				_song.songKeys = Std.int(nums.value);
 				reloadGridLayer();
+				updateWaveform();
 			}
 			else if (wname == 'song_bpm')
 			{
@@ -1519,7 +1520,7 @@ class ChartingState extends MusicBeatState
 	function updateWaveform() {
 		#if desktop
 		if(waveformPrinted) {
-			waveformSprite.makeGraphic(Std.int(GRID_SIZE * 8), Std.int(gridBG.height), 0x00FFFFFF);
+			waveformSprite.makeGraphic(Std.int(GRID_SIZE * (_song.songKeys * 2)), Std.int(gridBG.height), 0x00FFFFFF);
 			waveformSprite.pixels.fillRect(new Rectangle(0, 0, gridBG.width, gridBG.height), 0x00FFFFFF);
 		}
 		waveformPrinted = false;
@@ -1573,9 +1574,9 @@ class ChartingState extends MusicBeatState
 					drawIndex = 0;
 				}*/
 
-				var pixelsMin:Float = Math.abs(min * (GRID_SIZE * 8));
-				var pixelsMax:Float = max * (GRID_SIZE * 8);
-				waveformSprite.pixels.fillRect(new Rectangle(Std.int((GRID_SIZE * 4) - pixelsMin), drawIndex, pixelsMin + pixelsMax, 1), FlxColor.BLUE);
+				var pixelsMin:Float = Math.abs(min * (GRID_SIZE * (_song.songKeys * 2)));
+				var pixelsMax:Float = max * (GRID_SIZE * (_song.songKeys * 2));
+				waveformSprite.pixels.fillRect(new Rectangle(Std.int((GRID_SIZE * _song.songKeys) - pixelsMin), drawIndex, pixelsMin + pixelsMax, 1), FlxColor.BLUE);
 				drawIndex++;
 
 				min = 0;
