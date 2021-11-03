@@ -973,7 +973,6 @@ class Controls extends FlxActionSet
 			case RESET:
 				func(_reset, JUST_PRESSED);
 		}
-		trace("registering " + control);
 	}
 
 	public function replaceBinding(control:Control, device:Device, ?toAdd:Int, ?toRemove:Int)
