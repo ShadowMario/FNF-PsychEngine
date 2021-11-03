@@ -65,6 +65,38 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.updateHitbox();
 		add(levelDifficulty);
 
+		var controlArray:Array<Control>;
+		
+		switch(PlayState.SONG.songKeys) {
+			case 4:
+				controlArray = [Control.NOTE_LEFT, Control.NOTE_DOWN, Control.NOTE_UP, Control.NOTE_RIGHT];
+			case 5:
+				controlArray = [Control.NOTE_LEFT, Control.NOTE_DOWN, Control.NOTE_CENTER_5k, Control.NOTE_UP, Control.NOTE_RIGHT];
+			case 6:
+				controlArray = [Control.NOTE_1_6k, Control.NOTE_2_6k, Control.NOTE_3_6k, Control.NOTE_4_6k, Control.NOTE_5_6k, Control.NOTE_6_6k];
+			case 7:
+				controlArray = [Control.NOTE_1_6k, Control.NOTE_2_6k, Control.NOTE_3_6k, Control.NOTE_CENTER_7k, Control.NOTE_4_6k, Control.NOTE_5_6k, Control.NOTE_6_6k];
+			case 8:
+				controlArray = [Control.NOTE_1_8k, Control.NOTE_2_8k, Control.NOTE_3_8k, Control.NOTE_4_8k, Control.NOTE_5_8k, Control.NOTE_6_8k, Control.NOTE_7_8k, Control.NOTE_8_8k];
+			case 9:
+				controlArray = [Control.NOTE_1_8k, Control.NOTE_2_8k, Control.NOTE_3_8k, Control.NOTE_4_8k, Control.NOTE_CENTER_9k, Control.NOTE_5_8k, Control.NOTE_6_8k, Control.NOTE_7_8k, Control.NOTE_8_8k];
+			default: return;
+		}
+
+		var controls:FlxText = new FlxText(20, 15, 0, "Controls: ", 32);
+		for (i in 0...PlayState.SONG.songKeys)
+		{
+			controls.text += InputFormatter.getKeyName(ClientPrefs.keyBinds[controlArray[i]][0]);
+			if (i != PlayState.SONG.songKeys - 1) controls.text += '|';
+		}
+
+		controls.scrollFactor.set();
+		controls.setFormat(Paths.font('vcr.ttf'), 32);
+		controls.updateHitbox();
+		controls.alpha = 0;
+		add(controls);
+
+
 		var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, "", 32);
 		blueballedTxt.text = "Blueballed: " + PlayState.deathCounter;
 		blueballedTxt.scrollFactor.set();
@@ -100,6 +132,8 @@ class PauseSubState extends MusicBeatSubstate
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 		FlxTween.tween(blueballedTxt, {alpha: 1, y: blueballedTxt.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
+
+		FlxTween.tween(controls, {alpha: 1}, 0.4, {ease: FlxEase.quartInOut});
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
