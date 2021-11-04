@@ -1026,6 +1026,11 @@ class PlayState extends MusicBeatState
 		// Updating Discord Rich Presence.
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
+		
+		
+		callOnLuas('onCreatePost', []);
+		
+		
 		super.create();
 	}
 
@@ -2671,6 +2676,7 @@ class PlayState extends MusicBeatState
 						targetsArray[i].shake(intensity, duration);
 					}
 				}
+
 
 			case 'Change Character':
 				var charType:Int = 0;
