@@ -3447,6 +3447,9 @@ class PlayState extends MusicBeatState
 			if(!note.noAnimation) {
 				var daAlt = '';
 				if(note.noteType == 'Alt Animation') daAlt = '-alt';
+						
+				if (Paths.formatToSongPath(SONG.song) != 'tutorial')
+					camZooming = true;
 	
 				var animToPlay:String = '';
 				switch (Std.int(Math.abs(note.noteData)))
