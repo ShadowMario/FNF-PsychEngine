@@ -119,7 +119,7 @@ class FunkinLua {
 		set('mustHitSection', false);
 		set('botPlay', PlayState.cpuControlled);
 
-		for (i in 0...4) {
+		for (i in 0...9) {
 			set('defaultPlayerStrumX' + i, 0);
 			set('defaultPlayerStrumY' + i, 0);
 			set('defaultOpponentStrumX' + i, 0);

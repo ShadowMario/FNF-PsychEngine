@@ -138,6 +138,7 @@ class NotesSubstate extends MusicBeatSubstate
 	var nextAccept:Int = 5;
 
 	var posX = 250;
+	
 	public function new() {
 		super();
 
@@ -149,23 +150,14 @@ class NotesSubstate extends MusicBeatSubstate
 		for (i in 0...ClientPrefs.arrowHSV.length) {
 			var yPos:Float = (165 * i) + 35;
 			for (j in 0...3) {
-				var optionText:Alphabet = new Alphabet(0, yPos, Std.string(ClientPrefs.arrowHSV[i][j]));
+				var optionText:Alphabet = new Alphabet(0, 250, Std.string(ClientPrefs.arrowHSV[i][j]));
 				optionText.x = posX + (225 * j) + 100 - ((optionText.lettersArray.length * 90) / 2);
 				grpNumbers.add(optionText);
 			}
 
-			var note:FlxSprite = new FlxSprite(posX - 70, yPos);
+			var note:FlxSprite = new FlxSprite(posX - 70, 250);
 			note.frames = Paths.getSparrowAtlas('NOTE_assets');
-			switch(i) {
-				case 0:
-					note.animation.addByPrefix('idle', 'purple0');
-				case 1:
-					note.animation.addByPrefix('idle', 'blue0');
-				case 2:
-					note.animation.addByPrefix('idle', 'green0');
-				case 3:
-					note.animation.addByPrefix('idle', 'red0');
-			}
+			note.animation.addByPrefix('idle', Note.frameN[2][i] + "0");
 			note.animation.play('idle');
 			note.antialiasing = ClientPrefs.globalAntialiasing;
 			grpNotes.add(note);
@@ -267,6 +259,8 @@ class NotesSubstate extends MusicBeatSubstate
 		for (i in 0...grpNotes.length) {
 			var item = grpNotes.members[i];
 			var intendedPos:Float = posX - 70;
+			var posY = (165 * i) + 35;
+			var intendedYPos:Float = posY;
 			if (curSelected == i) {
 				item.x = FlxMath.lerp(item.x, intendedPos + 100, lerpVal);
 			} else {
@@ -318,14 +312,14 @@ class NotesSubstate extends MusicBeatSubstate
 
 		for (i in 0...grpNumbers.length) {
 			var item = grpNumbers.members[i];
-			item.alpha = 0.6;
+			item.alpha = 0.2;
 			if ((curSelected * 3) + typeSelected == i) {
 				item.alpha = 1;
 			}
 		}
 		for (i in 0...grpNotes.length) {
 			var item = grpNotes.members[i];
-			item.alpha = 0.6;
+			item.alpha = 0.2;
 			item.scale.set(1, 1);
 			if (curSelected == i) {
 				item.alpha = 1;
@@ -348,7 +342,7 @@ class NotesSubstate extends MusicBeatSubstate
 
 		for (i in 0...grpNumbers.length) {
 			var item = grpNumbers.members[i];
-			item.alpha = 0.6;
+			item.alpha = 0.2;
 			if ((curSelected * 3) + typeSelected == i) {
 				item.alpha = 1;
 			}
@@ -405,6 +399,24 @@ class ControlsSubstate extends MusicBeatSubstate {
 		['Down', 'note_down'],
 		['Up', 'note_up'],
 		['Right', 'note_right'],
+		["6 or 7k"],
+		['Left', '6k0'],
+		['Up', '6k1'],
+		['Right', '6k2'],
+		['Middle', '6k3'],
+		['Left 2', '6k4'],
+		['Down', '6k5'],
+		['Right 2', '6k6'],
+		["9k"],
+		['Left', '9k0'],
+		['Down', '9k1'],
+		['Up', '9k2'],
+		['Right', '9k3'],
+		['Middle', '9k4'],
+		['Left 2', '9k5'],
+		['Down 2', '9k6'],
+		['Up 2', '9k7'],
+		['Right 2', '9k8'],	
 		[''],
 		['UI'],
 		['Left', 'ui_left'],
@@ -729,7 +741,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 		'Hide HUD',
 		'Hide Song Length',
 		'Flashing Lights',
-		'Camera Zooms'
+		'Camera Zooms',
+		'EK Input'
 		#if !mobile
 		,'FPS Counter'
 		#end
@@ -917,6 +930,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 					
 					case 'Hide Song Length':
 						ClientPrefs.hideTime = !ClientPrefs.hideTime;
+					case "EK Input": 
+						ClientPrefs.ekInput = !ClientPrefs.ekInput;
 				}
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				reloadValues();
@@ -1010,6 +1025,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If checked, hides most HUD elements.";
 			case 'Hide Song Length':
 				daText = "If checked, the bar showing how much time is left\nwill be hidden.";
+			case 'EK Input': 
+				daText = "If checked, a different input system will be used.\nthis should disable the anti-mash.";
 		}
 		descText.text = daText;
 
@@ -1082,6 +1099,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.imagesPersist;
 					case 'Hide Song Length':
 						daValue = ClientPrefs.hideTime;
+					case 'EK Input': 
+						daValue = ClientPrefs.ekInput;
 				}
 				checkbox.daValue = daValue;
 			}

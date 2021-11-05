@@ -9,9 +9,26 @@
 	<SubTexture name="green hold piece0000" x="60" y="5" width="50" height="44"/>
 	<SubTexture name="green0000" x="277" y="5" width="157" height="154"/>
 	<SubTexture name="purple0000" x="5" y="164" width="154" height="157"/>
-	<SubTexture name="pruple end hold0000" x="5" y="5" width="50" height="64"/>
+	<SubTexture name="purple end hold0000" x="5" y="5" width="50" height="64"/>
 	<SubTexture name="purple hold piece0000" x="60" y="5" width="50" height="44"/>
 	<SubTexture name="red hold end0000" x="5" y="5" width="50" height="64"/>
 	<SubTexture name="red hold piece0000" x="60" y="5" width="50" height="44"/>
 	<SubTexture name="red0000" x="164" y="164" width="154" height="157"/>
+
+	<SubTexture name="violet hold end0000" x="5" y="5" width="50" height="64"/>
+	<SubTexture name="violet hold piece0000" x="60" y="5" width="50" height="44"/>
+	<SubTexture name="violet0000" x="115" y="5" width="157" height="154"/>
+	<SubTexture name="darkred hold end0000" x="5" y="5" width="50" height="64"/>
+	<SubTexture name="darkred hold piece0000" x="60" y="5" width="50" height="44"/>
+	<SubTexture name="darkred0000" x="277" y="5" width="157" height="154"/>
+	<SubTexture name="yellow0000" x="5" y="164" width="154" height="157"/>
+	<SubTexture name="yellow end hold0000" x="5" y="5" width="50" height="64"/>
+	<SubTexture name="yellow hold piece0000" x="60" y="5" width="50" height="44"/>
+	<SubTexture name="dark hold end0000" x="5" y="5" width="50" height="64"/>
+	<SubTexture name="dark hold piece0000" x="60" y="5" width="50" height="44"/>
+	<SubTexture name="dark0000" x="164" y="164" width="154" height="157"/>
+
+	<SubTexture name="white hold end0000" x="5" y="5" width="50" height="64"/>
+	<SubTexture name="white hold piece0000" x="60" y="5" width="50" height="44"/>
+	<SubTexture name="white0000" x="277" y="5" width="157" height="154"/>
 </TextureAtlas>

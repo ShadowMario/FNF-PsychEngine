@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="splash.png"><SubTexture name="splash black0000" x="0" y="0" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash black0001" x="304" y="0" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash black0002" x="608" y="0" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash black0003" x="912" y="0" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash darkred0000" x="0" y="304" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash darkred0001" x="304" y="304" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash darkred0002" x="608" y="304" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash darkred0003" x="912" y="304" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash blue0000" x="0" y="608" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash blue0001" x="304" y="608" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash blue0002" x="608" y="608" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash blue0003" x="912" y="608" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash darkblue0000" x="0" y="912" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash darkblue0001" x="304" y="912" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash darkblue0002" x="608" y="912" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash darkblue0003" x="912" y="912" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash green0000" x="0" y="1216" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash green0001" x="304" y="1216" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash green0002" x="608" y="1216" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash green0003" x="912" y="1216" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash orange0000" x="0" y="1520" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash orange0001" x="304" y="1520" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash orange0002" x="608" y="1520" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash orange0003" x="912" y="1520" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash purple0000" x="0" y="1824" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash purple0001" x="304" y="1824" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash purple0002" x="608" y="1824" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash purple0003" x="912" y="1824" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash red0000" x="0" y="2128" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash red0001" x="304" y="2128" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash red0002" x="608" y="2128" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash red0003" x="912" y="2128" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash violet0000" x="0" y="2432" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash violet0001" x="304" y="2432" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash violet0002" x="608" y="2432" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash violet0003" x="912" y="2432" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash white0000" x="0" y="2736" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash white0001" x="304" y="2736" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash white0002" x="608" y="2736" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash white0003" x="912" y="2736" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash yellow0000" x="0" y="3040" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash yellow0001" x="304" y="3040" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash yellow0002" x="608" y="3040" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+<SubTexture name="splash yellow0003" x="912" y="3040" width="304" height="304" frameX="0" frameY="0" frameWidth="304" frameHeight="304" />
+</TextureAtlas>

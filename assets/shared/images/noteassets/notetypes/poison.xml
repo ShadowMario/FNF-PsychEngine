@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="poison.png"><SubTexture name="poison hold end0000" x="2" y="2" width="50" height="64"/>
+<SubTexture name="poison hold piece0000" x="56" y="2" width="50" height="44"/>
+<SubTexture name="poison blue0000" x="0" y="68" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="poison purple0000" x="164" y="68" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="poison red0000" x="0" y="232" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="poison white0000" x="164" y="232" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="poison green0000" x="0" y="396" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="poison violet0000" x="0" y="68" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="poison yellow0000" x="164" y="68" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="poison dark0000" x="0" y="232" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="poison darkred0000" x="0" y="396" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+</TextureAtlas>

@@ -76,4 +76,107 @@ class CoolUtil
 		FlxG.openURL(site);
 		#end
 	}
+
+	public static function bindCheck(mania:Int)
+	{
+		var keysMap = ClientPrefs.keyBinds;
+
+		var binds:Array<Int> = [keysMap.get('note_left')[0],keysMap.get('note_down')[0], keysMap.get('note_up')[0], keysMap.get('note_right')[0]];
+		switch(mania)
+		{
+			case 0: 
+				binds = [keysMap.get('note_left')[0],keysMap.get('note_down')[0], keysMap.get('note_up')[0], keysMap.get('note_right')[0]];
+			case 1: 
+				binds = [keysMap.get('6k0')[0], keysMap.get('6k1')[0], keysMap.get('6k2')[0], keysMap.get('6k4')[0], keysMap.get('6k5')[0], keysMap.get('6k6')[0]];
+			case 2: 
+				if (PlayState.maniaToChange	!= 2)
+				{
+					switch (PlayState.maniaToChange)
+					{
+						case 0: 
+							binds = [keysMap.get('note_left')[0],keysMap.get('note_down')[0], keysMap.get('note_up')[0], keysMap.get('note_right')[0], -1, -1, -1, -1, -1];
+						case 1: 
+							binds = [keysMap.get('6k0')[0], keysMap.get('6k5')[0], keysMap.get('6k1')[0], keysMap.get('6k2')[0],-1, keysMap.get('6k4')[0],-1, -1,keysMap.get('6k6')[0]];
+						case 3: 
+							binds = [keysMap.get('note_left')[0],keysMap.get('note_down')[0], keysMap.get('note_up')[0], keysMap.get('note_right')[0], keysMap.get('6k3')[0], -1, -1, -1, -1];
+						case 4: 
+							binds = [keysMap.get('6k0')[0], keysMap.get('6k5')[0], keysMap.get('6k1')[0], keysMap.get('6k2')[0],keysMap.get('6k3')[0], keysMap.get('6k4')[0],-1, -1,keysMap.get('6k6')[0]];
+						case 5: 
+							binds = [keysMap.get('9k0')[0], keysMap.get('9k1')[0], keysMap.get('9k2')[0], keysMap.get('9k3')[0], -1, keysMap.get('9k5')[0], keysMap.get('9k6')[0], keysMap.get('9k7')[0], keysMap.get('9k8')[0]];
+						case 6: 
+							binds = [-1,-1,-1,-1,keysMap.get('6k3')[0],-1,-1,-1,-1];
+						case 7:
+							binds = [keysMap.get('note_left')[0],-1,-1, keysMap.get('note_right')[0],-1,-1,-1,-1,-1];
+						case 8: 
+							binds = [keysMap.get('note_left')[0],-1,-1, keysMap.get('note_right')[0],keysMap.get('6k3')[0],-1,-1,-1,-1];
+					}
+				}
+				else
+					binds = [keysMap.get('9k0')[0], keysMap.get('9k1')[0], keysMap.get('9k2')[0], keysMap.get('9k3')[0], keysMap.get('9k4')[0], keysMap.get('9k5')[0], keysMap.get('9k6')[0], keysMap.get('9k7')[0], keysMap.get('9k8')[0]];
+			case 3: 
+				binds = [keysMap.get('note_left')[0],keysMap.get('note_down')[0], keysMap.get('6k3')[0], keysMap.get('note_up')[0], keysMap.get('note_right')[0]];
+			case 4: 
+				binds = [keysMap.get('6k0')[0], keysMap.get('6k1')[0], keysMap.get('6k2')[0], keysMap.get('6k3')[0], keysMap.get('6k4')[0], keysMap.get('6k5')[0], keysMap.get('6k6')[0]];
+			case 5: 
+				binds = [keysMap.get('9k0')[0], keysMap.get('9k1')[0], keysMap.get('9k2')[0], keysMap.get('9k3')[0], keysMap.get('9k5')[0], keysMap.get('9k6')[0], keysMap.get('9k7')[0], keysMap.get('9k8')[0]];
+			case 6: 
+				binds = [keysMap.get('6k3')[0]];
+			case 7:
+				binds = [keysMap.get('note_left')[0], keysMap.get('note_right')[0]];
+			case 8: 
+				binds = [keysMap.get('note_left')[0], keysMap.get('6k3')[0], keysMap.get('note_right')[0]];
+		}
+		return binds;
+	}
+	public static function altbindCheck(mania:Int)
+		{
+			var keysMap = ClientPrefs.keyBinds;
+	
+			var binds:Array<Int> = [keysMap.get('note_left')[1],keysMap.get('note_down')[1], keysMap.get('note_up')[1], keysMap.get('note_right')[1]];
+			switch(mania)
+			{
+				case 0: 
+					binds = [keysMap.get('note_left')[1],keysMap.get('note_down')[1], keysMap.get('note_up')[1], keysMap.get('note_right')[1]];
+				case 1: 
+					binds = [keysMap.get('6k0')[1], keysMap.get('6k1')[1], keysMap.get('6k2')[1], keysMap.get('6k4')[1], keysMap.get('6k5')[1], keysMap.get('6k6')[1]];
+				case 2: 
+					if (PlayState.maniaToChange	!= 2)
+					{
+						switch (PlayState.maniaToChange)
+						{
+							case 0: 
+								binds = [keysMap.get('note_left')[1],keysMap.get('note_down')[1], keysMap.get('note_up')[1], keysMap.get('note_right')[1], -1, -1, -1, -1, -1];
+							case 1: 
+								binds = [keysMap.get('6k0')[1], keysMap.get('6k5')[1], keysMap.get('6k1')[1], keysMap.get('6k2')[1],-1, keysMap.get('6k4')[1],-1, -1,keysMap.get('6k6')[0]];
+							case 3: 
+								binds = [keysMap.get('note_left')[1],keysMap.get('note_down')[1], keysMap.get('note_up')[1], keysMap.get('note_right')[1], keysMap.get('6k3')[1], -1, -1, -1, -1];
+							case 4: 
+								binds = [keysMap.get('6k0')[1], keysMap.get('6k5')[1], keysMap.get('6k1')[1], keysMap.get('6k2')[1],keysMap.get('6k3')[1], keysMap.get('6k4')[1],-1, -1,keysMap.get('6k6')[1]];
+							case 5: 
+								binds = [keysMap.get('9k0')[1], keysMap.get('9k1')[1], keysMap.get('9k2')[1], keysMap.get('9k3')[1], -1, keysMap.get('9k5')[1], keysMap.get('9k6')[1], keysMap.get('9k7')[1], keysMap.get('9k8')[1]];
+							case 6: 
+								binds = [-1,-1,-1,-1,keysMap.get('6k3')[1],-1,-1,-1,-1];
+							case 7:
+								binds = [keysMap.get('note_left')[1],-1,-1, keysMap.get('note_right')[1],-1,-1,-1,-1,-1];
+							case 8: 
+								binds = [keysMap.get('note_left')[1],-1,-1, keysMap.get('note_right')[1],keysMap.get('6k3')[1],-1,-1,-1,-1];
+						}
+					}
+					else
+						binds = [keysMap.get('9k0')[1], keysMap.get('9k1')[1], keysMap.get('9k2')[1], keysMap.get('9k3')[1], keysMap.get('9k4')[1], keysMap.get('9k5')[1], keysMap.get('9k6')[1], keysMap.get('9k7')[1], keysMap.get('9k8')[1]];
+				case 3: 
+					binds = [keysMap.get('note_left')[1],keysMap.get('note_down')[1], keysMap.get('6k3')[1], keysMap.get('note_up')[1], keysMap.get('note_right')[1]];
+				case 4: 
+					binds = [keysMap.get('6k0')[1], keysMap.get('6k1')[1], keysMap.get('6k2')[1], keysMap.get('6k3')[1], keysMap.get('6k4')[1], keysMap.get('6k5')[1], keysMap.get('6k6')[1]];
+				case 5: 
+					binds = [keysMap.get('9k0')[1], keysMap.get('9k1')[1], keysMap.get('9k2')[1], keysMap.get('9k3')[1], keysMap.get('9k5')[1], keysMap.get('9k6')[1], keysMap.get('9k7')[1], keysMap.get('9k8')[1]];
+				case 6: 
+					binds = [keysMap.get('6k3')[1]];
+				case 7:
+					binds = [keysMap.get('note_left')[1], keysMap.get('note_right')[1]];
+				case 8: 
+					binds = [keysMap.get('note_left')[1], keysMap.get('6k3')[1], keysMap.get('note_right')[1]];
+			}
+			return binds;
+		}
 }

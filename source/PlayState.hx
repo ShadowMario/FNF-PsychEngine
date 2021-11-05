@@ -50,6 +50,10 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 
+import openfl.ui.Keyboard; //fuck controls.hx
+import openfl.events.KeyboardEvent;
+import flixel.input.keyboard.FlxKey;
+
 #if sys
 import sys.FileSystem;
 #end
@@ -109,6 +113,7 @@ class PlayState extends MusicBeatState
 	public var dadGroup:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
 
+	public static var mania:Int;
 	public static var curStage:String = '';
 	public static var isPixelStage:Bool = false;
 	public static var SONG:SwagSong = null;
@@ -116,6 +121,20 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
+
+	public static var maniaToChange:Int;
+
+	public static var sDir:Array<Dynamic> = [
+		['LEFT', 'DOWN', 'UP', 'RIGHT'],
+		['LEFT', 'UP', 'RIGHT', 'LEFT', 'DOWN', 'RIGHT'],
+		['LEFT', 'DOWN', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'UP', 'RIGHT'],
+		['LEFT', 'DOWN', 'UP', 'UP', 'RIGHT'],
+		['LEFT', 'UP', 'RIGHT', 'UP', 'LEFT', 'DOWN', 'RIGHT'],
+		['LEFT', 'DOWN', 'UP', 'RIGHT', 'LEFT', 'DOWN', 'UP', 'RIGHT'],
+		['UP'],
+		['LEFT', 'RIGHT'],
+		['LEFT', 'UP', 'RIGHT'],
+	]; 
 
 	public var vocals:FlxSound;
 
@@ -282,6 +301,9 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
+
+		mania = SONG.mania;
+		maniaToChange = mania;
 
 		#if desktop
 		storyDifficultyText = '' + CoolUtil.difficultyStuff[storyDifficulty][0];
@@ -1030,6 +1052,9 @@ class PlayState extends MusicBeatState
 		
 		callOnLuas('onCreatePost', []);
 		
+
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN,handleInput);
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, releaseInput);
 		
 		super.create();
 	}
@@ -1423,6 +1448,203 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	var keysHeld = [false,false,false,false,false,false,false,false,false];
+
+	/////////////////////////////////////////////////////////// input code - fuck controls.hx
+	private function releaseInput(evt:KeyboardEvent):Void
+		{
+			@:privateAccess
+			var key = evt.keyCode;
+
+			var keysMap = ClientPrefs.keyBinds;
+	
+			var binds:Array<Int> = [keysMap.get('note_left')[0],keysMap.get('note_down')[0], keysMap.get('note_up')[0], keysMap.get('note_right')[0]];
+			var altbinds:Array<Int> = [keysMap.get('note_left')[1],keysMap.get('note_down')[1], keysMap.get('note_up')[1], keysMap.get('note_right')[1]];
+			var data = -1;
+			
+			binds = CoolUtil.bindCheck(mania);
+			altbinds = CoolUtil.altbindCheck(mania);
+
+			
+	
+			for (i in 0...binds.length)//convert binds to key to data
+				if (binds[i] == key && binds[i] != -1)
+					data = i;
+
+			if (data == -1) //check alt keys
+				for (i in 0...altbinds.length)
+					if (altbinds[i] == key && altbinds[i] != -1)
+						data = i;
+
+			if (data == -1)
+				return;
+
+			keysHeld[data] = false;
+	
+	}
+	private function handleInput(evt:KeyboardEvent):Void 
+	{
+		if (paused)
+			return;
+
+		@:privateAccess
+
+		var keysMap = ClientPrefs.keyBinds;
+		var key = evt.keyCode;
+		var binds:Array<Int> = [keysMap.get('note_left')[0],keysMap.get('note_down')[0], keysMap.get('note_up')[0], keysMap.get('note_right')[0]];
+		var altbinds:Array<Int> = [keysMap.get('note_left')[1],keysMap.get('note_down')[1], keysMap.get('note_up')[1], keysMap.get('note_right')[1]];
+		var data = -1;
+		binds = CoolUtil.bindCheck(mania);
+		altbinds = CoolUtil.altbindCheck(mania);		
+
+		for (i in 0...binds.length)//convert binds to key to data
+		{
+			//trace(binds[i]);
+			if (binds[i] == key && binds[i] != -1)
+				data = i;
+		}
+
+
+		if (data == -1) //check alt keys
+			for (i in 0...altbinds.length)
+				if (altbinds[i] == key && altbinds[i] != -1)
+					data = i;
+
+
+		if (keysHeld[data] || data == -1)
+				return;
+
+		keysHeld[data] = true;
+		if (ClientPrefs.ekInput)
+			ekInput(data);
+		else
+			psychInput(data);
+	}
+
+	function psychInput(data:Int) //had to tweak some things
+	{
+		if (!boyfriend.stunned && generatedMusic)
+		{
+			var justPressed = [false,false,false,false,false,false,false,false];
+			justPressed[data] = true;
+			if (keysHeld.contains(true) && !endingSong) {
+				var canMiss:Bool = !ClientPrefs.ghostTapping;
+				if (justPressed.contains(true)) {
+					for (i in 0...justPressed.length) {
+						// heavily based on my own code LOL if it aint broke dont fix it
+						var pressNotes:Array<Note> = [];
+						var notesDatas:Array<Int> = [];
+						var notesStopped:Bool = false;
+	
+						var sortedNotesList:Array<Note> = [];
+						notes.forEachAlive(function(daNote:Note)
+						{
+							if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
+							&& !daNote.wasGoodHit && daNote.noteData == i) {
+								sortedNotesList.push(daNote);
+								notesDatas.push(daNote.noteData);
+								canMiss = true;
+							}
+						});
+						sortedNotesList.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
+	
+						if (sortedNotesList.length > 0) {
+							for (epicNote in sortedNotesList)
+							{
+								for (doubleNote in pressNotes) {
+									if (Math.abs(doubleNote.strumTime - epicNote.strumTime) < 10) {
+										doubleNote.kill();
+										notes.remove(doubleNote, true);
+										doubleNote.destroy();
+									} else
+										notesStopped = true;
+								}
+									
+								// eee jack detection before was not super good
+								if (justPressed[epicNote.noteData] && !notesStopped) {
+									goodNoteHit(epicNote);
+									pressNotes.push(epicNote);
+								}
+	
+							}
+						}
+						else if (canMiss) 
+							ghostMiss(justPressed[i], i, true);
+	
+						// I dunno what you need this for but here you go
+						//									- Shubs
+	
+						// Shubs, this is for the "Just the Two of Us" achievement lol
+						//									- Shadow Mario
+						if (!keysPressed[i] && keysHeld[i]) 
+							keysPressed[i] = true;
+					}
+				}
+	
+				#if ACHIEVEMENTS_ALLOWED
+				var achieve:String = checkForAchievement(['oversinging']);
+				if (achieve != null) {
+					startAchievement(achieve);
+				}
+				#end
+			}
+		}
+	}
+
+	function ekInput(data:Int) //based on kade input
+	{
+		var hittableNotes = [];
+		var closestNotes = [];
+
+		notes.forEachAlive(function(daNote:Note)
+		{
+			if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
+			&& !daNote.wasGoodHit) {
+				closestNotes.push(daNote);
+			}
+		});
+		closestNotes.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
+
+		for(i in closestNotes)
+			if (i.noteData == data)
+				hittableNotes.push(i);
+
+		if (hittableNotes.length != 0)
+		{
+			var daNote = null;
+
+			for (i in hittableNotes)
+				if (!i.isSustainNote)
+				{
+					daNote = i;
+					break;
+				}
+
+			if (daNote == null)
+				return;
+
+			if (hittableNotes.length > 1)
+			{
+				for (shitNote in hittableNotes)
+				{
+					if (shitNote.strumTime == daNote.strumTime)
+						goodNoteHit(shitNote);
+					else if ((!shitNote.isSustainNote && (shitNote.strumTime - daNote.strumTime) < 15))
+						goodNoteHit(shitNote);
+
+					/*if (hittableNotes.length > 2 && SaveData.casual) //literally all you need to allow you to spam though impossiblely hard jacks
+						goodNoteHit(shitNote, playernum);*/
+				}
+
+			}
+			goodNoteHit(daNote);
+		}
+		else if (!ClientPrefs.ghostTapping && generatedMusic)
+		{
+			ghostMiss(keysHeld[data], data, true);
+		}
+	}
+
 	function startNextDialogue() {
 		dialogueCount++;
 		callOnLuas('onNextDialogue', [dialogueCount]);
@@ -1525,11 +1747,11 @@ class PlayState extends MusicBeatState
 			{
 				if(songNotes[1] > -1) { //Real notes
 					var daStrumTime:Float = songNotes[0];
-					var daNoteData:Int = Std.int(songNotes[1] % 4);
+					var daNoteData:Int = Std.int(songNotes[1] % Note.keyAmmo[mania]);
 
 					var gottaHitNote:Bool = section.mustHitSection;
 
-					if (songNotes[1] > 3)
+					if (songNotes[1] >= Note.keyAmmo[mania])
 					{
 						gottaHitNote = !section.mustHitSection;
 					}
@@ -1649,7 +1871,7 @@ class PlayState extends MusicBeatState
 
 	private function generateStaticArrows(player:Int):Void
 	{
-		for (i in 0...4)
+		for (i in 0...Note.keyAmmo[mania])
 		{
 			// FlxG.log.add(i);
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
@@ -1977,6 +2199,8 @@ class PlayState extends MusicBeatState
 					cancelFadeTween();
 					CustomFadeTransition.nextCamera = camOther;
 					MusicBeatState.switchState(new GitarooPause());
+					FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
+					FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);
 				}
 				else {
 					if(FlxG.sound.music != null) {
@@ -2000,6 +2224,8 @@ class PlayState extends MusicBeatState
 			cancelFadeTween();
 			CustomFadeTransition.nextCamera = camOther;
 			MusicBeatState.switchState(new ChartingState());
+			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
+			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);
 
 			#if desktop
 			DiscordClient.changePresence("Chart Editor", null, null, true);
@@ -2039,6 +2265,8 @@ class PlayState extends MusicBeatState
 			cancelFadeTween();
 			CustomFadeTransition.nextCamera = camOther;
 			MusicBeatState.switchState(new CharacterEditorState(SONG.player2));
+			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
+			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);
 		}
 
 		if (startingSong)
@@ -2238,17 +2466,7 @@ class PlayState extends MusicBeatState
 						}
 
 						var animToPlay:String = '';
-						switch (Math.abs(daNote.noteData))
-						{
-							case 0:
-								animToPlay = 'singLEFT';
-							case 1:
-								animToPlay = 'singDOWN';
-							case 2:
-								animToPlay = 'singUP';
-							case 3:
-								animToPlay = 'singRIGHT';
-						}
+						animToPlay = "sing" + sDir[mania][Std.int(Math.abs(daNote.noteData))];
 						if(daNote.noteType == 'GF Sing') {
 							gf.playAnim(animToPlay + altAnim, true);
 							gf.holdTimer = 0;
@@ -2265,7 +2483,7 @@ class PlayState extends MusicBeatState
 					if(daNote.isSustainNote && !daNote.animation.curAnim.name.endsWith('end')) {
 						time += 0.15;
 					}
-					StrumPlayAnim(true, Std.int(Math.abs(daNote.noteData)) % 4, time);
+					StrumPlayAnim(true, Std.int(Math.abs(daNote.noteData)) % Note.keyAmmo[mania], time);
 					daNote.hitByOpponent = true;
 
 					callOnLuas('opponentNoteHit', [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
@@ -2393,6 +2611,9 @@ class PlayState extends MusicBeatState
 					timer.active = true;
 				}
 
+				FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
+				FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);
+
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 				
 				#if desktop
@@ -2473,7 +2694,16 @@ class PlayState extends MusicBeatState
 				var value:Int = Std.parseInt(value1);
 				if(Math.isNaN(value)) value = 1;
 				gfSpeed = value;
-
+			case 'Set P1 Mania': 
+				var value:Int = Std.parseInt(value1);
+				if(Math.isNaN(value)) value = 1;
+				switchMania(value, 1);
+				trace("p1 mania change????");
+			case 'Set P2 Mania': 
+				var value:Int = Std.parseInt(value1);
+				if(Math.isNaN(value)) value = 1;
+				switchMania(value, 0);
+				trace("p2 mania change????");
 			case 'Blammed Lights':
 				var lightId:Int = Std.parseInt(value1);
 				if(Math.isNaN(lightId)) lightId = 0;
@@ -2837,6 +3067,10 @@ class PlayState extends MusicBeatState
 	var transitioning = false;
 	public function endSong():Void
 	{
+
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, releaseInput);
+
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
@@ -3203,25 +3437,6 @@ class PlayState extends MusicBeatState
 
 	private function keyShit():Void
 	{
-		// HOLDING
-		var up = controls.NOTE_UP;
-		var right = controls.NOTE_RIGHT;
-		var down = controls.NOTE_DOWN;
-		var left = controls.NOTE_LEFT;
-
-		var upP = controls.NOTE_UP_P;
-		var rightP = controls.NOTE_RIGHT_P;
-		var downP = controls.NOTE_DOWN_P;
-		var leftP = controls.NOTE_LEFT_P;
-
-		var upR = controls.NOTE_UP_R;
-		var rightR = controls.NOTE_RIGHT_R;
-		var downR = controls.NOTE_DOWN_R;
-		var leftR = controls.NOTE_LEFT_R;
-
-		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
-		var controlReleaseArray:Array<Bool> = [leftR, downR, upR, rightR];
-		var controlHoldArray:Array<Bool> = [left, down, up, right];
 
 		// FlxG.watch.addQuick('asdfa', upP);
 		if (!boyfriend.stunned && generatedMusic)
@@ -3230,72 +3445,14 @@ class PlayState extends MusicBeatState
 			notes.forEachAlive(function(daNote:Note)
 			{
 				// hold note functions
-				if (daNote.isSustainNote && controlHoldArray[daNote.noteData] && daNote.canBeHit 
+				if (daNote.isSustainNote && keysHeld[daNote.noteData] && daNote.canBeHit 
 				&& daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit) {
 					goodNoteHit(daNote);
 				}
 			});
 
-			if ((controlHoldArray.contains(true) || controlArray.contains(true)) && !endingSong) {
-				var canMiss:Bool = !ClientPrefs.ghostTapping;
-				if (controlArray.contains(true)) {
-					for (i in 0...controlArray.length) {
-						// heavily based on my own code LOL if it aint broke dont fix it
-						var pressNotes:Array<Note> = [];
-						var notesDatas:Array<Int> = [];
-						var notesStopped:Bool = false;
-
-						var sortedNotesList:Array<Note> = [];
-						notes.forEachAlive(function(daNote:Note)
-						{
-							if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
-							&& !daNote.wasGoodHit && daNote.noteData == i) {
-								sortedNotesList.push(daNote);
-								notesDatas.push(daNote.noteData);
-								canMiss = true;
-							}
-						});
-						sortedNotesList.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
-
-						if (sortedNotesList.length > 0) {
-							for (epicNote in sortedNotesList)
-							{
-								for (doubleNote in pressNotes) {
-									if (Math.abs(doubleNote.strumTime - epicNote.strumTime) < 10) {
-										doubleNote.kill();
-										notes.remove(doubleNote, true);
-										doubleNote.destroy();
-									} else
-										notesStopped = true;
-								}
-									
-								// eee jack detection before was not super good
-								if (controlArray[epicNote.noteData] && !notesStopped) {
-									goodNoteHit(epicNote);
-									pressNotes.push(epicNote);
-								}
-
-							}
-						}
-						else if (canMiss) 
-							ghostMiss(controlArray[i], i, true);
-
-						// I dunno what you need this for but here you go
-						//									- Shubs
-
-						// Shubs, this is for the "Just the Two of Us" achievement lol
-						//									- Shadow Mario
-						if (!keysPressed[i] && controlArray[i]) 
-							keysPressed[i] = true;
-					}
-				}
-
-				#if ACHIEVEMENTS_ALLOWED
-				var achieve:String = checkForAchievement(['oversinging']);
-				if (achieve != null) {
-					startAchievement(achieve);
-				}
-				#end
+			if (keysHeld.contains(true) && !endingSong) {
+				//uhh i left this here so the anim doesnt break
 			} else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing')
 			&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
@@ -3303,11 +3460,11 @@ class PlayState extends MusicBeatState
 
 		playerStrums.forEach(function(spr:StrumNote)
 		{
-			if(controlArray[spr.ID] && spr.animation.curAnim.name != 'confirm') {
+			if(keysHeld[spr.ID] && spr.animation.curAnim.name != 'confirm' && spr.animation.curAnim.name != 'pressed') {
 				spr.playAnim('pressed');
 				spr.resetAnim = 0;
 			}
-			if(controlReleaseArray[spr.ID]) {
+			if(!keysHeld[spr.ID]) {
 				spr.playAnim('static');
 				spr.resetAnim = 0;
 			}
@@ -3338,17 +3495,7 @@ class PlayState extends MusicBeatState
 		RecalculateRating();
 
 		var animToPlay:String = '';
-		switch (Math.abs(daNote.noteData) % 4)
-		{
-			case 0:
-				animToPlay = 'singLEFTmiss';
-			case 1:
-				animToPlay = 'singDOWNmiss';
-			case 2:
-				animToPlay = 'singUPmiss';
-			case 3:
-				animToPlay = 'singRIGHTmiss';
-		}
+		animToPlay = "sing" + sDir[mania][Std.int(Math.abs(daNote.noteData % Note.keyAmmo[mania]))] + "miss";
 
 		if(daNote.noteType == 'GF Sing') {
 			gf.playAnim(animToPlay, true);
@@ -3391,17 +3538,7 @@ class PlayState extends MusicBeatState
 				boyfriend.stunned = false;
 			});*/
 
-			switch (direction)
-			{
-				case 0:
-					boyfriend.playAnim('singLEFTmiss', true);
-				case 1:
-					boyfriend.playAnim('singDOWNmiss', true);
-				case 2:
-					boyfriend.playAnim('singUPmiss', true);
-				case 3:
-					boyfriend.playAnim('singRIGHTmiss', true);
-			}
+			boyfriend.playAnim("sing" + sDir[mania][direction] + "miss", true);
 			vocals.volume = 0;
 		}
 	}
@@ -3449,17 +3586,8 @@ class PlayState extends MusicBeatState
 				if(note.noteType == 'Alt Animation') daAlt = '-alt';
 	
 				var animToPlay:String = '';
-				switch (Std.int(Math.abs(note.noteData)))
-				{
-					case 0:
-						animToPlay = 'singLEFT';
-					case 1:
-						animToPlay = 'singDOWN';
-					case 2:
-						animToPlay = 'singUP';
-					case 3:
-						animToPlay = 'singRIGHT';
-				}
+
+				animToPlay = "sing" + sDir[mania][Std.int(Math.abs(note.noteData))];
 
 				if(note.noteType == 'GF Sing') {
 					gf.playAnim(animToPlay + daAlt, true);
@@ -3489,7 +3617,7 @@ class PlayState extends MusicBeatState
 				if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 					time += 0.15;
 				}
-				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % 4, time);
+				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % Note.keyAmmo[mania], time);
 			} else {
 				playerStrums.forEach(function(spr:StrumNote)
 				{
@@ -3517,21 +3645,23 @@ class PlayState extends MusicBeatState
 	}
 
 	function spawnNoteSplashOnNote(note:Note) {
-		if(ClientPrefs.noteSplashes && note != null) {
+		/*if(ClientPrefs.noteSplashes && note != null) {
 			var strum:StrumNote = playerStrums.members[note.noteData];
 			if(strum != null) {
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note);
 			}
-		}
+		}*/
 	}
 
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		
-		var hue:Float = ClientPrefs.arrowHSV[data % 4][0] / 360;
-		var sat:Float = ClientPrefs.arrowHSV[data % 4][1] / 100;
-		var brt:Float = ClientPrefs.arrowHSV[data % 4][2] / 100;
+		var colornum:Int = StrumNote.colorFromData[Note.mania][data % Note.keyAmmo[Note.mania]];
+
+		var hue:Float = ClientPrefs.arrowHSV[colornum][0] / 360;
+		var sat:Float = ClientPrefs.arrowHSV[colornum][1] / 100;
+		var brt:Float = ClientPrefs.arrowHSV[colornum][2] / 100;
 		if(note != null) {
 			skin = note.noteSplashTexture;
 			hue = note.noteSplashHue;
@@ -3540,7 +3670,7 @@ class PlayState extends MusicBeatState
 		}
 
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
+		splash.setupNoteSplash(x, y, (data % Note.keyAmmo[mania]), skin, hue, sat, brt);
 		grpNoteSplashes.add(splash);
 	}
 
@@ -4017,4 +4147,44 @@ class PlayState extends MusicBeatState
 
 	var curLight:Int = 0;
 	var curLightEvent:Int = 0;
+
+	public function switchMania(newMania:Int, strumnum = 1)
+	{
+		if (mania == 2) //so it doesnt break the fucking game
+		{
+			var strums:FlxTypedGroup<StrumNote> = playerStrums;
+		
+			var scaleToCheck:Float = 1;
+			
+			if (strumnum == 1)
+			{
+				maniaToChange = newMania;
+				Note.p1NoteScale = Note.noteScales[newMania];
+				if(PlayState.isPixelStage)
+					Note.p1NoteScale = Note.pixelNoteScales[newMania];
+				scaleToCheck = Note.p1NoteScale;
+				strums = playerStrums;
+			}
+			else
+			{
+				Note.p2NoteScale = Note.noteScales[newMania];
+				if(PlayState.isPixelStage)
+					Note.p2NoteScale = Note.pixelNoteScales[newMania];
+				scaleToCheck = Note.p2NoteScale;
+				strums = opponentStrums;
+			}
+	
+			strums.forEach(function(spr:StrumNote)
+			{
+				spr.playAnim('static', true); //changes to static because it can break the scaling of the static arrows if they are doing the confirm animation
+				if(PlayState.isPixelStage)
+					spr.setGraphicSize(Std.int(spr.defaultWidth * PlayState.daPixelZoom * scaleToCheck));
+				else 
+					spr.setGraphicSize(Std.int(spr.defaultWidth * scaleToCheck));
+				spr.centerOffsets();
+
+				spr.moveKeyPositions(spr, newMania, strumnum);
+			});	
+		}
+	}
 }

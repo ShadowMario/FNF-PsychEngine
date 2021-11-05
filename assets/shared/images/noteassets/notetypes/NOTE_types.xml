@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="NOTE_types.png"><SubTexture name="angel hold end0000" x="2" y="2" width="50" height="64" />
+<SubTexture name="angel hold piece0000" x="56" y="2" width="50" height="44" />
+<SubTexture name="angel blue0000" x="108" y="0" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel violet0000" x="108" y="0" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel purple0000" x="272" y="0" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel yellow0000" x="272" y="0" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel red0000" x="0" y="164" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel dark0000" x="0" y="164" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel white0000" x="164" y="164" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel green0000" x="328" y="164" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel darkred0000" x="328" y="164" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel black0000" x="328" y="164" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="angel orange0000" x="328" y="164" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob hold end0000" x="494" y="166" width="50" height="64" />
+<SubTexture name="bob hold piece0000" x="2" y="330" width="50" height="44"  />
+<SubTexture name="bob blue0000" x="54" y="328" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob violet0000" x="54" y="328" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob purple0000" x="218" y="328" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob yellow0000" x="218" y="328" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob red0000" x="382" y="328" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob dark0000" x="382" y="328" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob white0000" x="0" y="492" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob green0000" x="164" y="492" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob orange0000" x="164" y="492" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob darkred0000" x="164" y="492" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="bob black0000" x="164" y="492" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire hold end0000" x="330" y="494" width="50" height="64"  />
+<SubTexture name="fire hold piece0000" x="384" y="494" width="50" height="44"  />
+<SubTexture name="fire blue0000" x="0" y="656" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire violet0000" x="0" y="656" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire purple0000" x="164" y="656" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire yellow0000" x="164" y="656" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire red0000" x="328" y="656" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire dark0000" x="328" y="656" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire white0000" x="492" y="656" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire green0000" x="0" y="820" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire darkred0000" x="0" y="820" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire orange0000" x="0" y="820" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="fire black0000" x="0" y="820" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch hold end0000" x="166" y="822" width="50" height="64"  />
+<SubTexture name="glitch hold piece0000" x="220" y="822" width="50" height="44"  />
+<SubTexture name="glitch blue0000" x="272" y="820" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch violet0000" x="272" y="820" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch purple0000" x="0" y="984" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch yellow0000" x="0" y="984" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch red0000" x="164" y="984" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch dark0000" x="164" y="984" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch white0000" x="328" y="984" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch darkred0000" x="492" y="984" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch green0000" x="492" y="984" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch orange0000" x="492" y="984" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="glitch black0000" x="492" y="984" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo hold end0000" x="2" y="1150" width="50" height="64" />
+<SubTexture name="halo hold piece0000" x="56" y="1150" width="50" height="44" />
+<SubTexture name="halo blue0000" x="108" y="1148" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo violet0000" x="108" y="1148" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo purple0000" x="272" y="1148" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo yellow0000" x="272" y="1148" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo red0000" x="0" y="1312" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo dark0000" x="0" y="1312" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo white0000" x="164" y="1312" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo green0000" x="328" y="1312" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo darkred0000" x="328" y="1312" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo black0000" x="328" y="1312" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="halo orange0000" x="328" y="1312" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning hold end0000" x="494" y="1314" width="50" height="64"  />
+<SubTexture name="warning hold piece0000" x="2" y="1478" width="50" height="44"  />
+<SubTexture name="warning blue0000" x="54" y="1476" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning violet0000" x="54" y="1476" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning purple0000" x="218" y="1476" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning yellow0000" x="218" y="1476" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning red0000" x="382" y="1476" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning dark0000" x="382" y="1476" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning white0000" x="0" y="1640" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning green0000" x="164" y="1640" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning darkred0000" x="164" y="1640" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning black0000" x="164" y="1640" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+<SubTexture name="warning orange0000" x="164" y="1640" width="164" height="164" frameX="0" frameY="0" frameWidth="164" frameHeight="164" />
+</TextureAtlas>

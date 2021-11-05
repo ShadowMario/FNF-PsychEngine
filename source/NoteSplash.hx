@@ -42,9 +42,12 @@ class NoteSplash extends FlxSprite
 		colorSwap.brightness = brtColor;
 		offset.set(10, 10);
 
+		note = StrumNote.colorFromData[Note.mania][note % Note.keyAmmo[Note.mania]];
+
 		var animNum:Int = FlxG.random.int(1, 2);
 		animation.play('note' + note + '-' + animNum, true);
 		animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
+		setGraphicSize(Std.int(Note.swagWidth * 3));
 	}
 
 	function loadAnims(skin:String) {
@@ -54,6 +57,11 @@ class NoteSplash extends FlxSprite
 			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);
 			animation.addByPrefix("note0-" + i, "note splash purple " + i, 24, false);
 			animation.addByPrefix("note3-" + i, "note splash red " + i, 24, false);
+			animation.addByPrefix("note4-" + i, "note splash white " + i, 24, false);
+			animation.addByPrefix("note5-" + i, "note splash yellow " + i, 24, false);
+			animation.addByPrefix("note6-" + i, "note splash violet " + i, 24, false);
+			animation.addByPrefix("note7-" + i, "note splash darkred " + i, 24, false);
+			animation.addByPrefix("note8-" + i, "note splash dark " + i, 24, false);
 		}
 	}
 
