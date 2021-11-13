@@ -28,6 +28,10 @@ import Type.ValueType;
 import Controls;
 import DialogueBoxPsych;
 
+#if desktop
+import Discord;
+#end
+
 using StringTools;
 
 class FunkinLua {
@@ -1138,6 +1142,9 @@ class FunkinLua {
 			FlxG.sound.music.fadeOut(duration, toValue);
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
+
+		Discord.DiscordClient.addLuaCallbacks(lua);
+
 		call('onCreate', []);
 		#end
 	}
