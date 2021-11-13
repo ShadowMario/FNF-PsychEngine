@@ -64,6 +64,23 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.setFormat(Paths.font('vcr.ttf'), 32);
 		levelDifficulty.updateHitbox();
 		add(levelDifficulty);
+		
+		var controlArray:Array<Control>;
+		
+		controlArray = [Control.NOTE_LEFT, Control.NOTE_DOWN, Control.NOTE_UP, Control.NOTE_RIGHT];
+
+		var controls:FlxText = new FlxText(20, 15, 0, "Controls: ", 32);
+		for (i in 0...4)
+		{
+			controls.text += InputFormatter.getKeyName(ClientPrefs.keyBinds[controlArray[i]][0]);
+			if (i != 4 - 1) controls.text += '|';
+		}
+
+		controls.scrollFactor.set();
+		controls.setFormat(Paths.font('vcr.ttf'), 32);
+		controls.updateHitbox();
+		controls.alpha = 0;
+		add(controls);
 
 		var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, "", 32);
 		blueballedTxt.text = "Blueballed: " + PlayState.deathCounter;
