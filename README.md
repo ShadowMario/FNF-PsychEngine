@@ -1,5 +1,10 @@
+# I don't recommend you use this template just yet
+
 # Friday Night Funkin' - Psych Engine
-Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
+Original Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
+
+# Friday Night Funkin' - Unnamed Engine
+Used for upcoming mod
 
 ## Installation:
 Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
@@ -11,6 +16,7 @@ You can do this with: `haxelib install linc_luajit` on a Command prompt/PowerShe
 ## Credits:
 * Shadow Mario - Coding
 * RiverOaken - Arts and Animations
+* unfair - Art, Animations, and Coding
 
 ### Special Thanks
 * Keoiki - Note Splash Animations
@@ -54,6 +60,8 @@ _____________________________________
 * You can change a note's type on the Editor, it comes with two example types:
   * Alt Animation: Forces an alt animation to play, useful for songs like Ugh/Stress
   * Hey: Forces a "Hey" animation instead of the base Sing animation, if Boyfriend hits this note, Girlfriend will do a "Hey!" too.
+* You can place notes on top of eachother by holding alt and clicking
+* You can hold right-click and drag to place multiple notes
 
 ## Improved Animation Debug menu (Press 8 in-game on a Debug build)
 ![](https://user-images.githubusercontent.com/44785097/127721062-f912853c-2513-41b8-bd66-fd80d9d4ee0f.png)
@@ -61,6 +69,12 @@ _____________________________________
 * You can also now change the characters while on the Menu
 * Go back to the game by pressing Escape
 NOTE: This should be used for fixing your character floating or being slightly under the ground! It's not for texture editting.
+
+## The New Stuff
+
+* You can have different events.json files for each difficulty. For example, if you want to have events when you play a song, you create a file called "events-hard.json". You can also create a file called "eventsDefault.json". If a song on a difficulty doesn't have any events, the events will be loaded from "eventsDefault.json," if it exists.
+
+* You can add a "Options.json" file to do stuff like not list that song in story mode. Sadly, there is no editor for this, so you have to make your own .json file.
 
 ## Story mode menu rework:
 ![](https://i.imgur.com/UB2EKpV.png)
