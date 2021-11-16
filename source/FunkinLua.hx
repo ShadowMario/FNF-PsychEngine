@@ -27,10 +27,7 @@ import sys.io.File;
 import Type.ValueType;
 import Controls;
 import DialogueBoxPsych;
-
-#if desktop
-import Discord;
-#end
+import Achievements;
 
 using StringTools;
 
@@ -52,7 +49,8 @@ class FunkinLua {
 		lua = LuaL.newstate();
 		LuaL.openlibs(lua);
 		Lua.init_callbacks(lua);
-
+		#end
+		
 		//trace('Lua version: ' + Lua.version());
 		//trace("LuaJIT version: " + Lua.versionJIT());
 
@@ -92,6 +90,7 @@ class FunkinLua {
 		set('songLength', FlxG.sound.music.length);
 		set('songName', PlayState.SONG.song);
 		set('startedCountdown', false);
+		set('songPos', Conductor.songPosition);
 
 		set('isStoryMode', PlayState.isStoryMode);
 		set('difficulty', PlayState.storyDifficulty);
@@ -118,7 +117,6 @@ class FunkinLua {
 
 		set('rating', 0);
 		set('ratingName', '');
-		set('version', MainMenuState.psychEngineVersion.trim());
 		
 		set('inGameOver', false);
 		set('mustHitSection', false);
@@ -141,7 +139,9 @@ class FunkinLua {
 
 		// Some settings, no jokes
 		set('downscroll', ClientPrefs.downScroll);
-		set('middlescroll', ClientPrefs.middleScroll);
+		//set('middlescroll', ClientPrefs.middleScroll);
+		set('middlescroll', false); // Middlescroll is currently broke so it's automaticly disabled
+		ClientPrefs.middleScroll=false;
 		set('framerate', ClientPrefs.framerate);
 		set('ghostTapping', ClientPrefs.ghostTapping);
 		set('hideHud', ClientPrefs.hideHud);
@@ -168,6 +168,10 @@ class FunkinLua {
 				return Reflect.getProperty(coverMeInPiss, killMe[killMe.length-1]);
 			}
 			return Reflect.getProperty(lePlayState, variable);
+		});
+		// I'm just not gonna hardcode this cause I noob
+		Lua_helper.add_callback(lua, "unlockAchievement", function(value:String) {
+			Achievements.unlockAchievement(value);
 		});
 		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic) {
 			var killMe:Array<String> = variable.split('.');
@@ -265,7 +269,19 @@ class FunkinLua {
 			}
 			return Reflect.setProperty(Type.resolveClass(classVar), variable, value);
 		});
+        /*
+		Lua_helper.add_callback(lua, "setHealthbarX", function(x:Float) {
+			// Just slide the healthbar off the screen lol so player has no idea how much HP they have
+			lePlayState.healthBar.x=x;
+		});
 
+		Lua_helper.add_callback(lua, "setHealthbarY", function(x:Float) {
+			lePlayState.healthBar.y=x;
+		});
+		Lua_helper.add_callback(lua, "sethealthbarAlpha", function(x:Float) {
+			lePlayState.healthBar.alpha=x;
+		});
+		*/
 		//shitass stuff for epic coders like me B)  *image of obama giving himself a medal*
 		Lua_helper.add_callback(lua, "getObjectOrder", function(obj:String) {
 			if(lePlayState.modchartSprites.exists(obj) && lePlayState.modchartSprites.get(obj).wasAdded) {
@@ -441,6 +457,11 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "cancelTween", function(tag:String) {
 			cancelTween(tag);
+		});
+
+		Lua_helper.add_callback(lua, "cameraSetScale", function(width:Float, height:Float) {
+			// I wish this worked
+			FlxG.camera.setScale(width, height);
 		});
 
 		Lua_helper.add_callback(lua, "runTimer", function(tag:String, time:Float = 1, loops:Int = 1) {
@@ -728,7 +749,7 @@ class FunkinLua {
 			for (i in 0...strIndices.length) {
 				die.push(Std.parseInt(strIndices[i]));
 			}
-
+			
 			if(lePlayState.modchartSprites.exists(obj)) {
 				var pussy:ModchartSprite = lePlayState.modchartSprites.get(obj);
 				pussy.animation.addByIndices(name, prefix, die, '', framerate, false);
@@ -737,7 +758,7 @@ class FunkinLua {
 				}
 				return;
 			}
-			
+
 			var pussy:FlxSprite = Reflect.getProperty(lePlayState, obj);
 			if(pussy != null) {
 				pussy.animation.addByIndices(name, prefix, die, '', framerate, false);
@@ -1136,17 +1157,12 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "musicFadeIn", function(duration:Float, fromValue:Float = 0, toValue:Float = 1) {
 			FlxG.sound.music.fadeIn(duration, fromValue, toValue);
 			luaTrace('musicFadeIn is deprecated! Use soundFadeIn instead.', false, true);
-
 		});
 		Lua_helper.add_callback(lua, "musicFadeOut", function(duration:Float, toValue:Float = 0) {
 			FlxG.sound.music.fadeOut(duration, toValue);
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
-
-		Discord.DiscordClient.addLuaCallbacks(lua);
-
 		call('onCreate', []);
-		#end
 	}
 
 	function resetSpriteTag(tag:String) {
