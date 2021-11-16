@@ -290,7 +290,7 @@ class Note extends FlxSprite
 			animation.addByPrefix('bluehold', 'blue hold piece');
 		}
 
-		setGraphicSize(Std.int(width * 0.7));
+		setGraphicSize(Std.int(width * ClientPrefs.noteSize));
 		updateHitbox();
 	}
 
