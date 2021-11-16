@@ -158,6 +158,11 @@ class ClientPrefs {
 		if(FlxG.save.data.hideTime != null) {
 			hideTime = FlxG.save.data.hideTime;
 		}
+		
+		// flixel automatically saves your volume!
+		if(FlxG.save.data.volume != null) {
+			FlxG.sound.volume = FlxG.save.data.volume;
+		}
 
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', 'ninjamuffin99');
