@@ -32,6 +32,10 @@ class NoteSplash extends FlxSprite
 		if(texture == null) {
 			texture = 'noteSplashes';
 			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+            
+			if (PlayState.isPixelStage) {
+			     texture = 'noteSplashes-pixel';
+			}   
 		}
 
 		if(textureLoaded != texture) {
@@ -40,7 +44,7 @@ class NoteSplash extends FlxSprite
 		colorSwap.hue = hueColor;
 		colorSwap.saturation = satColor;
 		colorSwap.brightness = brtColor;
-		offset.set(10*(ClientPrefs.noteSize/0.7), 10*(ClientPrefs.noteSize/0.7));
+		offset.set(10, 10);
 
 		var animNum:Int = FlxG.random.int(1, 2);
 		animation.play('note' + note + '-' + animNum, true);
