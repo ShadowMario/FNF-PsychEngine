@@ -1,9 +1,9 @@
-# I don't recommend you use this template just yet
+# This template is ready for use!
 
 # Friday Night Funkin' - Psych Engine
 Original Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
-# Friday Night Funkin' - Unnamed Engine
+# Friday Night Funkin' - Immo Engine
 Used for upcoming mod
 
 ## Installation:
