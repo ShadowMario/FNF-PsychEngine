@@ -168,6 +168,5 @@
 	<icon path="art/icon16.png" size='16'/>
 	<icon path="art/icon32.png" size='32'/>
 	<icon path="art/icon64.png" size='64'/>
-	<icon path="art/icon64.png" />
-	<!-- <icon path="art/iconOG.png" /> -->
+	<icon path="art/iconOG.png" />
 </project>
