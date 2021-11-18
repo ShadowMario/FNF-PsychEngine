@@ -186,6 +186,22 @@ class FunkinLua {
 			}
 			return Reflect.setProperty(lePlayState, variable, value);
 		});
+		Lua_helper.add_callback(lua, "callMethod", function(method:String, args:Array<Dynamic>) {
+			var pipiss:Array<String> = method.split('.');
+			if (pipiss.length > 1) {
+				var pispiss2:Dynamic = null;
+				if (lePlayState.modchartSprites.exists(pipiss[0]) {
+					pipiss2 = lePlayState.modchartSprites.get(killMe[0]); 	
+				} else {
+					pipiss2 = Reflect.getProperty(lePlayState, pipiss[0]);
+				}
+				for (i in 1...pipiss.length -1 {
+			     		pipiss2 = Reflect.getProperty(coverMeInPiss, pipiss[i]);
+				}
+				return Reflect.callMethod(pipiss2, pipiss[pipiss.length-1], args);
+			}
+			return Reflect.callMethod(lePlayState, method, args);
+		});
 		Lua_helper.add_callback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic) {
 			if(Std.isOfType(Reflect.getProperty(lePlayState, obj), FlxTypedGroup)) {
 				return Reflect.getProperty(Reflect.getProperty(lePlayState, obj).members[index], variable);
