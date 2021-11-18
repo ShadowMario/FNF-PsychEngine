@@ -36,9 +36,6 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 
-	// Mod Stuff
-	var secretPasscode:Float = 0;
-
 	override function create()
 	{
 		#if desktop
@@ -108,7 +105,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "FNF Tetris v" + gameVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Immo Engine v" + gameVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
