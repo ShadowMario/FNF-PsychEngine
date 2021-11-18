@@ -384,6 +384,7 @@ class WeekEditorState extends MusicBeatState
 							weekFile.songs[i][1] = 'dad';
 							weekFile.songs[i][2] = [146, 113, 253];
 						}
+						if(weekFile.songs[i][3]==null) weekFile.songs[i][3] = false;
 					}
 				}
 				updateText();
@@ -701,6 +702,13 @@ class WeekEditorFreeplayState extends MusicBeatState
 		{
 			weekFile.hideFreeplay = hideFreeplayCheckbox.checked;
 		};
+
+		var hideFromListCheckbox:FlxUICheckBox = new FlxUICheckBox(130, iconInputText.y + 30, null, null, "Song isn't listed in Story Mode?", 100);
+		hideFromListCheckbox.checked = weekFile.songs[curSelected][3];
+		hideFromListCheckbox.callback = function()
+		{
+			weekFile.songs[curSelected][3] = hideFromListCheckbox.checked;
+		};
 		
 		tab_group.add(new FlxText(10, bgColorStepperR.y - 18, 0, 'Selected background Color R/G/B:'));
 		tab_group.add(new FlxText(10, iconInputText.y - 18, 0, 'Selected icon:'));
@@ -711,6 +719,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 		tab_group.add(pasteColor);
 		tab_group.add(iconInputText);
 		tab_group.add(hideFreeplayCheckbox);
+		tab_group.add(hideFromListCheckbox);
 		UI_box.addGroup(tab_group);
 	}
 

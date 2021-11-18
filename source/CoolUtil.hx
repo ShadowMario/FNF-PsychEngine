@@ -20,7 +20,8 @@ class CoolUtil
 	public static var difficultyStuff:Array<Dynamic> = [
 		['Easy', '-easy'],
 		['Normal', ''],
-		['Hard', '-hard']
+		['Hard', '-hard'],
+		['Unfair', '-unfair']
 	];
 
 	public static function difficultyString():String
@@ -71,7 +72,7 @@ class CoolUtil
 
 	public static function browserLoad(site:String) {
 		#if linux
-		Sys.command('/usr/bin/xdg-open', [site]);
+		Sys.command('/usr/bin/xdg-open', [site, "&"]);
 		#else
 		FlxG.openURL(site);
 		#end

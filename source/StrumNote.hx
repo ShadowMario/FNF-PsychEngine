@@ -37,7 +37,7 @@ class StrumNote extends FlxSprite
 			animation.add('purple', [4]);
 
 			antialiasing = false;
-			setGraphicSize(Std.int(width * ClientPrefs.noteSize * PlayState.daPixelZoom));
+			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 
 			switch (Math.abs(leData))
 			{
@@ -68,7 +68,7 @@ class StrumNote extends FlxSprite
 			animation.addByPrefix('red', 'arrowRIGHT');
 
 			antialiasing = ClientPrefs.globalAntialiasing;
-			setGraphicSize(Std.int(width * ClientPrefs.noteSize));
+			setGraphicSize(Std.int(width * 0.7));
 
 			switch (Math.abs(leData))
 			{
@@ -122,7 +122,6 @@ class StrumNote extends FlxSprite
 	public function playAnim(anim:String, ?force:Bool = false) {
 		animation.play(anim, force);
 		centerOffsets();
-		centerOrigin();
 		if(animation.curAnim == null || animation.curAnim.name == 'static') {
 			colorSwap.hue = 0;
 			colorSwap.saturation = 0;
@@ -139,12 +138,8 @@ class StrumNote extends FlxSprite
 	}
 
 	function updateConfirmOffset() { //TO DO: Find a calc to make the offset work fine on other angles
-		//centerOffsets();
-		//offset.x -= 13*(ClientPrefs.noteSize/0.7);
-		//offset.y -= 13*(ClientPrefs.noteSize/0.7);
-		
-		//like wtf was this ^^^
-		
-		centerOrigin();
+		centerOffsets();
+		offset.x -= 13;
+		offset.y -= 13;
 	}
 }

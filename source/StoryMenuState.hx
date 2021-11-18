@@ -32,6 +32,9 @@ class StoryMenuState extends MusicBeatState
 
 	private static var curDifficulty:Int = 1;
 
+	var secretStuff:Int = 0;
+	var secArr=[];
+
 	var txtWeekTitle:FlxText;
 	var bgSprite:FlxSprite;
 
@@ -299,8 +302,11 @@ class StoryMenuState extends MusicBeatState
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 				FreeplayState.destroyFreeplayVocals();
 			});
-		} else {
-			FlxG.sound.play(Paths.sound('cancelMenu'));
+		} else if(secretStuff<3) {
+			secArr=[FlxG.keys.pressed.FOUR,FlxG.keys.pressed.ONE,FlxG.keys.pressed.NINE,FlxG.keys.pressed.SIX];
+			if(secArr[secretStuff+1]==true) {
+				secretStuff+=1;
+			}
 		}
 	}
 
@@ -309,8 +315,8 @@ class StoryMenuState extends MusicBeatState
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = CoolUtil.difficultyStuff.length-1;
-		if (curDifficulty >= CoolUtil.difficultyStuff.length)
+			curDifficulty = CoolUtil.difficultyStuff.length-2;
+		if (curDifficulty >= CoolUtil.difficultyStuff.length-1)
 			curDifficulty = 0;
 
 		sprDifficultyGroup.forEach(function(spr:FlxSprite) {
@@ -384,7 +390,7 @@ class StoryMenuState extends MusicBeatState
 		var leWeek:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[curWeek]);
 		var stringThing:Array<String> = [];
 		for (i in 0...leWeek.songs.length) {
-			stringThing.push(leWeek.songs[i][0]);
+			if(!leWeek.songs[i][3]) stringThing.push(leWeek.songs[i][0]);
 		}
 
 		txtTracklist.text = '';

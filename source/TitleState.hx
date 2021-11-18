@@ -48,7 +48,7 @@ class TitleState extends MusicBeatState
 
 	var wackyImage:FlxSprite;
 
-	var easterEggEnabled:Bool = true; //Disable this to hide the easter egg
+	var easterEggEnabled:Bool = false; //Disable this to hide the easter egg
 	var easterEggKeyCombination:Array<FlxKey> = [FlxKey.B, FlxKey.B]; //bb stands for bbpanzu cuz he wanted this lmao
 	var lastKeysPressed:Array<FlxKey> = [];
 
@@ -280,7 +280,7 @@ class TitleState extends MusicBeatState
 
 		for (i in firstArray)
 		{
-			swagGoodArray.push(i.split('--'));
+			swagGoodArray.push(i.split('//'));
 		}
 
 		return swagGoodArray;
@@ -476,10 +476,10 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
 				case 5:
-					createCoolText(['This is a mod to'], -60);
+					createCoolText(["Bugs fixed by *drumroll*"], -60);
 				case 7:
-					addMoreText('This game right below lol', -60);
-					logoSpr.visible = true;
+					addMoreText('me', -60);
+					//logoSpr.visible = true;
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
 					deleteCoolText();
