@@ -1142,6 +1142,42 @@ class FunkinLua {
 			FlxG.sound.music.fadeOut(duration, toValue);
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
+		// you cant do somethin in lua? use this shit. lol
+		Lua_helper.add_callback(lua, "hscript", function(code:String) {
+			var parser = new hscript.Parser();
+			var interp = new hscript.Interp();
+			var program = parser.parseString(code);
+			interp.variables.set("PlayState",lePlayState);
+			interp.variables.set("FlxG",FlxG);
+			interp.variables.set("Sys",Sys);
+			interp.variables.set("Math",Math);
+			interp.variables.set("FlxSprite",FlxSprite);
+			interp.variables.set("FlxObject",FlxObject);
+			interp.variables.set("Character",Character);
+			interp.variables.set("Note",Note);
+			interp.variables.set("FlxTimer",FlxTimer);
+			interp.variables.set("FlxSprite",FlxSprite);
+			interp.variables.set("FlxTween",FlxTween);
+			interp.variables.set("FlxEase",FlxEase);
+			interp.variables.set("FlxText",FlxText);
+			interp.variables.set("Alphabet",Alphabet);
+			interp.variables.set("MusicBeatState",MusicBeatState);
+			interp.variables.set("FlxCamera",FlxCamera);
+			interp.variables.set("ClientPrefs", ClientPrefs);
+			try{
+				interp.execute(program);
+			}
+			catch(e){
+				luaTrace('HScript error! Message: ' + e.message);
+			}
+		});
+		// I do know math.random exists, but it seems unreliable sometimes
+		Lua_helper.add_callback(lua, "getRandomInt", function(min, max) {
+			return FlxG.random.int(Std.int(min), Std.int(max));
+		});
+		Lua_helper.add_callback(lua, "getRandomBool", function(chance) {
+			return FlxG.random.bool(chance);
+		});
 
 		Discord.DiscordClient.addLuaCallbacks(lua);
 
