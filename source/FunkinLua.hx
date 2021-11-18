@@ -198,9 +198,9 @@ class FunkinLua {
 				for (i in 1...pipiss.length -1 {
 			     		pipiss2 = Reflect.getProperty(coverMeInPiss, pipiss[i]);
 				}
-				return Reflect.callMethod(pipiss2, pipiss[pipiss.length-1], args);
+				return Reflect.callMethod(pipiss2, Reflect.field(pipiss2, pipiss[pipiss.length-1]), args);
 			}
-			return Reflect.callMethod(lePlayState, method, args);
+			return Reflect.callMethod(lePlayState, Reflect.field(lePlayState, method), args);
 		});
 		Lua_helper.add_callback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic) {
 			if(Std.isOfType(Reflect.getProperty(lePlayState, obj), FlxTypedGroup)) {
