@@ -74,8 +74,6 @@ NOTE: This should be used for fixing your character floating or being slightly u
 
 * You can have different events.json files for each difficulty. For example, if you want to have events when you play a song, you create a file called "events-hard.json". You can also create a file called "eventsDefault.json". If a song on a difficulty doesn't have any events, the events will be loaded from "eventsDefault.json," if it exists.
 
-* You can add a "Options.json" file to do stuff like not list that song in story mode. Sadly, there is no editor for this, so you have to make your own .json file.
-
 ## Story mode menu rework:
 ![](https://i.imgur.com/UB2EKpV.png)
 * Added a different BG to every song (less Tutorial)
