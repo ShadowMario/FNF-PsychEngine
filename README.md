@@ -4,7 +4,9 @@
 Original Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 # Friday Night Funkin' - Immo Engine
-Used for upcoming mod
+I am using this for an upcoming mod combining PNP with FNF.
+
+This engine basically adds KadeEngine modcharting features to PsychEngine and other stuff.
 
 ## Installation:
 Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
@@ -16,7 +18,7 @@ You can do this with: `haxelib install linc_luajit` on a Command prompt/PowerShe
 ## Credits:
 * Shadow Mario - Coding
 * RiverOaken - Arts and Animations
-* unfair - Art, Animations, and Coding
+* Unfair - Coding
 
 ### Special Thanks
 * Keoiki - Note Splash Animations
@@ -69,10 +71,6 @@ _____________________________________
 * You can also now change the characters while on the Menu
 * Go back to the game by pressing Escape
 NOTE: This should be used for fixing your character floating or being slightly under the ground! It's not for texture editting.
-
-## The New Stuff
-
-* You can have different events.json files for each difficulty. For example, if you want to have events when you play a song, you create a file called "events-hard.json". You can also create a file called "eventsDefault.json". If a song on a difficulty doesn't have any events, the events will be loaded from "eventsDefault.json," if it exists.
 
 ## Story mode menu rework:
 ![](https://i.imgur.com/UB2EKpV.png)
