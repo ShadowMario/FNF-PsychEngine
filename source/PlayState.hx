@@ -3451,6 +3451,27 @@ songSpeed = SONG.speed;
 	{
 		if (!note.wasGoodHit)
 		{
+			var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + 8); // rating shit
+
+			var rating = "";
+			var score = 0;
+
+			if (noteDiff > Conductor.safeZoneOffset * 0.75)
+			{
+				rating = 'shit';
+				score = 50;
+			}
+			else if (noteDiff > Conductor.safeZoneOffset * 0.5)
+			{
+				rating = 'bad';
+				score = 100;
+			}
+			else if (noteDiff > Conductor.safeZoneOffset * 0.25)
+			{
+				rating = 'good';
+				score = 200;
+			}
+			
 			if(cpuControlled && (note.ignoreNote || note.hitCausesMiss)) return;
 
 			if(note.hitCausesMiss) {
@@ -3526,12 +3547,20 @@ songSpeed = SONG.speed;
 			}
 
 			if(cpuControlled) {
+				var isSus:Bool = note.isSustainNote;
+				// 					   who hit the note, note direction, note type, rating earned, score earned, is sustain note
+				callOnLuas("hitNote", ["opponent", note.noteData, note.noteType, rating, score, isSus]);
+
 				var time:Float = 0.15;
 				if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 					time += 0.15;
 				}
 				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)) % 4, time);
 			} else {
+				var isSus:Bool = note.isSustainNote;
+				// 					   who hit the note, note direction, note type, rating earned, score earned, is sustain note
+				callOnLuas("hitNote", ["player", note.noteData, note.noteType, rating, score, isSus]);
+
 				playerStrums.forEach(function(spr:StrumNote)
 				{
 					if (Math.abs(note.noteData) == spr.ID)
@@ -3546,7 +3575,7 @@ songSpeed = SONG.speed;
 			var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
 			var leData:Int = Math.round(Math.abs(note.noteData));
 			var leType:String = note.noteType;
-			callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
+			// Uncomment if this function is really necessary: callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
 
 			if (!note.isSustainNote)
 			{
