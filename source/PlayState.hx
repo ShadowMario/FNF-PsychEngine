@@ -3453,7 +3453,7 @@ songSpeed = SONG.speed;
 		{
 			var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + 8); // rating shit
 
-			var rating = "";
+			var rating:String = "sick";
 			var score = 0;
 
 			if (noteDiff > Conductor.safeZoneOffset * 0.75)
