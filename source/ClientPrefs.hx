@@ -34,10 +34,10 @@ class ClientPrefs {
 
 	public static function startControls() {
 		//Key Bind, Name for ControlsSubState
-		keyBinds.set('note_left', [A, LEFT]);
-		keyBinds.set('note_down', [S, DOWN]);
-		keyBinds.set('note_up', [W, UP]);
-		keyBinds.set('note_right', [D, RIGHT]);
+		keyBinds.set('note_left', [D, LEFT]);
+		keyBinds.set('note_down', [F, DOWN]);
+		keyBinds.set('note_up', [J, UP]);
+		keyBinds.set('note_right', [K, RIGHT]);
 		
 		keyBinds.set('ui_left', [A, LEFT]);
 		keyBinds.set('ui_down', [S, DOWN]);
