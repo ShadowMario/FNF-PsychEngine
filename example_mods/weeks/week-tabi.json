@@ -1,0 +1,48 @@
+{
+	"storyName": "Tabi",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "tutorial",
+	"startUnlocked": true,
+	"hideStoryMode": false,
+	"weekCharacters": [
+		"tabi",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"my-battle",
+			"tabi",
+			[
+				126,
+				93,
+				55
+			]
+		],
+		[
+			"last-chance",
+			"tabi",
+			[
+				126,
+				93,
+				55
+			]
+		],
+		[
+			"genocide",
+			"tabi",
+			[
+				126,
+				93,
+				55
+			]
+		]
+	],
+	"weekName": "Tabi"
+}

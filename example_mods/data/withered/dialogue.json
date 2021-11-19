@@ -1,0 +1,53 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "bobalt",
+			"boxState": "normal",
+			"expression": "mad",
+			"text": "what was that for"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "boop skedeep"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bobalt",
+			"boxState": "normal",
+			"expression": "mad",
+			"text": "i am so mad bro"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "you kinda look like Dream"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bobalt",
+			"boxState": "normal",
+			"expression": "mad",
+			"text": "..."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "beep boop (funny)"
+		},
+                {
+			"speed": 0.05,
+			"portrait": "bobalt",
+			"boxState": "normal",
+			"expression": "mad",
+			"text": "this is the part where bob absolubley destroys the dialog box like an awesome person"
+		}
+	]
+}

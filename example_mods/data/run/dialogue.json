@@ -1,0 +1,25 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "bobalt",
+			"boxState": "normal",
+			"expression": "hell",
+			"text": "እኔ እዚህ ድረስ አግኝቻለሁ ፣ የሴት ጓደኛዎን ይሳቡ እና እርስዎም በህይወትዎ ቀሪ ሥቃይ እና ሥቃይ ሊደርስብዎት እና ሥቃይ ደርሶብዎታል ፡፡ "
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "boop ski bep"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bobalt",
+			"boxState": "normal",
+			"expression": "hell",
+			"text": "ለማንም አያስቡም ፡፡ ማንም አይወድህም እና አፍቃሪ ልጃገረድህ በጭራሽ አይሳካልህም ፣ በሚያስደንቅ ላንዲን "
+		}
+	]
+}

@@ -1,0 +1,120 @@
+---SECTION START---
+:class:Cutscene2,
+:bghide:
+:disableTypeSound:
+:switchSound:tabiText
+:class-use:Cutscene2
+:fadeOut:0.5
+:musicloop:bgms/2
+:enableTypeSound:
+:switchSound:tabiText
+:tabi:Hehehe... So, You Survived The Explosion, Huh?
+:disableTypeSound:
+:sound:GF_1
+:gf-hmm:*TERRIFIED*
+:sound:bfText
+:bf-exp:*WORRIED BEEP BOPS*
+:enableTypeSound:
+:tabi-mad:You Think Im Stupid? I knew you would bring someone with you, BUT HIM?!
+:switchSound:bfText
+:bf-exp:Bep Bob Skbed
+:switchSound:tabiText
+:tabi-worried:I DON'T CARE ANYMORE! I WILL KILL HER HERE AND NOW NO MATTER WHAT!!!
+:fadeOut:0oh wow my man here is fucking crazy chill OUT
+:tabi-worried:JUST TO MAKE THAT PIECE OF CRAP SHE CALLS HER FATHER FEEL PAIN
+:chromeoffset:4
+:tabi-worried:JUST DIE!!!
+:musicstop:
+---SECTION END---
+
+---SECTION START---
+:class:Cutscene2,
+:disableTypeSound:
+:switchSound:bfText
+:bghide:
+:class-use:Cutscene2
+:fadeOut:0.5
+:musicloop:bgms/2
+:soundoverwrite:voices/tabi3/1
+:tabi:Hehehe... So, You Survived The Explosion, Huh?
+:soundoverwritestop:
+:sound:GF_1
+:gf-hmm:*TERRIFIED*
+:sound:bfText
+:bf-exp:*WORRIED BEEP BOPS*
+:soundoverwrite:voices/tabi3/2
+:tabi-mad:You Think Im Stupid? I knew you would bring someone with you, BUT HIM?!
+:soundoverwritestop:
+:enableTypeSound:
+:bf-exp:Bep Bob Skbed
+:disableTypeSound:
+:soundoverwrite:voices/tabi3/3
+:tabi-worried:I DON'T CARE ANYMORE! I WILL KILL HER HERE AND NOW NO MATTER WHAT!!!
+:soundoverwrite:voices/tabi3/4
+:tabi-worried:JUST TO MAKE THAT PIECE OF CRAP SHE CALLS HER FATHER FEEL PAIN
+:chromeoffset:4
+:soundoverwrite:voices/tabi3/5
+:tabi-worried:JUST DIE!!!
+:soundoverwritestop:
+:musicstop:
+---SECTION END---
+
+---SECTION START---
+:class:Cutscene2,
+:bghide:
+:disableTypeSound:
+:switchSound:tabiText
+:class-use:Cutscene2
+:fadeOut:0.5
+:musicloop:bgms/2
+:enableTypeSound:
+:switchSound:tabiText
+:tabi:Хах… живые? … не так-ли?
+:disableTypeSound:
+:sound:GF_1
+:gf-hmm:*выглядит напуганной*
+:sound:bfText
+:bf-exp:*напуганные бип бопы*
+:enableTypeSound:
+:tabi-mad:Хах… думала я тупой? Я знал, что ты приведёшь кого-то.. охрану например или головорезов, но ЕГО?!
+:switchSound:bfText
+:bf-exp:Бип боп скбид
+:switchSound:tabiText
+:tabi-worried:МНЕ ВСЁ РОВНО! К ЧЕРТУ! Я УБЬЮ ЕЁ ЛЮБОЙ ЦЕНОЙ! ДАЖЕ ЕСЛИ МНЕ НУЖНО БУДЕТ ВЗОРВАТЬ ЦЕЛЫЙ МИР!!!
+:tabi-worried:ВСЁ ДЛЯ ТОГО ЧТОБЫ ЭТА МАЛЕНЬКАЯ ДРЯНЬ И ЕЁ ПАПАША СТРАДАЛИ!
+:chromeoffset:4
+:tabi-worried:СДОХНИТЕ!!!
+:musicstop:
+---SECTION END---
+
+---SECTION START---
+:class:Cutscene2,
+:disableTypeSound:
+:switchSound:bfText
+:bghide:
+:class-use:Cutscene2
+:fadeOut:0.5
+:musicloop:bgms/2
+:soundoverwrite:voices/tabi3/1
+:tabi:Хах… живые? … не так-ли?
+:soundoverwritestop:
+:sound:GF_1
+:gf-hmm:*выглядит напуганной*
+:sound:bfText
+:bf-exp:*напуганные бип бопы*
+:soundoverwrite:voices/tabi3/2
+:tabi-mad:Хах… думала я тупой? Я знал, что ты приведёшь кого-то.. охрану например или головорезов, но ЕГО?!
+:soundoverwritestop:
+:enableTypeSound:
+:bf-exp:Бип боп скбид
+:disableTypeSound:
+:soundoverwrite:voices/tabi3/3
+:tabi-worried:МНЕ ВСЁ РОВНО! К ЧЕРТУ! Я УБЬЮ ЕЁ ЛЮБОЙ ЦЕНОЙ! ДАЖЕ ЕСЛИ МНЕ НУЖНО БУДЕТ ВЗОРВАТЬ ЦЕЛЫЙ МИР!!!
+:soundoverwrite:voices/tabi3/4
+:tabi-worried:ВСЁ ДЛЯ ТОГО ЧТОБЫ ЭТА МАЛЕНЬКАЯ ДРЯНЬ И ЕЁ ПАПАША СТРАДАЛИ!
+:chromeoffset:4
+:soundoverwrite:voices/tabi3/5
+:tabi-worried:СДОХНИТЕ!!!
+:soundoverwritestop:
+:musicstop:
+---SECTION END---

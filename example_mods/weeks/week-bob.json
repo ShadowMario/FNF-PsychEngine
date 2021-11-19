@@ -1,0 +1,66 @@
+{
+	"storyName": "Bob",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"weekCharacters": [
+		"bob",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"sunshine",
+			"bob",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"trouble",
+			"bob",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"withered",
+			"bob",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"onslaught",
+			"glitched-bob",
+			[
+				50,
+				50,
+				50
+			]
+		],
+		[
+			"run",
+			"hellbob",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "Bob"
+}

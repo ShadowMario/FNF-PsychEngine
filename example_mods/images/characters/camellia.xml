@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="camellia.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Camellia_Down0000" x="0" y="0" width="961" height="995" pivotX="480.25" pivotY="539.7"/>
+	<SubTexture name="Camellia_Down0001" x="0" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0002" x="961" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0003" x="961" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0004" x="1922" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0005" x="1922" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0006" x="2883" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0007" x="2883" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0008" x="3844" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0009" x="3844" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0010" x="3844" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0011" x="3844" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0012" x="3844" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0013" x="3844" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0014" x="3844" y="0" width="961" height="995"/>
+	<SubTexture name="Camellia_Idle0000" x="4805" y="0" width="961" height="903" pivotX="480.25" pivotY="447.3"/>
+	<SubTexture name="Camellia_Idle0001" x="4805" y="0" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0002" x="5766" y="0" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0003" x="5766" y="0" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0004" x="6727" y="0" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0005" x="6727" y="0" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0006" x="0" y="995" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0007" x="0" y="995" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0008" x="961" y="995" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0009" x="961" y="995" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0010" x="961" y="995" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0011" x="961" y="995" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0012" x="961" y="995" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0013" x="961" y="995" width="961" height="903"/>
+	<SubTexture name="Camellia_Left0000" x="1922" y="995" width="1055" height="922" pivotX="574.85" pivotY="466.85"/>
+	<SubTexture name="Camellia_Left0001" x="2977" y="995" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0002" x="4032" y="995" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0003" x="4032" y="995" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0004" x="5087" y="995" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0005" x="6142" y="995" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0006" x="0" y="1917" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0007" x="0" y="1917" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0008" x="1055" y="1917" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0009" x="1055" y="1917" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0010" x="1055" y="1917" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0011" x="1055" y="1917" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0012" x="1055" y="1917" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0013" x="1055" y="1917" width="1055" height="922"/>
+	<SubTexture name="Camellia_Left0014" x="1055" y="1917" width="1055" height="922"/>
+	<SubTexture name="Camellia_Right0000" x="2110" y="1917" width="961" height="900" pivotX="480.25" pivotY="444.45"/>
+	<SubTexture name="Camellia_Right0001" x="3071" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0002" x="4032" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0003" x="4032" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0004" x="4993" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0005" x="4993" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0006" x="5954" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0007" x="5954" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0008" x="5954" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0009" x="5954" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0010" x="5954" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0011" x="5954" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0012" x="5954" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0013" x="5954" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0014" x="5954" y="1917" width="961" height="900"/>
+	<SubTexture name="Camellia_Up0000" x="6915" y="1917" width="966" height="991" pivotX="485.15" pivotY="535.55"/>
+	<SubTexture name="Camellia_Up0001" x="0" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0002" x="966" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0003" x="1932" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0004" x="2898" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0005" x="2898" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0006" x="3864" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0007" x="3864" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0008" x="4830" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0009" x="4830" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0010" x="4830" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0011" x="4830" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0012" x="4830" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0013" x="4830" y="2908" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0014" x="4830" y="2908" width="966" height="991"/>
+</TextureAtlas>

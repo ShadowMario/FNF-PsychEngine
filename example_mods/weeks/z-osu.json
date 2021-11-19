@@ -1,0 +1,39 @@
+{
+	"storyName": "osu",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"kayanoaioracion",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"theasteriskwar",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "osu"
+}

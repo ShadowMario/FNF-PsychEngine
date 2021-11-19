@@ -1,0 +1,84 @@
+---SECTION START---
+:musicloop:bgms/1
+:disableTypeSound:
+:switchSound:tabiText
+:enableTypeSound:
+:tabi-mad:GH... How Do You Not Understand, That She Is Just Using You For Her Own Success?
+:tabi-mad:Like She Used Me Once, NOW LOOK WHO I AM, JUST A FLOATING SKULL WITH AN INVISIBLE BODY, I'VE LOST EVERYTHING!
+:fadeOut:0jesus christ its me gwebdev my man needs to calm down lol
+:switchSound:bfText
+:bf-right:Beb Bop Beb Bob Skbob Dop
+:switchSound:tabiText
+:tabi-mad:This is your last chance to leave, I-I Won't Stop Until I GET MY HANDS ON THAT LITTLE BRAT, LEAVE NOW OR FACE THE CONSEQUENCES
+:switchSound:bfText
+:bf-right:...
+:musicstop:
+:switchSound:tabiText
+:tabi-mad:Very well then, I Didn't Want It To End This Way, But, I GUESS I WILL JUST KILL THE BOTH OF YOU!
+---SECTION END---
+
+---SECTION START---
+:musicloop:bgms/1
+:disableTypeSound:
+:switchSound:bfText
+:soundoverwrite:voices/tabi2/1
+:tabi-mad:GH... How Do You Not Understand, That She Is Just Using You For Her Own Success?
+:soundoverwrite:voices/tabi2/2
+:tabi-mad:Like She Used Me Once, NOW LOOK WHO I AM, JUST A FLOATING SKULL WITH AN INVISIBLE BODY, I'VE LOST EVERYTHING!
+:soundoverwritestop:
+:enableTypeSound:
+:bf-right:Beb Bop Beb Bob Skbob Dop
+:disableTypeSound:
+:soundoverwrite:voices/tabi2/3
+:tabi-mad:This is your last chance to leave, I-I Won't Stop Until I GET MY HANDS ON THAT LITTLE BRAT, LEAVE NOW OR FACE THE CONSEQUENCES
+:soundoverwritestop:
+:enableTypeSound:
+:bf-right:...
+:disableTypeSound:
+:musicstop:
+:soundoverwrite:voices/tabi2/4
+:tabi-mad:Very well then, I Didn't Want It To End This Way, But, I GUESS I WILL JUST KILL THE BOTH OF YOU!
+:soundoverwritestop:
+---SECTION END---
+
+---SECTION START---
+:musicloop:bgms/1
+:disableTypeSound:
+:switchSound:tabiText
+:enableTypeSound:
+:tabi-mad:Гх… как ты не понимаешь, что она использует тебя лишь для своей собственной выгоды?!
+:tabi-mad:Использует так, как использовала... меня когда-то... Теперь посмотри на меня! Кто я теперь!? Летающий череп с невидимым телом? Я потерял всё!
+:switchSound:bfText
+:bf-right:Биб боб биб боп сбоп скд
+:switchSound:tabiText
+:tabi-mad:Слушай сюда, это твой последний шанс уйти. Я не остановлюсь, пока не доберусь до этой мелкой стервы! Проваливай сейчас-же, или узри последствия
+:switchSound:bfText
+:bf-right:...
+:musicstop:
+:switchSound:tabiText
+:tabi-mad:Хорошо.. Не хотел я причинять тебе вред, малыш, но ты мне не оставляешь выбора, раз так, то я.. УБЬЮ ВАС ОБОИХ!
+---SECTION END---
+
+---SECTION START---
+:musicloop:bgms/1
+:disableTypeSound:
+:switchSound:bfText
+:soundoverwrite:voices/tabi2/1
+:tabi-mad:Гх… как ты не понимаешь, что она использует тебя лишь для своей собственной выгоды?!
+:soundoverwrite:voices/tabi2/2
+:tabi-mad:Использует так, как использовала... меня когда-то... Теперь посмотри на меня! Кто я теперь!? Летающий череп с невидимым телом? Я потерял всё!
+:soundoverwritestop:
+:enableTypeSound:
+:bf-right:Биб боб биб боп сбоп скд
+:disableTypeSound:
+:soundoverwrite:voices/tabi2/3
+:tabi-mad:Слушай сюда, это твой последний шанс уйти. Я не остановлюсь, пока не доберусь до этой мелкой стервы! Проваливай сейчас-же, или узри последствия
+:soundoverwritestop:
+:enableTypeSound:
+:bf-right:...
+:disableTypeSound:
+:musicstop:
+:soundoverwrite:voices/tabi2/4
+:tabi-mad:Хорошо.. Не хотел я причинять тебе вред, малыш, но ты мне не оставляешь выбора, раз так, то я.. УБЬЮ ВАС ОБОИХ!
+:soundoverwritestop:
+---SECTION END---
