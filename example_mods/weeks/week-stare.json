@@ -2,15 +2,16 @@
 	"storyName": "starecrown",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
-	"weekBefore": "tutorial",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
+	"weekBefore": "tutorial",
 	"startUnlocked": true,
+	"hideStoryMode": false,
 	"weekCharacters": [
-		"dad",
+		"starecrown",
 		"bf",
 		"gf"
 	],
@@ -43,6 +44,5 @@
 			]
 		]
 	],
-	"hideStoryMode": false,
 	"weekName": "stare"
 }

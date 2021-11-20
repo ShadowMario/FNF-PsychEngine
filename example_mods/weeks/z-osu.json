@@ -1,5 +1,5 @@
 {
-	"storyName": "osu",
+	"storyName": "osu converts",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
 	"weekBefore": "tutorial",
@@ -17,7 +17,7 @@
 	"songs": [
 		[
 			"kayanoaioracion",
-			"dad",
+			"osu",
 			[
 				146,
 				113,
@@ -26,7 +26,7 @@
 		],
 		[
 			"theasteriskwar",
-			"dad",
+			"osu",
 			[
 				146,
 				113,
@@ -34,6 +34,6 @@
 			]
 		]
 	],
-	"hideStoryMode": false,
-	"weekName": "osu"
+	"hideStoryMode": true,
+	"weekName": "osu converts"
 }

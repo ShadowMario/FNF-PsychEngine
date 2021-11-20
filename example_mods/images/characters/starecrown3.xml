@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="starecrown3.png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Idle0000" x="0" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Down0000" x="4686" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Down0001" x="5858" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Down0002" x="7031" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Left0000" x="1170" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Left0001" x="2342" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Left0002" x="3515" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Right0000" x="8202" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Right0001" x="9373" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Right0002" x="10546" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Up0000" x="11717" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Up0001" x="12889" y="0" width="1170" height="1170"/>
+	<SubTexture name="Sing Up0002" x="0" y="1170" width="1170" height="1170"/>
+
+</TextureAtlas>
