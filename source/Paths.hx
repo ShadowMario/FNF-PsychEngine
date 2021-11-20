@@ -161,6 +161,39 @@ class Paths
 		return getPath('sounds/$key.$SOUND_EXT', SOUND, library);
 	}
 	
+	static public function listSongsToCache()
+	{
+		var soundAssets = OpenFlAssets.list(AssetType.MUSIC).concat(OpenFlAssets.list(AssetType.SOUND));
+
+		var songNames = [];
+
+		for (sound in soundAssets)
+		{
+			var path = sound.split('/');
+			path.reverse();
+
+			var fileName = path[0];
+			var songName = path[1];
+
+			if (path[2] != 'songs')
+				continue;
+
+			if (songNames.indexOf(songName) != -1)
+				continue;
+
+			songNames.push(songName);
+		}
+
+		return songNames;
+	}
+
+	static public function doesSoundAssetExist(path:String)
+	{
+		if (path == null || path == "")
+			return false;
+		return OpenFlAssets.exists(path, AssetType.SOUND) || OpenFlAssets.exists(path, AssetType.MUSIC);
+	}
+	
 	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
 	{
 		return sound(key + FlxG.random.int(min, max), library);
@@ -188,7 +221,8 @@ class Paths
 			return file;
 		}
 		#end
-		return 'songs:assets/songs/${song.toLowerCase().replace(' ', '-')}/Voices.$SOUND_EXT';
+		var result = 'songs:assets/songs/${song.toLowerCase().replace(' ', '-')}/Voices.$SOUND_EXT';
+		return doesSoundAssetExist(result) ? result : null;
 	}
 
 	inline static public function inst(song:String):Any
