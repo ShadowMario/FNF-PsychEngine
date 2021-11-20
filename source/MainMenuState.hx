@@ -36,6 +36,9 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
+	
+	//cache music
+	var music = [];
 
 	override function create()
 	{
@@ -214,6 +217,30 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new StoryMenuState());
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
+										
+        									#if desktop
+										music = Paths.listSongsToCache();
+										#end
+
+        									#if cpp
+										sys.thread.Thread.create(() ->
+										{
+        								    	    for (i in music)
+        								            {
+        								        	var inst = Paths.inst(i);
+            								    		if (Paths.doesSoundAssetExist(inst))
+            								    		{
+            								        	    FlxG.sound.cache(inst);
+            								    		}
+
+            								    		var voices = Paths.voices(i);
+            								    		if (Paths.doesSoundAssetExist(voices))
+            								    		{
+            								    		    FlxG.sound.cache(voices);
+            								    		}
+            									    }
+										});
+										#end
 									case 'awards':
 										MusicBeatState.switchState(new AchievementsMenuState());
 									case 'credits':
