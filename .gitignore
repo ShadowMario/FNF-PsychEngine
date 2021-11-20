@@ -6,3 +6,6 @@ art/build_x64-officialrelease.bat
 art/test_x64-debug-officialrelease.bat
 Psych Engine Scripts/
 .gitignore
+assets/preload/data/introText.txt.bak
+assets/preload/data/introText.txt
+assets/preload/data/introText.txt
