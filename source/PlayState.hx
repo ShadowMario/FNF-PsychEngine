@@ -2838,17 +2838,20 @@ class PlayState extends MusicBeatState
 		var songName:String = Paths.formatToSongPath(SONG.song);
 
 		var dialogueJson:DialogueFile = null;
-		var file:String = Paths.json(songName + '/dialogueEND'); //Checks for json/Psych Engine dialogue
-		if (OpenFlAssets.exists(file)) {
-			dialogueJson = DialogueBoxPsych.parseDialogue(file);
-		}
 
-		#if MODS_ALLOWED
-		var file:String = Paths.modsJson(songName + '/dialogueEND'); //Checks for json/Psych Engine dialogue in mod folder
-		if(dialogueJson == null && FileSystem.exists(file)) { // Only check if dialogue has not already been found
-			dialogueJson = DialogueBoxPsych.parseDialogue(file);
+		if(isStoryMode) {
+			var file:String = Paths.json(songName + '/dialogueEND'); //Checks for json/Psych Engine dialogue
+			if (OpenFlAssets.exists(file)) {
+				dialogueJson = DialogueBoxPsych.parseDialogue(file);
+			}
+
+			#if MODS_ALLOWED
+			var file:String = Paths.modsJson(songName + '/dialogueEND'); //Checks for json/Psych Engine dialogue in mod folder
+			if(dialogueJson == null && FileSystem.exists(file)) { // Only check if dialogue has not already been found
+				dialogueJson = DialogueBoxPsych.parseDialogue(file);
+			}
+			#end
 		}
-		#end
 
 		if(ClientPrefs.noteOffset <= 0) {
 			if(dialogueJson != null) startDialogue(dialogueJson);
