@@ -1,12 +1,5 @@
-# This template is ready for use!
-
 # Friday Night Funkin' - Psych Engine
-Original Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
-
-# Friday Night Funkin' - Immo Engine
-I am using this for an upcoming mod combining PNP with FNF.
-
-This engine basically adds KadeEngine modcharting features to PsychEngine and other stuff.
+Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
 Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
@@ -18,7 +11,6 @@ You can do this with: `haxelib install linc_luajit` on a Command prompt/PowerShe
 ## Credits:
 * Shadow Mario - Coding
 * RiverOaken - Arts and Animations
-* Unfair - Coding
 
 ### Special Thanks
 * Keoiki - Note Splash Animations
@@ -62,8 +54,6 @@ _____________________________________
 * You can change a note's type on the Editor, it comes with two example types:
   * Alt Animation: Forces an alt animation to play, useful for songs like Ugh/Stress
   * Hey: Forces a "Hey" animation instead of the base Sing animation, if Boyfriend hits this note, Girlfriend will do a "Hey!" too.
-* You can place notes on top of eachother by holding alt and clicking
-* You can hold right-click and drag to place multiple notes
 
 ## Improved Animation Debug menu (Press 8 in-game on a Debug build)
 ![](https://user-images.githubusercontent.com/44785097/127721062-f912853c-2513-41b8-bd66-fd80d9d4ee0f.png)
