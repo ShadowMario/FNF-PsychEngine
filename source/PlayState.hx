@@ -1958,7 +1958,7 @@ songSpeed = SONG.speed;
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 			if(!startingSong && !endingSong && boyfriend.animation.curAnim.name.startsWith('idle')) {
 				boyfriendIdleTime += elapsed;
-				if(boyfriendIdleTime >= 0.15) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
+				if(boyfriendIdleTime >= 0.15) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some players
 					boyfriendIdled = true;
 				}
 			} else {
@@ -3083,17 +3083,17 @@ songSpeed = SONG.speed;
 
 		var daRating:String = "sick";
 
-		if (noteDiff > Conductor.safeZoneOffset * 0.75)
+		if (noteDiff > Conductor.safeZoneOffset * 0.60)
 		{
 			daRating = 'shit';
 			score = 50;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.5)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.40)
 		{
 			daRating = 'bad';
 			score = 100;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.25)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.20)
 		{
 			daRating = 'good';
 			score = 200;
@@ -3172,17 +3172,17 @@ songSpeed = SONG.speed;
 		comboSpr.updateHitbox();
 		rating.updateHitbox();
 
-		var seperatedScore:Array<Int> = [];
+		var separatedScore:Array<Int> = [];
 
 		if(combo >= 1000) {
-			seperatedScore.push(Math.floor(combo / 1000) % 10);
+			separatedScore.push(Math.floor(combo / 1000) % 10);
 		}
-		seperatedScore.push(Math.floor(combo / 100) % 10);
-		seperatedScore.push(Math.floor(combo / 10) % 10);
-		seperatedScore.push(combo % 10);
+		separatedScore.push(Math.floor(combo / 100) % 10);
+		separatedScore.push(Math.floor(combo / 10) % 10);
+		separatedScore.push(combo % 10);
 
 		var daLoop:Int = 0;
-		for (i in seperatedScore)
+		for (i in separatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
 			numScore.screenCenter();
@@ -3220,10 +3220,10 @@ songSpeed = SONG.speed;
 		}
 		/* 
 			trace(combo);
-			trace(seperatedScore);
+			trace(separatedScore);
 		 */
 
-		coolText.text = Std.string(seperatedScore);
+		coolText.text = Std.string(separatedScore);
 		// add(coolText);
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2, {
