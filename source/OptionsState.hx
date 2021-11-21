@@ -938,7 +938,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Framerate':
 						ClientPrefs.framerate += add;
 						if(ClientPrefs.framerate < 60) ClientPrefs.framerate = 60;
-						else if(ClientPrefs.framerate > 240) ClientPrefs.framerate = 240;
+						else if(ClientPrefs.framerate > 960) ClientPrefs.framerate = 960;
 
 						if(ClientPrefs.framerate > FlxG.drawFramerate) {
 							FlxG.updateFramerate = ClientPrefs.framerate;
