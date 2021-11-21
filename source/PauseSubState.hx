@@ -14,8 +14,6 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.FlxCamera;
 
-import sys.FileSystem;
-
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
@@ -23,7 +21,6 @@ class PauseSubState extends MusicBeatSubstate
 	var menuItems:Array<String> = [];
 	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Botplay', 'Exit to menu'];
 	var difficultyChoices = [];
-	var difficultyIndex = [];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -36,26 +33,10 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 		menuItems = menuItemsOG;
-		if(PlayState.isStoryMode==true) {
-			for (i in 0...CoolUtil.difficultyStuff.length-1) {
-				var name:String = PlayState.SONG.song.toLowerCase();
-				var diff:String = '' + CoolUtil.difficultyStuff[i][0];
-				var poop = Highscore.formatSong(name, i);
-				if(Song.checkJsonExists(poop, name)==true) {
-					difficultyChoices.push(diff);
-					difficultyIndex.push(i);
-				}
-			}
-		} else {
-			for (i in 0...CoolUtil.difficultyStuff.length) {
-				var name:String = PlayState.SONG.song.toLowerCase();
-				var diff:String = '' + CoolUtil.difficultyStuff[i][0];
-				var poop = Highscore.formatSong(name, i);
-				if(Song.checkJsonExists(poop, name)==true) {
-					difficultyChoices.push(diff);
-					difficultyIndex.push(i);
-				}
-			}
+
+		for (i in 0...CoolUtil.difficultyStuff.length) {
+			var diff:String = '' + CoolUtil.difficultyStuff[i][0];
+			difficultyChoices.push(diff);
 		}
 		difficultyChoices.push('BACK');
 
@@ -162,9 +143,9 @@ class PauseSubState extends MusicBeatSubstate
 			for (i in 0...difficultyChoices.length-1) {
 				if(difficultyChoices[i] == daSelected) {
 					var name:String = PlayState.SONG.song.toLowerCase();
-					var poop = Highscore.formatSong(name, difficultyIndex[curSelected]);
+					var poop = Highscore.formatSong(name, curSelected);
 					PlayState.SONG = Song.loadFromJson(poop, name);
-					PlayState.storyDifficulty = difficultyIndex[curSelected];
+					PlayState.storyDifficulty = curSelected;
 					CustomFadeTransition.nextCamera = transCamera;
 					MusicBeatState.resetState();
 					FlxG.sound.music.volume = 0;

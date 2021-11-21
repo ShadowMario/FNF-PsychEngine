@@ -94,29 +94,11 @@ class Song
 				daNotes = songData.notes;
 				daSong = songData.song;
 				daBpm = songData.bpm; */
+
 		var songJson:SwagSong = parseJSONshit(rawJson);
 		if(jsonInput != 'events') StageData.loadDirectory(songJson);
-		if(ClientPrefs.customNoteSpeed) songJson.speed*=ClientPrefs.noteSpeed;
 		return songJson;
 	}
-
-	public static function checkJsonExists(jsonInput:String, ?folder:String)
-		{
-			var formattedFolder:String = Paths.formatToSongPath(folder);
-			var formattedSong:String = Paths.formatToSongPath(jsonInput);
-			var checkfile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
-			var checkfile2:String = Paths.json(formattedFolder + '/' + formattedSong);
-			// Code doesn't check if difficulty file even exists, disgusting...
-			trace("(Mod): Checking if .json exists, " + checkfile + ", returned " + FileSystem.exists(checkfile));
-			trace("(Vanilla): Checking if .json exists, " + checkfile2 + ", returned " + FileSystem.exists(checkfile2));
-			if(FileSystem.exists(checkfile)) {
-				return true;
-			} else if(FileSystem.exists(checkfile2)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
 
 	public static function parseJSONshit(rawJson:String):SwagSong
 	{

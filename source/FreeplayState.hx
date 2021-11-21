@@ -80,7 +80,7 @@ class FreeplayState extends MusicBeatState
 		for (i in 0...initSonglist.length)
 		{
 			if(initSonglist[i] != null && initSonglist[i].length > 0) {
-				var songArray:Array<String >= initSonglist[i].split(":");
+				var songArray:Array<String> = initSonglist[i].split(":");
 				addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
 			}
 		}
@@ -330,11 +330,6 @@ class FreeplayState extends MusicBeatState
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
 		positionHighscore();
-		var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-		if(!Song.checkJsonExists(poop,songs[curSelected].songName.toLowerCase())) {
-			if(change==0) change=1;
-			changeDiff(change);
-		}
 	}
 
 	function changeSelection(change:Int = 0)
