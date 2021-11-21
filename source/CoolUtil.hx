@@ -16,11 +16,14 @@ using StringTools;
 
 class CoolUtil
 {
+	// Added additional difficulties based on osu! //Lulu
 	// [Difficulty name, Chart file suffix]
 	public static var difficultyStuff:Array<Dynamic> = [
 		['Easy', '-easy'],
 		['Normal', ''],
-		['Hard', '-hard']
+		['Hard', '-hard'],
+		['Insane', '-insane'],
+		['Expert', '-expert']
 	];
 
 	public static function difficultyString():String
