@@ -101,6 +101,7 @@ class FunkinLua {
 		// Camera poo
 		set('cameraX', 0);
 		set('cameraY', 0);
+		set('cameraAngle', 0);
 		
 		// Screen stuff
 		set('screenWidth', FlxG.width);
@@ -139,9 +140,7 @@ class FunkinLua {
 
 		// Some settings, no jokes
 		set('downscroll', ClientPrefs.downScroll);
-		//set('middlescroll', ClientPrefs.middleScroll);
-		set('middlescroll', false); // Middlescroll is currently broke so it's automaticly disabled
-		ClientPrefs.middleScroll=false;
+		set('middlescroll', ClientPrefs.middleScroll);
 		set('framerate', ClientPrefs.framerate);
 		set('ghostTapping', ClientPrefs.ghostTapping);
 		set('hideHud', ClientPrefs.hideHud);
@@ -150,6 +149,10 @@ class FunkinLua {
 		set('flashingLights', ClientPrefs.flashing);
 		set('noteOffset', ClientPrefs.noteOffset);
 		set('lowQuality', ClientPrefs.lowQuality);
+
+		// Other Modchart Stuff
+		set('defaultHPBarX', lePlayState.healthBarDefaultX);
+		set('defaultHPBarY', lePlayState.healthBarDefaultY);
 
 		//stuff 4 noobz like you B)
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
@@ -172,6 +175,24 @@ class FunkinLua {
 		// I'm just not gonna hardcode this cause I noob
 		Lua_helper.add_callback(lua, "unlockAchievement", function(value:String) {
 			Achievements.unlockAchievement(value);
+		});
+		Lua_helper.add_callback(lua, "toString", function(value) {
+			return "" + value;
+		});
+		Lua_helper.add_callback(lua, "camAngle", function(value:Float) {
+			lePlayState.camGame.angle=value;
+		});
+		Lua_helper.add_callback(lua, "hudAngle", function(value:Float) {
+			lePlayState.camHUD.angle=value;
+		});
+		Lua_helper.add_callback(lua, "camAlpha", function(value:Float) {
+			lePlayState.camGame.alpha=value/255;
+		});
+		Lua_helper.add_callback(lua, "getcamHUD", function(value:Float) {
+			return lePlayState.camHUD;
+		});
+		Lua_helper.add_callback(lua, "getcamGame", function(value:Float) {
+			return lePlayState.camGame;
 		});
 		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic) {
 			var killMe:Array<String> = variable.split('.');
@@ -454,14 +475,134 @@ class FunkinLua {
 				}));
 			}
 		});
+		
+		Lua_helper.add_callback(lua, "noteTweenScaleX", function(tag:String, note:Int, x:Dynamic, duration:Float, ease:String) {
+			cancelTween(tag);
+			if(note < 0) note = 0;
+			var testicle:StrumNote = lePlayState.strumLineNotes.members[note % lePlayState.strumLineNotes.length];
+
+			if(testicle != null) {
+				lePlayState.modchartTweens.set(tag, FlxTween.tween(testicle, {scaleX: x}, duration, {ease: getFlxEaseByString(ease),
+					onComplete: function(twn:FlxTween) {
+						lePlayState.callOnLuas('onTweenCompleted', [tag]);
+						lePlayState.modchartTweens.remove(tag);
+					}
+				}));
+			}
+		});
+
+		Lua_helper.add_callback(lua, "hudTweenAlpha", function(tag:String, value:Dynamic, duration:Float, ease:String) {
+			cancelTween(tag);
+			var testicle = lePlayState.camHUD;
+
+			if(testicle!=null) {
+				lePlayState.modchartTweens.set(tag, FlxTween.tween(testicle, {alpha: value}, duration, {ease: getFlxEaseByString(ease),
+					onComplete: function(twn:FlxTween) {
+						lePlayState.callOnLuas('onTweenCompleted', [tag]);
+						lePlayState.modchartTweens.remove(tag);
+					}
+				}));
+			}
+		});
+
+		Lua_helper.add_callback(lua, "healthbarTweenX", function(tag:String, value:Dynamic, duration:Float, ease:String) {
+			cancelTween(tag);
+			var testicle = lePlayState.healthBar;
+
+			if(testicle!=null) {
+				lePlayState.modchartTweens.set(tag, FlxTween.tween(testicle, {x: value}, duration, {ease: getFlxEaseByString(ease),
+					onComplete: function(twn:FlxTween) {
+						lePlayState.callOnLuas('onTweenCompleted', [tag]);
+						lePlayState.modchartTweens.remove(tag);
+					}
+				}));
+			}
+		});
+
+		Lua_helper.add_callback(lua, "healthbarTweenY", function(tag:String, value:Dynamic, duration:Float, ease:String) {
+			cancelTween(tag);
+			var testicle = lePlayState.healthBar;
+
+			if(testicle!=null) {
+				lePlayState.modchartTweens.set(tag, FlxTween.tween(testicle, {y: value}, duration, {ease: getFlxEaseByString(ease),
+					onComplete: function(twn:FlxTween) {
+						lePlayState.callOnLuas('onTweenCompleted', [tag]);
+						lePlayState.modchartTweens.remove(tag);
+					}
+				}));
+			}
+		});
+
+		Lua_helper.add_callback(lua, "healthbarTweenAngle", function(tag:String, value:Dynamic, duration:Float, ease:String) {
+			cancelTween(tag);
+			var testicle = lePlayState.healthBar;
+
+			if(testicle!=null) {
+				lePlayState.modchartTweens.set(tag, FlxTween.tween(testicle, {angle: value}, duration, {ease: getFlxEaseByString(ease),
+					onComplete: function(twn:FlxTween) {
+						lePlayState.callOnLuas('onTweenCompleted', [tag]);
+						lePlayState.modchartTweens.remove(tag);
+					}
+				}));
+			}
+		});
+
+		Lua_helper.add_callback(lua, "hudTweenAngle", function(tag:String, value:Dynamic, duration:Float, ease:String) {
+			cancelTween(tag);
+			var testicle = lePlayState.camHUD;
+
+			if(testicle!=null) {
+				lePlayState.modchartTweens.set(tag, FlxTween.tween(testicle, {angle: value}, duration, {ease: getFlxEaseByString(ease),
+					onComplete: function(twn:FlxTween) {
+						lePlayState.callOnLuas('onTweenCompleted', [tag]);
+						lePlayState.modchartTweens.remove(tag);
+					}
+				}));
+			}
+		});
+
+		Lua_helper.add_callback(lua, "healthbarTweenAlpha", function(tag:String, value:Dynamic, duration:Float, ease:String) {
+			cancelTween(tag);
+			var testicle = lePlayState.healthBar;
+
+			if(testicle!=null) {
+				lePlayState.modchartTweens.set(tag, FlxTween.tween(testicle, {alpha: value}, duration, {ease: getFlxEaseByString(ease),
+					onComplete: function(twn:FlxTween) {
+						lePlayState.callOnLuas('onTweenCompleted', [tag]);
+						lePlayState.modchartTweens.remove(tag);
+					}
+				}));
+			}
+		});
+
+		Lua_helper.add_callback(lua, "gameTweenAngle", function(tag:String, value:Dynamic, duration:Float, ease:String) {
+			cancelTween(tag);
+			var testicle = lePlayState.camGame;
+
+			if(testicle!=null) {
+				lePlayState.modchartTweens.set(tag, FlxTween.tween(testicle, {angle: value}, duration, {ease: getFlxEaseByString(ease),
+					onComplete: function(twn:FlxTween) {
+						lePlayState.callOnLuas('onTweenCompleted', [tag]);
+						lePlayState.modchartTweens.remove(tag);
+					}
+				}));
+			}
+		});
 
 		Lua_helper.add_callback(lua, "cancelTween", function(tag:String) {
 			cancelTween(tag);
 		});
 
-		Lua_helper.add_callback(lua, "cameraSetScale", function(width:Float, height:Float) {
+		Lua_helper.add_callback(lua, "camGameScale", function(width:Float, height:Float) {
 			// I wish this worked
-			FlxG.camera.setScale(width, height);
+			lePlayState.modchartGameScaleX = width;
+			lePlayState.modchartGameScaleY = height;
+		});
+
+		Lua_helper.add_callback(lua, "camHudScale", function(width:Float, height:Float) {
+			// I wish this worked
+			lePlayState.modchartHUDScaleX = width;
+			lePlayState.modchartHUDScaleY = height;
 		});
 
 		Lua_helper.add_callback(lua, "runTimer", function(tag:String, time:Float = 1, loops:Int = 1) {
@@ -547,6 +688,7 @@ class FunkinLua {
 				case 'down': key = lePlayState.getControl('NOTE_DOWN_P');
 				case 'up': key = lePlayState.getControl('NOTE_UP_P');
 				case 'right': key = lePlayState.getControl('NOTE_RIGHT_P');
+				case 'dodge': key = lePlayState.getControl('NOTE_DODGE');
 				case 'accept': key = lePlayState.getControl('ACCEPT');
 				case 'back': key = lePlayState.getControl('BACK');
 				case 'pause': key = lePlayState.getControl('PAUSE');
@@ -559,6 +701,7 @@ class FunkinLua {
 			switch(name) {
 				case 'left': key = lePlayState.getControl('NOTE_LEFT');
 				case 'down': key = lePlayState.getControl('NOTE_DOWN');
+				case 'dodge': key = lePlayState.getControl('NOTE_DODGE');
 				case 'up': key = lePlayState.getControl('NOTE_UP');
 				case 'right': key = lePlayState.getControl('NOTE_RIGHT');
 			}
@@ -569,6 +712,7 @@ class FunkinLua {
 			switch(name) {
 				case 'left': key = lePlayState.getControl('NOTE_LEFT_R');
 				case 'down': key = lePlayState.getControl('NOTE_DOWN_R');
+				case 'dodge': key = lePlayState.getControl('NOTE_DODGE');
 				case 'up': key = lePlayState.getControl('NOTE_UP_R');
 				case 'right': key = lePlayState.getControl('NOTE_RIGHT_R');
 			}

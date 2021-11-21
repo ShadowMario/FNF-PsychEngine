@@ -11,6 +11,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.util.FlxStringUtil;
 import lime.utils.Assets;
 import flixel.FlxSubState;
 import flash.text.TextField;
@@ -35,7 +36,7 @@ class OptionsState extends MusicBeatState
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
 
-	override function create() { 
+	override function create() {
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
 		#end
@@ -709,8 +710,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 	];
 	static var noCheckbox:Array<String> = [
 		'Framerate',
-		'Note Speed',
-		'Note Delay'
+		'Note Delay',
+		'Scroll Speed',
+		'Note Size'
 	];
 
 	static var options:Array<String> = [
@@ -723,20 +725,20 @@ class PreferencesSubstate extends MusicBeatSubstate
 		#end
 		'GAMEPLAY',
 		'Downscroll',
-		'Noob Mode',
+		'Middlescroll',
 		'Ghost Tapping',
-		'Custom Note Speed',
-		'Note Speed',
 		'Note Delay',
 		'Note Splashes',
+		'Note Size',
+		'Custom Scroll Speed',
+		'Scroll Speed',
 		'Hide HUD',
 		'Hide Song Length',
 		'Flashing Lights',
-		'Camera Zooms',
+		'Camera Zooms'
 		#if !mobile
-		'FPS Counter',
+		,'FPS Counter'
 		#end
-		'Swearing'
 	];
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
@@ -903,11 +905,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Downscroll':
 						ClientPrefs.downScroll = !ClientPrefs.downScroll;
 
-					case 'Noob Mode':
-						ClientPrefs.promechs = !ClientPrefs.promechs;
-					
 					case 'Middlescroll':
-						// Middlescroll is currently disabled lol because game breaks
 						ClientPrefs.middleScroll = !ClientPrefs.middleScroll;
 
 					case 'Ghost Tapping':
@@ -918,6 +916,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 
 					case 'Hide HUD':
 						ClientPrefs.hideHud = !ClientPrefs.hideHud;
+
+					case 'Custom Scroll Speed':
+						ClientPrefs.scroll = !ClientPrefs.scroll;
 
 					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
@@ -946,6 +947,16 @@ class PreferencesSubstate extends MusicBeatSubstate
 							FlxG.drawFramerate = ClientPrefs.framerate;
 							FlxG.updateFramerate = ClientPrefs.framerate;
 						}
+					case 'Scroll Speed':
+						ClientPrefs.speed += add/10;
+						if(ClientPrefs.speed < 0.5) ClientPrefs.speed = 0.5;
+						else if(ClientPrefs.speed > 4) ClientPrefs.speed = 4;
+
+					case 'Note Size':
+						ClientPrefs.noteSize += add/20;
+						if(ClientPrefs.noteSize < 0.5) ClientPrefs.noteSize = 0.5;
+						else if(ClientPrefs.noteSize > 1.5) ClientPrefs.noteSize = 1.5;
+
 					case 'Note Delay':
 						var mult:Int = 1;
 						if(holdTime > 1.5) { //Double speed after 1.5 seconds holding
@@ -954,14 +965,6 @@ class PreferencesSubstate extends MusicBeatSubstate
 						ClientPrefs.noteOffset += add * mult;
 						if(ClientPrefs.noteOffset < 0) ClientPrefs.noteOffset = 0;
 						else if(ClientPrefs.noteOffset > 500) ClientPrefs.noteOffset = 500;
-					case 'Note Speed':
-						var mult:Float = 0.1;
-						if(holdTime > 1.5) { //Double speed after 1.5 seconds holding
-							mult = 0.2;
-						}
-						ClientPrefs.noteSpeed += add * mult;
-						if(ClientPrefs.noteSpeed < 0.5) ClientPrefs.noteSpeed = 0.5;
-						else if(ClientPrefs.noteSpeed > 4) ClientPrefs.noteSpeed = 4;
 				}
 				reloadValues();
 
@@ -1014,20 +1017,20 @@ class PreferencesSubstate extends MusicBeatSubstate
 				daText = "If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.";
 			case 'Swearing':
 				daText = "If unchecked, your mom won't be angry at you.";
-			case 'Custom Note Speed':
-				daText = "Customize how fast notes scroll";
-			case 'Note Speed':
-				daText = "How fast notes scroll (Custom Note Speed must be enabled)";
 			case 'Violence':
 				daText = "If unchecked, you won't get disgusted as frequently.";
+			case 'Custom Scroll Speed'://for Joseph -bbpanzu
+				daText = "Leave unchecked for chart-dependent scroll speed";
+			case 'Scroll Speed':
+				daText = "Arrow speed (Custom must be enabled)";
+			case 'Note Size':
+				daText = "Size of notes and stuff";
 			case 'Note Splashes':
 				daText = "If unchecked, hitting \"Sick!\" notes won't show particles.";
 			case 'Flashing Lights':
 				daText = "Uncheck this if you're sensitive to flashing lights!";
 			case 'Camera Zooms':
 				daText = "If unchecked, the camera won't zoom in on a beat hit.";
-			case 'Noob Mode':
-				daText = "Turns off mechanics like Downscroll constantly being toggled\non and off";
 			case 'Hide HUD':
 				daText = "If checked, hides most HUD elements.";
 			case 'Hide Song Length':
@@ -1090,12 +1093,12 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daValue = ClientPrefs.downScroll;
 					case 'Middlescroll':
 						daValue = ClientPrefs.middleScroll;
-					case 'Noob Mode':
-						daValue = ClientPrefs.promechs;
 					case 'Ghost Tapping':
 						daValue = ClientPrefs.ghostTapping;
 					case 'Swearing':
 						daValue = ClientPrefs.cursing;
+					case 'Custom Scroll Speed':
+						daValue = ClientPrefs.scroll;
 					case 'Violence':
 						daValue = ClientPrefs.violence;
 					case 'Camera Zooms':
@@ -1119,8 +1122,11 @@ class PreferencesSubstate extends MusicBeatSubstate
 						daText = '' + ClientPrefs.framerate;
 					case 'Note Delay':
 						daText = ClientPrefs.noteOffset + 'ms';
-					case 'Note Speed':
-						daText = ClientPrefs.noteSpeed + 'x';
+					case 'Note Size':
+						daText = FlxStringUtil.formatMoney(ClientPrefs.noteSize) + 'x';
+						if (ClientPrefs.noteSize == 0.7) daText += "(Default)";
+					case 'Scroll Speed':
+						daText = ClientPrefs.speed+"";
 				}
 				var lastTracker:FlxSprite = text.sprTracker;
 				text.sprTracker = null;
