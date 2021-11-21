@@ -7,14 +7,14 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs {
-	public static var downScroll:Bool = false;
+	public static var downScroll:Bool = true;
 	public static var middleScroll:Bool = false;
 	public static var showFPS:Bool = true;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
 	public static var lowQuality:Bool = false;
-	public static var framerate:Int = 60;
+	public static var framerate:Int = 240;
 	public static var cursing:Bool = true;
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
@@ -39,14 +39,14 @@ class ClientPrefs {
 		keyBinds.set('note_up', [J, UP]);
 		keyBinds.set('note_right', [K, RIGHT]);
 		
-		keyBinds.set('ui_left', [A, LEFT]);
-		keyBinds.set('ui_down', [S, DOWN]);
-		keyBinds.set('ui_up', [W, UP]);
-		keyBinds.set('ui_right', [D, RIGHT]);
+		keyBinds.set('ui_left', [LEFT, A]);
+		keyBinds.set('ui_down', [DOWN, S]);
+		keyBinds.set('ui_up', [UP, W]);
+		keyBinds.set('ui_right', [RIGHT, D]);
 		
-		keyBinds.set('accept', [SPACE, ENTER]);
-		keyBinds.set('back', [BACKSPACE, ESCAPE]);
-		keyBinds.set('pause', [ENTER, ESCAPE]);
+		keyBinds.set('accept', [ENTER, SPACE]);
+		keyBinds.set('back', [ESCAPE,BACKSPACE]);
+		keyBinds.set('pause', [ESCAPE, ENTER]);
 		keyBinds.set('reset', [R, NONE]);
 
 
