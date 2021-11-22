@@ -476,16 +476,13 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
 				case 5:
-					createCoolText(['This is a mod to'], -60);
+					createCoolText(['A mod compilation by'], -60);
 				case 7:
-					addMoreText('This game right below lol', -60);
-					logoSpr.visible = true;
+					addMoreText('AutisticLulu', -60);
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
 					deleteCoolText();
-					logoSpr.visible = false;
 				// credTextShit.visible = false;
-
 				// credTextShit.text = 'Shoutouts Tom Fulp';
 				// credTextShit.screenCenter();
 				case 9:
