@@ -292,7 +292,7 @@ class ChartingState extends MusicBeatState
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
 		\nSpace - Stop/Resume song
-		\nC - Activates auto-clicker (Useful for mods like bob)";
+		\nAlt-c - Activates auto-clicker for note stacking.";
 
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
