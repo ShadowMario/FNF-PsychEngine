@@ -118,6 +118,7 @@ class PlayState extends MusicBeatState
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
+	public static var originalStoryPlaylistLength:Int = 1;
 	public static var storyDifficulty:Int = 1;
 
 	public var vocals:FlxSound;
@@ -1681,7 +1682,7 @@ songSpeed = SONG.speed;
 		{
 			// FlxG.log.add(i);
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
-			if (!isStoryMode)
+			if (originalStoryPlaylistLength == storyPlaylist.length || !isStoryMode)
 			{
 				babyArrow.y -= 10;
 				babyArrow.alpha = 0;
