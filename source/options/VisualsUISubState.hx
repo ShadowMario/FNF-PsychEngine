@@ -37,9 +37,9 @@ class VisualsUISubState extends BaseOptionsMenu
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', //Name
 			'If checked, notes go Down instead of Up, simple enough.', //Description
-			'lowQuality', //Save data variable name
+			'downScroll', //Save data variable name
 			'bool', //Variable type
-			false); //Default value
+			true); //Default value
 		addOption(option);
 
 		var option:Option = new Option('Middlescroll',
