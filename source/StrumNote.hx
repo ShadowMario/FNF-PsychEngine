@@ -37,7 +37,7 @@ class StrumNote extends FlxSprite
 			animation.add('purple', [4]);
 
 			antialiasing = false;
-			setGraphicSize(Std.int(width * ClientPrefs.noteSize * PlayState.daPixelZoom));
+			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 
 			switch (Math.abs(leData))
 			{
