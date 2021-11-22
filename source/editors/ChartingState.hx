@@ -286,7 +286,7 @@ class ChartingState extends MusicBeatState
 		\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
-		\nAlt - Place notes on top of eachother
+		\nAlt - Place notes on top of each other
 		\nEsc - Test your chart inside Chart Editor
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
@@ -1173,7 +1173,7 @@ class ChartingState extends MusicBeatState
 				if (FlxG.mouse.overlaps(curRenderedNotes) && !FlxG.keys.pressed.ALT)
 				{
 					if(mouseAction!=1) {
-					curRenderedNotes.forEachAlive(function(note:Note)
+					curRenderedNotes.forEachAlive(function(note:ChartingNote)
 					{
 						if (FlxG.mouse.overlaps(note))
 						{
@@ -1207,7 +1207,6 @@ class ChartingState extends MusicBeatState
 			} else if(mouseAction!=0) {
 				mouseAction=0;
 			}
-
 		if (FlxG.mouse.x > gridBG.x
 			&& FlxG.mouse.x < gridBG.x + gridBG.width
 			&& FlxG.mouse.y > gridBG.y
