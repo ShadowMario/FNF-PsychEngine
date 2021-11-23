@@ -1212,7 +1212,7 @@ class PlayState extends MusicBeatState
 		{
 			remove(black);
 
-			if (songName == 'thorns')
+			if (!ClientPrefs.maxOptimization && songName == 'thorns')
 			{
 				add(red);
 				camHUD.visible = false;
