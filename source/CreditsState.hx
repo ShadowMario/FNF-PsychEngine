@@ -74,7 +74,6 @@ class CreditsState extends MusicBeatState
 			['SqirraRNG',			'gedehari',			'Chart Editor\'s Sound Waveform base',				'https://twitter.com/gedehari',			'FF9300'],
 			['PolybiusProxy',		'polybiusproxy',	'.MP4 Video Loader Extension',						'https://twitter.com/polybiusproxy',	'FFEAA6'],
 			['Keoiki',				'keoiki',			'Note Splash Animations',							'https://twitter.com/Keoiki_',			'FFFFFF'],
-			['SandPlanet',			'sandplanet',		'Mascot\'s Owner\nMain Supporter of the Engine',		'https://twitter.com/SandPlanetNG',	'D10616'],
 			['bubba',				'bubba',		'Guest Composer for "Hot Dilf"',	'https://www.youtube.com/channel/UCxQTnLmv0OAS63yzk9pVfaw',	'61536A'],
 			[''],
 			["Funkin' Crew"],
