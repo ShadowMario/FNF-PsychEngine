@@ -24,14 +24,26 @@ class Paths
 
 	#if MODS_ALLOWED
 	#if (haxe >= "4.0.0")
-	public static var ignoreModFolders:Map<String, Bool> = new Map();
 	public static var customImagesLoaded:Map<String, Bool> = new Map();
 	public static var customSoundsLoaded:Map<String, Sound> = new Map();
 	#else
-	public static var ignoreModFolders:Map<String, Bool> = new Map<String, Bool>();
 	public static var customImagesLoaded:Map<String, Bool> = new Map<String, Bool>();
 	public static var customSoundsLoaded:Map<String, Sound> = new Map<String, Sound>();
 	#end
+	
+	public static var ignoreModFolders:Map<String, Bool> = [
+		'characters' => true,
+		'custom_events' => true,
+		'custom_notetypes' => true,
+		'data' => true,
+		'songs' => true,
+		'music' => true,
+		'sounds' => true,
+		'videos' => true,
+		'images' => true,
+		'stages' => true,
+		'weeks' => true
+	];
 	#end
 
 	public static function destroyLoadedImages(ignoreCheck:Bool = false) {
@@ -52,23 +64,6 @@ class Paths
 
 	static public var currentModDirectory:String = null;
 	static var currentLevel:String;
-	static public function getModFolders()
-	{
-		#if MODS_ALLOWED
-		ignoreModFolders.set('characters', true);
-		ignoreModFolders.set('custom_events', true);
-		ignoreModFolders.set('custom_notetypes', true);
-		ignoreModFolders.set('data', true);
-		ignoreModFolders.set('songs', true);
-		ignoreModFolders.set('music', true);
-		ignoreModFolders.set('sounds', true);
-		ignoreModFolders.set('videos', true);
-		ignoreModFolders.set('images', true);
-		ignoreModFolders.set('stages', true);
-		ignoreModFolders.set('weeks', true);
-		#end
-	}
-
 	static public function setCurrentLevel(name:String)
 	{
 		currentLevel = name.toLowerCase();

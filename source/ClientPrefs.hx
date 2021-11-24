@@ -20,38 +20,42 @@ class ClientPrefs {
 	public static var camZooms:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var noteOffset:Int = 0;
-	public static var speed:Float = 2;
-	public static var noteSize:Float = 0.7;
-	public static var scroll:Bool = false;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var imagesPersist:Bool = false;
 	public static var ghostTapping:Bool = true;
 	public static var hideTime:Bool = false;
+	public static var keSustains:Bool = false; //i was bored, okay?
 
-	//Every key has two binds, these binds are defined on defaultKeys! If you want your control to be changeable, you have to add it on ControlsSubState (inside OptionsState.hx)'s list
-	public static var keyBinds:Map<String, Dynamic> = new Map<String, Dynamic>();
-	public static var defaultKeys:Map<String, Dynamic>;
-
-	public static function startControls() {
+	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
+	public static var keyBinds:Map<String, Array<FlxKey>> = [
 		//Key Bind, Name for ControlsSubState
-		keyBinds.set('note_left', [A, LEFT]);
-		keyBinds.set('note_down', [S, DOWN]);
-		keyBinds.set('note_up', [W, UP]);
-		keyBinds.set('note_right', [D, RIGHT]);
+		'note_left'		=> [A, LEFT],
+		'note_down'		=> [S, DOWN],
+		'note_up'		=> [W, UP],
+		'note_right'	=> [D, RIGHT],
 		
-		keyBinds.set('ui_left', [A, LEFT]);
-		keyBinds.set('ui_down', [S, DOWN]);
-		keyBinds.set('ui_up', [W, UP]);
-		keyBinds.set('ui_right', [D, RIGHT]);
+		'ui_left'		=> [A, LEFT],
+		'ui_down'		=> [S, DOWN],
+		'ui_up'			=> [W, UP],
+		'ui_right'		=> [D, RIGHT],
 		
-		keyBinds.set('accept', [SPACE, ENTER]);
-		keyBinds.set('back', [BACKSPACE, ESCAPE]);
-		keyBinds.set('pause', [ENTER, ESCAPE]);
-		keyBinds.set('reset', [R, NONE]);
+		'accept'		=> [SPACE, ENTER],
+		'back'			=> [BACKSPACE, ESCAPE],
+		'pause'			=> [ENTER, ESCAPE],
+		'reset'			=> [R, NONE],
+		
+		'volume_mute'	=> [ZERO, NONE],
+		'volume_up'		=> [NUMPADPLUS, PLUS],
+		'volume_down'	=> [NUMPADMINUS, MINUS],
+		
+		'debug_1'		=> [SEVEN, NONE],
+		'debug_2'		=> [EIGHT, NONE]
+	];
+	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 
-
-		// Don't delete this
+	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
+		//trace(defaultKeys);
 	}
 
 	public static function saveSettings() {
@@ -65,9 +69,6 @@ class ClientPrefs {
 		FlxG.save.data.framerate = framerate;
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
-		FlxG.save.data.speed = speed;
-		FlxG.save.data.scroll = scroll;
-		FlxG.save.data.noteSize = noteSize;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
@@ -139,15 +140,6 @@ class ClientPrefs {
 		if(FlxG.save.data.arrowHSV != null) {
 			arrowHSV = FlxG.save.data.arrowHSV;
 		}
-		if(FlxG.save.data.speed != null) {
-			speed = FlxG.save.data.speed;
-		}
-		if(FlxG.save.data.scroll != null) {
-			scroll = FlxG.save.data.scroll;
-		}
-		if(FlxG.save.data.noteSize != null) {
-			noteSize = FlxG.save.data.noteSize;
-		}
 		if(FlxG.save.data.imagesPersist != null) {
 			imagesPersist = FlxG.save.data.imagesPersist;
 			FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
@@ -164,10 +156,15 @@ class ClientPrefs {
 			FlxG.sound.volume = FlxG.save.data.volume;
 		}
 
+		// flixel automatically saves your volume!
+		if(FlxG.save.data.volume != null) {
+			FlxG.sound.volume = FlxG.save.data.volume;
+		}
+
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', 'ninjamuffin99');
 		if(save != null && save.data.customControls != null) {
-			var loadedControls:Map<String, Dynamic> = save.data.customControls;
+			var loadedControls:Map<String, Array<FlxKey>> = save.data.customControls;
 			for (control => keys in loadedControls) {
 				keyBinds.set(control, keys);
 			}
@@ -177,5 +174,28 @@ class ClientPrefs {
 
 	public static function reloadControls() {
 		PlayerSettings.player1.controls.setKeyboardScheme(KeyboardScheme.Solo);
+
+		TitleState.muteKeys = copyKey(keyBinds.get('volume_mute'));
+		TitleState.volumeDownKeys = copyKey(keyBinds.get('volume_down'));
+		TitleState.volumeUpKeys = copyKey(keyBinds.get('volume_up'));
+		FlxG.sound.muteKeys = TitleState.muteKeys;
+		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+	}
+
+	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey> {
+		var copiedArray:Array<FlxKey> = arrayToCopy.copy();
+		var i:Int = 0;
+		var len:Int = copiedArray.length;
+
+		while (i < len) {
+			if(copiedArray[i] == NONE) {
+				copiedArray.remove(NONE);
+				--i;
+			}
+			i++;
+			len = copiedArray.length;
+		}
+		return copiedArray;
 	}
 }
