@@ -131,7 +131,7 @@ class Character extends FlxSprite
 				#end
 				//bozo forgot about the packer shits : P
 					frames = Paths.getPackerAtlas(json.image);
-				} else {
+				 else {
 					frames = Paths.getSparrowAtlas(json.image);
 				}
 				imageFile = json.image;
