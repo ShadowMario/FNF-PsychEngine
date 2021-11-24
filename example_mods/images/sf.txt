@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<TextureAtlas imagePath="attack.png">
+	<!-- Created with Adobe Flash CS6 version 12.0.0.481 -->
+	<!-- http://www.adobe.com/products/flash.html -->
+	<SubTexture name="finn attack0000" x="0" y="0" width="738" height="551" frameX="-12" frameY="-61" frameWidth="750" frameHeight="612"/>
+	<SubTexture name="finn attack0001" x="738" y="0" width="736" height="608" frameX="-5" frameY="-4" frameWidth="750" frameHeight="612"/>
+	<SubTexture name="finn attack0002" x="0" y="608" width="677" height="612" frameX="0" frameY="0" frameWidth="750" frameHeight="612"/>
+	<SubTexture name="finn attack0003" x="677" y="608" width="549" height="577" frameX="-3" frameY="-35" frameWidth="750" frameHeight="612"/>
+	<SubTexture name="finn attack0004" x="1226" y="608" width="555" height="592" frameX="0" frameY="-20" frameWidth="750" frameHeight="612"/>
+</TextureAtlas>

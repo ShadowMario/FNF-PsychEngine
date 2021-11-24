@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				-26,
+				340
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "assbeater Idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				11,
+				334
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "assbeater left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-14,
+				330
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "assbeater down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-26,
+				343
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "assbeater up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				3,
+				330
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "assbeater right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-26,
+				343
+			],
+			"anim": "hey",
+			"fps": 24,
+			"name": "assbeater up",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/assbeater",
+	"position": [
+		-200,
+		340
+	],
+	"healthicon": "assbeater",
+	"flip_x": false,
+	"healthbar_colors": [
+		138,
+		80,
+		91
+	],
+	"camera_position": [
+		240,
+		-200
+	],
+	"sing_duration": 4,
+	"scale": 0.7
+}

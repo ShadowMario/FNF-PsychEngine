@@ -1,0 +1,48 @@
+{
+	"storyName": "Week 3 B-Sides",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "tutorial",
+	"startUnlocked": true,
+	"hideStoryMode": false,
+	"weekCharacters": [
+		"pico",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"Pico-b",
+			"pico-bsides",
+			[
+				106,
+				53,
+				193
+			]
+		],
+		[
+			"Philly-b",
+			"pico-bsides",
+			[
+				106,
+				53,
+				193
+			]
+		],
+		[
+			"Blammed-b",
+			"pico-bsides",
+			[
+				106,
+				53,
+				193
+			]
+		]
+	],
+	"weekName": "week3-bsides"
+}

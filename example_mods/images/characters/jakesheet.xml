@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="jakesheet.png"><SubTexture name="jake Right0000" x="0" y="0" width="922" height="652" frameX="-140" frameY="0" frameWidth="922" frameHeight="652" />
+<SubTexture name="jake Right0001" x="922" y="0" width="922" height="652" frameX="-140" frameY="0" frameWidth="922" frameHeight="652" />
+<SubTexture name="jake Right0002" x="1844" y="0" width="922" height="652" frameX="-140" frameY="0" frameWidth="922" frameHeight="652" />
+<SubTexture name="jake Right0003" x="2766" y="0" width="922" height="652" frameX="-140" frameY="0" frameWidth="922" frameHeight="652" />
+<SubTexture name="jake Right0004" x="0" y="652" width="922" height="652" frameX="-140" frameY="0" frameWidth="922" frameHeight="652" />
+<SubTexture name="jake Right0005" x="922" y="652" width="922" height="652" frameX="-140" frameY="0" frameWidth="922" frameHeight="652" />
+<SubTexture name="jake Right0006" x="1844" y="652" width="922" height="652" frameX="-140" frameY="0" frameWidth="922" frameHeight="652" />
+<SubTexture name="jake Idle0000" x="2766" y="652" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0001" x="0" y="1304" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0002" x="523" y="1304" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0003" x="1046" y="1304" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0004" x="1569" y="1304" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0005" x="0" y="1751" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0006" x="523" y="1751" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0007" x="1046" y="1751" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0008" x="1569" y="1751" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0009" x="0" y="2198" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0010" x="523" y="2198" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0011" x="1046" y="2198" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0012" x="1569" y="2198" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0013" x="0" y="2645" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Idle0014" x="523" y="2645" width="523" height="447" frameX="-200" frameY="-300" frameWidth="523" frameHeight="447" />
+<SubTexture name="jake Left final0000" x="1046" y="2645" width="878" height="707" frameX="40" frameY="0" frameWidth="878" frameHeight="707" />
+<SubTexture name="jake Left final0001" x="1924" y="2645" width="878" height="707" frameX="40" frameY="0" frameWidth="878" frameHeight="707" />
+<SubTexture name="jake Left final0002" x="0" y="3352" width="878" height="707" frameX="40" frameY="0" frameWidth="878" frameHeight="707" />
+<SubTexture name="jake Left final0003" x="878" y="3352" width="878" height="707" frameX="40" frameY="0" frameWidth="878" frameHeight="707" />
+<SubTexture name="jake Left final0004" x="1756" y="3352" width="878" height="707" frameX="40" frameY="0" frameWidth="878" frameHeight="707" />
+<SubTexture name="jake Left final0005" x="2634" y="3352" width="878" height="707" frameX="40" frameY="0" frameWidth="878" frameHeight="707" />
+<SubTexture name="jake Left final0006" x="0" y="4059" width="878" height="707" frameX="40" frameY="0" frameWidth="878" frameHeight="707" />
+<SubTexture name="jake Up0000" x="878" y="4059" width="726" height="707" frameX="0" frameY="-200" frameWidth="726" frameHeight="707" />
+<SubTexture name="jake Up0001" x="1604" y="4059" width="726" height="707" frameX="0" frameY="-200" frameWidth="726" frameHeight="707" />
+<SubTexture name="jake Up0002" x="2330" y="4059" width="726" height="707" frameX="0" frameY="-200" frameWidth="726" frameHeight="707" />
+<SubTexture name="jake Up0003" x="0" y="4766" width="726" height="707" frameX="0" frameY="-200" frameWidth="726" frameHeight="707" />
+<SubTexture name="jake Up0004" x="726" y="4766" width="726" height="707" frameX="0" frameY="-200" frameWidth="726" frameHeight="707" />
+<SubTexture name="jake Up0005" x="1452" y="4766" width="726" height="707" frameX="0" frameY="-200" frameWidth="726" frameHeight="707" />
+<SubTexture name="jake Up0006" x="2178" y="4766" width="726" height="707" frameX="0" frameY="-200" frameWidth="726" frameHeight="707" />
+<SubTexture name="jake Down0000" x="0" y="5473" width="782" height="503" frameX="-100" frameY="0" frameWidth="782" frameHeight="503" />
+<SubTexture name="jake Down0001" x="782" y="5473" width="782" height="503" frameX="-100" frameY="0" frameWidth="782" frameHeight="503" />
+<SubTexture name="jake Down0002" x="1564" y="5473" width="782" height="503" frameX="-100" frameY="0" frameWidth="782" frameHeight="503" />
+<SubTexture name="jake Down0003" x="2346" y="5473" width="782" height="503" frameX="-100" frameY="0" frameWidth="782" frameHeight="503" />
+<SubTexture name="jake Down0004" x="0" y="5976" width="782" height="503" frameX="-100" frameY="0" frameWidth="782" frameHeight="503" />
+<SubTexture name="jake Down0005" x="782" y="5976" width="782" height="503" frameX="-100" frameY="0" frameWidth="782" frameHeight="503" />
+<SubTexture name="jake Down0006" x="1564" y="5976" width="782" height="503" frameX="-100" frameY="0" frameWidth="782" frameHeight="503" />
+</TextureAtlas>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-16"?>
+<TextureAtlas imagePath="glitchattack.png">
+	<!-- Created with Adobe Flash CS6 version 12.0.0.481 -->
+	<!-- http://www.adobe.com/products/flash.html -->
+	<SubTexture name="nonglitch0000" x="0" y="0" width="0" height="0" frameX="107374181" frameY="107374181" frameWidth="0" frameHeight="0"/>
+	<SubTexture name="nonglitch0001" x="0" y="0" width="0" height="0" frameX="107374181" frameY="107374181" frameWidth="0" frameHeight="0"/>
+	<SubTexture name="nonglitch0002" x="0" y="0" width="0" height="0" frameX="107374181" frameY="107374181" frameWidth="0" frameHeight="0"/>
+	<SubTexture name="nonglitch0003" x="0" y="0" width="0" height="0" frameX="107374181" frameY="107374181" frameWidth="0" frameHeight="0"/>
+	<SubTexture name="nonglitch0004" x="0" y="0" width="0" height="0" frameX="107374181" frameY="107374181" frameWidth="0" frameHeight="0"/>
+	<SubTexture name="glitchattack0000" x="0" y="0" width="265" height="436" frameX="-234" frameY="-159" frameWidth="501" frameHeight="610"/>
+	<SubTexture name="glitchattack0001" x="265" y="0" width="443" height="578" frameX="-58" frameY="-32" frameWidth="501" frameHeight="610"/>
+	<SubTexture name="glitchattack0002" x="0" y="578" width="384" height="418" frameX="-53" frameY="-14" frameWidth="501" frameHeight="610"/>
+	<SubTexture name="glitchattack0003" x="384" y="578" width="194" height="289" frameX="0" frameY="0" frameWidth="501" frameHeight="610"/>
+	<SubTexture name="glitchattack0004" x="578" y="578" width="0" height="0" frameX="228" frameY="-469" frameWidth="501" frameHeight="610"/>
+</TextureAtlas>

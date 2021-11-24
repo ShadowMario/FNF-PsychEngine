@@ -1,0 +1,48 @@
+{
+	"storyName": "the fun will never end with",
+	"hideFreeplay": false,
+	"weekBackground": "black",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "tutorial",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"songs": [
+		[
+			"CORRUPTED-HERO",
+			"finn",
+			[
+				20,
+				20,
+				20
+			]
+		],
+		[
+			"BROTHERLY-BOND",
+			"jake",
+			[
+				20,
+				20,
+				20
+			]
+		],
+		[
+			"NO-HERO",
+			"finn",
+			[
+				20,
+				20,
+				20
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "Custom Week"
+}

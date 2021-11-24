@@ -5,10 +5,10 @@
 				-9,
 				10
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
+			"indices": [],
 			"name": "Sing Left"
 		},
 		{
@@ -16,10 +16,10 @@
 				0,
 				-30
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
+			"indices": [],
 			"name": "Sing Down"
 		},
 		{
@@ -27,10 +27,10 @@
 				-6,
 				50
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
+			"indices": [],
 			"name": "Sing Up"
 		},
 		{
@@ -38,10 +38,10 @@
 				0,
 				0
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "idle",
-			"loop": false,
+			"indices": [],
 			"name": "Idle"
 		},
 		{
@@ -49,18 +49,18 @@
 				0,
 				27
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singRIGHT",
-			"loop": false,
+			"indices": [],
 			"name": "Sing Right"
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/starecrown3",
 	"position": [
-		-200,
-		-400
+		-450,
+		-380
 	],
 	"healthicon": "starecrown",
 	"flip_x": false,
@@ -74,5 +74,5 @@
 		0
 	],
 	"sing_duration": 4,
-	"scale": 1
+	"scale": 0.9
 }

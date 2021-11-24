@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-16"?>
+<TextureAtlas imagePath="finn.png">
+	<!-- Created with Adobe Flash CS6 version 12.0.0.481 -->
+	<!-- http://www.adobe.com/products/flash.html -->
+	<SubTexture name="finn attack0000" x="0" y="0" width="738" height="551" frameX="-12" frameY="-61" frameWidth="750" frameHeight="612"/>
+	<SubTexture name="finn attack0001" x="738" y="0" width="736" height="608" frameX="-5" frameY="-4" frameWidth="750" frameHeight="612"/>
+	<SubTexture name="finn attack0002" x="1474" y="0" width="677" height="612" frameX="0" frameY="0" frameWidth="750" frameHeight="612"/>
+	<SubTexture name="finn attack0003" x="2151" y="0" width="549" height="577" frameX="-3" frameY="-35" frameWidth="750" frameHeight="612"/>
+	<SubTexture name="finn attack0004" x="2700" y="0" width="555" height="592" frameX="0" frameY="-20" frameWidth="750" frameHeight="612"/>
+	<SubTexture name="finn down0000" x="3255" y="0" width="413" height="381" frameX="-13" frameY="-13" frameWidth="432" frameHeight="394"/>
+	<SubTexture name="finn down0001" x="3668" y="0" width="420" height="382" frameX="-12" frameY="-12" frameWidth="432" frameHeight="394"/>
+	<SubTexture name="finn down0002" x="0" y="612" width="411" height="391" frameX="0" frameY="0" frameWidth="432" frameHeight="394"/>
+	<SubTexture name="finn down0003" x="411" y="612" width="409" height="389" frameX="-5" frameY="-2" frameWidth="432" frameHeight="394"/>
+	<SubTexture name="finn down0004" x="820" y="612" width="411" height="391" frameX="0" frameY="0" frameWidth="432" frameHeight="394"/>
+	<SubTexture name="finn idle0000" x="1231" y="612" width="545" height="464" frameX="-10" frameY="-22" frameWidth="562" frameHeight="493"/>
+	<SubTexture name="finn idle0001" x="1776" y="612" width="546" height="476" frameX="-16" frameY="-14" frameWidth="562" frameHeight="493"/>
+	<SubTexture name="finn idle0002" x="2322" y="612" width="557" height="493" frameX="-4" frameY="0" frameWidth="562" frameHeight="493"/>
+	<SubTexture name="finn idle0003" x="2879" y="612" width="535" height="485" frameX="-24" frameY="-7" frameWidth="562" frameHeight="493"/>
+	<SubTexture name="finn idle0004" x="3414" y="612" width="561" height="479" frameX="0" frameY="-11" frameWidth="562" frameHeight="493"/>
+	<SubTexture name="finn idle0005" x="0" y="1105" width="535" height="485" frameX="-24" frameY="-7" frameWidth="562" frameHeight="493"/>
+	<SubTexture name="finn left0000" x="535" y="1105" width="556" height="529" frameX="-28" frameY="0" frameWidth="603" frameHeight="537"/>
+	<SubTexture name="finn left0001" x="1091" y="1105" width="591" height="502" frameX="0" frameY="-10" frameWidth="603" frameHeight="537"/>
+	<SubTexture name="finn left0002" x="1682" y="1105" width="553" height="526" frameX="-38" frameY="-11" frameWidth="603" frameHeight="537"/>
+	<SubTexture name="finn left0003" x="2235" y="1105" width="554" height="525" frameX="-49" frameY="-9" frameWidth="603" frameHeight="537"/>
+	<SubTexture name="finn left0004" x="2789" y="1105" width="553" height="526" frameX="-38" frameY="-11" frameWidth="603" frameHeight="537"/>
+	<SubTexture name="finn right0000" x="3342" y="1105" width="396" height="470" frameX="-48" frameY="-27" frameWidth="469" frameHeight="497"/>
+	<SubTexture name="finn right0001" x="0" y="1634" width="409" height="467" frameX="-43" frameY="-30" frameWidth="469" frameHeight="497"/>
+	<SubTexture name="finn right0002" x="409" y="1634" width="410" height="468" frameX="-59" frameY="-29" frameWidth="469" frameHeight="497"/>
+	<SubTexture name="finn right0003" x="819" y="1634" width="409" height="497" frameX="0" frameY="0" frameWidth="469" frameHeight="497"/>
+	<SubTexture name="finn right0004" x="1228" y="1634" width="400" height="487" frameX="-4" frameY="-10" frameWidth="469" frameHeight="497"/>
+	<SubTexture name="finn up0000" x="1628" y="1634" width="384" height="625" frameX="-26" frameY="0" frameWidth="410" frameHeight="625"/>
+	<SubTexture name="finn up0001" x="2012" y="1634" width="380" height="613" frameX="-19" frameY="-11" frameWidth="410" frameHeight="625"/>
+	<SubTexture name="finn up0002" x="2392" y="1634" width="405" height="615" frameX="0" frameY="-7" frameWidth="410" frameHeight="625"/>
+	<SubTexture name="finn up0003" x="2797" y="1634" width="384" height="618" frameX="-10" frameY="-4" frameWidth="410" frameHeight="625"/>
+	<SubTexture name="finn up0004" x="3181" y="1634" width="405" height="615" frameX="0" frameY="-7" frameWidth="410" frameHeight="625"/>
+</TextureAtlas>

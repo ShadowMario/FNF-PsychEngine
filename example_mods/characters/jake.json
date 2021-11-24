@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				167,
+				120
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "jake Idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				90,
+				17
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "jake Right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				110,
+				-140
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "jake Down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				54,
+				290
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "jake Up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				321,
+				89
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "jake Left final",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/jakesheet",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "jake",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		0
+	],
+	"camera_position": [
+		-260,
+		80
+	],
+	"sing_duration": 6.1,
+	"scale": 1.1
+}

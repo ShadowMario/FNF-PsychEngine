@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-9,
-				10
+				11
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
-			"name": "Sing Left"
+			"fps": 24,
+			"name": "Sing Left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				-30
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
-			"name": "Sing Down"
+			"fps": 24,
+			"name": "Sing Down",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-6,
 				50
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
-			"name": "Sing Up"
+			"fps": 24,
+			"name": "Sing Up",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "idle",
-			"loop": false,
-			"name": "Idle"
+			"fps": 24,
+			"name": "Idle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				27
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singRIGHT",
-			"loop": false,
-			"name": "Sing Right"
+			"fps": 24,
+			"name": "Sing Right",
+			"indices": []
 		},
 		{
 			"offsets": [
@@ -63,6 +63,17 @@
 			"indices": [],
 			"fps": 24,
 			"anim": "idle-loop",
+			"loop": true,
+			"name": "Idle"
+		},
+		{
+			"offsets": [
+				-77,
+				4
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "HeWatchesYOU",
 			"loop": true,
 			"name": "HeWatchesYOU"
 		}

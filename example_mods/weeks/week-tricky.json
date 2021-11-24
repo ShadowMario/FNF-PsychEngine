@@ -1,0 +1,57 @@
+{
+	"songs": [
+		[
+			"Improbable-outset",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"madness",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"hellclown",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"expurgation",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekCharacters": [
+		"",
+		"bf",
+		"gf"
+	],
+	"storyName": "Tricky",
+	"weekName": "Tricky",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}
