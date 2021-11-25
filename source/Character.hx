@@ -118,23 +118,9 @@ class Character extends FlxSprite
 				#end
 				
 				var json:CharacterFile = cast Json.parse(rawJson);
-				
-				#if MODS_ALLOWED
-				var path2:String = Paths.modFolders('images/' + json.image + '.txt');
-				if (!FileSystem.exists(path2)) {
-					path2 = Paths.getPreloadPath('images/' + json.image + '.txt');
-				}
-
-				if (!FileSystem.exists(path2))
-				#else
-				if(Assets.exists(Paths.getPath('images/' + json.image + '.txt', TEXT)))
-				#end
-				//bozo forgot about the packer shits : P
-				{
+				if(Assets.exists(Paths.getPath('images/' + json.image + '.txt', TEXT))) {
 					frames = Paths.getPackerAtlas(json.image);
-				}
-				else
-				{
+				} else {
 					frames = Paths.getSparrowAtlas(json.image);
 				}
 				imageFile = json.image;
