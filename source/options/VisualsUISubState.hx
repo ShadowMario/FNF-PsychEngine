@@ -82,7 +82,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Hide Song Length',
-			'If unchecked, disables anti-aliasing, increases performance\nat the cost of the graphics not looking as smooth.',
+			'If checked, the bar showing how much time is left\nwill be hidden.',
 			'hideTime',
 			'bool',
 			false);
