@@ -38,7 +38,7 @@
 			]
 		]
 	],
-	"hideStoryMode": false,
+	"hideStoryMode": true,
 	"weekCharacters": [
 		"camellia",
 		"bf",

@@ -9,7 +9,7 @@
 	],
 	"weekBefore": "tutorial",
 	"startUnlocked": true,
-	"hideStoryMode": false,
+	"hideStoryMode": true,
 	"weekCharacters": [
 		"starecrown",
 		"bf",

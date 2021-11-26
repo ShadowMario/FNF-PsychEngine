@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="Menu_Tankman.png">
+<SubTexture name="M Tankman Idle0000" x="0" y="0" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0001" x="0" y="0" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0002" x="248" y="0" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0003" x="248" y="0" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0004" x="496" y="0" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0005" x="496" y="0" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0006" x="744" y="0" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0007" x="0" y="311" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0008" x="248" y="311" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0009" x="248" y="311" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0010" x="248" y="311" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0011" x="248" y="311" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0012" x="248" y="311" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+<SubTexture name="M Tankman Idle0013" x="248" y="311" width="248" height="311" frameX="0" frameY="0" frameWidth="248" frameHeight="311" />
+</TextureAtlas>

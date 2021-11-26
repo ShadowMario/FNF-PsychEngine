@@ -1,0 +1,122 @@
+{
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				439,
+				253
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				265,
+				332
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Sing Left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				436,
+				352
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Sing Up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				607,
+				260
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Sing Right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				324,
+				100
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Sing Down",
+			"indices": []
+		},
+		{
+			"offsets": [
+				434,
+				252
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT-alt",
+			"indices": [],
+			"name": "Hank"
+		},
+		{
+			"offsets": [
+				434,
+				252
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP-alt",
+			"indices": [],
+			"name": "Hank"
+		},
+		{
+			"offsets": [
+				434,
+				312
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT-alt",
+			"indices": [],
+			"name": "Hank"
+		},
+		{
+			"offsets": [
+				464,
+				292
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN-alt",
+			"indices": [],
+			"name": "Hank"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/extricky",
+	"position": [
+		400,
+		340
+	],
+	"healthicon": "extricky",
+	"flip_x": false,
+	"healthbar_colors": [
+		75,
+		80,
+		60
+	],
+	"camera_position": [
+		500,
+		-100
+	],
+	"sing_duration": 4,
+	"scale": 0.7
+}
