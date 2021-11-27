@@ -144,7 +144,6 @@ class CharacterEditorState extends MusicBeatState
 		var tipText:FlxText = new FlxText(FlxG.width - 20, FlxG.height, 0,
 			"E/Q - Camera Zoom In/Out
 			\nJKLI - Move Camera
-			
 			\nW/S - Previous/Next Animation
 			\nSpace - Play Animation
 			\nArrow Keys - Move Character Offset
@@ -1054,13 +1053,19 @@ class CharacterEditorState extends MusicBeatState
 
 				if (FlxG.keys.justPressed.Z)
 				{
-					char.animationsArray[curAnim].offsets = [0,0];
+					char.animationsArray[curAnim].offsets = [0, 0];
+					
+						char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
+						ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
 						genBoyOffsets();
 				}
 				if (FlxG.keys.justPressed.X)
 				{
 					for(i in 0...char.animationsArray.length){
 						char.animationsArray[i].offsets = [0, 0];
+						
+						char.addOffset(char.animationsArray[i].anim, char.animationsArray[i].offsets[0], char.animationsArray[i].offsets[1]);
+						ghostChar.addOffset(char.animationsArray[i].anim, char.animationsArray[i].offsets[0], char.animationsArray[i].offsets[1]);
 						genBoyOffsets();
 					}
 				}
