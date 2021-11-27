@@ -57,18 +57,6 @@
 		<library name="shared"        preload="true" />
 		<library name="tutorial"      preload="true" />
 		<library name="tutorial_high" preload="true" />
-		<library name="week1"         preload="true" />
-		<library name="week1_high"    preload="true" />
-		<library name="week2"         preload="true" />
-		<library name="week2_high"    preload="true" />
-		<library name="week3"         preload="true" />
-		<library name="week3_high"    preload="true" />
-		<library name="week4"         preload="true" />
-		<library name="week4_high"    preload="true" />
-		<library name="week5"         preload="true" />
-		<library name="week5_high"    preload="true" />
-		<library name="week6"         preload="true" />
-		<library name="week6_high"    preload="true" />
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
@@ -76,18 +64,6 @@
 		<library name="shared"        preload="false" />
 		<library name="tutorial"      preload="false" />
 		<library name="tutorial_high" preload="false" />
-		<library name="week1"         preload="false" />
-		<library name="week1_high"    preload="false" />
-		<library name="week2"         preload="false" />
-		<library name="week2_high"    preload="false" />
-		<library name="week3"         preload="false" />
-		<library name="week3_high"    preload="false" />
-		<library name="week4"         preload="false" />
-		<library name="week4_high"    preload="false" />
-		<library name="week5"         preload="false" />
-		<library name="week5_high"    preload="false" />
-		<library name="week6"         preload="false" />
-		<library name="week6_high"    preload="false" />
 	</section>
 	
 	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
@@ -98,30 +74,6 @@
 	<assets path="assets/tutorial"      library="tutorial"      exclude="*.mp3" unless="web"/>
 	<assets path="assets/tutorial_high" library="tutorial_high" exclude="*.ogg" if="web"/>
 	<assets path="assets/tutorial_high" library="tutorial_high" exclude="*.mp3" unless="web"/>
-	<assets path="assets/week1"         library="week1"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week1"         library="week1"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week1_high"    library="week1_high"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week1_high"    library="week1_high"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week2"         library="week2"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week2"         library="week2"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week2_high"    library="week2_high"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week2_high"    library="week2_high"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week3"         library="week3"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week3"         library="week3"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week3_high"    library="week3_high"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week3_high"    library="week3_high"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week4"         library="week4"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week4"         library="week4"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week4_high"    library="week4_high"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week4_high"    library="week4_high"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week5"         library="week5"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week5"         library="week5"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week5_high"    library="week5_high"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week5_high"    library="week5_high"    exclude="*.mp3" unless="web"/>
-	<assets path="assets/week6"         library="week6"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week6"         library="week6"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week6_high"    library="week6_high"    exclude="*.ogg" if="web"/>
-	<assets path="assets/week6_high"    library="week6_high"    exclude="*.mp3" unless="web"/>
 	
 	<assets path='example_mods' rename='mods' embed='false' if="MODS_ALLOWED"/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />

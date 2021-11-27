@@ -28,30 +28,34 @@ class RegisterState extends MusicBeatState
 
     private function submitCredentials(username:String, password:String)
         {
-            var register:Dynamic = ServerConnectionsManager.register(username, password);
-            if(register.success)
-            {
-                errorText.setFormat("VCR OSD Mono", 20, 0xFF03FC07, CENTER, FlxTextBorderStyle.OUTLINE, 0xFF008C02);
-                errorTimer.cancel();
-                errorText.text = 'Logged in as ' + username;
-                errorText.alpha = 1;
-                FlxG.mouse.visible = false;
-                new FlxTimer().start(1, function (timer:FlxTimer) {
-                    FlxG.switchState(new MainMenuState());
-                });
-            }else
-            {
-                errorTimer.cancel();
-                trace('error xd');
-                errorText.text = register.error == null ? "Unknown error" : register.error;
-                errorText.alpha = 1;
-                errorTimer = new FlxTimer().start(7, function (timer:FlxTimer) {
-                    var tempY = errorText.y;
-                    FlxTween.tween(errorText, {y: errorText.y * 10, alpha: 0}, 0.4, {ease: FlxEase.quadIn, onComplete: function (tween:FlxTween) {
-                        errorText.y = tempY;
-                    }});
-                });
-            }
+            /*var resData = ServerConnectionsManager.register(username, password);*/
+            var resData = null;
+                if(resData != null)
+                {
+                    if(resData.success)
+                    {
+                        errorText.setFormat("VCR OSD Mono", 20, 0xFF03FC07, CENTER, FlxTextBorderStyle.OUTLINE, 0xFF008C02);
+                        errorTimer.cancel();
+                        errorText.text = 'Thanks you for creating an account! Your username is ' + username;
+                        errorText.alpha = 1;
+                        FlxG.mouse.visible = false;
+                        new FlxTimer().start(1, function (timer:FlxTimer) {
+                            FlxG.switchState(new MainMenuState());
+                        });
+                    }else
+                    {
+                        errorTimer.cancel();
+                        trace('error xd');
+                        errorText.text = resData.error == null ? "Unknown error" : resData.error;
+                        errorText.alpha = 1;
+                        errorTimer = new FlxTimer().start(7, function (timer:FlxTimer) {
+                            var tempY = errorText.y;
+                            FlxTween.tween(errorText, {y: errorText.y * 10, alpha: 0}, 0.4, {ease: FlxEase.quadIn, onComplete: function (tween:FlxTween) {
+                                errorText.y = tempY;
+                            }});
+                        });
+                    }
+                }
         }
 
     override function create()

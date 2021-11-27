@@ -5,15 +5,19 @@ import haxe.Json;
 
 class ServerConnectionsManager
 {
-    var serverIp:String = "localhost";
-    var serverPort:String = "2000";
+    static var serverIp:String = "localhost";
+    static var serverPort:String = "2000";
+
+    public static var finished:Bool = false;
+    public static var specialDone:Bool = false;
 
     // i dont recommend editing this file :)
     // if you do why you would do it
 
-    private static function serverConnection(action:String, data:String, ?contentType:String = "application/json")
+    private static function serverConnection(action:String, data:String, ?contentType:String = "application/json"):Dynamic
     {
         var req = new haxe.Http(serverIp + ':' +  serverPort + '/' + action);
+        var resData:Dynamic = {};
         req.setHeader ("Content-type", contentType);
         req.setPostData(data);
         trace(data);
@@ -26,75 +30,46 @@ class ServerConnectionsManager
         {
             trace(req);
             trace(error);
-            return {success:false,error:error};
+            return {success:false,error:"Http error:" + error};
+        }
+        req.onComplete = function ()
+        {
+            return resData;
         }
         req.request(true);
-        return {success:false,error:"Unknown"};
     }
 
-    private static function checkTokenValid(token:String):Bool
+    public static var preFinished:Bool = false;
+
+    public static function register(username:String, password:String)
     {
-        if(serverConnection("checkToken", token, "text/plain").valid)
+        var req = new haxe.Http(serverIp + ':' +  serverPort + '/' + action);
+        var data:Dynamic = {username:username,password:password}
+        req.setHeader ("Content-type", contentType);
+        req.setPostData(Json.stringify(data));
+        req.onData = function (res:String)
         {
-            return true;
-        }else
-        {
-            return false;
+            var response:Dynamic = Json.parse(res);
+            return response;
         }
+        req.onError = function (error)
+        {
+            trace(req);
+            trace(error);
+            return {success:false,error:"Http error:" + error};
+        }
+        req.request(true);
     }
 
-    public static function register(username:String, password:String):Dynamic
-    {
-        var data:Dynamic = {username: username, password: password};
-        var connection = serverConnection("register", Json.stringify(data));
-        if(connection.success)
-        {
-            if(connection.token == null)
-            {
-                return {success:false};
-            }else
-            {
-                var tokenValid:Bool = checkTokenValid(connection.token);
-                if(tokenValid)
-                {
-                    FlxG.save.data.token = connection.token;
-                    return {success:true};
-                }
-                else{
-                    return {success:false,error:"Token invalid"};
-                }
-            }
-        }
-        return {success:false,error:"Timed out"};
-    }
-
-    public static function login(username:String, password:String):Dynamic
+    public static function login(username:String, password:String)
     {
         var data:Dynamic = {username: username, password: password};
-        var connection = serverConnection("login", Json.stringify(data));
-        if(connection.success)
-        {
-            if(connection.token == null)
-            {
-                return {success:false,error:connection.error};
-            }else
-            {
-                var tokenValid:Bool = checkTokenValid(connection.token);
-                if(tokenValid)
-                {
-                    FlxG.save.data.token = connection.token;
-                    return {success:true};
-                }
-                else{
-                    return {success:false,error:"Token invalid"};
-                }
-            }
-        }
-        return {success:false,error:"Timed out"};
+        var conn = serverConnection("login", Json.stringify(data));
+        return conn;
     }
 
     public static function publishLevel(level:Dynamic)
     {
-        var connection = serverConnection("publishLevel", level);
+        serverConnection("publishLevel", level);
     }
 }

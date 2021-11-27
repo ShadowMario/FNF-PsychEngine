@@ -137,6 +137,7 @@ app.post("/login", function(req, res)
                     {
                         const token = generateAccessToken({username: daLoginThing.username});
                         res.send({token: token});
+                        console.log('success');
                     }else
                     {
                         res.send({error: "Account not found in the database", token: null});
