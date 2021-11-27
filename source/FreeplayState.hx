@@ -78,6 +78,8 @@ class FreeplayState extends MusicBeatState
 		}
 		WeekData.setDirectoryFromWeek();
 
+		/*		//KIND OF BROKEN NOW AND ALSO PRETTY USELESS//
+
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
 		for (i in 0...initSonglist.length)
 		{
@@ -85,7 +87,7 @@ class FreeplayState extends MusicBeatState
 				var songArray:Array<String> = initSonglist[i].split(":");
 				addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
 			}
-		}
+		}*/
 
 		// LOAD MUSIC
 
@@ -352,18 +354,6 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		
-		CoolUtil.difficultyStuff = [//reset difficulties
-			['Easy', '-easy'],
-			['Normal', ''],
-			['Hard', '-hard']
-		];
-		
-		
-		
-		if (curDifficulty > CoolUtil.difficultyStuff.length-1) curDifficulty = CoolUtil.difficultyStuff.length-1;
-		
-		
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		curSelected += change;
@@ -372,13 +362,6 @@ class FreeplayState extends MusicBeatState
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
 			curSelected = 0;
-
-			
-			
-			
-			
-			
-			
 			
 		var newColor:Int = songs[curSelected].color;
 		if(newColor != intendedColor) {
@@ -428,7 +411,6 @@ class FreeplayState extends MusicBeatState
 		//it didn't account for mod directories my bad : P
 		
 			
-		//MAKE THIS COOLER : PPP
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			#if MODS_ALLOWED
 			var pathshit = Paths.modFolders('data/' + songLowercase);
