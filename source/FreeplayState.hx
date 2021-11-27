@@ -376,36 +376,6 @@ class FreeplayState extends MusicBeatState
 			
 			
 			
-		//MAKE THIS COOLER : PPP
-			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
-			#if MODS_ALLOWED
-			var pathshit = Paths.modFolders('data/' + songLowercase);
-			//if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
-			
-			if (FileSystem.exists(Paths.json(songLowercase + '/' + songLowercase))){
-				
-				pathshit = Paths.getPreloadPath('data/' + songLowercase);
-			}
-				for (i in FileSystem.readDirectory(pathshit)){
-			#else
-				for (i in FileSystem.readDirectory(Paths.json(songLowercase + '/' + songLowercase))){
-			#end
-					var name:String = i;
-					var dif = StringTools.replace(name, songLowercase, '').split('.')[0];
-					var difName = StringTools.replace(dif, '-', '');
-					
-					if (name.split('.')[1] == 'json' && name != 'events.json'){//check if it's an actual song chart
-						
-						if (dif != '-easy' && dif != '' && dif != '-hard' ){//now check if it's a custom difficulty
-							CoolUtil.difficultyStuff.push([difName,dif]);
-						}
-						
-					}
-				}
-			
-			
-			trace(	CoolUtil.difficultyStuff);
-			
 			
 			
 			
@@ -455,6 +425,40 @@ class FreeplayState extends MusicBeatState
 		}
 		changeDiff();
 		Paths.currentModDirectory = songs[curSelected].folder;
+		//it didn't account for mod directories my bad : P
+		
+			
+		//MAKE THIS COOLER : PPP
+			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
+			#if MODS_ALLOWED
+			var pathshit = Paths.modFolders('data/' + songLowercase);
+			//if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
+			
+			if (FileSystem.exists(Paths.json(songLowercase + '/' + songLowercase))){
+				
+				pathshit = Paths.getPreloadPath('data/' + songLowercase);
+			}
+				for (i in FileSystem.readDirectory(pathshit)){
+			#else
+				for (i in FileSystem.readDirectory(Paths.json(songLowercase + '/' + songLowercase))){
+			#end
+					var name:String = i;
+					var dif = StringTools.replace(name, songLowercase, '').split('.')[0];
+					var difName = StringTools.replace(dif, '-', '');
+					
+					if (name.split('.')[1] == 'json' && name != 'events.json'){//check if it's an actual song chart
+						
+						if (dif != '-easy' && dif != '' && dif != '-hard' ){//now check if it's a custom difficulty
+							CoolUtil.difficultyStuff.push([difName,dif]);
+						}
+						
+					}
+				}
+			
+			
+			trace(	CoolUtil.difficultyStuff);
+		
+		
 	}
 
 	private function positionHighscore() {
