@@ -3376,8 +3376,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 
-	//	health -= daNote.missHealth; 
-		health -= daNote.missHealth+(songMisses/2000); //For get-gud incentive
+		health -= daNote.missHealth; 
 		//For testing purposes
 		//trace(daNote.missHealth);
 		songMisses++;
@@ -3525,8 +3524,7 @@ class PlayState extends MusicBeatState
 				combo += 1;
 				if(combo > 9999) combo = 9999;
 			}
-			//health += note.hitHealth;
-			health += note.hitHealth-(songMisses/2000);//incentivises players to get good. VERY IMPORTANT
+			health += note.hitHealth;
 
 			if(!note.noAnimation) {
 				var daAlt = '';
