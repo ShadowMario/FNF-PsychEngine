@@ -157,6 +157,14 @@ class PlayState extends MusicBeatState
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
 
+	
+	public var sicks:Int = 0;
+	public var goods:Int = 0;
+	public var bads:Int = 0;
+	public var shits:Int = 0;
+	
+	
+	
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
 	private var startingSong:Bool = false;
@@ -1058,6 +1066,7 @@ class PlayState extends MusicBeatState
 	public function reloadHealthBarColors() {
 		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+			
 		healthBar.updateBar();
 	}
 
@@ -1963,10 +1972,21 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
+		var AwesomeRatings:String = "Boobs in my mouth";//Sick Full Combo
+		
+			if (sicks > 0 ) AwesomeRatings = "SFC" ;
+			if (goods > 0 ) AwesomeRatings = "GFC" ;
+			if (bads > 0 ) AwesomeRatings = "FC" ;
+			if (songMisses > 0 && songMisses<10) AwesomeRatings = "SDCB" ;
+			if (songMisses > 0 && songMisses>=10) AwesomeRatings = "Clear" ;
+		
+		
+		
+		
 		if(ratingString == '?') {
-			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString;
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString ;
 		} else {
-			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString + ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)';
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString + ' (' + FlxMath.roundDecimal(ratingPercent * 100,3) + '% )'+ ' '+ AwesomeRatings;//peeps wanted no integer rating
 		}
 
 		if(cpuControlled) {
@@ -3002,6 +3022,8 @@ class PlayState extends MusicBeatState
 		eventNotes = [];
 	}
 
+	public var totalPlayed = -1.00;
+	public var totalNotesHit  = 0.00;
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + 8); 
@@ -3020,7 +3042,7 @@ class PlayState extends MusicBeatState
 		var score:Int = 350;
 
 		var daRating:String = "sick";
-
+/*
 		if (noteDiff > Conductor.safeZoneOffset * 0.75)
 		{
 			daRating = 'shit';
@@ -3036,6 +3058,29 @@ class PlayState extends MusicBeatState
 			daRating = 'good';
 			score = 200;
 		}
+*/
+		
+//tryna do MS based judgment due to popular demand
+
+
+		daRating = Conductor.judgeNote(note,noteDiff);
+
+		switch (daRating){
+			
+                    case "shit": // shit
+						totalNotesHit += 0;
+                       shits++;
+                    case "bad": // bad
+						totalNotesHit += 0.5;
+                       bads++;
+                    case "good": // good
+						totalNotesHit += 0.75;
+                      goods++;
+                    case "sick": // sick
+                       sicks ++;
+					   totalNotesHit += 1;
+		}
+
 
 		if(daRating == 'sick' && !note.noteSplashDisabled)
 		{
@@ -3310,7 +3355,9 @@ class PlayState extends MusicBeatState
 			}
 		});
 
-		health -= daNote.missHealth; //For testing purposes
+	//	health -= daNote.missHealth; 
+		health -= daNote.missHealth+(songMisses/2000); //For get-gud incentive
+		//For testing purposes
 		//trace(daNote.missHealth);
 		songMisses++;
 		vocals.volume = 0;
@@ -3457,7 +3504,8 @@ class PlayState extends MusicBeatState
 				combo += 1;
 				if(combo > 9999) combo = 9999;
 			}
-			health += note.hitHealth;
+			//health += note.hitHealth;
+			health += note.hitHealth-(songMisses/2000);//incentivises players to get good. VERY IMPORTANT
 
 			if(!note.noAnimation) {
 				var daAlt = '';
@@ -3909,6 +3957,8 @@ class PlayState extends MusicBeatState
 	public var ratingString:String;
 	public var ratingPercent:Float;
 	public function RecalculateRating() {
+		 totalPlayed++;
+		trace(totalNotesHit / totalPlayed);
 		setOnLuas('score', songScore);
 		setOnLuas('misses', songMisses);
 		setOnLuas('ghostMisses', songMisses);
@@ -3916,7 +3966,8 @@ class PlayState extends MusicBeatState
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', []);
 		if(ret != FunkinLua.Function_Stop) {
-			ratingPercent = songScore / ((songHits + songMisses - ghostMisses) * 350);
+			//ratingPercent = songScore / ((songHits + songMisses - ghostMisses) * 350);
+			ratingPercent = Math.max(0, totalNotesHit / totalPlayed);
 			if(!Math.isNaN(ratingPercent) && ratingPercent < 0) ratingPercent = 0;
 
 			if(Math.isNaN(ratingPercent)) {
