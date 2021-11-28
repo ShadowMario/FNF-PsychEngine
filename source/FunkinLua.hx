@@ -405,7 +405,7 @@ class FunkinLua {
 			
 			return boobs;
 		});
-		Lua_helper.add_callback(lua, "mouseDown", function(button:String) {
+		Lua_helper.add_callback(lua, "mousePressed", function(button:String) {
 			var boobs = FlxG.mouse.pressed;
 			switch(button){
 				case 'middle':

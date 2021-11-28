@@ -406,6 +406,13 @@ class FreeplayState extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+		
+		CoolUtil.difficultyStuff: = [
+			['Easy', '-easy'],
+			['Normal', ''],
+			['Hard', '-hard']
+		];
+		
 		changeDiff();
 		Paths.currentModDirectory = songs[curSelected].folder;
 		//it didn't account for mod directories my bad : P
