@@ -125,6 +125,7 @@ class Character extends FlxSprite
 				if(Assets.exists(Paths.getPath('images/' + json.image + '.txt', TEXT)))
 				#end
 				{
+				//bozo forgot about the packer shits : P
 					frames = Paths.getPackerAtlas(json.image);
 				}
 				else

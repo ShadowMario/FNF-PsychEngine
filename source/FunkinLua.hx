@@ -6,6 +6,7 @@ import llua.Convert;
 #end
 
 import flixel.FlxG;
+import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.text.FlxText;
@@ -392,6 +393,38 @@ class FunkinLua {
 				}));
 			}
 		});
+		Lua_helper.add_callback(lua, "mouseClicked", function(button:String) {
+			var boobs = FlxG.mouse.justPressed;
+			switch(button){
+				case 'middle':
+					boobs = FlxG.mouse.justPressedMiddle;
+				case 'right':
+					boobs = FlxG.mouse.justPressedRight;
+			}
+			
+			
+			return boobs;
+		});
+		Lua_helper.add_callback(lua, "mousePressed", function(button:String) {
+			var boobs = FlxG.mouse.pressed;
+			switch(button){
+				case 'middle':
+					boobs = FlxG.mouse.pressedMiddle;
+				case 'right':
+					boobs = FlxG.mouse.pressedRight;
+			}
+			return boobs;
+		});
+		Lua_helper.add_callback(lua, "mouseReleased", function(button:String) {
+			var boobs = FlxG.mouse.justReleased;
+			switch(button){
+				case 'middle':
+					boobs = FlxG.mouse.justReleasedMiddle;
+				case 'right':
+					boobs = FlxG.mouse.justReleasedRight;
+			}
+			return boobs;
+		});
 		Lua_helper.add_callback(lua, "noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
@@ -522,6 +555,7 @@ class FunkinLua {
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
+				case 'space': key = FlxG.keys.justPressed.SPACE;//an extra key for convinience
 			}
 			return key;
 		});
@@ -532,6 +566,7 @@ class FunkinLua {
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
+				case 'space': key = FlxG.keys.pressed.SPACE;//an extra key for convinience
 			}
 			return key;
 		});
@@ -542,6 +577,7 @@ class FunkinLua {
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_R');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP_R');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_R');
+				case 'space': key = FlxG.keys.justReleased.SPACE;//an extra key for convinience
 			}
 			return key;
 		});

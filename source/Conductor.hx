@@ -23,6 +23,9 @@ class Conductor
 	public static var lastSongPos:Float;
 	public static var offset:Float = 0;
 
+//tryna do MS based judgment due to popular demand
+    public static var timingWindows = [166, 135, 90, 45];
+	
 	public static var safeFrames:Int = 10;
 	public static var safeZoneOffset:Float = (safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
 
@@ -32,6 +35,30 @@ class Conductor
 	{
 	}
 
+    public static function judgeNote(note:Note,diff:Float=0)//STOLEN FROM KADE ENGINE
+    {
+       // var diff = Math.abs(note.strumTime - Conductor.songPosition) / (PlayState.songMultiplier >= 1 ? PlayState.songMultiplier : 1);
+        for(index in 0...timingWindows.length) // based on 4 timing windows, will break with anything else
+        {
+            var time = timingWindows[index];
+            var nextTime = index + 1 > timingWindows.length - 1 ? 0 : timingWindows[index + 1];
+            if (diff < time && diff >= nextTime)
+            {
+                switch(index)
+                {
+                    case 0: // shit
+                        return "shit";
+                    case 1: // bad
+                        return "bad";
+                    case 2: // good
+                        return "good";
+                    case 3: // sick
+                        return "sick";
+                }
+            }
+        }
+        return "shit";
+    }
 	public static function mapBPMChanges(song:SwagSong)
 	{
 		bpmChangeMap = [];

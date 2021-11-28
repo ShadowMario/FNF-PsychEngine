@@ -112,9 +112,10 @@ class StrumNote extends FlxSprite
 				resetAnim = 0;
 			}
 		}
-		
+		//if(animation.curAnim != null){ //my bad i was upset
 		if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
 			centerOrigin();
+		//}
 		}
 
 		super.update(elapsed);
