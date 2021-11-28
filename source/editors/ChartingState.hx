@@ -1465,24 +1465,22 @@ class ChartingState extends MusicBeatState
 					//(Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;//snap into quantization
 				if (FlxG.keys.pressed.UP)
 				{
-					/*
-					var tosnapto = 0.00;
-					var foundaspot = false;
 					
-					for (i in datimess){
-						if(!foundaspot){
-							if (FlxG.sound.music.time < i){// or < i that might work
-								foundaspot = true;
-							}else{
-								tosnapto = i;
-							}
+					//var tosnapto = 0.00;
+					var foundaspot = false;
+					var i = datimess.length-1;//backwards for loop 
+					while (i > -1){
+						if (FlxG.sound.music.time >= datimess[i] && !foundaspot){
+							foundaspot = true;
+							FlxG.sound.music.time = datimess[i];
 						}
-					}*/
+						i --;
+					}
 					//FlxG.sound.music.time = tosnapto;
 					FlxG.sound.music.time -= daTime;
 				}
 				else{
-					/*
+					
 					var foundaspot = false;
 					for (i in datimess){
 						if (FlxG.sound.music.time <= i && !foundaspot){
@@ -1490,7 +1488,7 @@ class ChartingState extends MusicBeatState
 							FlxG.sound.music.time = i;
 						}
 					}
-					*/
+					
 					
 					FlxG.sound.music.time += daTime;
 				}
