@@ -2,7 +2,7 @@
 	"songs": [
 		["Senpai", "senpai-pixel", [255, 120, 191]],
 		["Roses", "senpai-pixel", [255, 120, 191]],
-		["Thorns", "spirit-pixel", [153, 17, 44]]
+		["Thorns", "spirit-pixel", [255, 120, 191]]
 	],
 
 	"weekCharacters": [
