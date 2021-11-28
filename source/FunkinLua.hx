@@ -82,9 +82,9 @@ class FunkinLua {
 		set('songName', PlayState.SONG.song);
 		set('startedCountdown', false);
 
-		set('isStoryMode', PlayState.isStoryMode);
+		//set('isStoryMode', PlayState.isStoryMode);
 		set('difficulty', PlayState.storyDifficulty);
-		set('weekRaw', PlayState.storyWeek);
+		//set('weekRaw', PlayState.storyWeek);
 		set('week', WeekData.getCurrentWeekNumber());
 		set('seenCutscene', PlayState.seenCutscene);
 

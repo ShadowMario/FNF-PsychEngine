@@ -63,7 +63,7 @@ class WeekData {
 
 	//To use on PlayState.hx or Highscore stuff
 	public static function getCurrentWeekNumber():Int {
-		return getWeekNumber(PlayState.storyWeek);
+		return getWeekNumber(0);
 	}
 
 	public static function getWeekNumber(num:Int):Int {
@@ -80,7 +80,7 @@ class WeekData {
 
 	//Used on LoadingState, nothing really too relevant
 	public static function getWeekDirectory():String {
-		var value:String = loadDirectory[PlayState.storyWeek];
+		var value:String = loadDirectory[0];
 		if(value == null) {
 			value = "week" + getCurrentWeekNumber();
 		}

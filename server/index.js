@@ -11,6 +11,8 @@ const fs = require("fs");
 
 var app = express();
 
+var port = 2000;
+
 var username = "";
 
 app.db = mongojs('game_server', ['scores', 'users']);
@@ -18,6 +20,15 @@ app.db = mongojs('game_server', ['scores', 'users']);
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 dotenv.config();
+
+var args = process.argv.slice(2);
+console.log(process.argv);
+
+switch (args[0]) {
+    case "--" + 'port':
+        port = parseInt(args[1]);
+        break;
+}
 
 async function checkNsfw(pic) {
     const model = await nsfw.load();
@@ -223,7 +234,7 @@ app.post("/postImg", function(req, res) {
     }
 });
 
-var server = app.listen(2000, function()
+var server = app.listen(port, function()
 { 
     console.log('Listening on port %d', server.address().port);
     //console.log(require('crypto').randomBytes(64).toString('hex'));

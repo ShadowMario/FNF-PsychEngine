@@ -89,8 +89,8 @@ class PlayState extends MusicBeatState
 
 	public static var curStage:String = '';
 	public static var SONG:SwagSong = null;
-	public static var isStoryMode:Bool = false;
-	public static var storyWeek:Int = 0;
+	//public static var isStoryMode:Bool = false;
+	//public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 
@@ -258,7 +258,7 @@ class PlayState extends MusicBeatState
 		#if desktop
 		storyDifficultyText = '' + CoolUtil.difficultyStuff[storyDifficulty][0];
 
-		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
+		/*// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
 		if (isStoryMode)
 		{
 			var weekCustomName = 'Week ' + storyWeek;
@@ -270,9 +270,9 @@ class PlayState extends MusicBeatState
 			detailsText = "Story Mode: " + weekCustomName;
 		}
 		else
-		{
+		{*/
 			detailsText = "Freeplay";
-		}
+		//}
 
 		// String for when the game is paused
 		detailsPausedText = "Paused - " + detailsText;
@@ -651,12 +651,12 @@ class PlayState extends MusicBeatState
 		if(dad.curCharacter.startsWith('gf')) {
 			dad.setPosition(GF_X, GF_Y);
 			gf.visible = false;
-			if (isStoryMode)
-			{
-				camPos.x += 300;
-				camPos.y -= 30;
-				tweenCamIn();
-			}
+			/*if (isStoryMode)
+			{*/
+			camPos.x += 300;
+			camPos.y -= 30;
+			tweenCamIn();
+			//}
 		}
 
 		switch(curStage)
@@ -858,7 +858,7 @@ class PlayState extends MusicBeatState
 		#end
 		
 		var daSong:String = curSong.toLowerCase();
-		if (isStoryMode && !seenCutscene)
+		/*if (isStoryMode && !seenCutscene)
 		{
 			switch (daSong)
 			{
@@ -925,9 +925,9 @@ class PlayState extends MusicBeatState
 					startCountdown();
 			}
 			seenCutscene = true;
-		} else {
+		} else {*/
 			startCountdown();
-		}
+		//}
 		RecalculateRating();
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
@@ -1533,12 +1533,12 @@ class PlayState extends MusicBeatState
 			babyArrow.updateHitbox();
 			babyArrow.scrollFactor.set();
 
-			if (!isStoryMode)
-			{
+			/*if (!isStoryMode)
+			{*/
 				babyArrow.y -= 10;
 				babyArrow.alpha = 0;
 				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
-			}
+			//}
 
 			babyArrow.ID = i;
 
@@ -2674,7 +2674,7 @@ class PlayState extends MusicBeatState
 			#end
 		}
 
-		if (isStoryMode)
+		/*if (isStoryMode)
 		{
 			campaignScore += songScore;
 			campaignMisses += songMisses;
@@ -2742,14 +2742,14 @@ class PlayState extends MusicBeatState
 			}
 		}
 		else
-		{
+		{*/
 			trace('WENT BACK TO FREEPLAY??');
 			MusicBeatState.switchState(new FreeplayState());
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			usedPractice = false;
 			changedDifficulty = false;
 			cpuControlled = false;
-		}
+		//}
 	}
 
 	#if ACHIEVEMENTS_ALLOWED
@@ -3634,11 +3634,11 @@ class PlayState extends MusicBeatState
 			if(!Achievements.achievementsUnlocked[arrayIDs[i]][1]) {
 				switch(arrayIDs[i]) {
 					case 1 | 2 | 3 | 4 | 5 | 6 | 7:
-						if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'Hard' &&
+						/*if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'Hard' &&
 						storyPlaylist.length <= 1 && WeekData.getCurrentWeekNumber() == arrayIDs[i] && !changedDifficulty && !usedPractice) {
 							Achievements.unlockAchievement(arrayIDs[i]);
 							return arrayIDs[i];
-						}
+						}*/
 					case 8:
 						if(ratingPercent < 0.2 && !practiceMode && !cpuControlled) {
 							Achievements.unlockAchievement(arrayIDs[i]);
