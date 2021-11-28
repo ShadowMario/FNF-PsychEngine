@@ -1435,7 +1435,7 @@ class ChartingState extends MusicBeatState
 			
 				var datimess = [];
 				
-				var daTime:Float = Conductor.stepCrochet*quants[curQuant];
+				var daTime:Float = Math.round(Conductor.stepCrochet*quants[curQuant]);
 				var cuquant = Std.int(32/quants[curQuant]);
 				for (i in 0...cuquant){
 					datimess.push(sectionStartTime() + daTime * i);
