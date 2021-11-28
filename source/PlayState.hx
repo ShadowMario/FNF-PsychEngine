@@ -156,14 +156,6 @@ class PlayState extends MusicBeatState
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
 
-	
-	public var sicks:Int = 0;
-	public var goods:Int = 0;
-	public var bads:Int = 0;
-	public var shits:Int = 0;
-	
-	
-	
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
 	private var startingSong:Bool = false;
@@ -1065,7 +1057,6 @@ class PlayState extends MusicBeatState
 	public function reloadHealthBarColors() {
 		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
-			
 		healthBar.updateBar();
 	}
 
@@ -1302,7 +1293,7 @@ class PlayState extends MusicBeatState
 			for (i in 0...opponentStrums.length) {
 				setOnLuas('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
 				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
-				//if(ClientPrefs.middleScroll) opponentStrums.members[i].visible = false;
+				if(ClientPrefs.middleScroll) opponentStrums.members[i].visible = false;
 			}
 
 			startedCountdown = true;
@@ -1428,11 +1419,7 @@ class PlayState extends MusicBeatState
 
 				notes.forEachAlive(function(note:Note) {
 					note.copyAlpha = false;
-					if(note.mustPress) {
-						note.alpha = playerStrums.members[note.noteData].alpha * note.multAlpha;
-					} else {
-						note.alpha = opponentStrums.members[note.noteData].alpha * note.multAlpha;
-					}
+					note.alpha = 1 * note.multAlpha;
 				});
 				callOnLuas('onCountdownTick', [swagCounter]);
 
@@ -1593,14 +1580,6 @@ class PlayState extends MusicBeatState
 							{
 								sustainNote.x += FlxG.width / 2; // general offset
 							}
-							else if(ClientPrefs.middleScroll)
-							{
-								sustainNote.x += 310;
-								if(daNoteData > 1)
-								{ //Up and Right
-									sustainNote.x += FlxG.width / 2 + 25;
-								}
-							}
 						}
 					}
 
@@ -1608,14 +1587,7 @@ class PlayState extends MusicBeatState
 					{
 						swagNote.x += FlxG.width / 2; // general offset
 					}
-					else if(ClientPrefs.middleScroll)
-					{
-						swagNote.x += 310;
-						if(daNoteData > 1) //Up and Right
-						{
-							swagNote.x += FlxG.width / 2 + 25;
-						}
-					}
+					else {}
 
 					if(!noteTypeMap.exists(swagNote.noteType)) {
 						noteTypeMap.set(swagNote.noteType, true);
@@ -1697,7 +1669,7 @@ class PlayState extends MusicBeatState
 			{
 				babyArrow.y -= 10;
 				babyArrow.alpha = 0;
-				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: (player < 1 && ClientPrefs.middleScroll) ? 0.5 : 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
+				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
 
 			if (player == 1)
@@ -1706,13 +1678,6 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				if(ClientPrefs.middleScroll)
-				{
-					babyArrow.x += 310;
-					if(i > 1) { //Up and Right
-						babyArrow.x += FlxG.width / 2 + 25;
-					}
-				}
 				opponentStrums.add(babyArrow);
 			}
 
@@ -1997,21 +1962,10 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		var AwesomeRatings:String = "Boobs in my mouth";//Sick Full Combo
-		
-			if (sicks > 0 ) AwesomeRatings = "SFC" ;
-			if (goods > 0 ) AwesomeRatings = "GFC" ;
-			if (bads > 0 ) AwesomeRatings = "FC" ;
-			if (songMisses > 0 && songMisses<10) AwesomeRatings = "SDCB" ;
-			if (songMisses > 0 && songMisses>=10) AwesomeRatings = "Clear" ;
-		
-		
-		
-		
 		if(ratingString == '?') {
-			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString ;
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString;
 		} else {
-			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString + ' (' + FlxMath.roundDecimal(ratingPercent * 100,3) + '% )'+ ' '+ AwesomeRatings;//peeps wanted no integer rating
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString + ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)';
 		}
 
 		if(cpuControlled) {
@@ -2181,7 +2135,12 @@ class PlayState extends MusicBeatState
 			var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.y > FlxG.height)
+				if(!daNote.mustPress && ClientPrefs.middleScroll)
+				{
+					daNote.active = true;
+					daNote.visible = false;
+				}
+				else if (daNote.y > FlxG.height)
 				{
 					daNote.active = false;
 					daNote.visible = false;
@@ -3042,8 +3001,6 @@ class PlayState extends MusicBeatState
 		eventNotes = [];
 	}
 
-	public var totalPlayed = -1.00;
-	public var totalNotesHit  = 0.00;
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + 8); 
@@ -3062,7 +3019,7 @@ class PlayState extends MusicBeatState
 		var score:Int = 350;
 
 		var daRating:String = "sick";
-/*
+
 		if (noteDiff > Conductor.safeZoneOffset * 0.75)
 		{
 			daRating = 'shit';
@@ -3078,29 +3035,6 @@ class PlayState extends MusicBeatState
 			daRating = 'good';
 			score = 200;
 		}
-*/
-		
-//tryna do MS based judgment due to popular demand
-
-
-		daRating = Conductor.judgeNote(note,noteDiff);
-
-		switch (daRating){
-			
-                    case "shit": // shit
-						totalNotesHit += 0;
-                       shits++;
-                    case "bad": // bad
-						totalNotesHit += 0.5;
-                       bads++;
-                    case "good": // good
-						totalNotesHit += 0.75;
-                      goods++;
-                    case "sick": // sick
-                       sicks ++;
-					   totalNotesHit += 1;
-		}
-
 
 		if(daRating == 'sick' && !note.noteSplashDisabled)
 		{
@@ -3375,8 +3309,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 
-		health -= daNote.missHealth; 
-		//For testing purposes
+		health -= daNote.missHealth; //For testing purposes
 		//trace(daNote.missHealth);
 		songMisses++;
 		vocals.volume = 0;
@@ -3975,8 +3908,6 @@ class PlayState extends MusicBeatState
 	public var ratingString:String;
 	public var ratingPercent:Float;
 	public function RecalculateRating() {
-		 totalPlayed++;
-		trace(totalNotesHit / totalPlayed);
 		setOnLuas('score', songScore);
 		setOnLuas('misses', songMisses);
 		setOnLuas('ghostMisses', songMisses);
@@ -3984,8 +3915,7 @@ class PlayState extends MusicBeatState
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', []);
 		if(ret != FunkinLua.Function_Stop) {
-			//ratingPercent = songScore / ((songHits + songMisses - ghostMisses) * 350);
-			ratingPercent = Math.max(0, totalNotesHit / totalPlayed);
+			ratingPercent = songScore / ((songHits + songMisses - ghostMisses) * 350);
 			if(!Math.isNaN(ratingPercent) && ratingPercent < 0) ratingPercent = 0;
 
 			if(Math.isNaN(ratingPercent)) {
