@@ -120,6 +120,9 @@ class ChartingState extends MusicBeatState
 	var gridBG:FlxSprite;
 	var gridMult:Int = 2;
 
+	var daquantspot = 0;
+	
+	
 	var _song:SwagSong;
 	/*
 	 * WILL BE THE CURRENT / LAST PLACED NOTE
@@ -275,7 +278,8 @@ class ChartingState extends MusicBeatState
 		add(strumLine);
 
 		quant = new AttachedSprite('chart_quant','chart_quant');
-		quant.animation.play('idle', true, false, 0);
+		quant.animation.addByPrefix('q','chart_quant',0,false);
+		quant.animation.play('q', true, false, 0);
 		quant.sprTracker = strumLine;
 		quant.xAdd = -32;
 		quant.yAdd = 8;
@@ -1439,51 +1443,56 @@ class ChartingState extends MusicBeatState
 			
 			
 			
+				var datimess = [];
+				
+				var daTime:Float = Conductor.stepCrochet*quants[curQuant];
+				var cuquant = Std.int(32/quants[curQuant]);
+				for (i in 0...cuquant){
+					datimess.push(sectionStartTime() + daTime * i);
+				}
 			if (FlxG.keys.justPressed.LEFT && FlxG.keys.pressed.CONTROL)
 			{
 				curQuant --;
 				if (curQuant < 0) curQuant = 0;
+				
+				daquantspot *=  Std.int(32/quants[curQuant]);
 			}
 			if (FlxG.keys.justPressed.RIGHT && FlxG.keys.pressed.CONTROL)
 			{
 				curQuant ++;
 				if (curQuant > quants.length-1) curQuant = quants.length-1;
+				daquantspot *=  Std.int(32/quants[curQuant]);
 			}
-			quant.animation.play('idle', true, false, curQuant);
+			quant.animation.play('q', true, false, curQuant);
 			if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
 			{
 				FlxG.sound.music.pause();
 
-				var daTime:Float = Conductor.stepCrochet*quants[curQuant];
 				
-				var datimess = [];
-				var cuquant = Std.int(32/quants[curQuant]);
-				for (i in 0...cuquant){
-					datimess.push(sectionStartTime() + daTime * i);
-				}
 				updateCurStep();
+				//FlxG.sound.music.time = (Math.round(curStep/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;
 				
-				//	FlxG.sound.music.time = (Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;//snap into quantization
+					//(Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;//snap into quantization
 				if (FlxG.keys.pressed.UP)
 				{
-					
+					/*
 					var tosnapto = 0.00;
 					var foundaspot = false;
 					
 					for (i in datimess){
 						if(!foundaspot){
-							if (FlxG.sound.music.time <= i){// or < i that might work
+							if (FlxG.sound.music.time < i){// or < i that might work
 								foundaspot = true;
 							}else{
 								tosnapto = i;
 							}
 						}
-					}
-					FlxG.sound.music.time = tosnapto;
+					}*/
+					//FlxG.sound.music.time = tosnapto;
 					FlxG.sound.music.time -= daTime;
 				}
 				else{
-					
+					/*
 					var foundaspot = false;
 					for (i in datimess){
 						if (FlxG.sound.music.time <= i && !foundaspot){
@@ -1491,7 +1500,7 @@ class ChartingState extends MusicBeatState
 							FlxG.sound.music.time = i;
 						}
 					}
-					
+					*/
 					
 					FlxG.sound.music.time += daTime;
 				}
