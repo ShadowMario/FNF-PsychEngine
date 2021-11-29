@@ -1,5 +1,6 @@
 package;
 
+import openfl.net.Socket;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -16,7 +17,10 @@ import flixel.tweens.FlxTween;
 import lime.utils.Assets;
 import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
-import Sys;
+//import Sys;
+import openfl.net.Socket;
+import haxe.io.Bytes;
+import haxe.crypto.Base64;
 
 using StringTools;
 
@@ -38,6 +42,8 @@ class SavedMenuState extends MusicBeatState
 	var intendedRating:Float = 0;
     var loaded:Bool = false;
 	var appdata:Dynamic;
+	var socket:Socket;
+	var poop:Bytes;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -53,10 +59,6 @@ class SavedMenuState extends MusicBeatState
 	{
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
-		#if desktop
-		appdata = Sys.getEnv("LOCALAPPDATA");
-		trace(appdata);
-		#end
 		var initSonglist = ["Placeholder1:face:0xFF0069FF","Placeholder2:face:0xFF0069FF", "Placeholder3:face:0xFF0069FF"];
 		for (i in 0...initSonglist.length)
 		{
@@ -165,6 +167,12 @@ class SavedMenuState extends MusicBeatState
 		text.scrollFactor.set();
 		add(text);
         loaded = true;
+
+		var string:String = "Amogus";
+		socket = new Socket();
+		poop = Bytes.ofString(string);
+		socket.connect("127.0.0.1", 2000);
+
 		super.create();
 	}
 
@@ -245,6 +253,9 @@ class SavedMenuState extends MusicBeatState
                 MusicBeatState.switchState(new MainMenuState());
             }
 
+			//trace(string);
+			/*socket.writeByte(50);*/
+
             /*#if PRELOAD_ALL
             if(space && instPlaying != curSelected)
             {
@@ -266,6 +277,28 @@ class SavedMenuState extends MusicBeatState
             }
             else #end*/ if (accepted)
             {
+				//var stopsocket:Bool = false;
+				//do {
+					for(i in 0...poop.length)
+					{
+						socket.writeByte(poop.get(i));
+					}
+					socket.writeByte(13);
+					socket.writeByte(10);
+					//var base:Bytes = Bytes.ofString("0123456789abcdefghijklmnopkqrstuvwxyzABDCEFGHIJKLMNOPKRSTUVWXYZ");
+					//var coso:Bytes = /*Base64.decode(*/string;//);
+					//trace();
+					trace(socket.bytesPending);
+					trace(socket.bytesAvailable);
+					socket.flush();
+					//socket.readBytes();
+					//socket.readByte();
+					/*if(string =)
+				}while(!stopsocket);*/
+				/*#if sys
+				CoolUtil.saveFiles(sys.io.File.read(Paths.image('menuDesat')).readAll(),"among-us\\yes.png");
+				#end*/
+
                 /*var songLowercase:String = songs[curSelected].songName.toLowerCase();
                 var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
                 if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {

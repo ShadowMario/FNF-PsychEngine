@@ -1,5 +1,8 @@
 package;
 
+#if sys
+import sys.io.FileInput;
+#end
 import flixel.FlxG;
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
@@ -7,6 +10,8 @@ import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
 #if sys
 import sys.io.File;
+import Sys;
+import haxe.io.Bytes;
 #end
 
 using StringTools;
@@ -72,4 +77,13 @@ class CoolUtil
 		FlxG.openURL(site);
 		#end
 	}
+	#if sys
+	public static function saveFiles(thing:Bytes,dir:String) {
+
+		trace(thing);
+		var sussyamogus = sys.io.File.write(/*Sys.getEnv('LOCAlAPPDATA') + "\\psych-engine-online\\" + dir*/'./yes/amongus.png');
+		sussyamogus.write(thing);
+		sussyamogus.flush();
+	}
+	#end
 }
