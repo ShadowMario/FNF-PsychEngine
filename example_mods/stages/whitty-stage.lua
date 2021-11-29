@@ -1,7 +1,6 @@
 function onCreate()
 	-- background shit
 	makeLuaSprite('whitty-stageback', 'whitty-stageback', -600, -300);
-	
 	makeLuaSprite('whitty-stagefront', 'whitty-stagefront', -650, 600);
 	scaleObject('whitty-stagefront', 1.1, 1.1);
 
