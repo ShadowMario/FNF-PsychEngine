@@ -1,0 +1,66 @@
+{
+	"storyName": "Camellia Week 2",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"songs": [
+		[
+			"quaoar",
+			"camellia",
+			[
+				66,
+				33,
+				133
+			]
+		],
+		[
+			"crystallized",
+			"camellia",
+			[
+				66,
+				33,
+				133
+			]
+		],
+		[
+			"nacreous-snowmelt",
+			"camellia",
+			[
+				66,
+				33,
+				133
+			]
+		],
+		[
+			"ghost",
+			"camellia",
+			[
+				66,
+				33,
+				133
+			]
+		],
+		[
+			"ghoul",
+			"camellia",
+			[
+				66,
+				33,
+				133
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekCharacters": [
+		"camellia",
+		"bf",
+		"gf"
+	],
+	"weekName": "camellia week 2"
+}
