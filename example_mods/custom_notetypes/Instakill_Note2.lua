@@ -2,8 +2,8 @@ function onCreate()
 	--Iterate over all notes
 	for i = 0, getProperty('unspawnNotes.length')-1 do
 		--Check if the note is an Instakill Note
-		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Instakill_Note' then
-			setPropertyFromGroup('unspawnNotes', i, 'texture', 'instakill-note-assets'); --Change texture
+		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Instakill_Note2' then
+			setPropertyFromGroup('unspawnNotes', i, 'texture', 'instakill-note-assets2'); --Change texture
 
 			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') then --Doesn't let Dad/Opponent notes get ignored
 				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); --Miss has no penalties
@@ -19,7 +19,7 @@ end
 -- noteType: The note type string/tag
 -- isSustainNote: If it's a hold note, can be either true or false
 function goodNoteHit(id, noteData, noteType, isSustainNote)
-	if noteType == 'Instakill_Note' then
+	if noteType == 'Instakill_Note2' then
 		setProperty('health', -500);
 	end
 end

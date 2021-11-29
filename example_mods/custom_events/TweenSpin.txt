@@ -1,0 +1,4 @@
+Makes the Receptors move in a circular motion
+BOTH VALUES ARE REQUIRED FOR THE EFFECT
+Value 1: How long to tween for (in seconds)
+Value 2: How big of a tween (in degrees) (360 for one spin, 720 for 2 spins)
