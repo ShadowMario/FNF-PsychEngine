@@ -144,10 +144,11 @@ class CharacterEditorState extends MusicBeatState
 		var tipText:FlxText = new FlxText(FlxG.width - 20, FlxG.height, 0,
 			"E/Q - Camera Zoom In/Out
 			\nJKLI - Move Camera
-			
 			\nW/S - Previous/Next Animation
 			\nSpace - Play Animation
 			\nArrow Keys - Move Character Offset
+			\nZ - Reset Current Offset
+			\nX - Reset All Offsets
 			\nHold Shift to Move 10x faster\n", 12);
 		tipText.cameras = [camHUD];
 		tipText.setFormat(null, 12, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1050,7 +1051,29 @@ class CharacterEditorState extends MusicBeatState
 					genBoyOffsets();
 				}
 
+				if (FlxG.keys.justPressed.Z)
+				{
+					char.animationsArray[curAnim].offsets = [0, 0];
+					
+						char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
+						ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
+						genBoyOffsets();
+				}
+				if (FlxG.keys.justPressed.X)
+				{
+					for(i in 0...char.animationsArray.length){
+						char.animationsArray[i].offsets = [0, 0];
+						
+						char.addOffset(char.animationsArray[i].anim, char.animationsArray[i].offsets[0], char.animationsArray[i].offsets[1]);
+						ghostChar.addOffset(char.animationsArray[i].anim, char.animationsArray[i].offsets[0], char.animationsArray[i].offsets[1]);
+						genBoyOffsets();
+					}
+				}
+
 				var controlArray:Array<Bool> = [FlxG.keys.justPressed.LEFT, FlxG.keys.justPressed.RIGHT, FlxG.keys.justPressed.UP, FlxG.keys.justPressed.DOWN];
+				
+				
+				
 				for (i in 0...controlArray.length) {
 					if(controlArray[i]) {
 						var holdShift = FlxG.keys.pressed.SHIFT;
