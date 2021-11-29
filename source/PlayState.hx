@@ -136,6 +136,9 @@ class PlayState extends MusicBeatState
 	private var camFollowPos:FlxObject;
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
+	
+	public var laneunderlay:FlxSprite;
+	public var laneunderlayOpponent:FlxSprite;
 
 	public var strumLineNotes:FlxTypedGroup<StrumNote>;
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
@@ -787,6 +790,22 @@ class PlayState extends MusicBeatState
 		strumLine = new FlxSprite(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
+	
+		laneunderlayOpponent = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
+		laneunderlayOpponent.alpha = ClientPrefs.underlay;
+		laneunderlayOpponent.color = FlxColor.BLACK;
+		laneunderlayOpponent.scrollFactor.set();
+
+		laneunderlay = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
+		laneunderlay.alpha = ClientPrefs.underlay;
+		laneunderlay.color = FlxColor.BLACK;
+		laneunderlay.scrollFactor.set();
+
+		if (!ClientPrefs.middleScroll)
+		{
+			add(laneunderlayOpponent);
+		}
+		add(laneunderlay);
 
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 20, 400, "", 32);
 		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -939,6 +958,8 @@ class PlayState extends MusicBeatState
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		laneunderlay.cameras = [camHUD];
+		laneunderlayOpponent.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -1295,6 +1316,13 @@ class PlayState extends MusicBeatState
 		if(ret != FunkinLua.Function_Stop) {
 			generateStaticArrows(0);
 			generateStaticArrows(1);
+
+			laneunderlay.x = playerStrums.members[0].x - 25;
+			laneunderlayOpponent.x = opponentStrums.members[0].x - 25;
+
+			laneunderlay.screenCenter(Y);
+			laneunderlayOpponent.screenCenter(Y);
+
 			for (i in 0...playerStrums.length) {
 				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
