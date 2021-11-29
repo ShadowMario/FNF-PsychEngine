@@ -11,6 +11,7 @@ class StrumNote extends FlxSprite
 	private var colorSwap:ColorSwap;
 	public var resetAnim:Float = 0;
 	private var noteData:Int = 0;
+	public var direction:Float = 30;//plan on doing scroll directions soon -bb
 
 	private var player:Int;
 
@@ -37,7 +38,7 @@ class StrumNote extends FlxSprite
 			animation.add('purple', [4]);
 
 			antialiasing = false;
-			setGraphicSize(Std.int(width * ClientPrefs.noteSize * PlayState.daPixelZoom));
+			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 
 			switch (Math.abs(leData))
 			{
@@ -68,7 +69,7 @@ class StrumNote extends FlxSprite
 			animation.addByPrefix('red', 'arrowRIGHT');
 
 			antialiasing = ClientPrefs.globalAntialiasing;
-			setGraphicSize(Std.int(width * ClientPrefs.noteSize));
+			setGraphicSize(Std.int(width * 0.7));
 
 			switch (Math.abs(leData))
 			{
@@ -111,10 +112,11 @@ class StrumNote extends FlxSprite
 				resetAnim = 0;
 			}
 		}
-		
-		/*if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
-			updateConfirmOffset();
-		}*/
+		//if(animation.curAnim != null){ //my bad i was upset
+		if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
+			centerOrigin();
+		//}
+		}
 
 		super.update(elapsed);
 	}
@@ -133,18 +135,8 @@ class StrumNote extends FlxSprite
 			colorSwap.brightness = ClientPrefs.arrowHSV[noteData % 4][2] / 100;
 
 			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
-				updateConfirmOffset();
+				centerOrigin();
 			}
 		}
-	}
-
-	function updateConfirmOffset() { //TO DO: Find a calc to make the offset work fine on other angles
-		//centerOffsets();
-		//offset.x -= 13*(ClientPrefs.noteSize/0.7);
-		//offset.y -= 13*(ClientPrefs.noteSize/0.7);
-		
-		//like wtf was this ^^^
-		
-		centerOrigin();
 	}
 }

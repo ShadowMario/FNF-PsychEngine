@@ -3,6 +3,7 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
+import editors.ChartingState;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -17,6 +18,7 @@ import lime.utils.Assets;
 import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
 import WeekData;
+import sys.FileSystem;
 
 using StringTools;
 
@@ -76,6 +78,8 @@ class FreeplayState extends MusicBeatState
 		}
 		WeekData.setDirectoryFromWeek();
 
+		/*		//KIND OF BROKEN NOW AND ALSO PRETTY USELESS//
+
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
 		for (i in 0...initSonglist.length)
 		{
@@ -83,7 +87,7 @@ class FreeplayState extends MusicBeatState
 				var songArray:Array<String> = initSonglist[i].split(":");
 				addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
 			}
-		}
+		}*/
 
 		// LOAD MUSIC
 
@@ -200,6 +204,8 @@ class FreeplayState extends MusicBeatState
 	private static var vocals:FlxSound = null;
 	override function update(elapsed:Float)
 	{
+		
+		
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -300,7 +306,12 @@ class FreeplayState extends MusicBeatState
 			if(colorTween != null) {
 				colorTween.cancel();
 			}
+			
+			if (FlxG.keys.pressed.SHIFT){
+				FlxG.switchState(new ChartingState());
+			}else{
 			LoadingState.loadAndSwitchState(new PlayState());
+			}
 
 			FlxG.sound.music.volume = 0;
 					
@@ -351,7 +362,7 @@ class FreeplayState extends MusicBeatState
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
 			curSelected = 0;
-
+			
 		var newColor:Int = songs[curSelected].color;
 		if(newColor != intendedColor) {
 			if(colorTween != null) {
@@ -395,8 +406,48 @@ class FreeplayState extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+		
+		CoolUtil.difficultyStuff = [
+			['Easy', '-easy'],
+			['Normal', ''],
+			['Hard', '-hard']
+		];
+		
 		changeDiff();
 		Paths.currentModDirectory = songs[curSelected].folder;
+		//it didn't account for mod directories my bad : P
+		
+			
+			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
+			#if MODS_ALLOWED
+			var pathshit = Paths.modFolders('data/' + songLowercase);
+			//if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
+			
+			if (FileSystem.exists(Paths.json(songLowercase + '/' + songLowercase))){
+				
+				pathshit = Paths.getPreloadPath('data/' + songLowercase);
+			}
+				for (i in FileSystem.readDirectory(pathshit)){
+			#else
+				for (i in FileSystem.readDirectory(Paths.json(songLowercase + '/' + songLowercase))){
+			#end
+					var name:String = i;
+					var dif = StringTools.replace(name, songLowercase, '').split('.')[0];
+					var difName = StringTools.replace(dif, '-', '');
+					
+					if (name.split('.')[1] == 'json' && name != 'events.json'){//check if it's an actual song chart
+						
+						if (dif != '-easy' && dif != '' && dif != '-hard' ){//now check if it's a custom difficulty
+							CoolUtil.difficultyStuff.push([difName,dif]);
+						}
+						
+					}
+				}
+			
+			
+			trace(	CoolUtil.difficultyStuff);
+		
+		
 	}
 
 	private function positionHighscore() {

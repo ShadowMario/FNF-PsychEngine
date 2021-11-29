@@ -226,8 +226,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 									curOption.setValue(FlxMath.roundDecimal(holdValue, curOption.decimals));
 							}
 							updateTextFrom(curOption);
+							curOption.change();
 						}
-						reloadCheckboxes();
 					}
 
 					if(curOption.type != 'string') {

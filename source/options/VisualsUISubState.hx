@@ -37,7 +37,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', //Name
 			'If checked, notes go Down instead of Up, simple enough.', //Description
-			'lowQuality', //Save data variable name
+			'downScroll', //Save data variable name
 			'bool', //Variable type
 			false); //Default value
 		addOption(option);
@@ -82,7 +82,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Hide Song Length',
-			'If unchecked, disables anti-aliasing, increases performance\nat the cost of the graphics not looking as smooth.',
+			'If checked, the bar showing how much time is left\nwill be hidden.',
 			'hideTime',
 			'bool',
 			false);
@@ -109,8 +109,17 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+		option.onChange = onChangeFPSCounter;
 		#end
 
 		super();
 	}
+
+	#if !mobile
+	function onChangeFPSCounter()
+	{
+		if(Main.fpsVar != null)
+			Main.fpsVar.visible = ClientPrefs.showFPS;
+	}
+	#end
 }
