@@ -13284,11 +13284,11 @@
 				"mustHitSection": true
 			}
 		],
-		"player3": "gf",
+		"player3": "gf-hellclown",
 		"song": "Hellclown",
 		"sections": 0,
 		"validScore": true,
-		"stage": "nevadaRed",
+		"stage": "tricky-island-red",
 		"needsVoices": true,
 		"speed": 3,
 		"bpm": 197

@@ -1,57 +1,57 @@
 {
-	"songs": [
-		[
-			"Improbable-outset",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"madness",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"hellclown",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"expurgation",
-			"dad",
-			[
-				146,
-				113,
-				253
-			]
-		]
-	],
+	"storyName": "Tricky",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
-	"weekCharacters": [
-		"",
-		"bf",
-		"gf"
-	],
-	"storyName": "Tricky",
-	"weekName": "Tricky",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
-	"hideStoryMode": true,
 	"weekBefore": "tutorial",
-	"startUnlocked": true
+	"startUnlocked": true,
+	"hideStoryMode": true,
+	"weekCharacters": [
+		"",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"Improbable-outset",
+			"tricky-mask",
+			[
+				100,
+				20,
+				20
+			]
+		],
+		[
+			"madness",
+			"tricky",
+			[
+				100,
+				20,
+				20
+			]
+		],
+		[
+			"hellclown",
+			"tricky-hellclown",
+			[
+				100,
+				20,
+				20
+			]
+		],
+		[
+			"expurgation",
+			"tricky-expurgation",
+			[
+				100,
+				20,
+				20
+			]
+		]
+	],
+	"weekName": "Tricky"
 }
