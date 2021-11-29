@@ -1,25 +1,69 @@
 {
 	"animations": [
 		{
-			"loop": true,
 			"offsets": [
 				439,
-				253
+				254
 			],
-			"anim": "idle",
+			"loop": true,
 			"fps": 24,
-			"name": "Idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "Idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				265,
 				332
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 24,
-			"name": "Sing Left",
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Sing Left"
+		},
+		{
+			"offsets": [
+				436,
+				352
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "Sing Up"
+		},
+		{
+			"offsets": [
+				607,
+				260
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Sing Right"
+		},
+		{
+			"offsets": [
+				324,
+				100
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Sing Down"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				434,
+				302
+			],
+			"anim": "singLEFT-alt",
+			"fps": 24,
+			"name": "Hank",
 			"indices": []
 		},
 		{
@@ -28,75 +72,42 @@
 				436,
 				352
 			],
-			"anim": "singUP",
-			"fps": 24,
-			"name": "Sing Up",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				607,
-				260
-			],
-			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "Sing Right",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				324,
-				100
-			],
-			"anim": "singDOWN",
-			"fps": 24,
-			"name": "Sing Down",
-			"indices": []
-		},
-		{
-			"offsets": [
-				434,
-				252
-			],
-			"loop": false,
-			"fps": 24,
-			"anim": "singLEFT-alt",
-			"indices": [],
-			"name": "Hank"
-		},
-		{
-			"offsets": [
-				434,
-				252
-			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singUP-alt",
-			"indices": [],
-			"name": "Hank"
+			"fps": 24,
+			"name": "Hank",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				434,
 				312
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singRIGHT-alt",
-			"indices": [],
-			"name": "Hank"
+			"fps": 24,
+			"name": "Hank",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				464,
 				292
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singDOWN-alt",
+			"fps": 24,
+			"name": "Hank",
+			"indices": []
+		},
+		{
+			"offsets": [
+				436,
+				352
+			],
 			"indices": [],
+			"fps": 24,
+			"anim": "hey",
+			"loop": false,
 			"name": "Hank"
 		}
 	],
