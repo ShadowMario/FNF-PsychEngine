@@ -1,18 +1,19 @@
 {
 	"storyName": "Whitty",
 	"hideFreeplay": false,
-	"weekBackground": "stage",
-	"weekBefore": "tutorial",
+	"weekBackground": "",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
+	"weekBefore": "tutorial",
 	"startUnlocked": true,
+	"hideStoryMode": true,
 	"weekCharacters": [
-		"dad",
+		"",
 		"bf",
-		"gf-whitty"
+		""
 	],
 	"songs": [
 		[
@@ -35,7 +36,7 @@
 		],
 		[
 			"ballistic",
-			"whittyballistic",
+			"whitty-ballistic",
 			[
 				166,
 				40,
@@ -43,6 +44,5 @@
 			]
 		]
 	],
-	"hideStoryMode": true,
 	"weekName": "Whitty"
 }

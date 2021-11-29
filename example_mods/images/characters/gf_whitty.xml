@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="gf_whitty.png">
+<TextureAtlas imagePath="gf-whitty.png">
 	<!-- Created with Adobe Animate version 21.0.3.38773 -->
 	<!-- http://www.adobe.com/products/animate.html -->
 	<SubTexture name="Idle Left0000" x="5" y="5" width="355" height="432"/>
