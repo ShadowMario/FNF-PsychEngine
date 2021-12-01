@@ -1,7 +1,7 @@
 {
 	"song": {
 		"player1": "bf",
-		"player2": "finn",
+		"player2": "corrupted-finn",
 		"notes": [
 			{
 				"typeOfSection": 0,
@@ -15586,7 +15586,7 @@
 		"isMoody": false,
 		"sectionLengths": [],
 		"uiType": "normal",
-		"stage": "place",
+		"stage": "pibby-corrupted-stage",
 		"sections": 0,
 		"needsVoices": true,
 		"bpm": 206,

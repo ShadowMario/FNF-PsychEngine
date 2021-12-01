@@ -21796,9 +21796,9 @@
 				"mustHitSection": true
 			}
 		],
-		"player2": "finn",
+		"player2": "corrupted-finn",
 		"isHey": false,
-		"player3": "nogf",
+		"player3": "corrupted-jake",
 		"cutsceneType": "none",
 		"isSpooky": false,
 		"song": "NO-HERO",
@@ -21807,7 +21807,7 @@
 		"isMoody": false,
 		"sectionLengths": [],
 		"uiType": "normal",
-		"stage": "place",
+		"stage": "pibby-corrupted-stage",
 		"sections": 0,
 		"needsVoices": true,
 		"gf": "gf",

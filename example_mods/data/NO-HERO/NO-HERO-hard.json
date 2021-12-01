@@ -1,7 +1,6 @@
 {
 	"song": {
 		"player1": "bf",
-		"player2": "finn",
 		"notes": [
 			{
 				"typeOfSection": 0,
@@ -21806,8 +21805,9 @@
 				"mustHitSection": true
 			}
 		],
-		"player3": "jake",
+		"player2": "corrupted-finn",
 		"isHey": false,
+		"player3": "corrupted-jake",
 		"cutsceneType": "none",
 		"isSpooky": false,
 		"song": "NO-HERO",
@@ -21816,10 +21816,10 @@
 		"isMoody": false,
 		"sectionLengths": [],
 		"uiType": "normal",
-		"stage": "place",
+		"stage": "pibby-corrupted-stage",
 		"sections": 0,
 		"needsVoices": true,
-		"bpm": 144,
-		"gf": "gf"
+		"gf": "gf",
+		"bpm": 144
 	}
 }

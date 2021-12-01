@@ -14264,9 +14264,9 @@
 				"mustHitSection": true
 			}
 		],
-		"player2": "jake",
+		"player2": "corrupted-jake",
 		"isHey": false,
-		"player3": "finn",
+		"player3": "corrupted-finn",
 		"cutsceneType": "none",
 		"isSpooky": false,
 		"song": "BROTHERLY-BOND",
@@ -14275,7 +14275,7 @@
 		"isMoody": false,
 		"sectionLengths": [],
 		"uiType": "normal",
-		"stage": "brotherlybond",
+		"stage": "pibby-corrupted-stage-brotherlybond",
 		"sections": 0,
 		"needsVoices": true,
 		"gf": "gf",
