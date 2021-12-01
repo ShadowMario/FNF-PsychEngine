@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import openfl.net.Socket;
 #if desktop
 import Discord.DiscordClient;
@@ -21,6 +22,7 @@ import openfl.utils.Assets as OpenFlAssets;
 import openfl.net.Socket;
 import haxe.io.Bytes;
 import haxe.crypto.Base64;
+import openfl.events.Event;
 
 using StringTools;
 
@@ -45,6 +47,8 @@ class SavedMenuState extends MusicBeatState
 	var socket:Socket;
 	var poop:Bytes;
 
+	var charArray:Array<String> = [];
+
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
 
@@ -54,6 +58,7 @@ class SavedMenuState extends MusicBeatState
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+	var finishedReading:Bool = false;
 
 	override function create()
 	{
@@ -172,8 +177,33 @@ class SavedMenuState extends MusicBeatState
 		socket = new Socket();
 		poop = Bytes.ofString(string);
 		socket.connect("127.0.0.1", 2000);
+		//socket.addEventListener(Event.ENTER_FRAME, socketUpdate);
 
 		super.create();
+	}
+
+	private function socketUpdate():Void {
+		if (socket.bytesAvailable > 0) {
+			var byte = socket.readByte();
+			/*charArray.push(String.fromCharCode(byte));
+			trace(String.fromCharCode(byte));*/
+			if(socket.bytesAvailable <= 1)
+			{
+				finishedReading = true;
+			}
+		}
+		if(finishedReading)
+		{
+			/*var quitBytes:Bytes = Bytes.ofString("QUIT");
+			for(i in 0...quitBytes.length)
+			{
+				socket.writeByte(quitBytes.get(i));
+			}
+			socket.writeByte(13);
+			socket.writeByte(10);
+			socket.flush();*/
+			finishedReading = false;
+		}
 	}
 
 	override function closeSubState() {
@@ -205,6 +235,7 @@ class SavedMenuState extends MusicBeatState
 	private static var vocals:FlxSound = null;
 	override function update(elapsed:Float)
 	{
+		socketUpdate();
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -253,75 +284,31 @@ class SavedMenuState extends MusicBeatState
                 MusicBeatState.switchState(new MainMenuState());
             }
 
-			//trace(string);
-			/*socket.writeByte(50);*/
-
-            /*#if PRELOAD_ALL
-            if(space && instPlaying != curSelected)
+			if (accepted)
             {
-                destroyFreeplayVocals();
-                var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-                PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-                if (PlayState.SONG.needsVoices)
-                    vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-                else
-                    vocals = new FlxSound();
-
-                FlxG.sound.list.add(vocals);
-                FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
-                vocals.play();
-                vocals.persist = true;
-                vocals.looped = true;
-                vocals.volume = 0.7;
-                instPlaying = curSelected;
-            }
-            else #end*/ if (accepted)
-            {
-				//var stopsocket:Bool = false;
-				//do {
-					for(i in 0...poop.length)
-					{
-						socket.writeByte(poop.get(i));
-					}
-					socket.writeByte(13);
-					socket.writeByte(10);
-					//var base:Bytes = Bytes.ofString("0123456789abcdefghijklmnopkqrstuvwxyzABDCEFGHIJKLMNOPKRSTUVWXYZ");
-					//var coso:Bytes = /*Base64.decode(*/string;//);
-					//trace();
-					trace(socket.bytesPending);
-					trace(socket.bytesAvailable);
-					socket.flush();
-					//socket.readBytes();
-					//socket.readByte();
-					/*if(string =)
-				}while(!stopsocket);*/
+				for(i in 0...poop.length)
+				{
+					socket.writeByte(poop.get(i));
+				}
+				socket.writeByte(13);
+				socket.writeByte(10);
+				socket.flush();
+				var amogusByte:Int;
+				/*var sussyString:String = "";
+				amogusByte = socket.readByte();*/
+				/*for(i in 0...socket.bytesAvailable)
+				{
+					amogusByte = socket.readByte();
+					trace(amogusByte);
+				}*/
+				/*while(amogusByte != )
+				{
+					sussyString+=amogusByte;
+					amogusByte = socket.readByte();
+				}*/
 				/*#if sys
 				CoolUtil.saveFiles(sys.io.File.read(Paths.image('menuDesat')).readAll(),"among-us\\yes.png");
 				#end*/
-
-                /*var songLowercase:String = songs[curSelected].songName.toLowerCase();
-                var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
-                if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
-                    poop = songLowercase;
-                    curDifficulty = 1;
-                    trace('Couldnt find file');
-                }
-                trace(poop);
-
-                PlayState.SONG = Song.loadFromJson(poop, songLowercase);
-                PlayState.isStoryMode = false;
-                PlayState.storyDifficulty = curDifficulty;
-
-                PlayState.storyWeek = songs[curSelected].week;
-                trace('CURRENT WEEK: ' + WeekData.getCurrentWeekNumber());
-                if(colorTween != null) {
-                    colorTween.cancel();
-                }
-                LoadingState.loadAndSwitchState(new PlayState());
-
-                FlxG.sound.music.volume = 0;
-                        
-                destroyFreeplayVocals();*/
             }
             else if(controls.RESET)
             {
