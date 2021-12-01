@@ -150,21 +150,23 @@ class FunkinLua {
 
 		//stuff 4 noobz like you B)
 		
+		PlayState.instance.callOnLuas('onLoaded', []);
+		
 		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String) {//would be dope asf. 
-		var cervix = luaFile;
+		var cervix = luaFile + ".lua";
 			var doPush = false;
-		if(FileSystem.exists(Paths.modFolders(luaFile))) {
-			luaFile = Paths.modFolders(luaFile);
+		if(FileSystem.exists(Paths.modFolders(cervix))) {
+			cervix = Paths.modFolders(cervix);
 			doPush = true;
 		} else {
-			luaFile = Paths.getPreloadPath(luaFile);
-			if(FileSystem.exists(luaFile)) {
+			cervix = Paths.getPreloadPath(cervix);
+			if(FileSystem.exists(cervix)) {
 				doPush = true;
 			}
 		}
 
 			if(doPush){ 
-			PlayState.instance.luaArray.push(new FunkinLua(luaFile)); 
+			PlayState.instance.luaArray.push(new FunkinLua(cervix)); 
 			}else{
 			luaTrace("Script doesn't exist!");
 			
