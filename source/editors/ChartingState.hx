@@ -170,7 +170,6 @@ class ChartingState extends MusicBeatState
 
 	var waveformSprite:FlxSprite;
 	var gridLayer:FlxTypedGroup<FlxSprite>;
-	
 	//public var quants:Array<Float> = [4,2,1];
 	/**/
 	 
@@ -322,21 +321,18 @@ class ChartingState extends MusicBeatState
 		\nA or Left/D or Right - Go to the previous/next section
 		\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
-		\nClick and drag will delete a note, or add notes evenly spaced
 		\nZ/X - Zoom in/out
-		\nAlt - Place notes on top of each other
+		\n
 		\nEsc - Test your chart inside Chart Editor
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
-		\nSpace - Stop/Resume song
-		\nAlt-C - Activates auto-clicker for even note stacking.
-		\nShift-Alt-C - Activates auto-clicker for dragging stacked notes.";
+		\nSpace - Stop/Resume song";
 
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
 			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
-			tipText.y += i * 10;
-			tipText.setFormat(Paths.font("vcr.ttf"), 10, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+			tipText.y += i * 14;
+			tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 			//tipText.borderSize = 2;
 			tipText.scrollFactor.set();
 			add(tipText);
@@ -1211,45 +1207,39 @@ class ChartingState extends MusicBeatState
 		FlxG.watch.addQuick('daBeat', curBeat);
 		FlxG.watch.addQuick('daStep', curStep);
 
-		if (FlxG.mouse.pressed && !FlxG.keys.pressed.ALT || FlxG.mouse.justPressed || FlxG.keys.pressed.C)
+		if (FlxG.mouse.justPressed)
+		{
+			if (FlxG.mouse.overlaps(curRenderedNotes))
 			{
-				if (FlxG.mouse.overlaps(curRenderedNotes) && !FlxG.keys.pressed.ALT)
+				curRenderedNotes.forEachAlive(function(note:Note)
 				{
-					if(mouseAction!=1) {
-					curRenderedNotes.forEachAlive(function(note:Note)
+					if (FlxG.mouse.overlaps(note))
 					{
-						if (FlxG.mouse.overlaps(note))
+						if (FlxG.keys.pressed.CONTROL)
 						{
-							if (FlxG.keys.pressed.CONTROL)
-							{
-								selectNote(note);
-							}
-							else
-							{
-								trace('tryin to delete note...');
-								deleteNote(note);
-								mouseAction=2;
-							}
+							selectNote(note);
 						}
-					});
+						else
+						{
+							trace('tryin to delete note...');
+							deleteNote(note);
+						}
 					}
-				}
-				else
-				{
-					if (FlxG.mouse.x > gridBG.x
-						&& FlxG.mouse.x < gridBG.x + gridBG.width
-						&& FlxG.mouse.y > gridBG.y
-						&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps) * zoomList[curZoom]
-						&& mouseAction!=2)
-					{
-						FlxG.log.add('added note');
-						addNote();
-						mouseAction=1;
-					}
-				}
-			} else if(mouseAction!=0) {
-				mouseAction=0;
+				});
 			}
+			else
+			{
+				if (FlxG.mouse.x > gridBG.x
+					&& FlxG.mouse.x < gridBG.x + gridBG.width
+					&& FlxG.mouse.y > gridBG.y
+					&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps) * zoomList[curZoom])
+				{
+					FlxG.log.add('added note');
+					addNote();
+				}
+			}
+		}
+
 		if (FlxG.mouse.x > gridBG.x
 			&& FlxG.mouse.x < gridBG.x + gridBG.width
 			&& FlxG.mouse.y > gridBG.y
