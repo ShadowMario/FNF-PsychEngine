@@ -9,13 +9,14 @@ _Example of a "generic" port: **VS Tricky - Expurgation** is missing the annoyin
 
 Also contains songs ported from **_osu!mania_**, handpicked by me.
 
-Other features are:
+Other features and goals are:
+ * Actually clean sources, renamed assets to be found easier and make more sense.
  * Week 7!!
  * B-Sides songs/texture recolours without replacing the original ones.
  * Renamed **accuracy ratings** to crush your dreams and tell you the truth about your shitty 80% accuracy.
  * Added **Insane** and **Expert** difficulty options. 
  * Recharting of some _poorly_ done charts, example: VS Tabi - Last Chance (Hard difficulty)
- * Resurrect dead mods from super early kade engine or other custom engines that we're crap.
+ * Resurrect dead mods from super early kade engine or other custom engines that were crap.
 
 ## Songs with additional difficulties
     VS Camellia - First Town 				| Insane, playing Camellias part from Hard chart
@@ -23,12 +24,13 @@ Other features are:
 	VS Camellia - Why Do You Hate Me 			| Insane, playing Camellias part from Hard chart
     VS Starecrown - Staredown 				| Insane, charted by AutisticLulu
 	B-Sides VS Pico - Pico					| Insane, charted by AutisticLulu
+	VS Tabi - Genocide					| Insane, charted by AutisticLulu
 	
 ## Songs recharted
-	VS Tabi - Last Chance 					| Hard recharted by AutisticLulu 
+	VS Tabi - Last Chance 					| Hard recharted by AutisticLulu
+	VS Tabi - Genocide					| Hard recharted by AutisticLulu
 	
 	* Planned recharts (Hard diff)
-	VS Tabi - Genocide					| Regular Rechart
 	VS Starecrown - Stare					| Regular Rechart
 	VS Starecrown - Body Inversion				| Regular Rechart
 	VS Bob - Run						| Move existing Hard to Expert and do Hard and Insane difficulties from scratch with Insane not being overcharted.
@@ -48,12 +50,8 @@ Other features are:
 	
 # Other Info, kinda like a FAQ
 ## "Songs doesn't have the right characters/stage applied!"
-    To be completely honest, I've only bothered fixing this mostly on Hard for B-Sides songs. 
+    To be completely honest, I've only bothered fixing this mostly on Hard for B-Sides songs.
     You'll have to do it manually for now or wait until I'm not lazy.
-
-## "Why is there stages or some mechanics missing?"
-    Some mods are really messy in their source code, in those cases I won't bother until I feel like it.
-    
 
 ## "I can port stages/characters for you!!"
 
