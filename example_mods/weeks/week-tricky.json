@@ -7,7 +7,7 @@
 		113,
 		253
 	],
-	"weekBefore": "tutorial",
+	"weekBefore": "week6-bsides",
 	"startUnlocked": true,
 	"hideStoryMode": true,
 	"weekCharacters": [
@@ -53,5 +53,5 @@
 			]
 		]
 	],
-	"weekName": "Tricky"
+	"weekName": "week-tricky"
 }

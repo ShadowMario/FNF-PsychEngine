@@ -18,13 +18,13 @@
 		"gf"
 	],
 	"storyName": "Assbeater vs tricky",
-	"weekName": "trickyassbeater",
+	"weekName": "week-trickyassbeater",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
 	"hideStoryMode": true,
-	"weekBefore": "tutorial",
+	"weekBefore": "week6-bsides",
 	"startUnlocked": true
 }

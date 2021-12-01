@@ -2,7 +2,7 @@
 	"storyName": "osu converts",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
-	"weekBefore": "tutorial",
+	"weekBefore": "week6-bsides",
 	"freeplayColor": [
 		146,
 		113,
@@ -71,5 +71,5 @@
 		]
 	],
 	"hideStoryMode": true,
-	"weekName": "osu converts"
+	"weekName": "week-osuconverts"
 }

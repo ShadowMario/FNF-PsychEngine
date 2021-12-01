@@ -1,8 +1,8 @@
 {
 	"song": {
 		"sectionLengths": [],
-		"player1": "bf-tabi-crazy",
-		"player2": "tabi",
+		"player1": "bf-tabi-explosion",
+		"player2": "tabi-mad",
 		"notes": [
 			{
 				"typeOfSection": 0,
@@ -7715,6 +7715,36 @@
 				"bpm": 213
 			},
 			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 213,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 213
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 213
+			},
+			{
 				"gfSection": false,
 				"lengthInSteps": 16,
 				"altAnim": false,
@@ -7725,12 +7755,12 @@
 				"mustHitSection": true
 			}
 		],
-		"player3": "gf",
+		"player3": "gf-tabi-explosion",
 		"song": "Genocide",
-		"stage": "camellia-stage",
 		"validScore": true,
-		"sections": 0,
+		"stage": "tabi-stage-destroyed",
 		"needsVoices": true,
+		"sections": 0,
 		"speed": 2.1,
 		"bpm": 213
 	}

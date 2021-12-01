@@ -2,7 +2,7 @@
 	"animations": [
 		{
 			"offsets": [
-				-9,
+				168,
 				10
 			],
 			"loop": false,
@@ -13,8 +13,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				-30
+				-21,
+				10
 			],
 			"loop": false,
 			"fps": 24,
@@ -24,8 +24,8 @@
 		},
 		{
 			"offsets": [
-				-6,
-				50
+				44,
+				-6
 			],
 			"loop": false,
 			"fps": 24,
@@ -35,7 +35,7 @@
 		},
 		{
 			"offsets": [
-				0,
+				-50,
 				0
 			],
 			"loop": false,
@@ -46,8 +46,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				27
+				-200,
+				7
 			],
 			"loop": false,
 			"fps": 24,
@@ -59,20 +59,20 @@
 	"no_antialiasing": false,
 	"image": "characters/starecrown3",
 	"position": [
-		-450,
-		-380
+		-500,
+		-330
 	],
-	"healthicon": "starecrown",
+	"healthicon": "starecrown3",
 	"flip_x": false,
 	"healthbar_colors": [
-		175,
-		102,
-		206
+		255,
+		255,
+		255
 	],
 	"camera_position": [
-		0,
-		0
+		300,
+		250
 	],
 	"sing_duration": 4,
-	"scale": 0.9
+	"scale": 0.8
 }

@@ -1,0 +1,39 @@
+{
+	"songs": [
+		[
+			"the-anger-of-god",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"1corekiller",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "Jebus",
+	"weekName": "week-jebus",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": true,
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true
+}

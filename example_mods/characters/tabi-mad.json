@@ -60,6 +60,9 @@
 				-1,
 				0
 			],
+			"loop": true,
+			"fps": 24,
+			"anim": "idle-loop",
 			"indices": [
 				1,
 				2,
@@ -75,9 +78,6 @@
 				12,
 				13
 			],
-			"fps": 24,
-			"anim": "idle-loop",
-			"loop": true,
 			"name": "Idle"
 		}
 	],
@@ -87,7 +87,7 @@
 		0,
 		0
 	],
-	"healthicon": "tabi",
+	"healthicon": "tabi-mad",
 	"flip_x": false,
 	"healthbar_colors": [
 		255,
@@ -95,7 +95,7 @@
 		129
 	],
 	"camera_position": [
-		0,
+		80,
 		0
 	],
 	"sing_duration": 4,

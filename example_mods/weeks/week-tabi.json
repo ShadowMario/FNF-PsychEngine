@@ -2,27 +2,21 @@
 	"storyName": "Tabi",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
+	"weekBefore": "week6-bsides",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
-	"weekBefore": "tutorial",
 	"startUnlocked": true,
-	"hideStoryMode": true,
-	"weekCharacters": [
-		"tabi",
-		"bf",
-		"gf"
-	],
 	"songs": [
 		[
 			"my-battle",
 			"tabi",
 			[
-				126,
-				93,
-				55
+				146,
+				113,
+				75
 			]
 		],
 		[
@@ -36,13 +30,19 @@
 		],
 		[
 			"genocide",
-			"tabi",
+			"tabi-mad",
 			[
-				126,
-				93,
-				55
+				106,
+				73,
+				35
 			]
 		]
 	],
-	"weekName": "Tabi"
+	"hideStoryMode": true,
+	"weekCharacters": [
+		"tabi",
+		"bf",
+		"gf"
+	],
+	"weekName": "week-tabi"
 }

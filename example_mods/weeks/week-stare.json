@@ -7,9 +7,8 @@
 		113,
 		253
 	],
-	"weekBefore": "tutorial",
+	"weekBefore": "week6-bsides",
 	"startUnlocked": true,
-	"hideStoryMode": true,
 	"weekCharacters": [
 		"starecrown",
 		"bf",
@@ -18,31 +17,32 @@
 	"songs": [
 		[
 			"stare",
-			"dad",
+			"starecrown",
 			[
-				146,
-				113,
-				253
+				135,
+				80,
+				20
 			]
 		],
 		[
 			"staredown",
-			"dad",
+			"starecrown2",
 			[
-				146,
-				113,
-				253
+				135,
+				80,
+				20
 			]
 		],
 		[
 			"body-inversion",
-			"dad",
+			"starecrown3",
 			[
-				146,
-				113,
-				253
+				46,
+				20,
+				60
 			]
 		]
 	],
-	"weekName": "stare"
+	"hideStoryMode": true,
+	"weekName": "week-stare"
 }

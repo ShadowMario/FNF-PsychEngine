@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="dead boyfriend jebus.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Dead Loop instance 10000" x="0" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10001" x="0" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10002" x="822" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10003" x="822" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10004" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10005" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10006" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10007" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10008" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10009" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10010" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10011" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10012" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10013" x="1644" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10014" x="2466" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10015" x="3288" y="0" width="822" height="418"/>
+	<SubTexture name="Dead Loop instance 10016" x="3288" y="0" width="822" height="418"/>
+	<SubTexture name="Dead comfirmed  instance 10000" x="4110" y="0" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10001" x="4943" y="0" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10002" x="5776" y="0" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10003" x="6609" y="0" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10004" x="0" y="646" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10005" x="833" y="646" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10006" x="1666" y="646" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10007" x="2499" y="646" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10008" x="3332" y="646" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10009" x="4165" y="646" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10010" x="4998" y="646" width="833" height="646"/>
+	<SubTexture name="Dead comfirmed  instance 10011" x="5831" y="646" width="833" height="646"/>
+	<SubTexture name="dies instance 10000" x="6664" y="646" width="1151" height="619"/>
+	<SubTexture name="dies instance 10001" x="6664" y="646" width="1151" height="619"/>
+	<SubTexture name="dies instance 10002" x="0" y="1292" width="1151" height="619"/>
+	<SubTexture name="dies instance 10003" x="1151" y="1292" width="1151" height="619"/>
+	<SubTexture name="dies instance 10004" x="2302" y="1292" width="1151" height="619"/>
+	<SubTexture name="dies instance 10005" x="3453" y="1292" width="1151" height="619"/>
+	<SubTexture name="dies instance 10006" x="4604" y="1292" width="1151" height="619"/>
+	<SubTexture name="dies instance 10007" x="5755" y="1292" width="1151" height="619"/>
+	<SubTexture name="dies instance 10008" x="6906" y="1292" width="1151" height="619"/>
+	<SubTexture name="dies instance 10009" x="0" y="1911" width="1151" height="619"/>
+	<SubTexture name="dies instance 10010" x="1151" y="1911" width="1151" height="619"/>
+	<SubTexture name="dies instance 10011" x="2302" y="1911" width="1151" height="619"/>
+	<SubTexture name="dies instance 10012" x="3453" y="1911" width="1151" height="619"/>
+	<SubTexture name="dies instance 10013" x="4604" y="1911" width="1151" height="619"/>
+	<SubTexture name="dies instance 10014" x="5755" y="1911" width="1151" height="619"/>
+	<SubTexture name="dies instance 10015" x="6906" y="1911" width="1151" height="619"/>
+	<SubTexture name="dies instance 10016" x="0" y="2530" width="1151" height="619"/>
+	<SubTexture name="dies instance 10017" x="1151" y="2530" width="1151" height="619"/>
+	<SubTexture name="dies instance 10018" x="2302" y="2530" width="1151" height="619"/>
+	<SubTexture name="dies instance 10019" x="3453" y="2530" width="1151" height="619"/>
+	<SubTexture name="dies instance 10020" x="4604" y="2530" width="1151" height="619"/>
+	<SubTexture name="dies instance 10021" x="5755" y="2530" width="1151" height="619"/>
+	<SubTexture name="dies instance 10022" x="6906" y="2530" width="1151" height="619"/>
+	<SubTexture name="dies instance 10023" x="0" y="3149" width="1151" height="619"/>
+	<SubTexture name="dies instance 10024" x="1151" y="3149" width="1151" height="619"/>
+	<SubTexture name="dies instance 10025" x="2302" y="3149" width="1151" height="619"/>
+	<SubTexture name="dies instance 10026" x="3453" y="3149" width="1151" height="619"/>
+	<SubTexture name="dies instance 10027" x="4604" y="3149" width="1151" height="619"/>
+	<SubTexture name="dies instance 10028" x="5755" y="3149" width="1151" height="619"/>
+	<SubTexture name="dies instance 10029" x="6906" y="3149" width="1151" height="619"/>
+	<SubTexture name="dies instance 10030" x="0" y="3768" width="1151" height="619"/>
+	<SubTexture name="dies instance 10031" x="1151" y="3768" width="1151" height="619"/>
+	<SubTexture name="dies instance 10032" x="2302" y="3768" width="1151" height="619"/>
+	<SubTexture name="dies instance 10033" x="3453" y="3768" width="1151" height="619"/>
+	<SubTexture name="dies instance 10034" x="4604" y="3768" width="1151" height="619"/>
+	<SubTexture name="dies instance 10035" x="5755" y="3768" width="1151" height="619"/>
+	<SubTexture name="dies instance 10036" x="6906" y="3768" width="1151" height="619"/>
+	<SubTexture name="dies instance 10037" x="0" y="4387" width="1151" height="619"/>
+	<SubTexture name="dies instance 10038" x="1151" y="4387" width="1151" height="619"/>
+	<SubTexture name="dies instance 10039" x="2302" y="4387" width="1151" height="619"/>
+	<SubTexture name="dies instance 10040" x="3453" y="4387" width="1151" height="619"/>
+	<SubTexture name="dies instance 10041" x="4604" y="4387" width="1151" height="619"/>
+	<SubTexture name="dies instance 10042" x="5755" y="4387" width="1151" height="619"/>
+	<SubTexture name="dies instance 10043" x="6906" y="4387" width="1151" height="619"/>
+	<SubTexture name="dies instance 10044" x="0" y="5006" width="1151" height="619"/>
+	<SubTexture name="dies instance 10045" x="1151" y="5006" width="1151" height="619"/>
+	<SubTexture name="dies instance 10046" x="2302" y="5006" width="1151" height="619"/>
+	<SubTexture name="dies instance 10047" x="3453" y="5006" width="1151" height="619"/>
+	<SubTexture name="dies instance 10048" x="4604" y="5006" width="1151" height="619"/>
+	<SubTexture name="dies instance 10049" x="5755" y="5006" width="1151" height="619"/>
+	<SubTexture name="dies instance 10050" x="6906" y="5006" width="1151" height="619"/>
+	<SubTexture name="dies instance 10051" x="0" y="5625" width="1151" height="619"/>
+	<SubTexture name="dies instance 10052" x="1151" y="5625" width="1151" height="619"/>
+	<SubTexture name="dies instance 10053" x="2302" y="5625" width="1151" height="619"/>
+	<SubTexture name="dies instance 10054" x="3453" y="5625" width="1151" height="619"/>
+	<SubTexture name="dies instance 10055" x="4604" y="5625" width="1151" height="619"/>
+	<SubTexture name="dies instance 10056" x="5755" y="5625" width="1151" height="619"/>
+	<SubTexture name="dies instance 10057" x="6906" y="5625" width="1151" height="619"/>
+	<SubTexture name="dies instance 10058" x="0" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10059" x="1151" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10060" x="2302" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10061" x="3453" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10062" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10063" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10064" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10065" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10066" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10067" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10068" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10069" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10070" x="5755" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10071" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10072" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10073" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10074" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10075" x="1151" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10076" x="1151" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10077" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10078" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10079" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10080" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10081" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10082" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10083" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10084" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10085" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10086" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10087" x="5755" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10088" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10089" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10090" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10091" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10092" x="1151" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10093" x="1151" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10094" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10095" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10096" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10097" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10098" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10099" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10100" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10101" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10102" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10103" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10104" x="5755" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10105" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10106" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10107" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10108" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10109" x="1151" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10110" x="1151" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10111" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10112" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10113" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10114" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10115" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10116" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10117" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10118" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10119" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10120" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10121" x="5755" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10122" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10123" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10124" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10125" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10126" x="1151" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10127" x="1151" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10128" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10129" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10130" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10131" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10132" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10133" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10134" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10135" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10136" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10137" x="4604" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10138" x="5755" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10139" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10140" x="6906" y="6244" width="1151" height="619"/>
+	<SubTexture name="dies instance 10141" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10142" x="0" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10143" x="1151" y="6863" width="1151" height="619"/>
+	<SubTexture name="dies instance 10144" x="1151" y="6863" width="1151" height="619"/>
+</TextureAtlas>
