@@ -17,8 +17,38 @@ Other features are:
  * Recharting of some _poorly_ done charts, example: VS Tabi - Last Chance (Hard difficulty)
  * Resurrect dead mods from super early kade engine or other custom engines that we're crap.
 
+## Songs with additional difficulties
+    VS Camellia - First Town 				| Insane, playing Camellias part from Hard chart
+    VS Camellia - Liquated 					| Insane, playing Camellias part from Hard chart
+	VS Camellia - Why Do You Hate Me 			| Insane, playing Camellias part from Hard chart
+    VS Starecrown - Staredown 				| Insane, charted by AutisticLulu
+	B-Sides VS Pico - Pico					| Insane, charted by AutisticLulu
+	
+## Songs recharted
+	VS Tabi - Last Chance 					| Hard recharted by AutisticLulu 
+	
+	* Planned recharts (Hard diff)
+	VS Tabi - Genocide					| Regular Rechart
+	VS Starecrown - Stare					| Regular Rechart
+	VS Starecrown - Body Inversion				| Regular Rechart
+	VS Bob - Run						| Move existing Hard to Expert and do Hard and Insane difficulties from scratch with Insane not being overcharted.
+	VS Whitty - Ballstic					| Regular Rechart
+	
+## Songs ported from osu!mania
+	Kayano Ai - Oracion							| Normal, Hard
+	Shiena Nishizawa - The Asterisk War					| Easy, Normal, Hard, Insane, Expert
+	C-Show - Invitation From Mr.C						| Normal, Hard, Insane, Expert
+	Yooh - LegenD								| Easy, Normal, Hard, Insane, Expert
+	Camellia as "Bang Riot" - Blastix Riotz					| Easy, Normal, Hard, Insane, Expert
+	Akito Matsuda - After After						| Easy, Normal, Hard
+	
+
+---
+	
+	
+# Other Info, kinda like a FAQ
 ## "Songs doesn't have the right characters/stage applied!"
-    To be completely honest, I've only bothered fixing this mostly on Hard and above. 
+    To be completely honest, I've only bothered fixing this mostly on Hard for B-Sides songs. 
     You'll have to do it manually for now or wait until I'm not lazy.
 
 ## "Why is there stages or some mechanics missing?"
