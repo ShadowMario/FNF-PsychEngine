@@ -29,6 +29,9 @@ class EditorPlayState extends MusicBeatState
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
 	public var playerStrums:FlxTypedGroup<StrumNote>;
 	public var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
+	
+	public var laneunderlay:FlxSprite;
+	public var laneunderlayOpponent:FlxSprite;
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
@@ -65,6 +68,22 @@ class EditorPlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 		
+		laneunderlayOpponent = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
+		laneunderlayOpponent.alpha = ClientPrefs.underlay;
+		laneunderlayOpponent.color = FlxColor.BLACK;
+		laneunderlayOpponent.scrollFactor.set();
+
+		laneunderlay = new FlxSprite(0, 0).makeGraphic(110 * 4 + 50, FlxG.height * 2);
+		laneunderlay.alpha = ClientPrefs.underlay;
+		laneunderlay.color = FlxColor.BLACK;
+		laneunderlay.scrollFactor.set();
+
+		if (!ClientPrefs.middleScroll)
+		{
+			add(laneunderlayOpponent);
+		}
+		add(laneunderlay);
+		
 		comboGroup = new FlxTypedGroup<FlxSprite>();
 		add(comboGroup);
 
@@ -75,6 +94,13 @@ class EditorPlayState extends MusicBeatState
 
 		generateStaticArrows(0);
 		generateStaticArrows(1);
+		
+		laneunderlay.x = playerStrums.members[0].x - 25;
+		laneunderlayOpponent.x = opponentStrums.members[0].x - 25;
+
+		laneunderlay.screenCenter(Y);
+		laneunderlayOpponent.screenCenter(Y);
+
 		if(ClientPrefs.middleScroll) {
 			opponentStrums.forEachAlive(function (note:StrumNote) {
 				note.visible = false;
