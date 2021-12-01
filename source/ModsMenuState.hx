@@ -385,15 +385,18 @@ class ModMetadata
 				var stuff = Json.parse(rawJson);
 				if(stuff.name != null && stuff.name.length > 0)
 				{
-					this.name = stuff.name;
+					//"remove the " " if it got fixed in the future
+					"this.name = stuff.name";
 				}
 				if(stuff.description != null && stuff.description.length > 0)
 				{
-					this.description = stuff.description;
+					//Same thing with "this.name = stuff.name"
+					"this.description = stuff.description";
 				}
 				if(stuff.color != null && stuff.color.length > 2)
 				{
-					this.color = FlxColor.fromRGB(stuff.color[0], stuff.color[1], stuff.color[2]);
+					this.color = FlxColor.RED; // The one that stops them errors
+					//this.color = FlxColor.fromRGB(stuff.color[0], stuff.color[1], stuff.color[2]); - The code that was used
 				}
 			}
 		}
