@@ -730,6 +730,36 @@ class ChartingState extends MusicBeatState
 		copyLastButton.setGraphicSize(80, 30);
 		copyLastButton.updateHitbox();
 
+		var invertNotesLeftSide:FlxButton = new FlxButton(10, 330, "Invert notes (left side)", function()
+			{
+				if (_song.notes[curSection].sectionNotes != null) {
+					for (note in _song.notes[curSection].sectionNotes)
+						{
+							if (note[1] < 4 && note[1] > -1) {
+								note[1] = 3 - note[1];
+							}
+						}
+				}
+				updateGrid();
+			});
+		invertNotesLeftSide.setGraphicSize(80, 30);
+		invertNotesLeftSide.updateHitbox();
+
+		var invertNotesRightSide:FlxButton = new FlxButton(110, 330, "Invert notes (right side)", function()
+			{
+				if (_song.notes[curSection].sectionNotes != null) {
+					for (note in _song.notes[curSection].sectionNotes)
+						{
+							if (note[1] > 3) {
+								note[1] = 7 - (note[1] - 4);
+							}
+						}
+				}
+				updateGrid();
+			});
+		invertNotesRightSide.setGraphicSize(80, 30);
+		invertNotesRightSide.updateHitbox();
+
 		tab_group_section.add(stepperLength);
 		tab_group_section.add(stepperSectionBPM);
 		tab_group_section.add(check_mustHitSection);
@@ -742,6 +772,8 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(swapSection);
 		tab_group_section.add(stepperCopy);
 		tab_group_section.add(copyLastButton);
+		tab_group_section.add(invertNotesLeftSide);
+		tab_group_section.add(invertNotesRightSide);
 
 		UI_box.addGroup(tab_group_section);
 	}
