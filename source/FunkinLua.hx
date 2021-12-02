@@ -149,6 +149,33 @@ class FunkinLua {
 		set('lowQuality', ClientPrefs.lowQuality);
 
 		//stuff 4 noobz like you B)
+		
+		PlayState.instance.callOnLuas('onLoaded', []);
+		
+		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String) {//would be dope asf. 
+		var cervix = luaFile + ".lua";
+			var doPush = false;
+		if(FileSystem.exists(Paths.modFolders(cervix))) {
+			cervix = Paths.modFolders(cervix);
+			doPush = true;
+		} else {
+			cervix = Paths.getPreloadPath(cervix);
+			if(FileSystem.exists(cervix)) {
+				doPush = true;
+			}
+		}
+
+			if(doPush){ 
+			PlayState.instance.luaArray.push(new FunkinLua(cervix)); 
+			}else{
+			luaTrace("Script doesn't exist!");
+			
+				
+			}
+			
+			
+			return null;
+		});
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
