@@ -11,7 +11,7 @@ Also contains songs ported from **_osu!mania_**, handpicked by me.
 
 Other features and goals are:
  * Actually clean sources, renamed assets to be found easier and make more sense.
- * Week 7!!
+ * _Week 7!!_ (temporarily removed)
  * B-Sides songs/texture recolours without replacing the original ones.
  * Renamed **accuracy ratings** to crush your dreams and tell you the truth about your shitty 80% accuracy.
  * Added **Insane** and **Expert** difficulty options. 
