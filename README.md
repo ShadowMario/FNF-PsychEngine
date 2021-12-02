@@ -22,11 +22,12 @@ Other features and goals are:
     VS Camellia - First Town 				| Insane, playing Camellias part from Hard chart
     VS Camellia - Liquated 					| Insane, playing Camellias part from Hard chart
 	VS Camellia - Why Do You Hate Me 			| Insane, playing Camellias part from Hard chart
-    VS Starecrown - Staredown 				| Insane, charted by AutisticLulu
 	B-Sides VS Pico - Pico					| Insane, charted by AutisticLulu
+    VS Starecrown - Staredown 				| Insane, charted by AutisticLulu
 	VS Tabi - Genocide					| Insane, charted by AutisticLulu
 	
 ## Songs recharted
+	VS Starecrown - Stare					| Hard recharted by AutisticLulu
 	VS Tabi - Last Chance 					| Hard recharted by AutisticLulu
 	VS Tabi - Genocide					| Hard recharted by AutisticLulu
 	
