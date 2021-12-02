@@ -11,7 +11,7 @@ Also contains songs ported from **_osu!mania_**, handpicked by me.
 
 Other features and goals are:
  * Actually clean sources, renamed assets to be found easier and make more sense.
- * Week 7!!
+ * _Week 7!!_ (temporarily removed)
  * B-Sides songs/texture recolours without replacing the original ones.
  * Renamed **accuracy ratings** to crush your dreams and tell you the truth about your shitty 80% accuracy.
  * Added **Insane** and **Expert** difficulty options. 
@@ -22,11 +22,12 @@ Other features and goals are:
     VS Camellia - First Town 				| Insane, playing Camellias part from Hard chart
     VS Camellia - Liquated 					| Insane, playing Camellias part from Hard chart
 	VS Camellia - Why Do You Hate Me 			| Insane, playing Camellias part from Hard chart
-    VS Starecrown - Staredown 				| Insane, charted by AutisticLulu
 	B-Sides VS Pico - Pico					| Insane, charted by AutisticLulu
+    VS Starecrown - Staredown 				| Insane, charted by AutisticLulu
 	VS Tabi - Genocide					| Insane, charted by AutisticLulu
 	
 ## Songs recharted
+	VS Starecrown - Stare					| Hard recharted by AutisticLulu
 	VS Tabi - Last Chance 					| Hard recharted by AutisticLulu
 	VS Tabi - Genocide					| Hard recharted by AutisticLulu
 	
