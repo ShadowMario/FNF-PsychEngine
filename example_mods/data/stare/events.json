@@ -1418,6 +1418,13 @@
 						"Screen Shake",
 						"2.25, 0.03",
 						"2.25, 0.03"
+					],
+					[
+						152801.136363636,
+						-1,
+						"Add Camera Zoom",
+						"0.25",
+						"0.25"
 					]
 				],
 				"bpm": 0,
@@ -1439,7 +1446,15 @@
 				"lengthInSteps": 16,
 				"altAnim": false,
 				"typeOfSection": 0,
-				"sectionNotes": [],
+				"sectionNotes": [
+					[
+						154977.272727272,
+						-1,
+						"Add Camera Zoom",
+						"0",
+						"0"
+					]
+				],
 				"bpm": 0,
 				"changeBPM": false,
 				"mustHitSection": false
@@ -2268,8 +2283,8 @@
 						216000,
 						-1,
 						"Screen Shake",
-						"8, 0.01",
-						"8, 0.01"
+						"8.5, 0.01",
+						"8.5, 0.01"
 					]
 				],
 				"bpm": 0,
@@ -2356,8 +2371,8 @@
 						224727.272727272,
 						-1,
 						"Screen Shake",
-						"4, 0.02",
-						"4, 0.02"
+						"4.2, 0.02",
+						"4.2, 0.02"
 					]
 				],
 				"bpm": 0,
@@ -2404,8 +2419,8 @@
 						229090.909090909,
 						-1,
 						"Screen Shake",
-						"2, 0.03",
-						"2, 0.03"
+						"2.2, 0.03",
+						"2.2, 0.03"
 					]
 				],
 				"bpm": 0,
@@ -2429,11 +2444,11 @@
 				"typeOfSection": 0,
 				"sectionNotes": [
 					[
-						231340.909090909,
+						231272.727272727,
 						-1,
 						"Screen Shake",
-						"2, 0.04",
-						"2, 0.04"
+						"2,5, 0.04",
+						"2,5, 0.04"
 					]
 				],
 				"bpm": 0,
@@ -2482,6 +2497,36 @@
 						"1, 0.04"
 					]
 				],
+				"bpm": 0,
+				"changeBPM": false,
+				"mustHitSection": false
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 0,
+				"changeBPM": false,
+				"mustHitSection": false
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 0,
+				"changeBPM": false,
+				"mustHitSection": false
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
 				"bpm": 0,
 				"changeBPM": false,
 				"mustHitSection": false
