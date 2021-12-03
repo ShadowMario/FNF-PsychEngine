@@ -1,0 +1,57 @@
+{
+	"storyName": "Sarvente's Mid Fight Masses",
+	"hideFreeplay": false,
+	"weekBackground": "",
+	"weekBefore": "week6-bsides",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"songs": [
+		[
+			"Parish",
+			"sarvente",
+			[
+				206,
+				105,
+				157
+			]
+		],
+		[
+			"Worship",
+			"sarvente-annoyed",
+			[
+				126,
+				45,
+				97
+			]
+		],
+		[
+			"Gospel",
+			"sarvente-succubus",
+			[
+				197,
+				30,
+				103
+			]
+		],
+		[
+			"Zavodila",
+			"ruv",
+			[
+				91,
+				78,
+				106
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "week-sarvente"
+}

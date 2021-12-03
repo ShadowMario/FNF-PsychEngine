@@ -1,0 +1,143 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				100,
+				0
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "singLEFT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				100,
+				0
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "singRIGHT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				100,
+				0
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "singDOWN",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				100,
+				70
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "singUP",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				100,
+				0
+			],
+			"anim": "singLEFT-loop",
+			"fps": 24,
+			"name": "singLEFT",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				100,
+				70
+			],
+			"anim": "singUP-loop",
+			"fps": 24,
+			"name": "singUP",
+			"indices": [
+				11,
+				12,
+				13,
+				14
+			]
+		},
+		{
+			"loop": true,
+			"offsets": [
+				100,
+				0
+			],
+			"anim": "singRIGHT-loop",
+			"fps": 24,
+			"name": "singRIGHT",
+			"indices": [
+				6,
+				7,
+				8,
+				9
+			]
+		},
+		{
+			"offsets": [
+				100,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN-loop",
+			"loop": true,
+			"name": "singDOWN"
+		},
+		{
+			"offsets": [
+				0,
+				50
+			],
+			"indices": [],
+			"fps": 40,
+			"anim": "idle",
+			"loop": false,
+			"name": "idle"
+		},
+		{
+			"offsets": [
+				0,
+				50
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "idle-loop",
+			"loop": true,
+			"name": "idle"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/sarvente-succubus",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "sarvente-succubus",
+	"flip_x": false,
+	"healthbar_colors": [
+		217,
+		50,
+		123
+	],
+	"camera_position": [
+		0,
+		100
+	],
+	"sing_duration": 4,
+	"scale": 1
+}
