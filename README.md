@@ -1,23 +1,24 @@
-# Friday Night Funkin' - Psych Engine Mod Collection
+# Friday Night Funkin' - The Fat-Ass Mod Compilation
 
 ## What is this mod?
 This mod ports several mods into one single FNF.exe.
 
-Not intended to replace the original mods but instead do "generic" ports of them, leaving certain mechanics or modspecific features out.
+****Not intended to replace the original mods but instead do "generic" ports of them, leaving some stuff out.****
 
-_Example of a "generic" port: **VS Tricky - Expurgation** is missing the annoying Signs and HP Gremlins._
+Example of a "generic" port: **VS Tricky - Expurgation** is missing the annoying Signs and HP Gremlins.
 
-Also contains songs ported from **_osu!mania_**, handpicked by me.
+* _In some cases, like with old mods, the quality may be better here than the original however due to recharting and adding custom events._
 
 Other features and goals are:
- * Actually clean sources, renamed assets to be found easier and make more sense.
- * _Week 7!!_ (temporarily removed)
+ * Actually clean sources, renamed assets to be found easier and make more sense. _(Also to prevent conflicts while the collection grows!)_
  * B-Sides songs/texture recolours without replacing the original ones.
  * Renamed **accuracy ratings** to crush your dreams and tell you the truth about your shitty 80% accuracy.
  * Added **Insane** and **Expert** difficulty options. 
  * Recharting of some _poorly_ done charts, example: VS Tabi - Last Chance (Hard difficulty)
- * Resurrect dead mods from super early kade engine or other custom engines that were crap.
+ * Resurrect dead/removed mods from super early kade engine or other custom engines that were crap.
+ * Songs ported from **_osu!mania_**, handpicked by me.
 
+---
 ## Songs with additional difficulties
     VS Camellia - First Town 				| Insane, playing Camellias part from Hard chart
     VS Camellia - Liquated 					| Insane, playing Camellias part from Hard chart
@@ -30,12 +31,6 @@ Other features and goals are:
 	VS Starecrown - Stare					| Hard recharted by AutisticLulu
 	VS Tabi - Last Chance 					| Hard recharted by AutisticLulu
 	VS Tabi - Genocide					| Hard recharted by AutisticLulu
-	
-	* Planned recharts (Hard diff)
-	VS Starecrown - Stare					| Regular Rechart
-	VS Starecrown - Body Inversion				| Regular Rechart
-	VS Bob - Run						| Move existing Hard to Expert and do Hard and Insane difficulties from scratch with Insane not being overcharted.
-	VS Whitty - Ballstic					| Regular Rechart
 	
 ## Songs ported from osu!mania
 	Kayano Ai - Oracion							| Normal, Hard
@@ -74,7 +69,8 @@ Other features and goals are:
 
     If there's no reasons given, I will add it anyways.
     
-    If it's because of hate or troll comments, I will add it anyways, it's already been on the internet for too long, so there are tons of copies of it downloadable anyways. I do not condone harrassment of these people and never will.
+    If it's because of hate or troll comments, I will add it anyways, if it's easily accessible with a 5 second google search, then it shouldn't matter, it's been on the internet for too long. 
+    I do not condone harrassment of these people and never will.
     
     If I were the only one on the internet to have the mod available for download, in those cases I wouldn't add their mods to this compilation.
     
