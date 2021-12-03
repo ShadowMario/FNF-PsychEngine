@@ -589,6 +589,7 @@ class ModMetadata
 	public var name:String;
 	public var description:String;
 	public var color:FlxColor;
+	public var restart:Bool;//trust me. this is very important
 	public var alphabet:Alphabet;
 	public var icon:AttachedSprite;
 
@@ -600,6 +601,7 @@ class ModMetadata
 		this.color = ModsMenuState.defaultColor;
 		
 		//Try loading json
+		/*
 		var path = Paths.mods(folder + '/pack.json');
 		if(FileSystem.exists(path)) {
 			var rawJson:String = File.getContent(path);
@@ -618,6 +620,6 @@ class ModMetadata
 					this.color = FlxColor.fromRGB(stuff.color[0], stuff.color[1], stuff.color[2]);
 				}
 			}
-		}
+		}*/
 	}
 }

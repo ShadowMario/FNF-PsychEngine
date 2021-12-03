@@ -4161,8 +4161,9 @@ class PlayState extends MusicBeatState
 			lightningStrikeShit();
 		}
 		lastBeatHit = curBeat;
+		
+			setOnLuas('gfSection', );
 
-		setOnLuas('curBeat', curBeat);
 		callOnLuas('onBeatHit', []);
 	}
 

@@ -98,6 +98,7 @@ class ChartingState extends MusicBeatState
 
 	var camPos:FlxObject;
 	var strumLine:FlxSprite;
+	var quant:AttachedSprite;
 	var strumLineNotes:FlxTypedGroup<StrumNote>;
 	var curSong:String = 'Dadbattle';
 	var amountSteps:Int = 0;
@@ -120,6 +121,9 @@ class ChartingState extends MusicBeatState
 	var gridBG:FlxSprite;
 	var gridMult:Int = 2;
 
+	var daquantspot = 0;
+	
+	
 	var _song:SwagSong;
 	/*
 	 * WILL BE THE CURRENT / LAST PLACED NOTE
@@ -167,17 +171,48 @@ class ChartingState extends MusicBeatState
 
 	var waveformSprite:FlxSprite;
 	var gridLayer:FlxTypedGroup<FlxSprite>;
-	public var quants:Array<Int> = [4,2,1];
+	//public var quants:Array<Float> = [4,2,1];
+	/**/
+	 
+	public var quants:Array<Float> = [
+	4,// quarter
+	2,//half
+	4/3,
+	1,
+	4/8];//eight
+	
+	
 	public var curQuant = 0;
 	override function create()
 	{
+		if (PlayState.SONG != null)
+			_song = PlayState.SONG;
+		else
+		{
+			_song = {
+				song: 'Test',
+				notes: [],
+				bpm: 150.0,
+				needsVoices: true,
+				arrowSkin: '',
+				splashSkin: '',
+				player1: 'bf',
+				player2: 'dad',
+				player3: 'gf',
+				speed: 1,
+				stage: 'stage',
+				validScore: false
+			};
+			addSection();
+			PlayState.SONG = _song;
+		}
 		#if MODS_ALLOWED
 		Paths.destroyLoadedImages();
 		#end
 
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("Chart Editor", StringTools.replace(PlayState.SONG.song, '-', ' '));
+		DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
 		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -216,25 +251,6 @@ class ChartingState extends MusicBeatState
 		nextRenderedSustains = new FlxTypedGroup<FlxSprite>();
 		nextRenderedNotes = new FlxTypedGroup<Note>();
 
-		if (PlayState.SONG != null)
-			_song = PlayState.SONG;
-		else
-		{
-			_song = {
-				song: 'Test',
-				notes: [],
-				bpm: 150.0,
-				needsVoices: true,
-				arrowSkin: '',
-				splashSkin: '',
-				player1: 'bf',
-				player2: 'dad',
-				player3: 'gf',
-				speed: 1,
-				stage: 'stage',
-				validScore: false
-			};
-		}
 		
 		if(curSection >= _song.notes.length) curSection = _song.notes.length - 1;
 
@@ -260,6 +276,14 @@ class ChartingState extends MusicBeatState
 
 		strumLine = new FlxSprite(0, 50).makeGraphic(Std.int(GRID_SIZE * 9), 4);
 		add(strumLine);
+
+		quant = new AttachedSprite('chart_quant','chart_quant');
+		quant.animation.addByPrefix('q','chart_quant',0,false);
+		quant.animation.play('q', true, false, 0);
+		quant.sprTracker = strumLine;
+		quant.xAdd = -32;
+		quant.yAdd = 8;
+		add(quant);
 		
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		for (i in 0...8){
@@ -1225,11 +1249,14 @@ class ChartingState extends MusicBeatState
 			&& FlxG.mouse.y > gridBG.y
 			&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps) * zoomList[curZoom])
 		{
+			dummyArrow.visible = true;
 			dummyArrow.x = Math.floor(FlxG.mouse.x / GRID_SIZE) * GRID_SIZE;
 			if (FlxG.keys.pressed.SHIFT)
 				dummyArrow.y = FlxG.mouse.y;
 			else
 				dummyArrow.y = Math.floor(FlxG.mouse.y / GRID_SIZE) * GRID_SIZE;
+		}else{
+			dummyArrow.visible = false;
 		}
 
 		var blockInput:Bool = false;
@@ -1392,31 +1419,66 @@ class ChartingState extends MusicBeatState
 						doANoteThing(conductorTime, i, style);
 				}
 			}
-
+			
+			
+			
+				var datimess = [];
+				
+				var daTime:Float = Math.round(Conductor.stepCrochet*quants[curQuant]);
+				var cuquant = Std.int(32/quants[curQuant]);
+				for (i in 0...cuquant){
+					datimess.push(sectionStartTime() + daTime * i);
+				}
 			if (FlxG.keys.justPressed.LEFT && FlxG.keys.pressed.CONTROL)
 			{
 				--curQuant;
 				if (curQuant < 0) curQuant = 0;
+				
+				daquantspot *=  Std.int(32/quants[curQuant]);
 			}
 			if (FlxG.keys.justPressed.RIGHT && FlxG.keys.pressed.CONTROL)
 			{
-				curQuant++;
-				if (curQuant > 2) curQuant = 2;
+				curQuant ++;
+				if (curQuant > quants.length-1) curQuant = quants.length-1;
+				daquantspot *=  Std.int(32/quants[curQuant]);
 			}
+			quant.animation.play('q', true, false, curQuant);
 			if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
 			{
 				FlxG.sound.music.pause();
 
-				var daTime:Float = Conductor.stepCrochet*quants[curQuant];
-
-				updateCurStep();
 				
-					FlxG.sound.music.time = (Math.floor(curStep/quants[curQuant]+1)*quants[curQuant]) * Conductor.stepCrochet;//snap into quantization
+				updateCurStep();
+				//FlxG.sound.music.time = (Math.round(curStep/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;
+				
+					//(Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;//snap into quantization
 				if (FlxG.keys.pressed.UP)
 				{
+					
+					//var tosnapto = 0.00;
+					var foundaspot = false;
+					var i = datimess.length-1;//backwards for loop 
+					while (i > -1){
+						if (FlxG.sound.music.time >= datimess[i] && !foundaspot){
+							foundaspot = true;
+							FlxG.sound.music.time = datimess[i];
+						}
+						i --;
+					}
+					//FlxG.sound.music.time = tosnapto;
 					FlxG.sound.music.time -= daTime;
 				}
 				else{
+					
+					var foundaspot = false;
+					for (i in datimess){
+						if (FlxG.sound.music.time <= i && !foundaspot){
+							foundaspot = true;
+							FlxG.sound.music.time = i;
+						}
+					}
+					
+					
 					FlxG.sound.music.time += daTime;
 				}
 				if(vocals != null) {
@@ -1424,14 +1486,14 @@ class ChartingState extends MusicBeatState
 					vocals.time = FlxG.sound.music.time;
 				}
 				
-				//Find a sexier way to do this </3
 				var dastrum = 0;
 				
 				if (curSelectedNote != null){
 					dastrum = curSelectedNote[0];
 				}
 				
-				var datime = (FlxG.sound.music.time - sectionStartTime()) - dastrum; //idk math find out why it doesn't work on any other section other than 0
+				var secStart:Float = sectionStartTime();
+				var datime = (FlxG.sound.music.time - secStart) - (dastrum - secStart); //idk math find out why it doesn't work on any other section other than 0
 				if (curSelectedNote != null)
 				{
 					var controlArray:Array<Bool> = [FlxG.keys.pressed.ONE, FlxG.keys.pressed.TWO, FlxG.keys.pressed.THREE, FlxG.keys.pressed.FOUR,
@@ -1612,6 +1674,15 @@ class ChartingState extends MusicBeatState
 
 		var gridBlackLine:FlxSprite = new FlxSprite(gridBG.x + gridBG.width - (GRID_SIZE * 4)).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
 		gridLayer.add(gridBlackLine);
+
+		for (i in 1...8){
+		var beatsep2:FlxSprite = new FlxSprite(gridBG.x,(GRID_SIZE * (2*curZoom))*i).makeGraphic(Std.int(gridBG.width), 1, FlxColor.BLUE);
+		gridLayer.add(beatsep2);
+		}
+		for (i in 1...4){
+		var beatsep1:FlxSprite = new FlxSprite(gridBG.x,(GRID_SIZE * (4*curZoom))*i).makeGraphic(Std.int(gridBG.width), 1, FlxColor.RED);
+		gridLayer.add(beatsep1);
+		}
 
 		gridBlackLine = new FlxSprite(gridBG.x + GRID_SIZE).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
 		gridLayer.add(gridBlackLine);
@@ -2078,7 +2149,7 @@ class ChartingState extends MusicBeatState
 		{
 			curRenderedNotes.forEachAlive(function(note:Note)
 			{
-				if (strumLineNotes.members[d].overlaps(note) && note.noteData == d % 4)
+				if (strumLine.overlaps(note) && note.noteData == d%4)
 				{
 						trace('tryin to delete note...');
 						if(!delnote) deleteNote(note);
