@@ -11,6 +11,7 @@ You can do this with: `haxelib install linc_luajit` on a Command prompt/PowerShe
 ## Credits:
 * Shadow Mario - Coding
 * RiverOaken - Arts and Animations
+* bbpanzu - Assistant Coding
 
 ### Special Thanks
 * Keoiki - Note Splash Animations
@@ -47,7 +48,7 @@ _____________________________________
   * Also there's the Background girls being spooky during the "Hey!" parts of the Instrumental
 
 ## Cool new Chart Editor changes and countless bug fixes
-![](https://i.imgur.com/h6Ja7eT.png)
+![](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/docs/img/chart.png?raw=true)
 * You can now chart "Event" notes, which are bookmarks that trigger specific actions that usually were hardcoded on the vanilla version of the game.
 * Your song's BPM can now have decimal values
 * You can manually adjust a Note's strum time if you're really going for milisecond precision
@@ -56,7 +57,7 @@ _____________________________________
   * Hey: Forces a "Hey" animation instead of the base Sing animation, if Boyfriend hits this note, Girlfriend will do a "Hey!" too.
 
 ## Improved Animation Debug menu (Press 8 in-game on a Debug build)
-![](https://user-images.githubusercontent.com/44785097/127721062-f912853c-2513-41b8-bd66-fd80d9d4ee0f.png)
+![](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/docs/img/charedit.png)
 * You can now press Save Offsets to save a .txt file with the editted offsets
 * You can also now change the characters while on the Menu
 * Go back to the game by pressing Escape
