@@ -824,6 +824,15 @@ class FunkinLua {
 				object.scrollFactor.set(scrollX, scrollY);
 			}
 		});
+
+		Lua_helper.add_callback(lua, "setObjectOrigin", function(obj:String, originX:Float, originY:Float) {
+			if (PlayState.instance.modchartSprites.exists(obj)) {
+				PlayState.instance.modchartSprites.get(obj).origin.set(originX, originY);
+				return;
+			}
+
+			//FlxObject has no field "origin", I think this one is only for the modchartSprites.
+		});
 		Lua_helper.add_callback(lua, "addLuaSprite", function(tag:String, front:Bool = false) {
 			if(PlayState.instance.modchartSprites.exists(tag)) {
 				var shit:ModchartSprite = PlayState.instance.modchartSprites.get(tag);
