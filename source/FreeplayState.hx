@@ -352,8 +352,6 @@ class FreeplayState extends MusicBeatState
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
 		positionHighscore();
-
-		// CURRENTLY DISABLED CUSTOM DIFFICULTIES UNTIL THE OFFICIAL 0.5 RELEASE, BUGFIXING SHIT
 	}
 
 	function changeSelection(change:Int = 0)
@@ -411,17 +409,19 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 		
-		CoolUtil.difficultyStuff = [
+		// CURRENTLY DISABLED CUSTOM DIFFICULTIES UNTIL THE OFFICIAL 0.5 RELEASE, BUGFIXING SHIT
+		
+		/*CoolUtil.difficultyStuff = [
 			['Easy', '-easy'],
 			['Normal', ''],
 			['Hard', '-hard']
-		];
+		];*/
 		
 		changeDiff();
 		Paths.currentModDirectory = songs[curSelected].folder;
 		//it didn't account for mod directories my bad : P
 		
-			
+			/*
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			#if MODS_ALLOWED
 			var pathshit = Paths.modFolders('data/' + songLowercase);
@@ -449,7 +449,7 @@ class FreeplayState extends MusicBeatState
 				}
 			
 			
-			trace(	CoolUtil.difficultyStuff);
+			trace(	CoolUtil.difficultyStuff);*/
 		
 		
 	}
