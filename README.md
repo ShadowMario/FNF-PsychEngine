@@ -11,6 +11,7 @@ You can do this with: `haxelib install linc_luajit` on a Command prompt/PowerShe
 ## Credits:
 * Shadow Mario - Coding
 * RiverOaken - Arts and Animations
+* bbpanzu - Assistant Coding
 
 ### Special Thanks
 * Keoiki - Note Splash Animations
