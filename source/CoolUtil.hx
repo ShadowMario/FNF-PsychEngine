@@ -16,23 +16,36 @@ using StringTools;
 
 class CoolUtil
 {
-	// [Difficulty name, Chart file suffix]
-	public static var difficultyStuff:Array<Dynamic> = [
-		['Easy', '-easy'],
-		['Normal', ''],
-		['Hard', '-hard']
+	public static var difficulties:Array<String> = [
+		'Easy',
+		'Normal',
+		'Hard'
 	];
+	public static var defaultDifficulty:String = 'Normal';
+
+	public static function getDifficultyFilePath(num:Null<Int> = null)
+	{
+		if(num == null) num = PlayState.storyDifficulty;
+
+		var fileSuffix:String = difficulties[num];
+		if(fileSuffix != defaultDifficulty)
+		{
+			fileSuffix = '-' + fileSuffix;
+		}
+		else
+		{
+			fileSuffix = '';
+		}
+		return Paths.formatToSongPath(fileSuffix);
+	}
 
 	public static function difficultyString():String
 	{
-		return difficultyStuff[PlayState.storyDifficulty][0].toUpperCase();
+		return difficulties[PlayState.storyDifficulty].toUpperCase();
 	}
 
-	public static function boundTo(value:Float, min:Float, max:Float):Float {
-		var newValue:Float = value;
-		if(newValue < min) newValue = min;
-		else if(newValue > max) newValue = max;
-		return newValue;
+	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
+		return Math.max(min, Math.min(max, value));
 	}
 
 	public static function coolTextFile(path:String):Array<String>

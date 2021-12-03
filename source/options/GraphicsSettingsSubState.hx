@@ -32,7 +32,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 	public function new()
 	{
 		title = 'Graphics';
-		rpcTitle = 'Graphics Menu'; //for Discord Rich Presence
+		rpcTitle = 'Graphics Settings Menu'; //for Discord Rich Presence
 
 		//I'd suggest using "Low Quality" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Low Quality', //Name
@@ -76,12 +76,11 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 
 	function onChangeAntiAliasing()
 	{
-		for (i in 0...members.length)
+		for (sprite in members)
 		{
-			var obj:Dynamic = members[i]; //Don't judge me for this ok
-			var sprite:FlxSprite = obj; //Dumb but works lol
-			var isText:FlxText = obj; //Don't change texts antialiasing
-			if(sprite != null && isText == null) {
+			var sprite:Dynamic = sprite; //Make it check for FlxSprite instead of FlxBasic
+			var sprite:FlxSprite = sprite; //Don't judge me ok
+			if(!(sprite is FlxText)) {
 				sprite.antialiasing = ClientPrefs.globalAntialiasing;
 			}
 		}
