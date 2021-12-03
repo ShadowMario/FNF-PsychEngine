@@ -3841,6 +3841,7 @@ class PlayState extends MusicBeatState
 			}
 			setOnLuas('mustHitSection', SONG.notes[Math.floor(curStep / 16)].mustHitSection);
 			setOnLuas('altAnim', SONG.notes[Math.floor(curStep / 16)].altAnim);
+			setOnLuas('gfSection', SONG.notes[Math.floor(curStep / 16)].gfSection);
 			// else
 			// Conductor.changeBPM(SONG.bpm);
 		}
@@ -3934,8 +3935,9 @@ class PlayState extends MusicBeatState
 			lightningStrikeShit();
 		}
 		lastBeatHit = curBeat;
+		
+			setOnLuas('gfSection', );
 
-		setOnLuas('curBeat', curBeat);
 		callOnLuas('onBeatHit', []);
 	}
 
