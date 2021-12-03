@@ -14,6 +14,10 @@ You can do this with: `haxelib install linc_luajit` on a Command prompt/PowerShe
 * bbpanzu - Assistant Coding
 
 ### Special Thanks
+* shubs - New Input System
+* SqirraRNG - Chart Editor's Sound Waveform base code
+* Delay/Combo Menu Song Composer + Dialogue Sounds
+* PolybiusProxy - .MP4 Loader Extension
 * Keoiki - Note Splash Animations
 
 WARNING: This engine is still very early in development! You can request new features though
@@ -24,6 +28,11 @@ _____________________________________
 ## Attractive animated dialogue boxes:
 
 ![](https://user-images.githubusercontent.com/44785097/127706669-71cd5cdb-5c2a-4ecc-871b-98a276ae8070.gif)
+
+
+## Mod Support
+* Probably one of the main points of this engine, you can code in .lua files outside of the source code, making your own weeks without even messing with the source!
+* Comes with a Mod Organizing/Disabling Menu. 
 
 
 ## Atleast one change to every week:
@@ -56,12 +65,9 @@ _____________________________________
   * Alt Animation: Forces an alt animation to play, useful for songs like Ugh/Stress
   * Hey: Forces a "Hey" animation instead of the base Sing animation, if Boyfriend hits this note, Girlfriend will do a "Hey!" too.
 
-## Improved Animation Debug menu (Press 8 in-game on a Debug build)
-![](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/docs/img/charedit.png)
-* You can now press Save Offsets to save a .txt file with the editted offsets
-* You can also now change the characters while on the Menu
-* Go back to the game by pressing Escape
-NOTE: This should be used for fixing your character floating or being slightly under the ground! It's not for texture editting.
+## Multiple editors to assist you in making your own Mod
+![Screenshot_3](https://user-images.githubusercontent.com/44785097/144629914-1fe55999-2f18-4cc1-bc70-afe616d74ae5.png)
+* Working both for Source code modding and Downloaded builds!
 
 ## Story mode menu rework:
 ![](https://i.imgur.com/UB2EKpV.png)
@@ -69,7 +75,7 @@ NOTE: This should be used for fixing your character floating or being slightly u
 * All menu characters are now in individual spritesheets, makes modding it easier.
 
 ## Credits menu
-![](https://i.imgur.com/NdIQt3d.png)
+![Screenshot_1](https://user-images.githubusercontent.com/44785097/144632635-f263fb22-b879-4d6b-96d6-865e9562b907.png)
 * You can add a head icon, name, description and a Redirect link for when the player presses Enter while the item is currently selected.
 
 ## Awards/Achievements
@@ -77,11 +83,11 @@ NOTE: This should be used for fixing your character floating or being slightly u
 
 ## Options menu:
 * You can change Note colors, Controls and Preferences there.
- * On Preferences you can toggle Downscroll, Anti-Aliasing, Framerate, Low Quality, Note Splashes, Hide Hud elements, Flashing Lights, etc.
+ * On Preferences you can toggle Downscroll, Middlescroll, Anti-Aliasing, Framerate, Low Quality, Note Splashes, Flashing Lights, etc.
 
 ## Other gameplay features:
-* When the enemy hits a note, it plays the note hit animation on their strum, just like when the player hits a note.
+* When the enemy hits a note, their strum note also glows.
 * Lag doesn't impact the camera movement and player icon scaling anymore.
 * Some stuff based on Week 7's changes has been put in (Background colors on Freeplay, Note splashes)
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
-* You can listen to a song on Freeplay by pressing Space once.
+* You can listen to a song or adjust Scroll Speed/Damage taken/etc. on Freeplay by pressing Space.
