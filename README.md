@@ -19,8 +19,6 @@ You can do this with: `haxelib install linc_luajit` on a Command prompt/PowerShe
 * Delay/Combo Menu Song Composer + Dialogue Sounds
 * PolybiusProxy - .MP4 Loader Extension
 * Keoiki - Note Splash Animations
-
-WARNING: This engine is still very early in development! You can request new features though
 _____________________________________
 
 # Features
