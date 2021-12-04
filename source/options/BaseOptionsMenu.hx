@@ -101,11 +101,13 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			grpOptions.add(optionText);
 
 			if(optionsArray[i].type == 'bool') {
-				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, false);
+				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.ID = i;
 				checkboxGroup.add(checkbox);
 			} else {
+				optionText.x -= 80;
+				optionText.xAdd -= 80;
 				var valueText:AttachedText = new AttachedText(optionsArray[i].getValue(), optionText.width + 80);
 				valueText.sprTracker = optionText;
 				valueText.copyAlpha = true;
@@ -207,7 +209,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 									curOption.curOption = num;
 									curOption.setValue(curOption.options[num]); //lol
-									trace(curOption.options[num]);
+									//trace(curOption.options[num]);
 							}
 							updateTextFrom(curOption);
 							curOption.change();
@@ -236,6 +238,26 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				} else if(controls.UI_LEFT_R || controls.UI_RIGHT_R) {
 					clearHold();
 				}
+			}
+
+			if(controls.RESET)
+			{
+				for (i in 0...optionsArray.length)
+				{
+					var leOption:Option = optionsArray[i];
+					leOption.setValue(leOption.defaultValue);
+					if(leOption.type != 'bool')
+					{
+						if(leOption.type == 'string')
+						{
+							leOption.curOption = leOption.options.indexOf(leOption.getValue());
+						}
+						updateTextFrom(leOption);
+					}
+					leOption.change();
+				}
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				reloadCheckboxes();
 			}
 		}
 

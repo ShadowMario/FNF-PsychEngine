@@ -24,8 +24,29 @@ class ClientPrefs {
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var imagesPersist:Bool = false;
 	public static var ghostTapping:Bool = true;
-	public static var hideTime:Bool = false;
+	public static var timeBarType:String = 'Time Left';
+	public static var scoreZoom:Bool = true;
+	public static var noReset:Bool = false;
+	public static var healthBarAlpha:Float = 1;
+	public static var gameplaySettings:Map<String, Dynamic> = [
+		'scrollspeed' => 1.0,
+		'songspeed' => 1.0,
+		'healthgain' => 1.0,
+		'healthloss' => 1.0,
+		'instakill' => false,
+		'practice' => false,
+		'botplay' => false,
+		'opponentplay' => false
+	];
+
+	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
 	public static var keSustains:Bool = false; //i was bored, okay?
+	
+	public static var ratingOffset:Int = 0;
+	public static var sickWindow:Int = 45;
+	public static var goodWindow:Int = 90;
+	public static var badWindow:Int = 135;
+	public static var safeFrames:Float = 10;
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -77,9 +98,21 @@ class ClientPrefs {
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.imagesPersist = imagesPersist;
 		FlxG.save.data.ghostTapping = ghostTapping;
-		FlxG.save.data.hideTime = hideTime;
+		FlxG.save.data.timeBarType = timeBarType;
+		FlxG.save.data.scoreZoom = scoreZoom;
+		FlxG.save.data.noReset = noReset;
+		FlxG.save.data.healthBarAlpha = healthBarAlpha;
+		FlxG.save.data.comboOffset = comboOffset;
 		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
+
+		FlxG.save.data.ratingOffset = ratingOffset;
+		FlxG.save.data.sickWindow = sickWindow;
+		FlxG.save.data.goodWindow = goodWindow;
+		FlxG.save.data.badWindow = badWindow;
+		FlxG.save.data.safeFrames = safeFrames;
+		FlxG.save.data.gameplaySettings = gameplaySettings;
+	
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
@@ -153,8 +186,44 @@ class ClientPrefs {
 		if(FlxG.save.data.ghostTapping != null) {
 			ghostTapping = FlxG.save.data.ghostTapping;
 		}
-		if(FlxG.save.data.hideTime != null) {
-			hideTime = FlxG.save.data.hideTime;
+		if(FlxG.save.data.timeBarType != null) {
+			timeBarType = FlxG.save.data.timeBarType;
+		}
+		if(FlxG.save.data.scoreZoom != null) {
+			scoreZoom = FlxG.save.data.scoreZoom;
+		}
+		if(FlxG.save.data.noReset != null) {
+			noReset = FlxG.save.data.noReset;
+		}
+		if(FlxG.save.data.healthBarAlpha != null) {
+			healthBarAlpha = FlxG.save.data.healthBarAlpha;
+		}
+		if(FlxG.save.data.comboOffset != null) {
+			comboOffset = FlxG.save.data.comboOffset;
+		}
+		
+		if(FlxG.save.data.ratingOffset != null) {
+			ratingOffset = FlxG.save.data.ratingOffset;
+		}
+		if(FlxG.save.data.sickWindow != null) {
+			sickWindow = FlxG.save.data.sickWindow;
+		}
+		if(FlxG.save.data.goodWindow != null) {
+			goodWindow = FlxG.save.data.goodWindow;
+		}
+		if(FlxG.save.data.badWindow != null) {
+			badWindow = FlxG.save.data.badWindow;
+		}
+		if(FlxG.save.data.safeFrames != null) {
+			safeFrames = FlxG.save.data.safeFrames;
+		}
+		if(FlxG.save.data.gameplaySettings != null)
+		{
+			var savedMap:Map<String, Dynamic> = FlxG.save.data.gameplaySettings;
+			for (name => value in savedMap)
+			{
+				gameplaySettings.set(name, value);
+			}
 		}
 		
 		// flixel automatically saves your volume!
@@ -176,6 +245,10 @@ class ClientPrefs {
 			}
 			reloadControls();
 		}
+	}
+
+	inline public static function getGameplaySetting(name:String, defaultValue:Dynamic):Dynamic {
+		return PlayState.isStoryMode ? defaultValue : (gameplaySettings.exists(name) ? gameplaySettings.get(name) : null);
 	}
 
 	public static function reloadControls() {

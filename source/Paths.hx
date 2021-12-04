@@ -31,18 +31,18 @@ class Paths
 	public static var customSoundsLoaded:Map<String, Sound> = new Map<String, Sound>();
 	#end
 	
-	public static var ignoreModFolders:Map<String, Bool> = [
-		'characters' => true,
-		'custom_events' => true,
-		'custom_notetypes' => true,
-		'data' => true,
-		'songs' => true,
-		'music' => true,
-		'sounds' => true,
-		'videos' => true,
-		'images' => true,
-		'stages' => true,
-		'weeks' => true
+	public static var ignoreModFolders:Array<String> = [
+		'characters',
+		'custom_events',
+		'custom_notetypes',
+		'data',
+		'songs',
+		'music',
+		'sounds',
+		'videos',
+		'images',
+		'stages',
+		'weeks'
 	];
 	#end
 
@@ -62,7 +62,7 @@ class Paths
 		#end
 	}
 
-	static public var currentModDirectory:String = null;
+	static public var currentModDirectory:String = '';
 	static var currentLevel:String;
 	static public function setCurrentLevel(name:String)
 	{
@@ -222,8 +222,10 @@ class Paths
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
 		#if sys
+		#if MODS_ALLOWED
 		if (!ignoreMods && FileSystem.exists(mods(key)))
 			return File.getContent(mods(key));
+		#end
 
 		if (FileSystem.exists(getPreloadPath(key)))
 			return File.getContent(getPreloadPath(key));
@@ -357,6 +359,20 @@ class Paths
 			}
 		}
 		return 'mods/' + key;
+	}
+
+	static public function getModDirectories():Array<String> {
+		var list:Array<String> = [];
+		var modsFolder:String = Paths.mods();
+		if(FileSystem.exists(modsFolder)) {
+			for (folder in FileSystem.readDirectory(modsFolder)) {
+				var path = haxe.io.Path.join([modsFolder, folder]);
+				if (sys.FileSystem.isDirectory(path) && !Paths.ignoreModFolders.contains(folder) && !list.contains(folder)) {
+					list.push(folder);
+				}
+			}
+		}
+		return list;
 	}
 	#end
 }

@@ -148,7 +148,6 @@ class CharacterEditorState extends MusicBeatState
 			\nSpace - Play Animation
 			\nArrow Keys - Move Character Offset
 			\nZ - Reset Current Offset
-			\nX - Reset All Offsets
 			\nHold Shift to Move 10x faster\n", 12);
 		tipText.cameras = [camHUD];
 		tipText.setFormat(null, 12, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1051,21 +1050,14 @@ class CharacterEditorState extends MusicBeatState
 					genBoyOffsets();
 				}
 
-				if (FlxG.keys.justPressed.Z)
+				if (FlxG.keys.justPressed.R)
 				{
-					char.animationsArray[curAnim].offsets = [0, 0];
-					
+					if(FlxG.keys.pressed.CONTROL) //Center
+					{
+						char.animationsArray[curAnim].offsets = [0, 0];
+						
 						char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
 						ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
-						genBoyOffsets();
-				}
-				if (FlxG.keys.justPressed.X)
-				{
-					for(i in 0...char.animationsArray.length){
-						char.animationsArray[i].offsets = [0, 0];
-						
-						char.addOffset(char.animationsArray[i].anim, char.animationsArray[i].offsets[0], char.animationsArray[i].offsets[1]);
-						ghostChar.addOffset(char.animationsArray[i].anim, char.animationsArray[i].offsets[0], char.animationsArray[i].offsets[1]);
 						genBoyOffsets();
 					}
 				}
