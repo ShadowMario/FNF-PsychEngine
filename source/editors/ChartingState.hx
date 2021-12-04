@@ -2165,12 +2165,11 @@ class ChartingState extends MusicBeatState
 
 	public function doANoteThing(cs, d, style){
 		var delnote = false;
-		var mh = d > 3;
 		if(strumLineNotes.members[d].overlaps(curRenderedNotes))
 		{
 			curRenderedNotes.forEachAlive(function(note:Note)
 			{
-				if (strumLine.overlaps(note) && note.noteData == d%4 && note.mustPress == mh)
+				if (note.overlapsPoint(new FlxPoint(strumLineNotes.members[d].x + 1,strumLine.y+1)) && note.noteData == d%4)
 				{
 						//trace('tryin to delete note...');
 						if(!delnote) deleteNote(note);

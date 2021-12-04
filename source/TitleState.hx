@@ -63,9 +63,12 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		var path = Paths.modFolders("images/gfDanceTitle.json");
+		if (!FileSystem.exists(path)){
+			path = "assets/images/gfDanceTitle.json";
+		}
 		
-		
-		//titleJSON = Json.parse(Paths.getTextFromFile("data")) finna do it l8r
+		titleJSON = Json.parse(File.getContent(path)); //finna do it l8r
 		
 		#if MODS_ALLOWED
 		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
