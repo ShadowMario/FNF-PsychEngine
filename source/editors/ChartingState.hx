@@ -182,7 +182,7 @@ class ChartingState extends MusicBeatState
 	4/8];//eight
 	
 	
-	public var curQuant = 0;
+	public static var curQuant = 0;
 	var text:String = "";
 	public static var vortex:Bool = false;
 	override function create()
