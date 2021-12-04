@@ -18,7 +18,7 @@ class CoolUtil
 {
 	// Added additional difficulties based on osu! //Lulu
 	// [Difficulty name, Chart file suffix]
-	public static var difficultyStuff:Array<String> = [
+	public static var difficulties:Array<String> = [
 		['Easy', '-easy'],
 		['Normal', ''],
 		['Hard', '-hard'],
