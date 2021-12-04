@@ -12,6 +12,8 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
+import sys.FileSystem;
+import sys.io.File;
 //import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
@@ -36,7 +38,7 @@ class TitleState extends MusicBeatState
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
 
-	static var initialized:Bool = false;
+	public static var initialized:Bool = false;
 
 	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
@@ -57,6 +59,26 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		#if MODS_ALLOWED
+		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
+		if (FileSystem.exists("modsList.txt")){
+			
+			var list:Array<String> = CoolUtil.listFromString(File.getContent("modsList.txt"));
+			var foundTheTop = false;
+			for (i in list){
+				var dat = i.split("|");
+				if (dat[1] == "1" && !foundTheTop){
+					foundTheTop = true;
+					Paths.currentModDirectory = dat[0];
+				}
+				
+			}
+		}
+		
+		#end
+		
+		
+		
 		#if (polymod && !html5)
 		if (sys.FileSystem.exists('mods/')) {
 			var folders:Array<String> = [];

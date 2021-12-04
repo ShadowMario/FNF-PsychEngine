@@ -8,6 +8,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionableState;
+import flixel.addons.ui.FlxButtonPlus;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
@@ -43,11 +44,12 @@ class ModsMenuState extends MusicBeatState
 	var noModsTxt:FlxText;
 	var selector:AttachedSprite;
 	var descriptionTxt:FlxText;
-
+	var needaReset = false;
 	private static var curSelected:Int = 0;
 	public static var defaultColor:FlxColor = 0xFF665AFF;
 
 	var buttonDown:FlxButton;
+	var buttonTop:FlxButton;
 	var buttonUp:FlxButton;
 	var buttonToggle:FlxButton;
 	var buttonsArray:Array<FlxButton> = [];
@@ -92,14 +94,31 @@ class ModsMenuState extends MusicBeatState
 				if(leMods.length > 1 && leMods[0].length > 0) {
 					var modSplit:Array<String> = leMods[i].split('|');
 					addToModsList([modSplit[0], (modSplit[1] == '1')]);
+					trace(modSplit[1]);
 				}
 			}
 		}
 
 		// FIND MOD FOLDERS
-		for (folder in Paths.getModDirectories())
-		{
-			addToModsList([folder, true]);
+		var boolshit = true;
+		if (FileSystem.exists("modsList.txt")){
+			var list:Array<String> = CoolUtil.listFromString(File.getContent("modsList.txt"));
+			for (folder in Paths.getModDirectories())
+			{
+			
+				
+				for (i in list){
+					var dat = i.split("|");
+					if(folder == dat[0]){
+						boolshit = dat[1] == '1';
+					}
+				}
+					
+			addToModsList([folder, boolshit]);//didn't like mod folders being locked enabled
+			}
+			
+			
+			
 		}
 		saveTxt();
 
@@ -154,8 +173,17 @@ class ModsMenuState extends MusicBeatState
 		buttonsArray.push(buttonDown);
 		visibleWhenHasMods.push(buttonDown);
 		buttonDown.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
-		setAllLabelsOffset(buttonDown, -15, 10);
+		setAllLabelsOffset(buttonUp, -15, 10);
 
+		startX -= 70;
+		buttonTop = new FlxButton(startX, 0, "TOP", function() {
+			moveMod(-curSelected);
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
+		});
+		buttonTop.setGraphicSize(50, 50);
+		buttonTop.updateHitbox();
+		buttonTop.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
+		setAllLabelsOffset(buttonDown, -15, 10);
 
 		// more buttons
 		var startX:Int = 1100;
@@ -236,7 +264,6 @@ class ModsMenuState extends MusicBeatState
 			newMod.alphabet.y = i * 150;
 			newMod.alphabet.x = 310;
 			add(newMod.alphabet);
-
 			//Don't ever cache the icons, it's a waste of loaded memory
 			var loadedIcon:BitmapData = null;
 			var iconToUse:String = Paths.mods(values[0] + '/pack.png');
@@ -361,10 +388,18 @@ class ModsMenuState extends MusicBeatState
 			if(colorTween != null) {
 				colorTween.cancel();
 			}
-			MusicBeatState.switchState(new MainMenuState());
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			FlxG.mouse.visible = false;
 			saveTxt();
+			if(needaReset){
+			//MusicBeatState.switchState(new TitleState());
+			TitleState.initialized = false;
+			FlxG.sound.music.fadeOut(0.3);
+			FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
+			}else{
+			MusicBeatState.switchState(new MainMenuState());
+				
+			}
 		}
 
 		if(controls.UI_UP_P)
@@ -440,6 +475,10 @@ class ModsMenuState extends MusicBeatState
 				mod.alphabet.alpha = 1;
 				selector.sprTracker = mod.alphabet;
 				descriptionTxt.text = mod.description;
+				if (mod.restart){
+					descriptionTxt.text += " (This will restart the game)";
+					needaReset = true;
+				}
 
 				// correct layering
 				var stuffArray:Array<FlxSprite> = [/*removeButton, installButton,*/ selector, descriptionTxt, mod.alphabet, mod.icon];
@@ -599,13 +638,35 @@ class ModMetadata
 		this.name = folder;
 		this.description = "No description provided.";
 		this.color = ModsMenuState.defaultColor;
+		this.restart = false;
 		
 		//Try loading json
 		var path = Paths.mods(folder + '/pack.json');
 		if(FileSystem.exists(path)) {
 			var rawJson:String = File.getContent(path);
 			if(rawJson != null && rawJson.length > 0) {
-				var stuff = Json.parse(rawJson);
+				var stuff:Dynamic = Json.parse(rawJson);
+					//using reflects cuz for some odd reason my haxe hates the stuff.var shit
+					var col:Array<Int> = Reflect.getProperty(stuff, "color");
+					var des:String = Reflect.getProperty(stuff, "description");
+					var n:String = Reflect.getProperty(stuff, "name");
+					var r:Bool = Reflect.getProperty(stuff, "restart");
+					
+				if(n != null && n.length > 0)
+				{
+					this.name = n;
+				}
+				if(des != null && des.length > 0)
+				{
+					this.description = des;
+				}
+				if(col != null && col.length > 2)
+				{
+					this.color = FlxColor.fromRGB(col[0], col[1], col[2]);
+				}
+				
+				this.restart = r;
+				/*
 				if(stuff.name != null && stuff.name.length > 0)
 				{
 					this.name = stuff.name;
@@ -617,7 +678,7 @@ class ModMetadata
 				if(stuff.color != null && stuff.color.length > 2)
 				{
 					this.color = FlxColor.fromRGB(stuff.color[0], stuff.color[1], stuff.color[2]);
-				}
+				}*/
 			}
 		}
 	}
