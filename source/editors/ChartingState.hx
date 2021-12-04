@@ -1528,8 +1528,7 @@ class ChartingState extends MusicBeatState
 						for (i in 0...controlArray.length)
 						{
 							if(controlArray[i])
-								doANoteThing(conductorTime, i, style);
-								if(curSelectedNote[1] == 1) curSelectedNote[2] += datime - curSelectedNote[2] - Conductor.stepCrochet;
+								if(curSelectedNote[1] == i) curSelectedNote[2] += datime - curSelectedNote[2] - Conductor.stepCrochet;
 						}
 						updateGrid();
 					}
