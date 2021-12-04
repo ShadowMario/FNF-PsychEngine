@@ -29,6 +29,8 @@ Other features and goals are:
 	
 ## Songs recharted
 	VS Starecrown - Stare					| Hard recharted by AutisticLulu
+	VS Starecrown - Staredown				| Hard recharted by AutisticLulu
+	VS Starecrown - Body Inversion				| Hard recharted by AutisticLulu
 	VS Tabi - Last Chance 					| Hard recharted by AutisticLulu
 	VS Tabi - Genocide					| Hard recharted by AutisticLulu
 	
