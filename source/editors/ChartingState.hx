@@ -1429,7 +1429,7 @@ class ChartingState extends MusicBeatState
 				style = 3;
 			}
 			
-			var conductorTime = Conductor.songPosition + sectionStartTime();//Conductor.songPosition / Conductor.stepCrochet;
+			var conductorTime = Conductor.songPosition; //+ sectionStartTime();Conductor.songPosition / Conductor.stepCrochet;
 			
 			//AWW YOU MADE IT SEXY <3333 THX SHADMAR
 			if(vortex){
