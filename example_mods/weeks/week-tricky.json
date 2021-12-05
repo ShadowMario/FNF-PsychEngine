@@ -1,7 +1,7 @@
 {
 	"storyName": "Tricky",
 	"hideFreeplay": false,
-	"weekBackground": "stage",
+	"weekBackground": "",
 	"freeplayColor": [
 		146,
 		113,
@@ -12,8 +12,8 @@
 	"hideStoryMode": true,
 	"weekCharacters": [
 		"",
-		"bf",
-		"gf"
+		"",
+		""
 	],
 	"songs": [
 		[

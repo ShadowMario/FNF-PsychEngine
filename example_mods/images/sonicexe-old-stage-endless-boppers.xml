@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sonicexe-old-stage-endless-boppers.png">
+	<!-- Created with Adobe Animate version 18.0.1.115 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="sonicboppers0000" x="0" y="0" width="2492" height="1234"/>
+	<SubTexture name="sonicboppers0001" x="2492" y="0" width="2492" height="1234"/>
+	<SubTexture name="sonicboppers0002" x="4984" y="0" width="2492" height="1234"/>
+	<SubTexture name="sonicboppers0003" x="0" y="1234" width="2492" height="1234"/>
+	<SubTexture name="sonicboppers0004" x="2492" y="1234" width="2492" height="1234"/>
+	<SubTexture name="sonicboppers0005" x="4984" y="1234" width="2492" height="1234"/>
+	<SubTexture name="sonicboppers0006" x="0" y="2468" width="2492" height="1234"/>
+	<SubTexture name="sonicboppers0007" x="2492" y="2468" width="2492" height="1234"/>
+	<SubTexture name="sonicboppers0008" x="4984" y="2468" width="2492" height="1234"/>
+	<SubTexture name="sonicboppers0009" x="0" y="0" width="2492" height="1234"/>
+</TextureAtlas>

@@ -1,7 +1,7 @@
 {
 	"storyName": "Camellia Week 1",
 	"hideFreeplay": false,
-	"weekBackground": "stage",
+	"weekBackground": "",
 	"weekBefore": "week6-bsides",
 	"freeplayColor": [
 		146,
@@ -40,9 +40,9 @@
 	],
 	"hideStoryMode": true,
 	"weekCharacters": [
-		"camellia",
-		"bf",
-		"gf"
+		"",
+		"",
+		""
 	],
-	"weekName": "week-camellia1"
+	"weekName": "week-camellia"
 }

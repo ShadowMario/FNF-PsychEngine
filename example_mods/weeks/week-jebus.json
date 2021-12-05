@@ -2,7 +2,7 @@
 	"songs": [
 		[
 			"the-anger-of-god",
-			"dad",
+			"jebus-infected",
 			[
 				146,
 				113,
@@ -11,7 +11,7 @@
 		],
 		[
 			"1corekiller",
-			"dad",
+			"jebus-infected",
 			[
 				146,
 				113,
@@ -20,11 +20,11 @@
 		]
 	],
 	"hideFreeplay": false,
-	"weekBackground": "stage",
+	"weekBackground": "",
 	"weekCharacters": [
-		"dad",
-		"bf",
-		"gf"
+		"",
+		"",
+		""
 	],
 	"storyName": "Jebus",
 	"weekName": "week-jebus",

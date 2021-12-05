@@ -1,7 +1,7 @@
 {
 	"storyName": "Tabi",
 	"hideFreeplay": false,
-	"weekBackground": "stage",
+	"weekBackground": "",
 	"weekBefore": "week6-bsides",
 	"freeplayColor": [
 		146,
@@ -40,9 +40,9 @@
 	],
 	"hideStoryMode": true,
 	"weekCharacters": [
-		"tabi",
-		"bf",
-		"gf"
+		"",
+		"",
+		"s"
 	],
 	"weekName": "week-tabi"
 }

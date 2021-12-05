@@ -2,7 +2,7 @@
 	"songs": [
 		[
 			"inundation-ass",
-			"dad",
+			"assbeater",
 			[
 				146,
 				113,
@@ -11,11 +11,11 @@
 		]
 	],
 	"hideFreeplay": false,
-	"weekBackground": "stage",
+	"weekBackground": "",
 	"weekCharacters": [
-		"dad",
-		"bf",
-		"gf"
+		"",
+		"",
+		""
 	],
 	"storyName": "Assbeater vs tricky",
 	"weekName": "week-trickyassbeater",
