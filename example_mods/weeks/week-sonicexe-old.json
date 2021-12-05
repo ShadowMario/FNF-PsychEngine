@@ -2,13 +2,14 @@
 	"storyName": "Sonic.exe V1",
 	"hideFreeplay": false,
 	"weekBackground": "",
-	"weekBefore": "week6-bsides",
 	"freeplayColor": [
-		146,
-		113,
-		253
+		50,
+		255,
+		50
 	],
+	"weekBefore": "week6-bsides",
 	"startUnlocked": true,
+	"hideStoryMode": true,
 	"weekCharacters": [
 		"",
 		"",
@@ -16,15 +17,32 @@
 	],
 	"songs": [
 		[
-			"endless-old",
-			"dad",
+			"too-slow-old",
+			"sonicexe-old",
 			[
-				206,
-				105,
-				157
+				0,
+				70,
+				150
+			]
+		],
+		[
+			"endless-old",
+			"sonicexe-old-endless",
+			[
+				5,
+				5,
+				60
+			]
+		],
+		[
+			"execution-old",
+			"sonicexe-old-lordX",
+			[
+				90,
+				88,
+				160
 			]
 		]
 	],
-	"hideStoryMode": true,
 	"weekName": "week-sonicexe-old"
 }

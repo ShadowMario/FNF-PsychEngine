@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sonicexe-old-stage-lordX-tree.png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Tree0000" x="0" y="0" width="393" height="627"/>
+	<SubTexture name="Tree0001" x="393" y="0" width="393" height="627"/>
+	<SubTexture name="Tree0002" x="786" y="0" width="393" height="627"/>
+	<SubTexture name="Tree0003" x="1179" y="0" width="393" height="627"/>
+	<SubTexture name="Tree0004" x="1572" y="0" width="393" height="627"/>
+	<SubTexture name="Tree0005" x="0" y="627" width="393" height="627"/>
+	<SubTexture name="Tree0006" x="393" y="627" width="393" height="627"/>
+	<SubTexture name="Tree0007" x="786" y="627" width="393" height="627"/>
+	<SubTexture name="Tree0008" x="1179" y="627" width="393" height="627"/>
+	<SubTexture name="Tree0009" x="1572" y="627" width="393" height="627"/>
+	<SubTexture name="Tree0010" x="0" y="1254" width="393" height="627"/>
+</TextureAtlas>

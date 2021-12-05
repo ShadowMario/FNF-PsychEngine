@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sonicexe-old-stage-lordX-eyeflower.png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="EyeFlower0000" x="0" y="0" width="162" height="322"/>
+	<SubTexture name="EyeFlower0001" x="162" y="0" width="162" height="322"/>
+	<SubTexture name="EyeFlower0002" x="324" y="0" width="162" height="322"/>
+	<SubTexture name="EyeFlower0003" x="486" y="0" width="162" height="322"/>
+	<SubTexture name="EyeFlower0004" x="648" y="0" width="162" height="322"/>
+	<SubTexture name="EyeFlower0005" x="810" y="0" width="162" height="322"/>
+	<SubTexture name="EyeFlower0006" x="0" y="322" width="162" height="322"/>
+	<SubTexture name="EyeFlower0007" x="162" y="322" width="162" height="322"/>
+	<SubTexture name="EyeFlower0008" x="324" y="322" width="162" height="322"/>
+	<SubTexture name="EyeFlower0009" x="486" y="322" width="162" height="322"/>
+	<SubTexture name="EyeFlower0010" x="648" y="322" width="162" height="322"/>
+</TextureAtlas>

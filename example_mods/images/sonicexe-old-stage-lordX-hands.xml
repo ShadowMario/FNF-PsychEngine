@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sonicexe-old-stage-lordX-hands.png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Hands0000" x="0" y="0" width="1961" height="1836"/>
+	<SubTexture name="Hands0001" x="1961" y="0" width="1961" height="1836"/>
+	<SubTexture name="Hands0002" x="3922" y="0" width="1961" height="1836"/>
+	<SubTexture name="Hands0003" x="5883" y="0" width="1961" height="1836"/>
+	<SubTexture name="Hands0004" x="0" y="1836" width="1961" height="1836"/>
+	<SubTexture name="Hands0005" x="1961" y="1836" width="1961" height="1836"/>
+	<SubTexture name="Hands0006" x="3922" y="1836" width="1961" height="1836"/>
+	<SubTexture name="Hands0007" x="5883" y="1836" width="1961" height="1836"/>
+	<SubTexture name="Hands0008" x="0" y="3672" width="1961" height="1836"/>
+	<SubTexture name="Hands0009" x="1961" y="3672" width="1961" height="1836"/>
+	<SubTexture name="Hands0010" x="3922" y="3672" width="1961" height="1836"/>
+</TextureAtlas>
