@@ -15,6 +15,7 @@ Other features and goals are:
  * Renamed **accuracy ratings** to crush your dreams and tell you the truth about your shitty 80% accuracy.
  * Added **Insane** and **Expert** difficulty options. 
  * Recharting of some _poorly_ done charts, example: VS Tabi - Last Chance (Hard difficulty)
+ * Retiming any out of sync charts.
  * Resurrect dead/removed mods from super early kade engine or other custom engines that were crap.
  * Songs ported from **_osu!mania_**, handpicked by me.
 
@@ -24,8 +25,7 @@ Other features and goals are:
     VS Camellia - Liquated 					| Insane, playing Camellias part from Hard chart
 	VS Camellia - Why Do You Hate Me 			| Insane, playing Camellias part from Hard chart
 	B-Sides VS Pico - Pico					| Insane, charted by AutisticLulu
-    VS Starecrown - Staredown 				| Insane, charted by AutisticLulu
-	VS Tabi - Genocide					| Insane, charted by AutisticLulu
+    Also every recharted song has an additional "Insane" difficulty too.
 	
 ## Songs recharted
 	VS Starecrown - Stare					| Hard recharted by AutisticLulu
@@ -50,6 +50,13 @@ Other features and goals are:
 ## "Songs doesn't have the right characters/stage applied!"
     To be completely honest, I've only bothered fixing this mostly on Hard for B-Sides songs.
     You'll have to do it manually for now or wait until I'm not lazy.
+    
+## "Why aren't you using the new method of Psych Engine 0.5 to load mods?
+    It's still very new but very easy and fast to move to that system once I feel it's mature enough,
+    but in the meantime feel free to load your own mods here
+    
+## "Where are the credits?
+    Sorry, this will be fixed before the actual official release.
 
 ## "I can port stages/characters for you!!"
 
