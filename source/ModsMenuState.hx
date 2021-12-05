@@ -36,7 +36,7 @@ using StringTools;
 class ModsMenuState extends MusicBeatState
 {
 	var mods:Array<ModMetadata> = [];
-
+	static var changedAThing = false;
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
@@ -50,6 +50,8 @@ class ModsMenuState extends MusicBeatState
 
 	var buttonDown:FlxButton;
 	var buttonTop:FlxButton;
+	var buttonDisableAll:FlxButton;
+	var buttonEnableAll:FlxButton;
 	var buttonUp:FlxButton;
 	var buttonToggle:FlxButton;
 	var buttonsArray:Array<FlxButton> = [];
@@ -173,20 +175,62 @@ class ModsMenuState extends MusicBeatState
 		buttonsArray.push(buttonDown);
 		visibleWhenHasMods.push(buttonDown);
 		buttonDown.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
-		setAllLabelsOffset(buttonUp, -15, 10);
+		setAllLabelsOffset(buttonDown, -15, 10);
 
-		startX -= 70;
+		startX -= 100;
 		buttonTop = new FlxButton(startX, 0, "TOP", function() {
 			moveMod(-curSelected);
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 		});
-		buttonTop.setGraphicSize(50, 50);
+		buttonTop.setGraphicSize(80, 50);
 		buttonTop.updateHitbox();
 		buttonTop.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
-		setAllLabelsOffset(buttonDown, -15, 10);
+		setAllLabelsOffset(buttonTop, 0, 10);
+		add(buttonTop);
+		buttonsArray.push(buttonTop);
+		visibleWhenHasMods.push(buttonTop);
+
+		
+		startX -= 190;
+		buttonDisableAll = new FlxButton(startX, 0, "DISABLE ALL", function() {
+			for (i in modsList){
+				i[1] = false;
+			}
+			updateButtonToggle();
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
+		});
+		buttonDisableAll.setGraphicSize(170, 50);
+		buttonDisableAll.updateHitbox();
+		buttonDisableAll.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
+		buttonDisableAll.label.fieldWidth = 170;
+		setAllLabelsOffset(buttonDisableAll, 0, 10);
+		add(buttonDisableAll);
+		buttonsArray.push(buttonDisableAll);
+		visibleWhenHasMods.push(buttonDisableAll);
+
+		startX -= 190;
+		buttonEnableAll = new FlxButton(startX, 0, "ENABLE ALL", function() {
+			for (i in modsList){
+				i[1] = true;
+			}
+			updateButtonToggle();
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
+		});
+		buttonEnableAll.setGraphicSize(170, 50);
+		buttonEnableAll.updateHitbox();
+		buttonEnableAll.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
+		buttonEnableAll.label.fieldWidth = 170;
+		setAllLabelsOffset(buttonEnableAll, 0, 10);
+		add(buttonEnableAll);
+		buttonsArray.push(buttonEnableAll);
+		visibleWhenHasMods.push(buttonEnableAll);
 
 		// more buttons
 		var startX:Int = 1100;
+		
+		
+		
+		
 		/*
 		installButton = new FlxButton(startX, 620, "Install Mod", function()
 		{
@@ -275,7 +319,9 @@ class ModsMenuState extends MusicBeatState
 			newMod.icon = new AttachedSprite();
 			if(loadedIcon != null)
 			{
-				newMod.icon.loadGraphic(loadedIcon);
+				newMod.icon.loadGraphic(loadedIcon, true, 150, 150);//animated icon support
+				newMod.icon.animation.add("icon", getIntArray(Math.floor(loadedIcon.width / 150)),24);
+				newMod.icon.animation.play("icon");
 			}
 			else
 			{
@@ -304,6 +350,13 @@ class ModsMenuState extends MusicBeatState
 		super.create();
 	}
 
+	function getIntArray(max:Int):Array<Int>{
+		var arr:Array<Int> = [];
+		for (i in 0...max){
+			arr.push(i);
+		}
+		return arr;
+	}
 	function addToModsList(values:Array<Dynamic>)
 	{
 		for (i in 0...modsList.length)
@@ -394,6 +447,7 @@ class ModsMenuState extends MusicBeatState
 			if(needaReset){
 			//MusicBeatState.switchState(new TitleState());
 			TitleState.initialized = false;
+			TitleState.closedState = false;
 			FlxG.sound.music.fadeOut(0.3);
 			FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
 			}else{
@@ -475,7 +529,7 @@ class ModsMenuState extends MusicBeatState
 				mod.alphabet.alpha = 1;
 				selector.sprTracker = mod.alphabet;
 				descriptionTxt.text = mod.description;
-				if (mod.restart){
+				if (mod.restart){//finna make it to where if nothing changed then it won't reset
 					descriptionTxt.text += " (This will restart the game)";
 					needaReset = true;
 				}
