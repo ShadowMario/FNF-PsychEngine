@@ -412,9 +412,7 @@ class FreeplayState extends MusicBeatState
 		// CURRENTLY DISABLED CUSTOM DIFFICULTIES UNTIL THE OFFICIAL 0.5 RELEASE, BUGFIXING SHIT
 		
 		/*CoolUtil.difficultyStuff = [
-			['Easy', '-easy'],
 			['Normal', ''],
-			['Hard', '-hard']
 		];*/
 		
 		changeDiff();
@@ -441,7 +439,7 @@ class FreeplayState extends MusicBeatState
 					
 					if (name.split('.')[1] == 'json' && name != 'events.json'){//check if it's an actual song chart
 						
-						if (dif != '-easy' && dif != '' && dif != '-hard' ){//now check if it's a custom difficulty
+						if (dif != ''){//now check if it's a custom difficulty
 							CoolUtil.difficultyStuff.push([difName,dif]);
 						}
 						

@@ -59,7 +59,7 @@ class NoteOffsetState extends MusicBeatState
 		FlxG.camera.scroll.set(120, 130);
 
 		persistentUpdate = true;
-
+		FlxG.sound.pause();
 		// Stage
 		var bg:BGSprite = new BGSprite('stageback', -600, -200, 0.9, 0.9);
 		add(bg);
