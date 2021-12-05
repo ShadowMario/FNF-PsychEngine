@@ -49,6 +49,8 @@ typedef DialogueLine = {
 	var text:Null<String>;
 	var boxState:Null<String>;
 	var speed:Null<Float>;
+	//var skipdelay:Null<Int>;
+	//var append:Null<Bool>; //thinkin bout having some rpg type text shit.
 }
 
 class DialogueCharacter extends FlxSprite
@@ -67,7 +69,8 @@ class DialogueCharacter extends FlxSprite
 	public var startingPos:Float = 0; //For center characters, it works as the starting Y, for everything else it works as starting X
 	public var isGhost:Bool = false; //For the editor
 	public var curCharacter:String = 'bf';
-
+	public var skiptimer = 0;
+	public var skipping = 0;
 	public function new(x:Float = 0, y:Float = 0, character:String = null)
 	{
 		super(x, y);
