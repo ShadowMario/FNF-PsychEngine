@@ -104,7 +104,7 @@ class TitleState extends MusicBeatState
 		if (!FileSystem.exists(path)){
 			path = "assets/images/gfDanceTitle.json";
 		}
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		titleJSON = Json.parse(File.getContent(path));
 		#else
 		
