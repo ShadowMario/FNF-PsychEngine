@@ -42,7 +42,9 @@ class Paths
 		'videos',
 		'images',
 		'stages',
-		'weeks'
+		'weeks',
+		'fonts',
+		'scripts'
 	];
 	#end
 

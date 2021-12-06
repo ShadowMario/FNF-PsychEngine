@@ -96,15 +96,15 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.json";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/gfDanceTitle.json";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "assets/images/gfDanceTitle.json";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		titleJSON = Json.parse(File.getContent(path));
 		#else
 		
@@ -266,15 +266,15 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/logoBumpin.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/logoBumpin.png";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "assets/images/logoBumpin.png";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		logoBl.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		
@@ -293,14 +293,14 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/gfDanceTitle.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		}
 		if (!FileSystem.exists(path)){
 			path = "assets/images/gfDanceTitle.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		}
 		gfDance.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
@@ -319,15 +319,15 @@ class TitleState extends MusicBeatState
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/titleEnter.png";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "assets/images/titleEnter.png";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		
