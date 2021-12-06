@@ -30,7 +30,8 @@ class FreeplayState extends MusicBeatState
 
 	var selector:FlxText;
 	private static var curSelected:Int = 0;
-	private static var curDifficulty:Int = 1;
+	var curDifficulty:Int = -1;
+	private static var lastDifficultyName:String = '';
 
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
@@ -55,6 +56,7 @@ class FreeplayState extends MusicBeatState
 		Paths.destroyLoadedImages();
 		#end
 		WeekData.reloadWeekFiles(false);
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
@@ -138,6 +140,13 @@ class FreeplayState extends MusicBeatState
 		if(curSelected >= songs.length) curSelected = 0;
 		bg.color = songs[curSelected].color;
 		intendedColor = bg.color;
+
+		if(lastDifficultyName == '')
+		{
+			lastDifficultyName = CoolUtil.defaultDifficulty;
+		}
+		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
+		
 		changeSelection();
 		changeDiff();
 
@@ -200,8 +209,6 @@ class FreeplayState extends MusicBeatState
 	private static var vocals:FlxSound = null;
 	override function update(elapsed:Float)
 	{
-		
-		
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -246,8 +253,9 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.UI_LEFT_P)
 			changeDiff(-1);
-		if (controls.UI_RIGHT_P)
+		else if (controls.UI_RIGHT_P)
 			changeDiff(1);
+		else if (upP || downP) changeDiff();
 
 		if (controls.BACK)
 		{
@@ -288,7 +296,7 @@ class FreeplayState extends MusicBeatState
 		{
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
-			#if MODS_ALLOWED
+			/*#if MODS_ALLOWED
 			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
 			#else
 			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
@@ -296,14 +304,13 @@ class FreeplayState extends MusicBeatState
 				poop = songLowercase;
 				curDifficulty = 1;
 				trace('Couldnt find file');
-			}
+			}*/
 			trace(poop);
 
 			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
 
-			PlayState.storyWeek = songs[curSelected].week;
 			trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
 			if(colorTween != null) {
 				colorTween.cancel();
@@ -312,7 +319,7 @@ class FreeplayState extends MusicBeatState
 			if (FlxG.keys.pressed.SHIFT){
 				FlxG.switchState(new ChartingState());
 			}else{
-			LoadingState.loadAndSwitchState(new PlayState());
+				LoadingState.loadAndSwitchState(new PlayState());
 			}
 
 			FlxG.sound.music.volume = 0;
@@ -343,6 +350,8 @@ class FreeplayState extends MusicBeatState
 			curDifficulty = CoolUtil.difficulties.length-1;
 		if (curDifficulty >= CoolUtil.difficulties.length)
 			curDifficulty = 0;
+
+		lastDifficultyName = CoolUtil.difficulties[curDifficulty];
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
@@ -409,47 +418,38 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 		
-		// CURRENTLY DISABLED CUSTOM DIFFICULTIES UNTIL THE OFFICIAL 0.5 RELEASE, BUGFIXING SHIT
-		
-		/*CoolUtil.difficultyStuff = [
-			['Normal', ''],
-		];*/
-		
-		changeDiff();
 		Paths.currentModDirectory = songs[curSelected].folder;
-		//it didn't account for mod directories my bad : P
-		
-			/*
-			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
-			#if MODS_ALLOWED
-			var pathshit = Paths.modFolders('data/' + songLowercase);
-			//if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
-			
-			if (FileSystem.exists(Paths.json(songLowercase + '/' + songLowercase))){
-				
-				pathshit = Paths.getPreloadPath('data/' + songLowercase);
-			}
-				for (i in FileSystem.readDirectory(pathshit)){
-			#else
-				for (i in FileSystem.readDirectory(Paths.json(songLowercase + '/' + songLowercase))){
-			#end
-					var name:String = i;
-					var dif = StringTools.replace(name, songLowercase, '').split('.')[0];
-					var difName = StringTools.replace(dif, '-', '');
-					
-					if (name.split('.')[1] == 'json' && name != 'events.json'){//check if it's an actual song chart
-						
-						if (dif != ''){//now check if it's a custom difficulty
-							CoolUtil.difficultyStuff.push([difName,dif]);
-						}
-						
-					}
+		PlayState.storyWeek = songs[curSelected].week;
+
+		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
+		var diffStr:String = WeekData.getCurrentWeek().difficulties.trim();
+		if(diffStr != null && diffStr.length > 0)
+		{
+			var diffs:Array<String> = diffStr.split(',');
+			var i:Int = diffs.length - 1;
+			while (i > 0)
+			{
+				if(diffs[i] != null)
+				{
+					diffs[i] = diffs[i].trim();
+					if(diffs[i].length < 1) diffs.remove(diffs[i]);
 				}
-			
-			
-			trace(	CoolUtil.difficultyStuff);*/
+				--i;
+			}
+
+			if(diffs.length > 0 && diffs[0].length > 0)
+			{
+				CoolUtil.difficulties = diffs;
+			}
+		}
 		
-		
+		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
+		var newPos:Int = CoolUtil.difficulties.indexOf(lastDifficultyName);
+		//trace('Pos of ' + lastDifficultyName + ' is ' + newPos);
+		if(newPos > -1)
+		{
+			curDifficulty = newPos;
+		}
 	}
 
 	private function positionHighscore() {
