@@ -123,7 +123,7 @@ class WeekEditorState extends MusicBeatState
 	function addEditorBox() {
 		var tabs = [
 			{name: 'Week', label: 'Week'},
-			{name: 'Lock', label: 'Lock'},
+			{name: 'Other', label: 'Other'},
 		];
 		UI_box = new FlxUITabMenu(null, tabs, true);
 		UI_box.resize(250, 375);
@@ -131,7 +131,7 @@ class WeekEditorState extends MusicBeatState
 		UI_box.y = FlxG.height - UI_box.height;
 		UI_box.scrollFactor.set();
 		addWeekUI();
-		addLockUI();
+		addOtherUI();
 		
 		UI_box.selected_tab_id = 'Week';
 		add(UI_box);
@@ -227,11 +227,12 @@ class WeekEditorState extends MusicBeatState
 	}
 
 	var weekBeforeInputText:FlxUIInputText;
+	var difficultiesInputText:FlxUIInputText;
 	var lockedCheckbox:FlxUICheckBox;
 
-	function addLockUI() {
+	function addOtherUI() {
 		var tab_group = new FlxUI(null, UI_box);
-		tab_group.name = "Lock";
+		tab_group.name = "Other";
 
 		lockedCheckbox = new FlxUICheckBox(10, 30, null, null, "Week starts Locked", 100);
 		lockedCheckbox.callback = function()
@@ -242,9 +243,15 @@ class WeekEditorState extends MusicBeatState
 
 		weekBeforeInputText = new FlxUIInputText(10, lockedCheckbox.y + 55, 100, '', 8);
 		blockPressWhileTypingOn.push(weekBeforeInputText);
+
+		difficultiesInputText = new FlxUIInputText(10, weekBeforeInputText.y + 60, 200, '', 8);
+		blockPressWhileTypingOn.push(difficultiesInputText);
 		
 		tab_group.add(new FlxText(weekBeforeInputText.x, weekBeforeInputText.y - 28, 0, 'Week File name of the Week you have\nto finish for Unlocking:'));
+		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y - 20, 0, 'Difficulties:'));
+		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y + 20, 0, 'Default difficulties are "Easy, Normal, Hard"\nwithout quotes.'));
 		tab_group.add(weekBeforeInputText);
+		tab_group.add(difficultiesInputText);
 		tab_group.add(lockedCheckbox);
 		UI_box.addGroup(tab_group);
 	}
@@ -268,6 +275,10 @@ class WeekEditorState extends MusicBeatState
 		hideCheckbox.checked = weekFile.hideStoryMode;
 
 		weekBeforeInputText.text = weekFile.weekBefore;
+
+		difficultiesInputText.text = '';
+		if(weekFile.difficulties != null) difficultiesInputText.text = weekFile.difficulties;
+
 		lockedCheckbox.checked = !weekFile.startUnlocked;
 		lock.visible = lockedCheckbox.checked;
 
@@ -389,6 +400,8 @@ class WeekEditorState extends MusicBeatState
 				updateText();
 			} else if(sender == weekBeforeInputText) {
 				weekFile.weekBefore = weekBeforeInputText.text.trim();
+			} else if(sender == difficultiesInputText) {
+				weekFile.difficulties = difficultiesInputText.text.trim();
 			}
 		}
 	}
