@@ -96,11 +96,11 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.json";
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/gfDanceTitle.json";
 		}
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "assets/images/gfDanceTitle.json";
 		}
@@ -266,15 +266,15 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/logoBumpin.png";
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/logoBumpin.png";
 		}
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "assets/images/logoBumpin.png";
 		}
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		logoBl.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		
@@ -289,26 +289,26 @@ class TitleState extends MusicBeatState
 		// logoBl.color = FlxColor.BLACK;
 
 		swagShader = new ColorSwap();
-			gfDance = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
+		gfDance = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.png";
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/gfDanceTitle.png";
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		}
 		if (!FileSystem.exists(path)){
 			path = "assets/images/gfDanceTitle.png";
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		}
 		gfDance.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		#end
-			gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-			gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 	
 		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
 		add(gfDance);
@@ -319,15 +319,15 @@ class TitleState extends MusicBeatState
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/titleEnter.png";
 		}
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "assets/images/titleEnter.png";
 		}
-		trace(path, FileSystem.exists(path));
+		// trace(path, FileSystem.exists(path));
 		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		
