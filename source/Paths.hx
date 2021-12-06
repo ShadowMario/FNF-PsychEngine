@@ -249,6 +249,12 @@ class Paths
 
 	inline static public function font(key:String)
 	{
+		#if MODS_ALLOWED
+		var file:String = modsFont(key);
+		if(FileSystem.exists(file)) {
+			return file;
+		}
+		#end
 		return 'assets/fonts/$key';
 	}
 
@@ -317,6 +323,10 @@ class Paths
 
 	inline static public function mods(key:String = '') {
 		return 'mods/' + key;
+	}
+	
+	inline static public function modsFont(key:String) {
+		return modFolders('fonts/' + key);
 	}
 
 	inline static public function modsJson(key:String) {
