@@ -214,6 +214,16 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var imageToReturn:FlxGraphic = addCustomGraphic(key);
+		/*
+		//SHADOWMARIO TEST THIS IM NOT AT HOME RN.
+
+		//k so for sum reason even when a current mod is loaded, it will only pull from the graphics key shit : (((
+		//so i made it test if one exists in the mod folder or the mod directories.
+		var pathshit = modsImages(key)
+		if (FileSystem.exists(path)){
+			imageToReturn = BitmapData.fromFile(path);
+		}
+		*/
 		if(imageToReturn != null) return imageToReturn;
 		#end
 		return getPath('images/$key.png', IMAGE, library);
