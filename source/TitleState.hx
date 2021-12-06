@@ -12,6 +12,9 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
+import haxe.Json;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
 import sys.FileSystem;
 import sys.io.File;
 //import flixel.graphics.FlxGraphic;
@@ -31,7 +34,18 @@ import lime.app.Application;
 import openfl.Assets;
 
 using StringTools;
-
+typedef TitleData =
+{
+	
+	titlex:Float,
+	titley:Float,
+	startx:Float,
+	starty:Float,
+	gfx:Float,
+	gfy:Float,
+	backgroundSprite:String,
+	bpm:Int
+}
 class TitleState extends MusicBeatState
 {
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
@@ -55,6 +69,9 @@ class TitleState extends MusicBeatState
 	var lastKeysPressed:Array<FlxKey> = [];
 
 	var mustUpdate:Bool = false;
+	
+	var titleJSON:TitleData;
+	
 	public static var updateVersion:String = '';
 
 	override public function create():Void
@@ -77,6 +94,24 @@ class TitleState extends MusicBeatState
 		
 		#end
 		
+		#if (desktop && MODS_ALLOWED)
+		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.json";
+		trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)){
+			path = "mods/images/gfDanceTitle.json";
+		}
+		trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)){
+			path = "assets/images/gfDanceTitle.json";
+		}
+		trace(path, FileSystem.exists(path));
+		titleJSON = Json.parse(File.getContent(path));
+		#else
+		
+		path = Paths.getPreloadPath("images/gfDanceTitle.json");
+		
+		titleJSON = Json.parse(Assets.getText(path)); 
+		#end
 		
 		
 		#if (polymod && !html5)
@@ -206,17 +241,46 @@ class TitleState extends MusicBeatState
 			}
 		}
 
-		Conductor.changeBPM(102);
+		Conductor.changeBPM(titleJSON.bpm);
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite();
+		
+		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none"){
+			bg.loadGraphic(Paths.image(titleJSON.backgroundSprite));
+		}else{
+			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		}
+		
 		// bg.antialiasing = ClientPrefs.globalAntialiasing;
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
 		// bg.updateHitbox();
+		
+		
+		
+		
 		add(bg);
 
-		logoBl = new FlxSprite(-150, -100);
+		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
+		
+		
+		#if (desktop && MODS_ALLOWED)
+		var path = "mods/" + Paths.currentModDirectory + "/images/logoBumpin.png";
+		trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)){
+			path = "mods/images/logoBumpin.png";
+		}
+		trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)){
+			path = "assets/images/logoBumpin.png";
+		}
+		trace(path, FileSystem.exists(path));
+		logoBl.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
+		#else
+		
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		#end
+		
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
@@ -225,27 +289,50 @@ class TitleState extends MusicBeatState
 		// logoBl.color = FlxColor.BLACK;
 
 		swagShader = new ColorSwap();
-		/*if(!FlxG.save.data.psykaEasterEgg || !easterEggEnabled) {*/
-			gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
-			gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
+			gfDance = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
+		
+		#if (desktop && MODS_ALLOWED)
+		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.png";
+		trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)){
+			path = "mods/images/gfDanceTitle.png";
+		trace(path, FileSystem.exists(path));
+		}
+		if (!FileSystem.exists(path)){
+			path = "assets/images/gfDanceTitle.png";
+		trace(path, FileSystem.exists(path));
+		}
+		gfDance.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
+		#else
+		
+		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
+		#end
 			gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 			gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		/*}
-		else //Psyka easter egg
-		{
-			gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.04);
-			gfDance.frames = Paths.getSparrowAtlas('psykaDanceTitle');
-			gfDance.animation.addByIndices('danceLeft', 'psykaDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-			gfDance.animation.addByIndices('danceRight', 'psykaDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		}*/
+	
 		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
 		add(gfDance);
 		gfDance.shader = swagShader.shader;
 		add(logoBl);
 		//logoBl.shader = swagShader.shader;
 
-		titleText = new FlxSprite(100, FlxG.height * 0.8);
+		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
+		#if (desktop && MODS_ALLOWED)
+		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
+		trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)){
+			path = "mods/images/titleEnter.png";
+		}
+		trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)){
+			path = "assets/images/titleEnter.png";
+		}
+		trace(path, FileSystem.exists(path));
+		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
+		#else
+		
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
+		#end
 		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		titleText.antialiasing = ClientPrefs.globalAntialiasing;
@@ -438,14 +525,16 @@ class TitleState extends MusicBeatState
 			var money:Alphabet = new Alphabet(0, 0, textArray[i], true, false);
 			money.screenCenter(X);
 			money.y += (i * 60) + 200 + offset;
+			if(credGroup != null && textGroup != null){
 			credGroup.add(money);
 			textGroup.add(money);
+			}
 		}
 	}
 
 	function addMoreText(text:String, ?offset:Float = 0)
 	{
-		if(textGroup != null) {
+		if(textGroup != null && credGroup != null) {
 			var coolText:Alphabet = new Alphabet(0, 0, text, true, false);
 			coolText.screenCenter(X);
 			coolText.y += (textGroup.length * 60) + 200 + offset;
@@ -464,7 +553,7 @@ class TitleState extends MusicBeatState
 	}
 
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
-	private static var closedState:Bool = false;
+	public static var closedState:Bool = false;
 	override function beatHit()
 	{
 		super.beatHit();

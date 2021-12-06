@@ -1801,9 +1801,9 @@ class PlayState extends MusicBeatState
 			case 'Change Character':
 				var charType:Int = 0;
 				switch(event[3].toLowerCase()) {
-					case 'gf' | 'girlfriend':
+					case 'gf' | 'girlfriend' | '1':
 						charType = 2;
-					case 'dad' | 'opponent':
+					case 'dad' | 'opponent' | '0':
 						charType = 1;
 					default:
 						charType = Std.parseInt(event[3]);
@@ -3744,8 +3744,8 @@ class PlayState extends MusicBeatState
 
 			if (!note.isSustainNote)
 			{
-				popUpScore(note);
 				combo += 1;
+				popUpScore(note);
 				if(combo > 9999) combo = 9999;
 			}
 			health += note.hitHealth * healthGain;
