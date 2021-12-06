@@ -1,5 +1,7 @@
 export/
-.vscode/
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
 APIStuff.hx
 art/build_x32-officialrelease.bat
 art/build_x64-officialrelease.bat
