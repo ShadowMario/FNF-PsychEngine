@@ -179,7 +179,9 @@ class ModsMenuState extends MusicBeatState
 
 		startX -= 100;
 		buttonTop = new FlxButton(startX, 0, "TOP", function() {
-			moveMod(-curSelected);
+			for (i in 0...curSelected){//so if shifts to the top instead of replacing the top one
+			moveMod(-1);
+			}
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 		});
 		buttonTop.setGraphicSize(80, 50);
