@@ -94,7 +94,7 @@ class TitleState extends MusicBeatState
 		
 		#end
 		
-		#if (desktop && MODS_ALLOWED)
+		#if MODS_ALLOWED
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.json";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
@@ -264,7 +264,7 @@ class TitleState extends MusicBeatState
 		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
 		
 		
-		#if (desktop && MODS_ALLOWED)
+		#if MODS_ALLOWED
 		var path = "mods/" + Paths.currentModDirectory + "/images/logoBumpin.png";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
@@ -291,7 +291,7 @@ class TitleState extends MusicBeatState
 		swagShader = new ColorSwap();
 		gfDance = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
 		
-		#if (desktop && MODS_ALLOWED)
+		#if MODS_ALLOWED
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.png";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
@@ -317,7 +317,7 @@ class TitleState extends MusicBeatState
 		//logoBl.shader = swagShader.shader;
 
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
-		#if (desktop && MODS_ALLOWED)
+		#if MODS_ALLOWED
 		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
@@ -383,7 +383,21 @@ class TitleState extends MusicBeatState
 
 	function getIntroTextShit():Array<Array<String>>
 	{
-		var fullText:String = Assets.getText(Paths.txt('introText'));
+		var moddedFullText:String = '';
+
+		#if MODS_ALLOWED
+		var path = "mods/" + Paths.currentModDirectory + "/introText.txt";
+		if (!FileSystem.exists(path)){
+			path = "mods/introText.txt";
+		}
+		if (!FileSystem.exists(path)){
+			path = "assets/introText.txt";
+		}
+		moddedFullText = File.getContent(path);				
+		#end
+
+		var fullText:String = Assets.getText(Paths.txt('introText')) + (moddedFullText != '' ? '\n' + moddedFullText : '');
+		trace(fullText);
 
 		var firstArray:Array<String> = fullText.split('\n');
 		var swagGoodArray:Array<Array<String>> = [];
