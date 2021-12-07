@@ -15,8 +15,10 @@ import flixel.addons.transition.TransitionData;
 import haxe.Json;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
+#if MODS_ALLOWED
 import sys.FileSystem;
 import sys.io.File;
+#end
 //import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
@@ -91,28 +93,24 @@ class TitleState extends MusicBeatState
 				
 			}
 		}
-		
 		#end
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.json";
 		//trace(path, FileSystem.exists(path));
-		if (!FileSystem.exists(path)){
+		if (!FileSystem.exists(path)) {
 			path = "mods/images/gfDanceTitle.json";
 		}
 		//trace(path, FileSystem.exists(path));
-		if (!FileSystem.exists(path)){
+		if (!FileSystem.exists(path)) {
 			path = "assets/images/gfDanceTitle.json";
 		}
 		//trace(path, FileSystem.exists(path));
 		titleJSON = Json.parse(File.getContent(path));
 		#else
-		
-		path = Paths.getPreloadPath("images/gfDanceTitle.json");
-		
+		var path = Paths.getPreloadPath("images/gfDanceTitle.json");
 		titleJSON = Json.parse(Assets.getText(path)); 
 		#end
-		
 		
 		#if (polymod && !html5)
 		if (sys.FileSystem.exists('mods/')) {
