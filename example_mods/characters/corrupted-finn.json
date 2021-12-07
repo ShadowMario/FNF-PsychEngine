@@ -1,70 +1,70 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				7,
 				-160
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 24,
-			"name": "finn idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "finn idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				111,
 				-160
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 24,
-			"name": "finn left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "finn left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-180,
 				-270
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 24,
-			"name": "finn down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "finn down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-116,
 				-30
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "finn up",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "finn up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-180,
 				-163
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "finn right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "finn right"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-360,
 				-14
 			],
-			"anim": "attack",
+			"loop": false,
 			"fps": 24,
-			"name": "finn attack",
-			"indices": []
+			"anim": "attack",
+			"indices": [],
+			"name": "finn attack"
 		}
 	],
 	"no_antialiasing": false,
