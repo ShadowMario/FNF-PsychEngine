@@ -83,7 +83,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'percent',
 			1);
 		option.scrollSpeed = 1.6;
-		option.minValue = 0.2;
+		option.minValue = 0.0;
 		option.maxValue = 1;
 		option.changeValue = 0.1;
 		option.decimals = 1;
