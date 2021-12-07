@@ -3543,6 +3543,19 @@ class PlayState extends MusicBeatState
 		var right = controls.NOTE_RIGHT;
 		var down = controls.NOTE_DOWN;
 		var left = controls.NOTE_LEFT;
+
+		var upP = controls.NOTE_UP_P;
+		var rightP = controls.NOTE_RIGHT_P;
+		var downP = controls.NOTE_DOWN_P;
+		var leftP = controls.NOTE_LEFT_P;
+
+		var upR = controls.NOTE_UP_R;
+		var rightR = controls.NOTE_RIGHT_R;
+		var downR = controls.NOTE_DOWN_R;
+		var leftR = controls.NOTE_LEFT_R;
+
+		// var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
+		// var controlReleaseArray:Array<Bool> = [leftR, downR, upR, rightR];
 		var controlHoldArray:Array<Bool> = [left, down, up, right];
 
 		// FlxG.watch.addQuick('asdfa', upP);
@@ -3558,6 +3571,17 @@ class PlayState extends MusicBeatState
 				}
 			});
 
+			// basic control to key code converter
+			if(left || leftP) keyPress(37);
+			if(down || downP) keyPress(40);
+			if(up || upP) keyPress(38);
+			if(right || rightP) keyPress(39);
+
+			if(leftR) keyRelease(37);
+			if(downR) keyRelease(40);
+			if(upR) keyRelease(38);
+			if(rightR) keyRelease(39);
+
 			if (controlHoldArray.contains(true) && !endingSong) {
 				#if ACHIEVEMENTS_ALLOWED
 				var achieve:String = checkForAchievement(['oversinging']);
@@ -3569,6 +3593,16 @@ class PlayState extends MusicBeatState
 			&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
 		}
+	}
+
+	private function keyPress(keyCodeValue:Int) {
+		var event:KeyboardEvent = new KeyboardEvent(KeyboardEvent.KEY_DOWN, false, false, 0, keyCodeValue);
+		FlxG.stage.dispatchEvent(event);
+	}
+
+	private function keyRelease(keyCodeValue:Int) {
+		var event:KeyboardEvent = new KeyboardEvent(KeyboardEvent.KEY_UP, false, false, 0, keyCodeValue);
+		FlxG.stage.dispatchEvent(event);
 	}
 
 	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
