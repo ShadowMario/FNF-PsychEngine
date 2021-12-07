@@ -37,7 +37,7 @@ class NoteSplash extends FlxSprite
 				texture = 'pixelUI/noteSplashes';
 			}
 		}
-		
+
 		if(textureLoaded != texture) {
 			loadAnims(texture);
 		}
