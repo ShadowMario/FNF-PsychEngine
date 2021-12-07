@@ -99,8 +99,7 @@ jobs:
         with:
           name: windowsBuild
           path: export/release/windows/bin
- 
-buildMac:
+  buildMac:
     runs-on: macos-latest
 
     steps:
