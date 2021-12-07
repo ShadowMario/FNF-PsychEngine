@@ -1,5 +1,6 @@
 package;
 
+import openfl.display.Tile;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -42,7 +43,8 @@ class FreeplayState extends MusicBeatState
 	var intendedRating:Float = 0;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
-	private var curPlaying:Bool = false;
+	
+	public static var curPlaying:Bool = false;
 
 	private var iconArray:Array<HealthIcon> = [];
 
@@ -95,6 +97,10 @@ class FreeplayState extends MusicBeatState
 				addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
 			}
 		}*/
+
+		#if PRELOAD_ALL
+		if (!curPlaying) Conductor.changeBPM(TitleState.titleJSON.bpm);
+		#end
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
@@ -172,7 +178,7 @@ class FreeplayState extends MusicBeatState
 		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
 		add(textBG);
-		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, "Press P for play the song / Press SPACE to open the Gameplay Changers Menu / Press RESET to reset your score and accuracy.", 16);
+		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, "Press P to listen to this Song / Press SPACE to open the Gameplay Changers Menu / Press RESET to reset your score and accuracy.", 16);
 		text.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
@@ -249,13 +255,9 @@ class FreeplayState extends MusicBeatState
 		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
 
 		if (upP)
-		{
 			changeSelection(-shiftMult);
-		}
 		if (downP)
-		{
 			changeSelection(shiftMult);
-		}
 
 		if (controls.UI_LEFT_P)
 			changeDiff(-1);
@@ -292,10 +294,15 @@ class FreeplayState extends MusicBeatState
 			vocals.volume = 0.7;
 			Conductor.changeBPM(PlayState.SONG.bpm);
 			instPlaying = curSelected;
+			curPlaying = true;
 			#end
 		}
 
-		if(space) openSubState(new GameplayChangersSubstate());
+		if (space)
+		{
+			curPlaying = false;
+			openSubState(new GameplayChangersSubstate());
+		}
 
 		else if (accepted)
 		{
@@ -320,6 +327,8 @@ class FreeplayState extends MusicBeatState
 			if(colorTween != null) {
 				colorTween.cancel();
 			}
+
+			curPlaying = false;
 			
 			if (FlxG.keys.pressed.SHIFT){
 				FlxG.switchState(new ChartingState());

@@ -52,6 +52,8 @@ class GameOverSubstate extends MusicBeatSubstate
 		boyfriend = new Boyfriend(x, y, characterName);
 		boyfriend.x += boyfriend.positionArray[0];
 		boyfriend.y += boyfriend.positionArray[1];
+		// todo: find a better way to handle this
+		if(ClientPrefs.maxOptimization) boyfriend.revive(); 
 		add(boyfriend);
 
 		camFollow = new FlxPoint(boyfriend.getGraphicMidpoint().x, boyfriend.getGraphicMidpoint().y);
