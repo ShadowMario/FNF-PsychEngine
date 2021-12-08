@@ -2203,6 +2203,17 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		// basic control to key code converter
+		if(controls.NOTE_LEFT || controls.NOTE_LEFT_P) keyPress(37);
+		if(controls.NOTE_DOWN || controls.NOTE_DOWN_P) keyPress(40);
+		if(controls.NOTE_UP || controls.NOTE_UP_P) keyPress(38);
+		if(controls.NOTE_RIGHT || controls.NOTE_RIGHT_P) keyPress(39);
+
+		if(controls.NOTE_LEFT_R) keyRelease(37);
+		if(controls.NOTE_DOWN_R) keyRelease(40);
+		if(controls.NOTE_UP_R) keyRelease(38);
+		if(controls.NOTE_RIGHT_R) keyRelease(39);
+
 		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene)
 		{
 			persistentUpdate = false;
@@ -3543,24 +3554,7 @@ class PlayState extends MusicBeatState
 	private function keyShit():Void
 	{
 		// HOLDING
-		var up = controls.NOTE_UP;
-		var right = controls.NOTE_RIGHT;
-		var down = controls.NOTE_DOWN;
-		var left = controls.NOTE_LEFT;
-
-		var upP = controls.NOTE_UP_P;
-		var rightP = controls.NOTE_RIGHT_P;
-		var downP = controls.NOTE_DOWN_P;
-		var leftP = controls.NOTE_LEFT_P;
-
-		var upR = controls.NOTE_UP_R;
-		var rightR = controls.NOTE_RIGHT_R;
-		var downR = controls.NOTE_DOWN_R;
-		var leftR = controls.NOTE_LEFT_R;
-
-		// var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
-		// var controlReleaseArray:Array<Bool> = [leftR, downR, upR, rightR];
-		var controlHoldArray:Array<Bool> = [left, down, up, right];
+		var controlHoldArray:Array<Bool> = [controls.NOTE_LEFT, controls.NOTE_DOWN, controls.NOTE_UP, controls.NOTE_RIGHT];
 
 		// FlxG.watch.addQuick('asdfa', upP);
 		if (!boyfriend.stunned && generatedMusic)
@@ -3574,17 +3568,6 @@ class PlayState extends MusicBeatState
 					goodNoteHit(daNote);
 				}
 			});
-
-			// basic control to key code converter
-			if(left || leftP) keyPress(37);
-			if(down || downP) keyPress(40);
-			if(up || upP) keyPress(38);
-			if(right || rightP) keyPress(39);
-
-			if(leftR) keyRelease(37);
-			if(downR) keyRelease(40);
-			if(upR) keyRelease(38);
-			if(rightR) keyRelease(39);
 
 			if (controlHoldArray.contains(true) && !endingSong) {
 				#if ACHIEVEMENTS_ALLOWED
