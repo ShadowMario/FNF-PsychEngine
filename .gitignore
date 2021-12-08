@@ -11,3 +11,4 @@ assets/preload/data/introText.txt
 assets/preload/data/introText.txt
 example_mods/stages/exampleStage.lua
 example_mods/stages/exampleStage.json
+*.bak
