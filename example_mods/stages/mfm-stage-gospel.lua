@@ -1,7 +1,7 @@
 function onCreate()
 	-- background shit
-	makeLuaSprite('mfm-stage-gospel', 'mfm-stage-gospel', -500, -500);
-	addLuaSprite('mfm-stage-gospel',false);
+	makeLuaSprite('stage', 'mfm-stage-gospel', -500, -500);
+	addLuaSprite('stage',false);
 
 	-- sprites that only load if Low Quality is turned off
 	if not lowQuality then

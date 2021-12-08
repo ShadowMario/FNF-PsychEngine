@@ -16,10 +16,12 @@ function onCreate()
    addLuaSprite('endless-floor', false);
    scaleObject('endless-floor', 1.5, 1.5);
 
-   makeAnimatedLuaSprite('sonicboppers', 'sonicexe-old-stage-endless-boppers', -500, -250);
-   addAnimationByPrefix('sonicboppers', 'first', 'sonicboppers', 24, true);
-   objectPlayAnimation('sonicboppers', 'first');
-   addLuaSprite('sonicboppers', false);
-
+	-- sprites that only load if Low Quality is turned off
+	if not lowQuality then
+      makeAnimatedLuaSprite('sonicboppers', 'sonicexe-old-stage-endless-boppers', -500, -250);
+      addAnimationByPrefix('sonicboppers', 'first', 'sonicboppers', 24, true);
+      objectPlayAnimation('sonicboppers', 'first');
+      addLuaSprite('sonicboppers', false);
+	end
 	close(true); --For performance reasons, close this script once the stage is fully loaded, as this script won't be used anymore after loading the stage
 end

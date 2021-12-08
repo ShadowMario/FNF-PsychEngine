@@ -19,25 +19,25 @@ function onCreate()
    addLuaSprite('floor', false);
    scaleObject('floor', 0.5, 0.5);
 
-   makeAnimatedLuaSprite('Hands', 'sonicexe-old-stage-lordX-hands', 200, -100);
-   addAnimationByPrefix('Hands', 'first', 'Hands', 24, true);
-   objectPlayAnimation('Hands', 'first');
-   addLuaSprite('Hands', false);
-   scaleObject('Hands', 0.4, 0.4);
-
-   makeAnimatedLuaSprite('Tree', 'sonicexe-old-stage-lordX-tree', 900, -150);
-   addAnimationByPrefix('Tree', 'first', 'Tree', 24, true);
-   objectPlayAnimation('Tree', 'first');
-   addLuaSprite('Tree', false);
-   scaleObject('Tree', 1.5, 1.5);
-
-   makeAnimatedLuaSprite('EyeFlower', 'sonicexe-old-stage-lordX-eyeflower', -300, 200);
-   addAnimationByPrefix('EyeFlower', 'first', 'EyeFlower', 12, true);
-   objectPlayAnimation('EyeFlower', 'first');
-   addLuaSprite('EyeFlower', false);
-   scaleObject('EyeFlower', 1.5, 1.5);
-
+	-- sprites that only load if Low Quality is turned off
+	if not lowQuality then
+      makeAnimatedLuaSprite('Hands', 'sonicexe-old-stage-lordX-hands', 200, -100);
+      addAnimationByPrefix('Hands', 'first', 'Hands', 24, true);
+      objectPlayAnimation('Hands', 'first');
+      addLuaSprite('Hands', false);
+      scaleObject('Hands', 0.4, 0.4);
    
-
+      makeAnimatedLuaSprite('Tree', 'sonicexe-old-stage-lordX-tree', 900, -150);
+      addAnimationByPrefix('Tree', 'first', 'Tree', 24, true);
+      objectPlayAnimation('Tree', 'first');
+      addLuaSprite('Tree', false);
+      scaleObject('Tree', 1.5, 1.5);
+   
+      makeAnimatedLuaSprite('EyeFlower', 'sonicexe-old-stage-lordX-eyeflower', -300, 200);
+      addAnimationByPrefix('EyeFlower', 'first', 'EyeFlower', 12, true);
+      objectPlayAnimation('EyeFlower', 'first');
+      addLuaSprite('EyeFlower', false);
+      scaleObject('EyeFlower', 1.5, 1.5);
+	end
 	close(true); --For performance reasons, close this script once the stage is fully loaded, as this script won't be used anymore after loading the stage
 end
