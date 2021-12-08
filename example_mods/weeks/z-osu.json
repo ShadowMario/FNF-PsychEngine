@@ -1,7 +1,7 @@
 {
 	"storyName": "osu converts",
 	"hideFreeplay": false,
-	"weekBackground": "",
+	"weekBackground": "menu_black",
 	"weekBefore": "week6-bsides",
 	"freeplayColor": [
 		146,
@@ -10,22 +10,13 @@
 	],
 	"startUnlocked": true,
 	"weekCharacters": [
-		"",
-		"",
-		""
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
 	],
 	"songs": [
 		[
-			"kayanoaioracion",
-			"osu",
-			[
-				146,
-				113,
-				253
-			]
-		],
-		[
-			"theasteriskwar",
+			"the-asterisk-war",
 			"osu",
 			[
 				146,
