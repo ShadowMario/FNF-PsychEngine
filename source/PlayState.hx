@@ -2035,7 +2035,7 @@ class PlayState extends MusicBeatState
 
 		callOnLuas('onUpdate', [elapsed]);
 
-		if (FlxG.gamepads.lastActive.pressed.ANY)
+		if (FlxG.gamepads.lastActive != null && FlxG.gamepads.lastActive.pressed.ANY)
 		{
 			// basic control to key code converter
 			if(controls.NOTE_LEFT || controls.NOTE_LEFT_P) keyPress(37);
