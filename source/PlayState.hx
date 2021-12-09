@@ -2038,20 +2038,6 @@ class PlayState extends MusicBeatState
 
 		callOnLuas('onUpdate', [elapsed]);
 
-		if (FlxG.gamepads.lastActive != null && FlxG.gamepads.lastActive.pressed.ANY)
-		{
-			// basic control to key code converter
-			if(controls.NOTE_LEFT || controls.NOTE_LEFT_P) keyPress(37);
-			if(controls.NOTE_DOWN || controls.NOTE_DOWN_P) keyPress(40);
-			if(controls.NOTE_UP || controls.NOTE_UP_P) keyPress(38);
-			if(controls.NOTE_RIGHT || controls.NOTE_RIGHT_P) keyPress(39);
-
-			if(controls.NOTE_LEFT_R) keyRelease(37);
-			if(controls.NOTE_DOWN_R) keyRelease(40);
-			if(controls.NOTE_UP_R) keyRelease(38);
-			if(controls.NOTE_RIGHT_R) keyRelease(39);
-		}
-
 		switch (curStage)
 		{
 			case 'schoolEvil':
@@ -3619,16 +3605,6 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
-	}
-
-	private function keyPress(keyCodeValue:Int) {
-		var event:KeyboardEvent = new KeyboardEvent(KeyboardEvent.KEY_DOWN, false, false, 0, keyCodeValue);
-		FlxG.stage.dispatchEvent(event);
-	}
-
-	private function keyRelease(keyCodeValue:Int) {
-		var event:KeyboardEvent = new KeyboardEvent(KeyboardEvent.KEY_UP, false, false, 0, keyCodeValue);
-		FlxG.stage.dispatchEvent(event);
 	}
 
 	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
