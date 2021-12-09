@@ -320,8 +320,11 @@ class StoryMenuState extends MusicBeatState
 
 		var image:Dynamic = Paths.image('menudifficulties/' + Paths.formatToSongPath(CoolUtil.difficulties[curDifficulty]));
 		var newImagePath:String = '';
-		if($type(image) == 'FlxGraphic')
-			newImagePath = image.assetsKey;
+		if(image is FlxGraphic)
+		{
+			var graphic:FlxGraphic = image;
+			newImagePath = graphic.assetsKey;
+		}
 		else
 			newImagePath = image;
 
@@ -389,7 +392,9 @@ class StoryMenuState extends MusicBeatState
 		PlayState.storyWeek = curWeek;
 
 		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
-		var diffStr:String = WeekData.getCurrentWeek().difficulties.trim();
+		var diffStr:String = WeekData.getCurrentWeek().difficulties;
+		if(diffStr != null) diffStr = diffStr.trim(); //Fuck you HTML5
+
 		if(diffStr != null && diffStr.length > 0)
 		{
 			var diffs:Array<String> = diffStr.split(',');

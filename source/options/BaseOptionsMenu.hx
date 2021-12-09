@@ -108,7 +108,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			} else {
 				optionText.x -= 80;
 				optionText.xAdd -= 80;
-				var valueText:AttachedText = new AttachedText(optionsArray[i].getValue(), optionText.width + 80);
+				var valueText:AttachedText = new AttachedText('' + optionsArray[i].getValue(), optionText.width + 80);
 				valueText.sprTracker = optionText;
 				valueText.copyAlpha = true;
 				valueText.ID = i;
