@@ -15,8 +15,10 @@ import flixel.addons.transition.TransitionData;
 import haxe.Json;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
+#if MODS_ALLOWED
 import sys.FileSystem;
 import sys.io.File;
+#end
 //import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
@@ -91,28 +93,24 @@ class TitleState extends MusicBeatState
 				
 			}
 		}
-		
 		#end
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.json";
-		trace(path, FileSystem.exists(path));
-		if (!FileSystem.exists(path)){
+		//trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)) {
 			path = "mods/images/gfDanceTitle.json";
 		}
-		trace(path, FileSystem.exists(path));
-		if (!FileSystem.exists(path)){
+		//trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)) {
 			path = "assets/images/gfDanceTitle.json";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		titleJSON = Json.parse(File.getContent(path));
 		#else
-		
-		path = Paths.getPreloadPath("images/gfDanceTitle.json");
-		
+		var path = Paths.getPreloadPath("images/gfDanceTitle.json");
 		titleJSON = Json.parse(Assets.getText(path)); 
 		#end
-		
 		
 		#if (polymod && !html5)
 		if (sys.FileSystem.exists('mods/')) {
@@ -266,15 +264,15 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/logoBumpin.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/logoBumpin.png";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "assets/images/logoBumpin.png";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		logoBl.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		
@@ -293,14 +291,14 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/gfDanceTitle.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		}
 		if (!FileSystem.exists(path)){
 			path = "assets/images/gfDanceTitle.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		}
 		gfDance.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
@@ -319,15 +317,15 @@ class TitleState extends MusicBeatState
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "mods/images/titleEnter.png";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = "assets/images/titleEnter.png";
 		}
-		trace(path, FileSystem.exists(path));
+		//trace(path, FileSystem.exists(path));
 		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		
@@ -409,7 +407,7 @@ class TitleState extends MusicBeatState
 			FlxG.fullscreen = !FlxG.fullscreen;
 		}
 
-		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
+		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
 
 		#if mobile
 		for (touch in FlxG.touches.list)
