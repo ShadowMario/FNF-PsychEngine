@@ -320,7 +320,7 @@ class StoryMenuState extends MusicBeatState
 
 		var image:Dynamic = Paths.image('menudifficulties/' + Paths.formatToSongPath(CoolUtil.difficulties[curDifficulty]));
 		var newImagePath:String = '';
-		if(Std.is(image, FlxGraphic))
+		if(Std.isOfType(image, FlxGraphic))
 		{
 			var graphic:FlxGraphic = image;
 			newImagePath = graphic.assetsKey;
