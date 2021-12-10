@@ -104,29 +104,29 @@
 				436,
 				352
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "hey",
-			"loop": false,
+			"indices": [],
 			"name": "Hank"
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/tricky-expurgation",
 	"position": [
-		400,
-		340
+		-100,
+		300
 	],
 	"healthicon": "tricky-expurgation",
 	"flip_x": false,
 	"healthbar_colors": [
-		75,
-		80,
-		60
+		255,
+		25,
+		0
 	],
 	"camera_position": [
 		500,
-		-100
+		-50
 	],
 	"sing_duration": 4,
 	"scale": 0.7

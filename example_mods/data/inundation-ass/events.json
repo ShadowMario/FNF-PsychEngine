@@ -4,28 +4,8 @@
 		"stage": "jebus-stage",
 		"player1": "asstricky",
 		"player2": "assbeater",
-		"player3": "gf",
+		"player3": "nogf",
 		"notes": [
-			{
-				"gfSection": false,
-				"lengthInSteps": 16,
-				"altAnim": false,
-				"typeOfSection": 0,
-				"sectionNotes": [],
-				"bpm": 0,
-				"changeBPM": false,
-				"mustHitSection": false
-			},
-			{
-				"gfSection": false,
-				"lengthInSteps": 16,
-				"altAnim": false,
-				"typeOfSection": 0,
-				"sectionNotes": [],
-				"bpm": 0,
-				"changeBPM": false,
-				"mustHitSection": false
-			},
 			{
 				"gfSection": false,
 				"lengthInSteps": 16,
@@ -63,13 +43,72 @@
 				"typeOfSection": 0,
 				"sectionNotes": [
 					[
+						9107.14285714286,
+						-1,
+						"ScreenRotCam",
+						"25",
+						"0.25"
+					],
+					[
+						9260.20408163265,
+						-1,
+						"ScreenRotCam",
+						"0",
+						"0.25"
+					]
+				],
+				"bpm": 0,
+				"changeBPM": false,
+				"mustHitSection": false
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 0,
+				"changeBPM": false,
+				"mustHitSection": false
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [
+					[
 						13622.4489795918,
 						-1,
 						"Screen Shake",
 						"4, 0.01",
 						"4, 0.01"
+					],
+					[
+						13616.0714285714,
+						-1,
+						"ScreenRotCam",
+						"90",
+						"0.25"
+					],
+					[
+						13852.0408163265,
+						-1,
+						"ScreenRotCam",
+						"0",
+						"0.25"
 					]
 				],
+				"bpm": 0,
+				"changeBPM": false,
+				"mustHitSection": false
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
 				"bpm": 0,
 				"changeBPM": false,
 				"mustHitSection": false

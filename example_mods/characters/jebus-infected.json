@@ -3,17 +3,6 @@
 		{
 			"loop": false,
 			"offsets": [
-				90,
-				-187
-			],
-			"anim": "singDOWN",
-			"fps": 24,
-			"name": "down",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
 				318,
 				293
 			],
@@ -58,6 +47,17 @@
 		{
 			"loop": false,
 			"offsets": [
+				310,
+				190
+			],
+			"anim": "attack",
+			"fps": 24,
+			"name": "attack",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
 				-13,
 				-117
 			],
@@ -69,13 +69,46 @@
 		{
 			"loop": false,
 			"offsets": [
-				0,
-				0
+				88,
+				-187
 			],
-			"anim": "attack",
+			"anim": "singDOWN-Alt",
 			"fps": 24,
-			"name": "attack",
+			"name": "downAlt",
 			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				84,
+				-146
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "down",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-13,
+				-117
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT-Alt",
+			"loop": false,
+			"name": "leftAlt"
+		},
+		{
+			"offsets": [
+				270,
+				151
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT-Alt",
+			"loop": false,
+			"name": "rightAlt"
 		}
 	],
 	"no_antialiasing": false,

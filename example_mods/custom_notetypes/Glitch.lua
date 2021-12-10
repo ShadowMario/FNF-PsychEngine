@@ -39,6 +39,6 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	-- loops = how many loops it will have done when it ends completely
 	-- loopsLeft = how many are remaining
 	if loopsLeft >= 1 then
-		setProperty('health', getProperty('health')-0.001);
+		setProperty('health', getProperty('health')-0.05);
 	end
 end

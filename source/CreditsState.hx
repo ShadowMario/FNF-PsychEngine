@@ -82,7 +82,10 @@ class CreditsState extends MusicBeatState
 			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",					'https://twitter.com/ninja_muffin99',	'F73838'],
 			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",						'https://twitter.com/PhantomArcade3K',	'FFBB1B'],
 			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",						'https://twitter.com/evilsk8r',			'53E52C'],
-			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",						'https://twitter.com/kawaisprite',		'6475F3']
+			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",						'https://twitter.com/kawaisprite',		'6475F3'],
+			[''],
+			['Fat-Ass Mod Compilation Team'],
+			['Autistic Lulu',		'generic',			'Project Starter, Charter/Porting, Programmer',			'https://www.youtube.com/channel/UCm5gqgI9DEzRILCR_-nLN0A_',	'DAF7A6'],		
 		];
 		
 		for(i in pisspoop){
@@ -124,7 +127,7 @@ class CreditsState extends MusicBeatState
 		}
 
 		descText = new FlxText(50, 600, 1180, "", 32);
-		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		descText.setFormat(Paths.font("roboto.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
 		add(descText);

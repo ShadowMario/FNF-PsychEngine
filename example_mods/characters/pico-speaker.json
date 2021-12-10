@@ -106,7 +106,7 @@
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/PicoSpeakers",
+	"image": "characters/pico-speakers",
 	"position": [
 		120,
 		-125
