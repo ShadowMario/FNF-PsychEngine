@@ -2,38 +2,38 @@
 	"storyName": "Week 2 B-Sides",
 	"hideFreeplay": false,
 	"weekBackground": "halloween",
+	"weekBefore": "week1-bsides",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
-	"weekBefore": "week1-bsides",
 	"startUnlocked": true,
-	"hideStoryMode": false,
-	"weekCharacters": [
-		"spooky",
-		"bf",
-		"gf"
-	],
 	"songs": [
 		[
 			"spookeez-b",
 			"spookeez-bsides",
 			[
-				175,
-				88,
-				0
+				34,
+				51,
+				68
 			]
 		],
 		[
 			"South-b",
 			"spookeez-bsides",
 			[
-				175,
-				88,
-				0
+				34,
+				51,
+				68
 			]
 		]
+	],
+	"hideStoryMode": false,
+	"weekCharacters": [
+		"spooky",
+		"bf",
+		"gf"
 	],
 	"weekName": "week2-bsides"
 }

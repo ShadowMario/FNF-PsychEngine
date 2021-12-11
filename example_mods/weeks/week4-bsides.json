@@ -2,47 +2,47 @@
 	"storyName": "Week 4 B-Sides",
 	"hideFreeplay": false,
 	"weekBackground": "limo",
+	"weekBefore": "week3-bsides",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
-	"weekBefore": "week3-bsides",
 	"startUnlocked": true,
-	"hideStoryMode": false,
-	"weekCharacters": [
-		"mom",
-		"bf",
-		"gf"
-	],
 	"songs": [
 		[
 			"Satin-Panties-b",
 			"mom-bsides",
 			[
-				215,
-				113,
-				155
+				252,
+				150,
+				215
 			]
 		],
 		[
 			"High-b",
 			"mom-bsides",
 			[
-				215,
-				113,
-				155
+				252,
+				150,
+				215
 			]
 		],
 		[
 			"Milf-b",
 			"mom-bsides",
 			[
-				215,
-				113,
-				155
+				252,
+				150,
+				215
 			]
 		]
+	],
+	"hideStoryMode": false,
+	"weekCharacters": [
+		"mom",
+		"bf",
+		"gf"
 	],
 	"weekName": "week4-bsides"
 }

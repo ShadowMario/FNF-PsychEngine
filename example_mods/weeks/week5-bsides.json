@@ -1,0 +1,48 @@
+{
+	"storyName": "Week 5 B-Sides",
+	"hideFreeplay": false,
+	"weekBackground": "christmas",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "week4-bsides",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"parents-christmas",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"Cocoa-b",
+			"parents-bsides",
+			[
+				160,
+				209,
+				255
+			]
+		],
+		[
+			"Eggnog-b",
+			"parents-bsides",
+			[
+				160,
+				209,
+				255
+			]
+		],
+		[
+			"Winter-horrorland-b",
+			"monster-bsides",
+			[
+				160,
+				209,
+				255
+			]
+		]
+	],
+	"hideStoryMode": false,
+	"weekName": "week5-bsides"
+}

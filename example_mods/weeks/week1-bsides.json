@@ -2,47 +2,47 @@
 	"storyName": "Week 1 B-Sides",
 	"hideFreeplay": false,
 	"weekBackground": "stage",
+	"weekBefore": "week7",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
-	"weekBefore": "week7",
 	"startUnlocked": true,
-	"hideStoryMode": false,
-	"weekCharacters": [
-		"dad",
-		"bf",
-		"gf"
-	],
 	"songs": [
 		[
 			"Bopeebo-b",
 			"dad-bsides",
 			[
-				255,
-				153,
-				235
+				146,
+				113,
+				253
 			]
 		],
 		[
 			"Fresh-b",
 			"dad-bsides",
 			[
-				255,
-				153,
-				235
+				146,
+				113,
+				253
 			]
 		],
 		[
 			"Dadbattle-b",
 			"dad-bsides",
 			[
-				255,
-				153,
-				235
+				146,
+				113,
+				253
 			]
 		]
+	],
+	"hideStoryMode": false,
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
 	],
 	"weekName": "week1-bsides"
 }
