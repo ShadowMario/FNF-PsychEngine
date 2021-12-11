@@ -247,7 +247,7 @@ class ClientPrefs {
 	}
 
 	inline public static function getGameplaySetting(name:String, defaultValue:Dynamic):Dynamic {
-		return PlayState.isStoryMode ? defaultValue : (gameplaySettings.exists(name) ? gameplaySettings.get(name) : null);
+		return /*PlayState.isStoryMode ? defaultValue : */ (gameplaySettings.exists(name) ? gameplaySettings.get(name) : defaultValue);
 	}
 
 	public static function reloadControls() {
