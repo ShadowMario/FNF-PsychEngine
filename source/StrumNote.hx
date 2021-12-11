@@ -14,6 +14,15 @@ class StrumNote extends FlxSprite
 	public var direction:Float = 30;//plan on doing scroll directions soon -bb
 
 	private var player:Int;
+	
+	public var texture(default, set):String = null;
+	private function set_texture(value:String):String {
+		if(texture != value) {
+			texture = value;
+			reloadNote();
+		}
+		return value;
+	}
 
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
 		colorSwap = new ColorSwap();
@@ -25,22 +34,31 @@ class StrumNote extends FlxSprite
 
 		var skin:String = 'NOTE_assets';
 		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
+		texture = skin; //Load texture and anims
+
+		scrollFactor.set();
+	}
+
+	public function reloadNote()
+	{
+		var lastAnim:String = null;
+		if(animation.curAnim != null) lastAnim = animation.curAnim.name;
 
 		if(PlayState.isPixelStage)
 		{
-			loadGraphic(Paths.image('pixelUI/' + skin));
+			loadGraphic(Paths.image('pixelUI/' + texture));
 			width = width / 4;
 			height = height / 5;
-			loadGraphic(Paths.image('pixelUI/' + skin), true, Math.floor(width), Math.floor(height));
-			animation.add('green', [6]);
-			animation.add('red', [7]);
-			animation.add('blue', [5]);
-			animation.add('purple', [4]);
+			loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
 
 			antialiasing = false;
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 
-			switch (Math.abs(leData))
+			animation.add('green', [6]);
+			animation.add('red', [7]);
+			animation.add('blue', [5]);
+			animation.add('purple', [4]);
+			switch (Math.abs(noteData))
 			{
 				case 0:
 					animation.add('static', [0]);
@@ -62,7 +80,7 @@ class StrumNote extends FlxSprite
 		}
 		else
 		{
-			frames = Paths.getSparrowAtlas(skin);
+			frames = Paths.getSparrowAtlas(texture);
 			animation.addByPrefix('green', 'arrowUP');
 			animation.addByPrefix('blue', 'arrowDOWN');
 			animation.addByPrefix('purple', 'arrowLEFT');
@@ -71,7 +89,7 @@ class StrumNote extends FlxSprite
 			antialiasing = ClientPrefs.globalAntialiasing;
 			setGraphicSize(Std.int(width * 0.7));
 
-			switch (Math.abs(leData))
+			switch (Math.abs(noteData))
 			{
 				case 0:
 					animation.addByPrefix('static', 'arrowLEFT');
@@ -91,9 +109,12 @@ class StrumNote extends FlxSprite
 					animation.addByPrefix('confirm', 'right confirm', 24, false);
 			}
 		}
-
 		updateHitbox();
-		scrollFactor.set();
+
+		if(lastAnim != null)
+		{
+			playAnim(lastAnim, true);
+		}
 	}
 
 	public function postAddedToGroup() {

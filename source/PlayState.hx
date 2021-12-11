@@ -767,7 +767,7 @@ class PlayState extends MusicBeatState
 		blammedLightsBlack = modchartSprites.get('blammedLightsBlack');
 		blammedLightsBlack.alpha = 0.0;
 
-		var gfVersion:String = SONG.player3;
+		var gfVersion:String = SONG.gfVersion;
 		if(gfVersion == null || gfVersion.length < 1) {
 			switch (curStage)
 			{
@@ -780,7 +780,7 @@ class PlayState extends MusicBeatState
 				default:
 					gfVersion = 'gf';
 			}
-			SONG.player3 = gfVersion; //Fix for the Chart Editor
+			SONG.gfVersion = gfVersion; //Fix for the Chart Editor
 		}
 
 		gf = new Character(0, 0, gfVersion);
@@ -1592,11 +1592,6 @@ class PlayState extends MusicBeatState
 				});
 				callOnLuas('onCountdownTick', [swagCounter]);
 
-				if (generatedMusic)
-				{
-					notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
-				}
-
 				swagCounter += 1;
 				// generateSong('fresh');
 			}, 5);
@@ -1686,15 +1681,14 @@ class PlayState extends MusicBeatState
 		#else
 		if (OpenFlAssets.exists(file)) {
 		#end
-			var eventsData:Array<SwagSection> = Song.loadFromJson('events', songName).notes;
-			for (section in eventsData)
+			var eventsData:Array<Dynamic> = Song.loadFromJson('events', songName).events;
+			for (event in eventsData) //Event Notes
 			{
-				for (songNotes in section.sectionNotes)
+				for (i in 0...event[1].length)
 				{
-					if(songNotes[1] < 0) {
-						eventNotes.push([songNotes[0] + ClientPrefs.noteOffset, songNotes[1], songNotes[2], songNotes[3], songNotes[4]]);
-						eventPushed(songNotes);
-					}
+					var subEvent:Array<Dynamic> = [event[0] + ClientPrefs.noteOffset, event[1][i][0], event[1][i][1], event[1][i][2]];
+					eventNotes.push(subEvent);
+					eventPushed(subEvent);
 				}
 			}
 		}
@@ -1703,85 +1697,89 @@ class PlayState extends MusicBeatState
 		{
 			for (songNotes in section.sectionNotes)
 			{
-				if(songNotes[1] > -1) { //Real notes
-					var daStrumTime:Float = songNotes[0];
-					var daNoteData:Int = Std.int(songNotes[1] % 4);
+				var daStrumTime:Float = songNotes[0];
+				var daNoteData:Int = Std.int(songNotes[1] % 4);
 
-					var gottaHitNote:Bool = section.mustHitSection;
+				var gottaHitNote:Bool = section.mustHitSection;
 
-					if (songNotes[1] > 3)
+				if (songNotes[1] > 3)
+				{
+					gottaHitNote = !section.mustHitSection;
+				}
+
+				var oldNote:Note;
+				if (unspawnNotes.length > 0)
+					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
+				else
+					oldNote = null;
+
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+				swagNote.mustPress = gottaHitNote;
+				swagNote.sustainLength = songNotes[2];
+				swagNote.noteType = songNotes[3];
+				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
+				
+				swagNote.scrollFactor.set();
+
+				var susLength:Float = swagNote.sustainLength;
+
+				susLength = susLength / Conductor.stepCrochet;
+				unspawnNotes.push(swagNote);
+
+				var floorSus:Int = Math.floor(susLength);
+				if(floorSus > 0) {
+					for (susNote in 0...floorSus+1)
 					{
-						gottaHitNote = !section.mustHitSection;
-					}
-
-					var oldNote:Note;
-					if (unspawnNotes.length > 0)
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-					else
-						oldNote = null;
 
-					var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
-					swagNote.mustPress = gottaHitNote;
-					swagNote.sustainLength = songNotes[2];
-					swagNote.noteType = songNotes[3];
-					if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
-					
-					swagNote.scrollFactor.set();
+						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
+						sustainNote.mustPress = gottaHitNote;
+						sustainNote.noteType = swagNote.noteType;
+						sustainNote.scrollFactor.set();
+						unspawnNotes.push(sustainNote);
 
-					var susLength:Float = swagNote.sustainLength;
-
-					susLength = susLength / Conductor.stepCrochet;
-					unspawnNotes.push(swagNote);
-
-					var floorSus:Int = Math.floor(susLength);
-					if(floorSus > 0) {
-						for (susNote in 0...floorSus+1)
+						if (sustainNote.mustPress)
 						{
-							oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-
-							var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
-							sustainNote.mustPress = gottaHitNote;
-							sustainNote.noteType = swagNote.noteType;
-							sustainNote.scrollFactor.set();
-							unspawnNotes.push(sustainNote);
-
-							if (sustainNote.mustPress)
-							{
-								sustainNote.x += FlxG.width / 2; // general offset
-							}
-							else if(ClientPrefs.middleScroll)
-							{
-								sustainNote.x += 310;
-								if(daNoteData > 1)
-								{ //Up and Right
-									sustainNote.x += FlxG.width / 2 + 25;
-								}
+							sustainNote.x += FlxG.width / 2; // general offset
+						}
+						else if(ClientPrefs.middleScroll)
+						{
+							sustainNote.x += 310;
+							if(daNoteData > 1)
+							{ //Up and Right
+								sustainNote.x += FlxG.width / 2 + 25;
 							}
 						}
 					}
+				}
 
-					if (swagNote.mustPress)
+				if (swagNote.mustPress)
+				{
+					swagNote.x += FlxG.width / 2; // general offset
+				}
+				else if(ClientPrefs.middleScroll)
+				{
+					swagNote.x += 310;
+					if(daNoteData > 1) //Up and Right
 					{
-						swagNote.x += FlxG.width / 2; // general offset
+						swagNote.x += FlxG.width / 2 + 25;
 					}
-					else if(ClientPrefs.middleScroll)
-					{
-						swagNote.x += 310;
-						if(daNoteData > 1) //Up and Right
-						{
-							swagNote.x += FlxG.width / 2 + 25;
-						}
-					}
+				}
 
-					if(!noteTypeMap.exists(swagNote.noteType)) {
-						noteTypeMap.set(swagNote.noteType, true);
-					}
-				} else { //Event Notes
-					eventNotes.push([songNotes[0] + ClientPrefs.noteOffset, songNotes[1], songNotes[2], songNotes[3], songNotes[4]]);
-					eventPushed(songNotes);
+				if(!noteTypeMap.exists(swagNote.noteType)) {
+					noteTypeMap.set(swagNote.noteType, true);
 				}
 			}
 			daBeats += 1;
+		}
+		for (event in songData.events) //Event Notes
+		{
+			for (i in 0...event[1].length)
+			{
+				var subEvent:Array<Dynamic> = [event[0] + ClientPrefs.noteOffset, event[1][i][0], event[1][i][1], event[1][i][2]];
+				eventNotes.push(subEvent);
+				eventPushed(subEvent);
+			}
 		}
 
 		// trace(unspawnNotes.length);
@@ -1813,8 +1811,8 @@ class PlayState extends MusicBeatState
 				addCharacterToList(newCharacter, charType);
 		}
 
-		if(!eventPushedMap.exists(event[2])) {
-			eventPushedMap.set(event[2], true);
+		if(!eventPushedMap.exists(event[1])) {
+			eventPushedMap.set(event[1], true);
 		}
 	}
 
@@ -1849,7 +1847,7 @@ class PlayState extends MusicBeatState
 		{
 			// FlxG.log.add(i);
 			var targetAlpha:Float = 1;
-			if (player < 1 && ClientPrefs.middleScroll) targetAlpha = 0.5;
+			if (player < 1 && ClientPrefs.middleScroll) targetAlpha = 0.35;
 
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
 			if (!isStoryMode)
@@ -2331,7 +2329,7 @@ class PlayState extends MusicBeatState
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
 			{
 				var dunceNote:Note = unspawnNotes[0];
-				notes.add(dunceNote);
+				notes.insert(0, dunceNote);
 
 				var index:Int = unspawnNotes.indexOf(dunceNote);
 				unspawnNotes.splice(index, 1);
@@ -2343,7 +2341,7 @@ class PlayState extends MusicBeatState
 			var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.y > FlxG.height)
+				/*if (daNote.y > FlxG.height)
 				{
 					daNote.active = false;
 					daNote.visible = false;
@@ -2352,7 +2350,7 @@ class PlayState extends MusicBeatState
 				{
 					daNote.visible = true;
 					daNote.active = true;
-				}
+				}*/
 
 				// i am so fucking sorry for this if condition
 				var strumX:Float = 0;
@@ -2582,14 +2580,14 @@ class PlayState extends MusicBeatState
 			}
 
 			var value1:String = '';
-			if(eventNotes[0][3] != null)
-				value1 = eventNotes[0][3];
+			if(eventNotes[0][2] != null)
+				value1 = eventNotes[0][2];
 
 			var value2:String = '';
-			if(eventNotes[0][4] != null)
-				value2 = eventNotes[0][4];
+			if(eventNotes[0][3] != null)
+				value2 = eventNotes[0][3];
 
-			triggerEventNote(eventNotes[0][2], value1, value2);
+			triggerEventNote(eventNotes[0][1], value1, value2);
 			eventNotes.shift();
 		}
 	}
@@ -3662,6 +3660,8 @@ class PlayState extends MusicBeatState
 				doDeathCheck(true);
 			}
 
+			if(ClientPrefs.ghostTapping) return;
+
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
 				gf.playAnim('sad');
@@ -4328,7 +4328,7 @@ class PlayState extends MusicBeatState
 							unlock = true;
 						}
 					case 'oversinging':
-						if(boyfriend.holdTimer >= 20 && !usedPractice) {
+						if(boyfriend.holdTimer >= 10 && !usedPractice) {
 							unlock = true;
 						}
 					case 'hype':
