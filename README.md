@@ -25,9 +25,11 @@ Other features and goals are:
     VS Camellia - Liquated 					| Insane, playing Camellias part from Hard chart
 	VS Camellia - Why Do You Hate Me 			| Insane, playing Camellias part from Hard chart
 	B-Sides VS Pico - Pico					| Insane, charted by AutisticLulu
+  B-Sides VS Mom - Milf					| Insane, charted by AutisticLulu
     Sonic.EXE (OLD) - Too Slow              | Insane, charted by AutisticLulu
     Sonic.EXE (OLD) - Endless              | Insane, charted by AutisticLulu
     Sonic.EXE (OLD) - Execution            | Insane, charted by AutisticLulu
+    VS Whitty - Ballistic             | Expert, a tribute to the old original with tons of jackhammers, charted by AutisticLulu
     Also every recharted song has an additional "Insane" difficulty too.
 	
 ## Songs recharted
@@ -36,11 +38,14 @@ Other features and goals are:
 	VS Starecrown - Body Inversion				| Hard recharted by AutisticLulu
 	VS Tabi - Last Chance 					| Hard recharted by AutisticLulu
 	VS Tabi - Genocide					| Hard recharted by AutisticLulu
+  VS Whitty - Overhead        | Hard recharted by AutisticLulu
+  VS Whitty - Ballistic       | Normal, Hard recharted by AutisticLulu  
 	Sarventes Mid Fight Masses - Parish					| Easy, Normal, Hard, recharted by AutisticLulu
 	Sarventes Mid Fight Masses - Worship					| Easy, Normal, Hard, recharted by AutisticLulu
 	Sarventes Mid Fight Masses - Gospel					| Easy, Normal, Hard, recharted by AutisticLulu
 	Sarventes Mid Fight Masses - Zavodila               | Easy, Normal, Hard, recharted by AutisticLulu
-	
+  
+
 ## Songs ported from osu!mania
 	Kayano Ai - Oracion							| Normal, Hard
 	Shiena Nishizawa - The Asterisk War					| Easy, Normal, Hard, Insane, Expert

@@ -24,6 +24,7 @@ typedef WeekFile =
 	var startUnlocked:Bool;
 	var hideStoryMode:Bool;
 	var hideFreeplay:Bool;
+	var difficulties:String;
 }
 
 class WeekData {
@@ -42,6 +43,7 @@ class WeekData {
 	public var startUnlocked:Bool;
 	public var hideStoryMode:Bool;
 	public var hideFreeplay:Bool;
+	public var difficulties:String;
 
 	public static function createWeekFile():WeekFile {
 		var weekFile:WeekFile = {
@@ -54,7 +56,8 @@ class WeekData {
 			freeplayColor: [146, 113, 253],
 			startUnlocked: true,
 			hideStoryMode: false,
-			hideFreeplay: false
+			hideFreeplay: false,
+			difficulties: ''
 		};
 		return weekFile;
 	}
@@ -71,6 +74,7 @@ class WeekData {
 		startUnlocked = weekFile.startUnlocked;
 		hideStoryMode = weekFile.hideStoryMode;
 		hideFreeplay = weekFile.hideFreeplay;
+		difficulties = weekFile.difficulties;
 	}
 
 	public static function reloadWeekFiles(isStoryMode:Null<Bool> = false)

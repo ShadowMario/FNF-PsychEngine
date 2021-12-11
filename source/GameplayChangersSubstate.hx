@@ -120,7 +120,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				checkboxGroup.add(checkbox);
 				optionText.xAdd += 80;
 			} else {
-				var valueText:AttachedText = new AttachedText(optionsArray[i].getValue(), optionText.width + 80, true, 0.8);
+				var valueText:AttachedText = new AttachedText('' + optionsArray[i].getValue(), optionText.width + 80, true, 0.8);
 				valueText.sprTracker = optionText;
 				valueText.copyAlpha = true;
 				valueText.ID = i;
