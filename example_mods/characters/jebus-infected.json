@@ -1,133 +1,122 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
-				318,
-				293
+				284,
+				194
 			],
+			"loop": false,
+			"fps": 30,
 			"anim": "singUP",
-			"fps": 24,
-			"name": "up",
-			"indices": []
+			"indices": [],
+			"name": "singUP"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				271,
-				156
+				294,
+				136
 			],
+			"loop": false,
+			"fps": 30,
 			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "right",
-			"indices": []
+			"indices": [],
+			"name": "singRIGHT"
 		},
 		{
-			"loop": true,
 			"offsets": [
-				0,
-				0
+				-11,
+				-145
 			],
-			"anim": "idle-loop",
-			"fps": 24,
-			"name": "idle",
-			"indices": []
-		},
-		{
 			"loop": false,
-			"offsets": [
-				0,
-				0
-			],
-			"anim": "idle",
-			"fps": 24,
-			"name": "idle",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				310,
-				190
-			],
-			"anim": "attack",
-			"fps": 24,
-			"name": "attack",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-13,
-				-117
-			],
+			"fps": 30,
 			"anim": "singLEFT",
-			"fps": 24,
-			"name": "left",
-			"indices": []
+			"indices": [],
+			"name": "singLEFT"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				88,
-				-187
+				94,
+				-227
 			],
+			"loop": false,
+			"fps": 30,
 			"anim": "singDOWN-Alt",
-			"fps": 24,
-			"name": "downAlt",
-			"indices": []
-		},
-		{
-			"loop": true,
-			"offsets": [
-				84,
-				-146
-			],
-			"anim": "singDOWN",
-			"fps": 24,
-			"name": "down",
-			"indices": []
-		},
-		{
-			"offsets": [
-				-13,
-				-117
-			],
 			"indices": [],
-			"fps": 24,
+			"name": "singDOWN-Alt"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-12,
+				-145
+			],
 			"anim": "singLEFT-Alt",
+			"fps": 30,
+			"name": "singLEFT-Alt",
+			"indices": []
+		},
+		{
 			"loop": false,
-			"name": "leftAlt"
+			"offsets": [
+				294,
+				137
+			],
+			"anim": "singRIGHT-Alt",
+			"fps": 30,
+			"name": "singRIGHT-Alt",
+			"indices": []
 		},
 		{
 			"offsets": [
-				270,
-				151
+				0,
+				-1
 			],
 			"indices": [],
-			"fps": 24,
-			"anim": "singRIGHT-Alt",
+			"fps": 30,
+			"anim": "idle-loop",
+			"loop": true,
+			"name": "Idle"
+		},
+		{
+			"offsets": [
+				0,
+				-1
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "idle",
 			"loop": false,
-			"name": "rightAlt"
+			"name": "Idle"
+		},
+		{
+			"offsets": [
+				95,
+				-230
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "singDOWN",
+			"loop": true,
+			"name": "singDOWN"
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/jebus-infected",
 	"position": [
 		0,
-		-20
+		0
 	],
 	"healthicon": "jebus-infected",
 	"flip_x": false,
 	"healthbar_colors": [
-		161,
-		161,
-		161
+		152,
+		17,
+		17
 	],
 	"camera_position": [
 		50,
 		150
 	],
-	"sing_duration": 6.1,
+	"sing_duration": 4,
 	"scale": 1
 }
