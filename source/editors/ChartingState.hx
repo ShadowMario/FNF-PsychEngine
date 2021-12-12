@@ -1355,7 +1355,7 @@ class ChartingState extends MusicBeatState
 
 		camPos.y = strumLine.y;
 		if(!disableAutoScrolling.checked) {
-			if (strumLine.y > (gridBG.height / 2))
+			if (strumLine.y >= (gridBG.height / 2))
 			{
 				//trace(curStep);
 				//trace((_song.notes[curSection].lengthInSteps) * (curSection + 1));
