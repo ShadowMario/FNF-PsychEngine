@@ -1,0 +1,48 @@
+{
+	"storyName": "garcello",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		98,
+		191,
+		127
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"songs": [
+		[
+			"headache",
+			"garcello",
+			[
+				98,
+				191,
+				127
+			]
+		],
+		[
+			"nerves",
+			"garcello",
+			[
+				98,
+				191,
+				127
+			]
+		],
+		[
+			"release",
+			"garcello-ghost",
+			[
+				98,
+				191,
+				127
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "week-garcello"
+}
