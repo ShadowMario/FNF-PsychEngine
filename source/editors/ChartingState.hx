@@ -1355,7 +1355,7 @@ class ChartingState extends MusicBeatState
 
 		camPos.y = strumLine.y;
 		if(!disableAutoScrolling.checked) {
-			if (strumLine.y >= (gridBG.height / 2))
+			if (strumLine.y > (gridBG.height / 2))
 			{
 				//trace(curStep);
 				//trace((_song.notes[curSection].lengthInSteps) * (curSection + 1));
@@ -1620,12 +1620,33 @@ class ChartingState extends MusicBeatState
 					//(Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;//snap into quantization
 				if (FlxG.keys.pressed.UP)
 				{
-					strumLine.y -= GRID_SIZE*quants[curQuant];
+					
+					//var tosnapto = 0.00;
+					var foundaspot = false;
+					var i = datimess.length-1;//backwards for loop 
+					while (i > -1){
+						if (FlxG.sound.music.time >= datimess[i] && !foundaspot){
+							foundaspot = true;
+							FlxG.sound.music.time = datimess[i];
+						}
+						--i;
+					}
+					//FlxG.sound.music.time = tosnapto;
+					FlxG.sound.music.time -= daTime;
 				}
 				else{
-					strumLine.y += GRID_SIZE*quants[curQuant];
+					
+					var foundaspot = false;
+					for (i in datimess){
+						if (FlxG.sound.music.time <= i && !foundaspot){
+							foundaspot = true;
+							FlxG.sound.music.time = i;
+						}
+					}
+					
+					
+					FlxG.sound.music.time += daTime;
 				}
-					FlxG.sound.music.time = getStrumTime(strumLine.y, false) + sectionStartTime();
 				if(vocals != null) {
 					vocals.pause();
 					vocals.time = FlxG.sound.music.time;
