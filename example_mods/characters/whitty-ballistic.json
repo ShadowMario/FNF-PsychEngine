@@ -6,7 +6,7 @@
 				357
 			],
 			"indices": [],
-			"fps": 48,
+			"fps": 24,
 			"anim": "idle",
 			"loop": true,
 			"name": "Whitty idle dance"
@@ -17,7 +17,7 @@
 				459
 			],
 			"indices": [],
-			"fps": 48,
+			"fps": 24,
 			"anim": "singUP",
 			"loop": true,
 			"name": "Whitty Sing Note UP"
@@ -28,7 +28,7 @@
 				224
 			],
 			"indices": [],
-			"fps": 48,
+			"fps": 24,
 			"anim": "singDOWN",
 			"loop": true,
 			"name": "Whitty Sing Note DOWN"
@@ -39,7 +39,7 @@
 				384
 			],
 			"indices": [],
-			"fps": 48,
+			"fps": 24,
 			"anim": "singLEFT",
 			"loop": true,
 			"name": "Whitty Sing Note LEFT"
@@ -50,7 +50,7 @@
 				278
 			],
 			"indices": [],
-			"fps": 48,
+			"fps": 24,
 			"anim": "singRIGHT",
 			"loop": true,
 			"name": "whitty sing note right"
