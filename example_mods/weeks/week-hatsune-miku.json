@@ -1,0 +1,57 @@
+{
+	"storyName": "Hatsune Miku",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"hideStoryMode": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"songs": [
+		[
+			"aishite",
+			"hatsune-miku",
+			[
+				0,
+				255,
+				255
+			]
+		],
+		[
+			"disappearance",
+			"hatsune-miku",
+			[
+				0,
+				255,
+				255
+			]
+		],
+		[
+			"popipo",
+			"hatsune-miku",
+			[
+				0,
+				255,
+				255
+			]
+		],
+		[
+			"ievan polkka",
+			"hatsune-miku",
+			[
+				0,
+				255,
+				255
+			]
+		]
+	],
+	"weekName": "week-hatsune-miku"
+}

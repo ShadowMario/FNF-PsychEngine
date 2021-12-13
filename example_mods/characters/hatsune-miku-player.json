@@ -1,0 +1,112 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				73,
+				234
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		},
+		{
+			"offsets": [
+				61,
+				149
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "dodge",
+			"indices": [],
+			"name": "Eww"
+		},
+		{
+			"offsets": [
+				61,
+				241
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "hey",
+			"indices": [],
+			"name": "hey"
+		},
+		{
+			"offsets": [
+				28,
+				235
+			],
+			"indices": [
+				1,
+				2
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": true,
+			"name": "Sing Left"
+		},
+		{
+			"offsets": [
+				101,
+				236
+			],
+			"indices": [
+				1,
+				2
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": true,
+			"name": "Sing Down"
+		},
+		{
+			"offsets": [
+				135,
+				236
+			],
+			"indices": [
+				1,
+				2
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": true,
+			"name": "Sing Right"
+		},
+		{
+			"offsets": [
+				35,
+				285
+			],
+			"indices": [
+				1,
+				2
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": true,
+			"name": "Sing Up"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/hatsune-miku",
+	"position": [
+		100,
+		200
+	],
+	"healthicon": "hatsune-miku",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		255,
+		255
+	],
+	"camera_position": [
+		300,
+		-200
+	],
+	"sing_duration": 4,
+	"scale": 1
+}
