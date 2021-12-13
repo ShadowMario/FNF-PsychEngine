@@ -1245,12 +1245,15 @@ class FunkinLua {
 				obj.fieldWidth = width;
 			}
 		});
-		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Int, color:Int = 0xFF000000) {
+		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Int, color:String) {
 			var obj:FlxText = getTextObject(tag);
 			if(obj != null)
 			{
+				var colorNum:Int = Std.parseInt(color);
+				if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
+
 				obj.borderSize = size;
-				obj.borderColor = color;
+				obj.borderColor = colorNum;
 			}
 		});
 		Lua_helper.add_callback(lua, "setTextColor", function(tag:String, color:String) {
