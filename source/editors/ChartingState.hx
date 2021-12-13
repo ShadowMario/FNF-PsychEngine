@@ -674,13 +674,24 @@ class ChartingState extends MusicBeatState
 				var strumTime:Float = event[0];
 				if(endThing > event[0] && event[0] >= startThing)
 				{
-					notesCopied.push([strumTime, -1, [event[2][0], event[2][1], event[2][2]]]);
+					var copiedEventArray:Array<Dynamic> = [];
+					for (i in 0...event[1].length)
+					{
+						var eventToPush:Array<Dynamic> = event[1][i];
+						copiedEventArray.push([eventToPush[0], eventToPush[1], eventToPush[2]]);
+					}
+					notesCopied.push([strumTime, -1, copiedEventArray]);
 				}
 			}
 		});
 
 		var pasteButton:FlxButton = new FlxButton(10, 180, "Paste Section", function()
 		{
+			if(notesCopied == null || notesCopied.length < 1)
+			{
+				return;
+			}
+
 			var addToTime:Float = Conductor.stepCrochet * (_song.notes[curSection].lengthInSteps * (curSection - sectionToCopy));
 			//trace('Time to add: ' + addToTime);
 
@@ -689,7 +700,15 @@ class ChartingState extends MusicBeatState
 				var copiedNote:Array<Dynamic> = [];
 				var newStrumTime:Float = note[0] + addToTime;
 				if(note[1] < 0)
-					_song.events.push([newStrumTime, [[note[2][0], note[2][1], note[2][2]]]]);
+				{
+					var copiedEventArray:Array<Dynamic> = [];
+					for (i in 0...note[2].length)
+					{
+						var eventToPush:Array<Dynamic> = note[2][i];
+						copiedEventArray.push([eventToPush[0], eventToPush[1], eventToPush[2]]);
+					}
+					_song.events.push([newStrumTime, copiedEventArray]);
+				}
 				else
 				{
 					if(note[4] != null) {
@@ -706,7 +725,21 @@ class ChartingState extends MusicBeatState
 		var clearSectionButton:FlxButton = new FlxButton(10, 210, "Clear", function()
 		{
 			_song.notes[curSection].sectionNotes = [];
+			
+			var i:Int = _song.events.length - 1;
+			
+			var startThing:Float = sectionStartTime();
+			var endThing:Float = sectionStartTime(1);
+			while(i > -1) {
+				var event:Array<Dynamic> = _song.events[i];
+				if(event != null && endThing > event[0] && event[0] >= startThing)
+				{
+					_song.events.remove(event);
+				}
+				--i;
+			}
 			updateGrid();
+			updateNoteUI();
 		});
 
 		var swapSection:FlxButton = new FlxButton(10, 240, "Swap section", function()
