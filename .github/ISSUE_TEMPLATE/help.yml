@@ -24,10 +24,11 @@ body:
     attributes:
       label: "What is your build target?"
       options:
-        - "Windows"
+        - "Windows x64"
+        - "Windows x86/x32"
         - "Linux"
         - "Mac"
-        - "HTML5"
+        - "HTML5/Browser"
         - "Flash/Air-based target"
         - "Neko, HashLink, or other build system"
     validations:

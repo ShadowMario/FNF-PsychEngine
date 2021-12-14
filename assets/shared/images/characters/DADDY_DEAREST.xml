@@ -126,28 +126,4 @@
 	<SubTexture name="Dad idle dance0010" x="2970" y="828" width="419" height="767" frameX="-6" frameY="0" frameWidth="429" frameHeight="767"/>
 	<SubTexture name="Dad idle dance0011" x="2970" y="828" width="419" height="767" frameX="-6" frameY="0" frameWidth="429" frameHeight="767"/>
 	<SubTexture name="Dad idle dance0012" x="831" y="828" width="419" height="767" frameX="-6" frameY="0" frameWidth="429" frameHeight="767"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0000" x="3394" y="828" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0001" x="3394" y="828" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0002" x="5" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0003" x="5" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0004" x="522" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0005" x="522" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0006" x="1039" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0007" x="1039" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0008" x="1556" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0009" x="1556" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0010" x="2073" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0011" x="2073" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0012" x="2590" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0013" x="2590" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0014" x="3107" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0015" x="3107" y="1642" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0016" x="5" y="2304" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0017" x="5" y="2304" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0018" x="522" y="2304" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0019" x="522" y="2304" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0020" x="1039" y="2304" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0021" x="1039" y="2304" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0022" x="522" y="2304" width="512" height="657"/>
-	<SubTexture name="WhatYouKnowAboutRollingDownInTheDeep0023" x="522" y="2304" width="512" height="657"/>
 </TextureAtlas>

@@ -23,8 +23,8 @@ class Conductor
 	public static var lastSongPos:Float;
 	public static var offset:Float = 0;
 
-	public static var safeFrames:Int = 10;
-	public static var safeZoneOffset:Float = (safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
+	//public static var safeFrames:Int = 10;
+	public static var safeZoneOffset:Float = (ClientPrefs.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
@@ -32,6 +32,22 @@ class Conductor
 	{
 	}
 
+	public static function judgeNote(note:Note, diff:Float=0) //STOLEN FROM KADE ENGINE (bbpanzu) - I had to rewrite it later anyway after i added the custom hit windows lmao (Shadow Mario)
+	{
+		//tryna do MS based judgment due to popular demand
+		var timingWindows:Array<Int> = [ClientPrefs.sickWindow, ClientPrefs.goodWindow, ClientPrefs.badWindow];
+		var windowNames:Array<String> = ['sick', 'good', 'bad'];
+
+		// var diff = Math.abs(note.strumTime - Conductor.songPosition) / (PlayState.songMultiplier >= 1 ? PlayState.songMultiplier : 1);
+		for(i in 0...timingWindows.length) // based on 4 timing windows, will break with anything else
+		{
+			if (diff <= timingWindows[Math.round(Math.min(i, timingWindows.length - 1))])
+			{
+				return windowNames[i];
+			}
+		}
+		return 'shit';
+	}
 	public static function mapBPMChanges(song:SwagSong)
 	{
 		bpmChangeMap = [];
