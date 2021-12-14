@@ -1192,6 +1192,9 @@ class PlayState extends MusicBeatState
 				for (i in 0...splitText.length) {
 					spr.y += 20;
 				}
+				if (spr.y > FlxG.height) {
+					spr.disableTime = 0;
+				}
 			});
 			for (i in 0...splitText.length) {
 				var debugText:DebugLuaText = new DebugLuaText(splitText[i], luaDebugGroup);
