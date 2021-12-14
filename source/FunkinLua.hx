@@ -1640,7 +1640,7 @@ class FunkinLua {
 				return;
 			}
 			PlayState.instance.addTextToDebug(text);
-			trace(text);
+			//trace(text);
 		}
 		#end
 	}
