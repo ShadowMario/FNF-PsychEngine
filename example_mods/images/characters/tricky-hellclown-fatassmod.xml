@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="tricky-hellclown-fatassmod.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Down note0000" x="0" y="0" width="791" height="931"/>
+	<SubTexture name="Down note0001" x="891" y="0" width="791" height="931"/>
+	<SubTexture name="Down note0002" x="1782" y="0" width="791" height="931"/>
+	<SubTexture name="Down note0003" x="2673" y="0" width="791" height="931"/>
+	<SubTexture name="Down note0004" x="3564" y="0" width="791" height="931"/>
+	<SubTexture name="Down note0005" x="4455" y="0" width="791" height="931"/>
+	<SubTexture name="Left note0000" x="5346" y="0" width="740" height="1047"/>
+	<SubTexture name="Left note0001" x="6186" y="0" width="740" height="1047"/>
+	<SubTexture name="Left note0002" x="7026" y="0" width="740" height="1047"/>
+	<SubTexture name="Left note0003" x="0" y="1147" width="740" height="1047"/>
+	<SubTexture name="Left note0004" x="840" y="1147" width="740" height="1047"/>
+	<SubTexture name="Left note0005" x="1680" y="1147" width="740" height="1047"/>
+	<SubTexture name="Right note0000" x="2520" y="1147" width="880" height="1038"/>
+	<SubTexture name="Right note0001" x="3500" y="1147" width="880" height="1038"/>
+	<SubTexture name="Right note0002" x="4480" y="1147" width="880" height="1038"/>
+	<SubTexture name="Right note0003" x="5460" y="1147" width="880" height="1038"/>
+	<SubTexture name="Right note0004" x="6440" y="1147" width="880" height="1038"/>
+	<SubTexture name="Right note0005" x="0" y="2294" width="880" height="1038"/>
+	<SubTexture name="Tricky Hell idle0000" x="980" y="2294" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0001" x="1849" y="2294" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0002" x="2718" y="2294" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0003" x="3587" y="2294" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0004" x="4456" y="2294" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0005" x="5325" y="2294" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0006" x="6194" y="2294" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0007" x="7063" y="2294" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0008" x="0" y="3434" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0009" x="869" y="3434" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0010" x="1738" y="3434" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0011" x="2607" y="3434" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0012" x="3476" y="3434" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0013" x="4345" y="3434" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0014" x="5214" y="3434" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0015" x="6083" y="3434" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0016" x="6952" y="3434" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0017" x="0" y="4574" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0018" x="869" y="4574" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0019" x="1738" y="4574" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0020" x="2607" y="4574" width="769" height="1040"/>
+	<SubTexture name="Tricky Hell idle0021" x="3476" y="4574" width="769" height="1040"/>
+	<SubTexture name="Up note0000" x="4345" y="4574" width="932" height="1060"/>
+	<SubTexture name="Up note0001" x="5377" y="4574" width="932" height="1060"/>
+	<SubTexture name="Up note0002" x="6409" y="4574" width="932" height="1060"/>
+	<SubTexture name="Up note0003" x="0" y="5734" width="932" height="1060"/>
+	<SubTexture name="Up note0004" x="1032" y="5734" width="932" height="1060"/>
+	<SubTexture name="Up note0005" x="2064" y="5734" width="932" height="1060"/>
+</TextureAtlas>

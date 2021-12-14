@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				-310
+			],
+			"indices": [],
+			"fps": 12,
+			"anim": "singLEFT",
+			"loop": true,
+			"name": "bobismad"
+		},
+		{
+			"offsets": [
+				0,
+				-310
+			],
+			"indices": [],
+			"fps": 12,
+			"anim": "idle",
+			"loop": true,
+			"name": "bobismad"
+		},
+		{
+			"offsets": [
+				0,
+				-310
+			],
+			"indices": [],
+			"fps": 12,
+			"anim": "singRIGHT",
+			"loop": true,
+			"name": "bobismad"
+		},
+		{
+			"offsets": [
+				0,
+				-310
+			],
+			"indices": [],
+			"fps": 12,
+			"anim": "singDOWN",
+			"loop": true,
+			"name": "bobismad"
+		},
+		{
+			"offsets": [
+				0,
+				-310
+			],
+			"indices": [],
+			"fps": 12,
+			"anim": "singUP",
+			"loop": true,
+			"name": "bobismad"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/bob-run",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "bob-run",
+	"flip_x": true,
+	"healthbar_colors": [
+		255,
+		255,
+		255
+	],
+	"camera_position": [
+		20,
+		400
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

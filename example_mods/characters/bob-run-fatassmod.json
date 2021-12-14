@@ -1,0 +1,98 @@
+{
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				-310
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "bobismad",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				-310
+			],
+			"indices": [
+				1,
+				2,
+				3,
+				4
+			],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": true,
+			"name": "bobismad"
+		},
+		{
+			"offsets": [
+				0,
+				-310
+			],
+			"indices": [
+				24,
+				25,
+				26,
+				27
+			],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": true,
+			"name": "bobismad"
+		},
+		{
+			"offsets": [
+				0,
+				-310
+			],
+			"indices": [
+				16,
+				17,
+				18,
+				19
+			],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": true,
+			"name": "bobismad"
+		},
+		{
+			"offsets": [
+				0,
+				-310
+			],
+			"indices": [
+				30,
+				31,
+				32,
+				34
+			],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": true,
+			"name": "bobismad"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/bob-run-fatassmod",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "bob-run",
+	"flip_x": true,
+	"healthbar_colors": [
+		255,
+		15,
+		0
+	],
+	"camera_position": [
+		20,
+		400
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}
