@@ -2924,8 +2924,8 @@ class PlayState extends MusicBeatState
 				if(Math.isNaN(val1)) val1 = 1;
 				if(Math.isNaN(val2)) val2 = 0;
 
-				// again, change the scroll speed itself, don't multiply over it
-				var newValue:Float = val1;
+				// ignore scroll speed changes if the player has a custom scroll speed
+				var newValue:Float = ((ClientPrefs.getGameplaySetting('scrollspeed', 1) > 0) ? ClientPrefs.getGameplaySetting('scrollspeed', 1) : val1);
 
 				if(val2 <= 0)
 				{
