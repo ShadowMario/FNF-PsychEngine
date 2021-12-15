@@ -41,7 +41,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	{
 		var option:GameplayOption = new GameplayOption('Scroll Speed', 'scrollspeed', 'float', 1);
 		option.scrollSpeed = 1.5;
-		option.minValue = 0.5;
+		option.minValue = 0;
 		option.maxValue = 3;
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
@@ -275,7 +275,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		var val:Dynamic = option.getValue();
 		if(option.type == 'percent') val *= 100;
 		var def:Dynamic = option.defaultValue;
+		
 		option.text = text.replace('%v', val).replace('%d', def);
+		if(option.name == "Scroll Speed" && val == 0.0) option.text = "From chart";
 	}
 
 	function clearHold()
