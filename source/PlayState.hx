@@ -1645,7 +1645,10 @@ class PlayState extends MusicBeatState
 	private function generateSong(dataPath:String):Void
 	{
 		// FlxG.log.add(ChartParser.parse());
-		songSpeed = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1);
+		
+		// Use player's chosen speed as the actual scroll speed if higher than absolute zero
+		// not a multiplier for the scroll speed chosen on the chart editor
+		songSpeed = ((ClientPrefs.getGameplaySetting('scrollspeed', 1) > 0) ? ClientPrefs.getGameplaySetting('scrollspeed', 1) : SONG.speed);
 		
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
@@ -2921,7 +2924,8 @@ class PlayState extends MusicBeatState
 				if(Math.isNaN(val1)) val1 = 1;
 				if(Math.isNaN(val2)) val2 = 0;
 
-				var newValue:Float = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
+				// again, change the scroll speed itself, don't multiply over it
+				var newValue:Float = val1;
 
 				if(val2 <= 0)
 				{
@@ -4083,7 +4087,7 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
-			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
+			notes.sort(FlxSort.byY, (ClientPrefs.downScroll) ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
