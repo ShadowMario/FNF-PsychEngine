@@ -1386,7 +1386,7 @@ class ChartingState extends MusicBeatState
 			strumLineNotes.members[i].y = strumLine.y;
 		}
 
-		FlxG.mouse.visible = true;
+		FlxG.mouse.visible = true;//cause reasons. trust me 
 		camPos.y = strumLine.y;
 		if(!disableAutoScrolling.checked) {
 			if (strumLine.y >= (gridBG.height / 2))
@@ -1624,7 +1624,7 @@ class ChartingState extends MusicBeatState
 			
 				var datimess = [];
 				
-				var daTime:Float = Math.round(Conductor.stepCrochet*quants[curQuant]);
+				var daTime:Float = (Conductor.stepCrochet*quants[curQuant]);//WHY DID I ROUND BEFORE THIS IS A FLOAT???
 				var cuquant = Std.int(32/quants[curQuant]);
 				for (i in 0...cuquant){
 					datimess.push(sectionStartTime() + daTime * i);
@@ -1778,6 +1778,8 @@ class ChartingState extends MusicBeatState
 				note.alpha = 0.4;
 				if(note.strumTime > lastConductorPos && FlxG.sound.music.playing && note.noteData > -1) {
 					var data:Int = note.noteData % 4;
+						strumLineNotes.members[data].playAnim('confirm', true);
+						strumLineNotes.members[data].resetAnim = (note.sustainLength / 1000) + 0.15;
 					if(!playedSound[data]) {
 						if((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress)){
 							var soundToPlay = 'ChartingTick';
@@ -1794,8 +1796,6 @@ class ChartingState extends MusicBeatState
 						{
 							data += 4;
 						}
-						strumLineNotes.members[data].playAnim('confirm', true);
-						strumLineNotes.members[data].resetAnim = (note.sustainLength / 1000) + 0.15;
 					}
 				}
 			}
