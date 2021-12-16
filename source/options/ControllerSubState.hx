@@ -291,8 +291,8 @@ class ControllerSubState extends MusicBeatSubstate {
 		grpInputs.push(text1);
 		add(text1);
 
-		var text2 = new AttachedText(InputFormatter.getGamepadButton(binds[1]), 650, -55);
-		text2.setPosition(optionText.x + 900, optionText.y - 55);
+		var text2 = new AttachedText(InputFormatter.getGamepadButton(binds[1]), 850, -55);
+		text2.setPosition(optionText.x + 1000, optionText.y - 55);
 		text2.sprTracker = optionText;
 		grpInputsAlt.push(text2);
 		add(text2);
