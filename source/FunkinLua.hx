@@ -22,6 +22,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import openfl.display.BlendMode;
 import openfl.utils.Assets;
+import flixel.math.FlxMath;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -199,38 +200,15 @@ class FunkinLua {
 
 		//stuff 4 noobz like you B)
 		
-		PlayState.instance.callOnLuas('onLoaded', []);
 		
-		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String) {//would be dope asf. 
-		var cervix = luaFile + ".lua";
-			var doPush = false;
-		if(FileSystem.exists(Paths.modFolders(cervix))) {
-			cervix = Paths.modFolders(cervix);
-			doPush = true;
-		} else {
-			cervix = Paths.getPreloadPath(cervix);
-			if(FileSystem.exists(cervix)) {
-				doPush = true;
-			}
-		}
-
-			if(doPush){ 
-			PlayState.instance.luaArray.push(new FunkinLua(cervix)); 
-			}else{
-			luaTrace("Script doesn't exist!");
-			
-				
-			}
-			
-			
-			return null;
-		});
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
 				var coverMeInPiss:Dynamic = null;
 				if(PlayState.instance.modchartSprites.exists(killMe[0])) {
 					coverMeInPiss = PlayState.instance.modchartSprites.get(killMe[0]);
+				} else if(PlayState.instance.modchartTexts.exists(killMe[0])) {
+					coverMeInPiss = PlayState.instance.modchartTexts.get(killMe[0]);
 				} else {
 					coverMeInPiss = Reflect.getProperty(getInstance(), killMe[0]);
 				}
@@ -248,6 +226,8 @@ class FunkinLua {
 				var coverMeInPiss:Dynamic = null;
 				if(PlayState.instance.modchartSprites.exists(killMe[0])) {
 					coverMeInPiss = PlayState.instance.modchartSprites.get(killMe[0]);
+				} else if(PlayState.instance.modchartTexts.exists(killMe[0])) {
+					coverMeInPiss = PlayState.instance.modchartTexts.get(killMe[0]);
 				} else {
 					coverMeInPiss = Reflect.getProperty(getInstance(), killMe[0]);
 				}
@@ -331,6 +311,10 @@ class FunkinLua {
 			{
 				return getInstance().members.indexOf(PlayState.instance.modchartSprites.get(obj));
 			}
+			else if(PlayState.instance.modchartTexts.exists(obj))
+			{
+				return getInstance().members.indexOf(PlayState.instance.modchartTexts.get(obj));
+			}
 
 			var leObj:FlxBasic = Reflect.getProperty(getInstance(), obj);
 			if(leObj != null)
@@ -343,6 +327,14 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setObjectOrder", function(obj:String, position:Int) {
 			if(PlayState.instance.modchartSprites.exists(obj)) {
 				var spr:ModchartSprite = PlayState.instance.modchartSprites.get(obj);
+				if(spr.wasAdded) {
+					getInstance().remove(spr, true);
+				}
+				getInstance().insert(position, spr);
+				return;
+			}
+			if(PlayState.instance.modchartTexts.exists(obj)) {
+				var spr:ModchartText = PlayState.instance.modchartTexts.get(obj);
 				if(spr.wasAdded) {
 					getInstance().remove(spr, true);
 				}
@@ -745,6 +737,16 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "cameraShake", function(camera:String, intensity:Float, duration:Float) {
 			cameraFromString(camera).shake(intensity, duration);
 		});
+		Lua_helper.add_callback(lua, "cameraFlash", function(camera:String, color:String, duration:Float,forced:Bool) {
+			var colorNum:Int = Std.parseInt(color);
+			if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
+			cameraFromString(camera).flash(colorNum, duration,null,forced);
+		});
+		Lua_helper.add_callback(lua, "cameraFade", function(camera:String, color:String, duration:Float,forced:Bool) {
+			var colorNum:Int = Std.parseInt(color);
+			if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
+			cameraFromString(camera).fade(colorNum, duration,false,null,forced);
+		});
 		Lua_helper.add_callback(lua, "setRatingPercent", function(value:Float) {
 			PlayState.instance.ratingPercent = value;
 		});
@@ -984,6 +986,10 @@ class FunkinLua {
 				PlayState.instance.modchartSprites.get(obj).cameras = [cameraFromString(camera)];
 				return true;
 			}
+			else if(PlayState.instance.modchartTexts.exists(obj)) {
+				PlayState.instance.modchartTexts.get(obj).cameras = [cameraFromString(camera)];
+				return true;
+			}
 
 			var object:FlxObject = Reflect.getProperty(getInstance(), obj);
 			if(object != null) {
@@ -1006,6 +1012,54 @@ class FunkinLua {
 			}
 			luaTrace("Object " + obj + " doesn't exist!");
 			return false;
+		});
+		Lua_helper.add_callback(lua, "screenCenter", function(obj:String, pos:String = 'xy') {
+			var spr:FlxSprite;
+			if(PlayState.instance.modchartSprites.exists(obj)) {
+				spr = PlayState.instance.modchartSprites.get(obj);
+			} else if(PlayState.instance.modchartTexts.exists(obj)) {
+				spr = PlayState.instance.modchartTexts.get(obj);
+			} else {
+				spr = Reflect.getProperty(getInstance(), obj);
+			}
+
+			if(spr != null)
+			{
+				switch(pos.trim().toLowerCase())
+				{
+					case 'x':
+						spr.screenCenter(X);
+						return;
+					case 'y':
+						spr.screenCenter(Y);
+						return;
+					default:
+						spr.screenCenter(XY);
+						return;
+				}
+			}
+			luaTrace("Object " + obj + " doesn't exist!");
+		});
+		Lua_helper.add_callback(lua, "getRandomInt", function(min:Int, max:Int = FlxMath.MAX_VALUE_INT, exclude:String = '') {
+			var excludeArray:Array<String> = exclude.split(',');
+			var toExclude:Array<Int> = [];
+			for (i in 0...excludeArray.length)
+			{
+				toExclude.push(Std.parseInt(excludeArray[i].trim()));
+			}
+			return FlxG.random.int(min, max, toExclude);
+		});
+		Lua_helper.add_callback(lua, "getRandomFloat", function(min:Float, max:Float = 1, exclude:String = '') {
+			var excludeArray:Array<String> = exclude.split(',');
+			var toExclude:Array<Float> = [];
+			for (i in 0...excludeArray.length)
+			{
+				toExclude.push(Std.parseFloat(excludeArray[i].trim()));
+			}
+			return FlxG.random.float(min, max, toExclude);
+		});
+		Lua_helper.add_callback(lua, "getRandomBool", function(chance:Float = 50) {
+			return FlxG.random.bool(chance);
 		});
 		Lua_helper.add_callback(lua, "startDialogue", function(dialogueFile:String, music:String = null) {
 			var path:String = Paths.modsJson(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
@@ -1171,6 +1225,151 @@ class FunkinLua {
 			#end
 		});
 
+
+		// LUA TEXTS
+		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
+			tag = tag.replace('.', '');
+			resetTextTag(tag);
+			var leText:ModchartText = new ModchartText(x, y, text, width);
+			PlayState.instance.modchartTexts.set(tag, leText);
+		});
+
+		Lua_helper.add_callback(lua, "setTextString", function(tag:String, text:String) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				obj.text = text;
+			}
+		});
+		Lua_helper.add_callback(lua, "setTextSize", function(tag:String, size:Int) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				obj.size = size;
+			}
+		});
+		Lua_helper.add_callback(lua, "setTextWidth", function(tag:String, width:Float) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				obj.fieldWidth = width;
+			}
+		});
+		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Int, color:String) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				var colorNum:Int = Std.parseInt(color);
+				if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
+
+				obj.borderSize = size;
+				obj.borderColor = colorNum;
+			}
+		});
+		Lua_helper.add_callback(lua, "setTextColor", function(tag:String, color:String) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				var colorNum:Int = Std.parseInt(color);
+				if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
+
+				obj.color = colorNum;
+			}
+		});
+		Lua_helper.add_callback(lua, "setTextFont", function(tag:String, newFont:String) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				obj.font = Paths.font(newFont);
+			}
+		});
+		Lua_helper.add_callback(lua, "setTextItalic", function(tag:String, italic:Bool) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				obj.italic = italic;
+			}
+		});
+		Lua_helper.add_callback(lua, "setTextAlignment", function(tag:String, alignment:String = 'left') {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				obj.alignment = LEFT;
+				switch(alignment.trim().toLowerCase())
+				{
+					case 'right':
+						obj.alignment = RIGHT;
+					case 'center':
+						obj.alignment = CENTER;
+				}
+			}
+		});
+
+		Lua_helper.add_callback(lua, "getTextString", function(tag:String) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				return obj.text;
+			}
+			return null;
+		});
+		Lua_helper.add_callback(lua, "getTextSize", function(tag:String) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				return obj.size;
+			}
+			return -1;
+		});
+		Lua_helper.add_callback(lua, "getTextFont", function(tag:String) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				return obj.font;
+			}
+			return null;
+		});
+		Lua_helper.add_callback(lua, "getTextWidth", function(tag:String) {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				return obj.fieldWidth;
+			}
+			return 0;
+		});
+
+		Lua_helper.add_callback(lua, "addLuaText", function(tag:String) {
+			if(PlayState.instance.modchartTexts.exists(tag)) {
+				var shit:ModchartText = PlayState.instance.modchartTexts.get(tag);
+				if(!shit.wasAdded) {
+					getInstance().add(shit);
+					shit.wasAdded = true;
+					//trace('added a thing: ' + tag);
+				}
+			}
+		});
+		Lua_helper.add_callback(lua, "removeLuaText", function(tag:String, destroy:Bool = true) {
+			if(!PlayState.instance.modchartTexts.exists(tag)) {
+				return;
+			}
+			
+			var pee:ModchartText = PlayState.instance.modchartTexts.get(tag);
+			if(destroy) {
+				pee.kill();
+			}
+
+			if(pee.wasAdded) {
+				getInstance().remove(pee, true);
+				pee.wasAdded = false;
+			}
+
+			if(destroy) {
+				pee.destroy();
+				PlayState.instance.modchartTexts.remove(tag);
+			}
+		});
+
+
 		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY
 		Lua_helper.add_callback(lua, "luaSpriteMakeGraphic", function(tag:String, width:Int, height:Int, color:String) {
 			luaTrace("luaSpriteMakeGraphic is deprecated! Use makeGraphic instead", false, true);
@@ -1281,6 +1480,11 @@ class FunkinLua {
 		#end
 	}
 
+	inline function getTextObject(name:String):FlxText
+	{
+		return PlayState.instance.modchartTexts.exists(name) ? PlayState.instance.modchartTexts.get(name) : Reflect.getProperty(PlayState.instance, name);
+	}
+
 	function getGroupStuff(leArray:Dynamic, variable:String) {
 		var killMe:Array<String> = variable.split('.');
 		if(killMe.length > 1) {
@@ -1304,6 +1508,20 @@ class FunkinLua {
 			return;
 		}
 		Reflect.setProperty(leArray, variable, value);
+	}
+
+	function resetTextTag(tag:String) {
+		if(!PlayState.instance.modchartTexts.exists(tag)) {
+			return;
+		}
+		
+		var pee:ModchartText = PlayState.instance.modchartTexts.get(tag);
+		pee.kill();
+		if(pee.wasAdded) {
+			PlayState.instance.remove(pee, true);
+		}
+		pee.destroy();
+		PlayState.instance.modchartTexts.remove(tag);
 	}
 
 	function resetSpriteTag(tag:String) {
@@ -1334,6 +1552,9 @@ class FunkinLua {
 		var sexyProp:Dynamic = Reflect.getProperty(getInstance(), variables[0]);
 		if(PlayState.instance.modchartSprites.exists(variables[0])) {
 			sexyProp = PlayState.instance.modchartSprites.get(variables[0]);
+		}
+		if(PlayState.instance.modchartTexts.exists(variables[0])) {
+			sexyProp = PlayState.instance.modchartTexts.get(variables[0]);
 		}
 
 		for (i in 1...variables.length) {
@@ -1513,7 +1734,7 @@ class FunkinLua {
 		if(accessedProps != null) {
 			accessedProps.clear();
 		}
-		PlayState.instance.removeLua(this);
+		//PlayState.instance.removeLua(this);
 		Lua.close(lua);
 		lua = null;
 		#end
@@ -1529,6 +1750,19 @@ class ModchartSprite extends FlxSprite
 {
 	public var wasAdded:Bool = false;
 	//public var isInFront:Bool = false;
+}
+
+class ModchartText extends FlxText
+{
+	public var wasAdded:Bool = false;
+	public function new(x:Float, y:Float, text:String, width:Float)
+	{
+		super(x, y, width, text, 16);
+		setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		cameras = [PlayState.instance.camHUD];
+		scrollFactor.set();
+		borderSize = 2;
+	}
 }
 
 class DebugLuaText extends FlxText

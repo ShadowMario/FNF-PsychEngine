@@ -95,8 +95,11 @@ class ModsMenuState extends MusicBeatState
 			{
 				if(leMods.length > 1 && leMods[0].length > 0) {
 					var modSplit:Array<String> = leMods[i].split('|');
-					addToModsList([modSplit[0], (modSplit[1] == '1')]);
-					trace(modSplit[1]);
+					if(!Paths.ignoreModFolders.contains(modSplit[0].toLowerCase()))
+					{
+						addToModsList([modSplit[0], (modSplit[1] == '1')]);
+						//trace(modSplit[1]);
+					}
 				}
 			}
 		}
@@ -104,23 +107,13 @@ class ModsMenuState extends MusicBeatState
 		// FIND MOD FOLDERS
 		var boolshit = true;
 		if (FileSystem.exists("modsList.txt")){
-			var list:Array<String> = CoolUtil.listFromString(File.getContent("modsList.txt"));
 			for (folder in Paths.getModDirectories())
 			{
-			
-				
-				for (i in list){
-					var dat = i.split("|");
-					if(folder == dat[0]){
-						boolshit = dat[1] == '1';
-					}
+				if(!Paths.ignoreModFolders.contains(folder))
+				{
+					addToModsList([folder, false]);
 				}
-					
-			addToModsList([folder, boolshit]);//didn't like mod folders being locked enabled
 			}
-			
-			
-			
 		}
 		saveTxt();
 
@@ -179,7 +172,9 @@ class ModsMenuState extends MusicBeatState
 
 		startX -= 100;
 		buttonTop = new FlxButton(startX, 0, "TOP", function() {
-			moveMod(-curSelected);
+			for (i in 0...curSelected){//so if shifts to the top instead of replacing the top one
+			moveMod(-1);
+			}
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 		});
 		buttonTop.setGraphicSize(80, 50);
@@ -701,25 +696,25 @@ class ModMetadata
 			if(rawJson != null && rawJson.length > 0) {
 				var stuff:Dynamic = Json.parse(rawJson);
 					//using reflects cuz for some odd reason my haxe hates the stuff.var shit
-					var col:Array<Int> = Reflect.getProperty(stuff, "color");
-					var des:String = Reflect.getProperty(stuff, "description");
-					var n:String = Reflect.getProperty(stuff, "name");
-					var r:Bool = Reflect.getProperty(stuff, "restart");
+					var colors:Array<Int> = Reflect.getProperty(stuff, "color");
+					var description:String = Reflect.getProperty(stuff, "description");
+					var name:String = Reflect.getProperty(stuff, "name");
+					var restart:Bool = Reflect.getProperty(stuff, "restart");
 					
-				if(n != null && n.length > 0)
+				if(name != null && name.length > 0)
 				{
-					this.name = n;
+					this.name = name;
 				}
-				if(des != null && des.length > 0)
+				if(description != null && description.length > 0)
 				{
-					this.description = des;
+					this.description = description;
 				}
-				if(col != null && col.length > 2)
+				if(colors != null && colors.length > 2)
 				{
-					this.color = FlxColor.fromRGB(col[0], col[1], col[2]);
+					this.color = FlxColor.fromRGB(colors[0], colors[1], colors[2]);
 				}
 				
-				this.restart = r;
+				this.restart = restart;
 				/*
 				if(stuff.name != null && stuff.name.length > 0)
 				{

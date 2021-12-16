@@ -22,7 +22,7 @@ class Achievements {
 		["What a Funkin' Disaster!",	"Complete a Song with a rating lower than 20%.",	'ur_bad',				false],
 		["Perfectionist",				"Complete a Song with a rating of 100%.",			'ur_good',				false],
 		["Roadkill Enthusiast",			"Watch the Henchmen die over 100 times.",			'roadkill_enthusiast',	false],
-		["Oversinging Much...?",		"Hold down a note for 20 seconds.",					'oversinging',			false],
+		["Oversinging Much...?",		"Hold down a note for 10 seconds.",					'oversinging',			false],
 		["Hyperactive",					"Finish a Song without going Idle.",				'hype',					false],
 		["Just the Two of Us",			"Finish a Song pressing only two keys.",			'two_keys',				false],
 		["Toaster Gamer",				"Have you tried to run the game on a toaster?",		'toastie',				false],
@@ -81,6 +81,8 @@ class Achievements {
 		// So yeah, if you didn't thought about that i'm smarter than you, i think
 
 		// buffoon
+
+		// EDIT 2: Uhh this is weird, this message was written for MInd Games, so it doesn't apply logically for Psych Engine LOL
 	}
 }
 
