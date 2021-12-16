@@ -1423,6 +1423,12 @@ class ChartingState extends MusicBeatState
 						{
 							selectNote(note);
 						}
+						else if (FlxG.keys.pressed.ALT)
+						{
+							selectNote(note);
+							curSelectedNote[3] = noteTypeIntMap.get(currentType);
+							updateGrid();
+						}
 						else
 						{
 							//trace('tryin to delete note...');
