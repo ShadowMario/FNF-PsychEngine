@@ -1785,6 +1785,11 @@ class ChartingState extends MusicBeatState
 				note.alpha = 0.4;
 				if(note.strumTime > lastConductorPos && FlxG.sound.music.playing && note.noteData > -1) {
 					var data:Int = note.noteData % 4;
+						data = note.noteData;
+						if(note.mustPress != _song.notes[curSection].mustHitSection)
+						{
+							data += 4;
+						}
 						strumLineNotes.members[data].playAnim('confirm', true);
 						strumLineNotes.members[data].resetAnim = (note.sustainLength / 1000) + 0.15;
 					if(!playedSound[data]) {
@@ -1796,12 +1801,6 @@ class ChartingState extends MusicBeatState
 							
 							FlxG.sound.play(Paths.sound(soundToPlay)).pan = note.noteData < 4? -0.3 : 0.3; //would be coolio
 							playedSound[data] = true;
-						}
-					
-						data = note.noteData;
-						if(note.mustPress != _song.notes[curSection].mustHitSection)
-						{
-							data += 4;
 						}
 					}
 				}
