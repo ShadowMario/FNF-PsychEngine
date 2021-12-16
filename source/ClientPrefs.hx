@@ -1,5 +1,6 @@
 package;
 
+import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.FlxG;
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
@@ -75,9 +76,29 @@ class ClientPrefs {
 	];
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 
+	
+	public static var controllerBinds:Map<String, Array<FlxGamepadInputID>> = [
+		//FlxGamepadButtonId = Controller default binding
+		'note_left'		=> [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT],
+		'note_down'		=> [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN],
+		'note_up'		=> [DPAD_UP, LEFT_STICK_DIGITAL_UP],
+		'note_right'	=> [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT],
+		
+		'ui_left'		=> [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT],
+		'ui_down'		=> [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN],
+		'ui_up'			=> [DPAD_UP, LEFT_STICK_DIGITAL_UP],
+		'ui_right'		=> [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT],
+		
+		'accept'		=> [#if !switch A #else B #end, START],
+		'back'			=> [#if !switch B #else A #end, LEFT_SHOULDER],
+		'pause'			=> [START, LEFT_TRIGGER],
+		'reset'			=> [8, RIGHT_SHOULDER]
+	];
+	public static var controllerDefaultBinds:Map<String, Array<FlxGamepadInputID>> = null;
+
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
-		//trace(defaultKeys);
+		controllerDefaultBinds = controllerBinds.copy();
 	}
 
 	public static function saveSettings() {
@@ -118,6 +139,7 @@ class ClientPrefs {
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', 'ninjamuffin99'); //Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		save.data.customControls = keyBinds;
+		save.data.customControllerBinds = controllerBinds;
 		save.flush();
 		FlxG.log.add("Settings saved!");
 	}
@@ -243,6 +265,14 @@ class ClientPrefs {
 				keyBinds.set(control, keys);
 			}
 			reloadControls();
+		}
+
+		if (save != null && save.data.customControllerBinds != null) {
+			var loadedGamepadBinds:Map<String, Array<FlxGamepadInputID>> = save.data.customControllerBinds;
+			for (gamepadBind => binds in loadedGamepadBinds) {
+				controllerBinds.set(gamepadBind, binds);
+			}
+			PlayerSettings.updateGamepads();
 		}
 	}
 

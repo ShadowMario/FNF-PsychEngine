@@ -39,7 +39,11 @@ class OptionsState extends MusicBeatState
 			case 'Note Colors':
 				openSubState(new options.NotesSubState());
 			case 'Controls':
-				openSubState(new options.ControlsSubState());
+				if (ClientPrefs.controllerMode) {
+					openSubState(new options.ControllerSubState());
+				} else {
+					openSubState(new options.ControlsSubState());
+				}
 			case 'Graphics':
 				openSubState(new options.GraphicsSettingsSubState());
 			case 'Visuals and UI':

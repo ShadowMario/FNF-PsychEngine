@@ -1,3 +1,4 @@
+import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKey;
 
@@ -92,6 +93,62 @@ class InputFormatter {
 				var label:String = '' + key;
 				if(label.toLowerCase() == 'null') return '---';
 				return '' + label.charAt(0).toUpperCase() + label.substr(1).toLowerCase();
+		}
+	}
+
+	public static function getGamepadButton(button:FlxGamepadInputID)
+	{
+		return switch (button) {
+			case A:
+				"A";
+			case B:
+				"B";
+			case X:
+				"X";
+			case Y:
+				"Y";
+			case LEFT_SHOULDER:
+				"LB";
+			case RIGHT_SHOULDER:
+				"RB";
+			case LEFT_TRIGGER:
+				"LT";
+			case RIGHT_TRIGGER:
+				"RT";
+			case LEFT_STICK_CLICK:
+				"LStick Click";
+			case RIGHT_STICK_CLICK:
+				"RStick Click";
+			case LEFT_STICK_DIGITAL_DOWN:
+				"LStick Down";
+			case LEFT_STICK_DIGITAL_LEFT:
+				"LStick Left";
+			case LEFT_STICK_DIGITAL_RIGHT:
+				"LStick Right";
+			case LEFT_STICK_DIGITAL_UP:
+				"LStick Up";
+			case RIGHT_STICK_DIGITAL_DOWN:
+				"RStick Down";
+			case RIGHT_STICK_DIGITAL_LEFT:
+				"RStick Left";
+			case RIGHT_STICK_DIGITAL_RIGHT:
+				"RStick Right";
+			case RIGHT_STICK_DIGITAL_UP:
+				"RStick Up";
+			case DPAD_LEFT:
+				"D-Pad Left";
+			case DPAD_DOWN:
+				"D-Pad Down";
+			case DPAD_UP:
+				"D-Pad Up";
+			case DPAD_RIGHT:
+				"D-Pad Right";
+			case NONE:
+				"---";
+			default:
+				var label:String = '' + button;
+				if(label.toLowerCase() == 'null') '---';
+				'' + label.charAt(0).toUpperCase() + label.substr(1).toLowerCase();
 		}
 	}
 }
