@@ -79,6 +79,10 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+
+			['Fat-Ass Mod Team'],
+			['Autistic Lulu',		'generic',			'Project Starter, Charter/Porting, Programmer',			'https://www.youtube.com/channel/UCm5gqgI9DEzRILCR_-nLN0A_',	'DAF7A6'],		
+			['']
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',						'https://twitter.com/Shadow_Mario_',	'FFDD33'],
 			['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',					'https://twitter.com/river_oaken',		'C30085'],
@@ -97,8 +101,7 @@ class CreditsState extends MusicBeatState
 			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",						'https://twitter.com/evilsk8r',			'53E52C'],
 			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",						'https://twitter.com/kawaisprite',		'6475F3'],
 			[''],
-			['Fat-Ass Mod Compilation Team'],
-			['Autistic Lulu',		'generic',			'Project Starter, Charter/Porting, Programmer',			'https://www.youtube.com/channel/UCm5gqgI9DEzRILCR_-nLN0A_',	'DAF7A6'],		
+
 		];
 		
 		for(i in pisspoop){
