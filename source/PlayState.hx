@@ -1714,6 +1714,7 @@ class PlayState extends MusicBeatState
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
+				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 				
@@ -3630,7 +3631,7 @@ class PlayState extends MusicBeatState
 		RecalculateRating();
 
 		var char:Character = boyfriend;
-		if(daNote.noteType == 'GF Sing') {
+		if(daNote.gfNote) {
 			char = gf;
 		}
 
@@ -3712,7 +3713,7 @@ class PlayState extends MusicBeatState
 
 			var char:Character = dad;
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
-			if(SONG.notes[curSection].gfSection || note.noteType == 'GF Sing') {
+			if(SONG.notes[curSection].gfSection || note.gfNote) {
 				char = gf;
 			}
 
@@ -3784,7 +3785,7 @@ class PlayState extends MusicBeatState
 	
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
 
-				if(note.noteType == 'GF Sing') {
+				if(note.gfNote) {
 					gf.playAnim(animToPlay + daAlt, true);
 					gf.holdTimer = 0;
 				} else {

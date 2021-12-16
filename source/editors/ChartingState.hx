@@ -1708,12 +1708,14 @@ class ChartingState extends MusicBeatState
 
 					if(controlArray.contains(true))
 					{
+						
 						for (i in 0...controlArray.length)
 						{
 							if(controlArray[i])
 								if(curSelectedNote[1] == i) curSelectedNote[2] += datime - curSelectedNote[2] - Conductor.stepCrochet;
 						}
 						updateGrid();
+						updateNoteUI();
 					}
 				}
 			}
@@ -1785,8 +1787,10 @@ class ChartingState extends MusicBeatState
 				note.alpha = 0.4;
 				if(note.strumTime > lastConductorPos && FlxG.sound.music.playing && note.noteData > -1) {
 					var data:Int = note.noteData % 4;
-						strumLineNotes.members[data].playAnim('confirm', true);
-						strumLineNotes.members[data].resetAnim = (note.sustainLength / 1000) + 0.15;
+					var noteDataToCheck:Int = note.noteData;
+					if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSection].mustHitSection) noteDataToCheck += 4;
+						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true);
+						strumLineNotes.members[noteDataToCheck].resetAnim = (note.sustainLength / 1000) + 0.15;
 					if(!playedSound[data]) {
 						if((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress)){
 							var soundToPlay = 'ChartingTick';
