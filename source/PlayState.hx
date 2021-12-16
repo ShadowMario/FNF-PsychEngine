@@ -1733,6 +1733,7 @@ class PlayState extends MusicBeatState
 
 						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
 						sustainNote.mustPress = gottaHitNote;
+						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
 						sustainNote.scrollFactor.set();
 						unspawnNotes.push(sustainNote);
