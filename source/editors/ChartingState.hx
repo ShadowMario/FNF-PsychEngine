@@ -27,6 +27,8 @@ import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.ui.FlxSpriteButton;
 import flixel.util.FlxColor;
@@ -1389,7 +1391,7 @@ class ChartingState extends MusicBeatState
 		FlxG.mouse.visible = true;//cause reasons. trust me 
 		camPos.y = strumLine.y;
 		if(!disableAutoScrolling.checked) {
-			if (strumLine.y >= (gridBG.height / 2))
+			if (Math.ceil(strumLine.y) >= (gridBG.height / 2))
 			{
 				//trace(curStep);
 				//trace((_song.notes[curSection].lengthInSteps) * (curSection + 1));
@@ -1608,7 +1610,7 @@ class ChartingState extends MusicBeatState
 			var conductorTime = Conductor.songPosition; //+ sectionStartTime();Conductor.songPosition / Conductor.stepCrochet;
 			
 			//AWW YOU MADE IT SEXY <3333 THX SHADMAR
-			if(vortex){
+			if(vortex && !blockInput){
 			var controlArray:Array<Bool> = [FlxG.keys.justPressed.ONE, FlxG.keys.justPressed.TWO, FlxG.keys.justPressed.THREE, FlxG.keys.justPressed.FOUR,
 										   FlxG.keys.justPressed.FIVE, FlxG.keys.justPressed.SIX, FlxG.keys.justPressed.SEVEN, FlxG.keys.justPressed.EIGHT];
 
@@ -1629,6 +1631,7 @@ class ChartingState extends MusicBeatState
 				for (i in 0...cuquant){
 					datimess.push(sectionStartTime() + daTime * i);
 				}
+			
 			if (FlxG.keys.justPressed.LEFT)
 			{
 				--curQuant;
@@ -1643,6 +1646,7 @@ class ChartingState extends MusicBeatState
 				daquantspot *=  Std.int(32/quants[curQuant]);
 			}
 			quant.animation.play('q', true, false, curQuant);
+			var feces:Float;
 			if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
 			{
 				FlxG.sound.music.pause();
@@ -1659,28 +1663,31 @@ class ChartingState extends MusicBeatState
 					var foundaspot = false;
 					var i = datimess.length-1;//backwards for loop 
 					while (i > -1){
-						if (FlxG.sound.music.time >= datimess[i] && !foundaspot){
+						if (Math.ceil(FlxG.sound.music.time) >= Math.ceil(datimess[i]) && !foundaspot){
 							foundaspot = true;
 							FlxG.sound.music.time = datimess[i];
 						}
 						--i;
 					}
 					//FlxG.sound.music.time = tosnapto;
-					FlxG.sound.music.time -= daTime;
+					//FlxG.sound.music.time -= daTime;
+					 feces = FlxG.sound.music.time - daTime;
 				}
 				else{
 					
 					var foundaspot = false;
 					for (i in datimess){
-						if (FlxG.sound.music.time <= i && !foundaspot){
+						if (Math.floor(FlxG.sound.music.time) <= Math.floor(i) && !foundaspot){
 							foundaspot = true;
 							FlxG.sound.music.time = i;
 						}
 					}
 					
 					
-					FlxG.sound.music.time += daTime;
+					//FlxG.sound.music.time += daTime;
+					 feces = FlxG.sound.music.time+ daTime;
 				}
+				FlxTween.tween(FlxG.sound.music, {time:feces}, 0.1, {ease:FlxEase.circOut});
 				if(vocals != null) {
 					vocals.pause();
 					vocals.time = FlxG.sound.music.time;
@@ -1693,7 +1700,7 @@ class ChartingState extends MusicBeatState
 				}
 				
 				var secStart:Float = sectionStartTime();
-				var datime = (FlxG.sound.music.time - secStart) - (dastrum - secStart); //idk math find out why it doesn't work on any other section other than 0
+				var datime = (feces - secStart) - (dastrum - secStart); //idk math find out why it doesn't work on any other section other than 0
 				if (curSelectedNote != null)
 				{
 					var controlArray:Array<Bool> = [FlxG.keys.pressed.ONE, FlxG.keys.pressed.TWO, FlxG.keys.pressed.THREE, FlxG.keys.pressed.FOUR,
