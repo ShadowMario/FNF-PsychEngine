@@ -14,50 +14,16 @@ Other features and goals are:
  * B-Sides songs/texture recolours without replacing the original ones.
  * Renamed **accuracy ratings** to crush your dreams and tell you the truth about your shitty 80% accuracy.
  * Added **Insane** and **Expert** difficulty options. 
- * Recharting of some _poorly_ done charts, example: VS Tabi - Last Chance (Hard difficulty)
+ * Recharting of some _poorly_ done charts, like _Sarvente's Mid-Fight Masses_.
  * Retiming any out of sync charts.
- * Resurrect dead/removed mods from super early kade engine or other custom engines that were crap.
+ * Resurrect dead/removed mods from super early kade engine or other custom engines.
  * Songs ported from **_osu!mania_**, handpicked by me.
 
 ---
-## Songs with additional difficulties
-    VS Camellia - First Town 				| Insane, playing Camellias part from Hard chart
-    VS Camellia - Liquated 					| Insane, playing Camellias part from Hard chart
-	VS Camellia - Why Do You Hate Me 			| Insane, playing Camellias part from Hard chart
-	B-Sides VS Pico - Pico					| Insane, charted by AutisticLulu
-  B-Sides VS Mom - Milf					| Insane, charted by AutisticLulu
-    Sonic.EXE (OLD) - Too Slow              | Insane, charted by AutisticLulu
-    Sonic.EXE (OLD) - Endless              | Insane, charted by AutisticLulu
-    Sonic.EXE (OLD) - Execution            | Insane, charted by AutisticLulu
-    VS Whitty - Ballistic             | Expert, a tribute to the old original with tons of jackhammers, charted by AutisticLulu
-    Also every recharted song has an additional "Insane" difficulty too.
-	
-## Songs recharted
-	VS Starecrown - Stare					| Hard recharted by AutisticLulu
-	VS Starecrown - Staredown				| Hard recharted by AutisticLulu
-	VS Starecrown - Body Inversion				| Hard recharted by AutisticLulu
-	VS Tabi - Last Chance 					| Hard recharted by AutisticLulu
-	VS Tabi - Genocide					| Hard recharted by AutisticLulu
-  VS Whitty - Overhead        | Hard recharted by AutisticLulu
-  VS Whitty - Ballistic       | Normal, Hard recharted by AutisticLulu  
-	Sarventes Mid Fight Masses - Parish					| Easy, Normal, Hard, recharted by AutisticLulu
-	Sarventes Mid Fight Masses - Worship					| Easy, Normal, Hard, recharted by AutisticLulu
-	Sarventes Mid Fight Masses - Gospel					| Easy, Normal, Hard, recharted by AutisticLulu
-	Sarventes Mid Fight Masses - Zavodila               | Easy, Normal, Hard, recharted by AutisticLulu
-  
-
-## Songs ported from osu!mania
-	Kayano Ai - Oracion							| Normal, Hard
-	Shiena Nishizawa - The Asterisk War					| Easy, Normal, Hard, Insane, Expert
-	C-Show - Invitation From Mr.C						| Normal, Hard, Insane, Expert
-	Yooh - LegenD								| Easy, Normal, Hard, Insane, Expert
-	Camellia as "Bang Riot" - Blastix Riotz					| Easy, Normal, Hard, Insane, Expert
-	Akito Matsuda - After After						| Easy, Normal, Hard
-	
-
+Chart previews of the reworked charts/added charts (V1.0 release)	
+https://www.youtube.com/watch?v=gFZJzazrJ3E
 ---
-	
-	
+
 # Other Info, kinda like a FAQ
 ## "Songs doesn't have the right characters/stage applied!"
     To be completely honest, I've only bothered fixing this mostly on Hard for B-Sides songs.
@@ -68,7 +34,7 @@ Other features and goals are:
     but in the meantime feel free to load your own mods here
     
 ## "Where are the credits?
-    Sorry, this will be fixed before the actual official release.
+    Everyone who has worked on the original mods have been added to the Credits menu inside the game. 
 
 ## "I can port stages/characters for you!!"
 
