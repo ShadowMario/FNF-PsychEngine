@@ -89,6 +89,7 @@ class ChartingState extends MusicBeatState
 
 	var UI_box:FlxUITabMenu;
 
+	public static var goToPlayState:Bool = false;
 	/**
 	 * Array of notes showing when each section STARTS in STEPS
 	 * Usually rounded up??
@@ -1516,6 +1517,16 @@ class ChartingState extends MusicBeatState
 				{
 					changeNoteSustain(-Conductor.stepCrochet);
 				}
+			}
+			
+			
+			if (FlxG.keys.justPressed.BACKSPACE) {
+				//if(onMasterEditor) {
+					MusicBeatState.switchState(new editors.MasterEditorMenu());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				//}
+				FlxG.mouse.visible = false;
+				return;
 			}
 
 			if(FlxG.keys.justPressed.Z && curZoom > 0) {
