@@ -1,15 +1,15 @@
 # Friday Night Funkin' - The Fat-Ass Mod Compilation
-
-## What is this mod?
-This mod ports several mods into one single FNF.exe.
-
 ****Not intended to replace the original mods but instead do "generic" ports of them, leaving some stuff out.****
 
 Example of a "generic" port: **VS Tricky - Expurgation** is missing the annoying Signs and HP Gremlins.
-
 * _In some cases, like with old mods, the quality may be better here than the original however due to recharting and adding custom events._
 
-Other features and goals are:
+## What is this mod?
+This isn't your typical mods ported into one single FNF.exe.
+
+We aim to make it better one way or another wheter it's by re-timing, recharting or even just change one note in the chart!.
+
+### Other features and goals are:
  * Actually clean sources, renamed assets to be found easier and make more sense. _(Also to prevent conflicts while the collection grows!)_
  * B-Sides songs/texture recolours without replacing the original ones.
  * Renamed **accuracy ratings** to crush your dreams and tell you the truth about your shitty 80% accuracy.
@@ -20,14 +20,40 @@ Other features and goals are:
  * Songs ported from **_osu!mania_**, handpicked by me.
 
 ---
-Chart previews of the reworked charts/added charts (V1.0 release)	
-https://www.youtube.com/watch?v=gFZJzazrJ3E
+# Song List
+[![Watch the video](https://img.youtube.com/vi/HaUv50bt7Xk/hqdefault.jpg)](https://youtu.be/HaUv50bt7Xk) [![Watch the video](https://img.youtube.com/vi/gFZJzazrJ3E/hqdefault.jpg)](https://youtu.be/gFZJzazrJ3E)
+
+### Current full week songlists 
+- Week 1-6
+- B-Sides Remixes of Week1-6
+- The Full-Ass Tricky Mod
+- Camellia Week 1-2
+- Smoke 'Em Out Struggle (Garcello)
+- Sarvente's Mid Fight Masses
+- Tabi Ex-Boyfriend
+- Starecrown
+- Sonic.exe V1.0
+- Whitty
+- High Effort Finn and Jake
+### Current songs not including full weeks
+- Bob - Run
+- Zardy - Foolhardy
+- Hatsune Miku - Popipo
+- Hatsune Miku - Ievan Polkka
+- Hatsune Miku - Aishite
+- Hatsune Miku - Disappearance
+- Friday Night Madness - Jebus - 1corekiller
+- Friday Night Madness - Jebus - The Anger of God
+### Current Bonus songs
+- Mike Geno - Ruv/Sarvente - Glazomer 
+
+
 ---
 
 # Other Info, kinda like a FAQ
 ## "Songs doesn't have the right characters/stage applied!"
     To be completely honest, I've only bothered fixing this mostly on Hard for B-Sides songs.
-    You'll have to do it manually for now or wait until I'm not lazy.
+    You'll have to do it manually for now or wait until I'm not lazy. Everything but B-Sides should have correct stages applied on all diffs.
     
 ## "Why aren't you using the new method of Psych Engine 0.5 to load mods?
     It's still very new but very easy and fast to move to that system once I feel it's mature enough,
