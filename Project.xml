@@ -15,6 +15,21 @@
 	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8" />
 
+	
+	<log warn="UPDATE HAXE TO 4.2.4" />
+	<log warn="UPDATE HAXE TO 4.2.4 " />
+	<log warn="UPDATE HAXE TO 4.2.4  " />
+	<log warn="UPDATE HAXE TO 4.2.4  " />
+	<log warn="UPDATE HAXE TO 4.2.4   " />
+	<log warn="UPDATE HAXE TO 4.2.4    " />
+	<log warn="UPDATE HAXE TO 4.2.4     " />
+	<log warn="UPDATE HAXE TO 4.2.4      " />
+	<log warn="UPDATE HAXE TO 4.2.4       " />
+	<log warn="UPDATE HAXE TO 4.2.4        " />
+	<log warn="STOP USING 4.1.5 IT WON'T COMPILE" />
+	<echo value="-bbpanzu"/>
+	<!-- Cause im tired of getting these messages.>
+	
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
