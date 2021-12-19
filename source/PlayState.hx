@@ -993,12 +993,14 @@ class PlayState extends MusicBeatState
 		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.hideHud;
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
+		iconP1.canBounce = true;
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.y = healthBar.y - 75;
 		iconP2.visible = !ClientPrefs.hideHud;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
+		iconP2.canBounce = true;
 		add(iconP2);
 		reloadHealthBarColors();
 
@@ -2221,14 +2223,6 @@ class PlayState extends MusicBeatState
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
-
-		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
-		
-		iconP1.scale.set(mult, mult);
-		iconP1.updateHitbox();
-
-		iconP2.scale.set(mult, mult);
-		iconP2.updateHitbox();
 
 		var iconOffset:Int = 26;
 
@@ -4133,12 +4127,8 @@ class PlayState extends MusicBeatState
 			camHUD.zoom += 0.03;
 		}
 
-		var mult:Float = 1.2;
-		iconP1.scale.set(mult, mult);
-		iconP2.scale.set(mult, mult);
-
-		iconP1.updateHitbox();
-		iconP2.updateHitbox();
+		iconP1.bounce();
+		iconP2.bounce();
 
 		if (curBeat % gfSpeed == 0 && !gf.stunned && gf.animation.curAnim.name != null && !gf.animation.curAnim.name.startsWith("sing"))
 		{

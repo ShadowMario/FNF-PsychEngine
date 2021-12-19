@@ -1,5 +1,6 @@
 package;
 
+import flixel.math.FlxMath;
 import flixel.FlxSprite;
 import openfl.utils.Assets as OpenFlAssets;
 
@@ -8,6 +9,7 @@ using StringTools;
 class HealthIcon extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
+	public var canBounce:Bool = false;
 	private var isOldIcon:Bool = false;
 	private var isPlayer:Bool = false;
 	private var char:String = '';
@@ -27,6 +29,12 @@ class HealthIcon extends FlxSprite
 
 		if (sprTracker != null)
 			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
+
+		if(canBounce) {
+			var mult:Float = FlxMath.lerp(1, scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+			scale.set(mult, mult);
+			updateHitbox();
+		}
 	}
 
 	public function swapOldIcon() {
@@ -64,6 +72,14 @@ class HealthIcon extends FlxSprite
 		super.updateHitbox();
 		offset.x = iconOffsets[0];
 		offset.y = iconOffsets[1];
+	}
+
+	public function bounce() {
+		if(canBounce) {
+			var mult:Float = 1.2;
+			scale.set(mult, mult);
+			updateHitbox();
+		}
 	}
 
 	public function getCharacter():String {

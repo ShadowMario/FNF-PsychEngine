@@ -253,8 +253,6 @@ class FreeplayState extends MusicBeatState
 		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
 		positionHighscore();
 
-		FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
-
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
@@ -310,8 +308,11 @@ class FreeplayState extends MusicBeatState
 				vocals.looped = true;
 				vocals.volume = 0.7;
 				instPlaying = curSelected;
-        Conductor.changeBPM(PlayState.SONG.bpm);
-        curPlaying = true;
+				Conductor.changeBPM(PlayState.SONG.bpm);
+				for (i in 0...iconArray.length)
+					iconArray[i].canBounce = false;
+				iconArray[instPlaying].canBounce = true;
+				curPlaying = true;
 				#end
 			}
 		}
@@ -363,8 +364,8 @@ class FreeplayState extends MusicBeatState
 	override function beatHit() {
 		super.beatHit();
 
-		if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && curBeat % 1 == 0)
-			FlxG.camera.zoom += 0.015;
+		if (curPlaying)
+			iconArray[instPlaying].bounce();
 	}
 
 	public static function destroyFreeplayVocals() {
