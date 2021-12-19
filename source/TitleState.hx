@@ -130,7 +130,7 @@ class TitleState extends MusicBeatState
 		#if CHECK_FOR_UPDATES
 		if(!closedState) {
 			trace('checking for update');
-			var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
+			var http = new haxe.Http("https://raw.githubusercontent.com/MeguminBOT/PsychEngine-TheFatAssModCompilation/main/gitVersion.txt");
 			
 			http.onData = function (data:String)
 			{
@@ -598,6 +598,7 @@ class TitleState extends MusicBeatState
 					createCoolText(['A mod compilation by'], -60);
 				case 7:
 					addMoreText('AutisticLulu', -60);
+					addMoreText('Roxbeige', -60);
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
 					deleteCoolText();
