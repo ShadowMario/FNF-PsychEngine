@@ -27,6 +27,8 @@ import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.ui.FlxSpriteButton;
 import flixel.util.FlxColor;
@@ -77,16 +79,17 @@ class ChartingState extends MusicBeatState
 		['Trigger BG Ghouls', "Should be used only in \"schoolEvil\" Stage!"],
 		['Play Animation', "Plays an animation on a Character,\nonce the animation is completed,\nthe animation changes to Idle\n\nValue 1: Animation to play.\nValue 2: Character (Dad, BF, GF)"],
 		['Camera Follow Pos', "Value 1: X\nValue 2: Y\n\nThe camera won't change the follow point\nafter using this, for getting it back\nto normal, leave both values blank."],
-		['Alt Idle Animation', "Sets a speciied suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (Dad, BF or GF)\nValue 2: New suffix (Leave it blank to disable)"],
+		['Alt Idle Animation', "Sets a specified suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (Dad, BF or GF)\nValue 2: New suffix (Leave it blank to disable)"],
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
-		['Change Scroll Speed', "Value 1: Target value\nValue 2: Time it takes to change fully"]
+		['Change Scroll Speed', "Value 1: Scroll Multiplier\nValue 2: Time it takes to change fully"]
 	];
 
 	var _file:FileReference;
 
 	var UI_box:FlxUITabMenu;
 
+	public static var goToPlayState:Bool = false;
 	/**
 	 * Array of notes showing when each section STARTS in STEPS
 	 * Usually rounded up??
@@ -220,6 +223,7 @@ class ChartingState extends MusicBeatState
 		DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
 		#end
 
+		vortex = FlxG.save.data.chart_vortex;
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set();
 		bg.color = 0xFF222222;
@@ -673,13 +677,24 @@ class ChartingState extends MusicBeatState
 				var strumTime:Float = event[0];
 				if(endThing > event[0] && event[0] >= startThing)
 				{
-					notesCopied.push([strumTime, -1, [event[2][0], event[2][1], event[2][2]]]);
+					var copiedEventArray:Array<Dynamic> = [];
+					for (i in 0...event[1].length)
+					{
+						var eventToPush:Array<Dynamic> = event[1][i];
+						copiedEventArray.push([eventToPush[0], eventToPush[1], eventToPush[2]]);
+					}
+					notesCopied.push([strumTime, -1, copiedEventArray]);
 				}
 			}
 		});
 
 		var pasteButton:FlxButton = new FlxButton(10, 180, "Paste Section", function()
 		{
+			if(notesCopied == null || notesCopied.length < 1)
+			{
+				return;
+			}
+
 			var addToTime:Float = Conductor.stepCrochet * (_song.notes[curSection].lengthInSteps * (curSection - sectionToCopy));
 			//trace('Time to add: ' + addToTime);
 
@@ -688,7 +703,15 @@ class ChartingState extends MusicBeatState
 				var copiedNote:Array<Dynamic> = [];
 				var newStrumTime:Float = note[0] + addToTime;
 				if(note[1] < 0)
-					_song.events.push([newStrumTime, [[note[2][0], note[2][1], note[2][2]]]]);
+				{
+					var copiedEventArray:Array<Dynamic> = [];
+					for (i in 0...note[2].length)
+					{
+						var eventToPush:Array<Dynamic> = note[2][i];
+						copiedEventArray.push([eventToPush[0], eventToPush[1], eventToPush[2]]);
+					}
+					_song.events.push([newStrumTime, copiedEventArray]);
+				}
 				else
 				{
 					if(note[4] != null) {
@@ -705,7 +728,21 @@ class ChartingState extends MusicBeatState
 		var clearSectionButton:FlxButton = new FlxButton(10, 210, "Clear", function()
 		{
 			_song.notes[curSection].sectionNotes = [];
+			
+			var i:Int = _song.events.length - 1;
+			
+			var startThing:Float = sectionStartTime();
+			var endThing:Float = sectionStartTime(1);
+			while(i > -1) {
+				var event:Array<Dynamic> = _song.events[i];
+				if(event != null && endThing > event[0] && event[0] >= startThing)
+				{
+					_song.events.remove(event);
+				}
+				--i;
+			}
 			updateGrid();
+			updateNoteUI();
 		});
 
 		var swapSection:FlxButton = new FlxButton(10, 240, "Swap section", function()
@@ -888,8 +925,11 @@ class ChartingState extends MusicBeatState
 		eventDropDown = new FlxUIDropDownMenuCustom(20, 50, FlxUIDropDownMenuCustom.makeStrIdLabelArray(leEvents, true), function(pressed:String) {
 			var selectedEvent:Int = Std.parseInt(pressed);
 			descText.text = eventStuff[selectedEvent][1];
-			if(curSelectedNote != null) {
+				if (curSelectedNote != null &&  eventStuff != null) {
+				if (curSelectedNote != null && curSelectedNote[2] == null){
 				curSelectedNote[1][curEventSelected][0] = eventStuff[selectedEvent][0];
+					
+				}
 				updateGrid();
 			}
 		});
@@ -1059,7 +1099,6 @@ class ChartingState extends MusicBeatState
 		check_vortex = new FlxUICheckBox(10, 120, null, null, "Vortex Editor (BETA)", 100);
 		if (FlxG.save.data.chart_vortex == null) FlxG.save.data.chart_vortex = false;
 		check_vortex.checked = FlxG.save.data.chart_vortex;
-		vortex = FlxG.save.data.chart_vortex;
 
 		check_vortex.callback = function()
 		{
@@ -1353,9 +1392,10 @@ class ChartingState extends MusicBeatState
 			strumLineNotes.members[i].y = strumLine.y;
 		}
 
+		FlxG.mouse.visible = true;//cause reasons. trust me 
 		camPos.y = strumLine.y;
 		if(!disableAutoScrolling.checked) {
-			if (strumLine.y > (gridBG.height / 2))
+			if (Math.ceil(strumLine.y) >= (gridBG.height / 2))
 			{
 				//trace(curStep);
 				//trace((_song.notes[curSection].lengthInSteps) * (curSection + 1));
@@ -1386,6 +1426,12 @@ class ChartingState extends MusicBeatState
 						if (FlxG.keys.pressed.CONTROL)
 						{
 							selectNote(note);
+						}
+						else if (FlxG.keys.pressed.ALT)
+						{
+							selectNote(note);
+							curSelectedNote[3] = noteTypeIntMap.get(currentType);
+							updateGrid();
 						}
 						else
 						{
@@ -1474,6 +1520,16 @@ class ChartingState extends MusicBeatState
 				{
 					changeNoteSustain(-Conductor.stepCrochet);
 				}
+			}
+			
+			
+			if (FlxG.keys.justPressed.BACKSPACE) {
+				//if(onMasterEditor) {
+					MusicBeatState.switchState(new editors.MasterEditorMenu());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				//}
+				FlxG.mouse.visible = false;
+				return;
 			}
 
 			if(FlxG.keys.justPressed.Z && curZoom > 0) {
@@ -1574,7 +1630,7 @@ class ChartingState extends MusicBeatState
 			var conductorTime = Conductor.songPosition; //+ sectionStartTime();Conductor.songPosition / Conductor.stepCrochet;
 			
 			//AWW YOU MADE IT SEXY <3333 THX SHADMAR
-			if(vortex){
+			if(vortex && !blockInput){
 			var controlArray:Array<Bool> = [FlxG.keys.justPressed.ONE, FlxG.keys.justPressed.TWO, FlxG.keys.justPressed.THREE, FlxG.keys.justPressed.FOUR,
 										   FlxG.keys.justPressed.FIVE, FlxG.keys.justPressed.SIX, FlxG.keys.justPressed.SEVEN, FlxG.keys.justPressed.EIGHT];
 
@@ -1590,11 +1646,12 @@ class ChartingState extends MusicBeatState
 			
 				var datimess = [];
 				
-				var daTime:Float = Math.round(Conductor.stepCrochet*quants[curQuant]);
+				var daTime:Float = (Conductor.stepCrochet*quants[curQuant]);//WHY DID I ROUND BEFORE THIS IS A FLOAT???
 				var cuquant = Std.int(32/quants[curQuant]);
 				for (i in 0...cuquant){
 					datimess.push(sectionStartTime() + daTime * i);
 				}
+			
 			if (FlxG.keys.justPressed.LEFT)
 			{
 				--curQuant;
@@ -1609,6 +1666,7 @@ class ChartingState extends MusicBeatState
 				daquantspot *=  Std.int(32/quants[curQuant]);
 			}
 			quant.animation.play('q', true, false, curQuant);
+			var feces:Float;
 			if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
 			{
 				FlxG.sound.music.pause();
@@ -1625,28 +1683,31 @@ class ChartingState extends MusicBeatState
 					var foundaspot = false;
 					var i = datimess.length-1;//backwards for loop 
 					while (i > -1){
-						if (FlxG.sound.music.time >= datimess[i] && !foundaspot){
+						if (Math.ceil(FlxG.sound.music.time) >= Math.ceil(datimess[i]) && !foundaspot){
 							foundaspot = true;
 							FlxG.sound.music.time = datimess[i];
 						}
 						--i;
 					}
 					//FlxG.sound.music.time = tosnapto;
-					FlxG.sound.music.time -= daTime;
+					//FlxG.sound.music.time -= daTime;
+					 feces = FlxG.sound.music.time - daTime;
 				}
 				else{
 					
 					var foundaspot = false;
 					for (i in datimess){
-						if (FlxG.sound.music.time <= i && !foundaspot){
+						if (Math.floor(FlxG.sound.music.time) <= Math.floor(i) && !foundaspot){
 							foundaspot = true;
 							FlxG.sound.music.time = i;
 						}
 					}
 					
 					
-					FlxG.sound.music.time += daTime;
+					//FlxG.sound.music.time += daTime;
+					 feces = FlxG.sound.music.time+ daTime;
 				}
+				FlxTween.tween(FlxG.sound.music, {time:feces}, 0.1, {ease:FlxEase.circOut});
 				if(vocals != null) {
 					vocals.pause();
 					vocals.time = FlxG.sound.music.time;
@@ -1659,7 +1720,7 @@ class ChartingState extends MusicBeatState
 				}
 				
 				var secStart:Float = sectionStartTime();
-				var datime = (FlxG.sound.music.time - secStart) - (dastrum - secStart); //idk math find out why it doesn't work on any other section other than 0
+				var datime = (feces - secStart) - (dastrum - secStart); //idk math find out why it doesn't work on any other section other than 0
 				if (curSelectedNote != null)
 				{
 					var controlArray:Array<Bool> = [FlxG.keys.pressed.ONE, FlxG.keys.pressed.TWO, FlxG.keys.pressed.THREE, FlxG.keys.pressed.FOUR,
@@ -1667,12 +1728,14 @@ class ChartingState extends MusicBeatState
 
 					if(controlArray.contains(true))
 					{
+						
 						for (i in 0...controlArray.length)
 						{
 							if(controlArray[i])
 								if(curSelectedNote[1] == i) curSelectedNote[2] += datime - curSelectedNote[2] - Conductor.stepCrochet;
 						}
 						updateGrid();
+						updateNoteUI();
 					}
 				}
 			}
@@ -1744,6 +1807,10 @@ class ChartingState extends MusicBeatState
 				note.alpha = 0.4;
 				if(note.strumTime > lastConductorPos && FlxG.sound.music.playing && note.noteData > -1) {
 					var data:Int = note.noteData % 4;
+					var noteDataToCheck:Int = note.noteData;
+					if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSection].mustHitSection) noteDataToCheck += 4;
+						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true);
+						strumLineNotes.members[noteDataToCheck].resetAnim = (note.sustainLength / 1000) + 0.15;
 					if(!playedSound[data]) {
 						if((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress)){
 							var soundToPlay = 'ChartingTick';
@@ -1760,8 +1827,6 @@ class ChartingState extends MusicBeatState
 						{
 							data += 4;
 						}
-						strumLineNotes.members[data].playAnim('confirm', true);
-						strumLineNotes.members[data].resetAnim = (note.sustainLength / 1000) + 0.15;
 					}
 				}
 			}

@@ -737,6 +737,16 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "cameraShake", function(camera:String, intensity:Float, duration:Float) {
 			cameraFromString(camera).shake(intensity, duration);
 		});
+		Lua_helper.add_callback(lua, "cameraFlash", function(camera:String, color:String, duration:Float,forced:Bool) {
+			var colorNum:Int = Std.parseInt(color);
+			if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
+			cameraFromString(camera).flash(colorNum, duration,null,forced);
+		});
+		Lua_helper.add_callback(lua, "cameraFade", function(camera:String, color:String, duration:Float,forced:Bool) {
+			var colorNum:Int = Std.parseInt(color);
+			if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
+			cameraFromString(camera).fade(colorNum, duration,false,null,forced);
+		});
 		Lua_helper.add_callback(lua, "setRatingPercent", function(value:Float) {
 			PlayState.instance.ratingPercent = value;
 		});
@@ -1245,12 +1255,15 @@ class FunkinLua {
 				obj.fieldWidth = width;
 			}
 		});
-		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Int, color:Int = 0xFF000000) {
+		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Int, color:String) {
 			var obj:FlxText = getTextObject(tag);
 			if(obj != null)
 			{
+				var colorNum:Int = Std.parseInt(color);
+				if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
+
 				obj.borderSize = size;
-				obj.borderColor = color;
+				obj.borderColor = colorNum;
 			}
 		});
 		Lua_helper.add_callback(lua, "setTextColor", function(tag:String, color:String) {
