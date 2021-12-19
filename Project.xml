@@ -28,7 +28,7 @@
 	<log warn="UPDATE HAXE TO 4.2.4        " />
 	<log warn="STOP USING 4.1.5 IT WON'T COMPILE" />
 	<echo value="-bbpanzu"/>
-	<!-- Cause im tired of getting these messages.>
+	<!-- Cause im tired of getting these messages. -->
 	
 	<!-- ____________________________ Window Settings ___________________________ -->
 
