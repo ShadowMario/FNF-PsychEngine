@@ -2551,11 +2551,11 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		#end
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
-		#end
 	}
 
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
