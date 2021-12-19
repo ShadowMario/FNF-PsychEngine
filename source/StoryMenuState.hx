@@ -63,15 +63,15 @@ class StoryMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
-		scoreText.setFormat("rubik", 32);
+		scoreText.setFormat("Rubik Medium", 32);
 
 		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
-		txtWeekTitle.setFormat("rubik", 32, FlxColor.WHITE, RIGHT);
+		txtWeekTitle.setFormat("Rubik Medium", 32, FlxColor.WHITE, RIGHT);
 		txtWeekTitle.alpha = 0.7;
 
 		var rankText:FlxText = new FlxText(0, 10);
 		rankText.text = 'RANK: GREAT';
-		rankText.setFormat(Paths.font("rubik.ttf"), 32);
+		rankText.setFormat(Paths.font("Rubik Medium"), 32);
 		rankText.size = scoreText.size;
 		rankText.screenCenter(X);
 
