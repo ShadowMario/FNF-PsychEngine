@@ -2,19 +2,13 @@
 	"storyName": "Fatass Mod",
 	"hideFreeplay": false,
 	"weekBackground": "no_menu_background",
-	"weekBefore": "week6-bsides",
 	"freeplayColor": [
 		25,
 		28,
 		56
 	],
+	"weekBefore": "week6-bsides",
 	"startUnlocked": true,
-	"hideStoryMode": true,
-	"weekCharacters": [
-		"no_menu_character",
-		"no_menu_character",
-		"no_menu_character"
-	],
 	"songs": [
 		[
 			"glazomer",
@@ -26,14 +20,29 @@
 			]
 		],
 		[
+			"crescendo",
+			"fatassmod",
+			[
+				255,
+				140,
+				0
+			]
+		],
+		[
 			"inundation-ass",
 			"fatassmod",
 			[
-				146,
-				113,
-				253
+				255,
+				140,
+				0
 			]
 		]
+	],
+	"hideStoryMode": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
 	],
 	"weekName": "week-fatassmod"
 }

@@ -1,88 +1,99 @@
 The Full-Ass Tricky Mod
-Banbuds::generic::Director, Artist and Animator::https://twitter.com/Banbuds::FFDD33
-Rozebud::generic::Musician and Programming::https://twitter.com/helpme_thebigt::FFDD33
-Cval::generic::Charting::https://twitter.com/cval_brown::FFDD33
-YingYang48::generic::Composer::https://twitter.com/YingWasHere::FFDD33
-JADS::generic::Composer::https://twitter.com/Aw3somejds::FFDD33
-Moro::generic::Backgrounds::https://www.youtube.com/channel/UC8f-8Krg89SQvyEFfts1H3A::FFDD33
+Banbuds::generic::Director, Artist and Animator::https://twitter.com/Banbuds::00897B
+Rozebud::generic::Musician and Programming::https://twitter.com/helpme_thebigt::00897B
+Cval::generic::Charting::https://twitter.com/cval_brown::00897B
+YingYang48::generic::Composer::https://twitter.com/YingWasHere::00897B
+JADS::generic::Composer::https://twitter.com/Aw3somejds::00897B
+Moro::generic::Backgrounds::https://www.youtube.com/channel/UC8f-8Krg89SQvyEFfts1H3A::00897B
+
 Sarvente's Mid-Fight Masses
-Dokki.doodlez::generic::Artist::https://twitter.com/dokkidoodlez::FFDD33
-Mike Geno::generic::Composer::https://www.youtube.com/channel/UCyDQKOgEjuIiuPXctcuQKlg::FFDD33
-KuroAo_Anomal::generic::For the horrible and out of sync charts::https://twitter.com/Kuroao_Anomal::FFDD33
+Dokki.doodlez::generic::Artist::https://twitter.com/dokkidoodlez::00897B
+Mike Geno::generic::Composer::https://www.youtube.com/channel/UCyDQKOgEjuIiuPXctcuQKlg::00897B
+KuroAo_Anomal::generic::For the horrible and out of sync charts::https://twitter.com/Kuroao_Anomal::00897B
+
 VS Tabi ExBoyfriend
-Homskiyy::generic::Writer and Author of Tabi::https://twitter.com/Homskiyy::FFDD33
-Tenzubushi::generic::Composer / Artist / Sprites Editor / Charter::https://gamebanana.com/members/1803333::FFDD33
-DeveloVoosh GWeb::generic::Scripting::https://gamebanana.com/members/1799048::FFDD33
-Brightfyre::generic::Scripting::https://gamebanana.com/members/1800180::FFDD33
-LadMcLad::generic::Charting for My Battle::https://gamebanana.com/members/1775965::FFDD33
-Sock.clip::generic::FNF Styled Tabi Idle Sprite::https://www.instagram.com/sock.clip::FFDD33
-Sini::generic::First Version of Mad Tabi Sprites::https://twitter.com/Sini_Art_::FFDD33
+Homskiyy::generic::Writer and Author of Tabi::https://twitter.com/Homskiyy::00897B
+Tenzubushi::generic::Composer / Artist / Sprites Editor / Charter::https://gamebanana.com/members/1803333::00897B
+DeveloVoosh GWeb::generic::Scripting::https://gamebanana.com/members/1799048::00897B
+Brightfyre::generic::Scripting::https://gamebanana.com/members/1800180::00897B
+LadMcLad::generic::Charting for My Battle::https://gamebanana.com/members/1775965::00897B
+Sock.clip::generic::FNF Styled Tabi Idle Sprite::https://www.instagram.com/sock.clip::00897B
+Sini::generic::First Version of Mad Tabi Sprites::https://twitter.com/Sini_Art_::00897B
+
 VS Whitty
-Sock.clip::generic::Artist / Song Composer::https://www.instagram.com/sock.clip::FFDD33
-Nate Anim8::generic::Charter / Animator::https://www.youtube.com/channel/UCOSGaPr3d8k3SEZ27YzxGLg::FFDD33
+Sock.clip::generic::Artist / Song Composer::https://www.instagram.com/sock.clip::00897B
+Nate Anim8::generic::Charter / Animator::https://www.youtube.com/channel/UCOSGaPr3d8k3SEZ27YzxGLg::00897B
+
 VS Starecrown
-Jofini::generic::Creator / Composer / Artist / Writer::https://twitter.com/jofini2::FFDD33
-Jacobe::generic::Composer / Programming::link::FFDD33
+Jofini::generic::Creator / Composer / Artist / Writer::https://twitter.com/jofini2::00897B
+Jacobe::generic::Composer / Programming::link::00897B
+
 VS Garcello
-Atsuover::generic::Artist / Composer / Programmer::https://twitter.com/atsuover::FFDD33
-Rageminer::generic::Voice Samples / Programmer::https://twitter.com/Rageminer996::FFDD33
+Atsuover::generic::Artist / Composer / Programmer::https://twitter.com/atsuover::00897B
+Rageminer::generic::Voice Samples / Programmer::https://twitter.com/Rageminer996::00897B
+
 VS Camellia
-Camellia::generic::Composer::https://www.youtube.com/user/camelliaxxglitch::FFDD33
-Fireable::generic::Programmer::https://twitter.com/notfireable::FFDD33
-TentaRJ::generic::Programmer::https://twitter.com/TentaRJ::FFDD33
-SugarRatio::generic::Artist::https://twitter.com/SugarRatio::FFDD33
-Swizik::generic::Artist::https://twitter.com/swizikgd::FFDD33
-Uniimations::generic::Artist::https://twitter.com/uniianimates::FFDD33
-Ruiner::generic::Artist::https://gamebanana.com/members/1780709::FFDD33
-CocotheMunchkin::generic::Artist::https://gamebanana.com/members/1992634::FFDD33
-Lalnerd::generic::Artist::https://twitter.com/lal_nerd::FFDD33
-Foxxeru::generic::Charter::https://twitter.com/FoxeruKun::FFDD33
-Somf::generic::Charter::https://gamebanana.com/members/1863069::FFDD33
-DiscWraith::generic::Charter::https://twitter.com/kirseu64::FFDD33
-LiterallyNoOne::generic::Vocals::https://gamebanana.com/members/1840085::FFDD33
-Tictacto::generic::Vocals::https://twitter.com/tictactuh::FFDD33
-ZenusPurity::generic::Modcharter::https://gamebanana.com/members/1843028::FFDD33
-Ji_nre::generic::Trailer::https://twitter.com/Ji_nre::FFDD33
+Camellia::generic::Composer::https://www.youtube.com/user/camelliaxxglitch::00897B
+Fireable::generic::Programmer::https://twitter.com/notfireable::00897B
+TentaRJ::generic::Programmer::https://twitter.com/TentaRJ::00897B
+SugarRatio::generic::Artist::https://twitter.com/SugarRatio::00897B
+Swizik::generic::Artist::https://twitter.com/swizikgd::00897B
+Uniimations::generic::Artist::https://twitter.com/uniianimates::00897B
+Ruiner::generic::Artist::https://gamebanana.com/members/1780709::00897B
+CocotheMunchkin::generic::Artist::https://gamebanana.com/members/1992634::00897B
+Lalnerd::generic::Artist::https://twitter.com/lal_nerd::00897B
+Foxxeru::generic::Charter::https://twitter.com/FoxeruKun::00897B
+Somf::generic::Charter::https://gamebanana.com/members/1863069::00897B
+DiscWraith::generic::Charter::https://twitter.com/kirseu64::00897B
+LiterallyNoOne::generic::Vocals::https://gamebanana.com/members/1840085::00897B
+Tictacto::generic::Vocals::https://twitter.com/tictactuh::00897B
+ZenusPurity::generic::Modcharter::https://gamebanana.com/members/1843028::00897B
+Ji_nre::generic::Trailer::https://twitter.com/Ji_nre::00897B
+
 VS Miku
-Evdial::generic::Artist / Animation / Charter / Minor Coding::https://www.youtube.com/channel/UCwbeHQGp3t4sB3m8KWa4USw::FFDD33
-Genox::generic::Programmer / Charter::https://www.youtube.com/channel/UCxRBys-eyaerUlWlTWbCokw::FFDD33
-Smokey_5::generic::Menu Programmer::https://gamebanana.com/members/1773391::FFDD33
-bbpanzu::bbpanzu::Music::https://gamebanana.com/members/1764067::FFDD33
-PaperKitty::generic::Music / Vocals::https://gamebanana.com/members/1838959::FFDD33
+Evdial::generic::Artist / Animation / Charter / Minor Coding::https://www.youtube.com/channel/UCwbeHQGp3t4sB3m8KWa4USw::00897B
+Genox::generic::Programmer / Charter::https://www.youtube.com/channel/UCxRBys-eyaerUlWlTWbCokw::00897B
+Smokey_5::generic::Menu Programmer::https://gamebanana.com/members/1773391::00897B
+bb-panzu::bb-panzu::Music::https://gamebanana.com/members/1764067::00897B
+PaperKitty::generic::Music / Vocals::https://gamebanana.com/members/1838959::00897B
+
 Pibby Corrupted
-NiteWind::generic::Creator::https://gamebanana.com/members/1867241::FFDD33
-Scissor::generic::Programmer / Charter / Animator::https://twitter.com/LiteralScissor::FFDD33
-OJogadorAnimador::generic::Animator::https://gamebanana.com/members/1774867::FFDD33
-Artache::generic::Logo::https://gamebanana.com/members/1888948::FFDD33
-Haylow::generic::Charter::https://www.youtube.com/channel/UCCyquuOmOEd0I9z3rnsdAMA::FFDD33
-MurtherSoy::generic::Charter::Link::FFDD33
-agvids::generic::Composer of No Hero::Link::FFDD33
-vtm1ns::generic::Composer of Corrupted Hero::Link::FFDD33
-SmokeDeveloper::generic::Composer of Brotherly Bond::Link:FFDD33
+NiteWind::generic::Creator::https://gamebanana.com/members/1867241::00897B
+Scissor::generic::Programmer / Charter / Animator::https://twitter.com/LiteralScissor::00897B
+OJogadorAnimador::generic::Animator::https://gamebanana.com/members/1774867::00897B
+Artache::generic::Logo::https://gamebanana.com/members/1888948::00897B
+Haylow::generic::Charter::https://www.youtube.com/channel/UCCyquuOmOEd0I9z3rnsdAMA::00897B
+MurtherSoy::generic::Charter::Link::00897B
+agvids::generic::Composer of No Hero::Link::00897B
+vtm1ns::generic::Composer of Corrupted Hero::Link::00897B
+SmokeDeveloper::generic::Composer of Brotherly Bond::Link::00897B
+
 VS Sonic.exe V1
-RightBurst::generic::Director / Artist::https://www.youtube.com/channel/UC_uQ5WVhV8qvhiQJfcEZycg::FFDD33
-Razencro::generic::Programming / Animator / Video Editor::https://www.youtube.com/channel/UCXFT5spxGrX3zD0zwTJt-lQ::FFDD33
-MarStarBro::generic::Composer::https://www.youtube.com/channel/UClcxyfiBOora2dYxtMpv7Qw::FFDD33
-Vania::generic::Composer::https://www.youtube.com/channel/UC5Uq_Zqf9_vnZnxeDRdhLhA::FFDD33 
-Comgaming_Nz::generic::Artist::https://www.youtube.com/channel/UCoqgb8tGIy2--4qQDaclMOw::FFDD33
-Zekuta::generic::Artist / Animator::https://www.youtube.com/channel/UCSqjWHtKGnZmoj2OgPPgzxw::FFDD33
-CryBit::generic::Programmer::https://www.youtube.com/channel/UCpdkS0LRZw4h6hHr4tzi4_A::FFDD33
-Elie::generic::Charter::Link::FFDD33
+RightBurst::generic::Director / Artist::https://www.youtube.com/channel/UC_uQ5WVhV8qvhiQJfcEZycg::00897B
+Razencro::generic::Programming / Animator / Video Editor::https://www.youtube.com/channel/UCXFT5spxGrX3zD0zwTJt-lQ::00897B
+MarStarBro::generic::Composer::https://www.youtube.com/channel/UClcxyfiBOora2dYxtMpv7Qw::00897B
+Vania::generic::Composer::https://www.youtube.com/channel/UC5Uq_Zqf9_vnZnxeDRdhLhA::00897B 
+Comgaming_Nz::generic::Artist::https://www.youtube.com/channel/UCoqgb8tGIy2--4qQDaclMOw::00897B
+Zekuta::generic::Artist / Animator::https://www.youtube.com/channel/UCSqjWHtKGnZmoj2OgPPgzxw::00897B
+CryBit::generic::Programmer::https://www.youtube.com/channel/UCpdkS0LRZw4h6hHr4tzi4_A::00897B
+Elie::generic::Charter::Link::00897B
+
 Friday Night Madness (Jebus)
-CumiNashe::generic::SFX::https://gamebanana.com/members/1945594::FFDD33
-Frankuretr0::generic::Programmer::https://gamebanana.com/members/1818070::FFDD33
-Lyfer!::generic::Composer::https://gamebanana.com/members/1953240::FFDD33
-sugar::generic::Composer::https://gamebanana.com/members/1900351::FFDD33
-YourFellowHuman::generic::Composer::https://gamebanana.com/members/1911550::FFDD33
-Scolberon::generic::Composer::https://gamebanana.com/members/1946602::FFDD33
-Clodium::generic::Charter::https://gamebanana.com/members/1937792::FFDD33
-Cape::generic::Charter::https://gamebanana.com/members/1353296::FFDD33
-DevJxlian::generic::Artist::https://gamebanana.com/members/1843890::FFDD33
-CristalBlue::generic::Artist::https://gamebanana.com/members/1941939::FFDD33
-Elsniper538::generic::Artist::https://gamebanana.com/members/1885646::FFDD33
-Mayerxd::generic::Artist::https://gamebanana.com/members/1843834::FFDD33
-LeCherlok::generic::Artist::https://gamebanana.com/members/1909579::FFDD33
-Juan Ignacio chotinha::generic::Animator::https://gamebanana.com/members/1918117::FFDD33
+CumiNashe::generic::SFX::https://gamebanana.com/members/1945594::00897B
+Frankuretr0::generic::Programmer::https://gamebanana.com/members/1818070::00897B
+Lyfer!::generic::Composer::https://gamebanana.com/members/1953240::00897B
+sugar::generic::Composer::https://gamebanana.com/members/1900351::00897B
+YourFellowHuman::generic::Composer::https://gamebanana.com/members/1911550::00897B
+Scolberon::generic::Composer::https://gamebanana.com/members/1946602::00897B
+Clodium::generic::Charter::https://gamebanana.com/members/1937792::00897B
+Cape::generic::Charter::https://gamebanana.com/members/1353296::00897B
+DevJxlian::generic::Artist::https://gamebanana.com/members/1843890::00897B
+CristalBlue::generic::Artist::https://gamebanana.com/members/1941939::00897B
+Elsniper538::generic::Artist::https://gamebanana.com/members/1885646::00897B
+Mayerxd::generic::Artist::https://gamebanana.com/members/1843834::00897B
+LeCherlok::generic::Artist::https://gamebanana.com/members/1909579::00897B
+Juan Ignacio chotinha::generic::Animator::https://gamebanana.com/members/1918117::00897B
+
 VS Bob
-Wildy::generic::Programmer / Animator::https://twitter.com/wildythomas1233::FFDD33
-Phlox::generic::Assets::https://twitter.com/HiPhlox::FFDD33
+Wildy::generic::Programmer / Animator::https://twitter.com/wildythomas1233::00897B
+Phlox::generic::Assets::https://twitter.com/HiPhlox::00897B

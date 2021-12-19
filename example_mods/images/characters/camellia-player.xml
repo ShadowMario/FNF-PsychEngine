@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="camellia-player.png">
+	<!-- Created with Adobe Animate version 21.0.9.42677 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Camellia_DEATH0000" x="1" y="1" width="961" height="882" frameX="-25" frameY="-4" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0001" x="962" y="1" width="980" height="882" frameX="-6" frameY="-4" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0002" x="1942" y="1" width="986" height="886" frameX="0" frameY="0" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0003" x="1942" y="1" width="986" height="886" frameX="0" frameY="0" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0004" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0005" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0006" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0007" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0008" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0009" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0010" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0011" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0012" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0013" x="2928" y="1" width="961" height="885" frameX="-25" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0014" x="3889" y="1" width="974" height="889" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0015" x="3889" y="1" width="974" height="889" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0016" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0017" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0018" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0019" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0020" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0021" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0022" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0023" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0024" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0025" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0026" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0027" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0028" x="4863" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0029" x="5835" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0030" x="5835" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0031" x="6807" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0032" x="6807" y="1" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0033" x="1" y="890" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0034" x="1" y="890" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0035" x="973" y="890" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0036" x="973" y="890" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0037" x="973" y="890" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0038" x="973" y="890" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATH0039" x="973" y="890" width="972" height="888" frameX="-23" frameY="-1" frameWidth="997" frameHeight="890"/>
+	<SubTexture name="Camellia_DEATHLoop0000" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0001" x="1945" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0002" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0003" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0004" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0005" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0006" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0007" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0008" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0009" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0010" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0011" x="1945" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0012" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0013" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0014" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0015" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0016" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0017" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0018" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0019" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0020" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0021" x="1945" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0022" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0023" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0024" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0025" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0026" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0027" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0028" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0029" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0030" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0031" x="1945" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0032" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0033" x="973" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0034" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0035" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0036" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0037" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0038" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_DEATHLoop0039" x="2917" y="890" width="972" height="888"/>
+	<SubTexture name="Camellia_Down0000" x="3889" y="890" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0001" x="4850" y="890" width="961" height="995"/>
+	<SubTexture name="Camellia_Down0002" x="5811" y="890" width="961" height="987" frameX="0" frameY="-8" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0003" x="5811" y="890" width="961" height="987" frameX="0" frameY="-8" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0004" x="6772" y="890" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0005" x="6772" y="890" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0006" x="1" y="1885" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0007" x="1" y="1885" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0008" x="962" y="1885" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0009" x="962" y="1885" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0010" x="962" y="1885" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0011" x="962" y="1885" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0012" x="962" y="1885" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0013" x="962" y="1885" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down0014" x="962" y="1885" width="961" height="983" frameX="0" frameY="-12" frameWidth="961" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0000" x="1923" y="1885" width="961" height="995" frameX="-1" frameY="0" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0001" x="2884" y="1885" width="958" height="930" frameX="0" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0002" x="2884" y="1885" width="958" height="930" frameX="0" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0003" x="3842" y="1885" width="961" height="930" frameX="-2" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0004" x="3842" y="1885" width="961" height="930" frameX="-2" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0005" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0006" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0007" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0008" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0009" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0010" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0011" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0012" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0013" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0014" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0015" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0016" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Down_MISS0017" x="4803" y="1885" width="961" height="930" frameX="-1" frameY="-65" frameWidth="963" frameHeight="995"/>
+	<SubTexture name="Camellia_Idle0000" x="5764" y="1885" width="961" height="870" frameX="0" frameY="-33" frameWidth="961" frameHeight="903"/>
+	<SubTexture name="Camellia_Idle0001" x="5764" y="1885" width="961" height="870" frameX="0" frameY="-33" frameWidth="961" frameHeight="903"/>
+	<SubTexture name="Camellia_Idle0002" x="6725" y="1885" width="961" height="884" frameX="0" frameY="-19" frameWidth="961" frameHeight="903"/>
+	<SubTexture name="Camellia_Idle0003" x="6725" y="1885" width="961" height="884" frameX="0" frameY="-19" frameWidth="961" frameHeight="903"/>
+	<SubTexture name="Camellia_Idle0004" x="1" y="2880" width="961" height="896" frameX="0" frameY="-7" frameWidth="961" frameHeight="903"/>
+	<SubTexture name="Camellia_Idle0005" x="1" y="2880" width="961" height="896" frameX="0" frameY="-7" frameWidth="961" frameHeight="903"/>
+	<SubTexture name="Camellia_Idle0006" x="962" y="2880" width="961" height="902" frameX="0" frameY="-1" frameWidth="961" frameHeight="903"/>
+	<SubTexture name="Camellia_Idle0007" x="962" y="2880" width="961" height="902" frameX="0" frameY="-1" frameWidth="961" frameHeight="903"/>
+	<SubTexture name="Camellia_Idle0008" x="1923" y="2880" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0009" x="1923" y="2880" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0010" x="1923" y="2880" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0011" x="1923" y="2880" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0012" x="1923" y="2880" width="961" height="903"/>
+	<SubTexture name="Camellia_Idle0013" x="1923" y="2880" width="961" height="903"/>
+	<SubTexture name="Camellia_Left0000" x="2884" y="2880" width="1055" height="907" frameX="0" frameY="-15" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0001" x="3939" y="2880" width="1055" height="907" frameX="0" frameY="-15" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0002" x="4994" y="2880" width="1032" height="918" frameX="-23" frameY="-4" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0003" x="4994" y="2880" width="1032" height="918" frameX="-23" frameY="-4" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0004" x="6026" y="2880" width="1018" height="922" frameX="-37" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0005" x="6026" y="2880" width="1018" height="922" frameX="-37" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0006" x="7044" y="2880" width="1013" height="922" frameX="-42" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0007" x="7044" y="2880" width="1013" height="922" frameX="-42" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0008" x="1" y="3802" width="1013" height="922" frameX="-42" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0009" x="1" y="3802" width="1013" height="922" frameX="-42" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0010" x="1" y="3802" width="1013" height="922" frameX="-42" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0011" x="1" y="3802" width="1013" height="922" frameX="-42" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0012" x="1" y="3802" width="1013" height="922" frameX="-42" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0013" x="1" y="3802" width="1013" height="922" frameX="-42" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left0014" x="1" y="3802" width="1013" height="922" frameX="-42" frameY="0" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left_MISS0000" x="2884" y="2880" width="1055" height="907" frameX="0" frameY="-8" frameWidth="1055" frameHeight="922"/>
+	<SubTexture name="Camellia_Left_MISS0001" x="1014" y="3802" width="1002" height="915" frameX="-47" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0002" x="1014" y="3802" width="1002" height="915" frameX="-47" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0003" x="2016" y="3802" width="1001" height="915" frameX="-56" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0004" x="3017" y="3802" width="1001" height="915" frameX="-56" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0005" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0006" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0007" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0008" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0009" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0010" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0011" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0012" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0013" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0014" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0015" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0016" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Left_MISS0017" x="4018" y="3802" width="1001" height="915" frameX="-54" frameY="0" frameWidth="1057" frameHeight="915"/>
+	<SubTexture name="Camellia_Right0000" x="5019" y="3802" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0001" x="5980" y="3802" width="961" height="900"/>
+	<SubTexture name="Camellia_Right0002" x="6941" y="3802" width="961" height="891" frameX="0" frameY="-9" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0003" x="6941" y="3802" width="961" height="891" frameX="0" frameY="-9" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0004" x="1" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0005" x="1" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0006" x="962" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0007" x="962" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0008" x="1923" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0009" x="1923" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0010" x="1923" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0011" x="1923" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0012" x="1923" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0013" x="1923" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right0014" x="1923" y="4724" width="961" height="890" frameX="0" frameY="-10" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right_MISS0000" x="5019" y="3802" width="961" height="900" frameX="0" frameY="-26" frameWidth="961" frameHeight="900"/>
+	<SubTexture name="Camellia_Right_MISS0001" x="2884" y="4724" width="1006" height="905" frameX="-2" frameY="-20" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0002" x="3890" y="4724" width="1037" height="905" frameX="-2" frameY="-20" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0003" x="4927" y="4724" width="1018" height="926" frameX="0" frameY="0" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0004" x="5945" y="4724" width="978" height="926" frameX="0" frameY="0" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0005" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0006" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0007" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0008" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0009" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0010" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0011" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0012" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0013" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0014" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0015" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0016" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0017" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0018" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0019" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0020" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0021" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0022" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Right_MISS0023" x="6923" y="4724" width="979" height="923" frameX="0" frameY="-3" frameWidth="1039" frameHeight="926"/>
+	<SubTexture name="Camellia_Up0000" x="1" y="5650" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0001" x="967" y="5650" width="966" height="991"/>
+	<SubTexture name="Camellia_Up0002" x="1933" y="5650" width="961" height="974" frameX="-5" frameY="-17" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0003" x="2894" y="5650" width="961" height="974" frameX="-5" frameY="-17" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0004" x="3855" y="5650" width="961" height="973" frameX="-5" frameY="-18" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0005" x="3855" y="5650" width="961" height="973" frameX="-5" frameY="-18" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0006" x="4816" y="5650" width="961" height="972" frameX="-5" frameY="-19" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0007" x="4816" y="5650" width="961" height="972" frameX="-5" frameY="-19" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0008" x="5777" y="5650" width="961" height="972" frameX="-5" frameY="-19" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0009" x="5777" y="5650" width="961" height="972" frameX="-5" frameY="-19" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0010" x="5777" y="5650" width="961" height="972" frameX="-5" frameY="-19" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0011" x="5777" y="5650" width="961" height="972" frameX="-5" frameY="-19" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0012" x="5777" y="5650" width="961" height="972" frameX="-5" frameY="-19" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0013" x="5777" y="5650" width="961" height="972" frameX="-5" frameY="-19" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up0014" x="5777" y="5650" width="961" height="972" frameX="-5" frameY="-19" frameWidth="966" frameHeight="991"/>
+	<SubTexture name="Camellia_Up_MISS0000" x="6738" y="5650" width="966" height="991" frameX="-1" frameY="-37" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0001" x="1" y="6641" width="964" height="1028" frameX="-8" frameY="0" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0002" x="1" y="6641" width="964" height="1028" frameX="-8" frameY="0" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0003" x="965" y="6641" width="966" height="1018" frameX="0" frameY="-10" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0004" x="965" y="6641" width="966" height="1018" frameX="0" frameY="-10" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0005" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0006" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0007" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0008" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0009" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0010" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0011" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0012" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0013" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0014" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0015" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0016" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0017" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+	<SubTexture name="Camellia_Up_MISS0018" x="1931" y="6641" width="966" height="1020" frameX="-1" frameY="-8" frameWidth="972" frameHeight="1028"/>
+</TextureAtlas>
