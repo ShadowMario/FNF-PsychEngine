@@ -2359,7 +2359,7 @@ class ChartingState extends MusicBeatState
 
 	function setupSusNote(i:Array<Dynamic>, note:Note):FlxSprite {
 		var daNoteInfo = i[1];
-		var data:Int = daNoteInfo % _song.songKeys;
+		var data:Int = daNoteInfo % 4;
 		
 		public static var colors:Array<Dynamic> = [ // yayy pain
 			[FlxColor.fromRGB(194, 75, 153)],
