@@ -2361,7 +2361,7 @@ class ChartingState extends MusicBeatState
 		var daNoteInfo = i[1];
 		var data:Int = daNoteInfo % 4;
 		
-		public static var colors:Array<Dynamic> = [ // yayy pain
+		var colors:Array<Dynamic> = [ // yayy pain
 			[FlxColor.fromRGB(194, 75, 153)],
 			[FlxColor.fromRGB(0, 255, 255)],
 			[FlxColor.fromRGB(18, 250, 5)],
