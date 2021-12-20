@@ -2219,7 +2219,7 @@ class ChartingState extends MusicBeatState
 			curRenderedNotes.add(note);
 			if (note.sustainLength > 0)
 			{
-				curRenderedSustains.add(setupSusNote(note));
+				curRenderedSustains.add(setupSusNote(i, note));
 			}
 
 			if(note.y < -150) note.y = -150;
@@ -2276,7 +2276,7 @@ class ChartingState extends MusicBeatState
 				nextRenderedNotes.add(note);
 				if (note.sustainLength > 0)
 				{
-					nextRenderedSustains.add(setupSusNote(note));
+					nextRenderedSustains.add(setupSusNote(i, note));
 				}
 			}
 		}
@@ -2354,13 +2354,23 @@ class ChartingState extends MusicBeatState
 		return retStr;
 	}
 
-	function setupSusNote(note:Note):FlxSprite {
+	function setupSusNote(i:Array<Dynamic>, note:Note):FlxSprite {
+		var daNoteInfo = i[1];
+		var data:Int = daNoteInfo % _song.songKeys;
+		
+		public static var colors:Array<Dynamic> = [ // yayy pain
+			[FlxColor.fromRGB(194, 75, 153)],
+			[FlxColor.fromRGB(0, 255, 255)],
+			[FlxColor.fromRGB(18, 250, 5)],
+			[FlxColor.fromRGB(249, 57, 63)]
+		];
+
 		var height:Int = Math.floor(FlxMath.remapToRange(note.sustainLength, 0, Conductor.stepCrochet * 16, 0, (gridBG.height / gridMult)) + (GRID_SIZE * zoomList[curZoom]) - GRID_SIZE / 2);
 		var minHeight:Int = Std.int((GRID_SIZE * zoomList[curZoom] / 2) + GRID_SIZE / 2);
 		if(height < minHeight) height = minHeight;
 		if(height < 1) height = 1; //Prevents error of invalid height
 
-		var spr:FlxSprite = new FlxSprite(note.x + (GRID_SIZE * 0.5) - 4, note.y + GRID_SIZE / 2).makeGraphic(8, height);
+		var spr:FlxSprite = new FlxSprite(note.x + (GRID_SIZE * 0.5) - 4, note.y + GRID_SIZE / 2).makeGraphic(8, height, colors[data]);
 		return spr;
 	}
 
