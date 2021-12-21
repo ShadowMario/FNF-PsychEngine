@@ -340,8 +340,8 @@ class ChartingState extends MusicBeatState
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
 		\nSpace - Stop/Resume song
-		\nAlt-C - Activates auto-clicker for even note stacking.
-		\nShift-Alt-C - Activates auto-clicker for dragging stacked notes.";
+		\nTab-C - Activates auto-clicker for even note stacking.
+		\nShift-Tab-C - Activates auto-clicker for dragging stacked notes.";
 
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
@@ -1433,7 +1433,7 @@ class ChartingState extends MusicBeatState
 
 		if (FlxG.mouse.pressed && !FlxG.keys.pressed.TAB || FlxG.mouse.justPressed || FlxG.keys.pressed.C)
 			{
-				if (FlxG.mouse.overlaps(curRenderedNotes) && !FlxG.keys.pressed.ALT)
+				if (FlxG.mouse.overlaps(curRenderedNotes) && !FlxG.keys.pressed.TAB)
 				{
 					if(mouseAction!=1) {
 					curRenderedNotes.forEachAlive(function(note:Note)
@@ -1444,7 +1444,7 @@ class ChartingState extends MusicBeatState
 							{
 								selectNote(note);
 							}
-              else if (FlxG.keys.pressed.ALT)
+              else if (FlxG.keys.pressed.TAB)
 					  	{
 						  	selectNote(note);
 						  	curSelectedNote[3] = noteTypeIntMap.get(currentType);
