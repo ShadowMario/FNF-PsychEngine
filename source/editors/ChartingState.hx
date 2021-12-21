@@ -335,7 +335,7 @@ class ChartingState extends MusicBeatState
 		\nHold Control and click on an arrow to select it
 		\nClick and drag will delete a note, or add notes evenly spaced
 		\nZ/X - Zoom in/out
-		\nAlt - Place notes on top of each other
+		\nTab - Place notes on top of each other
 		\nEsc - Test your chart inside Chart Editor
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
