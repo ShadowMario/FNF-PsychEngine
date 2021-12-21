@@ -315,7 +315,8 @@ class ModsMenuState extends MusicBeatState
 			if(loadedIcon != null)
 			{
 				newMod.icon.loadGraphic(loadedIcon, true, 150, 150);//animated icon support
-				newMod.icon.animation.add("icon", getIntArray(Math.floor(loadedIcon.width / 150)),24);
+				var totalFrames = Math.floor(loadedIcon.width / 150) * Math.floor(loadedIcon.height / 150);
+				newMod.icon.animation.add("icon", [for (i in 0...totalFrames) i],10);
 				newMod.icon.animation.play("icon");
 			}
 			else
