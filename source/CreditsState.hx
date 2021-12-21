@@ -85,7 +85,7 @@ class CreditsState extends MusicBeatState
 			['Roxbeige',			'generic',			'Charter, Playtesting, Being a Fat-ass',				'https://www.youtube.com/channel/UCaHN6LutYv6wGZkuplqcQyw',		'DAF7A6'],		
 			[''],
 			['Psych Engine Team'],
-			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',						'https://twitter.com/Shadow_Mario_',	'FFDD33'],
+			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',						'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',					'https://twitter.com/river_oaken',		'C30085'],
 			['bb-panzu',			'bb-panzu',			'Additional Programmer of Psych Engine',				'https://twitter.com/bbsub3',			'389A58'],
 			[''],
