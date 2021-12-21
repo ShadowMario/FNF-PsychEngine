@@ -34,7 +34,7 @@ class FlashingState extends MusicBeatState
 			There WILL be missing stages and mod specific mechanics.
 			",
 			24);
-		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
+		warnText.setFormat("Rubik Medium", 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
 	}
