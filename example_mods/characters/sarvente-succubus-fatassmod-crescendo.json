@@ -1,0 +1,132 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				100,
+				0
+			],
+			"loop": false,
+			"fps": 72,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "singLEFT"
+		},
+		{
+			"offsets": [
+				100,
+				0
+			],
+			"loop": false,
+			"fps": 72,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "singRIGHT"
+		},
+		{
+			"offsets": [
+				100,
+				0
+			],
+			"loop": false,
+			"fps": 72,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "singDOWN"
+		},
+		{
+			"offsets": [
+				100,
+				70
+			],
+			"loop": false,
+			"fps": 72,
+			"anim": "singUP",
+			"indices": [],
+			"name": "singUP"
+		},
+		{
+			"offsets": [
+				100,
+				0
+			],
+			"loop": true,
+			"fps": 72,
+			"anim": "singLEFT-loop",
+			"indices": [],
+			"name": "singLEFT"
+		},
+		{
+			"offsets": [
+				100,
+				70
+			],
+			"loop": true,
+			"fps": 72,
+			"anim": "singUP-loop",
+			"indices": [
+				11,
+				12,
+				13,
+				14
+			],
+			"name": "singUP"
+		},
+		{
+			"offsets": [
+				100,
+				0
+			],
+			"loop": true,
+			"fps": 72,
+			"anim": "singRIGHT-loop",
+			"indices": [
+				6,
+				7,
+				8,
+				9
+			],
+			"name": "singRIGHT"
+		},
+		{
+			"loop": true,
+			"offsets": [
+				100,
+				0
+			],
+			"anim": "singDOWN-loop",
+			"fps": 72,
+			"name": "singDOWN",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				50
+			],
+			"indices": [],
+			"fps": 48,
+			"anim": "idle",
+			"loop": true,
+			"name": "idle"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/sarvente-succubus-fatassmod-crescendo",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "sarvente-succubus",
+	"flip_x": false,
+	"healthbar_colors": [
+		217,
+		50,
+		123
+	],
+	"camera_position": [
+		0,
+		100
+	],
+	"sing_duration": 2,
+	"scale": 1
+}

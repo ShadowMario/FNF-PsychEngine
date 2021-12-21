@@ -1,7 +1,7 @@
 {
 	"storyName": "High Effort Finn and Jake (Pibby x FNF)",
 	"hideFreeplay": false,
-	"weekBackground": "",
+	"weekBackground": "no_menu_background",
 	"freeplayColor": [
 		146,
 		113,
@@ -10,9 +10,9 @@
 	"weekBefore": "week6-bsides",
 	"startUnlocked": true,
 	"weekCharacters": [
-		"",
-		"",
-		""
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
 	],
 	"songs": [
 		[

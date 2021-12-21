@@ -1,7 +1,7 @@
 {
 	"storyName": "Sarvente's Mid Fight Masses",
 	"hideFreeplay": false,
-	"weekBackground": "",
+	"weekBackground": "no_menu_background",
 	"weekBefore": "week6-bsides",
 	"freeplayColor": [
 		146,
@@ -10,9 +10,9 @@
 	],
 	"startUnlocked": true,
 	"weekCharacters": [
-		"",
-		"",
-		""
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
 	],
 	"songs": [
 		[

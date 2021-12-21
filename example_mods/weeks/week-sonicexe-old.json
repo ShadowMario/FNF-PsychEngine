@@ -1,7 +1,7 @@
 {
 	"storyName": "Sonic.exe V1",
 	"hideFreeplay": false,
-	"weekBackground": "",
+	"weekBackground": "no_menu_background",
 	"freeplayColor": [
 		50,
 		255,
@@ -11,9 +11,9 @@
 	"startUnlocked": true,
 	"hideStoryMode": true,
 	"weekCharacters": [
-		"",
-		"",
-		""
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
 	],
 	"songs": [
 		[

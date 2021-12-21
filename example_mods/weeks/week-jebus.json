@@ -38,11 +38,11 @@
 		]
 	],
 	"hideFreeplay": false,
-	"weekBackground": "",
+	"weekBackground": "no_menu_background",
 	"weekCharacters": [
-		"",
-		"",
-		""
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
 	],
 	"storyName": "Jebus",
 	"weekName": "week-jebus",

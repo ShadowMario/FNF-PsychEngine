@@ -1,7 +1,7 @@
 {
 	"storyName": "Tricky",
 	"hideFreeplay": false,
-	"weekBackground": "",
+	"weekBackground": "no_menu_background",
 	"freeplayColor": [
 		146,
 		113,
@@ -11,9 +11,9 @@
 	"startUnlocked": true,
 	"hideStoryMode": true,
 	"weekCharacters": [
-		"",
-		"",
-		""
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
 	],
 	"songs": [
 		[
