@@ -53,7 +53,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 
 		#if !html5 //Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		var option:Option = new Option('Framerate',
-			"Pretty self explanatory, isn't it? 240 or higher recommended",
+			"Pretty self explanatory, isn't it? 240-480FPS recommended.\nhigher than 480 will cause menu animations to be super slow.",
 			'framerate',
 			'int',
 			60);
@@ -61,6 +61,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.minValue = 60;
 		option.maxValue = 960;
 		option.displayFormat = '%v FPS';
+		option.scrollSpeed = 200;
 		option.onChange = onChangeFramerate;
 		#end
 
