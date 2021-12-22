@@ -10687,6 +10687,76 @@
 				"bpm": 127
 			},
 			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 127,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 127,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 127,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 127
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 127
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 127,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 127,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
 				"gfSection": false,
 				"lengthInSteps": 16,
 				"altAnim": false,
@@ -10718,16 +10788,6 @@
 			}
 		],
 		"events": [
-			[
-				0,
-				[
-					[
-						"Play Animation",
-						"stage1",
-						""
-					]
-				]
-			],
 			[
 				59.0551181102362,
 				[
@@ -11739,16 +11799,6 @@
 				]
 			],
 			[
-				61889.7637795276,
-				[
-					[
-						"Play Animation",
-						"stage3",
-						""
-					]
-				]
-			],
-			[
 				62357.0374015748,
 				[
 					[
@@ -11793,7 +11843,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -11813,7 +11863,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -11833,7 +11883,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -11853,7 +11903,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -11873,7 +11923,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -11893,7 +11943,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -11913,7 +11963,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -11933,7 +11983,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -11953,7 +12003,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -11973,7 +12023,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -11993,7 +12043,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -12013,7 +12063,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -12033,7 +12083,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -12053,7 +12103,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -12073,7 +12123,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -12093,7 +12143,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -12113,7 +12163,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -12133,7 +12183,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -12153,7 +12203,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -12173,7 +12223,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -12193,7 +12243,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -12213,7 +12263,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -12233,7 +12283,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -12253,7 +12303,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -12294,7 +12344,7 @@
 					[
 						"Change Scroll Speed",
 						"2",
-						"5.5"
+						"5"
 					]
 				]
 			],
@@ -12599,36 +12649,6 @@
 				]
 			],
 			[
-				74985.2362204725,
-				[
-					[
-						"Change Character",
-						"dad",
-						"sarvente-succubus-fatassmod-crescendo"
-					]
-				]
-			],
-			[
-				74990.157480315,
-				[
-					[
-						"Change Character",
-						"bf",
-						"ruv-fatassmod-crescendo"
-					]
-				]
-			],
-			[
-				74995.0787401575,
-				[
-					[
-						"Play Animation",
-						"stage2",
-						""
-					]
-				]
-			],
-			[
 				75000,
 				[
 					[
@@ -12645,6 +12665,36 @@
 						"Change Scroll Speed",
 						"0.5",
 						"0.1"
+					]
+				]
+			],
+			[
+				75349.4094488189,
+				[
+					[
+						"Play Animation",
+						"stage2",
+						""
+					]
+				]
+			],
+			[
+				75354.3307086614,
+				[
+					[
+						"Change Character",
+						"bf",
+						"ruv-fatassmod-crescendo"
+					]
+				]
+			],
+			[
+				75359.251968504,
+				[
+					[
+						"Change Character",
+						"dad",
+						"sarvente-succubus-fatassmod-crescendo"
 					]
 				]
 			],
@@ -13559,6 +13609,36 @@
 				]
 			],
 			[
+				107165.354330709,
+				[
+					[
+						"Play Animation",
+						"stage3",
+						""
+					]
+				]
+			],
+			[
+				107170.275590551,
+				[
+					[
+						"Change Character",
+						"bf",
+						"ruv-fatassmod"
+					]
+				]
+			],
+			[
+				107175.196850394,
+				[
+					[
+						"Change Character",
+						"dad",
+						"sarvente-succubus-fatassmod"
+					]
+				]
+			],
+			[
 				107235.728346457,
 				[
 					[
@@ -13574,36 +13654,6 @@
 					[
 						"Blammed Lights",
 						"1",
-						""
-					]
-				]
-			],
-			[
-				107236.958661417,
-				[
-					[
-						"Change Character",
-						"bf",
-						"ruv-fatassmod"
-					]
-				]
-			],
-			[
-				107238.065944882,
-				[
-					[
-						"Change Character",
-						"dad",
-						"sarvente-succubus"
-					]
-				]
-			],
-			[
-				107239.173228347,
-				[
-					[
-						"Play Animation",
-						"stage3",
 						""
 					]
 				]
@@ -14489,6 +14539,16 @@
 				]
 			],
 			[
+				137535.32241532,
+				[
+					[
+						"Play Animation",
+						"stage1",
+						""
+					]
+				]
+			],
+			[
 				137539.020640172,
 				[
 					[
@@ -14499,12 +14559,12 @@
 				]
 			],
 			[
-				137543.903452672,
+				152630.757334849,
 				[
 					[
-						"Play Animation",
-						"stage1",
-						""
+						"Change Scroll Speed",
+						"0.85",
+						"0.1"
 					]
 				]
 			],
@@ -14815,6 +14875,16 @@
 						"Blammed Lights",
 						"1",
 						""
+					]
+				]
+			],
+			[
+				167748.848272012,
+				[
+					[
+						"Change Scroll Speed",
+						"0.95",
+						"0.1"
 					]
 				]
 			],
@@ -15459,22 +15529,22 @@
 				]
 			],
 			[
-				197972.273468862,
-				[
-					[
-						"Change Scroll Speed",
-						"0.5",
-						"0.1"
-					]
-				]
-			],
-			[
-				197976.702602721,
+				197980.14748461,
 				[
 					[
 						"Play Animation",
 						"stage3",
 						""
+					]
+				]
+			],
+			[
+				197985.068744453,
+				[
+					[
+						"Change Scroll Speed",
+						"0.5",
+						"0.1"
 					]
 				]
 			],
@@ -15763,7 +15833,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -15783,7 +15853,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -15803,7 +15873,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -15823,7 +15893,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -15843,7 +15913,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -15863,7 +15933,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -15883,7 +15953,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -15903,7 +15973,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -15923,7 +15993,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -15943,7 +16013,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -15963,7 +16033,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -15983,7 +16053,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -16003,7 +16073,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"0.5",
+						"1",
 						"0.1"
 					]
 				]
@@ -16023,7 +16093,7 @@
 				[
 					[
 						"Change Scroll Speed",
-						"1",
+						"0.5",
 						"0.1"
 					]
 				]
@@ -16239,36 +16309,6 @@
 				]
 			],
 			[
-				212870.77248461,
-				[
-					[
-						"Play Animation",
-						"stage2",
-						""
-					]
-				]
-			],
-			[
-				212870.895516106,
-				[
-					[
-						"Change Character",
-						"dad",
-						"sarvente-succubus-fatassmod-crescendo"
-					]
-				]
-			],
-			[
-				212871.141579099,
-				[
-					[
-						"Change Character",
-						"bf",
-						"ruv-fatassmod-crescendo"
-					]
-				]
-			],
-			[
 				212871.879768075,
 				[
 					[
@@ -16299,7 +16339,37 @@
 				]
 			],
 			[
+				213088.415201146,
+				[
+					[
+						"Play Animation",
+						"stage2",
+						""
+					]
+				]
+			],
+			[
+				213093.336460988,
+				[
+					[
+						"Change Character",
+						"bf",
+						"ruv-fatassmod-crescendo"
+					]
+				]
+			],
+			[
 				213098.257720831,
+				[
+					[
+						"Change Character",
+						"dad",
+						"sarvente-succubus-fatassmod-crescendo"
+					]
+				]
+			],
+			[
+				213103.178980673,
 				[
 					[
 						"Change Scroll Speed",

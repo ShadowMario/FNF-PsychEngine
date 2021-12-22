@@ -1,12 +1,3 @@
-function onCreate()
-    precacheImage('mfm-stage-gospel');
-    precacheImage('mfm-stage-crescendo');
-    precacheImage('ruv-fatassmod');
-    precacheImage('ruv-fatassmod-crescendo');
-    precacheImage('sarvente-succubus');
-    precacheImage('sarvente-succubus-fatassmod-crescendo');
-end
-
 local xx = 270;
 local yy = 500;
 local xx2 = 750;
@@ -16,32 +7,16 @@ local followchars = true;
 local del = 0;
 local del2 = 0;
 
-function onEvent(name,value1,value2)
-        if name == 'Blammed Lights' then 
-            
-            if value1 == '1' then
-                cameraShake('game', '0.02', '0.1');
-                cameraShake('hud', '0.02', '0.1');
-            end
-            if value1 == '2' then
-                cameraShake('game', '0.02', '0.1');
-                cameraShake('hud', '0.02', '0.1');
-            end
-            if value1 == '3' then
-                cameraShake('game', '0.02', '0.1');
-                cameraShake('hud', '0.02', '0.1');
-            end
-            if value1 == '4' then
-                cameraShake('game', '0.02', '0.1');
-                cameraShake('hud', '0.02', '0.1');
-            end
-            if value1 == '5' then
-                cameraShake('game', '0.02', '0.1');
-                cameraShake('hud', '0.02', '0.1');
-            end
-        end
-    end
-function onUpdate()
+function onCreate()
+    precacheImage('mfm-stage-gospel')
+    precacheImage('mfm-stage-crescendo')
+    precacheImage('ruv-fatassmod')
+    precacheImage('ruv-fatassmod-crescendo')
+    precacheImage('sarvente-succubus-fatassmod')
+    precacheImage('sarvente-succubus-fatassmod-crescendo')
+end
+
+function onUpdate(elapsed)
 	if del > 0 then
 		del = del - 1
 	end
@@ -94,7 +69,7 @@ function onUpdate()
             if getProperty('boyfriend.animation.curAnim.name') == 'singDOWN' then
                 triggerEvent('Camera Follow Pos',xx2,yy2+ofs)
             end
-	    if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
+	        if getProperty('boyfriend.animation.curAnim.name') == 'idle' then
                 triggerEvent('Camera Follow Pos',xx2,yy2)
             end
         end
@@ -103,3 +78,28 @@ function onUpdate()
     end
 end
 
+function onEvent(name,value1,value2)
+    if name == 'Blammed Lights' then 
+            
+        if value1 == '1' then
+            cameraShake('game', '0.02', '0.1')
+            cameraShake('hud', '0.02', '0.1')
+        end
+        if value1 == '2' then
+            cameraShake('game', '0.02', '0.1')
+            cameraShake('hud', '0.02', '0.1')
+        end
+        if value1 == '3' then
+            cameraShake('game', '0.02', '0.1')
+            cameraShake('hud', '0.02', '0.1')
+        end
+        if value1 == '4' then
+            cameraShake('game', '0.02', '0.1')
+            cameraShake('hud', '0.02', '0.1')
+        end
+        if value1 == '5' then
+            cameraShake('game', '0.02', '0.1')
+            cameraShake('hud', '0.02', '0.1')
+        end
+    end
+end
