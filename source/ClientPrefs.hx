@@ -63,11 +63,11 @@ class ClientPrefs {
 		'ui_right'		=> [RIGHT, D],
 		
 		'accept'		=> [ENTER, SPACE],
-		'back'			=> [ESCAPE, BACKSPACE],
+		'back'			=> [ESCAPE, INSERT],
 		'pause'			=> [ESCAPE, ENTER],
 		'reset'			=> [R, NONE],
 		
-		'volume_mute'	=> [ZERO, NONE],
+		'volume_mute'	=> [M, ZERO],
 		'volume_up'		=> [NUMPADPLUS, PAGEUP],
 		'volume_down'	=> [NUMPADMINUS, PAGEDOWN],
 		
