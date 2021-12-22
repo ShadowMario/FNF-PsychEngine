@@ -64,8 +64,8 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [ // Now actually tells the truth about your accuracy without being too harsh on your feelings. Unless you go below 80% :^) //Lulu
-		['Uninstall', 0.5], //From 0% to 20%
-		['Laughable', 0.75], //From 20% to 75%
+		['Uninstall', 0.5], //From 0% to 50%
+		['Laughable', 0.75], //From 50% to 75%
 		['Horrible', 0.8], //From 75% to 80%
 		['Bad', 0.85], //From 80% to 85%
 		['OK', 0.9], //From 85% to 90%
@@ -3303,6 +3303,7 @@ class PlayState extends MusicBeatState
 				totalNotesHit += 0.75;
 				goods++;
 			case "sick": // sick
+				score = 300;
 				totalNotesHit += 1;
 				sicks++;
 		}
