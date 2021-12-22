@@ -9,7 +9,7 @@
 		"notes": [],
 		"splashSkin": null,
 		"validScore": false,
-		"gfVersion": "gf",
+		"gfVersion": "nogf",
 		"bpm": 106,
 		"arrowSkin": null,
 		"needsVoices": true,
