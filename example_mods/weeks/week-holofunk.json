@@ -1,0 +1,30 @@
+{
+	"storyName": "holofunk",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"freeplayColor": [
+		25,
+		28,
+		56
+	],
+	"weekBefore": "week6-bsides",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"songs": [
+		[
+			"killer-scream",
+			"rushia",
+			[
+				98,
+				191,
+				127
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "week-holofunk"
+}

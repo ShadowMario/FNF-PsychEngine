@@ -1,0 +1,15 @@
+{
+	"song": {
+		"player1": "aloe-mano",
+		"player2": "rushia",
+		"player3": "nogf",
+		"song": "Killer Scream",
+		"arrowSkin": "",
+		"validScore": true,
+		"speed": 3.2,
+		"stage": "rushia-stage",
+		"needsVoices": true,
+		"sections": 0,
+		"bpm": 214
+	}
+}
