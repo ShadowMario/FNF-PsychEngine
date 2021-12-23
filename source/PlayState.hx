@@ -3264,7 +3264,7 @@ class PlayState extends MusicBeatState
 		switch (daRating)
 		{
 			case "shit": // shit
-				totalNotesHit += 0;
+				totalNotesHit += 0.25;
 				shits++;
 			case "bad": // bad
 				totalNotesHit += 0.5;
@@ -4284,27 +4284,24 @@ class PlayState extends MusicBeatState
 		if(ret != FunkinLua.Function_Stop)
 		{
 			if(totalPlayed < 1) //Prevent divide by 0
-				ratingName = '?';
+				ratingPercent = 1;
 			else
-			{
 				// Rating Percent
 				ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
-				//trace((totalNotesHit / totalPlayed) + ', Total: ' + totalPlayed + ', notes hit: ' + totalNotesHit);
 
-				// Rating Name
-				if(ratingPercent >= 1)
+			// Rating Name
+			if(ratingPercent >= 1)
+			{
+				ratingName = ratingStuff[ratingStuff.length-1][0]; //Uses last string
+			}
+			else
+			{
+				for (i in 0...ratingStuff.length-1)
 				{
-					ratingName = ratingStuff[ratingStuff.length-1][0]; //Uses last string
-				}
-				else
-				{
-					for (i in 0...ratingStuff.length-1)
+					if(ratingPercent < ratingStuff[i][1])
 					{
-						if(ratingPercent < ratingStuff[i][1])
-						{
-							ratingName = ratingStuff[i][0];
-							break;
-						}
+						ratingName = ratingStuff[i][0];
+						break;
 					}
 				}
 			}
