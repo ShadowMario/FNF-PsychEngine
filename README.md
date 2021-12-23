@@ -1,4 +1,17 @@
-# Friday Night Funkin' - The Fat-Ass Mod Compilation
+# Table of Contents
+- [Introduction](#introduction)
+    - [Friday Night Funkin' - The Fat-Ass Mod Compilation](#introduction)
+    - [What is this mod?](#what-is-this-mod)
+    - [Other features and goals](#other-features-and-goals-are)
+- [Song List](#song-list)
+- [Known Bugs](#known-bugs)
+    - [On V1.1 - Psych Engine 0.5.1](#known-bugs)
+    - [On V1.0 - Psych Engine 0.5](#known-bugs)
+- [Other Info, kinda like a FAQ](#other-info-kinda-like-a-faq)
+
+# Introduction
+
+## Friday Night Funkin' - The Fat-Ass Mod Compilation
 ****Not intended to replace the original mods but instead do "generic" ports of them, leaving some stuff out.****
 
 Example of a "generic" port: **VS Tricky - Expurgation** is missing the annoying Signs and HP Gremlins.
@@ -48,7 +61,21 @@ We aim to make it better one way or another wheter it's by re-timing, recharting
 - Mike Geno - Ruv/Sarvente - Glazomer 
 
 
----
+# Known Bugs
+### On V1.1 - Psych Engine 0.5.1
+- Lua Scripts that changes camera behavior stop working around 2-3 minutes into songs.
+- Having events.json and chart.json with change character events causes characters not deloading properly. Workaround: delete events.json
+- Setting the game to 960 FPS and closing it, causes menu animations to be super slow next time you start the game.
+Workaround: 
+Use values under 480fps
+- Character Editor: Tends to crash.
+
+### On V1.0 - Psych Engine 0.5
+- Setting the game to 960 FPS and closing it, causes menu animations to be super slow next time you start the game.
+Workaround: 
+Use values under 480fps
+- Character Editor: Tends to crash
+- Chart Editor: Copy Section causes crash.
 
 # Other Info, kinda like a FAQ
 ## "Songs doesn't have the right characters/stage applied!"
