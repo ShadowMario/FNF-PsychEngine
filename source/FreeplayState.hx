@@ -249,7 +249,6 @@ class FreeplayState extends MusicBeatState
 		var ctrl = FlxG.keys.justPressed.CONTROL;
 
 		var shiftMult:Int = 1;
-		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
 
 		if (!selectedSong)
 		{
@@ -257,6 +256,8 @@ class FreeplayState extends MusicBeatState
 			{
 				FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 			}
+
+			if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
 			
 			if (upP)
 			{
