@@ -282,7 +282,31 @@ class FunkinLua {
 			}
 			Reflect.getProperty(getInstance(), obj).remove(Reflect.getProperty(getInstance(), obj)[index]);
 		});
-
+		Lua_helper.add_callback(lua, "getPropertyFromMap", function(map:String, key:String) {	//Doesn't work, Idk why
+			var noPoints:String = map.replace('.', '');
+			var returnval:Dynamic = Reflect.getProperty(getInstance(), noPoints).get(key);
+			return returnval;
+		});
+		Lua_helper.add_callback(lua, "setPropertyFromMap", function(map:String, key:String, value:Dynamic) {
+			var noPoints:String = map.replace('.', '');
+			Reflect.getProperty(getInstance(), noPoints).set(key, value);
+		});
+		Lua_helper.add_callback(lua, "existsInMap", function(map:String, key:String) {	//Also doesn't work
+			var noPoints:String = map.replace('.', '');
+			var returnval:Dynamic = Reflect.getProperty(getInstance(), noPoints).exists(key);
+			return returnval;
+		});
+		Lua_helper.add_callback(lua, "clearMap", function(map:String) {	//Don't bother to use this! It might break something
+			var noPoints:String = map.replace('.', '');
+			Reflect.getProperty(getInstance(), noPoints).clear();
+		});
+		//Do not use these for variables that already exist in PlayState! do setProperty() / getProperty() instead!
+		Lua_helper.add_callback(lua, "setCustomVariable", function(variable:String, value:Dynamic) {	//Incase you don't know what locals are
+			PlayState.instance.customVariables.set(variable, value);
+		});
+		Lua_helper.add_callback(lua, "getCustomVariable", function(variable:String) {
+			return PlayState.instance.customVariables.get(variable);
+		});
 		Lua_helper.add_callback(lua, "getPropertyFromClass", function(classVar:String, variable:String) {
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {

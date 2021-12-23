@@ -81,6 +81,7 @@ class PlayState extends MusicBeatState
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
 	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
+	public var customVariables:Map<String, Dynamic> = new Map<String, Dynamic>();
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
