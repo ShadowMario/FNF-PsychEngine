@@ -2176,7 +2176,11 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ratingFC;//peeps wanted no integer rating
+		if(ratingName == '?') {
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
+		} else {
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC;//peeps wanted no integer rating
+		}
 
 		if(botplayTxt.visible) {
 			botplaySine += 180 * elapsed;
@@ -4282,36 +4286,33 @@ class PlayState extends MusicBeatState
 		var ret:Dynamic = callOnLuas('onRecalculateRating', []);
 		if(ret != FunkinLua.Function_Stop)
 		{
-			if(totalPlayed < 1) //Prevent divide by 0
-				ratingPercent = 1;
-			else
+			if(totalPlayed > 0) //Prevent divide by 0
+			{
 				// Rating Percent
 				ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
 
-			// Rating Name
-			if(ratingPercent >= 1)
-			{
-				ratingName = ratingStuff[ratingStuff.length-1][0]; //Uses last string
-			}
-			else
-			{
-				for (i in 0...ratingStuff.length-1)
+				// Rating Name
+				if(ratingPercent >= 1)
+					ratingName = ratingStuff[ratingStuff.length-1][0]; //Uses last string
+				else
 				{
-					if(ratingPercent < ratingStuff[i][1])
+					for (i in 0...ratingStuff.length-1)
 					{
-						ratingName = ratingStuff[i][0];
-						break;
+						if(ratingPercent < ratingStuff[i][1])
+						{
+							ratingName = ratingStuff[i][0];
+							break;
+						}
 					}
 				}
 			}
-
 			// Rating FC
 			ratingFC = "";
-			if (sicks > 0) ratingFC = " - SFC";
-			if (goods > 0) ratingFC = " - GFC";
-			if (bads > 0 || shits > 0) ratingFC = " - FC";
-			if (songMisses > 0 && songMisses < 10) ratingFC = " - SDCB";
-			else if (songMisses >= 10) ratingFC = " - Clear";
+			if (sicks > 0) ratingFC = "SFC";
+			if (goods > 0) ratingFC = "GFC";
+			if (bads > 0 || shits > 0) ratingFC = "FC";
+			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
+			else if (songMisses >= 10) ratingFC = "Clear";
 		}
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
