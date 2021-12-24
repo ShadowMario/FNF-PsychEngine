@@ -81,6 +81,7 @@ class PlayState extends MusicBeatState
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
 	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
+	public var characterLuas:Map<String, FunkinLua> = new Map<String, FunkinLua>();
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
@@ -786,16 +787,19 @@ class PlayState extends MusicBeatState
 		startCharacterPos(gf);
 		gf.scrollFactor.set(0.95, 0.95);
 		gfGroup.add(gf);
+		gfMap.set(gfVersion, gf);
 		startCharacterLua(gf.curCharacter);
 
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
 		dadGroup.add(dad);
+		dadMap.set(SONG.player2, dad);
 		startCharacterLua(dad.curCharacter);
 		
 		boyfriend = new Boyfriend(0, 0, SONG.player1);
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
+		boyfriendMap.set(SONG.player1, boyfriend);
 		startCharacterLua(boyfriend.curCharacter);
 		
 		var camPos:FlxPoint = new FlxPoint(gf.getGraphicMidpoint().x, gf.getGraphicMidpoint().y);
@@ -1205,7 +1209,7 @@ class PlayState extends MusicBeatState
 		healthBar.updateBar();
 	}
 
-	public function addCharacterToList(newCharacter:String, type:Int) {
+	public function addCharacterToList(newCharacter:String, type:Int, invisible:Bool = true) {
 		switch(type) {
 			case 0:
 				if(!boyfriendMap.exists(newCharacter)) {
@@ -1213,7 +1217,9 @@ class PlayState extends MusicBeatState
 					boyfriendMap.set(newCharacter, newBoyfriend);
 					boyfriendGroup.add(newBoyfriend);
 					startCharacterPos(newBoyfriend);
-					newBoyfriend.alpha = 0.00001;
+					if (invisible) {
+						newBoyfriend.alpha = 0.00001;
+					}
 					startCharacterLua(newBoyfriend.curCharacter);
 				}
 
@@ -1223,7 +1229,9 @@ class PlayState extends MusicBeatState
 					dadMap.set(newCharacter, newDad);
 					dadGroup.add(newDad);
 					startCharacterPos(newDad, true);
-					newDad.alpha = 0.00001;
+					if (invisible) {
+						newDad.alpha = 0.00001;
+					}
 					startCharacterLua(newDad.curCharacter);
 				}
 
@@ -1234,8 +1242,45 @@ class PlayState extends MusicBeatState
 					gfMap.set(newCharacter, newGf);
 					gfGroup.add(newGf);
 					startCharacterPos(newGf);
-					newGf.alpha = 0.00001;
+					if (invisible) {
+						newGf.alpha = 0.00001;
+					}
 					startCharacterLua(newGf.curCharacter);
+				}
+		}
+	}
+
+	public function removeCharacter(name:String, type:Int) {
+		switch (type) {
+			case 0:
+				if (boyfriendMap.exists(name)) {
+					var leChar = boyfriendMap.get(name);
+					boyfriendGroup.remove(leChar);
+					boyfriendMap.remove(name);
+					if (characterLuas.exists(name)) {
+						var charLua:FunkinLua = characterLuas.get(name);
+						charLua.stop();
+					}
+				}
+			case 1:
+				if (dadMap.exists(name)) {
+					var leChar = dadMap.get(name);
+					dadGroup.remove(leChar);
+					dadMap.remove(name);
+					if (characterLuas.exists(name)) {
+						var charLua:FunkinLua = characterLuas.get(name);
+						charLua.stop();
+					}
+				}
+			case 2:
+				if (gfMap.exists(name)) {
+					var leChar = gfMap.get(name);
+					gfGroup.remove(leChar);
+					gfMap.remove(name);
+					if (characterLuas.exists(name)) {
+						var charLua:FunkinLua = characterLuas.get(name);
+						charLua.stop();
+					}
 				}
 		}
 	}
@@ -1261,7 +1306,9 @@ class PlayState extends MusicBeatState
 			{
 				if(lua.scriptName == luaFile) return;
 			}
-			luaArray.push(new FunkinLua(luaFile));
+			var charLua:FunkinLua = new FunkinLua(luaFile);
+			luaArray.push(charLua);
+			characterLuas.set(name, charLua);
 		}
 		#end
 	}
@@ -4154,22 +4201,30 @@ class PlayState extends MusicBeatState
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 
-		if (curBeat % gfSpeed == 0 && !gf.stunned && gf.animation.curAnim.name != null && !gf.animation.curAnim.name.startsWith("sing"))
-		{
-			gf.dance();
+		for (gf in gfMap) {
+			if (curBeat % gfSpeed == 0 && !gf.stunned && gf.animation.curAnim.name != null && !gf.animation.curAnim.name.startsWith("sing"))
+				{
+					gf.dance();
+				}
 		}
 
-		if(curBeat % 2 == 0) {
-			if (boyfriend.animation.curAnim.name != null && !boyfriend.animation.curAnim.name.startsWith("sing"))
-			{
-				boyfriend.dance();
+		for (boyfriend in boyfriendMap) {
+			if (curBeat % 2 == 0) {
+				if (boyfriend.animation.curAnim.name != null && !boyfriend.animation.curAnim.name.startsWith("sing"))
+					{
+						boyfriend.dance();
+					}
 			}
-			if (dad.animation.curAnim.name != null && !dad.animation.curAnim.name.startsWith("sing") && !dad.stunned)
-			{
+		}
+		for (dad in dadMap) {
+			if(curBeat % 2 == 0) {
+				if (dad.animation.curAnim.name != null && !dad.animation.curAnim.name.startsWith("sing") && !dad.stunned)
+				{
+					dad.dance();
+				}
+			} else if(dad.danceIdle && dad.animation.curAnim.name != null && !dad.curCharacter.startsWith('gf') && !dad.animation.curAnim.name.startsWith("sing") && !dad.stunned) {
 				dad.dance();
 			}
-		} else if(dad.danceIdle && dad.animation.curAnim.name != null && !dad.curCharacter.startsWith('gf') && !dad.animation.curAnim.name.startsWith("sing") && !dad.stunned) {
-			dad.dance();
 		}
 
 		switch (curStage)

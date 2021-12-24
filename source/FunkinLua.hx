@@ -677,6 +677,36 @@ class FunkinLua {
 			//trace('Triggered event: ' + name + ', ' + value1 + ', ' + value2);
 		});
 
+		Lua_helper.add_callback(lua, "addCharacter", function(name:String, type:String) {
+			var charType:Int = 0;
+			switch (type.toLowerCase()) {
+				case 'boyfriend' | 'bf' | 'player':
+					charType = 0;
+				case 'dad' | 'opponent' | '0':
+					charType = 1;
+				case 'gf' | 'girlfriend' | '1':
+					charType = 2;
+				default:
+					charType = 0;
+			}
+			PlayState.instance.addCharacterToList(name, charType, false);
+		});
+
+		Lua_helper.add_callback(lua, "removeCharacter", function(name:String, type:String) {
+			var charType:Int = 0;
+			switch (type.toLowerCase()) {
+				case 'boyfriend' | 'bf' | 'player':
+					charType = 0;
+				case 'dad' | 'opponent' | '0':
+					charType = 1;
+				case 'gf' | 'girlfriend' | '1':
+					charType = 2;
+				default:
+					charType = 0;
+			}
+			PlayState.instance.removeCharacter(name, charType);
+		});
+
 		Lua_helper.add_callback(lua, "startCountdown", function(variable:String) {
 			PlayState.instance.startCountdown();
 		});
@@ -793,24 +823,32 @@ class FunkinLua {
 			return FlxG.mouse.getScreenPosition(cam).y;
 		});
 		Lua_helper.add_callback(lua, "characterPlayAnim", function(character:String, anim:String, ?forced:Bool = false) {
-			switch(character.toLowerCase()) {
-				case 'dad':
-					if(PlayState.instance.dad.animOffsets.exists(anim))
-						PlayState.instance.dad.playAnim(anim, forced);
-				case 'gf' | 'girlfriend':
-					if(PlayState.instance.gf.animOffsets.exists(anim))
-						PlayState.instance.gf.playAnim(anim, forced);
-				default: 
-					if(PlayState.instance.boyfriend.animOffsets.exists(anim))
-						PlayState.instance.boyfriend.playAnim(anim, forced);
+			var leChar:Character;
+			if (PlayState.instance.dadMap.exists(character)) {
+				leChar = PlayState.instance.dadMap.get(character);
+			} else if (PlayState.instance.boyfriendMap.exists(character)) {
+				leChar = PlayState.instance.boyfriendMap.get(character);
+			} else if (PlayState.instance.gfMap.exists(character)) {
+				leChar = PlayState.instance.gfMap.get(character);
+			} else {
+				leChar = PlayState.instance.dad;
 			}
+
+			leChar.playAnim(anim, forced);
 		});
 		Lua_helper.add_callback(lua, "characterDance", function(character:String) {
-			switch(character.toLowerCase()) {
-				case 'dad': PlayState.instance.dad.dance();
-				case 'gf' | 'girlfriend': PlayState.instance.gf.dance();
-				default: PlayState.instance.boyfriend.dance();
+			var leChar:Character;
+			if (PlayState.instance.dadMap.exists(character)) {
+				leChar = PlayState.instance.dadMap.get(character);
+			} else if (PlayState.instance.boyfriendMap.exists(character)) {
+				leChar = PlayState.instance.boyfriendMap.get(character);
+			} else if (PlayState.instance.gfMap.exists(character)) {
+				leChar = PlayState.instance.gfMap.get(character);
+			} else {
+				leChar = PlayState.instance.dad;
 			}
+
+			leChar.dance();
 		});
 
 		Lua_helper.add_callback(lua, "makeLuaSprite", function(tag:String, image:String, x:Float, y:Float) {
