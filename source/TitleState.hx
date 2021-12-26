@@ -188,6 +188,9 @@ class TitleState extends MusicBeatState
 			MusicBeatState.switchState(new FlashingState());
 		} else {
 			#if desktop
+			#if sys
+			ArtemisIntegration.initialize();
+			#end
 			DiscordClient.initialize();
 			Application.current.onExit.add (function (exitCode) {
 				DiscordClient.shutdown();
