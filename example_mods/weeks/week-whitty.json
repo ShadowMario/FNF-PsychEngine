@@ -1,5 +1,6 @@
 {
 	"storyName": "Whitty",
+	"difficulties": "Normal, Hard, Insane, Expert",
 	"hideFreeplay": false,
 	"weekBackground": "no_menu_background",
 	"freeplayColor": [

@@ -1,14 +1,20 @@
 {
 	"storyName": "Week 3 B-Sides",
+	"difficulties": "Hard, Insane",
 	"hideFreeplay": false,
 	"weekBackground": "philly",
-	"weekBefore": "week2-bsides",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
+	"weekBefore": "week2-bsides",
 	"startUnlocked": true,
+	"weekCharacters": [
+		"pico",
+		"bf",
+		"gf"
+	],
 	"songs": [
 		[
 			"Pico-b",
@@ -39,10 +45,5 @@
 		]
 	],
 	"hideStoryMode": false,
-	"weekCharacters": [
-		"pico",
-		"bf",
-		"gf"
-	],
 	"weekName": "week3-bsides"
 }

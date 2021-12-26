@@ -1,14 +1,16 @@
 {
 	"storyName": "Week 5 B-Sides",
+	"difficulties": "Hard",
 	"hideFreeplay": false,
 	"weekBackground": "christmas",
+	"weekBefore": "week4-bsides",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
-	"weekBefore": "week4-bsides",
 	"startUnlocked": true,
+	"hideStoryMode": false,
 	"weekCharacters": [
 		"parents-christmas",
 		"bf",
@@ -43,6 +45,5 @@
 			]
 		]
 	],
-	"hideStoryMode": false,
 	"weekName": "week5-bsides"
 }

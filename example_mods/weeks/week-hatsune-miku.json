@@ -1,5 +1,6 @@
 {
 	"storyName": "Hatsune Miku",
+	"difficulties": "Normal, Hard",
 	"hideFreeplay": false,
 	"weekBackground": "no_menu_background",
 	"freeplayColor": [

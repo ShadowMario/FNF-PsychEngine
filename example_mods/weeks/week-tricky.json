@@ -1,5 +1,6 @@
 {
 	"storyName": "Tricky",
+	"difficulties": "Normal, Hard, Insane",
 	"hideFreeplay": false,
 	"weekBackground": "no_menu_background",
 	"freeplayColor": [

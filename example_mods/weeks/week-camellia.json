@@ -1,5 +1,6 @@
 {
 	"storyName": "Camellia Week 1",
+	"difficulties": "Normal, Hard, Insane",
 	"hideFreeplay": false,
 	"weekBackground": "no_menu_background",
 	"weekBefore": "week6-bsides",

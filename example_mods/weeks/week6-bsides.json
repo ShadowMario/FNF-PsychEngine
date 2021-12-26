@@ -1,14 +1,20 @@
 {
 	"storyName": "Week 6 B-Sides",
+	"difficulties": "Hard, Insane",
 	"hideFreeplay": false,
 	"weekBackground": "school",
-	"weekBefore": "week5-bsides",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
+	"weekBefore": "week5-bsides",
 	"startUnlocked": true,
+	"weekCharacters": [
+		"senpai",
+		"bf",
+		"gf"
+	],
 	"songs": [
 		[
 			"Senpai-b",
@@ -39,10 +45,5 @@
 		]
 	],
 	"hideStoryMode": false,
-	"weekCharacters": [
-		"senpai",
-		"bf",
-		"gf"
-	],
 	"weekName": "week6-bsides"
 }

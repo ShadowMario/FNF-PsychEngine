@@ -1,14 +1,16 @@
 {
 	"storyName": "bob",
+	"difficulties": "Hard, Insane",
 	"hideFreeplay": false,
 	"weekBackground": "no_menu_background",
+	"weekBefore": "week6-bsides",
 	"freeplayColor": [
 		25,
 		28,
 		56
 	],
-	"weekBefore": "week6-bsides",
 	"startUnlocked": true,
+	"hideStoryMode": true,
 	"weekCharacters": [
 		"no_menu_character",
 		"no_menu_character",
@@ -25,6 +27,5 @@
 			]
 		]
 	],
-	"hideStoryMode": true,
 	"weekName": "week-bob"
 }

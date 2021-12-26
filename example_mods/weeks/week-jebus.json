@@ -45,6 +45,7 @@
 		"no_menu_character"
 	],
 	"storyName": "Jebus",
+	"difficulties": "Normal, Hard, Insane, Expert",
 	"weekName": "week-jebus",
 	"freeplayColor": [
 		146,

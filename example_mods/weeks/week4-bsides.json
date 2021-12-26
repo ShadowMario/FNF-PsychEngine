@@ -1,14 +1,20 @@
 {
 	"storyName": "Week 4 B-Sides",
+	"difficulties": "Hard, Insane",
 	"hideFreeplay": false,
 	"weekBackground": "limo",
-	"weekBefore": "week3-bsides",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
+	"weekBefore": "week3-bsides",
 	"startUnlocked": true,
+	"weekCharacters": [
+		"mom",
+		"bf",
+		"gf"
+	],
 	"songs": [
 		[
 			"Satin-Panties-b",
@@ -39,10 +45,5 @@
 		]
 	],
 	"hideStoryMode": false,
-	"weekCharacters": [
-		"mom",
-		"bf",
-		"gf"
-	],
 	"weekName": "week4-bsides"
 }
