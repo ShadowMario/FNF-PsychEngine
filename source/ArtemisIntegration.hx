@@ -92,4 +92,32 @@ class ArtemisIntegration {
             request.request (true);
         }
     }
+
+    public static function sendSongData () {
+        if (artemisAvailable) {
+            trace (ArtemisSongData.getJson ());
+            var request = new haxe.Http (fnfEndpoints + "SetSongData");
+            request.setPostData (ArtemisSongData.getJson ());
+            request.request (true);
+        }
+    }
+
+    public static function setHealthbarColors (dadColor:FlxColor, bfColor:FlxColor) {
+        ArtemisSongData.dadColor = StringTools.hex (dadColor);
+        ArtemisSongData.bfColor = StringTools.hex (bfColor);
+    }
+}
+
+class ArtemisSongData {
+    public static var dadColor:String = "#00000000";
+    public static var bfColor:String = "#00000000";
+    public static var leftNoteColor:String = "#C24B99";
+    public static var downNoteColor:String = "#00FFFF";
+    public static var upNoteColor:String = "#12FA05";
+    public static var rightNoteColor:String = "#12FA05";
+
+    public static function getJson ():String {
+        return Json.stringify ({DadHealthHex: dadColor, BfHealthHex: bfColor,
+            LeftNoteHex: leftNoteColor, DownNoteHex: downNoteColor, UpNoteHex: upNoteColor, RightNoteHex: rightNoteColor});
+    }
 }

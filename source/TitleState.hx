@@ -190,6 +190,7 @@ class TitleState extends MusicBeatState
 			#if desktop
 			#if sys
 			ArtemisIntegration.initialize();
+			ArtemisIntegration.sendSongData ();
 			#end
 			DiscordClient.initialize();
 			Application.current.onExit.add (function (exitCode) {
