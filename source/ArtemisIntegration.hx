@@ -72,7 +72,6 @@ class ArtemisIntegration {
 
     public static function sendBoyfriendHealth (health:Float) {
         if (artemisAvailable) {
-            trace (health);
             var request = new haxe.Http (fnfEndpoints + "SetHealth");
             request.setPostData (Std.string (health));
             request.request (true);
