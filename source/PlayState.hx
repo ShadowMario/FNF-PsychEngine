@@ -1337,23 +1337,23 @@ class PlayState extends MusicBeatState
 			inCutscene = true;
 			CoolUtil.precacheSound('dialogue');
 			CoolUtil.precacheSound('dialogueClose');
-			var doof:DialogueBoxPsych = new DialogueBoxPsych(dialogueFile, song);
-			doof.scrollFactor.set();
+			psychDialogue = new DialogueBoxPsych(dialogueFile, song);
+			psychDialogue.scrollFactor.set();
 			if(endingSong) {
-				doof.finishThing = function() {
+				psychDialogue.finishThing = function() {
 					psychDialogue = null;
 					endSong();
 				}
 			} else {
-				doof.finishThing = function() {
+				psychDialogue.finishThing = function() {
 					psychDialogue = null;
 					startCountdown();
 				}
 			}
-			doof.nextDialogueThing = startNextDialogue;
-			doof.skipDialogueThing = skipDialogue;
-			doof.cameras = [camHUD];
-			add(doof);
+			psychDialogue.nextDialogueThing = startNextDialogue;
+			psychDialogue.skipDialogueThing = skipDialogue;
+			psychDialogue.cameras = [camHUD];
+			add(psychDialogue);
 		} else {
 			FlxG.log.warn('Your dialogue file is badly formatted!');
 			if(endingSong) {
