@@ -1,5 +1,6 @@
 {
 	"storyName": "Fat-Ass Mod Specials",
+	"difficulties": "Normal, Hard, Insane, Expert, Hank",
 	"hideFreeplay": false,
 	"weekBackground": "no_menu_background",
 	"freeplayColor": [
@@ -11,16 +12,7 @@
 	"startUnlocked": true,
 	"songs": [
 		[
-			"glazomer",
-			"fatassmod",
-			[
-				255,
-				140,
-				0
-			]
-		],
-		[
-			"crescendo",
+			"inundation-ass",
 			"fatassmod",
 			[
 				255,
