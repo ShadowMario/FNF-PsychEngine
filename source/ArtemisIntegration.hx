@@ -15,9 +15,11 @@ class ArtemisIntegration {
     public static inline var ArtemisAPIUrlDirectory:String = "C:/ProgramData/Artemis";
     public static inline var ArtemisAPIUrlFile:String = "./webserver.txt";
     public static inline var ArtemisAPIPluginEndpoints:String = "plugins/endpoints";
+    public static inline var THETHINGIMADE:String = "plugins/84c5243c-5492-4965-940c-4ce006524c06/";
 
     public static var artemisApiUrl:String = "http://localhost:9696/";
     public static var artemisAvailable:Bool = false;
+    public static var fnfEndpoints:String = "http://localhost:9696/plugins/84c5243c-5492-4965-940c-4ce006524c06/";
 
     public static function initialize ():Void {
         #if sys
@@ -47,6 +49,7 @@ class ArtemisIntegration {
                         trace ("AHA that's a json response, assuming it's artemis");
                         // TODO: probably should add a check to make sure it's an actual artemis server and not just some random ass webserver that happens to match this criteria
 
+                        fnfEndpoints = artemisApiUrl + THETHINGIMADE;
                         artemisAvailable = true;
                     } catch (e) {
                         // yep nope if it's not json then it's definitely not what we're looking for
@@ -65,5 +68,14 @@ class ArtemisIntegration {
             trace ("nope nevermind, it probably isn't installed (directory's not there)");
         } // none of this is working but it's very obviously something that should be implemented because statistically people are not going to have artemis
         #end
+    }
+
+    public static function sendBoyfriendHealth (health:Float) {
+        if (artemisAvailable) {
+            trace (health);
+            var request = new haxe.Http (fnfEndpoints + "SetHealth");
+            request.setPostData (Std.string (health));
+            request.request (true);
+        }
     }
 }

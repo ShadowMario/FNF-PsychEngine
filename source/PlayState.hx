@@ -2318,6 +2318,7 @@ class PlayState extends MusicBeatState
 		if (!ClientPrefs.noReset && controls.RESET && !inCutscene && !endingSong)
 		{
 			health = 0;
+			ArtemisIntegration.sendBoyfriendHealth (health);
 			trace("RESET = True");
 		}
 		doDeathCheck();
@@ -3632,6 +3633,7 @@ class PlayState extends MusicBeatState
 		combo = 0;
 
 		health -= daNote.missHealth * healthLoss;
+		ArtemisIntegration.sendBoyfriendHealth (health);
 		if(instakillOnMiss)
 		{
 			vocals.volume = 0;
@@ -3669,6 +3671,7 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.stunned)
 		{
 			health -= 0.05 * healthLoss;
+			ArtemisIntegration.sendBoyfriendHealth (health);
 			if(instakillOnMiss)
 			{
 				vocals.volume = 0;
@@ -3796,6 +3799,7 @@ class PlayState extends MusicBeatState
 				if(combo > 9999) combo = 9999;
 			}
 			health += note.hitHealth * healthGain;
+			ArtemisIntegration.sendBoyfriendHealth (health);
 
 			if(!note.noAnimation) {
 				var daAlt = '';
