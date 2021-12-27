@@ -1,0 +1,40 @@
+{
+	"storyName": "VS Impostor",
+	"difficulties": "Normal, Hard",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"weekBefore": "week6-bsides",
+	"freeplayColor": [
+		25,
+		28,
+		56
+	],
+	"startUnlocked": true,
+	"hideStoryMode": true,
+	"songs": [
+		[
+			"reactor",
+			"impostor-green",
+			[
+				40,
+				91,
+				40
+			]
+		],
+		[
+			"sussy-bussy",
+			"impostor-pixel",
+			[
+				115,
+				51,
+				67
+			]
+		]
+	],
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"weekName": "week-impostor"
+}

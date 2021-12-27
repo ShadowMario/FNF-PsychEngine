@@ -70,8 +70,8 @@
 	"no_antialiasing": true,
 	"image": "characters/gfPixel-demon",
 	"position": [
-		0,
-		0
+		50,
+		70
 	],
 	"healthicon": "gf-demon",
 	"flip_x": false,
@@ -85,5 +85,5 @@
 		80
 	],
 	"sing_duration": 4,
-	"scale": 5.99999999999999
+	"scale": 5.5
 }

@@ -1,0 +1,18 @@
+{
+	"song": {
+		"speed": 2.7,
+		"stage": "school",
+		"player1": "bfPixel-bsides",
+		"player2": "impostor-pixel",
+		"player3": null,
+		"events": [],
+		"notes": [],
+		"splashSkin": null,
+		"validScore": false,
+		"gfVersion": "gfPixel-demon",
+		"bpm": 132,
+		"arrowSkin": null,
+		"needsVoices": true,
+		"song": "Sussy Bussy"
+	}
+}
