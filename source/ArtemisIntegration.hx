@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxColor;
 import haxe.Json;
 #if sys
 import haxe.Http;
@@ -51,6 +52,8 @@ class ArtemisIntegration {
 
                         fnfEndpoints = artemisApiUrl + THETHINGIMADE;
                         artemisAvailable = true;
+
+                        setBackgroundColor ("#FF000000");
                     } catch (e) {
                         // yep nope if it's not json then it's definitely not what we're looking for
                         // just assume it's a random ass webserver and don't enable integration
@@ -74,6 +77,18 @@ class ArtemisIntegration {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetHealth");
             request.setPostData (Std.string (health));
+            request.request (true);
+        }
+    }
+
+    public static function setBackgroundFlxColor (color:FlxColor) {
+        setBackgroundColor (StringTools.hex (color));
+    }
+
+    public static function setBackgroundColor (hexCode:String) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetBackgroundHex");
+            request.setPostData (hexCode);
             request.request (true);
         }
     }

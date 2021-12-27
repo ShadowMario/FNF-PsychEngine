@@ -144,6 +144,7 @@ class CreditsState extends MusicBeatState
 
 		bg.color = getCurrentBGColor();
 		intendedColor = bg.color;
+		ArtemisIntegration.setBackgroundFlxColor (intendedColor);
 		changeSelection();
 		super.create();
 	}
@@ -198,6 +199,7 @@ class CreditsState extends MusicBeatState
 				colorTween.cancel();
 			}
 			intendedColor = newColor;
+			ArtemisIntegration.setBackgroundFlxColor (intendedColor);
 			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
 				onComplete: function(twn:FlxTween) {
 					colorTween = null;

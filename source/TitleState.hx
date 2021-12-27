@@ -194,6 +194,7 @@ class TitleState extends MusicBeatState
 			DiscordClient.initialize();
 			Application.current.onExit.add (function (exitCode) {
 				DiscordClient.shutdown();
+				ArtemisIntegration.setBackgroundColor ("#00000000");
 			});
 			#end
 			new FlxTimer().start(1, function(tmr:FlxTimer)

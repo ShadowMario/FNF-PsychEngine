@@ -586,6 +586,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 
 		bg.color = FlxColor.WHITE;
+		ArtemisIntegration.setBackgroundColor ("#FFFFFFFF");
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();

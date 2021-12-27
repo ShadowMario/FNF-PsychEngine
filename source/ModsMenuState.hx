@@ -338,6 +338,7 @@ class ModsMenuState extends MusicBeatState
 			bg.color = mods[curSelected].color;
 
 		intendedColor = bg.color;
+		ArtemisIntegration.setBackgroundFlxColor (intendedColor);
 		changeSelection();
 		updatePosition();
 
@@ -508,6 +509,7 @@ class ModsMenuState extends MusicBeatState
 				colorTween.cancel();
 			}
 			intendedColor = newColor;
+			ArtemisIntegration.setBackgroundFlxColor (intendedColor);
 			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
 				onComplete: function(twn:FlxTween) {
 					colorTween = null;

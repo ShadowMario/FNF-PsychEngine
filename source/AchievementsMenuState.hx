@@ -37,6 +37,7 @@ class AchievementsMenuState extends MusicBeatState
 		menuBG.screenCenter();
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
+		ArtemisIntegration.setBackgroundColor ("#FF9271FD");
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
