@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sky-manifest-stage-animated.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Stage0000" x="0" y="0" width="2131" height="1171"/>
+	<SubTexture name="Stage0001" x="2131" y="0" width="2131" height="1171"/>
+	<SubTexture name="Stage0002" x="4262" y="0" width="2131" height="1171"/>
+	<SubTexture name="Stage0003" x="0" y="1171" width="2131" height="1171"/>
+	<SubTexture name="Stage0004" x="0" y="1171" width="2131" height="1171"/>
+	<SubTexture name="Stage0005" x="0" y="1171" width="2131" height="1171"/>
+	<SubTexture name="Stage0006" x="0" y="1171" width="2131" height="1171"/>
+	<SubTexture name="Stage0007" x="0" y="1171" width="2131" height="1171"/>
+</TextureAtlas>

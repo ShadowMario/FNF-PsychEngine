@@ -1,0 +1,49 @@
+{
+	"storyName": "Sky",
+	"difficulties": "Hard",
+	"hideFreeplay": false,
+	"weekBackground": "no_menu_background",
+	"weekBefore": "week6-bsides",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"songs": [
+		[
+			"wife-forever",
+			"sky",
+			[
+				51,
+				204,
+				255
+			]
+		],
+		[
+			"sky",
+			"sky",
+			[
+				31,
+				184,
+				235
+			]
+		],
+		[
+			"manifest",
+			"sky",
+			[
+				11,
+				164,
+				215
+			]
+		]
+	],
+	"weekCharacters": [
+		"no_menu_character",
+		"no_menu_character",
+		"no_menu_character"
+	],
+	"hideStoryMode": true,
+	"weekName": "week-sky"
+}
