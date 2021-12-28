@@ -96,6 +96,11 @@ class CreditsState extends MusicBeatState
 			['PolybiusProxy',		'polybiusproxy',	'.MP4 Video Loader Extension',							'https://twitter.com/polybiusproxy',	'FFEAA6'],
 			['Keoiki',				'keoiki',			'Note Splash Animations',								'https://twitter.com/Keoiki_',			'FFFFFF'],
 			[''],
+			['Extra features']
+			['Sector03',			'generic',			'Hitsound Toggle.',										'LINK',			'FFFFFF'],
+			['Tposejank'			'generic',			'Anti-mash Toggle.',									'https://twitter.com/tposejank',			'FFFFFF'],
+			['lemz1'				'generic',			'Play Opponents Chart',									'LINK',			'FFFFFF'],
+			[''],
 			["Funkin' Crew"],
 			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",					'https://twitter.com/ninja_muffin99',	'F73838'],
 			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",						'https://twitter.com/PhantomArcade3K',	'FFBB1B'],
