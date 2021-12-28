@@ -222,17 +222,8 @@ class AchievementObject extends FlxSpriteGroup
 		add(achievementName);
 		add(achievementText);
 		add(achievementIcon);
-
-		var cam:Array<FlxCamera> = FlxCamera.defaultCameras;
-		if (camera != null)
-		{
-			cam = [camera];
-		}
+		
 		alpha = 0;
-		achievementBG.cameras = cam;
-		achievementName.cameras = cam;
-		achievementText.cameras = cam;
-		achievementIcon.cameras = cam;
 		alphaTween = FlxTween.tween(this, {alpha: 1}, 0.5, {
 			onComplete: function(twn:FlxTween)
 			{
