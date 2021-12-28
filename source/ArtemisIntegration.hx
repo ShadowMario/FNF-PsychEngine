@@ -95,7 +95,6 @@ class ArtemisIntegration {
 
     public static function sendSongData () {
         if (artemisAvailable) {
-            trace (ArtemisSongData.getJson ());
             var request = new haxe.Http (fnfEndpoints + "SetSongData");
             request.setPostData (ArtemisSongData.getJson ());
             request.request (true);
@@ -105,6 +104,48 @@ class ArtemisIntegration {
     public static function setHealthbarColors (dadColor:FlxColor, bfColor:FlxColor) {
         ArtemisSongData.dadColor = StringTools.hex (dadColor);
         ArtemisSongData.bfColor = StringTools.hex (bfColor);
+    }
+
+    public static function setBeat (beat:Int) {
+        var request = new haxe.Http (fnfEndpoints + "SetBeat");
+        request.setPostData (Std.string (beat));
+        request.request (true);
+    }
+
+    public static function setMeasure (measure:Int) {
+        var request = new haxe.Http (fnfEndpoints + "SetMeasure");
+        request.setPostData (Std.string (measure));
+        request.request (true);
+    }
+
+    public static function setCombo (combo:Int) {
+        var request = new haxe.Http (fnfEndpoints + "SetCombo");
+        request.setPostData (Std.string (combo));
+        request.request (true);
+    }
+
+    public static function setFullCombo (fullCombo:Bool) {
+        var request = new haxe.Http (fnfEndpoints + "SetFullCombo");
+        request.setPostData (Std.string (fullCombo));
+        request.request (true);
+    }
+
+    public static function setGameState (gameState:String) {
+        var request = new haxe.Http (fnfEndpoints + "SetGameState");
+        request.setPostData (gameState);
+        request.request (true);
+    }
+
+    public static function setModName (modName:String) {
+        var request = new haxe.Http (fnfEndpoints + "SetModName");
+        request.setPostData (modName);
+        request.request (true);
+    }
+
+    public static function setStageName (stageName:String) {
+        var request = new haxe.Http (fnfEndpoints + "SetStageName");
+        request.setPostData (stageName);
+        request.request (true);
     }
 }
 

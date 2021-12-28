@@ -264,6 +264,7 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+
 		#if MODS_ALLOWED
 		Paths.destroyLoadedImages();
 		#end
@@ -322,6 +323,11 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
+		// tell artemis that the game has in fact started and give it bf's default health (usually 1 but like what if it isn't)
+		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
+		else ArtemisIntegration.setGameState ("in-game freeplay");
+		ArtemisIntegration.sendBoyfriendHealth (health);
+
 		#if desktop
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
 
@@ -376,6 +382,8 @@ class PlayState extends MusicBeatState
 				girlfriend: [400, 130],
 				opponent: [100, 100]
 			};
+
+			ArtemisIntegration.setBackgroundColor ("#00000000");
 		}
 
 		defaultCamZoom = stageData.defaultZoom;
@@ -390,6 +398,8 @@ class PlayState extends MusicBeatState
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
 		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
+
+		ArtemisIntegration.setStageName (curStage);
 
 		switch (curStage)
 		{
@@ -3634,6 +3644,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 		combo = 0;
+		ArtemisIntegration.setCombo (combo);
 
 		health -= daNote.missHealth * healthLoss;
 		ArtemisIntegration.sendBoyfriendHealth (health);
@@ -3688,6 +3699,7 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			}
 			combo = 0;
+			ArtemisIntegration.setCombo (combo);
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
@@ -3800,6 +3812,7 @@ class PlayState extends MusicBeatState
 				combo += 1;
 				popUpScore(note);
 				if(combo > 9999) combo = 9999;
+				ArtemisIntegration.setCombo (combo);
 			}
 			health += note.hitHealth * healthGain;
 			ArtemisIntegration.sendBoyfriendHealth (health);
@@ -4122,6 +4135,9 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
+		ArtemisIntegration.setBeat (curBeat);
+		if (curBeat % 4 == 0) ArtemisIntegration.setMeasure (Std.int (curBeat / 4));
+
 		if (generatedMusic)
 		{
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
@@ -4323,6 +4339,9 @@ class PlayState extends MusicBeatState
 			if (bads > 0 || shits > 0) ratingFC = "FC";
 			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
 			else if (songMisses >= 10) ratingFC = "Clear";
+
+			if (songMisses > 0) ArtemisIntegration.setFullCombo (false);
+			else ArtemisIntegration.setFullCombo (true);
 		}
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);

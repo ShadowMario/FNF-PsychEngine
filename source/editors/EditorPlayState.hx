@@ -730,6 +730,7 @@ class EditorPlayState extends MusicBeatState
 				combo += 1;
 				songHits++;
 				if(combo > 9999) combo = 9999;
+				ArtemisIntegration.setCombo (combo);
 			}
 
 			playerStrums.forEach(function(spr:StrumNote)
@@ -755,6 +756,7 @@ class EditorPlayState extends MusicBeatState
 	function noteMiss(direction:Int = 1):Void
 	{
 		combo = 0;
+		ArtemisIntegration.setCombo (combo);
 
 		//songScore -= 10;
 		songMisses++;
