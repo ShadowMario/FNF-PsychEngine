@@ -3842,7 +3842,7 @@ class PlayState extends MusicBeatState
 			}
 			health += note.hitHealth * healthGain;
 
-			if (!note.isSustainNote && ClientPrefs.hitSounds) FlxG.sound.play(Paths.sound('hitsound'), 0.7);
+			if (!note.isSustainNote && ClientPrefs.hitSounds) FlxG.sound.play(Paths.sound('hitsound'), 1);
 
 			if(!note.noAnimation) {
 				var daAlt = '';

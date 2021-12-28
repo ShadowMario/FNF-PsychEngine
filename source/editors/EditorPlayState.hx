@@ -729,7 +729,7 @@ class EditorPlayState extends MusicBeatState
 				combo += 1;
 				songHits++;
 				if(combo > 9999) combo = 9999;
-				if (ClientPrefs.hitSounds) FlxG.sound.play(Paths.sound('hitsound'), 0.7);
+				if (ClientPrefs.hitSounds) FlxG.sound.play(Paths.sound('hitsound'), 1);
 			}
 
 			playerStrums.forEach(function(spr:StrumNote)
