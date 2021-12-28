@@ -3629,6 +3629,8 @@ class PlayState extends MusicBeatState
 				note.destroy();
 			}
 		});
+
+		if (daNote.isSustainNote && daNote.parentNote.tooLate) return;
 		combo = 0;
 
 		health -= daNote.missHealth * healthLoss;
