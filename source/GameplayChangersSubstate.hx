@@ -39,12 +39,18 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 	function getOptions()
 	{
+		var goption:GameplayOption = new GameplayOption('Scroll Type', 'scrolltype', 'string', 1, ["multiplicative", "constant"]);
+		optionsArray.push(goption);
+
 		var option:GameplayOption = new GameplayOption('Scroll Speed', 'scrollspeed', 'float', 1);
 		option.scrollSpeed = 1.5;
 		option.minValue = 0.5;
 		option.maxValue = 3;
 		option.changeValue = 0.1;
-		option.displayFormat = '%vX';
+		if (goption.getValue() != "constant")
+			option.displayFormat = '%vX';
+		else
+			option.displayFormat = "%v";
 		optionsArray.push(option);
 
 		/*var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
@@ -79,6 +85,17 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
 		optionsArray.push(option);
+	}
+
+	public function getOptionByName(name:String)
+	{
+		for(i in optionsArray)
+		{
+			var opt:GameplayOption = i;
+			if (opt.name == name)
+				return opt;
+		}
+		return null;
 	}
 
 	public function new()
@@ -212,6 +229,22 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 									curOption.curOption = num;
 									curOption.setValue(curOption.options[num]); //lol
+
+									
+									if (curOption.name == "Scroll Type")
+									{
+										var oOption:GameplayOption = getOptionByName("Scroll Speed");
+										if (oOption != null)
+										{
+											if (curOption.getValue() == "constant")
+											{
+												oOption.displayFormat = "%v";
+											}
+											else
+												oOption.displayFormat = "%vX";
+											updateTextFrom(oOption);
+										}
+									}
 									//trace(curOption.options[num]);
 							}
 							updateTextFrom(curOption);
