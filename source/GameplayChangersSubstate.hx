@@ -229,7 +229,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 									curOption.curOption = num;
 									curOption.setValue(curOption.options[num]); //lol
-
 									
 									if (curOption.name == "Scroll Type")
 									{
