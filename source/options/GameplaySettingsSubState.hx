@@ -43,15 +43,22 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', //Name
-			'If checked, notes go Down instead of Up, simple enough.', //Description
+			'Changes the direction of the notes to fall down.', //Description
 			'downScroll', //Save data variable name
 			'bool', //Variable type
-			false); //Default value
+			true); //Default value
 		addOption(option);
 
 		var option:Option = new Option('Middlescroll',
-			'If checked, your notes get centered.',
+			'Moves your play area to the center of the screen.',
 			'middleScroll',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('Hitsounds', // Credits to Sector03
+			'Plays a sound whenever a note is hit, like in osu!\nAdd your own .ogg file to the "/mods/sounds" folder and name it "hitsound"\nto change hitsound.',
+			'hitSounds',
 			'bool',
 			false);
 		addOption(option);
@@ -63,10 +70,9 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		var option:Option = new Option('Hitsounds',
-			'Check this to make a sound whenever a note is hit.',
-			'hitSounds',
-			'bool',
+		var option:Option = new Option('No Anti-Mash', // Credits to tposejank
+			"If checked, The Anti-Mash protection will be disabled.\nDon't brag about completing a song when this is checked.",
+			'noAntimash',
 			false);
 		addOption(option);
 
@@ -133,12 +139,12 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Safe Frames',
-			'Changes how many frames you have for\nhitting a note earlier or late.',
+			'Changes how many frames you have for\nhitting a note earlier or late.\nIf you want to get better, then 5 frames are great to improve your accuracy.',
 			'safeFrames',
 			'float',
 			10);
 		option.scrollSpeed = 5;
-		option.minValue = 2;
+		option.minValue = 0;
 		option.maxValue = 10;
 		option.changeValue = 0.1;
 		addOption(option);
