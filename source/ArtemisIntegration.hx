@@ -45,7 +45,7 @@ class ArtemisIntegration {
                         // do one final check to make sure we didn't just connect to some random ass webserver
                         var r = ~/[\x{200B}-\x{200D}\x{FEFF}]/g;
                         var trimmedData = r.replace (data, ''); // when the web request returns with a zero width space at the start for no fucking reason
-                        trace ("recieved response from what i think/hopefully is the artemis webserver:" + trimmedData);
+                        // trace ("recieved response from what i think/hopefully is the artemis webserver:" + trimmedData);
                         try {
                             var response = haxe.Json.parse (trimmedData);
 
