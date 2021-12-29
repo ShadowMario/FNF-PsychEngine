@@ -329,10 +329,7 @@ class PlayState extends MusicBeatState
 		else ArtemisIntegration.setGameState ("in-game freeplay");
 		ArtemisIntegration.sendBoyfriendHealth (health);
 		ArtemisIntegration.setCombo (0);
-		// in case there's no background configured for this week it will just set the background to its freeplay color instead
-		if (WeekData.getCurrentWeek() != null) ArtemisIntegration.setBackgroundFlxColor (
-			FlxColor.fromRGB (WeekData.getCurrentWeek().freeplayColor[0], WeekData.getCurrentWeek().freeplayColor[1], WeekData.getCurrentWeek().freeplayColor[2]));
-		else ArtemisIntegration.setBackgroundColor ("#00000000"); // and if all else fails just use no color and just show the overlays over the user's default artemis layout
+		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
 
 		#if desktop
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
