@@ -99,8 +99,33 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.onChange = onChangeFPSCounter;
 		#end
 
+		#if desktop
+		var option:Option = new Option('Enable Artemis',
+			'Cool colors for your RGB stuff. https://github.com/skedgyedgy/Artemis.Plugins',
+			'enableArtemis',
+			'bool',
+			true);
+		addOption(option);
+		option.onChange = onToggleArtemis;
+		#end
+
 		super();
 	}
+
+	#if desktop
+	function onToggleArtemis()
+	{
+		if (ClientPrefs.enableArtemis) {
+			ArtemisIntegration.initialize();
+			ArtemisIntegration.setBackgroundColor ("#FFEA71FD");
+			ArtemisIntegration.setGameState ("menu");
+		} else {
+			ArtemisIntegration.setBackgroundColor ("#00000000");
+			ArtemisIntegration.setGameState ("closed");
+			ArtemisIntegration.artemisAvailable = false;
+		}
+	}
+	#end
 
 	#if !mobile
 	function onChangeFPSCounter()
