@@ -328,6 +328,7 @@ class PlayState extends MusicBeatState
 		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
 		else ArtemisIntegration.setGameState ("in-game freeplay");
 		ArtemisIntegration.sendBoyfriendHealth (health);
+		ArtemisIntegration.setCombo (0);
 
 		#if desktop
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
