@@ -128,6 +128,14 @@ class ArtemisIntegration {
         }
     }
 
+    public static function fadeToBlack (enable:Bool) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "FadeToBlack");
+            request.setPostData (Std.string (enable));
+            request.request (true);
+        }
+    }
+
     public static function sendSongData () {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetSongData");
