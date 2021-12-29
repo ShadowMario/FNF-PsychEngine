@@ -93,6 +93,48 @@ class ArtemisIntegration {
         }
     }
 
+    public static function setAccentColor1 (hexCode:String) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetAccent1Hex");
+            request.setPostData (hexCode);
+            request.request (true);
+        }
+    }
+
+    public static function setAccentColor2 (hexCode:String) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetAccent2Hex");
+            request.setPostData (hexCode);
+            request.request (true);
+        }
+    }
+
+    public static function setBlammedLights (hexCode:String) {
+        if (artemisAvailable) {
+            // the effect is triggered whenever this value changes so if the color is the same this wouldn't work otherwise
+            var request = new haxe.Http (fnfEndpoints + "SetBlammedHex");
+            request.setPostData ("#00000000");
+            request.request (true);
+            
+            request = new haxe.Http (fnfEndpoints + "SetBlammedHex");
+            request.setPostData (hexCode);
+            request.request (true);
+        }
+    }
+
+    public static function setFlashColor (hexCode:String) {
+        if (artemisAvailable) {
+            // the effect is triggered whenever this value changes so if the color is the same this wouldn't work otherwise
+            var request = new haxe.Http (fnfEndpoints + "FlashColorHex");
+            request.setPostData ("#00000000");
+            request.request (true);
+
+            request = new haxe.Http (fnfEndpoints + "FlashColorHex");
+            request.setPostData (hexCode);
+            request.request (true);
+        }
+    }
+
     public static function sendSongData () {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetSongData");

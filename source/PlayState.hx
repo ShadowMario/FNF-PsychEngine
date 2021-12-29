@@ -1,5 +1,6 @@
 package;
 
+import haxe.macro.Expr.Case;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -2737,6 +2738,8 @@ class PlayState extends MusicBeatState
 							phillyCityLightsEvent.members[lightId - 1].alpha = 1;
 						}
 					}
+
+					ArtemisIntegration.setBlammedLights (StringTools.hex (color));
 				} else {
 					if(blammedLightsBlack.alpha != 0) {
 						if(blammedLightsBlackTween != null) {
@@ -4028,6 +4031,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(ClientPrefs.flashing) {
+			ArtemisIntegration.setFlashColor ("#FFFFFFBF");
 			halloweenWhite.alpha = 0.4;
 			FlxTween.tween(halloweenWhite, {alpha: 0.5}, 0.075);
 			FlxTween.tween(halloweenWhite, {alpha: 0}, 0.25, {startDelay: 0.15});
@@ -4232,6 +4236,22 @@ class PlayState extends MusicBeatState
 					});
 
 					curLight = FlxG.random.int(0, phillyCityLights.length - 1, [curLight]);
+
+					// man it would sure be a shame if all the philly lights were individual files rather than one desaturated image that's tinted the right color
+					// which i could just grab the tint color from and forward it to the client. that'd be so inconvenient, wouldn't it?
+					switch (curLight)
+					{
+						case 0:
+							ArtemisIntegration.setAccentColor1 ("#FF31A2FD");
+						case 1:
+							ArtemisIntegration.setAccentColor1 ("#FF31FD8C");
+						case 2:
+							ArtemisIntegration.setAccentColor1 ("#FFFB33F5");
+						case 3:
+							ArtemisIntegration.setAccentColor1 ("#FFFD4531");
+						case 4:
+							ArtemisIntegration.setAccentColor1 ("#FFFBA633");
+					}
 
 					phillyCityLights.members[curLight].visible = true;
 					phillyCityLights.members[curLight].alpha = 1;
