@@ -191,11 +191,13 @@ class TitleState extends MusicBeatState
 			#if sys
 			ArtemisIntegration.initialize();
 			ArtemisIntegration.sendSongData ();
+			ArtemisIntegration.setGameState ("title");
 			#end
 			DiscordClient.initialize();
 			Application.current.onExit.add (function (exitCode) {
 				DiscordClient.shutdown();
 				ArtemisIntegration.setBackgroundColor ("#00000000");
+				ArtemisIntegration.setGameState ("closed");
 			});
 			#end
 			new FlxTimer().start(1, function(tmr:FlxTimer)
