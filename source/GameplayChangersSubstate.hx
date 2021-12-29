@@ -39,18 +39,23 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 	function getOptions()
 	{
-		var goption:GameplayOption = new GameplayOption('Scroll Type', 'scrolltype', 'string', 1, ["multiplicative", "constant"]);
+		var goption:GameplayOption = new GameplayOption('Scroll Type', 'scrolltype', 'string', 'multiplicative', ["multiplicative", "constant"]);
 		optionsArray.push(goption);
 
 		var option:GameplayOption = new GameplayOption('Scroll Speed', 'scrollspeed', 'float', 1);
 		option.scrollSpeed = 1.5;
 		option.minValue = 0.5;
-		option.maxValue = 3;
 		option.changeValue = 0.1;
 		if (goption.getValue() != "constant")
+		{
 			option.displayFormat = '%vX';
+			option.maxValue = 3;
+		}
 		else
+		{
 			option.displayFormat = "%v";
+			option.maxValue = 6;
+		}
 		optionsArray.push(option);
 
 		/*var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
@@ -238,9 +243,14 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 											if (curOption.getValue() == "constant")
 											{
 												oOption.displayFormat = "%v";
+												oOption.maxValue = 6;
 											}
 											else
+											{
 												oOption.displayFormat = "%vX";
+												oOption.maxValue = 3;
+												if(oOption.getValue() > 3) oOption.setValue(3);
+											}
 											updateTextFrom(oOption);
 										}
 									}
@@ -286,6 +296,17 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 						if(leOption.type == 'string')
 						{
 							leOption.curOption = leOption.options.indexOf(leOption.getValue());
+						}
+						updateTextFrom(leOption);
+					}
+
+					if(leOption.name == 'Scroll Speed')
+					{
+						leOption.displayFormat = "%vX";
+						leOption.maxValue = 3;
+						if(leOption.getValue() > 3)
+						{
+							leOption.setValue(3);
 						}
 						updateTextFrom(leOption);
 					}
