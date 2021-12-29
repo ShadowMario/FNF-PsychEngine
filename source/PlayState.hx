@@ -1,6 +1,5 @@
 package;
 
-import js.lib.intl.DateTimeFormat.WeekdayRepresentation;
 import haxe.macro.Expr.Case;
 #if desktop
 import Discord.DiscordClient;
