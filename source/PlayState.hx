@@ -157,6 +157,7 @@ class PlayState extends MusicBeatState
 	public var timeBar:FlxBar;
 	
 	public var sicks:Int = 0;
+	public var greats:Int = 0;
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
@@ -3321,8 +3322,12 @@ class PlayState extends MusicBeatState
 				score = 200;
 				totalNotesHit += 0.75;
 				goods++;
-			case "sick": // sick
+			case "great": // same as sick but awards less points //Lulu
 				score = 300;
+				totalNotesHit += 1;
+				greats++;
+			case "sick": // sick
+				score = 320;
 				totalNotesHit += 1;
 				sicks++;
 		}
@@ -4379,7 +4384,8 @@ class PlayState extends MusicBeatState
 
 			// Rating FC
 			ratingFC = "";
-			if (sicks > 0) ratingFC = "SFC";
+			if (sicks > 0) ratingFC = "PFC";
+			if (greats > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
 			if (bads > 0 || shits > 0) ratingFC = "FC";
 			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";

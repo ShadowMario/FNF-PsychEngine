@@ -55,7 +55,8 @@ class ClientPrefs {
 	public static var keSustains:Bool = false; //i was bored, okay?
 	public static var noAntimash:Bool = false;
 	public static var ratingOffset:Int = 0;
-	public static var sickWindow:Int = 45;
+	public static var sickWindow:Int = 22;
+	public static var greatWindow:Int = 45;
 	public static var goodWindow:Int = 90;
 	public static var badWindow:Int = 135;
 	public static var safeFrames:Float = 10;
@@ -120,6 +121,7 @@ class ClientPrefs {
 		FlxG.save.data.noAntimash = noAntimash; // Credits to tposejank
 		FlxG.save.data.ratingOffset = ratingOffset;
 		FlxG.save.data.sickWindow = sickWindow;
+		FlxG.save.data.greatWindow = greatWindow;
 		FlxG.save.data.goodWindow = goodWindow;
 		FlxG.save.data.badWindow = badWindow;
 		FlxG.save.data.safeFrames = safeFrames;
@@ -223,6 +225,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.sickWindow != null) {
 			sickWindow = FlxG.save.data.sickWindow;
+		}
+		if(FlxG.save.data.greatWindow != null) {
+			greatWindow = FlxG.save.data.greatWindow;
 		}
 		if(FlxG.save.data.goodWindow != null) {
 			goodWindow = FlxG.save.data.goodWindow;

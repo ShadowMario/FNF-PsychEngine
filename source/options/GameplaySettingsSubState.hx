@@ -105,36 +105,48 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.maxValue = 30;
 		addOption(option);
 
-		var option:Option = new Option('Sick! Hit Window',
-			'Changes the amount of time you have\nfor hitting a "Sick!" in miliseconds.',
+		var option:Option = new Option('Perfect Sick! Hit Window',
+			'Changes the amount of time you have\nfor hitting a "Perfect Sick!" in miliseconds.\nDefault is 22, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
 			'sickWindow',
+			'int',
+			22);
+		option.displayFormat = '%vms';
+		option.scrollSpeed = 5;
+		option.minValue = 11;
+		option.maxValue = 22;
+		addOption(option);
+
+		var option:Option = new Option('Sick! Hit Window',
+			'Changes the amount of time you have\nfor hitting a "Sick!" in miliseconds.\nDefault is 45, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
+			'greatWindow',
 			'int',
 			45);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 15;
-		option.minValue = 15;
+		option.minValue = 23;
 		option.maxValue = 45;
 		addOption(option);
+		
 
 		var option:Option = new Option('Good Hit Window',
-			'Changes the amount of time you have\nfor hitting a "Good" in miliseconds.',
+			'Changes the amount of time you have\nfor hitting a "Good" in miliseconds. Default is 90, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
 			'goodWindow',
 			'int',
 			90);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 30;
-		option.minValue = 15;
+		option.minValue = 45;
 		option.maxValue = 90;
 		addOption(option);
 
 		var option:Option = new Option('Bad Hit Window',
-			'Changes the amount of time you have\nfor hitting a "Bad" in miliseconds.',
+			'Changes the amount of time you have\nfor hitting a "Bad" in miliseconds. Default is 135, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
 			'badWindow',
 			'int',
 			135);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 60;
-		option.minValue = 15;
+		option.minValue = 68;
 		option.maxValue = 135;
 		addOption(option);
 
