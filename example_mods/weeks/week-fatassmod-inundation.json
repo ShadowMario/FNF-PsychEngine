@@ -1,6 +1,6 @@
 {
-	"storyName": "Fat-Ass Mod Specials",
-	"difficulties": "Normal, Hard, Insane, Expert, Hank",
+	"storyName": "Fat-Ass Mod Specials Inundation",
+	"difficulties": "Normal, Hard, Insane, Expert",
 	"hideFreeplay": false,
 	"weekBackground": "no_menu_background",
 	"freeplayColor": [
@@ -27,5 +27,5 @@
 		"no_menu_character",
 		"no_menu_character"
 	],
-	"weekName": "week-fatassmod"
+	"weekName": "week-fatassmod-inundation"
 }

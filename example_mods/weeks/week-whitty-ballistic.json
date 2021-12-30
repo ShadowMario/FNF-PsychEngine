@@ -1,6 +1,6 @@
 {
-	"storyName": "Whitty",
-	"difficulties": "Normal, Hard",
+	"storyName": "Whitty Ballistic",
+	"difficulties": "Normal, Hard, Insane, Expert",
 	"hideFreeplay": false,
 	"weekBackground": "no_menu_background",
 	"freeplayColor": [
@@ -18,23 +18,14 @@
 	],
 	"songs": [
 		[
-			"overhead",
-			"whitty",
+			"ballistic-old",
+			"whitty-ballistic",
 			[
-				175,
-				80,
-				80
-			]
-		],
-		[
-			"lo-fight",
-			"whitty",
-			[
-				175,
-				80,
-				80
+				166,
+				40,
+				40
 			]
 		]
 	],
-	"weekName": "week-whitty"
+	"weekName": "week-whitty-ballistic"
 }
