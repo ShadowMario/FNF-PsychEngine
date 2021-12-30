@@ -2687,6 +2687,8 @@ class PlayState extends MusicBeatState
 							color = 0xfff96d63;
 						case 5: //Orange
 							color = 0xfffba633;
+						case 6: // Random color i chose just for fun also when i typed the beggining there were two fives lol
+							color = 0xFF0C5259;
 					}
 					curLightEvent = lightId;
 
