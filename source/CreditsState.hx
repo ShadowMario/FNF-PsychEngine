@@ -100,6 +100,7 @@ class CreditsState extends MusicBeatState
 			['Sector03',			'generic',			'Hitsound Toggle.',										'LINK',			'FFFFFF'],
 			['Tposejank',			'generic',			'Anti-mash Toggle.',									'https://twitter.com/tposejank',		'FFFFFF'],
 			['lemz1',				'generic',			'Play Opponents Chart',									'LINK',			'FFFFFF'],
+			['KadeDev',				'generic',			'Improved Scroll Speed options',						'https://github.com/KadeDev',			'FFFFFF'],
 			[''],
 			["Funkin' Crew"],
 			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",					'https://twitter.com/ninja_muffin99',	'F73838'],
