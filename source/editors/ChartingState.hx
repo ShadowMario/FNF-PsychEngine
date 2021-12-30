@@ -579,8 +579,6 @@ class ChartingState extends MusicBeatState
 		var difficultyDropDown = new FlxUIDropDownMenuCustom(stageDropDown.x, player3DropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(CoolUtil.difficulties, true), function(difficulty:String)
 		{
 			var newDifficulty:String = CoolUtil.difficulties[Std.parseInt(difficulty)].toLowerCase();
-			trace("Current difficulty: " + CoolUtil.difficulties[PlayState.storyDifficulty]);
-			trace("New diffculty: " + newDifficulty);
 			PlayState.storyDifficulty = Std.parseInt(difficulty);
 			if (newDifficulty != 'normal')
 			{
