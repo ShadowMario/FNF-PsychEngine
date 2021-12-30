@@ -3312,7 +3312,7 @@ class PlayState extends MusicBeatState
 		{
 			case "shit": // shit
 				score = 50;
-				totalNotesHit += 0;
+				totalNotesHit += 0.25;
 				shits++;
 			case "bad": // bad
 				score = 100;
