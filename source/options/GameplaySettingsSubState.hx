@@ -106,7 +106,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Perfect Sick! Hit Window',
-			'Changes the amount of time you have\nfor hitting a "Perfect Sick!" in miliseconds.\nDefault is 22, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
+			'Changes the amount of time you have\nfor hitting a "Perfect Sick!" in milliseconds.\nDefault is 22, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
 			'sickWindow',
 			'int',
 			22);
@@ -117,7 +117,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Sick! Hit Window',
-			'Changes the amount of time you have\nfor hitting a "Sick!" in miliseconds.\nDefault is 45, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
+			'Changes the amount of time you have\nfor hitting a "Sick!" in milliseconds.\nDefault is 45, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
 			'greatWindow',
 			'int',
 			45);
@@ -129,7 +129,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		
 
 		var option:Option = new Option('Good Hit Window',
-			'Changes the amount of time you have\nfor hitting a "Good" in miliseconds. Default is 90, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
+			'Changes the amount of time you have\nfor hitting a "Good" in milliseconds. Default is 90, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
 			'goodWindow',
 			'int',
 			90);
@@ -140,7 +140,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Bad Hit Window',
-			'Changes the amount of time you have\nfor hitting a "Bad" in miliseconds. Default is 135, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
+			'Changes the amount of time you have\nfor hitting a "Bad" in milliseconds. Default is 135, the same value as Judge 4 in StepMania/Etterna.\nSetting this to lowest value = Judge 7.',
 			'badWindow',
 			'int',
 			135);
