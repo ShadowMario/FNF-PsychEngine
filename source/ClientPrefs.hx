@@ -241,7 +241,7 @@ class ClientPrefs {
 		if(FlxG.save.data.controllerMode != null) {
 			controllerMode = FlxG.save.data.controllerMode;
 		}
-		if(FlxG.save.data.hitSounds != null) {
+		if(FlxG.save.data.hitSounds != null) {  // Credits to Sector03
 			hitSounds = FlxG.save.data.hitSounds;
 		}
 		if(FlxG.save.data.gameplaySettings != null)
