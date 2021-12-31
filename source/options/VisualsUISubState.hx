@@ -118,6 +118,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		if (ClientPrefs.enableArtemis) {
 			ArtemisIntegration.initialize();
 			ArtemisIntegration.setBackgroundColor ("#FFEA71FD");
+			ArtemisIntegration.setFadeColor ("#FF000000");
 			ArtemisIntegration.setGameState ("menu");
 		} else {
 			ArtemisIntegration.setBackgroundColor ("#00000000");

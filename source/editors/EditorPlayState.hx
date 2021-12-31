@@ -756,7 +756,7 @@ class EditorPlayState extends MusicBeatState
 	function noteMiss(direction:Int = 1):Void
 	{
 		combo = 0;
-		ArtemisIntegration.setCombo (combo);
+		ArtemisIntegration.breakCombo ();
 
 		//songScore -= 10;
 		songMisses++;

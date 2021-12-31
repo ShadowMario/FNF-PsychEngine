@@ -325,13 +325,6 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
-		// tell artemis that the game has in fact started and give it bf's default health (usually 1 but like what if it isn't)
-		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
-		else ArtemisIntegration.setGameState ("in-game freeplay");
-		ArtemisIntegration.sendBoyfriendHealth (health);
-		ArtemisIntegration.setCombo (0);
-		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
-
 		#if desktop
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
 
@@ -403,7 +396,14 @@ class PlayState extends MusicBeatState
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
 		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
 
+		// tell artemis all the things it needs to know
 		ArtemisIntegration.setStageName (curStage);
+		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
+		else ArtemisIntegration.setGameState ("in-game freeplay");
+		ArtemisIntegration.sendBoyfriendHealth (health);
+		ArtemisIntegration.setIsPixelStage (isPixelStage);
+		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
+		ArtemisIntegration.startSong ();
 
 		switch (curStage)
 		{
@@ -2609,6 +2609,7 @@ class PlayState extends MusicBeatState
 				#if desktop
 				// Game Over doesn't get his own variable because it's only used here
 				DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+				ArtemisIntegration.setGameState ("dead");
 				#end
 				isDead = true;
 				return true;
@@ -3664,7 +3665,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 		combo = 0;
-		ArtemisIntegration.setCombo (combo);
+		ArtemisIntegration.breakCombo ();
 
 		health -= daNote.missHealth * healthLoss;
 		ArtemisIntegration.sendBoyfriendHealth (health);
@@ -3719,7 +3720,7 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			}
 			combo = 0;
-			ArtemisIntegration.setCombo (combo);
+			ArtemisIntegration.breakCombo ();
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
@@ -4048,7 +4049,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(ClientPrefs.flashing) {
-			ArtemisIntegration.setFlashColor ("#FFFFFFBF");
+			ArtemisIntegration.setFlashColor ("#FFFFFFEF");
 			halloweenWhite.alpha = 0.4;
 			FlxTween.tween(halloweenWhite, {alpha: 0.5}, 0.075);
 			FlxTween.tween(halloweenWhite, {alpha: 0}, 0.25, {startDelay: 0.15});
@@ -4157,7 +4158,6 @@ class PlayState extends MusicBeatState
 		}
 
 		ArtemisIntegration.setBeat (curBeat);
-		if (curBeat % 4 == 0) ArtemisIntegration.setMeasure (Std.int (curBeat / 4));
 
 		if (generatedMusic)
 		{
@@ -4376,9 +4376,6 @@ class PlayState extends MusicBeatState
 			if (bads > 0 || shits > 0) ratingFC = "FC";
 			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
 			else if (songMisses >= 10) ratingFC = "Clear";
-
-			if (songMisses > 0) ArtemisIntegration.setFullCombo (false);
-			else ArtemisIntegration.setFullCombo (true);
 		}
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);

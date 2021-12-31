@@ -191,6 +191,8 @@ class TitleState extends MusicBeatState
 			#if sys
 			ArtemisIntegration.initialize();
 			ArtemisIntegration.setGameState ("title");
+			ArtemisIntegration.setModName ("vanilla");
+			ArtemisIntegration.setFadeColor ("#FF000000");
 			#end
 			DiscordClient.initialize();
 			Application.current.onExit.add (function (exitCode) {

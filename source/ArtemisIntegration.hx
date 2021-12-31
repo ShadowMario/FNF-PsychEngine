@@ -111,6 +111,22 @@ class ArtemisIntegration {
             request.request (true);
         }
     }
+    
+    public static function setAccentColor3 (hexCode:String) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetAccent3Hex");
+            request.setPostData (hexCode);
+            request.request (true);
+        }
+    }
+    
+    public static function setAccentColor4 (hexCode:String) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetAccent4Hex");
+            request.setPostData (hexCode);
+            request.request (true);
+        }
+    }
 
     public static function setBlammedLights (hexCode:String) {
         if (artemisAvailable) {
@@ -128,9 +144,17 @@ class ArtemisIntegration {
         }
     }
 
-    public static function fadeToBlack (enable:Bool) {
+    public static function setFadeColor (hexCode:String) {
         if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "FadeToBlack");
+            var request = new haxe.Http (fnfEndpoints + "SetFadeHex");
+            request.setPostData (hexCode);
+            request.request (true);
+        }
+    }
+
+    public static function toggleFade (enable:Bool) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "ToggleFade");
             request.setPostData (Std.string (enable));
             request.request (true);
         }
@@ -160,38 +184,64 @@ class ArtemisIntegration {
     }
 
     public static function setBeat (beat:Int) {
-        var request = new haxe.Http (fnfEndpoints + "SetBeat");
-        request.setPostData (Std.string (beat));
-        request.request (true);
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetBeat");
+            request.setPostData (Std.string (beat));
+            request.request (true);
+        }
     }
 
     public static function setCombo (combo:Int) {
-        var request = new haxe.Http (fnfEndpoints + "SetCombo");
-        request.setPostData (Std.string (combo));
-        request.request (true);
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetCombo");
+            request.setPostData (Std.string (combo));
+            request.request (true);
+        }
     }
 
-    public static function setFullCombo (fullCombo:Bool) {
-        var request = new haxe.Http (fnfEndpoints + "SetFullCombo");
-        request.setPostData (Std.string (fullCombo));
-        request.request (true);
+    public static function breakCombo () {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "BreakCombo");
+            request.request (true);
+        }
+    }
+
+    public static function startSong () {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "StartSong");
+            request.request (true);
+        }
     }
 
     public static function setGameState (gameState:String) {
-        var request = new haxe.Http (fnfEndpoints + "SetGameState");
-        request.setPostData (gameState);
-        request.request (true);
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetGameState");
+            request.setPostData (gameState);
+            request.request (true);
+        }
     }
 
     public static function setModName (modName:String) {
-        var request = new haxe.Http (fnfEndpoints + "SetModName");
-        request.setPostData (modName);
-        request.request (true);
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetModName");
+            request.setPostData (modName);
+            request.request (true);
+        }
     }
 
     public static function setStageName (stageName:String) {
-        var request = new haxe.Http (fnfEndpoints + "SetStageName");
-        request.setPostData (stageName);
-        request.request (true);
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetStageName");
+            request.setPostData (stageName);
+            request.request (true);
+        }
+    }
+
+    public static function setIsPixelStage (isPixelStage:Bool) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetIsPixelStage");
+            request.setPostData (Std.string (isPixelStage));
+            request.request (true);
+        }
     }
 }
