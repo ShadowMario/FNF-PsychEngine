@@ -16,7 +16,7 @@
 	"weekBefore": "week5",
 	"weekName": "Week 6",
 	"startUnlocked": true,
-
+	"difficulties": "Normal, Hard",
 	"hideStoryMode": false,
 	"hideFreeplay": false
 }

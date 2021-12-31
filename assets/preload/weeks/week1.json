@@ -16,7 +16,7 @@
 	"weekBefore": "tutorial",
 	"weekName": "Week 1",
 	"startUnlocked": true,
-
+	"difficulties": "Normal, Hard",
 	"hideStoryMode": false,
 	"hideFreeplay": false
 }
