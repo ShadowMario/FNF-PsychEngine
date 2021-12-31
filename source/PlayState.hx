@@ -2964,6 +2964,41 @@ class PlayState extends MusicBeatState
 						}
 					});
 				}
+				
+			case 'Change Hurt Amount':
+				var val1:Float = Std.parseFloat(value1);
+				var val2:Float = Std.parseFloat(value2);
+			
+				if(Math.isNaN(val1))
+					val1 = 0.3;
+				else
+					val1 = Math.abs(val1);
+			
+				if(Math.isNaN(val2))
+					val2 = 0.1;
+				else
+					val2 = Math.abs(val2);
+			
+				for (note in notes)
+				{
+					if(note.noteType == "Hurt Note")
+					{
+						if(note.isSustainNote)
+							note.missHealth = val2;
+						else
+							note.missHealth = val1;
+					}
+				}
+				for (note in unspawnNotes)
+				{
+					if(note.noteType == "Hurt Note")
+					{
+						if(note.isSustainNote)
+							note.missHealth = val2;
+						else
+							note.missHealth = val1;                
+					}
+				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
