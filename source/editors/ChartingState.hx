@@ -576,16 +576,21 @@ class ChartingState extends MusicBeatState
 			postfix = '-' + CoolUtil.difficulties[PlayState.storyDifficulty].toLowerCase();
 		}
 
-		var difficultyDropDown = new FlxUIDropDownMenuCustom(stageDropDown.x, player3DropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(CoolUtil.difficulties, true), function(difficulty:String)
+		var difficultyDropDown = new FlxUIDropDownMenuCustom(stageDropDown.x, player3DropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(CoolUtil.defaultDifficulties, true), function(difficulty:String)
 		{
-			var newDifficulty:String = CoolUtil.difficulties[Std.parseInt(difficulty)].toLowerCase();
+			var newDifficulty:String = CoolUtil.defaultDifficulties[Std.parseInt(difficulty)].toLowerCase();
 			PlayState.storyDifficulty = Std.parseInt(difficulty);
-			if (newDifficulty != 'normal')
-			{
+			if (newDifficulty != 'normal') {
 				postfix = '-' + newDifficulty;
+			} else {
+				postfix = '';
 			}
-			PlayState.SONG = Song.loadFromJson(_song.song.toLowerCase() + postfix, _song.song.toLowerCase());
-			MusicBeatState.resetState();
+			try {
+				PlayState.SONG = Song.loadFromJson(_song.song.toLowerCase() + postfix, _song.song.toLowerCase());
+				MusicBeatState.resetState();
+			} catch (e:Any) {
+				trace("File " + _song.song.toLowerCase() + postfix + " is not found.");
+			}
 		});
 		difficultyDropDown.selectedLabel = CoolUtil.difficulties[PlayState.storyDifficulty];
 		blockPressWhileScrolling.push(difficultyDropDown);
