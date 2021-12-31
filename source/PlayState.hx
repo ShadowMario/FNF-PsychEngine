@@ -1217,8 +1217,7 @@ class PlayState extends MusicBeatState
 		var bfColor:FlxColor = FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]);
 		healthBar.createFilledBar(dadColor, bfColor);
 		
-		ArtemisIntegration.setHealthbarColors (dadColor, bfColor);
-		ArtemisIntegration.sendSongData ();
+		ArtemisIntegration.setHealthbarFlxColors (dadColor, bfColor);
 		healthBar.updateBar();
 	}
 

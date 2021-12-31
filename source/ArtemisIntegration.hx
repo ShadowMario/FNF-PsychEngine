@@ -136,28 +136,32 @@ class ArtemisIntegration {
         }
     }
 
-    public static function sendSongData () {
+    public static function setDadHealthColor (dadHex:String) {
         if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "SetSongData");
-            request.setPostData (ArtemisSongData.getJson ());
+            var request = new haxe.Http (fnfEndpoints + "SetDadHex");
+            request.setPostData (dadHex);
             request.request (true);
         }
     }
 
-    public static function setHealthbarColors (dadColor:FlxColor, bfColor:FlxColor) {
-        ArtemisSongData.dadColor = StringTools.hex (dadColor);
-        ArtemisSongData.bfColor = StringTools.hex (bfColor);
+    public static function setBfHealthColor (bfHex:String) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetBFHex");
+            request.setPostData (bfHex);
+            request.request (true);
+        }
+    }
+
+    public static function setHealthbarFlxColors (dadColor:FlxColor, bfColor:FlxColor) {
+        if (artemisAvailable) {
+            setDadHealthColor (StringTools.hex (dadColor));
+            setBfHealthColor (StringTools.hex (bfColor));
+        }
     }
 
     public static function setBeat (beat:Int) {
         var request = new haxe.Http (fnfEndpoints + "SetBeat");
         request.setPostData (Std.string (beat));
-        request.request (true);
-    }
-
-    public static function setMeasure (measure:Int) {
-        var request = new haxe.Http (fnfEndpoints + "SetMeasure");
-        request.setPostData (Std.string (measure));
         request.request (true);
     }
 
@@ -189,19 +193,5 @@ class ArtemisIntegration {
         var request = new haxe.Http (fnfEndpoints + "SetStageName");
         request.setPostData (stageName);
         request.request (true);
-    }
-}
-
-class ArtemisSongData {
-    public static var dadColor:String = "#00000000";
-    public static var bfColor:String = "#00000000";
-    public static var leftNoteColor:String = "#C24B99";
-    public static var downNoteColor:String = "#00FFFF";
-    public static var upNoteColor:String = "#12FA05";
-    public static var rightNoteColor:String = "#12FA05";
-
-    public static function getJson ():String {
-        return Json.stringify ({DadHealthHex: dadColor, BfHealthHex: bfColor,
-            LeftNoteHex: leftNoteColor, DownNoteHex: downNoteColor, UpNoteHex: upNoteColor, RightNoteHex: rightNoteColor});
     }
 }
