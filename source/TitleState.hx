@@ -392,11 +392,11 @@ class TitleState extends MusicBeatState
 			path = null;
 		}
 		if (path != null){
-			moddedFullText = File.getContent(path);
+			moddedFullText = "\n" + File.getContent(path);
 		}
 		#end
 
-		var fullText:String = Assets.getText(Paths.txt('introText') #if MODS_ALLOWED + (moddedFullText != '' ? '\n' + moddedFullText : '') #end);
+		var fullText:String = Assets.getText(Paths.txt('introText') #if MODS_ALLOWED + moddedFullText #end);
 		// trace(fullText);
 
 		var firstArray:Array<String> = fullText.split('\n');
