@@ -86,8 +86,6 @@ class ChartingState extends MusicBeatState
 	];
 
 	var _file:FileReference;
-	
-	var postfix:String = '';
 
 	var UI_box:FlxUITabMenu;
 
@@ -571,28 +569,17 @@ class ChartingState extends MusicBeatState
 		stageDropDown.selectedLabel = _song.stage;
 		blockPressWhileScrolling.push(stageDropDown);
 		
-		if (CoolUtil.difficulties[PlayState.storyDifficulty].toLowerCase() != 'normal')
-		{
-			postfix = '-' + CoolUtil.difficulties[PlayState.storyDifficulty].toLowerCase();
-		}
-
 		var difficultyDropDown = new FlxUIDropDownMenuCustom(stageDropDown.x, player3DropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(CoolUtil.defaultDifficulties, true), function(difficulty:String)
 		{
-			var newDifficulty:String = CoolUtil.defaultDifficulties[Std.parseInt(difficulty)].toLowerCase();
 			PlayState.storyDifficulty = Std.parseInt(difficulty);
-			if (newDifficulty != 'normal') {
-				postfix = '-' + newDifficulty;
-			} else {
-				postfix = '';
-			}
 			try {
-				PlayState.SONG = Song.loadFromJson(_song.song.toLowerCase() + postfix, _song.song.toLowerCase());
+				PlayState.SONG = Song.loadFromJson(_song.song.toLowerCase() + CoolUtil.getDifficultyFilePath(), _song.song.toLowerCase());
 				MusicBeatState.resetState();
 			} catch (e:Any) {
-				trace("File " + _song.song.toLowerCase() + postfix + " is not found.");
+				trace("File " + _song.song.toLowerCase() + CoolUtil.getDifficultyFilePath() + " is not found.");
 			}
 		});
-		difficultyDropDown.selectedLabel = CoolUtil.difficulties[PlayState.storyDifficulty];
+		difficultyDropDown.selectedLabel = CoolUtil.defaultDifficulties[PlayState.storyDifficulty];
 		blockPressWhileScrolling.push(difficultyDropDown);
 
 		var skin = PlayState.SONG.arrowSkin;
@@ -2636,7 +2623,7 @@ class ChartingState extends MusicBeatState
 
 	function loadJson(song:String):Void
 	{
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase() + postfix, song.toLowerCase());
+		PlayState.SONG = Song.loadFromJson(song.toLowerCase() + CoolUtil.getDifficultyFilePath(), song.toLowerCase());
 		MusicBeatState.resetState();
 	}
 
@@ -2668,7 +2655,7 @@ class ChartingState extends MusicBeatState
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + postfix + ".json");
+			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + CoolUtil.getDifficultyFilePath() + ".json");
 		}
 	}
 	
