@@ -25,7 +25,7 @@ class OutdatedState extends MusicBeatState
 
 		warnText = new FlxText(0, 0, FlxG.width,
 			"It looks like you're running an   \n
-			outdated version of Fat-Ass Mod (" + MainMenuState.psychEngineVersion + "),\n
+			outdated version of Fat-Ass Mod (" + MainMenuState.fatassVersion + "),\n
 			please update to " + TitleState.updateVersion + "!\n
 			\n
 			Thank you for using the Fat-Ass Client!",

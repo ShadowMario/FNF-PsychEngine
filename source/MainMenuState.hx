@@ -25,7 +25,8 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '0.5.1'; //This is also used for Discord RPC
+	public static var fatassVersion:String = '1.2.0'; //This is also used for Discord RPC
+	public static var psychEngineVersion:String = '0.5.1';
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -125,6 +126,11 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
+		
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Fat-Ass Mod Compilation v" + fatassVersion, 12);
+		versionShit.scrollFactor.set();
+		versionShit.setFormat("Rubik Medium", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionShit);
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("Rubik Medium", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
