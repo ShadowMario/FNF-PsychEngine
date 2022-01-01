@@ -20,6 +20,7 @@ import flixel.util.FlxColor;
 import flixel.FlxBasic;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.utils.Assets;
 import flixel.math.FlxMath;
@@ -1545,6 +1546,17 @@ class FunkinLua {
 			FlxG.sound.music.fadeOut(duration, toValue);
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
+		
+		
+		
+		//SHADER SHIT
+		
+		Lua_helper.add_callback(lua, "addShader", function(tag:String, shaderType:String) {
+			
+		});
+		Lua_helper.add_callback(lua, "removeShader", function(tag:String, shaderType:String) {
+			
+		});
 
 		Discord.DiscordClient.addLuaCallbacks(lua);
 
@@ -1617,7 +1629,7 @@ class FunkinLua {
 			PlayState.instance.modchartTweens.remove(tag);
 		}
 	}
-
+	
 	function tweenShit(tag:String, vars:String) {
 		cancelTween(tag);
 		var variables:Array<String> = vars.replace(' ', '').split('.');
