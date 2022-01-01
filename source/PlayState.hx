@@ -1028,8 +1028,8 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
-		versionShit = new FlxText(0, FlxG.height - 24, 0, SONG.song + " - " + CoolUtil.difficultyString() + " | Fat-Ass Mod Compilation: v" + MainMenuState.fatassVersion, 16);
-		versionShit.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionShit = new FlxText(0, FlxG.height - 16, 0, SONG.song + " - " + CoolUtil.difficultyString() + " | Fat-Ass Mod Compilation: v" + MainMenuState.fatassVersion, 12);
+		versionShit.setFormat(Paths.font("rubik.ttf"), 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.scrollFactor.set();
 		add(versionShit);
 
