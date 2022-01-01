@@ -91,14 +91,17 @@ class MusicBeatState extends FlxUIState
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
 		if(!FlxTransitionableState.skipNextTransIn) {
+			ArtemisIntegration.toggleFade (true);
 			leState.openSubState(new CustomFadeTransition(0.7, false));
 			if(nextState == FlxG.state) {
 				CustomFadeTransition.finishCallback = function() {
+					ArtemisIntegration.toggleFade (false);
 					FlxG.resetState();
 				};
 				//trace('resetted');
 			} else {
 				CustomFadeTransition.finishCallback = function() {
+					ArtemisIntegration.toggleFade (false);
 					FlxG.switchState(nextState);
 				};
 				//trace('changed state');

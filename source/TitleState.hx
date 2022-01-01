@@ -188,9 +188,17 @@ class TitleState extends MusicBeatState
 			MusicBeatState.switchState(new FlashingState());
 		} else {
 			#if desktop
+			#if sys
+			ArtemisIntegration.initialize();
+			ArtemisIntegration.setGameState ("title");
+			ArtemisIntegration.setModName ("vanilla");
+			ArtemisIntegration.setFadeColor ("#FF000000");
+			#end
 			DiscordClient.initialize();
 			Application.current.onExit.add (function (exitCode) {
 				DiscordClient.shutdown();
+				ArtemisIntegration.setBackgroundColor ("#00000000");
+				ArtemisIntegration.setGameState ("closed");
 			});
 			#end
 			new FlxTimer().start(1, function(tmr:FlxTimer)
@@ -446,6 +454,8 @@ class TitleState extends MusicBeatState
 				transitioning = true;
 				// FlxG.sound.music.stop();
 
+				ArtemisIntegration.triggerFlash ("#3FFFFFFF");
+
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
 					if (mustUpdate) {
@@ -645,6 +655,7 @@ class TitleState extends MusicBeatState
 		{
 			remove(ngSpr);
 
+			ArtemisIntegration.triggerFlash ("#FFFFFFFF");
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 			skippedIntro = true;

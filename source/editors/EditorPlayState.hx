@@ -69,6 +69,7 @@ class EditorPlayState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set();
 		bg.color = FlxColor.fromHSB(FlxG.random.int(0, 359), FlxG.random.float(0, 0.8), FlxG.random.float(0.3, 1));
+		ArtemisIntegration.setBackgroundFlxColor (bg.color);
 		add(bg);
 
 		keysArray = [
@@ -729,6 +730,7 @@ class EditorPlayState extends MusicBeatState
 				combo += 1;
 				songHits++;
 				if(combo > 9999) combo = 9999;
+				ArtemisIntegration.setCombo (combo);
 			}
 
 			playerStrums.forEach(function(spr:StrumNote)
@@ -754,6 +756,7 @@ class EditorPlayState extends MusicBeatState
 	function noteMiss(direction:Int = 1):Void
 	{
 		combo = 0;
+		ArtemisIntegration.breakCombo ();
 
 		//songScore -= 10;
 		songMisses++;

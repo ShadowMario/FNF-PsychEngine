@@ -1440,6 +1440,41 @@ class FunkinLua {
 			}
 		});
 
+		// Artemis functions
+		Lua_helper.add_callback(lua, "setArtemisBackgroundColor", function(color:String) {
+			ArtemisIntegration.setBackgroundColor (color);
+		});
+		Lua_helper.add_callback(lua, "setArtemisAccentColor1", function(color:String) {
+			ArtemisIntegration.setAccentColor1 (color);
+		});
+		Lua_helper.add_callback(lua, "setArtemisAccentColor2", function(color:String) {
+			ArtemisIntegration.setAccentColor2 (color);
+		});
+		Lua_helper.add_callback(lua, "setArtemisAccentColor3", function(color:String) {
+			ArtemisIntegration.setAccentColor3 (color);
+		});
+		Lua_helper.add_callback(lua, "setArtemisAccentColor4", function(color:String) {
+			ArtemisIntegration.setAccentColor4 (color);
+		});
+		Lua_helper.add_callback(lua, "triggerArtemisFlash", function(color:String) {
+			ArtemisIntegration.triggerFlash (color);
+		});
+		Lua_helper.add_callback(lua, "setArtemisFadeColor", function(color:String) {
+			ArtemisIntegration.setFadeColor (color);
+		});
+		Lua_helper.add_callback(lua, "setArtemisBlammedLights", function(color:String) {
+			ArtemisIntegration.setBlammedLights (color);
+		});
+		Lua_helper.add_callback(lua, "toggleArtemisFade", function(enable:Bool) {
+			ArtemisIntegration.toggleFade (enable);
+		});
+		Lua_helper.add_callback(lua, "setArtemisStageName", function(stageName:String) {
+			ArtemisIntegration.setStageName (stageName);
+		});
+		Lua_helper.add_callback(lua, "setArtemisIsPixelStage", function(isPixelStage:Bool) {
+			ArtemisIntegration.setIsPixelStage (isPixelStage);
+		});
+
 
 		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY
 		Lua_helper.add_callback(lua, "luaSpriteMakeGraphic", function(tag:String, width:Int, height:Int, color:String) {
