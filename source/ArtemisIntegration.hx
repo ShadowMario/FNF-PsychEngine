@@ -131,15 +131,15 @@ class ArtemisIntegration {
     public static function setBlammedLights (hexCode:String) {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetBlammedHex");
-            request.setPostData (hexCode);
+            request.setPostData (Json.stringify ({ FlashHex: hexCode, FadeTime: 1 }));
             request.request (true);
         }
     }
 
-    public static function setFlashColor (hexCode:String) {
+    public static function triggerFlash (hexCode:String) {
         if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "FlashColorHex");
-            request.setPostData (hexCode);
+            var request = new haxe.Http (fnfEndpoints + "TriggerFlash");
+            request.setPostData (Json.stringify ({ FlashHex: hexCode, FadeTime: 2 }));
             request.request (true);
         }
     }
@@ -241,6 +241,14 @@ class ArtemisIntegration {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetIsPixelStage");
             request.setPostData (Std.string (isPixelStage));
+            request.request (true);
+        }
+    }
+
+    public static function triggerCustomEvent (eventName:String, customArgColor:String, customArgInt:Int) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "TriggerCustomEvent");
+            request.setPostData (Json.stringify ({ Name: eventName, Hex: customArgColor, Num: customArgInt }));
             request.request (true);
         }
     }

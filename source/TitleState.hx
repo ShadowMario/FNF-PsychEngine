@@ -454,7 +454,7 @@ class TitleState extends MusicBeatState
 				transitioning = true;
 				// FlxG.sound.music.stop();
 
-				ArtemisIntegration.setFlashColor ("#FFFFFFFF");
+				ArtemisIntegration.triggerFlash ("#3FFFFFFF");
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
@@ -655,7 +655,7 @@ class TitleState extends MusicBeatState
 		{
 			remove(ngSpr);
 
-			ArtemisIntegration.setFlashColor ("#FFFFFFFF");
+			ArtemisIntegration.triggerFlash ("#FFFFFFFF");
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 			skippedIntro = true;

@@ -4049,7 +4049,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(ClientPrefs.flashing) {
-			ArtemisIntegration.setFlashColor ("#FFFFFFEF");
+			ArtemisIntegration.triggerFlash ("#FFFFFFEF");
 			halloweenWhite.alpha = 0.4;
 			FlxTween.tween(halloweenWhite, {alpha: 0.5}, 0.075);
 			FlxTween.tween(halloweenWhite, {alpha: 0}, 0.25, {startDelay: 0.15});
@@ -4259,15 +4259,15 @@ class PlayState extends MusicBeatState
 					switch (curLight)
 					{
 						case 0:
-							ArtemisIntegration.setAccentColor1 ("#FF31A2FD");
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FF31A2FD", curBeat);
 						case 1:
-							ArtemisIntegration.setAccentColor1 ("#FF31FD8C");
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FF31FD8C", curBeat);
 						case 2:
-							ArtemisIntegration.setAccentColor1 ("#FFFB33F5");
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FFFB33F5", curBeat);
 						case 3:
-							ArtemisIntegration.setAccentColor1 ("#FFFD4531");
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FFFD4531", curBeat);
 						case 4:
-							ArtemisIntegration.setAccentColor1 ("#FFFBA633");
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FFFBA633", curBeat);
 					}
 
 					phillyCityLights.members[curLight].visible = true;

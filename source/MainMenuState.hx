@@ -211,7 +211,7 @@ class MainMenuState extends MusicBeatState
 
 					if(ClientPrefs.flashing) {
 						FlxFlicker.flicker(magenta, 1.1, 0.15, false);
-						ArtemisIntegration.setFlashColor (StringTools.hex (magenta.color));
+						ArtemisIntegration.triggerFlash (StringTools.hex (magenta.color));
 					}
 
 					menuItems.forEach(function(spr:FlxSprite)
