@@ -227,6 +227,7 @@ class PlayState extends MusicBeatState
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
+	var versionShit;
 	var scoreTxtTween:FlxTween;
 
 	public static var campaignScore:Int = 0;
@@ -1026,6 +1027,10 @@ class PlayState extends MusicBeatState
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
+		versionShit = new FlxText(0, FlxG.height - 24, 0, SONG.song + " - " + CoolUtil.difficultyString() + " | Fat-Ass Mod Compilation v" + MainMenuState.fatassVersion, 16);
+		versionShit.setFormat(Paths.font("rubik.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionShit.scrollFactor.set();
+		add(versionShit);
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("rubik.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
