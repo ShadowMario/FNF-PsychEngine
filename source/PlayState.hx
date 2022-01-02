@@ -407,9 +407,11 @@ class PlayState extends MusicBeatState
 		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
 		
 		#if MODS_ALLOWED
-		if (Paths.currentModDirectory != null) {
+		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) {
 			var currentMod:ModMetadata = new ModMetadata (Paths.currentModDirectory);
-			ArtemisIntegration.setModName (currentMod.id);
+			if (currentMod.id == "name") ArtemisIntegration.resetModName ();
+			else ArtemisIntegration.setModName (currentMod.id);
+
 			var possibleArtemisProfilePathHahaLongVariableName:String = haxe.io.Path.join (["mods/", Paths.currentModDirectory, "/artemis/default.json"]);
 			if (sys.FileSystem.exists (possibleArtemisProfilePathHahaLongVariableName)) {
 				ArtemisIntegration.sendProfileRelativePath (possibleArtemisProfilePathHahaLongVariableName);
