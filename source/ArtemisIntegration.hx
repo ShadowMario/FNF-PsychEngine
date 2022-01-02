@@ -12,8 +12,7 @@ import sys.io.File;
 using StringTools;
 
 class ArtemisIntegration {
-    // public static inline var ArtemisAPIUrlDirectory:String = "%ProgramData%/Artemis"; // WHAT DO YOU MEAN THIS DOESN'T WORK???????
-    private static inline var ArtemisAPIUrlDirectory:String = "C:/ProgramData/Artemis";
+    private static inline var ArtemisAPIUrlDirectoryName:String = "Artemis";
     private static inline var ArtemisAPIUrlFile:String = "./webserver.txt";
     private static inline var ArtemisAPIPluginEndpoints:String = "plugins/endpoints";
     private static inline var THETHINGIMADE:String = "plugins/84c5243c-5492-4965-940c-4ce006524c06/";
@@ -29,9 +28,10 @@ class ArtemisIntegration {
             trace ("attempting to initialize artemis integration...");
             // get the file that says what the local artemis webserver's url is.
             // the file not being there is a pretty good indication that the user doesn't have artemis so if it isn't there just don't enable this integration
-            if (sys.FileSystem.exists (ArtemisAPIUrlDirectory) && sys.FileSystem.isDirectory (ArtemisAPIUrlDirectory)) {
+            var path:String = haxe.io.Path.join ([Sys.getEnv ("ProgramData"), ArtemisAPIUrlDirectoryName]);
+            if (sys.FileSystem.exists (path) && sys.FileSystem.isDirectory (path)) {
                 // is this part stupid? i'm not fluent in haxe so i have no clue if this is stupid or not i'm just rolling with what the api says
-                var path:String = haxe.io.Path.join ([ArtemisAPIUrlDirectory, ArtemisAPIUrlFile]);
+                path = haxe.io.Path.join ([path, ArtemisAPIUrlFile]);
                 if (sys.FileSystem.exists (path) && !sys.FileSystem.isDirectory (path)) {
                     artemisApiUrl = sys.io.File.getContent (path);
 
