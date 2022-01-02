@@ -13,8 +13,13 @@ import animateatlas.displayobject.SpriteMovieClip;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxFramesCollection;
 import flixel.graphics.frames.FlxFrame;
+#if desktop
 import sys.FileSystem;
 import sys.io.File;
+#else
+import js.html.FileSystem;
+import js.html.File;
+#end
 class AtlasFrameMaker extends FlxFramesCollection{
 
 
@@ -56,9 +61,11 @@ class AtlasFrameMaker extends FlxFramesCollection{
                 var animationData:AnimationData = Json.parse(Paths.getTextFromFile('images/$key/Animation.json'));
                 var atlasData:AtlasData = Json.parse(Paths.getTextFromFile('images/$key/spritemap.json'));
 				
-				
-				var paf = (Assets.exists('assets/images/$key/spritemap.png') ? 'assets/images/$key/spritemap.png' : Paths.modFolders('images/$key/spritemap.png'));
-				
+				#if MODS_ALLOWED
+				var paf = (FileSystem.exists('mods/images/$key/spritemap.png') || FileSystem.exists('mods/'+Paths.currentModDirectory+'/images/$key/spritemap.png') ? 'assets/images/$key/spritemap.png' : Paths.modFolders('images/$key/spritemap.png'));
+				#else
+				var paf = 'assets/images/$key/spritemap.png' ;
+				#end
                 var bitmapData:BitmapData = BitmapData.fromFile(paf);//new BitmapData(0,1);
 				
 				
