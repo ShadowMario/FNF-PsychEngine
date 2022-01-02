@@ -11,6 +11,16 @@ Dokki.doodlez::generic::Artist::https://twitter.com/dokkidoodlez::00897B
 Mike Geno::generic::Composer::https://www.youtube.com/channel/UCyDQKOgEjuIiuPXctcuQKlg::00897B
 KuroAo_Anomal::generic::For the horrible and out of sync charts::https://twitter.com/Kuroao_Anomal::00897B
 
+Holofunk
+KeatonHoshida::generic::Primary Animator / Creative Director / Co-Author::https://twitter.com/FoxArcana::00897B
+GGalactigal::generic::Music Director / Lead Musician / Secondary Animator::https://twitter.com/GGalactigal::00897B
+C013Huff::generic::Secondary Musician::https://twitter.com/C013Huff::00897B
+SaltyHotcakes::generic::Secondary Musician::https://twitter.com/SaltyHotcakes::00897B
+CoolStalker::generic::Primary Charter / Co-Author::https://twitter.com/TheCoolStalker::00897B
+Awoofle::generic::Lead Programmer::https://gamebanana.com/members/1878760::00897B
+Firubii::generic::Programmer::https://gamebanana.com/members/1504885::00897B
+Codexes::generic::Programmer::https://gamebanana.com/members/1875881::00897B
+
 VS Tabi ExBoyfriend
 Homskiyy::generic::Writer and Author of Tabi::https://twitter.com/Homskiyy::00897B
 Tenzubushi::generic::Composer / Artist / Sprites Editor / Charter::https://gamebanana.com/members/1803333::00897B
@@ -97,3 +107,12 @@ Juan Ignacio chotinha::generic::Animator::https://gamebanana.com/members/1918117
 VS Bob
 Wildy::generic::Programmer / Animator::https://twitter.com/wildythomas1233::00897B
 Phlox::generic::Assets::https://twitter.com/HiPhlox::00897B
+
+VS Zardy
+SwankyBox::generic::Project Leader / Animator::https://www.youtube.com/user/SwankyBox::00897B
+Rozebud::generic::Composer::https://www.youtube.com/channel/UCZsn8GXFKTdDB5TQtuR4FnA::00897B
+StarnyArt::generic::Artist::https://gamebanana.com/members/1774971::00897B
+JADS::generic::Vocal Samples::https://gamebanana.com/members/1767622::00897B
+
+VS Sky
+bb-panzu::bb-panzu::Programmer, Musician, Animator, and Artist.::https://gamebanana.com/members/1764067::00897B

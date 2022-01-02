@@ -235,7 +235,7 @@ class TitleState extends MusicBeatState
 			if(FlxG.sound.music == null) {
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 
-				FlxG.sound.music.fadeIn(4, 0, 0.7);
+				FlxG.sound.music.fadeIn(4, 0, 0.5);
 			}
 		}
 
@@ -573,58 +573,35 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 1:
-					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
-					#else
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-					#end
-				// credTextShit.visible = true;
+				case 2:
+					createCoolText(['A FNF Mod Compilation']);
+					addMoreText('by');
 				case 3:
-					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15);
-					addMoreText('RiverOaken', 15);
-					addMoreText('bb-panzu', 15);
-					#else
-					addMoreText('present');
-					#end
-				// credTextShit.text += '\npresent...';
-				// credTextShit.addText();
 				case 4:
-					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = 'In association \nwith';
-				// credTextShit.screenCenter();
+					addMoreText('AutisticLulu');
+					addMoreText('Roxbeige');
 				case 5:
-					createCoolText(['A mod compilation by'], -60);
+					deleteCoolText();
+				case 6:
+					createCoolText(['Powered by']);
 				case 7:
-					addMoreText('AutisticLulu', -60);
-					addMoreText('Roxbeige', -60);
-				// credTextShit.text += '\nNewgrounds';
+					addMoreText('Psych Engine');
 				case 8:
 					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = 'Shoutouts Tom Fulp';
-				// credTextShit.screenCenter();
 				case 9:
 					createCoolText([curWacky[0]]);
-				// credTextShit.visible = true;
-				case 11:
+				case 10:
 					addMoreText(curWacky[1]);
-				// credTextShit.text += '\nlmao';
-				case 12:
+				case 11:
 					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = "Friday";
-				// credTextShit.screenCenter();
+				case 12:
+					addMoreText('The');
 				case 13:
-					addMoreText('Friday');
-				// credTextShit.visible = true;
+					addMoreText('Fat');
 				case 14:
-					addMoreText('Night');
-				// credTextShit.text += '\nNight';
+					addMoreText('-Ass');
 				case 15:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
-
+					addMoreText('Mod Compilation');				
 				case 16:
 					skipIntro();
 			}
