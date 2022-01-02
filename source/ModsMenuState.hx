@@ -693,6 +693,7 @@ class ModMetadata
 		this.name = folder;
 		this.description = "No description provided.";
 		this.color = ModsMenuState.defaultColor;
+		this.id = folder;
 		this.restart = false;
 		
 		//Try loading json
@@ -706,6 +707,7 @@ class ModMetadata
 					var description:String = Reflect.getProperty(stuff, "description");
 					var name:String = Reflect.getProperty(stuff, "name");
 					var restart:Bool = Reflect.getProperty(stuff, "restart");
+					var id:String = Reflect.getProperty (stuff, "id");
 					
 				if(name != null && name.length > 0)
 				{
@@ -718,6 +720,10 @@ class ModMetadata
 				if(colors != null && colors.length > 2)
 				{
 					this.color = FlxColor.fromRGB(colors[0], colors[1], colors[2]);
+				}
+				if(id != null && id.length > 0)
+				{
+					this.id = id;
 				}
 				
 				this.restart = restart;
