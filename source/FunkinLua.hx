@@ -606,9 +606,11 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "setHealth", function(value:Float = 0) {
 			PlayState.instance.health = value;
+			ArtemisIntegration.sendBoyfriendHealth (PlayState.instance.health);
 		});
 		Lua_helper.add_callback(lua, "addHealth", function(value:Float = 0) {
 			PlayState.instance.health += value;
+			ArtemisIntegration.sendBoyfriendHealth (PlayState.instance.health);
 		});
 		Lua_helper.add_callback(lua, "getHealth", function() {
 			return PlayState.instance.health;
