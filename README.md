@@ -41,17 +41,17 @@ _____________________________________
   * New Dad Left sing sprite 
   * Unused stage lights are now used
 ### Week 2:
-  * Both BF and Skid & Pump does "Hey!" animations
-  * Thunders does a quick light flash and zooms the camera in slightly
+  * Both BF Skid & Pump do a "Hey!" animation
+  * Thunders do a quick light flash and zooms the camera in slightly
   * Added a quick transition/cutscene to Monster
 ### Week 3:
-  * BF does "Hey!" during Philly Nice
+  * BF does a "Hey!" during Philly Nice
   * Blammed has a cool new colors flash during that sick part of the song
 ### Week 4:
-  * Better hair physics for Mom/Boyfriend (Maybe even slightly better than Week 7's :eyes:)
-  * Henchmen die during all songs. Yeah :(
+  * Better hair physics for Mom and Boyfriend (Maybe even slightly better than Week 7's :eyes:)
+  * Henchmen die during all the songs. Yeah :(
 ### Week 5:
-  * Bottom Boppers and GF does "Hey!" animations during Cocoa and Eggnog
+  * Bottom Boppers and GF does a "Hey!" animation during Cocoa and Eggnog
   * On Winter Horrorland, GF bops her head slower in some parts of the song.
 ### Week 6:
   * On Thorns, the HUD is hidden during the cutscene
