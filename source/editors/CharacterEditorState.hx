@@ -148,8 +148,8 @@ class CharacterEditorState extends MusicBeatState
 			\nSpace - Play Animation
 			\nArrow Keys - Move Character Offset
 			\nR - Reset Current Offset
-			\nHold Shift to Move 10x faster
-			\nHold Control to be able to hold down the Arrow Keys\n", 12);
+			\nHold down Shift to Move 10x faster
+			\nHold down Control to be able to hold down the Arrow Keys\n", 12);
 		tipText.cameras = [camHUD];
 		tipText.setFormat(null, 12, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.scrollFactor.set();
