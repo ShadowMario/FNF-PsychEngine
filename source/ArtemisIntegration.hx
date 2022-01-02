@@ -20,9 +20,12 @@ class ArtemisIntegration {
     private static var artemisApiUrl:String = "http://localhost:9696/";
     private static var fnfEndpoints:String = "http://localhost:9696/plugins/84c5243c-5492-4965-940c-4ce006524c06/";
 
+    public static inline var DefaultModName:String = "vanilla"; // if your mod completely replaces vanilla content then change this to your mod name!!!
+
     public static var artemisAvailable:Bool = false;
 
     public static function initialize ():Void {
+        
         #if sys
         if (ClientPrefs.enableArtemis) {
             trace ("attempting to initialize artemis integration...");
@@ -229,6 +232,14 @@ class ArtemisIntegration {
         }
     }
 
+    public static function resetModName () {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetModName");
+            request.setPostData (DefaultModName);
+            request.request (true);
+        }
+    }
+
     public static function setStageName (stageName:String) {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetStageName");
@@ -251,5 +262,25 @@ class ArtemisIntegration {
             request.setPostData (Json.stringify ({ Name: eventName, Hex: customArgColor, Num: customArgInt }));
             request.request (true);
         }
+    }
+
+    public static function sendProfileRelativePath (directory:String) {
+        #if sys
+        if (artemisAvailable) {
+            sendProfileAbsolutePath (sys.FileSystem.absolutePath (directory));
+        }
+        #end
+    }
+
+    public static function sendProfileAbsolutePath (directory:String) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetProfile");
+            request.setPostData (directory);
+            request.request (true);
+        }
+    }
+
+    public static function onError (error:String) {
+        trace (error);
     }
 }

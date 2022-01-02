@@ -74,6 +74,7 @@ class ModsMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		ArtemisIntegration.setGameState ("menu");
+		ArtemisIntegration.resetModName ();
 		#end
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));

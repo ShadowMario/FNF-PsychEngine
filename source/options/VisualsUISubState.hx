@@ -120,9 +120,11 @@ class VisualsUISubState extends BaseOptionsMenu
 			ArtemisIntegration.setBackgroundColor ("#FFEA71FD");
 			ArtemisIntegration.setFadeColor ("#FF000000");
 			ArtemisIntegration.setGameState ("menu");
+			ArtemisIntegration.resetModName ();
 		} else {
 			ArtemisIntegration.setBackgroundColor ("#00000000");
 			ArtemisIntegration.setGameState ("closed");
+			ArtemisIntegration.resetModName ();
 			ArtemisIntegration.artemisAvailable = false;
 		}
 	}

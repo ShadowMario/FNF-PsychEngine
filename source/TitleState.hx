@@ -191,14 +191,16 @@ class TitleState extends MusicBeatState
 			#if sys
 			ArtemisIntegration.initialize();
 			ArtemisIntegration.setGameState ("title");
-			ArtemisIntegration.setModName ("vanilla");
+			ArtemisIntegration.resetModName ();
 			ArtemisIntegration.setFadeColor ("#FF000000");
+			ArtemisIntegration.sendProfileRelativePath ("assets/artemis/fnf-vanilla.json");
 			#end
 			DiscordClient.initialize();
 			Application.current.onExit.add (function (exitCode) {
 				DiscordClient.shutdown();
 				ArtemisIntegration.setBackgroundColor ("#00000000");
 				ArtemisIntegration.setGameState ("closed");
+				ArtemisIntegration.resetModName ();
 			});
 			#end
 			new FlxTimer().start(1, function(tmr:FlxTimer)

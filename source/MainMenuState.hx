@@ -53,6 +53,7 @@ class MainMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		ArtemisIntegration.setGameState ("menu");
+		ArtemisIntegration.resetModName ();
 		#end
 
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
