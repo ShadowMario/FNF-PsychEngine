@@ -21,6 +21,7 @@ To install LuaJIT do this: `haxelib install linc_luajit` on a Command prompt/Pow
 * iFlicky - Delay/Combo Menu Song Composer + Dialogue Sounds
 * PolybiusProxy - .MP4 Loader Extension
 * Keoiki - Note Splash Animations
+* Smokey - Spritemap Texture Atlas support
 _____________________________________
 
 # Features
