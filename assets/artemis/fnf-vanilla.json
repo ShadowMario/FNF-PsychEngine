@@ -2,11 +2,11 @@
   "$type": "Artemis.Core.ProfileConfigurationExportModel, Artemis.Core",
   "ProfileConfigurationEntity": {
     "$type": "Artemis.Storage.Entities.Profile.ProfileConfigurationEntity, Artemis.Storage",
-    "Name": "Friday Night Funkin'",
+    "Name": "FNF Vanilla",
     "MaterialIcon": "Music",
     "FileIconId": "00000000-0000-0000-0000-000000000000",
     "IconType": 0,
-    "Order": 0,
+    "Order": 1,
     "IsSuspended": false,
     "ActivationBehaviour": 0,
     "ActivationCondition": {
@@ -29,6 +29,21 @@
             "OperatorPluginGuid": "ffffffff-ffff-ffff-ffff-ffffffffffff",
             "RightStaticValue": "\"psychengine\"",
             "Children": null
+          },
+          {
+            "$type": "Artemis.Storage.Entities.Profile.Conditions.DataModelConditionGeneralPredicateEntity, Artemis.Storage",
+            "PredicateType": 0,
+            "LeftPath": {
+              "$type": "Artemis.Storage.Entities.Profile.DataModelPathEntity, Artemis.Storage",
+              "Path": "GameState.ModName",
+              "DataModelId": "Artemis.Plugins.Module.FNF.FnfModule-84c5243c",
+              "WrapperType": 0
+            },
+            "RightPath": null,
+            "OperatorType": "StringEqualsConditionOperator",
+            "OperatorPluginGuid": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            "RightStaticValue": "\"vanilla\"",
+            "Children": null
           }
         ]
       }
@@ -37,14 +52,14 @@
     "EnableHotkey": null,
     "DisableHotkey": null,
     "ModuleId": null,
-    "ProfileCategoryId": "8acfe8c0-c44b-4010-a3e9-210ae753a49c",
+    "ProfileCategoryId": "55bcad5e-afac-4da6-87c0-ae05abeb0637",
     "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4"
   },
   "ProfileEntity": {
     "$type": "Artemis.Storage.Entities.Profile.ProfileEntity, Artemis.Storage",
     "Id": "b782b249-387e-4968-a52c-7e22952832c4",
-    "Name": "Friday Night Funkin'",
-    "IsFreshImport": false,
+    "Name": "Friday Night Funkin' - auto-added",
+    "IsFreshImport": true,
     "LastSelectedProfileElement": "188175cf-0ec4-4ce0-bd4c-b6d41436194c",
     "Folders": {
       "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage]], System.Private.CoreLib",
@@ -11610,6 +11625,12 @@
                 "LedName": "Keyboard_NumPeriodAndDelete",
                 "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
                 "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Headset2",
+                "DeviceIdentifier": "Corsair VOID ELITE USB-Corsair-VOID ELITE USB-Headset",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -47750,6 +47771,12 @@
                 "LedName": "Keyboard_NumPeriodAndDelete",
                 "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
                 "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Headset2",
+                "DeviceIdentifier": "Corsair VOID ELITE USB-Corsair-VOID ELITE USB-Headset",
+                "PhysicalLayout": null
               }
             ]
           },

@@ -680,6 +680,7 @@ class ModsMenuState extends MusicBeatState
 class ModMetadata
 {
 	public var folder:String;
+	public var id:String; // not 100% necissary so it's optional, but because folders can get renamed pretty easily, this is useful for identifying the mod better
 	public var name:String;
 	public var description:String;
 	public var color:FlxColor;
@@ -689,11 +690,11 @@ class ModMetadata
 
 	public function new(folder:String)
 	{
+		this.id = folder;
 		this.folder = folder;
 		this.name = folder;
 		this.description = "No description provided.";
 		this.color = ModsMenuState.defaultColor;
-		this.id = folder;
 		this.restart = false;
 		
 		//Try loading json
@@ -703,11 +704,11 @@ class ModMetadata
 			if(rawJson != null && rawJson.length > 0) {
 				var stuff:Dynamic = Json.parse(rawJson);
 					//using reflects cuz for some odd reason my haxe hates the stuff.var shit
+					var id:String = Reflect.getProperty (stuff, "id");
 					var colors:Array<Int> = Reflect.getProperty(stuff, "color");
 					var description:String = Reflect.getProperty(stuff, "description");
 					var name:String = Reflect.getProperty(stuff, "name");
 					var restart:Bool = Reflect.getProperty(stuff, "restart");
-					var id:String = Reflect.getProperty (stuff, "id");
 					
 				if(name != null && name.length > 0)
 				{

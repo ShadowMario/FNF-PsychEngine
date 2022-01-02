@@ -1,5 +1,8 @@
 package;
 
+#if MODS_ALLOWED
+import ModsMenuState.ModMetadata;
+#end
 import haxe.macro.Expr.Case;
 import flixel.graphics.FlxGraphic;
 #if desktop
@@ -405,13 +408,11 @@ class PlayState extends MusicBeatState
 		
 		#if MODS_ALLOWED
 		if (Paths.currentModDirectory != null) {
-			ArtemisIntegration.setModName (Paths.currentModDirectory);
+			var currentMod:ModMetadata = new ModMetadata (Paths.currentModDirectory);
+			ArtemisIntegration.setModName (currentMod.id);
 			var possibleArtemisProfilePathHahaLongVariableName:String = haxe.io.Path.join (["mods/", Paths.currentModDirectory, "/artemis/default.json"]);
 			if (sys.FileSystem.exists (possibleArtemisProfilePathHahaLongVariableName)) {
-				trace ("hi");
 				ArtemisIntegration.sendProfileRelativePath (possibleArtemisProfilePathHahaLongVariableName);
-			} else {
-				trace ("bye");
 			}
 		} else {
 			ArtemisIntegration.resetModName ();
