@@ -147,8 +147,9 @@ class CharacterEditorState extends MusicBeatState
 			\nW/S - Previous/Next Animation
 			\nSpace - Play Animation
 			\nArrow Keys - Move Character Offset
-			\nZ - Reset Current Offset
-			\nHold Shift to Move 10x faster\n", 12);
+			\nR - Reset Current Offset
+			\nHold Shift to Move 10x faster
+			\nHold Control - Arrow Keys can be held down\n", 12);
 		tipText.cameras = [camHUD];
 		tipText.setFormat(null, 12, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.scrollFactor.set();
@@ -1177,6 +1178,10 @@ class CharacterEditorState extends MusicBeatState
 				}
 
 				var controlArray:Array<Bool> = [FlxG.keys.justPressed.LEFT, FlxG.keys.justPressed.RIGHT, FlxG.keys.justPressed.UP, FlxG.keys.justPressed.DOWN];
+				if (FlxG.keys.pressed.CONTROL)
+				{
+					controlArray = [FlxG.keys.pressed.LEFT, FlxG.keys.pressed.RIGHT, FlxG.keys.pressed.UP, FlxG.keys.pressed.DOWN];
+				}
 				
 				
 				
