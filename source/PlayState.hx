@@ -1,5 +1,8 @@
 package;
 
+#if MODS_ALLOWED
+import ModsMenuState.ModMetadata;
+#end
 import haxe.macro.Expr.Case;
 import flixel.graphics.FlxGraphic;
 #if desktop
@@ -402,6 +405,20 @@ class PlayState extends MusicBeatState
 		ArtemisIntegration.sendBoyfriendHealth (health);
 		ArtemisIntegration.setIsPixelStage (isPixelStage);
 		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
+		
+		#if MODS_ALLOWED
+		if (Paths.currentModDirectory != null) {
+			var currentMod:ModMetadata = new ModMetadata (Paths.currentModDirectory);
+			ArtemisIntegration.setModName (currentMod.id);
+			var possibleArtemisProfilePathHahaLongVariableName:String = haxe.io.Path.join (["mods/", Paths.currentModDirectory, "/artemis/default.json"]);
+			if (sys.FileSystem.exists (possibleArtemisProfilePathHahaLongVariableName)) {
+				ArtemisIntegration.sendProfileRelativePath (possibleArtemisProfilePathHahaLongVariableName);
+			}
+		} else {
+			ArtemisIntegration.resetModName ();
+		}
+		#end
+		
 		ArtemisIntegration.startSong ();
 
 		switch (curStage)

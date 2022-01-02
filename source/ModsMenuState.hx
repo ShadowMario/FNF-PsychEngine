@@ -25,7 +25,6 @@ import openfl.display.BitmapData;
 import flash.geom.Rectangle;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
-import sys.io.File;
 /*import haxe.zip.Reader;
 import haxe.zip.Entry;
 import haxe.zip.Uncompress;
@@ -74,6 +73,7 @@ class ModsMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		ArtemisIntegration.setGameState ("menu");
+		ArtemisIntegration.resetModName ();
 		#end
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -679,6 +679,7 @@ class ModsMenuState extends MusicBeatState
 class ModMetadata
 {
 	public var folder:String;
+	public var id:String; // not 100% necissary so it's optional, but because folders can get renamed pretty easily, this is useful for identifying the mod better
 	public var name:String;
 	public var description:String;
 	public var color:FlxColor;
@@ -688,6 +689,7 @@ class ModMetadata
 
 	public function new(folder:String)
 	{
+		this.id = folder;
 		this.folder = folder;
 		this.name = folder;
 		this.description = "No description provided.";
@@ -701,6 +703,7 @@ class ModMetadata
 			if(rawJson != null && rawJson.length > 0) {
 				var stuff:Dynamic = Json.parse(rawJson);
 					//using reflects cuz for some odd reason my haxe hates the stuff.var shit
+					var id:String = Reflect.getProperty (stuff, "id");
 					var colors:Array<Int> = Reflect.getProperty(stuff, "color");
 					var description:String = Reflect.getProperty(stuff, "description");
 					var name:String = Reflect.getProperty(stuff, "name");
@@ -717,6 +720,10 @@ class ModMetadata
 				if(colors != null && colors.length > 2)
 				{
 					this.color = FlxColor.fromRGB(colors[0], colors[1], colors[2]);
+				}
+				if(id != null && id.length > 0)
+				{
+					this.id = id;
 				}
 				
 				this.restart = restart;

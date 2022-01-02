@@ -1474,6 +1474,9 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setArtemisIsPixelStage", function(isPixelStage:Bool) {
 			ArtemisIntegration.setIsPixelStage (isPixelStage);
 		});
+		Lua_helper.add_callback(lua, "triggerCustomEvent", function(eventName:String, color:String = "#00000000", number:Int = 0) {
+			ArtemisIntegration.triggerCustomEvent (eventName, color, number);
+		});
 
 
 		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY
