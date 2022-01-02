@@ -354,7 +354,11 @@ class Paths
 		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
 		// trace(gottenPath);
 		if(!currentTrackedSounds.exists(gottenPath)) 
+		#if MODS_ALLOWED
 			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
+		#else
+			currentTrackedSounds.set(gottenPath, OpenFlAssets.getSound(gottenPath));
+		#end
 		localTrackedAssets.push(key);
 		return currentTrackedSounds.get(gottenPath);
 	}
