@@ -24,6 +24,7 @@ import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.utils.Assets;
 import flixel.math.FlxMath;
+import Shaders;
 import flixel.addons.transition.FlxTransitionableState;
 #if sys
 import sys.FileSystem;
@@ -1549,13 +1550,21 @@ class FunkinLua {
 		
 		//SHADER SHIT
 		
-		Lua_helper.add_callback(lua, "addShader", function(tag:String, shaderType:String) {
+		Lua_helper.add_callback(lua, "addChromaticAbberation", function(camera:String, shaderType:String,chromeOffset:Float = 0.005) {
+			
+			PlayState.instance.addShaderToCamera(camera, new ChromaticAberrationEffect(chromeOffset));
 			
 		});
-		Lua_helper.add_callback(lua, "removeShader", function(tag:String, shaderType:String) {
+		/*
+		Lua_helper.add_callback(lua, "addShaderToCamera", function(camera:String, shaderType:String) {
+			
+			PlayState.instance.addShaderToCamera(camera, shaderFromString(shaderType));
 			
 		});
-
+*/
+		Lua_helper.add_callback(lua, "clearShadersFromCamera", function(camera:String) {
+			PlayState.instance.clearShaderFromCamera(camera);
+		});
 		Discord.DiscordClient.addLuaCallbacks(lua);
 
 		call('onCreate', []);
@@ -1723,6 +1732,14 @@ class FunkinLua {
 			case 'camother' | 'other': return PlayState.instance.camOther;
 		}
 		return PlayState.instance.camGame;
+	}
+
+	function shaderFromString(cam:String) {
+		//switch(cam.toLowerCase()) {
+		//	case 'chromaticAbberation' | 'ca': 
+		//		
+		//}
+		return (new ChromaticAberrationEffect());
 	}
 
 	public function luaTrace(text:String, ignoreCheck:Bool = false, deprecated:Bool = false) {

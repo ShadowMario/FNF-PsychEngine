@@ -79,11 +79,11 @@ class ChromaticAberrationShader extends FlxShader
 class ChromaticAberrationEffect extends Effect
 {
 	public var shader:ChromaticAberrationShader;
-  public function new(){
+  public function new(offset:Float = 0.00){
 	shader = new ChromaticAberrationShader();
-    shader.rOffset.value = [0.005];
+    shader.rOffset.value = [offset];
     shader.gOffset.value = [0.0];
-    shader.bOffset.value = [0.005];
+    shader.bOffset.value = [-offset];
   }
 	
 	public function setChrome(chromeOffset:Float):Void
