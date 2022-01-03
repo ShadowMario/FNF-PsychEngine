@@ -104,7 +104,7 @@ class Paths
 	}
 
 	static public var currentModDirectory:String = '';
-	static var currentLevel:String;
+	static public var currentLevel:String;
 	static public function setCurrentLevel(name:String)
 	{
 		currentLevel = name.toLowerCase();
