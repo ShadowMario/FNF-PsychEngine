@@ -104,7 +104,7 @@ class Paths
 	}
 
 	static public var currentModDirectory:String = '';
-	static var currentLevel:String;
+	static public var currentLevel:String;
 	static public function setCurrentLevel(name:String)
 	{
 		currentLevel = name.toLowerCase();
@@ -357,7 +357,7 @@ class Paths
 		#if MODS_ALLOWED
 			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
 		#else
-			currentTrackedSounds.set(gottenPath, OpenFlAssets.getSound(gottenPath));
+			currentTrackedSounds.set(gottenPath, OpenFlAssets.getSound(getPath('$path/$key.$SOUND_EXT', SOUND, library)));
 		#end
 		localTrackedAssets.push(key);
 		return currentTrackedSounds.get(gottenPath);

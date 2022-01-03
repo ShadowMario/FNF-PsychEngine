@@ -60,13 +60,15 @@ class AtlasFrameMaker extends FlxFramesCollection{
 					}*/
                 var animationData:AnimationData = Json.parse(Paths.getTextFromFile('images/$key/Animation.json'));
                 var atlasData:AtlasData = Json.parse(Paths.getTextFromFile('images/$key/spritemap.json'));
-				
+				var bitmapData:BitmapData;
 				#if MODS_ALLOWED
-				var paf = (FileSystem.exists('mods/images/$key/spritemap.png') || FileSystem.exists('mods/'+Paths.currentModDirectory+'/images/$key/spritemap.png') ? 'assets/images/$key/spritemap.png' : Paths.modFolders('images/$key/spritemap.png'));
+				bitmapData = (FileSystem.exists('mods/images/$key/spritemap.png') || FileSystem.exists('mods/' + Paths.currentModDirectory + '/images/$key/spritemap.png') ? BitmapData.fromFile(Paths.modFolders('images/$key/spritemap.png')) : Assets.getBitmapData(Paths.getPath('images/$key/spritemap.png',IMAGE)));
+				
 				#else
-				var paf = 'assets/images/$key/spritemap.png' ;
+				
+				//var paf = 'assets/images/$key/spritemap.png' ;
+				bitmapData = Assets.getBitmapData(paf);//new BitmapData(0,1);
 				#end
-                var bitmapData:BitmapData = BitmapData.fromFile(paf);//new BitmapData(0,1);
 				
 				
 				
