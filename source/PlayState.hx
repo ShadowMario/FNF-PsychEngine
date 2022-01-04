@@ -92,8 +92,8 @@ class PlayState extends MusicBeatState
 	public var camHUDShaders:Array<ShaderEffect> = [];
 	public var camOtherShaders:Array<ShaderEffect> = [];
 	public var window = Lib.application.window;
-	public var windowX:Int = 320;
-	public var windowY:Int = 180;
+	/*public var windowX:Int = 320;
+	public var windowY:Int = 180;*/
 	public var windowW:Int = 1280;
 	public var windowH:Int = 720;
 	//event variables
@@ -1175,8 +1175,8 @@ class PlayState extends MusicBeatState
 		}
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
-		windowX = window.x;
-		windowY = window.y;
+		/*windowX = window.x;
+		windowY = window.y;*/
 		windowW = window.width;
 		windowH = window.height;
 		callOnLuas('onCreatePost', []);

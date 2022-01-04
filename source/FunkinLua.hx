@@ -1971,8 +1971,8 @@ class FunkinLua {
 		Lua.close(lua);
 		lua = null;
 		if (!FlxG.fullscreen) {	
-			PlayState.instance.window.x = PlayState.instance.windowX;
-			PlayState.instance.window.y = PlayState.instance.windowY;
+			/*PlayState.instance.window.x = PlayState.instance.windowX;
+			PlayState.instance.window.y = PlayState.instance.windowY;*/
 			PlayState.instance.window.width = PlayState.instance.windowW;
 			PlayState.instance.window.height = PlayState.instance.windowH;
 		}
