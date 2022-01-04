@@ -5,6 +5,7 @@ import llua.State;
 import llua.Convert;
 #end
 
+import animateatlas.AtlasFrameMaker;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxTween;
@@ -24,6 +25,7 @@ import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.utils.Assets;
 import flixel.math.FlxMath;
+import Shaders;
 import flixel.addons.transition.FlxTransitionableState;
 #if sys
 import sys.FileSystem;
@@ -823,11 +825,24 @@ class FunkinLua {
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
-		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float) {
+		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float,spriteType:String="sparrow") {
 			tag = tag.replace('.', '');
 			resetSpriteTag(tag);
 			var leSprite:ModchartSprite = new ModchartSprite(x, y);
-			leSprite.frames = Paths.getSparrowAtlas(image);
+			
+			switch(spriteType.toLowerCase()){
+				/* saving this until i can test it
+				case "texture":
+					leSprite.frames = AtlasFrameMaker.construct(image);
+					
+				case "packer"
+					leSprite.frames = Paths.getPackerAtlas(image);
+				*/
+				default:
+					leSprite.frames = Paths.getSparrowAtlas(image);
+			}
+			
+			
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 		});
@@ -1549,13 +1564,41 @@ class FunkinLua {
 		
 		//SHADER SHIT
 		
-		Lua_helper.add_callback(lua, "addShader", function(tag:String, shaderType:String) {
+		Lua_helper.add_callback(lua, "addChromaticAbberationEffect", function(camera:String, shaderType:String,chromeOffset:Float = 0.005) {
+			
+			PlayState.instance.addShaderToCamera(camera, new ChromaticAberrationEffect(chromeOffset));
 			
 		});
-		Lua_helper.add_callback(lua, "removeShader", function(tag:String, shaderType:String) {
+		/*
+		Lua_helper.add_callback(lua, "addGrainEffect", function(camera:String, shaderType:String,chromeOffset:Float = 0.005) {
+			
+			PlayState.instance.addShaderToCamera(camera, );
 			
 		});
-
+		Lua_helper.add_callback(lua, "addVCREffect", function(camera:String, shaderType:String,chromeOffset:Float = 0.005) {
+			
+			PlayState.instance.addShaderToCamera(camera, );
+			
+		});
+		Lua_helper.add_callback(lua, "addGrayscale", function(camera:String, shaderType:String,chromeOffset:Float = 0.005) {
+			
+			PlayState.instance.addShaderToCamera(camera, );
+			
+		});
+		Lua_helper.add_callback(lua, "addGreyscale", function(camera:String, shaderType:String,chromeOffset:Float = 0.005) { //for dem funkies
+			
+			PlayState.instance.addShaderToCamera(camera, );
+			
+		});
+		Lua_helper.add_callback(lua, "addBloom", function(camera:String, shaderType:String,intensity:Float = 0.005) { //saving for l8r
+			
+			PlayState.instance.addShaderToCamera(camera, );
+			
+		});
+*/
+		Lua_helper.add_callback(lua, "clearEffectsFromCamera", function(camera:String) {
+			PlayState.instance.clearShaderFromCamera(camera);
+		});
 		Discord.DiscordClient.addLuaCallbacks(lua);
 
 		call('onCreate', []);
@@ -1725,6 +1768,14 @@ class FunkinLua {
 		return PlayState.instance.camGame;
 	}
 
+	function shaderFromString(cam:String) {
+		//switch(cam.toLowerCase()) {
+		//	case 'chromaticAbberation' | 'ca': 
+		//		
+		//}
+		return (new ChromaticAberrationEffect());
+	}
+
 	public function luaTrace(text:String, ignoreCheck:Bool = false, deprecated:Bool = false) {
 		#if LUA_ALLOWED
 		if(ignoreCheck || getBool('luaDebugMode')) {
@@ -1869,4 +1920,5 @@ class DebugLuaText extends FlxText
 		}
 		else if(disableTime < 1) alpha = disableTime;
 	}
+	
 }
