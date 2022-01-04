@@ -699,8 +699,13 @@ void main() {
     //If we hit the rectangle, sample the texture
     if (abs(uv.x - 0.5) < 0.5 && abs(uv.y - 0.5) < 0.5) {
 		
+		vec3 tex = flixel_texture2D(bitmap, uv).xyz;
+		float bitch = 1.0;
+		if (tex.z == 0.0){
+			bitch = 0.0;
+		}
 		
-	  gl_FragColor = vec4(flixel_texture2D(bitmap, uv).xyz, texColor.a);
+	  gl_FragColor = vec4(flixel_texture2D(bitmap, uv).xyz, bitch);
     }
 }
 
