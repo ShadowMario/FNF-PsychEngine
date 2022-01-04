@@ -194,6 +194,9 @@ class TitleState extends MusicBeatState
 			ArtemisIntegration.resetModName ();
 			ArtemisIntegration.setFadeColor ("#FF000000");
 			ArtemisIntegration.sendProfileRelativePath ("assets/artemis/fnf-vanilla.json");
+			ArtemisIntegration.resetAllFlags ();
+			ArtemisIntegration.autoUpdateControls ();
+			// ArtemisIntegration.setControlColors ([{]note_left => "#FFC24B99", note_up => "#FFFFFFFF", note_down => "#FFFFFFFF", note_right => "#FFFFFFFF"])''
 			#end
 			DiscordClient.initialize();
 			Application.current.onExit.add (function (exitCode) {

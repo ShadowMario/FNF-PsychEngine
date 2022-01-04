@@ -120,6 +120,10 @@ class VisualsUISubState extends BaseOptionsMenu
 			ArtemisIntegration.setBackgroundColor ("#FFEA71FD");
 			ArtemisIntegration.setFadeColor ("#FF000000");
 			ArtemisIntegration.setGameState ("menu");
+			ArtemisIntegration.setFadeColor ("#FF000000");
+			ArtemisIntegration.sendProfileRelativePath ("assets/artemis/fnf-vanilla.json");
+			ArtemisIntegration.autoUpdateControls ();
+			ArtemisIntegration.resetAllFlags ();
 			ArtemisIntegration.resetModName ();
 		} else {
 			ArtemisIntegration.setBackgroundColor ("#00000000");

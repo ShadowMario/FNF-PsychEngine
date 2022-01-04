@@ -404,7 +404,9 @@ class PlayState extends MusicBeatState
 		else ArtemisIntegration.setGameState ("in-game freeplay");
 		ArtemisIntegration.sendBoyfriendHealth (health);
 		ArtemisIntegration.setIsPixelStage (isPixelStage);
+		ArtemisIntegration.autoUpdateControlColors (isPixelStage);
 		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
+		ArtemisIntegration.resetAllFlags ();
 		
 		#if MODS_ALLOWED
 		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) {

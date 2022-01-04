@@ -1,3 +1,6 @@
+// artemis integration by skedgyedgy, API ver: 1.2.x
+// https://github.com/skedgyedgy/Artemis.Plugins.FNF/releases
+
 package;
 
 import flixel.util.FlxColor;
@@ -260,6 +263,78 @@ class ArtemisIntegration {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "TriggerCustomEvent");
             request.setPostData (Json.stringify ({ Name: eventName, Hex: customArgColor, Num: customArgInt }));
+            request.request (true);
+        }
+    }
+
+    public static function autoUpdateControls () {
+        if (artemisAvailable) {
+            // help i don't know what i'm doing here so i'm playing it extremely safe
+            var leftKeybinds:Array<String> = [];
+            var downKeybinds:Array<String> = [];
+            var upKeybinds:Array<String> = [];
+            var rightKeybinds:Array<String> = [];
+
+            for (bind in ClientPrefs.keyBinds["note_left"]) leftKeybinds.push (InputFormatter.getKeyName (bind));
+            for (bind in ClientPrefs.keyBinds["note_down"]) downKeybinds.push (InputFormatter.getKeyName (bind));
+            for (bind in ClientPrefs.keyBinds["note_up"]) upKeybinds.push (InputFormatter.getKeyName (bind));
+            for (bind in ClientPrefs.keyBinds["note_right"]) rightKeybinds.push (InputFormatter.getKeyName (bind));
+
+            var controlMap:Map<String, Array<String>> = ["note_left" => leftKeybinds, "note_down" => downKeybinds, "note_up" => upKeybinds, "note_right" => rightKeybinds];
+
+            setControls (controlMap);
+        }
+    }
+
+    public static function setControls (controlMap:Map<String, Array<String>>) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetControls");
+            request.setPostData (Json.stringify (controlMap));
+            trace (Json.stringify (controlMap));
+            request.request (true);
+        }
+    }
+
+    public static function autoUpdateControlColors (isPixelStage) {
+        if (artemisAvailable) {
+            var leftColor:FlxColor = FlxColor.fromString ("#FFC24B99");
+            var downColor:FlxColor = FlxColor.fromString ("#FF00FFFF");
+            var upColor:FlxColor = FlxColor.fromString ("#FF12FA05");
+            var rightColor:FlxColor = FlxColor.fromString ("#FFF9393F");
+            if (isPixelStage) {
+                leftColor = FlxColor.fromString ("#FFE276FF");
+                downColor = FlxColor.fromString ("#FF3DCAFF");
+                upColor = FlxColor.fromString ("#FF71E300");
+                rightColor = FlxColor.fromString ("#FFFF884E");
+            }
+
+            var hexCodes:Map<String, String> = ["note_left" => StringTools.hex (leftColor), "note_down" => StringTools.hex (downColor), "note_up" => StringTools.hex (upColor), "note_right" => StringTools.hex (rightColor)];
+            setControlColors (hexCodes);
+        }
+    }
+
+    public static function setControlColors (hexCodes:Map<String, String>) {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "SetControlColors");
+            request.setPostData (Json.stringify (hexCodes));
+            trace (Json.stringify (hexCodes));
+            request.request (true);
+        }
+    }
+
+    public static function resetAllFlags () {
+        if (artemisAvailable) {
+            var request = new haxe.Http (fnfEndpoints + "ResetAllFlags");
+            request.request (true);
+        }
+    }
+
+    public static function setCustomFlag (flag:Int, value:Bool) {
+        if (artemisAvailable) {
+            var request:haxe.Http;
+            if (value) request = new haxe.Http (fnfEndpoints + "EnableFlag");
+            else request = new haxe.Http (fnfEndpoints + "DisableFlag");
+            request.setPostData (Std.string (flag));
             request.request (true);
         }
     }

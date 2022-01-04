@@ -305,6 +305,8 @@ class ControlsSubState extends MusicBeatSubstate {
 		}
 
 		trace('Reloaded keys: ' + ClientPrefs.keyBinds);
+		
+		ArtemisIntegration.autoUpdateControls ();
 
 		for (i in 0...grpOptions.length) {
 			if(!unselectableCheck(i, true)) {
