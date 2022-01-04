@@ -41,7 +41,7 @@ _____________________________________
   * New Dad Left sing sprite 
   * Unused stage lights are now used
 ### Week 2:
-  * Both BF Skid & Pump do a "Hey!" animation
+  * Both BF and Skid & Pump do a "Hey!" animation
   * Thunders do a quick light flash and zooms the camera in slightly
   * Added a quick transition/cutscene to Monster
 ### Week 3:
