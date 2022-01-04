@@ -24,17 +24,17 @@ class FlashingState extends MusicBeatState
 		add(bg);
 
 		warnText = new FlxText(0, 0, FlxG.width,
-			"Epilepsy Warning\n
+			"Epilepsy Warning:\n
 			This Mod may contain some flashing lights!\n
 			Press ENTER to disable them now or go to Options Menu.\n
 			Press ESCAPE to ignore this message.\n
 			You've been warned!\n
 			-\n
+			Other Information:\n
 			Also, this mod collection is not meant to replace the original mods.\n
-			There WILL be missing stages and mod specific mechanics.
-			",
+			There WILL be missing mod specific mechanics or assets,",
 			24);
-		warnText.setFormat("Rubik Medium", 32, FlxColor.WHITE, CENTER);
+		warnText.setFormat("Rubik Medium", 16, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
 	}
