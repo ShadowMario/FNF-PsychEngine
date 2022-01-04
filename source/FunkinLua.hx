@@ -1652,6 +1652,11 @@ class FunkinLua {
 			PlayState.instance.addShaderToCamera(camera, new GreyscaleEffect());
 			
 		});/*
+		Lua_helper.add_callback(lua, "add3DEffect", function(camera:String) { //for dem funkies
+			
+			PlayState.instance.addShaderToCamera(camera, new ThreeDEffect());
+			
+		});
 		Lua_helper.add_callback(lua, "addBloom", function(camera:String, shaderType:String,intensity:Float = 0.005) { //saving for l8r
 			
 			PlayState.instance.addShaderToCamera(camera, );

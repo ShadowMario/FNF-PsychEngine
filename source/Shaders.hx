@@ -622,6 +622,42 @@ class VCRDistortionShader extends FlxShader // https://www.shadertoy.com/view/ld
 
 
 
+class ThreeDEffect extends Effect{
+	
+	public var shader:ThreeDShader = new ThreeDShader();
+	public function new(){
+		
+	}
+	
+	
+}
+//coding is like hitting on women, you never start with the number
+//               -naether
+
+class ThreeDShader extends FlxShader{
+	@:glFragmentSource('
+	#pragma header
+
+	mat2 skewUV(in vec2 uv, in float skewX, in float skewY) {
+    return mat2(1., tan(skewX),
+                tan(skewY), 1.);
+	}
+	
+	vec2 bitch = skewUV(openfl_TextureCoordv, 1.0, 1.0);
+	gl_FragColor = texture2D(bitmap, bitch);
+	}
+	')
+	
+	public function new(){
+		super();
+	}
+	
+}
+
+
+
+
+
 
 /*STOLE FROM DAVE AND BAMBI
 
@@ -799,7 +835,7 @@ class InvertColorsEffect extends Effect
 {
     public var shader:InvertShader = new InvertShader();
 	public function new(lockAlpha){
-		shader.lockAlpha.value = [lockAlpha];
+	//	shader.lockAlpha.value = [lockAlpha];
 	}
 
 }
@@ -861,13 +897,14 @@ class InvertShader extends FlxShader
     vec4 sineWave(vec4 pt)
     {
 	
-        return vec4(1.0 - pt.x, 1.0 - pt.y, 1.0 - pt.z, texColor.a);
+	return vec4(1.0 - pt.x, 1.0 - pt.y, 1.0 - pt.z, pt.w);
     }
 
     void main()
     {
         vec2 uv = openfl_TextureCoordv;
         gl_FragColor = sineWave(texture2D(bitmap, uv));
+		gl_FragColor.a = 1.0 - gl_FragColor.a;
     }')
 
     public function new()
