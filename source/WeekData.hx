@@ -234,4 +234,12 @@ class WeekData {
 			Paths.currentModDirectory = data.folder;
 		}
 	}
+	
+	//For my Pull Request:
+	function checkWeekVisibility(weekName:String) {
+		if() {
+			return true;
+		}
+		return false;
+	}
 }
