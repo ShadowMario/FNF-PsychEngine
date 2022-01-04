@@ -2,7 +2,7 @@
   "$type": "Artemis.Core.ProfileConfigurationExportModel, Artemis.Core",
   "ProfileConfigurationEntity": {
     "$type": "Artemis.Storage.Entities.Profile.ProfileConfigurationEntity, Artemis.Storage",
-    "Name": "FNF Vanilla - auto-added",
+    "Name": "FNF Vanilla",
     "MaterialIcon": "Music",
     "FileIconId": "00000000-0000-0000-0000-000000000000",
     "IconType": 0,
@@ -58,8 +58,8 @@
   "ProfileEntity": {
     "$type": "Artemis.Storage.Entities.Profile.ProfileEntity, Artemis.Storage",
     "Id": "b782b249-387e-4968-a52c-7e22952832c4",
-    "Name": "FNF Vanilla - auto-added",
-    "IsFreshImport": false,
+    "Name": "FNF Vanilla",
+    "IsFreshImport": true,
     "LastSelectedProfileElement": "7e41f365-067e-461c-9483-bb345d5a51c1",
     "Folders": {
       "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage]], System.Private.CoreLib",
@@ -162,7 +162,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage",
-          "Order": 1,
+          "Order": 2,
           "Name": "Blueballing",
           "IsExpanded": false,
           "Suspended": false,
@@ -218,7 +218,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage",
-          "Order": 2,
+          "Order": 3,
           "Name": "Blueballed",
           "IsExpanded": true,
           "Suspended": false,
@@ -274,7 +274,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage",
-          "Order": 7,
+          "Order": 8,
           "Name": "Healthbar",
           "IsExpanded": false,
           "Suspended": false,
@@ -314,7 +314,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage",
-          "Order": 8,
+          "Order": 9,
           "Name": "Stage Backgrounds",
           "IsExpanded": true,
           "Suspended": false,
@@ -5440,7 +5440,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 0,
+          "Order": 1,
           "Name": "Full Combo Fail",
           "Suspended": false,
           "Leds": {
@@ -6961,7 +6961,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 3,
+          "Order": 4,
           "Name": "Key Presses",
           "Suspended": false,
           "Leds": {
@@ -8111,7 +8111,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 4,
+          "Order": 5,
           "Name": "Controls",
           "Suspended": false,
           "Leds": {
@@ -9584,7 +9584,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 5,
+          "Order": 6,
           "Name": "Blammed Lights",
           "Suspended": false,
           "Leds": {
@@ -11116,7 +11116,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 6,
+          "Order": 7,
           "Name": "Full Combo",
           "Suspended": false,
           "Leds": {
@@ -14601,7 +14601,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 0,
+          "Order": 1,
           "Name": "Blueballed",
           "Suspended": false,
           "Leds": {
@@ -16083,7 +16083,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 1,
+          "Order": 2,
           "Name": "Hit",
           "Suspended": false,
           "Leds": {
@@ -17401,7 +17401,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 2,
+          "Order": 3,
           "Name": "Controls",
           "Suspended": false,
           "Leds": {
@@ -17680,7 +17680,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 3,
+          "Order": 4,
           "Name": "Black",
           "Suspended": false,
           "Leds": {
