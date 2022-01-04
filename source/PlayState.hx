@@ -1175,6 +1175,10 @@ class PlayState extends MusicBeatState
 		}
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
+		windowX = window.x;
+		windowY = window.y;
+		windowW = window.width;
+		windowH = window.height;
 		callOnLuas('onCreatePost', []);
 		
 		super.create();
@@ -1759,10 +1763,6 @@ class PlayState extends MusicBeatState
 
 	function startSong():Void
 	{
-		windowX = window.x;
-		windowY = window.y;
-		windowW = window.width;
-		windowH = window.height;
 		startingSong = false;
 
 		previousFrameTime = FlxG.game.ticks;
