@@ -625,8 +625,11 @@ class VCRDistortionShader extends FlxShader // https://www.shadertoy.com/view/ld
 class ThreeDEffect extends Effect{
 	
 	public var shader:ThreeDShader = new ThreeDShader();
-	public function new(){
-		
+	public function new(xrotation:Float=0,yrotation:Float=0,zrotation:Float=0,depth:Float=0){
+		shader.xrot.value = [xrotation];
+		shader.yrot.value = [yrotation];
+		shader.zrot.value = [zrotation];
+		shader.dept.value = [depth];
 	}
 	
 	
@@ -637,15 +640,71 @@ class ThreeDEffect extends Effect{
 class ThreeDShader extends FlxShader{
 	@:glFragmentSource('
 	#pragma header
+	uniform float xrot = 0.0;
+	uniform float yrot = 0.0;
+	uniform float zrot = 0.0;
+	uniform float dept = 0.0;
+	float alph = 0;
+float plane( in vec3 norm, in vec3 po, in vec3 ro, in vec3 rd ) {
+    float de = dot(norm, rd);
+    de = sign(de)*max( abs(de), 0.001);
+    return dot(norm, po-ro)/de;
+}
 
-	mat2 skewUV(in vec2 uv, in float skewX, in float skewY) {
-    return mat2(1., tan(skewX),
-                tan(skewY), 1.);
-	}
+vec2 raytraceTexturedQuad(in vec3 rayOrigin, in vec3 rayDirection, in vec3 quadCenter, in vec3 quadRotation, in vec2 quadDimensions) {
+    //Rotations ------------------
+    float a = sin(quadRotation.x); float b = cos(quadRotation.x); 
+    float c = sin(quadRotation.y); float d = cos(quadRotation.y); 
+    float e = sin(quadRotation.z); float f = cos(quadRotation.z); 
+    float ac = a*c;   float bc = b*c;
 	
-	vec2 bitch = skewUV(openfl_TextureCoordv, 1.0, 1.0);
-	gl_FragColor = texture2D(bitmap, bitch);
-	}
+	mat3 RotationMatrix  = 
+			mat3(	  d*f,      d*e,  -c,
+                 ac*f-b*e, ac*e+b*f, a*d,
+                 bc*f+a*e, bc*e-a*f, b*d );
+    //--------------------------------------
+    
+    vec3 right = RotationMatrix * vec3(quadDimensions.x, 0.0, 0.0);
+    vec3 up = RotationMatrix * vec3(0, quadDimensions.y, 0);
+    vec3 normal = cross(right, up);
+    normal /= length(normal);
+    
+    //Find the plane hit point in space
+    vec3 pos = (rayDirection * plane(normal, quadCenter, rayOrigin, rayDirection)) - quadCenter;
+    
+    //Find the texture UV by projecting the hit point along the plane dirs
+    return vec2(dot(pos, right) / dot(right, right),
+                dot(pos, up)    / dot(up,    up)) + 0.5;
+}
+
+void main() {
+	vec4 texColor = texture2D(bitmap, openfl_TextureCoordv);
+    //Screen UV goes from 0 - 1 along each axis
+    vec2 screenUV = openfl_TextureCoordv;
+    vec2 p = (2.0 * screenUV) - 1.0;
+    float screenAspect = 1280/720;
+    p.x *= screenAspect;
+    
+    //Normalized Ray Dir
+    vec3 dir = vec3(p.x, p.y, 1.0);
+    dir /= length(dir);
+    
+    //Define the plane
+    vec3 planePosition = vec3(0.0, 0.0, dept);
+    vec3 planeRotation = vec3(xrot, yrot, zrot);//this the shit you needa change
+    vec2 planeDimension = vec2(-screenAspect, 1.0);
+    
+    vec2 uv = raytraceTexturedQuad(vec3(0), dir, planePosition, planeRotation, planeDimension);
+	
+    //If we hit the rectangle, sample the texture
+    if (abs(uv.x - 0.5) < 0.5 && abs(uv.y - 0.5) < 0.5) {
+		
+		
+	  gl_FragColor = vec4(flixel_texture2D(bitmap, uv).xyz, texColor.a);
+    }
+}
+
+
 	')
 	
 	public function new(){
@@ -653,6 +712,80 @@ class ThreeDShader extends FlxShader{
 	}
 	
 }
+
+class BloomEffect extends Effect{
+	
+	public var shader:BloomShader = new BloomShader();
+	public function new(blurSize:Float, intensity:Float){
+		shader.blurSize.value = [blurSize];
+		shader.intensity.value = [intensity];
+		
+	}
+	
+	
+}
+
+
+class BloomShader extends FlxShader{
+	
+	
+	@:glFragmentSource('
+	
+	#pragma header
+	
+	uniform float intensity = 0.35;
+	uniform float blurSize = 1.0/512.0;
+void main()
+{
+   vec4 sum = vec4(0);
+   vec2 texcoord = openfl_TextureCoordv;
+   int j;
+   int i;
+
+   //thank you! http://www.gamerendering.com/2008/10/11/gaussian-blur-filter-shader/ for the 
+   //blur tutorial
+   // blur in y (vertical)
+   // take nine samples, with the distance blurSize between them
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x - 4.0*blurSize, texcoord.y)) * 0.05;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x - 3.0*blurSize, texcoord.y)) * 0.09;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x - 2.0*blurSize, texcoord.y)) * 0.12;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x - blurSize, texcoord.y)) * 0.15;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y)) * 0.16;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x + blurSize, texcoord.y)) * 0.15;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x + 2.0*blurSize, texcoord.y)) * 0.12;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x + 3.0*blurSize, texcoord.y)) * 0.09;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x + 4.0*blurSize, texcoord.y)) * 0.05;
+	
+	// blur in y (vertical)
+   // take nine samples, with the distance blurSize between them
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y - 4.0*blurSize)) * 0.05;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y - 3.0*blurSize)) * 0.09;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y - 2.0*blurSize)) * 0.12;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y - blurSize)) * 0.15;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y)) * 0.16;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y + blurSize)) * 0.15;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y + 2.0*blurSize)) * 0.12;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y + 3.0*blurSize)) * 0.09;
+   sum += flixel_texture2D(bitmap, vec2(texcoord.x, texcoord.y + 4.0*blurSize)) * 0.05;
+
+   //increase blur with intensity!
+  gl_FragColor = sum*intensity + flixel_texture2D(bitmap, texcoord); 
+  // if(sin(iTime) > 0.0)
+   //    fragColor = sum * sin(iTime)+ texture(iChannel0, texcoord);
+  // else
+	//   fragColor = sum * -sin(iTime)+ texture(iChannel0, texcoord);
+}
+	
+	
+	')
+	
+	public function new(){
+		super();
+	}
+	
+	
+}
+
 
 
 

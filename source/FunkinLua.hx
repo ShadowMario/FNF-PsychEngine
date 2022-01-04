@@ -1651,19 +1651,18 @@ class FunkinLua {
 			
 			PlayState.instance.addShaderToCamera(camera, new GreyscaleEffect());
 			
-		});/*
-		Lua_helper.add_callback(lua, "add3DEffect", function(camera:String) { //for dem funkies
+		});
+		Lua_helper.add_callback(lua, "add3DEffect", function(camera:String,xrotation:Float=0,yrotation:Float=0,zrotation:Float=0,depth:Float=0) { //for dem funkies
 			
-			PlayState.instance.addShaderToCamera(camera, new ThreeDEffect());
+			PlayState.instance.addShaderToCamera(camera, new ThreeDEffect(xrotation,yrotation,zrotation,depth));
 			
 		});
-		Lua_helper.add_callback(lua, "addBloom", function(camera:String, shaderType:String,intensity:Float = 0.005) { //saving for l8r
+		Lua_helper.add_callback(lua, "addBloomEffect", function(camera:String,intensity:Float = 0.35,blurSize:Float=1.0) { //saving for l8r
 			
-			PlayState.instance.addShaderToCamera(camera, );
+			PlayState.instance.addShaderToCamera(camera, new BloomEffect(blurSize/512.0,intensity));
 			
 		});
-*/
-		Lua_helper.add_callback(lua, "clearEffectsFromCamera", function(camera:String) {
+		Lua_helper.add_callback(lua, "clearEffects", function(camera:String) {
 			PlayState.instance.clearShaderFromCamera(camera);
 		});
 		Discord.DiscordClient.addLuaCallbacks(lua);
