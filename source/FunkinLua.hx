@@ -1458,6 +1458,12 @@ class FunkinLua {
 		});
 
 		// Artemis functions
+		Lua_helper.add_callback(lua, "setArtemisModName", function(modName:String) {
+			ArtemisIntegration.setModName (modName);
+		});
+		Lua_helper.add_callback(lua, "resetArtemisModName", function() {
+			ArtemisIntegration.resetModName ();
+		});
 		Lua_helper.add_callback(lua, "setArtemisBackgroundColor", function(color:String) {
 			ArtemisIntegration.setBackgroundColor (color);
 		});
@@ -1493,6 +1499,30 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "triggerArtemisCustomEvent", function(eventName:String, color:String = "#00000000", number:Int = 0) {
 			ArtemisIntegration.triggerCustomEvent (eventName, color, number);
+		});
+		Lua_helper.add_callback(lua, "resetArtemisControls", function() {
+			ArtemisIntegration.autoUpdateControls ();
+		});
+		Lua_helper.add_callback(lua, "setArtemisControls", function(controlMap:Map<String, Array<String>>) {
+			ArtemisIntegration.setControls (controlMap);
+		});
+		Lua_helper.add_callback(lua, "resetArtemisControlColors", function() {
+			ArtemisIntegration.autoUpdateControlColors (false);
+		});
+		Lua_helper.add_callback(lua, "setArtemisPixelControlColors", function() {
+			ArtemisIntegration.autoUpdateControlColors (true);
+		});
+		Lua_helper.add_callback(lua, "setArtemisControlColors", function(hexCodes:Map<String, String>) {
+			ArtemisIntegration.setControlColors (hexCodes);
+		});
+		Lua_helper.add_callback(lua, "resetAllArtemisFlags", function() {
+			ArtemisIntegration.resetAllFlags ();
+		});
+		Lua_helper.add_callback(lua, "setArtemisCustomFlag", function(flag:Int, value:Bool) {
+			ArtemisIntegration.setCustomFlag (flag, value);
+		});
+		Lua_helper.add_callback(lua, "setArtemisProfile", function(profileLocation:String) {
+			ArtemisIntegration.sendProfileRelativePath (profileLocation);
 		});
 
 
