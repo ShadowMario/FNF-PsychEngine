@@ -30,6 +30,12 @@ class AchievementsMenuState extends MusicBeatState
 		#if desktop
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
+		
+		#if sys
+		ArtemisIntegration.setBackgroundColor ("#FF9271FD");
+		ArtemisIntegration.setGameState ("menu");
+		ArtemisIntegration.resetModName ();
+		#end
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1 * scaleRatio));
@@ -37,7 +43,6 @@ class AchievementsMenuState extends MusicBeatState
 		menuBG.screenCenter();
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
 		add(menuBG);
-		ArtemisIntegration.setBackgroundColor ("#FF9271FD");
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);

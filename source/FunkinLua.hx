@@ -668,11 +668,15 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "setHealth", function(value:Float = 0) {
 			PlayState.instance.health = value;
+			#if sys
 			ArtemisIntegration.sendBoyfriendHealth (PlayState.instance.health);
+			#end
 		});
 		Lua_helper.add_callback(lua, "addHealth", function(value:Float = 0) {
 			PlayState.instance.health += value;
+			#if sys
 			ArtemisIntegration.sendBoyfriendHealth (PlayState.instance.health);
+			#end
 		});
 		Lua_helper.add_callback(lua, "getHealth", function() {
 			return PlayState.instance.health;
@@ -1517,7 +1521,14 @@ class FunkinLua {
 			}
 		});
 
+		#if sys
 		// Artemis functions
+		Lua_helper.add_callback(lua, "setArtemisModName", function(modName:String) {
+			ArtemisIntegration.setModName (modName);
+		});
+		Lua_helper.add_callback(lua, "resetArtemisModName", function() {
+			ArtemisIntegration.resetModName ();
+		});
 		Lua_helper.add_callback(lua, "setArtemisBackgroundColor", function(color:String) {
 			ArtemisIntegration.setBackgroundColor (color);
 		});
@@ -1551,9 +1562,40 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setArtemisIsPixelStage", function(isPixelStage:Bool) {
 			ArtemisIntegration.setIsPixelStage (isPixelStage);
 		});
-		Lua_helper.add_callback(lua, "triggerCustomEvent", function(eventName:String, color:String = "#00000000", number:Int = 0) {
+		Lua_helper.add_callback(lua, "triggerArtemisCustomEvent", function(eventName:String, color:String = "#00000000", number:Int = 0) {
 			ArtemisIntegration.triggerCustomEvent (eventName, color, number);
 		});
+		Lua_helper.add_callback(lua, "resetArtemisControls", function() {
+			ArtemisIntegration.autoUpdateControls ();
+		});
+		Lua_helper.add_callback(lua, "setArtemisControls", function(controlMap:Map<String, Array<String>>) {
+			ArtemisIntegration.setControls (controlMap);
+		});
+		Lua_helper.add_callback(lua, "resetArtemisControlColors", function() {
+			ArtemisIntegration.autoUpdateControlColors (false);
+		});
+		Lua_helper.add_callback(lua, "setArtemisPixelControlColors", function() {
+			ArtemisIntegration.autoUpdateControlColors (true);
+		});
+		Lua_helper.add_callback(lua, "setArtemisControlColors", function(hexCodes:Map<String, String>) {
+			ArtemisIntegration.setControlColors (hexCodes);
+		});
+		Lua_helper.add_callback(lua, "resetAllArtemisFlags", function() {
+			ArtemisIntegration.resetAllFlags ();
+		});
+		Lua_helper.add_callback(lua, "setArtemisCustomFlag", function(flag:Int, value:Bool) {
+			ArtemisIntegration.setCustomFlag (flag, value);
+		});
+		Lua_helper.add_callback(lua, "setArtemisCustomString", function(flag:Int, value:String) {
+			ArtemisIntegration.setCustomString (flag, value);
+		});
+		Lua_helper.add_callback(lua, "setArtemisCustomNumber", function(flag:Int, value:Int) {
+			ArtemisIntegration.setCustomNumber (flag, value);
+		});
+		Lua_helper.add_callback(lua, "setArtemisProfile", function(profileLocation:String) {
+			ArtemisIntegration.sendProfileRelativePath (profileLocation);
+		});
+		#end
 
 
 		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY

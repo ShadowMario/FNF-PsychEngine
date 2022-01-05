@@ -52,9 +52,13 @@ class MainMenuState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
+		#end
+
+		#if sys
 		ArtemisIntegration.setGameState ("menu");
 		ArtemisIntegration.resetModName ();
 		#end
+
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 
 		camGame = new FlxCamera();
@@ -78,7 +82,9 @@ class MainMenuState extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+		#if sys
 		ArtemisIntegration.setBackgroundColor ("#FFFDE871");
+		#end
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
@@ -212,7 +218,9 @@ class MainMenuState extends MusicBeatState
 
 					if(ClientPrefs.flashing) {
 						FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+						#if sys
 						ArtemisIntegration.triggerFlash (StringTools.hex (magenta.color));
+						#end
 					}
 
 					menuItems.forEach(function(spr:FlxSprite)

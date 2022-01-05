@@ -228,8 +228,11 @@ class ChartingState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set();
 		bg.color = 0xFF222222;
-		ArtemisIntegration.setBackgroundColor ("#FF222222");
 		add(bg);
+		
+		#if sys
+		ArtemisIntegration.setBackgroundFlxColor (bg.color);
+		#end
 
 		gridLayer = new FlxTypedGroup<FlxSprite>();
 		add(gridLayer);
