@@ -237,26 +237,26 @@ class WeekData {
 	
 	//For my Pull Request:
 	static function checkWeekVisibility(weekName:String) {
-		if(CoolUtil.getPropertyFromClass('flixel.FlxG', weekName + 'StoryVisible')) {
+		if(CoolUtil.getPropertyFromClass('flixel.FlxG', 'save.data.' + weekName + 'StoryVisible')) {
 			return true;
 		}
 		return false;
 	}
 	static function checkFreeplayVisibility(freeplayName:String) {
-		if(CoolUtil.getPropertyFromClass('flixel.FlxG', freeplayName + 'FreeplayVisible')) {
+		if(CoolUtil.getPropertyFromClass('flixel.FlxG', 'save.data.' + freeplayName + 'FreeplayVisible')) {
 			return true;
 		}
 		return false;
 	}
 	
 	static function checkWeekHiddenState(weekName:String) {
-		if(CoolUtil.getPropertyFromClass('flixel.FlxG', weekName + 'StoryHidden')) {
+		if(CoolUtil.getPropertyFromClass('flixel.FlxG', 'save.data.' + weekName + 'StoryHidden')) {
 			return true;
 		}
 		return false;
 	}
 	static function checkFreeplayHiddenState(freeplayName:String) {
-		if(CoolUtil.getPropertyFromClass('flixel.FlxG', freeplayName + 'FreeplayHidden')) {
+		if(CoolUtil.getPropertyFromClass('flixel.FlxG', 'save.data.' + freeplayName + 'FreeplayHidden')) {
 			return true;
 		}
 		return false;
