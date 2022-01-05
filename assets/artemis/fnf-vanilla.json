@@ -60,7 +60,7 @@
     "Id": "b782b249-387e-4968-a52c-7e22952832c4",
     "Name": "FNF Vanilla - auto-added",
     "IsFreshImport": false,
-    "LastSelectedProfileElement": "93e5e4ed-a78a-41bf-9e4b-7e570a38ea52",
+    "LastSelectedProfileElement": "b6e9fdf4-ecf3-4e7f-a9c4-b9945de788a9",
     "Folders": {
       "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage]], System.Private.CoreLib",
       "$values": [
@@ -56735,7 +56735,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 1,
+          "Order": 2,
           "Name": "Glitch",
           "Suspended": false,
           "Leds": {
@@ -57641,7 +57641,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 2,
+          "Order": 3,
           "Name": "Background",
           "Suspended": false,
           "Leds": {
@@ -59518,7 +59518,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 0,
+          "Order": 1,
           "Name": "Danger",
           "Suspended": false,
           "Leds": {
@@ -60306,7 +60306,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 1,
+          "Order": 2,
           "Name": "Danger Borders",
           "Suspended": false,
           "Leds": {

@@ -1133,10 +1133,6 @@ class PlayState extends MusicBeatState
 					snapCamFollowToPos(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
 					inCutscene = true;
 
-					#if sys
-					ArtemisIntegration.setCustomFlag (1, true);
-					#end
-
 					FlxTween.tween(whiteScreen, {alpha: 0}, 1, {
 						startDelay: 0.1,
 						ease: FlxEase.linear,
@@ -1193,6 +1189,10 @@ class PlayState extends MusicBeatState
 			startCountdown();
 		}
 		RecalculateRating();
+
+		#if sys
+		if (daSong == "monster") ArtemisIntegration.setCustomFlag (1, true);
+		#end
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
 		CoolUtil.precacheSound('missnote1');
