@@ -29,6 +29,7 @@ class ClientPrefs {
 	public static var healthBarAlpha:Float = 1;
 	public static var controllerMode:Bool = false;
 	public static var enableArtemis:Bool = true;
+	public static var screenRes:String = "1280 x 720";
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -90,6 +91,11 @@ class ClientPrefs {
 		defaultKeys = keyBinds.copy();
 		//trace(defaultKeys);
 	}
+	public static function resizeScreen() {
+		if(FlxG.save.data.screenRes != null) {
+			screenRes = FlxG.save.data.screenRes;
+		}
+	}
 
 	public static function saveSettings() {
 		FlxG.save.data.downScroll = downScroll;
@@ -124,6 +130,7 @@ class ClientPrefs {
 		FlxG.save.data.enableArtemis = enableArtemis;
 		FlxG.save.data.gameplaySettings = gameplaySettings;
 		FlxG.save.data.controllerMode = controllerMode;
+		FlxG.save.data.screenRes = screenRes;
 	
 		FlxG.save.flush();
 
@@ -224,9 +231,11 @@ class ClientPrefs {
 		if(FlxG.save.data.controllerMode != null) {
 			controllerMode = FlxG.save.data.controllerMode;
 		}
-		if (FlxG.save.data.enableArtemis != null)
-		{
+		if (FlxG.save.data.enableArtemis != null) {
 			enableArtemis = FlxG.save.data.enableArtemis;
+		}
+		if(FlxG.save.data.screenRes != null) {
+			screenRes = FlxG.save.data.screenRes;
 		}
 		if(FlxG.save.data.gameplaySettings != null)
 		{
@@ -272,7 +281,15 @@ class ClientPrefs {
 		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 	}
-
+	public static function getResolution():Array<Int>{
+		var res = ClientPrefs.screenRes.split(" x ");
+		
+		if (ClientPrefs.screenRes == "FULLSCREEN") res = ["1280", "720"];
+		
+		
+		
+		return [Std.parseInt(res[0]),Std.parseInt(res[1])];
+	}
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey> {
 		var copiedArray:Array<FlxKey> = arrayToCopy.copy();
 		var i:Int = 0;

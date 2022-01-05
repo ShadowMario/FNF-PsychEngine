@@ -58,6 +58,16 @@ class AtlasFrameMaker extends FlxFramesCollection{
 					if (Assets.exists(txtToFind)){
 						dajson = txtToFind;
 					}*/
+					
+					
+					
+					
+				if (Paths.fileExists('images/$key/spritemap1.json',TEXT)){
+					
+					PlayState.instance.addTextToDebug("Only Spritemaps made with Adobe Animate 2018 are supported");
+					trace("Only Spritemaps made with Adobe Animate 2018 are supported");
+					return null;
+				}
                 var animationData:AnimationData = Json.parse(Paths.getTextFromFile('images/$key/Animation.json'));
                 var atlasData:AtlasData = Json.parse(Paths.getTextFromFile('images/$key/spritemap.json'));
 				var bitmapData:BitmapData;
@@ -69,7 +79,6 @@ class AtlasFrameMaker extends FlxFramesCollection{
 				//var paf = 'assets/images/$key/spritemap.png' ;
 				bitmapData = Assets.getBitmapData(paf);//new BitmapData(0,1);
 				#end
-				
 				
 				
 				
