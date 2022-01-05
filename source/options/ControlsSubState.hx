@@ -73,12 +73,15 @@ class ControlsSubState extends MusicBeatSubstate {
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
-		ArtemisIntegration.setBackgroundColor ("#FFEA71FD");
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+		
+		#if sys
+		ArtemisIntegration.setBackgroundFlxColor (bg.color);
+		#end
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -306,7 +309,9 @@ class ControlsSubState extends MusicBeatSubstate {
 
 		trace('Reloaded keys: ' + ClientPrefs.keyBinds);
 		
+		#if sys
 		ArtemisIntegration.autoUpdateControls ();
+		#end
 
 		for (i in 0...grpOptions.length) {
 			if(!unselectableCheck(i, true)) {

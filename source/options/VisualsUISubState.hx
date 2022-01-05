@@ -99,7 +99,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.onChange = onChangeFPSCounter;
 		#end
 
-		#if desktop
+		#if sys
 		var option:Option = new Option('Enable Artemis',
 			'Cool colors for your RGB stuff. Requires Artemis and its FNF plugin to work. https://github.com/skedgyedgy/Artemis.Plugins.FNF/releases/tag/1.1',
 			'enableArtemis',
@@ -112,7 +112,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		super();
 	}
 
-	#if desktop
+	#if sys
 	function onToggleArtemis()
 	{
 		if (ClientPrefs.enableArtemis) {

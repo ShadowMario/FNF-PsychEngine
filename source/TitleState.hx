@@ -188,6 +188,12 @@ class TitleState extends MusicBeatState
 			MusicBeatState.switchState(new FlashingState());
 		} else {
 			#if desktop
+			DiscordClient.initialize();
+			Application.current.onExit.add (function (exitCode) {
+				DiscordClient.shutdown();
+			});
+			#end
+
 			#if sys
 			ArtemisIntegration.initialize();
 			ArtemisIntegration.setGameState ("title");
@@ -196,16 +202,13 @@ class TitleState extends MusicBeatState
 			ArtemisIntegration.sendProfileRelativePath ("assets/artemis/fnf-vanilla.json");
 			ArtemisIntegration.resetAllFlags ();
 			ArtemisIntegration.autoUpdateControls ();
-			// ArtemisIntegration.setControlColors ([{]note_left => "#FFC24B99", note_up => "#FFFFFFFF", note_down => "#FFFFFFFF", note_right => "#FFFFFFFF"])''
-			#end
-			DiscordClient.initialize();
 			Application.current.onExit.add (function (exitCode) {
-				DiscordClient.shutdown();
 				ArtemisIntegration.setBackgroundColor ("#00000000");
 				ArtemisIntegration.setGameState ("closed");
 				ArtemisIntegration.resetModName ();
 			});
 			#end
+
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				startIntro();
@@ -459,7 +462,9 @@ class TitleState extends MusicBeatState
 				transitioning = true;
 				// FlxG.sound.music.stop();
 
+				#if sys
 				ArtemisIntegration.triggerFlash ("#3FFFFFFF");
+				#end
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
@@ -660,7 +665,9 @@ class TitleState extends MusicBeatState
 		{
 			remove(ngSpr);
 
+			#if sys
 			ArtemisIntegration.triggerFlash ("#FFFFFFFF");
+			#end
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 			skippedIntro = true;

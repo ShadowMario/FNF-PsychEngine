@@ -608,11 +608,15 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "setHealth", function(value:Float = 0) {
 			PlayState.instance.health = value;
+			#if sys
 			ArtemisIntegration.sendBoyfriendHealth (PlayState.instance.health);
+			#end
 		});
 		Lua_helper.add_callback(lua, "addHealth", function(value:Float = 0) {
 			PlayState.instance.health += value;
+			#if sys
 			ArtemisIntegration.sendBoyfriendHealth (PlayState.instance.health);
+			#end
 		});
 		Lua_helper.add_callback(lua, "getHealth", function() {
 			return PlayState.instance.health;
@@ -1457,6 +1461,7 @@ class FunkinLua {
 			}
 		});
 
+		#if sys
 		// Artemis functions
 		Lua_helper.add_callback(lua, "setArtemisModName", function(modName:String) {
 			ArtemisIntegration.setModName (modName);
@@ -1530,6 +1535,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setArtemisProfile", function(profileLocation:String) {
 			ArtemisIntegration.sendProfileRelativePath (profileLocation);
 		});
+		#end
 
 
 		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY
