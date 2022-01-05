@@ -52,7 +52,10 @@ class Main extends Sprite
 		}
 
 		setupGame();
-		update();
+		var timer = new haxe.Timer(1);
+		timer.run = function() {
+		coloring();
+		if (fpsVar.textColor == 0) fpsVar.textColor = -4775566;} // needs to be done because textcolor becomes black for a frame
 	}
 
 	private function setupGame():Void
@@ -92,44 +95,42 @@ class Main extends Sprite
 		FlxG.mouse.visible = false;
 		#end
 	}
-	static var array:Array<FlxColor> = [
-		FlxColor.fromRGB(127, 0, 0),
-		FlxColor.fromRGB(255, 0, 0),
-		FlxColor.fromRGB(0, 127, 0),
-		FlxColor.fromRGB(0, 255, 0),
-		FlxColor.fromRGB(0, 0, 127),
-		FlxColor.fromRGB(0, 0, 255),
-		FlxColor.fromRGB(127, 127, 0),
+	// Chroma Effect (12 Colors)
+	var array:Array<FlxColor> = [
+		FlxColor.fromRGB(216, 34, 83),
+		FlxColor.fromRGB(255, 38, 0),
+		FlxColor.fromRGB(255, 80, 0),
+		FlxColor.fromRGB(255, 147, 0),
+		FlxColor.fromRGB(255, 199, 0),
 		FlxColor.fromRGB(255, 255, 0),
-		FlxColor.fromRGB(0, 127, 127),
-		FlxColor.fromRGB(0, 255, 255),
-		FlxColor.fromRGB(127, 0, 127),
-		FlxColor.fromRGB(255, 0, 255)
+		FlxColor.fromRGB(202, 255, 0),
+		FlxColor.fromRGB(0, 255, 0),
+		FlxColor.fromRGB(0, 146, 146),
+		FlxColor.fromRGB(0, 0, 255),
+		FlxColor.fromRGB(82, 40, 204),
+		FlxColor.fromRGB(150, 33, 146)
 	];
-	static var skippedFrames = 0;
-
-	public static var currentColor = 0;
+	var skippedFrames = 0;
+	var currentColor = 0;
 
 	// Event Handlers
-	@:noCompletion
-	public static function coloring():Void
+	public function coloring():Void
 	{
+		// Hippity, Hoppity, your code is now my property (from KadeEngine)
+		if (FlxG.save.data.fpsRainbow) {
 		if (currentColor >= array.length)
 			currentColor = 0;
-		currentColor = Math.round(FlxMath.lerp(0, array.length, skippedFrames / (ClientPrefs.framerate / 1.5)));
+		currentColor = Math.round(FlxMath.lerp(0, array.length, skippedFrames / ClientPrefs.framerate));
 		(cast(Lib.current.getChildAt(0), Main)).changeFPSColor(array[currentColor]);
 		currentColor++;
 		skippedFrames++;
-		if (skippedFrames > (ClientPrefs.framerate / 1.5))
+		if (skippedFrames > ClientPrefs.framerate)
 			skippedFrames = 0;
+		}
+		else fpsVar.textColor = FlxColor.fromRGB(255, 255, 255);
 	}
 	public function changeFPSColor(color:FlxColor)
 	{
 		fpsVar.textColor = color;
-	}
-	public function update()
-	{
-		var timer = new haxe.Timer(1000/60);
-		timer.run = function() {coloring();}
 	}
 }
