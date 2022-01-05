@@ -192,7 +192,7 @@ class CoolUtil
 		}
 		return Reflect.setProperty(Type.resolveClass(classVar), variable, value);
 	}
-	inline function getInstance()
+	static inline function getInstance()
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
