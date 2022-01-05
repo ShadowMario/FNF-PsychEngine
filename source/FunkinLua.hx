@@ -15,6 +15,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
 import flixel.system.FlxSound;
 import flixel.util.FlxTimer;
+import flixel.util.FlxSave;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
 import flixel.util.FlxColor;
@@ -1542,6 +1543,7 @@ class FunkinLua {
 					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayHidden', false);
 				}
 			}
+			FlxG.save.flush();
 		});
 
 
