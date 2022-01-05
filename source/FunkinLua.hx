@@ -1514,6 +1514,35 @@ class FunkinLua {
 				PlayState.instance.modchartTexts.remove(tag);
 			}
 		});
+		Lua_helper.add_callback(lua, "toggleWeekVisibility", function(week:String, ?mode:String = '', ?state:Null<Bool> = null) {
+			if(state != null) {
+				if(mode.toLowerCase() == 'story') {
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryVisible', state);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryHidden', !state);
+				} else if() {
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayVisible', state);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayHidden', !state);
+				} else {
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryVisible', state);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryHidden', !state);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayVisible', state);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayHidden', !state);
+				}
+			} else {
+				if(mode.toLowerCase() == 'story') {
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryVisible', false);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryHidden', false);
+				} else if() {
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayVisible', false);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayHidden', false);
+				} else {
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryVisible', false);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryHidden', false);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayVisible', false);
+					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayHidden', false);
+				}
+			}
+		});
 
 
 		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY
