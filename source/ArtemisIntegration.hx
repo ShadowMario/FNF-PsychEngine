@@ -1,5 +1,5 @@
-// artemis integration by skedgyedgy, API ver: 1.2.x
-// https://github.com/skedgyedgy/Artemis.Plugins.FNF/releases
+// artemis integration by skedgyedgy, API ver: 1.2.1
+// https://github.com/skedgyedgy/Artemis.Plugins.FNF/releases/tags/1.2.1
 
 package;
 
@@ -335,6 +335,22 @@ class ArtemisIntegration {
             if (value) request = new haxe.Http (fnfEndpoints + "EnableFlag");
             else request = new haxe.Http (fnfEndpoints + "DisableFlag");
             request.setPostData (Std.string (flag));
+            request.request (true);
+        }
+    }
+
+    public static function setCustomString (flag:Int, value:String) {
+        if (artemisAvailable) {
+            var request:haxe.Http = new haxe.Http (fnfEndpoints + "SetCustomString");
+            request.setPostData (Json.stringify ({ Id: flag, Value: value }));
+            request.request (true);
+        }
+    }
+
+    public static function setCustomNumber (flag:Int, value:Int) {
+        if (artemisAvailable) {
+            var request:haxe.Http = new haxe.Http (fnfEndpoints + "SetCustomNumber");
+            request.setPostData (Json.stringify ({ Id: flag, Value: value }));
             request.request (true);
         }
     }

@@ -1521,6 +1521,12 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setArtemisCustomFlag", function(flag:Int, value:Bool) {
 			ArtemisIntegration.setCustomFlag (flag, value);
 		});
+		Lua_helper.add_callback(lua, "setArtemisCustomString", function(flag:Int, value:String) {
+			ArtemisIntegration.setCustomString (flag, value);
+		});
+		Lua_helper.add_callback(lua, "setArtemisCustomNumber", function(flag:Int, value:Int) {
+			ArtemisIntegration.setCustomNumber (flag, value);
+		});
 		Lua_helper.add_callback(lua, "setArtemisProfile", function(profileLocation:String) {
 			ArtemisIntegration.sendProfileRelativePath (profileLocation);
 		});
