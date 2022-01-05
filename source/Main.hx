@@ -1,5 +1,7 @@
 package;
 
+import flixel.math.FlxMath;
+import flixel.util.FlxColor;
 import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.FlxGame;
@@ -50,6 +52,7 @@ class Main extends Sprite
 		}
 
 		setupGame();
+		update();
 	}
 
 	private function setupGame():Void
@@ -88,5 +91,45 @@ class Main extends Sprite
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
+	}
+	static var array:Array<FlxColor> = [
+		FlxColor.fromRGB(127, 0, 0),
+		FlxColor.fromRGB(255, 0, 0),
+		FlxColor.fromRGB(0, 127, 0),
+		FlxColor.fromRGB(0, 255, 0),
+		FlxColor.fromRGB(0, 0, 127),
+		FlxColor.fromRGB(0, 0, 255),
+		FlxColor.fromRGB(127, 127, 0),
+		FlxColor.fromRGB(255, 255, 0),
+		FlxColor.fromRGB(0, 127, 127),
+		FlxColor.fromRGB(0, 255, 255),
+		FlxColor.fromRGB(127, 0, 127),
+		FlxColor.fromRGB(255, 0, 255)
+	];
+	static var skippedFrames = 0;
+
+	public static var currentColor = 0;
+
+	// Event Handlers
+	@:noCompletion
+	public static function coloring():Void
+	{
+		if (currentColor >= array.length)
+			currentColor = 0;
+		currentColor = Math.round(FlxMath.lerp(0, array.length, skippedFrames / (ClientPrefs.framerate / 1.5)));
+		(cast(Lib.current.getChildAt(0), Main)).changeFPSColor(array[currentColor]);
+		currentColor++;
+		skippedFrames++;
+		if (skippedFrames > (ClientPrefs.framerate / 1.5))
+			skippedFrames = 0;
+	}
+	public function changeFPSColor(color:FlxColor)
+	{
+		fpsVar.textColor = color;
+	}
+	public function update()
+	{
+		var timer = new haxe.Timer(1000/60);
+		timer.run = function() {coloring();}
 	}
 }
