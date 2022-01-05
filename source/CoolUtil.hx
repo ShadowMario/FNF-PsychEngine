@@ -10,7 +10,7 @@ import sys.io.File;
 import sys.FileSystem;
 #else
 import openfl.utils.Assets;
-#end
+#end//
 
 using StringTools;
 
