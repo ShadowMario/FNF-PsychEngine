@@ -6,7 +6,7 @@
     "MaterialIcon": "Music",
     "FileIconId": "00000000-0000-0000-0000-000000000000",
     "IconType": 0,
-    "Order": 2,
+    "Order": 0,
     "IsSuspended": false,
     "ActivationBehaviour": 0,
     "ActivationCondition": {
@@ -58,9 +58,9 @@
   "ProfileEntity": {
     "$type": "Artemis.Storage.Entities.Profile.ProfileEntity, Artemis.Storage",
     "Id": "b782b249-387e-4968-a52c-7e22952832c4",
-    "Name": "FNF Vanilla",
+    "Name": "FNF Vanilla - auto-added",
     "IsFreshImport": false,
-    "LastSelectedProfileElement": "0fc46300-b4aa-45a4-b760-0c51f9794df3",
+    "LastSelectedProfileElement": "93e5e4ed-a78a-41bf-9e4b-7e570a38ea52",
     "Folders": {
       "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage]], System.Private.CoreLib",
       "$values": [
@@ -452,7 +452,7 @@
           "$type": "Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage",
           "Order": 2,
           "Name": "Spooky",
-          "IsExpanded": true,
+          "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
           "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
@@ -884,7 +884,7 @@
           "$type": "Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage",
           "Order": 8,
           "Name": "School Evil",
-          "IsExpanded": false,
+          "IsExpanded": true,
           "Suspended": false,
           "Profile": null,
           "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
@@ -56735,6 +56735,912 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
+          "Order": 1,
+          "Name": "Glitch",
+          "Suspended": false,
+          "Leds": {
+            "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage]], System.Private.CoreLib",
+            "$values": [
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Space",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_RightAlt",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_RightGui",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Application",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F12",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_BracketRight",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Backslash",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Enter",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_EqualsAndPlus",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Backspace",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_RightShift",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_RightCtrl",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_U",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_I",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_O",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_P",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_BracketLeft",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_CapsLock",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_A",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_S",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_D",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_G",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_H",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_J",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_K",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_L",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_SemicolonAndColon",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_ApostropheAndDoubleQuote",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_LeftShift",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Z",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_X",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_C",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_V",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_B",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_N",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_M",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_CommaAndLessThan",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_PeriodAndBiggerThan",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_SlashAndQuestionMark",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_LeftCtrl",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_LeftGui",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_LeftAlt",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Escape",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F1",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F2",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F3",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F4",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F5",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F6",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F7",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F8",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F9",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F10",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_F11",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_GraveAccentAndTilde",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_1",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_2",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_3",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_4",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_5",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_6",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_7",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_8",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_9",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_0",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_MinusAndUnderscore",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Tab",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Q",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_W",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_E",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_R",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_T",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Keyboard_Y",
+                "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
+                "PhysicalLayout": 1
+              }
+            ]
+          },
+          "AdaptionHints": {
+            "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.AdaptionHints.IAdaptionHintEntity, Artemis.Storage]], System.Private.CoreLib",
+            "$values": []
+          },
+          "Profile": null,
+          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "Id": "93e5e4ed-a78a-41bf-9e4b-7e570a38ea52",
+          "ParentId": "6471d621-fc8e-49d4-92f7-dcaaeee1f339",
+          "LayerEffects": {
+            "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.LayerEffectEntity, Artemis.Storage]], System.Private.CoreLib",
+            "$values": [
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LayerEffectEntity, Artemis.Storage",
+                "Id": "40251b1a-a4db-4b8a-8c9d-db6216ef2a95",
+                "ProviderId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "EffectType": "AudioVisualizationEffect",
+                "Name": null,
+                "Suspended": false,
+                "HasBeenRenamed": false,
+                "Order": 1
+              }
+            ]
+          },
+          "PropertyEntities": {
+            "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage]], System.Private.CoreLib",
+            "$values": [
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Core.CorePluginFeature-ffffffff",
+                "Path": "General.BrushReference",
+                "Value": "{\"LayerBrushProviderId\":\"Artemis.Plugins.LayerBrushes.Color.ColorBrushProvider-92a9d6ba\",\"BrushType\":\"SolidBrush\"}",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Core.CorePluginFeature-ffffffff",
+                "Path": "General.ShapeType",
+                "Value": "1",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Core.CorePluginFeature-ffffffff",
+                "Path": "General.BlendMode",
+                "Value": "3",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Core.CorePluginFeature-ffffffff",
+                "Path": "General.TransformMode",
+                "Value": "0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Core.CorePluginFeature-ffffffff",
+                "Path": "Transform.AnchorPoint",
+                "Value": "{\"IsEmpty\":true,\"Length\":0.0,\"LengthSquared\":0.0,\"X\":0.0,\"Y\":0.0}",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Core.CorePluginFeature-ffffffff",
+                "Path": "Transform.Position",
+                "Value": "{\"IsEmpty\":true,\"Length\":0.0,\"LengthSquared\":0.0,\"X\":0.0,\"Y\":0.0}",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Core.CorePluginFeature-ffffffff",
+                "Path": "Transform.Scale",
+                "Value": "{\"IsEmpty\":false,\"Width\":100.0,\"Height\":100.0}",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Core.CorePluginFeature-ffffffff",
+                "Path": "Transform.Rotation",
+                "Value": "0.0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Core.CorePluginFeature-ffffffff",
+                "Path": "Transform.Opacity",
+                "Value": "100.0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.LayerBrushes.Color.ColorBrushProvider-92a9d6ba",
+                "Path": "LayerBrush.ColorMode",
+                "Value": "0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.LayerBrushes.Color.ColorBrushProvider-92a9d6ba",
+                "Path": "LayerBrush.Color",
+                "Value": "\"#ff465169\"",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.LayerBrushes.Color.ColorBrushProvider-92a9d6ba",
+                "Path": "LayerBrush.Colors",
+                "Value": "[{\"Color\":\"#ffff0000\",\"Position\":0.0},{\"Color\":\"#ffff9900\",\"Position\":0.125},{\"Color\":\"#ffffff00\",\"Position\":0.25},{\"Color\":\"#ff00ff00\",\"Position\":0.375},{\"Color\":\"#ff00ff7e\",\"Position\":0.5},{\"Color\":\"#ff0078ff\",\"Position\":0.625},{\"Color\":\"#ff9e22ff\",\"Position\":0.75},{\"Color\":\"#ffff34ae\",\"Position\":0.875},{\"Color\":\"#ffff0000\",\"Position\":1.0}]",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.LayerBrushes.Color.ColorBrushProvider-92a9d6ba",
+                "Path": "LayerBrush.GradientPosition",
+                "Value": "0.0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.LayerBrushes.Color.ColorBrushProvider-92a9d6ba",
+                "Path": "LayerBrush.AnimationSpeed",
+                "Value": "100.0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.Channel",
+                "Value": "0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.ValueMode",
+                "Value": "1",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.SpectrumMode",
+                "Value": "1",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.Bars",
+                "Value": "48",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.Smoothing",
+                "Value": "3.0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.MinFrequency",
+                "Value": "60.0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.MaxFrequency",
+                "Value": "15000.0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.ReferenceLevel",
+                "Value": "90.0",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.EmphasisePeaks",
+                "Value": "0.5",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.PropertyEntity, Artemis.Storage",
+                "FeatureId": "Artemis.Plugins.Audio.LayerEffects.AudioVisualizationEffectProvider-c9af6416",
+                "Path": "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect.Gamma",
+                "Value": "2",
+                "KeyframesEnabled": false,
+                "KeyframeEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.KeyframeEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                },
+                "DataBindingEntities": {
+                  "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.DataBindings.DataBindingEntity, Artemis.Storage]], System.Private.CoreLib",
+                  "$values": []
+                }
+              }
+            ]
+          },
+          "ExpandedPropertyGroups": {
+            "$type": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib",
+            "$values": [
+              "LayerBrush",
+              "LayerEffect.40251b1a-a4db-4b8a-8c9d-db6216ef2a95.AudioVisualizationEffect"
+            ]
+          },
+          "DisplayCondition": {
+            "$type": "Artemis.Storage.Entities.Profile.Conditions.DataModelConditionGroupEntity, Artemis.Storage",
+            "BooleanOperator": 0,
+            "Children": {
+              "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.Abstract.DataModelConditionPartEntity, Artemis.Storage]], System.Private.CoreLib",
+              "$values": [
+                {
+                  "$type": "Artemis.Storage.Entities.Profile.Conditions.DataModelConditionEventEntity, Artemis.Storage",
+                  "EventPath": {
+                    "$type": "Artemis.Storage.Entities.Profile.DataModelPathEntity, Artemis.Storage",
+                    "Path": "CustomEvent",
+                    "DataModelId": "Artemis.Plugins.Module.FNF.FnfModule-84c5243c",
+                    "WrapperType": 0
+                  },
+                  "Children": {
+                    "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.Abstract.DataModelConditionPartEntity, Artemis.Storage]], System.Private.CoreLib",
+                    "$values": [
+                      {
+                        "$type": "Artemis.Storage.Entities.Profile.Conditions.DataModelConditionGroupEntity, Artemis.Storage",
+                        "BooleanOperator": 0,
+                        "Children": {
+                          "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.Abstract.DataModelConditionPartEntity, Artemis.Storage]], System.Private.CoreLib",
+                          "$values": [
+                            {
+                              "$type": "Artemis.Storage.Entities.Profile.Conditions.DataModelConditionEventPredicateEntity, Artemis.Storage",
+                              "PredicateType": 0,
+                              "LeftPath": {
+                                "$type": "Artemis.Storage.Entities.Profile.DataModelPathEntity, Artemis.Storage",
+                                "Path": "Arguments.Name",
+                                "DataModelId": "Artemis.Core.CorePluginFeature-ffffffff",
+                                "WrapperType": 2
+                              },
+                              "RightPath": null,
+                              "OperatorType": "StringEqualsConditionOperator",
+                              "OperatorPluginGuid": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+                              "RightStaticValue": "\"bgGhouls\"",
+                              "Children": null
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "Timeline": {
+            "$type": "Artemis.Storage.Entities.Profile.TimelineEntity, Artemis.Storage",
+            "StartSegmentLength": "00:00:00",
+            "MainSegmentLength": "00:00:00.4400000",
+            "EndSegmentLength": "00:00:00",
+            "PlayMode": 0,
+            "StopMode": 0,
+            "EventOverlapMode": 0
+          }
+        },
+        {
+          "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
           "Order": 2,
           "Name": "Background",
           "Suspended": false,
@@ -58612,7 +59518,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 1,
+          "Order": 0,
           "Name": "Danger",
           "Suspended": false,
           "Leds": {
@@ -59400,7 +60306,7 @@
         },
         {
           "$type": "Artemis.Storage.Entities.Profile.LayerEntity, Artemis.Storage",
-          "Order": 2,
+          "Order": 1,
           "Name": "Danger Borders",
           "Suspended": false,
           "Leds": {
