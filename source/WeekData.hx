@@ -139,7 +139,7 @@ class WeekData {
 						}
 						#end
 
-						if(weekFile != null && (isStoryMode == null || (isStoryMode && (!weekFile.hideStoryMode || checkWeekVisibility(sexList[i])) && !checkWeekHiddenState(sexList[i])) || (!isStoryMode && !weekFile.hideFreeplay))) {
+						if(weekFile != null && (isStoryMode == null || (isStoryMode && (!weekFile.hideStoryMode || checkWeekVisibility(sexList[i])) && !checkWeekHiddenState(sexList[i])) || (!isStoryMode && (!weekFile.hideFreeplay || checkFreeplayVisibility(sexList[i])) && !checkFreeplayHiddenState(sexList[i])))) {
 							weeksLoaded.set(sexList[i], weekFile);
 							weeksList.push(sexList[i]);
 						}
@@ -189,7 +189,7 @@ class WeekData {
 					weekFile.folder = directory.substring(Paths.mods().length, directory.length-1);
 					#end
 				}
-				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay))
+				if((PlayState.isStoryMode && (!weekFile.hideStoryMode || checkWeekVisibility(weekToCheck)) && !checkWeekHiddenState(weekToCheck)) || (!PlayState.isStoryMode && (!weekFile.hideFreeplay || checkFreeplayVisibility(weekToCheck)) && !checkFreeplayHiddenState(weekToCheck)))
 				{
 					weeksLoaded.set(weekToCheck, weekFile);
 					weeksList.push(weekToCheck);
