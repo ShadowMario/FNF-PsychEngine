@@ -139,7 +139,7 @@ class WeekData {
 						}
 						#end
 
-						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay))) {
+						if(weekFile != null && (isStoryMode == null || (isStoryMode && (!weekFile.hideStoryMode || checkWeekVisibility(sexList[i])) && !checkWeekHiddenState(sexList[i])) || (!isStoryMode && !weekFile.hideFreeplay))) {
 							weeksLoaded.set(sexList[i], weekFile);
 							weeksList.push(sexList[i]);
 						}
@@ -237,7 +237,26 @@ class WeekData {
 	
 	//For my Pull Request:
 	function checkWeekVisibility(weekName:String) {
-		if() {
+		if(CoolUtil.getPropertyFromClass('flixel.FlxG', weekName + 'StoryVisible')) {
+			return true;
+		}
+		return false;
+	}
+	function checkFreeplayVisibility(freeplayName:String) {
+		if(CoolUtil.getPropertyFromClass('flixel.FlxG', freeplayName + 'FreeplayVisible')) {
+			return true;
+		}
+		return false;
+	}
+	
+	function checkWeekHiddenState(weekName:String) {
+		if(CoolUtil.getPropertyFromClass('flixel.FlxG', weekName + 'StoryHidden')) {
+			return true;
+		}
+		return false;
+	}
+	function checkFreeplayHiddenState(freeplayName:String) {
+		if(CoolUtil.getPropertyFromClass('flixel.FlxG', freeplayName + 'FreeplayHidden')) {
 			return true;
 		}
 		return false;
