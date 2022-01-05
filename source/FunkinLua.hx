@@ -1532,7 +1532,7 @@ class FunkinLua {
 				if(mode.toLowerCase() == 'story') {
 					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryVisible', false);
 					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'StoryHidden', false);
-				} else if() {
+				} else if(mode.toLowerCase() == 'freeplay') {
 					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayVisible', false);
 					CoolUtil.setPropertyFromClass('flixel.FlxG', week + 'FreeplayHidden', false);
 				} else {
