@@ -67,7 +67,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		
 		
 		var option:Option = new Option('Screen Resolution',
-			"Size of the window (Changes will only apply )",
+			"Size of the window (Changes will apply once leaving)",
 			'screenRes',
 			'string',
 			'1280 x 720', ['1280 x 720',
@@ -75,7 +75,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			'FULLSCREEN'
 			]);
 		addOption(option);
-		option.onChange = onChangeRes;
+		//option.onChange = onChangeRes;
 		#end
 
 		/*
@@ -128,10 +128,6 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		  //Lib.current.stage.width = Std.parseInt(res[0]);
 		 // Lib.current.stage.height = Std.parseInt(res[1]);
 			FlxCamera.defaultZoom = 1280/Std.parseInt(res[0]);
-		}else{
-			Lib.current.root.scaleX = 1;
-			Lib.current.root.scaleY = 1;
-			
 		}
 	}
 

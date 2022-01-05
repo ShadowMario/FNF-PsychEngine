@@ -128,6 +128,7 @@ class ClientPrefs {
 		FlxG.save.data.safeFrames = safeFrames;
 		FlxG.save.data.gameplaySettings = gameplaySettings;
 		FlxG.save.data.controllerMode = controllerMode;
+		FlxG.save.data.screenRes = screenRes;
 	
 		FlxG.save.flush();
 
@@ -275,7 +276,15 @@ class ClientPrefs {
 		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 	}
-
+	public static function getResolution():Array<Int>{
+		var res = ClientPrefs.screenRes.split(" x ");
+		
+		if (ClientPrefs.screenRes == "FULLSCREEN") res = ["1280", "720"];
+		
+		
+		
+		return [Std.parseInt(res[0]),Std.parseInt(res[1])];
+	}
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey> {
 		var copiedArray:Array<FlxKey> = arrayToCopy.copy();
 		var i:Int = 0;

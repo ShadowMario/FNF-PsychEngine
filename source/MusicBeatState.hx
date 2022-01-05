@@ -22,6 +22,7 @@ class MusicBeatState extends FlxUIState
 
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
+	public var scaleRatio = ClientPrefs.getResolution()[1] / 720;
 	
 	var modeRatio:RatioScaleMode;
 	var modeStage:StageSizeScaleMode;
@@ -40,6 +41,7 @@ class MusicBeatState extends FlxUIState
 		modeRatio = new RatioScaleMode();
 		modeStage = new StageSizeScaleMode();
 		
+		options.GraphicsSettingsSubState.onChangeRes();
 //	thx Cary for the res code < 333
 		FlxG.scaleMode = modeStage;
 
