@@ -4,6 +4,7 @@ package options;
 import Discord.DiscordClient;
 #end
 import flash.text.TextField;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -24,6 +25,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import openfl.Lib;
 
 using StringTools;
 
@@ -62,6 +64,18 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.maxValue = 240;
 		option.displayFormat = '%v FPS';
 		option.onChange = onChangeFramerate;
+		
+		
+		var option:Option = new Option('Screen Resolution',
+			"Size of the window (Changes will only apply )",
+			'screenRes',
+			'string',
+			'1280 x 720', ['1280 x 720',
+			'1280 x 960',
+			'FULLSCREEN'
+			]);
+		addOption(option);
+		option.onChange = onChangeRes;
 		#end
 
 		/*
@@ -99,6 +113,25 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		{
 			FlxG.drawFramerate = ClientPrefs.framerate;
 			FlxG.updateFramerate = ClientPrefs.framerate;
+		}
+	}
+	public static function onChangeRes()
+	{
+		FlxG.fullscreen = ClientPrefs.screenRes == "FULLSCREEN";
+		if (!FlxG.fullscreen){
+		var res = ClientPrefs.screenRes.split(" x ");
+		  FlxG.resizeWindow(Std.parseInt(res[0]), Std.parseInt(res[1]));
+		//  FlxG.resizeWindow(Std.parseInt(res[0]), Std.parseInt(res[1]));
+		 // FlxG.resizeGame(Std.parseInt(res[0]), Std.parseInt(res[1]));
+		 // Lib.application.window.width = Std.parseInt(res[0]);
+		 // Lib.application.window.height = Std.parseInt(res[1]);
+		  //Lib.current.stage.width = Std.parseInt(res[0]);
+		 // Lib.current.stage.height = Std.parseInt(res[1]);
+			FlxCamera.defaultZoom = 1280/Std.parseInt(res[0]);
+		}else{
+			Lib.current.root.scaleX = 1;
+			Lib.current.root.scaleY = 1;
+			
 		}
 	}
 
