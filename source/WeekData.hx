@@ -236,26 +236,26 @@ class WeekData {
 	}
 	
 	//For my Pull Request:
-	function checkWeekVisibility(weekName:String) {
+	static function checkWeekVisibility(weekName:String) {
 		if(CoolUtil.getPropertyFromClass('flixel.FlxG', weekName + 'StoryVisible')) {
 			return true;
 		}
 		return false;
 	}
-	function checkFreeplayVisibility(freeplayName:String) {
+	static function checkFreeplayVisibility(freeplayName:String) {
 		if(CoolUtil.getPropertyFromClass('flixel.FlxG', freeplayName + 'FreeplayVisible')) {
 			return true;
 		}
 		return false;
 	}
 	
-	function checkWeekHiddenState(weekName:String) {
+	static function checkWeekHiddenState(weekName:String) {
 		if(CoolUtil.getPropertyFromClass('flixel.FlxG', weekName + 'StoryHidden')) {
 			return true;
 		}
 		return false;
 	}
-	function checkFreeplayHiddenState(freeplayName:String) {
+	static function checkFreeplayHiddenState(freeplayName:String) {
 		if(CoolUtil.getPropertyFromClass('flixel.FlxG', freeplayName + 'FreeplayHidden')) {
 			return true;
 		}
