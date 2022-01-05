@@ -129,7 +129,7 @@ class CoolUtil
 		#end
 	}
 	
-	public function getProperty(variable:String) {
+	static public function getProperty(variable:String) {
 		var killMe:Array<String> = variable.split('.');
 		if(killMe.length > 1) {
 			var coverMeInPiss:Dynamic = null;
@@ -149,7 +149,7 @@ class CoolUtil
 		return Reflect.getProperty(getInstance(), variable);
 	}
 	
-	public function setProperty(variable:String, value:Dynamic) {
+	static public function setProperty(variable:String, value:Dynamic) {
 		var killMe:Array<String> = variable.split('.');
 		if(killMe.length > 1) {
 			var coverMeInPiss:Dynamic = null;
@@ -169,7 +169,7 @@ class CoolUtil
 		return Reflect.setProperty(getInstance(), variable, value);
 	}
 	
-	public function getPropertyFromClass(classVar:String, variable:String) {
+	static public function getPropertyFromClass(classVar:String, variable:String) {
 		var killMe:Array<String> = variable.split('.');
 		if(killMe.length > 1) {
 			var coverMeInPiss:Dynamic = Reflect.getProperty(Type.resolveClass(classVar), killMe[0]);
@@ -181,7 +181,7 @@ class CoolUtil
 		return Reflect.getProperty(Type.resolveClass(classVar), variable);
 	}
 	
-	public function setPropertyFromClass(classVar:String, variable:String, value:Dynamic) {
+	static public function setPropertyFromClass(classVar:String, variable:String, value:Dynamic) {
 		var killMe:Array<String> = variable.split('.');
 		if(killMe.length > 1) {
 			var coverMeInPiss:Dynamic = Reflect.getProperty(Type.resolveClass(classVar), killMe[0]);
