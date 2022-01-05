@@ -1,8 +1,20 @@
-export/
-.vscode/*
-!.vscode/tasks.json
-!.vscode/launch.json
+### FNF-Specific
+# File used for the NG API. Should not be shared with others.
 APIStuff.hx
 art/build_x32-officialrelease.bat
 art/build_x64-officialrelease.bat
 art/test_x64-debug-officialrelease.bat
+
+### VS Code
+export/*
+.vscode/*
+*.code-workspace
+# Local history which shouldn't be shared.
+.history
+.ionide
+# ! means a file should be added regardless of it it gets ignored prior.
+# Including to allow others to use already set-up configuration tweaked for the project.
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

@@ -13,6 +13,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxBasic;
+import flixel.system.scaleModes.*;
 
 class MusicBeatState extends FlxUIState
 {
@@ -21,6 +22,11 @@ class MusicBeatState extends FlxUIState
 
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
+	public var scaleRatio = ClientPrefs.getResolution()[1] / 720;
+	
+	var modeRatio:RatioScaleMode;
+	var modeStage:StageSizeScaleMode;
+	
 	private var controls(get, never):Controls;
 
 	inline function get_controls():Controls
@@ -31,6 +37,17 @@ class MusicBeatState extends FlxUIState
 		super.create();
 
 		// Custom made Trans out
+		
+		modeRatio = new RatioScaleMode();
+		modeStage = new StageSizeScaleMode();
+		
+		options.GraphicsSettingsSubState.onChangeRes();
+//	thx Cary for the res code < 333
+		FlxG.scaleMode = modeStage;
+
+		if (FlxG.fullscreen)FlxG.scaleMode = modeRatio;
+		
+		
 		if(!skip) {
 			openSubState(new CustomFadeTransition(1, true));
 		}
