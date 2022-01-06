@@ -72,7 +72,7 @@ class TitleState extends MusicBeatState
 	var wackyImage:FlxSprite;
 
 	var easterEggEnabled:Bool = true; //Disable this to hide the easter egg
-	var easterEggKeyCombination:Array<FlxKey> = [FlxKey.B, FlxKey.B, FlxKey.B]; //bb stands for bbpanzu cuz he wanted this lmao
+	var easterEggKeyCombination:Array<FlxKey> = [FlxKey.B, FlxKey.B]; //bb stands for bbpanzu cuz he wanted this lmao
 	var lastKeysPressed:Array<FlxKey> = [];
 
 	var mustUpdate:Bool = false;
@@ -376,6 +376,14 @@ class TitleState extends MusicBeatState
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
 		ngSpr.antialiasing = true;
+		
+ 		FNFLogo = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
+		FNFLogo.visible = false;
+		FNFLogo.setGraphicSize(Std.int(ngSpr.width * 0.8));
+		FNFLogo.updateHitbox();
+		FNFLogo.screenCenter(X);
+		FNFLogo.antialiasing = true;
+		add(FNFLogo);
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -612,9 +620,11 @@ class TitleState extends MusicBeatState
 					#if PSYCH_WATERMARKS
 					addMoreText('Friday night funkin', -40);
 					ngSpr.visible = false;
+					FNFLogo.visible = true;
 					#else
 					addMoreText('Newgrounds', -40);
 					ngSpr.visible = true;
+					FNFLogo.visible = false;
 					#end
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
@@ -643,10 +653,10 @@ class TitleState extends MusicBeatState
 				// credTextShit.text += '\nNight';
 				case 15:
 					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
-				//	LogoFNF.visible = true;
+					FNFLogo.visible = true;
 				case 16:
 					addMoreText('Psych'); // credTextShit.text += '\nFunkin';
-				//	LogoFNF.visible = false;
+					FNFLogo.visible = false;
 				case 17:
 					addMoreText('Engine'); // credTextShit.text += '\nFunkin';
 
@@ -663,7 +673,7 @@ class TitleState extends MusicBeatState
 		if (!skippedIntro)
 		{
 			remove(ngSpr);
-//			remove(FNFLogo);
+			remove(FNFLogo);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
