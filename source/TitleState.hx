@@ -609,8 +609,13 @@ class TitleState extends MusicBeatState
 					createCoolText(['In association', 'with'], -40);
 					#end
 				case 7:
-					addMoreText('newgrounds', -40);
+					#if PSYCH_WATERMARKS
+					addMoreText('Friday night funkin', -40);
+					ngSpr.visible = false;
+					#else
+					addMoreText('Newgrounds', -40);
 					ngSpr.visible = true;
+					#end
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
 					deleteCoolText();
@@ -638,8 +643,14 @@ class TitleState extends MusicBeatState
 				// credTextShit.text += '\nNight';
 				case 15:
 					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
-
+				//	LogoFNF.visible = true;
 				case 16:
+					addMoreText('Psych'); // credTextShit.text += '\nFunkin';
+				//	LogoFNF.visible = false;
+				case 17:
+					addMoreText('Engine'); // credTextShit.text += '\nFunkin';
+
+				case 18:
 					skipIntro();
 			}
 		}
@@ -652,6 +663,7 @@ class TitleState extends MusicBeatState
 		if (!skippedIntro)
 		{
 			remove(ngSpr);
+//			remove(FNFLogo);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
