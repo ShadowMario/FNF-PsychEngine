@@ -377,7 +377,7 @@ class TitleState extends MusicBeatState
 		ngSpr.screenCenter(X);
 		ngSpr.antialiasing = true;
 		
- 		FNFLogo = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
+ 		FNFLogo = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('titlelogo'));
 		FNFLogo.visible = false;
 		FNFLogo.setGraphicSize(Std.int(ngSpr.width * 0.8));
 		FNFLogo.updateHitbox();
@@ -590,16 +590,16 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
+					createCoolText(['Psych Engine But Better by'], 15);
 					#else
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
 				// credTextShit.visible = true;
 				case 3:
 					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15);
-					addMoreText('RiverOaken', 15);
-					addMoreText('bb-panzu', 15);
+					addMoreText('Luke', 15);
+					addMoreText('Jamie', 15);
+					addMoreText('Rosie', 15);
 					#else
 					addMoreText('present');
 					#end
@@ -659,7 +659,8 @@ class TitleState extends MusicBeatState
 					FNFLogo.visible = false;
 				case 17:
 					addMoreText('Engine'); // credTextShit.text += '\nFunkin';
-
+					//addMoreText('Sussy among us no one sees this XD'); // credTextShit.text += '\nFunkin';
+					
 				case 18:
 					skipIntro();
 			}
@@ -674,6 +675,7 @@ class TitleState extends MusicBeatState
 		{
 			remove(ngSpr);
 			remove(FNFLogo);
+	//              remove(Dog);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
