@@ -234,4 +234,11 @@ class WeekData {
 			Paths.currentModDirectory = data.folder;
 		}
 	}
-}
+
+	//for invis weeks thingie also All credit for invis weeks goes too XtraXD1
+	function checkWeekVisibility(weekName:String) {
+		if() {
+			return true;
+		}
+		return false;
+	}
