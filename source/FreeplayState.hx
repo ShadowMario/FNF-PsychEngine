@@ -177,11 +177,11 @@ class FreeplayState extends MusicBeatState
 		add(textBG);
 
 		#if PRELOAD_ALL
-		var leText:String = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
-		var size:Int = 16;
+		var leText:String = "1.1 is gonna be lit yo! also press space to listen to a song. its a good tip!";
+		var size:Int = 17;
 		#else
-		var leText:String = "Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
-		var size:Int = 18;
+		var leText:String = "press space to listen to a song your hovering over. also 1.1 is gonna be lit!";
+		var size:Int = 19;
 		#end
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
 		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
@@ -496,5 +496,6 @@ class SongMetadata
 		this.color = color;
 		this.folder = Paths.currentModDirectory;
 		if(this.folder == null) this.folder = '';
+		// trace("Among sus development");
 	}
 }
