@@ -6,11 +6,11 @@ import flixel.graphics.frames.FlxAtlasFrames;
 class BackgroundGirls extends FlxSprite
 {
 	var isPissed:Bool = true;
+//	var isCatted:Bool = true;
 	public function new(x:Float, y:Float)
 	{
 		super(x, y);
 
-		// BG fangirls dissuaded
 		frames = Paths.getSparrowAtlas('weeb/bgFreaks');
 
 		swapDanceType();
@@ -43,3 +43,4 @@ class BackgroundGirls extends FlxSprite
 			animation.play('danceLeft', true);
 	}
 }
+// distroud bg cats
