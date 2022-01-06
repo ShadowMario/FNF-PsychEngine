@@ -79,7 +79,7 @@ class PlayState extends MusicBeatState
 		['Good', 0.8], //From 70% to 79%
 		['Great', 0.9], //From 80% to 89%
 		['Sick!', 1], //From 90% to 99%
-		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['Very Epic!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 	
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
@@ -499,7 +499,7 @@ class PlayState extends MusicBeatState
 				var skyBG:BGSprite = new BGSprite('limo/limoSunset', -120, -50, 0.1, 0.1);
 				add(skyBG);
 
-				if(!ClientPrefs.lowQuality) {
+				if(!ClientPrefs.violence) {
 					limoMetalPole = new BGSprite('gore/metalPole', -500, 220, 0.4, 0.4);
 					add(limoMetalPole);
 
@@ -709,14 +709,14 @@ class PlayState extends MusicBeatState
 				bgStreet.updateHitbox();
 				bgTrees.updateHitbox();
 
-				/*if(!ClientPrefs.lowQuality) { // it doesnt do stuff YET!!
-					bgGirls = new BackgroundGirls(-100, 190);
+				if(!ClientPrefs.lowQuality) { // if it doesnt have the new hx state instead of the old they will still be happy so dont change it XD
+					bgGirls = new BGGirlsSad(-100, 190);
 					bgGirls.scrollFactor.set(0.9, 0.9);
 
 					bgGirls.setGraphicSize(Std.int(bgGirls.width * daPixelZoom));
 					bgGirls.updateHitbox();
 					add(bgGirls);
-				}*/
+				}
 			case 'schoolEvil': //Week 6 - Thorns
 				GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pixel';
 				GameOverSubstate.loopSoundName = 'gameOver-pixel';
@@ -831,7 +831,7 @@ class PlayState extends MusicBeatState
 			luaArray.push(new FunkinLua(luaFile));
 		#end
 
-		if(!modchartSprites.exists('blammedLightsBlack')) { //Creates blammed light black fade in case you didn't make your own
+		if(!modchartSprites.exists('blammedLightsBlack')) { // i may edit this code or remove blammed lights entirly cuz characters fade and come back for some reason
 			blammedLightsBlack = new ModchartSprite(FlxG.width * -0.5, FlxG.height * -0.5);
 			blammedLightsBlack.makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
 			var position:Int = members.indexOf(gfGroup);
@@ -954,7 +954,7 @@ class PlayState extends MusicBeatState
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
 		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
-		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
+		timeBar.numDivisions = 400; // Toned it down a notch to reduce lag!
 		timeBar.alpha = 0;
 		timeBar.visible = showTime;
 		add(timeBar);
@@ -1204,7 +1204,7 @@ class PlayState extends MusicBeatState
 							}
 						});
 					});
-				case 'senpai' | 'roses' | 'thorns':
+				    case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
 
@@ -2048,7 +2048,7 @@ class PlayState extends MusicBeatState
 
 		switch(event[1]) {
 			case 'Kill Henchmen': //Better timing so that the kill sound matches the beat intended
-				return 280; //Plays 280ms before the actual position
+				return 270; //Plays 270ms before the actual position (had to lower because it takes soo long!)
 		}
 		return 0;
 	}
@@ -2375,7 +2375,7 @@ class PlayState extends MusicBeatState
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 			if(!startingSong && !endingSong && boyfriend.animation.curAnim.name.startsWith('idle')) {
 				boyfriendIdleTime += elapsed;
-				if(boyfriendIdleTime >= 0.15) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
+				if(boyfriendIdleTime >= 0.16) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
 					boyfriendIdled = true;
 				}
 			} else {
@@ -2895,21 +2895,21 @@ class PlayState extends MusicBeatState
 				if(Math.isNaN(lightId)) lightId = 0;
 
 				if(lightId > 0 && curLightEvent != lightId) {
-					if(lightId > 5) lightId = FlxG.random.int(1, 5, [curLightEvent]);
+					if(lightId > 2) lightId = FlxG.random.int(1, 2, [curLightEvent]);
 
 					var color:Int = 0xffffffff;
 					switch(lightId) {
-						case 1: //Blue
-							color = 0xff31a2fd;
-						case 2: //Green
-							color = 0xff31fd8c;
-						case 3: //Pink
+						case 1: //Red
+							color = 0x963E2B; //963E2B
+						case 2: //Black
+							color = 0xffffffff;
+						/*case 3: //Pink
 							color = 0xfff794f7;
 						case 4: //Red
 							color = 0xfff96d63;
 						case 5: //Orange
 							color = 0xfffba633;
-					}
+					}*/
 					curLightEvent = lightId;
 
 					if(blammedLightsBlack.alpha == 0) {
@@ -2921,34 +2921,6 @@ class PlayState extends MusicBeatState
 								blammedLightsBlackTween = null;
 							}
 						});
-
-						var chars:Array<Character> = [boyfriend, gf, dad];
-						for (i in 0...chars.length) {
-							if(chars[i].colorTween != null) {
-								chars[i].colorTween.cancel();
-							}
-							chars[i].colorTween = FlxTween.color(chars[i], 1, FlxColor.WHITE, color, {onComplete: function(twn:FlxTween) {
-								chars[i].colorTween = null;
-							}, ease: FlxEase.quadInOut});
-						}
-					} else {
-						if(blammedLightsBlackTween != null) {
-							blammedLightsBlackTween.cancel();
-						}
-						blammedLightsBlackTween = null;
-						blammedLightsBlack.alpha = 1;
-
-						var chars:Array<Character> = [boyfriend, gf, dad];
-						for (i in 0...chars.length) {
-							if(chars[i].colorTween != null) {
-								chars[i].colorTween.cancel();
-							}
-							chars[i].colorTween = null;
-						}
-						dad.color = color;
-						boyfriend.color = color;
-						gf.color = color;
-					}
 					
 					if(curStage == 'philly') {
 						if(phillyCityLightsEvent != null) {
@@ -2991,17 +2963,7 @@ class PlayState extends MusicBeatState
 							}, ease: FlxEase.quadInOut});
 						}
 					}
-
-					var chars:Array<Character> = [boyfriend, gf, dad];
-					for (i in 0...chars.length) {
-						if(chars[i].colorTween != null) {
-							chars[i].colorTween.cancel();
-						}
-						chars[i].colorTween = FlxTween.color(chars[i], 1, chars[i].color, FlxColor.WHITE, {onComplete: function(twn:FlxTween) {
-							chars[i].colorTween = null;
-						}, ease: FlxEase.quadInOut});
-					}
-
+					
 					curLight = 0;
 					curLightEvent = 0;
 				}
@@ -3160,8 +3122,8 @@ class PlayState extends MusicBeatState
 				}
 				reloadHealthBarColors();
 			
-			case 'BG Freaks Expression':
-				if(bgGirls != null) bgGirls.swapDanceType();
+			//case 'BG Freaks Expression': // next stop removing this event from playstate and charting state may do later.
+			//	if(bgGirls != null) bgGirls.swapDanceType();
 			
 			case 'Change Scroll Speed':
 				if (songSpeedType == "constant")
@@ -3235,7 +3197,7 @@ class PlayState extends MusicBeatState
 					camFollow.x = boyfriend.getMidpoint().x - 300;
 				case 'mall':
 					camFollow.y = boyfriend.getMidpoint().y - 200;
-				case 'school' | 'schoolEvil':
+				case 'school' | 'school-sad' | 'schoolEvil':
 					camFollow.x = boyfriend.getMidpoint().x - 200;
 					camFollow.y = boyfriend.getMidpoint().y - 200;
 			}
@@ -4254,7 +4216,7 @@ class PlayState extends MusicBeatState
 
 	function killHenchmen():Void
 	{
-		if(!ClientPrefs.lowQuality && ClientPrefs.violence && curStage == 'limo') {
+		if(!ClientPrefs.violence && curStage == 'limo') {
 			if(limoKillingState < 1) {
 				limoMetalPole.x = -400;
 				limoMetalPole.visible = true;
