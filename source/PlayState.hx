@@ -1190,6 +1190,10 @@ class PlayState extends MusicBeatState
 		}
 		RecalculateRating();
 
+		#if sys
+		if (daSong == "monster") ArtemisIntegration.setCustomFlag (1, true);
+		#end
+
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
 		CoolUtil.precacheSound('missnote1');
 		CoolUtil.precacheSound('missnote2');
@@ -2268,7 +2272,12 @@ class PlayState extends MusicBeatState
 								if(dancers[i].x < FlxG.width * 1.5 && limoLight.x > (370 * i) + 130) {
 									switch(i) {
 										case 0 | 3:
-											if(i == 0) FlxG.sound.play(Paths.sound('dancerdeath'), 0.5);
+											if(i == 0) {
+												FlxG.sound.play(Paths.sound('dancerdeath'), 0.5);
+												#if sys
+												ArtemisIntegration.triggerFlash ("#AFFF0000");
+												#end
+											}
 
 											var diffStr:String = i == 3 ? ' 2 ' : ' ';
 											var particle:BGSprite = new BGSprite('gore/noooooo', dancers[i].x + 200, dancers[i].y, 0.4, 0.4, ['hench leg spin' + diffStr + 'PINK'], false);
@@ -3004,6 +3013,9 @@ class PlayState extends MusicBeatState
 				if(curStage == 'schoolEvil' && !ClientPrefs.lowQuality) {
 					bgGhouls.dance(true);
 					bgGhouls.visible = true;
+					#if sys
+					ArtemisIntegration.triggerCustomEvent ("bgGhouls", "#00000000", 0);
+					#end
 				}
 
 			case 'Play Animation':
