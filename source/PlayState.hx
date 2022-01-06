@@ -374,8 +374,10 @@ class PlayState extends MusicBeatState
 					curStage = 'mall';
 				case 'winter-horrorland':
 					curStage = 'mallEvil';
-				case 'senpai' | 'roses':
+				case 'senpai':
 					curStage = 'school';
+				case 'roses':
+					curStage = 'school-sad';
 				case 'thorns':
 					curStage = 'schoolEvil';
 				default:
@@ -2048,7 +2050,7 @@ class PlayState extends MusicBeatState
 
 		switch(event[1]) {
 			case 'Kill Henchmen': //Better timing so that the kill sound matches the beat intended
-				return 270; //Plays 270ms before the actual position (had to lower because it takes soo long!)
+				return 250; //Plays 250ms before the actual position (had to lower because it takes soo long!)
 		}
 		return 0;
 	}
@@ -2889,6 +2891,41 @@ class PlayState extends MusicBeatState
 				var value:Int = Std.parseInt(value1);
 				if(Math.isNaN(value)) value = 1;
 				gfSpeed = value;
+				
+				case 'Change Hurt Amount':
+				var val1:Float = Std.parseFloat(value1);
+				var val2:Float = Std.parseFloat(value2);
+
+				if(Math.isNaN(val1))
+					val1 = 0.3;
+				else
+					val1 = Math.abs(val1);
+
+				if(Math.isNaN(val2))
+					val2 = 0.1;
+				else
+					val2 = Math.abs(val2);
+
+				for (note in notes)
+				{
+					if(note.noteType == "Hurt Note")
+					{
+						if(note.isSustainNote)
+							note.missHealth = val2;
+						else
+							note.missHealth = val1;
+					}
+				}
+				for (note in unspawnNotes)
+				{
+					if(note.noteType == "Hurt Note")
+					{
+						if(note.isSustainNote)
+							note.missHealth = val2;
+						else
+							note.missHealth = val1;                
+					}
+				}
 
 			case 'Blammed Lights':
 				var lightId:Int = Std.parseInt(value1);
