@@ -116,9 +116,10 @@ class Main extends Sprite
 	public static var currentColor = 0;
 
 	// Event Handlers
-	@:noCompletion
-	public static function coloring():Void
+	public function coloring():Void
 	{
+		// Hippity, Hoppity, your code is now my property (from KadeEngine)
+		if (FlxG.save.data.fpsRainbow) {
 		if (currentColor >= array.length)
 			currentColor = 0;
 		currentColor = Math.round(FlxMath.lerp(0, array.length, skippedFrames / ClientPrefs.framerate));
@@ -127,9 +128,9 @@ class Main extends Sprite
 		skippedFrames++;
 		if (skippedFrames > ClientPrefs.framerate)
 			skippedFrames = 0;
+		}
+		else fpsVar.textColor = FlxColor.fromRGB(255, 255, 255);
 	}
-	else fpsVar.textColor = FlxColor.fromRGB(255, 255, 255);
-      }
 	public function changeFPSColor(color:FlxColor)
 	{
 		fpsVar.textColor = color;
