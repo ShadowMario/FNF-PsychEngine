@@ -35,6 +35,7 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
+// import PixelShader; 
 import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
@@ -78,8 +79,8 @@ class PlayState extends MusicBeatState
 		['Nice', 0.7], //69%
 		['Good', 0.8], //From 70% to 79%
 		['Great', 0.9], //From 80% to 89%
-		['Sick!', 1], //From 90% to 99%
-		['Very Epic!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['Cool!!', 1], //From 90% to 99%
+		['Very Epic!!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 	
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
@@ -163,10 +164,11 @@ class PlayState extends MusicBeatState
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
 	
-	public var sicks:Int = 0;
-	public var goods:Int = 0;
-	public var bads:Int = 0;
-	public var shits:Int = 0;
+	public var sicks:Int = 0; // sicks
+	public var goods:Int = 0; // goods
+	public var bads:Int = 0; // bads
+	public var shits:Int = 0; // shizes
+     // public var bruhs:Int = 0; // bruhs
 	
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -223,6 +225,7 @@ class PlayState extends MusicBeatState
 	var heyTimer:Float;
 
 	var bgGirls:BackgroundGirls;
+	var bgGirlsad:BGGirlsSad;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 	var bgGhouls:BGSprite;
 
@@ -712,12 +715,12 @@ class PlayState extends MusicBeatState
 				bgTrees.updateHitbox();
 
 				if(!ClientPrefs.lowQuality) { // if u change the BGGirlsSad to the og one then they will be happi lol
-					bgGirls = new BGGirlsSad(-100, 190);
-					bgGirls.scrollFactor.set(0.9, 0.9);
+					bgGirlsad = new BGGirlsSad(-100, 190);
+					bgGirlsad.scrollFactor.set(0.9, 0.9);
 
-					bgGirls.setGraphicSize(Std.int(bgGirls.width * daPixelZoom));
-					bgGirls.updateHitbox();
-					add(bgGirls);
+					bgGirlsad.setGraphicSize(Std.int(bgGirls.width * daPixelZoom));
+					bgGirlsad.updateHitbox();
+					add(bgGirlsad);
 				}
 			case 'schoolEvil': //Week 6 - Thorns
 				GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pixel';
