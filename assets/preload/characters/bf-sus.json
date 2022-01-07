@@ -63,7 +63,7 @@
 			],
 			"anim": "singLEFTmiss",
 			"fps": 24,
-			"name": "BF NOTE LEFT MISS",
+			"name": "BF hit",
 			"indices": []
 		},
 		{
@@ -74,7 +74,7 @@
 			],
 			"anim": "singDOWNmiss",
 			"fps": 24,
-			"name": "BF NOTE DOWN MISS",
+			"name": "BF hit",
 			"indices": []
 		},
 		{
@@ -85,7 +85,7 @@
 			],
 			"anim": "singUPmiss",
 			"fps": 24,
-			"name": "BF NOTE UP MISS",
+			"name": "BF hit",
 			"indices": []
 		},
 		{
@@ -96,7 +96,7 @@
 			],
 			"anim": "singRIGHTmiss",
 			"fps": 24,
-			"name": "BF NOTE RIGHT MISS",
+			"name": "BF hit",
 			"indices": []
 		},
 		{
@@ -107,7 +107,7 @@
 			],
 			"anim": "hey",
 			"fps": 24,
-			"name": "BF HEY",
+			"name": "BF hit",
 			"indices": []
 		},
 		{
