@@ -363,10 +363,35 @@ class PlayState extends MusicBeatState
 		GameOverSubstate.resetVariables();
 		var songName:String = Paths.formatToSongPath(SONG.song);
 
+		curStage = PlayState.SONG.stage;
+		//trace('stage is: ' + curStage);
+		if(PlayState.SONG.stage == null || PlayState.SONG.stage.length < 1) {
+			switch (songName)
+			{
+				case 'spookeez' | 'south' | 'monster':
+					curStage = 'spooky';
+				case 'pico' | 'blammed' | 'philly' | 'philly-nice':
+					curStage = 'philly';
+				case 'milf' | 'satin-panties' | 'high':
+					curStage = 'limo';
+				case 'cocoa' | 'eggnog':
+					curStage = 'mall';
+				case 'winter-horrorland':
+					curStage = 'mallEvil';
+				case 'senpai' | 'roses':
+					curStage = 'school';
+				case 'thorns':
+					curStage = 'schoolEvil';
+				default:
+					curStage = 'stage';
+			}
+		}
+
 
 		// tell artemis all the things it needs to know
 		#if sys
 		ArtemisIntegration.setStageName (curStage);
+		ArtemisIntegration.setSongName (songName);
 		ArtemisIntegration.setDifficulty (CoolUtil.difficultyString ());
 		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
 		else ArtemisIntegration.setGameState ("in-game freeplay");
@@ -393,30 +418,6 @@ class PlayState extends MusicBeatState
 		
 		ArtemisIntegration.startSong ();
 		#end
-
-		curStage = PlayState.SONG.stage;
-		//trace('stage is: ' + curStage);
-		if(PlayState.SONG.stage == null || PlayState.SONG.stage.length < 1) {
-			switch (songName)
-			{
-				case 'spookeez' | 'south' | 'monster':
-					curStage = 'spooky';
-				case 'pico' | 'blammed' | 'philly' | 'philly-nice':
-					curStage = 'philly';
-				case 'milf' | 'satin-panties' | 'high':
-					curStage = 'limo';
-				case 'cocoa' | 'eggnog':
-					curStage = 'mall';
-				case 'winter-horrorland':
-					curStage = 'mallEvil';
-				case 'senpai' | 'roses':
-					curStage = 'school';
-				case 'thorns':
-					curStage = 'schoolEvil';
-				default:
-					curStage = 'stage';
-			}
-		}
 
 		var stageData:StageFile = StageData.getStageFile(curStage);
 		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
@@ -1194,7 +1195,6 @@ class PlayState extends MusicBeatState
 		RecalculateRating();
 
 		#if sys
-		ArtemisIntegration.setSongName (daSong);
 		ArtemisIntegration.setDadName (SONG.player2);
 		ArtemisIntegration.setBfName (SONG.player1);
 		ArtemisIntegration.setGfName (gfVersion);
