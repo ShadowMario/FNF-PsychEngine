@@ -85,7 +85,8 @@ class CreditsState extends MusicBeatState
 			['Psych Engine But Better Team'],
 			['Luke',		'bb-panzu',		'Its furrycoltins real name!',						'https://twitter.com/Shadow_Mario_',	'444444'],
 			['Jamie',			'riveroaken',		'Jamie helped with bonus features',	                        'https://twitter.com/river_oaken',		'C30085'],
-			[''],
+			['Psych engine team'],
+			['Shadow Mario',			'riveroaken',		'Main programmer of pysch engine',	                        'https://twitter.com/Shadow_Mario_',		'C30085'],
 		];
 		
 		for(i in pisspoop){
