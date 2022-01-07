@@ -50,13 +50,14 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false); //Default value
 		addOption(option);
 		
-		var option:Option = new Option('Psych but better watermarks', //Name
+		/*var option:Option = new Option('Psych but better watermarks', //Name
 			'edits the intro', //Description
 			'Pbbwm', //Save data variable name
 			'bool', //Variable type
 			false); //Default value
 		addOption(option);
 
+		*/
 		var option:Option = new Option('Middlescroll',
 			'If checked, your notes get centered.',
 			'middleScroll',
@@ -78,7 +79,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		/*var option:Option = new Option('Note Delay',
+		/*var option:Option = new Option('Note Delay', // idk why this is unused? maybe ill make it a thing. we will see!
 			'Changes how late a note is spawned.\nUseful for preventing audio lag from wireless earphones.',
 			'noteOffset',
 			'int',
