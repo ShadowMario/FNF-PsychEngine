@@ -23,7 +23,7 @@ class MusicBeatState extends FlxUIState
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
 	public var scaleRatio = ClientPrefs.getResolution()[1] / 720;
-	
+	public static var musInstance:MusicBeatState;
 	var modeRatio:RatioScaleMode;
 	var modeStage:StageSizeScaleMode;
 	
@@ -35,17 +35,13 @@ class MusicBeatState extends FlxUIState
 	override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
-
+musInstance = this;
 		// Custom made Trans out
 		
 		modeRatio = new RatioScaleMode();
 		modeStage = new StageSizeScaleMode();
 		
-		options.GraphicsSettingsSubState.onChangeRes();
 //	thx Cary for the res code < 333
-		FlxG.scaleMode = modeStage;
-
-		if (FlxG.fullscreen)FlxG.scaleMode = modeRatio;
 		
 		
 		if(!skip) {
@@ -78,6 +74,14 @@ class MusicBeatState extends FlxUIState
 
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
+			
+			
+			
+		if (FlxG.keys.pressed.ALT && FlxG.keys.justPressed.ENTER){//to disable this fucker
+			FlxG.fullscreen = !FlxG.fullscreen;
+		}
+			
+			
 
 		super.update(elapsed);
 	}
@@ -111,11 +115,13 @@ class MusicBeatState extends FlxUIState
 			leState.openSubState(new CustomFadeTransition(0.7, false));
 			if(nextState == FlxG.state) {
 				CustomFadeTransition.finishCallback = function() {
+					musInstance.onStateSwitch();
 					FlxG.resetState();
 				};
 				//trace('resetted');
 			} else {
 				CustomFadeTransition.finishCallback = function() {
+					musInstance.onStateSwitch();
 					FlxG.switchState(nextState);
 				};
 				//trace('changed state');
@@ -130,6 +136,13 @@ class MusicBeatState extends FlxUIState
 		MusicBeatState.switchState(FlxG.state);
 	}
 
+	public function onStateSwitch(){
+		
+		options.GraphicsSettingsSubState.onChangeRes();
+		FlxG.scaleMode = modeStage;
+
+		if (FlxG.fullscreen)FlxG.scaleMode = modeRatio;
+	}
 	public static function getState():MusicBeatState {
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
