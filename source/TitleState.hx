@@ -177,7 +177,6 @@ class TitleState extends MusicBeatState
 		
 		GraphicsSettingsSubState.onChangeRes();
 
-
 		Highscore.load();
 
 		if (FlxG.save.data.weekCompleted != null)
