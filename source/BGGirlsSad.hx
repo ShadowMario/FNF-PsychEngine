@@ -18,7 +18,6 @@ class BGGirlsSad extends FlxSprite
 	}
 
 	var danceDir:Bool = false;
-        var isAngry:Bool = true;
 
 	public function swapDanceType():Void
 	{
