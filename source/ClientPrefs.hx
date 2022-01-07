@@ -15,7 +15,7 @@ class ClientPrefs {
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
 	public static var lowQuality:Bool = false;
-	public static var framerate:Int = 60;
+	public static var framerate:Int = 65;
 	// public static var cursing:Bool = false;
         public static var violence:Bool = false;
 	public static var camZooms:Bool = true;
@@ -29,6 +29,7 @@ class ClientPrefs {
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var controllerMode:Bool = false;
+        public static var Pbbwm:Bool = false;
 	public static var screenRes:String = "1280 x 720";
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
@@ -108,6 +109,7 @@ class ClientPrefs {
 		FlxG.save.data.framerate = framerate;
 		//FlxG.save.data.cursing = cursing;
 		FlxG.save.data.violence = violence;
+		FlxG.save.data.Pbbwm = Pbbwm; 		// Pbbwm
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
@@ -183,6 +185,9 @@ class ClientPrefs {
 		}*/
 		if(FlxG.save.data.violence != null) {
 			violence = FlxG.save.data.violence;
+		}
+		if(FlxG.save.data.Pbbwm != null) {
+			Pbbwm = FlxG.save.data.Pbbwm;
 		}
 		if(FlxG.save.data.camZooms != null) {
 			camZooms = FlxG.save.data.camZooms;
