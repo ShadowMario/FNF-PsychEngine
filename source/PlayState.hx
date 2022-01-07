@@ -368,9 +368,6 @@ class PlayState extends MusicBeatState
 		#if sys
 		ArtemisIntegration.setStageName (curStage);
 		ArtemisIntegration.setDifficulty (CoolUtil.difficultyString ());
-		ArtemisIntegration.setDadName (SONG.player2);
-		ArtemisIntegration.setBfName (SONG.player1);
-		ArtemisIntegration.setGfName (gfVersion);
 		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
 		else ArtemisIntegration.setGameState ("in-game freeplay");
 		ArtemisIntegration.sendBoyfriendHealth (health);
@@ -1198,6 +1195,9 @@ class PlayState extends MusicBeatState
 
 		#if sys
 		ArtemisIntegration.setSongName (daSong);
+		ArtemisIntegration.setDadName (SONG.player2);
+		ArtemisIntegration.setBfName (SONG.player1);
+		ArtemisIntegration.setGfName (gfVersion);
 		#end
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
