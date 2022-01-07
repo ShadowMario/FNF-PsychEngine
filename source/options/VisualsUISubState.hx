@@ -34,13 +34,14 @@ class VisualsUISubState extends BaseOptionsMenu
 		title = 'Visuals and UI';
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
 		
-		var option:Option = new Option('Rainbow FPS',
+		/*var option:Option = new Option('Rainbow FPS',
 		'If checked, makes the FPS have a chroma effect.',
 		'fpsRainbow',
 		'bool',
 		false);
 		addOption(option);
-		
+		*/
+
 		var option:Option = new Option('Violence',
 		'If checked, makes violence on week 4 happen',
 		'violence',
