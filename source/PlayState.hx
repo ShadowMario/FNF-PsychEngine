@@ -363,6 +363,40 @@ class PlayState extends MusicBeatState
 		GameOverSubstate.resetVariables();
 		var songName:String = Paths.formatToSongPath(SONG.song);
 
+
+		// tell artemis all the things it needs to know
+		#if sys
+		ArtemisIntegration.setStageName (curStage);
+		ArtemisIntegration.setDifficulty (CoolUtil.difficultyString ());
+		ArtemisIntegration.setDadName (SONG.player2);
+		ArtemisIntegration.setBfName (SONG.player1);
+		ArtemisIntegration.setGfName (gfVersion);
+		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
+		else ArtemisIntegration.setGameState ("in-game freeplay");
+		ArtemisIntegration.sendBoyfriendHealth (health);
+		ArtemisIntegration.setIsPixelStage (isPixelStage);
+		ArtemisIntegration.autoUpdateControlColors (isPixelStage);
+		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
+		ArtemisIntegration.resetAllFlags ();
+
+		#if MODS_ALLOWED
+		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) {
+			var currentMod:ModMetadata = new ModMetadata (Paths.currentModDirectory);
+			if (currentMod.id == "name") ArtemisIntegration.resetModName ();
+			else ArtemisIntegration.setModName (currentMod.id);
+
+			var possibleArtemisProfilePathHahaLongVariableName:String = haxe.io.Path.join (["mods/", Paths.currentModDirectory, "/artemis/default.json"]);
+			if (sys.FileSystem.exists (possibleArtemisProfilePathHahaLongVariableName)) {
+				ArtemisIntegration.sendProfileRelativePath (possibleArtemisProfilePathHahaLongVariableName);
+			}
+		} else {
+			ArtemisIntegration.resetModName ();
+		}
+		#end
+		
+		ArtemisIntegration.startSong ();
+		#end
+
 		curStage = PlayState.SONG.stage;
 		//trace('stage is: ' + curStage);
 		if(PlayState.SONG.stage == null || PlayState.SONG.stage.length < 1) {
@@ -1162,39 +1196,8 @@ class PlayState extends MusicBeatState
 		}
 		RecalculateRating();
 
-
-		// tell artemis all the things it needs to know
 		#if sys
-		ArtemisIntegration.setStageName (curStage);
 		ArtemisIntegration.setSongName (daSong);
-		ArtemisIntegration.setDifficulty (CoolUtil.difficultyString ());
-		ArtemisIntegration.setDadName (SONG.player2);
-		ArtemisIntegration.setBfName (SONG.player1);
-		ArtemisIntegration.setGfName (gfVersion);
-		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
-		else ArtemisIntegration.setGameState ("in-game freeplay");
-		ArtemisIntegration.sendBoyfriendHealth (health);
-		ArtemisIntegration.setIsPixelStage (isPixelStage);
-		ArtemisIntegration.autoUpdateControlColors (isPixelStage);
-		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
-		ArtemisIntegration.resetAllFlags ();
-
-		#if MODS_ALLOWED
-		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) {
-			var currentMod:ModMetadata = new ModMetadata (Paths.currentModDirectory);
-			if (currentMod.id == "name") ArtemisIntegration.resetModName ();
-			else ArtemisIntegration.setModName (currentMod.id);
-
-			var possibleArtemisProfilePathHahaLongVariableName:String = haxe.io.Path.join (["mods/", Paths.currentModDirectory, "/artemis/default.json"]);
-			if (sys.FileSystem.exists (possibleArtemisProfilePathHahaLongVariableName)) {
-				ArtemisIntegration.sendProfileRelativePath (possibleArtemisProfilePathHahaLongVariableName);
-			}
-		} else {
-			ArtemisIntegration.resetModName ();
-		}
-		#end
-		
-		ArtemisIntegration.startSong ();
 		#end
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
