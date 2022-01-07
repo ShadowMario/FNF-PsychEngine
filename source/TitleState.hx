@@ -494,7 +494,7 @@ class TitleState extends MusicBeatState
 						}
 
 						if(!isDifferent) {
-							trace('Easter egg triggered!');
+							trace('Epic easter egg enabled');
 							FlxG.save.data.psykaEasterEgg = !FlxG.save.data.psykaEasterEgg;
 							FlxG.sound.play(Paths.sound('secretSound'));
 
@@ -590,16 +590,18 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine But Better by'], 15);
+					createCoolText(['Psych Engine by'], 15);
 					#else
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+					#elseif PSYCHBUTBETTER_WATERMARKS
+					createCoolText(['Psych Engine But Better by', 'Luke', 'Jamie', 'Rosie']);
 					#end
 				// credTextShit.visible = true;
 				case 3:
 					#if PSYCH_WATERMARKS
-					addMoreText('Luke', 15);
-					addMoreText('Jamie', 15);
-					addMoreText('Rosie', 15);
+					addMoreText('Shadow mario', 15);
+					addMoreText('BBPanzu', 15);
+					addMoreText('riveroken', 15);
 					#else
 					addMoreText('present');
 					#end
