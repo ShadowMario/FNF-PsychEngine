@@ -77,7 +77,6 @@ class ChartingState extends MusicBeatState
 		['Blammed Lights', "Value 1: 0 = Turn off, 1 = Red, 2 = Black Anything else = Random"],
 		['Kill Henchmen', "For Mom's songs"],
 		['Add Camera Zoom', "Used on MILF on that one \"hard\" part\nValue 1: Camera zoom add (Default: 0.015)\nValue 2: UI zoom add (Default: 0.03)\nLeave the values blank if you want to use Default."],
-		['BG Freaks Expression', "Should be used only in \"school\" Stage!"],
 		['Trigger BG Ghouls', "Should be used only in \"schoolEvil\" Stage!"],
 		['Play Animation', "Plays an animation on a Character,\nonce the animation is completed,\nthe animation changes to Idle\n\nValue 1: Animation to play.\nValue 2: Character (Dad, BF, GF)"],
 		['Camera Follow Pos', "Value 1: X\nValue 2: Y\n\nThe camera won't change the follow point\nafter using this, for getting it back\nto normal, leave both values blank."],
@@ -126,7 +125,7 @@ class ChartingState extends MusicBeatState
 
 	var gridBG:FlxSprite;
 	var gridMult:Int = 2;
-//	var gridSusness:Bool = true;
+//	var gridSusness:Bool = false;
 
 	var daquantspot = 0;
 	var curEventSelected:Int = 0;
