@@ -711,7 +711,7 @@ class PlayState extends MusicBeatState
 				bgStreet.updateHitbox();
 				bgTrees.updateHitbox();
 
-				if(!ClientPrefs.lowQuality) { // if it doesnt have the new hx state instead of the old they will still be happy so dont change it XD
+				if(!ClientPrefs.lowQuality) { // if u change the BGGirlsSad to the og one then they will be happi lol
 					bgGirls = new BGGirlsSad(-100, 190);
 					bgGirls.scrollFactor.set(0.9, 0.9);
 
@@ -833,7 +833,7 @@ class PlayState extends MusicBeatState
 			luaArray.push(new FunkinLua(luaFile));
 		#end
 
-		if(!modchartSprites.exists('blammedLightsBlack')) { // i may edit this code or remove blammed lights entirly cuz characters fade and come back for some reason
+		if(!modchartSprites.exists('blammedLightsBlack')) { // i will edit this code eventully just not right now!
 			blammedLightsBlack = new ModchartSprite(FlxG.width * -0.5, FlxG.height * -0.5);
 			blammedLightsBlack.makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
 			var position:Int = members.indexOf(gfGroup);
@@ -1711,6 +1711,7 @@ class PlayState extends MusicBeatState
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 				introAssets.set('default', ['ready', 'set', 'go']);
 				introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
+// 				introAssets.set('spooky', ['spready', 'spset', 'spgo']);
 
 				var introAlts:Array<String> = introAssets.get('default');
 				var antialias:Bool = ClientPrefs.globalAntialiasing;
@@ -2050,7 +2051,7 @@ class PlayState extends MusicBeatState
 
 		switch(event[1]) {
 			case 'Kill Henchmen': //Better timing so that the kill sound matches the beat intended
-				return 250; //Plays 250ms before the actual position (had to lower because it takes soo long!)
+				return 230; //Plays 230ms before the actual position (had to lower because it takes soo long!)
 		}
 		return 0;
 	}
@@ -2253,11 +2254,6 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
-		/*if (FlxG.keys.justPressed.NINE)
-		{
-			iconP1.swapOldIcon();
-		}*/
-
 		callOnLuas('onUpdate', [elapsed]);
 
 		switch (curStage)
@@ -3736,11 +3732,6 @@ class PlayState extends MusicBeatState
 					callOnLuas('noteMissPress', [key]);
 				}
 
-				// I dunno what you need this for but here you go
-				//									- Shubs
-
-				// Shubs, this is for the "Just the Two of Us" achievement lol
-				//									- Shadow Mario
 				keysPressed[key] = true;
 
 				//more accurate hit time for the ratings? part 2 (Now that the calculations are done, go back to the time it was before for not causing a note stutter)
@@ -4030,7 +4021,7 @@ class PlayState extends MusicBeatState
 			{
 				combo += 1;
 				popUpScore(note);
-				if(combo > 9999) combo = 9999;
+				if(combo > 9999) combo = 9999; // what the HEDGE???
 			}
 			health += note.hitHealth * healthGain;
 
