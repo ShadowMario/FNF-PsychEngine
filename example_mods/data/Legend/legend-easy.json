@@ -1,7 +1,7 @@
 {
 	"song": {
 		"sectionLengths": [],
-		"player1": "bf",
+		"player1": "nobf",
 		"notes": [
 			{
 				"sectionNotes": [],
@@ -3154,8 +3154,8 @@
 				"mustHitSection": true
 			}
 		],
-		"player2": "gf",
-		"player3": "gf",
+		"player2": "nogf",
+		"player3": "no-gf-speaker",
 		"song": "Legend",
 		"validScore": true,
 		"needsVoices": false,
