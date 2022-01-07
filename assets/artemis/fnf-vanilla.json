@@ -52,15 +52,15 @@
     "EnableHotkey": null,
     "DisableHotkey": null,
     "ModuleId": null,
-    "ProfileCategoryId": "28fff3b9-177a-4a06-8bc0-1e44cdcc4b46",
-    "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4"
+    "ProfileCategoryId": "ef687f75-0806-4b9e-a56f-db4a203ed99f",
+    "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775"
   },
   "ProfileEntity": {
     "$type": "Artemis.Storage.Entities.Profile.ProfileEntity, Artemis.Storage",
-    "Id": "b782b249-387e-4968-a52c-7e22952832c4",
-    "Name": "FNF Vanilla - auto-added",
-    "IsFreshImport": false,
-    "LastSelectedProfileElement": "b6e9fdf4-ecf3-4e7f-a9c4-b9945de788a9",
+    "Id": "62c6d010-f906-4d70-8a8d-7b5105244775",
+    "Name": "FNF Vanilla",
+    "IsFreshImport": true,
+    "LastSelectedProfileElement": "00000000-0000-0000-0000-000000000000",
     "Folders": {
       "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage]], System.Private.CoreLib",
       "$values": [
@@ -71,9 +71,9 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "79927479-a74b-481b-a31a-51fd64424578",
-          "ParentId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ParentId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "LayerEffects": {
             "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.LayerEffectEntity, Artemis.Storage]], System.Private.CoreLib",
             "$values": []
@@ -111,7 +111,7 @@
           "IsExpanded": true,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "f6569020-fee6-45f3-8887-5a271ec45466",
           "ParentId": "79927479-a74b-481b-a31a-51fd64424578",
           "LayerEffects": {
@@ -167,7 +167,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "d4853ab7-e095-4cb4-a283-c9dc0788d3ea",
           "ParentId": "f6569020-fee6-45f3-8887-5a271ec45466",
           "LayerEffects": {
@@ -223,7 +223,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "ac0ad5b5-f3f3-4503-8e97-c2b1f7744570",
           "ParentId": "f6569020-fee6-45f3-8887-5a271ec45466",
           "LayerEffects": {
@@ -279,7 +279,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "810c8faa-0839-477b-97eb-e5a209ff6086",
           "ParentId": "f6569020-fee6-45f3-8887-5a271ec45466",
           "LayerEffects": {
@@ -319,7 +319,7 @@
           "IsExpanded": true,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "c64d0fbf-6679-48e8-a9e9-bd9d638230fc",
           "ParentId": "f6569020-fee6-45f3-8887-5a271ec45466",
           "LayerEffects": {
@@ -359,7 +359,7 @@
           "IsExpanded": true,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "8a336ad5-e89c-4c4f-89cd-5120ef319ffa",
           "ParentId": "c64d0fbf-6679-48e8-a9e9-bd9d638230fc",
           "LayerEffects": {
@@ -399,7 +399,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "c1b50a7d-2993-4608-a550-c4af163bb26a",
           "ParentId": "8a336ad5-e89c-4c4f-89cd-5120ef319ffa",
           "LayerEffects": {
@@ -455,7 +455,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "f3c261cf-3d42-47cb-bdd1-066a5ccdee22",
           "ParentId": "8a336ad5-e89c-4c4f-89cd-5120ef319ffa",
           "LayerEffects": {
@@ -511,7 +511,7 @@
           "IsExpanded": true,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "75d5cd04-1323-4db3-bc1c-d8f77b79cb95",
           "ParentId": "f3c261cf-3d42-47cb-bdd1-066a5ccdee22",
           "LayerEffects": {
@@ -567,7 +567,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "6c6e8e4b-7dca-4a4e-a432-692ba541f0ec",
           "ParentId": "8a336ad5-e89c-4c4f-89cd-5120ef319ffa",
           "LayerEffects": {
@@ -623,7 +623,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "039a46ac-f718-4ccf-872b-35fa9a60b132",
           "ParentId": "8a336ad5-e89c-4c4f-89cd-5120ef319ffa",
           "LayerEffects": {
@@ -679,7 +679,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "6c0842ee-4581-4a35-8764-250fafe91c07",
           "ParentId": "8a336ad5-e89c-4c4f-89cd-5120ef319ffa",
           "LayerEffects": {
@@ -735,7 +735,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "0e220f63-b767-4ca5-b295-06c3fcda927e",
           "ParentId": "8a336ad5-e89c-4c4f-89cd-5120ef319ffa",
           "LayerEffects": {
@@ -791,7 +791,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "e71fd88d-30ff-40ea-99d6-591ce0eb3061",
           "ParentId": "0e220f63-b767-4ca5-b295-06c3fcda927e",
           "LayerEffects": {
@@ -831,7 +831,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "1afbc0d3-c093-4437-a2d4-2226212d9f8b",
           "ParentId": "8a336ad5-e89c-4c4f-89cd-5120ef319ffa",
           "LayerEffects": {
@@ -887,7 +887,7 @@
           "IsExpanded": true,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "6471d621-fc8e-49d4-92f7-dcaaeee1f339",
           "ParentId": "8a336ad5-e89c-4c4f-89cd-5120ef319ffa",
           "LayerEffects": {
@@ -943,7 +943,7 @@
           "IsExpanded": false,
           "Suspended": false,
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "9df921a7-7ee3-4ea9-8db9-3890a57dcb20",
           "ParentId": "6471d621-fc8e-49d4-92f7-dcaaeee1f339",
           "LayerEffects": {
@@ -1004,12 +1004,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -2308,6 +2302,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -2324,7 +2324,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "aa21a12f-8e24-4991-ae38-a2af84f39f01",
           "ParentId": "79927479-a74b-481b-a31a-51fd64424578",
           "LayerEffects": {
@@ -2658,12 +2658,6 @@
               },
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Keyboard_Programmable3",
                 "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
                 "PhysicalLayout": 1
@@ -3957,6 +3951,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -3973,7 +3973,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "08299ca4-0b26-47b5-9d1e-16c42a3e993b",
           "ParentId": "79927479-a74b-481b-a31a-51fd64424578",
           "LayerEffects": {
@@ -4313,12 +4313,6 @@
               },
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Keyboard_Programmable3",
                 "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
                 "PhysicalLayout": 1
@@ -5612,6 +5606,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -5628,7 +5628,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "652b1a5d-46ba-4de6-9459-7942349e6319",
           "ParentId": "79927479-a74b-481b-a31a-51fd64424578",
           "LayerEffects": {
@@ -5922,12 +5922,6 @@
               },
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Keyboard_Programmable3",
                 "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
                 "PhysicalLayout": 1
@@ -7221,6 +7215,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -7237,7 +7237,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "54800553-0541-4a3e-b82a-d1fe41c677b3",
           "ParentId": "f6569020-fee6-45f3-8887-5a271ec45466",
           "LayerEffects": {
@@ -8376,7 +8376,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "6fe40bbb-f98b-4f4f-b9ee-cbc58027b584",
           "ParentId": "f6569020-fee6-45f3-8887-5a271ec45466",
           "LayerEffects": {
@@ -9030,12 +9030,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse3",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -10098,7 +10092,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "2cba9978-9a22-44bb-8e0b-ce79e139d121",
           "ParentId": "f6569020-fee6-45f3-8887-5a271ec45466",
           "LayerEffects": {
@@ -10367,12 +10361,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -11671,6 +11659,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -11687,7 +11681,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "188175cf-0ec4-4ce0-bd4c-b6d41436194c",
           "ParentId": "f6569020-fee6-45f3-8887-5a271ec45466",
           "LayerEffects": {
@@ -12020,12 +12014,6 @@
               },
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Keyboard_Programmable3",
                 "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
                 "PhysicalLayout": 1
@@ -13319,6 +13307,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -13335,7 +13329,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "9620383c-0c8a-447f-8a80-da2d6c2d4739",
           "ParentId": "f6569020-fee6-45f3-8887-5a271ec45466",
           "LayerEffects": {
@@ -14110,7 +14104,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "06468bd3-164d-4bd2-8e48-ed7cecb85a9e",
           "ParentId": "d4853ab7-e095-4cb4-a283-c9dc0788d3ea",
           "LayerEffects": {
@@ -14462,12 +14456,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -15322,6 +15310,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -15448,7 +15442,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "c9d70d1d-ea4d-4ecb-bc2b-647dc6f0ca2c",
           "ParentId": "d4853ab7-e095-4cb4-a283-c9dc0788d3ea",
           "LayerEffects": {
@@ -15800,12 +15794,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -17104,6 +17092,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -17120,7 +17114,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "933db177-8ef0-4d9e-bb8a-3ef286391f6b",
           "ParentId": "ac0ad5b5-f3f3-4503-8e97-c2b1f7744570",
           "LayerEffects": {
@@ -18220,7 +18214,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "2faf87b9-2fe0-41bc-84f1-82a1cc0893f2",
           "ParentId": "ac0ad5b5-f3f3-4503-8e97-c2b1f7744570",
           "LayerEffects": {
@@ -18740,7 +18734,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "7e41f365-067e-461c-9483-bb345d5a51c1",
           "ParentId": "ac0ad5b5-f3f3-4503-8e97-c2b1f7744570",
           "LayerEffects": {
@@ -19009,12 +19003,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -20313,6 +20301,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -20329,7 +20323,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "2229d8da-d606-4040-bbf5-740b2ba6ed22",
           "ParentId": "ac0ad5b5-f3f3-4503-8e97-c2b1f7744570",
           "LayerEffects": {
@@ -20668,7 +20662,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "3493854f-4f76-4fbb-8c23-e6af678f24ce",
           "ParentId": "810c8faa-0839-477b-97eb-e5a209ff6086",
           "LayerEffects": {
@@ -21134,7 +21128,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "796ec705-2a6d-43ff-a2d5-ff0c43ec9721",
           "ParentId": "810c8faa-0839-477b-97eb-e5a209ff6086",
           "LayerEffects": {
@@ -22316,7 +22310,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "ab89ce4b-3131-4da8-9026-53f63bc29b7a",
           "ParentId": "c1b50a7d-2993-4608-a550-c4af163bb26a",
           "LayerEffects": {
@@ -23402,7 +23396,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "d2dec816-b250-4746-8970-3ae2cd0bdd5c",
           "ParentId": "c1b50a7d-2993-4608-a550-c4af163bb26a",
           "LayerEffects": {
@@ -24347,7 +24341,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "8d6f605d-f14b-4528-bd94-818c957b273f",
           "ParentId": "c1b50a7d-2993-4608-a550-c4af163bb26a",
           "LayerEffects": {
@@ -25719,7 +25713,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "3cd5e2c3-046d-45d1-a2e8-1717a287b1da",
           "ParentId": "c1b50a7d-2993-4608-a550-c4af163bb26a",
           "LayerEffects": {
@@ -25989,12 +25983,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -27293,6 +27281,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -27309,7 +27303,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "7f1fc656-135b-4eae-81e7-5f959bf14f9f",
           "ParentId": "c1b50a7d-2993-4608-a550-c4af163bb26a",
           "LayerEffects": {
@@ -27667,7 +27661,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "baa0b110-d6d9-462a-8844-e6603283c0b3",
           "ParentId": "f3c261cf-3d42-47cb-bdd1-066a5ccdee22",
           "LayerEffects": {
@@ -27937,12 +27931,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -29241,6 +29229,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -29257,7 +29251,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "86b10548-7b42-45c5-add2-3d583e0a5de7",
           "ParentId": "f3c261cf-3d42-47cb-bdd1-066a5ccdee22",
           "LayerEffects": {
@@ -29962,7 +29956,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "62d2697c-c3b2-469e-ac96-253875974f8c",
           "ParentId": "75d5cd04-1323-4db3-bc1c-d8f77b79cb95",
           "LayerEffects": {
@@ -30314,12 +30308,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -31174,6 +31162,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -31293,7 +31287,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "0fc46300-b4aa-45a4-b760-0c51f9794df3",
           "ParentId": "75d5cd04-1323-4db3-bc1c-d8f77b79cb95",
           "LayerEffects": {
@@ -31829,7 +31823,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "f26908ec-d5bf-4fa5-9ac7-d53a260a355c",
           "ParentId": "6c6e8e4b-7dca-4a4e-a432-692ba541f0ec",
           "LayerEffects": {
@@ -32670,7 +32664,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "e1108be5-f0c2-4322-9470-b0bbd62de5c2",
           "ParentId": "6c6e8e4b-7dca-4a4e-a432-692ba541f0ec",
           "LayerEffects": {
@@ -33490,7 +33484,7 @@
               },
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
+                "LedName": "Mouse4",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               }
@@ -33509,7 +33503,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "6c10854e-62b9-469a-988a-f5375bf1410e",
           "ParentId": "6c6e8e4b-7dca-4a4e-a432-692ba541f0ec",
           "LayerEffects": {
@@ -34265,7 +34259,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "e7fea464-cb7f-4b64-9152-c25690ae8146",
           "ParentId": "6c6e8e4b-7dca-4a4e-a432-692ba541f0ec",
           "LayerEffects": {
@@ -34609,12 +34603,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -35913,6 +35901,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -35929,7 +35923,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "de2bb5be-7068-42b5-8666-c5f685973e06",
           "ParentId": "6c6e8e4b-7dca-4a4e-a432-692ba541f0ec",
           "LayerEffects": {
@@ -37081,7 +37075,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "2a960f2d-b531-44e1-ad32-205fd5c6d9f5",
           "ParentId": "039a46ac-f718-4ccf-872b-35fa9a60b132",
           "LayerEffects": {
@@ -38250,7 +38244,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "8c2f6531-0c38-4c9b-b99e-efae6635cf16",
           "ParentId": "039a46ac-f718-4ccf-872b-35fa9a60b132",
           "LayerEffects": {
@@ -38616,12 +38610,6 @@
               },
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Keyboard_Programmable3",
                 "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
                 "PhysicalLayout": 1
@@ -39915,6 +39903,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -39931,7 +39925,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "135787af-2fb9-4bed-9d7a-1ecff8ad6d58",
           "ParentId": "039a46ac-f718-4ccf-872b-35fa9a60b132",
           "LayerEffects": {
@@ -40281,12 +40275,6 @@
               },
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Keyboard_Programmable3",
                 "DeviceIdentifier": "Corsair K95 RGB PLATINUM-Corsair-K95 RGB PLATINUM-Keyboard",
                 "PhysicalLayout": 1
@@ -41580,6 +41568,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -41596,7 +41590,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "dbc3a14b-e8ac-4ae4-ac6f-cb84b93b0549",
           "ParentId": "6c0842ee-4581-4a35-8764-250fafe91c07",
           "LayerEffects": {
@@ -42350,7 +42344,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "cdeb8e98-381f-4cf8-9f59-f2fd5a27c8ff",
           "ParentId": "6c0842ee-4581-4a35-8764-250fafe91c07",
           "LayerEffects": {
@@ -42629,7 +42623,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "068a9852-1d7e-4c6e-97c7-f1da72a7c068",
           "ParentId": "6c0842ee-4581-4a35-8764-250fafe91c07",
           "LayerEffects": {
@@ -42950,7 +42944,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "884a8141-3569-4748-9bdf-debabd98be50",
           "ParentId": "6c0842ee-4581-4a35-8764-250fafe91c07",
           "LayerEffects": {
@@ -43219,12 +43213,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -44523,6 +44511,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -44539,7 +44533,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "5019fc47-cbb3-4d94-b486-3af060010d5b",
           "ParentId": "6c0842ee-4581-4a35-8764-250fafe91c07",
           "LayerEffects": {
@@ -45700,7 +45694,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "8f954d89-96bb-4249-b610-cd5afcbae994",
           "ParentId": "0e220f63-b767-4ca5-b295-06c3fcda927e",
           "LayerEffects": {
@@ -46440,7 +46434,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "8c9a16f6-660e-4166-b2e7-87a32cb1e30c",
           "ParentId": "0e220f63-b767-4ca5-b295-06c3fcda927e",
           "LayerEffects": {
@@ -46719,7 +46713,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "a8451203-ddae-4d1c-90f3-ad213f8288ec",
           "ParentId": "0e220f63-b767-4ca5-b295-06c3fcda927e",
           "LayerEffects": {
@@ -47040,7 +47034,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "d8d70bcf-da8b-4117-9205-00071333a666",
           "ParentId": "0e220f63-b767-4ca5-b295-06c3fcda927e",
           "LayerEffects": {
@@ -47309,12 +47303,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -48613,6 +48601,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -48629,7 +48623,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "ed594470-a77f-46c8-b3a0-3b7fffb41d3b",
           "ParentId": "0e220f63-b767-4ca5-b295-06c3fcda927e",
           "LayerEffects": {
@@ -49410,7 +49404,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "239eafb2-7d41-4402-b66d-ba17af910477",
           "ParentId": "e71fd88d-30ff-40ea-99d6-591ce0eb3061",
           "LayerEffects": {
@@ -49762,12 +49756,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -50622,6 +50610,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -50741,7 +50735,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "cd8376bc-b4f1-4d35-87c5-e38c65d2774f",
           "ParentId": "e71fd88d-30ff-40ea-99d6-591ce0eb3061",
           "LayerEffects": {
@@ -51909,7 +51903,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "3e635dfe-4cf4-4d54-a74f-70525678beb0",
           "ParentId": "1afbc0d3-c093-4437-a2d4-2226212d9f8b",
           "LayerEffects": {
@@ -52650,7 +52644,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "384c8e02-13df-40ea-a7d1-245a1220a0d7",
           "ParentId": "1afbc0d3-c093-4437-a2d4-2226212d9f8b",
           "LayerEffects": {
@@ -53735,7 +53729,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "d06e3a15-a814-4bd7-8f1c-c4b0f4974072",
           "ParentId": "1afbc0d3-c093-4437-a2d4-2226212d9f8b",
           "LayerEffects": {
@@ -54821,7 +54815,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "bd3a645a-68f6-418b-9493-eb2da48e8ecd",
           "ParentId": "1afbc0d3-c093-4437-a2d4-2226212d9f8b",
           "LayerEffects": {
@@ -55091,12 +55085,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -56395,6 +56383,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -56411,7 +56405,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "7a335356-1d67-4005-a799-b38dee10d03f",
           "ParentId": "1afbc0d3-c093-4437-a2d4-2226212d9f8b",
           "LayerEffects": {
@@ -57192,7 +57186,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "93e5e4ed-a78a-41bf-9e4b-7e570a38ea52",
           "ParentId": "6471d621-fc8e-49d4-92f7-dcaaeee1f339",
           "LayerEffects": {
@@ -57662,12 +57656,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -58966,6 +58954,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -58982,7 +58976,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "690a9253-9623-4f05-ae8e-b74fc3158fa7",
           "ParentId": "6471d621-fc8e-49d4-92f7-dcaaeee1f339",
           "LayerEffects": {
@@ -59975,7 +59969,7 @@
             "$values": []
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "58821718-20d5-4dcd-af14-feabacc6e393",
           "ParentId": "9df921a7-7ee3-4ea9-8db9-3890a57dcb20",
           "LayerEffects": {
@@ -60327,12 +60321,6 @@
               {
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse2",
-                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
-                "PhysicalLayout": null
-              },
-              {
-                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
-                "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
               },
@@ -61187,6 +61175,12 @@
                 "LedName": "GraphicsCard1",
                 "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mouse4",
+                "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -61306,7 +61300,7 @@
             ]
           },
           "Profile": null,
-          "ProfileId": "b782b249-387e-4968-a52c-7e22952832c4",
+          "ProfileId": "62c6d010-f906-4d70-8a8d-7b5105244775",
           "Id": "20cbcfdf-6482-470f-b4af-67da968aa7d2",
           "ParentId": "9df921a7-7ee3-4ea9-8db9-3890a57dcb20",
           "LayerEffects": {
