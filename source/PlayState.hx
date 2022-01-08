@@ -3127,6 +3127,9 @@ class PlayState extends MusicBeatState
 							iconP1.changeIcon(boyfriend.healthIcon);
 						}
 						setOnLuas('boyfriendName', boyfriend.curCharacter);
+						#if sys
+						ArtemisIntegration.setBfName (boyfriend.curCharacter);
+						#end
 
 					case 1:
 						if(dad.curCharacter != value2) {
@@ -3149,6 +3152,9 @@ class PlayState extends MusicBeatState
 							iconP2.changeIcon(dad.healthIcon);
 						}
 						setOnLuas('dadName', dad.curCharacter);
+						#if sys
+						ArtemisIntegration.setDadName (dad.curCharacter);
+						#end
 
 					case 2:
 						if(gf.curCharacter != value2) {
@@ -3162,6 +3168,9 @@ class PlayState extends MusicBeatState
 							gf.alpha = lastAlpha;
 						}
 						setOnLuas('gfName', gf.curCharacter);
+						#if sys
+						ArtemisIntegration.setGfName (gf.curCharacter);
+						#end
 				}
 				reloadHealthBarColors();
 			
