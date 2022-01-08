@@ -1,10 +1,8 @@
 package;
 
-#if MODS_ALLOWED
+import lime.utils.Assets;
 import sys.io.File;
 import sys.FileSystem;
-#end
-import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import haxe.Json;
 import haxe.format.JsonParser;
@@ -233,12 +231,4 @@ class WeekData {
 		if(data != null && data.folder != null && data.folder.length > 0) {
 			Paths.currentModDirectory = data.folder;
 		}
-	}
-
-	//for invis weeks thingie also All credit for invis weeks goes too XtraXD1
-	function checkWeekVisibility(weekName:String) {
-		if() {
-			return true;
-		}
-		return false;
 	}
