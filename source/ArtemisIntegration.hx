@@ -440,7 +440,7 @@ class ArtemisIntegration {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetControls");
             request.setPostData (Json.stringify (controlMap));
-            trace (Json.stringify (controlMap));
+            // trace (Json.stringify (controlMap));
             request.request (true);
         }
         #end
@@ -471,7 +471,7 @@ class ArtemisIntegration {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetControlColors");
             request.setPostData (Json.stringify (hexCodes));
-            trace (Json.stringify (hexCodes));
+            // trace (Json.stringify (hexCodes));
             request.request (true);
         }
         #end
