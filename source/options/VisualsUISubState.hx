@@ -101,7 +101,7 @@ class VisualsUISubState extends BaseOptionsMenu
 
 		#if sys
 		var option:Option = new Option('Enable Artemis',
-			'Cool colors for your RGB stuff. Requires Artemis and its FNF plugin to work. https://github.com/skedgyedgy/Artemis.Plugins.FNF/releases/tag/1.1',
+			'Cool colors for your RGB stuff. Requires Artemis and its FNF plugin to work. https://github.com/skedgyedgy/Artemis.Plugins.FNF/releases/tag/1.3',
 			'enableArtemis',
 			'bool',
 			true);
