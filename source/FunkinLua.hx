@@ -102,6 +102,9 @@ class FunkinLua {
 		set('weekRaw', PlayState.storyWeek);
 		set('week', WeekData.weeksList[PlayState.storyWeek]);
 		set('seenCutscene', PlayState.seenCutscene);
+		
+		// Block require, Should probably have a proper function but this should be good enough
+		set('require', false);
 
 		// Camera poo
 		set('cameraX', 0);
