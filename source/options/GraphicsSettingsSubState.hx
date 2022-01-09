@@ -134,6 +134,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			{
 				var shouldReset:Bool = ClientPrefs.screenScaleMode == "ADAPTIVE" || ClientPrefs.screenScaleModeTemp == "ADAPTIVE";
 				ClientPrefs.screenScaleMode = ClientPrefs.screenScaleModeTemp;
+				if (ClientPrefs.screenScaleMode == "ADAPTIVE") onChangeRes ();
 				if (shouldReset) MusicBeatState.switchState (new options.OptionsState ());
 				else MusicBeatState.musInstance.fixAspectRatio ();
 				FlxG.sound.play(Paths.sound('confirmMenu'));
