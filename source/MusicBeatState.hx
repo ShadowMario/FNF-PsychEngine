@@ -123,16 +123,25 @@ class MusicBeatState extends FlxUIState
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
 		if(!FlxTransitionableState.skipNextTransIn) {
+			#if sys
+			ArtemisIntegration.toggleFade (true);
+			#end
 			leState.openSubState(new CustomFadeTransition(0.7, false));
 			if(nextState == FlxG.state) {
 				CustomFadeTransition.finishCallback = function() {
 					musInstance.fixAspectRatio();
+					#if sys
+					ArtemisIntegration.toggleFade (false);
+					#end
 					FlxG.resetState();
 				};
 				//trace('resetted');
 			} else {
 				CustomFadeTransition.finishCallback = function() {
 					musInstance.fixAspectRatio();
+					#if sys
+					ArtemisIntegration.toggleFade (false);
+					#end
 					FlxG.switchState(nextState);
 				};
 				//trace('changed state');

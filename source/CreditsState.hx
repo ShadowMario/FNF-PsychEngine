@@ -40,6 +40,11 @@ class CreditsState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
+		#if sys
+		ArtemisIntegration.setGameState ("menu");
+		ArtemisIntegration.resetModName ();
+		#end
+
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		add(bg);
 
@@ -149,6 +154,9 @@ class CreditsState extends MusicBeatState
 
 		bg.color = getCurrentBGColor();
 		intendedColor = bg.color;
+		#if sys
+		ArtemisIntegration.setBackgroundFlxColor (intendedColor);
+		#end
 		changeSelection();
 		super.create();
 	}
@@ -203,6 +211,9 @@ class CreditsState extends MusicBeatState
 				colorTween.cancel();
 			}
 			intendedColor = newColor;
+			#if sys
+			ArtemisIntegration.setBackgroundFlxColor (intendedColor);
+			#end
 			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
 				onComplete: function(twn:FlxTween) {
 					colorTween = null;

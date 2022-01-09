@@ -94,6 +94,12 @@ class StoryMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
+		
+		#if sys
+		ArtemisIntegration.setGameState ("menu");
+		ArtemisIntegration.resetModName ();
+		ArtemisIntegration.setBackgroundColor ("#FFFDE871");
+		#end
 
 		for (i in 0...WeekData.weeksList.length)
 		{

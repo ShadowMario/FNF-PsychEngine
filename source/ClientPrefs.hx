@@ -28,6 +28,7 @@ class ClientPrefs {
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var controllerMode:Bool = false;
+	public static var enableArtemis:Bool = true;
 	public static var screenRes:String = "1280 x 720";
 	public static var screenResTemp:String = "1280 x 720"; // dummy value that isn't saved, used so that if the player cancels instead of hitting space the resolution isn't applied
 	public static var screenScaleMode:String = "Letterbox";
@@ -129,6 +130,7 @@ class ClientPrefs {
 		FlxG.save.data.goodWindow = goodWindow;
 		FlxG.save.data.badWindow = badWindow;
 		FlxG.save.data.safeFrames = safeFrames;
+		FlxG.save.data.enableArtemis = enableArtemis;
 		FlxG.save.data.gameplaySettings = gameplaySettings;
 		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.screenRes = screenRes;
@@ -232,6 +234,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.controllerMode != null) {
 			controllerMode = FlxG.save.data.controllerMode;
+		}
+		if (FlxG.save.data.enableArtemis != null) {
+			enableArtemis = FlxG.save.data.enableArtemis;
 		}
 		if(FlxG.save.data.screenRes != null) {
 			screenRes = FlxG.save.data.screenRes;

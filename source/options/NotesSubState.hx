@@ -52,6 +52,10 @@ class NotesSubState extends MusicBeatSubstate
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+
+		#if sys
+		ArtemisIntegration.setBackgroundFlxColor (bg.color);
+		#end
 		
 		blackBG = new FlxSprite(posX - 25).makeGraphic(870, 200, FlxColor.BLACK);
 		blackBG.alpha = 0.4;

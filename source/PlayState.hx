@@ -1,5 +1,9 @@
 package;
 
+#if MODS_ALLOWED
+import ModsMenuState.ModMetadata;
+#end
+import haxe.macro.Expr.Case;
 import flixel.graphics.FlxGraphic;
 #if desktop
 import Discord.DiscordClient;
@@ -394,6 +398,10 @@ class PlayState extends MusicBeatState
 				girlfriend: [400, 130],
 				opponent: [100, 100]
 			};
+
+			#if sys
+			ArtemisIntegration.setBackgroundColor ("#00000000");
+			#end
 		}
 
 		defaultCamZoom = stageData.defaultZoom;
@@ -408,6 +416,35 @@ class PlayState extends MusicBeatState
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
 		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
+
+		// tell artemis all the things it needs to know
+		#if sys
+		ArtemisIntegration.setStageName (curStage);
+		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
+		else ArtemisIntegration.setGameState ("in-game freeplay");
+		ArtemisIntegration.sendBoyfriendHealth (health);
+		ArtemisIntegration.setIsPixelStage (isPixelStage);
+		ArtemisIntegration.autoUpdateControlColors (isPixelStage);
+		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
+		ArtemisIntegration.resetAllFlags ();
+
+		#if MODS_ALLOWED
+		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) {
+			var currentMod:ModMetadata = new ModMetadata (Paths.currentModDirectory);
+			if (currentMod.id == "name") ArtemisIntegration.resetModName ();
+			else ArtemisIntegration.setModName (currentMod.id);
+
+			var possibleArtemisProfilePathHahaLongVariableName:String = haxe.io.Path.join (["mods/", Paths.currentModDirectory, "/artemis/default.json"]);
+			if (sys.FileSystem.exists (possibleArtemisProfilePathHahaLongVariableName)) {
+				ArtemisIntegration.sendProfileRelativePath (possibleArtemisProfilePathHahaLongVariableName);
+			}
+		} else {
+			ArtemisIntegration.resetModName ();
+		}
+		#end
+		
+		ArtemisIntegration.startSong ();
+		#end
 
 		switch (curStage)
 		{
@@ -1154,6 +1191,10 @@ class PlayState extends MusicBeatState
 		}
 		RecalculateRating();
 
+		#if sys
+		if (daSong == "monster") ArtemisIntegration.setCustomFlag (1, true);
+		#end
+
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
 		CoolUtil.precacheSound('missnote1');
 		CoolUtil.precacheSound('missnote2');
@@ -1220,9 +1261,13 @@ class PlayState extends MusicBeatState
 	}
 
 	public function reloadHealthBarColors() {
-		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
-			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
-			
+		var dadColor:FlxColor = FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
+		var bfColor:FlxColor = FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]);
+		healthBar.createFilledBar(dadColor, bfColor);
+		
+		#if sys
+		ArtemisIntegration.setHealthbarFlxColors (dadColor, bfColor);
+		#end
 		healthBar.updateBar();
 	}
 
@@ -2235,7 +2280,12 @@ class PlayState extends MusicBeatState
 								if(dancers[i].x < FlxG.width * 1.5 && limoLight.x > (370 * i) + 130) {
 									switch(i) {
 										case 0 | 3:
-											if(i == 0) FlxG.sound.play(Paths.sound('dancerdeath'), 0.5);
+											if(i == 0) {
+												FlxG.sound.play(Paths.sound('dancerdeath'), 0.5);
+												#if sys
+												ArtemisIntegration.triggerFlash ("#AFFF0000");
+												#end
+											}
 
 											var diffStr:String = i == 3 ? ' 2 ' : ' ';
 											var particle:BGSprite = new BGSprite('gore/noooooo', dancers[i].x + 200, dancers[i].y, 0.4, 0.4, ['hench leg spin' + diffStr + 'PINK'], false);
@@ -2464,6 +2514,9 @@ class PlayState extends MusicBeatState
 		if (!ClientPrefs.noReset && controls.RESET && !inCutscene && !endingSong)
 		{
 			health = 0;
+			#if sys
+			ArtemisIntegration.sendBoyfriendHealth (health);
+			#end
 			trace("RESET = True");
 		}
 		doDeathCheck();
@@ -2753,6 +2806,9 @@ class PlayState extends MusicBeatState
 				// Game Over doesn't get his own variable because it's only used here
 				DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 				#end
+				#if sys
+				ArtemisIntegration.setGameState ("dead");
+				#end
 				isDead = true;
 				return true;
 			}
@@ -2896,6 +2952,10 @@ class PlayState extends MusicBeatState
 							phillyCityLightsEvent.members[lightId - 1].alpha = 1;
 						}
 					}
+
+					#if sys
+					ArtemisIntegration.setBlammedLights (StringTools.hex (color));
+					#end
 				} else {
 					if(blammedLightsBlack.alpha != 0) {
 						if(blammedLightsBlackTween != null) {
@@ -2961,6 +3021,9 @@ class PlayState extends MusicBeatState
 				if(curStage == 'schoolEvil' && !ClientPrefs.lowQuality) {
 					bgGhouls.dance(true);
 					bgGhouls.visible = true;
+					#if sys
+					ArtemisIntegration.triggerCustomEvent ("bgGhouls", "#00000000", 0);
+					#end
 				}
 
 			case 'Play Animation':
@@ -3805,8 +3868,13 @@ class PlayState extends MusicBeatState
 			}
 		});
 		combo = 0;
-
 		health -= daNote.missHealth * healthLoss;
+
+		#if sys
+		ArtemisIntegration.breakCombo ();
+		ArtemisIntegration.sendBoyfriendHealth (health);
+		#end
+
 		if(instakillOnMiss)
 		{
 			vocals.volume = 0;
@@ -3857,6 +3925,11 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			}
 			combo = 0;
+
+			#if sys
+			ArtemisIntegration.sendBoyfriendHealth (health);
+			ArtemisIntegration.breakCombo ();
+			#end
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
@@ -3969,8 +4042,14 @@ class PlayState extends MusicBeatState
 				combo += 1;
 				popUpScore(note);
 				if(combo > 9999) combo = 9999;
+				#if sys
+				ArtemisIntegration.setCombo (combo);
+				#end
 			}
 			health += note.hitHealth * healthGain;
+			#if sys
+			ArtemisIntegration.sendBoyfriendHealth (health);
+			#end
 
 			if(!note.noAnimation) {
 				var daAlt = '';
@@ -4183,6 +4262,9 @@ class PlayState extends MusicBeatState
 		}
 
 		if(ClientPrefs.flashing) {
+			#if sys
+			ArtemisIntegration.triggerFlash ("#FFFFFFEF");
+			#end
 			halloweenWhite.alpha = 0.4;
 			FlxTween.tween(halloweenWhite, {alpha: 0.5}, 0.075);
 			FlxTween.tween(halloweenWhite, {alpha: 0}, 0.25, {startDelay: 0.15});
@@ -4294,6 +4376,10 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
+		#if sys
+		ArtemisIntegration.setBeat (curBeat);
+		#end
+
 		if (generatedMusic)
 		{
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
@@ -4388,6 +4474,24 @@ class PlayState extends MusicBeatState
 					});
 
 					curLight = FlxG.random.int(0, phillyCityLights.length - 1, [curLight]);
+
+					#if sys
+					// man it would sure be a shame if all the philly lights were individual files rather than one desaturated image that's tinted the right color
+					// which i could just grab the tint color from and forward it to the client. that'd be so inconvenient, wouldn't it?
+					switch (curLight)
+					{
+						case 0:
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FF31A2FD", curBeat);
+						case 1:
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FF31FD8C", curBeat);
+						case 2:
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FFFB33F5", curBeat);
+						case 3:
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FFFD4531", curBeat);
+						case 4:
+							ArtemisIntegration.triggerCustomEvent ("cityLights", "#FFFBA633", curBeat);
+					}
+					#end
 
 					phillyCityLights.members[curLight].visible = true;
 					phillyCityLights.members[curLight].alpha = 1;
