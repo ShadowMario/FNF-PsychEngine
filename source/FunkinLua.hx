@@ -1563,6 +1563,21 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setArtemisStageName", function(stageName:String) {
 			ArtemisIntegration.setStageName (stageName);
 		});
+		Lua_helper.add_callback(lua, "setArtemisSongName", function(songName:String) {
+			ArtemisIntegration.setSongName (songName);
+		});
+		Lua_helper.add_callback(lua, "setArtemisDifficulty", function(difficultyName:String) {
+			ArtemisIntegration.setDifficulty (difficultyName);
+		});
+		Lua_helper.add_callback(lua, "setArtemisDadName", function(dadName:String) {
+			ArtemisIntegration.setDadName (dadName);
+		});
+		Lua_helper.add_callback(lua, "setArtemisBfName", function(bfName:String) {
+			ArtemisIntegration.setBfName (bfName);
+		});
+		Lua_helper.add_callback(lua, "setArtemisGfName", function(gfName:String) {
+			ArtemisIntegration.setGfName (gfName);
+		});
 		Lua_helper.add_callback(lua, "setArtemisIsPixelStage", function(isPixelStage:Bool) {
 			ArtemisIntegration.setIsPixelStage (isPixelStage);
 		});

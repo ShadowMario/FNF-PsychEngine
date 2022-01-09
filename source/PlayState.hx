@@ -387,6 +387,38 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+
+		// tell artemis all the things it needs to know
+		#if sys
+		ArtemisIntegration.setStageName (curStage);
+		ArtemisIntegration.setSongName (songName);
+		ArtemisIntegration.setDifficulty (CoolUtil.difficultyString ());
+		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
+		else ArtemisIntegration.setGameState ("in-game freeplay");
+		ArtemisIntegration.sendBoyfriendHealth (health);
+		ArtemisIntegration.setIsPixelStage (isPixelStage);
+		ArtemisIntegration.autoUpdateControlColors (isPixelStage);
+		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
+		ArtemisIntegration.resetAllFlags ();
+
+		#if MODS_ALLOWED
+		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) {
+			var currentMod:ModMetadata = new ModMetadata (Paths.currentModDirectory);
+			if (currentMod.id == "name") ArtemisIntegration.resetModName ();
+			else ArtemisIntegration.setModName (currentMod.id);
+
+			var possibleArtemisProfilePathHahaLongVariableName:String = haxe.io.Path.join (["mods/", Paths.currentModDirectory, "/artemis/default.json"]);
+			if (sys.FileSystem.exists (possibleArtemisProfilePathHahaLongVariableName)) {
+				ArtemisIntegration.sendProfileRelativePath (possibleArtemisProfilePathHahaLongVariableName);
+			}
+		} else {
+			ArtemisIntegration.resetModName ();
+		}
+		#end
+		
+		ArtemisIntegration.startSong ();
+		#end
+
 		var stageData:StageFile = StageData.getStageFile(curStage);
 		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
 			stageData = {
@@ -416,35 +448,6 @@ class PlayState extends MusicBeatState
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
 		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
-
-		// tell artemis all the things it needs to know
-		#if sys
-		ArtemisIntegration.setStageName (curStage);
-		if (isStoryMode) ArtemisIntegration.setGameState ("in-game story");
-		else ArtemisIntegration.setGameState ("in-game freeplay");
-		ArtemisIntegration.sendBoyfriendHealth (health);
-		ArtemisIntegration.setIsPixelStage (isPixelStage);
-		ArtemisIntegration.autoUpdateControlColors (isPixelStage);
-		ArtemisIntegration.setBackgroundColor ("#00000000"); // in case there's no set background in the artemis profile, hide the background and just show the overlays over the user's default artemis layout
-		ArtemisIntegration.resetAllFlags ();
-
-		#if MODS_ALLOWED
-		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) {
-			var currentMod:ModMetadata = new ModMetadata (Paths.currentModDirectory);
-			if (currentMod.id == "name") ArtemisIntegration.resetModName ();
-			else ArtemisIntegration.setModName (currentMod.id);
-
-			var possibleArtemisProfilePathHahaLongVariableName:String = haxe.io.Path.join (["mods/", Paths.currentModDirectory, "/artemis/default.json"]);
-			if (sys.FileSystem.exists (possibleArtemisProfilePathHahaLongVariableName)) {
-				ArtemisIntegration.sendProfileRelativePath (possibleArtemisProfilePathHahaLongVariableName);
-			}
-		} else {
-			ArtemisIntegration.resetModName ();
-		}
-		#end
-		
-		ArtemisIntegration.startSong ();
-		#end
 
 		switch (curStage)
 		{
@@ -1192,7 +1195,9 @@ class PlayState extends MusicBeatState
 		RecalculateRating();
 
 		#if sys
-		if (daSong == "monster") ArtemisIntegration.setCustomFlag (1, true);
+		ArtemisIntegration.setDadName (SONG.player2);
+		ArtemisIntegration.setBfName (SONG.player1);
+		ArtemisIntegration.setGfName (gfVersion);
 		#end
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
@@ -3122,6 +3127,9 @@ class PlayState extends MusicBeatState
 							iconP1.changeIcon(boyfriend.healthIcon);
 						}
 						setOnLuas('boyfriendName', boyfriend.curCharacter);
+						#if sys
+						ArtemisIntegration.setBfName (boyfriend.curCharacter);
+						#end
 
 					case 1:
 						if(dad.curCharacter != value2) {
@@ -3144,6 +3152,9 @@ class PlayState extends MusicBeatState
 							iconP2.changeIcon(dad.healthIcon);
 						}
 						setOnLuas('dadName', dad.curCharacter);
+						#if sys
+						ArtemisIntegration.setDadName (dad.curCharacter);
+						#end
 
 					case 2:
 						if(gf.curCharacter != value2) {
@@ -3157,6 +3168,9 @@ class PlayState extends MusicBeatState
 							gf.alpha = lastAlpha;
 						}
 						setOnLuas('gfName', gf.curCharacter);
+						#if sys
+						ArtemisIntegration.setGfName (gf.curCharacter);
+						#end
 				}
 				reloadHealthBarColors();
 			
@@ -3515,6 +3529,9 @@ class PlayState extends MusicBeatState
 				sicks++;
 		}
 
+		#if sys
+		ArtemisIntegration.noteHit (note.noteData, note.noteType, daRating);
+		#end
 
 		if(daRating == 'sick' && !note.noteSplashDisabled)
 		{
@@ -3871,8 +3888,9 @@ class PlayState extends MusicBeatState
 		health -= daNote.missHealth * healthLoss;
 
 		#if sys
-		ArtemisIntegration.breakCombo ();
+		ArtemisIntegration.noteMiss (daNote.noteData, daNote.noteType);
 		ArtemisIntegration.sendBoyfriendHealth (health);
+		ArtemisIntegration.breakCombo ();
 		#end
 
 		if(instakillOnMiss)
@@ -4378,6 +4396,7 @@ class PlayState extends MusicBeatState
 
 		#if sys
 		ArtemisIntegration.setBeat (curBeat);
+		ArtemisIntegration.setSongProgress ((Conductor.songPosition - ClientPrefs.noteOffset) / songLength * 100);
 		#end
 
 		if (generatedMusic)
@@ -4599,6 +4618,11 @@ class PlayState extends MusicBeatState
 			if (bads > 0 || shits > 0) ratingFC = "FC";
 			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
 			else if (songMisses >= 10) ratingFC = "Clear";
+
+			#if sys
+			ArtemisIntegration.setComboType (ratingFC);
+			ArtemisIntegration.setRating (ratingPercent * 100);
+			#end
 		}
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
