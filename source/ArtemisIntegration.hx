@@ -1,5 +1,5 @@
-// artemis integration by skedgyedgy, API ver: 1.3
-// https://github.com/skedgyedgy/Artemis.Plugins.FNF/releases/tags/1.3
+// artemis integration by skedgyedgy, API ver: 1.2.1
+// https://github.com/skedgyedgy/Artemis.Plugins.FNF/releases/tags/1.2.1
 
 package;
 
@@ -226,16 +226,6 @@ class ArtemisIntegration {
         #end
     }
 
-    public static function setSongProgress (progress:Float) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "SetSongProgress");
-            request.setPostData (Std.string (progress));
-            request.request (true);
-        }
-        #end
-    }
-
     public static function setCombo (combo:Int) {
         #if sys
         if (artemisAvailable) {
@@ -246,50 +236,10 @@ class ArtemisIntegration {
         #end
     }
 
-    public static function setRating (rating:Float) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "SetRating");
-            request.setPostData (Std.string (rating));
-            request.request (true);
-        }
-        #end
-    }
-
-    public static function noteHit (noteDirection:Int, noteType:String, accuracy:String) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "NoteHit");
-            request.setPostData (Json.stringify ({ NoteDirection: noteDirection, NoteType: noteType, NoteHitAccuracy: accuracy }));
-            request.request (true);
-        }
-        #end
-    }
-
-    public static function noteMiss (noteDirection:Int, noteType:String) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "NoteMiss");
-            request.setPostData (Json.stringify ({ NoteDirection: noteDirection, NoteType: noteType }));
-            request.request (true);
-        }
-        #end
-    }
-
     public static function breakCombo () {
         #if sys
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "BreakCombo");
-            request.request (true);
-        }
-        #end
-    }
-
-    public static function setComboType (comboType:String) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "SetComboType");
-            request.setPostData (comboType);
             request.request (true);
         }
         #end
@@ -329,56 +279,6 @@ class ArtemisIntegration {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetModName");
             request.setPostData (DefaultModName);
-            request.request (true);
-        }
-        #end
-    }
-
-    public static function setSongName (songName:String) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "SetSongName");
-            request.setPostData (songName);
-            request.request (true);
-        }
-        #end
-    }
-
-    public static function setDifficulty (difficulty:String) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "SetDifficultyName");
-            request.setPostData (difficulty);
-            request.request (true);
-        }
-        #end
-    }
-
-    public static function setDadName (dadName:String) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "SetDadName");
-            request.setPostData (dadName);
-            request.request (true);
-        }
-        #end
-    }
-
-    public static function setBfName (bfName:String) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "SetBfName");
-            request.setPostData (bfName);
-            request.request (true);
-        }
-        #end
-    }
-
-    public static function setGfName (gfName:String) {
-        #if sys
-        if (artemisAvailable) {
-            var request = new haxe.Http (fnfEndpoints + "SetGfName");
-            request.setPostData (gfName);
             request.request (true);
         }
         #end
@@ -440,7 +340,7 @@ class ArtemisIntegration {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetControls");
             request.setPostData (Json.stringify (controlMap));
-            // trace (Json.stringify (controlMap));
+            trace (Json.stringify (controlMap));
             request.request (true);
         }
         #end
@@ -471,7 +371,7 @@ class ArtemisIntegration {
         if (artemisAvailable) {
             var request = new haxe.Http (fnfEndpoints + "SetControlColors");
             request.setPostData (Json.stringify (hexCodes));
-            // trace (Json.stringify (hexCodes));
+            trace (Json.stringify (hexCodes));
             request.request (true);
         }
         #end
