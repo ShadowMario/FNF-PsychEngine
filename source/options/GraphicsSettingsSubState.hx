@@ -128,7 +128,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 				ClientPrefs.screenRes = ClientPrefs.screenResTemp;
 				if (ClientPrefs.screenRes == "FULLSCREEN" && ClientPrefs.screenScaleMode == "ADAPTIVE") ClientPrefs.screenScaleMode = "LETTERBOX";
 				onChangeRes ();
-				FlxG.resetState ();
+				MusicBeatState.switchState (new options.OptionsState ());
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 			} else if (curOption.name == "Scale Mode")
 			{
