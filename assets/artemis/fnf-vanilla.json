@@ -4,9 +4,9 @@
     "$type": "Artemis.Storage.Entities.Profile.ProfileConfigurationEntity, Artemis.Storage",
     "Name": "FNF Vanilla",
     "MaterialIcon": "Music",
-    "FileIconId": "00000000-0000-0000-0000-000000000000",
-    "IconType": 0,
-    "Order": 0,
+    "FileIconId": "a010b357-f978-47d5-a333-9e7c6b630890",
+    "IconType": 1,
+    "Order": 2,
     "IsSuspended": false,
     "ActivationBehaviour": 0,
     "ActivationCondition": {
@@ -58,8 +58,8 @@
   "ProfileEntity": {
     "$type": "Artemis.Storage.Entities.Profile.ProfileEntity, Artemis.Storage",
     "Id": "62c6d010-f906-4d70-8a8d-7b5105244775",
-    "Name": "FNF Vanilla - auto-added",
-    "IsFreshImport": false,
+    "Name": "FNF Vanilla",
+    "IsFreshImport": true,
     "LastSelectedProfileElement": "1d5b550a-488a-4de3-bc5b-c046303d9bba",
     "Folders": {
       "$type": "System.Collections.Generic.List`1[[Artemis.Storage.Entities.Profile.FolderEntity, Artemis.Storage]], System.Private.CoreLib",
@@ -2135,6 +2135,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -3675,6 +3783,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -5223,6 +5439,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -6723,6 +7047,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -11060,6 +11492,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -12599,6 +13139,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -14495,6 +15143,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -16168,6 +16924,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -19270,6 +20134,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -21094,6 +22066,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -25117,6 +26197,114 @@
                 "LedName": "Headset2",
                 "DeviceIdentifier": "Corsair VOID ELITE USB-Corsair-VOID ELITE USB-Headset",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -28052,6 +29240,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -29892,6 +31188,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -31049,6 +32453,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Custom8",
                 "DeviceIdentifier": "Corsair Commander CORE (3)-Corsair-Commander CORE-Unknown",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -34228,6 +35740,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -38123,6 +39743,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -39679,6 +41407,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -42514,6 +44350,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -46496,6 +48440,114 @@
                 "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
                 "PhysicalLayout": null
               }
             ]
@@ -52052,6 +54104,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -54515,6 +56675,114 @@
                 "LedName": "Mouse5",
                 "DeviceIdentifier": "Corsair NIGHTSWORD RGB-Corsair-NIGHTSWORD RGB-Mouse",
                 "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "GraphicsCard1",
+                "DeviceIdentifier": "Gigabyte RTX3060 Ti EAGLE OC 8G V2.0 LHR-Gigabyte-RTX3060 Ti EAGLE OC 8G V2.0 LHR-GraphicsCard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard2",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (2)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard4",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (4)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard5",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (5)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard6",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard7",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (6)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard8",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard9",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard10",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard11",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard12",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard13",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard14",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard15",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard16",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard17",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (7)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard1",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
+              },
+              {
+                "$type": "Artemis.Storage.Entities.Profile.LedEntity, Artemis.Storage",
+                "LedName": "Mainboard3",
+                "DeviceIdentifier": "MSI Z490-A PRO (MS-7C75) (3)-MSI-Z490-A PRO (MS-7C75)-Mainboard",
+                "PhysicalLayout": null
               }
             ]
           },
@@ -55072,5 +57340,5 @@
       "$values": []
     }
   },
-  "ProfileImage": null
+  "ProfileImage": "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"
 }
