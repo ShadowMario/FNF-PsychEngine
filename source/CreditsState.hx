@@ -10,6 +10,7 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
+import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 #if MODS_ALLOWED
@@ -22,16 +23,19 @@ using StringTools;
 
 class CreditsState extends MusicBeatState
 {
-	var curSelected:Int = -1;
+	public var curSelected:Int = -1;
+
+	public var warningText:FlxText;
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var iconArray:Array<AttachedSprite> = [];
-	private var creditsStuff:Array<Array<String>> = [];
+	public var creditsStuff:Array<Array<String>> = [];
 
 	var bg:FlxSprite;
 	var descText:FlxText;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+	var isVisible:Bool = false;
 
 	override function create()
 	{
@@ -157,6 +161,9 @@ class CreditsState extends MusicBeatState
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
 		add(descText);
+		
+		warningText = new FlxText(0, 0, FlxG.width, "", 48);
+		add(warningText);
 
 		bg.color = getCurrentBGColor();
 		intendedColor = bg.color;
@@ -166,11 +173,23 @@ class CreditsState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+
+		warningText.screenCenter();
+		warningText.text = "WARNING!!!\nYOU ARE ABOUT TO GO TO: \n" + creditsStuff[curSelected][3] + "\nARE YOU ABSOLUTELY SURE YOU WANT TO GO TO THIS URL? \n(Y - Yes, N - No)";
+		warningText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		warningText.scrollFactor.set();
+		warningText.borderSize = 2;
+        warningText.visible = false;
+		if (isVisible){
+			warningText.visible = true;
+		}
+
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
+		
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 
@@ -191,10 +210,19 @@ class CreditsState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new MainMenuState());
 		}
-		if(controls.ACCEPT) {
-			CoolUtil.browserLoad(creditsStuff[curSelected][3]);
+	if(FlxG.keys.pressed.ENTER) {
+		isVisible = true;
+	}
+	if (isVisible) {
+		if(FlxG.keys.pressed.Y){
+		CoolUtil.browserLoad(creditsStuff[curSelected][3]);
+		isVisible = false;
 		}
-		super.update(elapsed);
+		if(FlxG.keys.pressed.N){
+		isVisible = false;
+		}
+	}
+	super.update(elapsed);
 	}
 
 	function changeSelection(change:Int = 0)
