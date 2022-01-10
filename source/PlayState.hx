@@ -4502,6 +4502,7 @@ class PlayState extends MusicBeatState
 	public static var othersCodeName:String = 'otherAchievements';
 	#if ACHIEVEMENTS_ALLOWED
 	private function checkForAchievement(achievesToCheck:Array<String> = null):String {
+
 		if(chartingMode) return null;
 
 		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice', false) || ClientPrefs.getGameplaySetting('botplay', false));
@@ -4524,7 +4525,7 @@ class PlayState extends MusicBeatState
 					var weekName:String = WeekData.getWeekFileName();
 
 					for (json in Achievements.loadedAchievements) {
-						if (json.unlocksAfter == weekName && !Achievements.isAchievementUnlocked(json.icon)) unlock = true;
+						if (json.unlocksAfter == weekName && !Achievements.isAchievementUnlocked(json.icon) && !json.customGoal) unlock = true;
 						achievementName = json.icon;
 					}
 
@@ -4535,6 +4536,18 @@ class PlayState extends MusicBeatState
 							achievementName = Achievements.achievementsStuff[k][2];
 						}
 					}
+				}
+			}
+
+			for (json in Achievements.loadedAchievements) { //Requires jsons for call
+				var ret:Dynamic = callOnLuas('onCheckForAchievement', [json.icon]); //Set custom goals
+
+				//IDK, like
+				// if getProperty('misses') > 10 and leName == 'lmao_skill_issue' then return Function_Continue end
+
+				if (ret == FunkinLua.Function_Continue && !Achievements.isAchievementUnlocked(json.icon) && json.customGoal && !unlock) {
+					unlock = true;
+					achievementName = json.icon;
 				}
 			}
 
