@@ -67,7 +67,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		
 		
 		var option:Option = new Option('Screen Resolution',
-			"Size of the window (Press ACCEPT to apply, CANCEL to cancel)",
+			"Size of the window [Press ACCEPT to apply, CANCEL to cancel]",
 			'screenResTemp',
 			'string',
 			'1280 x 720', ['1280 x 720',
@@ -78,7 +78,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		
 		if (ClientPrefs.screenRes == "FULLSCREEN") {
 			var option:Option = new Option('Scale Mode',
-				"How you'd like the screen to scale (Press ACCEPT to apply, CANCEL to cancel) (Adaptive is not compatible with fullscreen.)",
+				"How you'd like the screen to scale [Press ACCEPT to apply, CANCEL to cancel] (Adaptive is not compatible with fullscreen.)",
 				'screenScaleModeTemp',
 				'string',
 				'LETTERBOX', ['LETTERBOX',
@@ -88,7 +88,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			addOption(option);
 		} else {
 			var option:Option = new Option('Scale Mode',
-				"How you'd like the screen to scale (Press ACCEPT to apply, CANCEL to cancel) (Adaptive is hacky and unstable and may cause visual issues! Think widescreen hacks for 4:3 games, it's like that. It also doesn't work with fullscreen.)",
+				"Scale Mode [Press ACCEPT to apply, CANCEL to cancel] (Adaptive is unstable and may cause visual issues and doesn't work with fullscreen!)",//summerized < 333
 				'screenScaleModeTemp',
 				'string',
 				'LETTERBOX', ['LETTERBOX',
@@ -99,7 +99,8 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			addOption(option);
 		}
 		// before you tell me "why add adaptive in" i didn't add it in. someone changed the default behavior to be like adaptive which was way too buggy so i'm making it optional
-		
+		//thx, niko
+		//      -bbpanzu
 		ClientPrefs.screenScaleModeTemp = ClientPrefs.screenScaleMode;
 		ClientPrefs.screenResTemp = ClientPrefs.screenRes;
 		#end

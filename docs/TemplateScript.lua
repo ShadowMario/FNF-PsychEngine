@@ -164,3 +164,19 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	-- loops = how many loops it will have done when it ends completely
 	-- loopsLeft = how many are remaining
 end
+function onCheckForAchievement(name)
+	
+	--deals with achievement checks
+	
+	--EX:
+--[[
+  if name == 'sick-full-combo' and getProperty('bads') == 0 and getProperty('goods') == 0 and getProperty('shits') == 0 then
+    return Function_Continue
+  end
+  if name == 'bad-health-finish' and getProperty('health') < 0.01 then
+    return Function_Continue
+  end
+	
+	
+	]]--
+end
