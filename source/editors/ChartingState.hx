@@ -573,10 +573,10 @@ class ChartingState extends MusicBeatState
 		{
 			PlayState.storyDifficulty = Std.parseInt(difficulty);
 			try {
-				PlayState.SONG = Song.loadFromJson(_song.song.toLowerCase() + CoolUtil.getDifficultyFilePath(), _song.song.toLowerCase());
+				PlayState.SONG = Song.loadFromJson(_song.song.toLowerCase() + (CoolUtil.getDifficultyFilePath() == null ? CoolUtil.getDifficultyFilePath() : ''), _song.song.toLowerCase());
 				MusicBeatState.resetState();
 			} catch (e:Any) {
-				trace("File " + _song.song.toLowerCase() + CoolUtil.getDifficultyFilePath() + " is not found.");
+				trace("File " + _song.song.toLowerCase() + (CoolUtil.getDifficultyFilePath() == null ? CoolUtil.getDifficultyFilePath() : '') + " is not found.");
 			}
 		});
 		difficultyDropDown.selectedLabel = CoolUtil.defaultDifficulties[PlayState.storyDifficulty];
@@ -2623,7 +2623,7 @@ class ChartingState extends MusicBeatState
 
 	function loadJson(song:String):Void
 	{
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase() + CoolUtil.getDifficultyFilePath(), song.toLowerCase());
+		PlayState.SONG = Song.loadFromJson(song.toLowerCase() + (CoolUtil.getDifficultyFilePath() == null ? CoolUtil.getDifficultyFilePath() : ''), song.toLowerCase());
 		MusicBeatState.resetState();
 	}
 
@@ -2655,7 +2655,7 @@ class ChartingState extends MusicBeatState
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + CoolUtil.getDifficultyFilePath() + ".json");
+			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + (CoolUtil.getDifficultyFilePath() == null ? CoolUtil.getDifficultyFilePath() : '') + ".json");
 		}
 	}
 	
