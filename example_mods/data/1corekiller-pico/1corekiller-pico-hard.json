@@ -1,6 +1,8 @@
 {
 	"song": {
 		"player1": "pico-player",
+		"events": [],
+		"gfVersion": "nogf",
 		"player2": "jebus-infected",
 		"notes": [
 			{
@@ -154,19 +156,19 @@
 						12857.1428571429,
 						3,
 						0,
-						"jebus-hurtnote"
-					],
-					[
-						13285.7142857143,
-						3,
-						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						13285.7142857143,
 						1,
 						0,
 						"jebus-dodgenote"
+					],
+					[
+						13285.7142857143,
+						3,
+						0,
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -341,22 +343,22 @@
 						107.142857142857
 					],
 					[
-						17428.5714285714,
-						3,
-						0,
-						"jebus-hurtnote"
-					],
-					[
 						17285.7142857143,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						17428.5714285714,
+						3,
+						0,
+						"Hurt Note"
 					],
 					[
 						17785.7142857143,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -556,8 +558,7 @@
 					[
 						20857.1428571429,
 						2,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"lengthInSteps": 16,
@@ -650,13 +651,13 @@
 						21857.1428571429,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						22500,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -896,25 +897,25 @@
 						26428.5714285714,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						26857.1428571428,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						27071.4285714286,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						27357.1428571428,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -944,28 +945,28 @@
 						464.285714285714
 					],
 					[
-						27857.1428571428,
+						28000,
 						3,
 						0,
-						"jebus-hurtnote"
-					],
-					[
-						27714.2857142857,
-						0,
-						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						28214.2857142857,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						28428.5714285714,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						27642.8571428571,
+						0,
+						0,
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1048,13 +1049,13 @@
 						33571.4285714286,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						33857.1428571428,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1089,13 +1090,13 @@
 						34714.2857142857,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						34857.1428571428,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1130,13 +1131,13 @@
 						35928.5714285714,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						36142.8571428571,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1168,16 +1169,16 @@
 						"jebus-dodgenote"
 					],
 					[
-						37000,
-						5,
-						0,
-						"jebus-hurtnote"
-					],
-					[
 						36785.7142857143,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						37000,
+						5,
+						0,
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1324,25 +1325,25 @@
 						40285.7142857143,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						40571.4285714286,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						40714.2857142857,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						41000,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1395,19 +1396,19 @@
 						41214.2857142857,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						41571.4285714286,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						41785.7142857143,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1530,13 +1531,13 @@
 						42714.2857142857,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						43142.8571428571,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1659,7 +1660,7 @@
 						44357.1428571429,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1719,34 +1720,34 @@
 						0
 					],
 					[
-						44714.2857142857,
-						6,
-						0,
-						"jebus-hurtnote"
-					],
-					[
 						44857.1428571429,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
-						45285.7142857143,
+						44714.2857142857,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						45214.2857142857,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						45285.7142857143,
+						6,
+						0,
+						"Hurt Note"
 					],
 					[
 						45571.4285714286,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -1859,13 +1860,13 @@
 						45857.1428571429,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						46285.7142857143,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -2079,13 +2080,13 @@
 						49428.5714285714,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						49857.1428571429,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -2155,26 +2156,26 @@
 						0
 					],
 					[
-						50571.4285714286,
-						0,
+						51142.8571428572,
+						3,
 						0,
 						"jebus-dodgenote"
-					],
-					[
-						50857.1428571429,
-						0,
-						0,
-						"jebus-hurtnote"
 					],
 					[
 						50714.2857142857,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
-						51142.8571428572,
-						3,
+						50857.1428571429,
+						0,
+						0,
+						"Hurt Note"
+					],
+					[
+						50571.4285714286,
+						0,
 						0,
 						"jebus-dodgenote"
 					]
@@ -2237,12 +2238,6 @@
 					],
 					[
 						51714.2857142857,
-						1,
-						0,
-						"Alt Animation"
-					],
-					[
-						51714.2857142857,
 						2,
 						0,
 						"jebus-dodgenote"
@@ -2257,19 +2252,24 @@
 						51571.4285714286,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						51857.1428571429,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						52285.7142857143,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						51714.2857142857,
+						1,
+						0
 					]
 				],
 				"lengthInSteps": 16,
@@ -2349,14 +2349,14 @@
 						0
 					],
 					[
-						52857.1428571429,
-						0,
+						53428.5714285714,
+						3,
 						0,
 						"jebus-dodgenote"
 					],
 					[
-						53428.5714285714,
-						3,
+						52857.1428571429,
+						0,
 						0,
 						"jebus-dodgenote"
 					],
@@ -2364,7 +2364,7 @@
 						53642.8571428572,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -2402,19 +2402,19 @@
 						53928.5714285714,
 						4,
 						0,
-						"jebus-hurtnote"
-					],
-					[
-						53785.7142857143,
-						6,
-						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						54071.4285714286,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						53785.7142857143,
+						6,
+						0,
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -2547,13 +2547,13 @@
 						55000,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						55428.5714285714,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -2648,22 +2648,22 @@
 						0
 					],
 					[
-						56571.4285714286,
-						7,
+						56142.8571428572,
+						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						56357.1428571429,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
-						56142.8571428572,
-						6,
+						56571.4285714286,
+						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -3107,13 +3107,13 @@
 						63000,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						63357.1428571429,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -3181,13 +3181,13 @@
 						64428.5714285715,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						65000,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -3265,8 +3265,7 @@
 					[
 						65392.8571428572,
 						3,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"lengthInSteps": 16,
@@ -3340,8 +3339,7 @@
 					[
 						66592.8571428572,
 						3,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"lengthInSteps": 16,
@@ -3484,12 +3482,6 @@
 						0
 					],
 					[
-						68142.8571428572,
-						2,
-						0,
-						"Alt Animation"
-					],
-					[
 						67742.8571428572,
 						2,
 						0,
@@ -3500,6 +3492,11 @@
 						1,
 						0,
 						"jebus-dodgenote"
+					],
+					[
+						68142.8571428572,
+						2,
+						0
 					]
 				],
 				"lengthInSteps": 16,
@@ -3642,13 +3639,13 @@
 						69742.8571428572,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						69842.8571428572,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -3710,16 +3707,9 @@
 						0
 					],
 					[
-						69942.8571428572,
-						6,
-						0,
-						"Hey!"
-					],
-					[
 						70092.8571428572,
 						3,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"lengthInSteps": 16,
@@ -3830,7 +3820,7 @@
 						72092.8571428572,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -3867,19 +3857,19 @@
 						72442.8571428572,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						72892.8571428572,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						72992.8571428572,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -3935,28 +3925,28 @@
 						"jebus-dodgenote"
 					],
 					[
-						73571.4285714286,
-						3,
-						0,
-						"jebus-hurtnote"
-					],
-					[
 						73357.1428571429,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						73571.4285714286,
+						3,
+						0,
+						"Hurt Note"
 					],
 					[
 						73857.1428571429,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						74000,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -3987,19 +3977,19 @@
 						74500,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						74857.1428571429,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						75142.8571428572,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"lengthInSteps": 16,
@@ -4047,7 +4037,7 @@
 						75857.1428571429,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"altAnim": false,
@@ -4089,19 +4079,19 @@
 						76857.1428571429,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						77214.2857142858,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						77428.5714285715,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -4155,7 +4145,7 @@
 						78071.4285714286,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -4195,13 +4185,13 @@
 						79142.8571428572,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						79428.5714285715,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"altAnim": false,
@@ -4250,13 +4240,13 @@
 						80285.7142857143,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						80642.8571428572,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"altAnim": false,
@@ -4302,7 +4292,7 @@
 						81571.4285714286,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -4356,13 +4346,13 @@
 						82428.5714285715,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						83071.4285714286,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -4440,18 +4430,6 @@
 						1107.14285714286
 					],
 					[
-						84224.4897959184,
-						2,
-						0,
-						"Alt Animation"
-					],
-					[
-						84163.2653061225,
-						3,
-						0,
-						"Alt Animation"
-					],
-					[
 						83734.6938775511,
 						1,
 						0,
@@ -4467,7 +4445,17 @@
 						84040.8163265307,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						84163.2653061225,
+						3,
+						0
+					],
+					[
+						84224.4897959184,
+						2,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -4554,7 +4542,7 @@
 						85204.0816326531,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -4622,12 +4610,6 @@
 						964.285714285714
 					],
 					[
-						85510.2040816327,
-						0,
-						0,
-						"Alt Animation"
-					],
-					[
 						85448.9795918368,
 						1,
 						0,
@@ -4643,7 +4625,12 @@
 						85693.8775510205,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						85510.2040816327,
+						0,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -4736,7 +4723,7 @@
 						86489.7959183674,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -4829,13 +4816,13 @@
 						87775.5102040817,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						88020.4081632654,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -4936,13 +4923,13 @@
 						88571.4285714286,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						88938.7755102041,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -5000,22 +4987,21 @@
 						142.857142857143
 					],
 					[
-						89428.5714285715,
-						1,
-						0,
-						"Alt Animation"
-					],
-					[
 						89489.7959183674,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						89734.6938775511,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						89428.5714285715,
+						1,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -5116,13 +5102,13 @@
 						90653.0612244898,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						90959.1836734694,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -5203,19 +5189,19 @@
 						91755.1020408164,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						92000,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						92183.6734693878,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -5302,7 +5288,7 @@
 						92734.693877551,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -5402,10 +5388,10 @@
 						"jebus-dodgenote"
 					],
 					[
-						93500,
+						93438.7755102041,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -5649,13 +5635,13 @@
 						96469.387755102,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						96714.2857142857,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -5748,16 +5734,15 @@
 						1071.42857142857
 					],
 					[
-						98000,
-						3,
-						0,
-						"Alt Animation"
-					],
-					[
 						97510.2040816326,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						98000,
+						3,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -5860,13 +5845,13 @@
 						98551.0204081633,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						98857.1428571429,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"altAnim": false,
@@ -5962,13 +5947,13 @@
 						99714.2857142857,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						99959.1836734694,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"altAnim": false,
@@ -6064,13 +6049,13 @@
 						101352.891156463,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						101561.224489796,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"altAnim": false,
@@ -6130,8 +6115,7 @@
 					[
 						101870.74829932,
 						1,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"altAnim": false,
@@ -6179,22 +6163,19 @@
 						0
 					],
 					[
-						102870.74829932,
-						3,
-						0,
-						"Alt Animation"
-					],
-					[
 						103299.319727891,
 						2,
-						0,
-						"Alt Animation"
+						0
+					],
+					[
+						102870.74829932,
+						3,
+						0
 					],
 					[
 						103727.891156463,
 						2,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"altAnim": false,
@@ -6254,8 +6235,7 @@
 					[
 						104299.319727891,
 						0,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"altAnim": false,
@@ -6313,16 +6293,14 @@
 						0
 					],
 					[
-						105156.462585034,
-						0,
-						0,
-						"Alt Animation"
-					],
-					[
 						105585.034013605,
 						2,
+						0
+					],
+					[
+						105156.462585034,
 						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"altAnim": false,
@@ -6382,8 +6360,7 @@
 					[
 						106870.74829932,
 						2,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"altAnim": false,
@@ -6438,20 +6415,17 @@
 					[
 						107442.176870748,
 						3,
-						0,
-						"Alt Animation"
+						0
 					],
 					[
 						107942.176870748,
 						3,
-						0,
-						"Alt Animation"
+						0
 					],
 					[
 						108370.74829932,
 						3,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"altAnim": false,
@@ -6511,14 +6485,12 @@
 					[
 						108870.74829932,
 						1,
-						0,
-						"Alt Animation"
+						0
 					],
 					[
 						109585.034013605,
 						0,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"altAnim": false,
@@ -6566,20 +6538,17 @@
 					[
 						110156.462585034,
 						3,
-						0,
-						"Alt Animation"
+						0
 					],
 					[
 						110585.034013605,
 						1,
-						0,
-						"Alt Animation"
+						0
 					],
 					[
 						110727.891156463,
 						0,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -6632,12 +6601,6 @@
 						2035.71428571429
 					],
 					[
-						111013.605442177,
-						0,
-						0,
-						"Alt Animation"
-					],
-					[
 						111156.462585034,
 						3,
 						0,
@@ -6650,22 +6613,27 @@
 						"jebus-dodgenote"
 					],
 					[
-						110942.176870748,
-						3,
-						0,
-						"jebus-hurtnote"
-					],
-					[
 						111227.891156463,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						110942.176870748,
+						3,
+						0,
+						"Hurt Note"
 					],
 					[
 						111513.605442177,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						111013.605442177,
+						0,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -6739,19 +6707,19 @@
 						112227.891156463,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						112585.034013605,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						113013.605442177,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -6794,24 +6762,6 @@
 						2035.71428571429
 					],
 					[
-						113585.034013605,
-						1,
-						0,
-						"Alt Animation"
-					],
-					[
-						113727.891156463,
-						2,
-						0,
-						"Alt Animation"
-					],
-					[
-						113870.74829932,
-						3,
-						0,
-						"Alt Animation"
-					],
-					[
 						113442.176870748,
 						1,
 						0,
@@ -6827,19 +6777,34 @@
 						113513.605442177,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						113799.319727891,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						114085.034013605,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						113585.034013605,
+						1,
+						0
+					],
+					[
+						113870.74829932,
+						3,
+						0
+					],
+					[
+						113727.891156463,
+						2,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -6882,18 +6847,6 @@
 						0
 					],
 					[
-						114585.034013605,
-						0,
-						0,
-						"Alt Animation"
-					],
-					[
-						114870.74829932,
-						0,
-						0,
-						"Alt Animation"
-					],
-					[
 						114299.319727891,
 						2,
 						0,
@@ -6915,13 +6868,23 @@
 						114585.034013605,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						114942.176870748,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						114585.034013605,
+						0,
+						0
+					],
+					[
+						114870.74829932,
+						0,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -6974,12 +6937,6 @@
 						2035.71428571429
 					],
 					[
-						116299.319727891,
-						3,
-						0,
-						"Alt Animation"
-					],
-					[
 						115727.891156463,
 						0,
 						0,
@@ -6992,22 +6949,27 @@
 						"jebus-dodgenote"
 					],
 					[
-						115799.319727891,
-						3,
-						0,
-						"jebus-hurtnote"
-					],
-					[
 						115513.605442177,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						115799.319727891,
+						3,
+						0,
+						"Hurt Note"
 					],
 					[
 						116299.319727891,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						116299.319727891,
+						3,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -7087,13 +7049,13 @@
 						117156.462585034,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						117513.605442177,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -7172,13 +7134,13 @@
 						117870.74829932,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						118370.74829932,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -7263,19 +7225,19 @@
 						119085.034013605,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						119370.74829932,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						119727.891156463,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -7350,20 +7312,20 @@
 					[
 						120442.176870748,
 						4,
-						0,
-						"jebus-hurtnote"
+						71.4285714285714,
+						"Hurt Note"
 					],
 					[
 						120227.891156463,
 						7,
-						0,
-						"jebus-hurtnote"
+						71.4285714285714,
+						"Hurt Note"
 					],
 					[
 						120085.034013605,
 						5,
 						71.4285714285714,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -7529,13 +7491,13 @@
 						122406.462585034,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						122977.891156463,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -7801,25 +7763,25 @@
 						127120.74829932,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						127335.034013605,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						127460.034013605,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						127799.319727891,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -7885,13 +7847,13 @@
 						128513.605442177,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						129013.605442177,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -7961,8 +7923,7 @@
 					[
 						130013.605442177,
 						1,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -8052,8 +8013,7 @@
 					[
 						130585.034013605,
 						1,
-						0,
-						"Alt Animation"
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -8128,28 +8088,28 @@
 						"jebus-dodgenote"
 					],
 					[
-						131526.99829932,
+						131549.319727891,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						131593.962585034,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
-						132074.766156463,
+						132070.153061225,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
-						132144.409013605,
+						132144.557823129,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -8232,24 +8192,6 @@
 						0
 					],
 					[
-						133442.176870748,
-						4,
-						0,
-						"Alt Animation"
-					],
-					[
-						133513.605442177,
-						6,
-						0,
-						"Alt Animation"
-					],
-					[
-						133513.605442177,
-						2,
-						0,
-						"Alt Animation"
-					],
-					[
 						132870.74829932,
 						1,
 						0,
@@ -8266,6 +8208,21 @@
 						3,
 						0,
 						"jebus-dodgenote"
+					],
+					[
+						133513.605442177,
+						2,
+						0
+					],
+					[
+						133513.605442177,
+						6,
+						0
+					],
+					[
+						133442.176870748,
+						4,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -8336,25 +8293,25 @@
 						133870.74829932,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						134013.605442177,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						134299.319727891,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						134442.176870748,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -8407,34 +8364,33 @@
 						0
 					],
 					[
-						135156.462585034,
-						2,
-						0,
-						"Alt Animation"
-					],
-					[
 						135013.605442177,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						135227.891156463,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						135370.74829932,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						135585.034013605,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						135156.462585034,
+						2,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -8480,19 +8436,19 @@
 						136156.462585034,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						136513.605442177,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						136870.74829932,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -8568,13 +8524,13 @@
 						137442.176870748,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						137656.462585034,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -8621,22 +8577,22 @@
 						"jebus-dodgenote"
 					],
 					[
-						138513.605442177,
-						1,
-						0,
-						"jebus-hurtnote"
-					],
-					[
 						138799.319727891,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						138513.605442177,
+						1,
+						0,
+						"Hurt Note"
 					],
 					[
 						139085.034013605,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -8686,19 +8642,19 @@
 						139656.462585034,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						139942.176870748,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						140227.891156463,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -8748,13 +8704,13 @@
 						140799.319727891,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						141156.462585034,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -8810,19 +8766,19 @@
 						141942.176870748,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						142156.462585034,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						142513.605442177,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -8872,13 +8828,13 @@
 						143227.891156463,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						143513.605442177,
 						3,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -8917,12 +8873,6 @@
 						"jebus-dodgenote"
 					],
 					[
-						144227.891156462,
-						5,
-						0,
-						"jebus-hurtnote"
-					],
-					[
 						144370.74829932,
 						5,
 						0,
@@ -8941,16 +8891,22 @@
 						"jebus-dodgenote"
 					],
 					[
+						144227.891156462,
+						5,
+						0,
+						"Hurt Note"
+					],
+					[
 						144442.176870748,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						144799.319727891,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -9020,13 +8976,13 @@
 						145442.176870748,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						145727.891156462,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -9080,19 +9036,19 @@
 						146513.605442177,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						146799.319727891,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						147085.034013605,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -9269,12 +9225,6 @@
 						1035.71428571429
 					],
 					[
-						149656.462585034,
-						2,
-						0,
-						"Alt Animation"
-					],
-					[
 						148727.891156462,
 						0,
 						0,
@@ -9297,6 +9247,11 @@
 						3,
 						0,
 						"jebus-dodgenote"
+					],
+					[
+						149656.462585034,
+						2,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -9594,25 +9549,25 @@
 						152299.319727891,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						152442.176870748,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						152799.319727891,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						152942.176870748,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -9714,25 +9669,25 @@
 						153370.74829932,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						153585.034013605,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						153799.319727891,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						154013.605442177,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -9825,28 +9780,27 @@
 						0
 					],
 					[
-						155156.462585034,
-						0,
-						0,
-						"Alt Animation"
-					],
-					[
 						154585.034013605,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						154799.319727891,
 						4,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						155085.034013605,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						155156.462585034,
+						0,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -9941,28 +9895,27 @@
 						0
 					],
 					[
-						156013.605442177,
-						2,
-						0,
-						"Alt Animation"
-					],
-					[
 						155727.891156462,
 						5,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						155942.176870748,
 						7,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						156156.462585034,
 						6,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
+					],
+					[
+						156013.605442177,
+						2,
+						0
 					]
 				],
 				"altAnim": false,
@@ -9994,25 +9947,25 @@
 						156656.462585034,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						156942.176870748,
 						2,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						157299.319727891,
 						0,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					],
 					[
 						157513.605442177,
 						1,
 						0,
-						"jebus-hurtnote"
+						"Hurt Note"
 					]
 				],
 				"altAnim": false,
@@ -10570,14 +10523,24 @@
 				"bpm": 210
 			},
 			{
-				"gfSection": false,
 				"lengthInSteps": 16,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
+				"altAnim": false,
+				"gfSection": false,
 				"bpm": 210,
 				"changeBPM": false,
 				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 210
 			},
 			{
 				"gfSection": false,
@@ -10590,13 +10553,13 @@
 				"mustHitSection": true
 			}
 		],
-		"player3": "nogf",
+		"player3": null,
 		"song": "1corekiller-pico",
-		"validScore": true,
-		"sections": 45,
 		"needsVoices": true,
 		"stage": "jebus-stage",
+		"validScore": true,
+		"sections": 45,
 		"bpm": 210,
-		"speed": 3.5
+		"speed": 3.2
 	}
 }
