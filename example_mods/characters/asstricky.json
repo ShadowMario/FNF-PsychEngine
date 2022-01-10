@@ -114,8 +114,8 @@
 	"no_antialiasing": false,
 	"image": "characters/tricky-expurgation",
 	"position": [
-		-100,
-		300
+		200,
+		230
 	],
 	"healthicon": "tricky-expurgation",
 	"flip_x": false,
@@ -125,7 +125,7 @@
 		0
 	],
 	"camera_position": [
-		500,
+		550,
 		-50
 	],
 	"sing_duration": 4,
