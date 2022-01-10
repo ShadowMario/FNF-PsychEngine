@@ -56,7 +56,7 @@ class MusicBeatSubstate extends FlxSubState
 
 	public function stepHit():Void
 	{
-		if (curStep % 4 == 0)
+		if (curStep % Conductor.numerator == 0)
 			beatHit();
 	}
 

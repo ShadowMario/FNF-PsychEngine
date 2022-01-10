@@ -20,6 +20,8 @@ typedef SwagSong =
 	var bpm:Float;
 	var needsVoices:Bool;
 	var speed:Float;
+	var numerator:Null<Int>;
+	var denominator:Null<Int>;
 
 	var player1:String;
 	var player2:String;
@@ -55,6 +57,16 @@ class Song
 		{
 			songJson.gfVersion = songJson.player3;
 			songJson.player3 = null;
+		}
+
+		if(songJson.numerator == null)
+		{
+			songJson.numerator = 4;
+		}
+		
+		if(songJson.denominator == null)
+		{
+			songJson.denominator = 4;
 		}
 
 		if(songJson.events == null)
