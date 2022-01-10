@@ -102,6 +102,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		// before you tell me "why add adaptive in" i didn't add it in. someone changed the default behavior to be like adaptive which was way too buggy so i'm making it optional
 		//thx, niko
 		//      -bbpanzu
+		
 		ClientPrefs.screenScaleModeTemp = ClientPrefs.screenScaleMode;
 		ClientPrefs.screenResTemp = ClientPrefs.screenRes;
 		#end
@@ -115,7 +116,34 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.onChange = onChangePersistentData; //Persistent Cached Data changes FlxGraphic.defaultPersist
 		addOption(option);
 		*/
+
+
+
 		super();
+	}
+
+	override function update (elapsed:Float)
+	{
+		if(controls.ACCEPT)
+		{
+			if (curOption.name == "Screen Resolution")
+			{
+				ClientPrefs.screenRes = ClientPrefs.screenResTemp;
+				if (ClientPrefs.screenRes == "FULLSCREEN" && ClientPrefs.screenScaleMode == "ADAPTIVE") ClientPrefs.screenScaleMode = "LETTERBOX";
+				onChangeRes ();
+				MusicBeatState.switchState (new options.OptionsState ());
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+			} else if (curOption.name == "Scale Mode")
+			{
+				var shouldReset:Bool = ClientPrefs.screenScaleMode == "ADAPTIVE" || ClientPrefs.screenScaleModeTemp == "ADAPTIVE";
+				ClientPrefs.screenScaleMode = ClientPrefs.screenScaleModeTemp;
+				if (ClientPrefs.screenScaleMode == "ADAPTIVE") onChangeRes ();
+				if (shouldReset) MusicBeatState.switchState (new options.OptionsState ());
+				else MusicBeatState.musInstance.fixAspectRatio ();
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+			}
+		}
+		super.update(elapsed);
 	}
 
 	function onChangeAntiAliasing()
@@ -143,20 +171,23 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			FlxG.updateFramerate = ClientPrefs.framerate;
 		}
 	}
+	
 	public static function onChangeRes()
 	{
 		FlxG.fullscreen = ClientPrefs.screenRes == "FULLSCREEN";
-		if (!FlxG.fullscreen){
-		var res = ClientPrefs.screenRes.split(" x ");
-		  FlxG.resizeWindow(Std.parseInt(res[0]), Std.parseInt(res[1]));
-		//  FlxG.resizeWindow(Std.parseInt(res[0]), Std.parseInt(res[1]));
-		 // FlxG.resizeGame(Std.parseInt(res[0]), Std.parseInt(res[1]));
-		 // Lib.application.window.width = Std.parseInt(res[0]);
-		 // Lib.application.window.height = Std.parseInt(res[1]);
-		  //Lib.current.stage.width = Std.parseInt(res[0]);
-		 // Lib.current.stage.height = Std.parseInt(res[1]);
+		if (!FlxG.fullscreen) {
+			var res = ClientPrefs.screenRes.split(" x ");
+			FlxG.resizeWindow(Std.parseInt(res[0]), Std.parseInt(res[1]));
+			// FlxG.resizeGame(Std.parseInt(res[0]), Std.parseInt(res[1]));
+			// Lib.application.window.width = Std.parseInt(res[0]);
+			// Lib.application.window.height = Std.parseInt(res[1]);
+			// Lib.current.stage.width = Std.parseInt(res[0]);
+			// Lib.current.stage.height = Std.parseInt(res[1]);
 			FlxCamera.defaultZoom = 1280/Std.parseInt(res[0]);
 		}
+
+		MusicBeatState.musInstance.fixAspectRatio ();
+		// FlxG.resetState();
 	}
 
 }
