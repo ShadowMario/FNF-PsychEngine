@@ -29,8 +29,11 @@ class ClientPrefs {
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var controllerMode:Bool = false;
-	public static var screenRes:String = "1280 x 720";
 	public static var hitSounds:Bool = false;
+	public static var screenRes:String = "1280 x 720";
+	public static var screenResTemp:String = "1280 x 720"; // dummy value that isn't saved, used so that if the player cancels instead of hitting space the resolution isn't applied
+	public static var screenScaleMode:String = "Letterbox";
+	public static var screenScaleModeTemp:String = "Letterbox";
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -134,8 +137,9 @@ class ClientPrefs {
 		FlxG.save.data.gameplaySettings = gameplaySettings;
 		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.screenRes = screenRes;
+		FlxG.save.data.screenScaleMode = screenScaleMode;
 		FlxG.save.data.hitSounds = hitSounds;
-		
+	
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
@@ -249,6 +253,9 @@ class ClientPrefs {
 		} 
 		if(FlxG.save.data.hitSounds != null) {  // Credits to Sector03
 			hitSounds = FlxG.save.data.hitSounds;
+		}
+		if(FlxG.save.data.screenScaleMode != null) {
+			screenScaleMode = FlxG.save.data.screenScaleMode;
 		}
 		if(FlxG.save.data.gameplaySettings != null)
 		{
