@@ -18,11 +18,11 @@ end
 
 -- Gameplay/Song interactions
 function onBeatHit()
-	-- triggered 4 times per section
+	-- triggered 4 times per section (Depends on time signature)
 end
 
 function onStepHit()
-	-- triggered 16 times per section
+	-- triggered 16 times per section (Depends on time signature)
 end
 
 function onUpdate(elapsed)
