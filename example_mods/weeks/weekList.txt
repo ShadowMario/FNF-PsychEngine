@@ -14,4 +14,3 @@ week5-bsides
 week6-bsides
 week7-bsides
 week-fatassmod
-week-fatassmod-inundation

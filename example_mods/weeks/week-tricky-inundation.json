@@ -12,8 +12,8 @@
 	"startUnlocked": true,
 	"songs": [
 		[
-			"inundation-ass",
-			"fatassmod",
+			"inundation",
+			"hank",
 			[
 				255,
 				140,
@@ -27,5 +27,5 @@
 		"no_menu_character",
 		"no_menu_character"
 	],
-	"weekName": "week-fatassmod-inundation"
+	"weekName": "week-tricky-inundation"
 }

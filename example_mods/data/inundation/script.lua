@@ -1,15 +1,15 @@
 
-local xx = 520;
-local yy = 450;
-local xx2 = 820;
+local xx = 700;
+local yy = 400;
+local xx2 = 900;
 local yy2 = 450;
-local ofs = 60;
+local ofs = 70;
 local followchars = true;
 local del = 0;
 local del2 = 0;
 
 
-function onUpdate()
+function onStepHit()
 	if del > 0 then
 		del = del - 1
 	end

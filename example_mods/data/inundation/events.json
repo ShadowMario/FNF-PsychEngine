@@ -1,0 +1,1418 @@
+{
+	"song": {
+		"speed": 3,
+		"stage": "tricky-expurgation",
+		"player1": "asstricky",
+		"player2": "hank",
+		"player3": null,
+		"events": [
+			[
+				0,
+				[
+					[
+						"Hey!",
+						"BF",
+						"1"
+					],
+					[
+						"Play Animation",
+						"taunt",
+						"Dad"
+					],
+					[
+						"Screen Shake",
+						"1, 0.02",
+						"1, 0.02"
+					],
+					[
+						"Blammed Lights",
+						"4",
+						""
+					]
+				]
+			],
+			[
+				1839.62264150943,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
+			[
+				9056.60377358491,
+				[
+					[
+						"Screen Shake",
+						"0.5, 0.005",
+						"0.5, 0.003"
+					]
+				]
+			],
+			[
+				14433.9622641509,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				15283.0188679245,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				],
+				null,
+				"No Animation"
+			],
+			[
+				17547.1698113208,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				18113.2075471698,
+				[
+					[
+						"Screen Shake",
+						"0.3, 0.005",
+						"0.3, 0.003"
+					],
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				18679.2452830189,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				19245.2830188679,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				19846.6981132076,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				20377.358490566,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				20978.7735849057,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				21509.4339622642,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				22075.4716981132,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				22641.5094339623,
+				[
+					[
+						"Screen Shake",
+						"1, 0.005 ",
+						"1, 0.0005"
+					],
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				23207.5471698113,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				23472.8773584906,
+				[
+					[
+						"Screen Shake",
+						"1, 0.006",
+						"1, 0.006"
+					]
+				]
+			],
+			[
+				23490.5660377359,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				24339.6226415094,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				24905.6603773585,
+				[
+					[
+						"Screen Shake",
+						"2, 0.0095",
+						"2, 0.02"
+					]
+				]
+			],
+			[
+				26603.7735849057,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				27169.8113207547,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				28018.8679245283,
+				[
+					[
+						"Play Animation",
+						"singUP",
+						"BF"
+					],
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				28584.9056603774,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				30283.0188679245,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				30849.0566037736,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				31132.0754716981,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				31698.1132075472,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				32547.1698113208,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				33148.5849056604,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				33679.2452830189,
+				[
+					[
+						"Screen Shake",
+						"0.7, 0.02",
+						"0.7 0.02"
+					],
+					[
+						"Play Animation",
+						"hey",
+						"BF"
+					]
+				]
+			],
+			[
+				36084.9056603774,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				36279.4811320755,
+				[
+					[
+						"Screen Shake",
+						"5, 0.01",
+						"0.5 0.0015"
+					]
+				]
+			],
+			[
+				36367.9245283019,
+				[
+					[
+						"Play Animation",
+						"idle",
+						"hank"
+					]
+				]
+			],
+			[
+				37075.4716981132,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				37570.7547169811,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				38490.5660377359,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				39339.6226415094,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				39905.6603773585,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				40188.679245283,
+				[
+					[
+						"Screen Shake",
+						"0.65, 0.015",
+						"0.65, 0.015"
+					]
+				]
+			],
+			[
+				42452.8301886793,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				44716.9811320755,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				45000,
+				[
+					[
+						"Screen Shake",
+						"0.5, 0.01",
+						"0.5 0.01"
+					]
+				]
+			],
+			[
+				46132.0754716981,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				46698.1132075472,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				49811.320754717,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				50660.3773584906,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				51226.4150943396,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				51792.4528301887,
+				[
+					[
+						"Screen Shake",
+						"0.4, 0.04",
+						"0.4 0.04"
+					]
+				]
+			],
+			[
+				54127.3584905661,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				54339.6226415094,
+				[
+					[
+						"Screen Shake",
+						"5, 0.01",
+						"0.5 0.0015"
+					]
+				]
+			],
+			[
+				54445.7547169812,
+				[
+					[
+						"Play Animation",
+						"idle",
+						"hank"
+					]
+				]
+			],
+			[
+				55259.4339622642,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				55683.962264151,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				56603.7735849057,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				57452.8301886793,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				58036.5566037736,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				58319.5754716981,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				58354.9528301887,
+				[
+					[
+						"Screen Shake",
+						"0.4, 0.03",
+						"0.4 0.03"
+					]
+				]
+			],
+			[
+				58505.3066037736,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				58699.8820754717,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				59716.9811320755,
+				[
+					[
+						"Screen Shake",
+						"0.4, 0.03",
+						"0.4 0.03"
+					]
+				]
+			],
+			[
+				59823.1132075472,
+				[
+					[
+						"Play Animation",
+						"scream",
+						""
+					]
+				]
+			],
+			[
+				60566.0377358491,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				62865.5660377359,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				63042.4528301887,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				63254.7169811321,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				63466.9811320755,
+				[
+					[
+						"Play Animation",
+						"idle",
+						"hank"
+					]
+				]
+			],
+			[
+				67429.2452830189,
+				[
+					[
+						"Blammed Lights",
+						"4",
+						""
+					]
+				],
+				null,
+				""
+			],
+			[
+				67500,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
+			[
+				67570.7547169812,
+				[
+					[
+						"Blammed Lights",
+						"5",
+						""
+					]
+				]
+			],
+			[
+				67641.5094339623,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
+			[
+				67712.2641509434,
+				[
+					[
+						"Blammed Lights",
+						"4",
+						""
+					]
+				]
+			],
+			[
+				67783.0188679245,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
+			[
+				67924.5283018868,
+				[
+					[
+						"Blammed Lights",
+						"5",
+						""
+					]
+				]
+			],
+			[
+				67995.2830188679,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
+			[
+				68066.0377358491,
+				[
+					[
+						"Blammed Lights",
+						"4",
+						""
+					]
+				]
+			],
+			[
+				68136.7924528302,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
+			[
+				68207.5471698113,
+				[
+					[
+						"Blammed Lights",
+						"5",
+						""
+					]
+				]
+			],
+			[
+				68632.0754716981,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
+			[
+				72452.8301886792,
+				[
+					[
+						"Screen Shake",
+						"0.4, 0.01",
+						"0.4 0.01"
+					],
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				74716.9811320755,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				76415.0943396226,
+				[
+					[
+						"Screen Shake",
+						"0.5, 0.01",
+						"0.5 0.01"
+					]
+				]
+			],
+			[
+				77847.8773584906,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				78679.2452830189,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				79103.7735849056,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				80430.4245283019,
+				[
+					[
+						"Screen Shake",
+						"1, 0.05",
+						"1, 0.03"
+					]
+				]
+			],
+			[
+				80943.3962264151,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				81226.4150943396,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				81650.9433962264,
+				[
+					[
+						"Play Animation",
+						"idle",
+						"hank"
+					]
+				]
+			],
+			[
+				82641.5094339622,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				83449.2924528302,
+				[
+					[
+						"Screen Shake",
+						"0.6, 0.015",
+						"0.5, 0.01"
+					]
+				]
+			],
+			[
+				83773.5849056603,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				84905.6603773585,
+				[
+					[
+						"Play Animation",
+						"hankready",
+						"hank"
+					]
+				]
+			],
+			[
+				85471.6981132075,
+				[
+					[
+						"Screen Shake",
+						"0.6, 0.015",
+						"0.5, 0.01"
+					]
+				]
+			],
+			[
+				86037.7358490566,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				86886.7924528302,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				87028.3018867924,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				87169.8113207547,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				87735.8490566037,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				90000,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"hank"
+					]
+				]
+			],
+			[
+				90619.1037735849,
+				[
+					[
+						"Screen Shake",
+						"0.6, 0.015",
+						"0.5, 0.01"
+					]
+				]
+			],
+			[
+				90636.7924528301,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				91132.0754716981,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				91698.1132075471,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				92264.1509433962,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				92830.1886792452,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				93396.2264150943,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				93962.2641509433,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				94528.3018867924,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				94952.8301886792,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				99622.6415094339,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				100188.679245283,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				100754.716981132,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				101320.754716981,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				101886.79245283,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				102452.830188679,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				103018.867924528,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				103584.905660377,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				108679.245283019,
+				[
+					[
+						"Screen Shake",
+						"0.6, 0.015",
+						"0.5, 0.01"
+					],
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				109245.283018868,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				109811.320754717,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				110377.358490566,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				110943.396226415,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				111509.433962264,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				112075.471698113,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				112641.509433962,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				117735.849056604,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				118301.886792453,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				118867.924528302,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				119433.962264151,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				120000,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				120566.037735849,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				121132.075471698,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			],
+			[
+				121698.113207547,
+				[
+					[
+						"Play Animation",
+						"Scared",
+						"hank"
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": null,
+		"validScore": false,
+		"gfVersion": "gf-expurgation",
+		"bpm": 106,
+		"arrowSkin": "",
+		"needsVoices": true,
+		"song": "inundation"
+	}
+}
