@@ -871,7 +871,7 @@ class ChartingState extends MusicBeatState
 		copyLastButton.setGraphicSize(80, 30);
 		copyLastButton.updateHitbox();
 
-		tab_group_section.add(stepperLength); // this was broken in the first place and now even more broken
+		//tab_group_section.add(stepperLength); // this was broken in the first place and now even more broken
 		tab_group_section.add(stepperSectionBPM);
 		tab_group_section.add(check_mustHitSection);
 		tab_group_section.add(check_gfSection);
