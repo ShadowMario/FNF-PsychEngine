@@ -3899,7 +3899,7 @@ class PlayState extends MusicBeatState
 		} else if(!note.noAnimation) {
 			var altAnim:String = "";
 
-			var curSection:Int = Math.floor(curStep / (Conductor.numerator * 4));
+			var curSection:Int = getCurSection();
 			if (SONG.notes[curSection] != null)
 			{
 				if (SONG.notes[curSection].altAnim || note.noteType == 'Alt Animation') {
@@ -4302,28 +4302,37 @@ class PlayState extends MusicBeatState
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 
-		var sectionLength:Int = (Conductor.numerator * 4);
-		if (SONG.notes[Math.floor(curStep / sectionLength)] != null)
+		var section:Int = getCurSection();
+		if (SONG.notes[Math.floor(section)] != null)
 		{
-			if (SONG.notes[Math.floor(curStep / sectionLength)].changeBPM)
+			if (SONG.notes[Math.floor(section)].changeBPM)
 			{
-				Conductor.changeBPM(SONG.notes[Math.floor(curStep / sectionLength)].bpm);
+				Conductor.changeBPM(SONG.notes[Math.floor(section)].bpm);
 				//FlxG.log.add('CHANGED BPM!');
 				setOnLuas('curBpm', Conductor.bpm);
 				setOnLuas('crochet', Conductor.crochet);
 				setOnLuas('stepCrochet', Conductor.stepCrochet);
 			}
-			setOnLuas('mustHitSection', SONG.notes[Math.floor(curStep / sectionLength)].mustHitSection);
-			setOnLuas('altAnim', SONG.notes[Math.floor(curStep / sectionLength)].altAnim);
-			setOnLuas('gfSection', SONG.notes[Math.floor(curStep / sectionLength)].gfSection);
+			if (SONG.notes[Math.floor(section)].changeSignature)
+			{
+				Conductor.changeSignature(SONG.notes[Math.floor(section)].numerator, SONG.notes[Math.floor(section)].denominator);
+				//FlxG.log.add('CHANGED BPM!');
+				setOnLuas('barLength', Conductor.numerator);
+				setOnLuas('noteValue', Conductor.denominator);
+				setOnLuas('crochet', Conductor.crochet);
+				setOnLuas('stepCrochet', Conductor.stepCrochet);
+			}
+			setOnLuas('mustHitSection', SONG.notes[Math.floor(section)].mustHitSection);
+			setOnLuas('altAnim', SONG.notes[Math.floor(section)].altAnim);
+			setOnLuas('gfSection', SONG.notes[Math.floor(section)].gfSection);
 			// else
 			// Conductor.changeBPM(SONG.bpm);
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 
-		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / sectionLength)] != null && !endingSong && !isCameraOnForcedPos)
+		if (generatedMusic && PlayState.SONG.notes[Std.int(section)] != null && !endingSong && !isCameraOnForcedPos)
 		{
-			moveCameraSection(Std.int(curStep / sectionLength));
+			moveCameraSection(Std.int(section));
 		}
 		if (camZooming && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && curBeat % Conductor.numerator == 0)
 		{
@@ -4412,6 +4421,25 @@ class PlayState extends MusicBeatState
 
 				setOnLuas('curBeat', curBeat);//DAWGG?????
 		callOnLuas('onBeatHit', []);
+	}
+
+	function getCurSection():Int {
+		var daNumerator:Int = SONG.numerator;
+		var daPos:Int = 0;
+		var daStep:Int = 0;
+		for (i in 0...SONG.notes.length) {
+			if (SONG.notes[i] != null) {
+				if (SONG.notes[i].changeSignature) {
+					daNumerator = SONG.notes[i].numerator;
+				}
+			}
+			if (daStep + (daNumerator * 4) >= curStep) {
+				return daPos + Math.floor((curStep - daStep) / (daNumerator * 4));
+			}
+			daStep += daNumerator * 4;
+			daPos++;
+		}
+		return daPos;
 	}
 
 	public var closeLuas:Array<FunkinLua> = [];

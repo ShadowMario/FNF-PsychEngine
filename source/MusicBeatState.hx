@@ -1,6 +1,7 @@
 package;
 
 import Conductor.BPMChangeEvent;
+import Conductor.SignatureChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
 import flixel.math.FlxRect;
@@ -105,15 +106,19 @@ class MusicBeatState extends FlxUIState
 
 	private function updateCurStep():Void
 	{
-		var lastChange:BPMChangeEvent = {
+		var lastChange:Dynamic = {
 			stepTime: 0,
-			songTime: 0,
-			bpm: 0
+			songTime: 0
 		}
 		for (i in 0...Conductor.bpmChangeMap.length)
 		{
 			if (Conductor.songPosition >= Conductor.bpmChangeMap[i].songTime)
 				lastChange = Conductor.bpmChangeMap[i];
+		}
+		for (i in 0...Conductor.signatureChangeMap.length)
+		{
+			if (Conductor.songPosition >= Conductor.signatureChangeMap[i].songTime && Conductor.signatureChangeMap[i].songTime > lastChange.songTime)
+				lastChange = Conductor.signatureChangeMap[i];
 		}
 
 		curStep = lastChange.stepTime + Math.floor(((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / Conductor.stepCrochet);
