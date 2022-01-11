@@ -71,7 +71,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			'screenResTemp',
 			'string',
 			'1280 x 720', ['1280 x 720',
-			'1280 x 960',
+			'1280 x 800', '1280 x 960', '1280 x 1024',
 			'FULLSCREEN'
 			]);
 		addOption(option);
