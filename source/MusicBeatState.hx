@@ -178,7 +178,7 @@ class MusicBeatState extends FlxUIState
 
 	public function stepHit():Void
 	{
-		if (curStep % Conductor.numerator == 0)
+		if (curStep % 4 == 0)
 			beatHit();
 	}
 
