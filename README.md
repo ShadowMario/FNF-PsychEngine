@@ -63,7 +63,6 @@ So try playing with Judge 5 values for a bit sometime. If that still feels too e
 - Week 1-6
 - B-Sides Week 1-6
 - The Full-Ass Tricky Mod
-- Camellia Week 1-2
 - Smoke 'Em Out Struggle (Garcello)
 - Sarvente's Mid Fight Masses
 - Tabi Ex-Boyfriend
