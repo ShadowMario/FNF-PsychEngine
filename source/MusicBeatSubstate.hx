@@ -51,7 +51,7 @@ class MusicBeatSubstate extends FlxSubState
 		}
 		for (i in 0...Conductor.signatureChangeMap.length)
 		{
-			if (Conductor.songPosition >= Conductor.signatureChangeMap[i].songTime && Conductor.signatureChangeMap[i].songTime >= lastChange.songTime)
+			if (Conductor.songPosition >= Conductor.signatureChangeMap[i].songTime && Conductor.signatureChangeMap[i].songTime > lastChange.songTime)
 				lastChange = Conductor.signatureChangeMap[i];
 		}
 
