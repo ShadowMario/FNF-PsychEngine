@@ -114,6 +114,12 @@ class FunkinLua {
 		set('screenWidth', FlxG.width);
 		set('screenHeight', FlxG.height);
 
+		// Window shit
+		set('windowX', PlayState.instance.window.x);
+		set('windowY', PlayState.instance.window.y);
+		set('windowW', PlayState.instance.window.width);
+		set('windowH', PlayState.instance.window.height);
+
 		// PlayState cringe ass nae nae bullcrap
 		set('curBeat', 0);
 		set('curStep', 0);
@@ -1968,6 +1974,12 @@ class FunkinLua {
 
 		Lua.close(lua);
 		lua = null;
+		if (!FlxG.fullscreen) {	
+			//PlayState.instance.window.x = PlayState.instance.windowX;
+			//PlayState.instance.window.y = PlayState.instance.windowY;
+			PlayState.instance.window.width = PlayState.instance.windowW;
+			PlayState.instance.window.height = PlayState.instance.windowH;
+		}
 		#end
 	}
 

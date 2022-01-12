@@ -91,6 +91,11 @@ class PlayState extends MusicBeatState
 	public var camGameShaders:Array<ShaderEffect> = [];
 	public var camHUDShaders:Array<ShaderEffect> = [];
 	public var camOtherShaders:Array<ShaderEffect> = [];
+	public var window = Lib.application.window;
+	public var windowX:Int = 320;
+	public var windowY:Int = 180;
+	public var windowW:Int = 1280;
+	public var windowH:Int = 720;
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
 	#if (haxe >= "4.0.0")
@@ -1762,6 +1767,10 @@ class PlayState extends MusicBeatState
 
 	function startSong():Void
 	{
+		windowX = window.x;
+		windowY = window.y;
+		windowW = window.width;
+		windowH = window.height;
 		startingSong = false;
 
 		previousFrameTime = FlxG.game.ticks;
