@@ -1,7 +1,4 @@
 -- Lua stuff
-function onLoaded()
-	-- triggered when the lua file is loaded
-end
 
 function onCreate()
 	-- triggered when the lua file is started, some variables weren't created yet
