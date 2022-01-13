@@ -328,7 +328,11 @@ class StageEditorState extends MusicBeatState
         var directoryLayer:String = "images/" + assetName + ".png";
         if(assetName != null && assetName.length > 0) {
         if (Paths.fileExists(directoryLayer, IMAGE)){
+        #if MODS_ALLOWED
         createdLayer.loadGraphic(Paths.getPath(directoryLayer, IMAGE));
+        #else
+        createdLayer.loadGraphic(Paths.mods(directoryLayer));
+        #end
         createdLayer.visible = true;
     }
     else{
