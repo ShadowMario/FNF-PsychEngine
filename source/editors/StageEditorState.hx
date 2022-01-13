@@ -64,7 +64,7 @@ class StageEditorState extends MusicBeatState
     var addedLayers:Array<LayerFile>;
 
 
-    var createdLayer:FlxSprite;
+    var createdLayer:FlxSprite = new FlxSprite();
 
 	var boyfriend:Array<Dynamic>;
 	var girlfriend:Array<Dynamic>;
@@ -153,6 +153,8 @@ class StageEditorState extends MusicBeatState
 
     addLayersUI();
     addSettingsUI();
+    searchForLayer();
+
     UI_stagebox.selected_tab_id = 'Layers';
 
     var tipText:FlxText = new FlxText(FlxG.width - 20, FlxG.height, 0,
@@ -168,8 +170,9 @@ class StageEditorState extends MusicBeatState
     tipText.y -= tipText.height - 10;
     add(tipText);
 
-
     FlxG.mouse.visible = true;
+
+    add(createdLayer);
 
     super.create();
 }
@@ -205,20 +208,21 @@ class StageEditorState extends MusicBeatState
             noStage = false;
             layerAdded = true;
             stageCounter + 1;
-
             var stageSwag:LayerFile = {
-            name: nameInputText.text, 
-            directory: directoryInputText.text, 
-            xAxis: Std.parseFloat(xInputText.text), 
-            yAxis:  Std.parseFloat(yInputText.text), 
-            scrollY: Std.parseFloat(stepperscrollX.text), 
-            scrollX: Std.parseFloat(stepperscrollY.text), 
-            scale: scaleStepper.value
-            };
-
-            addLayer();
+                name: nameInputText.text, 
+                directory: directoryInputText.text, 
+                xAxis: Std.parseFloat(xInputText.text), 
+                yAxis:  Std.parseFloat(yInputText.text), 
+                scrollY: Std.parseFloat(stepperscrollX.text), 
+                scrollX: Std.parseFloat(stepperscrollY.text), 
+                scale: scaleStepper.value
+                 };
+            createdLayer = new FlxSprite();
+            add(createdLayer);
             if (layerAdded) {
             swagStage.layerArray.push(stageSwag);
+            xInputText.text = "" + 0;
+            yInputText.text = "" + 0;
             }
             // we need to make sure the created layer exists before being able to scale it or we'll experience a crash
             if (swagStage.layerArray.contains(stageSwag)) {
@@ -232,7 +236,6 @@ class StageEditorState extends MusicBeatState
 
         var removeLayer:FlxButton = new FlxButton(40, 20, "Remove Layer", function() {
         if (!noStage){
-            
             var stageSwag:LayerFile = {
                 name: nameInputText.text, 
                 directory: directoryInputText.text, 
@@ -241,9 +244,11 @@ class StageEditorState extends MusicBeatState
                 scrollY: Std.parseFloat(stepperscrollX.text), 
                 scrollX: Std.parseFloat(stepperscrollY.text), 
                 scale: scaleStepper.value
-                };
+                 };
            deleteLayer();
-           if (stageCounter < 0){
+           xInputText.text = "" + 0;
+           yInputText.text = "" + 0;
+           if (swagStage.layerArray.contains(stageSwag)){
            remove(createdLayer);
            swagStage.layerArray.remove(stageSwag);
            }
@@ -318,21 +323,21 @@ class StageEditorState extends MusicBeatState
 
            UI_stagebox.scrollFactor.set();
     }
-    function addLayer() {
-        layerAdded = true;
+    function searchForLayer() {
         var assetName:String = directoryInputText.text.trim();
+        var directoryLayer:String = "images/" + assetName + ".png";
         if(assetName != null && assetName.length > 0) {
-        createdLayer = new FlxSprite(0, 0).loadGraphic(Paths.getPath("images/" + assetName + ".png", IMAGE));
-        for (layer in swagStage.layerArray) {
-        layer.xAxis = createdLayer.x;
-        layer.yAxis = createdLayer.y;
-        }
-        noStage = false;
-        createdLayer.cameras = [camEditor];
-        if (Paths.fileExists("images/" + assetName + ".png", IMAGE)){
-        add(createdLayer);
-        }
-        }
+        if (Paths.fileExists(directoryLayer, IMAGE)){
+        createdLayer.loadGraphic(Paths.getPath(directoryLayer, IMAGE));
+        createdLayer.visible = true;
+    }
+    else{
+        createdLayer.visible = false;
+    }
+}
+else{
+    createdLayer.visible = false;
+}
     }
     function deleteLayer() {
         remove(createdLayer);
@@ -349,11 +354,9 @@ class StageEditorState extends MusicBeatState
                 scrollX: Std.parseFloat(stepperscrollY.text), 
                 scale: scaleStepper.value
                 };
-                if (confirmAdded){
 				stageSwag.scale = sender.value;
                 createdLayer.setGraphicSize(Std.int(createdLayer.width * stageSwag.scale));
-                }
-			}
+		}
     }
 }
     
@@ -361,10 +364,7 @@ class StageEditorState extends MusicBeatState
 
       super.update(elapsed);
 
-      if (confirmAdded){
-      xInputText.text = createdLayer.x + "";
-      yInputText.text = createdLayer.y + "";
-      }
+      searchForLayer();
       
       if(swagStage == null) {
       swagStage = {
@@ -400,20 +400,23 @@ class StageEditorState extends MusicBeatState
       swagStage.name = dirinputtext.text;
 
 
-      if (layerAdded) {
       if (FlxG.keys.pressed.LEFT) {
         createdLayer.x -= 1;
+        xInputText.text = createdLayer.x + "";
       }
       else if (FlxG.keys.pressed.RIGHT) {
         createdLayer.x += 1;
+        xInputText.text = createdLayer.x + "";
       }
       else if (FlxG.keys.pressed.UP) {
         createdLayer.y -= 1;
+        yInputText.text = createdLayer.y + "";
       }
       else if (FlxG.keys.pressed.DOWN) {
-        createdLayer.y += 1;
+        createdLayer.y += 1; 
+        yInputText.text = createdLayer.y + "";
       }
-    }
+
      if (FlxG.keys.justPressed.R) {
         FlxG.camera.zoom = 1;
      }
