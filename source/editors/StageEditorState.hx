@@ -329,9 +329,9 @@ class StageEditorState extends MusicBeatState
         if(assetName != null && assetName.length > 0) {
         if (Paths.fileExists(directoryLayer, IMAGE)){
         #if MODS_ALLOWED
-        createdLayer.loadGraphic(Paths.getPath(directoryLayer, IMAGE));
-        #else
         createdLayer.loadGraphic(Paths.mods(directoryLayer));
+        #else
+        createdLayer.loadGraphic(Paths.getPath(directoryLayer, IMAGE));
         #end
         createdLayer.visible = true;
     }
