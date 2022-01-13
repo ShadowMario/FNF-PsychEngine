@@ -100,6 +100,8 @@ class FreeplayState extends MusicBeatState
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+		bg.scale.x = bg.scale.y = scaleRatio;
+		bg.screenCenter();
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
