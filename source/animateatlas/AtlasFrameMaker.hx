@@ -13,13 +13,8 @@ import animateatlas.displayobject.SpriteMovieClip;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxFramesCollection;
 import flixel.graphics.frames.FlxFrame;
-#if desktop
 import sys.FileSystem;
 import sys.io.File;
-#else
-import js.html.FileSystem;
-import js.html.File;
-#end
 class AtlasFrameMaker extends FlxFramesCollection{
 
 
@@ -58,27 +53,14 @@ class AtlasFrameMaker extends FlxFramesCollection{
 					if (Assets.exists(txtToFind)){
 						dajson = txtToFind;
 					}*/
-					
-					
-					
-					
-				if (Paths.fileExists('images/$key/spritemap1.json',TEXT)){
-					
-					PlayState.instance.addTextToDebug("Only Spritemaps made with Adobe Animate 2018 are supported");
-					trace("Only Spritemaps made with Adobe Animate 2018 are supported");
-					return null;
-				}
                 var animationData:AnimationData = Json.parse(Paths.getTextFromFile('images/$key/Animation.json'));
                 var atlasData:AtlasData = Json.parse(Paths.getTextFromFile('images/$key/spritemap.json'));
-				var bitmapData:BitmapData;
-				#if MODS_ALLOWED
-				bitmapData = (FileSystem.exists('mods/images/$key/spritemap.png') || FileSystem.exists('mods/' + Paths.currentModDirectory + '/images/$key/spritemap.png') ? BitmapData.fromFile(Paths.modFolders('images/$key/spritemap.png')) : Assets.getBitmapData(Paths.getPath('images/$key/spritemap.png',IMAGE)));
 				
-				#else
 				
-				//var paf = 'assets/images/$key/spritemap.png' ;
-				bitmapData = Assets.getBitmapData(paf);//new BitmapData(0,1);
-				#end
+				var paf = (Assets.exists('assets/images/$key/spritemap.png') ? 'assets/images/$key/spritemap.png' : Paths.modFolders('images/$key/spritemap.png'));
+				
+                var bitmapData:BitmapData = BitmapData.fromFile(paf);//new BitmapData(0,1);
+				
 				
 				
 				

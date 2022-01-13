@@ -12,10 +12,6 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
-import flixel.system.scaleModes.BaseScaleMode;
-import flixel.system.scaleModes.FillScaleMode;
-import flixel.system.scaleModes.FixedScaleMode;
-import flixel.system.scaleModes.StageSizeScaleMode;
 import haxe.Json;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
@@ -23,7 +19,6 @@ import openfl.display.BitmapData;
 import sys.FileSystem;
 import sys.io.File;
 #end
-import options.GraphicsSettingsSubState;
 //import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
@@ -172,10 +167,7 @@ class TitleState extends MusicBeatState
 		super.create();
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
-		
 		ClientPrefs.loadPrefs();
-		
-		GraphicsSettingsSubState.onChangeRes();
 
 		Highscore.load();
 
@@ -410,7 +402,7 @@ class TitleState extends MusicBeatState
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
-		if (FlxG.keys.justPressed.F && ClientPrefs.screenScaleMode != "ADAPTIVE")
+		if (FlxG.keys.justPressed.F)
 		{
 			FlxG.fullscreen = !FlxG.fullscreen;
 		}

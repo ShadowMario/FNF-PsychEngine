@@ -32,7 +32,7 @@ class AchievementsMenuState extends MusicBeatState
 		#end
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
-		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1 * scaleRatio));
+		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
@@ -42,7 +42,7 @@ class AchievementsMenuState extends MusicBeatState
 		add(grpOptions);
 
 		for (i in 0...Achievements.achievementsStuff.length) {
-			if(!Achievements.achievementsStuff[i][4] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
+			if(!Achievements.achievementsStuff[i][3] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
 				options.push(Achievements.achievementsStuff[i]);
 				achievementIndex.push(i);
 			}

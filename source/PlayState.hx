@@ -27,24 +27,21 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.system.FlxAssets.FlxShader;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.util.FlxCollision;
+import editors.StageEditorState;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import haxe.Json;
 import lime.utils.Assets;
-import openfl.Lib;
 import openfl.display.BlendMode;
-import openfl.display.Shader;
 import openfl.display.StageQuality;
-import openfl.filters.BitmapFilter;
 import openfl.filters.ShaderFilter;
 import openfl.utils.Assets as OpenFlAssets;
 import editors.ChartingState;
@@ -54,12 +51,15 @@ import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
 import Achievements;
 import StageData;
+import StageData.StageFile;
+import LayerFile;
 import FunkinLua;
 import DialogueBoxPsych;
-import Shaders;
 
 #if sys
+import sys.io.File;
 import sys.FileSystem;
+import flash.media.Sound;
 #end
 
 using StringTools;
@@ -87,10 +87,7 @@ class PlayState extends MusicBeatState
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
 	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
-	public var shader_chromatic_abberation:ChromaticAberrationEffect;
-	public var camGameShaders:Array<ShaderEffect> = [];
-	public var camHUDShaders:Array<ShaderEffect> = [];
-	public var camOtherShaders:Array<ShaderEffect> = [];
+
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
 	#if (haxe >= "4.0.0")
@@ -117,7 +114,8 @@ class PlayState extends MusicBeatState
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
-	public var shaderUpdates:Array<Float->Void> = [];
+	public var parsedJson:StageFile;
+
 	public static var curStage:String = '';
 	public static var isPixelStage:Bool = false;
 	public static var SONG:SwagSong = null;
@@ -159,6 +157,7 @@ class PlayState extends MusicBeatState
 	private var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
+	public var loadedLayer:BGSprite;
 
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
@@ -233,10 +232,14 @@ class PlayState extends MusicBeatState
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
+	var layer:LayerFile;
+
 	public static var campaignScore:Int = 0;
 	public static var campaignMisses:Int = 0;
 	public static var seenCutscene:Bool = false;
 	public static var deathCounter:Int = 0;
+	public static var stageData:StageFile;
+	public static var stagestuffs:StageFile;
 
 	public var defaultCamZoom:Float = 1.05;
 
@@ -245,7 +248,6 @@ class PlayState extends MusicBeatState
 	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
 	public var inCutscene:Bool = false;
-	public var skipCountdown:Bool = false;
 	var songLength:Float = 0;
 
 	#if desktop
@@ -306,14 +308,6 @@ class PlayState extends MusicBeatState
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 
-		
-		
-		shader_chromatic_abberation = new ChromaticAberrationEffect();
-		
-		
-		
-		
-		
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -383,16 +377,18 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		var stageData:StageFile = StageData.getStageFile(curStage);
+		stageData = StageData.getStageFile(curStage);
 		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
 			stageData = {
+				name: "",
 				directory: "",
 				defaultZoom: 0.9,
 				isPixelStage: false,
 			
 				boyfriend: [770, 100],
 				girlfriend: [400, 130],
-				opponent: [100, 100]
+				opponent: [100, 100],
+				layerArray: []
 			};
 		}
 
@@ -459,9 +455,6 @@ class PlayState extends MusicBeatState
 					var bg:BGSprite = new BGSprite('philly/sky', -100, 0, 0.1, 0.1);
 					add(bg);
 				}
-				
-				//addShaderToCamera('game', chromAb);
-				//chromAb.setChrome(0.01);
 
 				var city:BGSprite = new BGSprite('philly/city', -10, 0, 0.3, 0.3);
 				city.setGraphicSize(Std.int(city.width * 0.85));
@@ -664,6 +657,7 @@ class PlayState extends MusicBeatState
 					var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
 					var waveEffectFG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
 				}*/
+
 				var posX = 400;
 				var posY = 200;
 				if(!ClientPrefs.lowQuality) {
@@ -684,8 +678,17 @@ class PlayState extends MusicBeatState
 					bg.antialiasing = false;
 					add(bg);
 				}
-		}
 
+				default: 
+					curStage = stageData.name;
+					for (layer in stageData.layerArray){
+					var loadedLayer:BGSprite = new BGSprite(layer.directory, layer.xAxis, layer.yAxis, layer.scrollX, layer.scrollY);
+                    loadedLayer.setGraphicSize(Std.int(loadedLayer.width * layer.scale));
+				    add(loadedLayer);
+				}
+
+			}	
+		  
 		if(isPixelStage) {
 			introSoundsSuffix = '-pixel';
 		}
@@ -744,6 +747,7 @@ class PlayState extends MusicBeatState
 						luaArray.push(new FunkinLua(folder + file));
 						filesPushed.push(file);
 					}
+					
 				}
 			}
 		}
@@ -1287,110 +1291,6 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	
-	
-  public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA
-	  
-	  
-	  
-		switch(cam.toLowerCase()) {
-			case 'camhud' | 'hud':
-					camHUDShaders.push(effect);
-					var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-					for(i in camHUDShaders){
-					  newCamEffects.push(new ShaderFilter(i.shader));
-					}
-					camHUD.setFilters(newCamEffects);
-			case 'camother' | 'other':
-					camOtherShaders.push(effect);
-					var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-					for(i in camOtherShaders){
-					  newCamEffects.push(new ShaderFilter(i.shader));
-					}
-					camOther.setFilters(newCamEffects);
-			case 'camgame' | 'game':
-					camGameShaders.push(effect);
-					var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-					for(i in camGameShaders){
-					  newCamEffects.push(new ShaderFilter(i.shader));
-					}
-					camGame.setFilters(newCamEffects);
-			default:
-				if(modchartSprites.exists(cam)) {
-					Reflect.setProperty(modchartSprites.get(cam),"shader",effect.shader);
-				} else if(modchartTexts.exists(cam)) {
-					Reflect.setProperty(modchartTexts.get(cam),"shader",effect.shader);
-				} else {
-					var OBJ = Reflect.getProperty(PlayState.instance,cam);
-					Reflect.setProperty(OBJ,"shader", effect.shader);
-				}
-			
-			
-				
-				
-		}
-	  
-	  
-	  
-	  
-  }
-
-  public function removeShaderFromCamera(cam:String,effect:ShaderEffect){
-	  
-	  
-		switch(cam.toLowerCase()) {
-			case 'camhud' | 'hud': 
-    camHUDShaders.remove(effect);
-    var newCamEffects:Array<BitmapFilter>=[];
-    for(i in camHUDShaders){
-      newCamEffects.push(new ShaderFilter(i.shader));
-    }
-    camHUD.setFilters(newCamEffects);
-			case 'camother' | 'other': 
-					camOtherShaders.remove(effect);
-					var newCamEffects:Array<BitmapFilter>=[];
-					for(i in camOtherShaders){
-					  newCamEffects.push(new ShaderFilter(i.shader));
-					}
-					camOther.setFilters(newCamEffects);
-			default: 
-				camGameShaders.remove(effect);
-				var newCamEffects:Array<BitmapFilter>=[];
-				for(i in camGameShaders){
-				  newCamEffects.push(new ShaderFilter(i.shader));
-				}
-				camGame.setFilters(newCamEffects);
-		}
-		
-	  
-  }
-	
-	
-	
-  public function clearShaderFromCamera(cam:String){
-	  
-	  
-		switch(cam.toLowerCase()) {
-			case 'camhud' | 'hud': 
-				camHUDShaders = [];
-				var newCamEffects:Array<BitmapFilter>=[];
-				camHUD.setFilters(newCamEffects);
-			case 'camother' | 'other': 
-				camOtherShaders = [];
-				var newCamEffects:Array<BitmapFilter>=[];
-				camOther.setFilters(newCamEffects);
-			default: 
-				camGameShaders = [];
-				var newCamEffects:Array<BitmapFilter>=[];
-				camGame.setFilters(newCamEffects);
-		}
-		
-	  
-  }
-	
-	
-	
-	
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
 		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION
 			char.setPosition(GF_X, GF_Y);
@@ -1617,11 +1517,6 @@ class PlayState extends MusicBeatState
 
 			var swagCounter:Int = 0;
 
-			if (skipCountdown){
-				Conductor.songPosition = 0;
-				Conductor.songPosition -= Conductor.crochet ;
-				swagCounter = 3;
-			}
 			startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 			{
 				if (tmr.loopsLeft % gfSpeed == 0 && !gf.stunned && gf.animation.curAnim.name != null && !gf.animation.curAnim.name.startsWith("sing"))
@@ -1707,7 +1602,6 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('intro1' + introSoundsSuffix), 0.6);
 					case 3:
-						if (!skipCountdown){
 						countdownGo = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
 						countdownGo.scrollFactor.set();
 
@@ -1728,7 +1622,6 @@ class PlayState extends MusicBeatState
 							}
 						});
 						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
-						}
 					case 4:
 				}
 
@@ -2009,7 +1902,6 @@ class PlayState extends MusicBeatState
 			if (player < 1 && ClientPrefs.middleScroll) targetAlpha = 0.35;
 
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
-			babyArrow.downScroll = ClientPrefs.downScroll;
 			if (!isStoryMode)
 			{
 				babyArrow.y -= 10;
@@ -2505,22 +2397,16 @@ class PlayState extends MusicBeatState
 				var strumY:Float = 0;
 				var strumAngle:Float = 0;
 				var strumAlpha:Float = 0;
-				var strumDirection:Float = 0;
-				var strumScroll:Bool = false;
 				if(daNote.mustPress) {
 					strumX = playerStrums.members[daNote.noteData].x;
 					strumY = playerStrums.members[daNote.noteData].y;
 					strumAngle = playerStrums.members[daNote.noteData].angle;
-					strumDirection = playerStrums.members[daNote.noteData].direction;
 					strumAlpha = playerStrums.members[daNote.noteData].alpha;
-					strumScroll = playerStrums.members[daNote.noteData].downScroll;
 				} else {
 					strumX = opponentStrums.members[daNote.noteData].x;
 					strumY = opponentStrums.members[daNote.noteData].y;
 					strumAngle = opponentStrums.members[daNote.noteData].angle;
-					strumDirection = opponentStrums.members[daNote.noteData].direction;
 					strumAlpha = opponentStrums.members[daNote.noteData].alpha;
-					strumScroll = opponentStrums.members[daNote.noteData].downScroll;
 				}
 
 				strumX += daNote.offsetX;
@@ -2529,9 +2415,9 @@ class PlayState extends MusicBeatState
 				strumAlpha *= daNote.multAlpha;
 				var center:Float = strumY + Note.swagWidth / 2;
 
-				//if(daNote.copyX) {
-				//	daNote.x = strumX;
-				//}
+				if(daNote.copyX) {
+					daNote.x = strumX;
+				}
 				if(daNote.copyAngle) {
 					daNote.angle = strumAngle;
 				}
@@ -2539,17 +2425,8 @@ class PlayState extends MusicBeatState
 					daNote.alpha = strumAlpha;
 				}
 				if(daNote.copyY) {
-					if (strumScroll) {
-						//daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
-						daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
-						
-					var angleDir = strumDirection * Math.PI / 180;
-					daNote.x = strumX + Math.cos(angleDir) * daNote.distance;
-					daNote.y = strumY + Math.sin(angleDir) * daNote.distance;
-					if (daNote.isSustainNote){
-						daNote.angle = strumDirection-90;
-					}
-					
+					if (ClientPrefs.downScroll) {
+						daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
 						if (daNote.isSustainNote && !ClientPrefs.keSustains) {
 							//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
 							if (daNote.animation.curAnim.name.endsWith('end')) {
@@ -2578,16 +2455,8 @@ class PlayState extends MusicBeatState
 							}
 						}
 					} else {
-						//daNote.y = (strumY - 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
+						daNote.y = (strumY - 0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
 
-						daNote.distance = (-0.45 * (Conductor.songPosition - daNote.strumTime) * roundedSpeed);
-						
-					var angleDir = strumDirection * Math.PI / 180;
-					daNote.x = strumX + Math.cos(angleDir) * daNote.distance;
-					daNote.y = strumY + Math.sin(angleDir) * daNote.distance;
-					if (daNote.isSustainNote){
-						daNote.angle = strumDirection-90;
-					}
 						if(!ClientPrefs.keSustains)
 						{
 							if(daNote.mustPress || !daNote.ignoreNote)
@@ -2625,8 +2494,8 @@ class PlayState extends MusicBeatState
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * songSpeed));
 
-				var doKill:Bool = Conductor.songPosition > daNote.strumTime + ClientPrefs.badWindow + 30;//daNote.y < -daNote.height;
-				//if(strumScroll) doKill = //daNote.y > FlxG.height;
+				var doKill:Bool = daNote.y < -daNote.height;
+				if(ClientPrefs.downScroll) doKill = daNote.y > FlxG.height;
 
 				if(ClientPrefs.keSustains && daNote.isSustainNote && daNote.wasGoodHit) doKill = true;
 
@@ -2702,11 +2571,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
-		
 		callOnLuas('onUpdatePost', [elapsed]);
-		for (i in shaderUpdates){
-			i(elapsed);
-		}
 	}
 
 	function openChartEditor()
@@ -3261,7 +3126,9 @@ class PlayState extends MusicBeatState
 		if(achievementObj != null) {
 			return;
 		} else {
-			var achieve:String = checkForAchievement();
+			var achieve:String = checkForAchievement(['week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss',
+				'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad',
+				'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
 
 			if(achieve != null) {
 				startAchievement(achieve);
@@ -4279,10 +4146,6 @@ class PlayState extends MusicBeatState
 	var lightningOffset:Int = 8;
 
 	var lastBeatHit:Int = -1;
-	
-	
-	
-	
 	override function beatHit()
 	{
 		super.beatHit();
@@ -4499,61 +4362,39 @@ class PlayState extends MusicBeatState
 		setOnLuas('ratingFC', ratingFC);
 	}
 
-	public static var othersCodeName:String = 'otherAchievements';
 	#if ACHIEVEMENTS_ALLOWED
-	private function checkForAchievement(achievesToCheck:Array<String> = null):String {
-
+	private function checkForAchievement(achievesToCheck:Array<String>):String {
 		if(chartingMode) return null;
 
 		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice', false) || ClientPrefs.getGameplaySetting('botplay', false));
-		var achievementsToCheck:Array<String> = achievesToCheck;
-		if (achievementsToCheck == null) {
-			achievementsToCheck = [];
-			for (i in 0...Achievements.achievementsStuff.length) {
-				achievementsToCheck.push(Achievements.achievementsStuff[i][2]);
-			}
-			achievementsToCheck.push(othersCodeName);
-		}
-
-		for (i in 0...achievementsToCheck.length) {
-			var achievementName:String = achievementsToCheck[i];
-			var unlock:Bool = false;
-
-			if (achievementName == othersCodeName) {
-				if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD' && storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
-				{
-					var weekName:String = WeekData.getWeekFileName();
-
-					for (json in Achievements.loadedAchievements) {
-						if (json.unlocksAfter == weekName && !Achievements.isAchievementUnlocked(json.icon) && !json.customGoal) unlock = true;
-						achievementName = json.icon;
-					}
-
-					for (k in 0...Achievements.achievementsStuff.length) {
-						var unlockPoint:String = Achievements.achievementsStuff[k][3];
-						if (unlockPoint != null) {
-							if (unlockPoint == weekName && !unlock && !Achievements.isAchievementUnlocked(Achievements.achievementsStuff[k][2])) unlock = true;
-							achievementName = Achievements.achievementsStuff[k][2];
-						}
-					}
-				}
-			}
-
-			for (json in Achievements.loadedAchievements) { //Requires jsons for call
-				var ret:Dynamic = callOnLuas('onCheckForAchievement', [json.icon]); //Set custom goals
-
-				//IDK, like
-				// if getProperty('misses') > 10 and leName == 'lmao_skill_issue' then return Function_Continue end
-
-				if (ret == FunkinLua.Function_Continue && !Achievements.isAchievementUnlocked(json.icon) && json.customGoal && !unlock) {
-					unlock = true;
-					achievementName = json.icon;
-				}
-			}
-
-			if(!Achievements.isAchievementUnlocked(achievementName) && !cpuControlled && !unlock) {
+		for (i in 0...achievesToCheck.length) {
+			var achievementName:String = achievesToCheck[i];
+			if(!Achievements.isAchievementUnlocked(achievementName) && !cpuControlled) {
+				var unlock:Bool = false;
 				switch(achievementName)
 				{
+					case 'week1_nomiss' | 'week2_nomiss' | 'week3_nomiss' | 'week4_nomiss' | 'week5_nomiss' | 'week6_nomiss' | 'week7_nomiss':
+						if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD' && storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
+						{
+							var weekName:String = WeekData.getWeekFileName();
+							switch(weekName) //I know this is a lot of duplicated code, but it's easier readable and you can add weeks with different names than the achievement tag
+							{
+								case 'week1':
+									if(achievementName == 'week1_nomiss') unlock = true;
+								case 'week2':
+									if(achievementName == 'week2_nomiss') unlock = true;
+								case 'week3':
+									if(achievementName == 'week3_nomiss') unlock = true;
+								case 'week4':
+									if(achievementName == 'week4_nomiss') unlock = true;
+								case 'week5':
+									if(achievementName == 'week5_nomiss') unlock = true;
+								case 'week6':
+									if(achievementName == 'week6_nomiss') unlock = true;
+								case 'week7':
+									if(achievementName == 'week7_nomiss') unlock = true;
+							}
+						}
 					case 'ur_bad':
 						if(ratingPercent < 0.2 && !practiceMode) {
 							unlock = true;
@@ -4594,11 +4435,11 @@ class PlayState extends MusicBeatState
 							unlock = true;
 						}
 				}
-			}
 
-			if(unlock) {
-				Achievements.unlockAchievement(achievementName);
-				return achievementName;
+				if(unlock) {
+					Achievements.unlockAchievement(achievementName);
+					return achievementName;
+				}
 			}
 		}
 		return null;
