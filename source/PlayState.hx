@@ -4525,29 +4525,33 @@ class PlayState extends MusicBeatState
 					var weekName:String = WeekData.getWeekFileName();
 
 					for (json in Achievements.loadedAchievements) {
-						if (json.unlocksAfter == weekName && !Achievements.isAchievementUnlocked(json.icon) && !json.customGoal) unlock = true;
-						achievementName = json.icon;
+						if (json.unlocksAfter == weekName && !Achievements.isAchievementUnlocked(json.tag) && !json.customGoal) {
+							unlock = true;
+							achievementName = json.tag;
+						}
 					}
 
 					for (k in 0...Achievements.achievementsStuff.length) {
 						var unlockPoint:String = Achievements.achievementsStuff[k][3];
 						if (unlockPoint != null) {
-							if (unlockPoint == weekName && !unlock && !Achievements.isAchievementUnlocked(Achievements.achievementsStuff[k][2])) unlock = true;
-							achievementName = Achievements.achievementsStuff[k][2];
+							if (unlockPoint == weekName && !unlock && !Achievements.isAchievementUnlocked(Achievements.achievementsStuff[k][2])) {
+								unlock = true;
+								achievementName = Achievements.achievementsStuff[k][2];
+							}
 						}
 					}
 				}
-			}
 
-			for (json in Achievements.loadedAchievements) { //Requires jsons for call
-				var ret:Dynamic = callOnLuas('onCheckForAchievement', [json.icon]); //Set custom goals
-
-				//IDK, like
-				// if getProperty('misses') > 10 and leName == 'lmao_skill_issue' then return Function_Continue end
-
-				if (ret == FunkinLua.Function_Continue && !Achievements.isAchievementUnlocked(json.icon) && json.customGoal && !unlock) {
-					unlock = true;
-					achievementName = json.icon;
+				for (json in Achievements.loadedAchievements) { //Requires jsons for call
+					var ret:Dynamic = callOnLuas('onCheckForAchievement', [json.tag]); //Set custom goals
+	
+					//IDK, like
+					// if getProperty('misses') > 10 and leName == 'lmao_skill_issue' then return Function_Continue end
+	
+					if (ret == FunkinLua.Function_Continue && !Achievements.isAchievementUnlocked(json.tag) && json.customGoal && !unlock) {
+						unlock = true;
+						achievementName = json.tag;
+					}
 				}
 			}
 
