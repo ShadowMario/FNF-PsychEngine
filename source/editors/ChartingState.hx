@@ -2648,6 +2648,7 @@ class ChartingState extends MusicBeatState
 		
 		if (!delnote){
 			addNote(cs, d, style);
+			stepperSusLength.max = Conductor.stepCrochet * (Conductor.numerator * 8);
 		}
 	}
 	function clearSong():Void
