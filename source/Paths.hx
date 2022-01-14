@@ -309,7 +309,7 @@ class Paths
 	inline static public function getTexturePackerAtlasXml(key:String, ?library:String)
 	{
 		#if MODS_ALLOWED
-		var imageLoaded:FlxGraphic = addCustomGraphic(key);
+		var imageLoaded:FlxGraphic = returnGraphic(key);
 		var xmlExists:Bool = false;
 		if(FileSystem.exists(modsXml(key))) {
 			xmlExists = true;
@@ -324,7 +324,7 @@ class Paths
     inline static public function getTexturePackerAtlasJson(key:String, ?library:String)
 	{
 		#if MODS_ALLOWED
-		var imageLoaded:FlxGraphic = addCustomGraphic(key);
+		var imageLoaded:FlxGraphic = returnGraphic(key);
 		var xmlExists:Bool = false;
 		if(FileSystem.exists(modsJson(key))) {
 			xmlExists = true;
