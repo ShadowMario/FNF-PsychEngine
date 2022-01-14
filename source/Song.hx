@@ -92,6 +92,16 @@ class Song
 				}
 			}
 		}
+
+		if(songJson.notes[0].changeSignature == null)
+		{
+			for (secNum in 0...songJson.notes.length)
+			{
+				songJson.notes[secNum].changeSignature = false;
+				songJson.notes[secNum].numerator = songJson.numerator;
+				songJson.notes[secNum].denominator = songJson.denominator;
+			}
+		}
 	}
 
 	public function new(song, notes, bpm)

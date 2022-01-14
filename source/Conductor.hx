@@ -14,6 +14,14 @@ typedef BPMChangeEvent =
 	var bpm:Float;
 }
 
+typedef SignatureChangeEvent =
+{
+	var stepTime:Int;
+	var songTime:Float;
+	var numerator:Int;
+	var denominator:Int;
+}
+
 class Conductor
 {
 	public static var bpm:Float = 100;
@@ -29,6 +37,7 @@ class Conductor
 	public static var safeZoneOffset:Float = (ClientPrefs.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
+	public static var signatureChangeMap:Array<SignatureChangeEvent> = [];
 
 	public function new()
 	{
@@ -53,8 +62,11 @@ class Conductor
 	public static function mapBPMChanges(song:SwagSong)
 	{
 		bpmChangeMap = [];
+		signatureChangeMap = [];
 
 		var curBPM:Float = song.bpm;
+		var curNumerator:Int = song.numerator;
+		var curDenominator:Int = song.denominator;
 		var totalSteps:Int = 0;
 		var totalPos:Float = 0;
 		for (i in 0...song.notes.length)
@@ -69,18 +81,40 @@ class Conductor
 				};
 				bpmChangeMap.push(event);
 			}
+			if(song.notes[i].changeSignature && (song.notes[i].numerator != curNumerator || song.notes[i].denominator != curDenominator))
+			{
+				curNumerator = song.notes[i].numerator;
+				curDenominator = song.notes[i].denominator;
+				var event:SignatureChangeEvent = {
+					stepTime: totalSteps,
+					songTime: totalPos,
+					numerator: curNumerator,
+					denominator: curDenominator
+				};
+				signatureChangeMap.push(event);
+			}
 
 			var deltaSteps:Int = song.notes[i].lengthInSteps;
 			totalSteps += deltaSteps;
-			totalPos += ((((60 /  curBPM) * 1000) / (denominator / 4)) / 4) * deltaSteps;
+			totalPos += ((((60 /  curBPM) * 1000) / (curDenominator / 4)) / 4) * deltaSteps;
 		}
 		trace("new BPM map BUDDY " + bpmChangeMap);
+		trace("new signature map BUDDY " + signatureChangeMap);
 	}
 
 	public static function changeBPM(newBpm:Float)
 	{
 		bpm = newBpm;
 
+		crochet = ((60 / bpm) * 1000) / (denominator / 4);
+		stepCrochet = crochet / 4;
+	}
+
+	public static function changeSignature(newNumerator:Int, newDenominator:Int)
+	{
+		numerator = newNumerator;
+		denominator = newDenominator;
+		
 		crochet = ((60 / bpm) * 1000) / (denominator / 4);
 		stepCrochet = crochet / 4;
 	}
