@@ -313,7 +313,7 @@ class AchievementObject extends FlxSpriteGroup {
 		achievementBG.scrollFactor.set();
 
 		var imagePath = Paths.image('achievementgrid');
-		var modsImage;
+		var modsImage = null;
 		var isModIcon:Bool = false;
 
 		if (Achievements.loadedAchievements.exists(name)) {
