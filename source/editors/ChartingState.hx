@@ -1477,7 +1477,6 @@ class ChartingState extends MusicBeatState
 			}
 			Conductor.changeSignature(daNumerator, daDenominator);
 		}
-		if (stepperSusLength != null) stepperSusLength.max = Conductor.stepCrochet * (Conductor.numerator * 8);
 	}
 
 	function updateSectionLengths():Void {
@@ -1598,6 +1597,7 @@ class ChartingState extends MusicBeatState
 				{
 					FlxG.log.add('added note');
 					addNote();
+					stepperSusLength.max = Conductor.stepCrochet * (Conductor.numerator * 8);
 				}
 			}
 		}
