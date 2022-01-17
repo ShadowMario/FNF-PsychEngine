@@ -775,6 +775,19 @@ class FunkinLua {
 			PlayState.chartingMode = false;
 			PlayState.instance.transitioning = true;
 		});
+		Lua_helper.add_callback(lua, "loadNewSong", function(jsonInput:String, folder:String, skipTransition:Bool) {
+			trace("trying to load new song " + jsonInput + " from folder " + folder);
+			if(skipTransition)
+			{
+				FlxTransitionableState.skipNextTransIn = true;
+				FlxTransitionableState.skipNextTransOut = true;
+			}
+
+			PlayState.SONG = Song.loadFromJson(jsonInput, folder);
+			FlxG.sound.music.stop();
+			PlayState.cancelMusicFadeTween();
+			LoadingState.loadAndSwitchState(new PlayState());
+		});
 		Lua_helper.add_callback(lua, "getSongPosition", function() {
 			return Conductor.songPosition;
 		});
