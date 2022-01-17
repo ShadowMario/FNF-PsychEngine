@@ -36,7 +36,7 @@ _____________________________________
 * Comes with a Mod Organizing/Disabling Menu. 
 
 
-## Atleast one change to every week:
+## At least one change to every week:
 ### Week 1:
   * New Dad Left sing sprite 
   * Unused stage lights are now used
