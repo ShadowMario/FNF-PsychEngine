@@ -775,7 +775,7 @@ class FunkinLua {
 			PlayState.chartingMode = false;
 			PlayState.instance.transitioning = true;
 		});
-		Lua_helper.add_callback(lua, "loadNewSong", function(jsonInput:String, folder:String, skipTransition:Bool) {
+		Lua_helper.add_callback(lua, "loadSong", function(jsonInput:String, folder:String, skipTransition:Bool) {
 			trace("trying to load new song " + jsonInput + " from folder " + folder);
 			if(skipTransition)
 			{
