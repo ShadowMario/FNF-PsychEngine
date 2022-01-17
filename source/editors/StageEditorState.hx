@@ -57,13 +57,16 @@ class StageEditorState extends MusicBeatState
     var data:StageFile;
     var shouldStayIn:FlxSprite;
     public static var swagStage:StageFile;
-    var stepperscrollX:FlxUIInputText;
-    var stepperscrollY:FlxUIInputText;
+    public static var stepperscrollX:FlxUIInputText;
+    public static var stepperscrollY:FlxUIInputText;
     var scaleStepper:FlxUINumericStepper;
     var coolswagStage:StageData;
     var addedLayers:Array<LayerFile>;
 
-
+    public static var luaStages:Array<String> = [];
+    public static var luaScrollFactors:Array<String> = [];
+    public static var luaAdded:Array<String> = [];
+    
     var createdLayer:FlxSprite = new FlxSprite();
 
 	var boyfriend:Array<Dynamic>;
@@ -86,20 +89,15 @@ class StageEditorState extends MusicBeatState
     private var camTips:FlxCamera;
     
     // so many text boxes lol
-    public var typingShit:FlxUIInputText;
-	public var typingCrap:FlxUIInputText;
-	public var typingDiarehha:FlxUIInputText;
-	public var typingWaste:FlxUIInputText;
-    public var typingWasted:FlxUIInputText;
     public static var nameInputText:FlxUIInputText;
-    public var directoryInputText:FlxUIInputText;
-    public var directoryInputTextcool:FlxUIInputText;
-    public var xInputText:FlxUIInputText;
-    public var yInputText:FlxUIInputText;
+    public static var directoryInputText:FlxUIInputText;
+    public static var directoryInputTextcool:FlxUIInputText;
+    public static var xInputText:FlxUIInputText;
+    public static var yInputText:FlxUIInputText;
     public static var gfInputText:FlxUIInputText;
     public static var bfInputText:FlxUIInputText;
-    public var opponentinputtext:FlxUIInputText;
-    public var zoominputtext:FlxUIInputText;
+    public static var opponentinputtext:FlxUIInputText;
+    public static var zoominputtext:FlxUIInputText;
     public static var dirinputtext:FlxUIInputText;
     public static var goToPlayState:Bool = true;
 
@@ -181,17 +179,13 @@ class StageEditorState extends MusicBeatState
 
         nameInputText = new FlxUIInputText(15, 50, 200, "", 8);
         var namelabel = new FlxText(15, nameInputText.y + 20, 64, 'Layer Name');
-        typingShit = nameInputText;
         directoryInputText = new FlxUIInputText(15, nameInputText.y + 50, 200, "", 8);
         var directlabel = new FlxText(15, directoryInputText.y + 20, 64, 'Image Directory');
-        typingCrap = directoryInputText;
         xInputText = new FlxUIInputText(15, directoryInputText.y + 50, 200, "", 8);
         var xlabel = new FlxText(15, xInputText.y + 20, 64, 'X Axis');
-        typingDiarehha = xInputText;
         yInputText = new FlxUIInputText(15, xInputText.y + 50, 200, "", 8);
         var ylabel = new FlxText(15, yInputText.y + 20, 64, 'Y Axis');
-        typingWaste = yInputText;
- 
+        
 		stepperscrollY = new FlxUIInputText(240, yInputText.y, 64, '');
         
         var whylabel = new FlxText(240, stepperscrollY.y + 20, 64, 'Scroll Factor Y');
@@ -217,9 +211,16 @@ class StageEditorState extends MusicBeatState
                 scrollX: Std.parseFloat(stepperscrollY.text), 
                 scale: scaleStepper.value
                  };
+            
+            var luaMakeStage:String = "makeLuaSprite('" + nameInputText.text + "', " + "'" + directoryInputText.text + "', " + xInputText.text + ", " + yInputText.text + ");";
+            var luaMakeScrollFactor:String = "setScrollFactor('" + nameInputText.text + "', " + stepperscrollX.text + ", " + stepperscrollY.text + ");";
+            var luaAdd:String = "addLuaSprite('" + nameInputText.text + "', " + "'false'" + ");";     
             createdLayer = new FlxSprite();
             add(createdLayer);
-            if (layerAdded) {
+            if (layerAdded) {  
+            luaStages.push(luaMakeStage);
+            luaScrollFactors.push(luaMakeScrollFactor);
+            luaAdded.push(luaAdd);
             swagStage.layerArray.push(stageSwag);
             xInputText.text = "" + 0;
             yInputText.text = "" + 0;
@@ -245,10 +246,16 @@ class StageEditorState extends MusicBeatState
                 scrollX: Std.parseFloat(stepperscrollY.text), 
                 scale: scaleStepper.value
                  };
+           var luaMakeStage:String = "makeLuaSprite('" + nameInputText.text + "', " + "'" + directoryInputText.text + "', " + xInputText.text + ", " + yInputText.text + ");";
+           var luaMakeScrollFactor:String = "setScrollFactor('" + nameInputText.text + "', " + stepperscrollX.text + ", " + stepperscrollY.text + ");";
+           var luaAdd:String = "addLuaSprite('" + nameInputText.text + "', " + "'false'" + ");";     
            deleteLayer();
            xInputText.text = "" + 0;
            yInputText.text = "" + 0;
            if (swagStage.layerArray.contains(stageSwag)){
+           luaStages.remove(luaMakeStage);
+           luaScrollFactors.remove(luaMakeScrollFactor);
+           luaAdded.remove(luaAdd);
            remove(createdLayer);
            swagStage.layerArray.remove(stageSwag);
            }
@@ -300,6 +307,18 @@ class StageEditorState extends MusicBeatState
         var saveStuff:FlxButton = new FlxButton(240, 20, "Save Stage", function() {
         saveStage(swagStage);
         });
+        var saveLua:FlxButton = new FlxButton(240, 70, "Save LUA Script", function() {
+        saveStageLua();
+        });
+        var saveLuaj:FlxButton = new FlxButton(240, 120, "Save LUA Config", function() {
+        saveStageLuaJSON();
+        });
+        
+    
+        saveLua.color = FlxColor.BLUE;
+        saveLua.label.color = FlxColor.WHITE;
+        saveLuaj.color = FlxColor.ORANGE;
+        saveLuaj.label.color = FlxColor.WHITE;
        /* var loadStuff:FlxButton = new FlxButton(240, 70, "Load Stage", function() {
         loadStage();
         });
@@ -307,6 +326,8 @@ class StageEditorState extends MusicBeatState
            var tab_group_settings = new FlxUI(null, UI_stagebox);
            tab_group_settings.name = "Settings";
            tab_group_settings.add(saveStuff);
+           tab_group_settings.add(saveLua);
+           tab_group_settings.add(saveLuaj);
            tab_group_settings.add(bfInputText);
            //tab_group_settings.add(loadStuff);
            tab_group_settings.add(gfInputText);
@@ -328,11 +349,7 @@ class StageEditorState extends MusicBeatState
         var directoryLayer:String = "images/" + assetName + ".png";
         if(assetName != null && assetName.length > 0) {
         if (Paths.fileExists(directoryLayer, IMAGE)){
-        #if MODS_ALLOWED
-        createdLayer.loadGraphic(Paths.mods(directoryLayer));
-        #else
         createdLayer.loadGraphic(Paths.getPath(directoryLayer, IMAGE));
-        #end
         createdLayer.visible = true;
     }
     else{
@@ -452,14 +469,52 @@ public static function saveStage(stageFile:StageFile) {
 var data:String = Json.stringify(stageFile, "\t");
 if (data.length > 0)
 {
-        _file = new FileReference();
-        _file.addEventListener(Event.COMPLETE, onSaveComplete);
-        _file.addEventListener(Event.CANCEL, onSaveCancel);
-        _file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-        _file.save(data, dirinputtext.text + ".json");
+    _file = new FileReference();
+    _file.addEventListener(Event.COMPLETE, onSaveComplete);
+    _file.addEventListener(Event.CANCEL, onSaveCancel);
+    _file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+    _file.save(data, dirinputtext.text + ".json");
 }
+}
+//for the json config if you are using lua
+public static function saveStageLuaJSON() {
+
+var stageFile = {
+    directory: "",
+    defaultZoom: swagStage.defaultZoom,
+    isPixelStage: false,
+    boyfriend: swagStage.boyfriend,
+    girlfriend: swagStage.girlfriend,
+    opponent: swagStage.opponent
 }
 
+var data:String = Json.stringify(stageFile, "\t");
+if (data.length > 0)
+{
+    _file = new FileReference();
+    _file.addEventListener(Event.COMPLETE, onSaveComplete);
+    _file.addEventListener(Event.CANCEL, onSaveCancel);
+    _file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+    _file.save(data, dirinputtext.text + ".json");
+}
+}
+public static function saveStageLua() {
+
+if (dirinputtext.text != "") {
+{
+    _file = new FileReference();
+    _file.addEventListener(Event.COMPLETE, onSaveComplete);
+    _file.addEventListener(Event.CANCEL, onSaveCancel);
+    _file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+    _file.save("function onCreate()\n"
+    + luaStages.join("\n") + "\n"
+    + luaScrollFactors.join("\n") + "\n"
+    + luaAdded.join("\n") + "\n"
+    + "end", 
+    dirinputtext.text + ".lua");
+}
+}
+}
 private static function onSaveComplete(_):Void
 {
     _file.removeEventListener(Event.COMPLETE, onSaveComplete);
