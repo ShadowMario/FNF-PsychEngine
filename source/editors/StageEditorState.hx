@@ -38,8 +38,6 @@ import flixel.animation.FlxAnimation;
 import flash.net.FileFilter;
 #if sys
 import sys.io.File;
-#end
-#if MODS_ALLOWED
 import sys.FileSystem;
 #end
 
@@ -348,6 +346,12 @@ class StageEditorState extends MusicBeatState
         var assetName:String = directoryInputText.text.trim();
         var directoryLayer:String = "images/" + assetName + ".png";
         if(assetName != null && assetName.length > 0) {
+        if (FileSystem.exists("mods/" + directoryLayer)){
+            createdLayer.loadGraphic(Paths.modsImages(assetName));
+        }
+        else{
+            createdLayer.visible = false;
+        }
         if (Paths.fileExists(directoryLayer, IMAGE)){
         createdLayer.loadGraphic(Paths.getPath(directoryLayer, IMAGE));
         createdLayer.visible = true;
