@@ -1856,6 +1856,26 @@ class PlayState extends MusicBeatState
 			for (songNotes in section.sectionNotes)
 			{
 				var daStrumTime:Float = songNotes[0];
+				if (ClientPrefs.leftSide) {
+					switch (songNotes[1]) {
+						case 0:
+							songNotes[1] = 4;
+						case 1:
+							songNotes[1] = 5;
+						case 2:
+							songNotes[1] = 6;
+						case 3:
+							songNotes[1] = 7;
+						case 4:
+							songNotes[1] = 0;
+						case 5:
+							songNotes[1] = 1;
+						case 6:
+							songNotes[1] = 2;
+						case 7:
+							songNotes[1] = 3;
+					}
+				}
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
 
 				var gottaHitNote:Bool = section.mustHitSection;
@@ -3875,9 +3895,9 @@ class PlayState extends MusicBeatState
 				boyfriend.stunned = false;
 			});*/
 
-			if(boyfriend.hasMissAnimations) {
-				boyfriend.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
-			}
+			//if(boyfriend.hasMissAnimations) {
+			//	boyfriend.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
+			//}
 			vocals.volume = 0;
 		}
 	}
@@ -3903,6 +3923,8 @@ class PlayState extends MusicBeatState
 			}
 
 			var char:Character = dad;
+			if (ClientPrefs.leftSide)
+				char = boyfriend;
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
 			if(note.gfNote) {
 				char = gf;
@@ -3994,8 +4016,13 @@ class PlayState extends MusicBeatState
 						gf.playAnim(animToPlay + daAlt, true);
 						gf.holdTimer = 0;
 					} else {
-						boyfriend.playAnim(animToPlay + daAlt, true);
-						boyfriend.holdTimer = 0;
+						if (ClientPrefs.leftSide) {
+							dad.playAnim(animToPlay + daAlt, true);
+							dad.holdTimer = 0;
+						} else {
+							boyfriend.playAnim(animToPlay + daAlt, true);
+							boyfriend.holdTimer = 0;
+						}
 					}
 				//}
 				if(note.noteType == 'Hey!') {

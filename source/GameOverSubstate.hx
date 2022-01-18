@@ -152,7 +152,15 @@ class GameOverSubstate extends MusicBeatSubstate
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
 				{
-					MusicBeatState.resetState();
+					if (ClientPrefs.leftSide) {
+						var name:String = PlayState.SONG.song.toLowerCase();
+						var poop = Highscore.formatSong(name, PlayState.storyDifficulty);
+						PlayState.SONG = Song.loadFromJson(poop, name);
+						MusicBeatState.switchState(new PlayState());
+						FlxG.sound.music.volume = 0;
+					} else {
+						MusicBeatState.resetState();
+					}
 				});
 			});
 			PlayState.instance.callOnLuas('onGameOverConfirm', [true]);

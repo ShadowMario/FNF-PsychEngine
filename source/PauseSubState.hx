@@ -173,7 +173,16 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
 				case "Restart Song":
-					restartSong();
+					if (!ClientPrefs.leftSide) {
+						restartSong();
+					} else {
+						var name:String = PlayState.SONG.song.toLowerCase();
+						var poop = Highscore.formatSong(name, PlayState.storyDifficulty);
+						PlayState.SONG = Song.loadFromJson(poop, name);
+						CustomFadeTransition.nextCamera = transCamera;
+						MusicBeatState.switchState(new PlayState());
+						FlxG.sound.music.volume = 0;
+					}
 				case 'Toggle Botplay':
 					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
 					PlayState.changedDifficulty = true;
