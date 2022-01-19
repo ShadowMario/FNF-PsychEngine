@@ -3993,7 +3993,7 @@ class PlayState extends MusicBeatState
 			if(!note.noAnimation) {
 				var daAlt = '';
 				var curSection:Int = Math.floor(curStep / 16);
-				if(SONG.notes[curSection].altAnim || note.noteType == 'Alt Animation') daAlt = '-alt';
+				if(SONG.notes[curSection].altAnim  && opponentChart || note.noteType == 'Alt Animation') daAlt = '-alt';
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
 
 				//if (note.isSustainNote){ wouldn't this be fun : P. i think it would be swell
