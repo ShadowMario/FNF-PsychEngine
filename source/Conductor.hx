@@ -96,7 +96,7 @@ class Conductor
 
 			var deltaSteps:Int = song.notes[i].lengthInSteps;
 			totalSteps += deltaSteps;
-			totalPos += ((((60 /  curBPM) * 1000) / (curDenominator / 4)) / 4) * deltaSteps;
+			totalPos += ((((60 / curBPM) * 4000) / curDenominator) / 4) * deltaSteps;
 		}
 		trace("new BPM map BUDDY " + bpmChangeMap);
 		trace("new signature map BUDDY " + signatureChangeMap);
@@ -106,7 +106,7 @@ class Conductor
 	{
 		bpm = newBpm;
 
-		crochet = ((60 / bpm) * 1000) / (denominator / 4);
+		crochet = ((60 / bpm) * 4000) / denominator;
 		stepCrochet = crochet / 4;
 	}
 
@@ -115,7 +115,7 @@ class Conductor
 		numerator = newNumerator;
 		denominator = newDenominator;
 		
-		crochet = ((60 / bpm) * 1000) / (denominator / 4);
+		crochet = ((60 / bpm) * 4000) / denominator;
 		stepCrochet = crochet / 4;
 	}
 }

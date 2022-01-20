@@ -273,8 +273,7 @@ class ChartingState extends MusicBeatState
 		//FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		tempBpm = _song.bpm;
-		Conductor.numerator = _song.numerator;
-		Conductor.denominator = _song.denominator;
+		Conductor.changeSignature(_song.numerator, _song.denominator);
 		updateSectionLengths();
 
 		addSection(Conductor.numerator * 4);
@@ -1511,7 +1510,7 @@ class ChartingState extends MusicBeatState
 				{
 					daDenominator = _song.notes[i].denominator;
 				}
-				daPos += ((((60 / daBPM) * 1000) / (daDenominator / 4)) / 4) * _song.notes[i].lengthInSteps;
+				daPos += ((((60 / daBPM) * 4000) / daDenominator) / 4) * _song.notes[i].lengthInSteps;
 			}
 		}
 		return daPos;
@@ -2508,7 +2507,7 @@ class ChartingState extends MusicBeatState
 		var daStepCrochet = Conductor.stepCrochet;
 		if (isNextSection) {
 			if (_song.notes[curSection + 1].changeSignature) {
-				daStepCrochet = ((60 / Conductor.bpm) * 1000) / (_song.notes[curSection + 1].denominator / 4);
+				daStepCrochet = ((60 / Conductor.bpm) * 4000) / _song.notes[curSection + 1].denominator;
 			}
 		}
 		note.y = (GRID_SIZE * (isNextSection ? _song.notes[curSection].lengthInSteps : 0)) * zoomList[curZoom] + Math.floor(getYfromStrum((daStrumTime - sectionStartTime(isNextSection ? 1 : 0)) % (daStepCrochet * _song.notes[curSection + (isNextSection ? 1 : 0)].lengthInSteps), false));

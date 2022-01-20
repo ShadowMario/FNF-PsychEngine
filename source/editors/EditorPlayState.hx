@@ -193,9 +193,8 @@ class EditorPlayState extends MusicBeatState
 		vocals.volume = 0;
 
 		var songData = PlayState.SONG;
-		Conductor.numerator = songData.numerator;
-		Conductor.denominator = songData.denominator;
 		Conductor.changeBPM(songData.bpm);
+		Conductor.changeSignature(songData.numerator, songData.denominator);
 		
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -209,8 +208,19 @@ class EditorPlayState extends MusicBeatState
 
 		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
 
+		var curStepCrochet = Conductor.stepCrochet;
+		var curBPM = Conductor.bpm;
+		var curDenominator = Conductor.denominator;
 		for (section in noteData)
 		{
+			if (section.changeBPM) {
+				curBPM = section.bpm;
+				curStepCrochet = (((60 / curBPM) * 4000) / curDenominator) / 4;
+			}
+			if (section.changeSignature) {
+				curDenominator = section.denominator;
+				curStepCrochet = (((60 / curBPM) * 4000) / curDenominator) / 4;
+			}
 			for (songNotes in section.sectionNotes)
 			{
 				if(songNotes[1] > -1) { //Real notes
@@ -240,7 +250,7 @@ class EditorPlayState extends MusicBeatState
 
 						var susLength:Float = swagNote.sustainLength;
 
-						susLength = susLength / Conductor.stepCrochet;
+						susLength = susLength / curStepCrochet;
 						unspawnNotes.push(swagNote);
 
 						var floorSus:Int = Math.floor(susLength);
@@ -249,7 +259,7 @@ class EditorPlayState extends MusicBeatState
 							{
 								oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-								var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(PlayState.SONG.speed, 2)), daNoteData, oldNote, true);
+								var sustainNote:Note = new Note(daStrumTime + (curStepCrochet * susNote) + (curStepCrochet / FlxMath.roundDecimal(PlayState.SONG.speed, 2)), daNoteData, oldNote, true);
 								sustainNote.mustPress = gottaHitNote;
 								sustainNote.noteType = swagNote.noteType;
 								sustainNote.scrollFactor.set();
@@ -352,7 +362,7 @@ class EditorPlayState extends MusicBeatState
 		
 		if (generatedMusic)
 		{
-			var fakeCrochet:Float = (60 / PlayState.SONG.bpm) * 1000;
+			var fakeCrochet:Float = ((60 / PlayState.SONG.bpm) * 4000) / PlayState.SONG.denominator;
 			notes.forEachAlive(function(daNote:Note)
 			{
 				/*if (daNote.y > FlxG.height)

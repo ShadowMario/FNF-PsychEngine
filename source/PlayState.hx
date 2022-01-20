@@ -336,10 +336,9 @@ class PlayState extends MusicBeatState
 		if (SONG == null)
 			SONG = Song.loadFromJson('tutorial');
 
-		Conductor.numerator = SONG.numerator;
-		Conductor.denominator = SONG.denominator;
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
+		Conductor.changeSignature(SONG.numerator, SONG.denominator);
 
 		#if desktop
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
@@ -1856,8 +1855,19 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		var curStepCrochet = Conductor.stepCrochet;
+		var curBPM = Conductor.bpm;
+		var curDenominator = Conductor.denominator;
 		for (section in noteData)
 		{
+			if (section.changeBPM) {
+				curBPM = section.bpm;
+				curStepCrochet = (((60 / curBPM) * 4000) / curDenominator) / 4;
+			}
+			if (section.changeSignature) {
+				curDenominator = section.denominator;
+				curStepCrochet = (((60 / curBPM) * 4000) / curDenominator) / 4;
+			}
 			for (songNotes in section.sectionNotes)
 			{
 				var daStrumTime:Float = songNotes[0];
@@ -1887,7 +1897,7 @@ class PlayState extends MusicBeatState
 
 				var susLength:Float = swagNote.sustainLength;
 
-				susLength = susLength / Conductor.stepCrochet;
+				susLength = susLength / curStepCrochet;
 				unspawnNotes.push(swagNote);
 
 				var floorSus:Int = Math.floor(susLength);
@@ -1896,7 +1906,7 @@ class PlayState extends MusicBeatState
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
+						var sustainNote:Note = new Note(daStrumTime + (curStepCrochet * susNote) + (curStepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
 						sustainNote.mustPress = gottaHitNote;
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
@@ -2491,7 +2501,7 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
-			var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
+			var fakeCrochet:Float = ((60 / SONG.bpm) * 4000) / SONG.denominator;
 			notes.forEachAlive(function(daNote:Note)
 			{
 				/*if (daNote.y > FlxG.height)
