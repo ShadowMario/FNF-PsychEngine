@@ -147,7 +147,7 @@ class TiltshiftEffect extends Effect{
 
 class Tiltshift extends FlxShader
 {
-	@:glFragmentSource('
+		@:glFragmentSource('
 		#pragma header
 
 		// Modified version of a tilt shift shader from Martin Jonasson (http://grapefrukt.com/)
@@ -186,8 +186,8 @@ class Tiltshift extends FlxShader
 		 
 		// I am hardcoding the constants like a jerk
 			
-		uniform float bluramount  = 1.0;
-		uniform float center      = 1.0;
+		const float bluramount  = 1.0;
+		const float center      = 1.0;
 		const float stepSize    = 0.004;
 		const float steps       = 3.0;
 		 
