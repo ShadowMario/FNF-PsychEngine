@@ -2501,7 +2501,6 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
-			var fakeCrochet:Float = ((60 / SONG.bpm) * 4000) / SONG.denominator;
 			notes.forEachAlive(function(daNote:Note)
 			{
 				/*if (daNote.y > FlxG.height)
@@ -2568,8 +2567,8 @@ class PlayState extends MusicBeatState
 						if (daNote.isSustainNote && !ClientPrefs.keSustains) {
 							//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
 							if (daNote.animation.curAnim.name.endsWith('end')) {
-								daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * roundedSpeed + (46 * (roundedSpeed - 1));
-								daNote.y -= 46 * (1 - (fakeCrochet / 600)) * roundedSpeed;
+								daNote.y += 10.5 * (Conductor.crochet / 400) * 1.5 * roundedSpeed + (46 * (roundedSpeed - 1));
+								daNote.y -= 46 * (1 - (Conductor.crochet / 600)) * roundedSpeed;
 								if(PlayState.isPixelStage) {
 									daNote.y += 8;
 								} else {
