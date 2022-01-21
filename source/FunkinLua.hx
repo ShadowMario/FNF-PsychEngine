@@ -35,6 +35,7 @@ import sys.io.File;
 import Type.ValueType;
 import Controls;
 import DialogueBoxPsych;
+import GameOverSubstate;
 
 #if desktop
 import Discord;
@@ -173,6 +174,9 @@ class FunkinLua {
 		set('healthBarAlpha', ClientPrefs.healthBarAlpha);
 		set('noResetButton', ClientPrefs.noReset);
 		set('lowQuality', ClientPrefs.lowQuality);
+
+                // Game over animation lua stuff (because i want this and for other people who want it too dope)
+                set('goan', GameOverSubstate.characterName = 'senpai');
 
 		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) { //would be dope asf. 
 			var cervix = luaFile + ".lua";
