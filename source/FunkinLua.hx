@@ -178,7 +178,7 @@ class FunkinLua {
                 // Game over animation lua stuff (because i want this and for other people who want it too dope) (note 2: this is also for sfx music end sounds all for game over substate. and i may also add trastisining and icon swaps too?)
                 set('goan', GameOverSubstate.characterName = 'senpai');
                 set('goam', GameOverSubstate.deathSoundName = 'fnf_loss_sfx');
-                set('suffix', GameOverSubstate.stageSuffix = "-pixel"); //NOTE 3 will this work? this is all for extra shiz
+//              set('suffix', GameOverSubstate.stageSuffix = "-pixel"); //NOTE 3 will this work? this is all for extra shiz
 
 		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) { //would be dope asf. 
 			var cervix = luaFile + ".lua";
