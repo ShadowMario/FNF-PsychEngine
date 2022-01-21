@@ -24,7 +24,7 @@ class AchievementsMenuState extends MusicBeatState
 	private static var curSelected:Int = 0;
 	private var achievementArray:Array<AttachedAchievement> = [];
 	private var achievementIndex:Array<Int> = [];
-	var descBox:FlxSprite;
+	private var descBox:FlxSprite;
 	private var descText:FlxText;
 
 	override function create() {
@@ -64,13 +64,6 @@ class AchievementsMenuState extends MusicBeatState
 			add(icon);
 		}
 
-		descBox = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
-		descBox.alpha = 0.5;
-		descBox.setPosition(descText.x - 10, descText.y - 10);
-		descBox.setGraphicSize(Std.int(descText.width + 20), Std.int(descText.height + 25));
-		descBox.updateHitbox();
-                add(descBox);
-
 		descText = new FlxText(150, 600, 980, "", 32);
 		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.scrollFactor.set();
@@ -79,6 +72,14 @@ class AchievementsMenuState extends MusicBeatState
 		descText.y += 270;
 		add(descText);
 		changeSelection();
+
+		descBox = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
+		descBox.alpha = 0.3;
+		descBox.setPosition(descText.x - 10, descText.y - 10);
+		descBox.setGraphicSize(Std.int(descText.width + 20), Std.int(descText.height + 25));
+		descBox.scrollFactor.set();
+		descBox.updateHitbox();
+                add(descBox);
 
 		super.create();
 	}
