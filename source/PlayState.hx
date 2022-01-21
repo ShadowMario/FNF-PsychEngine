@@ -1025,7 +1025,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
-		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt = new FlxText(395, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		if(ClientPrefs.downScroll)
 			botplayTxt.y = timeBarBG.y - 78;
 		if(ClientPrefs.middleScroll) {
