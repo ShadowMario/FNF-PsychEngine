@@ -20,9 +20,14 @@ import sys.io.File;
 import js.html.FileSystem;
 import js.html.File;
 #end
+
+using StringTools;
 class AtlasFrameMaker extends FlxFramesCollection{
 
+//sike
 
+
+//engine
         //public static var widthoffset:Int = 0;
         //public static var heightoffset:Int = 0;
         //public static var excludeArray:Array<String>;
@@ -69,7 +74,7 @@ class AtlasFrameMaker extends FlxFramesCollection{
 					return null;
 				}
                 var animationData:AnimationData = Json.parse(Paths.getTextFromFile('images/$key/Animation.json'));
-                var atlasData:AtlasData = Json.parse(Paths.getTextFromFile('images/$key/spritemap.json'));
+                var atlasData:AtlasData = Json.parse(Paths.getTextFromFile('images/$key/spritemap.json').replace("\uFEFF", ""));
 				var bitmapData:BitmapData;
 				#if MODS_ALLOWED
 				bitmapData = (FileSystem.exists('mods/images/$key/spritemap.png') || FileSystem.exists('mods/' + Paths.currentModDirectory + '/images/$key/spritemap.png') ? BitmapData.fromFile(Paths.modFolders('images/$key/spritemap.png')) : Assets.getBitmapData(Paths.getPath('images/$key/spritemap.png',IMAGE)));

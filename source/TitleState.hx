@@ -426,7 +426,7 @@ class TitleState extends MusicBeatState
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
-		if (FlxG.keys.justPressed.F)
+		if (FlxG.keys.justPressed.F && ClientPrefs.screenScaleMode != "ADAPTIVE")
 		{
 			FlxG.fullscreen = !FlxG.fullscreen;
 		}
@@ -662,7 +662,14 @@ class TitleState extends MusicBeatState
 	}
 
 	var skippedIntro:Bool = false;
-
+	override public function fixAspectRatio() 
+	{
+		super.fixAspectRatio();
+		
+		#if ACHIEVEMENTS_ALLOWED
+		Achievements.loadAchievements();
+		#end
+	}
 	function skipIntro():Void
 	{
 		if (!skippedIntro)
