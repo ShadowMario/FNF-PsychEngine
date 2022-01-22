@@ -16,11 +16,45 @@ using StringTools;
 
 class CoolUtil
 {
+	public static var programList:Array<String> = [
+		'obs32',
+		'obs64',
+		'streamlabs obs',
+		'bdcam',
+		'fraps',
+		'xsplit', 
+		'hycam2', 
+		'twitchstudio' 
+	];
+
 	public static var defaultDifficulties:Array<String> = [
 		'Easy',
 		'Normal',
 		'Hard'
 	];
+
+	public static function isRecording():Bool
+	{
+		#if FEATURE_OBS
+		var taskList:Process = new Process('tasklist', []);
+		var readableList:String = taskList.stdout.readAll().toString().toLowerCase();
+		var isOBS:Bool = false;
+
+		for (i in 0...programList.length)
+		{
+			if (readableList.contains(programList[i]))
+				isOBS = true;
+		}
+
+		taskList.close();
+		readableList = '';
+
+		return isOBS;
+		#else
+		return false;
+		#end
+	}
+
 	public static var defaultDifficulty:String = 'Normal'; //The chart that has no suffix and starting difficulty on Freeplay/Story Mode
 
 	public static var difficulties:Array<String> = [];
@@ -116,9 +150,9 @@ class CoolUtil
 
 	//uhhhh does this even work at all? i'm starting to doubt
 	public static function precacheSound(sound:String, ?library:String = null):Void {
-		var EmbeddedSound = Paths.sound(sound, library);
-		if (Assets.exists(EmbeddedSound, SOUND) || Assets.exists(EmbeddedSound, MUSIC))
-			Assets.getSound(EmbeddedSound, true);
+		if(!Assets.cache.hasSound(Paths.sound(sound, library))) {
+			FlxG.sound.cache(Paths.sound(sound, library));
+		}
 	}
 
 	public static function browserLoad(site:String) {
