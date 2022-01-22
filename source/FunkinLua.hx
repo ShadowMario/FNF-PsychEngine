@@ -117,6 +117,9 @@ class FunkinLua {
 		// PlayState cringe ass nae nae bullcrap
 		set('curBeat', 0);
 		set('curStep', 0);
+		set('curSection', 0);
+		set('lengthInSteps', 0);
+		set('changeBPM', false);
 
 		set('score', 0);
 		set('misses', 0);
@@ -239,7 +242,6 @@ class FunkinLua {
 		});
 
 		//stuff 4 noobz like you B)
-		
 		
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
 			var killMe:Array<String> = variable.split('.');
@@ -696,6 +698,7 @@ class FunkinLua {
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
 				case 'space': key = FlxG.keys.justPressed.SPACE;//an extra key for convinience
+				default: key = FlxG.keys.checkStatus(FlxKey.fromString(name.toUpperCase()), JUST_PRESSED); //check all keys
 			}
 			return key;
 		});
@@ -707,6 +710,7 @@ class FunkinLua {
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
 				case 'space': key = FlxG.keys.pressed.SPACE;//an extra key for convinience
+				default: key = FlxG.keys.checkStatus(FlxKey.fromString(name.toUpperCase()), PRESSED);
 			}
 			return key;
 		});
@@ -718,6 +722,7 @@ class FunkinLua {
 				case 'up': key = PlayState.instance.getControl('NOTE_UP_R');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_R');
 				case 'space': key = FlxG.keys.justReleased.SPACE;//an extra key for convinience
+				default: key = FlxG.keys.checkStatus(FlxKey.fromString(name.toUpperCase()), JUST_RELEASED);
 			}
 			return key;
 		});
@@ -735,6 +740,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "precacheSound", function(name:String) {
 			CoolUtil.precacheSound(name);
 		});
+		//Lua_helper.add_callback(lua, "browserLoad", CoolUtil.browserLoad); not doing this cuz security issues!!
+		Lua_helper.add_callback(lua, "boundTo", CoolUtil.boundTo);
 		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic) {
 			var value1:String = arg1;
 			var value2:String = arg2;
@@ -1624,7 +1631,11 @@ class FunkinLua {
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
 		
-		
+		Lua_helper.add_callback(lua, "bopIcon", function(icon:String) {
+			for (healthicon in iconFromString(icon)) {
+				PlayState.instance.bopIcon(healthicon);
+			}
+		});
 		
 		//SHADER SHIT
 		
@@ -1697,6 +1708,64 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "clearEffects", function(camera:String) {
 			PlayState.instance.clearShaderFromCamera(camera);
 		});
+
+		//MATH FUNCTIONS
+
+		Lua_helper.add_callback(lua, "remapToRange", FlxMath.remapToRange);
+		Lua_helper.add_callback(lua, "lerp", FlxMath.lerp);
+		Lua_helper.add_callback(lua, "bound", FlxMath.bound);
+		Lua_helper.add_callback(lua, "roundDecimal", FlxMath.roundDecimal);
+		Lua_helper.add_callback(lua, "wrap", FlxMath.wrap);
+
+		//DATE FUNCTIONS
+
+		Lua_helper.add_callback(lua, "getDate", function(utc:Bool = false) {
+			var date:Date;
+			if (utc) return date.getUTCDate();
+			else return date.getDate();
+		});
+
+		Lua_helper.add_callback(lua, "getDay", function(utc:Bool = false) {
+			var date:Date;
+			if (utc) return date.getUTCDay();
+			else return date.getDay();
+		});
+
+		Lua_helper.add_callback(lua, "getMonth", function(utc:Bool = false) {
+			var date:Date;
+			if (utc) return date.getUTCMonth();
+			else return date.getMonth();
+		});
+
+		Lua_helper.add_callback(lua, "getHours", function(utc:Bool = false) {
+			var date:Date;
+			if (utc) return date.getUTCHours();
+			else return date.getHours();
+		});
+
+		Lua_helper.add_callback(lua, "getFullYear", function(utc:Bool = false) {
+			var date:Date;
+			if (utc) return date.getUTCFullYear();
+			else return date.getFullYear();
+		});
+
+		Lua_helper.add_callback(lua, "getMinutes", function(utc:Bool = false) {
+			var date:Date;
+			if (utc) return date.getUTCMinutes();
+			else return date.getMinutes();
+		});
+
+		Lua_helper.add_callback(lua, "getSeconds", function(utc:Bool = false) {
+			var date:Date;
+			if (utc) return date.getUTCSeconds();
+			else return date.getSeconds();
+		});
+
+		Lua_helper.add_callback(lua, "date_now", function(utc:Bool = false) {
+			var date = Date.now();
+			return date.toString();
+		});
+
 		Discord.DiscordClient.addLuaCallbacks(lua);
 
 		call('onCreate', []);
@@ -1872,6 +1941,14 @@ class FunkinLua {
 		//		
 		//}
 		return (new ChromaticAberrationEffect());
+	}
+
+	function iconFromString(icon:String):Array<HealthIcon> {
+		switch(icon.toLowerCase()) {
+			case '1' | 'iconp1': return [PlayState.instance.iconP1];
+			case '2' | 'iconp2': return [PlayState.instance.iconP2];
+		}
+		return [PlayState.instance.iconP1, PlayState.instance.iconP2];
 	}
 
 	public function luaTrace(text:String, ignoreCheck:Bool = false, deprecated:Bool = false) {
