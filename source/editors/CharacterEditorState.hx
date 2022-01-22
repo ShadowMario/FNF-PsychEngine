@@ -1193,30 +1193,28 @@ class CharacterEditorState extends MusicBeatState
 					genBoyOffsets();
 				}
 
-				if(true)
-				{
-					var mouseLoc = FlxG.mouse.getPosition();
-					if(FlxG.mouse.justPressed)
-					{
-						mouseLocation = mouseLoc;
-					}
-					else if(FlxG.mouse.pressed && FlxG.mouse.justMoved)
-					{
-						var xDiff:Int = Std.int(mouseLoc.x - mouseLocation.x);
-						var yDiff:Int = Std.int(mouseLoc.y - mouseLocation.y);
 
-						char.animationsArray[curAnim].offsets[0] -= xDiff;
-						char.animationsArray[curAnim].offsets[1] -= yDiff;
-						char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
-						ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
-						
-						char.playAnim(char.animationsArray[curAnim].anim, false);
-						if(ghostChar.animation.curAnim != null && char.animation.curAnim != null && char.animation.curAnim.name == ghostChar.animation.curAnim.name) {
-							ghostChar.playAnim(char.animation.curAnim.name, false);
-						}
-						genBoyOffsets();
-						mouseLocation = mouseLoc;
+				var mouseLoc = FlxG.mouse.getPosition();
+				if(FlxG.mouse.justPressed)
+				{
+					mouseLocation = mouseLoc;
+				}
+				else if(FlxG.mouse.pressed && FlxG.mouse.justMoved)
+				{
+					var xDiff:Int = Std.int(mouseLoc.x - mouseLocation.x);
+					var yDiff:Int = Std.int(mouseLoc.y - mouseLocation.y);
+
+					char.animationsArray[curAnim].offsets[0] -= xDiff;
+					char.animationsArray[curAnim].offsets[1] -= yDiff;
+					char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
+					ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
+					
+					char.playAnim(char.animationsArray[curAnim].anim, false);
+					if(ghostChar.animation.curAnim != null && char.animation.curAnim != null && char.animation.curAnim.name == ghostChar.animation.curAnim.name) {
+						ghostChar.playAnim(char.animation.curAnim.name, false);
 					}
+					genBoyOffsets();
+					mouseLocation = mouseLoc;
 				}
 
 				
