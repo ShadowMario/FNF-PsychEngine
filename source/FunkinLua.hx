@@ -1720,43 +1720,43 @@ class FunkinLua {
 		//DATE FUNCTIONS
 
 		Lua_helper.add_callback(lua, "getDate", function(utc:Bool = false) {
-			var date:Date;
+			var date:Date = Date.now();
 			if (utc) return date.getUTCDate();
 			else return date.getDate();
 		});
 
 		Lua_helper.add_callback(lua, "getDay", function(utc:Bool = false) {
-			var date:Date;
+			var date:Date = Date.now();
 			if (utc) return date.getUTCDay();
 			else return date.getDay();
 		});
 
 		Lua_helper.add_callback(lua, "getMonth", function(utc:Bool = false) {
-			var date:Date;
+			var date:Date = Date.now();
 			if (utc) return date.getUTCMonth();
 			else return date.getMonth();
 		});
 
 		Lua_helper.add_callback(lua, "getHours", function(utc:Bool = false) {
-			var date:Date;
+			var date:Date = Date.now();
 			if (utc) return date.getUTCHours();
 			else return date.getHours();
 		});
 
 		Lua_helper.add_callback(lua, "getFullYear", function(utc:Bool = false) {
-			var date:Date;
+			var date:Date = Date.now();
 			if (utc) return date.getUTCFullYear();
 			else return date.getFullYear();
 		});
 
 		Lua_helper.add_callback(lua, "getMinutes", function(utc:Bool = false) {
-			var date:Date;
+			var date:Date = Date.now();
 			if (utc) return date.getUTCMinutes();
 			else return date.getMinutes();
 		});
 
 		Lua_helper.add_callback(lua, "getSeconds", function(utc:Bool = false) {
-			var date:Date;
+			var date:Date = Date.now();
 			if (utc) return date.getUTCSeconds();
 			else return date.getSeconds();
 		});
