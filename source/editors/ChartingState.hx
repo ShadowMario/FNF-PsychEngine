@@ -2587,6 +2587,8 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
+		stepperSusLength.max = Conductor.stepCrochet * (Conductor.numerator * 8);
+
 		updateGrid();
 		updateNoteUI();
 	}
