@@ -12,6 +12,10 @@ import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
+#if MODS_ALLOWED
+import sys.FileSystem;
+import sys.io.File;
+#end
 import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -20,8 +24,14 @@ import lime.app.Application;
 import Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
+import haxe.Json;
 
 using StringTools;
+typedef MenuData =
+{
+	menulocation:Int,
+	menuangle:Int
+}
 
 class MainMenuState extends MusicBeatState
 {
@@ -46,6 +56,9 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+	var logoBl:FlxSprite;
+
+	var menuJSON:MenuData;
 
 	override function create()
 	{
@@ -66,6 +79,23 @@ class MainMenuState extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
+		#if (desktop && MODS_ALLOWED)
+		var path = "mods/" + Paths.currentModDirectory + "/images/menuJson.json";
+		//trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)) {
+			path = "mods/images/menuJson.json";
+		}
+		//trace(path, FileSystem.exists(path));
+		if (!FileSystem.exists(path)) {
+			path = "assets/images/menuJson.json";
+		}
+		//trace(path, FileSystem.exists(path));
+		menuJSON = Json.parse(File.getContent(path));
+		#else
+		var path = Paths.getPreloadPath("menuJson.json");
+		menuJSON = Json.parse(Assets.getText(path)); 
+		#end
+
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
@@ -81,6 +111,7 @@ class MainMenuState extends MusicBeatState
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 		add(camFollowPos);
+
 
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.scrollFactor.set(0, yScroll);
@@ -105,7 +136,7 @@ class MainMenuState extends MusicBeatState
 		for (i in 0...optionShit.length)
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
-			var menuItem:FlxSprite = new FlxSprite(0, (i * 140)  + offset);
+			var menuItem:FlxSprite = new FlxSprite(menuJSON.menulocation, (i * 140)  + offset);
 			menuItem.scale.x = scale;
 			menuItem.scale.y = scale;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
@@ -113,7 +144,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
-			menuItem.screenCenter(X);
+			menuItem.angle = menuJSON.menuangle;
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
 			if(optionShit.length < 6) scr = 0;
@@ -261,7 +292,7 @@ class MainMenuState extends MusicBeatState
 
 		menuItems.forEach(function(spr:FlxSprite)
 		{
-			spr.screenCenter(X);
+			if (menuJSON.menulocation == 640) spr.screenCenter(X) else spr.x = menuJSON.menulocation;
 		});
 	}
 
