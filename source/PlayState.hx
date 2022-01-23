@@ -3477,6 +3477,8 @@ class PlayState extends MusicBeatState
 				sicks++;
 		}
 
+		callOnLuas("onJudgementCalculation", [noteDiff, rating]);
+
 
 		if(daRating == 'sick' && !note.noteSplashDisabled)
 		{
@@ -4094,6 +4096,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
+		callOnLuas('onNoteSplashSpawned', [x, y, data]);
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		
@@ -4252,6 +4255,10 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	public function bopIcon(icon:HealthIcon) {
+		icon.scale.set(1.2, 1.2);
+	}
+
 	function resetLimoKill():Void
 	{
 		if(curStage == 'limo') {
@@ -4345,12 +4352,20 @@ class PlayState extends MusicBeatState
 				setOnLuas('curBpm', Conductor.bpm);
 				setOnLuas('crochet', Conductor.crochet);
 				setOnLuas('stepCrochet', Conductor.stepCrochet);
+				callOnLuas('onChangeBPM', []);
 			}
+			setOnLuas('lengthInSteps', SONG.notes[Math.floor(curStep / 16)].lengthInSteps);
+			setOnLuas('curSection', Math.floor(curStep / 16));
+			setOnLuas('changeBPM', SONG.notes[Math.floor(curStep / 16)].changeBPM);
 			setOnLuas('mustHitSection', SONG.notes[Math.floor(curStep / 16)].mustHitSection);
 			setOnLuas('altAnim', SONG.notes[Math.floor(curStep / 16)].altAnim);
 			setOnLuas('gfSection', SONG.notes[Math.floor(curStep / 16)].gfSection);
 			// else
 			// Conductor.changeBPM(SONG.bpm);
+		}
+
+		if (curBeat % 4 == 0) {
+			callOnLuas('onSectionHit', []);
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 
