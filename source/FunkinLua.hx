@@ -35,6 +35,7 @@ import sys.io.File;
 import Type.ValueType;
 import Controls;
 import DialogueBoxPsych;
+import flixel.addons.effects.FlxTrail;
 
 #if desktop
 import Discord;
@@ -1622,6 +1623,20 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "musicFadeOut", function(duration:Float, toValue:Float = 0) {
 			FlxG.sound.music.fadeOut(duration, toValue);
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
+		});
+
+                Lua_helper.add_callback(lua, "addFlxTrail", function(target:String, length:Int = 10, delay:Int = 3, alpha:Float = 0.4, diff:Float = 0.05) {
+			switch(target.toLowerCase()) {
+				case 'dad' | 'opponent':
+                                        var cum = new FlxTrail(dad, null, length, delay, alpha, diff); //nice
+				        PlayState.instance.insert(members.indexOf(boyfriendGroup) - 1, cum);
+				case 'gf' | 'girlfriend':
+					var cum = new FlxTrail(gf, null, length, delay, alpha, diff); //nice
+				        PlayState.instance.insert(members.indexOf(boyfriendGroup) - 1, cum);
+				default:
+                                        var cum = new FlxTrail(bf, null, length, delay, alpha, diff); //nice
+				        PlayState.instance.insert(members.indexOf(boyfriendGroup) - 1, cum);
+			}
 		});
 		
 		
