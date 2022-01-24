@@ -2507,6 +2507,8 @@ class PlayState extends MusicBeatState
 				var strumAlpha:Float = 0;
 				var strumDirection:Float = 0;
 				var strumScroll:Bool = false;
+				var strumXScale:Float = 0;
+				var strumYScale:Float = 0;
 				if(daNote.mustPress) {
 					strumX = playerStrums.members[daNote.noteData].x;
 					strumY = playerStrums.members[daNote.noteData].y;
@@ -2514,6 +2516,8 @@ class PlayState extends MusicBeatState
 					strumDirection = playerStrums.members[daNote.noteData].direction;
 					strumAlpha = playerStrums.members[daNote.noteData].alpha;
 					strumScroll = playerStrums.members[daNote.noteData].downScroll;
+					strumXScale = playerStrums.members[daNote.noteData].scale.x;
+					strumYScale = playerStrums.members[daNote.noteData].scale.y;
 				} else {
 					strumX = opponentStrums.members[daNote.noteData].x;
 					strumY = opponentStrums.members[daNote.noteData].y;
@@ -2521,8 +2525,12 @@ class PlayState extends MusicBeatState
 					strumDirection = opponentStrums.members[daNote.noteData].direction;
 					strumAlpha = opponentStrums.members[daNote.noteData].alpha;
 					strumScroll = opponentStrums.members[daNote.noteData].downScroll;
+					strumXScale = opponentStrums.members[daNote.noteData].scale.x;
+					strumYScale = opponentStrums.members[daNote.noteData].scale.y;
 				}
 
+				daNote.scale.x = strumXScale;
+				if (!daNote.isSustainNote) daNote.scale.y = strumYScale;
 				strumX += daNote.offsetX;
 				strumY += daNote.offsetY;
 				strumAngle += daNote.offsetAngle;
