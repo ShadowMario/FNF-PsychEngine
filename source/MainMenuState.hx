@@ -30,8 +30,7 @@ using StringTools;
 typedef MenuData =
 {
 	menulocation:Int,
-	menuangle:Int,
-	menuscale:Int
+	menuangle:Int
 }
 
 class MainMenuState extends MusicBeatState
@@ -138,8 +137,8 @@ class MainMenuState extends MusicBeatState
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(, (i * 140)  + offset);
-			menuItem.scale.x = menuJSON.menuscale;
-			menuItem.scale.y = menuJSON.menuscale;
+			menuItem.scale.x = scale;
+			menuItem.scale.y = scale;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
