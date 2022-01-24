@@ -1628,13 +1628,13 @@ class FunkinLua {
                 Lua_helper.add_callback(lua, "addFlxTrail", function(target:String, length:Int = 10, delay:Int = 3, alpha:Float = 0.4, diff:Float = 0.05) {
 			switch(target.toLowerCase()) {
 				case 'dad' | 'opponent':
-                                        var cum = new FlxTrail(dad, null, length, delay, alpha, diff); //nice
-				        PlayState.instance.insert(members.indexOf(boyfriendGroup) - 1, cum);
+                                        var cum = new FlxTrail(dadGroup, null, length, delay, alpha, diff); //nice
+				        PlayState.instance.insert(members.indexOf(dadGroup) - 1, cum);
 				case 'gf' | 'girlfriend':
-					var cum = new FlxTrail(gf, null, length, delay, alpha, diff); //nice
-				        PlayState.instance.insert(members.indexOf(boyfriendGroup) - 1, cum);
+					var cum = new FlxTrail(gfGroup, null, length, delay, alpha, diff); //nice
+				        PlayState.instance.insert(members.indexOf(gfGroup) - 1, cum);
 				default:
-                                        var cum = new FlxTrail(bf, null, length, delay, alpha, diff); //nice
+                                        var cum = new FlxTrail(boyfriendGroup, null, length, delay, alpha, diff); //nice
 				        PlayState.instance.insert(members.indexOf(boyfriendGroup) - 1, cum);
 			}
 		});
