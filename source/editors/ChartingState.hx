@@ -870,7 +870,7 @@ class ChartingState extends MusicBeatState
 		copyLastButton.setGraphicSize(80, 30);
 		copyLastButton.updateHitbox();
 
-		//tab_group_section.add(stepperLength); // this was broken in the first place and now even more broken
+		//tab_group_section.add(stepperLength);
 		tab_group_section.add(stepperSectionBPM);
 		tab_group_section.add(check_mustHitSection);
 		tab_group_section.add(check_gfSection);
@@ -2504,13 +2504,7 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
-		var daStepCrochet = Conductor.stepCrochet;
-		if (isNextSection) {
-			if (_song.notes[curSection + 1].changeSignature) {
-				daStepCrochet = ((60 / Conductor.bpm) * 4000) / _song.notes[curSection + 1].denominator;
-			}
-		}
-		note.y = (GRID_SIZE * (isNextSection ? _song.notes[curSection].lengthInSteps : 0)) * zoomList[curZoom] + Math.floor(getYfromStrum((daStrumTime - sectionStartTime(isNextSection ? 1 : 0)) % (daStepCrochet * _song.notes[curSection + (isNextSection ? 1 : 0)].lengthInSteps), false));
+		note.y = (GRID_SIZE * (isNextSection ? _song.notes[curSection].lengthInSteps : 0)) * zoomList[curZoom] + Math.floor(getYfromStrum((daStrumTime - sectionStartTime(isNextSection ? 1 : 0)) % (Conductor.stepCrochet * _song.notes[curSection + (isNextSection ? 1 : 0)].lengthInSteps), false));
 		return note;
 	}
 
