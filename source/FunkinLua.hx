@@ -741,7 +741,9 @@ class FunkinLua {
 			CoolUtil.precacheSound(name);
 		});
 		//Lua_helper.add_callback(lua, "browserLoad", CoolUtil.browserLoad); not doing this cuz security issues!!
-		Lua_helper.add_callback(lua, "boundTo", CoolUtil.boundTo);
+		Lua_helper.add_callback(lua, "boundTo", function(val:Float, mi:Float, ma:Float) {
+			return CoolUtil.boundTo(val, mi, ma);
+		});
 		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic) {
 			var value1:String = arg1;
 			var value2:String = arg2;
@@ -1711,11 +1713,21 @@ class FunkinLua {
 
 		//MATH FUNCTIONS
 
-		Lua_helper.add_callback(lua, "remapToRange", FlxMath.remapToRange);
-		Lua_helper.add_callback(lua, "lerp", FlxMath.lerp);
-		Lua_helper.add_callback(lua, "bound", FlxMath.bound);
-		Lua_helper.add_callback(lua, "roundDecimal", FlxMath.roundDecimal);
-		Lua_helper.add_callback(lua, "wrap", FlxMath.wrap);
+		Lua_helper.add_callback(lua, "remapToRange", function(val:Float, s1:Float, st1:Float, s2:Float, st2:Float) {
+			return FlxMath.remapToRange(val, s1, st1, s2, st2);
+		});
+		Lua_helper.add_callback(lua, "lerp", function(a:Float, b:Float, ratio:Float) { //funny word
+			return FlxMath.lerp(a, b, ratio);
+		});
+		Lua_helper.add_callback(lua, "bound", function(v:Float, mi:Float, ma:Float) {
+			return FlxMath.bound(v, mi, ma);
+		});
+		Lua_helper.add_callback(lua, "roundDecimal", function(val:Float, precision:Int) {
+			return FlxMath.roundDecimal(val, precision);
+		});
+		Lua_helper.add_callback(lua, "wrap", function(v:Int, mi:Int, ma:Int) {
+			return FlxMath.wrap(v, mi, ma);
+		});
 
 		//DATE FUNCTIONS
 
