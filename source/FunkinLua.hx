@@ -86,6 +86,7 @@ class FunkinLua {
 		set('luaDebugMode', false);
 		set('luaDeprecatedWarnings', true);
 		set('inChartEditor', false);
+		set('scriptName', script);
 
 		// Song/Week shit
 		set('curBpm', Conductor.bpm);
@@ -391,6 +392,19 @@ class FunkinLua {
 				return;
 			}
 			luaTrace("Object " + obj + " doesn't exist!");
+		});
+
+		Lua_helper.add_callback(lua, "setObjectOrigin", function(obj:String, x:Float, y:Float) {
+			var object:Dynamic = null;
+			if(PlayState.instance.modchartSprites.exists(obj)) {
+				object = PlayState.instance.modchartSprites.get(obj);
+			} else if(PlayState.instance.modchartTexts.exists(obj)) {
+				object = PlayState.instance.modchartTexts.get(obj);
+			} else {
+				object = Reflect.getProperty(getInstance(), obj);
+			}
+
+			object.origin.set(x, y);
 		});
 
 		// gay ass tweens
