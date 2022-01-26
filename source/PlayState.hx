@@ -2566,11 +2566,11 @@ class PlayState extends MusicBeatState
 
 							if(daNote.mustPress || !daNote.ignoreNote)
 							{
-								if(daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= center
+								if(daNote.distance - daNote.offset.y * daNote.scale.y + daNote.height >= center
 									&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 								{
 									var swagRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
-									swagRect.height = (center - daNote.y) / daNote.scale.y;
+									swagRect.height = (center - daNote.distance) / daNote.scale.y;
 									swagRect.y = daNote.frameHeight - swagRect.height;
 
 									daNote.clipRect = swagRect;
@@ -2593,11 +2593,11 @@ class PlayState extends MusicBeatState
 							if(daNote.mustPress || !daNote.ignoreNote)
 							{
 								if (daNote.isSustainNote
-									&& daNote.y + daNote.offset.y * daNote.scale.y <= center
+									&& daNote.distance + daNote.offset.y * daNote.scale.y <= center
 									&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 								{
 									var swagRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
-									swagRect.y = (center - daNote.y) / daNote.scale.y;
+									swagRect.y = (center - daNote.distance) / daNote.scale.y;
 									swagRect.height -= swagRect.y;
 
 									daNote.clipRect = swagRect;
