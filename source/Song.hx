@@ -93,7 +93,7 @@ class Song
 			}
 		}
 
-		if(songJson.notes[0].changeSignature == null)
+		if(songJson.notes.length > 0 && songJson.notes[0].changeSignature == null)
 		{
 			for (secNum in 0...songJson.notes.length)
 			{
