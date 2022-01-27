@@ -570,12 +570,20 @@ class ChartingState extends MusicBeatState
 		stageDropDown.selectedLabel = _song.stage;
 		blockPressWhileScrolling.push(stageDropDown);
 		
-		var difficultyDropDown = new FlxUIDropDownMenuCustom(stageDropDown.x, player3DropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(CoolUtil.defaultDifficulties, true), function(difficulty:String)
+		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
+		
+		var difficultyDropDown = new FlxUIDropDownMenuCustom(stageDropDown.x, player3DropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(CoolUtil.difficulties, true), function(difficulty:String)
 		{
-			PlayState.storyDifficulty = Std.parseInt(difficulty);
-			loadJson(_song.song.toLowerCase());
+			if (PlayState.storyDifficulty != Std.parseInt(difficulty)) {
+				PlayState.storyDifficulty = Std.parseInt(difficulty);
+				try {
+					loadJson(_song.song.toLowerCase());
+				} catch (e:Any) {
+					trace ("File " + _song.song.toLowerCase() + CoolUtil.getDifficultyFilePath() + " is not found.");
+				}
+			}
 		});
-		difficultyDropDown.selectedLabel = CoolUtil.defaultDifficulties[PlayState.storyDifficulty];
+		difficultyDropDown.selectedLabel = CoolUtil.difficulties[PlayState.storyDifficulty];
 		blockPressWhileScrolling.push(difficultyDropDown);
 
 		var skin = PlayState.SONG.arrowSkin;
@@ -2687,8 +2695,8 @@ class ChartingState extends MusicBeatState
 	function loadJson(song:String):Void
 	{
 		//make it look sexier if possible
-		if (CoolUtil.defaultDifficulties[PlayState.storyDifficulty] != "Normal"){
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase()+"-"+CoolUtil.defaultDifficulties[PlayState.storyDifficulty], song.toLowerCase());
+		if (CoolUtil.difficulties[PlayState.storyDifficulty] != "Normal"){
+		PlayState.SONG = Song.loadFromJson(song.toLowerCase()+"-"+CoolUtil.difficulties[PlayState.storyDifficulty], song.toLowerCase());
 			
 		}else{
 		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
