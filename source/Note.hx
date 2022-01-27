@@ -163,7 +163,7 @@ class Note extends FlxSprite
 			if(ClientPrefs.downScroll) flipY = true;
 
 			offsetX += width / 2;
-			copyAngle = false;
+			// copyAngle = false;
 
 			switch (noteData)
 			{
