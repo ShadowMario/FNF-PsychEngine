@@ -64,7 +64,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 		
 		var option:Option = new Option('Instant Respawn',
-			"If checked, you will be respawned automatically, without animation.",
+			"If checked, you will automatically respawn, skipping the game over animation.",
 			'instantRespawn',
 			'bool',
 			false);
