@@ -12,11 +12,11 @@ using StringTools;
 
 class DiscordClient
 {
-	public function new()
+	public function new(client_ID:String = "863222024192262205")
 	{
 		trace("Discord Client starting...");
 		DiscordRpc.start({
-			clientID: "863222024192262205",
+			clientID: "client_ID",
 			onReady: onReady,
 			onError: onError,
 			onDisconnected: onDisconnected
@@ -58,11 +58,11 @@ class DiscordClient
 		trace('Disconnected! $_code : $_message');
 	}
 
-	public static function initialize()
+	public static function initialize(clientID:String = "863222024192262205")
 	{
 		var DiscordDaemon = sys.thread.Thread.create(() ->
 		{
-			new DiscordClient();
+			new DiscordClient(clientID);
 		});
 		trace("Discord Client initialized");
 	}
@@ -94,6 +94,11 @@ class DiscordClient
 	public static function addLuaCallbacks(lua:State) {
 		Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
 			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
+		});
+
+		Lua_helper.add_callback(lua, "changeClientID", function(newID:String) {
+			shutdown();
+			initialize(newID);
 		});
 	}
 	#end
