@@ -1194,31 +1194,41 @@ class CharacterEditorState extends MusicBeatState
 					genBoyOffsets();
 				}
 
-
+				// Drag and Drop is active when clicking over anything except for the UI boxes.
 				var mouseLoc = FlxG.mouse.getPosition();
-				if(!FlxG.mouse.overlaps(UI_box) && !FlxG.mouse.overlaps(UI_characterbox))
+				// Refer to 1210
+				try
 				{
-					if(FlxG.mouse.justPressed)
+					if(!FlxG.mouse.overlaps(UI_box) && !FlxG.mouse.overlaps(UI_characterbox))
 					{
-						mouseLocation = mouseLoc;
-					}
-					else if(FlxG.mouse.pressed && FlxG.mouse.justMoved)
-					{
-						var xDiff:Int = Std.int(mouseLoc.x - mouseLocation.x);
-						var yDiff:Int = Std.int(mouseLoc.y - mouseLocation.y);
-
-						char.animationsArray[curAnim].offsets[0] -= xDiff;
-						char.animationsArray[curAnim].offsets[1] -= yDiff;
-						char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
-						ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
-						
-						char.playAnim(char.animationsArray[curAnim].anim, false);
-						if(ghostChar.animation.curAnim != null && char.animation.curAnim != null && char.animation.curAnim.name == ghostChar.animation.curAnim.name) {
-							ghostChar.playAnim(char.animation.curAnim.name, false);
+						if(FlxG.mouse.justPressed)
+						{
+							mouseLocation = mouseLoc;
 						}
-						genBoyOffsets();
-						mouseLocation = mouseLoc;
+						else if(FlxG.mouse.pressed && FlxG.mouse.justMoved)
+						{
+							// If you click during the transition, this sometimes crashes cause 
+							// Null object error
+							var xDiff:Int = Std.int(mouseLoc.x - mouseLocation.x);
+							var yDiff:Int = Std.int(mouseLoc.y - mouseLocation.y);
+
+							char.animationsArray[curAnim].offsets[0] -= xDiff;
+							char.animationsArray[curAnim].offsets[1] -= yDiff;
+							char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
+							ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
+							
+							char.playAnim(char.animationsArray[curAnim].anim, false);
+							if(ghostChar.animation.curAnim != null && char.animation.curAnim != null && char.animation.curAnim.name == ghostChar.animation.curAnim.name) {
+								ghostChar.playAnim(char.animation.curAnim.name, false);
+							}
+							genBoyOffsets();
+							mouseLocation = mouseLoc;
+						}
 					}
+				}
+				catch(e)
+				{
+					trace("Temporary error caught");
 				}
 				
 				var controlArray:Array<Bool> = [FlxG.keys.justPressed.LEFT, FlxG.keys.justPressed.RIGHT, FlxG.keys.justPressed.UP, FlxG.keys.justPressed.DOWN];				
