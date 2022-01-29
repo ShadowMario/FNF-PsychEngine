@@ -320,6 +320,7 @@ class FreeplayState extends MusicBeatState
 
 				FlxG.sound.list.add(vocals);
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
+				FlxG.sound.list.add(vocals);
 				vocals.play();
 				vocals.persist = true;
 				vocals.looped = true;
