@@ -998,9 +998,7 @@ class PlayState extends MusicBeatState
 		add(healthBarBG);
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
-		var leftright = RIGHT_TO_LEFT;
-		if (opponentChart) leftright = LEFT_TO_RIGHT;
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, leftright, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
 	
@@ -2393,34 +2391,21 @@ class PlayState extends MusicBeatState
 
 		var iconOffset:Int = 26;
 
-		var offset:Float = 0;
-		var direction:Int = 1;
-		if (opponentChart) {
-			offset = -593;
-			direction = -1;
-		}
-		iconP1.x = offset + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100 * direction, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
-		iconP2.x = offset + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100 * direction, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
+		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 
 		if (health > 2)
 			health = 2;
 
-		var a = iconP1;
-		var b = iconP2;
-		if (opponentChart) {
-			a = iconP2;
-			b = iconP1;
-		}
-
 		if (healthBar.percent < 20)
-			a.animation.curAnim.curFrame = 1;
+			(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 1;
 		else
-			a.animation.curAnim.curFrame = 0;
+			(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 0;
 
 		if (healthBar.percent > 80)
-			b.animation.curAnim.curFrame = 1;
+			(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 1;
 		else
-			b.animation.curAnim.curFrame = 0;
+			(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 0;
 
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
 			persistentUpdate = false;
@@ -3905,8 +3890,10 @@ class PlayState extends MusicBeatState
 				boyfriend.stunned = false;
 			});*/
 
-			if(boyfriend.hasMissAnimations && !opponentChart) {
-				boyfriend.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
+			var char:Character = boyfriend;
+			if (opponentChart) char = dad;
+			if(char.hasMissAnimations) {
+				char.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
 			}
 			vocals.volume = 0;
 		}
@@ -3927,7 +3914,7 @@ class PlayState extends MusicBeatState
 			var curSection:Int = Math.floor(curStep / 16);
 			if (SONG.notes[curSection] != null)
 			{
-				if (SONG.notes[curSection].altAnim || note.noteType == 'Alt Animation') {
+				if (SONG.notes[curSection].altAnim && !opponentChart || note.noteType == 'Alt Animation') {
 					altAnim = '-alt';
 				}
 			}
@@ -4008,8 +3995,8 @@ class PlayState extends MusicBeatState
 
 			if(!note.noAnimation) {
 				var daAlt = '';
-				if(note.noteType == 'Alt Animation') daAlt = '-alt';
-	
+				var curSection:Int = Math.floor(curStep / 16);
+				if (curStep >= 0) if(SONG.notes[curSection].altAnim  && opponentChart || note.noteType == 'Alt Animation') daAlt = '-alt';
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
 
 				//if (note.isSustainNote){ wouldn't this be fun : P. i think it would be swell
@@ -4026,24 +4013,19 @@ class PlayState extends MusicBeatState
 					//	boyfriend.holdTimer = 0;
 					//}
 				//}else{
-					if(opponentChart) {
-						dad.playAnim(animToPlay, true);
-						dad.holdTimer = 0;
-					}
+					var char:Character = boyfriend;
+					if(opponentChart) char = dad;
 					if(note.gfNote) {
-						gf.playAnim(animToPlay + daAlt, true);
-						gf.holdTimer = 0;
-					} else if (!opponentChart) {
-						boyfriend.playAnim(animToPlay + daAlt, true);
-						boyfriend.holdTimer = 0;
+						char = gf;
 					}
-
+					char.playAnim(animToPlay + daAlt, true);
+					char.holdTimer = 0;
 				//}
 				if(note.noteType == 'Hey!') {
-					if(boyfriend.animOffsets.exists('hey')) {
-						boyfriend.playAnim('hey', true);
-						boyfriend.specialAnim = true;
-						boyfriend.heyTimer = 0.6;
+					if(char.animOffsets.exists('hey')) {
+						char.playAnim('hey', true);
+						char.specialAnim = true;
+						char.heyTimer = 0.6;
 					}
 	
 					if(gf.animOffsets.exists('cheer')) {
