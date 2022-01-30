@@ -4448,7 +4448,7 @@ class PlayState extends MusicBeatState
 			daStep += daNumerator * 4;
 			daPos++;
 		}
-		return daPos;
+		return Std.int(Math.max(daPos, 0));
 	}
 
 	function getNumeratorBeat():Int {
