@@ -154,7 +154,9 @@ class CharacterEditorState extends MusicBeatState
 			\nArrow Keys - Move Character Offset
 			\nR - Reset Current Offset
 			\nHold Shift to Move 10x faster
-			\n", 12);
+			", 12);
+			/*\nOptionally: Drag and drop to move animation
+			\nShift to drag the entire character*/
 		tipText.cameras = [camHUD];
 		tipText.setFormat(null, 12, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.scrollFactor.set();
@@ -1208,15 +1210,27 @@ class CharacterEditorState extends MusicBeatState
 						else if(FlxG.mouse.pressed && FlxG.mouse.justMoved)
 						{
 							// If you click during the transition, this sometimes crashes cause 
-							// Null object error
+							// Null object error, because the character won't be loaded
 							var xDiff:Int = Std.int(mouseLoc.x - mouseLocation.x);
 							var yDiff:Int = Std.int(mouseLoc.y - mouseLocation.y);
+							// Moves the entire character
+							if(FlxG.keys.pressed.SHIFT)
+							{
+								positionXStepper.value += xDiff;
+								positionYStepper.value += yDiff;
+								getEvent(FlxUINumericStepper.CHANGE_EVENT,positionXStepper,null);
+								getEvent(FlxUINumericStepper.CHANGE_EVENT,positionYStepper,null);
+							}
+							// Moves the animation
+							else
+							{
+								char.animationsArray[curAnim].offsets[0] -= xDiff;
+								char.animationsArray[curAnim].offsets[1] -= yDiff;
+								char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
+								ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
+								
 
-							char.animationsArray[curAnim].offsets[0] -= xDiff;
-							char.animationsArray[curAnim].offsets[1] -= yDiff;
-							char.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
-							ghostChar.addOffset(char.animationsArray[curAnim].anim, char.animationsArray[curAnim].offsets[0], char.animationsArray[curAnim].offsets[1]);
-							
+							}
 							char.playAnim(char.animationsArray[curAnim].anim, false);
 							if(ghostChar.animation.curAnim != null && char.animation.curAnim != null && char.animation.curAnim.name == ghostChar.animation.curAnim.name) {
 								ghostChar.playAnim(char.animation.curAnim.name, false);
