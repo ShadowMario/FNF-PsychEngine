@@ -63,6 +63,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Enable Windows Commands', // HHHHHHH I hope this works -DMMaster
+			'If checked, allows lua commands that can for example:\nOpen a Chrome tab or even shutdown your PC,/nSo be warned!',
+			'os',
+			'bool',
+			false);
+		addOption(option);
+
 		/*var option:Option = new Option('Note Delay',
 			'Changes how late a note is spawned.\nUseful for preventing audio lag from wireless earphones.',
 			'noteOffset',
