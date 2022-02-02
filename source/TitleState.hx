@@ -666,7 +666,14 @@ class TitleState extends MusicBeatState
 	}
 
 	var skippedIntro:Bool = false;
-
+	override public function fixAspectRatio() 
+	{
+		super.fixAspectRatio();
+		
+		#if ACHIEVEMENTS_ALLOWED
+		Achievements.loadAchievements();
+		#end
+	}
 	function skipIntro():Void
 	{
 		if (!skippedIntro)
