@@ -222,7 +222,7 @@ class FreeplayState extends MusicBeatState
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
-		if (FlxG.sound.music.volume < 0.7)
+		if (FlxG.sound.music.volume < 0.85)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
@@ -319,11 +319,11 @@ class FreeplayState extends MusicBeatState
 					vocals = new FlxSound();
 
 				FlxG.sound.list.add(vocals);
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1);
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.85);
 				vocals.play();
 				vocals.persist = true;
 				vocals.looped = true;
-				vocals.volume = 1;
+				vocals.volume = 0.85;
 				instPlaying = curSelected;
 				#end
 			}
