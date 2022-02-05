@@ -285,6 +285,9 @@ class Character extends FlxSprite
 			{
 				specialAnim = false;
 				dance();
+			} else if (specialAnim && animation.curAnim.name == 'hairBlow' && animation.curAnim.finished) {
+				specialAnim = false;
+				playAnim('danceRight');
 			}
 
 			if (!isPlayer)
