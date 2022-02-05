@@ -308,6 +308,9 @@ class Character extends FlxSprite
 				}
 				else
 					holdTimer = 0;
+
+				if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
+					dance();
 			}
 
 			if(animation.curAnim.finished && animation.getByName(animation.curAnim.name + '-loop') != null)
