@@ -85,7 +85,6 @@ class Main extends Sprite
 		#end
 
 		#if html5
-		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
 	}
