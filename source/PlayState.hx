@@ -182,7 +182,7 @@ class PlayState extends MusicBeatState
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
 	public var practiceMode:Bool = false;
-	public var opponentChart:Bool = false;
+	public static var opponentChart:Bool = false;
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -3716,7 +3716,9 @@ class PlayState extends MusicBeatState
 		}
 
 		// FlxG.watch.addQuick('asdfa', upP);
-		if (!boyfriend.stunned && generatedMusic)
+		var char:Character = boyfriend;
+		if (opponentChart) char = dad;
+		if (!char.stunned && generatedMusic)
 		{
 			// rewritten inputs???
 			notes.forEachAlive(function(daNote:Note)
@@ -3728,7 +3730,7 @@ class PlayState extends MusicBeatState
 				}
 			});
 
-			if (controlHoldArray.contains(true) && !endingSong) {
+			if (controlHoldArray.contains(true) && !endingSong && !opponentChart) {
 				#if ACHIEVEMENTS_ALLOWED
 				var achieve:String = checkForAchievement(['oversinging']);
 				if (achieve != null) {
@@ -3738,6 +3740,10 @@ class PlayState extends MusicBeatState
 			} else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing')
 			&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
+
+			if (controlHoldArray.contains(true) && !endingSong && opponentChart) {/*bruh*/} else if (dad.holdTimer > Conductor.stepCrochet * 0.001 * dad.singDuration && dad.animation.curAnim.name.startsWith('sing')
+			&& !dad.animation.curAnim.name.endsWith('miss'))
+				dad.dance();
 		}
 
 		// TO DO: Find a better way to handle controller inputs, this should work for now
