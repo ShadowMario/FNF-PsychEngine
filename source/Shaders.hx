@@ -48,7 +48,7 @@ class BuildingShader extends FlxShader
   }
 }
  
-class NoteEffect {
+class NoteEffect extends Effect {
   public var shader: NoteShader = new NoteShader();
   public function new(){
     shader.flash.value = [0];
