@@ -47,6 +47,45 @@ class BuildingShader extends FlxShader
     super();
   }
 }
+ 
+class NoteEffect {
+  public var shader: NoteShader = new NoteShader();
+  public function new(){
+    shader.flash.value = [0];
+  }
+
+  public function setFlash(val: Float){
+    shader.flash.value=[val];
+  }
+
+} 
+
+class NoteShader extends FlxShader
+{
+  @:glFragmentSource('
+    #pragma header
+    uniform float flash;
+
+    float scaleNum(float x, float l1, float h1, float l2, float h2){
+        return ((x - l1) * (h2 - l2) / (h1 - l1) + l2);
+    }
+
+    void main()
+    {
+        vec4 color = flixel_texture2D(bitmap, openfl_TextureCoordv);
+         vec4 newColor = color;
+         if(flash > color.a)
+           newColor = mix(color,vec4(1.0,1.0,1.0,color.a),flash);
+
+         gl_FragColor = newColor;
+    }
+  ')
+  public function new()
+  {
+    super();
+  }
+
+} 
 
 class ChromaticAberrationShader extends FlxShader
 {
