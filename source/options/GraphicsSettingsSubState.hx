@@ -60,22 +60,11 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			'int',
 			60);
 		addOption(option);
+
 		option.minValue = 60;
 		option.maxValue = 240;
 		option.displayFormat = '%v FPS';
 		option.onChange = onChangeFramerate;
-		
-		
-		var option:Option = new Option('Screen Resolution',
-			"Size of the window (Changes will apply once leaving)",
-			'screenRes',
-			'string',
-			'1280 x 720', ['1280 x 720',
-			'1280 x 960',
-			'FULLSCREEN'
-			]);
-		addOption(option);
-		//option.onChange = onChangeRes;
 		#end
 
 		/*
@@ -87,6 +76,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.onChange = onChangePersistentData; //Persistent Cached Data changes FlxGraphic.defaultPersist
 		addOption(option);
 		*/
+
 		super();
 	}
 
@@ -115,20 +105,4 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			FlxG.updateFramerate = ClientPrefs.framerate;
 		}
 	}
-	public static function onChangeRes()
-	{
-		FlxG.fullscreen = ClientPrefs.screenRes == "FULLSCREEN";
-		if (!FlxG.fullscreen){
-		var res = ClientPrefs.screenRes.split(" x ");
-		  FlxG.resizeWindow(Std.parseInt(res[0]), Std.parseInt(res[1]));
-		//  FlxG.resizeWindow(Std.parseInt(res[0]), Std.parseInt(res[1]));
-		 // FlxG.resizeGame(Std.parseInt(res[0]), Std.parseInt(res[1]));
-		 // Lib.application.window.width = Std.parseInt(res[0]);
-		 // Lib.application.window.height = Std.parseInt(res[1]);
-		  //Lib.current.stage.width = Std.parseInt(res[0]);
-		 // Lib.current.stage.height = Std.parseInt(res[1]);
-			FlxCamera.defaultZoom = 1280/Std.parseInt(res[0]);
-		}
-	}
-
 }

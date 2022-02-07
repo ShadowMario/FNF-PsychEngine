@@ -13,7 +13,6 @@ import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxBasic;
-import flixel.system.scaleModes.*;
 
 class MusicBeatState extends FlxUIState
 {
@@ -22,11 +21,7 @@ class MusicBeatState extends FlxUIState
 
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
-	public var scaleRatio = ClientPrefs.getResolution()[1] / 720;
-	public static var musInstance:MusicBeatState;
-	var modeRatio:RatioScaleMode;
-	var modeStage:StageSizeScaleMode;
-	
+
 	private var controls(get, never):Controls;
 
 	inline function get_controls():Controls
@@ -35,17 +30,9 @@ class MusicBeatState extends FlxUIState
 	override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
-musInstance = this;
-		// Custom made Trans out
-		
-		modeRatio = new RatioScaleMode();
-		modeStage = new StageSizeScaleMode();
-		
-//	thx Cary for the res code < 333
-		
-		
+
 		if(!skip) {
-			openSubState(new CustomFadeTransition(1, true));
+			openSubState(new CustomFadeTransition(0.7, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 	}
@@ -74,14 +61,8 @@ musInstance = this;
 
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
-			
-			
-			
-		if (FlxG.keys.pressed.ALT && FlxG.keys.justPressed.ENTER){//to disable this fucker
-			FlxG.fullscreen = !FlxG.fullscreen;
-		}
-			
-			
+
+		if(FlxG.save.data != null) FlxG.save.data.fullscreen = FlxG.fullscreen;
 
 		super.update(elapsed);
 	}
@@ -112,16 +93,14 @@ musInstance = this;
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
 		if(!FlxTransitionableState.skipNextTransIn) {
-			leState.openSubState(new CustomFadeTransition(0.7, false));
+			leState.openSubState(new CustomFadeTransition(0.6, false));
 			if(nextState == FlxG.state) {
 				CustomFadeTransition.finishCallback = function() {
-					musInstance.onStateSwitch();
 					FlxG.resetState();
 				};
 				//trace('resetted');
 			} else {
 				CustomFadeTransition.finishCallback = function() {
-					musInstance.onStateSwitch();
 					FlxG.switchState(nextState);
 				};
 				//trace('changed state');
@@ -136,13 +115,6 @@ musInstance = this;
 		MusicBeatState.switchState(FlxG.state);
 	}
 
-	public function onStateSwitch(){
-		
-		options.GraphicsSettingsSubState.onChangeRes();
-		FlxG.scaleMode = modeStage;
-
-		if (FlxG.fullscreen)FlxG.scaleMode = modeRatio;
-	}
 	public static function getState():MusicBeatState {
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
