@@ -216,7 +216,7 @@ class Paths
 		return inst;
 	}
 
-	inline static public function image(key:String, ?library:String):Dynamic
+	inline static public function image(key:String, ?library:String):FlxGraphic
 	{
 		// streamlined the assets process more
 		var returnAsset:FlxGraphic = returnGraphic(key, library);
@@ -227,8 +227,8 @@ class Paths
 	{
 		#if sys
 		#if MODS_ALLOWED
-		if (!ignoreMods && FileSystem.exists(mods(key)))
-			return File.getContent(mods(key));
+		if (!ignoreMods && FileSystem.exists(modFolders(key)))
+			return File.getContent(modFolders(key));
 		#end
 
 		if (FileSystem.exists(getPreloadPath(key)))
@@ -279,12 +279,13 @@ class Paths
 	inline static public function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
-		var graphic:FlxGraphic = Paths.image(key, library);
+		var imageLoaded:FlxGraphic = returnGraphic(key);
 		var xmlExists:Bool = false;
 		if(FileSystem.exists(modsXml(key))) {
 			xmlExists = true;
 		}
-		return FlxAtlasFrames.fromSparrow(graphic, (xmlExists ? File.getContent(modsXml(key)) : file('images/$key.xml', library)));
+
+		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library)), (xmlExists ? File.getContent(modsXml(key)) : file('images/$key.xml', library)));
 		#else
 		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
 		#end
