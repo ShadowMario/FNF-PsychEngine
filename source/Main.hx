@@ -87,6 +87,10 @@ class Main extends Sprite
 		}
 		#end
 
+		#if desktop
+		FlxG.autoPause = ClientPrefs.autoPause;
+		#end
+
 		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;

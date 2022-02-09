@@ -63,6 +63,17 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		#if desktop
+		var option:Option = new Option('Auto Pause',
+			"If checked, the game will automatically freeze itself when not in focus.",
+			'autoPause',
+			'bool',
+			true);
+		addOption(option);
+
+		option.onChange = onToggleAutoPause;
+		#end
+
 		var option:Option = new Option('Disable Reset Button',
 			"If checked, pressing Reset won't do anything.",
 			'noReset',
@@ -138,4 +149,11 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		super();
 	}
+
+	#if desktop
+	function onToggleAutoPause ()
+	{
+		FlxG.autoPause = ClientPrefs.autoPause;
+	}
+	#end
 }
