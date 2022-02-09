@@ -99,7 +99,6 @@ class MusicBeatState extends FlxUIState
 			leState.openSubState(new CustomFadeTransition(0.6, false));
 			if(nextState == FlxG.state) {
 				CustomFadeTransition.finishCallback = function() {
-					musInstance.fixAspectRatio();
 					#if sys
 					ArtemisIntegration.toggleFade (false);
 					#end
@@ -108,7 +107,6 @@ class MusicBeatState extends FlxUIState
 				//trace('resetted');
 			} else {
 				CustomFadeTransition.finishCallback = function() {
-					musInstance.fixAspectRatio();
 					#if sys
 					ArtemisIntegration.toggleFade (false);
 					#end
