@@ -2638,7 +2638,7 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
-		if (!FlxG.autoPause && !paused && canPause && !cpuControlled)
+		if (!FlxG.autoPause && !paused && canPause && startedCountdown && !cpuControlled)
 		{
 			pauseState();
 		}
