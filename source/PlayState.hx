@@ -4278,7 +4278,7 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
-		if (FlxG.sound.music.time > Conductor.songPosition + 20 * playbackRate || FlxG.sound.music.time < Conductor.songPosition - 20 * playbackRate)
+    if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > 20 * playbackRate || (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20 * playbackRate))
 		{
 			resyncVocals();
 		}
