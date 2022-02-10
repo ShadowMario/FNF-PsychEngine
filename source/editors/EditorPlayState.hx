@@ -193,7 +193,18 @@ class EditorPlayState extends MusicBeatState
 		vocals.volume = 0;
 
 		var songData = PlayState.SONG;
-		Conductor.changeBPM(songData.bpm);
+		if (songData.notes[Math.floor(curStep / 16)].changeBPM && songData.notes[Math.floor(curStep / 16)].bpm > 0)
+		{
+			Conductor.changeBPM(songData.notes[Math.floor(curStep / 16)].bpm);
+		}
+		else
+		{
+			var daBPM:Float = songData.bpm;
+			for (i in 0...Math.floor(curStep / 16))
+				if (songData.notes[i].changeBPM)
+					daBPM = songData.notes[i].bpm;
+			Conductor.changeBPM(daBPM);
+		}
 		
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -514,6 +525,11 @@ class EditorPlayState extends MusicBeatState
 		if (generatedMusic)
 		{
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
+		}
+
+		if (PlayState.SONG.notes[Math.floor(curStep / 16)] != null && PlayState.SONG.notes[Math.floor(curStep / 16)].changeBPM)
+		{
+			Conductor.changeBPM(PlayState.SONG.notes[Math.floor(curStep / 16)].bpm);
 		}
 	}
 
