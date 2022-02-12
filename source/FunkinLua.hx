@@ -1172,6 +1172,30 @@ class FunkinLua {
 			}
 			return false;
 		});
+		Lua_helper.add_callback(lua, "isOverlapping", function(obj1:String, obj2:String) {
+			var namesArray:Array<String> = [obj1, obj2];
+			var objectsArray:Array<FlxSprite> = [];
+			for (i in 0...namesArray.length)
+			{
+				if(PlayState.instance.modchartSprites.exists(namesArray[i])) {
+					objectsArray.push(PlayState.instance.modchartSprites.get(namesArray[i]));
+				}
+				else if(PlayState.instance.modchartTexts.exists(namesArray[i])) {
+					objectsArray.push(PlayState.instance.modchartTexts.get(namesArray[i]));
+				}
+				else {
+					objectsArray.push(Reflect.getProperty(getInstance(), namesArray[i]));
+				}
+			}
+
+			if(!objectsArray.contains(null))
+			{
+				return FlxG.overlap(objectsArray[0], objectsArray[1]);
+			} else {
+			trace('objectsArray contained a null!');
+			}
+			return false;
+		});
 		Lua_helper.add_callback(lua, "getPixelColor", function(obj:String, x:Int, y:Int) {
 			var spr:FlxSprite = null;
 			if(PlayState.instance.modchartSprites.exists(obj)) {
