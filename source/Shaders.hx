@@ -47,7 +47,8 @@ class BuildingShader extends FlxShader
     super();
   }
 }
- 
+  
+//note shader made by nebulazorua i just fixed the shader lol
 class NoteEffect extends Effect {
   public var shader: NoteShader = new NoteShader();
   public function new(){
