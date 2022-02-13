@@ -48,4 +48,12 @@ class AttachedSprite extends FlxSprite
 				visible = sprTracker.visible;
 		}
 	}
+	
+	
+	override public function makeGraphic(Width:Int, Height:Int, Color:FlxColor = FlxColor.WHITE, Unique:Bool = false, ?Key:String):AttachedSprite
+	{
+		var graph:FlxGraphic = FlxG.bitmap.create(Width, Height, Color, Unique, Key);
+		frames = graph.imageFrame;
+		return this;
+	}
 }
