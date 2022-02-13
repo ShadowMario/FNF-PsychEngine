@@ -1,5 +1,7 @@
 package;
 
+import flixel.graphics.FlxGraphic;
+import flixel.util.FlxColor;
 import flixel.FlxSprite;
 
 using StringTools;
