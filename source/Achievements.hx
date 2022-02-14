@@ -288,16 +288,17 @@ class AchievementObject extends FlxSpriteGroup {
 		var modsImage = null;
 		var isModIcon:Bool = false;
 
-		if (Achievements.loadedAchievements.exists(name)) {
+		//fucking hell bro
+		/*if (Achievements.loadedAchievements.exists(name)) {
 			isModIcon = true;
 			modsImage = Paths.image(Achievements.loadedAchievements.get(name).icon);
-		}
+		}*/
 
 		var index:Int = Achievements.getAchievementIndex(name);
 		if (isModIcon) index = 0;
 
-		trace(imagePath);
-		trace(modsImage);
+		//trace(imagePath);
+		//trace(modsImage);
 
 		var achievementIcon:FlxSprite = new FlxSprite(achievementBG.x + 10, achievementBG.y + 10).loadGraphic((isModIcon ? modsImage : imagePath), true, 150, 150);
 		achievementIcon.animation.add('icon', [index], 0, false, false);
