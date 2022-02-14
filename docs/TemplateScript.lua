@@ -1,7 +1,4 @@
 -- Lua stuff
-function onLoaded()
-	-- triggered when the lua file is loaded
-end
 
 function onCreate()
 	-- triggered when the lua file is started, some variables weren't created yet
@@ -170,10 +167,13 @@ function onCheckForAchievement(name)
 	
 	--EX:
 --[[
-  if name == 'sick-full-combo' and getProperty('bads') == 0 and getProperty('goods') == 0 and getProperty('shits') == 0 then
+  if name == 'sick-full-combo' and getProperty('bads') == 0 and getProperty('goods') == 0 and getProperty('shits') == 0 and getProperty('endingSong') then
     return Function_Continue
   end
-  if name == 'bad-health-finish' and getProperty('health') < 0.01 then
+  if name == 'bad-health-finish' and getProperty('health') < 0.01 and getProperty('endingSong') then
+    return Function_Continue
+  end
+  if name == 'halfway' and getSongPosition >  getPropertyFromClass('flixel.FlxG','sound.music.length')/2 then
     return Function_Continue
   end
 	
