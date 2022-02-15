@@ -193,6 +193,7 @@ class EditorPlayState extends MusicBeatState
 		vocals.volume = 0;
 
 		var songData = PlayState.SONG;
+		Conductor.mapBPMChanges(songData);
 		if (songData.notes[Math.floor(curStep / 16)].changeBPM && songData.notes[Math.floor(curStep / 16)].bpm > 0)
 		{
 			Conductor.changeBPM(songData.notes[Math.floor(curStep / 16)].bpm);

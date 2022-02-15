@@ -2236,7 +2236,7 @@ class PlayState extends MusicBeatState
 		{
 			if (!startingSong && !endingSong)
 			{
-				if (unspawnNotes.length == 0 && notes.length == 0 && FlxG.sound.music.time / playbackRate > (songLength - 100))
+				if (FlxG.sound.music != null && FlxG.sound.music.time / playbackRate > (songLength - 100))
 				{
 					shouldEndSong = true;
 					new FlxTimer().start(0.1 / playbackRate, function(timer)
