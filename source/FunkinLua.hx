@@ -1358,6 +1358,9 @@ class FunkinLua {
 			DiscordClient.changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
 			#end
 		});
+                Lua_helper.add_callback(lua, "openUrl", function(url:String) {
+                        CoolUtil.browserLoad(url);
+		});
 
 
 		// LUA TEXTS
