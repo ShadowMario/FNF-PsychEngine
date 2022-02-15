@@ -16,11 +16,11 @@
                  /          _/           /             
 
 HEY
-Thanks for downloadin Friday Night FUNKIN'
-If you downloaded this from any other place than ninja-muffin24.itch.io/FUNKIN
+Thanks for downloadin Friday Night FUNKIN':Psych Engine
+If you downloaded this from any other place than https://gamebanana.com/mods/309789
 You might be in DANGER!!! 
 
-The Itch.io release is the only official source for the desktop (PC, Mac, Linux) versions of the game!
+The Gamebana release is the only official source for the desktop (PC, Mac, Linux) versions of the game!
 As of right now, the game is FREE! If you paid for it, you got SCAMMED!
 
 Now that that's out of the way....
@@ -46,7 +46,7 @@ If not no biggie we don't fully hate you only kinda no biggie.
 #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
 
 If you wanna dig around, the game is fully open source on Github
-https://github.com/ninjamuffin99/Funkin
+https://gamebanana.com/mods/309789
 
 It's made in Haxe / HaxeFlixel
 
@@ -64,6 +64,8 @@ https://twitter.com/ninja_muffin99
 https://twitter.com/phantomarcade3k
 https://twitter.com/kawaisprite
 https://twitter.com/evilsk8r
+
+Psych Engine is made by Shadow Mario (programmer), RiverOaken (main artist), bb-panzu (additionnnal programmer) and his contributors (can be found in the credits in-game)
 
 Pico is created by Tom Fulp
 Skid and Pump are created by SrPelo
