@@ -58,7 +58,7 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import Shaders;
-
+import DynamicShaderHandler;
 #if sys
 import sys.FileSystem;
 #end
@@ -82,7 +82,7 @@ class PlayState extends MusicBeatState
 		['Sick!', 1], //From 90% to 99%
 		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
-	
+	public static var animatedShaders:Map<String, DynamicShaderHandler> = new Map<String, DynamicShaderHandler>();
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
@@ -267,6 +267,7 @@ class PlayState extends MusicBeatState
 	public var luaArray:Array<FunkinLua> = [];
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
+	public var luaShaders:Map<String, DynamicShaderHandler> = new Map<String, DynamicShaderHandler>();
 
 	// Debug buttons
 	private var debugKeysChart:Array<FlxKey>;
@@ -416,7 +417,10 @@ class PlayState extends MusicBeatState
 				stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
 				stageFront.updateHitbox();
 				add(stageFront);
-
+new DynamicShaderHandler('Example', false);
+var shaderArray = new Array<BitmapFilter>();
+shaderArray.push(new ShaderFilter(animatedShaders['Example'].shader));
+camGame.setFilters(shaderArray);
 				if(!ClientPrefs.lowQuality) {
 					var stageLight:BGSprite = new BGSprite('stage_light', -125, -100, 0.9, 0.9);
 					stageLight.setGraphicSize(Std.int(stageLight.width * 1.1));
@@ -1286,10 +1290,8 @@ class PlayState extends MusicBeatState
 		}
 		#end
 	}
-
 	
-	
-  public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA
+  public function addShaderToCamera(cam:String,effect:Dynamic){//STOLE FROM ANDROMEDA
 	  
 	  
 	  
@@ -2670,6 +2672,17 @@ class PlayState extends MusicBeatState
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
 		
+		for (shader in animatedShaders)
+		{
+			shader.update(elapsed);
+		}
+		#if LUA_ALLOWED
+		
+for (key => value in luaShaders)
+{
+	value.update(elapsed);
+}
+#end
 		callOnLuas('onUpdatePost', [elapsed]);
 		for (i in shaderUpdates){
 			i(elapsed);

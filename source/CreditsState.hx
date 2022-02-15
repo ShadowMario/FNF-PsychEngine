@@ -92,6 +92,12 @@ class CreditsState extends MusicBeatState
 			['PolybiusProxy',		'polybiusproxy',	'.MP4 Video Loader Extension',							'https://twitter.com/polybiusproxy',	'FFEAA6'],
 			['Keoiki',				'keoiki',			'Note Splash Animations',								'https://twitter.com/Keoiki_',			'FFFFFF'],
 			['Smokey',				'smokey',			'Spritemap Texture Support',							'https://twitter.com/Smokey_5_',		'0033CC'],
+			/* SHADER PEOPLE. ADDING EM IN ONCE IT'S FINISHEDDD
+			['kem0x',				'kem0x',			'External Shader Support',								'https://twitter.com/Smokey_5_',		'0033CC'],
+			['SqirraRNG',			'gedehari',			'Runtime shaders workaround.',							'https://twitter.com/Smokey_5_',		'0033CC'],
+			['Fireable',			'fireable',			'Lua Implementation',									'https://twitter.com/Smokey_5_',		'0033CC'],
+			*/
+			
 			[''],
 			[''],
 			["Funkin' Crew"],
