@@ -20,7 +20,7 @@ Thanks for downloadin Friday Night FUNKIN':Psych Engine
 If you downloaded this from any other place than https://gamebanana.com/mods/309789
 You might be in DANGER!!! 
 
-The Gamebana release is the only official source for the desktop (PC, Mac, Linux) versions of the game!
+The Gamebabana release is the only official build for the desktop (PC, Mac, Linux) versions of the game!
 As of right now, the game is FREE! If you paid for it, you got SCAMMED!
 
 Now that that's out of the way....
