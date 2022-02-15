@@ -1352,12 +1352,15 @@ class PlayState extends MusicBeatState
 					}
 					camOther.setFilters(newCamEffects);
 			default: 
-				camGameShaders.remove(effect);
-				var newCamEffects:Array<BitmapFilter>=[];
-				for(i in camGameShaders){
-				  newCamEffects.push(new ShaderFilter(i.shader));
+				if(modchartSprites.exists(cam)) {
+					Reflect.setProperty(modchartSprites.get(cam),"shader",null);
+				} else if(modchartTexts.exists(cam)) {
+					Reflect.setProperty(modchartTexts.get(cam),"shader",null);
+				} else {
+					var OBJ = Reflect.getProperty(PlayState.instance,cam);
+					Reflect.setProperty(OBJ,"shader", null);
 				}
-				camGame.setFilters(newCamEffects);
+				
 		}
 		
 	  
@@ -1377,6 +1380,10 @@ class PlayState extends MusicBeatState
 				camOtherShaders = [];
 				var newCamEffects:Array<BitmapFilter>=[];
 				camOther.setFilters(newCamEffects);
+			case 'camgame' | 'game': 
+				camGameShaders = [];
+				var newCamEffects:Array<BitmapFilter>=[];
+				camGame.setFilters(newCamEffects);
 			default: 
 				camGameShaders = [];
 				var newCamEffects:Array<BitmapFilter>=[];

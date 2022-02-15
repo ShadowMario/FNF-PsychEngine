@@ -888,6 +888,15 @@ class FunkinLua {
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
+		Lua_helper.add_callback(lua, "makeLuaShaderSprite", function(tag:String, shader:String, x:Float, y:Float,optimize:Bool=false) {
+			tag = tag.replace('.', '');
+			resetSpriteTag(tag);
+			var leSprite:ModchartSprite = new ModchartSprite(x, y,true,shader,optimize);
+			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+			
+			PlayState.instance.modchartSprites.set(tag, leSprite);
+			leSprite.active = true;
+		});
 		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float, ?spriteType:String = "sparrow") {
 			tag = tag.replace('.', '');
 			resetSpriteTag(tag);
@@ -2045,6 +2054,28 @@ class ModchartSprite extends FlxSprite
 {
 	public var wasAdded:Bool = false;
 	//public var isInFront:Bool = false;
+	var hShader:DynamicShaderHandler;
+
+	public function new(?x:Float = 0, ?y:Float = 0,shaderSprite:Bool=false,type:String='', optimize:Bool = false)
+	{
+			super(x, y);
+		if(shaderSprite){
+
+			// codism
+			flipY = true;
+
+			makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT);
+
+			hShader = new DynamicShaderHandler(type, optimize);
+
+			if (hShader.shader != null)
+			{
+				shader = hShader.shader;
+			}
+
+			antialiasing = FlxG.save.data.antialiasing;
+			}
+	}
 }
 
 class ModchartText extends FlxText

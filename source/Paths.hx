@@ -38,6 +38,7 @@ class Paths
 		'songs',
 		'music',
 		'sounds',
+		'shaders',
 		'videos',
 		'images',
 		'stages',

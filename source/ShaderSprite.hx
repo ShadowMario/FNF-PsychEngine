@@ -32,6 +32,6 @@ class ShaderSprite extends FlxSprite
 			shader = hShader.shader;
 		}
 
-		antialiasing = FlxG.save.data.antialiasing;
+		antialiasing = ClientPrefs.globalAntialiasing;
 	}
 }
