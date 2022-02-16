@@ -77,6 +77,8 @@ class Note extends FlxSprite
 	public var hitCausesMiss:Bool = false;
 	public var distance:Float = 2000;//plan on doing scroll directions soon -bb
 
+	public var noteSpeed:Float = 0;
+
 	private function set_texture(value:String):String {
 		if(texture != value) {
 			reloadNote('', value);
@@ -165,6 +167,7 @@ class Note extends FlxSprite
 
 		if (isSustainNote && prevNote != null)
 		{
+			noteSpeed = prevNote.noteSpeed;
 			alpha = 0.6;
 			multAlpha = 0.6;
 			if(ClientPrefs.downScroll) flipY = true;
@@ -208,7 +211,7 @@ class Note extends FlxSprite
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.05;
 				if(PlayState.instance != null)
 				{
-					prevNote.scale.y *= PlayState.instance.songSpeed;
+					prevNote.scale.y *= prevNote.noteSpeed;
 				}
 
 				if(PlayState.isPixelStage) {
@@ -226,6 +229,13 @@ class Note extends FlxSprite
 			earlyHitMult = 1;
 		}
 		x += offsetX;
+
+		if(noteSpeed == 0) {
+			if(PlayState.instance != null)
+			{
+				noteSpeed = PlayState.instance.songSpeed;
+			}
+		}
 	}
 
 	function reloadNote(?prefix:String = '', ?texture:String = '', ?suffix:String = '') {

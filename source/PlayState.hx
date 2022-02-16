@@ -2519,12 +2519,12 @@ class PlayState extends MusicBeatState
 				if (strumScroll) //Downscroll
 				{
 					//daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
-					daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
+					daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) * daNote.noteSpeed);
 				}
 				else //Upscroll
 				{
 					//daNote.y = (strumY - 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
-					daNote.distance = (-0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
+					daNote.distance = (-0.45 * (Conductor.songPosition - daNote.strumTime) * daNote.noteSpeed);
 				}
 
 				var angleDir = strumDirection * Math.PI / 180;
@@ -2545,16 +2545,16 @@ class PlayState extends MusicBeatState
 					if(strumScroll && daNote.isSustainNote)
 					{
 						if (daNote.animation.curAnim.name.endsWith('end')) {
-							daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * songSpeed + (46 * (songSpeed - 1));
-							daNote.y -= 46 * (1 - (fakeCrochet / 600)) * songSpeed;
+							daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * daNote.noteSpeed + (46 * (daNote.noteSpeed - 1));
+							daNote.y -= 46 * (1 - (fakeCrochet / 600)) * daNote.noteSpeed;
 							if(PlayState.isPixelStage) {
 								daNote.y += 8;
 							} else {
 								daNote.y -= 19;
 							}
 						} 
-						daNote.y += (Note.swagWidth / 2) - (60.5 * (songSpeed - 1));
-						daNote.y += 27.5 * ((SONG.bpm / 100) - 1) * (songSpeed - 1);
+						daNote.y += (Note.swagWidth / 2) - (60.5 * (daNote.noteSpeed - 1));
+						daNote.y += 27.5 * ((SONG.bpm / 100) - 1) * (daNote.noteSpeed - 1);
 					}
 				}
 
