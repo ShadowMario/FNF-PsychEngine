@@ -130,6 +130,11 @@ class PlayState extends MusicBeatState
 
 	public var vocals:FlxSound;
 
+	public var defaultCamHUDZoom:Float = 1;
+	public var camZoom:Float = 0.015;
+	public var camHUDZoom:Float = 0.03;
+	public var maxCamZoomLimit:Float = 1.35;
+
 	public var dad:Character;
 	public var gf:Character;
 	public var boyfriend:Boyfriend;
@@ -2467,7 +2472,7 @@ class PlayState extends MusicBeatState
 		if (camZooming)
 		{
 			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
-			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
+			camHUD.zoom = FlxMath.lerp(defaultCamHUDZoom, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
 		}
 
 		FlxG.watch.addQuick("beatShit", curBeat);
@@ -2558,9 +2563,10 @@ class PlayState extends MusicBeatState
 					}
 				}
 
-				if (!daNote.mustPress && daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote)
-				{
-					opponentNoteHit(daNote);
+				if (!daNote.mustPress && !daNote.hitByOpponent && !daNote.ignoreNote) {
+					if (daNote.strumTime <= Conductor.songPosition) {
+						opponentNoteHit(daNote);
+					}
 				}
 
 				if(daNote.mustPress && cpuControlled) {
@@ -3433,6 +3439,8 @@ for (key => value in luaShaders)
 				sicks++;
 		}
 
+		callOnLuas("onJudgementCalculation", [noteDiff, rating]);
+
 
 		if(daRating == 'sick' && !note.noteSplashDisabled)
 		{
@@ -3878,12 +3886,13 @@ for (key => value in luaShaders)
 			var altAnim:String = "";
 
 			var curSection:Int = Math.floor(curStep / 16);
+			var sectionIsAltAnim:Bool = false;
 			if (SONG.notes[curSection] != null)
 			{
-				if (SONG.notes[curSection].altAnim || note.noteType == 'Alt Animation') {
-					altAnim = '-alt';
-				}
+				sectionIsAltAnim = SONG.notes[curSection].altAnim;
 			}
+
+			if (sectionIsAltAnim || note.noteType == 'Alt Animation') altAnim = '-alt';
 
 			var char:Character = dad;
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
@@ -4038,6 +4047,7 @@ for (key => value in luaShaders)
 	}
 
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
+		callOnLuas('onNoteSplashSpawned', [x, y, data]);
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		
@@ -4196,6 +4206,10 @@ for (key => value in luaShaders)
 		}
 	}
 
+	public function bopIcon(icon:HealthIcon) {
+		icon.scale.set(1.2, 1.2);
+	}
+
 	function resetLimoKill():Void
 	{
 		if(curStage == 'limo') {
@@ -4290,12 +4304,20 @@ for (key => value in luaShaders)
 				setOnLuas('curBpm', Conductor.bpm);
 				setOnLuas('crochet', Conductor.crochet);
 				setOnLuas('stepCrochet', Conductor.stepCrochet);
+				callOnLuas('onChangeBPM', []);
 			}
+			setOnLuas('lengthInSteps', SONG.notes[Math.floor(curStep / 16)].lengthInSteps);
+			setOnLuas('curSection', Math.floor(curStep / 16));
+			setOnLuas('changeBPM', SONG.notes[Math.floor(curStep / 16)].changeBPM);
 			setOnLuas('mustHitSection', SONG.notes[Math.floor(curStep / 16)].mustHitSection);
 			setOnLuas('altAnim', SONG.notes[Math.floor(curStep / 16)].altAnim);
 			setOnLuas('gfSection', SONG.notes[Math.floor(curStep / 16)].gfSection);
 			// else
 			// Conductor.changeBPM(SONG.bpm);
+		}
+
+		if (curBeat % 4 == 0) {
+			callOnLuas('onSectionHit', []);
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 
@@ -4303,10 +4325,10 @@ for (key => value in luaShaders)
 		{
 			moveCameraSection(Std.int(curStep / 16));
 		}
-		if (camZooming && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && curBeat % 4 == 0)
+		if (camZooming && FlxG.camera.zoom < maxCamZoomLimit && ClientPrefs.camZooms && curBeat % 4 == 0)
 		{
-			FlxG.camera.zoom += 0.015;
-			camHUD.zoom += 0.03;
+			FlxG.camera.zoom += camZoom;
+			camHUD.zoom += camHUDZoom;
 		}
 
 		iconP1.scale.set(1.2, 1.2);

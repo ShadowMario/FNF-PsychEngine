@@ -30,6 +30,7 @@ class Note extends FlxSprite
 	public var hitByOpponent:Bool = false;
 	public var noteWasHit:Bool = false;
 	public var prevNote:Note;
+	public var canBeMissed:Bool = true;
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
