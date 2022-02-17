@@ -180,3 +180,36 @@ function onCheckForAchievement(name)
 	
 	]]--
 end
+function keyJustPressed(name:String)
+	-- this is when the user has pressed that key
+	-- variables:
+	-- left
+	-- right
+	-- down
+	-- up
+	-- accept
+	-- back
+	-- pause
+	-- reset
+	-- space
+end
+function keyPressed(name:String)
+	-- this is like, when you press a key for a long time
+	-- this function have less variables than the other
+	-- variables:
+	-- up
+	-- down
+	-- left 
+	-- right
+	-- space
+end
+function keyReleased(name:String)
+	-- the name explains what does it do
+	-- same variables
+	-- variables:
+	-- down
+	-- up
+	-- left
+	-- right
+	-- space
+end
