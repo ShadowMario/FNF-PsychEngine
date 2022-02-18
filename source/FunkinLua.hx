@@ -24,6 +24,9 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import openfl.Lib;
 import openfl.display.BlendMode;
+import openfl.display.ShaderParameter;
+import openfl.filters.BitmapFilter;
+import openfl.filters.ShaderFilter;
 import openfl.utils.Assets;
 import flixel.math.FlxMath;
 import Shaders;
@@ -49,7 +52,7 @@ class FunkinLua {
 	#if LUA_ALLOWED
 	public var lua:State = null;
 	#end
-
+	public var camTarget:FlxCamera;
 	public var scriptName:String = '';
 	var gonnaClose:Bool = false;
 
@@ -885,6 +888,15 @@ class FunkinLua {
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
+		Lua_helper.add_callback(lua, "makeLuaShaderSprite", function(tag:String, shader:String, x:Float, y:Float,optimize:Bool=false) {
+			tag = tag.replace('.', '');
+			resetSpriteTag(tag);
+			var leSprite:ModchartSprite = new ModchartSprite(x, y,true,shader,optimize);
+			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+			
+			PlayState.instance.modchartSprites.set(tag, leSprite);
+			leSprite.active = true;
+		});
 		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float, ?spriteType:String = "sparrow") {
 			tag = tag.replace('.', '');
 			resetSpriteTag(tag);
@@ -1638,6 +1650,46 @@ class FunkinLua {
 			PlayState.instance.addShaderToCamera(camera, new VCRDistortionEffect(glitchFactor,distortion,perspectiveOn,vignetteMoving));
 			
 		});
+		
+		
+
+Lua_helper.add_callback(lua, "createShaders", function(shaderName:String, ?optimize:Bool = false)
+{
+	var shader = new DynamicShaderHandler(shaderName, optimize);
+
+	return shaderName;
+});
+/*
+Lua_helper.add_callback(lua, "modifyShaderProperty", function(shaderName:String, propertyName:String, value:Dynamic)
+{
+	//var handler:DynamicShaderHandler = PlayState.instance.luaShaders.get(shaderName);
+	//trace(Reflect.getProperty(handler.shader.data, propertyName));
+	//Reflect.setProperty(Reflect.getProperty(handler.shader.data, propertyName), 'value', value);
+	handler.modifyShaderProperty(propertyName, value);
+});
+
+// shader set
+*/
+Lua_helper.add_callback(lua, "setShadersToCamera", function(shaderName:Array<String>, cameraName:String)
+{
+	
+	var shaderArray = new Array<BitmapFilter>();
+
+	for (i in shaderName)
+	{
+		shaderArray.push(new ShaderFilter(PlayState.instance.luaShaders[i].shader));
+	}
+
+	cameraFromString(cameraName).setFilters(shaderArray);
+});
+
+// shader clear
+
+Lua_helper.add_callback(lua, "clearShadersFromCamera", function(cameraName)
+{
+	cameraFromString(cameraName).setFilters([]);
+});	
+		
 		Lua_helper.add_callback(lua, "addGlitchEffect", function(camera:String,waveSpeed:Float = 0.1,waveFrq:Float = 0.1,waveAmp:Float = 0.1) {
 			
 			PlayState.instance.addShaderToCamera(camera, new GlitchEffect(waveSpeed,waveFrq,waveAmp));
@@ -2002,6 +2054,28 @@ class ModchartSprite extends FlxSprite
 {
 	public var wasAdded:Bool = false;
 	//public var isInFront:Bool = false;
+	var hShader:DynamicShaderHandler;
+
+	public function new(?x:Float = 0, ?y:Float = 0,shaderSprite:Bool=false,type:String='', optimize:Bool = false)
+	{
+			super(x, y);
+		if(shaderSprite){
+
+			// codism
+			flipY = true;
+
+			makeGraphic(FlxG.width, FlxG.height, FlxColor.TRANSPARENT);
+
+			hShader = new DynamicShaderHandler(type, optimize);
+
+			if (hShader.shader != null)
+			{
+				shader = hShader.shader;
+			}
+
+			antialiasing = FlxG.save.data.antialiasing;
+			}
+	}
 }
 
 class ModchartText extends FlxText
