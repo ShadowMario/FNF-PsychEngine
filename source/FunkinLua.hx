@@ -36,7 +36,7 @@ import Type.ValueType;
 import Controls;
 import DialogueBoxPsych;
 
-#if desktop
+#if DISCORD_ALLOWED
 import Discord;
 #end
 

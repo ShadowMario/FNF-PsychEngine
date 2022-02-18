@@ -1,12 +1,13 @@
 package;
 
-import Sys.sleep;
-import discord_rpc.DiscordRpc;
-
 #if LUA_ALLOWED
 import llua.Lua;
 import llua.State;
 #end
+
+#if DISCORD_ALLOWED
+import Sys.sleep;
+import discord_rpc.DiscordRpc;
 
 using StringTools;
 
@@ -98,3 +99,10 @@ class DiscordClient
 	}
 	#end
 }
+#else
+class DiscordClient {
+	public static function shutdown() {}
+	public static function initialize() {}
+	public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float) {}
+}
+#end
