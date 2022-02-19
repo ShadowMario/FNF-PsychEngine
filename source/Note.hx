@@ -110,8 +110,7 @@ class Note extends FlxSprite
 						missHealth = 0.3;
 					}
 					hitCausesMiss = true;
-					noteSpeed = 6;
-					allowChangeScrollSpeed = false;
+					//noteSpeed = 6;
 				case 'No Animation':
 					noAnimation = true;
 				case 'GF Sing':
