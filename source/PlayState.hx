@@ -2501,6 +2501,10 @@ class PlayState extends MusicBeatState
 			var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
 			notes.forEachAlive(function(daNote:Note)
 			{
+				if(daNote.allowChangeScrollSpeed) {
+					daNote.noteSpeed = songSpeed;
+				}
+				
 				var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
 				if(!daNote.mustPress) strumGroup = opponentStrums;
 
