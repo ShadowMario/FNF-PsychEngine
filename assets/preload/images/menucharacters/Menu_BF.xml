@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Menu_BF.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="M BF Idle0000" x="4" y="4" width="326" height="315" pivotX="0" pivotY="15.15" frameX="0" frameY="-15" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0001" x="4" y="4" width="326" height="315" frameX="0" frameY="-15" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0002" x="335" y="4" width="324" height="319" frameX="-2" frameY="-11" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0003" x="335" y="4" width="324" height="319" frameX="-2" frameY="-11" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0004" x="664" y="4" width="328" height="329" frameX="0" frameY="-1" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0005" x="664" y="4" width="328" height="329" frameX="0" frameY="-1" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0006" x="4" y="333" width="327" height="330" frameX="-1" frameY="0" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0007" x="4" y="333" width="327" height="330" frameX="-1" frameY="0" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0008" x="4" y="333" width="327" height="330" frameX="-1" frameY="0" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0009" x="4" y="333" width="327" height="330" frameX="-1" frameY="0" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0010" x="4" y="333" width="327" height="330" frameX="-1" frameY="0" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0011" x="4" y="333" width="327" height="330" frameX="-1" frameY="0" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0012" x="336" y="333" width="325" height="314" frameX="0" frameY="-16" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M BF Idle0013" x="336" y="333" width="325" height="314" frameX="0" frameY="-16" frameWidth="328" frameHeight="330"/>
+	<SubTexture name="M bf HEY0000" x="666" y="333" width="316" height="334" pivotX="0" pivotY="0" frameX="0" frameY="5" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0001" x="666" y="333" width="316" height="334" frameX="0" frameY="5" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0002" x="4" y="667" width="331" height="329" frameX="0" frameY="-1" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0003" x="4" y="667" width="331" height="329" frameX="0" frameY="-1" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0004" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0005" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0006" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0007" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0008" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0009" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0010" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0011" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0012" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0013" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0014" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0015" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0016" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0017" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0018" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0019" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0020" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0021" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0022" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0023" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0024" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+	<SubTexture name="M bf HEY0025" x="340" y="667" width="332" height="330" frameX="0" frameY="0" frameWidth="332" frameHeight="335"/>
+</TextureAtlas>

@@ -1,0 +1,10 @@
+{
+	"idle_anim": "M Senpai Idle",
+	"image": "Menu_Senpai",
+	"position": [
+		60,
+		-70
+	],
+	"scale": 1,
+	"confirm_anim": "M Dad Idle"
+}
