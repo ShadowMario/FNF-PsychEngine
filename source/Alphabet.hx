@@ -39,7 +39,7 @@ class Alphabet extends FlxSpriteGroup
 
 	var splitWords:Array<String> = [];
 
-	var isBold:Bool = false;
+	public var isBold:Bool = false;
 	public var lettersArray:Array<AlphaCharacter> = [];
 
 	public var finishedText:Bool = false;
