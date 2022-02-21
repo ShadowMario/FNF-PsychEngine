@@ -77,9 +77,8 @@ class Note extends FlxSprite
 	public var hitCausesMiss:Bool = false;
 	public var distance:Float = 2000;//plan on doing scroll directions soon -bb
 
-	public var noteSpeed:Float = 0; //put noteSpeed = newscrollspeed; under whatever notetype you want, example under Hurt Note
-	public var allowChangeScrollSpeed:Bool = true; //put allowChangeScrollSpeed = false; under whatever notetype you want
-	//as the name suggests it makes that specific note type not be effected by the change scroll speed event, useful for notes that have a set scroll speed
+	public var noteSpeed:Float = 0;
+	public var allowChangeScrollSpeed:Bool = true;
 
 	private function set_texture(value:String):String {
 		if(texture != value) {
@@ -110,7 +109,6 @@ class Note extends FlxSprite
 						missHealth = 0.3;
 					}
 					hitCausesMiss = true;
-					//noteSpeed = 6;
 				case 'No Animation':
 					noAnimation = true;
 				case 'GF Sing':

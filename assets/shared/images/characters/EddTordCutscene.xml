@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="EddTordCutscene.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="EddGroundShaking0000" x="1069" y="1799" width="545" height="575" pivotX="75.3" pivotY="-60.5" frameX="-1" frameY="-19" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddGroundShaking0001" x="542" y="2397" width="545" height="576" frameX="-1" frameY="-19" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddGroundShaking0002" x="535" y="604" width="533" height="596" frameX="0" frameY="0" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddGroundShaking0003" x="535" y="1799" width="532" height="596" frameX="0" frameY="0" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddGroundShaking0004" x="535" y="1202" width="533" height="595" frameX="0" frameY="-1" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddGroundShaking0005" x="1066" y="0" width="533" height="596" frameX="0" frameY="0" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddGroundShaking0006" x="1066" y="0" width="533" height="596" frameX="0" frameY="0" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddGroundShaking0007" x="535" y="1202" width="533" height="595" frameX="0" frameY="-1" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddGroundShaking0008" x="535" y="1202" width="533" height="595" frameX="0" frameY="-1" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddGroundShaking0009" x="1066" y="0" width="533" height="596" frameX="0" frameY="0" frameWidth="546" frameHeight="596"/>
+	<SubTexture name="EddLookingUp0000" x="1616" y="1243" width="297" height="641" pivotX="-23.15" pivotY="4.4" frameX="-3" frameY="-4" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0001" x="1677" y="1886" width="297" height="641" frameX="-3" frameY="-4" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0002" x="1677" y="1886" width="297" height="641" frameX="-3" frameY="-4" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0003" x="1616" y="1243" width="297" height="641" frameX="-3" frameY="-4" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0004" x="1616" y="1243" width="297" height="641" frameX="-3" frameY="-4" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0005" x="1677" y="1886" width="297" height="641" frameX="-3" frameY="-4" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0006" x="1072" y="2975" width="303" height="640" frameX="0" frameY="-5" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0007" x="1070" y="598" width="303" height="639" frameX="0" frameY="-5" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0008" x="1375" y="598" width="298" height="643" frameX="-2" frameY="-2" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0009" x="1377" y="2376" width="298" height="643" frameX="-2" frameY="-2" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0010" x="1377" y="3021" width="297" height="645" frameX="-3" frameY="0" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0011" x="1676" y="3021" width="297" height="645" frameX="-3" frameY="0" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0012" x="1676" y="3021" width="297" height="645" frameX="-3" frameY="0" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0013" x="1377" y="3021" width="297" height="645" frameX="-3" frameY="0" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddLookingUp0014" x="1377" y="3021" width="297" height="645" frameX="-3" frameY="0" frameWidth="303" frameHeight="645"/>
+	<SubTexture name="EddTurnToTord0000" x="0" y="3031" width="539" height="594" pivotX="78.2" pivotY="-49.4" frameX="-1" frameY="-12" frameWidth="540" frameHeight="607"/>
+	<SubTexture name="EddTurnToTord0001" x="0" y="2435" width="540" height="594" frameX="0" frameY="-12" frameWidth="540" frameHeight="607"/>
+	<SubTexture name="EddTurnToTord0002" x="541" y="3031" width="529" height="603" frameX="-3" frameY="-4" frameWidth="540" frameHeight="607"/>
+	<SubTexture name="EddTurnToTord0003" x="535" y="0" width="529" height="602" frameX="-3" frameY="-5" frameWidth="540" frameHeight="607"/>
+	<SubTexture name="EddTurnToTord0004" x="0" y="1827" width="533" height="606" frameX="-3" frameY="-1" frameWidth="540" frameHeight="607"/>
+	<SubTexture name="EddTurnToTord0005" x="0" y="0" width="533" height="607" frameX="-3" frameY="0" frameWidth="540" frameHeight="607"/>
+	<SubTexture name="EddTurnToTord0006" x="0" y="609" width="533" height="607" frameX="-3" frameY="0" frameWidth="540" frameHeight="607"/>
+	<SubTexture name="EddTurnToTord0007" x="0" y="1218" width="533" height="607" frameX="-3" frameY="0" frameWidth="540" frameHeight="607"/>
+</TextureAtlas>

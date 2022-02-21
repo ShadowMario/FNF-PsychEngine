@@ -1,0 +1,56 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "what",
+			"fps": 24,
+			"name": "BF Ground Shaking",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-7,
+				14
+			],
+			"anim": "lookin",
+			"fps": 24,
+			"name": "BF Look At Tord",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				40
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "looking",
+			"loop": false,
+			"name": "BF LookUp"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/BFTordCutscene",
+	"position": [
+		-40,
+		370
+	],
+	"healthicon": "bf",
+	"flip_x": true,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		200,
+		-50
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="TordFallin.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="TordFlailing0000" x="0" y="0" width="196" height="158" pivotX="42.1" pivotY="23.5" frameX="-4" frameY="0" frameWidth="213" frameHeight="169"/>
+	<SubTexture name="TordFlailing0001" x="0" y="0" width="196" height="158" frameX="-4" frameY="0" frameWidth="213" frameHeight="169"/>
+	<SubTexture name="TordFlailing0002" x="374" y="0" width="119" height="155" frameX="-37" frameY="-5" frameWidth="213" frameHeight="169"/>
+	<SubTexture name="TordFlailing0003" x="374" y="0" width="119" height="155" frameX="-37" frameY="-5" frameWidth="213" frameHeight="169"/>
+	<SubTexture name="TordFlailing0004" x="197" y="0" width="176" height="157" frameX="-37" frameY="-12" frameWidth="213" frameHeight="169"/>
+	<SubTexture name="TordFlailing0005" x="197" y="0" width="176" height="157" frameX="-37" frameY="-12" frameWidth="213" frameHeight="169"/>
+	<SubTexture name="TordFlailing0006" x="0" y="159" width="169" height="144" frameX="-17" frameY="-16" frameWidth="213" frameHeight="169"/>
+	<SubTexture name="TordFlailing0007" x="0" y="159" width="169" height="144" frameX="-17" frameY="-16" frameWidth="213" frameHeight="169"/>
+	<SubTexture name="TordFlailing0008" x="197" y="158" width="196" height="131" frameX="0" frameY="-14" frameWidth="213" frameHeight="169"/>
+	<SubTexture name="TordFlailing0009" x="197" y="158" width="196" height="131" frameX="0" frameY="-14" frameWidth="213" frameHeight="169"/>
+</TextureAtlas>

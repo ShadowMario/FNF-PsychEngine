@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="BFTordCutscene.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="BF Ground Shaking0000" x="1583" y="0" width="419" height="381" pivotX="-303.5" pivotY="186.85" frameX="0" frameY="-14" frameWidth="419" frameHeight="397"/>
+	<SubTexture name="BF Ground Shaking0001" x="1583" y="0" width="419" height="381" frameX="0" frameY="-14" frameWidth="419" frameHeight="397"/>
+	<SubTexture name="BF Ground Shaking0002" x="1189" y="410" width="383" height="397" frameX="-18" frameY="0" frameWidth="419" frameHeight="397"/>
+	<SubTexture name="BF Ground Shaking0003" x="1189" y="410" width="383" height="397" frameX="-18" frameY="0" frameWidth="419" frameHeight="397"/>
+	<SubTexture name="BF Ground Shaking0004" x="0" y="413" width="396" height="394" frameX="-12" frameY="-3" frameWidth="419" frameHeight="397"/>
+	<SubTexture name="BF Ground Shaking0005" x="0" y="413" width="396" height="394" frameX="-12" frameY="-3" frameWidth="419" frameHeight="397"/>
+	<SubTexture name="BF Ground Shaking0006" x="0" y="413" width="396" height="394" frameX="-12" frameY="-3" frameWidth="419" frameHeight="397"/>
+	<SubTexture name="BF Ground Shaking0007" x="0" y="413" width="396" height="394" frameX="-12" frameY="-3" frameWidth="419" frameHeight="397"/>
+	<SubTexture name="BF Look At Tord0000" x="1583" y="383" width="403" height="392" pivotX="-311.7" pivotY="200.45" frameX="0" frameY="-18" frameWidth="403" frameHeight="411"/>
+	<SubTexture name="BF Look At Tord0001" x="1583" y="383" width="403" height="392" frameX="0" frameY="-18" frameWidth="403" frameHeight="411"/>
+	<SubTexture name="BF Look At Tord0002" x="1189" y="0" width="392" height="408" frameX="-7" frameY="-3" frameWidth="403" frameHeight="411"/>
+	<SubTexture name="BF Look At Tord0003" x="1189" y="0" width="392" height="408" frameX="-7" frameY="-3" frameWidth="403" frameHeight="411"/>
+	<SubTexture name="BF Look At Tord0004" x="399" y="0" width="396" height="411" frameX="-4" frameY="0" frameWidth="403" frameHeight="411"/>
+	<SubTexture name="BF Look At Tord0005" x="399" y="0" width="396" height="411" frameX="-4" frameY="0" frameWidth="403" frameHeight="411"/>
+	<SubTexture name="BF Look At Tord0006" x="0" y="0" width="397" height="411" frameX="-4" frameY="0" frameWidth="403" frameHeight="411"/>
+	<SubTexture name="BF LookUp0000" x="797" y="0" width="390" height="417" pivotX="-49.05" pivotY="-46.4"/>
+	<SubTexture name="BF LookUp0001" x="797" y="0" width="390" height="417"/>
+	<SubTexture name="BF LookUp0002" x="797" y="0" width="390" height="417"/>
+	<SubTexture name="BF LookUp0003" x="797" y="0" width="390" height="417"/>
+	<SubTexture name="BF LookUp0004" x="797" y="0" width="390" height="417"/>
+	<SubTexture name="BF LookUp0005" x="797" y="0" width="390" height="417"/>
+	<SubTexture name="BF LookUp0006" x="797" y="0" width="390" height="417"/>
+	<SubTexture name="BF LookUp0007" x="797" y="0" width="390" height="417"/>
+	<SubTexture name="BF LookUp0008" x="797" y="0" width="390" height="417"/>
+</TextureAtlas>

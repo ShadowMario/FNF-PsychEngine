@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="TordHelicopter.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="TordHelicopter0000" x="198" y="78" width="41" height="42" pivotX="-33.75" pivotY="-65.1" frameX="-13" frameY="-43" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0001" x="191" y="122" width="41" height="42" frameX="-13" frameY="-43" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0002" x="191" y="166" width="32" height="41" frameX="-20" frameY="-44" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0003" x="191" y="166" width="32" height="41" frameX="-20" frameY="-44" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0004" x="198" y="0" width="39" height="76" frameX="-14" frameY="-10" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0005" x="0" y="0" width="66" height="85" frameX="0" frameY="-1" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0006" x="68" y="0" width="66" height="84" frameX="0" frameY="-1" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0007" x="130" y="87" width="59" height="85" frameX="-5" frameY="0" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0008" x="130" y="87" width="59" height="85" frameX="-5" frameY="0" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0009" x="136" y="0" width="60" height="85" frameX="-5" frameY="0" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0010" x="136" y="0" width="60" height="85" frameX="-5" frameY="0" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0011" x="136" y="0" width="60" height="85" frameX="-5" frameY="0" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0012" x="136" y="0" width="60" height="85" frameX="-5" frameY="0" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0013" x="68" y="86" width="60" height="84" frameX="-5" frameY="0" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0014" x="68" y="86" width="60" height="84" frameX="-5" frameY="0" frameWidth="66" frameHeight="86"/>
+	<SubTexture name="TordHelicopter0015" x="0" y="87" width="60" height="84" frameX="-5" frameY="0" frameWidth="66" frameHeight="86"/>
+</TextureAtlas>

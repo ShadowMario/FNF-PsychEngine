@@ -1,0 +1,100 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				-45,
+				-9
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "TordIdle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				0
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "TordLeft",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-20,
+				-15
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "TordDown",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-137,
+				51
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "TordUp",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-45,
+				-15
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "TordRight",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-45,
+				8
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP-alt",
+			"indices": [],
+			"name": "TordHa"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-45,
+				10
+			],
+			"anim": "singDOWN-alt",
+			"fps": 24,
+			"name": "TordButtonPress",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Tord",
+	"position": [
+		-760,
+		0
+	],
+	"healthicon": "tord",
+	"flip_x": false,
+	"healthbar_colors": [
+		161,
+		161,
+		161
+	],
+	"camera_position": [
+		20,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 0.8
+}

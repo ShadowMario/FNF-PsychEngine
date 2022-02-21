@@ -1,0 +1,56 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				-44,
+				-30
+			],
+			"anim": "pissed",
+			"fps": 24,
+			"name": "TordPissed",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-44,
+				-5
+			],
+			"anim": "harpoon",
+			"fps": 24,
+			"name": "TordHarpoonShot",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-44,
+				-9
+			],
+			"anim": "harpoonline",
+			"fps": 24,
+			"name": "TordOhNo",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Tord2",
+	"position": [
+		-780,
+		-30
+	],
+	"healthicon": "tord",
+	"flip_x": false,
+	"healthbar_colors": [
+		161,
+		161,
+		161
+	],
+	"camera_position": [
+		20,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 0.8
+}

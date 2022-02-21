@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Matt.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="MattHarpoonBit0000" x="1480" y="1623" width="131" height="305" pivotX="14.4" pivotY="28.7" frameX="-44" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0001" x="1480" y="1623" width="131" height="305" frameX="-44" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0002" x="1348" y="1624" width="131" height="305" frameX="-44" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0003" x="1348" y="1624" width="131" height="305" frameX="-44" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0004" x="1480" y="1623" width="131" height="305" frameX="-44" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0005" x="1480" y="1623" width="131" height="305" frameX="-44" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0006" x="1348" y="1624" width="131" height="305" frameX="-44" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0007" x="1348" y="1624" width="131" height="305" frameX="-44" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0008" x="1630" y="619" width="130" height="305" frameX="-42" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0009" x="1630" y="619" width="130" height="305" frameX="-42" frameY="0" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0010" x="216" y="945" width="211" height="298" frameX="0" frameY="-18" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0011" x="0" y="1237" width="211" height="298" frameX="0" frameY="-18" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0012" x="651" y="654" width="203" height="306" frameX="-4" frameY="-11" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0013" x="428" y="960" width="203" height="306" frameX="-4" frameY="-11" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0014" x="212" y="1244" width="203" height="306" frameX="-4" frameY="-11" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0015" x="0" y="1536" width="203" height="306" frameX="-4" frameY="-11" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0016" x="0" y="1536" width="203" height="306" frameX="-4" frameY="-11" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0017" x="212" y="1244" width="203" height="306" frameX="-4" frameY="-11" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonBit0018" x="212" y="1244" width="203" height="306" frameX="-4" frameY="-11" frameWidth="211" frameHeight="317"/>
+	<SubTexture name="MattHarpoonIdle0000" x="1170" y="1653" width="131" height="305" pivotX="-30.85" pivotY="28.7"/>
+	<SubTexture name="MattHarpoonIdle0001" x="1170" y="1653" width="131" height="305"/>
+	<SubTexture name="MattHarpoonIdle0002" x="1611" y="1219" width="131" height="305"/>
+	<SubTexture name="MattHarpoonIdle0003" x="1611" y="1219" width="131" height="305"/>
+	<SubTexture name="MattHarpoonIdle0004" x="1170" y="1653" width="131" height="305"/>
+	<SubTexture name="MattHarpoonIdle0005" x="1170" y="1653" width="131" height="305"/>
+	<SubTexture name="MattHarpoonIdle0006" x="1611" y="1219" width="131" height="305"/>
+	<SubTexture name="MattHarpoonIdle0007" x="1611" y="1219" width="131" height="305"/>
+	<SubTexture name="MattPISSED0000" x="450" y="0" width="215" height="326" pivotX="67.2" pivotY="38.95" frameX="-10" frameY="-2" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0001" x="450" y="0" width="215" height="326" frameX="-10" frameY="-2" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0002" x="0" y="0" width="224" height="328" frameX="0" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0003" x="0" y="0" width="224" height="328" frameX="0" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0004" x="385" y="1597" width="178" height="329" frameX="-45" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0005" x="777" y="1291" width="178" height="329" frameX="-45" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0006" x="1035" y="332" width="179" height="329" frameX="-45" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0007" x="1214" y="0" width="179" height="329" frameX="-45" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0008" x="632" y="961" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0009" x="416" y="1267" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0010" x="416" y="1267" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0011" x="632" y="961" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0012" x="632" y="961" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattPISSED0013" x="416" y="1267" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattReeaction0000" x="666" y="0" width="188" height="325" pivotX="27" pivotY="40.05" frameX="0" frameY="-5" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0001" x="666" y="326" width="188" height="325" frameX="0" frameY="-5" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0002" x="1174" y="992" width="173" height="330" frameX="-7" frameY="-2" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0003" x="1174" y="1323" width="173" height="329" frameX="-7" frameY="-2" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0004" x="994" y="662" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0005" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0006" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0007" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0008" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0009" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0010" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0011" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0012" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0013" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0014" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0015" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0016" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0017" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0018" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0019" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0020" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0021" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReeaction0022" x="1035" y="0" width="178" height="331" frameX="-5" frameY="0" frameWidth="188" frameHeight="332"/>
+	<SubTexture name="MattReactionTord0000" x="855" y="0" width="179" height="330" pivotX="23.2" pivotY="39.75" frameX="0" frameY="0" frameWidth="219" frameHeight="330"/>
+	<SubTexture name="MattReactionTord0001" x="855" y="331" width="179" height="330" frameX="0" frameY="0" frameWidth="219" frameHeight="330"/>
+	<SubTexture name="MattReactionTord0002" x="0" y="329" width="219" height="300" frameX="0" frameY="-27" frameWidth="219" frameHeight="330"/>
+	<SubTexture name="MattReactionTord0003" x="0" y="630" width="219" height="300" frameX="0" frameY="-27" frameWidth="219" frameHeight="330"/>
+	<SubTexture name="MattReactionTord0004" x="0" y="931" width="215" height="305" frameX="-2" frameY="-23" frameWidth="219" frameHeight="330"/>
+	<SubTexture name="MattReactionTord0005" x="435" y="654" width="215" height="305" frameX="-2" frameY="-23" frameWidth="219" frameHeight="330"/>
+	<SubTexture name="MattReactionTord0006" x="220" y="329" width="214" height="307" frameX="-2" frameY="-21" frameWidth="219" frameHeight="330"/>
+	<SubTexture name="MattReactionTord0007" x="220" y="637" width="214" height="307" frameX="-2" frameY="-21" frameWidth="219" frameHeight="330"/>
+	<SubTexture name="MattReactionTord0008" x="220" y="637" width="214" height="307" frameX="-2" frameY="-21" frameWidth="219" frameHeight="330"/>
+	<SubTexture name="MattSnappingFinger0000" x="450" y="327" width="215" height="326" pivotX="67.2" pivotY="38.95" frameX="-10" frameY="-2" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0001" x="450" y="327" width="215" height="326" frameX="-10" frameY="-2" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0002" x="225" y="0" width="224" height="328" frameX="0" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0003" x="225" y="0" width="224" height="328" frameX="0" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0004" x="1173" y="662" width="178" height="329" frameX="-45" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0005" x="1215" y="330" width="178" height="329" frameX="-45" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0006" x="994" y="994" width="179" height="329" frameX="-45" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0007" x="597" y="1291" width="179" height="329" frameX="-45" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0008" x="204" y="1551" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0009" x="813" y="961" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0010" x="813" y="961" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0011" x="204" y="1551" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0012" x="204" y="1551" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattSnappingFinger0013" x="813" y="961" width="180" height="329" frameX="-43" frameY="0" frameWidth="225" frameHeight="329"/>
+	<SubTexture name="MattWalking0000" x="1348" y="992" width="145" height="316" pivotX="56.35" pivotY="30.05" frameX="-19" frameY="0" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0001" x="1352" y="660" width="145" height="316" frameX="-19" frameY="0" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0002" x="1540" y="0" width="131" height="309" frameX="-31" frameY="-9" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0003" x="1672" y="0" width="130" height="309" frameX="-32" frameY="-9" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0004" x="1498" y="910" width="131" height="308" frameX="-31" frameY="-11" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0005" x="1629" y="310" width="131" height="308" frameX="-31" frameY="-11" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0006" x="1394" y="0" width="145" height="297" frameX="-14" frameY="-3" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0007" x="1394" y="298" width="145" height="297" frameX="-14" frameY="-3" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0008" x="956" y="1324" width="161" height="307" frameX="0" frameY="-1" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0009" x="564" y="1621" width="161" height="307" frameX="0" frameY="-1" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0010" x="726" y="1621" width="155" height="309" frameX="-5" frameY="-8" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0011" x="882" y="1632" width="155" height="309" frameX="-5" frameY="-8" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0012" x="1480" y="1309" width="130" height="313" frameX="-30" frameY="-8" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0013" x="1498" y="596" width="130" height="313" frameX="-30" frameY="-8" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0014" x="1038" y="1632" width="131" height="314" frameX="-32" frameY="-2" frameWidth="164" frameHeight="321"/>
+	<SubTexture name="MattWalking0015" x="1348" y="1309" width="131" height="314" frameX="-32" frameY="-2" frameWidth="164" frameHeight="321"/>
+</TextureAtlas>

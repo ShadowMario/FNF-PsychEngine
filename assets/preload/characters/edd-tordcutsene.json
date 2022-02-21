@@ -1,0 +1,77 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "what",
+			"fps": 24,
+			"name": "EddGroundShaking",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-30,
+				40
+			],
+			"anim": "tom",
+			"fps": 24,
+			"name": "EddLookingUp",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-30,
+				40
+			],
+			"indices": [
+				0,
+				1,
+				2,
+				3
+			],
+			"fps": 24,
+			"anim": "looking",
+			"loop": true,
+			"name": "EddLookingUp"
+		},
+		{
+			"offsets": [
+				5,
+				11
+			],
+			"indices": [
+				0,
+				1,
+				2,
+				3
+			],
+			"fps": 24,
+			"anim": "lookin",
+			"loop": false,
+			"name": "EddTurnToTord"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/EddTordCutscene",
+	"position": [
+		-50,
+		50
+	],
+	"healthicon": "edd",
+	"flip_x": false,
+	"healthbar_colors": [
+		217,
+		18,
+		76
+	],
+	"camera_position": [
+		100,
+		50
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

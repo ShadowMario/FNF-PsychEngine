@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="SlideEdd.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="EddEnterDown0000" x="0" y="0" width="500" height="438" pivotX="0" pivotY="0"/>
+	<SubTexture name="EddEnterDown0001" x="0" y="0" width="500" height="438"/>
+	<SubTexture name="EddEnterDown0002" x="502" y="0" width="500" height="438"/>
+	<SubTexture name="EddEnterDown0003" x="502" y="0" width="500" height="438"/>
+	<SubTexture name="EddEnterDown0004" x="1004" y="0" width="500" height="438"/>
+	<SubTexture name="EddEnterLeft0000" x="1506" y="0" width="500" height="438" pivotX="0" pivotY="0"/>
+	<SubTexture name="EddEnterLeft0001" x="1506" y="0" width="500" height="438"/>
+	<SubTexture name="EddEnterLeft0002" x="0" y="440" width="500" height="438"/>
+	<SubTexture name="EddEnterLeft0003" x="0" y="440" width="500" height="438"/>
+	<SubTexture name="EddEnterLeft0004" x="502" y="440" width="500" height="438"/>
+	<SubTexture name="EddEnterRight0000" x="1004" y="440" width="500" height="438" pivotX="0" pivotY="0"/>
+	<SubTexture name="EddEnterRight0001" x="1004" y="440" width="500" height="438"/>
+	<SubTexture name="EddEnterRight0002" x="1506" y="440" width="500" height="438"/>
+	<SubTexture name="EddEnterRight0003" x="1506" y="440" width="500" height="438"/>
+	<SubTexture name="EddEnterRight0004" x="0" y="880" width="500" height="438"/>
+	<SubTexture name="EddEnterUp0000" x="502" y="880" width="500" height="438" pivotX="0" pivotY="0"/>
+	<SubTexture name="EddEnterUp0001" x="502" y="880" width="500" height="438"/>
+	<SubTexture name="EddEnterUp0002" x="1004" y="880" width="500" height="438"/>
+	<SubTexture name="EddEnterUp0003" x="1004" y="880" width="500" height="438"/>
+	<SubTexture name="EddEnterUp0004" x="1506" y="880" width="500" height="438"/>
+</TextureAtlas>
