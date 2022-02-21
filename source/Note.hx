@@ -113,6 +113,15 @@ class Note extends FlxSprite
 					noAnimation = true;
 				case 'GF Sing':
 					gfNote = true;
+				case 'Missile Note':
+					reloadNote('edd/notes/ROCKET');
+					noteSplashTexture = 'edd/notes/Explosion';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					missHealth = 2;
+					noteSpeed = 5;
+					allowChangeScrollSpeed = false;
 			}
 			noteType = value;
 		}

@@ -68,9 +68,9 @@
 	"healthicon": "edd",
 	"flip_x": false,
 	"healthbar_colors": [
-		217,
-		18,
-		76
+		51,
+		173,
+		51
 	],
 	"camera_position": [
 		0,

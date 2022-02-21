@@ -43,9 +43,9 @@
 	"healthicon": "tord",
 	"flip_x": false,
 	"healthbar_colors": [
-		161,
-		161,
-		161
+		217,
+		18,
+		76
 	],
 	"camera_position": [
 		20,

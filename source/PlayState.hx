@@ -133,6 +133,7 @@ class PlayState extends MusicBeatState
 	public var dad:Character;
 	public var gf:Character;
 	public var boyfriend:Boyfriend;
+	public var eduar:Character;
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
@@ -189,6 +190,8 @@ class PlayState extends MusicBeatState
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
+	public var iconP3:HealthIcon;
+	public var iconP4:HealthIcon;
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
@@ -276,6 +279,23 @@ class PlayState extends MusicBeatState
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
 
+	var plane:FlxSprite;
+	var doorOpen:FlxSprite;
+	var matt:FlxSprite;
+	var tom:FlxSprite;
+	var sky:FlxSprite;
+	var mark:FlxSprite;
+	var john:FlxSprite;
+	var eduarC:FlxSprite;
+	var car:FlxSprite;
+	var tord = new FlxSprite(1270, -45);
+	var tordbot = new FlxSprite(340, -145);
+	var cock:FlxSprite;
+	var tordBG:FlxSprite;
+	var tord2 = new FlxSprite(600, -845);
+	var iconTween:FlxTween;
+	public var camNotes:FlxCamera;
+
 	override public function create()
 	{
 		Paths.clearStoredMemory();
@@ -316,12 +336,15 @@ class PlayState extends MusicBeatState
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
 		camOther = new FlxCamera();
+		camNotes = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 		camOther.bgColor.alpha = 0;
+		camNotes.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(camOther);
+		FlxG.cameras.add(camNotes);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxCamera.defaultCameras = [camGame];
@@ -681,6 +704,245 @@ class PlayState extends MusicBeatState
 					bg.antialiasing = false;
 					add(bg);
 				}
+
+			case 'eddhouse':
+				sky = new FlxSprite(-1790, -800).loadGraphic(Paths.image('edd/SkyBox'));
+				sky.scrollFactor.set(0.1, 0.5);
+				sky.antialiasing = ClientPrefs.globalAntialiasing;
+
+				var cloud:FlxSprite = new FlxSprite(-2590, -500).loadGraphic(Paths.image('edd/Clouds'));
+				cloud.scrollFactor.set(0.1, 0.3);
+				cloud.velocity.x = FlxG.random.float(5, 15);
+				cloud.antialiasing = ClientPrefs.globalAntialiasing;
+
+				var houses:FlxSprite = new FlxSprite(-1790, -600).loadGraphic(Paths.image('edd/HousesAndFloor'));
+				houses.scrollFactor.set(1, 1);
+				houses.antialiasing = ClientPrefs.globalAntialiasing;
+
+				doorOpen = new FlxSprite(600, 300);
+				doorOpen.frames = Paths.getSparrowAtlas('edd/DoorOpen');
+				doorOpen.animation.addByPrefix('open','Door Opening', 12, false);
+				doorOpen.scrollFactor.set(1, 1);
+				doorOpen.alpha = 0;
+				doorOpen.setGraphicSize(Std.int(doorOpen.width * 1.3), Std.int(doorOpen.height * 1.3));
+				doorOpen.antialiasing = ClientPrefs.globalAntialiasing;
+
+				var city:FlxSprite;
+				city = new FlxSprite(-1290, -500).loadGraphic(Paths.image('edd/SecondParalax'));
+				city.scrollFactor.set(0.65, 0.65);
+				city.setGraphicSize(Std.int(city.width * 0.8), Std.int(city.height * 0.8));
+				city.y -= 200;
+				city.x -= 200;
+				city.antialiasing = ClientPrefs.globalAntialiasing;
+
+				matt = new FlxSprite(560, 245);
+				matt.frames = Paths.getSparrowAtlas('edd/Matt');
+				matt.animation.addByPrefix('walk', 'MattWalking', 24, true);
+				matt.animation.addByPrefix('idle', 'MattSnappingFinger', 24, false);
+				matt.animation.addByPrefix('reaction', 'MattReeaction', 24, false);
+				matt.animation.addByPrefix('idol', 'MattPISSED', 24, false);
+				matt.scrollFactor.set(1, 1);
+				matt.alpha = 0;
+				matt.y += 100;
+				matt.setGraphicSize(Std.int(matt.width * 1.5), Std.int(matt.height * 1.5));
+				matt.antialiasing = ClientPrefs.globalAntialiasing;
+
+				tom = new FlxSprite(610, 245);
+				tom.frames = Paths.getSparrowAtlas('edd/Tom');
+				tom.animation.addByPrefix('walk', 'TomWalkingBy', 24, true);
+				tom.animation.addByPrefix('trans', 'TomTransition', 24, false);
+				tom.animation.addByPrefix('idle', 'TomIdle', 24, false);
+				tom.animation.addByPrefix('lookin', 'TomLooking', 24, false);
+				tom.animation.addByPrefix('idol', 'TomIdol', 24, false);
+				tom.animation.addByPrefix('reaction', 'TomReaction', 24, false);
+				tom.scrollFactor.set(1, 1);
+				tom.alpha = 0;
+				tom.y += 100;
+				tom.setGraphicSize(Std.int(tom.width * 1.5), Std.int(tom.height * 1.5));
+				tom.antialiasing = ClientPrefs.globalAntialiasing;
+
+				john = new FlxSprite(-915, 205);
+				john.frames = Paths.getSparrowAtlas('edd/John');
+				john.animation.addByPrefix('idle', 'JohnIdle', 24, false);
+				john.scrollFactor.set(1, 1);
+				john.alpha = 0;
+				john.setGraphicSize(Std.int(john.width * 0.9), Std.int(john.height * 0.9));
+				john.antialiasing = ClientPrefs.globalAntialiasing;
+
+				mark = new FlxSprite(-760, 245);
+				mark.frames = Paths.getSparrowAtlas('edd/Mark');
+				mark.animation.addByPrefix('idle', 'MarkIdle', 24, false);
+				mark.scrollFactor.set(1, 1);
+				mark.alpha = 0;
+				mark.y -= 30;
+				mark.setGraphicSize(Std.int(mark.width * 0.8), Std.int(mark.height * 0.8));
+				mark.antialiasing = ClientPrefs.globalAntialiasing;
+
+				car = new FlxSprite(-1790, -600).loadGraphic(Paths.image('edd/Car'));
+				car.scrollFactor.set(1.15, 1.15);
+				car.antialiasing = ClientPrefs.globalAntialiasing;
+
+				plane = new FlxSprite(-890, 0).loadGraphic(Paths.image('edd/Plane'));
+				plane.scrollFactor.set(0.2, 0.6);
+				plane.antialiasing = ClientPrefs.globalAntialiasing;
+
+				var fence:FlxSprite = new FlxSprite(-1790, -600).loadGraphic(Paths.image('edd/Fence'));
+				fence.scrollFactor.set(1, 1);
+				fence.antialiasing = ClientPrefs.globalAntialiasing;
+
+				eduarC = new FlxSprite(-1080, 125);
+				eduarC.frames = Paths.getSparrowAtlas('edd/EduardoCUTSCENE');
+				eduarC.animation.addByPrefix('punch', 'EduardoPunch', 24, false);
+				eduarC.scrollFactor.set(1, 1);
+				eduarC.alpha = 0;
+				eduarC.antialiasing = ClientPrefs.globalAntialiasing;
+
+				eduar = new Character(-1080, 125, 'eduardo');
+				eduar.scrollFactor.set(1, 1);
+				eduar.alpha = 0;
+				eduar.antialiasing = ClientPrefs.globalAntialiasing;
+
+				add(sky);
+				add(cloud);
+				add(plane);
+				add(city);
+				add(houses);
+				add(doorOpen);
+
+				add(mark);
+				add(john);
+				add(eduar);
+				add(eduarC);
+				add(fence);
+
+				add(matt);
+				add(tom);
+
+				add(car);
+
+			case 'eddhouse-tord':
+
+				sky = new FlxSprite(-1790, -800).loadGraphic(Paths.image('edd/SkyBox'));
+				sky.scrollFactor.set(0.1, 0.5);
+				sky.antialiasing = ClientPrefs.globalAntialiasing;
+
+				var cloud:FlxSprite = new FlxSprite(-2590, -500).loadGraphic(Paths.image('edd/Clouds'));
+				cloud.scrollFactor.set(0.1, 0.3);
+				cloud.velocity.x = FlxG.random.float(5, 15);
+				cloud.antialiasing = ClientPrefs.globalAntialiasing;
+
+				var houses:FlxSprite = new FlxSprite(-1790, -600).loadGraphic(Paths.image('edd/HousesAndFloor'));
+				houses.scrollFactor.set(1, 1);
+				houses.antialiasing = ClientPrefs.globalAntialiasing;
+
+				doorOpen = new FlxSprite(600, 300);
+				doorOpen.frames = Paths.getSparrowAtlas('edd/DoorOpen');
+				doorOpen.animation.addByPrefix('open','Door Opening', 12, false);
+				doorOpen.scrollFactor.set(1, 1);
+				doorOpen.alpha = 0;
+				doorOpen.scale.set(1.3, 1.3);
+				doorOpen.antialiasing = ClientPrefs.globalAntialiasing;
+
+				var city:FlxSprite;
+				city = new FlxSprite(-1290, -500).loadGraphic(Paths.image('edd/SecondParalax'));
+				city.scrollFactor.set(0.65, 0.65);
+				city.scale.set(0.9, 0.8);
+				city.y -= 200;
+				city.x -= 200;
+				city.antialiasing = ClientPrefs.globalAntialiasing;
+
+				matt = new FlxSprite(560, 245);
+				matt.frames = Paths.getSparrowAtlas('edd/Matt');
+				matt.animation.addByPrefix('walk', 'MattWalking', 24, true);
+				matt.animation.addByPrefix('idle', 'MattSnappingFinger', 24, false);
+				matt.animation.addByPrefix('reaction', 'MattReactionTord', 24, false);
+				matt.animation.addByPrefix('lookin', 'MattHarpoonBit', 24, false);
+				matt.animation.addByPrefix('lookidle', 'MattHarpoonIdle', 24, true);
+				matt.scrollFactor.set(1, 1);
+				matt.alpha = 0;
+				matt.y += 100;
+				matt.scale.set(1.5, 1.5);
+				matt.antialiasing = ClientPrefs.globalAntialiasing;
+
+				tom = new FlxSprite(1210, 299);
+				tom.frames = Paths.getSparrowAtlas('edd/TomEND');
+				tom.animation.addByPrefix('walk', 'Tom Running In', 24, false);
+				tom.animation.addByPrefix('harp', 'TomHarpoonLine', 24, false);
+				tom.animation.addByPrefix('harpidle', 'TomHarpoonIdle', 24, true);
+				tom.scrollFactor.set(1, 1);
+				tom.alpha = 0;
+				tom.y += 100;
+				tom.scale.set(1.5, 1.5);
+				tom.antialiasing = ClientPrefs.globalAntialiasing;
+
+				car = new FlxSprite(-1790, -600).loadGraphic(Paths.image('edd/Car'));
+				car.scrollFactor.set(1.15, 1.15);
+				car.antialiasing = ClientPrefs.globalAntialiasing;
+
+				plane = new FlxSprite(-890, 0).loadGraphic(Paths.image('edd/Plane'));
+				plane.scrollFactor.set(0.2, 0.6);
+				plane.antialiasing = ClientPrefs.globalAntialiasing;
+
+				tord.frames = Paths.getSparrowAtlas('edd/TordHelicopter');
+				tord.animation.addByIndices('jump', 'TordHelicopter', [1, 2, 3, 4], '', 24, false);
+				tord.animation.addByIndices('open', 'TordHelicopter', [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], '', 24, false);
+				tord.scrollFactor.set(0.2, 0.6);
+				tord.alpha = 0;
+				tord.scale.set(2, 2);
+				tord.antialiasing = ClientPrefs.globalAntialiasing;
+
+				tord2.frames = Paths.getSparrowAtlas('edd/TordFallin');
+				tord2.animation.addByPrefix('idle', 'TordFlailing', 24, true);
+				tord2.scrollFactor.set(0.9, 0.9);
+				tord2.alpha = 0;
+				tord2.scale.set(1.6, 1.6);
+				tord2.antialiasing = ClientPrefs.globalAntialiasing;
+
+				tordbot.frames = Paths.getSparrowAtlas('edd/TordBot');
+				tordbot.animation.addByPrefix('idle', 'TordBot', 24, true);
+				tordbot.animation.addByPrefix('explode', 'TordBotBlowingUp', 24, true);
+				tordbot.animation.addByIndices('blowidle', 'TordBotBlowingUp', [1, 2], '', 24);
+				tordbot.scrollFactor.set(0.9, 0.9);
+				tordbot.scale.set(1.3, 1.3);
+				tordbot.x += 100;
+				tordbot.y += 200;
+				tordbot.antialiasing = ClientPrefs.globalAntialiasing;
+
+				var fence:FlxSprite = new FlxSprite(-1790, -600).loadGraphic(Paths.image('edd/Fence'));
+				fence.scrollFactor.set(1, 1);
+				fence.antialiasing = ClientPrefs.globalAntialiasing;
+
+				tordBG = new FlxSprite(-100, -200).loadGraphic(Paths.image('edd/TordBG'));
+				tordBG.scrollFactor.set(0, 0);
+				tordBG.scale.set(0.5, 0.5);
+				tordBG.alpha = 0;
+				tordBG.x -= 775;
+				tordBG.y -= 550;
+				tordBG.antialiasing = ClientPrefs.globalAntialiasing;
+
+				cock = new FlxSprite(-20, -40).loadGraphic(Paths.image('edd/CockPitUpClose'));
+				cock.scrollFactor.set(0, 0);
+				cock.scale.set(0.6, 0.6);
+				cock.alpha = 0;
+				cock.x -= 500;
+				cock.y -= 250;
+				cock.antialiasing = ClientPrefs.globalAntialiasing;
+
+				add(sky);
+				add(cloud);
+				add(plane);
+				add(tord);
+				add(city);
+				add(tordbot);
+				add(tord2);
+				add(houses);
+				add(doorOpen);
+
+				add(fence);
+
+				add(matt);
+
+				add(tordBG);
 		}
 
 		if(isPixelStage) {
@@ -716,6 +978,16 @@ class PlayState extends MusicBeatState
 				light.updateHitbox();
 				phillyCityLightsEvent.add(light);
 			}
+		}
+
+		if (curStage == 'eddhouse') {
+			add(car);
+		}
+
+		if (curStage == 'eddhouse-tord') {
+			add(tom);
+			add(car);
+			add(cock);
 		}
 
 
@@ -1013,6 +1285,21 @@ class PlayState extends MusicBeatState
 		iconP2.visible = !ClientPrefs.hideHud;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP2);
+
+		iconP3 = new HealthIcon('eduardo', false);
+		iconP3.y = healthBar.y - 75;
+		iconP3.x = 10000;
+		iconP3.alpha = ClientPrefs.healthBarAlpha;
+		iconP3.visible = !ClientPrefs.hideHud;
+		add(iconP3);
+
+		iconP4 = new HealthIcon('tord', false);
+		iconP4.y = healthBar.y - 75;
+		iconP4.x = 10000;
+		iconP4.alpha = ClientPrefs.healthBarAlpha;
+		iconP4.visible = !ClientPrefs.hideHud;
+		add(iconP4);
+
 		reloadHealthBarColors();
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
@@ -1039,6 +1326,8 @@ class PlayState extends MusicBeatState
 		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
+		iconP3.cameras = [camHUD];
+		iconP4.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
@@ -1147,7 +1436,20 @@ class PlayState extends MusicBeatState
 			}
 			seenCutscene = true;
 		} else {
-			startCountdown();
+			switch(daSong)
+			{
+				case 'challengedd':
+					if(!gfMap.exists('tord')) {
+						addCharacterToList('tord', 2);
+					}
+					if(!gfMap.exists('tord2')) {
+						addCharacterToList('tord2', 2);
+					}
+					startCountdown();
+
+				default:
+					startCountdown();
+			}
 		}
 		RecalculateRating();
 
@@ -1640,10 +1942,18 @@ class PlayState extends MusicBeatState
 					{
 						dad.dance();
 					}
+					if (eduar != null && eduar.animation.curAnim != null && !eduar.animation.curAnim.name.startsWith('sing') && !eduar.stunned)
+					{
+						eduar.dance();
+					}
 				}
 				else if(dad.danceIdle && dad.animation.curAnim != null && !dad.stunned && !dad.curCharacter.startsWith('gf') && !dad.animation.curAnim.name.startsWith("sing"))
 				{
 					dad.dance();
+				}
+				else if(eduar != null && eduar.danceIdle && eduar.animation.curAnim != null && !eduar.stunned && !eduar.animation.curAnim.name.startsWith("sing"))
+				{
+					eduar.dance();
 				}
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
@@ -2219,6 +2529,10 @@ class PlayState extends MusicBeatState
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
 
+	var iconFlipped:Bool = false;
+	var iconOffset2:Int = 26;
+	var iconOffset3:Int = 250;
+
 	override public function update(elapsed:Float)
 	{
 		/*if (FlxG.keys.justPressed.NINE)
@@ -2411,10 +2725,34 @@ class PlayState extends MusicBeatState
 		iconP2.scale.set(mult, mult);
 		iconP2.updateHitbox();
 
+		var mult:Float = FlxMath.lerp(1, iconP3.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		iconP3.scale.set(mult, mult);
+		iconP3.updateHitbox();
+
+		var mult:Float = FlxMath.lerp(1, iconP4.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		iconP4.scale.set(mult, mult);
+		iconP4.updateHitbox();
+
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
-		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		if(curStage == 'eddhouse') {
+			if(!iconFlipped) {
+				iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+			} else {
+				iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP2.scale.x - 150) / 2 - iconOffset2;
+				iconP3.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP3.scale.x) / 2 - iconOffset3 * 2;
+			}
+		} else if(curStage == 'eddhouse-tord') {
+			if(!iconFlipped) {
+				iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+			} else {
+				iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP2.scale.x - 150) / 2 - iconOffset2;
+				iconP4.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP4.scale.x) / 2 - iconOffset3 * 2;
+			}
+		} else {
+			iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		}
 
 		if (health > 2)
 			health = 2;
@@ -2424,10 +2762,46 @@ class PlayState extends MusicBeatState
 		else
 			iconP1.animation.curAnim.curFrame = 0;
 
-		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 1;
-		else
-			iconP2.animation.curAnim.curFrame = 0;
+		if(curStage == 'eddhouse') {
+			if(!iconFlipped) {
+				if (healthBar.percent > 80)
+					iconP2.animation.curAnim.curFrame = 1;
+				else
+					iconP2.animation.curAnim.curFrame = 0;
+			} else {
+				if (healthBar.percent < 20)
+					iconP2.animation.curAnim.curFrame = 1;
+				else
+					iconP2.animation.curAnim.curFrame = 0;
+
+				if (healthBar.percent > 80)
+					iconP3.animation.curAnim.curFrame = 1;
+				else
+					iconP3.animation.curAnim.curFrame = 0;
+			}
+		} else if(curStage == 'eddhouse-tord') {
+			if(!iconFlipped) {
+				if (healthBar.percent > 80)
+					iconP2.animation.curAnim.curFrame = 1;
+				else
+					iconP2.animation.curAnim.curFrame = 0;
+			} else {
+				if (healthBar.percent < 20)
+					iconP2.animation.curAnim.curFrame = 1;
+				else
+					iconP2.animation.curAnim.curFrame = 0;
+
+				if (healthBar.percent > 80)
+					iconP4.animation.curAnim.curFrame = 1;
+				else
+					iconP4.animation.curAnim.curFrame = 0;
+			}
+		} else {
+			if (healthBar.percent > 80)
+				iconP2.animation.curAnim.curFrame = 1;
+			else
+				iconP2.animation.curAnim.curFrame = 0;
+		}
 
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
 			persistentUpdate = false;
@@ -2486,6 +2860,7 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
 			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
+			camNotes.zoom = FlxMath.lerp(1, camNotes.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
 		}
 
 		FlxG.watch.addQuick("beatShit", curBeat);
@@ -2959,6 +3334,7 @@ for (key => value in luaShaders)
 
 					FlxG.camera.zoom += camZoom;
 					camHUD.zoom += hudZoom;
+					camNotes.zoom += hudZoom;
 				}
 
 			case 'Trigger BG Ghouls':
@@ -3127,8 +3503,336 @@ for (key => value in luaShaders)
 						}
 					});
 				}
+
+			case 'Missile Warning':
+				var whichNote:Int = 0;
+				whichNote = Std.parseInt(value1);
+				if(Math.isNaN(whichNote)) whichNote = 0;
+
+				switch(whichNote) {
+					case 0:
+						doMissileWarningLeft();
+					case 1:
+						doMissileWarningDown();
+					case 2:
+						doMissileWarningUp();
+					case 3:
+						doMissileWarningRight();
+				}
+
+			case 'Slide In/Out':
+				var dadOrBF:Int = 0;
+				dadOrBF = Std.parseInt(value1);
+				if(Math.isNaN(dadOrBF)) dadOrBF = 0;
+				var inOrOut:Int = 0;
+				inOrOut = Std.parseInt(value2);
+				if(Math.isNaN(inOrOut)) inOrOut = 0;
+				var whoToSlide:Character = boyfriend;
+				var slideX:Int = 1050;
+				var slideY:Int = -300;
+				var slideSpeed:Float = 1;
+
+				switch(dadOrBF) {
+					case 0:
+						whoToSlide = boyfriend;
+					case 1:
+						whoToSlide = dad;
+				}
+				switch(inOrOut) {
+					case 0:
+						if(whoToSlide == boyfriend) {
+							slideX = 950;
+							slideY = -600;
+						}
+						if(whoToSlide == dad) {
+							slideX = 250;
+							slideY = -500;
+						}
+						slideSpeed = 0.2;
+					case 1:
+						if(whoToSlide == boyfriend) {
+							slideX = 1050;
+							slideY = -300;
+						}
+						if(whoToSlide == dad) {
+							slideX = 150;
+							slideY = -200;
+						}
+						slideSpeed = 1;
+				}
+
+				FlxTween.tween(whoToSlide, {x: slideX, y: slideY}, slideSpeed, {ease: FlxEase.cubeIn});
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
+	}
+
+	function doMissileWarningLeft():Void
+	{
+		var target2 = new FlxSprite(732, 47).loadGraphic(Paths.image('edd/notes/target2'));
+		target2.cameras = [camNotes];
+		target2.antialiasing = true;
+		target2.scale.set(1.5, 1.5);
+		add(target2);
+		FlxTween.tween(target2, {"scale.x": 0.1, "scale.y": 0.1}, 0.2, {ease: FlxEase.linear});
+		new FlxTimer().start(0.2, function(tmr:FlxTimer) {
+			remove(target2);
+		});
+		var target = new FlxSprite(732, 47).loadGraphic(Paths.image('edd/notes/target'));
+		target.cameras = [camNotes];
+		target.antialiasing = true;
+		add(target);
+		var target3 = new FlxSprite(732, 47).loadGraphic(Paths.image('edd/notes/target2'));
+		target3.cameras = [camNotes];
+		target3.antialiasing = true;
+		add(target3);
+		new FlxTimer().start(0.1, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.4, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.6, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.7, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.75, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.85, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.9, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(1, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(1.05, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(1.15, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(1.2, function(tmr:FlxTimer) {
+			remove(target);
+		});
+	}
+	function doMissileWarningDown():Void
+	{
+		var target2 = new FlxSprite(844, 47).loadGraphic(Paths.image('edd/notes/target2'));
+		target2.cameras = [camNotes];
+		target2.antialiasing = true;
+		target2.scale.set(1.5, 1.5);
+		add(target2);
+		FlxTween.tween(target2, {"scale.x": 0.1, "scale.y": 0.1}, 0.2, {ease: FlxEase.linear});
+		new FlxTimer().start(0.2, function(tmr:FlxTimer) {
+			remove(target2);
+		});
+		var target = new FlxSprite(844, 47).loadGraphic(Paths.image('edd/notes/target'));
+		target.cameras = [camNotes];
+		target.antialiasing = true;
+		add(target);
+		var target3 = new FlxSprite(844, 47).loadGraphic(Paths.image('edd/notes/target2'));
+		target3.cameras = [camNotes];
+		target3.antialiasing = true;
+		add(target3);
+		new FlxTimer().start(0.1, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.4, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.6, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.7, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.75, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.85, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.9, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(1, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(1.05, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(1.15, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(1.2, function(tmr:FlxTimer) {
+			remove(target);
+		});
+	}
+	function doMissileWarningUp():Void
+	{
+		var target2 = new FlxSprite(956, 47).loadGraphic(Paths.image('edd/notes/target2'));
+		target2.cameras = [camNotes];
+		target2.antialiasing = true;
+		target2.scale.set(1.5, 1.5);
+		add(target2);
+		FlxTween.tween(target2, {"scale.x": 0.1, "scale.y": 0.1}, 0.2, {ease: FlxEase.linear});
+		new FlxTimer().start(0.2, function(tmr:FlxTimer) {
+			remove(target2);
+		});
+		var target = new FlxSprite(956, 47).loadGraphic(Paths.image('edd/notes/target'));
+		target.cameras = [camNotes];
+		target.antialiasing = true;
+		add(target);
+		var target3 = new FlxSprite(956, 47).loadGraphic(Paths.image('edd/notes/target2'));
+		target3.cameras = [camNotes];
+		target3.antialiasing = true;
+		add(target3);
+		new FlxTimer().start(0.1, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.4, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.6, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.7, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.75, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.85, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.9, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(1, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(1.05, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(1.15, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(1.2, function(tmr:FlxTimer) {
+			remove(target);
+		});
+	}
+	function doMissileWarningRight():Void
+	{
+		var target2 = new FlxSprite(1068, 47).loadGraphic(Paths.image('edd/notes/target2'));
+		target2.cameras = [camNotes];
+		target2.antialiasing = true;
+		target2.scale.set(1.5, 1.5);
+		add(target2);
+		FlxTween.tween(target2, {"scale.x": 0.1, "scale.y": 0.1}, 0.2, {ease: FlxEase.linear});
+		new FlxTimer().start(0.2, function(tmr:FlxTimer) {
+			remove(target2);
+		});
+		var target = new FlxSprite(1068, 47).loadGraphic(Paths.image('edd/notes/target'));
+		target.cameras = [camNotes];
+		target.antialiasing = true;
+		add(target);
+		var target3 = new FlxSprite(1068, 47).loadGraphic(Paths.image('edd/notes/target2'));
+		target3.cameras = [camNotes];
+		target3.antialiasing = true;
+		add(target3);
+		new FlxTimer().start(0.1, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.4, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.6, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.7, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.75, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(0.85, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(0.9, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(1, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(1.05, function(tmr:FlxTimer) {
+			add(target3);
+			remove(target);
+		});
+		new FlxTimer().start(1.15, function(tmr:FlxTimer) {
+			remove(target3);
+			add(target);
+		});
+		new FlxTimer().start(1.2, function(tmr:FlxTimer) {
+			remove(target);
+		});
 	}
 
 	function moveCameraSection(?id:Int = 0):Void {
@@ -3456,7 +4160,7 @@ for (key => value in luaShaders)
 		}
 
 
-		if(daRating == 'sick' && !note.noteSplashDisabled)
+		if((daRating == 'sick' && !note.noteSplashDisabled) || note.noteType == 'Missile Note')
 		{
 			spawnNoteSplashOnNote(note);
 		}
@@ -3912,6 +4616,9 @@ for (key => value in luaShaders)
 			if(note.gfNote) {
 				char = gf;
 			}
+			if(note.noteType == 'Eduar Sing') {
+				char = eduar;
+			}
 
 			char.playAnim(animToPlay, true);
 			char.holdTimer = 0;
@@ -3934,6 +4641,22 @@ for (key => value in luaShaders)
 			note.kill();
 			notes.remove(note, true);
 			note.destroy();
+		}
+
+		if (curStage == 'eddhouse-tord' && curStep >= 928) {
+			if(!note.isSustainNote) {
+				camGame.shake(0.0025, 0.1);
+				camHUD.shake(0.0025, 0.1);
+				camNotes.shake(0.0025, 0.1);
+				if(health >= 0.2) {
+					health -= 0.028;
+				}
+			}
+			else {
+				if(health >= 0.2) {
+					health -= 0.014;
+				}
+			}
 		}
 	}
 
@@ -3998,6 +4721,9 @@ for (key => value in luaShaders)
 					if(note.gfNote) {
 						gf.playAnim(animToPlay + daAlt, true);
 						gf.holdTimer = 0;
+					} else if(note.noteType == 'Dad Sing') {
+						dad.playAnim(animToPlay + daAlt, true);
+						dad.holdTimer = 0;
 					} else {
 						boyfriend.playAnim(animToPlay + daAlt, true);
 						boyfriend.holdTimer = 0;
@@ -4263,6 +4989,8 @@ for (key => value in luaShaders)
 	}
 
 	var lastStepHit:Int = -1;
+
+	var stepOfLast = 0;
 	override function stepHit()
 	{
 		super.stepHit();
@@ -4279,6 +5007,197 @@ for (key => value in luaShaders)
 		lastStepHit = curStep;
 		setOnLuas('curStep', curStep);
 		callOnLuas('onStepHit', []);
+
+		if(curStage == 'eddhouse' && curStep != stepOfLast) {
+			switch(curStep)
+			{
+				case 144:
+					FlxTween.tween(plane, {x: 1600}, 25, {ease: FlxEase.linear, onComplete: function (twn:FlxTween) {
+						remove(plane);
+					}});
+				case 272:
+					doorOpen.animation.play('open');
+					doorOpen.alpha = 1;
+					new FlxTimer().start(1, function(tmr:FlxTimer) {
+						doorOpen.alpha = 0;
+					}, 1);
+					matt.alpha = 1;
+					FlxTween.tween(matt, {x: 10}, 1.9, {ease: FlxEase.linear, onComplete: function (twn:FlxTween) {
+						matt.animation.play('idle', true);
+						matt.x = -120;
+					}});
+					matt.animation.play('walk');
+				case 416:
+					doorOpen.alpha = 1;
+					doorOpen.animation.play('open');
+					new FlxTimer().start(1, function(tmr:FlxTimer) {
+						doorOpen.alpha = 0;
+					}, 1);
+					tom.alpha = 1;
+					tom.flipX = true;
+					FlxTween.tween(tom, {x: 1390}, 4.8, {ease: FlxEase.linear});
+					tom.animation.play('walk');
+					new FlxTimer().start(4.8, function(tmr:FlxTimer) {
+						tom.animation.play('trans');
+						tom.flipX = false;
+					}, 1);
+				case 928:
+					eduar.animation.play('well');
+					FlxTween.tween(sky, {alpha: 0.9}, 0.2, {ease: FlxEase.linear});
+					FlxTween.tween(camGame, {zoom: 0.75}, 0.2, {ease: FlxEase.linear});
+				case 932:
+					eduar.animation.play('well');
+					FlxTween.tween(sky, {alpha: 0.8}, 0.2, {ease: FlxEase.linear});
+					FlxTween.tween(camGame, {zoom: 0.8}, 0.2, {ease: FlxEase.linear});
+				case 936:
+					eduar.animation.play('well');
+					FlxTween.tween(sky, {alpha: 0.7}, 0.2, {ease: FlxEase.linear});
+					FlxTween.tween(camGame, {zoom: 0.9}, 0.2, {ease: FlxEase.linear});
+					new FlxTimer().start(1, function(tmr:FlxTimer) {
+						FlxTween.tween(sky, {alpha: 1}, 2, {ease: FlxEase.linear});
+					}, 1);
+				case 1599:
+					remove(mark);
+					remove(eduar);
+					remove(john);
+					eduarC.alpha = 1;
+					eduarC.animation.play('punch');
+			}
+			stepOfLast = curStep;
+		}
+
+		if(curStage == 'eddhouse-tord' && curStep != stepOfLast) {
+			switch(curStep)
+			{
+				case 144:
+					FlxTween.tween(plane, {x: 1600}, 25, {ease: FlxEase.linear, onComplete: function (twn:FlxTween) {
+						remove(plane);
+					}});
+				case 272:
+					doorOpen.animation.play('open', true);
+					doorOpen.alpha = 1;
+					new FlxTimer().start(1, function(tmr:FlxTimer) {
+						doorOpen.alpha = 0;
+					}, 1);
+					matt.alpha = 1;
+					FlxTween.tween(matt, {x: 10}, 1.9, {ease: FlxEase.linear, onComplete: function (twn:FlxTween) {
+						matt.animation.play('idle', true);
+						matt.x = -120;
+					}});
+					matt.animation.play('walk', true);
+				case 397:
+					tord.animation.play('jump', true);
+					tord.alpha = 1;
+					FlxTween.tween(tord, {y: 110}, 2, {ease: FlxEase.cubeIn, onComplete: function (twn:FlxTween) {
+						tord.animation.play('open', true);
+						FlxTween.tween(tord, {y: 510}, 10, {ease: FlxEase.linear, onComplete: function (twn:FlxTween) {
+							remove(tord);
+						}});
+					}});
+				case 928:
+					FlxTween.tween(camHUD, {alpha: 0}, 0.2, {ease: FlxEase.linear});
+					matt.animation.play('reaction', true);
+					cameraSpeed -= 0.8;
+					FlxTween.tween(tordbot, {y: -470}, 5.1, {ease: FlxEase.linear});
+				case 936:
+					tom.alpha = 1;
+					tom.animation.play('walk', true);
+				case 1018:
+					FlxTween.tween(camGame, {zoom: 1.3}, 0.3, {ease: FlxEase.linear});
+					defaultCamZoom = 1.3;
+				case 1024:
+					FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.linear});
+					cameraSpeed = 3;
+					cock.alpha = 1;
+					FlxTween.tween(cock, {alpha: 0}, 0.7, {ease: FlxEase.linear});
+					tordBG.alpha = 1;
+					changeGFToTord();
+					gf.y = -900;
+					gf.x = 100;
+					gf.y -= 20;
+					iconP2.changeIcon('edd');
+					healthBar.createFilledBar(FlxColor.fromRGB(217, 18, 76), FlxColor.fromRGB(50, 175, 130));
+					iconFlipped = true;
+					iconP2.flipX = true;
+					FlxTween.tween(iconP2, {y: 545}, 0.2, {ease: FlxEase.linear});
+					iconTween = FlxTween.tween(this, {"iconOffset3": 26, "iconOffset2": -60}, 0.4, {ease: FlxEase.cubeOut});
+				case 1132:
+					dad.y = -100;
+					dad.x = 250;
+					iconP2.changeIcon('edd');
+					healthBar.createFilledBar(FlxColor.fromRGB(217, 18, 76), FlxColor.fromRGB(50, 175, 130));
+				case 1260:
+					boyfriend.y = -100;
+					boyfriend.x = 950;
+					iconP2.changeIcon('edd');
+					healthBar.createFilledBar(FlxColor.fromRGB(217, 18, 76), FlxColor.fromRGB(50, 175, 130));
+				case 1261:
+					healthBar.createFilledBar(FlxColor.fromRGB(217, 18, 76), FlxColor.fromRGB(50, 175, 130));
+				case 1312:
+					changeGFToTord2();
+					gf.animation.play('pissed', true);
+					gf.x = 85;
+					gf.y = -925;
+					gf.x += 195;
+					gf.y += 110;
+					healthBar.createFilledBar(FlxColor.fromRGB(217, 18, 76), FlxColor.fromRGB(50, 175, 130));
+				case 1327:
+					changeGFToTord();
+					gf.y = -900;
+					gf.x = 100;
+					gf.y -= 20;
+					healthBar.createFilledBar(FlxColor.fromRGB(217, 18, 76), FlxColor.fromRGB(50, 175, 130));
+				case 1984:
+					FlxTween.tween(camHUD, {alpha: 0}, 0.2, {ease: FlxEase.linear});
+					changeGFToTord2();
+					gf.animation.play('harpoon', true);
+					gf.y = -925;
+					gf.x = 85;
+					gf.x += 195;
+					gf.y += 110;
+					healthBar.createFilledBar(FlxColor.fromRGB(217, 18, 76), FlxColor.fromRGB(50, 175, 130));
+				case 2007:
+					gf.animation.play('harpoonline', true);
+				case 2016:
+					tordbot.animation.play('blowidle', true);
+					tordbot.x = -220;
+					tordbot.y = -680;
+					changeGFToGF();
+					gf.y = 130;
+					gf.x = 460;
+					remove(tordBG);
+					FlxTween.tween(camGame, {zoom: 0.7}, 0.3, {ease: FlxEase.linear});
+					defaultCamZoom = 0.7;
+					cameraSpeed -= 0.4;
+					cock.alpha = 1;
+					FlxTween.tween(cock, {alpha: 0}, 0.3, {ease: FlxEase.linear});
+				case 2032:
+					new FlxTimer().start(0.7, function(tmr:FlxTimer) {
+						remove(tordbot);
+					}, 1);
+					tordbot.animation.play('explode', true);
+					tom.x = 700;
+					matt.x = 100;
+					cameraSpeed = 0.2;
+				case 2047:
+					tom.scale.set(1, 1);
+					tom.x -= 100;
+					tom.animation.play('harpidle', true);
+					matt.animation.play('lookidle', true);
+					tord2.animation.play('idle', true);
+					tord2.alpha = 1;
+					FlxTween.tween(tord2, {y: 400}, 1.5, {ease: FlxEase.linear});
+					new FlxTimer().start(1.5, function(tmr:FlxTimer) {
+						remove(tord2);
+					}, 1);
+				case 2078:
+					matt.animation.play('lookin', true);
+					matt.x = 35;
+				case 2087:
+					tom.animation.play('harp', true);
+			}
+			stepOfLast = curStep;
+		}
 	}
 
 	var lightningStrikeBeat:Int = 0;
@@ -4329,13 +5248,48 @@ for (key => value in luaShaders)
 		{
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
+			camNotes.zoom += 0.03;
 		}
 
-		iconP1.scale.set(1.2, 1.2);
-		iconP2.scale.set(1.2, 1.2);
-
-		iconP1.updateHitbox();
-		iconP2.updateHitbox();
+		if (curStage == 'eddhouse') {
+			if(!iconFlipped) {
+				iconP1.scale.set(1.2, 1.2);
+				iconP2.scale.set(1.2, 1.2);
+		
+				iconP1.updateHitbox();
+				iconP2.updateHitbox();
+			} else {
+				iconP1.scale.set(1.2, 1.2);
+				iconP2.scale.set(1.2, 1.2);
+				iconP3.scale.set(1.2, 1.2);
+		
+				iconP1.updateHitbox();
+				iconP2.updateHitbox();
+				iconP3.updateHitbox();
+			}
+		} else if(curStage == 'eddhouse-tord') {
+			if(!iconFlipped) {
+				iconP1.scale.set(1.2, 1.2);
+				iconP2.scale.set(1.2, 1.2);
+		
+				iconP1.updateHitbox();
+				iconP2.updateHitbox();
+			} else {
+				iconP1.scale.set(1.2, 1.2);
+				iconP2.scale.set(1.2, 1.2);
+				iconP4.scale.set(1.2, 1.2);
+		
+				iconP1.updateHitbox();
+				iconP2.updateHitbox();
+				iconP4.updateHitbox();
+			}
+		} else {
+			iconP1.scale.set(1.2, 1.2);
+			iconP2.scale.set(1.2, 1.2);
+	
+			iconP1.updateHitbox();
+			iconP2.updateHitbox();
+		}
 
 		if (curBeat % gfSpeed == 0 && !gf.stunned && gf.animation.curAnim.name != null && !gf.animation.curAnim.name.startsWith("sing"))
 		{
@@ -4351,56 +5305,56 @@ for (key => value in luaShaders)
 			{
 				dad.dance();
 			}
+			if (eduar != null && eduar.animation.curAnim.name != null && !eduar.animation.curAnim.name.startsWith("sing") && !eduar.stunned)
+			{
+				eduar.dance();
+			}
 		} else if(dad.danceIdle && dad.animation.curAnim.name != null && !dad.curCharacter.startsWith('gf') && !dad.animation.curAnim.name.startsWith("sing") && !dad.stunned) {
 			dad.dance();
+		}
+		else if(eduar != null && eduar.danceIdle && eduar.animation.curAnim.name != null && !eduar.animation.curAnim.name.startsWith("sing") && !eduar.stunned) {
+			eduar.dance();
 		}
 
 		switch (curStage)
 		{
-			case 'school':
-				if(!ClientPrefs.lowQuality) {
-					bgGirls.dance();
+			case "eddhouse":
+				if (curBeat % 2 == 0 && (curStep > 289 && curStep < 912)) {
+					matt.animation.play('idle');
 				}
-
-			case 'mall':
-				if(!ClientPrefs.lowQuality) {
-					upperBoppers.dance(true);
+				if (curBeat % 2 == 0 && curStep > 478) {
+					tom.animation.play('idle');
 				}
-
-				if(heyTimer <= 0) bottomBoppers.dance(true);
-				santa.dance(true);
-
-			case 'limo':
-				if(!ClientPrefs.lowQuality) {
-					grpLimoDancers.forEach(function(dancer:BackgroundDancer)
-					{
-						dancer.dance();
-					});
+				if (curBeat == 228) {
+					FlxTween.tween(camHUD, {alpha: 0}, 0.2, {ease: FlxEase.linear});
+					tom.animation.play('reaction');
+					matt.animation.play('reaction');
+					matt.x = -80;
+					eduar.alpha = 1;
+					john.alpha = 1;
+					mark.alpha = 1;
 				}
-
-				if (FlxG.random.bool(10) && fastCarCanDrive)
-					fastCarDrive();
-			case "philly":
-				if (!trainMoving)
-					trainCooldown += 1;
-
-				if (curBeat % 4 == 0)
-				{
-					phillyCityLights.forEach(function(light:BGSprite)
-					{
-						light.visible = false;
-					});
-
-					curLight = FlxG.random.int(0, phillyCityLights.length - 1, [curLight]);
-
-					phillyCityLights.members[curLight].visible = true;
-					phillyCityLights.members[curLight].alpha = 1;
+				if (curBeat % 2 == 0 && curStep > 940) {
+					matt.animation.play('idol');
+					matt.x = -120;
+					tom.animation.play('idol');
+					john.animation.play('idle');
+					mark.animation.play('idle');
 				}
-
-				if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
-				{
-					trainCooldown = FlxG.random.int(-4, 0);
-					trainStart();
+				if (curBeat == 236) {
+					FlxTween.tween(camHUD, {alpha: 1}, 0.2, {ease: FlxEase.linear});
+					iconP2.flipX = true;
+					iconFlipped = true;
+					FlxTween.tween(iconP2, {y: 545}, 0.2, {ease: FlxEase.linear});
+					iconTween = FlxTween.tween(this, {"iconOffset3": 26, "iconOffset2": -60}, 0.4, {ease: FlxEase.cubeOut});
+					healthBar.createFilledBar(FlxColor.fromRGB(17, 113, 43), FlxColor.fromRGB(50, 175, 130));
+				}
+				if (curBeat == 398) {
+					FlxTween.tween(camHUD, {alpha: 0}, 0.2, {ease: FlxEase.linear});
+				}
+			case "eddhouse-tord":
+				if (curBeat % 2 == 0 && (curStep > 292 && curStep < 929)) {
+					matt.animation.play('idle', true);
 				}
 		}
 
@@ -4613,4 +5567,44 @@ for (key => value in luaShaders)
 
 	var curLight:Int = 0;
 	var curLightEvent:Int = 0;
+
+	function changeGFToTord()
+	{
+		if(gf.curCharacter != 'tord') {
+			if(!gfMap.exists('tord')) {
+				addCharacterToList('tord', 2);
+			}
+
+			var lastAlpha:Float = gf.alpha;
+			gf.alpha = 0.00001;
+			gf = gfMap.get('tord');
+			gf.alpha = lastAlpha;
+		}
+	}
+	function changeGFToTord2()
+	{
+		if(gf.curCharacter != 'tord2') {
+			if(!gfMap.exists('tord2')) {
+				addCharacterToList('tord2', 2);
+			}
+
+			var lastAlpha:Float = gf.alpha;
+			gf.alpha = 0.00001;
+			gf = gfMap.get('tord2');
+			gf.alpha = lastAlpha;
+		}
+	}
+	function changeGFToGF()
+	{
+		if(gf.curCharacter != 'gf') {
+			if(!gfMap.exists('gf')) {
+				addCharacterToList('gf', 2);
+			}
+
+			var lastAlpha:Float = gf.alpha;
+			gf.alpha = 0.00001;
+			gf = gfMap.get('gf');
+			gf.alpha = lastAlpha;
+		}
+	}
 }
