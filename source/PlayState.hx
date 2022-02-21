@@ -766,6 +766,7 @@ class PlayState extends MusicBeatState
 				john.animation.addByPrefix('idle', 'JohnIdle', 24, false);
 				john.scrollFactor.set(1, 1);
 				john.alpha = 0;
+				john.y -= 30;
 				john.setGraphicSize(Std.int(john.width * 0.9), Std.int(john.height * 0.9));
 				john.antialiasing = ClientPrefs.globalAntialiasing;
 
@@ -774,7 +775,7 @@ class PlayState extends MusicBeatState
 				mark.animation.addByPrefix('idle', 'MarkIdle', 24, false);
 				mark.scrollFactor.set(1, 1);
 				mark.alpha = 0;
-				mark.y -= 30;
+				mark.y -= 60;
 				mark.setGraphicSize(Std.int(mark.width * 0.8), Std.int(mark.height * 0.8));
 				mark.antialiasing = ClientPrefs.globalAntialiasing;
 
