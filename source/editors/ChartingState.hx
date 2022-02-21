@@ -1270,8 +1270,13 @@ class ChartingState extends MusicBeatState
 			FlxG.sound.music.stop();
 			// vocals.stop();
 		}
-
-		var file:Dynamic = Paths.voices(currentSongName);
+		var file:Dynamic;
+		if (CoolUtil.difficultyString() == 'FUCKED') {
+			file = Paths.voicesfucked(currentSongName);
+		}
+		else {
+			file = Paths.voices(currentSongName);
+		}
 		vocals = new FlxSound();
 		if (Std.isOfType(file, Sound) || OpenFlAssets.exists(file)) {
 			vocals.loadEmbedded(file);
@@ -1284,7 +1289,12 @@ class ChartingState extends MusicBeatState
 	}
 
 	function generateSong() {
-		FlxG.sound.playMusic(Paths.inst(currentSongName), 0.6/*, false*/);
+		if (CoolUtil.difficultyString() == 'FUCKED') {
+			FlxG.sound.playMusic(Paths.instfucked(currentSongName), 0.6/*, false*/);
+		}
+		else {
+			FlxG.sound.playMusic(Paths.inst(currentSongName), 0.6/*, false*/);
+		}
 		if (instVolume != null) FlxG.sound.music.volume = instVolume.value;
 		if (check_mute_inst != null && check_mute_inst.checked) FlxG.sound.music.volume = 0;
 
@@ -1979,7 +1989,13 @@ class ChartingState extends MusicBeatState
 			audioBuffers[1] = AudioBuffer.fromFile(Paths.modFolders('songs/' + currentSongName + '/Voices.ogg'));
 			//trace('Custom vocals found');
 		} else { #end
-			var leVocals:String = Paths.getPath(currentSongName + '/Voices.' + Paths.SOUND_EXT, SOUND, 'songs');
+			var leVocals:String;
+			if (CoolUtil.difficultyString() == 'FUCKED') {
+				leVocals = Paths.getPath(currentSongName + '/Voices-Fucked.' + Paths.SOUND_EXT, SOUND, 'songs');
+			}
+			else {
+				leVocals = Paths.getPath(currentSongName + '/Voices.' + Paths.SOUND_EXT, SOUND, 'songs');
+			}
 			if (OpenFlAssets.exists(leVocals)) { //Vanilla voices
 				audioBuffers[1] = AudioBuffer.fromFile('./' + leVocals.substr(6));
 				//trace('Voices found, LETS FUCKING GOOOO');

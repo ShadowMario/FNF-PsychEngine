@@ -1770,7 +1770,12 @@ class PlayState extends MusicBeatState
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
 
-		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+		if(CoolUtil.difficultyString() == 'FUCKED') {
+			FlxG.sound.playMusic(Paths.instfucked(PlayState.SONG.song), 1, false);
+		}
+		else {
+			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+		}
 		FlxG.sound.music.onComplete = finishSong;
 		vocals.play();
 
@@ -1814,13 +1819,26 @@ class PlayState extends MusicBeatState
 		
 		curSong = songData.song;
 
-		if (SONG.needsVoices)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-		else
-			vocals = new FlxSound();
+		if (CoolUtil.difficultyString() == 'FUCKED') {
+			if (SONG.needsVoices)
+				vocals = new FlxSound().loadEmbedded(Paths.voicesfucked(PlayState.SONG.song));
+			else
+				vocals = new FlxSound();
+		}
+		else {
+			if (SONG.needsVoices)
+				vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+			else
+				vocals = new FlxSound();
+		}
 
 		FlxG.sound.list.add(vocals);
-		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
+		if (CoolUtil.difficultyString() == 'FUCKED') {
+			FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.instfucked(PlayState.SONG.song)));
+		}
+		else {
+			FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
+		}
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);

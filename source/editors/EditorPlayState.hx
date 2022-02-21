@@ -105,10 +105,18 @@ class EditorPlayState extends MusicBeatState
 		grpNoteSplashes.add(splash);
 		splash.alpha = 0.0;
 		
-		if (PlayState.SONG.needsVoices)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-		else
-			vocals = new FlxSound();
+		if (CoolUtil.difficultyString() == 'FUCKED') {
+			if (PlayState.SONG.needsVoices)
+				vocals = new FlxSound().loadEmbedded(Paths.voicesfucked(PlayState.SONG.song));
+			else
+				vocals = new FlxSound();
+		}
+		else {
+			if (PlayState.SONG.needsVoices)
+				vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+			else
+				vocals = new FlxSound();
+		}
 
 		generateSong(PlayState.SONG.song);
 		#if LUA_ALLOWED
@@ -186,7 +194,12 @@ class EditorPlayState extends MusicBeatState
 	var startingSong:Bool = true;
 	private function generateSong(dataPath:String):Void
 	{
-		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0, false);
+		if (CoolUtil.difficultyString() == 'FUCKED') {
+			FlxG.sound.playMusic(Paths.instfucked(PlayState.SONG.song), 0, false);
+		}
+		else {
+			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0, false);
+		}
 		FlxG.sound.music.pause();
 		FlxG.sound.music.onComplete = endSong;
 		vocals.pause();

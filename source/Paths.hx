@@ -218,9 +218,23 @@ class Paths
 		return voices;
 	}
 
+	inline static public function voicesfucked(song:String):Any
+	{
+		var songKey:String = '${song.toLowerCase().replace(' ', '-')}/Voices-Fucked';
+		var voices = returnSound('songs', songKey);
+		return voices;
+	}
+
 	inline static public function inst(song:String):Any
 	{
 		var songKey:String = '${song.toLowerCase().replace(' ', '-')}/Inst';
+		var inst = returnSound('songs', songKey);
+		return inst;
+	}
+
+	inline static public function instfucked(song:String):Any
+	{
+		var songKey:String = '${song.toLowerCase().replace(' ', '-')}/Inst-Fucked';
 		var inst = returnSound('songs', songKey);
 		return inst;
 	}
