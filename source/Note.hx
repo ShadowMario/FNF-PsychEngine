@@ -68,8 +68,8 @@ class Note extends FlxSprite
 	public var copyAngle:Bool = true;
 	public var copyAlpha:Bool = true;
 
-	public var hitHealth:Float = 0.023;
-	public var missHealth:Float = 0.0475;
+	public var hitHealth:Float = 0.046;
+	public var missHealth:Float = 0.0950;
 
 	public var texture(default, set):String = null;
 
@@ -104,9 +104,9 @@ class Note extends FlxSprite
 					colorSwap.saturation = 0;
 					colorSwap.brightness = 0;
 					if(isSustainNote) {
-						missHealth = 0.1;
+						missHealth = 0.2;
 					} else {
-						missHealth = 0.3;
+						missHealth = 0.6;
 					}
 					hitCausesMiss = true;
 				case 'No Animation':
@@ -120,7 +120,7 @@ class Note extends FlxSprite
 					colorSwap.saturation = 0;
 					colorSwap.brightness = 0;
 					missHealth = 2;
-					noteSpeed = 5;
+					noteSpeed = 5.5;
 					allowChangeScrollSpeed = false;
 			}
 			noteType = value;

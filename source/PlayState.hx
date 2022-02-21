@@ -3087,6 +3087,14 @@ for (key => value in luaShaders)
 		for (i in shaderUpdates){
 			i(elapsed);
 		}
+
+		if (FlxG.keys.justPressed.SPACE) {
+			if(boyfriend.animOffsets.exists('hey')) {
+				boyfriend.playAnim('hey', true);
+				boyfriend.specialAnim = true;
+				boyfriend.heyTimer = 0.6;
+			}
+		}
 	}
 
 	function openChartEditor()
@@ -4520,6 +4528,12 @@ for (key => value in luaShaders)
 			doDeathCheck(true);
 		}
 
+		if(daNote.noteType == 'Dad Sing') {
+			GameOverSubstate.characterName = 'edd-dead';
+		} else {
+			GameOverSubstate.characterName = 'bf';
+		}
+
 		//For testing purposes
 		//trace(daNote.missHealth);
 		songMisses++;
@@ -4649,12 +4663,12 @@ for (key => value in luaShaders)
 				camHUD.shake(0.0025, 0.1);
 				camNotes.shake(0.0025, 0.1);
 				if(health >= 0.2) {
-					health -= 0.028;
+					health -= 0.05 * healthLoss;
 				}
 			}
 			else {
 				if(health >= 0.2) {
-					health -= 0.014;
+					health -= 0.025 * healthLoss;
 				}
 			}
 		}
@@ -4724,9 +4738,11 @@ for (key => value in luaShaders)
 					} else if(note.noteType == 'Dad Sing') {
 						dad.playAnim(animToPlay + daAlt, true);
 						dad.holdTimer = 0;
+						GameOverSubstate.characterName = 'edd-dead';
 					} else {
 						boyfriend.playAnim(animToPlay + daAlt, true);
 						boyfriend.holdTimer = 0;
+						GameOverSubstate.characterName = 'bf';
 					}
 				//}
 				if(note.noteType == 'Hey!') {
@@ -5042,15 +5058,15 @@ for (key => value in luaShaders)
 						tom.flipX = false;
 					}, 1);
 				case 928:
-					eduar.animation.play('well');
+					eduar.animation.play('well', true);
 					FlxTween.tween(sky, {alpha: 0.9}, 0.2, {ease: FlxEase.linear});
 					FlxTween.tween(camGame, {zoom: 0.75}, 0.2, {ease: FlxEase.linear});
 				case 932:
-					eduar.animation.play('well');
+					eduar.animation.play('well', true);
 					FlxTween.tween(sky, {alpha: 0.8}, 0.2, {ease: FlxEase.linear});
 					FlxTween.tween(camGame, {zoom: 0.8}, 0.2, {ease: FlxEase.linear});
 				case 936:
-					eduar.animation.play('well');
+					eduar.animation.play('well', true);
 					FlxTween.tween(sky, {alpha: 0.7}, 0.2, {ease: FlxEase.linear});
 					FlxTween.tween(camGame, {zoom: 0.9}, 0.2, {ease: FlxEase.linear});
 					new FlxTimer().start(1, function(tmr:FlxTimer) {
@@ -5115,12 +5131,19 @@ for (key => value in luaShaders)
 					gf.y = -900;
 					gf.x = 100;
 					gf.y -= 20;
+					gf.animation.play('singUP-alt', true);
 					iconP2.changeIcon('edd');
 					healthBar.createFilledBar(FlxColor.fromRGB(217, 18, 76), FlxColor.fromRGB(50, 175, 130));
 					iconFlipped = true;
 					iconP2.flipX = true;
 					FlxTween.tween(iconP2, {y: 545}, 0.2, {ease: FlxEase.linear});
 					iconTween = FlxTween.tween(this, {"iconOffset3": 26, "iconOffset2": -60}, 0.4, {ease: FlxEase.cubeOut});
+				case 1028:
+					gf.animation.play('singUP-alt', true);
+				case 1032:
+					gf.animation.play('singUP-alt', true);
+				case 1036:
+					gf.animation.play('singUP-alt', true);
 				case 1132:
 					dad.y = -100;
 					dad.x = 250;

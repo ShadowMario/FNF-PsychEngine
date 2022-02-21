@@ -50,6 +50,8 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	static var isplaying:Bool = false;
+
 	override function create()
 	{
 		Paths.clearStoredMemory();
@@ -219,12 +221,16 @@ class FreeplayState extends MusicBeatState
 
 	var instPlaying:Int = -1;
 	private static var vocals:FlxSound = null;
+	private static var vocalsfucked:FlxSound = null;
+	private static var inst:FlxSound = null;
+	private static var instfucked:FlxSound = null;
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
-		if (FlxG.sound.music.volume < 0.7)
-		{
-			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
+		if(!isplaying) {
+			if (FlxG.sound.music.volume < 0.7) {
+				FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
+			}
 		}
 
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 24, 0, 1)));
@@ -298,6 +304,16 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
+		var funivolume:Float = 0.7;
+		var funivolumefucked:Float = 0;
+		if(curDifficulty == 1) {
+			funivolume = 0;
+			funivolumefucked = 0.7;
+		} else {
+			funivolume = 0.7;
+			funivolumefucked = 0;
+		}
+
 		if(ctrl)
 		{
 			persistentUpdate = false;
@@ -313,22 +329,38 @@ class FreeplayState extends MusicBeatState
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				if (PlayState.SONG.needsVoices)
+				if (PlayState.SONG.needsVoices) {
+					vocalsfucked = new FlxSound().loadEmbedded(Paths.voicesfucked(PlayState.SONG.song));
 					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-				else
+				} else {
+					vocalsfucked = new FlxSound();
 					vocals = new FlxSound();
+				}
 
 				FlxG.sound.list.add(vocals);
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
+				FlxG.sound.list.add(vocalsfucked);
+				//FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
+				instfucked = new FlxSound().loadEmbedded(Paths.instfucked(PlayState.SONG.song));
+				inst = new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song));
+				FlxG.sound.list.add(inst);
+				FlxG.sound.list.add(instfucked);
 				vocals.play();
 				vocals.persist = true;
-				vocals.looped = true;
-				vocals.volume = 0.7;
+				vocals.looped = false;
+				vocalsfucked.play();
+				vocalsfucked.persist = true;
+				vocalsfucked.looped = false;
+				inst.play();
+				inst.persist = true;
+				inst.looped = false;
+				instfucked.play();
+				instfucked.persist = true;
+				instfucked.looped = false;
 				instPlaying = curSelected;
+				isplaying = true;
 				#end
 			}
 		}
-
 		else if (accepted)
 		{
 			persistentUpdate = false;
@@ -369,6 +401,14 @@ class FreeplayState extends MusicBeatState
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
+
+		if(isplaying) {
+			vocals.volume = funivolume;
+			vocalsfucked.volume = funivolumefucked;
+			inst.volume = funivolume;
+			instfucked.volume = funivolumefucked;
+		}
+
 		super.update(elapsed);
 	}
 
@@ -378,6 +418,22 @@ class FreeplayState extends MusicBeatState
 			vocals.destroy();
 		}
 		vocals = null;
+		if(inst != null) {
+			inst.stop();
+			inst.destroy();
+		}
+		inst = null;
+		if(vocalsfucked != null) {
+			vocalsfucked.stop();
+			vocalsfucked.destroy();
+		}
+		vocalsfucked = null;
+		if(instfucked != null) {
+			instfucked.stop();
+			instfucked.destroy();
+		}
+		instfucked = null;
+		isplaying = false;
 	}
 
 	function changeDiff(change:Int = 0)
