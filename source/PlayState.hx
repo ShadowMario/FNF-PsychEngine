@@ -288,13 +288,14 @@ class PlayState extends MusicBeatState
 	var john:FlxSprite;
 	var eduarC:FlxSprite;
 	var car:FlxSprite;
-	var tord = new FlxSprite(1270, -45);
+	var tord = new FlxSprite(1270, 0);
 	var tordbot = new FlxSprite(340, -145);
 	var cock:FlxSprite;
 	var tordBG:FlxSprite;
 	var tord2 = new FlxSprite(600, -845);
 	var iconTween:FlxTween;
 	public var camNotes:FlxCamera;
+	var lookbitch:Bool = false;
 
 	override public function create()
 	{
@@ -730,9 +731,9 @@ class PlayState extends MusicBeatState
 				var city:FlxSprite;
 				city = new FlxSprite(-1290, -500).loadGraphic(Paths.image('edd/SecondParalax'));
 				city.scrollFactor.set(0.65, 0.65);
-				city.setGraphicSize(Std.int(city.width * 0.8), Std.int(city.height * 0.8));
+				city.scale.set(0.9, 0.8);
 				city.y -= 200;
-				city.x -= 200;
+				city.x -= 400;
 				city.antialiasing = ClientPrefs.globalAntialiasing;
 
 				matt = new FlxSprite(560, 245);
@@ -819,8 +820,6 @@ class PlayState extends MusicBeatState
 				add(matt);
 				add(tom);
 
-				add(car);
-
 			case 'eddhouse-tord':
 
 				sky = new FlxSprite(-1790, -800).loadGraphic(Paths.image('edd/SkyBox'));
@@ -849,7 +848,7 @@ class PlayState extends MusicBeatState
 				city.scrollFactor.set(0.65, 0.65);
 				city.scale.set(0.9, 0.8);
 				city.y -= 200;
-				city.x -= 200;
+				city.x -= 400;
 				city.antialiasing = ClientPrefs.globalAntialiasing;
 
 				matt = new FlxSprite(560, 245);
@@ -885,8 +884,8 @@ class PlayState extends MusicBeatState
 				plane.antialiasing = ClientPrefs.globalAntialiasing;
 
 				tord.frames = Paths.getSparrowAtlas('edd/TordHelicopter');
-				tord.animation.addByIndices('jump', 'TordHelicopter', [1, 2, 3, 4], '', 24, false);
-				tord.animation.addByIndices('open', 'TordHelicopter', [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], '', 24, false);
+				tord.animation.addByIndices('jump', 'TordHelicopter', [1, 2, 3], '', 24, false);
+				tord.animation.addByIndices('open', 'TordHelicopter', [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], '', 24, false);
 				tord.scrollFactor.set(0.2, 0.6);
 				tord.alpha = 0;
 				tord.scale.set(2, 2);
@@ -3861,11 +3860,13 @@ for (key => value in luaShaders)
 		{
 			moveCamera(true);
 			callOnLuas('onMoveCamera', ['dad']);
+			lookbitch = false;
 		}
 		else
 		{
 			moveCamera(false);
 			callOnLuas('onMoveCamera', ['boyfriend']);
+			lookbitch = true;
 		}
 	}
 
@@ -5105,7 +5106,7 @@ for (key => value in luaShaders)
 				case 397:
 					tord.animation.play('jump', true);
 					tord.alpha = 1;
-					FlxTween.tween(tord, {y: 110}, 2, {ease: FlxEase.cubeIn, onComplete: function (twn:FlxTween) {
+					FlxTween.tween(tord, {y: 155}, 1, {ease: FlxEase.cubeIn, onComplete: function (twn:FlxTween) {
 						tord.animation.play('open', true);
 						FlxTween.tween(tord, {y: 510}, 10, {ease: FlxEase.linear, onComplete: function (twn:FlxTween) {
 							remove(tord);
@@ -5346,8 +5347,11 @@ for (key => value in luaShaders)
 				if (curBeat % 2 == 0 && (curStep > 289 && curStep < 912)) {
 					matt.animation.play('idle');
 				}
-				if (curBeat % 2 == 0 && curStep > 478) {
+				if (curBeat % 2 == 0 && curStep > 478 && lookbitch) {
 					tom.animation.play('idle');
+				}
+				if (curBeat % 2 == 0 && curStep > 478 && !lookbitch) {
+					tom.animation.play('idol');
 				}
 				if (curBeat == 228) {
 					FlxTween.tween(camHUD, {alpha: 0}, 0.2, {ease: FlxEase.linear});
@@ -5361,7 +5365,6 @@ for (key => value in luaShaders)
 				if (curBeat % 2 == 0 && curStep > 940) {
 					matt.animation.play('idol');
 					matt.x = -120;
-					tom.animation.play('idol');
 					john.animation.play('idle');
 					mark.animation.play('idle');
 				}

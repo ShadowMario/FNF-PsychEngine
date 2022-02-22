@@ -1,70 +1,70 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "idle",
-			"indices": [],
-			"name": "EddSideIdle"
+			"fps": 24,
+			"name": "EddSideIdle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				6,
 				4
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "EddSideLeft"
+			"fps": 24,
+			"name": "EddSideLeft",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				2,
 				-59
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "EddSideDown"
+			"fps": 24,
+			"name": "EddSideDown",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-8,
 				41
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singUP",
-			"indices": [],
-			"name": "EddSideUp"
+			"fps": 24,
+			"name": "EddSideUp",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-9,
 				0
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "EddSideRight"
+			"fps": 24,
+			"name": "EddSideRight",
+			"indices": []
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"anim": "what",
+			"loop": false,
 			"fps": 24,
-			"name": "EddTurnAround",
-			"indices": []
+			"anim": "what",
+			"indices": [],
+			"name": "EddTurnAround"
 		}
 	],
 	"no_antialiasing": false,
@@ -81,7 +81,7 @@
 		51
 	],
 	"camera_position": [
-		100,
+		-180,
 		50
 	],
 	"sing_duration": 6.1,
