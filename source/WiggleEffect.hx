@@ -22,54 +22,52 @@ class WiggleEffect
 
 	public function new():Void
 	{
-		shader.data.uTime.value = [0];
+		shader.uTime.value = [0];
 	}
 
 	public function update(elapsed:Float):Void
 	{
-		shader.data.uTime.value[0] += elapsed;
+		shader.uTime.value[0] += elapsed;
 	}
 
 	public function setValue(value:Float):Void
 	{
-		shader.data.uTime.value[0] = value;
+		shader.uTime.value[0] = value;
 	}
 
 	function set_effectType(v:WiggleEffectType):WiggleEffectType
 	{
 		effectType = v;
-		shader.data.effectType.value = [WiggleEffectType.getConstructors().indexOf(Std.string(v))];
+		shader.effectType.value = [WiggleEffectType.getConstructors().indexOf(Std.string(v))];
 		return v;
 	}
 
 	function set_waveSpeed(v:Float):Float
 	{
 		waveSpeed = v;
-		shader.data.uSpeed.value = [waveSpeed];
+		shader.uSpeed.value = [waveSpeed];
 		return v;
 	}
 
 	function set_waveFrequency(v:Float):Float
 	{
 		waveFrequency = v;
-		shader.data.uFrequency.value = [waveFrequency];
+		shader.uFrequency.value = [waveFrequency];
 		return v;
 	}
 
 	function set_waveAmplitude(v:Float):Float
 	{
 		waveAmplitude = v;
-		shader.data.uWaveAmplitude.value = [waveAmplitude];
+		shader.uWaveAmplitude.value = [waveAmplitude];
 		return v;
 	}
 }
 
 class WiggleShader extends FlxShader
 {
-	
-	public function new()
-	{
-		super('#pragma header
+	@:glFragmentSource('
+		#pragma header
 		//uniform float tx, ty; // x,y waves phase
 		uniform float uTime;
 		
@@ -132,6 +130,9 @@ class WiggleShader extends FlxShader
 		{
 			vec2 uv = sineWave(openfl_TextureCoordv);
 			gl_FragColor = texture2D(bitmap, uv);
-		}');
+		}')
+	public function new()
+	{
+		super();
 	}
 }
