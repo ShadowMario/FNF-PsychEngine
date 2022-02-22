@@ -339,6 +339,8 @@ class FreeplayState extends MusicBeatState
 				vocals.volume = 0.7;
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
 				instPlaying = curSelected;
+				Conductor.mapBPMChanges(PlayState.SONG, ClientPrefs.getGameplaySetting('songspeed', 1));
+				Conductor.changeBPM(PlayState.SONG.bpm, ClientPrefs.getGameplaySetting('songspeed', 1));
 				speedPlaying = ClientPrefs.getGameplaySetting('songspeed', 1);
 				#if cpp
 				@:privateAccess
