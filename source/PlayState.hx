@@ -1910,7 +1910,7 @@ class PlayState extends MusicBeatState
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-						var sustainNote:Note = new Note(daStrumTime + (curStepCrochet * susNote) + (curStepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
+						var sustainNote:Note = new Note(daStrumTime + (curStepCrochet * susNote) + (curStepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true, curStepCrochet);
 						sustainNote.mustPress = gottaHitNote;
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
@@ -2554,8 +2554,8 @@ class PlayState extends MusicBeatState
 					if(strumScroll && daNote.isSustainNote)
 					{
 						if (daNote.animation.curAnim.name.endsWith('end')) {
-							daNote.y += 10.5 * (Conductor.crochet / 400) * 1.5 * songSpeed + (46 * (songSpeed - 1));
-							daNote.y -= 46 * (1 - (Conductor.crochet / 600)) * songSpeed;
+							daNote.y += 10.5 * (daNote.stepCrochet * 4 / 400) * 1.5 * songSpeed + (46 * (songSpeed - 1));
+							daNote.y -= 46 * (1 - (daNote.stepCrochet * 4 / 600)) * songSpeed;
 							if(PlayState.isPixelStage) {
 								daNote.y += 8;
 							} else {
@@ -2563,7 +2563,7 @@ class PlayState extends MusicBeatState
 							}
 						} 
 						daNote.y += (Note.swagWidth / 2) - (60.5 * (songSpeed - 1));
-						daNote.y += 27.5 * ((SONG.bpm / 100) - 1) * (songSpeed - 1);
+						daNote.y += 27.5 * ((Conductor.bpm / 100) - 1) * (songSpeed - 1);
 					}
 				}
 
@@ -4294,18 +4294,15 @@ class PlayState extends MusicBeatState
 			{
 				Conductor.changeSignature(SONG.notes[Math.floor(section)].numerator, SONG.notes[Math.floor(section)].denominator);
 				//FlxG.log.add('CHANGED BPM!');
-				setOnLuas('barLength', Conductor.numerator);
-				setOnLuas('noteValue', Conductor.denominator);
+				setOnLuas('numerator', Conductor.numerator);
+				setOnLuas('denominator', Conductor.denominator);
 				setOnLuas('crochet', Conductor.crochet);
 				setOnLuas('stepCrochet', Conductor.stepCrochet);
 			}
 			setOnLuas('mustHitSection', SONG.notes[Math.floor(section)].mustHitSection);
 			setOnLuas('altAnim', SONG.notes[Math.floor(section)].altAnim);
 			setOnLuas('gfSection', SONG.notes[Math.floor(section)].gfSection);
-			// else
-			// Conductor.changeBPM(SONG.bpm);
 		}
-		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 
 		if (generatedMusic && PlayState.SONG.notes[Std.int(section)] != null && !endingSong && !isCameraOnForcedPos)
 		{

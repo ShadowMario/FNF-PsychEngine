@@ -1661,7 +1661,6 @@ class ChartingState extends MusicBeatState
 				{
 					FlxG.log.add('added note');
 					addNote();
-					stepperSusLength.max = Conductor.stepCrochet * (Conductor.numerator * 8);
 				}
 			}
 		}
@@ -2645,7 +2644,8 @@ class ChartingState extends MusicBeatState
 				}
 			}
 		}
-
+		
+		stepperSusLength.stepSize = Conductor.stepCrochet / 2;
 		stepperSusLength.max = Conductor.stepCrochet * (Conductor.numerator * 8);
 
 		updateGrid();
@@ -2709,7 +2709,6 @@ class ChartingState extends MusicBeatState
 		
 		if (!delnote){
 			addNote(cs, d, style);
-			stepperSusLength.max = Conductor.stepCrochet * (Conductor.numerator * 8);
 		}
 	}
 	function clearSong():Void
@@ -2759,6 +2758,9 @@ class ChartingState extends MusicBeatState
 
 		//trace(noteData + ', ' + noteStrum + ', ' + curSection);
 		strumTimeInputText.text = '' + curSelectedNote[0];
+
+		stepperSusLength.stepSize = Conductor.stepCrochet / 2;
+		stepperSusLength.max = Conductor.stepCrochet * (Conductor.numerator * 8);
 
 		updateGrid();
 		updateNoteUI();

@@ -93,8 +93,8 @@ class FunkinLua {
 		set('scrollSpeed', PlayState.SONG.speed);
 		set('crochet', Conductor.crochet);
 		set('stepCrochet', Conductor.stepCrochet);
-		set('barLength', Conductor.numerator);
-		set('noteValue', Conductor.denominator);
+		set('numerator', Conductor.numerator);
+		set('denominator', Conductor.denominator);
 		set('songLength', FlxG.sound.music.length);
 		set('songName', PlayState.SONG.song);
 		set('startedCountdown', false);
