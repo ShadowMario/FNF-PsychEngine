@@ -1594,7 +1594,21 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "getTextFromFile", function(path:String, ?ignoreModFolders:Bool = false) {
 			return Paths.getTextFromFile(path, ignoreModFolders);
 		});
-
+		
+		// os stuffs
+		Lua_helper.add_callback(lua, "osClock", function() {
+			return Sys.cpuTime();
+		});
+		Lua_helper.add_callback(lua, "osTime", function() {
+			return Sys.time();
+		});
+		Lua_helper.add_callback(lua, "osDate", function(format:String) {
+			return DateTools.format(Date.now(), format);
+		});
+		Lua_helper.add_callback(lua, "osExit", function() {
+			Sys.exit(0);
+		});
+		
 		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY
 		Lua_helper.add_callback(lua, "luaSpriteMakeGraphic", function(tag:String, width:Int, height:Int, color:String) {
 			luaTrace("luaSpriteMakeGraphic is deprecated! Use makeGraphic instead", false, true);
