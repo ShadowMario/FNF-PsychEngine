@@ -1602,9 +1602,6 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "osTime", function() {
 			return Sys.time();
 		});
-		Lua_helper.add_callback(lua, "osDate", function(format:String) {
-			return DateTools.format(Date.now(), format);
-		});
 		Lua_helper.add_callback(lua, "osExit", function() {
 			Sys.exit(0);
 		});
