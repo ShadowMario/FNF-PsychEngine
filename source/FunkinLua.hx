@@ -336,6 +336,9 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic) {
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
+				if(!ClientPrefs.globalAntialiasing && killMe[killMe.length-1] == 'antialiasing') {
+					value = false;
+				}
 				setVarInArray(getPropertyLoopThingWhatever(killMe), killMe[killMe.length-1], value);
 				return true;
 			}
