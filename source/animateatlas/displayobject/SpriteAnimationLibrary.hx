@@ -26,6 +26,7 @@ class SpriteAnimationLibrary {
 	private var _symbolPool:Map<String, Array<SpriteSymbol>>;
 	private var _defaultSymbolName:String;
 	private var _texture:BitmapData;
+	public var smoothing:Bool = true;
 
 	public static inline var BITMAP_SYMBOL_NAME:String = "___atlas_sprite___";
 
@@ -59,7 +60,8 @@ class SpriteAnimationLibrary {
 		return hasSymbol(name);
 	}
 
-	public function createAnimation(symbol:String = null):SpriteMovieClip {
+	public function createAnimation(noAntialiasing:Bool, symbol:String = null):SpriteMovieClip {
+		this.smoothing = !noAntialiasing;
 		symbol = (symbol != null) ? symbol : _defaultSymbolName;
 		if (!hasSymbol(symbol)) {
 			throw new ArgumentError("Symbol not found: " + symbol);
@@ -107,7 +109,9 @@ class SpriteAnimationLibrary {
 	private function getSymbol(name:String):SpriteSymbol {
 		var pool:Array<SpriteSymbol> = getSymbolPool(name);
 		if (pool.length == 0) {
-			return new SpriteSymbol(getSymbolData(name), this, _texture);
+			var symbol:SpriteSymbol = new SpriteSymbol(getSymbolData(name), this, _texture);
+			symbol.smoothing = smoothing;
+			return symbol;
 		} else {
 			return pool.pop();
 		}
