@@ -2100,7 +2100,6 @@ class PlayState extends MusicBeatState
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
-	var shouldEndSong:Bool = false;
 
 	override public function update(elapsed:Float)
 	{
@@ -2115,13 +2114,10 @@ class PlayState extends MusicBeatState
 		{
 			if (!startingSong && !endingSong)
 			{
-				if (FlxG.sound.music != null && FlxG.sound.music.time / playbackRate > (songLength - 100))
+				if ((FlxG.sound.music.length / playbackRate) - Conductor.songPosition <= 0)
 				{
 					shouldEndSong = true;
-					new FlxTimer().start(0.1 / playbackRate, function(timer)
-					{
-						finishSong();
-					});
+					finishSong();
 				}
 			}
 		}
