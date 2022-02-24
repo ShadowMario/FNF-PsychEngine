@@ -91,7 +91,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		
 		#if !mobile
 		var option:Option = new Option('FPS & Memory Counter',
-			'If unchecked, hides FPS & Memory Counter.',
+			'If unchecked, hides the FPS & Memory Counter.',
 			'showFPS',
 			'bool',
 			true);
