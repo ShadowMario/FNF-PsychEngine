@@ -1288,6 +1288,45 @@ class FunkinLua {
 			}
 			#end
 		});
+		Lua_helper.add_callback(lua, "createAndLinkVideo", function(tag:String, videoFile:String, sprite:String) {
+			#if VIDEOS_ALLOWED
+			if(!FileSystem.exists(Paths.video(videoFile)) ) {
+				luaTrace('Video file not found: ' + videoFile);
+				return;
+			}
+			
+			if (!PlayState.instance.modchartSprites.exists(sprite)) {
+				//make a sprite for the video, you should be 
+				sprite = sprite.replace('.', '');
+				resetSpriteTag(sprite);
+				var leSprite:ModchartSprite = new ModchartSprite(0, 0);
+				leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+				PlayState.instance.modchartSprites.set(sprite, leSprite);
+				leSprite.active = true;
+				if(PlayState.instance.isDead)
+				{
+					GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), leSprite);
+				} else {
+					var position:Int = PlayState.instance.members.indexOf(PlayState.instance.gfGroup);
+					if(PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup) < position) {
+						position = PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup);
+					} else if(PlayState.instance.members.indexOf(PlayState.instance.dadGroup) < position) {
+						position = PlayState.instance.members.indexOf(PlayState.instance.dadGroup);
+					}
+					PlayState.instance.insert(position, leSprite);
+				}
+			}
+			
+			if (!PlayState.instance.modchartVideos.exists(tag) && FileSystem.exists(Paths.video(videoFile))) {
+				var videolink:FlxVideo = new FlxVideo(Paths.video(videoFile), PlayState.instance.modchartSprites.get(sprite));
+				PlayState.instance.modchartVideos.set(tag, videolink);
+			}
+			if
+			luaTrace('Video already exists or file doesn\'t exist')
+			#else
+			luaTrace('build doesn\'t support videos')
+			#end
+		});
 		
 		Lua_helper.add_callback(lua, "playMusic", function(sound:String, volume:Float = 1, loop:Bool = false) {
 			FlxG.sound.playMusic(Paths.music(sound), volume, loop);
