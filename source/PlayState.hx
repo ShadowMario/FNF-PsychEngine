@@ -2112,13 +2112,13 @@ class PlayState extends MusicBeatState
 
 		callOnLuas('onUpdate', [elapsed]);
 
-		if (generatedMusic && !shouldEndSong)
+		if (generatedMusic && !endingSong)
 		{
 			if (!startingSong && !endingSong)
 			{
 				if ((FlxG.sound.music.length / playbackRate) - Conductor.songPosition <= 0)
 				{
-					shouldEndSong = true;
+					endingSong = true;
 					finishSong();
 				}
 			}
