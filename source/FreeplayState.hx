@@ -230,6 +230,7 @@ class FreeplayState extends MusicBeatState
 		}
 	}*/
 
+	var speedPlaying:Int = -1;
 	var instPlaying:Int = -1;
 	private static var vocals:FlxSound = null;
 	var holdTime:Float = 0;
@@ -319,7 +320,7 @@ class FreeplayState extends MusicBeatState
 		}
 		else if(space)
 		{
-			if(instPlaying != curSelected)
+			if(instPlaying != curSelected || speedPlaying != ClientPrefs.getGameplaySetting('songspeed', 1))
 			{
 				#if PRELOAD_ALL
 				destroyFreeplayVocals();
@@ -333,12 +334,25 @@ class FreeplayState extends MusicBeatState
 					vocals = new FlxSound();
 
 				FlxG.sound.list.add(vocals);
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
 				vocals.play();
 				vocals.persist = true;
 				vocals.looped = true;
 				vocals.volume = 0.7;
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
 				instPlaying = curSelected;
+				Conductor.mapBPMChanges(PlayState.SONG, ClientPrefs.getGameplaySetting('songspeed', 1));
+				Conductor.changeBPM(PlayState.SONG.bpm, ClientPrefs.getGameplaySetting('songspeed', 1));
+				speedPlaying = ClientPrefs.getGameplaySetting('songspeed', 1);
+				#if cpp
+				@:privateAccess
+				{
+					if (ClientPrefs.getGameplaySetting('songspeed', 1) != 1) {
+						lime.media.openal.AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, ClientPrefs.getGameplaySetting('songspeed', 1));
+						if (vocals.playing)
+							lime.media.openal.AL.sourcef(vocals._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, ClientPrefs.getGameplaySetting('songspeed', 1));
+					}
+				}
+				#end
 				#end
 			}
 		}
