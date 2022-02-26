@@ -13,15 +13,25 @@ import flixel.FlxG;
 class FlxVideo extends FlxBasic {
 	#if VIDEOS_ALLOWED
 	public var finishCallback:Void->Void = null;
+	var renderSprite:FlxSprite;
+	var renderOnSprite:Bool = false;
 	
 	#if desktop
 	public static var vlcBitmap:VlcBitmap;
 	#end
 
-	public function new(name:String) {
+	public function new(name:String, ?parentSprite:FlxSprite) {
 		super();
 
+		renderSprite = parentSprite;
+		renderOnSprite = renderSprite != null;
+
 		#if web
+		if (renderOnSprite) {
+			//don't know how to access the bitmap data of web videos
+			trace('Web builds do not support video sprites yet, only video cutscenes');
+			return;
+		}
 		var player:Video = new Video();
 		player.x = 0;
 		player.y = 0;
@@ -62,12 +72,27 @@ class FlxVideo extends FlxBasic {
 		vlcBitmap.fullscreen = false;
 		fixVolume(null);
 
-		FlxG.addChildBelowMouse(vlcBitmap);
+		if (!renderOnSprite) {
+			trace('sprite connected to video')
+		} else {
+			FlxG.addChildBelowMouse(vlcBitmap);
+		}
 		vlcBitmap.play(checkFile(name));
 		#end
 	}
 
 	#if desktop
+	override public function update(elapsed:Float)
+	{
+		super.update(elapsed);
+
+		if (renderOnSprite && vlcBitmap != null)
+		{
+			renderSprite.loadGraphic(vlcBitmap.bitmapData);
+			renderSprite.setGraphicSize(1280, 720);
+		}
+	}
+
 	function checkFile(fileName:String):String
 	{
 		var pDir = "";
