@@ -9,18 +9,19 @@ import vlc.VlcBitmap;
 #end
 import flixel.FlxBasic;
 import flixel.FlxG;
+import flixel.util.typeLimit.OneOfTwo;
 
 class FlxVideo extends FlxBasic {
 	#if VIDEOS_ALLOWED
 	public var finishCallback:Void->Void = null;
-	var renderSprite:FlxSprite;
+	var renderSprite:Dynamic;
 	var renderOnSprite:Bool = false;
 	
 	#if desktop
 	public static var vlcBitmap:VlcBitmap;
 	#end
 
-	public function new(name:String, ?parentSprite:FlxSprite) {
+	public function new(name:String, ?parentSprite:OneOfTwo<BGSprite, ModchartSprite>) {
 		super();
 
 		renderSprite = parentSprite;
