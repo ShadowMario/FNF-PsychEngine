@@ -1288,71 +1288,103 @@ class FunkinLua {
 			}
 			#end
 		});
-		Lua_helper.add_callback(lua, "createAndLinkVideo", function(tag:String, videoFile:String, sprite:String) {
+		Lua_helper.add_callback(lua, "createVideoLuaSprite", function(tag:String, videoFile:String) {
 			#if VIDEOS_ALLOWED
 			if(!FileSystem.exists(Paths.video(videoFile)) ) {
 				luaTrace('Video file not found: ' + videoFile);
 				return;
 			}
 			
-			if (!PlayState.instance.modchartSprites.exists(sprite)) {
-				//make a sprite for the video, you should be 
-				sprite = sprite.replace('.', '');
-				resetSpriteTag(sprite);
-				var leSprite:ModchartSprite = new ModchartSprite(0, 0);
-				leSprite.antialiasing = ClientPrefs.globalAntialiasing;
-				PlayState.instance.modchartSprites.set(sprite, leSprite);
-				leSprite.active = true;
-				if(PlayState.instance.isDead)
-				{
-					GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), leSprite);
-				} else {
-					var position:Int = PlayState.instance.members.indexOf(PlayState.instance.gfGroup);
-					if(PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup) < position) {
-						position = PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup);
-					} else if(PlayState.instance.members.indexOf(PlayState.instance.dadGroup) < position) {
-						position = PlayState.instance.members.indexOf(PlayState.instance.dadGroup);
-					}
-					PlayState.instance.insert(position, leSprite);
-				}
+			if (PlayState.instance.modchartSprites.exists(tag)) {
+				luaTrace('Sprite already exists')
 			}
 			
-			if (!PlayState.instance.modchartVideos.exists(tag) && FileSystem.exists(Paths.video(videoFile))) {
-				var videolink:FlxVideo = new FlxVideo(Paths.video(videoFile), PlayState.instance.modchartSprites.get(sprite));
-				PlayState.instance.modchartVideos.set(tag, videolink);
+			tag = tag.replace('.', '');
+			resetSpriteTag(tag);
+			var leSprite:ModchartSprite = new ModchartSprite(0, 0);
+			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+			PlayState.instance.modchartSprites.set(tag, leSprite);
+			leSprite.active = true;
+			if(PlayState.instance.isDead)
+			{
+				GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), leSprite);
+			} else {
+				var position:Int = PlayState.instance.members.indexOf(PlayState.instance.gfGroup);
+				if(PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup) < position) {
+					position = PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup);
+				} else if(PlayState.instance.members.indexOf(PlayState.instance.dadGroup) < position) {
+					position = PlayState.instance.members.indexOf(PlayState.instance.dadGroup);
+				}
+				PlayState.instance.insert(position, leSprite);
 			}
-			if
-			luaTrace('Video already exists or file doesn\'t exist');
+			var videolink:FlxVideo = new FlxVideo(Paths.video(videoFile), true);
+			leSprite.video = videoLink;
+			
 			#else
 			luaTrace('build doesn\'t support video sprites');
 			#end
 		});
 		Lua_helper.add_callback(lua, "pauseVideoSprite", function(tag:String) { //totally not pauseSound
-			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
-				PlayState.instance.modchartVideos.get(tag).pause();
+			if (tag == null && !tag.length > 1) {
+				return;
+			} 
+			
+			if (PlayState.instance.modchartSprites.exists(tag)) {
+				var leSprite = PlayState.instance.modchartSprites.get(tag);
+				if (leSprite.video != null) {
+					leSprite.video.pause();
+				}
 			}
 		});
 		Lua_helper.add_callback(lua, "resumeVideoSprite", function(tag:String) {
-			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
-				PlayState.instance.modchartVideos.get(tag).resume();
+			if (tag == null && !tag.length > 1) {
+				return;
+			} 
+			
+			if (PlayState.instance.modchartSprites.exists(tag)) {
+				var leSprite = PlayState.instance.modchartSprites.get(tag);
+				if (leSprite.video != null) {
+					leSprite.video.resume();
+				}
 			}
 		});
 		Lua_helper.add_callback(lua, "muteVideoSprite", function(tag:String, unmute:Bool = false) {
-			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
-				PlayState.instance.modchartVideos.get(tag).muted = !unmute;
-				PlayState.instance.modchartVideos.get(tag).fixVolume(null);
+			if (tag == null && !tag.length > 1) {
+				return;
+			} 
+			
+			if (PlayState.instance.modchartSprites.exists(tag)) {
+				var leSprite = PlayState.instance.modchartSprites.get(tag);
+				if (leSprite.video != null) {
+					leSprite.video.muted = !unmute;
+					leSprite.video.fixVolume(null);
+				}
 			}
 		});
 		Lua_helper.add_callback(lua, "setVideoSpriteVolume", function(tag:String, volume:Float) {
-			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
-				PlayState.instance.modchartVideos.get(tag).volume = volume;
-				PlayState.instance.modchartVideos.get(tag).fixVolume(null);
+			if (tag == null && !tag.length > 1) {
+				return;
+			} 
+			
+			if (PlayState.instance.modchartSprites.exists(tag)) {
+				var leSprite = PlayState.instance.modchartSprites.get(tag);
+				if (leSprite.video != null) {
+					leSprite.video.volume = volume;
+					leSprite.video.fixVolume(null);
+				}
 			}
 		});
 		Lua_helper.add_callback(lua, "stopVideoSprite", function(tag:String) {
-			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
-				PlayState.instance.modchartVideos.get(tag).onVLCComplete();
-				PlayState.instance.modchartVideos.remove(tag);
+			if (tag == null && !tag.length > 1) {
+				return;
+			} 
+			
+			if (PlayState.instance.modchartSprites.exists(tag)) {
+				var leSprite = PlayState.instance.modchartSprites.get(tag);
+				if (leSprite.video != null) {
+					leSprite.video.onVLCComplete;
+					PlayState.instance.modchartSprites.remove(tag);
+				}
 			}
 		});
 		
@@ -2079,12 +2111,21 @@ class FunkinLua {
 class ModchartSprite extends FlxSprite
 {
 	public var wasAdded:Bool = false;
+	public var video:FlxVideo = null;
 	//public var isInFront:Bool = false;
 
 	public function new(?x:Float = 0, ?y:Float = 0)
 	{
 		super(x, y);
 		antialiasing = ClientPrefs.globalAntialiasing;
+	}
+	
+	override function update(elapsed:Float) {
+		if (video != null) {
+			loadGraphic(video.bitmapData);
+			setGraphicSize(1280, 720);
+			// updateHitbox();
+		}
 	}
 }
 
