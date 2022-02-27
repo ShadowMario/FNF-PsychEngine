@@ -1317,15 +1317,14 @@ class FunkinLua {
 				}
 				PlayState.instance.insert(position, leSprite);
 			}
-			var videolink:FlxVideo = new FlxVideo(Paths.video(videoFile), true);
-			leSprite.video = videoLink;
+			leSprite.video = new FlxVideo(Paths.video(videoFile), true);
 			
 			#else
 			luaTrace('build doesn\'t support video sprites');
 			#end
 		});
 		Lua_helper.add_callback(lua, "pauseVideoSprite", function(tag:String) { //totally not pauseSound
-			if (tag == null && !tag.length > 1) {
+			if (tag == null && tag.length < 1) {
 				return;
 			} 
 			
@@ -1337,7 +1336,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "resumeVideoSprite", function(tag:String) {
-			if (tag == null && !tag.length > 1) {
+			if (tag == null && tag.length < 1) {
 				return;
 			} 
 			
@@ -1349,7 +1348,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "muteVideoSprite", function(tag:String, unmute:Bool = false) {
-			if (tag == null && !tag.length > 1) {
+			if (tag == null && tag.length < 1) {
 				return;
 			} 
 			
@@ -1362,7 +1361,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "setVideoSpriteVolume", function(tag:String, volume:Float) {
-			if (tag == null && !tag.length > 1) {
+			if (tag == null && tag.length < 1) {
 				return;
 			} 
 			
@@ -1375,7 +1374,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "stopVideoSprite", function(tag:String) {
-			if (tag == null && !tag.length > 1) {
+			if (tag == null && tag.length < 1) {
 				return;
 			} 
 			
