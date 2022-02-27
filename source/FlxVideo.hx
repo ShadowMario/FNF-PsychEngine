@@ -21,7 +21,7 @@ class FlxVideo extends FlxBasic {
 	var renderOnSprite:Bool = false;
 	
 	#if desktop
-	public static var vlcBitmap:VlcBitmap;
+	public var vlcBitmap:VlcBitmap;
 	#end
 
 	public function new(name:String, ?parentSprite:FlxSprite) {
@@ -130,35 +130,35 @@ class FlxVideo extends FlxBasic {
 		return false;
 	}
 	
-	public static function resume() {
+	public function resume() {
 		if(vlcBitmap != null && !playstatePaused()) {
 			vlcBitmap.resume();
 			paused = isPaused = false;
 		}
 	}
 	
-	public static function pause() {
+	public function pause() {
 		if(vlcBitmap != null && !playstatePaused()) {
 			vlcBitmap.pause();
 			paused = isPaused = true;
 		}
 	}
 	
-	public static function onFocus() {
+	public function onFocus() {
 		if(vlcBitmap != null && !playstatePaused() && !paused) {
 			vlcBitmap.resume();
 			isPaused = false;
 		}
 	}
 	
-	public static function onFocusLost() {
+	public function onFocusLost() {
 		if(vlcBitmap != null && !playstatePaused()) {
 			vlcBitmap.pause();
 			isPaused = true;
 		}
 	}
 
-	function fixVolume(e:Event)
+	public function fixVolume(e:Event)
 	{
 		// shitty volume fix
 		vlcBitmap.volume = 0;
