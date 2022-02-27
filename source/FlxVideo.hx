@@ -23,6 +23,7 @@ class FlxVideo extends FlxBasic {
 	#if desktop
 	public var bitmapData:BitmapData;
 	public var vlcBitmap:VlcBitmap;
+	public static var instances:FlxVideo;
 	#end
 
 	public function new(name:String, isBitmapSource:Bool = false) {
@@ -82,6 +83,8 @@ class FlxVideo extends FlxBasic {
 			FlxG.addChildBelowMouse(vlcBitmap);
 		}
 		vlcBitmap.play(checkFile(name));
+		
+		instances.push(this);
 		#end
 	}
 
@@ -140,17 +143,21 @@ class FlxVideo extends FlxBasic {
 		}
 	}
 	
-	public function onFocus() {
-		if(vlcBitmap != null && !playstatePaused() && !paused) {
-			vlcBitmap.resume();
-			isPaused = false;
+	public static function onFocus() {
+		for (instance in instances) {
+			if(instance.vlcBitmap != null && !playstatePaused() && !instance.paused) {
+				instance.vlcBitmap.resume();
+				instance.isPaused = false;
+			}
 		}
 	}
 	
-	public function onFocusLost() {
-		if(vlcBitmap != null && !playstatePaused()) {
-			vlcBitmap.pause();
-			isPaused = true;
+	public static function onFocusLost() {
+		for (instance in instances) {
+			if(instance.vlcBitmap != null && !playstatePaused()) {
+				instance.vlcBitmap.pause();
+				instance.isPaused = true;
+			}
 		}
 	}
 
@@ -179,6 +186,8 @@ class FlxVideo extends FlxBasic {
 		{
 			finishCallback();
 		}
+		
+		instances.remove(this);
 	}
 
 	
