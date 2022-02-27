@@ -6,6 +6,7 @@ import openfl.media.Video;
 #else
 import openfl.events.Event;
 import vlc.VlcBitmap;
+import openfl.display.BitmapData;
 #end
 import flixel.FlxBasic;
 import flixel.FlxG;
@@ -17,23 +18,22 @@ class FlxVideo extends FlxBasic {
 	public var muted:Bool = false;
 	public var paused:Bool = false; //if it should be paused or playing
 	public var isPaused:Bool = false; //internal variable, whether it is paused or playing
-	var renderSprite:FlxSprite;
-	var renderOnSprite:Bool = false;
+	var isSource:Bool = false;
 	
 	#if desktop
+	public var bitmapData:BitmapData;
 	public var vlcBitmap:VlcBitmap;
 	#end
 
-	public function new(name:String, ?parentSprite:FlxSprite) {
+	public function new(name:String, isBitmapSource:Bool = false) {
 		super();
 
-		renderSprite = parentSprite;
-		renderOnSprite = renderSprite != null;
+		isSource = isBitmapSource;
 
 		#if web
-		if (renderOnSprite) {
+		if (isSource) {
 			//don't know how to access the bitmap data of web videos
-			trace('Web builds do not support video sprites yet, only video cutscenes');
+			trace('Web builds do not support sourcing bitmap data from videos yet, only video cutscenes');
 			return;
 		}
 		var player:Video = new Video();
@@ -76,7 +76,7 @@ class FlxVideo extends FlxBasic {
 		vlcBitmap.fullscreen = false;
 		fixVolume(null);
 
-		if (!renderOnSprite) {
+		if (!isSource) {
 			trace('sprite connected to video');
 		} else {
 			FlxG.addChildBelowMouse(vlcBitmap);
@@ -104,11 +104,7 @@ class FlxVideo extends FlxBasic {
 			}
 		}
 
-		if (renderOnSprite)
-		{
-			renderSprite.loadGraphic(vlcBitmap.bitmapData);
-			renderSprite.setGraphicSize(1280, 720);
-		}
+		bitmapData = vlcBitmap.bitmapData;
 	}
 
 	function checkFile(fileName:String):String
