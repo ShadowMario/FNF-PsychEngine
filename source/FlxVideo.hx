@@ -9,19 +9,22 @@ import vlc.VlcBitmap;
 #end
 import flixel.FlxBasic;
 import flixel.FlxG;
-import flixel.util.typeLimit.OneOfTwo;
 
 class FlxVideo extends FlxBasic {
 	#if VIDEOS_ALLOWED
 	public var finishCallback:Void->Void = null;
-	var renderSprite:Dynamic;
+	public var volume:Float = 1;
+	public var muted:Bool = false;
+	public var paused:Bool = false; //if it should be paused or playing
+	public var isPaused:Bool = false; //internal variable, whether it is paused or playing
+	var renderSprite:FlxSprite;
 	var renderOnSprite:Bool = false;
 	
 	#if desktop
 	public static var vlcBitmap:VlcBitmap;
 	#end
 
-	public function new(name:String, ?parentSprite:OneOfTwo<BGSprite, ModchartSprite>) {
+	public function new(name:String, ?parentSprite:FlxSprite) {
 		super();
 
 		renderSprite = parentSprite;
@@ -74,7 +77,7 @@ class FlxVideo extends FlxBasic {
 		fixVolume(null);
 
 		if (!renderOnSprite) {
-			trace('sprite connected to video')
+			trace('sprite connected to video');
 		} else {
 			FlxG.addChildBelowMouse(vlcBitmap);
 		}
@@ -86,8 +89,22 @@ class FlxVideo extends FlxBasic {
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		
+		if (vlcBitmap == null)
+			return;
+		
+		if (playstatePaused() != isPaused)
+		{
+			if (isPaused && !paused) {
+				vlcBitmap.resume();
+				isPaused = false;
+			} else if(!isPaused) {	
+				vlcBitmap.pause();
+				isPaused = true;
+			}
+		}
 
-		if (renderOnSprite && vlcBitmap != null)
+		if (renderOnSprite)
 		{
 			renderSprite.loadGraphic(vlcBitmap.bitmapData);
 			renderSprite.setGraphicSize(1280, 720);
@@ -107,15 +124,37 @@ class FlxVideo extends FlxBasic {
 		return pDir + fileName;
 	}
 	
-	public static function onFocus() {
-		if(vlcBitmap != null) {
+	public static function playstatePaused():Bool {
+		if (PlayState.instance != null)
+			return PlayState.instance.paused;
+		return false;
+	}
+	
+	public static function resume() {
+		if(vlcBitmap != null && !playstatePaused()) {
 			vlcBitmap.resume();
+			paused = isPaused = false;
+		}
+	}
+	
+	public static function pause() {
+		if(vlcBitmap != null && !playstatePaused()) {
+			vlcBitmap.pause();
+			paused = isPaused = true;
+		}
+	}
+	
+	public static function onFocus() {
+		if(vlcBitmap != null && !playstatePaused() && !paused) {
+			vlcBitmap.resume();
+			isPaused = false;
 		}
 	}
 	
 	public static function onFocusLost() {
-		if(vlcBitmap != null) {
+		if(vlcBitmap != null && !playstatePaused()) {
 			vlcBitmap.pause();
+			isPaused = true;
 		}
 	}
 
@@ -123,8 +162,8 @@ class FlxVideo extends FlxBasic {
 	{
 		// shitty volume fix
 		vlcBitmap.volume = 0;
-		if(!FlxG.sound.muted && FlxG.sound.volume > 0.01) { //Kind of fixes the volume being too low when you decrease it
-			vlcBitmap.volume = FlxG.sound.volume * 0.5 + 0.5;
+		if(!FlxG.sound.muted && FlxG.sound.volume > 0.01 && !muted && volume != 0) { //Kind of fixes the volume being too low when you decrease it
+			vlcBitmap.volume = FlxG.sound.volume * 0.5 * volume + 0.5;
 		}
 	}
 
