@@ -1048,7 +1048,7 @@ class PlayState extends MusicBeatState
 			#if MODS_ALLOWED
 			foldersToCheck.insert(0, Paths.mods('data/' + Paths.formatToSongPath(SONG.song) + '/'));
 			if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-				foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/data/' + Paths.formatToSongPath(SONG.song) + '/'));
+			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/data/' + Paths.formatToSongPath(SONG.song) + '/'));
 			#end
 
 			for (folder in foldersToCheck)
@@ -1065,7 +1065,6 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
-		}
 		#end
 		
 		var daSong:String = Paths.formatToSongPath(curSong);
