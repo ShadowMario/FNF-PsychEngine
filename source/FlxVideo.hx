@@ -23,7 +23,7 @@ class FlxVideo extends FlxBasic {
 	#if desktop
 	public var bitmapData:BitmapData;
 	public var vlcBitmap:VlcBitmap;
-	public static var instances:FlxVideo;
+	public static var instances:Array<FlxVideo>;
 	#end
 
 	public function new(name:String, isBitmapSource:Bool = false) {
