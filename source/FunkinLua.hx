@@ -1324,8 +1324,36 @@ class FunkinLua {
 			if
 			luaTrace('Video already exists or file doesn\'t exist')
 			#else
-			luaTrace('build doesn\'t support videos')
+			luaTrace('build doesn\'t support video sprites')
 			#end
+		});
+		Lua_helper.add_callback(lua, "pauseVideoSprite", function(tag:String) { //totally not pauseSound
+			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
+				PlayState.instance.modchartVideos.get(tag).pause();
+			}
+		});
+		Lua_helper.add_callback(lua, "resumeVideoSprite", function(tag:String) {
+			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
+				PlayState.instance.modchartVideos.get(tag).resume();
+			}
+		});
+		Lua_helper.add_callback(lua, "muteVideoSprite", function(tag:String, unmute:Bool = false) {
+			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
+				PlayState.instance.modchartVideos.get(tag).muted = !unmute;
+				PlayState.instance.modchartVideos.get(tag).fixVolume(null);
+			}
+		});
+		Lua_helper.add_callback(lua, "setVideoSpriteVolume", function(tag:String, volume:Float) {
+			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
+				PlayState.instance.modchartVideos.get(tag).volume = volume;
+				PlayState.instance.modchartVideos.get(tag).fixVolume(null);
+			}
+		});
+		Lua_helper.add_callback(lua, "stopVideoSprite", function(tag:String) {
+			if(tag != null && tag.length > 1 && PlayState.instance.modchartVideos.exists(tag)) {
+				PlayState.instance.modchartVideos.get(tag).onVLCComplete();
+				PlayState.instance.modchartVideos.remove(tag);
+			}
 		});
 		
 		Lua_helper.add_callback(lua, "playMusic", function(sound:String, volume:Float = 1, loop:Bool = false) {
