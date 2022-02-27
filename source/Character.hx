@@ -56,6 +56,7 @@ class Character extends FlxSprite
 	public var holdTimer:Float = 0;
 	public var heyTimer:Float = 0;
 	public var specialAnim:Bool = false;
+	public var noIdle:Bool = false;
 	public var animationNotes:Array<Dynamic> = [];
 	public var stunned:Bool = false;
 	public var singDuration:Float = 4; //Multiplier of how long a character holds the sing pose
@@ -287,7 +288,7 @@ class Character extends FlxSprite
 				dance();
 			}
 
-			if (!isPlayer && !PlayState.opponentChart)
+			if (!isPlayer)
 			{
 				if (animation.curAnim.name.startsWith('sing'))
 				{
@@ -299,18 +300,6 @@ class Character extends FlxSprite
 					dance();
 					holdTimer = 0;
 				}
-			}
-			else if (PlayState.opponentChart)
-			{
-				if (animation.curAnim.name.startsWith('sing'))
-				{
-					holdTimer += elapsed;
-				}
-				else
-					holdTimer = 0;
-
-				if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
-					dance();
 			}
 
 			if(animation.curAnim.finished && animation.getByName(animation.curAnim.name + '-loop') != null)
@@ -328,7 +317,7 @@ class Character extends FlxSprite
 	 */
 	public function dance()
 	{
-		if (!debugMode && !specialAnim)
+		if (!debugMode && !specialAnim && !noIdle)
 		{
 			if(danceIdle)
 			{
