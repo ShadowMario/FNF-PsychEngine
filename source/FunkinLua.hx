@@ -1322,9 +1322,9 @@ class FunkinLua {
 				PlayState.instance.modchartVideos.set(tag, videolink);
 			}
 			if
-			luaTrace('Video already exists or file doesn\'t exist')
+			luaTrace('Video already exists or file doesn\'t exist');
 			#else
-			luaTrace('build doesn\'t support video sprites')
+			luaTrace('build doesn\'t support video sprites');
 			#end
 		});
 		Lua_helper.add_callback(lua, "pauseVideoSprite", function(tag:String) { //totally not pauseSound
