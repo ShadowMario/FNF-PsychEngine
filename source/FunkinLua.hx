@@ -1296,7 +1296,7 @@ class FunkinLua {
 			}
 			
 			if (PlayState.instance.modchartSprites.exists(tag)) {
-				luaTrace('Sprite already exists')
+				luaTrace('Sprite already exists');
 			}
 			
 			tag = tag.replace('.', '');
