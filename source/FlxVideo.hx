@@ -142,7 +142,7 @@ class FlxVideo extends FlxBasic {
 			paused = isPaused = true;
 		}
 	}
-	
+	/*
 	public static function onFocus() {
 		for (instance in instances) {
 			if(instance.vlcBitmap != null && !playstatePaused() && !instance.paused) {
@@ -160,7 +160,7 @@ class FlxVideo extends FlxBasic {
 			}
 		}
 	}
-
+	*/ // game crashes when losing focus
 	public function fixVolume(e:Event)
 	{
 		// shitty volume fix
