@@ -86,7 +86,7 @@ _____________________________________
 
 ## Options menu:
 * You can change Note colors, Delay and Combo Offset, Controls and Other Preferences there.
-* On Gameplay, you can toggle Downscroll, Middlescroll, Ghost Tapping, Rating Offsets, etc .
+* On Gameplay, you can toggle Downscroll, Middlescroll, Ghost Tapping, Rating Offsets, etc.
 * On Graphics, you can toggle Anti-Aliasing, Framerate, and Low Quality, Flashing Lights, etc.
 * On Visuals and UI, you can toggle Note Splashes, Camera Zooms, Health Bar Transparency, etc.
 
