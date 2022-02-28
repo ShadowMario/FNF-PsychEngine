@@ -13,7 +13,7 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 ## Credits:
 * Shadow Mario - Coding
 * RiverOaken - Arts and Animations
-* bbpanzu - Assistant Coding
+* Yoshubs - Assistant Coding
 
 ### Special Thanks
 * shubs - New Input System
@@ -78,19 +78,21 @@ _____________________________________
 * All menu characters are now in individual spritesheets, makes modding it easier.
 
 ## Credits menu
-![Screenshot_1](https://user-images.githubusercontent.com/44785097/144632635-f263fb22-b879-4d6b-96d6-865e9562b907.png)
+![image](https://user-images.githubusercontent.com/45212377/156034987-9d8938a0-0d21-465b-ba4b-1a9ab397f5b9.png)
 * You can add a head icon, name, description and a Redirect link for when the player presses Enter while the item is currently selected.
 
 ## Awards/Achievements
 * The engine comes with 16 example achievements that you can mess with and learn how it works (Check Achievements.hx and search for "checkForAchievement" on PlayState.hx)
 
 ## Options menu:
-* You can change Note colors, Delay and Combo Offset, Controls and Preferences there.
- * On Preferences you can toggle Downscroll, Middlescroll, Anti-Aliasing, Framerate, Low Quality, Note Splashes, Flashing Lights, etc.
+* You can change Note colors, Delay and Combo Offset, Controls and Other Preferences there.
+* On Gameplay, you can toggle Downscroll, Middlescroll, Ghost Tapping, Rating Offsets, etc .
+* On Graphics, you can toggle Anti-Aliasing, Framerate, and Low Quality, Flashing Lights, etc.
+* On Visuals and UI, you can toggle Note Splashes, Camera Zooms, Health Bar Transparency, etc.
 
 ## Other gameplay features:
 * When the enemy hits a note, their strum note also glows.
 * Lag doesn't impact the camera movement and player icon scaling anymore.
 * Some stuff based on Week 7's changes has been put in (Background colors on Freeplay, Note splashes)
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
-* You can listen to a song or adjust Scroll Speed/Damage taken/etc. on Freeplay by pressing Space.
+* You can listen to a song by pressing Space, or adjust Scroll Speed/Damage taken/etc. by pressing CTRL on Freeplay.
