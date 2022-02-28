@@ -13,7 +13,7 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 ## Credits:
 * Shadow Mario - Coding
 * RiverOaken - Arts and Animations
-* Yoshubs - Assistant Coding
+* shubs - Assistant Coding
 
 ### Special Thanks
 * shubs - New Input System
