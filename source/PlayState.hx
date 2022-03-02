@@ -3629,9 +3629,8 @@ class PlayState extends MusicBeatState
 					startAchievement(achieve);
 				}
 				#end
-			} else if (!opponentChart && boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing')
-			&& !boyfriend.animation.curAnim.name.endsWith('miss') || opponentChart && boyfriend.holdTimer > Conductor.stepCrochet * 0.002 
-			* boyfriend.singDuration)
+			} else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing')
+			&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
 
 			if (controlHoldArray.contains(true) && !endingSong && opponentChart) {/*bruh*/} else if (dad.holdTimer > Conductor.stepCrochet * 0.001 * dad.singDuration && dad.animation.curAnim.name.startsWith('sing')
