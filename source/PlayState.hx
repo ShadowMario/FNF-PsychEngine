@@ -1154,6 +1154,10 @@ class PlayState extends MusicBeatState
 		}
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
+
+		var luaCurStage:String = curStage;
+		setOnLuas('curStage', luaCurStage);
+
 		callOnLuas('onCreatePost', []);
 		
 		super.create();
