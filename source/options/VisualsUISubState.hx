@@ -69,6 +69,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+		
+		var option:Option = new Option('Camera Shake',
+			"If unchecked, the camera and HUD won't shake on Screen Shake event.",
+			'camShake',
+			'bool',
+			true);
+		addOption(option);
 
 		var option:Option = new Option('Score Text Zoom on Hit',
 			"If unchecked, disables the Score text zooming\neverytime you hit a note.",
