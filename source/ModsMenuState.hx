@@ -300,7 +300,8 @@ class ModsMenuState extends MusicBeatState
 			var newMod:ModMetadata = new ModMetadata(values[0]);
 			mods.push(newMod);
 
-			var scale:Float = Math.min(16 / (mods[i].name.length), 1);
+			newMod.alphabet = new Alphabet(0, 0, mods[i].name, true, false, 0.05);
+			var scale:Float = Math.min(840 / newMod.alphabet.width, 1);
 			newMod.alphabet = new Alphabet(0, 0, mods[i].name, true, false, 0.05, scale);
 			newMod.alphabet.y = i * 150;
 			newMod.alphabet.x = 310;
@@ -348,13 +349,13 @@ class ModsMenuState extends MusicBeatState
 		super.create();
 	}
 
-	function getIntArray(max:Int):Array<Int>{
+	/*function getIntArray(max:Int):Array<Int>{
 		var arr:Array<Int> = [];
-		for (i in 0...max){
+		for (i in 0...max) {
 			arr.push(i);
 		}
 		return arr;
-	}
+	}*/
 	function addToModsList(values:Array<Dynamic>)
 	{
 		for (i in 0...modsList.length)

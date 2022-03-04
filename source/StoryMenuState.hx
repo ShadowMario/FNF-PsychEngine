@@ -23,10 +23,6 @@ using StringTools;
 
 class StoryMenuState extends MusicBeatState
 {
-	// Wether you have to beat the previous week for playing this one
-	// Not recommended, as people usually download your mod for, you know,
-	// playing just the modded week then delete it.
-	// defaults to True
 	public static var weekCompleted:Map<String, Bool> = new Map<String, Bool>();
 
 	var scoreText:FlxText;
@@ -149,8 +145,6 @@ class StoryMenuState extends MusicBeatState
 		
 		sprDifficulty = new FlxSprite(0, leftArrow.y);
 		sprDifficulty.antialiasing = ClientPrefs.globalAntialiasing;
-		changeDifficulty();
-
 		difficultySelectors.add(sprDifficulty);
 
 		rightArrow = new FlxSprite(leftArrow.x + 376, leftArrow.y);
@@ -179,6 +173,7 @@ class StoryMenuState extends MusicBeatState
 		add(txtWeekTitle);
 
 		changeWeek();
+		changeDifficulty();
 
 		super.create();
 	}
@@ -263,6 +258,7 @@ class StoryMenuState extends MusicBeatState
 		grpLocks.forEach(function(lock:FlxSprite)
 		{
 			lock.y = grpWeekText.members[lock.ID].y;
+			lock.visible = (lock.y > FlxG.height / 2);
 		});
 	}
 
@@ -279,7 +275,9 @@ class StoryMenuState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 
 				grpWeekText.members[curWeek].startFlashing();
-				if(grpWeekCharacters.members[1].character != '') grpWeekCharacters.members[1].animation.play('confirm');
+
+				var bf:MenuCharacter = grpWeekCharacters.members[1];
+				if(bf.character != '' && bf.hasConfirmAnimation) grpWeekCharacters.members[1].animation.play('confirm');
 				stopspamming = true;
 			}
 
@@ -314,7 +312,6 @@ class StoryMenuState extends MusicBeatState
 	}
 
 	var tweenDifficulty:FlxTween;
-	var lastImagePath:String;
 	function changeDifficulty(change:Int = 0):Void
 	{
 		curDifficulty += change;
@@ -324,21 +321,17 @@ class StoryMenuState extends MusicBeatState
 		if (curDifficulty >= CoolUtil.difficulties.length)
 			curDifficulty = 0;
 
-		var image:Dynamic = Paths.image('menudifficulties/' + Paths.formatToSongPath(CoolUtil.difficulties[curDifficulty]));
-		var newImagePath:String = '';
-		if(Std.isOfType(image, FlxGraphic))
-		{
-			var graphic:FlxGraphic = image;
-			newImagePath = graphic.assetsKey;
-		}
-		else
-			newImagePath = image;
+		WeekData.setDirectoryFromWeek(WeekData.weeksLoaded.get(WeekData.weeksList[curWeek]));
 
-		if(newImagePath != lastImagePath)
+		var diff:String = CoolUtil.difficulties[curDifficulty];
+		var newImage:FlxGraphic = Paths.image('menudifficulties/' + Paths.formatToSongPath(diff));
+		trace(Paths.currentModDirectory + ', menudifficulties/' + Paths.formatToSongPath(diff));
+
+		if(sprDifficulty.graphic != newImage)
 		{
-			sprDifficulty.loadGraphic(image);
+			sprDifficulty.loadGraphic(newImage);
 			sprDifficulty.x = leftArrow.x + 60;
-			sprDifficulty.x += (308 - sprDifficulty.width) / 2;
+			sprDifficulty.x += (308 - sprDifficulty.width) / 3;
 			sprDifficulty.alpha = 0;
 			sprDifficulty.y = leftArrow.y - 15;
 
@@ -348,8 +341,7 @@ class StoryMenuState extends MusicBeatState
 				tweenDifficulty = null;
 			}});
 		}
-		lastImagePath = newImagePath;
-		lastDifficultyName = CoolUtil.difficulties[curDifficulty];
+		lastDifficultyName = diff;
 
 		#if !switch
 		intendedScore = Highscore.getWeekScore(WeekData.weeksList[curWeek], curDifficulty);
@@ -421,7 +413,15 @@ class StoryMenuState extends MusicBeatState
 			}
 		}
 		
-		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
+		if(CoolUtil.difficulties.contains(CoolUtil.defaultDifficulty))
+		{
+			curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
+		}
+		else
+		{
+			curDifficulty = 0;
+		}
+
 		var newPos:Int = CoolUtil.difficulties.indexOf(lastDifficultyName);
 		//trace('Pos of ' + lastDifficultyName + ' is ' + newPos);
 		if(newPos > -1)
