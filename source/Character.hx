@@ -289,7 +289,7 @@ class Character extends FlxSprite
 
 			if (!isPlayer)
 			{
-				if (!PlayState.opponentChart) {
+				if (!PlayState.opponentChart || curCharacter.startsWith('gf')) {
 					if (animation.curAnim.name.startsWith('sing'))
 					{
 						holdTimer += elapsed;

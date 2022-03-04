@@ -122,7 +122,6 @@ class PlayState extends MusicBeatState
 	public var dad:Character;
 	public var gf:Character;
 	public var boyfriend:Boyfriend;
-	var charArray:Array<Character> = [];
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
@@ -800,8 +799,6 @@ class PlayState extends MusicBeatState
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
 		startCharacterLua(boyfriend.curCharacter);
-
-		charArray = [dad, gf];
 		
 		var camPos:FlxPoint = new FlxPoint(gf.getGraphicMidpoint().x, gf.getGraphicMidpoint().y);
 		camPos.x += gf.cameraPosition[0];
@@ -2511,11 +2508,9 @@ class PlayState extends MusicBeatState
 			} else if(boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
 
-			for (i in 0...2) {
-				if(cpuControlled && opponentChart && charArray[i].holdTimer > Conductor.stepCrochet * 0.001 * charArray[i].singDuration && charArray[i].animation.curAnim.name.startsWith('sing') 
-				&& !charArray[i].animation.curAnim.name.endsWith('miss'))
-					charArray[i].dance();
-			}
+			if(cpuControlled && opponentChart && dad.holdTimer > Conductor.stepCrochet * 0.001 * dad.singDuration && dad.animation.curAnim.name.startsWith('sing') 
+			&& !dad.animation.curAnim.name.endsWith('miss'))
+				dad.dance();
 		}
 		
 		#if debug
@@ -3638,11 +3633,9 @@ class PlayState extends MusicBeatState
 			&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
 
-			for (i in 0...2) {
-				if (controlHoldArray.contains(true) && !endingSong && opponentChart) {/*bruh*/} else if (charArray[i].holdTimer > Conductor.stepCrochet * 0.001 * charArray[i].singDuration 
-				&& charArray[i].animation.curAnim.name.startsWith('sing') && !charArray[i].animation.curAnim.name.endsWith('miss'))
-				charArray[i].dance();
-			}
+			if (controlHoldArray.contains(true) && !endingSong && opponentChart) {/*bruh*/} else if (dad.holdTimer > Conductor.stepCrochet * 0.001 * dad.singDuration 
+			&& dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss'))
+				dad.dance();
 		}
 
 		// TO DO: Find a better way to handle controller inputs, this should work for now
