@@ -53,6 +53,7 @@ class ClientPrefs {
 	public static var ratingOffset:Int = 0;
 	public static var sickWindow:Int = 45;
 	public static var goodWindow:Int = 90;
+	public static var leftSide:Bool = false;
 	public static var badWindow:Int = 135;
 	public static var safeFrames:Float = 10;
 

@@ -978,8 +978,13 @@ class PlayState extends MusicBeatState
 		add(healthBarBG);
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'health', 0, 2);
+		if (!ClientPrefs.leftSide) {
+			healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+				'health', 0, 2);
+		} else {
+			healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, LEFT_TO_RIGHT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+				'health', 0, 2);
+		}
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -999,7 +1004,10 @@ class PlayState extends MusicBeatState
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP2);
 		reloadHealthBarColors();
-
+		if (ClientPrefs.leftSide) {
+			iconP1.visible = false;
+			iconP2.visible = false;
+		}
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
@@ -1736,6 +1744,26 @@ class PlayState extends MusicBeatState
 			for (songNotes in section.sectionNotes)
 			{
 				var daStrumTime:Float = songNotes[0];
+				if (ClientPrefs.leftSide) {
+					switch (songNotes[1]) {
+						case 0:
+							songNotes[1] = 4;
+						case 1:
+							songNotes[1] = 5;
+						case 2:
+							songNotes[1] = 6;
+						case 3:
+							songNotes[1] = 7;
+						case 4:
+							songNotes[1] = 0;
+						case 5:
+							songNotes[1] = 1;
+						case 6:
+							songNotes[1] = 2;
+						case 7:
+							songNotes[1] = 3;
+					}
+				}
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
 
 				var gottaHitNote:Bool = section.mustHitSection;
@@ -3667,6 +3695,9 @@ class PlayState extends MusicBeatState
 		if(daNote.gfNote) {
 			char = gf;
 		}
+		if (ClientPrefs.leftSide) {
+			char = dad;
+		}
 
 		if(char.hasMissAnimations)
 		{
@@ -3718,9 +3749,9 @@ class PlayState extends MusicBeatState
 				boyfriend.stunned = false;
 			});*/
 
-			if(boyfriend.hasMissAnimations) {
-				boyfriend.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
-			}
+			//if(boyfriend.hasMissAnimations) {
+			//	boyfriend.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
+			//}
 			vocals.volume = 0;
 		}
 	}
@@ -3746,6 +3777,8 @@ class PlayState extends MusicBeatState
 			}
 
 			var char:Character = dad;
+			if (ClientPrefs.leftSide)
+				char = boyfriend;
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
 			if(note.gfNote) {
 				char = gf;
@@ -3837,8 +3870,13 @@ class PlayState extends MusicBeatState
 						gf.playAnim(animToPlay + daAlt, true);
 						gf.holdTimer = 0;
 					} else {
-						boyfriend.playAnim(animToPlay + daAlt, true);
-						boyfriend.holdTimer = 0;
+						if (ClientPrefs.leftSide) {
+							dad.playAnim(animToPlay + daAlt, true);
+							dad.holdTimer = 0;
+						} else {
+							boyfriend.playAnim(animToPlay + daAlt, true);
+							boyfriend.holdTimer = 0;
+						}
 					}
 				//}
 				if(note.noteType == 'Hey!') {
