@@ -20,7 +20,8 @@ import openfl.errors.ArgumentError;
  * Since we can extract symbols from the exported timeline and instance them separatedly, this keeps track of all symbols.
  * Also, this is a "more readable" way of understanding the AnimationData
  */
-class TileAnimationLibrary {
+class TileAnimationLibrary
+{
 	public var frameRate:Float;
 
 	private var _atlas:Map<String, SpriteData>;
@@ -50,54 +51,69 @@ class TileAnimationLibrary {
 		m33: 1
 	};
 
-	public function new(data:AnimationData, atlas:AtlasData, texture:BitmapData) {
+	public function new(data:AnimationData, atlas:AtlasData, texture:BitmapData)
+	{
 		parseAnimationData(data);
 		parseAtlasData(atlas);
 		_texture = new Tileset(texture);
 		_symbolPool = new Map();
 	}
 
-	public function hasAnimation(name:String):Bool {
+	public function hasAnimation(name:String):Bool
+	{
 		return hasSymbol(name);
 	}
 
-	public function createAnimation(symbol:String = null):TileContainerMovieClip {
+	public function createAnimation(symbol:String = null):TileContainerMovieClip
+	{
 		symbol = (symbol != null) ? symbol : _defaultSymbolName;
-		if (!hasSymbol(symbol)) {
+		if (!hasSymbol(symbol))
+		{
 			throw new ArgumentError("Symbol not found: " + symbol);
 		}
 		return new TileContainerMovieClip(getSymbol(symbol));
 	}
 
-	public function getAnimationNames(prefix:String = ""):Array<String> {
+	public function getAnimationNames(prefix:String = ""):Array<String>
+	{
 		var out = new Array<String>();
 
-		for (name in _symbolData.keys()) {
-			if (name != BITMAP_SYMBOL_NAME && name.indexOf(prefix) == 0) {
+		for (name in _symbolData.keys())
+		{
+			if (name != BITMAP_SYMBOL_NAME && name.indexOf(prefix) == 0)
+			{
 				out.push(name);
 			}
 		}
 
 		// but... why?
-		out.sort(function(a1, a2):Int {
+		out.sort(function(a1, a2):Int
+		{
 			a1 = a1.toLowerCase();
 			a2 = a2.toLowerCase();
-			if (a1 < a2) {
+			if (a1 < a2)
+			{
 				return -1;
-			} else if (a1 > a2) {
+			}
+			else if (a1 > a2)
+			{
 				return 1;
-			} else {
+			}
+			else
+			{
 				return 0;
 			}
 		});
 		return out;
 	}
 
-	private function getSpriteData(name:String):SpriteData {
+	private function getSpriteData(name:String):SpriteData
+	{
 		return _atlas.get(name);
 	}
 
-	private function hasSymbol(name:String):Bool {
+	private function hasSymbol(name:String):Bool
+	{
 		return _symbolData.exists(name);
 	}
 
@@ -105,25 +121,32 @@ class TileAnimationLibrary {
 	// todo migrate this to lime pool
 
 	@:access(animateatlas)
-	private function getSymbol(name:String):TileContainerSymbol {
+	private function getSymbol(name:String):TileContainerSymbol
+	{
 		var pool:Array<TileContainerSymbol> = getSymbolPool(name);
-		if (pool.length == 0) {
+		if (pool.length == 0)
+		{
 			return new TileContainerSymbol(getSymbolData(name), this, _texture);
-		} else {
+		}
+		else
+		{
 			return pool.pop();
 		}
 	}
 
-	private function putSymbol(symbol:TileContainerSymbol):Void {
+	private function putSymbol(symbol:TileContainerSymbol):Void
+	{
 		symbol.reset();
 		var pool:Array<TileContainerSymbol> = getSymbolPool(symbol.symbolName);
 		pool.push(symbol);
 		symbol.currentFrame = 0;
 	}
 
-	private function getSymbolPool(name:String):Array<TileContainerSymbol> {
+	private function getSymbolPool(name:String):Array<TileContainerSymbol>
+	{
 		var pool:Array<TileContainerSymbol> = _symbolPool.get(name);
-		if (pool == null) {
+		if (pool == null)
+		{
 			pool = [];
 			_symbolPool.set(name, pool);
 		}
@@ -132,12 +155,16 @@ class TileAnimationLibrary {
 
 	// # end region
 	// # region helpers
-	private function parseAnimationData(data:AnimationData):Void {
+	private function parseAnimationData(data:AnimationData):Void
+	{
 		var metaData = data.metadata;
 
-		if (metaData != null && metaData.framerate != null && metaData.framerate > 0) {
+		if (metaData != null && metaData.framerate != null && metaData.framerate > 0)
+		{
 			frameRate = (metaData.framerate);
-		} else {
+		}
+		else
+		{
 			frameRate = 24;
 		}
 
@@ -145,7 +172,8 @@ class TileAnimationLibrary {
 
 		// the actual symbol dictionary
 		var symbols = data.SYMBOL_DICTIONARY.Symbols;
-		for (symbolData in symbols) {
+		for (symbolData in symbols)
+		{
 			_symbolData[symbolData.SYMBOL_name] = preprocessSymbolData(symbolData);
 		}
 
@@ -163,14 +191,16 @@ class TileAnimationLibrary {
 		});
 	}
 
-	private function preprocessSymbolData(symbolData:SymbolData):SymbolData {
+	private function preprocessSymbolData(symbolData:SymbolData):SymbolData
+	{
 		var timeLineData:SymbolTimelineData = symbolData.TIMELINE;
 		var layerDates:Array<LayerData> = timeLineData.LAYERS;
 
 		// In Animate CC, layers are sorted front to back.
 		// In Starling, it's the other way round - so we simply reverse the layer data.
 
-		if (!timeLineData.sortedForRender) {
+		if (!timeLineData.sortedForRender)
+		{
 			timeLineData.sortedForRender = true;
 			layerDates.reverse();
 		}
@@ -178,14 +208,18 @@ class TileAnimationLibrary {
 		// We replace all "ATLAS_SPRITE_instance" elements with symbols of the same contents.
 		// That way, we are always only dealing with symbols.
 
-		for (layerData in layerDates) {
+		for (layerData in layerDates)
+		{
 			var frames:Array<LayerFrameData> = layerData.Frames;
 
-			for (frame in frames) {
+			for (frame in frames)
+			{
 				var elements:Array<ElementData> = frame.elements;
-				for (e in 0...elements.length) {
+				for (e in 0...elements.length)
+				{
 					var element:ElementData = elements[e];
-					if (element.ATLAS_SPRITE_instance != null) {
+					if (element.ATLAS_SPRITE_instance != null)
+					{
 						element = elements[e] = {
 							SYMBOL_Instance: {
 								SYMBOL_name: BITMAP_SYMBOL_NAME,
@@ -209,16 +243,20 @@ class TileAnimationLibrary {
 		return symbolData;
 	}
 
-	private function parseAtlasData(atlas:AtlasData):Void {
+	private function parseAtlasData(atlas:AtlasData):Void
+	{
 		_atlas = new Map<String, SpriteData>();
-		if (atlas.ATLAS != null && atlas.ATLAS.SPRITES != null) {
-			for (s in atlas.ATLAS.SPRITES) {
+		if (atlas.ATLAS != null && atlas.ATLAS.SPRITES != null)
+		{
+			for (s in atlas.ATLAS.SPRITES)
+			{
 				_atlas.set(s.SPRITE.name, s.SPRITE);
 			}
 		}
 	}
 
-	private function getSymbolData(name:String):SymbolData {
+	private function getSymbolData(name:String):SymbolData
+	{
 		return _symbolData.get(name);
 	}
 

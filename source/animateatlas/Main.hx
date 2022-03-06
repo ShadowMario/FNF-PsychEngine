@@ -18,7 +18,8 @@ import animateatlas.displayobject.SpriteAnimationLibrary;
 import animateatlas.displayobject.SpriteMovieClip;
 import openfl.display.Sprite;
 
-class Main extends Sprite {
+class Main extends Sprite
+{
 	var aa:TileAnimationLibrary;
 	var ss:SpriteAnimationLibrary;
 
@@ -29,7 +30,8 @@ class Main extends Sprite {
 
 	var renderer:Tilemap;
 
-	public function new() {
+	public function new()
+	{
 		super();
 		graphics.beginFill(0x333333);
 		graphics.drawRect(0, 0, Lib.current.stage.stageWidth, Lib.current.stage.stageHeight);
@@ -62,22 +64,27 @@ class Main extends Sprite {
 	var dt:Int = 0;
 	var curr:Int = 0;
 
-	public function update(_) {
+	public function update(_)
+	{
 		// making a dt
 		curr = Lib.getTimer();
 		dt = curr - prev;
 		prev = curr;
 
-		for (symbol in tileSymbols) {
+		for (symbol in tileSymbols)
+		{
 			symbol.update(dt);
 		}
-		for (symbol in spriteSymbols) {
+		for (symbol in spriteSymbols)
+		{
 			symbol.update(dt);
 		}
 	}
 
-	public function addSpriteGirl(_) {
-		for (i in 0...1) {
+	public function addSpriteGirl(_)
+	{
+		for (i in 0...1)
+		{
 			var t = ss.createAnimation();
 			t.x = mouseX + i * 20 * (-1 * i % 2);
 			t.y = mouseY + i * 20 * (-1 * i % 2);
@@ -91,8 +98,10 @@ class Main extends Sprite {
 		}
 	}
 
-	public function addTileGirl(_) {
-		for (i in 0...1) {
+	public function addTileGirl(_)
+	{
+		for (i in 0...1)
+		{
 			var t = aa.createAnimation();
 			t.x = mouseX + i * 5 * (-1 * i % 2);
 			t.y = mouseY + i * 5 * (-1 * i % 2);

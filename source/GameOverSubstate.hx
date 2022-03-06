@@ -13,6 +13,7 @@ import flixel.tweens.FlxTween;
 class GameOverSubstate extends MusicBeatSubstate
 {
 	public var boyfriend:Boyfriend;
+
 	var camFollow:FlxPoint;
 	var camFollowPos:FlxObject;
 	var updateCamera:Bool = false;
@@ -26,7 +27,8 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	public static var instance:GameOverSubstate;
 
-	public static function resetVariables() {
+	public static function resetVariables()
+	{
 		characterName = 'bf';
 		deathSoundName = 'fnf_loss_sfx';
 		loopSoundName = 'gameOver';
@@ -73,12 +75,14 @@ class GameOverSubstate extends MusicBeatSubstate
 	}
 
 	var isFollowingAlready:Bool = false;
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
 		PlayState.instance.callOnLuas('onUpdate', [elapsed]);
-		if(updateCamera) {
+		if (updateCamera)
+		{
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 0.6, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 		}
@@ -105,7 +109,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (boyfriend.animation.curAnim.name == 'firstDeath')
 		{
-			if(boyfriend.animation.curAnim.curFrame >= 12 && !isFollowingAlready)
+			if (boyfriend.animation.curAnim.curFrame >= 12 && !isFollowingAlready)
 			{
 				FlxG.camera.follow(camFollowPos, LOCKON, 1);
 				updateCamera = true;
@@ -130,7 +134,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.beatHit();
 
-		//FlxG.log.add('beat');
+		// FlxG.log.add('beat');
 	}
 
 	var isEnding:Bool = false;
