@@ -8,14 +8,14 @@ import openfl.utils.Assets;
 #end
 import haxe.Json;
 import haxe.format.JsonParser;
-import Song;
 import LayerFile;
+import Song;
 
 using StringTools;
 
 typedef StageFile = {
-	var directory:String;
 	var name:String;
+	var directory:String;
 	var defaultZoom:Float;
 	var isPixelStage:Bool;
 
@@ -26,18 +26,7 @@ typedef StageFile = {
 }
 
 class StageData {
-	//Json Vars
-	public var directory:String;
-	public var name:String;
-	public var defaultZoom:Float;
-	public var isPixelStage:Bool;
-	public var boyfriend:Array<Dynamic>;
-	public var girlfriend:Array<Dynamic>;
-	public var opponent:Array<Dynamic>;
-	public var layerArray:Array<LayerFile> = [];
-
 	public static var forceNextDirectory:String = null;
-	
 	public static function loadDirectory(SONG:SwagSong) {
 		var stage:String = '';
 		if(SONG.stage != null) {

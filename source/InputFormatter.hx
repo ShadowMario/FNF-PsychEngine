@@ -3,12 +3,9 @@ import flixel.input.keyboard.FlxKey;
 
 using StringTools;
 
-class InputFormatter
-{
-	public static function getKeyName(key:FlxKey):String
-	{
-		switch (key)
-		{
+class InputFormatter {
+	public static function getKeyName(key:FlxKey):String {
+		switch (key) {
 			case BACKSPACE:
 				return "BckSpc";
 			case CONTROL:
@@ -75,13 +72,13 @@ class InputFormatter
 				return ",";
 			case PERIOD:
 				return ".";
-			// case SLASH:
+			//case SLASH:
 			//	return "/";
 			case GRAVEACCENT:
 				return "`";
 			case LBRACKET:
 				return "[";
-			// case BACKSLASH:
+			//case BACKSLASH:
 			//	return "\\";
 			case RBRACKET:
 				return "]";
@@ -93,8 +90,7 @@ class InputFormatter
 				return '---';
 			default:
 				var label:String = '' + key;
-				if (label.toLowerCase() == 'null')
-					return '---';
+				if(label.toLowerCase() == 'null') return '---';
 				return '' + label.charAt(0).toUpperCase() + label.substr(1).toLowerCase();
 		}
 	}

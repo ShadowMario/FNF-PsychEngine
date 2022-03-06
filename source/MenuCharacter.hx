@@ -10,8 +10,7 @@ import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
 
-typedef MenuCharacterFile =
-{
+typedef MenuCharacterFile = {
 	var image:String;
 	var scale:Float;
 	var position:Array<Int>;
@@ -23,11 +22,7 @@ typedef MenuCharacterFile =
 class MenuCharacter extends FlxSprite
 {
 	public var character:String;
-<<<<<<< HEAD
-
-=======
 	public var hasConfirmAnimation:Bool = false;
->>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 	private static var DEFAULT_CHARACTER:String = 'bf';
 
 	public function new(x:Float, character:String = 'bf')
@@ -37,12 +32,9 @@ class MenuCharacter extends FlxSprite
 		changeCharacter(character);
 	}
 
-	public function changeCharacter(?character:String = 'bf')
-	{
-		if (character == null)
-			character = '';
-		if (character == this.character)
-			return;
+	public function changeCharacter(?character:String = 'bf') {
+		if(character == null) character = '';
+		if(character == this.character) return;
 
 		this.character = character;
 		antialiasing = ClientPrefs.globalAntialiasing;
@@ -52,13 +44,8 @@ class MenuCharacter extends FlxSprite
 		scale.set(1, 1);
 		updateHitbox();
 
-<<<<<<< HEAD
-		switch (character)
-		{
-=======
 		hasConfirmAnimation = false;
 		switch(character) {
->>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 			case '':
 				visible = false;
 				dontPlayAnim = true;
@@ -68,25 +55,23 @@ class MenuCharacter extends FlxSprite
 
 				#if MODS_ALLOWED
 				var path:String = Paths.modFolders(characterPath);
-				if (!FileSystem.exists(path))
-				{
+				if (!FileSystem.exists(path)) {
 					path = Paths.getPreloadPath(characterPath);
 				}
 
-				if (!FileSystem.exists(path))
-				{
+				if(!FileSystem.exists(path)) {
 					path = Paths.getPreloadPath('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
 				}
 				rawJson = File.getContent(path);
+
 				#else
 				var path:String = Paths.getPreloadPath(characterPath);
-				if (!Assets.exists(path))
-				{
+				if(!Assets.exists(path)) {
 					path = Paths.getPreloadPath('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
 				}
 				rawJson = Assets.getText(path);
 				#end
-
+				
 				var charFile:MenuCharacterFile = cast Json.parse(rawJson);
 				frames = Paths.getSparrowAtlas('menucharacters/' + charFile.image);
 				animation.addByPrefix('idle', charFile.idle_anim, 24);
@@ -101,8 +86,7 @@ class MenuCharacter extends FlxSprite
 
 				flipX = (charFile.flipX == true);
 
-				if (charFile.scale != 1)
-				{
+				if(charFile.scale != 1) {
 					scale.set(charFile.scale, charFile.scale);
 					updateHitbox();
 				}

@@ -22,15 +22,12 @@ class AchievementsMenuState extends MusicBeatState
 	#if ACHIEVEMENTS_ALLOWED
 	var options:Array<String> = [];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
-
 	private static var curSelected:Int = 0;
-
 	private var achievementArray:Array<AttachedAchievement> = [];
 	private var achievementIndex:Array<Int> = [];
 	private var descText:FlxText;
 
-	override function create()
-	{
+	override function create() {
 		#if desktop
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
@@ -45,26 +42,17 @@ class AchievementsMenuState extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-<<<<<<< HEAD
-		for (i in 0...Achievements.achievementsStuff.length)
-		{
-			if (!Achievements.achievementsStuff[i][4] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2]))
-			{
-=======
 		Achievements.loadAchievements();
 		for (i in 0...Achievements.achievementsStuff.length) {
 			if(!Achievements.achievementsStuff[i][4] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
->>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 				options.push(Achievements.achievementsStuff[i]);
 				achievementIndex.push(i);
 			}
 		}
 
-		for (i in 0...options.length)
-		{
+		for (i in 0...options.length) {
 			var achieveName:String = Achievements.achievementsStuff[achievementIndex[i]][2];
-			var optionText:Alphabet = new Alphabet(0, (100 * i) + 210,
-				Achievements.isAchievementUnlocked(achieveName) ? Achievements.achievementsStuff[achievementIndex[i]][0] : '?', false, false);
+			var optionText:Alphabet = new Alphabet(0, (100 * i) + 210, Achievements.isAchievementUnlocked(achieveName) ? Achievements.achievementsStuff[achievementIndex[i]][0] : '?', false, false);
 			optionText.isMenuItem = true;
 			optionText.x += 280;
 			optionText.xAdd = 200;
@@ -87,28 +75,23 @@ class AchievementsMenuState extends MusicBeatState
 		super.create();
 	}
 
-	override function update(elapsed:Float)
-	{
+	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		if (controls.UI_UP_P)
-		{
+		if (controls.UI_UP_P) {
 			changeSelection(-1);
 		}
-		if (controls.UI_DOWN_P)
-		{
+		if (controls.UI_DOWN_P) {
 			changeSelection(1);
 		}
 
-		if (controls.BACK)
-		{
+		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new MainMenuState());
 		}
 	}
 
-	function changeSelection(change:Int = 0)
-	{
+	function changeSelection(change:Int = 0) {
 		curSelected += change;
 		if (curSelected < 0)
 			curSelected = options.length - 1;
@@ -117,23 +100,19 @@ class AchievementsMenuState extends MusicBeatState
 
 		var bullShit:Int = 0;
 
-		for (item in grpOptions.members)
-		{
+		for (item in grpOptions.members) {
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 
 			item.alpha = 0.6;
-			if (item.targetY == 0)
-			{
+			if (item.targetY == 0) {
 				item.alpha = 1;
 			}
 		}
 
-		for (i in 0...achievementArray.length)
-		{
+		for (i in 0...achievementArray.length) {
 			achievementArray[i].alpha = 0.6;
-			if (i == curSelected)
-			{
+			if(i == curSelected) {
 				achievementArray[i].alpha = 1;
 			}
 		}

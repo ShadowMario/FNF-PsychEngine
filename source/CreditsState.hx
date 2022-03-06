@@ -48,115 +48,44 @@ class CreditsState extends MusicBeatState
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		add(bg);
 		bg.screenCenter();
-
+		
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
 		#if MODS_ALLOWED
-		// trace("finding mod shit");
+		//trace("finding mod shit");
 		for (folder in Paths.getModDirectories())
 		{
 			var creditsFile:String = Paths.mods(folder + '/data/credits.txt');
 			if (FileSystem.exists(creditsFile))
 			{
 				var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
-				for (i in firstarray)
+				for(i in firstarray)
 				{
 					var arr:Array<String> = i.replace('\\n', '\n').split("::");
-					if (arr.length >= 5)
-						arr.push(folder);
+					if(arr.length >= 5) arr.push(folder);
 					creditsStuff.push(arr);
 				}
 				creditsStuff.push(['']);
 			}
 		};
 		var folder = "";
-		var creditsFile:String = Paths.mods('data/credits.txt');
-		if (FileSystem.exists(creditsFile))
-		{
-			var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
-			for (i in firstarray)
+			var creditsFile:String = Paths.mods('data/credits.txt');
+			if (FileSystem.exists(creditsFile))
 			{
-				var arr:Array<String> = i.replace('\\n', '\n').split("::");
-				if (arr.length >= 5)
-					arr.push(folder);
-				creditsStuff.push(arr);
+				var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
+				for(i in firstarray)
+				{
+					var arr:Array<String> = i.replace('\\n', '\n').split("::");
+					if(arr.length >= 5) arr.push(folder);
+					creditsStuff.push(arr);
+				}
+				creditsStuff.push(['']);
 			}
-			creditsStuff.push(['']);
-		}
 		#end
 
-		var pisspoop:Array<Array<String>> = [
-			// Name - Icon name - Description - Link - BG Color
+		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
 			['Psych Engine Team'],
-<<<<<<< HEAD
-			[
-				'Shadow Mario',
-				'shadowmario',
-				'Main Programmer of Psych Engine',
-				'https://twitter.com/Shadow_Mario_',
-				'444444'
-			],
-			[
-				'RiverOaken',
-				'riveroaken',
-				'Main Artist/Animator of Psych Engine',
-				'https://twitter.com/river_oaken',
-				'C30085'
-			],
-			[
-				'bb-panzu',
-				'bb-panzu',
-				'Additional Programmer of Psych Engine',
-				'https://twitter.com/bbsub3',
-				'389A58'
-			],
-			[''],
-			['Engine Contributors'],
-			[
-				'shubs',
-				'shubs',
-				'New Input System Programmer',
-				'https://twitter.com/yoshubs',
-				'4494E6'
-			],
-			[
-				'SqirraRNG',
-				'gedehari',
-				'Chart Editor\'s Sound Waveform base',
-				'https://twitter.com/gedehari',
-				'FF9300'
-			],
-			[
-				'iFlicky',
-				'iflicky',
-				'Delay/Combo Menu Song Composer\nand Dialogue Sounds',
-				'https://twitter.com/flicky_i',
-				'C549DB'
-			],
-			[
-				'PolybiusProxy',
-				'polybiusproxy',
-				'.MP4 Video Loader Extension',
-				'https://twitter.com/polybiusproxy',
-				'FFEAA6'
-			],
-			[
-				'Keoiki',
-				'keoiki',
-				'Note Splash Animations',
-				'https://twitter.com/Keoiki_',
-				'FFFFFF'
-			],
-			[
-				'Smokey',
-				'smokey',
-				'Spritemap Texture Support',
-				'https://twitter.com/Smokey_5_',
-				'0033CC'
-			],
-			[''],
-=======
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',						'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',					'https://twitter.com/river_oaken',		'C30085'],
 			['shubs',				'shubs',			'Additional Programmer of Psych Engine',				'https://twitter.com/yoshubs',			'279ADC'],
@@ -170,44 +99,18 @@ class CreditsState extends MusicBeatState
 			['PolybiusProxy',		'polybiusproxy',	'.MP4 Video Loader Extension',							'https://twitter.com/polybiusproxy',	'FFEAA6'],
 			['Keoiki',				'keoiki',			'Note Splash Animations',								'https://twitter.com/Keoiki_',			'FFFFFF'],
 			['Smokey',				'smokey',			'Spritemap Texture Support',							'https://twitter.com/Smokey_5_',		'4D5DBD'],
->>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 			[''],
 			["Funkin' Crew"],
-			[
-				'ninjamuffin99',
-				'ninjamuffin99',
-				"Programmer of Friday Night Funkin'",
-				'https://twitter.com/ninja_muffin99',
-				'F73838'
-			],
-			[
-				'PhantomArcade',
-				'phantomarcade',
-				"Animator of Friday Night Funkin'",
-				'https://twitter.com/PhantomArcade3K',
-				'FFBB1B'
-			],
-			[
-				'evilsk8r',
-				'evilsk8r',
-				"Artist of Friday Night Funkin'",
-				'https://twitter.com/evilsk8r',
-				'53E52C'
-			],
-			[
-				'kawaisprite',
-				'kawaisprite',
-				"Composer of Friday Night Funkin'",
-				'https://twitter.com/kawaisprite',
-				'6475F3'
-			]
+			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",					'https://twitter.com/ninja_muffin99',	'F73838'],
+			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",						'https://twitter.com/PhantomArcade3K',	'FFBB1B'],
+			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",						'https://twitter.com/evilsk8r',			'53E52C'],
+			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",						'https://twitter.com/kawaisprite',		'6475F3']
 		];
-
-		for (i in pisspoop)
-		{
+		
+		for(i in pisspoop){
 			creditsStuff.push(i);
 		}
-
+	
 		for (i in 0...creditsStuff.length)
 		{
 			var isSelectable:Bool = !unselectableCheck(i);
@@ -215,18 +118,16 @@ class CreditsState extends MusicBeatState
 			optionText.isMenuItem = true;
 			optionText.screenCenter(X);
 			optionText.yAdd -= 70;
-			if (isSelectable)
-			{
+			if(isSelectable) {
 				optionText.x -= 70;
 			}
 			optionText.forceX = optionText.x;
-			// optionText.yMult = 90;
+			//optionText.yMult = 90;
 			optionText.targetY = i;
 			grpOptions.add(optionText);
 
-			if (isSelectable)
-			{
-				if (creditsStuff[i][5] != null)
+			if(isSelectable) {
+				if(creditsStuff[i][5] != null)
 				{
 					Paths.currentModDirectory = creditsStuff[i][5];
 				}
@@ -234,14 +135,13 @@ class CreditsState extends MusicBeatState
 				var icon:AttachedSprite = new AttachedSprite('credits/' + creditsStuff[i][1]);
 				icon.xAdd = optionText.width + 10;
 				icon.sprTracker = optionText;
-
+	
 				// using a FlxGroup is too much fuss!
 				iconArray.push(icon);
 				add(icon);
 				Paths.currentModDirectory = '';
 
-				if (curSelected == -1)
-					curSelected = i;
+				if(curSelected == -1) curSelected = i;
 			}
 		}
 		
@@ -282,13 +182,6 @@ class CreditsState extends MusicBeatState
 				var shiftMult:Int = 1;
 				if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
 
-<<<<<<< HEAD
-		if (controls.BACK)
-		{
-			if (colorTween != null)
-			{
-				colorTween.cancel();
-=======
 				var upP = controls.UI_UP_P;
 				var downP = controls.UI_DOWN_P;
 
@@ -327,14 +220,8 @@ class CreditsState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new MainMenuState());
 				quitting = true;
->>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 			}
 		}
-<<<<<<< HEAD
-		if (controls.ACCEPT)
-		{
-			CoolUtil.browserLoad(creditsStuff[curSelected][3]);
-=======
 		
 		for (item in grpOptions.members)
 		{
@@ -354,7 +241,6 @@ class CreditsState extends MusicBeatState
 					item.forceX = item.x;
 				}
 			}
->>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		}
 		super.update(elapsed);
 	}
@@ -363,27 +249,22 @@ class CreditsState extends MusicBeatState
 	function changeSelection(change:Int = 0)
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-		do
-		{
+		do {
 			curSelected += change;
 			if (curSelected < 0)
 				curSelected = creditsStuff.length - 1;
 			if (curSelected >= creditsStuff.length)
 				curSelected = 0;
-		}
-		while (unselectableCheck(curSelected));
+		} while(unselectableCheck(curSelected));
 
-		var newColor:Int = getCurrentBGColor();
-		if (newColor != intendedColor)
-		{
-			if (colorTween != null)
-			{
+		var newColor:Int =  getCurrentBGColor();
+		if(newColor != intendedColor) {
+			if(colorTween != null) {
 				colorTween.cancel();
 			}
 			intendedColor = newColor;
 			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
-				onComplete: function(twn:FlxTween)
-				{
+				onComplete: function(twn:FlxTween) {
 					colorTween = null;
 				}
 			});
@@ -396,11 +277,9 @@ class CreditsState extends MusicBeatState
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 
-			if (!unselectableCheck(bullShit - 1))
-			{
+			if(!unselectableCheck(bullShit-1)) {
 				item.alpha = 0.6;
-				if (item.targetY == 0)
-				{
+				if (item.targetY == 0) {
 					item.alpha = 1;
 				}
 			}
@@ -416,18 +295,15 @@ class CreditsState extends MusicBeatState
 		descBox.updateHitbox();
 	}
 
-	function getCurrentBGColor()
-	{
+	function getCurrentBGColor() {
 		var bgColor:String = creditsStuff[curSelected][4];
-		if (!bgColor.startsWith('0x'))
-		{
+		if(!bgColor.startsWith('0x')) {
 			bgColor = '0xFF' + bgColor;
 		}
 		return Std.parseInt(bgColor);
 	}
 
-	private function unselectableCheck(num:Int):Bool
-	{
+	private function unselectableCheck(num:Int):Bool {
 		return creditsStuff[num].length <= 1;
 	}
 }

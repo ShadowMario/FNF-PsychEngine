@@ -25,28 +25,21 @@ class PauseSubState extends MusicBeatSubstate
 
 	var pauseMusic:FlxSound;
 	var practiceText:FlxText;
+	//var botplayText:FlxText;
 
-<<<<<<< HEAD
-	// var botplayText:FlxText;
-	public static var transCamera:FlxCamera;
-
-=======
->>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 	public function new(x:Float, y:Float)
 	{
 		super();
-		if (CoolUtil.difficulties.length < 2)
-			menuItemsOG.remove('Change Difficulty'); // No need to change difficulty if there is only one!
+		if(CoolUtil.difficulties.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
-		if (PlayState.chartingMode)
+		if(PlayState.chartingMode)
 		{
 			menuItemsOG.insert(2, 'Toggle Practice Mode');
 			menuItemsOG.insert(3, 'Toggle Botplay');
 		}
 		menuItems = menuItemsOG;
 
-		for (i in 0...CoolUtil.difficulties.length)
-		{
+		for (i in 0...CoolUtil.difficulties.length) {
 			var diff:String = '' + CoolUtil.difficulties[i];
 			difficultyChoices.push(diff);
 		}
@@ -153,8 +146,7 @@ class PauseSubState extends MusicBeatSubstate
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];
-			if (daSelected != 'BACK' && difficultyChoices.contains(daSelected))
-			{
+			if(daSelected != 'BACK' && difficultyChoices.contains(daSelected)) {
 				var name:String = PlayState.SONG.song.toLowerCase();
 				var poop = Highscore.formatSong(name, curSelected);
 				PlayState.SONG = Song.loadFromJson(poop, name);
@@ -188,12 +180,9 @@ class PauseSubState extends MusicBeatSubstate
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
-					if (PlayState.isStoryMode)
-					{
+					if(PlayState.isStoryMode) {
 						MusicBeatState.switchState(new StoryMenuState());
-					}
-					else
-					{
+					} else {
 						MusicBeatState.switchState(new FreeplayState());
 					}
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -213,7 +202,7 @@ class PauseSubState extends MusicBeatSubstate
 		FlxG.sound.music.volume = 0;
 		PlayState.instance.vocals.volume = 0;
 
-		if (noTrans)
+		if(noTrans)
 		{
 			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
@@ -260,14 +249,11 @@ class PauseSubState extends MusicBeatSubstate
 		}
 	}
 
-	function regenMenu():Void
-	{
-		for (i in 0...grpMenuShit.members.length)
-		{
+	function regenMenu():Void {
+		for (i in 0...grpMenuShit.members.length) {
 			this.grpMenuShit.remove(this.grpMenuShit.members[0], true);
 		}
-		for (i in 0...menuItems.length)
-		{
+		for (i in 0...menuItems.length) {
 			var item = new Alphabet(0, 70 * i + 30, menuItems[i], true, false);
 			item.isMenuItem = true;
 			item.targetY = i;
