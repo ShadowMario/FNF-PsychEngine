@@ -1900,7 +1900,7 @@ class PlayState extends MusicBeatState
 		for (i in 0...4)
 		{
 			// FlxG.log.add(i);
-			var targetAlpha:Float = 1;
+			var targetAlpha:Float = 0.5;
 			if (player < 1 && ClientPrefs.middleScroll) targetAlpha = 0.35;
 
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
@@ -2412,7 +2412,7 @@ class PlayState extends MusicBeatState
 					daNote.angle = strumDirection - 90 + strumAngle;
 
 				if(daNote.copyAlpha)
-					daNote.alpha = strumAlpha;
+					daNote.alpha = 1;
 				
 				if(daNote.copyX)
 					daNote.x = strumX + Math.cos(angleDir) * daNote.distance;
@@ -2427,6 +2427,10 @@ class PlayState extends MusicBeatState
 						if (daNote.animation.curAnim.name.endsWith('end')) {
 							daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * songSpeed + (46 * (songSpeed - 1));
 							daNote.y -= 46 * (1 - (fakeCrochet / 600)) * songSpeed;
+
+							var spr:StrumNote = opponentStrums.members[daNote.noteData];
+							spr.alpha = 0.5;
+
 							if(PlayState.isPixelStage) {
 								daNote.y += 8 + (6 - daNote.originalHeightForCalcs) * PlayState.daPixelZoom;
 							} else {
@@ -3535,6 +3539,7 @@ class PlayState extends MusicBeatState
 			if(spr != null && spr.animation.curAnim.name != 'confirm')
 			{
 				spr.playAnim('pressed');
+				spr.alpha = 1;
 				spr.resetAnim = 0;
 			}
 			callOnLuas('onKeyPress', [key]);
@@ -3551,6 +3556,7 @@ class PlayState extends MusicBeatState
 			var spr:StrumNote = playerStrums.members[key];
 			if(spr != null)
 			{
+				spr.alpha = 0.5;
 				spr.playAnim('static');
 				spr.resetAnim = 0;
 			}
@@ -3872,6 +3878,7 @@ class PlayState extends MusicBeatState
 				{
 					if (Math.abs(note.noteData) == spr.ID)
 					{
+						spr.alpha = 1;
 						spr.playAnim('confirm', true);
 					}
 				});

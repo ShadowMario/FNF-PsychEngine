@@ -31,22 +31,26 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
+
+	var galleryID:Int = 0;
+	var galleryY:Float = 0; // janky ass sprite, need to do weird stuff to keep it normal
 	
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
 		#if MODS_ALLOWED 'mods', #end
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
+		'gallery',
 		'credits',
 		#if !switch 'donate', #end
-		'options'
+		'options',
 	];
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
-
+	
 	override function create()
 	{
 		WeekData.loadTheFirstEnabledMod();
@@ -115,13 +119,22 @@ class MainMenuState extends MusicBeatState
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
-			menuItem.screenCenter(X);
+			//menuItem.screenCenter(X);
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
 			if(optionShit.length < 6) scr = 0;
 			menuItem.scrollFactor.set(0, scr);
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
+			add(menuItem);
+
+			if(optionShit[i] == 'gallery')
+			{
+				galleryID = i;
+				menuItem.y -= 20;
+				galleryY = menuItem.y;
+			};
+			
 			menuItem.updateHitbox();
 		}
 
@@ -209,7 +222,7 @@ class MainMenuState extends MusicBeatState
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-					if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+					if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false); 
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
@@ -241,6 +254,8 @@ class MainMenuState extends MusicBeatState
 									#end
 									case 'awards':
 										MusicBeatState.switchState(new AchievementsMenuState());
+									case 'gallery':
+										MusicBeatState.switchState(new GalleryState());
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
@@ -261,11 +276,12 @@ class MainMenuState extends MusicBeatState
 		}
 
 		super.update(elapsed);
-
+		/*
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.screenCenter(X);
 		});
+		*/
 	}
 
 	function changeItem(huh:Int = 0)
@@ -277,6 +293,17 @@ class MainMenuState extends MusicBeatState
 		if (curSelected < 0)
 			curSelected = menuItems.length - 1;
 
+		function resetOtherPositions(ID:Int = 0)
+		{
+			menuItems.forEach(function(spr:FlxSprite)
+			{
+				if(spr.ID != ID)
+					spr.x = 0;
+				if(spr.ID != galleryID)
+					menuItems.members[galleryID].y = galleryY;
+			});
+		};
+
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.animation.play('idle');
@@ -285,6 +312,34 @@ class MainMenuState extends MusicBeatState
 			if (spr.ID == curSelected)
 			{
 				spr.animation.play('selected');
+
+				switch (optionShit[spr.ID]) {
+					case 'story_mode':
+						spr.x = 85;
+						resetOtherPositions(spr.ID);
+					case 'freeplay':
+						spr.x = 65;
+						resetOtherPositions(spr.ID);
+					case 'mods':
+						spr.x = 20;
+						resetOtherPositions(spr.ID);
+					case 'awards':
+						spr.x = 60;
+						resetOtherPositions(spr.ID);
+					case 'gallery':
+						spr.y = galleryY - 20;
+						resetOtherPositions(spr.ID);
+					case 'credits':
+						spr.x = 80;
+						resetOtherPositions(spr.ID);
+					case 'donate':
+						spr.x = 60;
+						resetOtherPositions(spr.ID);
+					case 'options':
+						spr.x = 50;
+						resetOtherPositions(spr.ID);
+				};
+
 				var add:Float = 0;
 				if(menuItems.length > 4) {
 					add = menuItems.length * 8;
