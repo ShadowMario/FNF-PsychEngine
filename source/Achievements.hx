@@ -183,7 +183,7 @@ class Achievements
 		achievementsStuff = achievementShits;
 
 		#if MODS_ALLOWED
-		reloadAchievements();
+		//reloadAchievements(); //custom achievements do not work. will add once it doesn't do the duplication bug -bb
 		#end
 
 		if (FlxG.save.data != null)
@@ -423,18 +423,23 @@ class AchievementObject extends FlxSpriteGroup
 		var modsImage = null;
 		var isModIcon:Bool = false;
 
+<<<<<<< HEAD
 		if (Achievements.loadedAchievements.exists(name))
 		{
+=======
+		//fucking hell bro
+		/*if (Achievements.loadedAchievements.exists(name)) {
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 			isModIcon = true;
 			modsImage = Paths.image(Achievements.loadedAchievements.get(name).icon);
-		}
+		}*/
 
 		var index:Int = Achievements.getAchievementIndex(name);
 		if (isModIcon)
 			index = 0;
 
-		trace(imagePath);
-		trace(modsImage);
+		//trace(imagePath);
+		//trace(modsImage);
 
 		var achievementIcon:FlxSprite = new FlxSprite(achievementBG.x + 10,
 			achievementBG.y + 10).loadGraphic((isModIcon ? modsImage : imagePath), true, 150, 150);

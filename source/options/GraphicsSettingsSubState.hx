@@ -53,10 +53,12 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		#if !html5 // Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		var option:Option = new Option('Framerate', "Pretty self explanatory, isn't it?", 'framerate', 'int', 60);
 		addOption(option);
+
 		option.minValue = 60;
 		option.maxValue = 240;
 		option.displayFormat = '%v FPS';
 		option.onChange = onChangeFramerate;
+<<<<<<< HEAD
 
 		var option:Option = new Option('Screen Resolution', "Size of the window [Press ACCEPT to apply, CANCEL to cancel]", 'screenResTemp', 'string',
 			'1280 x 720', ['1280 x 720', '1280 x 960', 'FULLSCREEN']);
@@ -92,10 +94,24 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			option.onChange = onChangePersistentData; //Persistent Cached Data changes FlxGraphic.defaultPersist
 			addOption(option);
 		 */
+=======
+		#end
+
+		/*
+		var option:Option = new Option('Persistent Cached Data',
+			'If checked, images loaded will stay in memory\nuntil the game is closed, this increases memory usage,\nbut basically makes reloading times instant.',
+			'imagesPersist',
+			'bool',
+			false);
+		option.onChange = onChangePersistentData; //Persistent Cached Data changes FlxGraphic.defaultPersist
+		addOption(option);
+		*/
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 
 		super();
 	}
 
+<<<<<<< HEAD
 	override function update(elapsed:Float)
 	{
 		if (controls.ACCEPT)
@@ -125,6 +141,8 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		super.update(elapsed);
 	}
 
+=======
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 	function onChangeAntiAliasing()
 	{
 		for (sprite in members)
@@ -151,6 +169,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			FlxG.updateFramerate = ClientPrefs.framerate;
 		}
 	}
+<<<<<<< HEAD
 
 	public static function onChangeRes()
 	{
@@ -171,3 +190,6 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		// FlxG.resetState();
 	}
 }
+=======
+}
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e

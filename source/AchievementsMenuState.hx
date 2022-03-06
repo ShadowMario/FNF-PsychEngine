@@ -19,6 +19,7 @@ using StringTools;
 
 class AchievementsMenuState extends MusicBeatState
 {
+	#if ACHIEVEMENTS_ALLOWED
 	var options:Array<String> = [];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 
@@ -35,7 +36,7 @@ class AchievementsMenuState extends MusicBeatState
 		#end
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
-		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1 * scaleRatio));
+		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
 		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
@@ -44,10 +45,16 @@ class AchievementsMenuState extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
+<<<<<<< HEAD
 		for (i in 0...Achievements.achievementsStuff.length)
 		{
 			if (!Achievements.achievementsStuff[i][4] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2]))
 			{
+=======
+		Achievements.loadAchievements();
+		for (i in 0...Achievements.achievementsStuff.length) {
+			if(!Achievements.achievementsStuff[i][4] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 				options.push(Achievements.achievementsStuff[i]);
 				achievementIndex.push(i);
 			}
@@ -131,5 +138,7 @@ class AchievementsMenuState extends MusicBeatState
 			}
 		}
 		descText.text = Achievements.achievementsStuff[achievementIndex[curSelected]][1];
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 	}
+	#end
 }

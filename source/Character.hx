@@ -99,6 +99,7 @@ class Character extends FlxSprite
 
 			default:
 				var characterPath:String = 'characters/' + curCharacter + '.json';
+
 				#if MODS_ALLOWED
 				var path:String = Paths.modFolders(characterPath);
 				if (!FileSystem.exists(path))
@@ -141,7 +142,11 @@ class Character extends FlxSprite
 				{
 					spriteType = "packer";
 				}
+<<<<<<< HEAD
 
+=======
+				
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 				#if MODS_ALLOWED
 				var modAnimToFind:String = Paths.modFolders('images/' + json.image + '/Animation.json');
 				var animToFind:String = Paths.getPath('images/' + json.image + '/Animation.json', TEXT);
@@ -157,8 +162,13 @@ class Character extends FlxSprite
 					spriteType = "texture";
 				}
 
+<<<<<<< HEAD
 				switch (spriteType)
 				{
+=======
+				switch (spriteType){
+					
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 					case "packer":
 						frames = Paths.getPackerAtlas(json.image);
 
@@ -168,7 +178,10 @@ class Character extends FlxSprite
 					case "texture":
 						frames = AtlasFrameMaker.construct(json.image);
 				}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 				imageFile = json.image;
 
 				if (json.scale != 1)
@@ -362,9 +375,32 @@ class Character extends FlxSprite
 		}
 	}
 
+<<<<<<< HEAD
 	public function recalculateDanceIdle()
 	{
+=======
+	public var danceEveryNumBeats:Int = 2;
+	private var settingCharacterUp:Bool = true;
+	public function recalculateDanceIdle() {
+		var lastDanceIdle:Bool = danceIdle;
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		danceIdle = (animation.getByName('danceLeft' + idleSuffix) != null && animation.getByName('danceRight' + idleSuffix) != null);
+
+		if(settingCharacterUp)
+		{
+			danceEveryNumBeats = (danceIdle ? 1 : 2);
+		}
+		else if(lastDanceIdle != danceIdle)
+		{
+			var calc:Float = danceEveryNumBeats;
+			if(danceIdle)
+				calc /= 2;
+			else
+				calc *= 2;
+
+			danceEveryNumBeats = Math.round(Math.max(calc, 1));
+		}
+		settingCharacterUp = false;
 	}
 
 	public function addOffset(name:String, x:Float = 0, y:Float = 0)

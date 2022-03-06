@@ -30,7 +30,24 @@ class Paths
 
 	#if MODS_ALLOWED
 	public static var ignoreModFolders:Array<String> = [
+<<<<<<< HEAD
 		'characters', 'custom_events', 'custom_notetypes', 'data', 'songs', 'music', 'sounds', 'videos', 'images', 'stages', 'weeks', 'fonts', 'scripts',
+=======
+		'characters',
+		'custom_events',
+		'custom_notetypes',
+		'data',
+		'songs',
+		'music',
+		'sounds',
+		'shaders',
+		'videos',
+		'images',
+		'stages',
+		'weeks',
+		'fonts',
+		'scripts',
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		'achievements'
 	];
 	#end
@@ -41,8 +58,16 @@ class Paths
 			dumpExclusions.push(key);
 	}
 
+<<<<<<< HEAD
 	public static var dumpExclusions:Array<String> = [];
 
+=======
+	public static var dumpExclusions:Array<String> =
+	[
+		'assets/music/freakyMenu.$SOUND_EXT',
+		'assets/shared/music/breakfast.$SOUND_EXT'
+	];
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 	/// haya I love you for the base cache dump I took to the max
 	public static function clearUnusedMemory()
 	{
@@ -87,10 +112,17 @@ class Paths
 		}
 
 		// clear all sounds that are cached
+<<<<<<< HEAD
 		for (key in currentTrackedSounds.keys())
 		{
 			if (!localTrackedAssets.contains(key) && !dumpExclusions.contains(key) && key != null)
 			{
+=======
+		for (key in currentTrackedSounds.keys()) {
+			if (!localTrackedAssets.contains(key) 
+			&& !dumpExclusions.contains(key) && key != null) {
+				//trace('test: ' + dumpExclusions, key);
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 				Assets.cache.clear(key);
 				currentTrackedSounds.remove(key);
 			}
@@ -167,6 +199,14 @@ class Paths
 		return getPath('data/$key.json', TEXT, library);
 	}
 
+	inline static public function shaderFragment(key:String, ?library:String)
+	{
+		return getPath('shaders/$key.frag', TEXT, library);
+	}
+	inline static public function shaderVertex(key:String, ?library:String)
+	{
+		return getPath('shaders/$key.vert', TEXT, library);
+	}
 	inline static public function lua(key:String, ?library:String)
 	{
 		return getPath('$key.lua', TEXT, library);
@@ -215,7 +255,7 @@ class Paths
 		return inst;
 	}
 
-	inline static public function image(key:String, ?library:String):Dynamic
+	inline static public function image(key:String, ?library:String):FlxGraphic
 	{
 		// streamlined the assets process more
 		var returnAsset:FlxGraphic = returnGraphic(key, library);
@@ -226,8 +266,8 @@ class Paths
 	{
 		#if sys
 		#if MODS_ALLOWED
-		if (!ignoreMods && FileSystem.exists(mods(key)))
-			return File.getContent(mods(key));
+		if (!ignoreMods && FileSystem.exists(modFolders(key)))
+			return File.getContent(modFolders(key));
 		#end
 
 		if (FileSystem.exists(getPreloadPath(key)))
@@ -282,13 +322,14 @@ class Paths
 	inline static public function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
-		var graphic:FlxGraphic = Paths.image(key, library);
+		var imageLoaded:FlxGraphic = returnGraphic(key);
 		var xmlExists:Bool = false;
 		if (FileSystem.exists(modsXml(key)))
 		{
 			xmlExists = true;
 		}
-		return FlxAtlasFrames.fromSparrow(graphic, (xmlExists ? File.getContent(modsXml(key)) : file('images/$key.xml', library)));
+
+		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library)), (xmlExists ? File.getContent(modsXml(key)) : file('images/$key.xml', library)));
 		#else
 		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
 		#end
@@ -322,6 +363,7 @@ class Paths
 	public static function returnGraphic(key:String, ?library:String)
 	{
 		#if MODS_ALLOWED
+<<<<<<< HEAD
 		if (FileSystem.exists(modsImages(key)))
 		{
 			if (!currentTrackedAssets.exists(key))
@@ -329,21 +371,37 @@ class Paths
 				var newBitmap:BitmapData = BitmapData.fromFile(modsImages(key));
 				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, key);
 				currentTrackedAssets.set(key, newGraphic);
+=======
+		var modKey:String = modsImages(key);
+		if(FileSystem.exists(modKey)) {
+			if(!currentTrackedAssets.exists(modKey)) {
+				var newBitmap:BitmapData = BitmapData.fromFile(modKey);
+				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, modKey);
+				currentTrackedAssets.set(modKey, newGraphic);
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 			}
-			localTrackedAssets.push(key);
-			return currentTrackedAssets.get(key);
+			localTrackedAssets.push(modKey);
+			return currentTrackedAssets.get(modKey);
 		}
 		#end
+
 		var path = getPath('images/$key.png', IMAGE, library);
+<<<<<<< HEAD
 		if (OpenFlAssets.exists(path, IMAGE))
 		{
 			if (!currentTrackedAssets.exists(key))
 			{
 				var newGraphic:FlxGraphic = FlxG.bitmap.add(path, false, key);
 				currentTrackedAssets.set(key, newGraphic);
+=======
+		if (OpenFlAssets.exists(path, IMAGE)) {
+			if(!currentTrackedAssets.exists(path)) {
+				var newGraphic:FlxGraphic = FlxG.bitmap.add(path, false, path);
+				currentTrackedAssets.set(path, newGraphic);
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 			}
-			localTrackedAssets.push(key);
-			return currentTrackedAssets.get(key);
+			localTrackedAssets.push(path);
+			return currentTrackedAssets.get(path);
 		}
 		trace('oh no its returning null NOOOO');
 		return null;
@@ -374,8 +432,13 @@ class Paths
 			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
 			#else
 			currentTrackedSounds.set(gottenPath, OpenFlAssets.getSound(getPath('$path/$key.$SOUND_EXT', SOUND, library)));
+<<<<<<< HEAD
 			#end
 		localTrackedAssets.push(key);
+=======
+		#end
+		localTrackedAssets.push(gottenPath);
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		return currentTrackedSounds.get(gottenPath);
 	}
 
@@ -420,8 +483,20 @@ class Paths
 		return modFolders('images/' + key + '.txt');
 	}
 
+<<<<<<< HEAD
 	inline static public function modsAchievements(key:String)
 	{
+=======
+	inline static public function modsShaderFragment(key:String, ?library:String)
+	{
+		return modFolders('shaders/'+key+'.frag');
+	}
+	inline static public function modsShaderVertex(key:String, ?library:String)
+	{
+		return modFolders('shaders/'+key+'.vert');
+	}
+	inline static public function modsAchievements(key:String) {
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		return modFolders('achievements/' + key + '.json');
 	}
 
@@ -437,9 +512,13 @@ class Paths
 		}
 		return 'mods/' + key;
 	}
+<<<<<<< HEAD
 
 	static public function getModDirectories():Array<String>
 	{
+=======
+	static public function getModDirectories():Array<String> {
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		var list:Array<String> = [];
 		var modsFolder:String = Paths.mods();
 		if (FileSystem.exists(modsFolder))

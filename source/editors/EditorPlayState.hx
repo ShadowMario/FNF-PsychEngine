@@ -602,7 +602,7 @@ class EditorPlayState extends MusicBeatState
 				// var notesDatas:Array<Int> = [];
 				var notesStopped:Bool = false;
 
-				trace('test!');
+				//trace('test!');
 				var sortedNotesList:Array<Note> = [];
 				notes.forEachAlive(function(daNote:Note)
 				{
@@ -610,7 +610,7 @@ class EditorPlayState extends MusicBeatState
 					{
 						if (daNote.noteData == key && !daNote.isSustainNote)
 						{
-							trace('pushed note!');
+							//trace('pushed note!');
 							sortedNotesList.push(daNote);
 							// notesDatas.push(daNote.noteData);
 						}

@@ -25,7 +25,11 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
+<<<<<<< HEAD
 	public static var psychEngineVersion:String = '0.5.1'; // This is also used for Discord RPC
+=======
+	public static var psychEngineVersion:String = '0.5.1-git'; //This is also used for Discord RPC
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -53,6 +57,8 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		WeekData.loadTheFirstEnabledMod();
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
@@ -75,7 +81,11 @@ class MainMenuState extends MusicBeatState
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
 		bg.scrollFactor.set(0, yScroll);
+<<<<<<< HEAD
 		bg.setGraphicSize(Std.int(bg.width * 1.175 * scaleRatio));
+=======
+		bg.setGraphicSize(Std.int(bg.width * 1.175));
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
@@ -88,7 +98,11 @@ class MainMenuState extends MusicBeatState
 
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.scrollFactor.set(0, yScroll);
+<<<<<<< HEAD
 		magenta.setGraphicSize(Std.int(magenta.width * 1.175 * scaleRatio));
+=======
+		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		magenta.updateHitbox();
 		magenta.screenCenter();
 		magenta.visible = false;
@@ -130,12 +144,16 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		var versionShit:FlxText = new FlxText(12, ClientPrefs.getResolution()[1] - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+<<<<<<< HEAD
 		var versionShit:FlxText = new FlxText(12, ClientPrefs.getResolution()[1] - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'),
 			12);
+=======
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -252,7 +270,7 @@ class MainMenuState extends MusicBeatState
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
-										MusicBeatState.switchState(new options.OptionsState());
+										LoadingState.loadAndSwitchState(new options.OptionsState());
 								}
 							});
 						}

@@ -13,7 +13,6 @@ import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxBasic;
-import flixel.system.scaleModes.*;
 
 class MusicBeatState extends FlxUIState
 {
@@ -23,6 +22,7 @@ class MusicBeatState extends FlxUIState
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
 
+<<<<<<< HEAD
 	public static var musInstance:MusicBeatState;
 
 	#if desktop
@@ -31,6 +31,8 @@ class MusicBeatState extends FlxUIState
 	var modeRatio:RatioScaleMode;
 	var modeStage:StageSizeScaleMode;
 	#end
+=======
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 	private var controls(get, never):Controls;
 
 	inline function get_controls():Controls
@@ -40,6 +42,7 @@ class MusicBeatState extends FlxUIState
 	{
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
+<<<<<<< HEAD
 		musInstance = this;
 		// Custom made Trans out
 
@@ -52,12 +55,13 @@ class MusicBeatState extends FlxUIState
 		if (!skip)
 		{
 			openSubState(new CustomFadeTransition(1, true));
+=======
+
+		if(!skip) {
+			openSubState(new CustomFadeTransition(0.7, true));
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		}
 		FlxTransitionableState.skipNextTransOut = false;
-
-		// FlxG.signals.gameResized.add(onGameResized);
-		// this makes the game crash immediately for some reason, i'll try to figure it out later but this would allow
-		// resizing the window and having the aspect ratio update with it
 	}
 
 	#if (VIDEOS_ALLOWED && windows)
@@ -84,6 +88,7 @@ class MusicBeatState extends FlxUIState
 
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
+<<<<<<< HEAD
 
 		/*
 			if (FlxG.keys.pressed.ALT && FlxG.keys.justPressed.ENTER){//to disable this fucker
@@ -97,6 +102,10 @@ class MusicBeatState extends FlxUIState
 		{
 			FlxG.fullscreen = false;
 		} // only disabling this when adaptive is enabled is better as a warning about jankiness is given for adaptive anyways
+=======
+
+		if(FlxG.save.data != null) FlxG.save.data.fullscreen = FlxG.fullscreen;
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 
 		super.update(elapsed);
 	}
@@ -127,6 +136,7 @@ class MusicBeatState extends FlxUIState
 		// Custom made Trans in
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
+<<<<<<< HEAD
 		if (!FlxTransitionableState.skipNextTransIn)
 		{
 			leState.openSubState(new CustomFadeTransition(0.7, false));
@@ -144,6 +154,17 @@ class MusicBeatState extends FlxUIState
 				CustomFadeTransition.finishCallback = function()
 				{
 					musInstance.fixAspectRatio();
+=======
+		if(!FlxTransitionableState.skipNextTransIn) {
+			leState.openSubState(new CustomFadeTransition(0.6, false));
+			if(nextState == FlxG.state) {
+				CustomFadeTransition.finishCallback = function() {
+					FlxG.resetState();
+				};
+				//trace('resetted');
+			} else {
+				CustomFadeTransition.finishCallback = function() {
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 					FlxG.switchState(nextState);
 				};
 				// trace('changed state');
@@ -159,6 +180,7 @@ class MusicBeatState extends FlxUIState
 		MusicBeatState.switchState(FlxG.state);
 	}
 
+<<<<<<< HEAD
 	public function fixAspectRatio()
 	{
 		// options.GraphicsSettingsSubState.onChangeRes();
@@ -186,6 +208,9 @@ class MusicBeatState extends FlxUIState
 
 	public static function getState():MusicBeatState
 	{
+=======
+	public static function getState():MusicBeatState {
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
 		return leState;

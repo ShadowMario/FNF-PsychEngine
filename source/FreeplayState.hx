@@ -57,7 +57,12 @@ class FreeplayState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+<<<<<<< HEAD
 
+=======
+		
+		persistentUpdate = true;
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		PlayState.isStoryMode = false;
 		WeekData.reloadWeekFiles(false);
 
@@ -88,7 +93,7 @@ class FreeplayState extends MusicBeatState
 				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
 			}
 		}
-		WeekData.setDirectoryFromWeek();
+		WeekData.loadTheFirstEnabledMod();
 
 		/*//KIND OF BROKEN NOW AND ALSO PRETTY USELESS//
 
@@ -104,7 +109,6 @@ class FreeplayState extends MusicBeatState
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
-		bg.scale.x = bg.scale.y = scaleRatio;
 		bg.screenCenter();
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
@@ -116,6 +120,19 @@ class FreeplayState extends MusicBeatState
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
+
+			if (songText.width > 980)
+			{
+				var textScale:Float = 980 / songText.width;
+				songText.scale.x = textScale;
+				for (letter in songText.lettersArray)
+				{
+					letter.x *= textScale;
+					letter.offset.x *= textScale;
+				}
+				//songText.updateHitbox();
+				//trace(songs[i].songName + ' new scale: ' + textScale);
+			}
 
 			Paths.currentModDirectory = songs[i].folder;
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
@@ -198,6 +215,7 @@ class FreeplayState extends MusicBeatState
 	override function closeSubState()
 	{
 		changeSelection(0, false);
+		persistentUpdate = true;
 		super.closeSubState();
 	}
 
@@ -224,7 +242,11 @@ class FreeplayState extends MusicBeatState
 	var instPlaying:Int = -1;
 
 	private static var vocals:FlxSound = null;
+<<<<<<< HEAD
 
+=======
+	var holdTime:Float = 0;
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music.volume < 0.7)
@@ -264,13 +286,31 @@ class FreeplayState extends MusicBeatState
 		if (FlxG.keys.pressed.SHIFT)
 			shiftMult = 3;
 
-		if (upP)
+		if(songs.length > 1)
 		{
-			changeSelection(-shiftMult);
-		}
-		if (downP)
-		{
-			changeSelection(shiftMult);
+			if (upP)
+			{
+				changeSelection(-shiftMult);
+				holdTime = 0;
+			}
+			if (downP)
+			{
+				changeSelection(shiftMult);
+				holdTime = 0;
+			}
+
+			if(controls.UI_DOWN || controls.UI_UP)
+			{
+				var checkLastHold:Int = Math.floor((holdTime - 0.5) * 10);
+				holdTime += elapsed;
+				var checkNewHold:Int = Math.floor((holdTime - 0.5) * 10);
+
+				if(holdTime > 0.5 && checkNewHold - checkLastHold > 0)
+				{
+					changeSelection((checkNewHold - checkLastHold) * (controls.UI_UP ? -shiftMult : shiftMult));
+					changeDiff();
+				}
+			}
 		}
 
 		if (controls.UI_LEFT_P)
@@ -282,8 +322,13 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.BACK)
 		{
+<<<<<<< HEAD
 			if (colorTween != null)
 			{
+=======
+			persistentUpdate = false;
+			if(colorTween != null) {
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 				colorTween.cancel();
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'));
@@ -292,6 +337,7 @@ class FreeplayState extends MusicBeatState
 
 		if (ctrl)
 		{
+			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
 		}
 		else if (space)
@@ -321,6 +367,7 @@ class FreeplayState extends MusicBeatState
 		}
 		else if (accepted)
 		{
+			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
 			/*#if MODS_ALLOWED
@@ -359,6 +406,7 @@ class FreeplayState extends MusicBeatState
 		}
 		else if (controls.RESET)
 		{
+			persistentUpdate = false;
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
@@ -483,8 +531,21 @@ class FreeplayState extends MusicBeatState
 				CoolUtil.difficulties = diffs;
 			}
 		}
+<<<<<<< HEAD
 
 		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
+=======
+		
+		if(CoolUtil.difficulties.contains(CoolUtil.defaultDifficulty))
+		{
+			curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
+		}
+		else
+		{
+			curDifficulty = 0;
+		}
+
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		var newPos:Int = CoolUtil.difficulties.indexOf(lastDifficultyName);
 		// trace('Pos of ' + lastDifficultyName + ' is ' + newPos);
 		if (newPos > -1)

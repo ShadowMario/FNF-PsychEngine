@@ -29,10 +29,6 @@ class ClientPrefs
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var controllerMode:Bool = false;
-	public static var screenRes:String = "1280 x 720";
-	public static var screenResTemp:String = "1280 x 720"; // dummy value that isn't saved, used so that if the player cancels instead of hitting space the resolution isn't applied
-	public static var screenScaleMode:String = "Letterbox";
-	public static var screenScaleModeTemp:String = "Letterbox";
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative',
@@ -55,8 +51,11 @@ class ClientPrefs
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
+<<<<<<< HEAD
 	public static var keSustains:Bool = false; // i was bored, okay?
 
+=======
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 	public static var ratingOffset:Int = 0;
 	public static var sickWindow:Int = 45;
 	public static var goodWindow:Int = 90;
@@ -91,6 +90,7 @@ class ClientPrefs
 		defaultKeys = keyBinds.copy();
 		// trace(defaultKeys);
 	}
+<<<<<<< HEAD
 
 	public static function resizeScreen()
 	{
@@ -99,6 +99,8 @@ class ClientPrefs
 			screenRes = FlxG.save.data.screenRes;
 		}
 	}
+=======
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 
 	public static function saveSettings()
 	{
@@ -133,9 +135,13 @@ class ClientPrefs
 		FlxG.save.data.safeFrames = safeFrames;
 		FlxG.save.data.gameplaySettings = gameplaySettings;
 		FlxG.save.data.controllerMode = controllerMode;
+<<<<<<< HEAD
 		FlxG.save.data.screenRes = screenRes;
 		FlxG.save.data.screenScaleMode = screenScaleMode;
 
+=======
+	
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
@@ -264,6 +270,7 @@ class ClientPrefs
 		{
 			controllerMode = FlxG.save.data.controllerMode;
 		}
+<<<<<<< HEAD
 		if (FlxG.save.data.screenRes != null)
 		{
 			screenRes = FlxG.save.data.screenRes;
@@ -273,6 +280,9 @@ class ClientPrefs
 			screenScaleMode = FlxG.save.data.screenScaleMode;
 		}
 		if (FlxG.save.data.gameplaySettings != null)
+=======
+		if(FlxG.save.data.gameplaySettings != null)
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		{
 			var savedMap:Map<String, Dynamic> = FlxG.save.data.gameplaySettings;
 			for (name => value in savedMap)
@@ -320,6 +330,7 @@ class ClientPrefs
 		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 	}
+<<<<<<< HEAD
 
 	public static function getResolution():Array<Int>
 	{
@@ -333,6 +344,9 @@ class ClientPrefs
 
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey>
 	{
+=======
+	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey> {
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 		var copiedArray:Array<FlxKey> = arrayToCopy.copy();
 		var i:Int = 0;
 		var len:Int = copiedArray.length;

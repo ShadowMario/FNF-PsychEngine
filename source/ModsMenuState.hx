@@ -81,8 +81,8 @@ class ModsMenuState extends MusicBeatState
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
-		bg.scale.x = bg.scale.y = scaleRatio;
 		bg.screenCenter();
+
 		noModsTxt = new FlxText(0, 0, FlxG.width, "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD", 48);
 		if (FlxG.random.bool(0.1))
 			noModsTxt.text += '\nBITCH.'; // meanie
@@ -309,7 +309,8 @@ class ModsMenuState extends MusicBeatState
 			var newMod:ModMetadata = new ModMetadata(values[0]);
 			mods.push(newMod);
 
-			var scale:Float = Math.min(16 / (mods[i].name.length), 1);
+			newMod.alphabet = new Alphabet(0, 0, mods[i].name, true, false, 0.05);
+			var scale:Float = Math.min(840 / newMod.alphabet.width, 1);
 			newMod.alphabet = new Alphabet(0, 0, mods[i].name, true, false, 0.05, scale);
 			newMod.alphabet.y = i * 150;
 			newMod.alphabet.x = 310;
@@ -358,6 +359,7 @@ class ModsMenuState extends MusicBeatState
 		super.create();
 	}
 
+<<<<<<< HEAD
 	function getIntArray(max:Int):Array<Int>
 	{
 		var arr:Array<Int> = [];
@@ -368,6 +370,15 @@ class ModsMenuState extends MusicBeatState
 		return arr;
 	}
 
+=======
+	/*function getIntArray(max:Int):Array<Int>{
+		var arr:Array<Int> = [];
+		for (i in 0...max) {
+			arr.push(i);
+		}
+		return arr;
+	}*/
+>>>>>>> 9947c552482bcf59857be351c67b874a51063b8e
 	function addToModsList(values:Array<Dynamic>)
 	{
 		for (i in 0...modsList.length)
