@@ -254,8 +254,32 @@ class FunkinLua {
 			}
 			luaTrace("Script doesn't exist!");
 		});
+		
+		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
+			if(name == null || name.length < 1)
+				name = PlayState.SONG.song;
+			if (difficultyNum == -1)
+				difficultyNum = PlayState.storyDifficulty;
 
-		//stuff 4 noobz like you B)
+			var poop = Highscore.formatSong(name, difficultyNum);
+			PlayState.SONG = Song.loadFromJson(poop, name);
+			PlayState.storyDifficulty = difficultyNum;
+			PlayState.instance.persistentUpdate = false;
+			LoadingState.loadAndSwitchState(new PlayState());
+
+			FlxG.sound.music.pause();
+			FlxG.sound.music.volume = 0;
+			if(PlayState.instance.vocals != null)
+			{
+				PlayState.instance.vocals.pause();
+				PlayState.instance.vocals.volume = 0;
+			}
+		});
+
+		Lua_helper.add_callback(lua, "clearUnusedMemory", function() {
+			Paths.clearUnusedMemory();
+			return true;
+		});
 
 		Lua_helper.add_callback(lua, "loadGraphic", function(variable:String, image:String) {
 			var spr:FlxSprite = getObjectDirectly(variable);
