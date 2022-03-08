@@ -69,6 +69,7 @@ class CreditsState extends MusicBeatState
 				creditsStuff.push(['']);
 			}
 		};
+
 		var folder = "";
 			var creditsFile:String = Paths.mods('data/credits.txt');
 			if (FileSystem.exists(creditsFile))
@@ -87,7 +88,7 @@ class CreditsState extends MusicBeatState
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',						'https://twitter.com/Shadow_Mario_',	'444444'],
-			['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',					'https://twitter.com/river_oaken',		'C30085'],
+			['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',					'https://twitter.com/RiverOaken',		'C30085'],
 			['shubs',				'shubs',			'Additional Programmer of Psych Engine',				'https://twitter.com/yoshubs',			'279ADC'],
 			[''],
 			['Former Engine Members'],
