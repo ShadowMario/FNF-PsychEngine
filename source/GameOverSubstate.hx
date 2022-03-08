@@ -94,9 +94,9 @@ class GameOverSubstate extends MusicBeatSubstate
 			endBullshit();
 		}
 
-		if (controls.BACK && !isEnding)
+		if (controls.BACK)
 		{
-			isEnding = true;
+			fadeTimer.active = false;
 			
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
@@ -148,6 +148,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.sound.playMusic(Paths.music(loopSoundName), volume);
 	}
 
+	var fadeTimer:FlxTimer() = new FlxTimer();
 	function endBullshit():Void
 	{
 		if (!isEnding)
@@ -156,7 +157,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			boyfriend.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music(endSoundName));
-			new FlxTimer().start(0.7, function(tmr:FlxTimer)
+			fadeTimer = new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
 				{
