@@ -96,7 +96,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (controls.BACK)
 		{
-			fadeTimer.active = false;
+			if (fadeTimer != null) fadeTimer.active = false;
 			
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
@@ -148,7 +148,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.sound.playMusic(Paths.music(loopSoundName), volume);
 	}
 
-	var fadeTimer:FlxTimer() = new FlxTimer();
+	var fadeTimer:FlxTimer();
 	function endBullshit():Void
 	{
 		if (!isEnding)
