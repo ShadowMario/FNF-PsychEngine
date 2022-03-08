@@ -70,6 +70,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Instant Respawn',
+			"If checked, you will instantly respawn after dying.",
+			'instantRespawn',
+			'bool',
+			false);
+		addOption(option);
+
 		/*var option:Option = new Option('Note Delay',
 			'Changes how late a note is spawned.\nUseful for preventing audio lag from wireless earphones.',
 			'noteOffset',

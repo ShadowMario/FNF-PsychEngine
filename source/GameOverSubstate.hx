@@ -70,6 +70,8 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 		camFollowPos.setPosition(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2));
 		add(camFollowPos);
+
+		if (ClientPrefs.instantRespawn) MusicBeatState.resetState();
 	}
 
 	var isFollowingAlready:Bool = false;
@@ -88,8 +90,10 @@ class GameOverSubstate extends MusicBeatSubstate
 			endBullshit();
 		}
 
-		if (controls.BACK)
+		if (controls.BACK && !isEnding)
 		{
+			isEnding = true;
+			
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
 			PlayState.seenCutscene = false;
