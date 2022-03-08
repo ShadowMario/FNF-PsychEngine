@@ -88,9 +88,9 @@ class GameOverSubstate extends MusicBeatSubstate
 			endBullshit();
 		}
 
-		if (controls.BACK && !isGoingBack)
+		if (controls.BACK && !isQuitting)
 		{
-			isGoingBack = true;
+			isQuitting = true;
 			
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
@@ -135,8 +135,8 @@ class GameOverSubstate extends MusicBeatSubstate
 		//FlxG.log.add('beat');
 	}
 
-	var isEnding:Bool = false;
-	var isGoingBack:Bool = false;
+	var isRetrying:Bool = false; // Prevents retrying multiple times
+	var isQuitting:Bool = false; // Prevents reloading the level if you quit after retrying
 
 	function coolStartDeath(?volume:Float = 1):Void
 	{
@@ -145,9 +145,9 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	function endBullshit():Void
 	{
-		if (!isEnding)
+		if (!isRetrying)
 		{
-			isEnding = true;
+			isRetrying = true;
 			boyfriend.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music(endSoundName));
@@ -155,7 +155,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
 				{
-					if (!isGoingBack)
+					if (!isQuitting)
 					{
 						MusicBeatState.resetState();
 					}
