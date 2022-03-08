@@ -71,7 +71,11 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollowPos.setPosition(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2));
 		add(camFollowPos);
 
-		if (ClientPrefs.instantRespawn) MusicBeatState.resetState();
+		if (ClientPrefs.instantRespawn) 
+		{
+			MusicBeatState.resetState();
+			endBullshit();
+		}
 	}
 
 	var isFollowingAlready:Bool = false;
