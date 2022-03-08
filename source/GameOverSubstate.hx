@@ -74,7 +74,6 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (ClientPrefs.instantRespawn) 
 		{
 			MusicBeatState.resetState();
-			endBullshit();
 		}
 	}
 
@@ -94,9 +93,9 @@ class GameOverSubstate extends MusicBeatSubstate
 			endBullshit();
 		}
 
-		if (controls.BACK)
+		if (controls.BACK && !isGoingBack)
 		{
-			if (fadeTimer != null) fadeTimer.active = false;
+			isGoingBack = true;
 			
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
@@ -142,13 +141,13 @@ class GameOverSubstate extends MusicBeatSubstate
 	}
 
 	var isEnding:Bool = false;
+	var isGoingBack:Bool = false;
 
 	function coolStartDeath(?volume:Float = 1):Void
 	{
 		FlxG.sound.playMusic(Paths.music(loopSoundName), volume);
 	}
 
-	var fadeTimer:FlxTimer();
 	function endBullshit():Void
 	{
 		if (!isEnding)
@@ -157,11 +156,14 @@ class GameOverSubstate extends MusicBeatSubstate
 			boyfriend.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music(endSoundName));
-			fadeTimer = new FlxTimer().start(0.7, function(tmr:FlxTimer)
+			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
 				{
-					MusicBeatState.resetState();
+					if (!isGoingBack)
+					{
+						MusicBeatState.resetState();
+					}
 				});
 			});
 			PlayState.instance.callOnLuas('onGameOverConfirm', [true]);
