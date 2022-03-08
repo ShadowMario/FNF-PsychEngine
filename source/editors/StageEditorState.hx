@@ -66,6 +66,8 @@ class StageEditorState extends MusicBeatState
 
 	var ischar:FlxUICheckBox;
 
+	var isgf:FlxUICheckBox;
+
 	var data:StageFile;
 	var shouldStayIn:FlxSprite;
 
@@ -128,6 +130,10 @@ class StageEditorState extends MusicBeatState
 	public static var zoominputtext:FlxUIInputText;
 	public static var dirinputtext:FlxUIInputText;
 	public static var goToPlayState:Bool = true;
+	public static var boffsettext:FlxUIInputText;
+	public static var goffsettext:FlxUIInputText;
+	public static var ooffsettext:FlxUIInputText;
+	public static var speedoffsettext:FlxUIInputText;
 
 	override function create()
 	{
@@ -419,10 +425,19 @@ class StageEditorState extends MusicBeatState
 		zoominputtext = new FlxUIInputText(15, opponentinputtext.y + 50, 200, "", 8);
 		var elabel = new FlxText(15, zoominputtext.y + 20, 64, 'Default Zoom');
 		dirinputtext = new FlxUIInputText(15, zoominputtext.y + 50, 200, "", 8);
-		var directorycoollabel = new FlxText(15, dirinputtext.y + 20, 64, 'Stage Name');
+		var directorycoollabel = new FlxText(dirinputtext.x - 85, dirinputtext.y, 64, 'Stage Name');
+		goffsettext = new FlxUIInputText(15, dirinputtext.y + 20, 64, "", 8);
+		var gflabel = new FlxText(goffsettext.x, goffsettext.y + 20, 64, 'Girlfriend Camera Offset');
+		boffsettext = new FlxUIInputText(goffsettext.x + 80, dirinputtext.y + 20, 64, "", 8);
+		var bflabel = new FlxText(boffsettext.x, boffsettext.y + 20, 64, 'Boyfriend Camera Offset');
+		ooffsettext = new FlxUIInputText(boffsettext.x + 80, dirinputtext.y + 20, 64, "", 8);
+		var olabel = new FlxText(ooffsettext.x, ooffsettext.y + 20, 64, 'Opponent Camera Offset');
+		speedoffsettext = new FlxUIInputText(ooffsettext.x + 80, dirinputtext.y + 20, 64, "", 8);
+		var speedlabel = new FlxText(speedoffsettext.x, speedoffsettext.y + 20, 64, 'Camera Speed');
 
 		ispixel = new FlxUICheckBox(240, 220, null, null, "IsPixelStage", 100);
 		ischar = new FlxUICheckBox(240, 270, null, null, "Characters Are Visible", 100);
+		isgf = new FlxUICheckBox(240, 235, null, null, "Hide GirlFriend", 100);
 
 		ischar.checked = true;
 
@@ -454,8 +469,17 @@ class StageEditorState extends MusicBeatState
 		tab_group_settings.add(saveStuff);
 		tab_group_settings.add(saveLua);
 		tab_group_settings.add(ischar);
+		tab_group_settings.add(boffsettext);
+		tab_group_settings.add(bflabel);
+		tab_group_settings.add(goffsettext);
+		tab_group_settings.add(gflabel);
+		tab_group_settings.add(ooffsettext);
+		tab_group_settings.add(olabel);
+		tab_group_settings.add(speedoffsettext);
+		tab_group_settings.add(speedlabel);
 		tab_group_settings.add(saveLuaj);
 		tab_group_settings.add(bfInputText);
+		tab_group_settings.add(isgf);
 		tab_group_settings.add(ispixel);
 		tab_group_settings.add(loadStuff);
 		tab_group_settings.add(gfInputText);
@@ -482,6 +506,11 @@ class StageEditorState extends MusicBeatState
 		directoryInputText.text = stageFile.directory + "";
 		zoominputtext.text = Std.string(stageFile.defaultZoom + "");
 		ispixel.checked = stageFile.isPixelStage;
+		isgf.checked = stageFile.hide_girlfriend;
+		ooffsettext.text = stageFile.camera_opponent[0] + ", " + stageFile.camera_opponent[1];
+		goffsettext.text = stageFile.camera_girlfriend[0] + ", " + stageFile.camera_girlfriend[1];
+		boffsettext.text = stageFile.camera_boyfriend[0] + ", " + stageFile.camera_boyfriend[1];
+		speedoffsettext.text = Std.string(stageFile.camera_speed);
 
 		for (layer in stageFile.layerArray) {
 
@@ -643,11 +672,17 @@ class StageEditorState extends MusicBeatState
 				directory: "",
 				defaultZoom: 0.9,
 				isPixelStage: false,
-
+			
 				boyfriend: [770, 100],
 				girlfriend: [400, 130],
 				opponent: [100, 100],
-				layerArray: []
+				layerArray: [],
+				hide_girlfriend: false,
+			
+				camera_boyfriend: [0, 0],
+				camera_opponent: [0, 0],
+				camera_girlfriend: [0, 0],
+				camera_speed: 1
 			};
 		}
 		else
@@ -672,11 +707,29 @@ class StageEditorState extends MusicBeatState
 			stageFile.opponent = [x3, y3];
 			dad.x = x3;
 			dad.y = y3;
+
+			var STRINGG = boffsettext.text.trim().split(", ");
+			var xx = Std.parseInt(STRINGG[0].trim());
+			var yy = Std.parseInt(STRINGG[1].trim());
+			stageFile.camera_boyfriend = [xx, yy];
+
+			var STRINGG2 = goffsettext.text.trim().split(", ");
+			var xx2 = Std.parseInt(STRINGG2[0].trim());
+			var yy2 = Std.parseInt(STRINGG2[1].trim());
+			stageFile.camera_girlfriend = [xx2, yy2];
+
+			var STRINGG3 = ooffsettext.text.trim().split(", ");
+			var xx3 = Std.parseInt(STRINGG3[0].trim());
+			var yy3 = Std.parseInt(STRINGG3[1].trim());
+			stageFile.camera_opponent = [xx3, yy3];
+
 		}
 
 		stageFile.defaultZoom = Std.parseFloat(zoominputtext.text);
 		stageFile.name = dirinputtext.text;
+		stageFile.camera_speed = Std.parseFloat(speedoffsettext.text);
 		stageFile.isPixelStage = ispixel.checked;
+		stageFile.hide_girlfriend = isgf.checked;
 
 		visualLayers[Std.int(layerStepper.value)].flipX = isflippedX.checked;
 		visualLayers[Std.int(layerStepper.value)].flipY = isflippedY.checked;
