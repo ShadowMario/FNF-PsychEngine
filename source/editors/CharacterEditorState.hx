@@ -142,21 +142,24 @@ class CharacterEditorState extends MusicBeatState
 		camFollow.screenCenter();
 		add(camFollow);
 
-		var tipText:FlxText = new FlxText(FlxG.width - 20, FlxG.height, 0,
-			"E/Q - Camera Zoom In/Out
-			\nJKLI - Move Camera
-			\nW/S - Previous/Next Animation
-			\nSpace - Play Animation
-			\nArrow Keys - Move Character Offset
-			\nR - Reset Current Offset
-			\nHold Shift to Move 10x faster\n", 12);
-		tipText.cameras = [camHUD];
-		tipText.setFormat(null, 12, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		tipText.scrollFactor.set();
-		tipText.borderSize = 1;
-		tipText.x -= tipText.width;
-		tipText.y -= tipText.height - 10;
-		add(tipText);
+		var tipTextArray:Array<String> = "E/Q - Camera Zoom In/Out
+		\nR - Reset Camera Zoom
+		\nJKLI - Move Camera
+		\nW/S - Previous/Next Animation
+		\nSpace - Play Animation
+		\nArrow Keys - Move Character Offset
+		\nT - Reset Current Offset
+		\nHold Shift to Move 10x faster\n".split('\n');
+
+		for (i in 0...tipTextArray.length-1)
+		{
+			var tipText:FlxText = new FlxText(FlxG.width - 320, FlxG.height - 15 - 16 * (tipTextArray.length - i), 300, tipTextArray[i], 12);
+			tipText.cameras = [camHUD];
+			tipText.setFormat(null, 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
+			tipText.scrollFactor.set();
+			tipText.borderSize = 1;
+			add(tipText);
+		}
 
 		FlxG.camera.follow(camFollow);
 
@@ -556,6 +559,7 @@ class CharacterEditorState extends MusicBeatState
 				char.antialiasing = true;
 			}
 			char.noAntialiasing = noAntialiasingCheckBox.checked;
+			ghostChar.antialiasing = char.antialiasing;
 		};
 
 		positionXStepper = new FlxUINumericStepper(flipXCheckBox.x + 110, flipXCheckBox.y, 10, char.positionArray[0], -9000, 9000, 0);
@@ -1031,6 +1035,7 @@ class CharacterEditorState extends MusicBeatState
 			char.alpha = 1;
 		}
 		ghostChar.color = 0xFF666688;
+		ghostChar.antialiasing = char.antialiasing;
 		
 		ghostChar.setGraphicSize(Std.int(ghostChar.width * char.jsonScale));
 		ghostChar.updateHitbox();
@@ -1178,7 +1183,7 @@ class CharacterEditorState extends MusicBeatState
 					char.playAnim(char.animationsArray[curAnim].anim, true);
 					genBoyOffsets();
 				}
-				if (FlxG.keys.justPressed.R)
+				if (FlxG.keys.justPressed.T)
 				{
 					char.animationsArray[curAnim].offsets = [0, 0];
 					
