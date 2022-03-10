@@ -2037,11 +2037,7 @@ class FunkinLua {
 	}
 	static inline var CLENSE:String = "
 	os.execute = nil;
-	os.exit = nil;
 	package.loaded.os.execute = nil;
-	package.loaded.os.exit = nil;
-	process = nil;
-	package.loaded.process = nil;
 
 	"; // Fuck this, I can't figure out linc_lua, so I'mma set everything in Lua itself - Super
 }
