@@ -259,6 +259,18 @@ class FunkinLua {
 			luaTrace("Script doesn't exist!");
 		});
 		
+		Lua_helper.add_callback(lua, "loadCredits", function(?musicos:String = null, ?freakySex:Bool) {
+
+			LoadingState.loadAndSwitchState(new CreditsState());
+			FlxG.sound.playMusic(Paths.music(musicos));
+			if(musicos == '') {
+               freakySex = true;
+			}
+			if(freakySex == true) {
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			}
+		});
+
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
