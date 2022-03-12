@@ -229,6 +229,7 @@ class WeekEditorState extends MusicBeatState
 	var weekBeforeInputText:FlxUIInputText;
 	var difficultiesInputText:FlxUIInputText;
 	var lockedCheckbox:FlxUICheckBox;
+	var hiddenUntilUnlockCheckbox:FlxUICheckBox;
 
 	function addOtherUI() {
 		var tab_group = new FlxUI(null, UI_box);
@@ -239,9 +240,17 @@ class WeekEditorState extends MusicBeatState
 		{
 			weekFile.startUnlocked = !lockedCheckbox.checked;
 			lock.visible = lockedCheckbox.checked;
+			hiddenUntilUnlockCheckbox.alpha = 0.4 + 0.6 * (lockedCheckbox.checked ? 1 : 0);
 		};
 
-		weekBeforeInputText = new FlxUIInputText(10, lockedCheckbox.y + 55, 100, '', 8);
+		hiddenUntilUnlockCheckbox = new FlxUICheckBox(10, lockedCheckbox.y + 25, null, null, "Hidden until Unlocked", 110);
+		hiddenUntilUnlockCheckbox.callback = function()
+		{
+			weekFile.hiddenUntilUnlocked = hiddenUntilUnlockCheckbox.checked;
+		};
+		hiddenUntilUnlockCheckbox.alpha = 0.4;
+
+		weekBeforeInputText = new FlxUIInputText(10, hiddenUntilUnlockCheckbox.y + 55, 100, '', 8);
 		blockPressWhileTypingOn.push(weekBeforeInputText);
 
 		difficultiesInputText = new FlxUIInputText(10, weekBeforeInputText.y + 60, 200, '', 8);
@@ -252,6 +261,7 @@ class WeekEditorState extends MusicBeatState
 		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y + 20, 0, 'Default difficulties are "Easy, Normal, Hard"\nwithout quotes.'));
 		tab_group.add(weekBeforeInputText);
 		tab_group.add(difficultiesInputText);
+		tab_group.add(hiddenUntilUnlockCheckbox);
 		tab_group.add(lockedCheckbox);
 		UI_box.addGroup(tab_group);
 	}
@@ -281,6 +291,9 @@ class WeekEditorState extends MusicBeatState
 
 		lockedCheckbox.checked = !weekFile.startUnlocked;
 		lock.visible = lockedCheckbox.checked;
+		
+		hiddenUntilUnlockCheckbox.checked = weekFile.hiddenUntilUnlocked;
+		hiddenUntilUnlockCheckbox.alpha = 0.4 + 0.6 * (lockedCheckbox.checked ? 1 : 0);
 
 		reloadBG();
 		reloadWeekThing();
