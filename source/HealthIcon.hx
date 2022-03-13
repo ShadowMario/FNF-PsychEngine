@@ -67,7 +67,7 @@ class HealthIcon extends FlxSprite
 						animation.curAnim.curFrame = 0;
 				};
 				// This goes from Losing to Winning
-				else if(frameCount > 1) updateAnim = function(health:Float){animation.curAnim.curFrame = Math.round( frameCount * (health / 100) );};
+				else if(frameCount > 1) updateAnim = function(health:Float){animation.curAnim.curFrame = Math.round( animation.curAnim.frameCount * (health / 100) );};
 				
 			}
 			loadGraphic(file, true, icowidth, icoheight); //Then load it fr
