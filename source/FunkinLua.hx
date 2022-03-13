@@ -385,8 +385,12 @@ class FunkinLua {
                         var bigPiss:Dynamic = Type.resolveClass(state);
                         if (bigPiss != null)
                         {
-
-			        MusicBeatState.switchState(bigPiss);
+                                if(!loadBefore) {
+			                MusicBeatState.switchState(new bigPiss());
+                                }
+                                else {
+                                        LoadingState.loadAndSwitchState(new bigPiss());
+                                }
                         }
                         else
                         {
