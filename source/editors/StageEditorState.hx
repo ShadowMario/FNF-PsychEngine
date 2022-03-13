@@ -218,7 +218,7 @@ class StageEditorState extends MusicBeatState
 
 		UI_stagebox.selected_tab_id = 'Layers';
 
-		var tipText:FlxText = new FlxText(FlxG.width - 20, FlxG.height, 0, "E/Q - Camera Zoom In/Out
+		var tipText:FlxText = new FlxText(FlxG.width - FlxG.width + 250, FlxG.height, 0, "E/Q - Camera Zoom In/Out
         \nArrow Keys/Hold And Drag\n - Move Layer
         \nR - Reset Current Zoom", 12);
 		tipText.cameras = [camTips];
@@ -846,7 +846,15 @@ class StageEditorState extends MusicBeatState
 			isPixelStage: false,
 			boyfriend: stageFile.boyfriend,
 			girlfriend: stageFile.girlfriend,
-			opponent: stageFile.opponent
+			opponent: stageFile.opponent,
+
+			hide_girlfriend: stageFile.hide_girlfriend,
+			
+			camera_boyfriend: stageFile.camera_boyfriend,
+			camera_opponent: stageFile.camera_opponent,
+			camera_girlfriend: stageFile.camera_girlfriend,
+			camera_speed: stageFile.camera_speed
+
 		}
 
 		var data:String = Json.stringify(stageFile, "\t");
@@ -864,14 +872,12 @@ class StageEditorState extends MusicBeatState
 	{
 		if (dirinputtext.text != "")
 		{
-			{
-				_file = new FileReference();
-				_file.addEventListener(Event.COMPLETE, onSaveComplete);
-				_file.addEventListener(Event.CANCEL, onSaveCancel);
-				_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-				_file.save("function onCreate()\n" + luaStages.join("\n") + "\n" + luaScrollFactors.join("\n") + "\n" + luaFlipY.join("\n") + "\n" + luaFlipX.join("\n") + "\n" + luaAdded.join("\n") + "\n" + "end",
-					dirinputtext.text + ".lua");
-			}
+			_file = new FileReference();
+			_file.addEventListener(Event.COMPLETE, onSaveComplete);
+			_file.addEventListener(Event.CANCEL, onSaveCancel);
+			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+			_file.save("function onCreate()\n" + luaStages.join("\n") + "\n" + luaScrollFactors.join("\n") + "\n" + luaFlipY.join("\n") + "\n" + luaFlipX.join("\n") + "\n" + luaAdded.join("\n") + "\n" + "end",
+			dirinputtext.text + ".lua");
 		}
 	}
 
