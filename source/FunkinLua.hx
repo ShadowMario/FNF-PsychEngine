@@ -936,16 +936,16 @@ class FunkinLua {
 			switch(character.toLowerCase()) {
 				case 'dad':
 					if(PlayState.instance.dad.animOffsets.exists(anim))
-					        PlayState.instance.dad.specialAnim = specialAnim;
 						PlayState.instance.dad.playAnim(anim, forced, false, startFrame);
+					        PlayState.instance.dad.specialAnim = specialAnim;
 				case 'gf' | 'girlfriend':
 					if(PlayState.instance.gf != null && PlayState.instance.gf.animOffsets.exists(anim))
-						PlayState.instance.gf.specialAnim = specialAnim;
 						PlayState.instance.gf.playAnim(anim, forced, false, startFrame);
+					        PlayState.instance.gf.specialAnim = specialAnim;
 				default: 
 					if(PlayState.instance.boyfriend.animOffsets.exists(anim))
-						PlayState.instance.boyfriend.specialAnim = specialAnim;
 						PlayState.instance.boyfriend.playAnim(anim, forced, false, startFrame);
+					        PlayState.instance.boyfriend.specialAnim = specialAnim;
 			}
 		});
 		Lua_helper.add_callback(lua, "characterDance", function(character:String) {
