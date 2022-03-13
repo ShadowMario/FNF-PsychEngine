@@ -381,10 +381,11 @@ class FunkinLua {
 		});
 
                 //state shit for trolling coming??
-                Lua_helper.add_callback(lua, "switchState", function(state:String) {
+                Lua_helper.add_callback(lua, "switchState", function(state:String, loadBefore:Bool = false) {
                         var bigPiss:Dynamic = Type.resolveClass(state);
                         if (bigPiss != null)
                         {
+
 			        MusicBeatState.switchState(bigPiss);
                         }
                         else
