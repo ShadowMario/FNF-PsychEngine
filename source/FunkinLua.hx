@@ -284,6 +284,12 @@ class FunkinLua {
 			Paths.clearUnusedMemory();
 			return true;
 		});
+		
+		Lua_helper.add_callback(lua, "setCurrentLevel", function(name:String) { //YOU CAN NOW CHANGE SONGS DURING A SONG WHICH I THINK WAS NEVER DONE BEFORE IN LUA!!
+			Paths.setCurrentLevel(name);
+//			Playstate.SONG = (name); // does this code work?? ill try it later.
+			return true;
+		});
 
 		Lua_helper.add_callback(lua, "loadGraphic", function(variable:String, image:String) {
 			var spr:FlxSprite = getObjectDirectly(variable);
