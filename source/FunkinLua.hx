@@ -22,12 +22,18 @@ import flixel.util.FlxColor;
 import flixel.FlxBasic;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import openfl.display.BitmapData;
+import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
+import openfl.geom.Rectangle;
 import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.filters.BitmapFilter;
 import openfl.utils.Assets;
 import flixel.math.FlxMath;
 import flixel.util.FlxSave;
+import flixel.math.FlxRect;
+import haxe.xml.Access;
+import openfl.system.System;
 import flixel.addons.transition.FlxTransitionableState;
 #if sys
 import sys.FileSystem;
@@ -285,11 +291,17 @@ class FunkinLua {
 			return true;
 		});
 		
-		Lua_helper.add_callback(lua, "setCurrentLevel", function(name:String) { //YOU CAN NOW CHANGE SONGS DURING A SONG WHICH I THINK WAS NEVER DONE BEFORE IN LUA!!
+		Lua_helper.add_callback(lua, "setCurrentLevel", function(name:String) { // YOU CAN NOW CHANGE SONGS DURING A SONG WHICH I THINK WAS NEVER DONE BEFORE IN LUA!!
 			Paths.setCurrentLevel(name);
 //			Playstate.SONG = (name); // does this code work?? ill try it later.
 			return true;
 		});
+		
+		Lua_helper.add_callback(lua, "excludeAsset", function(key:String) { // Exclude something.
+		if (!dumpExclusions.contains(key))
+			dumpExclusions.push(key);
+		});
+
 
 		Lua_helper.add_callback(lua, "loadGraphic", function(variable:String, image:String) {
 			var spr:FlxSprite = getObjectDirectly(variable);
