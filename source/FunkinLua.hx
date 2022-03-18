@@ -2041,19 +2041,17 @@ class FunkinLua {
 os.getenv = nil;
 os.remove = nil;
 os.rename = nil;
-package.loaded.os.getenv = nil;
-package.loaded.os.remove = nil;
-package.loaded.os.rename = nil;
 os.chdir = nil;
 os.popen = nil;
 os.close = nil;
 os.makedir = nil;
 os.makedirs =nil;
-package.loaded.os.chdir = nil;
-package.loaded.os.popen = nil;
-package.loaded.os.close = nil;
-package.loaded.os.makedir = nil;
-package.loaded.os.makedirs = nil;
+require = nil;
+package.loaded.require = nil;
+package.preload.require = nil; -- Double remove require, this isn't needed for os since os just references package.loaded.os
+ffi = nil;
+package.loaded.ffi = nil;
+package.preload.ffi = nil;
 	"; // Fuck this, I can't figure out linc_lua, so I'mma set everything in Lua itself - Super
 }
 
