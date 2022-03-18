@@ -303,20 +303,17 @@ class Character extends FlxSprite
 			if(danceIdle)
 			{
 				danced = !danced;
-				var ret = PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,true,danced]);
-				
-				if(ret != FunkinLua.Function_Stop){
-					if (danced)
-						playAnim('danceRight' + idleSuffix);
-					else
-						playAnim('danceLeft' + idleSuffix);
-				}
+
+				if (danced)
+					playAnim('danceRight' + idleSuffix);
+				else
+					playAnim('danceLeft' + idleSuffix);
+
+				PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,danced]);
 			}
 			else if(animation.getByName('idle' + idleSuffix) != null) {
-				var ret = PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,false,null]);
-				if(ret != FunkinLua.Function_Stop){
 					playAnim('idle' + idleSuffix);
-				}
+					PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,danced]);
 			}
 		}
 	}

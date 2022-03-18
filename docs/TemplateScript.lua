@@ -137,15 +137,13 @@ function onCharacterDance(character,isGfDance,danceDirection)
 	-- danceDirection: whether the character is dancing left or right
 	-- NOTE: danceDirection returns null if isGfDance is false!!
 
-	-- return Function_Stop if you want to stop the character from dancing
-
 	if character == 'gf' then
 		-- when gf dances
 	end
     if character == 'bf' then
 		-- when bf dances
 	end
-	
+
 	return Function_Continue;
 end
 
