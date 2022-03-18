@@ -142,7 +142,7 @@ function onCharacterDance(character,isGfDance,danceDirection)
 	if character == 'gf' then
 		-- when gf dances
 	end
-    if character == 'bf' then
+        if character == 'bf' then
 		-- when bf dances
 	end
 	
