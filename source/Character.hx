@@ -17,6 +17,7 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
+import FunkinLua;
 
 using StringTools;
 
@@ -307,9 +308,12 @@ class Character extends FlxSprite
 					playAnim('danceRight' + idleSuffix);
 				else
 					playAnim('danceLeft' + idleSuffix);
+
+				PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,true,danced]);
 			}
 			else if(animation.getByName('idle' + idleSuffix) != null) {
 					playAnim('idle' + idleSuffix);
+					PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,false,null]);
 			}
 		}
 	}

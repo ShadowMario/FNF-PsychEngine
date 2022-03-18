@@ -4256,8 +4256,12 @@ class PlayState extends MusicBeatState
 			camHUD.zoom += 0.03;
 		}
 
-		iconP1.scale.set(1.2, 1.2);
-		iconP2.scale.set(1.2, 1.2);
+		var iconGoBrr:Dynamic = callOnLuas('onIconBop', []);
+
+		if(iconGoBrr != FunkinLua.Function_Stop){
+			iconP1.scale.set(1.2, 1.2);
+			iconP2.scale.set(1.2, 1.2);
+		}
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
