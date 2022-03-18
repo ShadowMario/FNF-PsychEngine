@@ -128,6 +128,33 @@ function onMoveCamera(focus)
 	end
 end
 
+function onCharacterDance(character,isGfDance,danceDirection)
+	-- Called when a character plays their idle animation
+	-- seperate from onBeatHit
+
+	-- character: The character name
+	-- isGfDance: if the character uses 'danceLeft' and 'danceRight' anims instead of 'idle'
+	-- danceDirection: whether the character is dancing left or right
+	-- NOTE: danceDirection returns null if isGfDance is false!!
+
+	-- return Function_Stop if you want to stop the character from dancing
+
+	if character == 'gf' then
+		-- when gf dances
+	end
+    if character == 'bf' then
+		-- when bf dances
+	end
+	
+	return Function_Continue;
+end
+
+function onIconBop()
+	-- called every beat, when the health icons bop
+	-- return Function_Stop if you want to change how the icons bop
+	return Function_Continue;
+end
+
 
 -- Event notes hooks
 function onEvent(name, value1, value2)
