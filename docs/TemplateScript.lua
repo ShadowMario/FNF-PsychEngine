@@ -151,6 +151,8 @@ function onIconBop()
 	-- called every beat, when the health icons bop
 	-- return Function_Stop if you want to change how the icons bop
 	return Function_Continue;
+	
+	-- NOTE FROM 8BIT: should i change the name of this callback?? feel free to give suggestions ig
 end
 
 
