@@ -298,25 +298,27 @@ class Character extends FlxSprite
 	 */
 	public function dance()
 	{
-		if (!debugMode && !specialAnim)
-		{
-			if(danceIdle)
+		if(!debugMode){
+			PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,specialAnim,!danced,idleSuffix]);
+			if (!specialAnim)
 			{
-				danced = !danced;
+				if(danceIdle)
+				{
+					danced = !danced;
 
-				if (danced)
-					playAnim('danceRight' + idleSuffix);
-				else
-					playAnim('danceLeft' + idleSuffix);
 
-				PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,danced]);
-			}
+					if (danced)
+						playAnim('danceRight' + idleSuffix);
+					else
+						playAnim('danceLeft' + idleSuffix);
+				}
 			else if(animation.getByName('idle' + idleSuffix) != null) {
 					playAnim('idle' + idleSuffix);
-					PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,danced]);
+					
 			}
 		}
 	}
+ }
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
