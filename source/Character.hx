@@ -297,9 +297,22 @@ class Character extends FlxSprite
 	 * FOR GF DANCING SHIT
 	 */
 	public function dance()
-	{
+		{
 		if(!debugMode){
-			PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,specialAnim,!danced,idleSuffix]);
+			var callback:Dynamic = PlayState.instance.callOnLuas('cancelCharacterDance', []);
+	//		trace(callback,FunkinLua.Function_Stop,callback == FunkinLua.Function_Stop);
+			if(callback == FunkinLua.Function_Stop){
+				if(!danced){
+					danced = true;
+					playAnim('danceRight');
+					playAnim('idle');
+				}
+				return;
+			}
+			PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,danceIdle,!danced,idleSuffix]);
+			// NOTE FROM 8BIT: for some reason lua callbacks with parameters never return Function_Stop??
+			// i might report it as a bug soon but for now i'll just use this crappy workaround
+
 			if (!specialAnim)
 			{
 				if(danceIdle)
@@ -318,7 +331,7 @@ class Character extends FlxSprite
 			}
 		}
 	}
- }
+		}
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{

@@ -4272,8 +4272,6 @@ class PlayState extends MusicBeatState
 		iconP2.updateHitbox();
 		
 		// idk if this is the best way to do this but ok
-		var ret = callOnLuas('onCharacterDance', []);
-		if(ret != FunkinLua.Function_Stop) {
 		if (gf != null && curBeat % Math.round(gfSpeed * gf.danceEveryNumBeats) == 0 && !gf.stunned && gf.animation.curAnim.name != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
 		{
 			gf.dance();
@@ -4286,7 +4284,6 @@ class PlayState extends MusicBeatState
 		{
 			dad.dance();
 		}
-	}
 
 		switch (curStage)
 		{
