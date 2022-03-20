@@ -299,7 +299,7 @@ class Character extends FlxSprite
 	public function dance()
 		{
 		if(!debugMode){
-			var callback:Dynamic = PlayState.instance.callOnLuas('cancelCharacterDance', []);
+			var callback:Dynamic = PlayState.instance.callOnLuas('cancelCharacterDances', []);
 	//		trace(callback,FunkinLua.Function_Stop,callback == FunkinLua.Function_Stop);
 			if(callback == FunkinLua.Function_Stop){
 				if(!danced){

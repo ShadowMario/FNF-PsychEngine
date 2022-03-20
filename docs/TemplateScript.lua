@@ -149,8 +149,8 @@ function onCharacterDance(character,isGfDance,danceDirection,idleSuffix)
 
 end
 
-function cancelCharacterDance()
-	-- return Function_Stop to prevent the character from dancing
+function cancelCharacterDances()
+	-- return Function_Stop to prevent ALL characters from dancing
 	-- only called because functions with parameters (such as onCharacterDance) never return Function_Stop for some reason
     return Function_Continue;
 end
