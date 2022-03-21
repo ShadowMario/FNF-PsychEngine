@@ -6,7 +6,12 @@
 		<compilervalue name="-I" value="${CPP_DIR}/include/" />
 		<compilervalue name="-I" value="${CPP_DIR}/src/" />
 	</files>
-	
+
+    <target id='haxe' tool='linker'>
+		<lib name='${CPP_DIR}/lib/libvlc.so.5' if='linux'/>
+		<lib name='${CPP_DIR}/lib/libvlccore.so.9' if='linux'/>
+	</target>
+
 	<target id='haxe' tool='linker' toolid='exe'>
 		<lib name='${CPP_DIR}/lib/libvlc.lib' if='windows'/>
 		<lib name='${CPP_DIR}/lib/libvlccore.lib' if='windows'/>
