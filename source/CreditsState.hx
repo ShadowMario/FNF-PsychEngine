@@ -34,6 +34,7 @@ class CreditsState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 	var descBox:AttachedSprite;
+        var noLink:Bool;
 
 	var offsetThing:Float = -75;
 
@@ -205,9 +206,21 @@ class CreditsState extends MusicBeatState
 				}
 			}
 
+						if(creditsStuff[curSelected][3] == 'nolink') {
+
+				noLink = true;
+			}else{
+				noLink = false;
+			}
+			if(noLink) {
 			if(controls.ACCEPT) {
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+			} 
+			}else {
+				if(controls.ACCEPT) {
 				CoolUtil.browserLoad(creditsStuff[curSelected][3]);
 			}
+		}
 			if (controls.BACK)
 			{
 				if(colorTween != null) {
