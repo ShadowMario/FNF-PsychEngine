@@ -319,11 +319,17 @@ class FunkinLua {
 			return Reflect.setProperty(getInstance(), variable, value);
 		});
 		Lua_helper.add_callback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic) {
-			if(Std.isOfType(Reflect.getProperty(getInstance(), obj), FlxTypedGroup)) {
-				return getGroupStuff(Reflect.getProperty(getInstance(), obj).members[index], variable);
-			}
+			var shitMyPants:Array<String> = obj.split('.');
+			var realObject:Dynamic = Reflect.getProperty(getInstance(), obj);
+			if(shitMyPants.length>1)
+				realObject = getPropertyLoopThingWhatever(shitMyPants, true, false);
 
-			var leArray:Dynamic = Reflect.getProperty(getInstance(), obj)[index];
+
+			if(Std.isOfType(realObject, FlxTypedGroup))
+				return getGroupStuff(realObject.members[index], variable);
+
+
+			var leArray:Dynamic = realObject[index];
 			if(leArray != null) {
 				if(Type.typeof(variable) == ValueType.TInt) {
 					return leArray[variable];
@@ -334,12 +340,17 @@ class FunkinLua {
 			return null;
 		});
 		Lua_helper.add_callback(lua, "setPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, value:Dynamic) {
-			if(Std.isOfType(Reflect.getProperty(getInstance(), obj), FlxTypedGroup)) {
-				setGroupStuff(Reflect.getProperty(getInstance(), obj).members[index], variable, value);
+			var shitMyPants:Array<String> = obj.split('.');
+			var realObject:Dynamic = Reflect.getProperty(getInstance(), obj);
+			if(shitMyPants.length>1)
+				realObject = getPropertyLoopThingWhatever(shitMyPants, true, false);
+
+			if(Std.isOfType(realObject, FlxTypedGroup)) {
+				setGroupStuff(realObject.members[index], variable, value);
 				return;
 			}
 
-			var leArray:Dynamic = Reflect.getProperty(getInstance(), obj)[index];
+			var leArray:Dynamic = realObject[index];
 			if(leArray != null) {
 				if(Type.typeof(variable) == ValueType.TInt) {
 					leArray[variable] = value;
@@ -1158,8 +1169,8 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "isNoteChild", function(parentID:Int, childID:Int){
-			var parent: Note = PlayState.instance.getLuaObject('note${parentID}',false);
-			var child: Note = PlayState.instance.getLuaObject('note${childID}',false);
+			var parent: Note = cast PlayState.instance.getLuaObject('note${parentID}',false);
+			var child: Note = cast PlayState.instance.getLuaObject('note${childID}',false);
 			if(parent!=null && child!=null)
 				return parent.tail.contains(child);
 
@@ -1978,10 +1989,13 @@ class FunkinLua {
 		return Function_Continue;
 	}
 
-	function getPropertyLoopThingWhatever(killMe:Array<String>, ?checkForTextsToo:Bool = true):Dynamic
+	function getPropertyLoopThingWhatever(killMe:Array<String>, ?checkForTextsToo:Bool = true, ?getProperty:Bool=true):Dynamic
 	{
 		var coverMeInPiss:Dynamic = getObjectDirectly(killMe[0], checkForTextsToo);
-		for (i in 1...killMe.length-1) {
+		var end = killMe.length;
+		if(getProperty)end=killMe.length-1;
+
+		for (i in 1...end) {
 			coverMeInPiss = Reflect.getProperty(coverMeInPiss, killMe[i]);
 		}
 		return coverMeInPiss;

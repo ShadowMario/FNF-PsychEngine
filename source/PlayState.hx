@@ -1314,7 +1314,7 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	public function getLuaObject(tag:String, text:Bool=true):Dynamic {
+	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
 		if(modchartObjects.exists(tag))return modchartObjects.get(tag);
 		if(modchartSprites.exists(tag))return modchartSprites.get(tag);
 		if(text && modchartTexts.exists(tag))return modchartTexts.get(tag);
