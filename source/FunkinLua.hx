@@ -64,16 +64,21 @@ class FunkinLua {
 		//trace('Lua version: ' + Lua.version());
 		//trace("LuaJIT version: " + Lua.versionJIT());
 
+		LuaL.dostring(lua, CLENSE);
 		var result:Dynamic = LuaL.dofile(lua, script);
 		var resultStr:String = Lua.tostring(lua, result);
 		if(resultStr != null && result != 0) {
-			lime.app.Application.current.window.alert(resultStr, 'Error on .LUA script!');
-			trace('Error on .LUA script! ' + resultStr);
+			trace('Error on lua script! ' + resultStr);
+			#if windows
+			lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
+			#else
+			luaTrace('Error loading lua script: "$script"\n' + resultStr,true,false);
+			#end
 			lua = null;
 			return;
 		}
 		scriptName = script;
-		trace('Lua file loaded succesfully:' + script);
+		trace('lua file loaded succesfully:' + script);
 
 		#if (haxe >= "4.0.0")
 		accessedProps = new Map();
@@ -107,7 +112,6 @@ class FunkinLua {
 		
 		// Block require and os, Should probably have a proper function but this should be good enough for now until someone smarter comes along and recreates a safe version of the OS library
 		set('require', false);
-		set('os', false);
 
 		// Camera poo
 		set('cameraX', 0);
@@ -254,8 +258,32 @@ class FunkinLua {
 			}
 			luaTrace("Script doesn't exist!");
 		});
+		
+		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
+			if(name == null || name.length < 1)
+				name = PlayState.SONG.song;
+			if (difficultyNum == -1)
+				difficultyNum = PlayState.storyDifficulty;
 
-		//stuff 4 noobz like you B)
+			var poop = Highscore.formatSong(name, difficultyNum);
+			PlayState.SONG = Song.loadFromJson(poop, name);
+			PlayState.storyDifficulty = difficultyNum;
+			PlayState.instance.persistentUpdate = false;
+			LoadingState.loadAndSwitchState(new PlayState());
+
+			FlxG.sound.music.pause();
+			FlxG.sound.music.volume = 0;
+			if(PlayState.instance.vocals != null)
+			{
+				PlayState.instance.vocals.pause();
+				PlayState.instance.vocals.volume = 0;
+			}
+		});
+
+		Lua_helper.add_callback(lua, "clearUnusedMemory", function() {
+			Paths.clearUnusedMemory();
+			return true;
+		});
 
 		Lua_helper.add_callback(lua, "loadGraphic", function(variable:String, image:String) {
 			var spr:FlxSprite = getObjectDirectly(variable);
@@ -910,7 +938,7 @@ class FunkinLua {
 					if(PlayState.instance.dad.animOffsets.exists(anim))
 						PlayState.instance.dad.playAnim(anim, forced);
 				case 'gf' | 'girlfriend':
-					if(PlayState.instance.gf.animOffsets.exists(anim))
+					if(PlayState.instance.gf != null && PlayState.instance.gf.animOffsets.exists(anim))
 						PlayState.instance.gf.playAnim(anim, forced);
 				default: 
 					if(PlayState.instance.boyfriend.animOffsets.exists(anim))
@@ -920,7 +948,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "characterDance", function(character:String) {
 			switch(character.toLowerCase()) {
 				case 'dad': PlayState.instance.dad.dance();
-				case 'gf' | 'girlfriend': PlayState.instance.gf.dance();
+				case 'gf' | 'girlfriend': if(PlayState.instance.gf != null) PlayState.instance.gf.dance();
 				default: PlayState.instance.boyfriend.dance();
 			}
 		});
@@ -2007,6 +2035,15 @@ class FunkinLua {
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
+	static inline var CLENSE:String = "
+	os.execute = nil;
+	os.exit = nil;
+	package.loaded.os.execute = nil;
+	package.loaded.os.exit = nil;
+	process = nil;
+	package.loaded.process = nil;
+
+	"; // Fuck this, I can't figure out linc_lua, so I'mma set everything in Lua itself - Super
 }
 
 class ModchartSprite extends FlxSprite
