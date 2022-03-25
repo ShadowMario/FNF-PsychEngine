@@ -3654,7 +3654,10 @@ class PlayState extends MusicBeatState
 	private function keyShit():Void
 	{
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
-		keyPressByController = (gamepad != null && (!gamepad.justReleased.ANY || gamepad.pressed.ANY));
+		keyPressByController = !FlxG.keys.justReleased.ANY
+			&& !FlxG.keys.pressed.ANY
+			&& gamepad != null
+			&& (!gamepad.justReleased.ANY || gamepad.pressed.ANY);
 
 		// HOLDING
 		var up = controls.NOTE_UP;
