@@ -1314,9 +1314,9 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
-		if(modchartSprites.exists(tag))return modchartSprites.get(tag);
+	public function getLuaObject(tag:String, text:Bool=true):Dynamic {
 		if(modchartObjects.exists(tag))return modchartObjects.get(tag);
+		if(modchartSprites.exists(tag))return modchartSprites.get(tag);
 		if(text && modchartTexts.exists(tag))return modchartTexts.get(tag);
 		return null;
 	}
@@ -1887,6 +1887,7 @@ class PlayState extends MusicBeatState
 						sustainNote.scrollFactor.set();
 						sustainNote.ID = unspawnNotes.length;
 						modchartObjects.set('note${sustainNote.ID}', sustainNote);
+						swagNote.tail.push(sustainNote);
 						unspawnNotes.push(sustainNote);
 
 						if (sustainNote.mustPress)
