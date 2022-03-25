@@ -1887,6 +1887,7 @@ class PlayState extends MusicBeatState
 						sustainNote.scrollFactor.set();
 						sustainNote.ID = unspawnNotes.length;
 						modchartObjects.set('note${sustainNote.ID}', sustainNote);
+						sustainNote.parent = swagNote;
 						swagNote.tail.push(sustainNote);
 						unspawnNotes.push(sustainNote);
 
