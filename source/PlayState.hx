@@ -1972,6 +1972,7 @@ class PlayState extends MusicBeatState
 			var pastDadNotes:Array<Null<Note>> = [null,null,null,null];
 			for(note in unspawnNotes){
 				if(removing.contains(note))continue;
+				if(note.isSustainNote)continue;
 
 				var array = pastBFNotes;
 				if(!note.mustPress)array = pastDadNotes;
@@ -2024,6 +2025,7 @@ class PlayState extends MusicBeatState
 			var pastDadNotes:Array<Null<Note>> = [null,null,null,null];
 			for(note in unspawnNotes){
 				if(removing.contains(note))continue;
+				if(note.isSustainNote)continue;
 				var array = pastBFNotes;
 				if(!note.mustPress)array = pastDadNotes;
 
@@ -2041,6 +2043,14 @@ class PlayState extends MusicBeatState
 					if(!note.mustPress)pastDadNotes[note.noteData]=note; else pastBFNotes[note.noteData]=note;
 				}
 
+			}
+		}
+
+		for(note in unspawnNotes){ // because eradicating jacks caused issues w/ holds!!
+			if(note.isSustainNote){
+				if(note.prevNote==null || removing.contains(note.prevNote) || !note.prevNote.alive){
+					removing.push(note);
+				}
 			}
 		}
 
