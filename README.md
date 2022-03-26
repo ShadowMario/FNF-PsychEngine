@@ -47,7 +47,7 @@ _____________________________________
   * Added a quick transition/cutscene to Monster
 ### Week 3:
   * BF does "Hey!" during Philly Nice
-  * Blammed has a cool new colors flash during that sick part of the song
+  * Blammed has a cool new colors flash during that sick part of the song (BLAMMED LIGHTS‼️)
 ### Week 4:
   * Better hair physics for Mom/Boyfriend (Maybe even slightly better than Week 7's :eyes:)
   * Henchmen die during all songs. Yeah :(
