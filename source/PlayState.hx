@@ -1994,8 +1994,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		unspawnNotes.sort(sortByShit);
-
 		if(ClientPrefs.getGameplaySetting("noJacks",false)){
 			var jackThreshold:Float = 16;
 			//["4th", "8th", "12th", "16th", "24th", "32nd", "48th", "64th", "192nd"]
