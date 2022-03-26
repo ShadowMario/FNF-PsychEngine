@@ -16,14 +16,13 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 * bbpanzu - Assistant Coding
 
 ### Special Thanks
-* shubs - New Input System
+* shubs - New Input System, updated asset loading
 * SqirraRNG - Chart Editor's Sound Waveform base code
 * iFlicky - Delay/Combo Menu Song Composer + Dialogue Sounds
 * PolybiusProxy - .MP4 Loader Extension
 * Keoiki - Note Splash Animations
 * Smokey - Spritemap Texture Atlas support
 * Cary - OG Resolution code
-* Nebula_Zorua - VCR Shader code
 _____________________________________
 
 # Features
@@ -35,12 +34,12 @@ _____________________________________
 
 ## Mod Support
 * Probably one of the main points of this engine, you can code in .lua files outside of the source code, making your own weeks without even messing with the source!
-* Comes with a Mod Organizing/Disabling Menu. 
+* Comes with a Mod Organizing/Disabling Menu.
 
 
 ## Atleast one change to every week:
 ### Week 1:
-  * New Dad Left sing sprite 
+  * New Dad Left sing sprite
   * Unused stage lights are now used
 ### Week 2:
   * Both BF and Skid & Pump does "Hey!" animations
@@ -93,4 +92,4 @@ _____________________________________
 * Lag doesn't impact the camera movement and player icon scaling anymore.
 * Some stuff based on Week 7's changes has been put in (Background colors on Freeplay, Note splashes)
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
-* You can listen to a song or adjust Scroll Speed/Damage taken/etc. on Freeplay by pressing Space.
+* In the freeplay menu, you can listen to a song by pressing Space or adjust Scroll Speed/Damage taken/etc. by pressing Control.
