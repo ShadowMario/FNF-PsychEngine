@@ -93,6 +93,24 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var option:GameplayOption = new GameplayOption('Drunk Notes', 'drunk_notes', 'bool', false);
 		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Swiftness Multiplicator', 'swiftness', 'float', 1.25);
+		option.scrollSpeed = 0.5;
+		option.decimals = 2;
+		option.minValue = 1.25;
+		option.maxValue = 1.75;
+		option.changeValue = 0.01;
+		option.displayFormat = '%v';
+		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Slowness Multiplicator', 'slowness', 'float', 0.75);
+		option.scrollSpeed = 0.5;
+		option.decimals = 2;
+		option.minValue = 0.25;
+		option.maxValue = 0.75;
+		option.changeValue = 0.01;
+		option.displayFormat = '%v';
+		optionsArray.push(option);
 	}
 
 	public function getOptionByName(name:String)

@@ -176,6 +176,9 @@ class PlayState extends MusicBeatState
 	public var drunk_notes:Bool = false;
 	public var practiceMode:Bool = false;
 
+	public var swiftness:Float = 1.25;
+	public var slowness:Float = 0.75;
+
 	var old_drunk:Float = 1;
 
 	public var botplaySine:Float = 0;
@@ -307,6 +310,8 @@ class PlayState extends MusicBeatState
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 		drunk_notes = ClientPrefs.getGameplaySetting('drunk_notes', false);
+		swiftness = ClientPrefs.getGameplaySetting('swiftness', 1.25);
+		slowness = ClientPrefs.getGameplaySetting('slowness', 0.75);
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -3024,7 +3029,7 @@ class PlayState extends MusicBeatState
 				if(bgGirls != null) bgGirls.swapDanceType();
 			
 			case 'Change Scroll Speed':
-				if (songSpeedType == "constant")
+				if (songSpeedType == "constant" || drunk_notes)
 					return;
 				var val1:Float = Std.parseFloat(value1);
 				var val2:Float = Std.parseFloat(value2);
@@ -4339,8 +4344,8 @@ class PlayState extends MusicBeatState
 		}
 
 		
-		if (drunk_notes && curBeat % 2 == 0) {
-			var random = FlxG.random.float(0.75, 1.25);
+		if (drunk_notes && curBeat % 2 == 0 && songSpeedType != "constant") {
+			var random = FlxG.random.float(slowness, swiftness);
 			songSpeedTween = FlxTween.tween(this, {songSpeed: SONG.speed*random}, 0.3*(1+Math.abs(old_drunk-random)));
 			old_drunk = random;
 		}
