@@ -173,7 +173,10 @@ class PlayState extends MusicBeatState
 	public var healthLoss:Float = 1;
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
+	public var drunk_notes:Bool = false;
 	public var practiceMode:Bool = false;
+
+	var old_drunk:Float = 1;
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -303,6 +306,7 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		drunk_notes = ClientPrefs.getGameplaySetting('drunk_notes', false);
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -4332,6 +4336,13 @@ class PlayState extends MusicBeatState
 		if (curStage == 'spooky' && FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
 		{
 			lightningStrikeShit();
+		}
+
+		
+		if (drunk_notes && curBeat % 2 == 0) {
+			var random = FlxG.random.float(0.75, 1.25);
+			songSpeedTween = FlxTween.tween(this, {songSpeed: SONG.speed*random}, 0.3*(1+Math.abs(old_drunk-random)));
+			old_drunk = random;
 		}
 		lastBeatHit = curBeat;
 
