@@ -209,6 +209,7 @@ class ChartingState extends MusicBeatState
 				player3: null,
 				gfVersion: 'gf',
 				speed: 1,
+				offset: 0,
 				stage: 'stage',
 				validScore: false
 			};
@@ -472,6 +473,11 @@ class ChartingState extends MusicBeatState
 		stepperSpeed.name = 'song_speed';
 		blockPressWhileTypingOnStepper.push(stepperSpeed);
 
+		var stepperOffset:FlxUINumericStepper = new FlxUINumericStepper(stepperBPM.x + 100, 70, 1, 0, -2000, 2000, 0);
+		stepperOffset.value = _song.offset;
+		stepperOffset.name = 'song_offset';
+		blockPressWhileTypingOnStepper.push(stepperOffset);
+
 		#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods('characters/'), Paths.mods(Paths.currentModDirectory + '/characters/'), Paths.getPreloadPath('characters/')];
 		#else
@@ -597,10 +603,12 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(loadEventJson);
 		tab_group_song.add(stepperBPM);
 		tab_group_song.add(stepperSpeed);
+		tab_group_song.add(stepperOffset);
 		tab_group_song.add(reloadNotesButton);
 		tab_group_song.add(noteSkinInputText);
 		tab_group_song.add(noteSplashesInputText);
 		tab_group_song.add(new FlxText(stepperBPM.x, stepperBPM.y - 15, 0, 'Song BPM:'));
+		tab_group_song.add(new FlxText(stepperBPM.x + 100, stepperBPM.y - 15, 0, 'Song Offset:'));
 		tab_group_song.add(new FlxText(stepperSpeed.x, stepperSpeed.y - 15, 0, 'Song Speed:'));
 		tab_group_song.add(new FlxText(player2DropDown.x, player2DropDown.y - 15, 0, 'Opponent:'));
 		tab_group_song.add(new FlxText(player3DropDown.x, player3DropDown.y - 15, 0, 'Girlfriend:'));
@@ -1298,6 +1306,10 @@ class ChartingState extends MusicBeatState
 			{
 				_song.speed = nums.value;
 			}
+			else if (wname == 'song_offset')
+			{
+				_song.offset = nums.value;
+			}
 			else if (wname == 'song_bpm')
 			{
 				tempBpm = nums.value;
@@ -1819,6 +1831,9 @@ class ChartingState extends MusicBeatState
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note) {
 			note.alpha = 1;
+			note.strumTime = note.unModifiedStrumTime - _song.offset; // make it change mid time lol
+			
+			note.y = (GRID_SIZE) * zoomList[curZoom] + Math.floor(getYfromStrum((note.strumTime) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps), false));
 			if(curSelectedNote != null) {
 				var noteDataToCheck:Int = note.noteData;
 				if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSection].mustHitSection) noteDataToCheck += 4;
@@ -2661,7 +2676,7 @@ class ChartingState extends MusicBeatState
 			speed: _song.speed,
 			arrowSkin: _song.arrowSkin,
 			splashSkin: _song.splashSkin,
-
+			offset: _song.offset,
 			player1: _song.player1,
 			player2: _song.player2,
 			player3: null,
