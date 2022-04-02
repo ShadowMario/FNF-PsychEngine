@@ -34,6 +34,7 @@ class OutdatedState extends MusicBeatState
 		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
+	     
 	}
 
 	override function update(elapsed:Float)
@@ -47,7 +48,9 @@ class OutdatedState extends MusicBeatState
 				leftState = true;
 			}
 
-			if(leftState)
+			
+		}
+		if(leftState)
 			{
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				FlxTween.tween(warnText, {alpha: 0}, 1, {
@@ -56,7 +59,6 @@ class OutdatedState extends MusicBeatState
 					}
 				});
 			}
-		}
 		super.update(elapsed);
 	}
 }
