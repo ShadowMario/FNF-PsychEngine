@@ -8,6 +8,7 @@ import flixel.addons.text.FlxTypeText;
 import flixel.FlxSprite;
 import flixel.FlxObject;
 import flixel.math.FlxMath;
+import flixel.util.FlxColor;
 
 using StringTools;
 
@@ -15,6 +16,7 @@ class NoteSkinState extends MusicBeatState {
    
     private var grpSkins:FlxTypedGroup<Alphabet>;
     private var skinText:Alphabet;
+    private var helpText:FlxText;
     public static var curSelected:Int = 0;
 
     var bg:FlxSprite;
@@ -69,7 +71,11 @@ class NoteSkinState extends MusicBeatState {
         skinText.isMenuItem = true;
         skinText.screenCenter();
         grpSkins.add(skinText);
-    
+        
+        helpText = new FlxText((FlxG.width/2) - 300, (FlxG.height/2) + 100, FlxG.width, "Use the up and down arrow keys to select a skin. Press enter to select.");
+        helpText.scrollFactor.set();
+        helpText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        add(helpText);
     }    
 
     
