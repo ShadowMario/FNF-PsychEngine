@@ -73,7 +73,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			'screenRes',
 			'string',
 			'1280x720',
-			['640x360', '852x480', '960x540', '1280x720', '1920x1080', '3840x2160', '7680x4320']);
+			['640x360', '852x480', '960x540', '1280x720', '1920x1080', '3840x2160']);
 		addOption(option);
 		option.onChange = onChangeScreenRes;
 		
