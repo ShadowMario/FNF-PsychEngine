@@ -70,12 +70,17 @@ class Note extends FlxSprite
 
 	public var hitHealth:Float = 0.023;
 	public var missHealth:Float = 0.0475;
+	public var rating:String = 'unknown';
+	public var ratingMod:Float = 0; //9 = unknown, 0.25 = shit, 0.5 = bad, 0.75 = good, 1 = sick
+	public var ratingDisabled:Bool = false;
 
 	public var texture(default, set):String = null;
 
 	public var noAnimation:Bool = false;
 	public var hitCausesMiss:Bool = false;
-	public var distance:Float = 2000;//plan on doing scroll directions soon -bb
+	public var distance:Float = 2000; //plan on doing scroll directions soon -bb
+
+	public var hitsoundDisabled:Bool = false;
 
 	private function set_texture(value:String):String {
 		if(texture != value) {
@@ -167,6 +172,7 @@ class Note extends FlxSprite
 		{
 			alpha = 0.6;
 			multAlpha = 0.6;
+			hitsoundDisabled = true;
 			if(ClientPrefs.downScroll) flipY = true;
 
 			offsetX += width / 2;
@@ -213,6 +219,7 @@ class Note extends FlxSprite
 
 				if(PlayState.isPixelStage) {
 					prevNote.scale.y *= 1.19;
+					prevNote.scale.y *= (6 / height); //Auto adjust note size
 				}
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
@@ -228,6 +235,9 @@ class Note extends FlxSprite
 		x += offsetX;
 	}
 
+	var lastNoteOffsetXForPixelAutoAdjusting:Float = 0;
+	var lastNoteScaleToo:Float = 1;
+	public var originalHeightForCalcs:Float = 6;
 	function reloadNote(?prefix:String = '', ?texture:String = '', ?suffix:String = '') {
 		if(prefix == null) prefix = '';
 		if(texture == null) texture = '';
@@ -256,6 +266,7 @@ class Note extends FlxSprite
 				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'));
 				width = width / 4;
 				height = height / 2;
+				originalHeightForCalcs = height;
 				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
 			} else {
 				loadGraphic(Paths.image('pixelUI/' + blahblah));
@@ -266,6 +277,19 @@ class Note extends FlxSprite
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 			loadPixelNoteAnims();
 			antialiasing = false;
+
+			if(isSustainNote) {
+				offsetX += lastNoteOffsetXForPixelAutoAdjusting;
+				lastNoteOffsetXForPixelAutoAdjusting = (width - 7) * (PlayState.daPixelZoom / 2);
+				offsetX -= lastNoteOffsetXForPixelAutoAdjusting;
+				
+				/*if(animName != null && !animName.endsWith('end'))
+				{
+					lastScaleY /= lastNoteScaleToo;
+					lastNoteScaleToo = (6 / height);
+					lastScaleY *= lastNoteScaleToo; 
+				}*/
+			}
 		} else {
 			frames = Paths.getSparrowAtlas(blahblah);
 			loadNoteAnims();

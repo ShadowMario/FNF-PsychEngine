@@ -65,9 +65,12 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		for (i in 0...WeekData.weeksList.length) {
+			if(weekIsLocked(WeekData.weeksList[i])) continue;
+
 			var leWeek:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
 			var leSongs:Array<String> = [];
 			var leChars:Array<String> = [];
+
 			for (j in 0...leWeek.songs.length)
 			{
 				leSongs.push(leWeek.songs[j][0]);
@@ -85,7 +88,7 @@ class FreeplayState extends MusicBeatState
 				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
 			}
 		}
-		WeekData.setDirectoryFromWeek();
+		WeekData.loadTheFirstEnabledMod();
 
 		/*		//KIND OF BROKEN NOW AND ALSO PRETTY USELESS//
 
@@ -112,6 +115,19 @@ class FreeplayState extends MusicBeatState
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
+
+			if (songText.width > 980)
+			{
+				var textScale:Float = 980 / songText.width;
+				songText.scale.x = textScale;
+				for (letter in songText.lettersArray)
+				{
+					letter.x *= textScale;
+					letter.offset.x *= textScale;
+				}
+				//songText.updateHitbox();
+				//trace(songs[i].songName + ' new scale: ' + textScale);
+			}
 
 			Paths.currentModDirectory = songs[i].folder;
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
@@ -201,6 +217,11 @@ class FreeplayState extends MusicBeatState
 		songs.push(new SongMetadata(songName, weekNum, songCharacter, color));
 	}
 
+	function weekIsLocked(name:String):Bool {
+		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
+		return (!leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!StoryMenuState.weekCompleted.exists(leWeek.weekBefore) || !StoryMenuState.weekCompleted.get(leWeek.weekBefore)));
+	}
+
 	/*public function addWeek(songs:Array<String>, weekNum:Int, weekColor:Int, ?songCharacters:Array<String>)
 	{
 		if (songCharacters == null)
@@ -278,6 +299,7 @@ class FreeplayState extends MusicBeatState
 				if(holdTime > 0.5 && checkNewHold - checkLastHold > 0)
 				{
 					changeSelection((checkNewHold - checkLastHold) * (controls.UI_UP ? -shiftMult : shiftMult));
+					changeDiff();
 				}
 			}
 		}
@@ -366,6 +388,7 @@ class FreeplayState extends MusicBeatState
 		}
 		else if(controls.RESET)
 		{
+			persistentUpdate = false;
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
@@ -483,7 +506,15 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 		
-		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
+		if(CoolUtil.difficulties.contains(CoolUtil.defaultDifficulty))
+		{
+			curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
+		}
+		else
+		{
+			curDifficulty = 0;
+		}
+
 		var newPos:Int = CoolUtil.difficulties.indexOf(lastDifficultyName);
 		//trace('Pos of ' + lastDifficultyName + ' is ' + newPos);
 		if(newPos > -1)
