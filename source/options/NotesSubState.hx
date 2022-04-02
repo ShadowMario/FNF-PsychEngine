@@ -206,13 +206,29 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		for (i in 0...grpNotes.length) {
 			var item = grpNotes.members[i];
-			item.alpha = 0.6;
+			/*item.alpha = 0.6;
 			item.scale.set(0.75, 0.75);
 			if (curSelected == i) {
 				item.alpha = 1;
 				item.scale.set(1, 1);
 				hsbText.y = item.y - 70;
 				blackBG.y = item.y - 20;
+			}*/
+			//i liek ze tweens!! so hopefully thiess be addeddd
+			FlxTween.tween(item, { alpha: 0.6 }, 0.1, { type: FlxTween.ONESHOT, ease: FlxEase.quadInOut }); //btw any of you review this first before adding
+			FlxTween.tween(item.scale, { x: 0.75, y: 0.75 }, 0.1, { type: FlxTween.ONESHOT, ease: FlxEase.quadInOut });
+			if (curSelected == i) {
+				FlxTween.tween(item, { alpha: 1 }, 0.1, { type: FlxTween.ONESHOT, ease: FlxEase.quadInOut });
+				FlxTween.tween(item.scale, { x: 1, y: 1 }, 0.1, { type: FlxTween.ONESHOT, ease: FlxEase.quadInOut });
+				FlxTween.tween(hsbText, { y: item.y - 70 }, 0.1, { type: FlxTween.ONESHOT, ease: FlxEase.quadInOut });
+				FlxTween.tween(blackBG, { y: item.y - 20 }, 0.1, { type: FlxTween.ONESHOT, ease: FlxEase.quadInOut });
+
+				//this kinda fixes it
+				if (item.scale.x != 1) {
+					FlxTween.tween(item.scale, { x: 1, y: 1 }, 0.1, { type: FlxTween.ONESHOT, ease: FlxEase.quadInOut });
+				} else if (item.scale.y != 1) {
+					FlxTween.tween(item.scale, { x: 1, y: 1 }, 0.1, { type: FlxTween.ONESHOT, ease: FlxEase.quadInOut });
+				}
 			}
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));
