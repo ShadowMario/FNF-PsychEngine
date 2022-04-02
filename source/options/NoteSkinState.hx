@@ -105,6 +105,9 @@ class NoteSkinState extends MusicBeatState {
         if(curSelected >= skinList.length) {
             curSelected = 0;
         }
+        else if(curSelected <= skinList.length) {
+            curSelected = 0;
+        }
         skinText.changeText(skinList[curSelected]);
     }
 
