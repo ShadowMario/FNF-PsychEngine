@@ -29,6 +29,7 @@ class ClientPrefs {
 	public static var healthBarAlpha:Float = 1;
 	public static var controllerMode:Bool = false;
 	public static var screenRes:String = '1280x720';
+	public static var fullscreen:Bool = false;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -122,6 +123,7 @@ class ClientPrefs {
 		FlxG.save.data.gameplaySettings = gameplaySettings;
 		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.screenRes = screenRes;
+		FlxG.save.data.fullscreen = fullscreen;
 	
 		FlxG.save.flush();
 
@@ -224,6 +226,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.screenRes != null) {
 			screenRes = FlxG.save.data.screenRes;
+		}
+		if(FlxG.save.data.fullscreen != null) {
+			fullscreen = FlxG.save.data.fullscreen
 		}
 		if(FlxG.save.data.gameplaySettings != null)
 		{
