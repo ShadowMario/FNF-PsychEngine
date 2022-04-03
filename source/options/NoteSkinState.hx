@@ -41,7 +41,9 @@ class NoteSkinState extends MusicBeatState {
         grpSkins = new FlxTypedGroup<Alphabet>();
 		add(grpSkins);
 
-        var path:String = 'assets/shared/images/noteSkins/';
+        var skinPath:String = 'images/noteSkins/';
+        var path:String = Paths.modFolders(skinPath);
+        trace(path);
 
         if(FileSystem.exists(path)) {
             trace("Note skins found");
