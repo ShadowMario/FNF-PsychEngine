@@ -93,18 +93,17 @@ class NoteSkinState extends MusicBeatState {
         var accepted = controls.ACCEPT;
         
         if(downP) {
-            grpNotes.clear();
             changeSkin();
-            previewSkin();
         }
         else if(upP) {
-            grpNotes.clear();
             changeSkin(false);
-            previewSkin();
         }
         if(accepted) {
             acceptSkin();
         }
+
+        grpNotes.clear();
+        previewSkin();
     }
 
     function changeSkin(down:Bool = true) {
