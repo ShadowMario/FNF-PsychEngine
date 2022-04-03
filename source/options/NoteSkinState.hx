@@ -84,7 +84,7 @@ class NoteSkinState extends MusicBeatState {
         helpText.scrollFactor.set();
         helpText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(helpText);
-    }    
+    }
 
     
     override function update(elapsed:Float) {
@@ -133,12 +133,12 @@ class NoteSkinState extends MusicBeatState {
     function previewSkin() {
         var arrows:Array<String> = ['purple0', 'blue0', 'green0', 'red0'];
         for (i in 0...arrows.length) {
-            var arrow:FlxSprite = new FlxSprite((FlxG.width/2) - (75 * i), (FlxG.height/2) - 200);
-            arrow.scale.set(0.5, 0.5);
+            var arrow:FlxSprite = new FlxSprite((FlxG.width/2) - 250 + Note.swagWidth * i , (FlxG.height/2) - 200);
+            arrow.scale.set(0.7, 0.7);
 			
 			arrow.frames = Paths.getSparrowAtlas('noteSkins/' + skinList[curSelected]);
 
-            arrow.animation.addByPrefix('idle', arrows[3-i]);
+            arrow.animation.addByPrefix('idle', arrows[i]);
             arrow.animation.play('idle');
             arrow.antialiasing = ClientPrefs.globalAntialiasing;
             grpNotes.add(arrow);
