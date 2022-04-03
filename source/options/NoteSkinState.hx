@@ -15,6 +15,7 @@ using StringTools;
 class NoteSkinState extends MusicBeatState {
    
     private var grpSkins:FlxTypedGroup<Alphabet>;
+    private var grpNotes:FlxTypedGroup<FlxSprite>;
     private var skinText:Alphabet;
     private var helpText:FlxText;
     public static var curSelected:Int = 0;
@@ -40,6 +41,8 @@ class NoteSkinState extends MusicBeatState {
 
         grpSkins = new FlxTypedGroup<Alphabet>();
 		add(grpSkins);
+        grpNotes = new FlxTypedGroup<FlxSprite>();
+        add(grpNotes);
 
         var skinPath:String = 'images/noteSkins/';
         var path:String = Paths.modFolders(skinPath);
@@ -68,6 +71,9 @@ class NoteSkinState extends MusicBeatState {
         //     skinText.targetY = i;
         //     grpSkins.add(skinText);
         // }
+        
+        previewSkin();
+
 
         skinText = new Alphabet(0, 100, skinList[curSelected], true, false);
         skinText.isMenuItem = true;
@@ -87,10 +93,14 @@ class NoteSkinState extends MusicBeatState {
         var accepted = controls.ACCEPT;
         
         if(downP) {
+            grpNotes.clear();
             changeSkin();
+            previewSkin();
         }
         else if(upP) {
+            grpNotes.clear();
             changeSkin(false);
+            previewSkin();
         }
         if(accepted) {
             acceptSkin();
@@ -118,5 +128,20 @@ class NoteSkinState extends MusicBeatState {
         FlxG.save.data.arrowSkin = 'noteSkins\x2f'+skinName;
         trace(FlxG.save.data.arrowSkin);
         MusicBeatState.switchState(new options.OptionsState());
+    }
+
+    function previewSkin() {
+        var arrows:Array<String> = ['purple0', 'blue0', 'green0', 'red0'];
+        for (i in 0...arrows.length) {
+            var arrow:FlxSprite = new FlxSprite((FlxG.width/2) - (75 * i), (FlxG.height/2) - 200);
+            arrow.scale.set(0.5, 0.5);
+			
+			arrow.frames = Paths.getSparrowAtlas('noteSkins/' + skinList[curSelected]);
+
+            arrow.animation.addByPrefix('idle', arrows[3-i]);
+            arrow.animation.play('idle');
+            arrow.antialiasing = ClientPrefs.globalAntialiasing;
+            grpNotes.add(arrow);
+        }
     }
 }
