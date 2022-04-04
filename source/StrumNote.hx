@@ -63,7 +63,6 @@ class StrumNote extends FlxSprite
 			} else {
 				texture = 'noteSkins/ARROW_assets';
 			}
-			trace(texture + 'Strum');
 			loadGraphic(Paths.image('pixelUI/' + texture));
 			width = width / 4;
 			height = height / 5;
