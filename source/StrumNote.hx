@@ -58,15 +58,16 @@ class StrumNote extends FlxSprite
 
 		if(PlayState.isPixelStage)
 		{
+			var skin:String = 'noteSkins/ARROW_assets';
 			if (FileSystem.exists(Paths.modFolders('images/pixelUI/$texture.png')) && FileSystem.exists(Paths.modFolders('images/pixelUI/' + texture + 'ENDS.png'))) {
-				texture = FlxG.save.data.arrowSkin;
+				skin = FlxG.save.data.arrowSkin;
 			} else {
-				texture = 'noteSkins/ARROW_assets';
+				skin = 'noteSkins/ARROW_assets';
 			}
-			loadGraphic(Paths.image('pixelUI/' + texture));
+			loadGraphic(Paths.image('pixelUI/' + skin));
 			width = width / 4;
 			height = height / 5;
-			loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
+			loadGraphic(Paths.image('pixelUI/' + skin), true, Math.floor(width), Math.floor(height));
 
 			antialiasing = false;
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
