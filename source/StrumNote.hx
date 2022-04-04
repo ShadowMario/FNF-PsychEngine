@@ -4,6 +4,7 @@ import flixel.addons.ui.U;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import sys.FileSystem;
 
 using StringTools;
 
@@ -57,6 +58,12 @@ class StrumNote extends FlxSprite
 
 		if(PlayState.isPixelStage)
 		{
+			if (FileSystem.exists(Paths.modFolders('images/pixelUI/$texture.png')) && FileSystem.exists(Paths.modFolders('images/pixelUI/' + texture + 'ENDS.png'))) {
+				texture = FlxG.save.data.arrowSkin;
+			} else {
+				texture = 'noteSkins/ARROW_assets';
+			}
+			trace(texture + 'Strum');
 			loadGraphic(Paths.image('pixelUI/' + texture));
 			width = width / 4;
 			height = height / 5;
