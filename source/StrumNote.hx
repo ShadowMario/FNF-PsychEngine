@@ -62,7 +62,7 @@ class StrumNote extends FlxSprite
 			if (FileSystem.exists(Paths.modFolders('images/pixelUI/$texture.png')) && FileSystem.exists(Paths.modFolders('images/pixelUI/' + texture + 'ENDS.png'))) {
 				skin = FlxG.save.data.arrowSkin;
 			} else {
-				var skin:String = 'noteSkins/ARROW_assets';
+				skin = 'noteSkins/ARROW_assets';
 			}
 			loadGraphic(Paths.image('pixelUI/' + skin));
 			width = width / 4;
