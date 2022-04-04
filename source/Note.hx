@@ -7,6 +7,9 @@ import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flash.display.BitmapData;
 import editors.ChartingState;
+#if sys
+import sys.FileSystem;
+#end
 
 using StringTools;
 
@@ -266,6 +269,13 @@ class Note extends FlxSprite
 		var lastScaleY:Float = scale.y;
 		var blahblah:String = arraySkin.join('/');
 		if(PlayState.isPixelStage) {
+				#if sys
+				if (FileSystem.exists(Paths.modsImages('pixelUI/'+texture)) || FileSystem.exists('images/pixelUI/'+texture)) 
+					blahblah = FlxG.save.data.arrowSkin;
+				else
+					blahblah = 'noteSkins/ARROW_assets';
+				#end
+				trace(blahblah);
 			if(isSustainNote) {
 				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'));
 				width = width / 4;

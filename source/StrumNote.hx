@@ -4,6 +4,9 @@ import flixel.addons.ui.U;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+#if sys
+import sys.FileSystem;
+#end
 
 using StringTools;
 
@@ -57,6 +60,12 @@ class StrumNote extends FlxSprite
 
 		if(PlayState.isPixelStage)
 		{
+			#if sys
+			if (FileSystem.exists(Paths.modsImages('pixelUI/'+texture)) || FileSystem.exists('images/pixelUI/'+texture)) 
+				texture = texture;
+			else
+				texture = 'noteSkins/ARROW_assets';
+			#end
 			loadGraphic(Paths.image('pixelUI/' + texture));
 			width = width / 4;
 			height = height / 5;
