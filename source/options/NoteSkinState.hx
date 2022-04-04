@@ -28,6 +28,7 @@ class NoteSkinState extends MusicBeatState {
     override function create() {
 
         bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        bg.color = 0xFFea71fd;
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 		bg.screenCenter();
