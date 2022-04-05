@@ -2932,7 +2932,7 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'Screen Shake':
-				if(ClientPrefs.camZooms) {
+				if(ClientPrefs.camShake) {
 						var valuesArray:Array<String> = [value1, value2];
 						var targetsArray:Array<FlxCamera> = [camGame, camHUD];
 						for (i in 0...targetsArray.length) {
