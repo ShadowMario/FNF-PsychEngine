@@ -26,6 +26,7 @@ import flash.geom.Rectangle;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
 import sys.io.File;
+import flixel.input.keyboard.FlxKey;
 /*import haxe.zip.Reader;
 import haxe.zip.Entry;
 import haxe.zip.Uncompress;
@@ -55,6 +56,7 @@ class ModsMenuState extends MusicBeatState
 	var buttonUp:FlxButton;
 	var buttonToggle:FlxButton;
 	var buttonsArray:Array<FlxButton> = [];
+	var debugKeys:Array<FlxKey>;
 
 	var installButton:FlxButton;
 	var removeButton:FlxButton;
@@ -70,6 +72,8 @@ class ModsMenuState extends MusicBeatState
 		Paths.clearUnusedMemory();
 		WeekData.setDirectoryFromWeek();
 
+		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
@@ -80,7 +84,12 @@ class ModsMenuState extends MusicBeatState
 		add(bg);
 		bg.screenCenter();
 
-		noModsTxt = new FlxText(0, 0, FlxG.width, "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD", 48);
+		noModsTxt = new FlxText(0, 0, FlxG.width, "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD\nOR PRESS 7 TO OPEN THE MOD DOWNLOADER", 48);
+		#if sys
+		noModsTxt.text = "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD\nOR PRESS 7 TO OPEN THE MOD DOWNLOADER";
+		#else
+		noModsTxt.text = "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD"
+		#end
 		if(FlxG.random.bool(0.1)) noModsTxt.text += '\nBITCH.'; //meanie
 		noModsTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		noModsTxt.scrollFactor.set();
@@ -469,6 +478,13 @@ class ModsMenuState extends MusicBeatState
 			noModsSine += 180 * elapsed;
 			noModsTxt.alpha = 1 - Math.sin((Math.PI * noModsSine) / 180);
 		}
+
+		#if sys
+		if (FlxG.keys.anyJustPressed(debugKeys))
+		{
+			MusicBeatState.switchState(new ModDownloadState());
+		}
+		#end
 
 		if(canExit && controls.BACK)
 		{
