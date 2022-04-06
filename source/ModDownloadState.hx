@@ -322,7 +322,7 @@ class ModDownloadState extends MusicBeatState
 			}
 		}
 
-		if (controls.BACK && canExit)
+		if (controls.BACK && canExit && !idInputText.hasFocus)
 		{
 			MusicBeatState.switchState(new ModsMenuState());
 		}
