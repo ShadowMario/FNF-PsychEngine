@@ -2320,7 +2320,7 @@ class PlayState extends MusicBeatState
 				{
 					if (convertedAccDisplay.charAt(i + 2) == '')
 					{
-						accuracy += '0';
+						convertedAccDisplay += '0';
 						break;
 					}
 				}
