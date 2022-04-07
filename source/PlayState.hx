@@ -2311,10 +2311,20 @@ class PlayState extends MusicBeatState
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
 		} else {
 			var convertedAccDisplay:String;
+			
 			convertedAccDisplay = Std.string(Highscore.floorDecimal(ratingPercent * 100, 2));
-
-			if (convertedAccDisplay.length == 4)
-				convertedAccDisplay += '0';
+			
+			for (i in 0...convertedAccDisplay.length)
+			{
+				if (convertedAccDisplay.charAt(i) == '.')
+				{
+					if (convertedAccDisplay.charAt(i + 2) == '')
+					{
+						accuracy += '0';
+						break;
+					}
+				}
+			}
 
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (' + convertedAccDisplay + '%)' + ' - ' + ratingFC;//peeps wanted no integer rating
 		}
