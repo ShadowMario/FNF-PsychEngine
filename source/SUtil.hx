@@ -11,6 +11,7 @@ import haxe.CallStack.StackItem;
 import haxe.CallStack;
 import haxe.io.Path;
 import sys.FileSystem;
+
 class SUtil
 {
     #if android
@@ -59,6 +60,14 @@ class SUtil
 
         if (!FileSystem.exists(sPath + "/" + "." + Application.current.meta.get("file") + "/files")){
             FileSystem.createDirectory(sPath + "/" + "." + Application.current.meta.get("file") + "/files");
+        }
+
+        if (!FileSystem.exists(SUtil.getPath() + "log")){
+            FileSystem.createDirectory(SUtil.getPath() + "log");
+        }
+
+        if (!FileSystem.exists(SUtil.getPath() + "system-saves")){
+            FileSystem.createDirectory(SUtil.getPath() + "system-saves");
         }
 
         if (!FileSystem.exists(SUtil.getPath() + "assets")){
@@ -123,6 +132,6 @@ class SUtil
         }
 
         sys.io.File.saveContent(SUtil.getPath() + "system-saves/" + fileName + fileExtension, fileData);
-        SUtil.applicationAlert("", "File Saved Successfully!");
+        SUtil.applicationAlert("", "File Saved Successfully!" + "\n" + "The File is saved here " + SUtil.getPath() + "system-saves/" + fileName + fileExtension);
     }
 }
