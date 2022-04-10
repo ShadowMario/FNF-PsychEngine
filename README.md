@@ -16,7 +16,7 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 
 Steps to do for compiling the game from this repository.
 
-First install [Haxe]([Haxe - The Cross-platform Toolkit](https://haxe.org/download/linux/)) by simply running the following command on a terminal:
+First install [Haxe](https://haxe.org/download/linux/) by simply running the following commands on a terminal:
 
 ```
 sudo apt install git
@@ -26,7 +26,7 @@ sudo apt-get install haxe -y
 mkdir ~/haxelib && haxelib setup ~/haxelib
 ```
 
-Next install some libraries for [HaxeFlixel]([Install HaxeFlixel | HaxeFlixel 2D Game Engine](https://haxeflixel.com/documentation/install-haxeflixel/)) by running the following commands:
+Next install some libraries for [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/) by running the following commands:
 
 ```
 haxelib install lime
@@ -86,27 +86,39 @@ _____________________________________
 ### Week 1:
 
 * New Dad Left sing sprite 
+
 * Unused stage lights are now used
   
   ### Week 2:
+
 * Both BF and Skid & Pump does "Hey!" animations
+
 * Thunders does a quick light flash and zooms the camera in slightly
+
 * Added a quick transition/cutscene to Monster
   
   ### Week 3:
+
 * BF does "Hey!" during Philly Nice
+
 * Blammed has a cool new colors flash during that sick part of the song
   
   ### Week 4:
+
 * Better hair physics for Mom/Boyfriend (Maybe even slightly better than Week 7's :eyes:)
+
 * Henchmen die during all songs. Yeah :(
   
   ### Week 5:
+
 * Bottom Boppers and GF does "Hey!" animations during Cocoa and Eggnog
+
 * On Winter Horrorland, GF bops her head slower in some parts of the song.
   
   ### Week 6:
+
 * On Thorns, the HUD is hidden during the cutscene
+
 * Also there's the Background girls being spooky during the "Hey!" parts of the Instrumental
 
 ## Cool new Chart Editor changes and countless bug fixes
