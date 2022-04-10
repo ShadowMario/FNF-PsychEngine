@@ -29,7 +29,7 @@ using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls' #if android , 'Android Controls' #end, 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -48,10 +48,6 @@ class OptionsState extends MusicBeatState
 				openSubState(new options.GameplaySettingsSubState());
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
-                        case 'Android Controls':
-                                #if android
-				MusicBeatState.switchState(new android.AndroidControlsMenu());
-                                #end
 		}
 	}
 
@@ -87,11 +83,19 @@ class OptionsState extends MusicBeatState
 		selectorRight = new Alphabet(0, 0, '<', true, false);
 		add(selectorRight);
 
+		#if android
+		var tipText:FlxText = new FlxText(10, 24, 0, 'Press C to Go In Android Controls Menu', 16);
+		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.borderSize = 2;
+		tipText.scrollFactor.set();
+		add(tipText);
+		#end
+
 		changeSelection();
 		ClientPrefs.saveSettings();
 
                 #if android
-		addVirtualPad(UP_DOWN, A_B);
+		addVirtualPad(UP_DOWN, A_B_C);
                 #end
 
 		super.create();
@@ -120,6 +124,13 @@ class OptionsState extends MusicBeatState
 		if (controls.ACCEPT) {
 			openSelectedSubstate(options[curSelected]);
 		}
+
+		#if android
+		if (_virtualpad.buttonC.justPressed) {
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+			MusicBeatState.switchState(new android.AndroidControlsMenu());
+		}
+		#end
 	}
 	
 	function changeSelection(change:Int = 0) {
