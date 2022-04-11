@@ -127,7 +127,6 @@ class OptionsState extends MusicBeatState
 
 		#if android
 		if (_virtualpad.buttonC.justPressed) {
-			FlxG.sound.play(Paths.sound('confirmMenu'));
 			MusicBeatState.switchState(new android.AndroidControlsMenu());
 		}
 		#end
