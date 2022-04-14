@@ -108,7 +108,6 @@ class SUtil
 
         errMsg += e.error;
 
-
         if (!FileSystem.exists(SUtil.getPath() + "log")){
             FileSystem.createDirectory(SUtil.getPath() + "log");
         }
