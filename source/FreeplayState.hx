@@ -210,7 +210,7 @@ class FreeplayState extends MusicBeatState
 		add(text);
 
                 #if android
-                addVirtualPad(FULL, A_B_C_X_Y);
+                addVirtualPad(FULL, A_B_C_X_Y_Z);
                 #end
 
 		super.create();
@@ -285,7 +285,7 @@ class FreeplayState extends MusicBeatState
 		var ctrl = FlxG.keys.justPressed.CONTROL #if android || _virtualpad.buttonC.justPressed #end;
 
 		var shiftMult:Int = 1;
-		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
+		if(FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.justPressed #end) shiftMult = 3;
 
 		if(songs.length > 1)
 		{
@@ -333,7 +333,7 @@ class FreeplayState extends MusicBeatState
 		if(ctrl)
 		{
 			#if android
-			_virtualpad.alpha = 0;
+			removeVirtualPad();
 			#end
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
@@ -389,7 +389,7 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			
-			if (FlxG.keys.pressed.SHIFT){
+			if (FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.justPressed #end){
 				LoadingState.loadAndSwitchState(new ChartingState());
 			}else{
 				LoadingState.loadAndSwitchState(new PlayState());
@@ -402,7 +402,7 @@ class FreeplayState extends MusicBeatState
 		else if(controls.RESET #if android || _virtualpad.buttonY.justPressed #end)
 		{
 			#if android
-			_virtualpad.alpha = 0;
+			removeVirtualPad();
 			#end
 			persistentUpdate = false;
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
