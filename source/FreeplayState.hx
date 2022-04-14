@@ -285,7 +285,7 @@ class FreeplayState extends MusicBeatState
 		var ctrl = FlxG.keys.justPressed.CONTROL #if android || _virtualpad.buttonC.justPressed #end;
 
 		var shiftMult:Int = 1;
-		if(FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.justPressed #end) shiftMult = 3;
+		if(FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.pressed #end) shiftMult = 3;
 
 		if(songs.length > 1)
 		{
@@ -389,7 +389,7 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			
-			if (FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.justPressed #end){
+			if (FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.pressed #end){
 				LoadingState.loadAndSwitchState(new ChartingState());
 			}else{
 				LoadingState.loadAndSwitchState(new PlayState());
