@@ -50,6 +50,13 @@ class MusicBeatState extends FlxUIState
 	#end
 
 	#if android
+	public function removeVirtualPad() {
+		controls.removeFlxInput(trackedinputsUI);
+		remove(_virtualpad);
+	}
+	#end
+
+	#if android
 	public function addAndroidControls() {
         androidc = new AndroidControls();
 
@@ -89,8 +96,8 @@ class MusicBeatState extends FlxUIState
 	
 	override function destroy() {
 		#if android
+		controls.removeFlxInput(trackedinputsNOTES);
 		controls.removeFlxInput(trackedinputsUI);
-		controls.removeFlxInput(trackedinputsNOTES);	
 		#end	
 		
 		super.destroy();
