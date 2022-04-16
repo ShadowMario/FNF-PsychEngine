@@ -58,8 +58,8 @@
 		<assets path="assets/secrets" rename="assets" exclude="*.mp3"  unless="web"/>
 	</section>
 
-	<!-- DONT ENABLE THIS -->
-	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
+	<!-- DONT ENABLE THIS --> <!-- Edit: i forgot the port is unofficial lmao -->
+	<define name="CHECK_FOR_UPDATES" />
 
 	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" unless="web" />
