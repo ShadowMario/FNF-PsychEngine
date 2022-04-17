@@ -27,8 +27,8 @@ class FlxVirtualPad extends FlxSpriteGroup
 	public var buttonUp:FlxButton;
 	public var buttonRight:FlxButton;
 	public var buttonDown:FlxButton;
-        
-        //PAD DUO MODE
+
+	//PAD DUO MODE
 	public var buttonLeft2:FlxButton;
 	public var buttonUp2:FlxButton;
 	public var buttonRight2:FlxButton;
@@ -53,25 +53,25 @@ class FlxVirtualPad extends FlxSpriteGroup
 		actions = new FlxSpriteGroup();
 		actions.scrollFactor.set();
 
-                buttonA = new FlxButton(0, 0);
-                buttonB = new FlxButton(0, 0);
-                buttonC = new FlxButton(0, 0);
-                buttonD = new FlxButton(0, 0);
-                buttonE = new FlxButton(0, 0);
-                buttonV = new FlxButton(0, 0);
-                buttonX = new FlxButton(0, 0);
-                buttonY = new FlxButton(0, 0);
-                buttonZ = new FlxButton(0, 0);
+		buttonA = new FlxButton(0, 0);
+		buttonB = new FlxButton(0, 0);
+		buttonC = new FlxButton(0, 0);
+		buttonD = new FlxButton(0, 0);
+		buttonE = new FlxButton(0, 0);
+		buttonV = new FlxButton(0, 0);
+		buttonX = new FlxButton(0, 0);
+		buttonY = new FlxButton(0, 0);
+		buttonZ = new FlxButton(0, 0);
 
-                buttonLeft = new FlxButton(0, 0);
-                buttonUp = new FlxButton(0, 0);
-                buttonRight = new FlxButton(0, 0);
-                buttonDown = new FlxButton(0, 0);
+		buttonLeft = new FlxButton(0, 0);
+		buttonUp = new FlxButton(0, 0);
+		buttonRight = new FlxButton(0, 0);
+		buttonDown = new FlxButton(0, 0);
 
-                buttonLeft2 = new FlxButton(0, 0);
-                buttonUp2 = new FlxButton(0, 0);
-                buttonRight2 = new FlxButton(0, 0);
-                buttonDown2 = new FlxButton(0, 0);
+		buttonLeft2 = new FlxButton(0, 0);
+		buttonUp2 = new FlxButton(0, 0);
+		buttonRight2 = new FlxButton(0, 0);
+		buttonDown2 = new FlxButton(0, 0);
 
 		switch (DPad)
 		{
@@ -95,7 +95,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 				dPad.add(add(buttonLeft = createButton(FlxG.width - 128 * 3, FlxG.height - 66 - 81 * 3, 44 * 3, 45 * 3, "left")));
 				dPad.add(add(buttonRight = createButton(FlxG.width - 44 * 3, FlxG.height - 66 - 81 * 3, 44 * 3, 45 * 3, "right")));
 				dPad.add(add(buttonDown = createButton(FlxG.width - 86 * 3, FlxG.height - 66 - 45 * 3, 44 * 3, 45 * 3, "down")));
-                        case DUO:
+			case DUO:
 				dPad.add(add(buttonUp = createButton(35 * 3, FlxG.height - 116 * 3, 44 * 3, 45 * 3, "up")));
 				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 81 * 3, 44 * 3, 45 * 3, "left")));
 				dPad.add(add(buttonRight = createButton(69 * 3, FlxG.height - 81 * 3, 44 * 3, 45 * 3, "right")));
@@ -111,49 +111,46 @@ class FlxVirtualPad extends FlxSpriteGroup
 		{
 			case A:
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));
-                        case B:
+			case B:
 				actions.add(add(buttonB = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "b")));
-		        case D:
+			case D:
 				actions.add(add(buttonD = createButton(FlxG.width - 44 * 3, FlxG.height - 125 * 3, 44 * 3, 45 * 3, "d")));						
 			case A_B:
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));
 				actions.add(add(buttonB = createButton(FlxG.width - 86 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "b")));
 			case A_B_C:
-  			        actions.add(add(buttonC = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "c")));
+				actions.add(add(buttonC = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "c")));
 				actions.add(add(buttonB = createButton(FlxG.width - 86 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "b")));								
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));				
 			case A_B_E:
-  			        actions.add(add(buttonE = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "e")));   
+				actions.add(add(buttonE = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "e")));   
 				actions.add(add(buttonB = createButton(FlxG.width - 86 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "b")));								
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));
  			case A_B_X_Y:
 				actions.add(add(buttonY = createButton(FlxG.width - 170 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "y")));
 				actions.add(add(buttonX = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "x")));
-
 				actions.add(add(buttonB = createButton(FlxG.width - 86 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "b")));								
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));	 			               
 			case A_B_C_X_Y:		
 				actions.add(add(buttonY = createButton(FlxG.width - 86 * 3, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "y")));
 				actions.add(add(buttonX = createButton(FlxG.width - 44 * 3, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "x")));
-                                actions.add(add(buttonC = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "c")));
+				actions.add(add(buttonC = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "c")));
 				actions.add(add(buttonB = createButton(FlxG.width - 86 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "b")));
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));				
-                        case A_B_C_X_Y_Z:
+			case A_B_C_X_Y_Z:
 				actions.add(add(buttonX = createButton(FlxG.width - 128 * 3, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "x")));
 				actions.add(add(buttonY = createButton(FlxG.width - 86 * 3, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "y")));
 				actions.add(add(buttonZ = createButton(FlxG.width - 44 * 3, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "z")));
-
-  			        actions.add(add(buttonC = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "c")));
+				actions.add(add(buttonC = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "c")));
 				actions.add(add(buttonB = createButton(FlxG.width - 86 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "b")));								
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));	
-                        case FULL:
+			case FULL:
 				actions.add(add(buttonV = createButton(FlxG.width - 170 * 3, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "v")));            
 				actions.add(add(buttonX = createButton(FlxG.width - 128 * 3, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "x")));
 				actions.add(add(buttonY = createButton(FlxG.width - 86 * 3, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "y")));
 				actions.add(add(buttonZ = createButton(FlxG.width - 44 * 3, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "z")));
-
-		                actions.add(add(buttonD = createButton(FlxG.width - 170 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "d")));
-  			        actions.add(add(buttonC = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "c")));
+				actions.add(add(buttonD = createButton(FlxG.width - 170 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "d")));
+				actions.add(add(buttonC = createButton(FlxG.width - 128 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "c")));
 				actions.add(add(buttonB = createButton(FlxG.width - 86 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "b")));								
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));						
 			case NONE:
