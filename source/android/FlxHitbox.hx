@@ -45,7 +45,7 @@ class FlxHitbox extends FlxSpriteGroup
 	}
 
 	public function createhitbox(x:Float = 0, y:Float = 0, frames:String) 
-        {
+	{
 		var button = new FlxButton(x, y);
 		button.loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
 		button.antialiasing = orgAntialiasing;
@@ -56,7 +56,7 @@ class FlxHitbox extends FlxSpriteGroup
 		return button;
 	}
 
-	public static function getFrames():FlxAtlasFrames
+	public function getFrames():FlxAtlasFrames
 	{
 		return Paths.getSparrowAtlas('androidcontrols/hitbox');
 	}
