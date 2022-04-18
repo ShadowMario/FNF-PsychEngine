@@ -5,6 +5,7 @@ import android.AndroidTools;
 import android.stuff.Permissions;
 #end
 import lime.app.Application;
+import flixel.graphics.FlxGraphic;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.Lib;
