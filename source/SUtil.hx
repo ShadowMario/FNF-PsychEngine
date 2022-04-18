@@ -149,4 +149,45 @@ class SUtil
 	    sys.io.File.saveBytes(savePath, bytes);
         }
     }
+
+    public static var persistentAssets:Array<FlxGraphic> = [];
+
+    public static function clearMemory(?cleanUnused:Bool = false)
+    {
+        trace('deleted cacheeeeeeeeeeee');
+        // credits to shubs and haya for this code
+        @:privateAccess
+        for (key in FlxG.bitmap._cache.keys())
+        {
+            var obj = FlxG.bitmap._cache.get(key);
+            if (cleanUnused)
+            {
+                if (obj != null && !persistentAssets.contains(obj))
+                {
+                    Assets.cache.removeBitmapData(key);
+                    FlxG.bitmap._cache.remove(key);
+                    obj.destroy();
+                }
+            }
+            else if (!cleanUnused)
+            {
+                if (obj != null)
+                {
+                    Assets.cache.removeBitmapData(key);
+                    FlxG.bitmap._cache.remove(key);
+                    obj.destroy();
+                }
+            }
+        }
+
+        if (cleanUnused)
+        {
+            openfl.system.System.gc();
+            cleanUnused = false;
+        }
+        else if (!cleanUnused)
+        {
+            Assets.cache.clear("songs");
+        }
+    }
 }
