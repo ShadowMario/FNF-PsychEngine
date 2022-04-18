@@ -5,11 +5,8 @@ import android.AndroidTools;
 import android.stuff.Permissions;
 #end
 import lime.app.Application;
-import flixel.graphics.FlxGraphic;
-import flixel.FlxG;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets as OpenFlAssets;
-import openfl.Assets;
 import openfl.Lib;
 import haxe.CallStack.StackItem;
 import haxe.CallStack;
