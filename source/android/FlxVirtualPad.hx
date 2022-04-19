@@ -9,8 +9,7 @@ import flixel.ui.FlxButton;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.FlxGraphic;
 
-class FlxVirtualPad extends FlxSpriteGroup
-{
+class FlxVirtualPad extends FlxSpriteGroup {
 	//Actions
 	public var buttonA:FlxButton;
 	public var buttonB:FlxButton;
@@ -40,8 +39,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 	public var orgAlpha:Float = 0.75;
 	public var orgAntialiasing:Bool = true;
 
-	public function new(?DPad:FlxDPadMode, ?Action:FlxActionMode, ?alphaAlt:Float = 0.75, ?antialiasingAlt:Bool = true)
-	{
+	public function new(?DPad:FlxDPadMode, ?Action:FlxActionMode, ?alphaAlt:Float = 0.75, ?antialiasingAlt:Bool = true) {
 		super();
 
 		orgAntialiasing = antialiasingAlt;
@@ -73,8 +71,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		buttonRight2 = new FlxButton(0, 0);
 		buttonDown2 = new FlxButton(0, 0);
 
-		switch (DPad)
-		{
+		switch (DPad){
 			case UP_DOWN:
 				dPad.add(add(buttonUp = createButton(0, FlxG.height - 85 * 3, 44 * 3, 45 * 3, "up")));
 				dPad.add(add(buttonDown = createButton(0, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "down")));
@@ -107,8 +104,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 			case NONE:
 		}
 
-		switch (Action)
-		{
+		switch (Action){
 			case A:
 				actions.add(add(buttonA = createButton(FlxG.width - 44 * 3, FlxG.height - 45 * 3, 44 * 3, 45 * 3, "a")));
 			case B:
@@ -157,8 +153,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		}
 	}
 
-	public function createButton(x:Float, y:Float, width:Int, height:Int, frames:String):FlxButton
-	{
+	public function createButton(x:Float, y:Float, width:Int, height:Int, frames:String):FlxButton {
 		var button = new FlxButton(x, y);
 		button.frames = FlxTileFrames.fromFrame(getFrames().getByName(frames), FlxPoint.get(width, height));
 		button.resetSizeFromFrame();
@@ -173,13 +168,11 @@ class FlxVirtualPad extends FlxSpriteGroup
 		return button;
 	}
 
-	public static function getFrames():FlxAtlasFrames
-	{
+	public static function getFrames():FlxAtlasFrames {
 		return Paths.getPackerAtlas('androidcontrols/virtualpad');
 	}
 
-	override public function destroy():Void
-	{
+	override public function destroy():Void {
 		super.destroy();
 
 		dPad = FlxDestroyUtil.destroy(dPad);
@@ -211,8 +204,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 	}
 }
 
-enum FlxDPadMode
-{
+enum FlxDPadMode {
 	UP_DOWN;
 	LEFT_RIGHT;
 	UP_LEFT_RIGHT;
@@ -222,8 +214,7 @@ enum FlxDPadMode
 	NONE;
 }
 
-enum FlxActionMode
-{
+enum FlxActionMode {
 	A;
 	B;
 	D;
