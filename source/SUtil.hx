@@ -123,7 +123,7 @@ class SUtil
         Sys.println("Crash dump saved in " + Path.normalize(path));
         Sys.println("Making a simple alert ...");
 
-        SUtil.applicationAlert("Uncaught Error, The Call Stack: ", errMsg);
+        SUtil.applicationAlert("Uncaught Error :(, The Call Stack: ", errMsg);
         flash.system.System.exit(0);
     }
 	
