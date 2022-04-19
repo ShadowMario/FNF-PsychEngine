@@ -44,9 +44,14 @@ import Discord;
 using StringTools;
 
 class FunkinLua {
+	#if mac
+	public static var Function_Stop: "Function_Stop";
+	public static var Function_Continue: "Function_Continue";
+	#else
 	public static var Function_Stop:Dynamic = 1;
-	public static var Function_Continue:Dynamic = 0;
-
+	public static var Function_Continue:Dynamic = 0;	
+	#end
+	
 	#if LUA_ALLOWED
 	public var lua:State = null;
 	#end
@@ -87,6 +92,10 @@ class FunkinLua {
 		#end
 
 		// Lua shit
+		#if mac
+		set('Function_Stop', "Function_Stop");
+		set('Function_Continue', "Function_Continue");
+		#else
 		set('Function_Stop', Function_Stop);
 		set('Function_Continue', Function_Continue);
 		set('luaDebugMode', false);
