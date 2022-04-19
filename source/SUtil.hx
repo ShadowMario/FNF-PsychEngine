@@ -12,27 +12,23 @@ import haxe.CallStack.StackItem;
 import haxe.CallStack;
 import haxe.io.Path;
 import sys.FileSystem;
+
 /**
  * author: Saw (M.A. Jigsaw)
  */
 
-class SUtil
-{
+class SUtil {
     #if android
-    private static var aDir:String = null;
-    private static var sPath:String = AndroidTools.getExternalStorageDirectory();  
+    private static var aDir:String = null; // android dir
+    private static var sPath:String = AndroidTools.getExternalStorageDirectory(); // storage dir
     private static var grantedPermsList:Array<Permissions> = AndroidTools.getGrantedPermissions();  
     #end
 
-    static public function getPath():String
-    {
+    static public function getPath():String {
     	#if android
-        if (aDir != null && aDir.length > 0) 
-        {
+        if (aDir != null && aDir.length > 0) {
             return aDir;
-        } 
-        else 
-        {
+        } else {
             aDir = sPath + "/" + "." + Application.current.meta.get("file") + "/files/";         
         }
         return aDir;
@@ -41,8 +37,7 @@ class SUtil
         #end
     }
 
-    static public function doTheCheck()
-    {
+    static public function doTheCheck() {
         #if android
         if (!grantedPermsList.contains(Permissions.READ_EXTERNAL_STORAGE) || !grantedPermsList.contains(Permissions.WRITE_EXTERNAL_STORAGE)) {
             if (AndroidTools.sdkVersion > 23 || AndroidTools.sdkVersion == 23) {
@@ -61,33 +56,33 @@ class SUtil
         if (!FileSystem.exists(sPath + "/" + "." + Application.current.meta.get("file"))){
             FileSystem.createDirectory(sPath + "/" + "." + Application.current.meta.get("file"));
         }
-
         if (!FileSystem.exists(sPath + "/" + "." + Application.current.meta.get("file") + "/files")){
             FileSystem.createDirectory(sPath + "/" + "." + Application.current.meta.get("file") + "/files");
         }
-
         if (!FileSystem.exists(SUtil.getPath() + "log")){
             FileSystem.createDirectory(SUtil.getPath() + "log");
         }
-
         if (!FileSystem.exists(SUtil.getPath() + "system-saves")){
             FileSystem.createDirectory(SUtil.getPath() + "system-saves");
         }
-
         if (!FileSystem.exists(SUtil.getPath() + "assets")){
-            SUtil.applicationAlert("Instructions:", "You have to copy assets/assets from apk to your internal storage app directory " + "( here " + SUtil.getPath() + " )" + "if you hadn't have Zarhiver Downloaded, download it and enable the show hidden files option to have the folder visible" + "\n" + "Press Ok To Close The App");
+            SUtil.applicationAlert("Instructions:", "You have to copy assets/assets from apk to your internal storage app directory"
+            + " ( here " + SUtil.getPath() + " )" 
+            + " if you hadn't have Zarhiver Downloaded, download it and enable the show hidden files option to have the folder visible" 
+            + "\n" + "Press Ok To Close The App");
             flash.system.System.exit(0);
         }
-        
         if (!FileSystem.exists(SUtil.getPath() + "mods")){
-            SUtil.applicationAlert("Instructions:", "You have to copy assets/mods from apk to your internal storage app directory " + "( here " + SUtil.getPath() + " )" + "if you hadn't have Zarhiver Downloaded, download it and enable the show hidden files option to have the folder visible" + "\n" + "Press Ok To Close The App");
+            SUtil.applicationAlert("Instructions:", "You have to copy assets/mods from apk to your internal storage app directory" 
+            + " ( here " + SUtil.getPath() + " )" 
+            + " if you hadn't have Zarhiver Downloaded, download it and enable the show hidden files option to have the folder visible" 
+            + "\n" + "Press Ok To Close The App");
             flash.system.System.exit(0);
         }
         #end
     }
 
-    //Thanks Forever Engine
-    static public function gameCrashCheck(){
+    static public function gameCrashCheck() {
     	Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
     }
      
@@ -99,10 +94,8 @@ class SUtil
         var path:String = "log/" + "crash_" + dateNow + ".txt";
         var errMsg:String = "";
 
-        for (stackItem in callStack)
-        {
-            switch (stackItem)
-            {
+        for (stackItem in callStack) {
+            switch (stackItem) {
                 case FilePos(s, file, line, column):
                     errMsg += file + " (line " + line + ")\n";
                 default:
@@ -126,7 +119,7 @@ class SUtil
         flash.system.System.exit(0);
     }
 	
-    public static function applicationAlert(title:String, description:String){
+    public static function applicationAlert(title:String, description:String) {
         Application.current.window.alert(description, title);
     }
 
@@ -137,15 +130,14 @@ class SUtil
 
         sys.io.File.saveContent(SUtil.getPath() + "system-saves/" + fileName + fileExtension, fileData);
         #if android
-        SUtil.applicationAlert("Done Action: ", "File Saved Successfully!");
+        SUtil.applicationAlert("Done Action :)", "File Saved Successfully!");
         #end
     }
 
-    //THANKS SIROX
     static public function copyContent(copyPath:String, savePath:String) {
         if (!FileSystem.exists(savePath)){
-	    var bytes = OpenFlAssets.getBytes(copyPath);
-	    sys.io.File.saveBytes(savePath, bytes);
+            var bytes = OpenFlAssets.getBytes(copyPath);
+            sys.io.File.saveBytes(savePath, bytes);
         }
     }
 }
