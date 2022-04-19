@@ -1,14 +1,52 @@
 # Friday Night Funkin' - Psych Engine
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
-## Installation:
-You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
+# Installation:
 
-Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
+If you just want to play Friday Night Funkin': Psych Engine, just download and play here (put gamebanana hyperlink thingie here)
+## Haxe
+You must have [the most up-to-date version of Haxe](https://haxe.org/download/) (4.2.4+) in order to compile.
 
-To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit ` on a Command prompt/PowerShell
+## HaxeFlixel
+To install the latest stable version of HaxeFlixel needed to compile, run the following commands:
 
-...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
+```
+haxelib install lime
+haxelib install openfl
+haxelib install flixel
+haxelib run lime setup flixel
+haxelib run lime setup
+haxelib install flixel-tools
+haxelib run flixel-tools setup
+```
+You can update HaxeFlixel anytime by running this command:
+```
+haxelib update flixel
+```
+## Funkin' Addons
+To install additonal libraries needed to compile, run the following commands:
+```
+haxelib install flixel
+haxelib install flixel addons
+haxelib install flixel-ui
+haxelib install hscript
+haxelib install newgrounds
+```
+## GIT-scm
+To make installing pachages from GitHub repositories easier, [install GIT-scm](https://git-scm.com/downloads)
+ 
+After installing GIT-scm, run the following commands:
+```
+haxelib git polymod https://github.com/larsiusprime/polymod.git
+haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+```
+Don't use discord??? Ignore these, and delete the text on line 133 of Project.xml: `<haxelib name="discord_rpc" if="desktop"/>`
+## Funkin' Lua
+To instal the LuaScript API for Friday Night Funkin', run the following command:
+```
+haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
+```
+...Or don't. To play without the luascript API, delete the text on line 47 of Project.xml: `<define name="LUA_ALLOWED" if="desktop" />`
 
 ## Credits:
 * Shadow Mario - Coding
