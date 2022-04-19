@@ -45,8 +45,8 @@ using StringTools;
 
 class FunkinLua {
 	#if mac
-	public static var Function_Stop: "Function_Stop";
-	public static var Function_Continue: "Function_Continue";
+	public static var Function_Stop:Dynamic = "Function_Stop";
+	public static var Function_Continue:Dynamic = "Function_Continue";
 	#else
 	public static var Function_Stop:Dynamic = 1;
 	public static var Function_Continue:Dynamic = 0;	
