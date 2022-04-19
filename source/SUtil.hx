@@ -12,7 +12,6 @@ import haxe.CallStack.StackItem;
 import haxe.CallStack;
 import haxe.io.Path;
 import sys.FileSystem;
-
 /**
  * author: Saw (M.A. Jigsaw)
  */
