@@ -3,7 +3,29 @@ Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), 
 
 # Installation:
 
-If you just want to play Friday Night Funkin': Psych Engine, just download and play here (put gamebanana hyperlink thingie here)
+If you just want to play Friday Night Funkin': Psych Engine, just download and play here: (put updated gamebanana hyperlink thingie here)
+
+## Visual Studio
+`windows` To install the software needed to compile: install [Visual Studio 19](https://visualstudio.microsoft.com/vs/older-downloads/#visual-studio-2019-and-other-products) and ONLY these components:
+```
+MSVC v142 - VS 2019 C++ x64/x86 build tools
+Windows SDK (10.0.17763.0)
+```
+`other platforms` Do nothing.
+
+## Command Prompt/Terminal
+`windows` any of these methods should send you to a terminal, where you can run commands needed to compile the game
+```
+Ctrl + Shift + p, and set directory
+
+open your directory, select Project.xml, and click "file" > "Open Windows Powershell"
+```
+
+`mac` any of these methods should send you to a terminal, where you can run commands needed to compile the game
+```
+guess who doesn't have a mac?
+```
+
 ## Haxe
 You must have [the most up-to-date version of Haxe](https://haxe.org/download/) (4.2.4+) in order to compile.
 
@@ -33,7 +55,7 @@ haxelib install hscript
 haxelib install newgrounds
 ```
 ## GIT-scm
-To make installing pachages from GitHub repositories easier, [install GIT-scm](https://git-scm.com/downloads)
+To make installing packages from GitHub repositories easier, [install GIT-scm](https://git-scm.com/downloads)
  
 After installing GIT-scm, run the following commands:
 ```
@@ -47,6 +69,15 @@ To instal the LuaScript API for Friday Night Funkin', run the following command:
 haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
 ```
 ...Or don't. To play without the luascript API, delete the text on line 47 of Project.xml: `<define name="LUA_ALLOWED" if="desktop" />`
+
+## Compilation
+Note: If you see any messages relating to deprecated packages, ignore them. They're just warnings that don't affect compiling.
+
+`windows`
+`linux`
+`html5`
+`mac`
+
 
 ## Credits:
 * Shadow Mario - Coding
