@@ -13,7 +13,7 @@ class Config {
 
 	public function new() {
 		save = new FlxSave();
-		save.bind("saved controls");
+		save.bind("saved-controls");
 	}
 
 	public function getcontrolmode():Int {
@@ -65,10 +65,12 @@ class AndroidControls extends FlxSpriteGroup {
 	public var hbox:FlxHitbox;
 	public var vpad:FlxVirtualPad;
 
-	var config = new Config();
+	var config:Config;
 
 	public function new() {
 		super();
+
+		config = new Config();
 
 		mode = getModeFromNumber(config.getcontrolmode());
 
