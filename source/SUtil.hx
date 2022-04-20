@@ -98,7 +98,9 @@ class SUtil {
 	static public function onCrash(e:UncaughtErrorEvent):Void {
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
-		var path:String = "crash/" + "crash" + dateNow + ".txt";
+		dateNow = StringTools.replace(dateNow, " ", "_");
+		dateNow = StringTools.replace(dateNow, ":", "'");
+		var path:String = "crash/" + "crash_" + dateNow + ".txt";
 		var errMsg:String = "";
 
 		for (stackItem in callStack) {
