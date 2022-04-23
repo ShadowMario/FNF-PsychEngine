@@ -63,7 +63,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.sound.play(Paths.sound(deathSoundName));
 //Option later
 			#if android
-			Hardware.vibrate(4000);
+			Hardware.vibrate(1000);
 			#end
 
 		Conductor.changeBPM(100);
