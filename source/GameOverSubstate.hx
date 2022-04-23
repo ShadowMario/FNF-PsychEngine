@@ -27,6 +27,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	public static var deathSoundName:String = 'fnf_loss_sfx';
 	public static var loopSoundName:String = 'gameOver';
 	public static var endSoundName:String = 'gameOverEnd';
+	public static var vibrationTime:Int = 1000;//milliseconds
 
 	public static var instance:GameOverSubstate;
 
@@ -35,6 +36,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		deathSoundName = 'fnf_loss_sfx';
 		loopSoundName = 'gameOver';
 		endSoundName = 'gameOverEnd';
+		vibrationTime = 1000;
 	}
 
 	override function create()
@@ -63,7 +65,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.sound.play(Paths.sound(deathSoundName));
 //Option later
 			#if android
-			Hardware.vibrate(1000);
+			Hardware.vibrate(vibrationTime);
 			#end
 
 		Conductor.changeBPM(100);
