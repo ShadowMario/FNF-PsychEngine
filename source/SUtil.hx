@@ -118,7 +118,7 @@ class SUtil {
 			FileSystem.createDirectory(SUtil.getPath() + "crash");
 		}
 
-		sys.io.File.saveContent(SUtil.getPath() + path, errMsg + "\n");
+		File.saveContent(SUtil.getPath() + path, errMsg + "\n");
 
 		Sys.println(errMsg);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
