@@ -64,7 +64,7 @@ class GameOverSubstate extends MusicBeatSubstate
 //Option later
 			#if android
 			Hardware.vibrate(4000);
-			#ebf
+			#end
 
 		Conductor.changeBPM(100);
 		// FlxG.camera.followLerp = 1;
