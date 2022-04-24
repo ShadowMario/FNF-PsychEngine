@@ -114,7 +114,7 @@ class SUtil {
 
 		errMsg += e.error;
 
-		#if (android && MODS_ALLOWED)
+		#if MODS_ALLOWED
 		if (!FileSystem.exists(SUtil.getPath() + "crash")){
 			FileSystem.createDirectory(SUtil.getPath() + "crash");
 		}
