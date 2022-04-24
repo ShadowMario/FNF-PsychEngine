@@ -2,10 +2,10 @@
 <TextureAtlas imagePath="alphabet.png">
 	<!-- Created with Adobe Animate version 22.0.4.185 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="#0000" x="1228" y="998" width="39" height="44"/>
-	<SubTexture name="#0001" x="1228" y="998" width="39" height="44"/>
-	<SubTexture name="#0002" x="1287" y="998" width="39" height="44"/>
-	<SubTexture name="#0003" x="1287" y="998" width="39" height="44"/>
+	<SubTexture name="hashtag0000" x="1228" y="998" width="39" height="44"/>
+	<SubTexture name="hashtag0001" x="1228" y="998" width="39" height="44"/>
+	<SubTexture name="hashtag0002" x="1287" y="998" width="39" height="44"/>
+	<SubTexture name="hashtag0003" x="1287" y="998" width="39" height="44"/>
 	<SubTexture name="$0000" x="1346" y="998" width="40" height="64"/>
 	<SubTexture name="$0001" x="1346" y="998" width="40" height="64"/>
 	<SubTexture name="$0002" x="1406" y="998" width="39" height="63" frameX="0" frameY="0" frameWidth="40" frameHeight="64"/>
