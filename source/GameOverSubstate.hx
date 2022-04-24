@@ -27,7 +27,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	public static var deathSoundName:String = 'fnf_loss_sfx';
 	public static var loopSoundName:String = 'gameOver';
 	public static var endSoundName:String = 'gameOverEnd';
-	public static var vibrationTime:Int = 1000;//milliseconds
+	public static var vibrationTime:Int = 500;//milliseconds
 
 	public static var instance:GameOverSubstate;
 
@@ -36,7 +36,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		deathSoundName = 'fnf_loss_sfx';
 		loopSoundName = 'gameOver';
 		endSoundName = 'gameOverEnd';
-		vibrationTime = 1000;
+		vibrationTime = 500;
 	}
 
 	override function create()
