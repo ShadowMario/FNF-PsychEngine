@@ -376,7 +376,7 @@ class AlphaCharacter extends FlxSprite
 
 	public static var numbers:String = "1234567890";
 
-	public static var symbols:String = "|~#$%()*+-:;<=>@[]^_.,'!?";
+	public static var symbols:String = "|~#$%()[]*+-:;<=>@^_.,'!?/\\";
 
 	public var row:Int = 0;
 
@@ -499,6 +499,8 @@ class AlphaCharacter extends FlxSprite
 				animation.addByPrefix(letter, 'exclamation point', 24);
 			case ",":
 				animation.addByPrefix(letter, 'comma', 24);
+			case '/':
+				animation.addByPrefix(letter, 'forward slash', 24);
 			default:
 				animation.addByPrefix(letter, letter, 24);
 		}
