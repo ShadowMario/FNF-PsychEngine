@@ -362,20 +362,11 @@ class Paths
 		var file:String = modsSounds(path, key);
 		if(FileSystem.exists(file)) {
 			if(!currentTrackedSounds.exists(file)) {
-<<<<<<< HEAD
 				currentTrackedSounds.set(file, Sound.fromFile(file));
-=======
-				#if MODS_ALLOWED
-				currentTrackedSounds.set(file, Sound.fromFile(file));
-				#else
-				currentTrackedSounds.set(file, OpenFlAssets.getSound(getPath('$path/$key.$SOUND_EXT', SOUND, library)));
-				#end
->>>>>>> f47abff (Update Paths.hx)
 			}
 			localTrackedAssets.push(key);
 			return currentTrackedSounds.get(file);
 		}
-<<<<<<< HEAD
 		#end
 		// I hate this so god damn much
 		var gottenPath:String = SUtil.getPath() + getPath('$path/$key.$SOUND_EXT', SOUND, library);	
@@ -395,10 +386,6 @@ class Paths
 		#end
 		localTrackedAssets.push(gottenPath);
 		return currentTrackedSounds.get(gottenPath);
-=======
-		trace('oh no its returning null NOOOO');
-		return null;
->>>>>>> f47abff (Update Paths.hx)
 	}
 	
 	#if MODS_ALLOWED
