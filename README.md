@@ -12,7 +12,7 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 
 # Build instructions
 
-2. Download Android studio, Jdk, Ndk revision 15c from these sites
+1. Download Android Studio, JDK, NDK revision 15c from these sites
 
   - jdk - https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
 
@@ -21,22 +21,22 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
   - ndk - https://developer.android.com/ndk/downloads/older_releases?hl=fi
 
 
-3. Install jdk, android studio 
+2. Install jdk, android studio 
   - unzip ndk (ndk does not need to be installed)
 
 
-4. We need to set up android studio for this go to android studio and find android sdk (in settings -> Appearance & Behavior -> system settings -> android sdk)
+3. We need to set up android studio for this go to android studio and find android sdk (in settings -> Appearance & Behavior -> system settings -> android sdk)
 ![andr](https://user-images.githubusercontent.com/59097731/104179652-44346000-541d-11eb-8ad1-1e4dfae304a8.PNG)
 ![andr2](https://user-images.githubusercontent.com/59097731/104179943-a9885100-541d-11eb-8f69-7fb5a4bfdd37.PNG)
 
 
-5. And run command `lime setup android`
+4. And run command `lime setup android`
   - You need to insert the program paths
 
   - As in this picture (use jdk, not jre)
 ![lime](https://user-images.githubusercontent.com/59097731/104179268-9e80f100-541c-11eb-948d-a00d85317b1a.PNG)
 
-6. You Need to install extension-androidtools, extension-videoview and to replace the linc_luajit
+5. You Need to install extension-androidtools, extension-videoview and to replace the linc_luajit
 
 To Install Them You Need To Open Command prompt/PowerShell And To Tipe
 ```cmd
@@ -50,7 +50,7 @@ haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git
 
 ```
 
-7. Open project in command line `cd (path to fnf source)`
+6. Open project in command line `cd (path to fnf source)`
   - And run command `lime build android -final`
   - Apk will be generated in this path (path to source)\export\release\android\bin\app\build\outputs\apk\debug
 
