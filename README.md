@@ -10,13 +10,12 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 
 ...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
 
-# Build instructions
+# Build instructions For Android
 
 1. Download Android Studio, JDK, NDK revision 15c from these sites
 * <a href = "https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html"> JDK </a>
 * <a href = "https://developer.android.com/studio"> Android Studio </a>
 * <a href = "https://developer.android.com/ndk/downloads/older_releases?hl=fi"> NDK </a>
-
 
 2. Install jdk, android studio 
 Unzip ndk (ndk does not need to be installed)
