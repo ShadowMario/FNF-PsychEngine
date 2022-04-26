@@ -142,7 +142,7 @@ class SUtil {
 		SUtil.applicationAlert("Done Action :)", "File Saved Successfully!");
 	}
 
-	static public function saveContent(fileName:String = "file", fileExtension:String = ".json", fileData:String = "you forgot something to add in your code"){
+	static public function saveClipboard(fileName:String = "file", fileExtension:String = ".json", fileData:String = "you forgot something to add in your code"){
 		openfl.system.System.setClipboard(fileData);
 		SUtil.applicationAlert("Done Action :)", "Data Saved to Clipboard Successfully!");
 	}
