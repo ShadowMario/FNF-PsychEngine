@@ -12,19 +12,19 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 
 # Build instructions For Android
 
-1. Download Android Studio, JDK, NDK revision 15c from these sites
+1. Download those Android Studio, JDK and NDK
 * <a href = "https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html"> JDK </a>
 * <a href = "https://developer.android.com/studio"> Android Studio </a>
-* <a href = "https://developer.android.com/ndk/downloads/older_releases?hl=fi"> NDK </a>
+* <a href = "https://developer.android.com/ndk/downloads/older_releases?hl=fi"> NDK </a> - download the r15 
 
-2. Install jdk, android studio 
+2. Install JDK, Android Studio 
 Unzip ndk (ndk does not need to be installed)
 
-3. We need to set up android studio for this go to android studio and find android sdk (in settings -> Appearance & Behavior -> system settings -> android sdk)
+3. We need to set up Android Studio for this go to android studio and find android sdk (in settings -> Appearance & Behavior -> system settings -> android sdk)
 ![andr](https://user-images.githubusercontent.com/59097731/104179652-44346000-541d-11eb-8ad1-1e4dfae304a8.PNG)
 ![andr2](https://user-images.githubusercontent.com/59097731/104179943-a9885100-541d-11eb-8f69-7fb5a4bfdd37.PNG)
 
-4. And run command `lime setup android`
+4. And run command `lime setup android` in power shell / cmd
 You need to insert the program paths
 
 As in this picture (use jdk, not jre)
