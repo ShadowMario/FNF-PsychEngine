@@ -36,6 +36,20 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
   - As in this picture (use jdk, not jre)
 ![lime](https://user-images.githubusercontent.com/59097731/104179268-9e80f100-541c-11eb-948d-a00d85317b1a.PNG)
 
+6. You Need to install extension-androidtools, extension-videoview and to replace the linc_luajit
+
+To Install Them You Need To Open Command prompt/PowerShell And To Tipe
+```cmd
+haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools.git
+
+haxelib git extension-videoview https://github.com/jigsaw-4277821/extension-videoview.git
+
+haxelib remove linc_luajit
+
+haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git
+
+```
+
 7. Open project in command line `cd (path to fnf source)`
   - And run command `lime build android -final`
   - Apk will be generated in this path (path to source)\export\release\android\bin\app\build\outputs\apk\debug
