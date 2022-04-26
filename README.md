@@ -1,4 +1,4 @@
-# Friday Night Funkin' - Psych Engine
+# Friday Night Funkin' - Psych Engine Android Support
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
@@ -13,27 +13,22 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 # Build instructions
 
 1. Download Android Studio, JDK, NDK revision 15c from these sites
-
-  - jdk - https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
-
-  - android studio - https://developer.android.com/studio
-
-  - ndk - https://developer.android.com/ndk/downloads/older_releases?hl=fi
+* <a href = "https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html"> JDK </a>
+* <a href = "https://developer.android.com/studio"> Android Studio </a>
+* <a href = "https://developer.android.com/ndk/downloads/older_releases?hl=fi"> NDK </a>
 
 
 2. Install jdk, android studio 
-  - unzip ndk (ndk does not need to be installed)
-
+Unzip ndk (ndk does not need to be installed)
 
 3. We need to set up android studio for this go to android studio and find android sdk (in settings -> Appearance & Behavior -> system settings -> android sdk)
 ![andr](https://user-images.githubusercontent.com/59097731/104179652-44346000-541d-11eb-8ad1-1e4dfae304a8.PNG)
 ![andr2](https://user-images.githubusercontent.com/59097731/104179943-a9885100-541d-11eb-8f69-7fb5a4bfdd37.PNG)
 
-
 4. And run command `lime setup android`
-  - You need to insert the program paths
+You need to insert the program paths
 
-  - As in this picture (use jdk, not jre)
+As in this picture (use jdk, not jre)
 ![lime](https://user-images.githubusercontent.com/59097731/104179268-9e80f100-541c-11eb-948d-a00d85317b1a.PNG)
 
 5. You Need to install extension-androidtools, extension-videoview and to replace the linc_luajit
@@ -51,9 +46,8 @@ haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git
 ```
 
 6. Open project in command line `cd (path to fnf source)`
-  - And run command `lime build android -final`
-  - Apk will be generated in this path (path to source)\export\release\android\bin\app\build\outputs\apk\debug
-
+And run command `lime build android -final`
+Apk will be generated in this path (path to source)\export\release\android\bin\app\build\outputs\apk\debug
 
 ## Credits:
 * Shadow Mario - Coding
@@ -84,7 +78,6 @@ _____________________________________
 ## Mod Support
 * Probably one of the main points of this engine, you can code in .lua files outside of the source code, making your own weeks without even messing with the source!
 * Comes with a Mod Organizing/Disabling Menu. 
-
 
 ## Atleast one change to every week:
 ### Week 1:
