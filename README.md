@@ -15,7 +15,7 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 1. Download those Android Studio, JDK and NDK
 * <a href = "https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html"> JDK </a>
 * <a href = "https://developer.android.com/studio"> Android Studio </a>
-* <a href = "https://developer.android.com/ndk/downloads/older_releases?hl=fi"> NDK </a> - download the r15 
+* <a href = "https://developer.android.com/ndk/downloads/older_releases?hl=fi"> NDK </a> - download the r15c
 
 2. Install JDK, Android Studio 
 Unzip ndk (ndk does not need to be installed)
