@@ -1,13 +1,8 @@
 package;
 import flixel.*;
-import flixel.FlxSubState;
-import flixel.addons.ui.FlxUIButton;
-import flixel.addons.ui.FlxUIPopup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
-import openfl.display.BitmapData;
 import openfl.geom.Rectangle;
 
 /**
@@ -22,7 +17,6 @@ class Prompt extends MusicBeatSubstate
 	var buttons:FlxSprite = new FlxSprite(473.3, 450);
 	var theText:String = '';
 	var goAnyway:Bool = false;
-	var UI_box:FlxUIPopup;
 	var panel:FlxSprite;
 	var panelbg:FlxSprite;
 	var buttonAccept:FlxButton;

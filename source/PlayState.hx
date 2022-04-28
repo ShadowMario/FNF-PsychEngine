@@ -4,6 +4,9 @@ import flixel.graphics.FlxGraphic;
 #if desktop
 import Discord.DiscordClient;
 #end
+#if VIDEOS_ALLOWED
+import vlc.MP4Handler;
+#end
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -262,6 +265,8 @@ class PlayState extends MusicBeatState
 	public var luaArray:Array<FunkinLua> = [];
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
+
+	public var video:MP4Handler;
 
 	// Debug buttons
 	private var debugKeysChart:Array<FlxKey>;
@@ -1345,15 +1350,16 @@ class PlayState extends MusicBeatState
 
 		if(foundFile) {
 			inCutscene = true;
-			var bg = new FlxSprite(-FlxG.width, -FlxG.height).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
-			bg.scrollFactor.set();
-			bg.cameras = [camHUD];
-			add(bg);
 
-			(new FlxVideo(fileName)).finishCallback = function() {
-				remove(bg);
+			video = new MP4Handler();
+			video.finishCallback = function()
+			{
+				video = null;
+				Paths.clearUnusedMemory();
 				startAndEnd();
 			}
+			video.playVideo(fileName);
+
 			return;
 		}
 		else
