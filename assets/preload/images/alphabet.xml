@@ -262,10 +262,10 @@
 	<SubTexture name="QUESTION MARK bold0001" x="1189" y="1084" width="44" height="73"/>
 	<SubTexture name="QUESTION MARK bold0002" x="1253" y="1084" width="44" height="73"/>
 	<SubTexture name="QUESTION MARK bold0003" x="1253" y="1084" width="44" height="73"/>
-	<SubTexture name="QUESTION MARK bold FLIPPED0000" x="98" y="12" width="44" height="73"/>
-	<SubTexture name="QUESTION MARK bold FLIPPED0001" x="98" y="12" width="44" height="73"/>
-	<SubTexture name="QUESTION MARK bold FLIPPED0002" x="162" y="12" width="44" height="73"/>
-	<SubTexture name="QUESTION MARK bold FLIPPED0003" x="162" y="12" width="44" height="73"/>
+	<SubTexture name="FLIPPED QUESTION MARK bold0000" x="98" y="12" width="44" height="73"/>
+	<SubTexture name="FLIPPED QUESTION MARK bold0001" x="98" y="12" width="44" height="73"/>
+	<SubTexture name="FLIPPED QUESTION MARK bold0002" x="162" y="12" width="44" height="73"/>
+	<SubTexture name="FLIPPED QUESTION MARK bold0003" x="162" y="12" width="44" height="73"/>
 	<SubTexture name="R bold0000" x="1954" y="649" width="47" height="66"/>
 	<SubTexture name="R bold0001" x="1954" y="649" width="47" height="66"/>
 	<SubTexture name="R bold0002" x="12" y="739" width="47" height="66"/>
