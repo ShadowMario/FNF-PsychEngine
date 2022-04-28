@@ -50,11 +50,13 @@ class FunkinLua {
 	#if LUA_ALLOWED
 	public var lua:State = null;
 	#end
-	public var camTarget:FlxCamera;
 	public var scriptName:String = '';
 	var gonnaClose:Bool = false;
 
+	public static var addedSprites:Array<FlxSprite> = [];
+
 	public var accessedProps:Map<String, Dynamic> = null;
+
 	public function new(script:String) {
 		#if LUA_ALLOWED
 		lua = LuaL.newstate();
@@ -402,7 +404,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setObjectOrder", function(obj:String, position:Int) {
 			if(PlayState.instance.modchartSprites.exists(obj)) {
 				var spr:ModchartSprite = PlayState.instance.modchartSprites.get(obj);
-				if(spr.wasAdded) {
+				if(addedSprites.contains(spr)) {
 					getInstance().remove(spr, true);
 				}
 				getInstance().insert(position, spr);
@@ -410,7 +412,7 @@ class FunkinLua {
 			}
 			if(PlayState.instance.modchartTexts.exists(obj)) {
 				var spr:ModchartText = PlayState.instance.modchartTexts.get(obj);
-				if(spr.wasAdded) {
+				if(addedSprites.contains(spr)) {
 					getInstance().remove(spr, true);
 				}
 				getInstance().insert(position, spr);
@@ -1057,7 +1059,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addLuaSprite", function(tag:String, front:Bool = false) {
 			if(PlayState.instance.modchartSprites.exists(tag)) {
 				var shit:ModchartSprite = PlayState.instance.modchartSprites.get(tag);
-				if(!shit.wasAdded) {
+				if(!addedSprites.contains(shit)) {
 					if(front)
 					{
 						getInstance().add(shit);
@@ -1079,7 +1081,7 @@ class FunkinLua {
 							PlayState.instance.insert(position, shit);
 						}
 					}
-					shit.wasAdded = true;
+					addedSprites.push(shit);
 					//trace('added a thing: ' + tag);
 				}
 			}
@@ -1147,9 +1149,9 @@ class FunkinLua {
 				pee.kill();
 			}
 
-			if(pee.wasAdded) {
+			if(addedSprites.contains(pee)) {
 				getInstance().remove(pee, true);
-				pee.wasAdded = false;
+				addedSprites.remove(pee);
 			}
 
 			if(destroy) {
@@ -1423,7 +1425,7 @@ class FunkinLua {
 			if (text5 == null) text5 = '';
 			luaTrace('' + text1 + text2 + text3 + text4 + text5, true, false);
 		});
-		Lua_helper.add_callback(lua, "close", function(printMessage:Bool) {
+		Lua_helper.add_callback(lua, "close", function(printMessage:Bool = true) {
 			if(!gonnaClose) {
 				if(printMessage) {
 					luaTrace('Stopping lua script: ' + scriptName);
@@ -1555,9 +1557,9 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addLuaText", function(tag:String) {
 			if(PlayState.instance.modchartTexts.exists(tag)) {
 				var shit:ModchartText = PlayState.instance.modchartTexts.get(tag);
-				if(!shit.wasAdded) {
+				if(!addedSprites.contains(shit)) {
 					getInstance().add(shit);
-					shit.wasAdded = true;
+					addedSprites.push(shit);
 					//trace('added a thing: ' + tag);
 				}
 			}
@@ -1572,9 +1574,9 @@ class FunkinLua {
 				pee.kill();
 			}
 
-			if(pee.wasAdded) {
+			if(addedSprites.contains(pee)) {
 				getInstance().remove(pee, true);
-				pee.wasAdded = false;
+				addedSprites.remove(pee);
 			}
 
 			if(destroy) {
@@ -1786,7 +1788,7 @@ class FunkinLua {
 		
 		var pee:ModchartText = PlayState.instance.modchartTexts.get(tag);
 		pee.kill();
-		if(pee.wasAdded) {
+		if(addedSprites.contains(pee)) {
 			PlayState.instance.remove(pee, true);
 		}
 		pee.destroy();
@@ -1800,7 +1802,7 @@ class FunkinLua {
 		
 		var pee:ModchartSprite = PlayState.instance.modchartSprites.get(tag);
 		pee.kill();
-		if(pee.wasAdded) {
+		if(addedSprites.contains(pee)) {
 			PlayState.instance.remove(pee, true);
 		}
 		pee.destroy();
@@ -2049,9 +2051,6 @@ class FunkinLua {
 
 class ModchartSprite extends FlxSprite
 {
-	public var wasAdded:Bool = false;
-	//public var isInFront:Bool = false;
-
 	public function new(?x:Float = 0, ?y:Float = 0)
 	{
 		super(x, y);
@@ -2061,7 +2060,6 @@ class ModchartSprite extends FlxSprite
 
 class ModchartText extends FlxText
 {
-	public var wasAdded:Bool = false;
 	public function new(x:Float, y:Float, text:String, width:Float)
 	{
 		super(x, y, width, text, 16);

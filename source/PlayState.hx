@@ -791,7 +791,7 @@ class PlayState extends MusicBeatState
 			}
 			insert(position, blammedLightsBlack);
 
-			blammedLightsBlack.wasAdded = true;
+			FunkinLua.addedSprites.push(blammedLightsBlack);
 			modchartSprites.set('blammedLightsBlack', blammedLightsBlack);
 		}
 		if(curStage == 'philly') insert(members.indexOf(blammedLightsBlack) + 1, phillyCityLightsEvent);
