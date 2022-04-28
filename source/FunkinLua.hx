@@ -1312,7 +1312,7 @@ class FunkinLua {
 				if(tag == null) {
 					PlayState.instance.startVideo(videoFile, repeat);
 				} else if(tag.length > 0) {
-					// sorry im lazy to recode startVideo
+					// Sorry im lazy to recode startVideo from PlayState
 					var foundFile:Bool = false;
 					var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + videoFile + '.' + Paths.VIDEO_EXT); #else ''; #end
 					#if sys
