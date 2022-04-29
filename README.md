@@ -23,7 +23,7 @@ open your directory, select Project.xml, and click "file" > "Open Windows Powers
 
 `mac` any of these methods should send you to a terminal, where you can run commands needed to compile the game.
 ```
-Open Terminal in Launchpad's Utillitie's folder.
+Open Terminal in Launchpad's Utillities folder.
 
 Spotlight Search for Terminal.
 ```
