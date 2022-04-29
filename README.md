@@ -11,7 +11,7 @@ If you just want to play Friday Night Funkin': Psych Engine, just download and p
 MSVC v142 - VS 2019 C++ x64/x86 build tools
 Windows SDK (10.0.17763.0)
 ```
-`other platforms` Do nothing.
+`Other Platforms` Do nothing.
 
 ## Command Prompt/Terminal
 `windows` any of these methods should send you to a terminal, where you can run commands needed to compile the game
@@ -22,8 +22,11 @@ open your directory, select Project.xml, and click "file" > "Open Windows Powers
 ```
 
 `mac` any of these methods should send you to a terminal, where you can run commands needed to compile the game
-```
+<!-- ```
 guess who doesn't have a mac?
+``` Certainly not Prokube -->
+```
+Launchpad or Spotlight Search for Terminal. Terminal's probably in the Utilities folder in Launchpad.
 ```
 
 ## Haxe
