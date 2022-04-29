@@ -54,6 +54,80 @@ class FunkinLua {
 	public var scriptName:String = '';
 	var gonnaClose:Bool = false;
 
+	// secure lua (superpowers04/cyn-8/DragShot)
+	static inline var CLENSE:String = "
+	do
+		local path_bin, path_mod, path_relative, root
+		local source = ${scriptPath}
+		
+		function splice_path(lim)
+			local path = source
+			
+			local idx = 0
+			for i = 1, lim do
+				idx, _ = path:find('/', idx + 1, true)
+			end
+			
+			return path:sub(1, idx)
+		end
+		
+		root = source:match('@?(.*/)')
+		path_relative = root .. '?.lua;' .. root .. '?/init.lua;'
+		
+		root = splice_path(2)
+		path_mod = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
+		
+		root = splice_path(1) .. 'libs/?.lua;'
+		path_script = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
+		
+		package.path = path_relative .. path_mod .. path_script
+	end
+
+	local function replace_require()
+		local require_clone = require
+		local function require_secured(str)
+			local blacklist = {
+				['ffi'] = true,
+				['bit'] = true,
+				['jit'] = true,
+				['io'] = true,
+				['debug'] = true
+			}
+			if not blacklist[str] then
+				return require_clone(str)
+			end
+		end
+
+		return require_secured
+	end
+
+	require = replace_require()
+	replace_require = nil
+	
+	debug = nil
+	io = nil
+	dofile = nil
+	load = nil
+	loadfile = nil
+	os.execute = nil
+	os.rename = nil
+	os.remove = nil
+	os.tmpname = nil
+	os.setlocale = nil
+	os.getenv = nil
+	package.loadlib = nil
+	package.seeall = nil
+	package.preload.ffi = nil
+	package.loaded.debug = nil
+	package.loaded.io = nil
+	package.loaded.os.execute = nil
+	package.loaded.os.rename = nil
+	package.loaded.os.remove = nil
+	package.loaded.os.tmpname = nil
+	package.loaded.os.setlocale = nil
+	package.loaded.os.getenv = nil
+    ";
+
 	public var accessedProps:Map<String, Dynamic> = null;
 	public function new(script:String) {
 		#if LUA_ALLOWED
@@ -64,7 +138,8 @@ class FunkinLua {
 		//trace('Lua version: ' + Lua.version());
 		//trace("LuaJIT version: " + Lua.versionJIT());
 
-		LuaL.dostring(lua, CLENSE);
+		var initLua = StringTools.replace(CLENSE, "${scriptPath}", "'" + script + "'");
+		LuaL.dostring(lua, initLua);
 		var result:Dynamic = LuaL.dofile(lua, script);
 		var resultStr:String = Lua.tostring(lua, result);
 		if(resultStr != null && result != 0) {
@@ -2036,15 +2111,6 @@ class FunkinLua {
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
-	static inline var CLENSE:String = "
-	os.execute = nil;
-	os.exit = nil;
-	package.loaded.os.execute = nil;
-	package.loaded.os.exit = nil;
-	process = nil;
-	package.loaded.process = nil;
-
-	"; // Fuck this, I can't figure out linc_lua, so I'mma set everything in Lua itself - Super
 }
 
 class ModchartSprite extends FlxSprite
