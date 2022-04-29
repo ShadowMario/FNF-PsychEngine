@@ -14,19 +14,18 @@ Windows SDK (10.0.17763.0)
 `Other Platforms` Do nothing.
 
 ## Command Prompt/Terminal
-`windows` any of these methods should send you to a terminal, where you can run commands needed to compile the game
+`windows` any of these methods should send you to a terminal, where you can run commands needed to compile the game.
 ```
-Ctrl + Shift + p, and set directory
+Ctrl + Shift + p, and set directory.
 
-open your directory, select Project.xml, and click "file" > "Open Windows Powershell"
+open your directory, select Project.xml, and click "file" > "Open Windows Powershell".
 ```
 
-`mac` any of these methods should send you to a terminal, where you can run commands needed to compile the game
-<!-- ```
-guess who doesn't have a mac?
-``` Certainly not Prokube -->
+`mac` any of these methods should send you to a terminal, where you can run commands needed to compile the game.
 ```
-Launchpad or Spotlight Search for Terminal. Terminal's probably in the Utilities folder in Launchpad.
+Open Terminal in Launchpad's Utillitie's folder.
+
+Spotlight Search for Terminal.
 ```
 
 ## Haxe
@@ -74,13 +73,33 @@ haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
 ...Or don't. To play without the luascript API, delete the text on line 47 of Project.xml: `<define name="LUA_ALLOWED" if="desktop" />`
 
 ## Compilation
+Run the correlating commands in the Terminal that match your build target to compile.
+
 Note: If you see any messages relating to deprecated packages, ignore them. They're just warnings that don't affect compiling.
 
 `windows`
-`linux`
-`html5`
-`mac`
+```
+lime test windows
+lime test windows -debug
+```
 
+`linux`
+```
+lime test linux
+lime test linux debug
+```
+
+`html5`
+``` 
+lime test html5
+lime test html5 -debug
+```
+
+`mac`
+```
+lime test mac
+lime test mac -debug
+```
 
 ## Credits:
 * Shadow Mario - Coding
