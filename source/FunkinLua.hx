@@ -82,13 +82,12 @@ class FunkinLua {
 		
 		package.path = path_relative .. path_mod .. path_script
 	end
-
+	
 	local function replace_require()
 		local require_clone = require
 		local function require_secured(str)
 			local blacklist = {
 				['ffi'] = true,
-				['bit'] = true,
 				['jit'] = true,
 				['io'] = true,
 				['debug'] = true
@@ -97,10 +96,10 @@ class FunkinLua {
 				return require_clone(str)
 			end
 		end
-
+		
 		return require_secured
 	end
-
+	
 	require = replace_require()
 	replace_require = nil
 	
@@ -117,16 +116,23 @@ class FunkinLua {
 	os.getenv = nil
 	package.loadlib = nil
 	package.seeall = nil
+	package.cpath = nil
+	package.searchpath = nil
+	package.config = nil
 	package.preload.ffi = nil
+	package.preload['jit.profile'] = nil
+	package.preload['jit.util'] = nil
 	package.loaded.debug = nil
 	package.loaded.io = nil
+	package.loaded.jit = nil
+	package.loaded['jit.opt'] = nil
 	package.loaded.os.execute = nil
 	package.loaded.os.rename = nil
 	package.loaded.os.remove = nil
 	package.loaded.os.tmpname = nil
 	package.loaded.os.setlocale = nil
 	package.loaded.os.getenv = nil
-    ";
+	";
 
 	public var accessedProps:Map<String, Dynamic> = null;
 	public function new(script:String) {
@@ -184,9 +190,6 @@ class FunkinLua {
 		set('weekRaw', PlayState.storyWeek);
 		set('week', WeekData.weeksList[PlayState.storyWeek]);
 		set('seenCutscene', PlayState.seenCutscene);
-		
-		// Block require and os, Should probably have a proper function but this should be good enough for now until someone smarter comes along and recreates a safe version of the OS library
-		set('require', false);
 
 		// Camera poo
 		set('cameraX', 0);
