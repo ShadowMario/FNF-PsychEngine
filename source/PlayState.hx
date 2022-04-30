@@ -3042,6 +3042,14 @@ class PlayState extends MusicBeatState
 						}
 					});
 				}
+			default: // maybe this will prevent crashes from non-existing events
+				var evtName:String = eventName;
+				var val1:Float = Std.parseFloat(value1);
+				var val2:Float = Std.parseFloat(value2);
+				if(Math.isNaN(val1)) val1 = 1;
+				if(Math.isNaN(val2)) val2 = 0;
+
+				trace('Such event does not exist. (Event Name: ' + evtName + ') | (Value 1:' + val1 + ') | (Value 2:' + val2 + ')');
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
