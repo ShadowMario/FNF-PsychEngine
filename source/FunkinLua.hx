@@ -71,13 +71,13 @@ class FunkinLua {
 			return path:sub(1, idx)
 		end
 		
-		root = source:match('@?(.*/)')
+		root = source
 		path_relative = root .. '?.lua;' .. root .. '?/init.lua;'
 		
 		root = splice_path(2)
 		path_mod = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
 		
-		root = splice_path(1) .. 'libs/?.lua;'
+		root = splice_path(1)
 		path_script = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
 		
 		package.path = path_relative .. path_mod .. path_script
