@@ -57,7 +57,7 @@ class FunkinLua {
 	// secure lua (superpowers04/cyn-8/DragShot)
 	static inline var CLENSE:String = "
 	do
-		local path_bin, path_mod, path_relative, root
+		local root, path_relative, path_mod_lib, path_lib
 		local source = ${scriptPath}
 		
 		function splice_path(lim)
@@ -71,16 +71,16 @@ class FunkinLua {
 			return path:sub(1, idx)
 		end
 		
-		root = source
+		root = source:match('.*/')
 		path_relative = root .. '?.lua;' .. root .. '?/init.lua;'
 		
 		root = splice_path(2)
-		path_mod = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
+		path_mod_lib = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
 		
 		root = splice_path(1)
-		path_script = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
+		path_lib = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
 		
-		package.path = path_relative .. path_mod .. path_script
+		package.path = path_relative .. path_mod_lib .. path_lib
 	end
 	
 	local function replace_require()
@@ -116,7 +116,6 @@ class FunkinLua {
 	os.getenv = nil
 	package.loadlib = nil
 	package.seeall = nil
-	package.cpath = nil
 	package.searchpath = nil
 	package.config = nil
 	package.preload.ffi = nil
