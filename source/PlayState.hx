@@ -38,6 +38,9 @@ import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import haxe.Json;
+#if js
+import js.Browser;
+#end
 import lime.utils.Assets;
 import openfl.Lib;
 import openfl.display.BlendMode;
@@ -1358,7 +1361,11 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
+			#if js
+			Browser.alert('Couldnt find video file: ' + fileName);
+			#else
 			FlxG.log.warn('Couldnt find video file: ' + fileName);
+			#end
 			startAndEnd();
 		}
 		#end
@@ -1403,7 +1410,11 @@ class PlayState extends MusicBeatState
 			psychDialogue.cameras = [camHUD];
 			add(psychDialogue);
 		} else {
+			#if js
+			Browser.alert('Your dialogue file is badly formatted!');
+			#else
 			FlxG.log.warn('Your dialogue file is badly formatted!');
+			#end
 			if(endingSong) {
 				endSong();
 			} else {
