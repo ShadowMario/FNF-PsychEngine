@@ -725,10 +725,10 @@ class EditorPlayState extends MusicBeatState
 
 			if (!note.isSustainNote)
 			{
-				popUpScore(note);
 				combo += 1;
 				songHits++;
 				if(combo > 9999) combo = 9999;
+				popUpScore(note);
 			}
 
 			playerStrums.forEach(function(spr:StrumNote)
@@ -896,7 +896,7 @@ class EditorPlayState extends MusicBeatState
 			numScore.velocity.x = FlxG.random.float(-5, 5);
 			numScore.visible = !ClientPrefs.hideHud;
 
-			if (combo >= 10 || combo == 0)
+			//if (combo >= 10 || combo == 0)
 				insert(members.indexOf(strumLineNotes), numScore);
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
