@@ -1034,6 +1034,10 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "objectPlayAnimation", function(obj:String, name:String, forced:Bool = false, ?startFrame:Int = 0) {
 			if(PlayState.instance.modchartSprites.exists(obj)) {
 				PlayState.instance.modchartSprites.get(obj).animation.play(name, forced, startFrame);
+				PlayState.instance.modchartSprites.get(obj).animation.finishCallback = function(name)
+					{
+						PlayState.instance.callOnLuas('onAnimCompleted', [obj, name]);
+					};
 				return;
 			}
 

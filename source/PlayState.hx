@@ -131,6 +131,8 @@ class PlayState extends MusicBeatState
 
 	private var strumLine:FlxSprite;
 
+	public var lane:FlxSprite;
+
 	//Handles the new epic mega sexy cam code that i've done
 	private var camFollow:FlxPoint;
 	private var camFollowPos:FlxObject;
@@ -874,6 +876,16 @@ class PlayState extends MusicBeatState
 		strumLine = new FlxSprite(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
+
+		if (ClientPrefs.laneUnderlay > 0) {		
+			for (i in 0...2) {
+				lane = new FlxSprite(42 + 50 + (FlxG.width/2 * i) - 10, 0).makeGraphic(Std.int(42 + Note.swagWidth * 3 + 90), FlxG.height);
+				lane.color = FlxColor.BLACK;
+				lane.alpha = ClientPrefs.laneUnderlay;
+				add(lane);
+				lane.cameras = [camHUD];
+			}
+		}
 
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
