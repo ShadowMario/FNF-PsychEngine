@@ -2,13 +2,16 @@
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
-You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
-
-Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
-
-To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit ` on a Command prompt/PowerShell
-
-...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
+1) Download Haxe 4.2.5: https://haxe.org/download/
+2) Download Visual Studio 2019: https://docs.microsoft.com/en-us/visualstudio/releases/2019/release-notes
+3) Download git-scm: https://git-scm.com
+4) Install all of them.
+5) Install visual Studio 2019 with
+```
+MSVC v142 - VS 2019 C++ x64/x86 build tools
+Windows SDK (10.0.17763.0)
+```
+6) Finally run Installation.bat
 
 ## Credits:
 * Shadow Mario - Coding
