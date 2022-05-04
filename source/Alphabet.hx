@@ -26,6 +26,7 @@ class Alphabet extends FlxSpriteGroup
 	public var xAdd:Float = 0;
 	public var yAdd:Float = 0;
 	public var isMenuItem:Bool = false;
+	public var isOption:Bool = false;
 	public var textSize:Float = 1.0;
 
 	public var text:String = "";
@@ -357,6 +358,13 @@ class Alphabet extends FlxSpriteGroup
 				x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, lerpVal);
 			}
 		}
+		if (isOption)
+		{
+			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+
+			y = FlxMath.lerp(y, (scaledY * 70) + (FlxG.height * 0.48), 0.30);
+			x = FlxMath.lerp(x, (targetY * 20) + 90, 0.30);
+		}
 
 		super.update(elapsed);
 	}
@@ -372,11 +380,11 @@ class Alphabet extends FlxSpriteGroup
 
 class AlphaCharacter extends FlxSprite
 {
-	public static var alphabet:String = "abcdefghijklmnopqrstuvwxyz";
+	public static var alphabet:String = "abcdefghijklmnopqrstuvwxyzàáãâåèéêëìíîïòóôöùúûüñçþæğş";
 
 	public static var numbers:String = "1234567890";
 
-	public static var symbols:String = "|~#$%()*+-:;<=>@[]^_.,'!?";
+	public static var symbols:String = "|~#$%()[]*+-:;<=>@^_.,'!?¿/\\";
 
 	public var row:Int = 0;
 
@@ -418,12 +426,18 @@ class AlphaCharacter extends FlxSprite
 				animation.addByPrefix(letter, 'APOSTRAPHIE bold', 24);
 			case "?":
 				animation.addByPrefix(letter, 'QUESTION MARK bold', 24);
+			case "¿":
+				animation.addByPrefix(letter, 'FLIPPED QUESTION MARK bold', 24);
 			case "!":
 				animation.addByPrefix(letter, 'EXCLAMATION POINT bold', 24);
 			case "(":
 				animation.addByPrefix(letter, 'bold (', 24);
 			case ")":
 				animation.addByPrefix(letter, 'bold )', 24);
+			case "$":
+				animation.addByPrefix(letter, '$', 24);
+			case '^':
+				animation.addByPrefix(letter, '^ bold', 24);
 			default:
 				animation.addByPrefix(letter, 'bold ' + letter, 24);
 		}
@@ -491,10 +505,14 @@ class AlphaCharacter extends FlxSprite
 				y -= 50;
 			case "?":
 				animation.addByPrefix(letter, 'question mark', 24);
+			case "¿":
+				animation.addByPrefix(letter, 'FLIPPED question mark', 24);
 			case "!":
 				animation.addByPrefix(letter, 'exclamation point', 24);
 			case ",":
 				animation.addByPrefix(letter, 'comma', 24);
+			case '/':
+				animation.addByPrefix(letter, 'forward slash', 24);
 			default:
 				animation.addByPrefix(letter, letter, 24);
 		}
