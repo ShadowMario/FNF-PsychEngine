@@ -34,6 +34,7 @@ class Option
 	// Everything else will use a text
 
 	public var showBoyfriend:Bool = false;
+	public var playScrollSFX:Bool = true; // Should always be enabled unless the option plays its own SFX (ex. Hitsound volume)
 	public var scrollSpeed:Float = 50; //Only works on int/float, defines how fast it scrolls per second while holding left/right
 
 	private var variable:String = null; //Variable from ClientPrefs.hx
