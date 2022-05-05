@@ -100,9 +100,9 @@ class DialogueEditorState extends MusicBeatState
 		add(animText);
 		changeText();
 
-                #if android
-                addVirtualPad(FULL, A_B_C);
-                #end
+		#if android
+		addVirtualPad(FULL, A_B_C);
+		#end
 
 		super.create();
 	}
@@ -529,15 +529,15 @@ class DialogueEditorState extends MusicBeatState
 		var data:String = Json.stringify(dialogueFile, "\t");
 		if (data.length > 0)
 		{
-                        #if android
-                        SUtil.saveContent("dialogue", ".json", data);
-                        #else
+			#if android
+			SUtil.saveContent("dialogue", ".json", data);
+			#else
 			_file = new FileReference();
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data, "dialogue.json");
-                        #end
+			#end
 		}
 	}
 

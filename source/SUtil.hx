@@ -23,9 +23,9 @@ using StringTools;
 
 class SUtil {
 	#if android
-	private static var grantedPermsList:Array<Permissions> = AndroidTools.getGrantedPermissions(); 
+	private static var grantedPermsList:Array<Permissions> = AndroidTools.getGrantedPermissions(); // granted Permissions
 	private static var aDir:String = null; // android dir 
-	private static var sPath:String = AndroidTools.externalStorageDirectory; // storage dir
+	private static var sPath:String = AndroidTools.getExternalStorageDirectory(); // storage dir
 	#end
 
 	static public function getPath():String {

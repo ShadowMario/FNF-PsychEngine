@@ -81,9 +81,9 @@ class MenuCharacterEditorState extends MusicBeatState
 		FlxG.mouse.visible = true;
 		updateCharTypeBox();
 
-                #if android
-                addVirtualPad(FULL, A_B);
-                #end
+		#if android
+		addVirtualPad(FULL, A_B);
+		#end
 
 		super.create();
 	}
@@ -419,15 +419,15 @@ class MenuCharacterEditorState extends MusicBeatState
 			var splittedImage:Array<String> = imageInputText.text.trim().split('_');
 			var characterName:String = splittedImage[splittedImage.length-1].toLowerCase().replace(' ', '');
 
-                        #if android
-                        SUtil.saveContent(characterName, ".json", data);
-                        #else
+			#if android
+			SUtil.saveContent(characterName, ".json", data);
+			#else
 			_file = new FileReference();
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data, characterName + ".json");
-                        #end
+			#end
 		}
 	}
 
