@@ -575,16 +575,14 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
+					createCoolText(['mod shit XD'], 15);
 					#else
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
 				// credTextShit.visible = true;
 				case 3:
 					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15);
-					addMoreText('RiverOaken', 15);
-					addMoreText('shubs', 15);
+					addMoreText('NimuUwU', 15);
+					addMoreText('Jefferson13', 15);
 					#else
 					addMoreText('present');
 					#end
@@ -593,44 +591,37 @@ class TitleState extends MusicBeatState
 				case 4:
 					deleteCoolText();
 				// credTextShit.visible = false;
-				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
 				case 5:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Not associated', 'with'], -40);
-					#else
-					createCoolText(['In association', 'with'], -40);
 					#end
 				case 7:
-					addMoreText('newgrounds', -40);
-					ngSpr.visible = true;
-				// credTextShit.text += '\nNewgrounds';
 				case 8:
 					deleteCoolText();
 					ngSpr.visible = false;
 				// credTextShit.visible = false;
 
-				// credTextShit.text = 'Shoutouts Tom Fulp';
+				// credTextShit.text = 'is game is trash';
 				// credTextShit.screenCenter();
 				case 9:
 					createCoolText([curWacky[0]]);
 				// credTextShit.visible = true;
 				case 11:
 					addMoreText(curWacky[1]);
-				// credTextShit.text += '\nlmao';
+				// credTextShit.text += '\nSrPelo is cool';
 				case 12:
 					deleteCoolText();
 				// credTextShit.visible = false;
-				// credTextShit.text = "Friday";
+				// credTextShit.text = "Vs";
 				// credTextShit.screenCenter();
 				case 13:
-					addMoreText('Friday');
+					addMoreText('Vs');
 				// credTextShit.visible = true;
 				case 14:
-					addMoreText('Night');
-				// credTextShit.text += '\nNight';
+					addMoreText('Jefferson13n');
+				// credTextShit.text += '\nJefferson13n';
 				case 15:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+					addMoreText('lol'); // credTextShit.text += '\nFunkin';
 
 				case 16:
 					skipIntro();
