@@ -57,80 +57,47 @@ class FunkinLua {
 	// secure lua (superpowers04/cyn-8/DragShot)
 	static inline var CLENSE:String = "
 	do
-		local root, path_relative, path_mod_lib, path_lib
-		local source = ${scriptPath}
-		
-		function splice_path(lim)
-			local path = source
-			
-			local idx = 0
-			for i = 1, lim do
-				idx, _ = path:find('/', idx + 1, true)
-			end
-			
-			return path:sub(1, idx)
+		local root, path_relative, path_lib, path_mod_lib;
+		local source = '${scriptPath}';
+		function splice_path(limit)
+			local path, last = source, 0;
+			for i = 1, limit do last, _ = path:find('/', last + 1, true); end
+			return path:sub(1, last);
 		end
-		
-		root = source:match('.*/')
-		path_relative = root .. '?.lua;' .. root .. '?/init.lua;'
-		
-		root = splice_path(2)
-		path_mod_lib = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
-		
-		root = splice_path(1)
-		path_lib = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;'
-		
-		package.path = path_relative .. path_mod_lib .. path_lib
+		root = source:match('.*/'); path_relative = root .. '?.lua;' .. root .. '?/init.lua;';
+		root = splice_path(1); path_lib = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;';
+		root = splice_path(2); path_mod_lib = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;';
+		package.path = path_relative .. path_lib .. path_mod_lib;
 	end
-	
 	local function replace_require()
-		local require_clone = require
+		local require_clone = require;
 		local function require_secured(str)
-			local blacklist = {
-				['ffi'] = true,
-				['jit'] = true,
-				['io'] = true,
-				['debug'] = true
-			}
-			if not blacklist[str] then
-				return require_clone(str)
-			end
+			local blacklist = {ffi = true, jit = true, io = true, debug = true};
+			if not blacklist[str] then return require_clone(str); end
 		end
-		
-		return require_secured
+		return require_secured;
 	end
-	
-	require = replace_require()
-	replace_require = nil
-	
-	debug = nil
-	io = nil
-	dofile = nil
-	load = nil
-	loadfile = nil
-	os.execute = nil
-	os.rename = nil
-	os.remove = nil
-	os.tmpname = nil
-	os.setlocale = nil
-	os.getenv = nil
-	package.loadlib = nil
-	package.seeall = nil
-	package.searchpath = nil
-	package.config = nil
-	package.preload.ffi = nil
-	package.preload['jit.profile'] = nil
-	package.preload['jit.util'] = nil
-	package.loaded.debug = nil
-	package.loaded.io = nil
-	package.loaded.jit = nil
-	package.loaded['jit.opt'] = nil
-	package.loaded.os.execute = nil
-	package.loaded.os.rename = nil
-	package.loaded.os.remove = nil
-	package.loaded.os.tmpname = nil
-	package.loaded.os.setlocale = nil
-	package.loaded.os.getenv = nil
+	require = replace_require(); replace_require = nil;
+	dofile = nil;
+	load = nil;
+	loadfile = nil;
+	debug, package.loaded.debug = nil, nil;
+	io, package.loaded.io = nil, nil;
+	os.execute, package.loaded.os.execute = nil, nil;
+	os.rename, package.loaded.os.rename = nil, nil;
+	os.remove, package.loaded.os.remove = nil, nil;
+	os.tmpname, package.loaded.os.tmpname = nil, nil;
+	os.setlocale, package.loaded.os.setlocale = nil, nil;
+	os.getenv, package.loaded.os.getenv = nil, nil;
+	package.loadlib = nil;
+	package.seeall = nil;
+	package.searchpath = nil;
+	package.config = nil;
+	package.preload.ffi = nil;
+	package.loaded.jit = nil;
+	package.loaded['jit.opt'] = nil;
+	package.preload['jit.util'] = nil;
+	package.preload['jit.profile'] = nil;
 	";
 
 	public var accessedProps:Map<String, Dynamic> = null;
@@ -143,8 +110,7 @@ class FunkinLua {
 		//trace('Lua version: ' + Lua.version());
 		//trace("LuaJIT version: " + Lua.versionJIT());
 
-		var initLua = StringTools.replace(CLENSE, "${scriptPath}", "'" + script + "'");
-		LuaL.dostring(lua, initLua);
+		LuaL.dostring(lua, StringTools.replace(CLENSE, "${scriptPath}", script));
 		var result:Dynamic = LuaL.dofile(lua, script);
 		var resultStr:String = Lua.tostring(lua, result);
 		if(resultStr != null && result != 0) {
