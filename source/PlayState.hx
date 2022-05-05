@@ -3042,9 +3042,11 @@ class PlayState extends MusicBeatState
 						}
 					});
 				}
-			default: // maybe this will prevent crashes from non-existing events
+			default: // maybe this will prevent crashes from non-existing events -nintendofan44
 				var evtName:String = eventName;
-				trace('Such event does not exist. (Event Name: ' + evtName + ') | (Value 1:' + value1 + ') | (Value 2:' + value2 + ')');
+				var debugString:String = 'Such event does not exist. (Event Name: ' + evtName + ') | (Value 1:' + value1 + ') | (Value 2:' + value2 + ')';
+				FunkinLua.luaTrace(debugString); // forgor abt this
+				trace(debugString);
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
