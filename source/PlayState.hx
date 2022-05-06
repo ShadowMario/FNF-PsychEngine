@@ -5,8 +5,7 @@ import flixel.graphics.FlxGraphic;
 import Discord.DiscordClient;
 #end
 #if VIDEOS_ALLOWED
-import vlc.MP4Handler;
-import vlc.MP4Sprite;
+import vlc.VideoHandler;
 #end
 import Section.SwagSection;
 import Song.SwagSong;
@@ -267,7 +266,7 @@ class PlayState extends MusicBeatState
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
 
-	public var video:MP4Handler;
+	public var video:VideoHandler;
 
 	// Debug buttons
 	private var debugKeysChart:Array<FlxKey>;
@@ -1352,10 +1351,9 @@ class PlayState extends MusicBeatState
 		if(foundFile) {
 			inCutscene = true;
 
-			video = new MP4Handler();
+			video = new VideoHandler();
 			video.finishCallback = function()
 			{
-				video = null;
 				Paths.clearUnusedMemory();
 				startAndEnd();
 			}
