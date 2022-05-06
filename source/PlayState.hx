@@ -1328,27 +1328,12 @@ class PlayState extends MusicBeatState
 	}
 
 	public function startVideo(name:String, ?repeat:Bool = false):Void {
-		#if VIDEOS_ALLOWED
-		var foundFile:Bool = false;
-		var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + name + '.' + Paths.VIDEO_EXT); #else ''; #end
+		var fileName:String = Paths.video(videoFile);
 		#if sys
 		if(FileSystem.exists(fileName)) {
-			foundFile = true;
-		}
+		#else
+		if(OpenFlAssets.exists(fileName)) {
 		#end
-
-		if(!foundFile) {
-			fileName = Paths.video(name);
-			#if sys
-			if(FileSystem.exists(fileName)) {
-			#else
-			if(OpenFlAssets.exists(fileName)) {
-			#end
-				foundFile = true;
-			}
-		}
-
-		if(foundFile) {
 			inCutscene = true;
 
 			video = new VideoHandler();
@@ -1367,7 +1352,6 @@ class PlayState extends MusicBeatState
 			startAndEnd();
 		}
 		#end
-		startAndEnd();
 	}
 
 	function startAndEnd()

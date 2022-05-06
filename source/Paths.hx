@@ -195,6 +195,11 @@ class Paths
 		var file:String = modsVideo(key);
 		if(FileSystem.exists(file)) {
 			return file;
+		} else if(!file.endsWith('.' + VIDEO_EXT)) {
+			file += '.' + VIDEO_EXT;
+			if(FileSystem.exists(file)) {
+				return file;
+			}
 		}
 		#end
 		return 'assets/videos/$key.$VIDEO_EXT';
@@ -397,7 +402,7 @@ class Paths
 	}
 
 	inline static public function modsVideo(key:String) {
-		return modFolders('videos/' + key + '.' + VIDEO_EXT);
+		return modFolders('videos/' + key);
 	}
 
 	inline static public function modsSounds(path:String, key:String) {

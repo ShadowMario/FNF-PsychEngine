@@ -34,7 +34,7 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 #if VIDEOS_ALLOWED
-import vlc.MP4Sprite;
+import vlc.VideoSprite;
 #end
 import Type.ValueType;
 import Controls;
@@ -1313,31 +1313,15 @@ class FunkinLua {
 					PlayState.instance.startVideo(videoFile, repeat);
 				} else if(tag.length > 0) {
 					// Sorry im lazy to recode startVideo from PlayState
-					var foundFile:Bool = false;
-					var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + videoFile + '.' + Paths.VIDEO_EXT); #else ''; #end
+					var fileName:String = Paths.video(videoFile);
 					#if sys
 					if(FileSystem.exists(fileName)) {
-						foundFile = true;
-					}
+					#else
+					if(OpenFlAssets.exists(fileName)) {
 					#end
-
-					if(!foundFile) {
-						fileName = Paths.video(videoFile);
-						#if sys
-						if(FileSystem.exists(fileName)) {
-						#else
-						if(OpenFlAssets.exists(fileName)) {
-						#end
-							foundFile = true;
-						}
-					}
-
-					if(foundFile) {
-						tag = tag.replace('.', '');
-						
-						var junk:MP4Sprite = new MP4Sprite(x, y);
+						var junk:VideoSprite = new VideoSprite(x, y);
 						junk.playVideo(fileName, repeat);
-						PlayState.instance.modchartSprites.set(tag, junk);
+						PlayState.instance.modchartSprites.set(tag.replace('.', ''), junk);
 					}
 				}
 			} else {
@@ -1356,7 +1340,7 @@ class FunkinLua {
 			#if VIDEOS_ALLOWED
 			if(tag != null) {
 				if(PlayState.instance.modchartSprites.exists(tag)) {
-					(cast (PlayState.instance.modchartSprites.get(tag), MP4Sprite)).pause();
+					(cast (PlayState.instance.modchartSprites.get(tag), VideoSprite)).pause();
 				}
 			} else if(PlayState.instance.video != null && !PlayState.instance.video.isDisposed) {
 				PlayState.instance.video.pause();
@@ -1367,7 +1351,7 @@ class FunkinLua {
 			#if VIDEOS_ALLOWED
 			if(tag != null) {
 				if(PlayState.instance.modchartSprites.exists(tag)) {
-					(cast (PlayState.instance.modchartSprites.get(tag), MP4Sprite)).resume();
+					(cast (PlayState.instance.modchartSprites.get(tag), VideoSprite)).resume();
 				}
 			} else if(PlayState.instance.video != null && !PlayState.instance.video.isDisposed) {
 				PlayState.instance.video.resume();
@@ -1378,7 +1362,7 @@ class FunkinLua {
 			#if VIDEOS_ALLOWED
 			if(tag != null) {
 				if(PlayState.instance.modchartSprites.exists(tag)) {
-					var junk:MP4Sprite = cast PlayState.instance.modchartSprites.get(tag);
+					var junk:VideoSprite = cast PlayState.instance.modchartSprites.get(tag);
 					if(junk.finishCallback != null)
 						junk.finishCallback();
 					PlayState.instance.modchartSprites.remove(tag);
