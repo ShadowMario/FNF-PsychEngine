@@ -1337,14 +1337,13 @@ class PlayState extends MusicBeatState
 			inCutscene = true;
 
 			video = new VideoHandler();
+                        video.canSkip = false;
 			video.finishCallback = function()
 			{
 				Paths.clearUnusedMemory();
 				startAndEnd();
 			}
 			video.playVideo(fileName, repeat);
-
-			return;
 		}
 		else
 		{
