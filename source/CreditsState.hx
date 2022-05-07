@@ -81,7 +81,12 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-			['Psych Engine Team'],
+			['Vs Jefferson13n Team'],
+			['NimuUwU',		'Amorultra',		'Code all fnf mod lol',						'https://www.youtube.com/channel/UCabgj1JPsbQJZpBZW8u01nQ/',
+			['Jefferson13n',			'penis',		'The Funky Friend :D',					'https://www.youtube.com/channel/UCs6yoYLcUQmJxTzuvxl23dQ',
+			['THANK YOU'],
+			['CommunityGame Team',		'Cool',		'For show fnf mod all artistl',						'https://www.youtube.com/c/CommunityGame',
+			['Psych Engine Team']
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',							'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',						'https://twitter.com/RiverOaken',		'C30085'],
 			['shubs',				'shubs',			'Additional Programmer of Psych Engine',					'https://twitter.com/yoshubs',			'279ADC'],
