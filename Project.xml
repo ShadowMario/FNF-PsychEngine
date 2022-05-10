@@ -48,7 +48,7 @@
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
 	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
-	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
+	<define name="PSYCH_WATERMARKS"/>
 	<define name="TITLE_SCREEN_EASTER_EGG"
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
