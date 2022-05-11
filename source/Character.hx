@@ -33,7 +33,12 @@ typedef CharacterFile = {
 	var flip_x:Bool;
 	var no_antialiasing:Bool;
 	var healthbar_colors:Array<Int>;
+
+	var multipleI8:Bool; // ONLY check this if you have multiple I8 jsons and images. and if youre using I8.
+	var I8Count:Int; // If you have multiple I8, please specify their count from 0 to whatever. Like: [Image0, Image1, etc.]
 }
+
+// Note from ZackDroid, okay so I DO NOT KNOW how to put the two new json arguments into CharacterEditorState, anyone else please do it instead :(
 
 typedef AnimArray = {
 	var anim:String;
@@ -97,6 +102,7 @@ class Character extends FlxSprite
 			//case 'your character name in case you want to hardcode them instead':
 
 			default:
+				// NOTE TO HARDCODER OF A MOD: this json should be in assets/characters. NOT images/characters. so dont get it confused :)
 				var characterPath:String = 'characters/' + curCharacter + '.json';
 
 				#if MODS_ALLOWED
@@ -125,6 +131,7 @@ class Character extends FlxSprite
 				//sparrow
 				//packer
 				//texture
+				//I8
 				#if MODS_ALLOWED
 				var modTxtToFind:String = Paths.modsTxt(json.image);
 				var txtToFind:String = Paths.getPath('images/' + json.image + '.txt', TEXT);
@@ -155,6 +162,18 @@ class Character extends FlxSprite
 					spriteType = "texture";
 				}
 
+				#if MODS_ALLOWED
+				var modI8ToFind:String = Paths.modFolders('images/' + json.image + '.json');
+				var I8ToFind:String = Paths.getPath('images/' + json.image + '.json', TEXT);
+
+				if (FileSystem.exists(modI8ToFind) || FileSystem.exists(I8ToFind) || Assets.exists(I8ToFind))
+				#else
+				if (Assets.exists(Paths.getPath('images/' + json.image + '.json', TEXT)))
+				#end
+				{
+					spriteType = "I8";
+				}
+
 				switch (spriteType){
 					
 					case "packer":
@@ -165,6 +184,18 @@ class Character extends FlxSprite
 					
 					case "texture":
 						frames = AtlasFrameMaker.construct(json.image);
+					
+					case "I8":
+						if (json.multipleI8) {
+							var fuckk:Array<String> = [];
+
+							for (i in 0...json.I8Count) 
+								fuckk.push(json.image + i);
+
+							frames = Paths.fromI8Array(fuckk);
+						}else{
+							frames = Paths.fromI8(json.image);
+						}
 				}
 				imageFile = json.image;
 

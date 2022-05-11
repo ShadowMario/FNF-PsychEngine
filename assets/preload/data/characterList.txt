@@ -19,3 +19,4 @@ senpai-angry
 spirit
 bf-pixel-opponent
 pico-player
+example-bf

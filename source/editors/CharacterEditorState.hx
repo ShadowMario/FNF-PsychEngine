@@ -504,6 +504,7 @@ class CharacterEditorState extends MusicBeatState
 
 	var flipXCheckBox:FlxUICheckBox;
 	var noAntialiasingCheckBox:FlxUICheckBox;
+	// var I8CheckBox:FlxUICheckBox
 
 	var healthColorStepperR:FlxUINumericStepper;
 	var healthColorStepperG:FlxUINumericStepper;
@@ -609,6 +610,7 @@ class CharacterEditorState extends MusicBeatState
 	var animationIndicesInputText:FlxUIInputText;
 	var animationNameFramerate:FlxUINumericStepper;
 	var animationLoopCheckBox:FlxUICheckBox;
+	// var multipleI8:FlxUICheckBox;
 	function addAnimationsUI() {
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Animations";
@@ -618,6 +620,8 @@ class CharacterEditorState extends MusicBeatState
 		animationIndicesInputText = new FlxUIInputText(animationNameInputText.x, animationNameInputText.y + 40, 250, '', 8);
 		animationNameFramerate = new FlxUINumericStepper(animationInputText.x + 170, animationInputText.y, 1, 24, 0, 240, 0);
 		animationLoopCheckBox = new FlxUICheckBox(animationNameInputText.x + 170, animationNameInputText.y - 1, null, null, "Should it Loop?", 100);
+
+		// multipleI8 = new FlxUICheckBox(animationNameInputText.x + 180, animationNameInputText.y - 10, null, null, "Should it Loop?", 100);
 
 		animationDropDown = new FlxUIDropDownMenuCustom(15, animationInputText.y - 55, FlxUIDropDownMenuCustom.makeStrIdLabelArray([''], true), function(pressed:String) {
 			var selectedAnimation:Int = Std.parseInt(pressed);

@@ -1,5 +1,7 @@
 package;
 
+import haxe.Json;
+import flixel.system.FlxAssets.FlxGraphicAsset;
 import animateatlas.AtlasFrameMaker;
 import flixel.math.FlxPoint;
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
@@ -23,6 +25,17 @@ import openfl.display.BitmapData;
 import flash.media.Sound;
 
 using StringTools;
+
+// JSONI8 Format code by luckydog https://www.youtube.com/channel/UCeHXKGpDKo2eqYKVkqCUdaA
+// Modified and PsychEngine support by ZackDroid https://twitter.com/ZackDroidCoder
+typedef I8frame = {
+	var frame:{ x:Float, y:Float, w:Float, h:Float }
+	var rotated:Bool;
+	var trimmed:Bool;
+	var spriteSourceSize:{ x:Float, y:Float, w:Float, h:Float }
+	var sourceSize:{ w:Float, h:Float }
+	var duration:Float;
+}
 
 class Paths
 {
@@ -236,6 +249,74 @@ class Paths
 		// streamlined the assets process more
 		var returnAsset:FlxGraphic = returnGraphic(key, library);
 		return returnAsset;
+	}
+
+	// Usage: Paths.fromI8("imageIwant", "shared");
+	public static function fromI8(key:String, ?library:String):Null<Dynamic> {
+		var Description:String = null;
+		#if MODS_ALLOWED
+		if (FileSystem.exists(getPath('images/$key.json', TEXT, library)))
+			Description = getPath('images/$key.json', TEXT, library);
+		else if (FileSystem.exists(modFolders('images/$key.json')))
+			Description = modFolders('images/$key.json');
+		#else
+		if (Assets.exists(getPath('images/$key.json', TEXT, library)))
+			Description = getPath('images/$key.json', TEXT, library);
+		#end
+
+		var graphic:FlxGraphic = FlxG.bitmap.add(returnGraphic(key, library));
+		if (graphic == null) {
+			// please.
+			FlxG.stage.window.alert(key + "'s graphic is not found, or is in a bad format. Try to see if you put it in the correct specified directory", 'Error on I8 IMAGE');
+			return null;
+		}
+
+		// No need to parse data again
+		var frames:FlxAtlasFrames = FlxAtlasFrames.findFrame(graphic);
+		if (frames != null)
+			return frames;
+
+		if (Description == null) {
+			// please.
+			FlxG.stage.window.alert(key + "'s jsonI8 file is not found, or is in a bad format. Try to see if you put it in the correct specified directory", 'Error on I8JSON');
+			return null;
+		}
+
+		frames = new FlxAtlasFrames(graphic);
+
+		if (Assets.exists(Description))
+			Description = Assets.getText(Description);
+
+		var json:{ frames:Dynamic, meta:Dynamic } = Json.parse(Description);
+		var framelist = Reflect.fields(json.frames);
+
+		for (framename in framelist)
+		{
+			var frame:I8frame = Reflect.field(json.frames, framename);
+			var rect = FlxRect.get(frame.frame.x, frame.frame.y, frame.frame.w, frame.frame.h);
+			// var duration:Int = frame.duration; // 100 = 10fps???
+
+			frames.addAtlasFrame(rect, FlxPoint.get(rect.width, rect.height), FlxPoint.get(), framename);
+		}
+
+		return frames;
+	}
+
+	// if you have multiple I8 Frames
+	// Usage: Paths.fromI8Array([ImageIwant, ImageIwant1, ImageIwant2], "shared");
+	public static function fromI8Array(array:Array<String>, ?library:String):FlxAtlasFrames {
+		var i8frames:Array<FlxAtlasFrames> = [];
+		for (i8 in 0...array.length)
+			i8frames.push(fromI8(array[i8], library));
+
+		var parent = i8frames[0];
+		i8frames.shift();
+
+		for (frames in i8frames)
+			for (frame in frames.frames)
+				parent.pushFrame(frame);
+
+		return parent;
 	}
 	
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
