@@ -975,6 +975,16 @@ class FunkinLua {
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 		});
+		
+		// Lua_helper.add_callback(lua, "makeJsonI8LuaSprite", function(tag:String, image:String, x:Float, y:Float, ?spriteType:String = "sparrow") {
+		// 	tag = tag.replace('.', '');
+		// 	resetSpriteTag(tag);
+		// 	var leSprite:ModchartSprite = new ModchartSprite(x, y);
+			
+		// 	loadFrames(leSprite, image, spriteType);
+		// 	leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+		// 	PlayState.instance.modchartSprites.set(tag, leSprite);
+		// });
 
 		Lua_helper.add_callback(lua, "makeGraphic", function(obj:String, width:Int, height:Int, color:String) {
 			var colorNum:Int = Std.parseInt(color);
@@ -1761,6 +1771,9 @@ class FunkinLua {
 				
 			case "packer" | "packeratlas" | "pac":
 				spr.frames = Paths.getPackerAtlas(image);
+			
+			case "i8" | "jsoni8" | "json": 
+				spr.frames = Paths.fromI8(image);
 			
 			default:
 				spr.frames = Paths.getSparrowAtlas(image);
