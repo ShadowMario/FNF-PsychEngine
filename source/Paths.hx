@@ -272,7 +272,7 @@ class Paths
 		}
 
 		// No need to parse data again
-		var frames:FlxAtlasFrames = FlxAtlasFrames.findFrame(graphic);
+		var frames:FlxAtlasFrames = FlxAtlasFrames.findFrame(graphic); // gets it from the cache right away -lucky
 		if (frames != null)
 			return frames;
 
