@@ -1321,6 +1321,7 @@ class FunkinLua {
 					#end
 						var junk:VideoSprite = new VideoSprite(x, y);
 						junk.playVideo(fileName, repeat);
+						junk.pause();
 						PlayState.instance.modchartSprites.set(tag.replace('.', ''), junk);
 					}
 				}
@@ -1328,7 +1329,6 @@ class FunkinLua {
 				luaTrace('Video file not found: ' + videoFile);
 			}
 			#else
-			if (tag == null) return;
 			if(PlayState.instance.endingSong) {
 				PlayState.instance.endSong();
 			} else {
