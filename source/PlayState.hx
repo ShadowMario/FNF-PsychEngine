@@ -1328,7 +1328,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public function startVideo(name:String, ?repeat:Bool = false):Void {
-		var fileName:String = Paths.video(videoFile);
+		var fileName:String = Paths.video(name);
 		#if sys
 		if(FileSystem.exists(fileName)) {
 		#else
@@ -1337,7 +1337,7 @@ class PlayState extends MusicBeatState
 			inCutscene = true;
 
 			video = new VideoHandler();
-                        video.canSkip = false;
+            video.canSkip = false;
 			video.finishCallback = function()
 			{
 				Paths.clearUnusedMemory();
@@ -1350,7 +1350,6 @@ class PlayState extends MusicBeatState
 			FlxG.log.warn('Couldnt find video file: ' + fileName);
 			startAndEnd();
 		}
-		#end
 	}
 
 	function startAndEnd()
