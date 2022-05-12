@@ -838,6 +838,8 @@ class CharacterEditorState extends MusicBeatState
 			char.frames = AtlasFrameMaker.construct(char.imageFile);
 		} else if(Paths.fileExists('images/' + char.imageFile + '.txt', TEXT)) {
 			char.frames = Paths.getPackerAtlas(char.imageFile);
+		} else if(Paths.fileExists('images/' + char.imageFile + '.json', TEXT)){
+			char.frames = Paths.fromI8(char.imageFile);
 		} else {
 			char.frames = Paths.getSparrowAtlas(char.imageFile);
 		}

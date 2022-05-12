@@ -284,8 +284,13 @@ class Paths
 
 		frames = new FlxAtlasFrames(graphic);
 
+		#if MODS_ALLOWED
+		if (FileSystem.exists(Description))
+			Description = File.getContent(Description);
+		#else
 		if (Assets.exists(Description))
 			Description = Assets.getText(Description);
+		#end
 
 		var json:{ frames:Dynamic, meta:Dynamic } = Json.parse(Description);
 		var framelist = Reflect.fields(json.frames);
