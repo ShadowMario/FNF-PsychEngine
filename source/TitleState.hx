@@ -47,6 +47,7 @@ typedef TitleData =
 	gfx:Float,
 	gfy:Float,
 	backgroundSprite:String,
+	foregroundSprite:String,
 	bpm:Int
 }
 class TitleState extends MusicBeatState
@@ -261,6 +262,11 @@ class TitleState extends MusicBeatState
 		}else{
 			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		}
+			if (titleJSON.foregroundSprite != null && titleJSON.foregroundSprite.length > 0 && titleJSON.foregroundSprite != "none"){
+			bg.loadGraphic(Paths.image(titleJSON.foregroundSprite));
+		}else{
+			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		}
 		
 		// bg.antialiasing = ClientPrefs.globalAntialiasing;
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
@@ -314,6 +320,9 @@ class TitleState extends MusicBeatState
 		
 		add(gfDance);
 		gfDance.shader = swagShader.shader;
+		
+		add(fg);
+		
 		add(logoBl);
 		logoBl.shader = swagShader.shader;
 
