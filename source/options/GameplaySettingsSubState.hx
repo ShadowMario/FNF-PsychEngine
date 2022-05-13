@@ -137,6 +137,26 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		addOption(option);
 
+		#if android
+		var option:Option = new Option('GameOver Vibration',
+			'If unchecked, will make the game to vibrate when you die.',
+			'vibration',
+			'bool',
+			false);
+		addOption(option);
+		option.onChange = onChangeGameOverVibration;
+		#end
+
 		super();
 	}
+
+	#if android
+	function onChangeGameOverVibration()
+	{
+		if(ClientPrefs.vibration)
+		{
+			Hardware.vibrate(500);
+		}
+	}
+	#end
 }
