@@ -51,7 +51,7 @@ _____________________________________
   * BF does "Hey!" during Philly Nice.
   * Blammed has a cool new colors flash during that sick part of the song.
 ### Week 4:
-  * Better hair physics for Mom/Boyfriend (Maybe even slightly better than Week 7's :eyes:).
+  * Better hair physics for Mom/Boyfriend (Maybe even slightly better than Week 7's 👀).
   * Henchmen die during all songs. Yeah 😢.
 ### Week 5:
   * Bottom Boppers and GF does "Hey!" animations during Cocoa and Eggnog.
