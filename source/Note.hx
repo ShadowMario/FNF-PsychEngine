@@ -79,6 +79,7 @@ class Note extends FlxSprite
 	public var noAnimation:Bool = false;
 	public var hitCausesMiss:Bool = false;
 	public var distance:Float = 2000; //plan on doing scroll directions soon -bb
+	public var multSpeed:Float = 1; //you can now change individual note scroll speed using lua :O
 
 	public var hitsoundDisabled:Bool = false;
 
