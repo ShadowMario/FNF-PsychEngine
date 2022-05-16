@@ -17,7 +17,6 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
-import FunkinLua;
 
 using StringTools;
 
@@ -297,41 +296,23 @@ class Character extends FlxSprite
 	 * FOR GF DANCING SHIT
 	 */
 	public function dance()
+	{
+		if (!debugMode && !specialAnim)
 		{
-		if(!debugMode){
-			var callback:Dynamic = PlayState.instance.callOnLuas('cancelCharacterDances', []);
-	//		trace(callback,FunkinLua.Function_Stop,callback == FunkinLua.Function_Stop);
-			if(callback == FunkinLua.Function_Stop){
-				if(!danced){
-					danced = true;
-					playAnim('danceRight');
-					playAnim('idle');
-				}
-				return;
-			}
-			PlayState.instance.callOnLuas('onCharacterDance', [curCharacter,danceIdle,!danced,idleSuffix]);
-			// NOTE FROM 8BIT: for some reason lua callbacks with parameters never return Function_Stop??
-			// i might report it as a bug soon but for now i'll just use this crappy workaround
-
-			if (!specialAnim)
+			if(danceIdle)
 			{
-				if(danceIdle)
-				{
-					danced = !danced;
+				danced = !danced;
 
-
-					if (danced)
-						playAnim('danceRight' + idleSuffix);
-					else
-						playAnim('danceLeft' + idleSuffix);
-				}
+				if (danced)
+					playAnim('danceRight' + idleSuffix);
+				else
+					playAnim('danceLeft' + idleSuffix);
+			}
 			else if(animation.getByName('idle' + idleSuffix) != null) {
 					playAnim('idle' + idleSuffix);
-					
 			}
 		}
 	}
-		}
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
