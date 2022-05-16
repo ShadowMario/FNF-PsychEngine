@@ -128,41 +128,6 @@ function onMoveCamera(focus)
 	end
 end
 
-function onCharacterDance(character,isGfDance,danceDirection,idleSuffix)
-	-- Called when a character plays their idle animation
-	-- seperate from onBeatHit
-
-	-- character: The character name
-	-- isGfDance: if the character uses 'danceLeft' and 'danceRight' anims instead of 'idle'
-	-- danceDirection: whether the character is dancing left or right (true or false)
-	-- NOTE: danceDirection returns always false if isGfDance is false!!
-	-- if isGfDance is true, danceDirection alternates between true and false
-	-- idleSuffix: the current character's idle suffix, such as '-alt'
-
-
-	if character == 'gf' then
-		-- when gf dances
-	end
-    if character == 'bf' then
-		-- when bf dances
-	end
-
-end
-
-function cancelCharacterDances()
-	-- return Function_Stop to prevent ALL characters from dancing
-	-- only called because functions with parameters (such as onCharacterDance) never return Function_Stop for some reason
-    return Function_Continue;
-end
-
-function onIconBop()
-	-- called every beat, when the health icons bop
-	-- return Function_Stop if you want to stop the icons from bopping (and/or override the bop)
-	return Function_Continue;
-	
-	-- NOTE FROM 8BIT: should i change the name of this callback?? feel free to give suggestions ig
-end
-
 
 -- Event notes hooks
 function onEvent(name, value1, value2)
