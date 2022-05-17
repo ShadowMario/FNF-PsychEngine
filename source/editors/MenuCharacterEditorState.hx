@@ -87,7 +87,7 @@ class MenuCharacterEditorState extends MusicBeatState
 
 		#if android
 		addVirtualPad(FULL, A_B);
-		_virtualpad.y = -100;
+		_virtualpad.y = -200;
 		#end
 
 		super.create();
