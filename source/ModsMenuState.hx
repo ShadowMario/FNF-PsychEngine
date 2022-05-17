@@ -23,7 +23,11 @@ import haxe.Json;
 import haxe.format.JsonParser;
 import openfl.display.BitmapData;
 import flash.geom.Rectangle;
+#if android
+import android.flixel.FlxButton;
+#else
 import flixel.ui.FlxButton;
+#end
 import flixel.FlxBasic;
 import sys.io.File;
 /*import haxe.zip.Reader;
@@ -374,7 +378,9 @@ class ModsMenuState extends MusicBeatState
 		updatePosition();
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 
+		#if !android
 		FlxG.mouse.visible = true;
+		#end
 
 		#if android
 		addVirtualPad(UP_DOWN, B);

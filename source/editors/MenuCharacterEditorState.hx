@@ -19,7 +19,11 @@ import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
+#if android
+import android.flixel.FlxButton;
+#else
 import flixel.ui.FlxButton;
+#end
 import MenuCharacter;
 import openfl.net.FileReference;
 import openfl.events.Event;
@@ -83,6 +87,7 @@ class MenuCharacterEditorState extends MusicBeatState
 
 		#if android
 		addVirtualPad(FULL, A_B);
+		_virtualpad.y = -100;
 		#end
 
 		super.create();
