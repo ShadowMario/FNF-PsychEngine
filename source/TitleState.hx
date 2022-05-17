@@ -265,7 +265,6 @@ class TitleState extends MusicBeatState
 			if (titleJSON.foregroundSprite != null && titleJSON.foregroundSprite.length > 0 && titleJSON.foregroundSprite != "none"){
 			bg.loadGraphic(Paths.image(titleJSON.foregroundSprite));
 		}else{
-			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		}
 		
 		// bg.antialiasing = ClientPrefs.globalAntialiasing;
