@@ -86,30 +86,32 @@ class AndroidControls extends FlxSpriteGroup {
 			case HITBOX:
 				initControler(4);
 			case KEYBOARD:// nothing
+				initControler(5);
 		}
 	}
 
 	function initControler(vpadMode:Int) {
 		switch (vpadMode){
 			case 0:
-				vpad = new FlxVirtualPad(RIGHT_FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);	
+				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);	
 				add(vpad);						
 			case 1:
-				vpad = new FlxVirtualPad(FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);
+				vpad = new FlxVirtualPad(FULL, NONE);
 				add(vpad);			
 			case 2:
-				vpad = new FlxVirtualPad(FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);
+				vpad = new FlxVirtualPad(FULL, NONE);
 				vpad = config.loadcustom(vpad);
 				add(vpad);	
 			case 3:
-				vpad = new FlxVirtualPad(DUO, NONE, 0.75, ClientPrefs.globalAntialiasing);
+				vpad = new FlxVirtualPad(DUO, NONE);
 				add(vpad);		
 			case 4:
-				hbox = new FlxHitbox(0.75, ClientPrefs.globalAntialiasing);
+				hbox = new FlxHitbox();
 				add(hbox);		
+			case 5:
+				//nothing
 			default:
-				vpad = new FlxVirtualPad(RIGHT_FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);	
-				add(vpad);					
+				//nothing
 		}
 	}
 
