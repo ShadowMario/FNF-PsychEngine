@@ -23,7 +23,11 @@ import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
+#if android
+import android.flixel.FlxButton;
+#else
 import flixel.ui.FlxButton;
+#end
 import flixel.ui.FlxSpriteButton;
 import openfl.net.FileReference;
 import openfl.events.Event;

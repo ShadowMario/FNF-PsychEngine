@@ -19,7 +19,11 @@ import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
+#if android
+import android.flixel.FlxButton;
+#else
 import flixel.ui.FlxButton;
+#end
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
