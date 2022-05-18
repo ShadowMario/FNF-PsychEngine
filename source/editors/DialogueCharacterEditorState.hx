@@ -162,7 +162,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		updateCharTypeBox();
 
 		#if android
-		addVirtualPad(FULL, A_B_X_Y);
+		addVirtualPad(FULL, A_B_C_X_Y);
 		addPadCamera();
 		_virtualpad.y = -300;
 		#end
@@ -585,6 +585,35 @@ class DialogueCharacterEditorState extends MusicBeatState
 				var animShit:DialogueAnimArray = character.dialogueAnimations.get(curSelectedAnim);
 				var controlArrayLoop:Array<Bool> = [FlxG.keys.justPressed.A #if android || _virtualpad.buttonLeft.justPressed #end, FlxG.keys.justPressed.W #if android || _virtualpad.buttonUp.justPressed #end, FlxG.keys.justPressed.D #if android || _virtualpad.buttonRight.justPressed #end, FlxG.keys.justPressed.S #if android || _virtualpad.buttonDown.justPressed #end];
 				var controlArrayIdle:Array<Bool> = [FlxG.keys.justPressed.LEFT #if android || _virtualpad.buttonLeft.justPressed #end, FlxG.keys.justPressed.UP #if android || _virtualpad.buttonUp.justPressed #end, FlxG.keys.justPressed.RIGHT #if android || _virtualpad.buttonRight.justPressed #end, FlxG.keys.justPressed.DOWN #if android || _virtualpad.buttonDown.justPressed #end];
+
+				#if android
+				if (_virtualpad.buttonC.pressed)
+				{
+					for (i in 0...controlArrayLoop.length) {
+						if(controlArrayLoop[i]) {
+							if(i % 2 == 1) {
+								animShit.loop_offsets[1] += offsetAdd * negaMult[i];
+							} else {
+								animShit.loop_offsets[0] += offsetAdd * negaMult[i];
+							}
+							moved = true;
+						}
+					}
+				}
+				else
+				{
+					for (i in 0...controlArrayIdle.length) {
+						if(controlArrayIdle[i]) {
+							if(i % 2 == 1) {
+								animShit.idle_offsets[1] += offsetAdd * negaMult[i];
+							} else {
+								animShit.idle_offsets[0] += offsetAdd * negaMult[i];
+							}
+							moved = true;
+						}
+					}
+				}
+				#else
 				for (i in 0...controlArrayLoop.length) {
 					if(controlArrayLoop[i]) {
 						if(i % 2 == 1) {
@@ -605,6 +634,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 						moved = true;
 					}
 				}
+				#end
 
 				if(moved) {
 					offsetLoopText.text = 'Loop: ' + animShit.loop_offsets;
