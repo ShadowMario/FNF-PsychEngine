@@ -233,6 +233,7 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.fullscreen != null) {
 			fullscreen = FlxG.save.data.fullscreen;
+			FlxG.fullscreen = fullscreen;
 		}
 		if(FlxG.save.data.hitsoundVolume != null) {
 			hitsoundVolume = FlxG.save.data.hitsoundVolume;
