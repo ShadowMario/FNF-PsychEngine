@@ -1,0 +1,6 @@
+{
+    "animations": ["BF IDLE", "BF DEAD"],
+    "width": 180,
+    "height": 180,
+    "forceAntialiasing": [false, true]
+}
