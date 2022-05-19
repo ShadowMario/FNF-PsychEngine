@@ -83,7 +83,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
-		option.onChange = onChangeFullscreen;
+		option.onChange = function() FlxG.fullscreen = ClientPrefs.fullscreen;;
 		#end
 
 		/*
@@ -120,11 +120,6 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 
 		if(!FlxG.fullscreen)
 			onChangeFullscreen();
-	}
-
-	function onChangeFullscreen()
-	{
-		FlxG.fullscreen = ClientPrefs.fullscreen;
 	}
 
 	function onChangeFramerate()
