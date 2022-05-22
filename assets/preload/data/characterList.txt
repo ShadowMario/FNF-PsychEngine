@@ -20,3 +20,9 @@ spirit
 bf-pixel-opponent
 pico-player
 example-bf
+gf-tankmen
+tankman
+pico-speaker
+bf-holding-gf
+pico-player
+tankman-player
