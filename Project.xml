@@ -78,7 +78,7 @@
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
-		<library name="songs"         preload="false" />
+		<library name="songs"         preload="true" />
 		<library name="shared"        preload="false" />
 		<library name="week2"         preload="false" />
 		<library name="week3"         preload="false" />

@@ -1598,7 +1598,7 @@ class PlayState extends MusicBeatState
 	function tankIntro()
 	{
 		var songName:String = Paths.formatToSongPath(SONG.song);
-		dadGroup.visible = false;
+		dadGroup.alpha = 0.00001;
 		camHUD.visible = false;
 		//inCutscene = true; //this would stop the camera movement, oops
 
@@ -1624,7 +1624,7 @@ class PlayState extends MusicBeatState
 			moveCamera(true);
 			startCountdown();
 
-			dadGroup.visible = true;
+			dadGroup.alpha = 1;
 			camHUD.visible = true;
 
 			var stuff:Array<FlxSprite> = [tankman, gfDance, gfCutscene, picoCutscene, boyfriendCutscene];
@@ -1735,8 +1735,8 @@ class PlayState extends MusicBeatState
 			case 'stress':
 				tankman.x -= 54;
 				tankman.y -= 14;
-				gfGroup.visible = false;
-				boyfriendGroup.visible = false;
+				gfGroup.alpha = 0.00001;
+				boyfriendGroup.alpha = 0.00001;
 				camFollow.set(dad.x + 400, dad.y + 170);
 				FlxTween.tween(FlxG.camera, {zoom: 0.9 * 1.2}, 1, {ease: FlxEase.quadInOut});
 				foregroundSprites.forEach(function(spr:BGSprite)
@@ -1754,12 +1754,12 @@ class PlayState extends MusicBeatState
 				gfCutscene.animation.addByPrefix('dieBitch', 'GF STARTS TO TURN PART 1', 24, false);
 				gfCutscene.animation.addByPrefix('getRektLmao', 'GF STARTS TO TURN PART 2', 24, false);
 				insert(members.indexOf(gfGroup) + 1, gfCutscene);
-				gfCutscene.visible = false;
+				gfCutscene.alpha = 0.00001;
 
 				picoCutscene.frames = AtlasFrameMaker.construct('cutscenes/stressPico');
 				picoCutscene.animation.addByPrefix('anim', 'Pico Badass', 24, false);
 				insert(members.indexOf(gfGroup) + 1, picoCutscene);
-				picoCutscene.visible = false;
+				picoCutscene.alpha = 0.00001;
 
 				boyfriendCutscene.frames = Paths.getSparrowAtlas('characters/BOYFRIEND');
 				boyfriendCutscene.animation.addByPrefix('idle', 'BF idle dance', 24, false);
@@ -1808,7 +1808,7 @@ class PlayState extends MusicBeatState
 					});
 					
 					gfDance.visible = false;
-					gfCutscene.visible = true;
+					gfCutscene.alpha = 1;
 					gfCutscene.animation.play('dieBitch', true);
 					gfCutscene.animation.finishCallback = function(name:String)
 					{
@@ -1820,10 +1820,10 @@ class PlayState extends MusicBeatState
 						else
 						{
 							gfCutscene.visible = false;
-							picoCutscene.visible = true;
+							picoCutscene.alpha = 1;
 							picoCutscene.animation.play('anim', true);
 							
-							boyfriendGroup.visible = true;
+							boyfriendGroup.alpha = 1;
 							boyfriendCutscene.visible = false;
 							boyfriend.playAnim('bfCatch', true);
 							boyfriend.animation.finishCallback = function(name:String)
@@ -1838,7 +1838,7 @@ class PlayState extends MusicBeatState
 							picoCutscene.animation.finishCallback = function(name:String)
 							{
 								picoCutscene.visible = false;
-								gfGroup.visible = true;
+								gfGroup.alpha = 1;
 								picoCutscene.animation.finishCallback = null;
 							};
 							gfCutscene.animation.finishCallback = null;
