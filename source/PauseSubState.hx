@@ -272,9 +272,6 @@ class PauseSubState extends MusicBeatSubstate
 					MusicBeatState.switchState(new editors.ChartingState());
 					PlayState.chartingMode = true;
 				case "Exit to menu":
-					#if android
-					PlayState.instance.androidc.visible = false;
-					#end
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 					if(PlayState.isStoryMode) {
@@ -292,9 +289,6 @@ class PauseSubState extends MusicBeatSubstate
 
 	public static function restartSong(noTrans:Bool = false)
 	{
-		#if android
-		PlayState.instance.androidc.visible = false;
-		#end
 		PlayState.instance.paused = true; // For lua
 		FlxG.sound.music.volume = 0;
 		PlayState.instance.vocals.volume = 0;
