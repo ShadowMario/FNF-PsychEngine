@@ -156,8 +156,11 @@ class ChartingState extends MusicBeatState
 	#if !html5
 	var zoomList:Array<Float> = [
 		0.5,
+		0.75,
 		1,
+		1.5,
 		2,
+		3,
 		4,
 		8,
 		12,
@@ -167,8 +170,11 @@ class ChartingState extends MusicBeatState
 	#else //The grid gets all black when over 1/12 snap
 	var zoomList:Array<Float> = [
 		0.5,
+		0.75,
 		1,
+		1.5,
 		2,
+		3,
 		4,
 		8,
 		12
