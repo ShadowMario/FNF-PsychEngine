@@ -34,8 +34,8 @@ import Discord;
 using StringTools;
 
 class EditorLua {
-	public static var Function_Stop:Dynamic = #if android "Function_Stop" #else 1 #end;
-	public static var Function_Continue:Dynamic = #if android "Function_Continue" #else 0 #end;
+	public static var Function_Stop:Dynamic = #if windows 1 #else "Function_Stop" #end;
+	public static var Function_Continue:Dynamic = #if windows 0 #else "Function_Continue" #end;
 
 	#if LUA_ALLOWED
 	public var lua:State = null;
