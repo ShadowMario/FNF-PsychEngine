@@ -2014,7 +2014,7 @@ class ChartingState extends MusicBeatState
 		gridLayer.add(gridBlackLine);
 
 		for (i in 1...4){
-		var beatsep1:FlxSprite = new FlxSprite(gridBG.x,(GRID_SIZE * (4*curZoom))*i).makeGraphic(Std.int(gridBG.width), 1, 0x44FF0000);
+		var beatsep1:FlxSprite = new FlxSprite(gridBG.x,(GRID_SIZE * (4*zoomList[curZoom]))*i).makeGraphic(Std.int(gridBG.width), 1, 0x44FF0000);
 		if(vortex)gridLayer.add(beatsep1);
 		}
 
