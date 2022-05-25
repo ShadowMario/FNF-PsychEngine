@@ -1,4 +1,4 @@
-# Friday Night Funkin' - Psych Engine Android Support
+# Friday Night Funkin' - Psych Engine With Android Support
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
@@ -13,7 +13,7 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRud
 # Build instructions For Android
 
 1. Download
-* <a href = "https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html"> JDK </a>
+* <a href = "https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html"> JDK </a> - download jdk 8
 * <a href = "https://developer.android.com/studio"> Android Studio </a>
 * <a href = "https://developer.android.com/ndk/downloads/older_releases?hl=fi"> NDK </a> - download the r15c
 
