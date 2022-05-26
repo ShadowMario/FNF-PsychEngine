@@ -1,7 +1,9 @@
 package;
 
+#if desktop
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
+#end
 
 #if LUA_ALLOWED
 import llua.Lua;
@@ -12,6 +14,7 @@ using StringTools;
 
 class DiscordClient
 {
+	#if desktop
 	public static var isInitialized:Bool = false;
 	public function new()
 	{
@@ -98,5 +101,6 @@ class DiscordClient
 			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
 		});
 	}
+	#end
 	#end
 }
