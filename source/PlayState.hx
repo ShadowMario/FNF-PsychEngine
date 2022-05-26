@@ -58,7 +58,7 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
-#if sys
+#if MODS_ALLOWED
 import sys.FileSystem;
 #end
 
@@ -1421,23 +1421,13 @@ class PlayState extends MusicBeatState
 	public function startVideo(name:String):Void {
 		#if VIDEOS_ALLOWED
 		var foundFile:Bool = false;
-		var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + name + '.' + Paths.VIDEO_EXT); #else ''; #end
-		#if sys
-		if(FileSystem.exists(fileName)) {
-			foundFile = true;
-		}
-		#end
+		var fileName:String = Paths.video(name);
 
-		if(!foundFile) {
-			fileName = Paths.video(name);
-			#if sys
-			if(FileSystem.exists(fileName)) {
-			#else
-			if(OpenFlAssets.exists(fileName)) {
-			#end
-				foundFile = true;
-			}
-		}
+		#if MODS_ALLOWED
+		if(FileSystem.exists(fileName)) foundFile = true;
+		#else
+		if(OpenFlAssets.exists(fileName)) foundFile = true;
+		#end
 
 		if(foundFile) {
 			inCutscene = true;
@@ -1451,9 +1441,7 @@ class PlayState extends MusicBeatState
 				startAndEnd();
 			}
 			return;
-		}
-		else
-		{
+		} else {
 			FlxG.log.warn('Couldnt find video file: ' + fileName);
 			startAndEnd();
 		}
@@ -1500,11 +1488,7 @@ class PlayState extends MusicBeatState
 			add(psychDialogue);
 		} else {
 			FlxG.log.warn('Your dialogue file is badly formatted!');
-			if(endingSong) {
-				endSong();
-			} else {
-				startCountdown();
-			}
+			startAndEnd();
 		}
 	}
 
@@ -2206,7 +2190,7 @@ class PlayState extends MusicBeatState
 
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		var file:String = Paths.json(songName + '/events');
-		#if sys
+		#if MODS_ALLOWED
 		if (FileSystem.exists(Paths.modsJson(songName + '/events')) || FileSystem.exists(file)) {
 		#else
 		if (OpenFlAssets.exists(file)) {

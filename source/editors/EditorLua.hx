@@ -19,7 +19,7 @@ import flixel.FlxSprite;
 import flixel.FlxCamera;
 import flixel.util.FlxColor;
 import flixel.FlxBasic;
-#if sys
+#if MODS_ALLOWED
 import sys.FileSystem;
 import sys.io.File;
 #end
@@ -180,7 +180,9 @@ class EditorLua {
 			}
 		});
 
+		#if desktop
 		Discord.DiscordClient.addLuaCallbacks(lua);
+		#end
 
 		call('onCreate', []);
 		#end
