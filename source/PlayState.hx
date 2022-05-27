@@ -3192,6 +3192,11 @@ class PlayState extends MusicBeatState
 							{
 								who.color = FlxColor.WHITE;
 							}
+
+							#if android
+							androidc.color = FlxColor.WHITE;
+							#end
+
 							phillyStreet.color = FlxColor.WHITE;
 						}
 
@@ -3222,6 +3227,11 @@ class PlayState extends MusicBeatState
 						{
 							who.color = color;
 						}
+
+						#if android
+						androidc.color = color;
+						#end
+
 						phillyGlowParticles.forEachAlive(function(particle:PhillyGlow.PhillyGlowParticle)
 						{
 							particle.color = color;
