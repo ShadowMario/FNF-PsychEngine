@@ -259,17 +259,24 @@ class FunkinLua {
 			luaTrace("Script doesn't exist!");
 		});
 		
-		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
+		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1, ?skipTransition:Bool = false) {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
 			if (difficultyNum == -1)
 				difficultyNum = PlayState.storyDifficulty;
+			if(skipTransition)
+			{
+				FlxTransitionableState.skipNextTransIn = true;
+				FlxTransitionableState.skipNextTransOut = true;
+			}
 
 			var poop = Highscore.formatSong(name, difficultyNum);
 			PlayState.SONG = Song.loadFromJson(poop, name);
 			PlayState.storyDifficulty = difficultyNum;
 			PlayState.instance.persistentUpdate = false;
 			LoadingState.loadAndSwitchState(new PlayState());
+			if(FlxTransitionableState.skipNextTransIn)
+				CustomFadeTransition.nextCamera = null;
 
 			FlxG.sound.music.pause();
 			FlxG.sound.music.volume = 0;
@@ -789,11 +796,11 @@ class FunkinLua {
 			PlayState.instance.KillNotes();
 			PlayState.instance.endSong();
 		});
-		Lua_helper.add_callback(lua, "restartSong", function(skipTransition:Bool) {
+		Lua_helper.add_callback(lua, "restartSong", function(?skipTransition:Bool = false) {
 			PlayState.instance.persistentUpdate = false;
 			PauseSubState.restartSong(skipTransition);
 		});
-		Lua_helper.add_callback(lua, "exitSong", function(skipTransition:Bool) {
+		Lua_helper.add_callback(lua, "exitSong", function(?skipTransition:Bool = false) {
 			if(skipTransition)
 			{
 				FlxTransitionableState.skipNextTransIn = true;
