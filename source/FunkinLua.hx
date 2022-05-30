@@ -1346,17 +1346,17 @@ class FunkinLua {
 			if(OpenFlAssets.exists(path)) {
 				var shit:DialogueFile = DialogueBoxPsych.parseDialogue(path);
 				if(shit.dialogue.length > 0) {
-					PlayState.instance..startDialogue(shit, music);
+					PlayState.instance.startDialogue(shit, music);
 					luaTrace('Successfully loaded dialogue');
 				} else {
 					luaTrace('Your dialogue file is badly formatted!');
 				}
 			} else {
 				luaTrace('Dialogue file not found');
-				if(PlayState.instance..endingSong) {
-					PlayState.instance..endSong();
+				if(PlayState.instance.endingSong) {
+					PlayState.instance.endSong();
 				} else {
-					PlayState.instance..startCountdown();
+					PlayState.instance.startCountdown();
 				}
 			}
 		});
