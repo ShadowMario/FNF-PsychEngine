@@ -1390,7 +1390,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String):Void {
+	public function startVideo(name:String,?isCutscene:Bool = true):Void {
 		#if VIDEOS_ALLOWED
 		var fileName:String = "assets/videos/" + name;
     
