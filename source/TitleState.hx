@@ -477,6 +477,7 @@ class TitleState extends MusicBeatState
 							var word:String = wordRaw.toUpperCase(); //just for being sure you're doing it right
 							if (easterEggKeysBuffer.contains(word))
 							{
+								FlxG.stage.window.textInputEnabled = false;
 								//trace('YOOO! ' + word);
 								if (FlxG.save.data.psychDevsEasterEgg == word)
 									FlxG.save.data.psychDevsEasterEgg = '';
