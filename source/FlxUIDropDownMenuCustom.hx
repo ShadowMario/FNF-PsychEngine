@@ -57,10 +57,6 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 	private var currentScroll:Int = 0; //Handles the scrolling
 	public var canScroll:Bool = true;
 
-	#if android
-	private var state:MusicBeatState;
-	#end
-
 	private function get_selectedId():String
 	{
 		return _selectedId;
@@ -437,36 +433,6 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 		#if FLX_MOUSE
 		if (dropPanel.visible)
 		{
-			#if android //this isnt using mause (in android) but ok
-			if(list.length > 1 && canScroll && state._virtualpad != null) 
-			{
-				if(FlxG.keys.justPressed.UP || state._virtualpad.buttonUp.justPressed)
-				{
-					// Go up
-					--currentScroll;
-					if(currentScroll < 0) currentScroll = 0;
-					updateButtonPositions();
-				}
-				else if (FlxG.keys.justPressed.DOWN || state._virtualpad.buttonDown.justPressed)
-				{
-					// Go down
-					currentScroll++;
-					if(currentScroll >= list.length) currentScroll = list.length-1;
-					updateButtonPositions();
-				}
-			}
-
-			if (state._virtualpad != null)
-			{
-				for (touch in FlxG.touches.list)
-				{
-					if (touch.justPressed && !touch.overlaps(this) && (!touch.overlaps(state._virtualpad) && (!state._virtualpad.buttonUp.justPressed || !state._virtualpad.buttonDown.justPressed)))
-					{
-						showList(false);
-					}
-				}
-			}
-			#else
 			if(list.length > 1 && canScroll) 
 			{
 				if(FlxG.mouse.wheel > 0 || FlxG.keys.justPressed.UP) 
@@ -489,7 +455,6 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 			{
 				showList(false);
 			}
-			#end
 		}
 		#end
 	}
