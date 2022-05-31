@@ -2800,13 +2800,19 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
-		iconP1.scale.set(mult, mult);
-		iconP1.updateHitbox();
+		if (!iconP1.animated)
+		{
+			var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+			iconP1.scale.set(mult, mult);
+			iconP1.updateHitbox();
+		}
 
-		var mult:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
-		iconP2.scale.set(mult, mult);
-		iconP2.updateHitbox();
+		if (!iconP2.animated)
+		{
+			var mult:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+			iconP2.scale.set(mult, mult);
+			iconP2.updateHitbox();
+		}
 
 		var iconOffset:Int = 26;
 
@@ -2816,15 +2822,42 @@ class PlayState extends MusicBeatState
 		if (health > 2)
 			health = 2;
 
-		if (healthBar.percent < 20)
-			iconP1.animation.curAnim.curFrame = 1;
-		else
-			iconP1.animation.curAnim.curFrame = 0;
+		if (!iconP1.animated)
+		{
+			if (healthBar.percent < 20)
+				iconP1.animation.curAnim.curFrame = 1;
+			else
+				iconP1.animation.curAnim.curFrame = 0;
+		}
 
-		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 1;
+		#if MODS_ALLOWED
 		else
-			iconP2.animation.curAnim.curFrame = 0;
+		{
+			if (healthBar.percent < 20)
+				iconP1.playAnim('dead', true);
+			else
+				iconP1.playAnim('idle', true);
+		}
+		#end
+
+		if (!iconP2.animated)
+		{
+			if (healthBar.percent > 80)
+				iconP2.animation.curAnim.curFrame = 1;
+			else
+				iconP2.animation.curAnim.curFrame = 0;
+		}
+
+		#if MODS_ALLOWED
+		else
+		{
+			if (healthBar.percent > 80)
+				iconP2.playAnim('dead', true);
+			else
+				iconP2.playAnim('idle', true);
+		}
+		#end
+
 
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
 			persistentUpdate = false;
