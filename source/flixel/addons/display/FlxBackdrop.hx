@@ -25,8 +25,9 @@ class FlxBackdrop extends FlxSprite
 	var _ppoint:Point;
 	var _scrollW:Int = 0;
 	var _scrollH:Int = 0;
-	var _repeatX:Bool = false;
-	var _repeatY:Bool = false;
+
+	public var repeatX:Bool = false;
+	public var repeatY:Bool = false;
 
 	var _spaceX:Int = 0;
 	var _spaceY:Int = 0;
@@ -76,8 +77,8 @@ class FlxBackdrop extends FlxSprite
 		scale = new FlxCallbackPoint(scaleCallback);
 		scale.set(1, 1);
 
-		_repeatX = RepeatX;
-		_repeatY = RepeatY;
+		repeatX = RepeatX;
+		repeatY = RepeatY;
 
 		_spaceX = SpaceX;
 		_spaceY = SpaceY;
@@ -157,7 +158,7 @@ class FlxBackdrop extends FlxSprite
 			var ssh:Float = _scrollH * Math.abs(scale.y);
 
 			// Find x position
-			if (_repeatX)
+			if (repeatX)
 			{
 				_ppoint.x = ((x - offset.x - camera.scroll.x * scrollFactor.x) % ssw);
 
@@ -170,7 +171,7 @@ class FlxBackdrop extends FlxSprite
 			}
 
 			// Find y position
-			if (_repeatY)
+			if (repeatY)
 			{
 				_ppoint.y = ((y - offset.y - camera.scroll.y * scrollFactor.y) % ssh);
 
@@ -247,9 +248,9 @@ class FlxBackdrop extends FlxSprite
 
 		var frameBitmap:BitmapData = null;
 
-		if (_repeatX)
+		if (repeatX)
 			w += Std.int(FlxG.width / _camZoom);
-		if (_repeatY)
+		if (repeatY)
 			h += Std.int(FlxG.height / _camZoom);
 
 		if (FlxG.renderBlit)

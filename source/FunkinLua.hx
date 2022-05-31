@@ -1366,10 +1366,10 @@ class FunkinLua {
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 		});
 
-		Lua_helper.add_callback(lua, "makeLuaBackdrop", function(tag:String, image:String, x:Float, y:Float, ?repeatX:Bool = true, ?repeatY:Bool = true) {
+		Lua_helper.add_callback(lua, "makeLuaBackdrop", function(tag:String, image:String, x:Float, y:Float) {
 			tag = tag.replace('.', '');
 			resetBackdropTag(tag);
-			var leSprite:ModchartBackdrop = new ModchartBackdrop(x, y, repeatX, repeatY);
+			var leSprite:ModchartBackdrop = new ModchartBackdrop(x, y);
 			if(image != null && image.length > 0)
 			{
 				leSprite.loadGraphic(Paths.image(image));
