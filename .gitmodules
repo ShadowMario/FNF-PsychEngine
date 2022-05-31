@@ -1,0 +1,3 @@
+[submodule "HaxeVLC"]
+	path = source/vlc
+	url = https://github.com/datee/HaxeVLC
