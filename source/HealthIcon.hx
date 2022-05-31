@@ -158,8 +158,6 @@ class HealthIcon extends FlxSprite
                 path = modPath;
 
             var file:HealthIconFile = cast Json.parse(File.getContent(path));
-            trace(file);
-
             return file;
         }
 

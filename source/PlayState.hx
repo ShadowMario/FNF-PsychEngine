@@ -2800,6 +2800,14 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
+		var scales:Array<Float> = [iconP1.scale.x, iconP2.scale.x];
+
+		for (i in 0...scales.length)
+		{
+			if (scales[i] > 180)
+				scales[i] = 180;
+		}
+
 		if (!iconP1.animated)
 		{
 			var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
