@@ -131,4 +131,9 @@ class CoolUtil
 		FlxG.openURL(site);
 		#end
 	}
+
+	/**
+		Specified by the constant, e. `EULER` is approximately `2.7182818284590452353602874713527`.
+	**/
+	public static var EULER(default, null):Float = 2.7182818284590452353602874713527;
 }
