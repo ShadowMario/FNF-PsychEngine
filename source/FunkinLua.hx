@@ -180,6 +180,8 @@ class FunkinLua {
 		set('healthBarAlpha', ClientPrefs.healthBarAlpha);
 		set('noResetButton', ClientPrefs.noReset);
 		set('lowQuality', ClientPrefs.lowQuality);
+		
+		set('euler', CoolUtil.EULER);
 
 		#if windows
 		set('buildTarget', 'windows');
