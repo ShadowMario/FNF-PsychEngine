@@ -54,7 +54,7 @@ jobs:
       - name: Compile
         run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v3.0.0
         with:
           name: linuxBuild
           path: 'export/release/linux/bin' 
@@ -95,7 +95,7 @@ jobs:
       - name: Compile
         run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v3.0.0
         with:
           name: windowsBuild
           path: export/release/windows/bin
@@ -135,7 +135,74 @@ jobs:
       - name: Compile
         run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v3.0.0
         with:
           name: macBuild
           path: export/release/macos/bin
+  buildAndroid:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.2.4
+          
+      - name: Cache haxelib path
+        uses: actions/cache@v2
+        with:
+          path: |
+            %~/haxelib%
+          key: ${{ runner.os }}-android
+          
+      - name: Setup Android SDK Tools
+        uses: android-actions/setup-android@v2.0.2
+        
+      - name: Setup Java JDK
+        uses: actions/setup-java@v2.3.1
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+        
+      - uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r15c
+
+      # Runs a set of commands using the runners shell
+      - name: Install Haxelib
+        run: |
+          haxelib setup ~/haxelib
+          haxelib install lime
+          haxelib install openfl
+          haxelib install hxcpp > /dev/null
+          haxelib --never install flixel
+          haxelib run lime setup flixel
+          haxelib run lime setup
+          haxelib run lime config ANDROID_SDK $ANDROID_SDK_ROOT
+          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_ROOT
+          haxelib run lime config JAVA_HOME $JAVA_HOME
+          haxelib run lime config ANDROID_SETUP true
+          haxelib install flixel-tools
+          haxelib install flixel-ui 
+          haxelib install flixel-addons
+          haxelib install hscript
+          haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit
+          haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools  
+          haxelib git extension-videoview https://github.com/jigsaw-4277821/extension-videoview
+          haxelib list
+          
+      - name: Create Version Tag
+        run: echo "${{github.run_id}}" > VERSION
+      - name: Compile
+        run: |
+          haxelib run lime setup android
+          haxelib run lime build android --app-version="4.0.0-${{ github.run_id}}"
+          
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: androidBuild
+          path: export/release/android/bin/app/build/outputs/apk/debug

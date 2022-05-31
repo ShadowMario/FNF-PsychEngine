@@ -41,11 +41,15 @@ import DialogueBoxPsych;
 import Discord;
 #end
 
+#if android
+import android.Hardware;
+#end
+
 using StringTools;
 
 class FunkinLua {
-	public static var Function_Stop:Dynamic = 1;
-	public static var Function_Continue:Dynamic = 0;
+	public static var Function_Stop:Dynamic = #if windows 1 #else "Function_Stop" #end;
+	public static var Function_Continue:Dynamic = #if windows 0 #else "Function_Continue" #end;
 
 	#if LUA_ALLOWED
 	public var lua:State = null;
@@ -68,12 +72,12 @@ class FunkinLua {
 		var result:Dynamic = LuaL.dofile(lua, script);
 		var resultStr:String = Lua.tostring(lua, result);
 		if(resultStr != null && result != 0) {
-			trace('Error on lua script! ' + resultStr);
-			#if windows
+			#if (windows || android)
 			lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
 			#else
 			luaTrace('Error loading lua script: "$script"\n' + resultStr,true,false);
 			#end
+			trace('Error on .LUA script! ' + resultStr);
 			lua = null;
 			return;
 		}
@@ -203,9 +207,8 @@ class FunkinLua {
 			{
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
-			}
-			else {
-				cervix = Paths.getPreloadPath(cervix);
+			} else {
+				cervix = SUtil.getPath() + Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
@@ -243,7 +246,7 @@ class FunkinLua {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			} else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = SUtil.getPath() + Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
@@ -262,10 +265,8 @@ class FunkinLua {
 					for (luaInstance in PlayState.instance.luaArray)
 					{
 						if(luaInstance.scriptName == cervix)
-						{
-							//luaTrace('The script "' + cervix + '" is already running!');
-							
-								PlayState.instance.luaArray.remove(luaInstance); 
+						{				
+							PlayState.instance.luaArray.remove(luaInstance); 
 							return;
 						}
 					}
@@ -616,6 +617,40 @@ class FunkinLua {
 			}
 			return boobs;
 		});
+		Lua_helper.add_callback(lua, "touchJustPressed", function(button:String) {
+			var boobs = false;
+			#if android
+			for (touch in FlxG.touches.list) {
+				if (touch.justPressed) {
+					boobs = true;
+				}
+			}
+			return boobs;
+			#end
+		});
+		Lua_helper.add_callback(lua, "touchPressed", function(button:String) {
+			var boobs = false;
+			#if android
+			for (touch in FlxG.touches.list) {
+				if (touch.pressed) {
+					boobs = true;
+				}
+			}
+			#end
+			return boobs;
+		});
+		Lua_helper.add_callback(lua, "touchReleased", function(button:String) {
+			var boobs = false;
+			#if android
+			for (touch in FlxG.touches.list) {
+				if (touch.justReleased) {
+					boobs = true;
+				}
+			}
+			return boobs;
+			#end
+		});
+
 		Lua_helper.add_callback(lua, "noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
@@ -911,6 +946,24 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "getMouseY", function(camera:String) {
 			var cam:FlxCamera = cameraFromString(camera);
 			return FlxG.mouse.getScreenPosition(cam).y;
+		});
+		Lua_helper.add_callback(lua, "getTouchX", function(camera:String) {
+			#if android
+			var cam:FlxCamera = cameraFromString(camera);
+			for (touch in FlxG.touches.list) {
+				return touch.getScreenPosition(cam).x;
+			}
+			#end
+			return 0;
+		});
+		Lua_helper.add_callback(lua, "getTouchY", function(camera:String) {
+			#if android
+			var cam:FlxCamera = cameraFromString(camera);
+			for (touch in FlxG.touches.list) {
+				return touch.getScreenPosition(cam).y;
+			}
+			#end
+			return 0;
 		});
 
 		Lua_helper.add_callback(lua, "getMidpointX", function(variable:String) {
@@ -1345,7 +1398,7 @@ class FunkinLua {
 			path = Paths.modsJson(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 			if(!FileSystem.exists(path))
 			#end
-				path = Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
+				path = SUtil.getPath() + Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 
 			luaTrace('Trying to load dialogue: ' + path);
 
@@ -1509,6 +1562,11 @@ class FunkinLua {
 			#end
 		});
 
+		Lua_helper.add_callback(lua, "vibration", function(milliseconds:Int) {
+			#if android
+			Hardware.vibrate(milliseconds);
+			#end
+		});
 
 		// LUA TEXTS
 		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
@@ -2134,6 +2192,7 @@ class FunkinLua {
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
+
 	static inline var CLENSE:String = "
 	os.execute = nil;
 	os.exit = nil;
@@ -2141,7 +2200,6 @@ class FunkinLua {
 	package.loaded.os.exit = nil;
 	process = nil;
 	package.loaded.process = nil;
-
 	"; // Fuck this, I can't figure out linc_lua, so I'mma set everything in Lua itself - Super
 }
 

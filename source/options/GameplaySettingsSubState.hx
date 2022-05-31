@@ -24,6 +24,9 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+#if android
+import android.Hardware;
+#end
 
 using StringTools;
 
@@ -38,7 +41,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'Check this if you want to play with\na controller instead of using your Keyboard.',
 			'controllerMode',
 			'bool',
-			false);
+			#if android true #else false #end);
 		addOption(option);
 
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
@@ -145,6 +148,16 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		addOption(option);
 
+		#if android
+		var option:Option = new Option('GameOver Vibration',
+			'If unchecked, will make the game to vibrate when you die.',
+			'vibration',
+			'bool',
+			false);
+		addOption(option);
+		option.onChange = onChangeGameOverVibration;
+		#end
+
 		super();
 	}
 
@@ -152,4 +165,14 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 	{
 		FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
 	}
+
+	#if android
+	function onChangeGameOverVibration()
+	{
+		if(ClientPrefs.vibration)
+		{
+			Hardware.vibrate(500);
+		}
+	}
+	#end
 }
