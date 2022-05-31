@@ -139,3 +139,39 @@ jobs:
         with:
           name: macBuild
           path: export/release/macos/bin
+
+buildHtml5:
+  runs-on: ubuntu-latest
+          
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: krdlab/setup-haxe@master
+      with:
+        haxe-version: 4.2.0
+    # Runs a set of commands using the runners shell
+    - name: Install Haxelib
+      run: |
+        haxelib setup ~/haxelib
+        haxelib install hxcpp > /dev/null
+        haxelib install lime
+        haxelib install openfl
+        haxelib --never install flixel
+        haxelib run lime setup flixel
+        haxelib run lime setup
+        haxelib install flixel-tools
+        haxelib install flixel-ui
+        haxelib install flixel-addons
+        haxelib install tjson
+        haxelib install hxjsonast
+        haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
+        haxelib install hscript
+        haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
+        haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+        haxelib install hxcpp-debug-server
+        haxelib list
+          
+    - uses: actions/upload-artifact@v2
+      with:
+        name: html5Build
+        path: export/release/html5/bin
