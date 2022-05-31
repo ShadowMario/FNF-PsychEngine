@@ -433,6 +433,41 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 		#if FLX_MOUSE
 		if (dropPanel.visible)
 		{
+			#if android
+			if(list.length > 1 && canScroll) 
+			{
+				for (swipe in FlxG.swipes)
+				{
+					var f = swipe.startPosition.x - swipe.endPosition.x;
+					var g = swipe.startPosition.y - swipe.endPosition.y;
+					if (25 <= Math.sqrt(f * f + g * g))
+					{
+						if ((-45 <= swipe.startPosition.angleBetween(swipe.endPosition) && 45 >= swipe.startPosition.angleBetween(swipe.endPosition)))
+						{
+							// Go down
+							currentScroll++;
+							if(currentScroll >= list.length) currentScroll = list.length-1;
+							updateButtonPositions();
+						}
+						else if (-180 <= swipe.startPosition.angleBetween(swipe.endPosition) && -135 >= swipe.startPosition.angleBetween(swipe.endPosition) || (135 <= swipe.startPosition.angleBetween(swipe.endPosition) && 180 >= swipe.startPosition.angleBetween(swipe.endPosition)))
+						{
+							// Go up
+							--currentScroll;
+							if(currentScroll < 0) currentScroll = 0;
+							updateButtonPositions();
+						}
+					}
+				}
+			}
+
+			for (touch in FlxG.touches.list)
+			{
+				if (touch.justPressed && !touch.overlaps(this))
+				{
+					showList(false);
+				}
+			}
+			#else
 			if(list.length > 1 && canScroll) 
 			{
 				if(FlxG.mouse.wheel > 0 || FlxG.keys.justPressed.UP) 
@@ -455,6 +490,7 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 			{
 				showList(false);
 			}
+			#end
 		}
 		#end
 	}
