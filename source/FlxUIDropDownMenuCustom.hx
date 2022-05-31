@@ -433,14 +433,47 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 		#if FLX_MOUSE
 		if (dropPanel.visible)
 		{
-			if(list.length > 1 && canScroll) {
-				if(FlxG.mouse.wheel > 0 || FlxG.keys.justPressed.UP) {
+			#if android //this isnt using mause (in android) but ok
+			if(list.length > 1 && canScroll && _virtualpad != null) 
+			{
+				if(FlxG.keys.justPressed.UP || _virtualpad.buttonUp.justPressed)
+				{
 					// Go up
 					--currentScroll;
 					if(currentScroll < 0) currentScroll = 0;
 					updateButtonPositions();
 				}
-				else if (FlxG.mouse.wheel < 0 || FlxG.keys.justPressed.DOWN) {
+				else if (FlxG.keys.justPressed.DOWN || _virtualpad.buttonDown.justPressed)
+				{
+					// Go down
+					currentScroll++;
+					if(currentScroll >= list.length) currentScroll = list.length-1;
+					updateButtonPositions();
+				}
+			}
+
+			if (_virtualpad != null)
+			{
+				for (touch in FlxG.touches.list)
+				{
+					if (touch.justPressed && !touch.overlaps(this) && (!touch.overlaps(_virtualpad) && (!_virtualpad.buttonUp.justPressed || !_virtualpad.buttonDown.justPressed)))
+					{
+						showList(false);
+					}
+				}
+			}
+			#else
+			if(list.length > 1 && canScroll) 
+			{
+				if(FlxG.mouse.wheel > 0 || FlxG.keys.justPressed.UP) 
+				{
+					// Go up
+					--currentScroll;
+					if(currentScroll < 0) currentScroll = 0;
+					updateButtonPositions();
+				}
+				else if (FlxG.mouse.wheel < 0 || FlxG.keys.justPressed.DOWN) 
+				{
 					// Go down
 					currentScroll++;
 					if(currentScroll >= list.length) currentScroll = list.length-1;
@@ -452,6 +485,7 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 			{
 				showList(false);
 			}
+			#end
 		}
 		#end
 	}
