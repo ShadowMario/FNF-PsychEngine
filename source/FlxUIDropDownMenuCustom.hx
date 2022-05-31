@@ -434,16 +434,16 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 		if (dropPanel.visible)
 		{
 			#if android //this isnt using mause (in android) but ok
-			if(list.length > 1 && canScroll && _virtualpad != null) 
+			if(list.length > 1 && canScroll && MusicBeatState._virtualpad != null) 
 			{
-				if(FlxG.keys.justPressed.UP || _virtualpad.buttonUp.justPressed)
+				if(FlxG.keys.justPressed.UP || MusicBeatState._virtualpad.buttonUp.justPressed)
 				{
 					// Go up
 					--currentScroll;
 					if(currentScroll < 0) currentScroll = 0;
 					updateButtonPositions();
 				}
-				else if (FlxG.keys.justPressed.DOWN || _virtualpad.buttonDown.justPressed)
+				else if (FlxG.keys.justPressed.DOWN || MusicBeatState._virtualpad.buttonDown.justPressed)
 				{
 					// Go down
 					currentScroll++;
@@ -452,11 +452,11 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 				}
 			}
 
-			if (_virtualpad != null)
+			if (MusicBeatState._virtualpad != null)
 			{
 				for (touch in FlxG.touches.list)
 				{
-					if (touch.justPressed && !touch.overlaps(this) && (!touch.overlaps(_virtualpad) && (!_virtualpad.buttonUp.justPressed || !_virtualpad.buttonDown.justPressed)))
+					if (touch.justPressed && !touch.overlaps(this) && (!touch.overlaps(MusicBeatState._virtualpad) && (!MusicBeatState._virtualpad.buttonUp.justPressed || !MusicBeatState._virtualpad.buttonDown.justPressed)))
 					{
 						showList(false);
 					}
