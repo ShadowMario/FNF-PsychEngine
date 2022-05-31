@@ -1,3 +1,4 @@
+When Compiling For Linux:
 In file included from ./src/vlc/VlcBitmap.cpp:128:
 /home/avereyconley/haxelib/git/source/vlc/cpp/src/LibVLC.cpp: In destructor ‘LibVLC::~LibVLC()’:
 /home/avereyconley/haxelib/git/source/vlc/cpp/src/LibVLC.cpp:59:2: warning: possible problem detected in invocation of ‘operator delete’ [-Wdelete-incomplete]
