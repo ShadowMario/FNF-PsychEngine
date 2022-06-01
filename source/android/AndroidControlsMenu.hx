@@ -7,9 +7,9 @@ import flixel.input.touch.FlxTouch;
 import flixel.text.FlxText;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import android.FlxHitbox;
 import android.AndroidControls.Config;
-import android.FlxVirtualPad;
+import android.flixel.FlxHitbox;
+import android.flixel.FlxVirtualPad;
 
 using StringTools;
 
@@ -42,7 +42,7 @@ class AndroidControlsMenu extends MusicBeatState
 		bg.color = FlxColor.fromHSB(FlxG.random.int(0, 359), FlxG.random.float(0, 0.8), FlxG.random.float(0.3, 1));
 		add(bg);
 
-		var titleText:PsychAlphabet = new PsychAlphabet(0, 0, "Android Controls", true, false, 0, 0.6);
+		var titleText:PsychAlphabet = new PsychAlphabet(0, 0, 'Android Controls', true, false, 0, 0.6);
 		titleText.x += 60;
 		titleText.y += 40;
 		titleText.alpha = 0.4;
@@ -60,44 +60,44 @@ class AndroidControlsMenu extends MusicBeatState
 		inputvari.screenCenter(X);
 		add(inputvari);
 
-		var ui_tex = Paths.getSparrowAtlas('androidcontrols/menu/arrows');
+		var ui_tex = Paths.getSparrowAtlas('android/menu/arrows');
 
 		leftArrow = new FlxSprite(inputvari.x - 60, inputvari.y + 50);
 		leftArrow.frames = ui_tex;
-		leftArrow.animation.addByPrefix('idle', "arrow left");
-		leftArrow.animation.addByPrefix('press', "arrow push left");
+		leftArrow.animation.addByPrefix('idle', 'arrow left');
+		leftArrow.animation.addByPrefix('press', 'arrow push left');
 		leftArrow.animation.play('idle');
 		add(leftArrow);
 
 		rightArrow = new FlxSprite(inputvari.x + inputvari.width + 10, leftArrow.y);
 		rightArrow.frames = ui_tex;
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
-		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
+		rightArrow.animation.addByPrefix('press', 'arrow push right', 24, false);
 		rightArrow.animation.play('idle');
 		add(rightArrow);
 
-		upPozition = new FlxText(10, FlxG.height - 104, 0,"Button Up X:" + vpad.buttonUp.x +" Y:" + vpad.buttonUp.y, 16);
-		upPozition.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		upPozition = new FlxText(10, FlxG.height - 104, 0,'Button Up X:' + vpad.buttonUp.x +' Y:' + vpad.buttonUp.y, 16);
+		upPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		upPozition.borderSize = 2.4;
 		add(upPozition);
 
-		downPozition = new FlxText(10, FlxG.height - 84, 0,"Button Down X:" + vpad.buttonDown.x +" Y:" + vpad.buttonDown.y, 16);
-		downPozition.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		downPozition = new FlxText(10, FlxG.height - 84, 0,'Button Down X:' + vpad.buttonDown.x +' Y:' + vpad.buttonDown.y, 16);
+		downPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		downPozition.borderSize = 2.4;
 		add(downPozition);
 
-		leftPozition = new FlxText(10, FlxG.height - 64, 0,"Button Left X:" + vpad.buttonLeft.x +" Y:" + vpad.buttonLeft.y, 16);
-		leftPozition.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		leftPozition = new FlxText(10, FlxG.height - 64, 0,'Button Left X:' + vpad.buttonLeft.x +' Y:' + vpad.buttonLeft.y, 16);
+		leftPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		leftPozition.borderSize = 2.4;
 		add(leftPozition);
 
-		rightPozition = new FlxText(10, FlxG.height - 44, 0,"Button RIght x:" + vpad.buttonRight.x +" Y:" + vpad.buttonRight.y, 16);
-		rightPozition.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		rightPozition = new FlxText(10, FlxG.height - 44, 0,'Button RIght x:' + vpad.buttonRight.x +' Y:' + vpad.buttonRight.y, 16);
+		rightPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		rightPozition.borderSize = 2.4;
 		add(rightPozition);
 
 		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK to Go Back to Options Menu', 16);
-		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2;
 		tipText.scrollFactor.set();
 		add(tipText);
@@ -173,7 +173,7 @@ class AndroidControlsMenu extends MusicBeatState
 					vpad.alpha = 0;
 		}
 
-		if (daChoice != "Hitbox")
+		if (daChoice != 'Hitbox')
 		{
 			hbox.visible = false;
 		}
@@ -182,7 +182,7 @@ class AndroidControlsMenu extends MusicBeatState
 			hbox.visible = true;
 		}
 
-		if (daChoice != "Pad-Custom")
+		if (daChoice != 'Pad-Custom')
 		{
 			upPozition.visible = false;
 			downPozition.visible = false;
@@ -242,10 +242,10 @@ class AndroidControlsMenu extends MusicBeatState
 	}
 
 	function setbuttontexts() {
-		upPozition.text = "Button Up X:" + vpad.buttonUp.x +" Y:" + vpad.buttonUp.y;
-		downPozition.text = "Button Down X:" + vpad.buttonDown.x +" Y:" + vpad.buttonDown.y;
-		leftPozition.text = "Button Left X:" + vpad.buttonLeft.x +" Y:" + vpad.buttonLeft.y;
-		rightPozition.text = "Button RIght x:" + vpad.buttonRight.x +" Y:" + vpad.buttonRight.y;
+		upPozition.text = 'Button Up X:' + vpad.buttonUp.x +' Y:' + vpad.buttonUp.y;
+		downPozition.text = 'Button Down X:' + vpad.buttonDown.x +' Y:' + vpad.buttonDown.y;
+		leftPozition.text = 'Button Left X:' + vpad.buttonLeft.x +' Y:' + vpad.buttonLeft.y;
+		rightPozition.text = 'Button RIght x:' + vpad.buttonRight.x +' Y:' + vpad.buttonRight.y;
 	}
 
 	function save() {

@@ -28,9 +28,9 @@ class PsychAlphabet extends FlxSpriteGroup
 	public var isMenuItem:Bool = false;
 	public var textSize:Float = 1.0;
 
-	public var text:String = "";
+	public var text:String = '';
 
-	var _finalText:String = "";
+	var _finalText:String = '';
 	var yMulti:Float = 1;
 
 	// custom shit
@@ -47,7 +47,7 @@ class PsychAlphabet extends FlxSpriteGroup
 	public var typed:Bool = false;
 
 	public var typingSpeed:Float = 0.05;
-	public function new(x:Float, y:Float, text:String = "", ?bold:Bool = false, typed:Bool = false, ?typingSpeed:Float = 0.05, ?textSize:Float = 1)
+	public function new(x:Float, y:Float, text:String = '', ?bold:Bool = false, typed:Bool = false, ?typingSpeed:Float = 0.05, ?textSize:Float = 1)
 	{
 		super(x, y);
 		forceX = Math.NEGATIVE_INFINITY;
@@ -58,7 +58,7 @@ class PsychAlphabet extends FlxSpriteGroup
 		this.typed = typed;
 		isBold = bold;
 
-		if (text != "")
+		if (text != '')
 		{
 			if (typed)
 			{
@@ -99,7 +99,7 @@ class PsychAlphabet extends FlxSpriteGroup
 			typingSpeed = newTypingSpeed;
 		}
 
-		if (text != "") {
+		if (text != '') {
 			if (typed)
 			{
 				startTypedText(typingSpeed);
@@ -119,11 +119,11 @@ class PsychAlphabet extends FlxSpriteGroup
 		var xPos:Float = 0;
 		for (character in splitWords)
 		{
-			// if (character.fastCodeAt() == " ")
+			// if (character.fastCodeAt() == ' ')
 			// {
 			// }
 
-			var spaceChar:Bool = (character == " " || (isBold && character == "_"));
+			var spaceChar:Bool = (character == ' ' || (isBold && character == '_'));
 			if (spaceChar)
 			{
 				consecutiveSpaces++;
@@ -191,7 +191,7 @@ class PsychAlphabet extends FlxSpriteGroup
 
 	function doSplitWords():Void
 	{
-		splitWords = _finalText.split("");
+		splitWords = _finalText.split('');
 	}
 
 	var loopNum:Int = 0;
@@ -238,7 +238,7 @@ class PsychAlphabet extends FlxSpriteGroup
 	var LONG_TEXT_ADD:Float = -24; //text is over 2 rows long, make it go up a bit
 	public function timerCheck(?tmr:FlxTimer = null) {
 		var autoBreak:Bool = false;
-		if ((loopNum <= splitWords.length - 2 && splitWords[loopNum] == "\\" && splitWords[loopNum+1] == "n") ||
+		if ((loopNum <= splitWords.length - 2 && splitWords[loopNum] == '\\' && splitWords[loopNum+1] == 'n') ||
 			((autoBreak = true) && xPos >= FlxG.width * 0.65 && splitWords[loopNum] == ' ' ))
 		{
 			if(autoBreak) {
@@ -256,7 +256,7 @@ class PsychAlphabet extends FlxSpriteGroup
 		}
 
 		if(loopNum <= splitWords.length && splitWords[loopNum] != null) {
-			var spaceChar:Bool = (splitWords[loopNum] == " " || (isBold && splitWords[loopNum] == "_"));
+			var spaceChar:Bool = (splitWords[loopNum] == ' ' || (isBold && splitWords[loopNum] == '_'));
 			if (spaceChar)
 			{
 				consecutiveSpaces++;
@@ -376,11 +376,11 @@ class PsychAlphabet extends FlxSpriteGroup
 
 class AlphaCharacter extends FlxSprite
 {
-	public static var alphabet:String = "abcdefghijklmnopqrstuvwxyz";
+	public static var alphabet:String = 'abcdefghijklmnopqrstuvwxyz';
 
-	public static var numbers:String = "1234567890";
+	public static var numbers:String = '1234567890';
 
-	public static var symbols:String = "|~#$%()*+-:;<=>@[]^_.,'!?";
+	public static var symbols:String = '|~#$%()*+-:;<=>@[]^_.,'!?';
 
 	public var row:Int = 0;
 
@@ -389,7 +389,7 @@ class AlphaCharacter extends FlxSprite
 	public function new(x:Float, y:Float, textSize:Float)
 	{
 		super(x, y);
-		var tex = Paths.getSparrowAtlas('androidcontrols/menu/alphabet');
+		var tex = Paths.getSparrowAtlas('android/menu/alphabet');
 		frames = tex;
 
 		setGraphicSize(Std.int(width * textSize));
@@ -400,14 +400,14 @@ class AlphaCharacter extends FlxSprite
 
 	public function createBoldLetter(letter:String)
 	{
-		animation.addByPrefix(letter, letter.toUpperCase() + " bold", 24);
+		animation.addByPrefix(letter, letter.toUpperCase() + ' bold', 24);
 		animation.play(letter);
 		updateHitbox();
 	}
 
 	public function createBoldNumber(letter:String):Void
 	{
-		animation.addByPrefix(letter, "bold" + letter, 24);
+		animation.addByPrefix(letter, 'bold' + letter, 24);
 		animation.play(letter);
 		updateHitbox();
 	}
@@ -418,15 +418,15 @@ class AlphaCharacter extends FlxSprite
 		{
 			case '.':
 				animation.addByPrefix(letter, 'PERIOD bold', 24);
-			case "'":
+			case ''':
 				animation.addByPrefix(letter, 'APOSTRAPHIE bold', 24);
-			case "?":
+			case '?':
 				animation.addByPrefix(letter, 'QUESTION MARK bold', 24);
-			case "!":
+			case '!':
 				animation.addByPrefix(letter, 'EXCLAMATION POINT bold', 24);
-			case "(":
+			case '(':
 				animation.addByPrefix(letter, 'bold (', 24);
-			case ")":
+			case ')':
 				animation.addByPrefix(letter, 'bold )', 24);
 			default:
 				animation.addByPrefix(letter, 'bold ' + letter, 24);
@@ -435,7 +435,7 @@ class AlphaCharacter extends FlxSprite
 		updateHitbox();
 		switch (letter)
 		{
-			case "'":
+			case ''':
 				y -= 20 * textSize;
 			case '-':
 				//x -= 35 - (90 * (1.0 - textSize));
@@ -457,13 +457,13 @@ class AlphaCharacter extends FlxSprite
 
 	public function createLetter(letter:String):Void
 	{
-		var letterCase:String = "lowercase";
+		var letterCase:String = 'lowercase';
 		if (letter.toLowerCase() != letter)
 		{
 			letterCase = 'capital';
 		}
 
-		animation.addByPrefix(letter, letter + " " + letterCase, 24);
+		animation.addByPrefix(letter, letter + ' ' + letterCase, 24);
 		animation.play(letter);
 		updateHitbox();
 
@@ -490,14 +490,14 @@ class AlphaCharacter extends FlxSprite
 				animation.addByPrefix(letter, 'hashtag', 24);
 			case '.':
 				animation.addByPrefix(letter, 'period', 24);
-			case "'":
+			case ''':
 				animation.addByPrefix(letter, 'apostraphie', 24);
 				y -= 50;
-			case "?":
+			case '?':
 				animation.addByPrefix(letter, 'question mark', 24);
-			case "!":
+			case '!':
 				animation.addByPrefix(letter, 'exclamation point', 24);
-			case ",":
+			case ',':
 				animation.addByPrefix(letter, 'comma', 24);
 			default:
 				animation.addByPrefix(letter, letter, 24);
@@ -510,7 +510,7 @@ class AlphaCharacter extends FlxSprite
 		y += row * 60;
 		switch (letter)
 		{
-			case "'":
+			case ''':
 				y -= 20;
 			case '-':
 				//x -= 35 - (90 * (1.0 - textSize));

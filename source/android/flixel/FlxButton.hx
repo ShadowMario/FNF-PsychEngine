@@ -49,7 +49,7 @@ class FlxButton extends FlxTypedButton<FlxText>
 		if (Text != null)
 		{
 			label = new FlxText(x + labelOffsets[NORMAL].x, y + labelOffsets[NORMAL].y, 80, Text);
-			label.setFormat(null, 8, 0x333333, "center");
+			label.setFormat(null, 8, 0x333333, 'center');
 			label.alpha = labelAlphas[status];
 			label.drawFrame(true);
 		}
@@ -82,7 +82,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	public var label(default, set):T;
 	public var labelOffsets:Array<FlxPoint> = [FlxPoint.get(), FlxPoint.get(), FlxPoint.get(0, 1)];
 	public var labelAlphas:Array<Float> = [0.8, 1.0, 0.5];
-	public var statusAnimations:Array<String> = ["normal", "highlight", "pressed"];
+	public var statusAnimations:Array<String> = ['normal', 'highlight', 'pressed'];
 	public var allowSwiping:Bool = true;
 	public var maxInputMovement:Float = Math.POSITIVE_INFINITY;
 	public var status(default, set):Int;
@@ -117,7 +117,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 
 		scrollFactor.set();
 
-		statusAnimations[FlxButton.HIGHLIGHT] = "normal";
+		statusAnimations[FlxButton.HIGHLIGHT] = 'normal';
 		labelAlphas[FlxButton.HIGHLIGHT] = 1;
 
 		input = new FlxInput(0);
@@ -127,14 +127,14 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	{
 		super.graphicLoaded();
 
-		setupAnimation("normal", FlxButton.NORMAL);
-		setupAnimation("highlight", FlxButton.HIGHLIGHT);
-		setupAnimation("pressed", FlxButton.PRESSED);
+		setupAnimation('normal', FlxButton.NORMAL);
+		setupAnimation('highlight', FlxButton.HIGHLIGHT);
+		setupAnimation('pressed', FlxButton.PRESSED);
 	}
 
 	function loadDefaultGraphic():Void
 	{
-		loadGraphic("flixel/images/ui/button.png", true, 80, 20);
+		loadGraphic('flixel/images/ui/button.png', true, 80, 20);
 	}
 
 	function setupAnimation(animationName:String, frameIndex:Int):Void

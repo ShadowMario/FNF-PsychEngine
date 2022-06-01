@@ -460,28 +460,25 @@ class TitleState extends MusicBeatState
 				});
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
-			#if TITLE_SCREEN_EASTER_EGG
-			#if android
+			#if TITLE_SCREEN_EASTER_EGG && android
 			else if (FlxG.android.justReleased.BACK)
 			{
 				FlxG.stage.window.textInputEnabled = true;
-				FlxG.stage.window.onTextInput.add(function(letter:String)
-				{
-					if(allowedKeys.contains(letter) && letter != '') {
-						easterEgg(letter);
+				FlxG.stage.window.onTextInput.add(function(letter:String) {
+					if(allowedKeys.contains(letter) {
+						titleScreenEasterEGG(letter);
 					}
 				});
 			}
-			#else
+			#elseif TITLE_SCREEN_EASTER_EGG
 			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
 			{
 				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
 				var keyName:String = Std.string(keyPressed);
 				if(allowedKeys.contains(keyName)) {
-					easterEgg(keyName);
+					titleScreenEasterEGG(keyName);
 				}
 			}
-			#end
 			#end
 		}
 
@@ -499,7 +496,7 @@ class TitleState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function easterEgg(name:String = '')
+	function titleScreenEasterEGG(name:String)
 	{
 		easterEggKeysBuffer += name;
 		if(easterEggKeysBuffer.length >= 32) easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
@@ -528,17 +525,18 @@ class TitleState extends MusicBeatState
 
 				FlxTween.tween(black, {alpha: 1}, 1, {onComplete:
 					function(twn:FlxTween) {
+						remove(black);
 						FlxTransitionableState.skipNextTransIn = true;
 						FlxTransitionableState.skipNextTransOut = true;
 						MusicBeatState.switchState(new TitleState());
 					}
 				});
+	
 				FlxG.sound.music.fadeOut();
 				closedState = true;
 				transitioning = true;
 				playJingle = true;
 				easterEggKeysBuffer = '';
-				name = '';
 				break;
 			}
 		}
