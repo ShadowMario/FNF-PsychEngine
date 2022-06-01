@@ -463,14 +463,6 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 					}
 				}
 			}
-
-			for (touch in FlxG.touches.list)
-			{
-				if (touch.justPressed && !touch.overlaps(this))
-				{
-					showList(false);
-				}
-			}
 			#else
 			if(list.length > 1 && canScroll) 
 			{
