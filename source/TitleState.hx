@@ -515,6 +515,7 @@ class TitleState extends MusicBeatState
 					FlxG.save.data.psychDevsEasterEgg = '';
 				else
 					FlxG.save.data.psychDevsEasterEgg = word;
+				FlxG.save.flush();
 
 				FlxG.sound.play(Paths.sound('ToggleJingle'));
 
