@@ -525,7 +525,6 @@ class TitleState extends MusicBeatState
 
 				FlxTween.tween(black, {alpha: 1}, 1, {onComplete:
 					function(twn:FlxTween) {
-						remove(black);
 						FlxTransitionableState.skipNextTransIn = true;
 						FlxTransitionableState.skipNextTransOut = true;
 						MusicBeatState.switchState(new TitleState());
