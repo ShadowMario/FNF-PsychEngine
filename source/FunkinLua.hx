@@ -182,6 +182,7 @@ class FunkinLua {
 		set('lowQuality', ClientPrefs.lowQuality);
 		
 		set('euler', CoolUtil.EULER);
+		set('gamma', CoolUtil.GAMMA);
 
 		#if windows
 		set('buildTarget', 'windows');
