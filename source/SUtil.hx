@@ -63,7 +63,7 @@ class SUtil {
 			FileSystem.createDirectory(sPath + '/' + '.' + Application.current.meta.get('file'));
 		}
 
-		var dirs:Array<String> = ['crash', 'saves']
+		var dirs:Array<String> = ['crash', 'saves'];
 		if (!FileSystem.exists(SUtil.getPath() + dirs)){
 			FileSystem.createDirectory(SUtil.getPath() + dirs);
 		}

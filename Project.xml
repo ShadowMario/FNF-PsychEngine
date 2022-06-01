@@ -51,7 +51,7 @@
 	<define name="PSYCH_WATERMARKS" /> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<define name="TITLE_SCREEN_EASTER_EGG" /> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build --> <!-- Edit: i forgot the port is unofficial lmao -saw -->
 
-	<assets path="assets/preload/images/androidcontrols" if="android"/> <!-- to not have the android assets in another builds -saw -->
+	<assets path="assets/preload/images/android" if="android"/> <!-- to not have the android assets in another builds -saw -->
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>

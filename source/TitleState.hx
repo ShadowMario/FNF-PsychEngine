@@ -460,12 +460,12 @@ class TitleState extends MusicBeatState
 				});
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
-			#if TITLE_SCREEN_EASTER_EGG && android
+			#if (TITLE_SCREEN_EASTER_EGG && android)
 			else if (FlxG.android.justReleased.BACK)
 			{
 				FlxG.stage.window.textInputEnabled = true;
 				FlxG.stage.window.onTextInput.add(function(letter:String) {
-					if(allowedKeys.contains(letter) {
+					if(allowedKeys.contains(letter)) {
 						titleScreenEasterEGG(letter);
 					}
 				});
