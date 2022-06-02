@@ -63,11 +63,6 @@ class SUtil {
 			FileSystem.createDirectory(sPath + '/' + '.' + Application.current.meta.get('file'));
 		}
 
-		var dirs:Array<String> = ['crash', 'saves'];
-		if (!FileSystem.exists(SUtil.getPath() + dirs)){
-			FileSystem.createDirectory(SUtil.getPath() + dirs);
-		}
-
 		if (!FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.exists(SUtil.getPath() + 'assets')){
 			File.saveContent(SUtil.getPath() + 'Paste the Assets and Mods folders here.txt', 'the file name says all');
 		}
