@@ -755,6 +755,15 @@ class FunkinLua {
 			PlayState.instance.songHits = value;
 			PlayState.instance.RecalculateRating();
 		});
+		Lua_helper.add_callback(lua, "getScore", function() {
+			return PlayState.instance.songScore;
+		});
+		Lua_helper.add_callback(lua, "getMisses", function() {
+			return PlayState.instance.songMisses;
+		});
+		Lua_helper.add_callback(lua, "getHits", function() {
+			return PlayState.instance.songHits;
+		});
 
 		Lua_helper.add_callback(lua, "setHealth", function(value:Float = 0) {
 			PlayState.instance.health = value;
@@ -1855,6 +1864,14 @@ class FunkinLua {
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
 		
+		// Other stuff
+		Lua_helper.add_callback(lua, "stringStartsWith", function(str:String, start:String) {
+			return str.startsWith(start);
+		});
+		Lua_helper.add_callback(lua, "stringEndsWith", function(str:String, end:String) {
+			return str.endsWith(end);
+		});
+
 		call('onCreate', []);
 		#end
 	}
