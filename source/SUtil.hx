@@ -69,14 +69,14 @@ class SUtil {
 
 		if (!FileSystem.exists(SUtil.getPath() + 'assets')){
 			SUtil.applicationAlert('Instructions:', 'You have to copy assets/assets from apk to your internal storage app directory'
-				+ " ( here ' + SUtil.getPath() + ' )"
+				+ " ( here " + SUtil.getPath() + " )"
 				+ " if you hadn't have Zarhiver Downloaded, download it and enable the show hidden files option to have the folder visible"
 				+ '\n' + 'Press Ok To Close The App');
 			System.exit(0);
 		}
 		if (!FileSystem.exists(SUtil.getPath() + 'mods')){
 			SUtil.applicationAlert('Instructions:', 'You have to copy assets/mods from apk to your internal storage app directory'
-				+ " ( here ' + SUtil.getPath() + ' )"
+				+ " ( here " + SUtil.getPath() + " )"
 				+ " if you hadn't have Zarhiver Downloaded, download it and enable the show hidden files option to have the folder visible"
 				+ '\n' + 'Press Ok To Close The App');
 			System.exit(0);
