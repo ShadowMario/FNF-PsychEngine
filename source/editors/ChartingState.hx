@@ -195,7 +195,7 @@ class ChartingState extends MusicBeatState
 	4/8];//eight*/ // DUMB WAY!!
 
 	public static var quantization:Int = 16;
-	public static var curQuant = 0;
+	public static var curQuant = 3;
 
 	public var quantizations:Array<Int> = [
 		4,
@@ -1787,7 +1787,7 @@ class ChartingState extends MusicBeatState
 				}
 
 				if(FlxG.keys.justPressed.LEFT){
-					--curQuant;
+					curQuant--;
 					if(curQuant<0)
 						curQuant = quantizations.length-1;
 
