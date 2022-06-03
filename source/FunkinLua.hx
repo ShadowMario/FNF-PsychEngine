@@ -720,6 +720,15 @@ class FunkinLua {
 			PlayState.instance.songHits = value;
 			PlayState.instance.RecalculateRating();
 		});
+		Lua_helper.add_callback(lua, "getScore", function() {
+			return PlayState.instance.songScore;
+		});
+		Lua_helper.add_callback(lua, "getMisses", function() {
+			return PlayState.instance.songMisses;
+		});
+		Lua_helper.add_callback(lua, "getHits", function() {
+			return PlayState.instance.songHits;
+		});
 
 		Lua_helper.add_callback(lua, "setHealth", function(value:Float = 0) {
 			PlayState.instance.health = value;
@@ -802,12 +811,14 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "endSong", function() {
 			PlayState.instance.KillNotes();
 			PlayState.instance.endSong();
+			return true;
 		});
-		Lua_helper.add_callback(lua, "restartSong", function(skipTransition:Bool) {
+		Lua_helper.add_callback(lua, "restartSong", function(?skipTransition:Bool = false) {
 			PlayState.instance.persistentUpdate = false;
 			PauseSubState.restartSong(skipTransition);
+			return true;
 		});
-		Lua_helper.add_callback(lua, "exitSong", function(skipTransition:Bool) {
+		Lua_helper.add_callback(lua, "exitSong", function(?skipTransition:Bool = false) {
 			if(skipTransition)
 			{
 				FlxTransitionableState.skipNextTransIn = true;
@@ -828,6 +839,7 @@ class FunkinLua {
 			PlayState.changedDifficulty = false;
 			PlayState.chartingMode = false;
 			PlayState.instance.transitioning = true;
+			return true;
 		});
 		Lua_helper.add_callback(lua, "getSongPosition", function() {
 			return Conductor.songPosition;
@@ -1797,6 +1809,14 @@ class FunkinLua {
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
 		
+		// Other stuff
+		Lua_helper.add_callback(lua, "stringStartsWith", function(str:String, start:String) {
+			return str.startsWith(start);
+		});
+		Lua_helper.add_callback(lua, "stringEndsWith", function(str:String, end:String) {
+			return str.endsWith(end);
+		});
+
 		call('onCreate', []);
 		#end
 	}
