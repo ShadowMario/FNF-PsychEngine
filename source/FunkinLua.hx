@@ -217,7 +217,9 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "callOnLuas", function(?funcName:String, ?args:Array<Dynamic>, ignoreStops=false, ignoreSelf=true, ?exclusions:Array<String>){
 			if(funcName==null){
+				#if (linc_luajit > "0.0.6")
 				LuaL.error(lua, "bad argument #1 to 'callOnLuas' (string expected, got nil)");
+				#end
 				return;
 			}
 			if(args==null)args = [];
@@ -233,11 +235,15 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "callScript", function(?luaFile:String, ?funcName:String, ?args:Array<Dynamic>){
 			if(luaFile==null){
+				#if (linc_luajit > "0.0.6")
 				LuaL.error(lua, "bad argument #1 to 'callScript' (string expected, got nil)");
+				#end
 				return;
 			}
 			if(funcName==null){
+				#if (linc_luajit > "0.0.6")
 				LuaL.error(lua, "bad argument #2 to 'callScript' (string expected, got nil)");
+				#end
 				return;
 			}
 			if(args==null){
@@ -287,11 +293,15 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "getGlobalFromScript", function(?luaFile:String, ?global:String){ // returns the global from a script
 			if(luaFile==null){
+				#if (linc_luajit > "0.0.6")
 				LuaL.error(lua, "bad argument #1 to 'getGlobalFromScript' (string expected, got nil)");
+				#end
 				return;
 			}
 			if(global==null){
+				#if (linc_luajit > "0.0.6")
 				LuaL.error(lua, "bad argument #2 to 'getGlobalFromScript' (string expected, got nil)");
+				#end
 				return;
 			}
 			var cervix = luaFile + ".lua";
