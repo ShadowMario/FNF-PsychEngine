@@ -353,6 +353,7 @@ class ChartingState extends MusicBeatState
 		"W/S or Mouse Wheel - Change Conductor's strum time
 		\nA/D - Go to the previous/next section
 		\nLeft/Right - Change beat snap
+		\nUp/Down - Change Conductor's strum time with snapping
 		\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
@@ -365,8 +366,8 @@ class ChartingState extends MusicBeatState
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
 			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
-			tipText.y += i * 14;
-			tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+			tipText.y += i * 12;
+			tipText.setFormat(Paths.font("vcr.ttf"), 14, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 			//tipText.borderSize = 2;
 			tipText.scrollFactor.set();
 			add(tipText);
@@ -1768,6 +1769,25 @@ class ChartingState extends MusicBeatState
 				}
 			}
 
+			if(!vortex){
+				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
+				{
+					FlxG.sound.music.pause();
+					updateCurStep();
+					var time:Float = FlxG.sound.music.time;
+					var beat:Float = curDecBeat;
+					var snap:Float = 4/quantization;
+					if (FlxG.keys.pressed.UP)
+					{
+						var fuck:Float = CoolUtil.quantize(beat, snap) - snap; //(Math.floor((beat+snap) / snap) * snap);
+						FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
+					}else{
+						var fuck:Float = CoolUtil.quantize(beat, snap) + snap; //(Math.floor((beat+snap) / snap) * snap);
+						FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
+					}
+				}
+			}
+
 			var style = currentType;
 
 			if (FlxG.keys.pressed.SHIFT){
@@ -1797,73 +1817,73 @@ class ChartingState extends MusicBeatState
 				quant.animation.play('q', true, false, curQuant);
 			}
 			if(vortex && !blockInput){
-			var controlArray:Array<Bool> = [FlxG.keys.justPressed.ONE, FlxG.keys.justPressed.TWO, FlxG.keys.justPressed.THREE, FlxG.keys.justPressed.FOUR,
-										   FlxG.keys.justPressed.FIVE, FlxG.keys.justPressed.SIX, FlxG.keys.justPressed.SEVEN, FlxG.keys.justPressed.EIGHT];
+				var controlArray:Array<Bool> = [FlxG.keys.justPressed.ONE, FlxG.keys.justPressed.TWO, FlxG.keys.justPressed.THREE, FlxG.keys.justPressed.FOUR,
+											   FlxG.keys.justPressed.FIVE, FlxG.keys.justPressed.SIX, FlxG.keys.justPressed.SEVEN, FlxG.keys.justPressed.EIGHT];
 
-			if(controlArray.contains(true))
-			{
-				for (i in 0...controlArray.length)
+				if(controlArray.contains(true))
 				{
-					if(controlArray[i])
-						doANoteThing(conductorTime, i, style);
-				}
-			}
-
-			var feces:Float;
-			if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
-			{
-				FlxG.sound.music.pause();
-
-
-				updateCurStep();
-				//FlxG.sound.music.time = (Math.round(curStep/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;
-
-					//(Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;//snap into quantization
-				var time:Float = FlxG.sound.music.time;
-				var beat:Float = curDecBeat;
-				var snap:Float = 4/quantization;
-				if (FlxG.keys.pressed.UP)
-				{
-					var fuck:Float = CoolUtil.quantize(beat, snap) - snap;
-					trace(fuck);
-					feces = Conductor.beatToSeconds(fuck);
-				}else{
-					var fuck:Float = CoolUtil.quantize(beat, snap) + snap; //(Math.floor((beat+snap) / snap) * snap);
-					trace(fuck);
-					feces = Conductor.beatToSeconds(fuck);
-				}
-				FlxTween.tween(FlxG.sound.music, {time:feces}, 0.1, {ease:FlxEase.circOut});
-				if(vocals != null) {
-					vocals.pause();
-					vocals.time = FlxG.sound.music.time;
-				}
-
-				var dastrum = 0;
-
-				if (curSelectedNote != null){
-					dastrum = curSelectedNote[0];
-				}
-
-				var secStart:Float = sectionStartTime();
-				var datime = (feces - secStart) - (dastrum - secStart); //idk math find out why it doesn't work on any other section other than 0
-				if (curSelectedNote != null)
-				{
-					var controlArray:Array<Bool> = [FlxG.keys.pressed.ONE, FlxG.keys.pressed.TWO, FlxG.keys.pressed.THREE, FlxG.keys.pressed.FOUR,
-												   FlxG.keys.pressed.FIVE, FlxG.keys.pressed.SIX, FlxG.keys.pressed.SEVEN, FlxG.keys.pressed.EIGHT];
-
-					if(controlArray.contains(true))
+					for (i in 0...controlArray.length)
 					{
-
-						for (i in 0...controlArray.length)
-						{
-							if(controlArray[i])
-								if(curSelectedNote[1] == i) curSelectedNote[2] += datime - curSelectedNote[2] - Conductor.stepCrochet;
-						}
-						updateGrid();
-						updateNoteUI();
+						if(controlArray[i])
+							doANoteThing(conductorTime, i, style);
 					}
 				}
-			}
+
+				var feces:Float;
+				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
+				{
+					FlxG.sound.music.pause();
+
+
+					updateCurStep();
+					//FlxG.sound.music.time = (Math.round(curStep/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;
+
+						//(Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;//snap into quantization
+					var time:Float = FlxG.sound.music.time;
+					var beat:Float = curDecBeat;
+					var snap:Float = 4/quantization;
+					if (FlxG.keys.pressed.UP)
+					{
+						var fuck:Float = CoolUtil.quantize(beat, snap) - snap;
+						trace(fuck);
+						feces = Conductor.beatToSeconds(fuck);
+					}else{
+						var fuck:Float = CoolUtil.quantize(beat, snap) + snap; //(Math.floor((beat+snap) / snap) * snap);
+						trace(fuck);
+						feces = Conductor.beatToSeconds(fuck);
+					}
+					FlxTween.tween(FlxG.sound.music, {time:feces}, 0.1, {ease:FlxEase.circOut});
+					if(vocals != null) {
+						vocals.pause();
+						vocals.time = FlxG.sound.music.time;
+					}
+
+					var dastrum = 0;
+
+					if (curSelectedNote != null){
+						dastrum = curSelectedNote[0];
+					}
+
+					var secStart:Float = sectionStartTime();
+					var datime = (feces - secStart) - (dastrum - secStart); //idk math find out why it doesn't work on any other section other than 0
+					if (curSelectedNote != null)
+					{
+						var controlArray:Array<Bool> = [FlxG.keys.pressed.ONE, FlxG.keys.pressed.TWO, FlxG.keys.pressed.THREE, FlxG.keys.pressed.FOUR,
+													   FlxG.keys.pressed.FIVE, FlxG.keys.pressed.SIX, FlxG.keys.pressed.SEVEN, FlxG.keys.pressed.EIGHT];
+
+						if(controlArray.contains(true))
+						{
+
+							for (i in 0...controlArray.length)
+							{
+								if(controlArray[i])
+									if(curSelectedNote[1] == i) curSelectedNote[2] += datime - curSelectedNote[2] - Conductor.stepCrochet;
+							}
+							updateGrid();
+							updateNoteUI();
+						}
+					}
+				}
 			}
 			var shiftThing:Int = 1;
 			if (FlxG.keys.pressed.SHIFT)
