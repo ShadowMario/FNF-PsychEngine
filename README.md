@@ -6,9 +6,11 @@ You must have [the most up-to-date version of Haxe](https://haxe.org/download/),
 
 Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
 
-To install LuaJIT do this: `haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit ` on a Command prompt/PowerShell
+To install LuaJIT do this: `haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit` on a Command prompt/PowerShell
 
 ...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
+
+If you get an error about StatePointer when using Lua, run `haxelib remove linc_luajit` into Command Prompt/PowerShell, then re-install linc_luajit.
 
 # Build instructions For Android
 
@@ -76,11 +78,11 @@ _____________________________________
 
 ## Mod Support
 * Probably one of the main points of this engine, you can code in .lua files outside of the source code, making your own weeks without even messing with the source!
-* Comes with a Mod Organizing/Disabling Menu. 
+* Comes with a Mod Organizing/Disabling Menu.
 
 ## Atleast one change to every week:
 ### Week 1:
-  * New Dad Left sing sprite 
+  * New Dad Left sing sprite
   * Unused stage lights are now used
 ### Week 2:
   * Both BF and Skid & Pump does "Hey!" animations
