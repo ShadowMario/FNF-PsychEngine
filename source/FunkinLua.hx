@@ -46,6 +46,7 @@ using StringTools;
 class FunkinLua {
 	public static var Function_Stop:Dynamic = 1;
 	public static var Function_Continue:Dynamic = 0;
+	public static var Function_StopLua:Dynamic = 2;
 
 	public var errorHandler:String->Void;
 	#if LUA_ALLOWED
@@ -93,6 +94,7 @@ class FunkinLua {
 		#end
 
 		// Lua shit
+		set('Function_StopLua', Function_StopLua);
 		set('Function_Stop', Function_Stop);
 		set('Function_Continue', Function_Continue);
 		set('luaDebugMode', false);
@@ -186,6 +188,7 @@ class FunkinLua {
 		set('healthBarAlpha', ClientPrefs.healthBarAlpha);
 		set('noResetButton', ClientPrefs.noReset);
 		set('lowQuality', ClientPrefs.lowQuality);
+		set("scriptName", scriptName);
 
 		#if windows
 		set('buildTarget', 'windows');
@@ -201,14 +204,92 @@ class FunkinLua {
 		set('buildTarget', 'unknown');
 		#end
 
+		Lua_helper.add_callback(lua, "getRunningScripts", function(){
+			var runningScripts:Array<String> = [];
+			for (idx in 0...PlayState.instance.luaArray.length)
+				runningScripts.push(PlayState.instance.luaArray[idx].scriptName);
+
+
+			return runningScripts;
+		});
+
+		Lua_helper.add_callback(lua, "callOnLuas", function(?funcName:String, ?args:Array<Dynamic>, ignoreStops=false, ignoreSelf=true, ?exclusions:Array<String>){
+			if(funcName==null){
+				LuaL.error(lua, "bad argument #1 to 'callOnLuas' (string expected, got nil)");
+				return;
+			}
+			if(args==null)args = [];
+
+			if(exclusions==null)exclusions=[];
+
+			Lua.getglobal(lua, 'scriptName');
+			var daScriptName = Lua.tostring(lua, -1);
+			Lua.pop(lua, 1);
+			if(ignoreSelf && !exclusions.contains(daScriptName))exclusions.push(daScriptName);
+			PlayState.instance.callOnLuas(funcName, args, ignoreStops, exclusions);
+		});
+
+		Lua_helper.add_callback(lua, "callScript", function(?luaFile:String, ?funcName:String, ?args:Array<Dynamic>){
+			if(luaFile==null){
+				LuaL.error(lua, "bad argument #1 to 'callScript' (string expected, got nil)");
+				return;
+			}
+			if(funcName==null){
+				LuaL.error(lua, "bad argument #2 to 'callScript' (string expected, got nil)");
+				return;
+			}
+			if(args==null){
+				args = [];
+			}
+			var cervix = luaFile + ".lua";
+			if(luaFile.endsWith(".lua"))cervix=luaFile;
+			var doPush = false;
+			#if MODS_ALLOWED
+			if(FileSystem.exists(Paths.modFolders(cervix)))
+			{
+				cervix = Paths.modFolders(cervix);
+				doPush = true;
+			}
+			else if(FileSystem.exists(cervix))
+			{
+				doPush = true;
+			}
+			else {
+				cervix = Paths.getPreloadPath(cervix);
+				if(FileSystem.exists(cervix)) {
+					doPush = true;
+				}
+			}
+			#else
+			cervix = Paths.getPreloadPath(cervix);
+			if(Assets.exists(cervix)) {
+				doPush = true;
+			}
+			#end
+			if(doPush)
+			{
+				for (luaInstance in PlayState.instance.luaArray)
+				{
+					if(luaInstance.scriptName == cervix)
+					{
+						luaInstance.call(funcName, args);
+
+						return;
+					}
+
+				}
+			}
+			Lua.pushnil(lua);
+
+		});
 
 		Lua_helper.add_callback(lua, "getGlobalFromScript", function(?luaFile:String, ?global:String){ // returns the global from a script
 			if(luaFile==null){
-				LuaL.error(lua, "Bad argument #1 to 'getGlobalFromScript' (string expected, got nil)");
+				LuaL.error(lua, "bad argument #1 to 'getGlobalFromScript' (string expected, got nil)");
 				return;
 			}
 			if(global==null){
-				LuaL.error(lua, "Bad argument #2 to 'getGlobalFromScript' (string expected, got nil)");
+				LuaL.error(lua, "bad argument #2 to 'getGlobalFromScript' (string expected, got nil)");
 				return;
 			}
 			var cervix = luaFile + ".lua";
