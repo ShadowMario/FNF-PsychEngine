@@ -351,7 +351,8 @@ class ChartingState extends MusicBeatState
 
 		text =
 		"W/S or Mouse Wheel - Change Conductor's strum time
-		\nA or Left/D or Right - Go to the previous/next section
+		\nA/D - Go to the previous/next section
+		\nLeft/Right - Change beat snap
 		\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
