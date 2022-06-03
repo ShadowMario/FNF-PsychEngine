@@ -32,11 +32,15 @@ class PauseSubState extends MusicBeatSubstate
 	//var botplayText:FlxText;
 
 	public static var songName:String = '';
+	
+	public static var toOptions:Bool = false;
 
 	public function new(x:Float, y:Float)
 	{
 		super();
 		if(CoolUtil.difficulties.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
+		
+		toOptions = false;
 
 		if(PlayState.chartingMode)
 		{
@@ -51,6 +55,7 @@ class PauseSubState extends MusicBeatSubstate
 			menuItemsOG.insert(3 + num, 'End Song');
 			menuItemsOG.insert(4 + num, 'Toggle Practice Mode');
 			menuItemsOG.insert(5 + num, 'Toggle Botplay');
+			menuItemsOG.insert(6 + num, 'Options');
 		}
 		menuItems = menuItemsOG;
 
@@ -257,6 +262,10 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled;
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
+				case "Options":
+					toOptions = true;
+					MusicBeatState.switchState(new options.OptionsState());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
