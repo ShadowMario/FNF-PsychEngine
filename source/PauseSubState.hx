@@ -55,7 +55,7 @@ class PauseSubState extends MusicBeatSubstate
 			menuItemsOG.insert(3 + num, 'End Song');
 			menuItemsOG.insert(4 + num, 'Toggle Practice Mode');
 			menuItemsOG.insert(5 + num, 'Toggle Botplay');
-			menuItemsOG.insert(6 + num, 'Exit to Options');
+			menuItemsOG.insert(7, 'Exit to Options');
 		}
 		menuItems = menuItemsOG;
 
