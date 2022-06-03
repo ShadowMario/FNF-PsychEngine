@@ -123,6 +123,7 @@
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
+	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxedev set='webgl' />
 
 	<!--In case you want to use the addons package-->
