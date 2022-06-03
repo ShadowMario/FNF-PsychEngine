@@ -187,15 +187,32 @@ class ChartingState extends MusicBeatState
 	//public var quants:Array<Float> = [4,2,1];
 	/**/
 
-	public var quants:Array<Float> = [
+	/*public var quants:Array<Float> = [
 	4,// quarter
 	2,//half
 	4/3,
 	1,
-	4/8];//eight
+	4/8];//eight*/ // DUMB WAY!!
 
-
+	public static var quantization:Int = 16;
 	public static var curQuant = 0;
+
+	public var quantizations:Array<Int> = [
+		4,
+		8,
+		12,
+		16,
+		20,
+		24,
+		32,
+		48,
+		64,
+		96,
+		192
+	];
+
+
+
 	var text:String = "";
 	public static var vortex:Bool = false;
 	override function create()
@@ -1565,8 +1582,13 @@ class ChartingState extends MusicBeatState
 			dummyArrow.x = Math.floor(FlxG.mouse.x / GRID_SIZE) * GRID_SIZE;
 			if (FlxG.keys.pressed.SHIFT)
 				dummyArrow.y = FlxG.mouse.y;
-			else
-				dummyArrow.y = Math.floor(FlxG.mouse.y / GRID_SIZE) * GRID_SIZE;
+			else{
+				var time = getStrumTime(FlxG.mouse.y);
+				var beat = Conductor.getBeat(time + sectionStartTime());
+				var snap = 4/quantization;
+				var y = getYfromStrum(Conductor.beatToSeconds(Math.floor(beat / snap) * snap) - sectionStartTime());
+				dummyArrow.y = y;
+			}
 		}else{
 			dummyArrow.visible = false;
 		}
@@ -1754,6 +1776,25 @@ class ChartingState extends MusicBeatState
 			var conductorTime = Conductor.songPosition; //+ sectionStartTime();Conductor.songPosition / Conductor.stepCrochet;
 
 			//AWW YOU MADE IT SEXY <3333 THX SHADMAR
+
+			if(!blockInput){
+				if(FlxG.keys.justPressed.RIGHT){
+					curQuant++;
+					if(curQuant>quantizations.length-1)
+						curQuant = 0;
+
+					quantization = quantizations[curQuant];
+				}
+
+				if(FlxG.keys.justPressed.LEFT){
+					--curQuant;
+					if(curQuant<0)
+						curQuant = quantizations.length-1;
+
+					quantization = quantizations[curQuant];
+				}
+				quant.animation.play('q', true, false, curQuant);
+			}
 			if(vortex && !blockInput){
 			var controlArray:Array<Bool> = [FlxG.keys.justPressed.ONE, FlxG.keys.justPressed.TWO, FlxG.keys.justPressed.THREE, FlxG.keys.justPressed.FOUR,
 										   FlxG.keys.justPressed.FIVE, FlxG.keys.justPressed.SIX, FlxG.keys.justPressed.SEVEN, FlxG.keys.justPressed.EIGHT];
@@ -1767,29 +1808,6 @@ class ChartingState extends MusicBeatState
 				}
 			}
 
-
-				var datimess = [];
-
-				var daTime:Float = (Conductor.stepCrochet*quants[curQuant]);//WHY DID I ROUND BEFORE THIS IS A FLOAT???
-				var cuquant = Std.int(32/quants[curQuant]);
-				for (i in 0...cuquant){
-					datimess.push(sectionStartTime() + daTime * i);
-				}
-
-			if (FlxG.keys.justPressed.LEFT)
-			{
-				--curQuant;
-				if (curQuant < 0) curQuant = 0;
-
-				daquantspot *=  Std.int(32/quants[curQuant]);
-			}
-			if (FlxG.keys.justPressed.RIGHT)
-			{
-				curQuant ++;
-				if (curQuant > quants.length-1) curQuant = quants.length-1;
-				daquantspot *=  Std.int(32/quants[curQuant]);
-			}
-			quant.animation.play('q', true, false, curQuant);
 			var feces:Float;
 			if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
 			{
@@ -1800,36 +1818,18 @@ class ChartingState extends MusicBeatState
 				//FlxG.sound.music.time = (Math.round(curStep/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;
 
 					//(Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant])*quants[curQuant]) * Conductor.stepCrochet;//snap into quantization
+				var time:Float = FlxG.sound.music.time;
+				var beat:Float = curDecBeat;
+				var snap:Float = 4/quantization;
 				if (FlxG.keys.pressed.UP)
 				{
-
-					//var tosnapto = 0.00;
-					var foundaspot = false;
-					var i = datimess.length-1;//backwards for loop
-					while (i > -1){
-						if (Math.ceil(FlxG.sound.music.time) >= Math.ceil(datimess[i]) && !foundaspot){
-							foundaspot = true;
-							FlxG.sound.music.time = datimess[i];
-						}
-						--i;
-					}
-					//FlxG.sound.music.time = tosnapto;
-					//FlxG.sound.music.time -= daTime;
-					 feces = FlxG.sound.music.time - daTime;
-				}
-				else{
-
-					var foundaspot = false;
-					for (i in datimess){
-						if (Math.floor(FlxG.sound.music.time) <= Math.floor(i) && !foundaspot){
-							foundaspot = true;
-							FlxG.sound.music.time = i;
-						}
-					}
-
-
-					//FlxG.sound.music.time += daTime;
-					 feces = FlxG.sound.music.time+ daTime;
+					var fuck:Float = CoolUtil.quantize(beat, snap) - snap;
+					trace(fuck);
+					feces = Conductor.beatToSeconds(fuck);
+				}else{
+					var fuck:Float = CoolUtil.quantize(beat, snap) + snap; //(Math.floor((beat+snap) / snap) * snap);
+					trace(fuck);
+					feces = Conductor.beatToSeconds(fuck);
 				}
 				FlxTween.tween(FlxG.sound.music, {time:feces}, 0.1, {ease:FlxEase.circOut});
 				if(vocals != null) {
@@ -1868,9 +1868,9 @@ class ChartingState extends MusicBeatState
 			if (FlxG.keys.pressed.SHIFT)
 				shiftThing = 4;
 
-			if (FlxG.keys.justPressed.RIGHT && !vortex|| FlxG.keys.justPressed.D)
+			if (FlxG.keys.justPressed.D)
 				changeSection(curSection + shiftThing);
-			if (FlxG.keys.justPressed.LEFT && !vortex|| FlxG.keys.justPressed.A) {
+			if (FlxG.keys.justPressed.A) {
 				if(curSection <= 0) {
 					changeSection(_song.notes.length-1);
 				} else {
@@ -1910,7 +1910,8 @@ class ChartingState extends MusicBeatState
 		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
 		"\nSection: " + curSection +
 		"\n\nBeat: " + curBeat +
-		"\n\nStep: " + curStep;
+		"\n\nStep: " + curStep +
+		"\n\nBeat Snap: 1/" + quantization;
 
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note) {
