@@ -78,6 +78,7 @@ class Note extends FlxSprite
 	public var texture(default, set):String = null;
 
 	public var noAnimation:Bool = false;
+	public var noMissAnimation:Bool = false;
 	public var hitCausesMiss:Bool = false;
 	public var distance:Float = 2000; //plan on doing scroll directions soon -bb
 
@@ -130,6 +131,7 @@ class Note extends FlxSprite
 					hitCausesMiss = true;
 				case 'No Animation':
 					noAnimation = true;
+					noMissAnimation = true;
 				case 'GF Sing':
 					gfNote = true;
 			}
