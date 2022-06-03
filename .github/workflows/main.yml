@@ -84,6 +84,7 @@ jobs:
           haxelib install flixel-addons
           haxelib install tjson
           haxelib install hxjsonast
+          haxelib install hscript
           haxelib install hxcpp-debug-server
           haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
           haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
@@ -125,6 +126,7 @@ jobs:
           haxelib install flixel-addons
           haxelib install tjson
           haxelib install hxjsonast
+          haxelib install hscript
           haxelib install hxcpp-debug-server
           haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
           haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
