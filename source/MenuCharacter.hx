@@ -17,6 +17,7 @@ typedef MenuCharacterFile = {
 	var idle_anim:String;
 	var confirm_anim:String;
 	var flipX:Bool;
+	var noAntialiasing:Bool;
 }
 
 class MenuCharacter extends FlxSprite
@@ -37,7 +38,7 @@ class MenuCharacter extends FlxSprite
 		if(character == this.character) return;
 
 		this.character = character;
-		antialiasing = ClientPrefs.globalAntialiasing;
+
 		visible = true;
 
 		var dontPlayAnim:Bool = false;
@@ -85,6 +86,11 @@ class MenuCharacter extends FlxSprite
 				}
 
 				flipX = (charFile.flipX == true);
+
+				if (charFile.noAntialiasing == true)
+					antialiasing = false;
+				else if (charFile.noAntialiasing == false)
+					antialiasing = ClientPrefs.globalAntialiasing;
 
 				if(charFile.scale != 1) {
 					scale.set(charFile.scale, charFile.scale);
