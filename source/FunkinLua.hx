@@ -2367,6 +2367,7 @@ class FunkinLua {
 		#if LUA_ALLOWED
 		try {
 			if(lua==null)return Function_Continue;
+
 			Lua.getglobal(lua, func);
 			if(Lua.isfunction(lua, -1)==true){
 				for(arg in args) Convert.toLua(lua, arg);
@@ -2384,8 +2385,12 @@ class FunkinLua {
 					Lua.pop(lua, 1);
 					return conv;
 				}
+			}else{
+				Lua.pop(lua, 1);
+				return null;
 			}
-
+		}catch(e:Dynamic){
+			trace(e);
 		}
 		#end
 		return Function_Continue;
