@@ -811,12 +811,14 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "endSong", function() {
 			PlayState.instance.KillNotes();
 			PlayState.instance.endSong();
+			return true;
 		});
-		Lua_helper.add_callback(lua, "restartSong", function(skipTransition:Bool) {
+		Lua_helper.add_callback(lua, "restartSong", function(?skipTransition:Bool = false) {
 			PlayState.instance.persistentUpdate = false;
 			PauseSubState.restartSong(skipTransition);
+			return true;
 		});
-		Lua_helper.add_callback(lua, "exitSong", function(skipTransition:Bool) {
+		Lua_helper.add_callback(lua, "exitSong", function(?skipTransition:Bool = false) {
 			if(skipTransition)
 			{
 				FlxTransitionableState.skipNextTransIn = true;
@@ -837,6 +839,7 @@ class FunkinLua {
 			PlayState.changedDifficulty = false;
 			PlayState.chartingMode = false;
 			PlayState.instance.transitioning = true;
+			return true;
 		});
 		Lua_helper.add_callback(lua, "getSongPosition", function() {
 			return Conductor.songPosition;
