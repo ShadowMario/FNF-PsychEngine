@@ -143,7 +143,7 @@ class CharacterEditorState extends MusicBeatState
 		camFollow.screenCenter();
 		add(camFollow);
 
-		var tipTextArray:Array<String> = "E/Q - Camera Zoom In/Out
+		var tipTextArray:Array<String> = "SCROLLMOUSE - Camera Zoom In/Out
 		\nR - Reset Camera Zoom
 		\nRMOUSE - Move Camera
 		\nW/S - Previous/Next Animation
@@ -1142,6 +1142,7 @@ class CharacterEditorState extends MusicBeatState
 					camFollow.screenCenter();
 			}
 
+			/*
 			if (FlxG.keys.pressed.E && FlxG.camera.zoom < 3) {
 				FlxG.camera.zoom += elapsed * FlxG.camera.zoom;
 				if(FlxG.camera.zoom > 3) FlxG.camera.zoom = 3;
@@ -1150,7 +1151,7 @@ class CharacterEditorState extends MusicBeatState
 				FlxG.camera.zoom -= elapsed * FlxG.camera.zoom;
 				if(FlxG.camera.zoom < 0.1) FlxG.camera.zoom = 0.1;
 			}
-			/*
+			
 			if (FlxG.keys.pressed.I || FlxG.keys.pressed.J || FlxG.keys.pressed.K || FlxG.keys.pressed.L)
 			{
 				var addToCam:Float = 500 * elapsed;
