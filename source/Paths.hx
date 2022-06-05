@@ -238,6 +238,22 @@ class Paths
 		var returnAsset:FlxGraphic = returnGraphic(key, library);
 		return returnAsset;
 	}
+	
+	public static function achievementImage(key:String):String {
+		#if MODS_ALLOWED
+		var modKey:String = modsImages(key);
+		if(FileSystem.exists(modKey)) {
+			return modKey;
+		}
+		#end
+
+		var path = getPath('images/$key.png', IMAGE);
+		if (OpenFlAssets.exists(path, IMAGE)) {
+			return path;
+		}
+		trace('oh no its returning null NOOOO');
+		return null;
+	}
 
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
