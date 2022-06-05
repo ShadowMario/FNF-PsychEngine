@@ -1138,6 +1138,8 @@ class CharacterEditorState extends MusicBeatState
 
 			if (FlxG.keys.justPressed.R) {
 				FlxG.camera.zoom = 1;
+				if (FlxG.keys.pressed.SHIFT)
+					camFollow.screenCenter();
 			}
 
 			if (FlxG.keys.pressed.E && FlxG.camera.zoom < 3) {
@@ -1260,6 +1262,11 @@ class CharacterEditorState extends MusicBeatState
 		else
 		{
 			FlxG.mouse.visible = true;
+		}
+
+		if (FlxG.mouse.wheel != 0)
+		{
+			FlxG.camera.zoom += FlxG.mouse.wheel / 10;
 		}
 	}
 
