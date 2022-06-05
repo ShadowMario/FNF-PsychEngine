@@ -145,7 +145,7 @@ class CharacterEditorState extends MusicBeatState
 
 		var tipTextArray:Array<String> = "E/Q - Camera Zoom In/Out
 		\nR - Reset Camera Zoom
-		\nMOUSE - Move Camera
+		\nRMOUSE - Move Camera
 		\nW/S - Previous/Next Animation
 		\nSpace - Play Animation
 		\nArrow Keys - Move Character Offset
