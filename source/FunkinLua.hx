@@ -368,7 +368,7 @@ class FunkinLua
 						{
 							Lua.pushstring(lua, Lua.tostring(luaInstance.lua, -1));
 						}
-						else if (Lua.isboolean(luaInstance.lua, -1) != 0)
+						else if (Lua.isboolean(luaInstance.lua, -1))
 						{
 							Lua.pushboolean(lua, Lua.toboolean(luaInstance.lua, -1));
 						}
@@ -490,7 +490,7 @@ class FunkinLua
 								Lua.pushstring(lua, Lua.tostring(luaInstance.lua, -2));
 								pop++;
 							}
-							else if (Lua.isboolean(luaInstance.lua, -2) != 0)
+							else if (Lua.isboolean(luaInstance.lua, -2))
 							{
 								Lua.pushboolean(lua, Lua.toboolean(luaInstance.lua, -2));
 								pop++;
@@ -508,7 +508,7 @@ class FunkinLua
 								Lua.pushstring(lua, Lua.tostring(luaInstance.lua, -1));
 								pop++;
 							}
-							else if (Lua.isboolean(luaInstance.lua, -1) != 0)
+							else if (Lua.isboolean(luaInstance.lua, -1))
 							{
 								Lua.pushboolean(lua, Lua.toboolean(luaInstance.lua, -1));
 								pop++;
@@ -3057,7 +3057,7 @@ class FunkinLua
 				return Function_Continue;
 
 			Lua.getglobal(lua, func);
-			if (Lua.isfunction(lua, -1) != 0)
+			if (Lua.isfunction(lua, -1))
 			{
 				for (arg in args)
 					Convert.toLua(lua, arg);
