@@ -3653,17 +3653,17 @@ class PlayState extends MusicBeatState
 		seenCutscene = false;
 
 		#if ACHIEVEMENTS_ALLOWED
-		if(achievementObj != null) {
-			return;
-		} else {
-			var achieve:String = checkForAchievement(['week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss',
-				'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad',
-				'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
+		var achieve:String = checkForAchievement(['week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss',
+			'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad',
+			'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
 
-			if(achieve != null) {
-				startAchievement(achieve);
-				return;
-			}
+		if(achieve != null) {
+			Achievements.giveAchievement(achieve, function() {
+				if(endingSong && !inCutscene) {
+					endSong();
+				}
+			});
+			return;
 		}
 		#end
 
@@ -3773,23 +3773,6 @@ class PlayState extends MusicBeatState
 			transitioning = true;
 		}
 	}
-
-	#if ACHIEVEMENTS_ALLOWED
-	var achievementObj:AchievementObject = null;
-	function startAchievement(achieve:String) {
-		achievementObj = new AchievementObject(achieve, camOther);
-		achievementObj.onFinish = achievementEnd;
-		add(achievementObj);
-		trace('Giving achievement ' + achieve);
-	}
-	function achievementEnd():Void
-	{
-		achievementObj = null;
-		if(endingSong && !inCutscene) {
-			endSong();
-		}
-	}
-	#end
 
 	public function KillNotes() {
 		while(notes.length > 0) {
@@ -4156,7 +4139,11 @@ class PlayState extends MusicBeatState
 				#if ACHIEVEMENTS_ALLOWED
 				var achieve:String = checkForAchievement(['oversinging']);
 				if (achieve != null) {
-					startAchievement(achieve);
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					});
 				}
 				#end
 			}
@@ -4607,7 +4594,11 @@ class PlayState extends MusicBeatState
 				FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 				var achieve:String = checkForAchievement(['roadkill_enthusiast']);
 				if (achieve != null) {
-					startAchievement(achieve);
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					});
 				} else {
 					FlxG.save.flush();
 				}
