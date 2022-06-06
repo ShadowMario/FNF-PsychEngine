@@ -501,6 +501,7 @@ class TitleState extends MusicBeatState
 		super.update(elapsed);
 	}
 
+	#if TITLE_SCREEN_EASTER_EGG
 	function titleScreenEasterEGG(name:String)
 	{
 		easterEggKeysBuffer += name;
@@ -545,6 +546,7 @@ class TitleState extends MusicBeatState
 			}
 		}
 	}
+	#end
 
 	function createCoolText(textArray:Array<String>, ?offset:Float = 0)
 	{
