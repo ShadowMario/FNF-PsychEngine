@@ -1194,6 +1194,9 @@ class PlayState extends MusicBeatState
 
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
+	
+	        if (Paths.formatToSongPath(SONG.song) != 'tutorial')
+			camZooming = true;
 
 		// SONG SPECIFIC SCRIPTS
 		#if LUA_ALLOWED
