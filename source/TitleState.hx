@@ -526,12 +526,12 @@ class TitleState extends MusicBeatState
 
 	function createCoolText(textArray:Array<String>, ?offset:Float = 0)
 	{
-		for (i in 0...textArray.length)
-		{
-			var money:Alphabet = new Alphabet(0, 0, textArray[i], true, false);
-			money.screenCenter(X);
-			money.y += (i * 60) + 200 + offset;
-			if(credGroup != null && textGroup != null) {
+		if (credGroup != null) {
+			for (i in 0...textArray.length)
+			{
+				var money:Alphabet = new Alphabet(0, 0, textArray[i], true, false);
+				money.screenCenter(X);
+				money.y += (i * 60) + 200 + offset;
 				credGroup.add(money);
 				textGroup.add(money);
 			}
@@ -540,7 +540,7 @@ class TitleState extends MusicBeatState
 
 	function addMoreText(text:String, ?offset:Float = 0)
 	{
-		if(textGroup != null && credGroup != null) {
+		if(credGroup != null) {
 			var coolText:Alphabet = new Alphabet(0, 0, text, true, false);
 			coolText.screenCenter(X);
 			coolText.y += (textGroup.length * 60) + 200 + offset;
