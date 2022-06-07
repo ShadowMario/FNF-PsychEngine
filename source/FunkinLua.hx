@@ -2594,28 +2594,15 @@ class FunkinLua {
 	}
 
 	static inline var CLENSE:String = "
-	require = nil;
-	dofile = nil;
-	load = nil;
-	loadfile = nil;
-	debug, package.loaded.debug = nil, nil;
-	io, package.loaded.io = nil, nil;
-	os.execute, package.loaded.os.execute = nil, nil;
-	os.rename, package.loaded.os.rename = nil, nil;
-	os.remove, package.loaded.os.remove = nil, nil;
-	os.tmpname, package.loaded.os.tmpname = nil, nil;
-	os.setlocale, package.loaded.os.setlocale = nil, nil;
-	os.getenv, package.loaded.os.getenv = nil, nil;
-	package.loadlib = nil;
-	package.seeall = nil;
-	package.searchpath = nil;
-	package.config = nil;
-	package.preload.ffi = nil;
-	package.loaded.jit = nil;
-	package.loaded['jit.opt'] = nil;
-	package.preload['jit.util'] = nil;
-	package.preload['jit.profile'] = nil;
-	"; // Fuck this, I can't figure out linc_lua, so I'mma set everything in Lua itself - Super
+	os.execute, os.getenv, os.rename, os.remove, os.tmpname = nil, nil, nil, nil, nil
+	io, load, loadfile, loadstring, dofile = nil, nil, nil, nil, nil
+	require, module, package = nil, nil, nil
+	setfenv, getfenv = nil, nil
+	newproxy = nil
+	gcinfo = nil
+	debug = nil
+	jit = nil
+	"; // superpowers04/cyn-8/DragShot
 }
 
 class ModchartSprite extends FlxSprite
