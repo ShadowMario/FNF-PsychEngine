@@ -1,5 +1,8 @@
 package;
 
+#if VIDEOS
+import vlc.VideoHandler;
+#end
 import flixel.graphics.FlxGraphic;
 #if desktop
 import Discord.DiscordClient;
