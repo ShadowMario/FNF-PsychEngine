@@ -31,6 +31,8 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
+          sudo apt-get install libvlc-dev
+          sudo apt-get install libvlccore-dev
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null
           haxelib install lime
@@ -43,6 +45,7 @@ jobs:
           haxelib install flixel-addons
           haxelib install tjson
           haxelib install hxjsonast
+          haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
@@ -83,6 +86,7 @@ jobs:
           haxelib install flixel-addons
           haxelib install tjson
           haxelib install hxjsonast
+          haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
@@ -124,6 +128,7 @@ jobs:
           haxelib install flixel-addons
           haxelib install tjson
           haxelib install hxjsonast
+          haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib install hscript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex

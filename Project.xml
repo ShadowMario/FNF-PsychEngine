@@ -88,8 +88,6 @@
 		<library name="week7"         preload="false" />
 	</section>
 	
-	<assets path="plugins/"             rename=''               if="VIDEOS_ALLOWED windows" />
-	<assets path="dlls/"                rename=''               if="VIDEOS_ALLOWED windows" />
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
@@ -132,6 +130,7 @@
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
+	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="faxe" if='switch'/>
 	<!--<haxelib name="polymod"/> -->
 	<haxelib name="discord_rpc" if="desktop"/>
