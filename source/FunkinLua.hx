@@ -190,7 +190,7 @@ class FunkinLua {
 		set('lowQuality', ClientPrefs.lowQuality);
 		set("scriptName", scriptName);
 		set('isPixelStage', PlayState.isPixelStage); // BTW idrk if these will actually work properly since I don't fully know what I'm doing with haxe lmao I only have some understandings like how I had to add the "PlayState." part
-		set('isPixelStage', PlayState.curStage);
+		set('curStage', PlayState.curStage);
 
 		#if windows
 		set('buildTarget', 'windows');
