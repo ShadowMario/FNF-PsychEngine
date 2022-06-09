@@ -2487,9 +2487,11 @@ class FunkinLua {
 	}*/
 
 	function getErrorMessage() {
+		#if LUA_ALLOWED
 		var v:String = Lua.tostring(lua, -1);
 		Lua.pop(lua, 1);
 		return v;
+		#end
 	}
 
 	public function call(func:String, args:Array<Dynamic>): Dynamic{
