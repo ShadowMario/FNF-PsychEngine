@@ -61,7 +61,7 @@ class Character extends FlxSprite
 	public var singDuration:Float = 4; //Multiplier of how long a character holds the sing pose
 	public var idleSuffix:String = '';
 	public var danceIdle:Bool = false; //Character use "danceLeft" and "danceRight" instead of "idle"
-	
+	public var skipDance:Bool = false;
 
 	public var healthIcon:String = 'face';
 	public var animationsArray:Array<AnimArray> = [];
@@ -98,20 +98,14 @@ class Character extends FlxSprite
 
 			default:
 				var characterPath:String = 'characters/' + curCharacter + '.json';
+
 				#if MODS_ALLOWED
-				
-				
-				
-				
 				var path:String = Paths.modFolders(characterPath);
 				if (!FileSystem.exists(path)) {
 					path = Paths.getPreloadPath(characterPath);
 				}
 
 				if (!FileSystem.exists(path))
-				
-				
-				
 				#else
 				var path:String = Paths.getPreloadPath(characterPath);
 				if (!Assets.exists(path))
@@ -143,13 +137,8 @@ class Character extends FlxSprite
 				if (Assets.exists(Paths.getPath('images/' + json.image + '.txt', TEXT)))
 				#end
 				{
-					
 					spriteType = "packer";
-					
 				}
-				
-				
-				
 				
 				#if MODS_ALLOWED
 				var modAnimToFind:String = Paths.modFolders('images/' + json.image + '/Animation.json');
@@ -163,14 +152,9 @@ class Character extends FlxSprite
 				if (Assets.exists(Paths.getPath('images/' + json.image + '/Animation.json', TEXT)))
 				#end
 				{
-					
 					spriteType = "texture";
-					
 				}
-				
-				
-				
-				
+
 				switch (spriteType){
 					
 					case "packer":
@@ -181,10 +165,7 @@ class Character extends FlxSprite
 					
 					case "texture":
 						frames = AtlasFrameMaker.construct(json.image);
-						
-						
 				}
-				
 				imageFile = json.image;
 
 				if(json.scale != 1) {
@@ -263,6 +244,14 @@ class Character extends FlxSprite
 				}
 			}*/
 		}
+
+		switch(curCharacter)
+		{
+			case 'pico-speaker':
+				skipDance = true;
+				loadMappedAnims();
+				playAnim("shoot1");
+		}
 	}
 
 	override function update(elapsed:Float)
@@ -286,6 +275,21 @@ class Character extends FlxSprite
 				specialAnim = false;
 				dance();
 			}
+			
+			switch(curCharacter)
+			{
+				case 'pico-speaker':
+					if(animationNotes.length > 0 && Conductor.songPosition > animationNotes[0][0])
+					{
+						var noteData:Int = 1;
+						if(animationNotes[0][1] > 2) noteData = 3;
+
+						noteData += FlxG.random.int(0, 1);
+						playAnim('shoot' + noteData, true);
+						animationNotes.shift();
+					}
+					if(animation.curAnim.finished) playAnim(animation.curAnim.name, false, false, animation.curAnim.frames.length - 3);
+			}
 
 			if (!isPlayer)
 			{
@@ -294,7 +298,7 @@ class Character extends FlxSprite
 					holdTimer += elapsed;
 				}
 
-				if (holdTimer >= Conductor.stepCrochet * 0.001 * singDuration)
+				if (holdTimer >= Conductor.stepCrochet * 0.0011 * singDuration)
 				{
 					dance();
 					holdTimer = 0;
@@ -316,7 +320,7 @@ class Character extends FlxSprite
 	 */
 	public function dance()
 	{
-		if (!debugMode && !specialAnim)
+		if (!debugMode && !skipDance && !specialAnim)
 		{
 			if(danceIdle)
 			{
@@ -363,9 +367,45 @@ class Character extends FlxSprite
 			}
 		}
 	}
+	
+	function loadMappedAnims():Void
+	{
+		var noteData:Array<SwagSection> = Song.loadFromJson('picospeaker', Paths.formatToSongPath(PlayState.SONG.song)).notes;
+		for (section in noteData) {
+			for (songNotes in section.sectionNotes) {
+				animationNotes.push(songNotes);
+			}
+		}
+		TankmenBG.animationNotes = animationNotes;
+		animationNotes.sort(sortAnims);
+	}
 
+	function sortAnims(Obj1:Array<Dynamic>, Obj2:Array<Dynamic>):Int
+	{
+		return FlxSort.byValues(FlxSort.ASCENDING, Obj1[0], Obj2[0]);
+	}
+
+	public var danceEveryNumBeats:Int = 2;
+	private var settingCharacterUp:Bool = true;
 	public function recalculateDanceIdle() {
+		var lastDanceIdle:Bool = danceIdle;
 		danceIdle = (animation.getByName('danceLeft' + idleSuffix) != null && animation.getByName('danceRight' + idleSuffix) != null);
+
+		if(settingCharacterUp)
+		{
+			danceEveryNumBeats = (danceIdle ? 1 : 2);
+		}
+		else if(lastDanceIdle != danceIdle)
+		{
+			var calc:Float = danceEveryNumBeats;
+			if(danceIdle)
+				calc /= 2;
+			else
+				calc *= 2;
+
+			danceEveryNumBeats = Math.round(Math.max(calc, 1));
+		}
+		settingCharacterUp = false;
 	}
 
 	public function addOffset(name:String, x:Float = 0, y:Float = 0)

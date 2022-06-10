@@ -5,6 +5,7 @@ import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
+import flixel.system.FlxSound;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -116,9 +117,11 @@ class CoolUtil
 
 	//uhhhh does this even work at all? i'm starting to doubt
 	public static function precacheSound(sound:String, ?library:String = null):Void {
-		var EmbeddedSound = Paths.sound(sound, library);
-		if (Assets.exists(EmbeddedSound, SOUND) || Assets.exists(EmbeddedSound, MUSIC))
-			Assets.getSound(EmbeddedSound, true);
+		Paths.sound(sound, library);
+	}
+
+	public static function precacheMusic(sound:String, ?library:String = null):Void {
+		Paths.music(sound, library);
 	}
 
 	public static function browserLoad(site:String) {

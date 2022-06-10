@@ -111,7 +111,7 @@ class EditorPlayState extends MusicBeatState
 			vocals = new FlxSound();
 
 		generateSong(PlayState.SONG.song);
-		#if LUA_ALLOWED
+		#if (LUA_ALLOWED && MODS_ALLOWED)
 		for (notetype in noteTypeMap.keys()) {
 			var luaToLoad:String = Paths.modFolders('custom_notetypes/' + notetype + '.lua');
 			if(sys.FileSystem.exists(luaToLoad)) {
@@ -556,7 +556,7 @@ class EditorPlayState extends MusicBeatState
 				//var notesDatas:Array<Int> = [];
 				var notesStopped:Bool = false;
 
-				trace('test!');
+				//trace('test!');
 				var sortedNotesList:Array<Note> = [];
 				notes.forEachAlive(function(daNote:Note)
 				{
@@ -564,7 +564,7 @@ class EditorPlayState extends MusicBeatState
 					{
 						if(daNote.noteData == key && !daNote.isSustainNote)
 						{
-							trace('pushed note!');
+							//trace('pushed note!');
 							sortedNotesList.push(daNote);
 							//notesDatas.push(daNote.noteData);
 						}

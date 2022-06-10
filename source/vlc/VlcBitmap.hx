@@ -357,7 +357,7 @@ class VlcBitmap extends Bitmap
 	{
 		var cTime = Lib.getTimer();
 
-		if ((cTime - oldTime) > 28) // min 28 ms between renders, but this is not a good way to do it...
+		if ((cTime - oldTime) > 8.3) // min 8.3 ms between renders, but this is not a good way to do it...
 		{
 			oldTime = cTime;
 
