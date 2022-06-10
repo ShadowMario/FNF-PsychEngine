@@ -16,7 +16,7 @@ If you get an error about StatePointer when using Lua, run `haxelib remove linc_
 
 1. Download
 * <a href = "https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html"> JDK </a> - Download the version `11`
-* <a href = "https://developer.android.com/studio"> Android Studio </a>
+* <a href = "https://developer.android.com/studio"> Android Studio </a> - I recommend to download the latest version
 * <a href = "https://developer.android.com/ndk/downloads/older_releases?hl=fi"> NDK </a> - Download the version `r20b`
 
 2. Install JDK, Android Studio 
