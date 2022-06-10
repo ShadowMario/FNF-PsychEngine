@@ -68,7 +68,7 @@ Don't use discord??? Ignore these, and delete the text on line 133 of Project.xm
 ## Funkin' Lua
 To instal the LuaScript API for Friday Night Funkin', run the following command:
 ```
-haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
+haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
 ```
 ...Or don't. To play without the luascript API, delete the text on line 47 of Project.xml: `<define name="LUA_ALLOWED" if="desktop" />`
 
