@@ -11,6 +11,7 @@ To install LuaJIT do this: `haxelib git linc_luajit https://github.com/jigsaw-42
 ...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
 
 If you get an error about StatePointer when using Lua, run `haxelib remove linc_luajit` into Command Prompt/PowerShell, then re-install linc_luajit.
+_____________________________________
 
 ### Build Instructions For Android:
 
@@ -26,17 +27,17 @@ Unzip NDK (NDK does not need to be installed because is a zip archive)
 ![andr](https://user-images.githubusercontent.com/59097731/104179652-44346000-541d-11eb-8ad1-1e4dfae304a8.PNG)
 ![andr2](https://user-images.githubusercontent.com/59097731/104179943-a9885100-541d-11eb-8f69-7fb5a4bfdd37.PNG)
 
-4. And run command `lime setup android` in power shell / cmd (You need to insert the program paths)
-
-5. You Need to install extension-androidtools and extension-videoview
+6. You Need to install extension-androidtools and extension-videoview
 
 To install `extension-androidtools` do this: `haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools` on a Command prompt/PowerShell
+To install `extension-videoview` do this: `haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-videoview` on a Command prompt/PowerShell
 
-And to install `extension-videoview` do this: `haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-videoview` on a Command prompt/PowerShell
+5. And run command `lime setup android` in power shell / cmd (You need to insert the program paths)
 
 6. Open project in Command prompt/PowerShell `cd (path to fnf source)`
 And run command `lime build android -final`
 Apk will be generated in this path (path to source)\export\release\android\bin\app\build\outputs\apk\debug
+_____________________________________
 
 ## Credits:
 * Shadow Mario - Coding
