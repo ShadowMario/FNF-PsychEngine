@@ -2851,6 +2851,10 @@ class PlayState extends MusicBeatState
 
 			case 'Kill Henchmen':
 				killHenchmen();
+		
+			case 'Change Icon':
+				iconP1.changeIcon(value1);
+				iconP2.changeIcon(value2);
 
 			case 'Add Camera Zoom':
 				if(ClientPrefs.camZooms && FlxG.camera.zoom < 1.35) {
