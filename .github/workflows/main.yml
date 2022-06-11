@@ -170,7 +170,7 @@ jobs:
 
       - uses: nttld/setup-ndk@v1.0.6
         with:
-          ndk-version: r21e
+          ndk-version: r15c
 
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
