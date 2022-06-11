@@ -3934,6 +3934,7 @@ class PlayState extends MusicBeatState
 		Paths.image(pixelShitPart1 + "good" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "bad" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "shit" + pixelShitPart2);
+		Paths.image(pixelShitPart1 + "combo" + pixelShitPart2);
 		
 		for (i in 0...10) {
 			Paths.image(pixelShitPart1 + 'num' + i + pixelShitPart2);
