@@ -1,6 +1,6 @@
 package;
 
-#if android
+#if (android && MODS_ALLOWED)
 import android.AndroidTools;
 import android.stuff.Permissions;
 #end
@@ -22,14 +22,14 @@ import flash.system.System;
 using StringTools;
 
 class SUtil {
-	#if android
+	#if (android && MODS_ALLOWED)
 	private static var grantedPermsList:Array<Permissions> = AndroidTools.getGrantedPermissions(); // granted Permissions
 	private static var aDir:String = null; // android dir 
 	private static var sPath:String = AndroidTools.getExternalStorageDirectory(); // storage dir
 	#end
 
 	static public function getPath():String {
-		#if android
+		#if (android && MODS_ALLOWED)
 		if (aDir != null && aDir.length > 0) {
 			return aDir;
 		} else {
@@ -42,7 +42,7 @@ class SUtil {
 	}
 
 	static public function doTheCheck() {
-		#if android
+		#if (android && MODS_ALLOWED)
 		if (!grantedPermsList.contains(Permissions.READ_EXTERNAL_STORAGE) || !grantedPermsList.contains(Permissions.WRITE_EXTERNAL_STORAGE)) {
 			if (AndroidTools.sdkVersion > 23 || AndroidTools.sdkVersion == 23) {
 				AndroidTools.requestPermissions([Permissions.READ_EXTERNAL_STORAGE, Permissions.WRITE_EXTERNAL_STORAGE]);
@@ -110,11 +110,13 @@ class SUtil {
 
 		errMsg += e.error;
 
-		if (!FileSystem.exists(SUtil.getPath() + 'crash')){
+		#if MODS_ALLOWED
+		if (!FileSystem.exists(SUtil.getPath() + 'crash')) {
 			FileSystem.createDirectory(SUtil.getPath() + 'crash');
 		}
 
 		File.saveContent(SUtil.getPath() + path, errMsg + '\n');
+		#end
 
 		Sys.println(errMsg);
 		Sys.println('Crash dump saved in ' + Path.normalize(path));
@@ -130,24 +132,30 @@ class SUtil {
 
 	#if android
 	static public function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code'){
+		#if MODS_ALLOWED
 		if (!FileSystem.exists(SUtil.getPath() + 'saves')){
 			FileSystem.createDirectory(SUtil.getPath() + 'saves');
 		}
 
 		File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
 		SUtil.applicationAlert('Done Action :)', 'File Saved Successfully!');
+		#else
+		SUtil.saveClipboard(fileData);
+		#end
 	}
 
-	static public function saveClipboard(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code'){
+	static public function saveClipboard(fileData:String = 'you forgot something to add in your code'){
 		openfl.system.System.setClipboard(fileData);
 		SUtil.applicationAlert('Done Action :)', 'Data Saved to Clipboard Successfully!');
 	}
 
 	static public function copyContent(copyPath:String, savePath:String) {
-		if (!FileSystem.exists(savePath)){
+		#if MODS_ALLOWED
+		if (!FileSystem.exists(savePath)) {
 			var bytes = OpenFlAssets.getBytes(copyPath);
 			File.saveBytes(savePath, bytes);
 		}
+		#end
 	}
 	#end
 }

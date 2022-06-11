@@ -161,7 +161,6 @@ class FlxVirtualPad extends FlxSpriteGroup
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
 		#end
-
 		return button;
 	}
 

@@ -1,5 +1,6 @@
 package android.flixel;
 
+import flixel.util.FlxDestroyUtil;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.FlxGraphic;
 import flixel.group.FlxSpriteGroup;
@@ -11,12 +12,13 @@ import flixel.FlxSprite;
 // Mofifications by saw (m.a. jigsaw)
 class FlxHitbox extends FlxSpriteGroup 
 {
-	public var hitbox:FlxSpriteGroup;
-
 	public var buttonLeft:FlxButton;
 	public var buttonDown:FlxButton;
 	public var buttonUp:FlxButton;
 	public var buttonRight:FlxButton;
+
+	public var hitbox:FlxSpriteGroup;
+	public var hints:FlxSprite;
 	
 	public function new()
 	{
@@ -33,7 +35,7 @@ class FlxHitbox extends FlxSpriteGroup
 		hitbox.add(add(buttonUp = createhitbox(640, 0, 'up')));
 		hitbox.add(add(buttonRight = createhitbox(960, 0, 'right')));
 
-		var hints:FlxSprite = new FlxSprite(0, 0);
+		hints = new FlxSprite(0, 0);
 		hints.loadGraphic(Paths.image('android/hitbox_hint'));
 		hints.antialiasing = ClientPrefs.globalAntialiasing;
 		hints.alpha = 0.75;
@@ -44,23 +46,14 @@ class FlxHitbox extends FlxSpriteGroup
 	{
 		var button = new FlxButton(x, y);
 		button.loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
+		button.alpha = 0.00001;
 		button.antialiasing = ClientPrefs.globalAntialiasing;
-		button.alpha = 0;
-		button.onDown.callback = function() {
-			FlxTween.num(0, 0.75, 0.075, {ease:FlxEase.circInOut}, function(alpha:Float){ 
-				button.alpha = alpha;
-			});
-		};
-		button.onUp.callback = function() {
-			FlxTween.num(0.75, 0, 0.1, {ease:FlxEase.circInOut}, function(alpha:Float){
-				button.alpha = alpha;
-			});
-		}
-		button.onOut.callback = function() {
-			FlxTween.num(button.alpha, 0, 0.2, {ease:FlxEase.circInOut}, function(alpha:Float){ 
-				button.alpha = alpha;
-			});
-		}
+		button.onDown.callback = function() {FlxTween.num(0.00001, 0.75, 0.075, {ease:FlxEase.circInOut}, function(alpha:Float) {button.alpha = alpha;});}
+		button.onUp.callback = function() {FlxTween.num(0.75, 0.00001, 0.1, {ease:FlxEase.circInOut}, function(alpha:Float) {button.alpha = alpha;});}
+		button.onOut.callback = function() {FlxTween.num(button.alpha, 0.00001, 0.2, {ease:FlxEase.circInOut}, function(alpha:Float) {button.alpha = alpha;});}
+		#if FLX_DEBUG
+		button.ignoreDrawDebug = true;
+		#end
 		return button;
 	}
 
@@ -72,6 +65,10 @@ class FlxHitbox extends FlxSpriteGroup
 	override public function destroy():Void
 	{
 		super.destroy();
+
+		hitbox = FlxDestroyUtil.destroy(hitbox);
+		hitbox = null;
+		hints = null;
 
 		buttonLeft = null;
 		buttonDown = null;
