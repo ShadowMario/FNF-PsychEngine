@@ -28,13 +28,13 @@ Unzip NDK (NDK does not need to be installed because is a zip archive)
 
 4. And run command `lime setup android` in power shell / cmd (You need to insert the program paths)
 
-3. You Need to install extension-androidtools and extension-videoview
+5. You Need to install extension-androidtools and extension-videoview
 
 To install `extension-androidtools` do this: `haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools` on a Command prompt/PowerShell
 
 And to install `extension-videoview` do this: `haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-videoview` on a Command prompt/PowerShell
 
-4. Open project in Command prompt/PowerShell `cd (path to fnf source)`
+6. Open project in Command prompt/PowerShell `cd (path to fnf source)`
 And run command `lime build android -final`
 Apk will be generated in this path (path to source)\export\release\android\bin\app\build\outputs\apk\debug
 
