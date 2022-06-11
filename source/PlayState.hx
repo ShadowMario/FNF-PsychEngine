@@ -1335,8 +1335,6 @@ class PlayState extends MusicBeatState
 
 		super.create();
 
-		Paths.clearUnusedMemory();
-
 		cacheCountdown();
 		cachePopUpScore();
 		for (key => type in precacheList)
@@ -1352,6 +1350,8 @@ class PlayState extends MusicBeatState
 					Paths.music(key);
 			}
 		}
+		Paths.clearUnusedMemory();
+		
 		CustomFadeTransition.nextCamera = camOther;
 	}
 
