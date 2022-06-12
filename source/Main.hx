@@ -33,7 +33,7 @@ class Main extends Sprite
 	{
 		super();
 
- 	        SUtil.gameCrashCheck();
+		SUtil.gameCrashCheck();
 
 		if (stage != null)
 		{
@@ -88,6 +88,8 @@ class Main extends Sprite
 
 		#if html5
 		FlxG.autoPause = false;
+		FlxG.mouse.visible = false;
+		#elseif android
 		FlxG.mouse.visible = false;
 		#end
 	}

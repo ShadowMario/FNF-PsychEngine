@@ -2,11 +2,11 @@ package android;
 
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
-import android.flixel.FlxButton;
 import flixel.input.touch.FlxTouch;
 import flixel.text.FlxText;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import android.flixel.FlxButton;
 import android.AndroidControls.Config;
 import android.flixel.FlxHitbox;
 import android.flixel.FlxVirtualPad;
@@ -24,16 +24,15 @@ class AndroidControlsMenu extends MusicBeatState
 	var inputvari:PsychAlphabet;
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
-	var controlitems:Array<String> = ['Pad-Right','Pad-Left','Pad-Custom','Duo','Hitbox','Keyboard'];
+	var controlitems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Duo', 'Hitbox', 'Keyboard'];
 	var curSelected:Int = 0;
 	var buttonistouched:Bool = false;
 	var bindbutton:FlxButton;
+	var resetbutton:FlxButton;
 	var config:Config;
 
-	override public function create():Void
+	override function create()
 	{
-		super.create();
-		
 		config = new Config();
 		curSelected = config.getcontrolmode();
 
@@ -48,8 +47,15 @@ class AndroidControlsMenu extends MusicBeatState
 		titleText.alpha = 0.4;
 		add(titleText);
 
+		resetbutton = new FlxButton(FlxG.width - 200, 50, "Exit");
+		resetbutton.setGraphicSize(Std.int(resetbutton.width) * 3);
+		resetbutton.label.setFormat(null, 16, 0x333333, "center");
+		resetbutton.color = FlxColor.fromRGB(255, 0, 0);
+		resetbutton.visible = false;
+		add(resetbutton);
+
 		vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
-		vpad.alpha = 0;
+		vpad.visible = false;
 		add(vpad);
 
 		hbox = new FlxHitbox();
@@ -103,38 +109,39 @@ class AndroidControlsMenu extends MusicBeatState
 		add(tipText);
 
 		changeSelection();
+
+		super.create();
 	}
 
 	override function update(elapsed:Float)
 	{
-		super.update(elapsed);
-
 		leftArrow.x = inputvari.x - 60;
 		rightArrow.x = inputvari.x + inputvari.width + 10;
 		inputvari.screenCenter(X);
 		
-		for (touch in FlxG.touches.list){		
+		for (touch in FlxG.touches.list)
+		{
 			if(touch.overlaps(leftArrow) && touch.justPressed)
-			{
 				changeSelection(-1);
-			}
 			else if (touch.overlaps(rightArrow) && touch.justPressed)
-			{
 				changeSelection(1);
-			}
+
 			trackbutton(touch);
 		}
-		
-		#if android
+
+		if (resetbutton.justPressed && resetbutton.visible == true)
+			reset();
+
 		if (FlxG.android.justReleased.BACK)
 		{
 			save();
 			MusicBeatState.switchState(new options.OptionsState());
 		}
-		#end
+
+		super.update(elapsed);
 	}
 
-	function changeSelection(change:Int = 0)
+	function changeSelection(change:Int = 0):Void
 	{
 		curSelected += change;
 	
@@ -149,115 +156,126 @@ class AndroidControlsMenu extends MusicBeatState
 
 		switch (daChoice)
 		{
-				case 'Pad-Right':
-					remove(vpad);
-					vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
-					add(vpad);
-				case 'Pad-Left':
-					remove(vpad);
-					vpad = new FlxVirtualPad(FULL, NONE);
-					add(vpad);
-				case 'Pad-Custom':
-					remove(vpad);
-					vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
-					add(vpad);
-					loadcustom();
-				case 'Duo':
-					remove(vpad);
-					vpad = new FlxVirtualPad(DUO, NONE);
-					add(vpad);
-				case 'Hitbox':
-					vpad.alpha = 0;
-				case 'Keyboard':
-					remove(vpad);
-					vpad.alpha = 0;
+			case 'Pad-Right':
+				remove(vpad);
+				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
+				add(vpad);
+			case 'Pad-Left':
+				remove(vpad);
+				vpad = new FlxVirtualPad(FULL, NONE);
+				add(vpad);
+			case 'Pad-Custom':
+				remove(vpad);
+				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
+				add(vpad);
+				loadcustom();
+			case 'Duo':
+				remove(vpad);
+				vpad = new FlxVirtualPad(DUO, NONE);
+				add(vpad);
+			case 'Hitbox':
+				vpad.visible = false;
+			case 'Keyboard':
+				remove(vpad);
+				vpad.visible = false;
 		}
 
-		if (daChoice != 'Hitbox')
-		{
-			hbox.visible = false;
-		}
-		else
-		{
+		if (daChoice == 'Hitbox')
 			hbox.visible = true;
-		}
-
-		if (daChoice != 'Pad-Custom')
-		{
-			upPozition.visible = false;
-			downPozition.visible = false;
-			leftPozition.visible = false;
-			rightPozition.visible = false;
-		}
 		else
+			hbox.visible = false;
+
+		if (daChoice == 'Pad-Custom')
 		{
 			upPozition.visible = true;
 			downPozition.visible = true;
 			leftPozition.visible = true;
 			rightPozition.visible = true;
 		}
+		else
+		{
+			upPozition.visible = false;
+			downPozition.visible = false;
+			leftPozition.visible = false;
+			rightPozition.visible = false;
+		}
 	}
 
-	function trackbutton(touch:FlxTouch){
+	function trackbutton(touch:FlxTouch):Void
+	{
 		var daChoice:String = controlitems[Math.floor(curSelected)];
 
-		if (daChoice == 'Pad-Custom'){
-			if (buttonistouched){
+		if (daChoice == 'Pad-Custom')
+		{
+			if (buttonistouched)
+			{
 				if (bindbutton.justReleased && touch.justReleased)
 				{
 					bindbutton = null;
 					buttonistouched = false;
-				}else 
+				}
+				else 
 				{
 					movebutton(touch, bindbutton);
-					setbuttontexts();
+					positionsTexts();
 				}
 			}
 			else 
 			{
-				if (vpad.buttonUp.justPressed) {
+				if (vpad.buttonUp.justPressed)
 					movebutton(touch, vpad.buttonUp);
-				}
-				
-				if (vpad.buttonDown.justPressed) {
+
+				if (vpad.buttonDown.justPressed)
 					movebutton(touch, vpad.buttonDown);
-				}
 
-				if (vpad.buttonRight.justPressed) {
+				if (vpad.buttonRight.justPressed)
 					movebutton(touch, vpad.buttonRight);
-				}
 
-				if (vpad.buttonLeft.justPressed) {
+				if (vpad.buttonLeft.justPressed)
 					movebutton(touch, vpad.buttonLeft);
-				}
 			}
 		}
 	}
 
-	function movebutton(touch:FlxTouch, button:FlxButton) {
-		button.x = touch.x - vpad.buttonUp.width / 2;
-		button.y = touch.y - vpad.buttonUp.height / 2;
+	function movebutton(touch:FlxTouch, button:FlxButton):Void
+	{
+		button.x = touch.x - button.width;
+		button.y = touch.y - button.height;
 		bindbutton = button;
 		buttonistouched = true;
 	}
 
-	function setbuttontexts() {
+	function positionsTexts():Void
+	{
 		upPozition.text = 'Button Up X:' + vpad.buttonUp.x +' Y:' + vpad.buttonUp.y;
 		downPozition.text = 'Button Down X:' + vpad.buttonDown.x +' Y:' + vpad.buttonDown.y;
 		leftPozition.text = 'Button Left X:' + vpad.buttonLeft.x +' Y:' + vpad.buttonLeft.y;
 		rightPozition.text = 'Button RIght x:' + vpad.buttonRight.x +' Y:' + vpad.buttonRight.y;
 	}
 
-	function save() {
+	function save():Void
+	{
 		config.setcontrolmode(curSelected);
 		var daChoice:String = controlitems[Math.floor(curSelected)];
 
-		if (daChoice == 'Pad-Custom'){
+		if (daChoice == 'Pad-Custom')
 			config.savecustom(vpad);
-		}
 	}
 
-	function loadcustom():Void{
+	function reset():Void
+	{
+		vpad.buttonUp.y = FlxG.height - 66 - 116 * 3;
+		vpad.buttonUp.x = FlxG.width - 86 * 3;
+		vpad.buttonDown.y = FlxG.height - 66 - 45 * 3;
+		vpad.buttonDown.x = FlxG.width - 86 * 3;
+		vpad.buttonRight.y = FlxG.height - 66 - 81 * 3;
+		vpad.buttonRight.x = FlxG.width - 44 * 3;
+		vpad.buttonLeft.y = FlxG.height - 66 - 81 * 3;
+		vpad.buttonLeft.x = FlxG.width - 128 * 3;
+	}
+
+	function loadcustom():Void
+	{
 		vpad = config.loadcustom(vpad);	
 	}
 }
