@@ -62,8 +62,7 @@ class FlxJoyStick extends FlxSpriteGroup
 	function createBase():Void
 	{
 		base = new FlxSprite(0, 0);
-		base.frames = getFrames();
-		base.animation.frameName = 'base';
+		base.loadGraphic(FlxGraphic.fromFrame(getFrames().getByName('base')));
 		base.resetSizeFromFrame();
 		base.x += -base.width * 1.5;
 		base.y += -base.height * 1.5;
@@ -78,8 +77,7 @@ class FlxJoyStick extends FlxSpriteGroup
 	function createThumb():Void
 	{
 		thumb = new FlxSprite(0, 0);
-		thumb.frames = getFrames();
-		thumb.animation.frameName = 'thumb';
+		thumb.loadGraphic(FlxGraphic.fromFrame(getFrames().getByName('thumb')));
 		thumb.resetSizeFromFrame();
 		thumb.scrollFactor.set();
 		thumb.solid = false;
@@ -91,7 +89,7 @@ class FlxJoyStick extends FlxSpriteGroup
 
 	public static function getFrames():FlxAtlasFrames
 	{
-		return Paths.getPackerAtlas('android/joystick');
+		return Paths.getSparrowAtlas('android/joystick');
 	}
 
 	function createZone():Void
