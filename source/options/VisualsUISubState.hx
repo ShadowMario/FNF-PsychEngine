@@ -88,6 +88,15 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		option.decimals = 1;
 		addOption(option);
+
+		#if android
+		var option:Option = new Option('VPad FNF Arrow Colours',
+			'If unchecked, The colours of the vpad will be like\nthe og fnf ones.',
+			'fnfPadColours',
+			'bool',
+			 false);
+		addOption(option);
+		#end
 		
 		var option:Option = new Option('FPS Counter',
 			'If unchecked, hides FPS Counter.',

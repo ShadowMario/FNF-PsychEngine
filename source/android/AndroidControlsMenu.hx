@@ -30,7 +30,6 @@ class AndroidControlsMenu extends MusicBeatState
 	var bindButton:FlxButton;
 	var resetButton:FlxButton;
 	var config:Config;
-	var daChoice:String;
 
 	override function create()
 	{
@@ -120,8 +119,6 @@ class AndroidControlsMenu extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		daChoice = controlitems[Math.floor(curSelected)];
-
 		leftArrow.x = inputvari.x - 60;
 		rightArrow.x = inputvari.x + inputvari.width + 10;
 		inputvari.screenCenter(X);
@@ -155,6 +152,8 @@ class AndroidControlsMenu extends MusicBeatState
 			curSelected = 0;
 	
 		inputvari.changeText(controlitems[curSelected]);
+
+		var daChoice:String = controlitems[Math.floor(curSelected)];
 
 		switch (daChoice)
 		{
@@ -207,6 +206,8 @@ class AndroidControlsMenu extends MusicBeatState
 
 	function trackButton(touch:FlxTouch):Void
 	{
+		var daChoice:String = controlitems[Math.floor(curSelected)];
+
 		if (daChoice == 'Pad-Custom')
 		{
 			if (buttonIsTouched)
@@ -243,8 +244,8 @@ class AndroidControlsMenu extends MusicBeatState
 	{
 		bindButton = button;
 
-		button.x = touch.x - button.getMidpoint().x;
-		button.y = touch.y - button.getMidpoint().y;
+		bindButton.x = touch.x - bindButton.width / 2;
+		bindButton.y = touch.y - bindButton.height / 2;
 
 		buttonIsTouched = true;
 	}
@@ -260,6 +261,8 @@ class AndroidControlsMenu extends MusicBeatState
 	function save():Void
 	{
 		config.setcontrolmode(curSelected);
+
+		var daChoice:String = controlitems[Math.floor(curSelected)];
 
 		if (daChoice == 'Pad-Custom')
 			config.savecustom(vpad);
