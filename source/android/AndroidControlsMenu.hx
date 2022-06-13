@@ -26,10 +26,11 @@ class AndroidControlsMenu extends MusicBeatState
 	var rightArrow:FlxSprite;
 	var controlitems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Duo', 'Hitbox', 'Keyboard'];
 	var curSelected:Int = 0;
-	var buttonistouched:Bool = false;
-	var bindbutton:FlxButton;
+	var buttonIsTouched:Bool = false;
+	var bindButton:FlxButton;
 	var resetbutton:FlxButton;
 	var config:Config;
+	var daChoice:String;
 
 	override function create()
 	{
@@ -115,6 +116,8 @@ class AndroidControlsMenu extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		daChoice = controlitems[Math.floor(curSelected)];
+
 		leftArrow.x = inputvari.x - 60;
 		rightArrow.x = inputvari.x + inputvari.width + 10;
 		inputvari.screenCenter(X);
@@ -126,7 +129,7 @@ class AndroidControlsMenu extends MusicBeatState
 			else if (touch.overlaps(rightArrow) && touch.justPressed)
 				changeSelection(1);
 
-			trackbutton(touch);
+			trackButton(touch);
 		}
 
 		if (resetbutton.justPressed && resetbutton.visible == true)
@@ -152,8 +155,6 @@ class AndroidControlsMenu extends MusicBeatState
 	
 		inputvari.changeText(controlitems[curSelected]);
 
-		var daChoice:String = controlitems[Math.floor(curSelected)];
-
 		switch (daChoice)
 		{
 			case 'Pad-Right':
@@ -168,7 +169,7 @@ class AndroidControlsMenu extends MusicBeatState
 				remove(vpad);
 				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
 				add(vpad);
-				loadcustom();
+				loadCustom();
 			case 'Duo':
 				remove(vpad);
 				vpad = new FlxVirtualPad(DUO, NONE);
@@ -203,48 +204,47 @@ class AndroidControlsMenu extends MusicBeatState
 		}
 	}
 
-	function trackbutton(touch:FlxTouch):Void
+	function trackButton(touch:FlxTouch):Void
 	{
-		var daChoice:String = controlitems[Math.floor(curSelected)];
-
 		if (daChoice == 'Pad-Custom')
 		{
 			if (buttonistouched)
 			{
-				if (bindbutton.justReleased && touch.justReleased)
+				if (bindButton.justReleased && touch.justReleased)
 				{
-					bindbutton = null;
-					buttonistouched = false;
+					bindButton = null;
+					buttonIsTouched = false;
 				}
 				else 
 				{
-					movebutton(touch, bindbutton);
+					moveButton(touch, bindbutton);
 					positionsTexts();
 				}
 			}
 			else 
 			{
 				if (vpad.buttonUp.justPressed)
-					movebutton(touch, vpad.buttonUp);
+					moveButton(touch, vpad.buttonUp);
 
 				if (vpad.buttonDown.justPressed)
-					movebutton(touch, vpad.buttonDown);
+					moveButton(touch, vpad.buttonDown);
 
 				if (vpad.buttonRight.justPressed)
-					movebutton(touch, vpad.buttonRight);
+					moveButton(touch, vpad.buttonRight);
 
 				if (vpad.buttonLeft.justPressed)
-					movebutton(touch, vpad.buttonLeft);
+					moveButton(touch, vpad.buttonLeft);
 			}
 		}
 	}
 
-	function movebutton(touch:FlxTouch, button:FlxButton):Void
+	function moveButton(touch:FlxTouch, button:FlxButton):Void
 	{
-		button.x = touch.x - button.width;
-		button.y = touch.y - button.height;
-		bindbutton = button;
-		buttonistouched = true;
+		button.x = touch.x - button.width / 2;
+		button.y = touch.y - button.height / 2;
+
+		bindButton = button;
+		buttonIsTouched = true;
 	}
 
 	function positionsTexts():Void
@@ -258,7 +258,6 @@ class AndroidControlsMenu extends MusicBeatState
 	function save():Void
 	{
 		config.setcontrolmode(curSelected);
-		var daChoice:String = controlitems[Math.floor(curSelected)];
 
 		if (daChoice == 'Pad-Custom')
 			config.savecustom(vpad);
@@ -276,7 +275,7 @@ class AndroidControlsMenu extends MusicBeatState
 		vpad.buttonLeft.x = FlxG.width - 128 * 3;
 	}
 
-	function loadcustom():Void
+	function loadCustom():Void
 	{
 		vpad = config.loadcustom(vpad);	
 	}
