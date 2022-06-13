@@ -28,7 +28,7 @@ class AndroidControlsMenu extends MusicBeatState
 	var curSelected:Int = 0;
 	var buttonIsTouched:Bool = false;
 	var bindButton:FlxButton;
-	var resetbutton:FlxButton;
+	var resetButton:FlxButton;
 	var config:Config;
 	var daChoice:String;
 
@@ -48,12 +48,16 @@ class AndroidControlsMenu extends MusicBeatState
 		titleText.alpha = 0.4;
 		add(titleText);
 
-		resetbutton = new FlxButton(FlxG.width - 200, 50, "Reset Positions");
-		resetbutton.setGraphicSize(Std.int(resetbutton.width) * 3);
-		resetbutton.label.setFormat(null, 16, 0x333333, "center");
-		resetbutton.color = FlxColor.fromRGB(255, 0, 0);
-		resetbutton.visible = false;
-		add(resetbutton);
+		resetButton = new FlxButton(FlxG.width - 200, 50, "Reset Positions", function()
+		{
+			if (resetButton.visible)
+				reset();
+		});
+		resetButton.setGraphicSize(Std.int(resetButton.width) * 3);
+		resetButton.label.setFormat(null, 16, 0x333333, "center");
+		resetButton.color = FlxColor.fromRGB(255, 0, 0);
+		resetButton.visible = false;
+		add(resetButton);
 
 		vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
 		vpad.visible = false;
@@ -121,7 +125,7 @@ class AndroidControlsMenu extends MusicBeatState
 		leftArrow.x = inputvari.x - 60;
 		rightArrow.x = inputvari.x + inputvari.width + 10;
 		inputvari.screenCenter(X);
-		
+
 		for (touch in FlxG.touches.list)
 		{
 			if(touch.overlaps(leftArrow) && touch.justPressed)
@@ -131,9 +135,6 @@ class AndroidControlsMenu extends MusicBeatState
 
 			trackButton(touch);
 		}
-
-		if (resetbutton.justPressed && resetbutton.visible == true)
-			reset();
 
 		if (FlxG.android.justReleased.BACK)
 		{
@@ -188,7 +189,7 @@ class AndroidControlsMenu extends MusicBeatState
 
 		if (daChoice == 'Pad-Custom')
 		{
-			resetbutton.visible = true;
+			resetButton.visible = true;
 			upPozition.visible = true;
 			downPozition.visible = true;
 			leftPozition.visible = true;
@@ -196,7 +197,7 @@ class AndroidControlsMenu extends MusicBeatState
 		}
 		else
 		{
-			resetbutton.visible = false;
+			resetButton.visible = false;
 			upPozition.visible = false;
 			downPozition.visible = false;
 			leftPozition.visible = false;
@@ -208,7 +209,7 @@ class AndroidControlsMenu extends MusicBeatState
 	{
 		if (daChoice == 'Pad-Custom')
 		{
-			if (buttonistouched)
+			if (buttonIsTouched)
 			{
 				if (bindButton.justReleased && touch.justReleased)
 				{
@@ -217,7 +218,7 @@ class AndroidControlsMenu extends MusicBeatState
 				}
 				else 
 				{
-					moveButton(touch, bindbutton);
+					moveButton(touch, bindButton);
 					positionsTexts();
 				}
 			}
@@ -240,10 +241,11 @@ class AndroidControlsMenu extends MusicBeatState
 
 	function moveButton(touch:FlxTouch, button:FlxButton):Void
 	{
-		button.x = touch.x - button.width / 2;
-		button.y = touch.y - button.height / 2;
-
 		bindButton = button;
+
+		button.x = touch.x - button.getMidpoint().x;
+		button.y = touch.y - button.getMidpoint().y;
+
 		buttonIsTouched = true;
 	}
 
