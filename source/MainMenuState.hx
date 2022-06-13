@@ -89,8 +89,7 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		if (menuJSON.options != null && menuJSON.options.length > 0)
-		{
+		if (menuJSON.options != null && menuJSON.options.length > 0) {
 			optionShit = menuJSON.options;
 		} else {
 			optionShit = [
@@ -107,11 +106,12 @@ class MainMenuState extends MusicBeatState
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 		var bg:FlxSprite = new FlxSprite();
 		bg.loadGraphic(Paths.image('menuBG'));
-		if (menuJSON.backgroundStatic != null && menuJSON.backgroundStatic.length > 0 && menuJSON.backgroundStatic != "none"){
+
+		if (menuJSON.backgroundStatic != null && menuJSON.backgroundStatic.length > 0 && menuJSON.backgroundStatic != "none")
 			bg.loadGraphic(Paths.image(menuJSON.backgroundStatic));
-		}else{
+		else
 			bg.loadGraphic(Paths.image('menuBG'));
-		}
+
 		bg.x = menuJSON.bgX;
 		bg.y = menuJSON.bgY;
 		bg.scrollFactor.set(0, yScroll);
@@ -127,11 +127,12 @@ class MainMenuState extends MusicBeatState
 		add(camFollowPos);
 
 		magenta = new FlxSprite();
-		if (menuJSON.backgroundConfirm != null && menuJSON.backgroundConfirm.length > 0 && menuJSON.backgroundConfirm != "none"){
+
+		if (menuJSON.backgroundConfirm != null && menuJSON.backgroundConfirm.length > 0 && menuJSON.backgroundConfirm != "none")
 			magenta.loadGraphic(Paths.image(menuJSON.backgroundConfirm));
-		}else{
+		else
 			magenta.loadGraphic(Paths.image('menuDesat'));
-		}
+
 		magenta.x = menuJSON.bgX;
 		magenta.y = menuJSON.bgY;
 		magenta.scrollFactor.set(0, yScroll);
@@ -140,10 +141,12 @@ class MainMenuState extends MusicBeatState
 		magenta.screenCenter();
 		magenta.visible = false;
 		magenta.antialiasing = ClientPrefs.globalAntialiasing;
+
 		if (menuJSON.colorOnConfirm != null && menuJSON.colorOnConfirm.length > 0)
 			magenta.color = FlxColor.fromRGB(menuJSON.colorOnConfirm[0], menuJSON.colorOnConfirm[1], menuJSON.colorOnConfirm[2]);
 		else
 			magenta.color = 0xFFfd719b;
+
 		add(magenta);
 		
 		// magenta.scrollFactor.set();
@@ -152,14 +155,25 @@ class MainMenuState extends MusicBeatState
 		add(menuItems);
 
 		var invalidPosition:Null<Int> = null;
+		var scale = 1;
 		for (i in 0...optionShit.length)
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(0, (i * 140)  + offset);
-			menuItem.scale.x = menuJSON.scaleX;
-			menuItem.scale.y = menuJSON.scaleY;
+
+			if (menuJSON.scaleX != null && menuJSON.scaleX.length > 0)
+				menuItem.scale.x = menuJSON.scaleX;
+			else
+				menuJSON.scale.x = scale;
+
+			if (menuJSON.scaleY != null && menuJSON.scaleY.length > 0)
+				menuItem.scale.y = menuJSON.scaleY;
+			else
+				menuJSON.scale.y = scale;
+
 			if (menuJSON.optionX != invalidPosition) menuItem.x = menuJSON.optionX;
 			if (menuJSON.optionY != invalidPosition) menuItem.y = menuJSON.optionY;
+
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
