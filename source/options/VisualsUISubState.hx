@@ -90,9 +90,9 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		#if android
-		var option:Option = new Option('VPad FNF Arrow Colours',
-			'If unchecked, The colours of the vpad will be like\nthe og fnf ones.',
-			'fnfPadColours',
+		var option:Option = new Option('Visual Controls FNF Colours',
+			'If unchecked, The colours of the visual controls\nwill be like the og fnf ones.',
+			'fnfColours',
 			'bool',
 			 false);
 		addOption(option);

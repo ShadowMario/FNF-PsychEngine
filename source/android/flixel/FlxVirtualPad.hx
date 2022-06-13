@@ -150,16 +150,16 @@ class FlxVirtualPad extends FlxSpriteGroup
 
 	public function createButton(x:Float, y:Float, width:Int, height:Int, frames:String, ?color:FlxColor):FlxButton
 	{
-		var button = new FlxButton(x, y);
+		var button:FlxButton = new FlxButton(x, y);
 		button.frames = FlxTileFrames.fromFrame(getFrames().getByName(frames), FlxPoint.get(width, height));
 		button.resetSizeFromFrame();
 		button.solid = false;
 		button.immovable = true;
 		button.scrollFactor.set();
 		button.alpha = 0.75;
-		if (color != null && ClientPrefs.fnfPadColours)
-			button.color = color;
 		button.antialiasing = ClientPrefs.globalAntialiasing;
+		if (color != null && ClientPrefs.fnfColours)
+			button.color = color;
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
 		#end
