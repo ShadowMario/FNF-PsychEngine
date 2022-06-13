@@ -5,10 +5,10 @@
 	<SubTexture name="up" x="792" y="0" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
 	<SubTexture name="right" x="1188" y="0" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
 	<SubTexture name="a" x="0" y="135" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
-	<SubTexture name="b" x="396" y="135" width="396" height="135" frameX="p" frameY="0" frameWidth="396" frameHeight="135"/>
+	<SubTexture name="b" x="396" y="135" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
 	<SubTexture name="c" x="792" y="135" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
 	<SubTexture name="y" x="1188" y="135" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
-	<SubTexture name="x" x="0" y="270" width="396" height="135" frameX="0" frameY="270" frameWidth="396" frameHeight="135"/>
+	<SubTexture name="x" x="0" y="270" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
 	<SubTexture name="z" x="396" y="270" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
 	<SubTexture name="v" x="792" y="270" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
 	<SubTexture name="g" x="1188" y="270" width="396" height="135" frameX="0" frameY="0" frameWidth="396" frameHeight="135"/>
