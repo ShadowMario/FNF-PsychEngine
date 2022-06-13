@@ -35,10 +35,11 @@ typedef MenuData =
 	centerOptions:Bool,
 	optionX:Float,
 	optionY:Float,
-	bgX:Float,
-	bgY:Float,
 	scaleX:Float,
 	scaleY:Float,
+	angle:Float,
+	bgX:Float,
+	bgY:Float,
 	backgroundStatic:String,
 	backgroundConfirm:String,
 	colorOnConfirm:Array<FlxColor>,
@@ -161,6 +162,11 @@ class MainMenuState extends MusicBeatState
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(0, (i * 140)  + offset);
 
+			if (menuJSON.optionX != invalidPosition) menuItem.x = menuJSON.optionX;
+			if (menuJSON.optionY != invalidPosition) menuItem.y = menuJSON.optionY;
+
+			if (menuJSON.angle != invalidPosition) menuItem.angle = menuJSON.angle;
+
 			if (menuJSON.scaleX != invalidPosition)
 				menuItem.scale.x = menuJSON.scaleX;
 			else
@@ -170,9 +176,6 @@ class MainMenuState extends MusicBeatState
 				menuItem.scale.y = menuJSON.scaleY;
 			else
 				menuItem.scale.y = scale;
-
-			if (menuJSON.optionX != invalidPosition) menuItem.x = menuJSON.optionX;
-			if (menuJSON.optionY != invalidPosition) menuItem.y = menuJSON.optionY;
 
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
