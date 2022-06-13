@@ -164,12 +164,12 @@ class MainMenuState extends MusicBeatState
 			if (menuJSON.scaleX != null && menuJSON.scaleX.length > 0)
 				menuItem.scale.x = menuJSON.scaleX;
 			else
-				menuJSON.scale.x = scale;
+				menuItem.scale.x = scale;
 
 			if (menuJSON.scaleY != null && menuJSON.scaleY.length > 0)
 				menuItem.scale.y = menuJSON.scaleY;
 			else
-				menuJSON.scale.y = scale;
+				menuItem.scale.y = scale;
 
 			if (menuJSON.optionX != invalidPosition) menuItem.x = menuJSON.optionX;
 			if (menuJSON.optionY != invalidPosition) menuItem.y = menuJSON.optionY;
