@@ -94,7 +94,7 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		if (menuJSON.options != null && menuJSON.options.length > 0) {
+		if (menuJSON.options != null && menuJSON.options.length > 0 && menuJSON.options.length < 13) {
 			optionShit = menuJSON.options;
 		} else {
 			optionShit = [
