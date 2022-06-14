@@ -67,6 +67,8 @@ class MainMenuState extends MusicBeatState
 
 	var menuJSON:MenuData;
 
+	var linkArray:Array<Array<String>> = [];
+
 	override function create()
 	{
 		WeekData.loadTheFirstEnabledMod();
@@ -104,6 +106,10 @@ class MainMenuState extends MusicBeatState
 				#if !switch 'donate', #end
 				'options'
 			];
+		}
+
+		for(i in menuJSON.links){
+			linkArray.push(i);
 		}
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
@@ -270,8 +276,8 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == '${menuJSON.links[0]}') {
-					CoolUtil.browserLoad('${menuJSON.links[1]}');
+				if (optionShit[curSelected] == linkArray[curSelected][0]) {
+					CoolUtil.browserLoad(linkArray[curSelected][1]);
 				}
 				else if (optionShit[curSelected] == 'donate') {
 					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
