@@ -1,6 +1,7 @@
 {	
 	"enableReloadKey":false,
 	"centerOptions":true,
+	"alignToCenter":true,
 	"optionX":null,
 	"optionY":null,
 	"scaleX":1,
@@ -11,5 +12,6 @@
 	"backgroundStatic":"",
 	"backgroundConfirm":"",
 	"colorOnConfirm": [],
-	"options": []
+	"options": [],
+	"links": []
 }
