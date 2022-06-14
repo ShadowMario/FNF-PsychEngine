@@ -2865,10 +2865,14 @@ class ChartingState extends MusicBeatState
 
 	function loadJson(song:String):Void
 	{
+		//shitty null fix, i fucking hate it when this happens
 		//make it look sexier if possible
 		if (CoolUtil.difficulties[PlayState.storyDifficulty] != "Normal"){
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase()+"-"+CoolUtil.difficulties[PlayState.storyDifficulty], song.toLowerCase());
-
+			if(CoolUtil.difficulties[PlayState.storyDifficulty] == null){
+				PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+			}else{
+				PlayState.SONG = Song.loadFromJson(song.toLowerCase()+"-"+CoolUtil.difficulties[PlayState.storyDifficulty], song.toLowerCase());
+			}
 		}else{
 		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
 		}
