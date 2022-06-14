@@ -58,16 +58,16 @@ class MainMenuState extends MusicBeatState
 	private var camAchievement:FlxCamera;
 	
 	var optionShit:Array<String> = [];
+	var linkArray:Array<Array<String>> = [];
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
+
 	var debugKeys:Array<FlxKey>;
 	var modShortcutKeys:Array<FlxKey>;
 
 	var menuJSON:MenuData;
-
-	var linkArray:Array<Array<String>> = [];
 
 	override function create()
 	{
@@ -276,10 +276,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == linkArray[curSelected][0]) {
-					CoolUtil.browserLoad(linkArray[curSelected][1]);
-				}
-				else if (optionShit[curSelected] == 'donate') {
+				if (optionShit[curSelected] == 'donate') {
 					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 				}
 				else
