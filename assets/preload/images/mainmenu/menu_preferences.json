@@ -1,5 +1,5 @@
 {	
-	"enableReloadKey":true,
+	"enableReloadKey":false,
 	"centerOptions":true,
 	"alignToCenter":true,
 	"optionX":null,
