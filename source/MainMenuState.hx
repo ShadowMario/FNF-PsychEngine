@@ -32,6 +32,7 @@ using StringTools;
 typedef MenuData =
 {
 	enableReloadKey:Bool,
+	alignToCenter:Bool,
 	centerOptions:Bool,
 	optionX:Float,
 	optionY:Float,
@@ -43,7 +44,8 @@ typedef MenuData =
 	backgroundStatic:String,
 	backgroundConfirm:String,
 	colorOnConfirm:Array<FlxColor>,
-	options:Array<String>
+	options:Array<String>,
+	links:Array<Array<String>>
 }
 
 class MainMenuState extends MusicBeatState
@@ -182,7 +184,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
-			if (menuJSON.centerOptions)
+			if (menuJSON.alignToCenter)
 				menuItem.screenCenter(X);
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
@@ -268,8 +270,10 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == 'donate')
-				{
+				if (optionShit[curSelected] == '${menuJSON.links[0]}') {
+					CoolUtil.browserLoad('${menuJSON.links[1]}');
+				}
+				else if (optionShit[curSelected] == 'donate') {
 					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 				}
 				else
