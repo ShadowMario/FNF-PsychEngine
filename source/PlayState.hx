@@ -64,7 +64,7 @@ import sys.FileSystem;
 #end
 
 #if VIDEOS_ALLOWED
-import vlc.VideoHandler;
+import vlc.MP4Handler;
 #end
 
 using StringTools;
@@ -1480,8 +1480,10 @@ class PlayState extends MusicBeatState
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
 
-		var video:VideoHandler = new VideoHandler();
 		FlxG.sound.music.stop();
+		var video:MP4Handler = new MP4Handler();
+		video.playVideo(Paths.video(name));
+		
 		video.finishCallback = function()
 		{
 			if (atend == true)
@@ -1507,7 +1509,6 @@ class PlayState extends MusicBeatState
 				startAndEnd();
 			}
 		}
-		video.playVideo(Paths.video(name));
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
