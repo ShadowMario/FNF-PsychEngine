@@ -66,19 +66,26 @@ class FlxHitboxHint extends FlxButton
 	{
 		super(x, y);
 
-		loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
-		alpha = 0.00001;
+		if (ClientPrefs.visibleHints)
+		{
+			loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames + '_hint')));
+			alpha = 0.75;
+			#if FLX_DEBUG
+			ignoreDrawDebug = true;
+			#end
+		}
+		else
+		{
+			loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
+			alpha = 0.00001;
 
-		onDown.callback = function() {FlxTween.num(0.00001, 0.75, 0.075, {ease:FlxEase.circInOut}, function(value:Float) {alpha = value;});}
-		onUp.callback = function() {FlxTween.num(0.75, 0.00001, 0.1, {ease:FlxEase.circInOut}, function(value:Float) {alpha = value;});}
-		onOut.callback = function() {FlxTween.num(alpha, 0.00001, 0.2, {ease:FlxEase.circInOut}, function(value:Float) {alpha = value;});}
-		#if FLX_DEBUG
-		ignoreDrawDebug = true;
-		#end
-
-		var hint:FlxSprite = new FlxSprite(x, y);
-		hint.loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames + '_hint')));
-		hint.alpha = 0.75;
+			onDown.callback = function() {FlxTween.num(0.00001, 0.75, 0.075, {ease:FlxEase.circInOut}, function(value:Float) {alpha = value;});}
+			onUp.callback = function() {FlxTween.num(0.75, 0.00001, 0.1, {ease:FlxEase.circInOut}, function(value:Float) {alpha = value;});}
+			onOut.callback = function() {FlxTween.num(alpha, 0.00001, 0.2, {ease:FlxEase.circInOut}, function(value:Float) {alpha = value;});}
+			#if FLX_DEBUG
+			ignoreDrawDebug = true;
+			#end
+		}
 	}
 
 	public function getFrames():FlxAtlasFrames
