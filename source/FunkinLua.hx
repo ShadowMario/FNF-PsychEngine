@@ -54,7 +54,6 @@ class FunkinLua {
 	#end
 	public var camTarget:FlxCamera;
 	public var scriptName:String = '';
-	var gonnaClose:Bool = false;
 
 	public var accessedProps:Map<String, Dynamic> = null;
 	public function new(script:String) {
@@ -132,6 +131,8 @@ class FunkinLua {
 		// PlayState cringe ass nae nae bullcrap
 		set('curBeat', 0);
 		set('curStep', 0);
+		set('curDecBeat', 0);
+		set('curDecStep', 0);
 
 		set('score', 0);
 		set('misses', 0);
@@ -1905,16 +1906,6 @@ class FunkinLua {
 			if (text4 == null) text4 = '';
 			if (text5 == null) text5 = '';
 			luaTrace('' + text1 + text2 + text3 + text4 + text5, true, false);
-		});
-		Lua_helper.add_callback(lua, "close", function(printMessage:Bool) {
-			if(!gonnaClose) {
-				if(printMessage) {
-					luaTrace('Stopping lua script: ' + scriptName);
-				}
-				PlayState.instance.closeLuas.push(this);
-			}
-			gonnaClose = true;
-			return true;
 		});
 
 		Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
