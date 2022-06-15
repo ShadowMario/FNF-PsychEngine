@@ -63,21 +63,23 @@ class SUtil {
 			FileSystem.createDirectory(sPath + '/' + '.' + Application.current.meta.get('file'));
 		}
 
-		if (!FileSystem.exists(SUtil.getPath() + 'assets')){
-			SUtil.applicationAlert('Instructions:', 'You have to copy assets/assets from apk to your internal storage app directory'
-				+ " ( here " + SUtil.getPath() + " )"
-				+ "Whoops, it seems you didn't extract the files from the .APK! \nPlease watch the tutorial by pressing OK."
-				+ '\n' + 'Press OK To close the app.');
+		if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods')){
+			SUtil.applicationAlert('', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
 			CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
 			System.exit(0);
 		}
-		if (!FileSystem.exists(SUtil.getPath() + 'mods')){
-			SUtil.applicationAlert('Instructions:', 'You have to copy assets/mods from apk to your internal storage app directory'
-				+ " ( here " + SUtil.getPath() + " )"
-				+ "Whoops, it seems you didn't extract the files from the .APK! \nPlease watch the tutorial by pressing OK."
-				+ '\n' + 'Press OK To close the app.');
-			CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
-			System.exit(0);
+		else
+		{
+			if (!FileSystem.exists(SUtil.getPath() + 'assets')){
+				SUtil.applicationAlert('', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+				CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
+				System.exit(0);
+			}
+			if (!FileSystem.exists(SUtil.getPath() + 'mods')){
+				SUtil.applicationAlert('', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+				CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
+				System.exit(0);
+			}
 		}
 		#end
 	}
