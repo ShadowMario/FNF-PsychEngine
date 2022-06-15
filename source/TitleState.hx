@@ -83,6 +83,10 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK];
+		#end
+
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
@@ -112,8 +116,7 @@ class TitleState extends MusicBeatState
 		#if CHECK_FOR_UPDATES
 		if(!closedState) {
 			trace('checking for update');
-			var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
-
+			var http = new haxe.Http("https://raw.githubusercontent.com/jigsaw-4277821/FNF-PsychEngine-Android-Support/main/gitVersion.txt");
 			http.onData = function (data:String)
 			{
 				updateVersion = data.split('\n')[0].trim();
@@ -326,15 +329,15 @@ class TitleState extends MusicBeatState
 		logoBl.shader = swagShader.shader;
 
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
-		#if (desktop && MODS_ALLOWED)
-		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
+		#if MODS_ALLOWED
+		var path = SUtil.getPath() + "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
-			path = "mods/images/titleEnter.png";
+			path = SUtil.getPath() + "mods/images/titleEnter.png";
 		}
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
-			path = "assets/images/titleEnter.png";
+			path = SUtil.getPath() + "assets/images/titleEnter.png";
 		}
 		//trace(path, FileSystem.exists(path));
 		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
@@ -464,49 +467,23 @@ class TitleState extends MusicBeatState
 				});
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
-			#if TITLE_SCREEN_EASTER_EGG
+			#if (TITLE_SCREEN_EASTER_EGG && android)
+			else if (FlxG.android.justReleased.BACK)
+			{
+				FlxG.stage.window.textInputEnabled = true;
+				FlxG.stage.window.onTextInput.add(function(letter:String) {
+					if(allowedKeys.contains(letter)) {
+						titleScreenEasterEGG(letter);
+					}
+				});
+			}
+			#elseif TITLE_SCREEN_EASTER_EGG
 			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
 			{
 				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
 				var keyName:String = Std.string(keyPressed);
 				if(allowedKeys.contains(keyName)) {
-					easterEggKeysBuffer += keyName;
-					if(easterEggKeysBuffer.length >= 32) easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
-					//trace('Test! Allowed Key pressed!!! Buffer: ' + easterEggKeysBuffer);
-
-					for (wordRaw in easterEggKeys)
-					{
-						var word:String = wordRaw.toUpperCase(); //just for being sure you're doing it right
-						if (easterEggKeysBuffer.contains(word))
-						{
-							//trace('YOOO! ' + word);
-							if (FlxG.save.data.psychDevsEasterEgg == word)
-								FlxG.save.data.psychDevsEasterEgg = '';
-							else
-								FlxG.save.data.psychDevsEasterEgg = word;
-							FlxG.save.flush();
-
-							FlxG.sound.play(Paths.sound('ToggleJingle'));
-
-							var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-							black.alpha = 0;
-							add(black);
-
-							FlxTween.tween(black, {alpha: 1}, 1, {onComplete:
-								function(twn:FlxTween) {
-									FlxTransitionableState.skipNextTransIn = true;
-									FlxTransitionableState.skipNextTransOut = true;
-									MusicBeatState.switchState(new TitleState());
-								}
-							});
-							FlxG.sound.music.fadeOut();
-							closedState = true;
-							transitioning = true;
-							playJingle = true;
-							easterEggKeysBuffer = '';
-							break;
-						}
-					}
+					titleScreenEasterEGG(keyName);
 				}
 			}
 			#end
@@ -525,6 +502,54 @@ class TitleState extends MusicBeatState
 
 		super.update(elapsed);
 	}
+
+	#if TITLE_SCREEN_EASTER_EGG
+	function titleScreenEasterEGG(name:String)
+	{
+		easterEggKeysBuffer += name;
+		if(easterEggKeysBuffer.length >= 32) easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
+		//trace('Test! Allowed Key pressed!!! Buffer: ' + easterEggKeysBuffer);
+
+		for (wordRaw in easterEggKeys)
+		{
+			var word:String = wordRaw.toUpperCase(); //just for being sure you're doing it right
+			if (easterEggKeysBuffer.contains(word))
+			{
+				//trace('YOOO! ' + word);
+				if (FlxG.save.data.psychDevsEasterEgg == word)
+					FlxG.save.data.psychDevsEasterEgg = '';
+				else
+					FlxG.save.data.psychDevsEasterEgg = word;
+				FlxG.save.flush();
+
+				#if android
+				FlxG.stage.window.textInputEnabled = false;
+				#end
+
+				FlxG.sound.play(Paths.sound('ToggleJingle'));
+
+				var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+				black.alpha = 0;
+				add(black);
+
+				FlxTween.tween(black, {alpha: 1}, 1, {onComplete:
+					function(twn:FlxTween) {
+						FlxTransitionableState.skipNextTransIn = true;
+						FlxTransitionableState.skipNextTransOut = true;
+						MusicBeatState.switchState(new TitleState());
+					}
+				});
+	
+				FlxG.sound.music.fadeOut();
+				closedState = true;
+				transitioning = true;
+				playJingle = true;
+				easterEggKeysBuffer = '';
+				break;
+			}
+		}
+	}
+	#end
 
 	function createCoolText(textArray:Array<String>, ?offset:Float = 0)
 	{

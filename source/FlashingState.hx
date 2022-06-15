@@ -23,6 +23,17 @@ class FlashingState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 
+		#if android
+		warnText = new FlxText(0, 0, FlxG.width,
+			"Hey, watch out!\n
+			Be careful with the phone touch if you touch fast!\n
+			You can broke your phone touch if you do that also\n
+			This Mod contains some flashing lights!\n
+			Press A to disable them now or go to Options Menu.\n
+			Press B to ignore this message.\n
+			You've been warned!",
+			32);
+		#else
 		warnText = new FlxText(0, 0, FlxG.width,
 			"Hey, watch out!\n
 			This Mod contains some flashing lights!\n
@@ -30,9 +41,14 @@ class FlashingState extends MusicBeatState
 			Press ESCAPE to ignore this message.\n
 			You've been warned!",
 			32);
+		#end
 		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
+
+		#if android
+		addVirtualPad(NONE, A_B);
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -48,12 +64,18 @@ class FlashingState extends MusicBeatState
 					ClientPrefs.saveSettings();
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 					FlxFlicker.flicker(warnText, 1, 0.1, false, true, function(flk:FlxFlicker) {
+						#if android
+						_virtualpad.alpha = 0;
+						#end
 						new FlxTimer().start(0.5, function (tmr:FlxTimer) {
 							MusicBeatState.switchState(new TitleState());
 						});
 					});
 				} else {
 					FlxG.sound.play(Paths.sound('cancelMenu'));
+					#if android
+					FlxTween.tween(_virtualpad, {alpha: 0}, 1);
+					#end
 					FlxTween.tween(warnText, {alpha: 0}, 1, {
 						onComplete: function (twn:FlxTween) {
 							MusicBeatState.switchState(new TitleState());
