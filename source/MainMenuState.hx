@@ -244,6 +244,7 @@ class MainMenuState extends MusicBeatState
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
+										PauseSubState.toOptions = false;
 										LoadingState.loadAndSwitchState(new options.OptionsState());
 								}
 							});
