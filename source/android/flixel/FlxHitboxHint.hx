@@ -35,7 +35,7 @@ class FlxHitboxHint extends FlxButton
 
 			var tween:FlxTween = null;
 
-			button.onDown.callback = function()
+			onDown.callback = function()
 			{
 				if (tween != null)
 					tween.cancel();
@@ -46,7 +46,7 @@ class FlxHitboxHint extends FlxButton
 				});
 			}
 
-			button.onUp.callback = function()
+			onUp.callback = function()
 			{
 				if (tween != null)
 					tween.cancel();
@@ -57,7 +57,7 @@ class FlxHitboxHint extends FlxButton
 				});
 			}
 
-			button.onOut.callback = function()
+			onOut.callback = function()
 			{
 				if (tween != null)
 					tween.cancel();
