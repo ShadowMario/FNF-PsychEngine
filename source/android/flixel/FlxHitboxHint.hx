@@ -9,8 +9,6 @@ import flixel.tweens.FlxEase;
 
 class FlxHitboxHint extends FlxButton
 {
-	var orgHitbox:FlxHitbox;
-
 	public function new(x:Float = 0, y:Float = 0, frames:String)
 	{
 		super(x, y);
@@ -27,9 +25,6 @@ class FlxHitboxHint extends FlxButton
 		else
 		{
 			loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
-
-			setGraphicSize(Std.int(orgHitbox.sizeX), Std.int(orgHitbox.sizeY));
-			updateHitbox();
 
 			alpha = 0.00001;
 
