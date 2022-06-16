@@ -2100,16 +2100,16 @@ class PlayState extends MusicBeatState
 					case 4:
 				}
 
-				if(ClientPrefs.opponentStrums)
-				{
-					notes.forEachAlive(function(note:Note) {
+				notes.forEachAlive(function(note:Note) {
+					if(ClientPrefs.opponentStrums || note.mustPress)
+					{
 						note.copyAlpha = false;
 						note.alpha = note.multAlpha;
 						if(ClientPrefs.middleScroll && !note.mustPress) {
 							note.alpha *= 0.35;
 						}
-					});
-				}
+					}
+				});
 				callOnLuas('onCountdownTick', [swagCounter]);
 
 				swagCounter += 1;
@@ -2863,6 +2863,9 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+
+		setOnLuas('curDecStep', curDecStep);
+		setOnLuas('curDecBeat', curDecBeat);
 
 		scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
 		if(ratingName != '?')
@@ -4912,7 +4915,6 @@ class PlayState extends MusicBeatState
 		callOnLuas('onBeatHit', []);
 	}
 
-	public var closeLuas:Array<FunkinLua> = [];
 	public function callOnLuas(event:String, args:Array<Dynamic>, ignoreStops=false, ?exclusions:Array<String>):Dynamic {
 		var returnVal:Dynamic = FunkinLua.Function_Continue;
 		#if LUA_ALLOWED
@@ -4933,11 +4935,6 @@ class PlayState extends MusicBeatState
 			if(ret != FunkinLua.Function_Continue) {
 				returnVal = ret;
 			}
-		}
-
-		for (i in 0...closeLuas.length) {
-			luaArray.remove(closeLuas[i]);
-			closeLuas[i].stop();
 		}
 		#end
 		//trace(event, returnVal);
