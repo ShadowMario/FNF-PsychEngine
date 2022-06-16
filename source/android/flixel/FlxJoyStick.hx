@@ -12,7 +12,6 @@ import flixel.math.FlxRect;
 import flixel.util.FlxDestroyUtil;
 import flixel.graphics.frames.FlxAtlasFrames;
 
-// Mofifications by saw (m.a. jigsaw)
 class FlxJoyStick extends FlxSpriteGroup
 {
 	public var status:Int = NORMAL;
@@ -65,8 +64,8 @@ class FlxJoyStick extends FlxSpriteGroup
 		base = new FlxSprite(0, 0);
 		base.loadGraphic(FlxGraphic.fromFrame(getFrames().getByName('base')));
 		base.resetSizeFromFrame();
-		base.x += -base.width * 1.5;
-		base.y += -base.height * 1.5;
+		base.x += -base.width * 0.5;
+		base.y += -base.height * 0.5;
 		base.scrollFactor.set();
 		base.solid = false;
 		#if FLX_DEBUG
@@ -96,7 +95,7 @@ class FlxJoyStick extends FlxSpriteGroup
 	function createZone():Void
 	{
 		if (base != null && _radius == 0)
-			_radius = base.width * 1.5;
+			_radius = base.width * 0.5;
 
 		_zone.set(x - _radius, y - _radius, 2 * _radius, 2 * _radius);
 	}
@@ -149,7 +148,7 @@ class FlxJoyStick extends FlxSpriteGroup
 		{
 			_point = touch.getWorldPosition(FlxG.camera, _point);
 
-			if (!updatejoystick(_point, touch.pressed, touch.justPressed, touch.justReleased, touch))
+			if (!updateJoystick(_point, touch.pressed, touch.justPressed, touch.justReleased, touch))
 			{
 				offAll = false;
 				break;
@@ -167,8 +166,8 @@ class FlxJoyStick extends FlxSpriteGroup
 			}
 		}
 
-		thumb.x = x + Math.cos(_direction) * _amount * _radius - (thumb.width * 1.5);
-		thumb.y = y + Math.sin(_direction) * _amount * _radius - (thumb.height * 1.5);
+		thumb.x = x + Math.cos(_direction) * _amount * _radius - (thumb.width * 0.5);
+		thumb.y = y + Math.sin(_direction) * _amount * _radius - (thumb.height * 0.5);
 
 		if (offAll)
 			status = NORMAL;
@@ -178,7 +177,7 @@ class FlxJoyStick extends FlxSpriteGroup
 		super.update(elapsed);
 	}
 
-	function updatejoystick(TouchPoint:FlxPoint, Pressed:Bool, JustPressed:Bool, JustReleased:Bool, ?Touch:FlxTouch):Bool
+	function updateJoystick(TouchPoint:FlxPoint, Pressed:Bool, JustPressed:Bool, JustReleased:Bool, ?Touch:FlxTouch):Bool
 	{
 		var offAll:Bool = true;
 
@@ -200,8 +199,10 @@ class FlxJoyStick extends FlxSpriteGroup
 				status = PRESSED;
 
 				if (JustPressed)
+				{
 					if (onDown != null)
 						onDown();
+				}
 
 				if (status == PRESSED)
 				{

@@ -15,7 +15,6 @@ import flixel.text.FlxText;
 import flixel.util.FlxDestroyUtil;
 import flixel.input.touch.FlxTouch;
 
-// Mofifications by saw (m.a. jigsaw)
 class FlxButton extends FlxTypedButton<FlxText>
 {
 	public static inline var NORMAL:Int = 0;

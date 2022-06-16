@@ -9,7 +9,6 @@ import android.flixel.FlxButton;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.FlxGraphic;
 
-// Mofifications by saw (m.a. jigsaw)
 class FlxVirtualPad extends FlxSpriteGroup 
 {
 	public var dPad:FlxSpriteGroup;

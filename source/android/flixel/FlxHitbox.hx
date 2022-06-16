@@ -1,16 +1,10 @@
 package android.flixel;
 
+import flixel.FlxG;
 import flixel.util.FlxDestroyUtil;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.graphics.FlxGraphic;
 import flixel.group.FlxSpriteGroup;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
 import android.flixel.FlxButton;
-import flixel.util.FlxColor;
-import flixel.FlxSprite;
 
-// Mofifications by saw (m.a. jigsaw)
 class FlxHitbox extends FlxSpriteGroup 
 {
 	public var hitbox:FlxSpriteGroup;
@@ -19,6 +13,9 @@ class FlxHitbox extends FlxSpriteGroup
 	public var buttonDown:FlxButton;
 	public var buttonUp:FlxButton;
 	public var buttonRight:FlxButton;
+
+	public var sizex:Int = 320;
+	public var sizey:Int = 720;
 
 	public function new()
 	{
@@ -31,10 +28,13 @@ class FlxHitbox extends FlxSpriteGroup
 		buttonUp = new FlxButton(0, 0);
 		buttonRight = new FlxButton(0, 0);
 
+		sizex = FlxG.width / 4;
+		sizey = FlxG.height;
+
 		hitbox.add(add(buttonLeft = createHitbox(0, 0, 'left', 0xFFFF00FF)));
-		hitbox.add(add(buttonDown = createHitbox(320, 0, 'down', 0xFF00FFFF)));
-		hitbox.add(add(buttonUp = createHitbox(640, 0, 'up', 0xFF00FF00)));
-		hitbox.add(add(buttonRight = createHitbox(960, 0, 'right', 0xFFFF0000)));
+		hitbox.add(add(buttonDown = createHitbox(sizex, 0, 'down', 0xFF00FFFF)));
+		hitbox.add(add(buttonUp = createHitbox(sizex * 2, 0, 'up', 0xFF00FF00)));
+		hitbox.add(add(buttonRight = createHitbox(sizex * 3, 0, 'right', 0xFFFF0000)));
 	}
 
 	public function createHitbox(x:Float = 0, y:Float = 0, frames:String, ?color:Int):FlxButton
@@ -57,39 +57,5 @@ class FlxHitbox extends FlxSpriteGroup
 		buttonDown = null;
 		buttonUp = null;
 		buttonRight = null;
-	}
-}
-
-class FlxHitboxHint extends FlxButton
-{
-	public function new(x:Float = 0, y:Float = 0, frames:String)
-	{
-		super(x, y);
-
-		if (ClientPrefs.visibleHints)
-		{
-			loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames + '_hint')));
-			alpha = 0.75;
-			#if FLX_DEBUG
-			ignoreDrawDebug = true;
-			#end
-		}
-		else
-		{
-			loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
-			alpha = 0.00001;
-
-			onDown.callback = function() {FlxTween.num(0.00001, 0.75, 0.075, {ease:FlxEase.circInOut}, function(value:Float) {alpha = value;});}
-			onUp.callback = function() {FlxTween.num(0.75, 0.00001, 0.1, {ease:FlxEase.circInOut}, function(value:Float) {alpha = value;});}
-			onOut.callback = function() {FlxTween.num(alpha, 0.00001, 0.2, {ease:FlxEase.circInOut}, function(value:Float) {alpha = value;});}
-			#if FLX_DEBUG
-			ignoreDrawDebug = true;
-			#end
-		}
-	}
-
-	public function getFrames():FlxAtlasFrames
-	{
-		return Paths.getSparrowAtlas('android/hitbox');
 	}
 }
