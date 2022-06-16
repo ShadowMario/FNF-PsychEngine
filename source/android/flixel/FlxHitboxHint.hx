@@ -28,7 +28,7 @@ class FlxHitboxHint extends FlxButton
 		{
 			loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
 
-			setGraphicSize(orgHitbox.sizex, orgHitbox.sizey);
+			setGraphicSize(Std.int(orgHitbox.sizex), Std.int(orgHitbox.sizey));
 			updateHitbox();
 
 			alpha = 0.00001;
