@@ -93,11 +93,14 @@ class AchievementsMenuState extends MusicBeatState
 		}
 		
 		if(controls.RESET) {
+			FlxG.mouse.visible = true;
 			openSubState(new Prompt('This action will clear the progress of the selected achievement.\n\nProceed?', 0, function() {
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 				achievementArray[curSelected].forget();
 				grpOptions.members[curSelected].changeText('?');
+				FlxG.mouse.visible = false;
 			}, function() {
+				FlxG.mouse.visible = false;
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}, false));
 		}
