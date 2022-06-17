@@ -3025,6 +3025,7 @@ class PlayState extends MusicBeatState
 		{
 			var time:Float = spawnTime;//shit be werid on 4:3
 			if(songSpeed < 1) time /= songSpeed;
+			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
 
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
 			{
@@ -4129,7 +4130,7 @@ class PlayState extends MusicBeatState
 						canMiss = true;
 					}
 				});
-				sortedNotesList.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
+				sortedNotesList.sort(sortHitNotes);
 
 				if (sortedNotesList.length > 0) {
 					for (epicNote in sortedNotesList)
@@ -4180,6 +4181,16 @@ class PlayState extends MusicBeatState
 			callOnLuas('onKeyPress', [key]);
 		}
 		//trace('pressed: ' + controlArray);
+	}
+
+	function sortHitNotes(a:Note, b:Note):Int
+	{
+		if (a.lowPriority && !b.lowPriority)
+			return 1;
+		else if (!a.lowPriority && b.lowPriority)
+			return -1;
+
+		return FlxSort.byValues(FlxSort.ASCENDING, a.strumTime, b.strumTime);
 	}
 
 	private function onKeyRelease(event:KeyboardEvent):Void
