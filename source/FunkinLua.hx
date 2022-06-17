@@ -1630,6 +1630,7 @@ class FunkinLua {
 			}
 			return FileSystem.exists('assets/$filename');
 			#else
+			luaTrace('Platform not suppoted for checkFileExists!', true, false, FlxColor.RED);
 			return false;
 			#end
 		});
