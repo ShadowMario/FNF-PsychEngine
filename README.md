@@ -42,6 +42,10 @@ And run command `lime build android -final`
 Apk will be generated in this path (path to source)\export\release\android\bin\app\build\outputs\apk\debug
 _____________________________________
 
+If you want video support on your mod, simply do `haxelib install hxCodec` on a Command prompt/PowerShell
+
+otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
+
 ## Credits:
 * Shadow Mario - Coding
 * RiverOaken - Arts and Animations
