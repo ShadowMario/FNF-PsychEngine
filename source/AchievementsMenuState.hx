@@ -93,8 +93,13 @@ class AchievementsMenuState extends MusicBeatState
 		}
 		
 		if(controls.RESET) {
-			achievementArray[curSelected].forget();
-			grpOptions.members[curSelected].changeText('?');
+			openSubState(new Prompt('This action will clear the progress of the selected achievement.\n\nProceed?', 0, function() {
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+				achievementArray[curSelected].forget();
+				grpOptions.members[curSelected].changeText('?');
+			}, function() {
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+			}, false));
 		}
 
 		if (controls.BACK) {
