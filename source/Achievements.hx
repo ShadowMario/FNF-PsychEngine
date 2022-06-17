@@ -90,7 +90,7 @@ class AttachedAchievement extends FlxSprite {
 				if (savedStuff.exists(tag))
 					savedStuff.remove(tag);
 				FlxG.save.data.achievementsMap = savedStuff;
-				loadGraphic(Paths.image('lockedachievement'));
+				loadGraphic(Paths.image('achievements/lockedachievement'));
 			}
 		}
 	}
