@@ -29,11 +29,9 @@ Unzip NDK (NDK does not need to be installed because is a zip archive)
 ![andr](https://user-images.githubusercontent.com/59097731/104179652-44346000-541d-11eb-8ad1-1e4dfae304a8.PNG)
 ![andr2](https://user-images.githubusercontent.com/59097731/104179943-a9885100-541d-11eb-8f69-7fb5a4bfdd37.PNG)
 
-6. You Need to install extension-androidtools and extension-videoview
+6. You Need to install extension-androidtools
 
 To install `extension-androidtools` do this: `haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools` on a Command prompt/PowerShell
-
-To install `extension-videoview` do this: `haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-videoview` on a Command prompt/PowerShell
 
 5. And run command `lime setup android` in power shell / cmd (You need to insert the program paths)
 
