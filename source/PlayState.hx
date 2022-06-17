@@ -4330,10 +4330,7 @@ class PlayState extends MusicBeatState
 
 		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
 		{
-			var daAlt = '';
-			if(daNote.noteType == 'Alt Animation') daAlt = '-alt';
-
-			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daAlt;
+			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
 			char.playAnim(animToPlay, true);
 		}
 
@@ -4396,12 +4393,12 @@ class PlayState extends MusicBeatState
 			dad.specialAnim = true;
 			dad.heyTimer = 0.6;
 		} else if(!note.noAnimation) {
-			var altAnim:String = "";
+			var altAnim:String = note.animSuffix;
 
 			var curSection:Int = Math.floor(curStep / 16);
 			if (SONG.notes[curSection] != null)
 			{
-				if (SONG.notes[curSection].altAnim || note.noteType == 'Alt Animation') {
+				if (SONG.notes[curSection].altAnim) {
 					altAnim = '-alt';
 				}
 			}
@@ -4488,22 +4485,19 @@ class PlayState extends MusicBeatState
 			health += note.hitHealth * healthGain;
 
 			if(!note.noAnimation) {
-				var daAlt = '';
-				if(note.noteType == 'Alt Animation') daAlt = '-alt';
-
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
 
 				if(note.gfNote)
 				{
 					if(gf != null)
 					{
-						gf.playAnim(animToPlay + daAlt, true);
+						gf.playAnim(animToPlay + note.animSuffix, true);
 						gf.holdTimer = 0;
 					}
 				}
 				else
 				{
-					boyfriend.playAnim(animToPlay + daAlt, true);
+					boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
 				}
 
