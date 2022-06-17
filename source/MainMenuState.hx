@@ -121,8 +121,12 @@ class MainMenuState extends MusicBeatState
 		else
 			bg.loadGraphic(Paths.image('menuBG'));
 
-		bg.x = menuJSON.bgX;
-		bg.y = menuJSON.bgY;
+		if (menuJSON.bgX != null && menuJSON.bgX.length > 0) bg.x = menuJSON.bgX;
+		if (menuJSON.bgY != null && menuJSON.bgY.length > 0)
+			bg.y = menuJSON.bgY;
+		else
+			bg.y = -80;
+
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
@@ -142,8 +146,12 @@ class MainMenuState extends MusicBeatState
 		else
 			magenta.loadGraphic(Paths.image('menuDesat'));
 
-		magenta.x = menuJSON.bgX;
-		magenta.y = menuJSON.bgY;
+		if (menuJSON.bgX != null && menuJSON.bgX.length > 0) magenta.x = menuJSON.bgX;
+		if (menuJSON.bgY != null && menuJSON.bgY.length > 0)
+			magenta.y = menuJSON.bgY;
+		else
+			magenta.y = -80;
+
 		magenta.scrollFactor.set(0, yScroll);
 		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
 		magenta.updateHitbox();
