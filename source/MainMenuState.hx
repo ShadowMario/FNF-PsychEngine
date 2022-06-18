@@ -3,31 +3,31 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
+import Achievements;
+import editors.MasterEditorMenu;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.FlxCamera;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.text.FlxText;
+import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxMath;
+import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import lime.app.Application;
-import Achievements;
-import editors.MasterEditorMenu;
-import flixel.input.keyboard.FlxKey;
 import haxe.Json;
+import lime.app.Application;
 
+using StringTools;
 #if MODS_ALLOWED
 import sys.FileSystem;
 import sys.io.File;
 #end
 
-using StringTools;
 
 typedef MenuData =
 {
@@ -50,13 +50,13 @@ typedef MenuData =
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '0.5.2h'; //This is also used for Discord RPC
+	public static var psychEngineVersion:String = '0.5.2h'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
-	
+
 	var optionShit:Array<String> = [];
 	var linkArray:Array<Array<String>> = [];
 
@@ -67,9 +67,9 @@ class MainMenuState extends MusicBeatState
 	var debugKeys:Array<FlxKey>;
 	var modShortcutKeys:Array<FlxKey>;
 
-	var menuJSON:MenuData;
-	
 	var invalidPosition:Null<Int> = null;
+
+	var menuJSON:MenuData;
 
 	override function create()
 	{
@@ -96,21 +96,29 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		if (menuJSON.options != null && menuJSON.options.length > 0 && menuJSON.options.length < 13) {
+		if (menuJSON.options != null && menuJSON.options.length > 0 && menuJSON.options.length < 13)
+		{
 			optionShit = menuJSON.options;
-		} else {
+		}
+		else
+		{
 			optionShit = [
 				'story_mode',
 				'freeplay',
-				#if MODS_ALLOWED 'mods', #end
-				#if ACHIEVEMENTS_ALLOWED 'awards', #end
+				#if MODS_ALLOWED 'mods',
+				#end
+				#if ACHIEVEMENTS_ALLOWED
+				'awards',
+				#end
 				'credits',
-				#if !switch 'donate', #end
+				#if !switch 'donate',
+				#end
 				'options'
 			];
 		}
 
-		for(i in menuJSON.links){
+		for (i in menuJSON.links)
+		{
 			linkArray.push(i);
 		}
 
@@ -123,7 +131,8 @@ class MainMenuState extends MusicBeatState
 		else
 			bg.loadGraphic(Paths.image('menuBG'));
 
-		if (menuJSON.bgX != invalidPosition) bg.x = menuJSON.bgX;
+		if (menuJSON.bgX != invalidPosition)
+			bg.x = menuJSON.bgX;
 		if (menuJSON.bgY != invalidPosition)
 			bg.y = menuJSON.bgY;
 		else
@@ -148,8 +157,9 @@ class MainMenuState extends MusicBeatState
 		else
 			magenta.loadGraphic(Paths.image('menuDesat'));
 
-		if (menuJSON.bgX != null) magenta.x = menuJSON.bgX;
-		if (menuJSON.bgY != null)
+		if (menuJSON.bgX != invalidPosition)
+			magenta.x = menuJSON.bgX;
+		if (menuJSON.bgY != invalidPosition)
 			magenta.y = menuJSON.bgY;
 		else
 			magenta.y = -80;
@@ -167,7 +177,7 @@ class MainMenuState extends MusicBeatState
 			magenta.color = 0xFFfd719b;
 
 		add(magenta);
-		
+
 		// magenta.scrollFactor.set();
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
@@ -177,12 +187,15 @@ class MainMenuState extends MusicBeatState
 		for (i in 0...optionShit.length)
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
-			var menuItem:FlxSprite = new FlxSprite(0, (i * 140)  + offset);
+			var menuItem:FlxSprite = new FlxSprite(0, (i * 140) + offset);
 
-			if (menuJSON.optionX != invalidPosition) menuItem.x = menuJSON.optionX;
-			if (menuJSON.optionY != invalidPosition) menuItem.y = menuJSON.optionY;
+			if (menuJSON.optionX != invalidPosition)
+				menuItem.x = menuJSON.optionX;
+			if (menuJSON.optionY != invalidPosition)
+				menuItem.y = menuJSON.optionY;
 
-			if (menuJSON.angle != invalidPosition) menuItem.angle = menuJSON.angle;
+			if (menuJSON.angle != invalidPosition)
+				menuItem.angle = menuJSON.angle;
 
 			if (menuJSON.scaleX != invalidPosition)
 				menuItem.scale.x = menuJSON.scaleX;
@@ -203,10 +216,11 @@ class MainMenuState extends MusicBeatState
 				menuItem.screenCenter(X);
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
-			if(optionShit.length < 6) scr = 0;
+			if (optionShit.length < 6)
+				scr = 0;
 			menuItem.scrollFactor.set(0, scr);
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
+			// menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 		}
 
@@ -228,9 +242,11 @@ class MainMenuState extends MusicBeatState
 		#if ACHIEVEMENTS_ALLOWED
 		Achievements.loadAchievements();
 		var leDate = Date.now();
-		if (leDate.getDay() == 5 && leDate.getHours() >= 18) {
+		if (leDate.getDay() == 5 && leDate.getHours() >= 18)
+		{
 			var achieveID:Int = Achievements.getAchievementIndex('friday_night_play');
-			if(!Achievements.isAchievementUnlocked(Achievements.achievementsStuff[achieveID][2])) { //It's a friday night. WEEEEEEEEEEEEEEEEEE
+			if (!Achievements.isAchievementUnlocked(Achievements.achievementsStuff[achieveID][2]))
+			{ // It's a friday night. WEEEEEEEEEEEEEEEEEE
 				Achievements.achievementsMap.set(Achievements.achievementsStuff[achieveID][2], true);
 				giveAchievement();
 				ClientPrefs.saveSettings();
@@ -243,7 +259,8 @@ class MainMenuState extends MusicBeatState
 
 	#if ACHIEVEMENTS_ALLOWED
 	// Unlocks "Freaky on a Friday Night" achievement
-	function giveAchievement() {
+	function giveAchievement()
+	{
 		add(new AchievementObject('friday_night_play', camAchievement));
 		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 		trace('Giving achievement "friday_night_play"');
@@ -285,7 +302,8 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == 'donate') {
+				if (optionShit[curSelected] == 'donate')
+				{
 					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 				}
 				else
@@ -293,7 +311,8 @@ class MainMenuState extends MusicBeatState
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-					if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+					if (ClientPrefs.flashing)
+						FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
@@ -379,7 +398,8 @@ class MainMenuState extends MusicBeatState
 			{
 				spr.animation.play('selected');
 				var add:Float = 0;
-				if(menuItems.length > 4) {
+				if (menuItems.length > 4)
+				{
 					add = menuItems.length * 8;
 				}
 				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y - add);
