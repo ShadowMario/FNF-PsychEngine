@@ -68,6 +68,8 @@ class MainMenuState extends MusicBeatState
 	var modShortcutKeys:Array<FlxKey>;
 
 	var menuJSON:MenuData;
+	
+	var invalidPosition:Null<Int> = null;
 
 	override function create()
 	{
@@ -121,8 +123,8 @@ class MainMenuState extends MusicBeatState
 		else
 			bg.loadGraphic(Paths.image('menuBG'));
 
-		if (menuJSON.bgX != null) bg.x = menuJSON.bgX;
-		if (menuJSON.bgY != null)
+		if (menuJSON.bgX != invalidPosition) bg.x = menuJSON.bgX;
+		if (menuJSON.bgY != invalidPosition)
 			bg.y = menuJSON.bgY;
 		else
 			bg.y = -80;
@@ -171,7 +173,6 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		var invalidPosition:Null<Int> = null;
 		var scale = 1;
 		for (i in 0...optionShit.length)
 		{
