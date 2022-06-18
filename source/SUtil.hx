@@ -120,7 +120,7 @@ class SUtil
 
 		Sys.println(errMsg);
 		Sys.println('Crash dump saved in ' + Path.normalize(path));
-		Sys.println('No crash dialog found! Making a simple alert instead...');
+		Sys.println('Making a simple alert...');
 
 		SUtil.applicationAlert('Error :(!', errMsg);
 
