@@ -98,8 +98,8 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Hitbox Hints',
-			'If unchecked, The hitbox hints will not be visible with the back hint box.',
-			'visibleHints',
+			'If unchecked, The hitbox hints will not be visible.',
+			'hitboxHints',
 			'bool',
 			 false);
 		addOption(option);

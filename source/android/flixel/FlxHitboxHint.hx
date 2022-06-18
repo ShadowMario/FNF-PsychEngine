@@ -13,60 +13,46 @@ class FlxHitboxHint extends FlxButton
 	{
 		super(x, y);
 
-		if (ClientPrefs.visibleHints)
+		loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
+		alpha = 0.00001;
+
+		var tween:FlxTween = null;
+		onDown.callback = function()
 		{
-			loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames + '_hint')));
-			alpha = 0.75;
+			if (tween != null)
+				tween.cancel();
 
-			#if FLX_DEBUG
-			ignoreDrawDebug = true;
-			#end
+			tween = FlxTween.num(alpha, 0.75, 0.075, {ease: FlxEase.circInOut}, function(value:Float)
+			{
+				alpha = value;
+			});
 		}
-		else
+
+		onUp.callback = function()
 		{
-			loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
+			if (tween != null)
+				tween.cancel();
 
-			alpha = 0.00001;
-
-			var tween:FlxTween = null;
-
-			onDown.callback = function()
+			tween = FlxTween.num(alpha, 0.00001, 0.15, {ease: FlxEase.circInOut}, function(value:Float)
 			{
-				if (tween != null)
-					tween.cancel();
-
-				tween = FlxTween.num(alpha, 0.75, 0.075, {ease: FlxEase.circInOut}, function(value:Float)
-				{
-					alpha = value;
-				});
-			}
-
-			onUp.callback = function()
-			{
-				if (tween != null)
-					tween.cancel();
-
-				tween = FlxTween.num(alpha, 0.00001, 0.15, {ease: FlxEase.circInOut}, function(value:Float)
-				{
-					alpha = value;
-				});
-			}
-
-			onOut.callback = function()
-			{
-				if (tween != null)
-					tween.cancel();
-
-				tween = FlxTween.num(alpha, 0.00001, 0.15, {ease: FlxEase.circInOut}, function(value:Float)
-				{
-					alpha = value;
-				});
-			}
-
-			#if FLX_DEBUG
-			ignoreDrawDebug = true;
-			#end
+				alpha = value;
+			});
 		}
+
+		onOut.callback = function()
+		{
+			if (tween != null)
+				tween.cancel();
+
+			tween = FlxTween.num(alpha, 0.00001, 0.15, {ease: FlxEase.circInOut}, function(value:Float)
+			{
+				alpha = value;
+			});
+		}
+
+		#if FLX_DEBUG
+		ignoreDrawDebug = true;
+		#end
 	}
 
 	public function getFrames():FlxAtlasFrames
