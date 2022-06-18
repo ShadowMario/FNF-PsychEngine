@@ -1548,7 +1548,7 @@ class ChartingState extends MusicBeatState
 					if (touch.x > gridBG.x
 						&& touch.x < gridBG.x + gridBG.width
 						&& touch.y > gridBG.y
-						&& touch.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps) * zoomList[curZoom])
+						&& touch.y < gridBG.y + (GRID_SIZE * getSectionBeats() * 4) * zoomList[curZoom])
 					{
 						FlxG.log.add('added note');
 						addNote();

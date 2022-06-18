@@ -3,6 +3,8 @@ package android.flixel;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxDestroyUtil;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.graphics.FlxGraphic;
 import flixel.group.FlxSpriteGroup;
 import android.flixel.FlxButton;
 
@@ -42,7 +44,7 @@ class FlxHitbox extends FlxSpriteGroup
 
 	public function createHitbox(x:Float = 0, y:Float = 0, frames:String, ?color:Int):FlxButton
 	{
-		var bo:FlxHitboxHint = new FlxHitboxHint(x, y, frames);
+		var hint:FlxHitboxHint = new FlxHitboxHint(x, y, frames);
 		hint.antialiasing = ClientPrefs.globalAntialiasing;
 		if (color != null && ClientPrefs.visualColours)
 			hint.color = color;
@@ -58,6 +60,11 @@ class FlxHitbox extends FlxSpriteGroup
 		if (color != null && ClientPrefs.visualColours)
 			hint.color = color;
 		return hint;
+	}
+
+	public function getFrames():FlxAtlasFrames
+	{
+		return Paths.getSparrowAtlas('android/hitbox');
 	}
 
 	override function destroy()
