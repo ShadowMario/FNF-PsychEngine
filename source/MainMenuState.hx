@@ -121,8 +121,8 @@ class MainMenuState extends MusicBeatState
 		else
 			bg.loadGraphic(Paths.image('menuBG'));
 
-		if (menuJSON.bgX != null && menuJSON.bgX.length > 0) bg.x = menuJSON.bgX;
-		if (menuJSON.bgY != null && menuJSON.bgY.length > 0)
+		if (menuJSON.bgX != null) bg.x = menuJSON.bgX;
+		if (menuJSON.bgY != null)
 			bg.y = menuJSON.bgY;
 		else
 			bg.y = -80;
@@ -146,8 +146,8 @@ class MainMenuState extends MusicBeatState
 		else
 			magenta.loadGraphic(Paths.image('menuDesat'));
 
-		if (menuJSON.bgX != null && menuJSON.bgX.length > 0) magenta.x = menuJSON.bgX;
-		if (menuJSON.bgY != null && menuJSON.bgY.length > 0)
+		if (menuJSON.bgX != null) magenta.x = menuJSON.bgX;
+		if (menuJSON.bgY != null)
 			magenta.y = menuJSON.bgY;
 		else
 			magenta.y = -80;
