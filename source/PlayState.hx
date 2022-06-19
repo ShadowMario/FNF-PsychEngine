@@ -3791,7 +3791,6 @@ class PlayState extends MusicBeatState
 				return;
 			}
 
-			WeekData.loadTheFirstEnabledMod();
 			if (isStoryMode)
 			{
 				campaignScore += songScore;
