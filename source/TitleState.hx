@@ -419,7 +419,7 @@ class TitleState extends MusicBeatState
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
 
-		#if mobile
+		#if android
 		for (touch in FlxG.touches.list)
 		{
 			if (touch.justPressed)
@@ -448,6 +448,10 @@ class TitleState extends MusicBeatState
 		{
 			if(pressedEnter)
 			{
+				#if (TITLE_SCREEN_EASTER_EGG && android)
+				FlxG.stage.window.textInputEnabled = false;
+				#end
+
 				if(titleText != null) titleText.animation.play('press');
 
 				FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -471,7 +475,8 @@ class TitleState extends MusicBeatState
 			else if (FlxG.android.justReleased.BACK)
 			{
 				FlxG.stage.window.textInputEnabled = true;
-				FlxG.stage.window.onTextInput.add(function(letter:String) {
+				FlxG.stage.window.onTextInput.add(function(letter:String)
+				{
 					if(allowedKeys.contains(letter)) {
 						easterEggKeysBuffer += letter;
 						if(easterEggKeysBuffer.length >= 32) easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
