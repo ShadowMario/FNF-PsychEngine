@@ -140,25 +140,34 @@ class WeekEditorState extends MusicBeatState
 		UI_box.selected_tab_id = 'Week';
 		add(UI_box);
 
+		#if !android
 		var loadWeekButton:FlxButton = new FlxButton(0, 650, "Load Week", function() {
 			loadWeek();
 		});
 		loadWeekButton.screenCenter(X);
 		loadWeekButton.x -= 120;
 		add(loadWeekButton);
+		#end
 		
 		var freeplayButton:FlxButton = new FlxButton(0, 650, "Freeplay", function() {
 			MusicBeatState.switchState(new WeekEditorFreeplayState(weekFile));
 			
 		});
 		freeplayButton.screenCenter(X);
+		#if android
+		freeplayButton.x -= 60;
+		#end
 		add(freeplayButton);
 	
 		var saveWeekButton:FlxButton = new FlxButton(0, 650, "Save Week", function() {
 			saveWeek(weekFile);
 		});
 		saveWeekButton.screenCenter(X);
+		#if android
+		freeplayButton.x += 60;
+		#else
 		saveWeekButton.x += 120;
+		#end
 		add(saveWeekButton);
 	}
 
@@ -642,11 +651,12 @@ class WeekEditorFreeplayState extends MusicBeatState
 		}
 
 		addEditorBox();
-		changeSelection();
 
 		#if android
 		addVirtualPad(UP_DOWN, NONE);
 		#end
+
+		changeSelection();
 
 		super.create();
 	}
@@ -767,10 +777,10 @@ class WeekEditorFreeplayState extends MusicBeatState
 		weekFile.songs[curSelected][2][0] = Math.round(bgColorStepperR.value);
 		weekFile.songs[curSelected][2][1] = Math.round(bgColorStepperG.value);
 		weekFile.songs[curSelected][2][2] = Math.round(bgColorStepperB.value);
-		#if android
-		_virtualpad.color = FlxColor.fromRGB(weekFile.songs[curSelected][2][0], weekFile.songs[curSelected][2][1], weekFile.songs[curSelected][2][2]);
-		#end
 		bg.color = FlxColor.fromRGB(weekFile.songs[curSelected][2][0], weekFile.songs[curSelected][2][1], weekFile.songs[curSelected][2][2]);
+		#if android
+		virtualPad.color = FlxColor.fromRGB(weekFile.songs[curSelected][2][0], weekFile.songs[curSelected][2][1], weekFile.songs[curSelected][2][2]);
+		#end
 	}
 
 	function changeSelection(change:Int = 0) {

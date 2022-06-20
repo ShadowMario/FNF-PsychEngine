@@ -163,11 +163,13 @@ class CreditsState extends MusicBeatState
 
 		bg.color = getCurrentBGColor();
 		intendedColor = bg.color;
-		changeSelection();
 
 		#if android
 		addVirtualPad(UP_DOWN, A_B);
+		virtualPad.color = getCurrentBGColor();
 		#end
+
+		changeSelection();
 
 		super.create();
 	}
@@ -274,6 +276,13 @@ class CreditsState extends MusicBeatState
 					colorTween = null;
 				}
 			});
+			#if android
+			colorTween = FlxTween.color(virtualPad, 1, virtualPad.color, intendedColor, {
+				onComplete: function(twn:FlxTween) {
+					colorTween = null;
+				}
+			});
+			#end
 		}
 
 		var bullShit:Int = 0;

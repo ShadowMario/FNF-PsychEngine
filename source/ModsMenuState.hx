@@ -366,12 +366,26 @@ class ModsMenuState extends MusicBeatState
 			i++;
 		}
 
+		#if android
+		addVirtualPad(UP_DOWN, B);
+		#end
+
 		if(curSelected >= mods.length) curSelected = 0;
 
 		if(mods.length < 1)
+		{
 			bg.color = defaultColor;
+			#if android
+			virtualPad.color = defaultColor;
+			#end
+		}
 		else
+		{
 			bg.color = mods[curSelected].color;
+			#if android
+			virtualPad.color = mods[curSelected].color;
+			#end
+		}
 
 		intendedColor = bg.color;
 		changeSelection();
@@ -380,11 +394,6 @@ class ModsMenuState extends MusicBeatState
 
 		#if !android
 		FlxG.mouse.visible = true;
-		#end
-
-		#if android
-		addVirtualPad(UP_DOWN, B);
-		_virtualpad.canUseColor = false;
 		#end
 
 		super.create();
@@ -567,14 +576,18 @@ class ModsMenuState extends MusicBeatState
 				colorTween.cancel();
 			}
 			intendedColor = newColor;
-			#if android
-			colorTween = FlxTween.color(_virtualpad, 1, _virtualpad.color, intendedColor);
-			#end
 			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
 				onComplete: function(twn:FlxTween) {
 					colorTween = null;
 				}
 			});
+			#if android
+			colorTween = FlxTween.color(virtualPad, 1, virtualPad.color, intendedColor, {
+				onComplete: function(twn:FlxTween) {
+					colorTween = null;
+				}
+			});
+			#end
 		}
 
 		var i:Int = 0;

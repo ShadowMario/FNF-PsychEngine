@@ -33,8 +33,6 @@ class FlxVirtualPad extends FlxSpriteGroup
 	public var buttonY:FlxButton;
 	public var buttonZ:FlxButton;
 
-	public var canUseColor:Bool = true;
-
 	public function new(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
 		super();
@@ -145,6 +143,18 @@ class FlxVirtualPad extends FlxSpriteGroup
 				actions.add(add(buttonC = createButton(FlxG.width - 384, FlxG.height - 135, 132, 127, 'c')));
 				actions.add(add(buttonB = createButton(FlxG.width - 258, FlxG.height - 135, 132, 127, 'b')));
 				actions.add(add(buttonA = createButton(FlxG.width - 132, FlxG.height - 135, 132, 127, 'a')));
+			case FULL_UP_DOWN:
+				actions.add(add(buttonUp2 = createButton(FlxG.width - 636, FlxG.height - 255, 132, 127, 'up', 0xFFFF00FF)));
+				actions.add(add(buttonV = createButton(FlxG.width - 510, FlxG.height - 255, 132, 127, 'v')));
+				actions.add(add(buttonX = createButton(FlxG.width - 384, FlxG.height - 255, 132, 127, 'x')));
+				actions.add(add(buttonY = createButton(FlxG.width - 258, FlxG.height - 255, 132, 127, 'y')));
+				actions.add(add(buttonZ = createButton(FlxG.width - 132, FlxG.height - 255, 132, 127, 'z')));
+
+				actions.add(add(buttonDown2 = createButton(FlxG.width - 636, FlxG.height - 135, 132, 127, 'down', 0xFFFF0000)));
+				actions.add(add(buttonD = createButton(FlxG.width - 510, FlxG.height - 135, 132, 127, 'd')));
+				actions.add(add(buttonC = createButton(FlxG.width - 384, FlxG.height - 135, 132, 127, 'c')));
+				actions.add(add(buttonB = createButton(FlxG.width - 258, FlxG.height - 135, 132, 127, 'b')));
+				actions.add(add(buttonA = createButton(FlxG.width - 132, FlxG.height - 135, 132, 127, 'a')));
 			case NONE:
 		}
 	}
@@ -159,7 +169,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		button.scrollFactor.set();
 		button.alpha = 0.75;
 		button.antialiasing = ClientPrefs.globalAntialiasing;
-		if (color != null && (ClientPrefs.visualColours && canUseColor))
+		if (color != null && ClientPrefs.visualColours)
 			button.color = color;
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
@@ -226,5 +236,6 @@ enum FlxActionMode
 	A_B_C_X_Y;
 	A_B_C_X_Y_Z;
 	FULL;
+	FULL_UP_DOWN;
 	NONE;
 }

@@ -87,8 +87,6 @@ class AndroidControls extends FlxSpriteGroup
 	public var hbox:FlxHitbox;
 	public var vpad:FlxVirtualPad;
 
-	public var canUseColor:Bool = true;
-
 	var config:Config;
 
 	public function new()
@@ -121,24 +119,19 @@ class AndroidControls extends FlxSpriteGroup
 		{
 			case 0:
 				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
-				vpad.canUseColor = canUseColor;
 				add(vpad);
 			case 1:
 				vpad = new FlxVirtualPad(FULL, NONE);
-				vpad.canUseColor = canUseColor;
 				add(vpad);	
 			case 2:
 				vpad = new FlxVirtualPad(FULL, NONE);
-				vpad.canUseColor = canUseColor;
 				vpad = config.loadcustom(vpad);
 				add(vpad);
 			case 3:
 				vpad = new FlxVirtualPad(DUO, NONE);
-				vpad.canUseColor = canUseColor;
 				add(vpad);
 			case 4:
 				hbox = new FlxHitbox();
-				hbox.canUseColor = canUseColor;
 				add(hbox);
 			default:
 		}
@@ -158,7 +151,7 @@ class AndroidControls extends FlxSpriteGroup
 				DUO;
 			case 4:	
 				HITBOX;
-			case 5: 
+			case 5:
 				KEYBOARD;
 			default: 
 				VIRTUALPAD_RIGHT;

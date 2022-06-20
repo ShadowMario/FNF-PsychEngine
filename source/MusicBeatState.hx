@@ -35,17 +35,17 @@ class MusicBeatState extends FlxUIState
 		return PlayerSettings.player1.controls;
 
 	#if android
-	var _virtualpad:FlxVirtualPad;
-	var androidc:AndroidControls;
+	var virtualPad:FlxVirtualPad;
+	var androidControls:AndroidControls;
 	var trackedinputsUI:Array<FlxActionInput> = [];
 	var trackedinputsNOTES:Array<FlxActionInput> = [];
 	#end
 	
 	#if android
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode) {
-		_virtualpad = new FlxVirtualPad(DPad, Action);
-		add(_virtualpad);
-		controls.setVirtualPadUI(_virtualpad, DPad, Action);
+		virtualPad = new FlxVirtualPad(DPad, Action);
+		add(virtualPad);
+		controls.setVirtualPadUI(virtualPad, DPad, Action);
 		trackedinputsUI = controls.trackedinputsUI;
 		controls.trackedinputsUI = [];
 	}
@@ -54,22 +54,22 @@ class MusicBeatState extends FlxUIState
 	#if android
 	public function removeVirtualPad() {
 		controls.removeFlxInput(trackedinputsUI);
-		remove(_virtualpad);
+		remove(virtualPad);
 	}
 	#end
 
 	#if android
 	public function addAndroidControls() {
-        androidc = new AndroidControls();
+        androidControls = new AndroidControls();
 
-		switch (androidc.mode)
+		switch (androidControls.mode)
 		{
 			case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
-				controls.setVirtualPadNOTES(androidc.vpad, FULL, NONE);
+				controls.setVirtualPadNOTES(androidControls.vpad, FULL, NONE);
 			case DUO:
-				controls.setVirtualPadNOTES(androidc.vpad, DUO, NONE);
+				controls.setVirtualPadNOTES(androidControls.vpad, DUO, NONE);
 			case HITBOX:
-				controls.setHitBox(androidc.hbox);
+				controls.setHitBox(androidControls.hbox);
 			default:
 		}
 
@@ -79,11 +79,11 @@ class MusicBeatState extends FlxUIState
 		var camcontrol = new flixel.FlxCamera();
 		FlxG.cameras.add(camcontrol);
 		camcontrol.bgColor.alpha = 0;
-		androidc.cameras = [camcontrol];
+		androidControls.cameras = [camcontrol];
 
-		androidc.visible = false;
+		androidControls.visible = false;
 
-		add(androidc);
+		add(androidControls);
 	}
 	#end
 
@@ -92,7 +92,7 @@ class MusicBeatState extends FlxUIState
 		var camcontrol = new flixel.FlxCamera();
 		FlxG.cameras.add(camcontrol);
 		camcontrol.bgColor.alpha = 0;
-		_virtualpad.cameras = [camcontrol];
+		virtualPad.cameras = [camcontrol];
 	}
 	#end
 	

@@ -1972,7 +1972,7 @@ class PlayState extends MusicBeatState
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
 			#if android
-			androidc.visible = true;
+			androidControls.visible = true;
 			#end
 
 			generateStaticArrows(0);
@@ -3374,6 +3374,9 @@ class PlayState extends MusicBeatState
 							{
 								who.color = FlxColor.WHITE;
 							}
+							#if android
+							androidControls.color = FlxColor.WHITE;
+							#end
 							phillyStreet.color = FlxColor.WHITE;
 						}
 
@@ -3404,6 +3407,9 @@ class PlayState extends MusicBeatState
 						{
 							who.color = color;
 						}
+						#if android
+						androidControls.color = color;
+						#end
 						phillyGlowParticles.forEachAlive(function(particle:PhillyGlow.PhillyGlowParticle)
 						{
 							particle.color = color;
@@ -3751,7 +3757,7 @@ class PlayState extends MusicBeatState
 		}
 
 		#if android
-		androidc.visible = false;
+		androidControls.visible = false;
 		#end
 		timeBarBG.visible = false;
 		timeBar.visible = false;
