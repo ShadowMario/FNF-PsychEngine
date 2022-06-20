@@ -62,14 +62,12 @@ class DialogueCharacterEditorState extends MusicBeatState
 	\nHold Shift to move offsets 10x faster';
 	#else
 	private static var TIP_TEXT_MAIN:String =
-	'Y - Reset Camera
-	\nX - Toggle Speech Bubble
+	'X - Toggle Speech Bubble
 	\nA - Reset text';
 
 	private static var TIP_TEXT_OFFSET:String =
-	'Y - Reset Camera
-	\nX - Toggle Ghosts
-	\nWASD - Move Looping animation offset (Red)
+	'X - Toggle Ghosts
+	\nArrow Buttons If You Hold C Button - Move Looping animation offset (Red)
 	\nArrow Buttons - Move Idle/Finished animation offset (Blue)
 	\nHold B to move offsets 10x faster';
 	#end
@@ -176,7 +174,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		updateCharTypeBox();
 
 		#if android
-		addVirtualPad(FULL, A_B_C_X_Y);
+		addVirtualPad(FULL, A_B_X_Y);
 		addPadCamera();
 		virtualPad.y = -300;
 		#end
@@ -613,7 +611,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 				var controlArrayIdle:Array<Bool> = [#if !android FlxG.keys.justPressed.LEFT #else virtualPad.buttonLeft.justPressed #end, #if !android FlxG.keys.justPressed.UP #else virtualPad.buttonUp.justPressed #end, #if !android FlxG.keys.justPressed.RIGHT #else virtualPad.buttonRight.justPressed #end, #if !android FlxG.keys.justPressed.DOWN #else virtualPad.buttonDown.justPressed #end];
 
 				#if android
-				if (virtualPad.buttonC.pressed)
+				if (virtualPad.buttonY.pressed)
 				{
 					for (i in 0...controlArrayLoop.length) {
 						if(controlArrayLoop[i]) {
@@ -691,7 +689,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 					hudGroup.visible = !hudGroup.visible;
 				}
 			}
-			if(#if !android FlxG.keys.justPressed.R #else virtualPad.buttonY.justPressed #end) {
+			if(virtualPad.buttonY.justPressed) {
 				camGame.zoom = 1;
 				mainGroup.setPosition(0, 0);
 				hudGroup.visible = true;

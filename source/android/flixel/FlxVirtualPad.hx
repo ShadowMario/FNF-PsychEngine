@@ -144,13 +144,13 @@ class FlxVirtualPad extends FlxSpriteGroup
 				actions.add(add(buttonB = createButton(FlxG.width - 258, FlxG.height - 135, 132, 127, 'b')));
 				actions.add(add(buttonA = createButton(FlxG.width - 132, FlxG.height - 135, 132, 127, 'a')));
 			case FULL_UP_DOWN:
-				actions.add(add(buttonUp2 = createButton(FlxG.width - 636, FlxG.height - 255, 132, 127, 'up', 0xFFFF00FF)));
+				actions.add(add(buttonUp2 = createButton(FlxG.width - 636, FlxG.height - 255, 132, 127, 'up')));
 				actions.add(add(buttonV = createButton(FlxG.width - 510, FlxG.height - 255, 132, 127, 'v')));
 				actions.add(add(buttonX = createButton(FlxG.width - 384, FlxG.height - 255, 132, 127, 'x')));
 				actions.add(add(buttonY = createButton(FlxG.width - 258, FlxG.height - 255, 132, 127, 'y')));
 				actions.add(add(buttonZ = createButton(FlxG.width - 132, FlxG.height - 255, 132, 127, 'z')));
 
-				actions.add(add(buttonDown2 = createButton(FlxG.width - 636, FlxG.height - 135, 132, 127, 'down', 0xFFFF0000)));
+				actions.add(add(buttonDown2 = createButton(FlxG.width - 636, FlxG.height - 135, 132, 127, 'down')));
 				actions.add(add(buttonD = createButton(FlxG.width - 510, FlxG.height - 135, 132, 127, 'd')));
 				actions.add(add(buttonC = createButton(FlxG.width - 384, FlxG.height - 135, 132, 127, 'c')));
 				actions.add(add(buttonB = createButton(FlxG.width - 258, FlxG.height - 135, 132, 127, 'b')));

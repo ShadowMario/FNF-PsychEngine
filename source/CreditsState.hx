@@ -33,10 +33,6 @@ class CreditsState extends MusicBeatState
 	var descText:FlxText;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
-	#if android
-	var padColorTween:FlxTween;
-	#end
-
 	var descBox:AttachedSprite;
 
 	var offsetThing:Float = -75;
@@ -228,11 +224,6 @@ class CreditsState extends MusicBeatState
 				if(colorTween != null) {
 					colorTween.cancel();
 				}
-				#if android
-				if(padColorTween != null) {
-					padColorTween.cancel();
-				}
-				#end
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new MainMenuState());
 				quitting = true;
@@ -278,24 +269,12 @@ class CreditsState extends MusicBeatState
 			if(colorTween != null) {
 				colorTween.cancel();
 			}
-			#if android
-			if(padColorTween != null) {
-				padColorTween.cancel();
-			}
-			#end
 			intendedColor = newColor;
 			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
 				onComplete: function(twn:FlxTween) {
 					colorTween = null;
 				}
 			});
-			#if android
-			padColorTween = FlxTween.color(virtualPad, 1, virtualPad.color, intendedColor, {
-				onComplete: function(twn:FlxTween) {
-					padColorTween = null;
-				}
-			});
-			#end
 		}
 
 		var bullShit:Int = 0;
