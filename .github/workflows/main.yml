@@ -145,7 +145,7 @@ jobs:
           name: macBuild
           path: export/release/macos/bin
   buildAndroid:
-    name: Build for Android
+    name: Build Android
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -182,6 +182,7 @@ jobs:
           haxelib install flixel-ui
           haxelib install hscript
           haxelib install flixel-addons
+          haxelib install hxCodec
           haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git
           haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools.git
           haxelib list
@@ -201,7 +202,7 @@ jobs:
         run: lime build android -final
       
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2.2.2
+        uses: actions/upload-artifact@v2.2.4
         with:
           name: Android Build
           path: export/release/android/bin/app/build/outputs/apk/debug
