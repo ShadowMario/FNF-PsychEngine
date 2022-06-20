@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="prompt_buttons.png">
-	<!-- Created with Adobe Animate version 22.0.1.105 -->
-	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="buttons0000" x="0" y="0" width="334" height="60"/>
-	<SubTexture name="buttons0001" x="0" y="62" width="334" height="60"/>
-</TextureAtlas>
