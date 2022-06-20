@@ -8,7 +8,7 @@ import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
 import flixel.input.touch.FlxTouch;
 import flixel.text.FlxText;
-
+import android.flixel.FlxButton;
 import android.flixel.FlxHitbox;
 import android.flixel.FlxVirtualPad;
 
