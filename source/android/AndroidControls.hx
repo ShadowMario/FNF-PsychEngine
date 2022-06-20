@@ -113,7 +113,7 @@ class AndroidControls extends FlxSpriteGroup
 		}
 	}
 
-	function initControler(vpadMode:Int)
+	private function initControler(vpadMode:Int):Void
 	{
 		switch (vpadMode)
 		{
@@ -155,6 +155,32 @@ class AndroidControls extends FlxSpriteGroup
 				KEYBOARD;
 			default: 
 				VIRTUALPAD_RIGHT;
+		}
+	}
+
+	public function resetColors():Void
+	{
+		if (vpad != null)
+		{
+			vpad.buttonUp.color = 0xFF00FF00;
+			vpad.buttonLeft.color = 0xFFFF00FF;
+			vpad.buttonRight.color = 0xFFFF0000;
+			vpad.buttonDown.color = 0xFF00FFFF;
+
+			if (config.getcontrolmode() == 3)
+			{
+				vpad.buttonUp2.color = 0xFF00FF00;
+				vpad.buttonLeft2.color = 0xFFFF00FF;
+				vpad.buttonRight2.color = 0xFFFF0000;
+				vpad.buttonDown2.color = 0xFF00FFFF;
+			}
+		}
+		else if (hbox != null)
+		{
+			hbox.buttonLeft.color = 0xFFFF00FF;
+			hbox.buttonDown.color = 0xFF00FFFF;
+			hbox.buttonUp.color = 0xFF00FF00;
+			hbox.buttonRight.color = 0xFFFF0000;
 		}
 	}
 }
@@ -394,7 +420,7 @@ class Menu extends MusicBeatState
 		upPozition.text = 'Button Up X:' + vpad.buttonUp.x +' Y:' + vpad.buttonUp.y;
 		downPozition.text = 'Button Down X:' + vpad.buttonDown.x +' Y:' + vpad.buttonDown.y;
 		leftPozition.text = 'Button Left X:' + vpad.buttonLeft.x +' Y:' + vpad.buttonLeft.y;
-		rightPozition.text = 'Button RIght x:' + vpad.buttonRight.x +' Y:' + vpad.buttonRight.y;
+		rightPozition.text = 'Button Right x:' + vpad.buttonRight.x +' Y:' + vpad.buttonRight.y;
 	}
 
 	function save():Void

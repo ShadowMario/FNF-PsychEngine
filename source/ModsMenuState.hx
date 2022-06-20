@@ -366,26 +366,12 @@ class ModsMenuState extends MusicBeatState
 			i++;
 		}
 
-		#if android
-		addVirtualPad(UP_DOWN, B);
-		#end
-
 		if(curSelected >= mods.length) curSelected = 0;
 
 		if(mods.length < 1)
-		{
 			bg.color = defaultColor;
-			#if android
-			virtualPad.color = defaultColor;
-			#end
-		}
 		else
-		{
 			bg.color = mods[curSelected].color;
-			#if android
-			virtualPad.color = mods[curSelected].color;
-			#end
-		}
 
 		intendedColor = bg.color;
 		changeSelection();
@@ -394,6 +380,10 @@ class ModsMenuState extends MusicBeatState
 
 		#if !android
 		FlxG.mouse.visible = true;
+		#end
+
+		#if android
+		addVirtualPad(UP_DOWN, B);
 		#end
 
 		super.create();
@@ -497,7 +487,9 @@ class ModsMenuState extends MusicBeatState
 				colorTween.cancel();
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'));
+			#if !android
 			FlxG.mouse.visible = false;
+			#end
 			saveTxt();
 			if(needaReset)
 			{
