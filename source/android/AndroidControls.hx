@@ -82,6 +82,8 @@ class Config
 
 class AndroidControls extends FlxSpriteGroup
 {
+	public var mode:ControlsGroup = VIRTUALPAD_RIGHT;
+
 	public var hbox:FlxHitbox;
 	public var vpad:FlxVirtualPad;
 
@@ -95,7 +97,9 @@ class AndroidControls extends FlxSpriteGroup
 
 		config = new Config();
 
-		switch (getModeFromNumber(config.getcontrolmode()))
+		mode = getModeFromNumber(config.getcontrolmode());
+
+		switch (mode)
 		{
 			case VIRTUALPAD_RIGHT:
 				initControler(0);
