@@ -683,7 +683,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 
 		#if !android
 		var loadWeekButton:FlxButton = new FlxButton(0, 650, "Load Week", function() {
-			loadWeek();
+			WeekEditorState.loadWeek();
 		});
 		loadWeekButton.screenCenter(X);
 		loadWeekButton.x -= 120;
@@ -691,7 +691,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 		#end
 		
 		var storyModeButton:FlxButton = new FlxButton(0, 650, "Story Mode", function() {
-			MusicBeatState.switchState(new WeekEditorFreeplayState(weekFile));
+			MusicBeatState.switchState(new WeekEditorState(weekFile));
 			
 		});
 		storyModeButton.screenCenter(X);
@@ -701,7 +701,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 		add(storyModeButton);
 	
 		var saveWeekButton:FlxButton = new FlxButton(0, 650, "Save Week", function() {
-			saveWeek(weekFile);
+			WeekEditorState.saveWeek(weekFile);
 		});
 		saveWeekButton.screenCenter(X);
 		#if android
