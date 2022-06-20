@@ -144,3 +144,64 @@ jobs:
         with:
           name: macBuild
           path: export/release/macos/bin
+  buildAndroid:
+    name: Build for Android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+
+      - name: Setup Android NDK
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r21e
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@v1.1.5
+        with:
+          haxe-version: 4.2.5
+
+      - name: Setup HaxeFlixel
+        run: |
+          haxelib setup ~/haxelib
+          haxelib install hxcpp > /dev/null
+          haxelib install lime
+          haxelib install openfl
+          haxelib --never install flixel
+          haxelib run lime setup flixel
+          haxelib install flixel-tools
+          haxelib install flixel-ui
+          haxelib install hscript
+          haxelib install flixel-addons
+          haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git
+          haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools.git
+          haxelib list
+
+      - name: Setup Lime
+        run: |
+          haxelib run lime setup -alias -y
+          lime config ANDROID_SDK $ANDROID_HOME
+          lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
+          lime config JAVA_HOME $JAVA_HOME
+          lime config ANDROID_SETUP true
+          lime config
+        env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+
+      - name: Build APK
+        run: lime build android -final
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2.2.2
+        with:
+          name: Android Build
+          path: export/release/android/bin/app/build/outputs/apk/debug
