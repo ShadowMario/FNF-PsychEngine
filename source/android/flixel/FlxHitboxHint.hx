@@ -9,11 +9,11 @@ import flixel.tweens.FlxEase;
 
 class FlxHitboxHint extends FlxButton
 {
-	public function new(x:Float = 0, y:Float = 0, frames:String)
+	public function new(X:Float = 0, Y:Float = 0, Frames:String)
 	{
-		super(x, y);
+		super(X, Y);
 
-		loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(frames)));
+		loadGraphic(FlxGraphic.fromFrame(getFrames().getByName(Frames)));
 		alpha = 0.00001;
 
 		var tween:FlxTween = null;

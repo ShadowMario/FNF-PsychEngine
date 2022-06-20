@@ -96,13 +96,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			 false);
 		addOption(option);
-
-		var option:Option = new Option('Hitbox Hints',
-			'If unchecked, The hitbox hints will not be visible.',
-			'hitboxHints',
-			'bool',
-			 false);
-		addOption(option);
 		#end
 
 		var option:Option = new Option('FPS Counter',

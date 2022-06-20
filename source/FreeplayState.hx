@@ -211,6 +211,7 @@ class FreeplayState extends MusicBeatState
 
 		#if android
 		addVirtualPad(FULL, A_B_C_X_Y_Z);
+		_virtualpad.canUseColor = false;
 		#end
 
 		super.create();
@@ -457,6 +458,9 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			intendedColor = newColor;
+			#if android
+			colorTween = FlxTween.color(_virtualpad, 1, _virtualpad.color, intendedColor);
+			#end
 			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
 				onComplete: function(twn:FlxTween) {
 					colorTween = null;

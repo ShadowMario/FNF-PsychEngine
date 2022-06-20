@@ -33,7 +33,6 @@ class ClientPrefs {
 	public static var pauseMusic:String = 'Tea Time';
 	public static var vibration:Bool = false;
 	public static var visualColours:Bool = false;
-	public static var hitboxHints:Bool = false;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -131,7 +130,6 @@ class ClientPrefs {
 		FlxG.save.data.pauseMusic = pauseMusic;
 		FlxG.save.data.vibration = vibration;
 		FlxG.save.data.visualColours = visualColours;
-		FlxG.save.data.hitboxHints = hitboxHints;
 	
 		FlxG.save.flush();
 
@@ -246,9 +244,6 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.visualColours != null) {
 			visualColours = FlxG.save.data.visualColours;
-		}
-		if(FlxG.save.data.hitboxHints != null) {
-			hitboxHints = FlxG.save.data.hitboxHints;
 		}
 		if(FlxG.save.data.gameplaySettings != null)
 		{
