@@ -581,13 +581,6 @@ class ModsMenuState extends MusicBeatState
 					colorTween = null;
 				}
 			});
-			#if android
-			colorTween = FlxTween.color(virtualPad, 1, virtualPad.color, intendedColor, {
-				onComplete: function(twn:FlxTween) {
-					colorTween = null;
-				}
-			});
-			#end
 		}
 
 		var i:Int = 0;

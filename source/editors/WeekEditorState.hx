@@ -164,7 +164,7 @@ class WeekEditorState extends MusicBeatState
 		});
 		saveWeekButton.screenCenter(X);
 		#if android
-		freeplayButton.x += 60;
+		saveWeekButton.x += 60;
 		#else
 		saveWeekButton.x += 120;
 		#end
@@ -467,8 +467,8 @@ class WeekEditorState extends MusicBeatState
 		if(!blockInput) {
 			FlxG.sound.muteKeys = TitleState.muteKeys;
 			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
-			if(FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end) {
+			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys
+			if(#if !android FlxG.keys.justPressed.ESCAPE #else FlxG.android.justReleased.BACK #end) {
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
@@ -652,11 +652,11 @@ class WeekEditorFreeplayState extends MusicBeatState
 
 		addEditorBox();
 
+		changeSelection();
+
 		#if android
 		addVirtualPad(UP_DOWN, NONE);
 		#end
-
-		changeSelection();
 
 		super.create();
 	}
@@ -681,25 +681,34 @@ class WeekEditorFreeplayState extends MusicBeatState
 		blackBlack.alpha = 0.6;
 		add(blackBlack);
 
-		var loadWeekButton:FlxButton = new FlxButton(0, 685, "Load Week", function() {
-			WeekEditorState.loadWeek();
+		#if !android
+		var loadWeekButton:FlxButton = new FlxButton(0, 650, "Load Week", function() {
+			loadWeek();
 		});
 		loadWeekButton.screenCenter(X);
 		loadWeekButton.x -= 120;
 		add(loadWeekButton);
+		#end
 		
-		var storyModeButton:FlxButton = new FlxButton(0, 685, "Story Mode", function() {
-			MusicBeatState.switchState(new WeekEditorState(weekFile));
+		var storyModeButton:FlxButton = new FlxButton(0, 650, "Story Mode", function() {
+			MusicBeatState.switchState(new WeekEditorFreeplayState(weekFile));
 			
 		});
 		storyModeButton.screenCenter(X);
+		#if android
+		storyModeButton.x -= 60;
+		#end
 		add(storyModeButton);
 	
-		var saveWeekButton:FlxButton = new FlxButton(0, 685, "Save Week", function() {
-			WeekEditorState.saveWeek(weekFile);
+		var saveWeekButton:FlxButton = new FlxButton(0, 650, "Save Week", function() {
+			saveWeek(weekFile);
 		});
 		saveWeekButton.screenCenter(X);
+		#if android
+		saveWeekButton.x += 60;
+		#else
 		saveWeekButton.x += 120;
+		#end
 		add(saveWeekButton);
 	}
 	
@@ -778,9 +787,6 @@ class WeekEditorFreeplayState extends MusicBeatState
 		weekFile.songs[curSelected][2][1] = Math.round(bgColorStepperG.value);
 		weekFile.songs[curSelected][2][2] = Math.round(bgColorStepperB.value);
 		bg.color = FlxColor.fromRGB(weekFile.songs[curSelected][2][0], weekFile.songs[curSelected][2][1], weekFile.songs[curSelected][2][2]);
-		#if android
-		virtualPad.color = FlxColor.fromRGB(weekFile.songs[curSelected][2][0], weekFile.songs[curSelected][2][1], weekFile.songs[curSelected][2][2]);
-		#end
 	}
 
 	function changeSelection(change:Int = 0) {
@@ -844,7 +850,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 			FlxG.sound.muteKeys = TitleState.muteKeys;
 			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
-			if(FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end) {
+			if(#if !android FlxG.keys.justPressed.ESCAPE #else FlxG.android.justReleased.BACK #end) {
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}

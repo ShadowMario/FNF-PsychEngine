@@ -169,7 +169,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		button.scrollFactor.set();
 		button.alpha = 0.75;
 		button.antialiasing = ClientPrefs.globalAntialiasing;
-		if (color != null && ClientPrefs.visualColours)
+		if (color != null)
 			button.color = color;
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;

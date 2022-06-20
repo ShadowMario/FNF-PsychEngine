@@ -89,15 +89,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.decimals = 1;
 		addOption(option);
 
-		#if android
-		var option:Option = new Option('Visual Controls Colours',
-			'If unchecked, The direction visual controls will not have colours.',
-			'visualColours',
-			'bool',
-			 false);
-		addOption(option);
-		#end
-
 		var option:Option = new Option('FPS Counter',
 			'If unchecked, hides FPS Counter.',
 			'showFPS',

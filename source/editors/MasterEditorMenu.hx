@@ -84,6 +84,7 @@ class MasterEditorMenu extends MusicBeatState
 
 		#if android
 		addVirtualPad(FULL, A_B);
+		virtualPad.y = -42;
 		#end
 
 		super.create();

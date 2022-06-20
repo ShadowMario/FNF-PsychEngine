@@ -311,33 +311,33 @@ class MenuCharacterEditorState extends MusicBeatState
 			FlxG.sound.muteKeys = TitleState.muteKeys;
 			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
 			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
-			if(FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end) {
+			if(#if !android FlxG.keys.justPressed.ESCAPE #else FlxG.android.justReleased.BACK #end) {
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
 
 			var shiftMult:Int = 1;
 
-			if(FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonA.pressed #end) shiftMult = 10;
+			if(#if !android FlxG.keys.pressed.SHIFT #else virtualPad.buttonA.pressed #end) shiftMult = 10;
 
-			if(FlxG.keys.justPressed.LEFT #if android || virtualPad.buttonLeft.justPressed #end) {
+			if(#if !android FlxG.keys.justPressed.LEFT #else virtualPad.buttonLeft.justPressed #end) {
 				characterFile.position[0] += shiftMult;
 				updateOffset();
 			}
-			if(FlxG.keys.justPressed.RIGHT #if android || virtualPad.buttonRight.justPressed #end) {
+			if(#if !android FlxG.keys.justPressed.RIGHT #else virtualPad.buttonRight.justPressed #end) {
 				characterFile.position[0] -= shiftMult;
 				updateOffset();
 			}
-			if(FlxG.keys.justPressed.UP #if android || virtualPad.buttonUp.justPressed #end) {
+			if(#if !android FlxG.keys.justPressed.UP #else virtualPad.buttonUp.justPressed #end) {
 				characterFile.position[1] += shiftMult;
 				updateOffset();
 			}
-			if(FlxG.keys.justPressed.DOWN #if android || virtualPad.buttonDown.justPressed #end) {
+			if(#if !android FlxG.keys.justPressed.DOWN #else virtualPad.buttonDown.justPressed #end) {
 				characterFile.position[1] -= shiftMult;
 				updateOffset();
 			}
 
-			if(FlxG.keys.justPressed.SPACE #if android || virtualPad.buttonB.pressed #end && curTypeSelected == 1) {
+			if(#if !android FlxG.keys.justPressed.SPACE #else virtualPad.buttonB.pressed #end && curTypeSelected == 1) {
 				grpWeekCharacters.members[curTypeSelected].animation.play('confirm', true);
 			}
 		}
