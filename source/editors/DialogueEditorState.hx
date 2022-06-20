@@ -391,7 +391,7 @@ class DialogueEditorState extends MusicBeatState
 			}
 			var negaMult:Array<Int> = [1, -1];
 			var controlAnim:Array<Bool> = [#if !android FlxG.keys.justPressed.W #else virtualPad.buttonUp.justPressed #end, #if !android FlxG.keys.justPressed.S #else virtualPad.buttonDown.justPressed #end];
-			var controlText:Array<Bool> = [#if !android FlxG.keys.justPressed.D #else || virtualPad.buttonLeft.justPressed #end, #if !android FlxG.keys.justPressed.A #else virtualPad.buttonRight.justPressed #end];
+			var controlText:Array<Bool> = [#if !android FlxG.keys.justPressed.D #else virtualPad.buttonLeft.justPressed #end, #if !android FlxG.keys.justPressed.A #else virtualPad.buttonRight.justPressed #end];
 			for (i in 0...controlAnim.length) {
 				if(controlAnim[i] && character.jsonFile.animations.length > 0) {
 					curAnim -= negaMult[i];
