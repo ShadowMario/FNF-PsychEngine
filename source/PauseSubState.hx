@@ -201,15 +201,6 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.sound.music.volume = 0;
 					PlayState.changedDifficulty = true;
 					PlayState.chartingMode = false;
-					skipTimeTracker = null;
-
-					if(skipTimeText != null)
-					{
-						skipTimeText.kill();
-						remove(skipTimeText);
-						skipTimeText.destroy();
-					}
-					skipTimeText = null;
 					return;
 				}
 
@@ -223,6 +214,7 @@ class PauseSubState extends MusicBeatSubstate
 					close();
 				case 'Change Difficulty':
 					menuItems = difficultyChoices;
+					deleteSkipTimeText();
 					regenMenu();
 				case 'Toggle Practice Mode':
 					PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
@@ -273,6 +265,18 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.chartingMode = false;
 			}
 		}
+	}
+
+	function deleteSkipTimeText()
+	{
+		if(skipTimeText != null)
+		{
+			skipTimeText.kill();
+			remove(skipTimeText);
+			skipTimeText.destroy();
+		}
+		skipTimeText = null;
+		skipTimeTracker = null;
 	}
 
 	public static function restartSong(noTrans:Bool = false)
