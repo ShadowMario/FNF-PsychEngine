@@ -26,6 +26,10 @@ class CoolUtil
 
 	public static var difficulties:Array<String> = [];
 
+	inline public static function quantize(f:Float, interval:Float){
+		return Std.int((f+interval/2)/interval)*interval;
+	}
+	
 	public static function getDifficultyFilePath(num:Null<Int> = null)
 	{
 		if(num == null) num = PlayState.storyDifficulty;
