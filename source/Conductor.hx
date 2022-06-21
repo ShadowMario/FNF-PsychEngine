@@ -128,11 +128,18 @@ class Conductor
 				bpmChangeMap.push(event);
 			}
 
-			var deltaSteps:Int = Math.round(song.notes[i].sectionBeats * 4);
+			var deltaSteps:Int = Math.round(getSectionBeats(song, i) * 4);
 			totalSteps += deltaSteps;
 			totalPos += ((60 / curBPM) * 1000 / 4) * deltaSteps;
 		}
 		trace("new BPM map BUDDY " + bpmChangeMap);
+	}
+
+	static function getSectionBeats(song:SwagSong, section:Int)
+	{
+		var val:Null<Float> = null;
+		if(song.notes[section] != null) val = song.notes[section].sectionBeats;
+		return val != null ? val : 4;
 	}
 
 	inline public static function calculateCrochet(bpm:Float){
