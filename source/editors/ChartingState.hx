@@ -1904,7 +1904,7 @@ class ChartingState extends MusicBeatState
 		"\nSection: " + curSec +
 		"\n\nBeat: " + curBeat +
 		"\n\nStep: " + curStep +
-		"\n\nBeat Snap: 1/" + quantization;
+		"\n\nBeat Snap: 1/" + quantization * zoomList[curZoom];
 
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note) {
