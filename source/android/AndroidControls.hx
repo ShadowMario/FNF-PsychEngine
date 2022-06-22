@@ -407,14 +407,9 @@ class Menu extends MusicBeatState
 
 	function moveButton(touch:FlxTouch, button:FlxButton):Void
 	{
+		button.x = touch.x - button.width / 2;
+		button.y = touch.y - button.height / 2;
 		bindButton = button;
-
-		if (bindButton.x > 0 && bindButton.x < FlxG.width - 130)
-			bindButton.x = touch.x - bindButton.width / 2;
-
-		if (bindButton.y > 0 && bindButton.y < FlxG.height - 270)
-			bindButton.y = touch.y - bindButton.height / 2;
-
 		buttonIsTouched = true;
 	}
 
