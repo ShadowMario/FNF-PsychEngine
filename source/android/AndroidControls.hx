@@ -47,9 +47,7 @@ class Config
 		{
 			save.data.buttons = new Array();
 			for (buttons in _pad)
-			{
 				save.data.buttons.push(FlxPoint.get(buttons.x, buttons.y));
-			}
 		}
 		else
 		{
@@ -410,8 +408,13 @@ class Menu extends MusicBeatState
 	function moveButton(touch:FlxTouch, button:FlxButton):Void
 	{
 		bindButton = button;
-		bindButton.x = touch.x - bindButton.width / 2;
-		bindButton.y = touch.y - bindButton.height / 2;
+
+		if (bindButton.x > 0 || bindButton.x < FlxG.width - 130)
+			bindButton.x = touch.x - bindButton.width / 2;
+
+		if (bindButton.y > 0 || bindButton.y < FlxG.height - 270)
+			bindButton.y = touch.y - bindButton.height / 2;
+
 		buttonIsTouched = true;
 	}
 
