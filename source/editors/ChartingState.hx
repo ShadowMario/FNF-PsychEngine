@@ -779,7 +779,7 @@ class ChartingState extends MusicBeatState
 			updateGrid();
 		});
 
-		var stepperCopy:FlxUINumericStepper;
+		var stepperCopy:FlxUINumericStepper = null;
 		var copyLastButton:FlxButton = new FlxButton(10, swapSection.y + 30, "Copy last section", function()
 		{
 			var value:Int = Std.int(stepperCopy.value);
