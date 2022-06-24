@@ -14,9 +14,6 @@ import haxe.CallStack;
 import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
-#if desktop
-import Discord.DiscordClient;
-#end
 
 /**
  * ...
@@ -118,9 +115,6 @@ class SUtil
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
 		Application.current.window.alert(errMsg, "Error!");
-		#if desktop
-		DiscordClient.shutdown();
-		#end
 		Sys.exit(1);
 	}
 
