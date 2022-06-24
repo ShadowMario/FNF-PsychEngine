@@ -40,7 +40,7 @@ class SUtil
 		#end
 	}
 
-	public static function doTheCheck():Void
+	public static function doTheCheck()
 	{
 		#if android
 		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
@@ -66,6 +66,7 @@ class SUtil
 					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
 					openLinkAndClose();
 				}
+
 				if (!FileSystem.exists(SUtil.getPath() + 'mods/'))
 				{
 					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
@@ -76,7 +77,7 @@ class SUtil
 		#end
 	}
 
-	public static function gameCrashCheck():Void
+	public static function gameCrashCheck()
 	{
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 	}
@@ -91,7 +92,7 @@ class SUtil
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = "crash/" + Application.current.meta.get('file') + "_" + dateNow + ".txt";
+		path = SUtil.getPath() + "crash/" + "Crash_" + dateNow + ".txt";
 
 		for (stackItem in callStack)
 		{
@@ -109,12 +110,15 @@ class SUtil
 		if (!FileSystem.exists(SUtil.getPath() + "crash/"))
 			FileSystem.createDirectory(SUtil.getPath() + "crash/");
 
-		File.saveContent(SUtil.getPath() + path, errMsg + "\n");
+		File.saveContent(path, errMsg + "\n");
 
 		Sys.println(errMsg);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
 		Application.current.window.alert(errMsg, "Error!");
+		#if desktop
+		DiscordClient.shutdown();
+		#end
 		Sys.exit(1);
 	}
 
