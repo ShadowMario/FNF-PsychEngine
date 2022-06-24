@@ -119,19 +119,19 @@ class SUtil
 		Sys.exit(1);
 	}
 
-	private static function applicationAlert(title:String, description:String):Void
+	private static function applicationAlert(title:String, description:String)
 	{
 		Application.current.window.alert(description, title);
 	}
 
-	private static function openLinkAndClose():Void
+	private static function openLinkAndClose()
 	{
 		CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
 		Sys.exit(1);
 	}
 
 	#if android
-	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code'):Void
+	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code')
 	{
 		if (!FileSystem.exists(SUtil.getPath() + 'saves/'))
 			FileSystem.createDirectory(SUtil.getPath() + 'saves/');
@@ -140,13 +140,13 @@ class SUtil
 		SUtil.applicationAlert('Done!', 'File Saved Successfully!');
 	}
 
-	public static function saveClipboard(fileData:String = 'you forgot something to add in your code'):Void
+	public static function saveClipboard(fileData:String = 'you forgot something to add in your code')
 	{
 		openfl.system.System.setClipboard(fileData);
 		SUtil.applicationAlert('Done!', 'Data Saved to Clipboard Successfully!');
 	}
 
-	public static function copyContent(copyPath:String, savePath:String):Void
+	public static function copyContent(copyPath:String, savePath:String)
 	{
 		if (!FileSystem.exists(savePath))
 			File.saveBytes(savePath, OpenFlAssets.getBytes(copyPath));
