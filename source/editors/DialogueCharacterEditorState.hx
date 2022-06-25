@@ -12,11 +12,11 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.system.FlxSound;
-import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
-import flixel.addons.ui.FlxUIInputText;
+import texter.flixel.FlxInputTextRTL;
+import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.ui.FlxButton;
@@ -230,9 +230,9 @@ class DialogueCharacterEditorState extends MusicBeatState
 	var curSelectedAnim:String;
 	var animationArray:Array<String> = [];
 	var animationDropDown:FlxUIDropDownMenuCustom;
-	var animationInputText:FlxUIInputText;
-	var loopInputText:FlxUIInputText;
-	var idleInputText:FlxUIInputText;
+	var animationInputText:FlxInputTextRTL;
+	var loopInputText:FlxInputTextRTL;
+	var idleInputText:FlxInputTextRTL;
 
 	function addAnimationsUI()
 	{
@@ -258,11 +258,11 @@ class DialogueCharacterEditorState extends MusicBeatState
 			}
 		});
 
-		animationInputText = new FlxUIInputText(15, 85, 80, '', 8);
+		animationInputText = new FlxInputTextRTL(15, 85, 80, '', 8);
 		blockPressWhileTypingOn.push(animationInputText);
-		loopInputText = new FlxUIInputText(animationInputText.x, animationInputText.y + 35, 150, '', 8);
+		loopInputText = new FlxInputTextRTL(animationInputText.x, animationInputText.y + 35, 150, '', 8);
 		blockPressWhileTypingOn.push(loopInputText);
-		idleInputText = new FlxUIInputText(loopInputText.x, loopInputText.y + 40, 150, '', 8);
+		idleInputText = new FlxInputTextRTL(loopInputText.x, loopInputText.y + 40, 150, '', 8);
 		blockPressWhileTypingOn.push(idleInputText);
 
 		var addUpdateButton:FlxButton = new FlxButton(10, idleInputText.y + 30, "Add/Update", function()
@@ -365,18 +365,18 @@ class DialogueCharacterEditorState extends MusicBeatState
 		animationDropDown.setData(FlxUIDropDownMenuCustom.makeStrIdLabelArray(animationArray, true));
 	}
 
-	var imageInputText:FlxUIInputText;
+	var imageInputText:FlxInputTextRTL;
 	var scaleStepper:FlxUINumericStepper;
 	var xStepper:FlxUINumericStepper;
 	var yStepper:FlxUINumericStepper;
-	var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
+	var blockPressWhileTypingOn:Array<FlxInputTextRTL> = [];
 
 	function addCharacterUI()
 	{
 		var tab_group = new FlxUI(null, UI_mainbox);
 		tab_group.name = "Character";
 
-		imageInputText = new FlxUIInputText(10, 30, 80, character.jsonFile.image, 8);
+		imageInputText = new FlxInputTextRTL(10, 30, 80, character.jsonFile.image, 8);
 		blockPressWhileTypingOn.push(imageInputText);
 		xStepper = new FlxUINumericStepper(imageInputText.x, imageInputText.y + 50, 10, character.jsonFile.position[0], -2000, 2000, 0);
 		yStepper = new FlxUINumericStepper(imageInputText.x + 80, xStepper.y, 10, character.jsonFile.position[1], -2000, 2000, 0);
@@ -522,7 +522,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
-		if (id == FlxUIInputText.CHANGE_EVENT && sender == imageInputText)
+		if (id == FlxInputText.INPUT_ACTION && sender == imageInputText)
 		{
 			character.jsonFile.image = imageInputText.text;
 		}
@@ -587,7 +587,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 				{ // Copy paste
 					inputText.text = ClipboardAdd(inputText.text);
 					inputText.caretIndex = inputText.text.length;
-					getEvent(FlxUIInputText.CHANGE_EVENT, inputText, null, []);
+					getEvent(FlxInputText.INPUT_ACTION, inputText, null, []);
 				}
 				if (FlxG.keys.justPressed.ENTER)
 					inputText.hasFocus = false;

@@ -15,11 +15,12 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.graphics.FlxGraphic;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
-import flixel.addons.ui.FlxUIInputText;
+import flixel.addons.ui.FlxInputText;
+import texter.flixel.FlxInputTextRTL;
+import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
@@ -281,64 +282,6 @@ class CharacterEditorState extends MusicBeatState
 		}
 	}
 
-	/*var animationInputText:FlxUIInputText;
-		function addOffsetsUI() {
-			var tab_group = new FlxUI(null, UI_box);
-			tab_group.name = "Offsets";
-
-			animationInputText = new FlxUIInputText(15, 30, 100, 'idle', 8);
-
-			var addButton:FlxButton = new FlxButton(animationInputText.x + animationInputText.width + 23, animationInputText.y - 2, "Add", function()
-			{
-				var theText:String = animationInputText.text;
-				if(theText != '') {
-					var alreadyExists:Bool = false;
-					for (i in 0...animList.length) {
-						if(animList[i] == theText) {
-							alreadyExists = true;
-							break;
-						}
-					}
-
-					if(!alreadyExists) {
-						char.animOffsets.set(theText, [0, 0]);
-						animList.push(theText);
-					}
-				}
-			});
-
-			var removeButton:FlxButton = new FlxButton(animationInputText.x + animationInputText.width + 23, animationInputText.y + 20, "Remove", function()
-			{
-				var theText:String = animationInputText.text;
-				if(theText != '') {
-					for (i in 0...animList.length) {
-						if(animList[i] == theText) {
-							if(char.animOffsets.exists(theText)) {
-								char.animOffsets.remove(theText);
-							}
-
-							animList.remove(theText);
-							if(char.animation.curAnim.name == theText && animList.length > 0) {
-								char.playAnim(animList[0], true);
-							}
-							break;
-						}
-					}
-				}
-			});
-
-			var saveButton:FlxButton = new FlxButton(animationInputText.x, animationInputText.y + 35, "Save Offsets", function()
-			{
-				saveOffsets();
-			});
-
-			tab_group.add(new FlxText(10, animationInputText.y - 18, 0, 'Add/Remove Animation:'));
-			tab_group.add(addButton);
-			tab_group.add(removeButton);
-			tab_group.add(saveButton);
-			tab_group.add(animationInputText);
-			UI_box.addGroup(tab_group);
-	}*/
 	var TemplateCharacter:String = '{
 			"animations": [
 				{
@@ -502,8 +445,8 @@ class CharacterEditorState extends MusicBeatState
 		UI_box.addGroup(tab_group);
 	}
 
-	var imageInputText:FlxUIInputText;
-	var healthIconInputText:FlxUIInputText;
+	var imageInputText:FlxInputTextRTL;
+	var healthIconInputText:FlxInputTextRTL;
 
 	var singDurationStepper:FlxUINumericStepper;
 	var scaleStepper:FlxUINumericStepper;
@@ -524,7 +467,7 @@ class CharacterEditorState extends MusicBeatState
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Character";
 
-		imageInputText = new FlxUIInputText(15, 30, 200, 'characters/BOYFRIEND', 8);
+		imageInputText = new FlxInputTextRTL(15, 30, 200, 'characters/BOYFRIEND', 8);
 		var reloadImage:FlxButton = new FlxButton(imageInputText.x + 210, imageInputText.y - 3, "Reload Image", function()
 		{
 			char.imageFile = imageInputText.text;
@@ -546,7 +489,7 @@ class CharacterEditorState extends MusicBeatState
 			getEvent(FlxUINumericStepper.CHANGE_EVENT, healthColorStepperB, null);
 		});
 
-		healthIconInputText = new FlxUIInputText(15, imageInputText.y + 35, 75, leHealthIcon.getCharacter(), 8);
+		healthIconInputText = new FlxInputTextRTL(15, imageInputText.y + 35, 75, leHealthIcon.getCharacter(), 8);
 
 		singDurationStepper = new FlxUINumericStepper(15, healthIconInputText.y + 45, 0.1, 4, 0, 999, 1);
 
@@ -622,9 +565,9 @@ class CharacterEditorState extends MusicBeatState
 
 	var ghostDropDown:FlxUIDropDownMenuCustom;
 	var animationDropDown:FlxUIDropDownMenuCustom;
-	var animationInputText:FlxUIInputText;
-	var animationNameInputText:FlxUIInputText;
-	var animationIndicesInputText:FlxUIInputText;
+	var animationInputText:FlxInputTextRTL;
+	var animationNameInputText:FlxInputTextRTL;
+	var animationIndicesInputText:FlxInputTextRTL;
 	var animationNameFramerate:FlxUINumericStepper;
 	var animationLoopCheckBox:FlxUICheckBox;
 
@@ -633,9 +576,9 @@ class CharacterEditorState extends MusicBeatState
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Animations";
 
-		animationInputText = new FlxUIInputText(15, 85, 80, '', 8);
-		animationNameInputText = new FlxUIInputText(animationInputText.x, animationInputText.y + 35, 150, '', 8);
-		animationIndicesInputText = new FlxUIInputText(animationNameInputText.x, animationNameInputText.y + 40, 250, '', 8);
+		animationInputText = new FlxInputTextRTL(15, 85, 80, '', 8);
+		animationNameInputText = new FlxInputTextRTL(animationInputText.x, animationInputText.y + 35, 150, '', 8);
+		animationIndicesInputText = new FlxInputTextRTL(animationNameInputText.x, animationNameInputText.y + 40, 250, '', 8);
 		animationNameFramerate = new FlxUINumericStepper(animationInputText.x + 170, animationInputText.y, 1, 24, 0, 240, 0);
 		animationLoopCheckBox = new FlxUICheckBox(animationNameInputText.x + 170, animationNameInputText.y - 1, null, null, "Should it Loop?", 100);
 
@@ -809,7 +752,7 @@ class CharacterEditorState extends MusicBeatState
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
-		if (id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText))
+		if (id == FlxInputText.INPUT_ACTION && (sender is FlxInputTextRTL))
 		{
 			if (sender == healthIconInputText)
 			{
@@ -1210,7 +1153,7 @@ class CharacterEditorState extends MusicBeatState
 			textAnim.text = '';
 		}
 
-		var inputTexts:Array<FlxUIInputText> = [
+		var inputTexts:Array<FlxInputTextRTL> = [
 			animationInputText,
 			imageInputText,
 			healthIconInputText,
@@ -1225,7 +1168,7 @@ class CharacterEditorState extends MusicBeatState
 				{ // Copy paste
 					inputTexts[i].text = ClipboardAdd(inputTexts[i].text);
 					inputTexts[i].caretIndex = inputTexts[i].text.length;
-					getEvent(FlxUIInputText.CHANGE_EVENT, inputTexts[i], null, []);
+					getEvent(FlxInputText.INPUT_ACTION, inputTexts[i], null, []);
 				}
 				if (FlxG.keys.justPressed.ENTER)
 				{

@@ -124,22 +124,13 @@
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
-
-	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
-	<haxelib name="hscript" />
-
-	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
+
 	<haxelib name="linc_luajit" if="LUA_ALLOWED" />
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED" />
-	<haxelib name="faxe" if='switch' />
-	<!--<haxelib name="polymod"/> -->
 	<haxelib name="discord_rpc" if="desktop" />
-	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
-
-	<!-- <haxelib name="markdown" /> -->
-	<!-- <haxelib name="HtmlParser" /> -->
+	<haxelib name="texter" />
 
 	<!--In case you want to use nape with flixel-->
 	<!--<haxelib name="nape-haxe4" />-->

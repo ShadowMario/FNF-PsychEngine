@@ -12,11 +12,11 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.system.FlxSound;
-import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
-import flixel.addons.ui.FlxUIInputText;
+import texter.flixel.FlxInputTextRTL;
+import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.ui.FlxButton;
@@ -86,7 +86,7 @@ class MenuCharacterEditorState extends MusicBeatState
 
 	var UI_typebox:FlxUITabMenu;
 	var UI_mainbox:FlxUITabMenu;
-	var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
+	var blockPressWhileTypingOn:Array<FlxInputTextRTL> = [];
 
 	function addEditorBox()
 	{
@@ -162,9 +162,9 @@ class MenuCharacterEditorState extends MusicBeatState
 		UI_typebox.addGroup(tab_group);
 	}
 
-	var imageInputText:FlxUIInputText;
-	var idleInputText:FlxUIInputText;
-	var confirmInputText:FlxUIInputText;
+	var imageInputText:FlxInputTextRTL;
+	var idleInputText:FlxInputTextRTL;
+	var confirmInputText:FlxInputTextRTL;
 	var confirmDescText:FlxText;
 	var scaleStepper:FlxUINumericStepper;
 	var flipXCheckbox:FlxUICheckBox;
@@ -174,11 +174,11 @@ class MenuCharacterEditorState extends MusicBeatState
 		var tab_group = new FlxUI(null, UI_mainbox);
 		tab_group.name = "Character";
 
-		imageInputText = new FlxUIInputText(10, 20, 80, characterFile.image, 8);
+		imageInputText = new FlxInputTextRTL(10, 20, 80, characterFile.image, 8);
 		blockPressWhileTypingOn.push(imageInputText);
-		idleInputText = new FlxUIInputText(10, imageInputText.y + 35, 100, characterFile.idle_anim, 8);
+		idleInputText = new FlxInputTextRTL(10, imageInputText.y + 35, 100, characterFile.idle_anim, 8);
 		blockPressWhileTypingOn.push(idleInputText);
-		confirmInputText = new FlxUIInputText(10, idleInputText.y + 35, 100, characterFile.confirm_anim, 8);
+		confirmInputText = new FlxInputTextRTL(10, idleInputText.y + 35, 100, characterFile.confirm_anim, 8);
 		blockPressWhileTypingOn.push(confirmInputText);
 
 		flipXCheckbox = new FlxUICheckBox(10, confirmInputText.y + 30, null, null, "Flip X", 100);
@@ -267,7 +267,7 @@ class MenuCharacterEditorState extends MusicBeatState
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
-		if (id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText))
+		if (id == FlxInputText.INPUT_ACTION && (sender is FlxInputTextRTL))
 		{
 			if (sender == imageInputText)
 			{

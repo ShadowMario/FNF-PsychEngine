@@ -4,19 +4,16 @@ Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), 
 
 ## Installation
 
-You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
+You must have [the most up-to-date version of Haxe](https://haxe.org/download/). Seriously, stop using 4.1.5, it misses some stuff.
 
-Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
+Follow [this source code compilation tutorial](https://gamebanana.com/tuts/15054). After this, you will need to run the following commands on a Command prompt/PowerShell:
 
-To install LuaJIT do this: `haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit` on a Command prompt/PowerShell.
+```
+haxelib install hxCodec
+haxelib install texter
+```
 
-...Or if you don't want your mod to be able to run .lua scripts, delete the `LUA_ALLOWED` line on `Project.xml`.
-
-If you get an error about StatePointer when using Lua, run `haxelib remove linc_luajit` into Command Prompt/PowerShell, then re-install linc_luajit.
-
-If you want video support on your mod, simply do `haxelib install hxCodec` on a Command prompt/PowerShell.
-
-...Or you delete the `VIDEOS_ALLOWED` Line on `Project.xml`.
+If you get an error about StatePointer when using Lua, run `haxelib remove linc_luajit` and re-install linc_luajit.
 
 ## Credits
 
@@ -39,7 +36,7 @@ If you want video support on your mod, simply do `haxelib install hxCodec` on a 
 
 # Features
 
-## Attractive animated dialogue boxes:
+## Attractive animated dialogue boxes
 
 ![](https://user-images.githubusercontent.com/44785097/127706669-71cd5cdb-5c2a-4ecc-871b-98a276ae8070.gif)
 
