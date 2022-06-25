@@ -3353,9 +3353,32 @@ class FunkinLua
 	}
 
 	static inline var CLENSE:String = "
+	do
+		local root, path_relative, path_lib, path_mod_lib;
+		local source = '${scriptPath}';
+		function splice_path(limit)
+			local path, last = source, 0;
+			for i = 1, limit do last, _ = path:find('/', last + 1, true); end
+			return path:sub(1, last);
+		end
+		root = source:match('.*/'); path_relative = root .. '?.lua;' .. root .. '?/init.lua;';
+		root = splice_path(1); path_lib = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;';
+		root = splice_path(2); path_mod_lib = root .. 'libs/?.lua;' .. root .. 'libs/?/init.lua;';
+		package.path = path_relative .. path_lib .. path_mod_lib;
+	end
+	local function replace_require()
+		local require_clone = require;
+		local function require_secured(str)
+			local blacklist = {ffi = true, jit = true, io = true, debug = true};
+			if not blacklist[str] then return require_clone(str); end
+		end
+		return require_secured;
+	end
+	require = replace_require();
+
 	os.execute, os.getenv, os.rename, os.remove, os.tmpname = nil, nil, nil, nil, nil
 	io, load, loadfile, loadstring, dofile = nil, nil, nil, nil, nil
-	require, module, package = nil, nil, nil
+	module, package = nil, nil, nil
 	setfenv, getfenv = nil, nil
 	newproxy = nil
 	gcinfo = nil
