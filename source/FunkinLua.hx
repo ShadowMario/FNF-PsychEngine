@@ -632,11 +632,6 @@ class FunkinLua {
 			}
 		});
 
-		Lua_helper.add_callback(lua, "clearUnusedMemory", function() {
-			Paths.clearUnusedMemory();
-			return true;
-		});
-
 		Lua_helper.add_callback(lua, "loadGraphic", function(variable:String, image:String, ?gridX:Int, ?gridY:Int) {
 			var killMe:Array<String> = variable.split('.');
 			var spr:FlxSprite = getObjectDirectly(killMe[0]);
@@ -667,6 +662,7 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
+			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
 				return getVarInArray(getPropertyLoopThingWhatever(killMe), killMe[killMe.length-1]);
@@ -674,6 +670,7 @@ class FunkinLua {
 			return getVarInArray(getInstance(), variable);
 		});
 		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic) {
+			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
 				setVarInArray(getPropertyLoopThingWhatever(killMe), killMe[killMe.length-1], value);
@@ -683,6 +680,7 @@ class FunkinLua {
 			return true;
 		});
 		Lua_helper.add_callback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic) {
+			@:privateAccess
 			var shitMyPants:Array<String> = obj.split('.');
 			var realObject:Dynamic = Reflect.getProperty(getInstance(), obj);
 			if(shitMyPants.length>1)
@@ -703,6 +701,7 @@ class FunkinLua {
 			luaTrace("Object #" + index + " from group: " + obj + " doesn't exist!", false, false, FlxColor.RED);
 			return null;
 		});
+		@:privateAccess
 		Lua_helper.add_callback(lua, "setPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, value:Dynamic) {
 			var shitMyPants:Array<String> = obj.split('.');
 			var realObject:Dynamic = Reflect.getProperty(getInstance(), obj);
@@ -737,6 +736,7 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "getPropertyFromClass", function(classVar:String, variable:String) {
+			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
 				var coverMeInPiss:Dynamic = getVarInArray(Type.resolveClass(classVar), killMe[0]);
@@ -748,6 +748,7 @@ class FunkinLua {
 			return getVarInArray(Type.resolveClass(classVar), variable);
 		});
 		Lua_helper.add_callback(lua, "setPropertyFromClass", function(classVar:String, variable:String, value:Dynamic) {
+			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
 				var coverMeInPiss:Dynamic = getVarInArray(Type.resolveClass(classVar), killMe[0]);
@@ -1093,6 +1094,54 @@ class FunkinLua {
 			if(!color.startsWith('0x')) color = '0xff' + color;
 			return Std.parseInt(color);
 		});
+
+		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
+		{
+			return Reflect.getProperty(FlxG.keys.justPressed, name);
+		});
+		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
+		{
+			return Reflect.getProperty(FlxG.keys.pressed, name);
+		});
+		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
+		{
+			return Reflect.getProperty(FlxG.keys.justReleased, name);
+		});
+
+		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String)
+		{
+			return FlxG.gamepads.anyJustPressed(name);
+		});
+		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String)
+		{
+			return FlxG.gamepads.anyPressed(name);
+		});
+		Lua_helper.add_callback(lua, "anyGamepadReleased", function(name:String)
+		{
+			return FlxG.gamepads.anyJustReleased(name);
+		});
+
+		Lua_helper.add_callback(lua, "gamepadAnalogX", function(id:Int, ?leftStick:Bool = true)
+		{
+			return FlxG.gamepads.getByID(id).getXAxis(leftStick ? LEFT_ANALOG_STICK : RIGHT_ANALOG_STICK);
+		});
+		Lua_helper.add_callback(lua, "gamepadAnalogY", function(id:Int, ?leftStick:Bool = true)
+		{
+			return FlxG.gamepads.getByID(id).getYAxis(leftStick ? LEFT_ANALOG_STICK : RIGHT_ANALOG_STICK);
+		});
+		Lua_helper.add_callback(lua, "gamepadJustPressed", function(id:Int, name:String)
+		{
+			return Reflect.getProperty(FlxG.gamepads.getByID(id).justPressed, name);
+		});
+		Lua_helper.add_callback(lua, "gamepadPressed", function(id:Int, name:String)
+		{
+			return Reflect.getProperty(FlxG.gamepads.getByID(id).pressed, name);
+		});
+		Lua_helper.add_callback(lua, "gamepadJustReleased", function(id:Int, name:String)
+		{
+			return Reflect.getProperty(FlxG.gamepads.getByID(id).justReleased, name);
+		});
+
 		Lua_helper.add_callback(lua, "keyJustPressed", function(name:String) {
 			var key:Bool = false;
 			switch(name) {
@@ -1190,6 +1239,7 @@ class FunkinLua {
 			PlayState.changedDifficulty = false;
 			PlayState.chartingMode = false;
 			PlayState.instance.transitioning = true;
+			WeekData.loadTheFirstEnabledMod();
 			return true;
 		});
 		Lua_helper.add_callback(lua, "getSongPosition", function() {

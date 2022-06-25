@@ -3792,7 +3792,6 @@ class PlayState extends MusicBeatState
 				return;
 			}
 
-			WeekData.loadTheFirstEnabledMod();
 			if (isStoryMode)
 			{
 				campaignScore += songScore;
@@ -3823,6 +3822,7 @@ class PlayState extends MusicBeatState
 						FlxG.save.flush();
 					}
 					changedDifficulty = false;
+					WeekData.loadTheFirstEnabledMod();
 				}
 				else
 				{
@@ -3873,6 +3873,7 @@ class PlayState extends MusicBeatState
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
+				WeekData.loadTheFirstEnabledMod();
 			}
 			transitioning = true;
 		}
