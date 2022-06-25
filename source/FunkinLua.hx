@@ -54,6 +54,7 @@ class FunkinLua {
 	#end
 	public var camTarget:FlxCamera;
 	public var scriptName:String = '';
+	public var closed:Bool = false;
 
 	public var accessedProps:Map<String, Dynamic> = null;
 	public function new(script:String) {
@@ -116,9 +117,6 @@ class FunkinLua {
 		set('weekRaw', PlayState.storyWeek);
 		set('week', WeekData.weeksList[PlayState.storyWeek]);
 		set('seenCutscene', PlayState.seenCutscene);
-
-		// Block require and os, Should probably have a proper function but this should be good enough for now until someone smarter comes along and recreates a safe version of the OS library
-		set('require', false);
 
 		// Camera poo
 		set('cameraX', 0);
@@ -631,11 +629,6 @@ class FunkinLua {
 			}
 		});
 
-		Lua_helper.add_callback(lua, "clearUnusedMemory", function() {
-			Paths.clearUnusedMemory();
-			return true;
-		});
-
 		Lua_helper.add_callback(lua, "loadGraphic", function(variable:String, image:String, ?gridX:Int, ?gridY:Int) {
 			var killMe:Array<String> = variable.split('.');
 			var spr:FlxSprite = getObjectDirectly(killMe[0]);
@@ -666,6 +659,7 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
+			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
 				return getVarInArray(getPropertyLoopThingWhatever(killMe), killMe[killMe.length-1]);
@@ -673,6 +667,7 @@ class FunkinLua {
 			return getVarInArray(getInstance(), variable);
 		});
 		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic) {
+			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
 				setVarInArray(getPropertyLoopThingWhatever(killMe), killMe[killMe.length-1], value);
@@ -682,6 +677,7 @@ class FunkinLua {
 			return true;
 		});
 		Lua_helper.add_callback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic) {
+			@:privateAccess
 			var shitMyPants:Array<String> = obj.split('.');
 			var realObject:Dynamic = Reflect.getProperty(getInstance(), obj);
 			if(shitMyPants.length>1)
@@ -702,6 +698,7 @@ class FunkinLua {
 			luaTrace("Object #" + index + " from group: " + obj + " doesn't exist!", false, false, FlxColor.RED);
 			return null;
 		});
+		@:privateAccess
 		Lua_helper.add_callback(lua, "setPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, value:Dynamic) {
 			var shitMyPants:Array<String> = obj.split('.');
 			var realObject:Dynamic = Reflect.getProperty(getInstance(), obj);
@@ -736,6 +733,7 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "getPropertyFromClass", function(classVar:String, variable:String) {
+			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
 				var coverMeInPiss:Dynamic = getVarInArray(Type.resolveClass(classVar), killMe[0]);
@@ -747,6 +745,7 @@ class FunkinLua {
 			return getVarInArray(Type.resolveClass(classVar), variable);
 		});
 		Lua_helper.add_callback(lua, "setPropertyFromClass", function(classVar:String, variable:String, value:Dynamic) {
+			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
 				var coverMeInPiss:Dynamic = getVarInArray(Type.resolveClass(classVar), killMe[0]);
@@ -1092,6 +1091,54 @@ class FunkinLua {
 			if(!color.startsWith('0x')) color = '0xff' + color;
 			return Std.parseInt(color);
 		});
+
+		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
+		{
+			return Reflect.getProperty(FlxG.keys.justPressed, name);
+		});
+		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
+		{
+			return Reflect.getProperty(FlxG.keys.pressed, name);
+		});
+		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
+		{
+			return Reflect.getProperty(FlxG.keys.justReleased, name);
+		});
+
+		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String)
+		{
+			return FlxG.gamepads.anyJustPressed(name);
+		});
+		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String)
+		{
+			return FlxG.gamepads.anyPressed(name);
+		});
+		Lua_helper.add_callback(lua, "anyGamepadReleased", function(name:String)
+		{
+			return FlxG.gamepads.anyJustReleased(name);
+		});
+
+		Lua_helper.add_callback(lua, "gamepadAnalogX", function(id:Int, ?leftStick:Bool = true)
+		{
+			return FlxG.gamepads.getByID(id).getXAxis(leftStick ? LEFT_ANALOG_STICK : RIGHT_ANALOG_STICK);
+		});
+		Lua_helper.add_callback(lua, "gamepadAnalogY", function(id:Int, ?leftStick:Bool = true)
+		{
+			return FlxG.gamepads.getByID(id).getYAxis(leftStick ? LEFT_ANALOG_STICK : RIGHT_ANALOG_STICK);
+		});
+		Lua_helper.add_callback(lua, "gamepadJustPressed", function(id:Int, name:String)
+		{
+			return Reflect.getProperty(FlxG.gamepads.getByID(id).justPressed, name);
+		});
+		Lua_helper.add_callback(lua, "gamepadPressed", function(id:Int, name:String)
+		{
+			return Reflect.getProperty(FlxG.gamepads.getByID(id).pressed, name);
+		});
+		Lua_helper.add_callback(lua, "gamepadJustReleased", function(id:Int, name:String)
+		{
+			return Reflect.getProperty(FlxG.gamepads.getByID(id).justReleased, name);
+		});
+
 		Lua_helper.add_callback(lua, "keyJustPressed", function(name:String) {
 			var key:Bool = false;
 			switch(name) {
@@ -1189,6 +1236,7 @@ class FunkinLua {
 			PlayState.changedDifficulty = false;
 			PlayState.chartingMode = false;
 			PlayState.instance.transitioning = true;
+			WeekData.loadTheFirstEnabledMod();
 			return true;
 		});
 		Lua_helper.add_callback(lua, "getSongPosition", function() {
@@ -1635,6 +1683,25 @@ class FunkinLua {
 			#end
 		});
 
+		Lua_helper.add_callback(lua, "setHealthBarColors", function(leftHex:String, rightHex:String) {
+			var left:FlxColor = Std.parseInt(leftHex);
+			if(!leftHex.startsWith('0x')) left = Std.parseInt('0xff' + leftHex);
+			var right:FlxColor = Std.parseInt(rightHex);
+			if(!rightHex.startsWith('0x')) right = Std.parseInt('0xff' + rightHex);
+
+			PlayState.instance.healthBar.createFilledBar(left, right);
+			PlayState.instance.healthBar.updateBar();
+		});
+		Lua_helper.add_callback(lua, "setTimeBarColors", function(leftHex:String, rightHex:String) {
+			var left:FlxColor = Std.parseInt(leftHex);
+			if(!leftHex.startsWith('0x')) left = Std.parseInt('0xff' + leftHex);
+			var right:FlxColor = Std.parseInt(rightHex);
+			if(!rightHex.startsWith('0x')) right = Std.parseInt('0xff' + rightHex);
+
+			PlayState.instance.timeBar.createFilledBar(right, left);
+			PlayState.instance.timeBar.updateBar();
+		});
+
 		Lua_helper.add_callback(lua, "setObjectCamera", function(obj:String, camera:String = '') {
 			/*if(PlayState.instance.modchartSprites.exists(obj)) {
 				PlayState.instance.modchartSprites.get(obj).cameras = [cameraFromString(camera)];
@@ -1924,6 +1991,11 @@ class FunkinLua {
 			if (text4 == null) text4 = '';
 			if (text5 == null) text5 = '';
 			luaTrace('' + text1 + text2 + text3 + text4 + text5, true, false);
+		});
+		
+		Lua_helper.add_callback(lua, "close", function() {
+			closed = true;
+			return closed;
 		});
 
 		Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
@@ -2526,6 +2598,8 @@ class FunkinLua {
 
 	public function call(func:String, args:Array<Dynamic>): Dynamic{
 		#if LUA_ALLOWED
+		if(closed) return Function_Continue;
+
 		try {
 			if(lua == null) return Function_Continue;
 
@@ -2646,15 +2720,17 @@ class FunkinLua {
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
-	static inline var CLENSE:String = "
-	os.execute = nil;
-	os.exit = nil;
-	package.loaded.os.execute = nil;
-	package.loaded.os.exit = nil;
-	process = nil;
-	package.loaded.process = nil;
 
-	"; // Fuck this, I can't figure out linc_lua, so I'mma set everything in Lua itself - Super
+	static inline var CLENSE:String = "
+	os.execute, os.getenv, os.rename, os.remove, os.tmpname = nil, nil, nil, nil, nil
+	io, load, loadfile, loadstring, dofile = nil, nil, nil, nil, nil
+	require, module, package = nil, nil, nil
+	setfenv, getfenv = nil, nil
+	newproxy = nil
+	gcinfo = nil
+	debug = nil
+	jit = nil
+	"; // superpowers04/cyn-8/DragShot
 }
 
 class ModchartSprite extends FlxSprite

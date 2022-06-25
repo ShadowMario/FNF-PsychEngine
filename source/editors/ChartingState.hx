@@ -69,7 +69,6 @@ class ChartingState extends MusicBeatState
 	];
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
-	private var didAThing = false;
 	public var ignoreWarnings = false;
 	var undos = [];
 	var redos = [];
@@ -161,7 +160,9 @@ class ChartingState extends MusicBeatState
 		0.5,
 		1,
 		2,
+		3,
 		4,
+		6,
 		8,
 		12,
 		16,
@@ -378,7 +379,7 @@ class ChartingState extends MusicBeatState
 		}
 		lastSong = currentSongName;
 
-		zoomTxt = new FlxText(10, 10, 0, "Zoom: 1x", 16);
+		zoomTxt = new FlxText(10, 10, 0, "Zoom: 1 / 1", 16);
 		zoomTxt.scrollFactor.set();
 		add(zoomTxt);
 
@@ -779,7 +780,7 @@ class ChartingState extends MusicBeatState
 			updateGrid();
 		});
 
-		var stepperCopy:FlxUINumericStepper;
+		var stepperCopy:FlxUINumericStepper = null;
 		var copyLastButton:FlxButton = new FlxButton(10, swapSection.y + 30, "Copy last section", function()
 		{
 			var value:Int = Std.int(stepperCopy.value);
@@ -1964,7 +1965,10 @@ class ChartingState extends MusicBeatState
 	}
 
 	function updateZoom() {
-		zoomTxt.text = 'Zoom: ' + zoomList[curZoom] + 'x';
+		var daZoom:Float = zoomList[curZoom];
+		var zoomThing:String = '1 / ' + daZoom;
+		if(daZoom < 1) zoomThing = Math.round(1 / daZoom) + ' / 1';
+		zoomTxt.text = 'Zoom: ' + zoomThing;
 		reloadGridLayer();
 	}
 
@@ -2692,7 +2696,6 @@ class ChartingState extends MusicBeatState
 		var noteDataToCheck:Int = note.noteData;
 		if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
 
-		didAThing = true;
 		if(note.noteData > -1) //Normal Notes
 		{
 			for (i in _song.notes[curSec].sectionNotes)
@@ -2760,8 +2763,7 @@ class ChartingState extends MusicBeatState
 	{
 		//curUndoIndex++;
 		//var newsong = _song.notes;
-	//	undos.push(newsong);
-		didAThing = true;
+		//	undos.push(newsong);
 		var noteStrum = getStrumTime(dummyArrow.y, false) + sectionStartTime();
 		var noteData = Math.floor((FlxG.mouse.x - GRID_SIZE) / GRID_SIZE);
 		var noteSus = 0;
@@ -2772,10 +2774,13 @@ class ChartingState extends MusicBeatState
 		if (data != null) noteData = data;
 		if (type != null) daType = type;
 
-		if(noteData > -1) {
+		if(noteData > -1)
+		{
 			_song.notes[curSec].sectionNotes.push([noteStrum, noteData, noteSus, noteTypeIntMap.get(daType)]);
 			curSelectedNote = _song.notes[curSec].sectionNotes[_song.notes[curSec].sectionNotes.length - 1];
-		} else {
+		}
+		else
+		{
 			var event = eventStuff[Std.parseInt(eventDropDown.selectedId)][0];
 			var text1 = value1InputText.text;
 			var text2 = value2InputText.text;
@@ -2796,17 +2801,22 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 		updateNoteUI();
 	}
+
 	// will figure this out l8r
-	function redo(){
+	function redo()
+	{
 		//_song = redos[curRedoIndex];
 	}
-	function undo(){
+
+	function undo()
+	{
 		//redos.push(_song);
 		undos.pop();
 		//_song.notes = undos[undos.length - 1];
 		///trace(_song.notes);
 		//updateGrid();
 	}
+
 	function getStrumTime(yPos:Float, doZoomCalc:Bool = true):Float
 	{
 		var leZoom:Float = zoomList[curZoom];
@@ -2864,9 +2874,6 @@ class ChartingState extends MusicBeatState
 	}
 
 	function clearEvents() {
-
-
-
 		_song.events = [];
 		updateGrid();
 	}
@@ -2919,7 +2926,6 @@ class ChartingState extends MusicBeatState
 
 	function onSaveComplete(_):Void
 	{
-		didAThing = true;
 		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
