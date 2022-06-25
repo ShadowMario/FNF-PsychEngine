@@ -132,7 +132,7 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 
-	public var spawnTime:Float = 3000;
+	public var spawnTime:Float = 2000;
 
 	public var vocals:FlxSound;
 
@@ -3226,11 +3226,9 @@ class PlayState extends MusicBeatState
 
 		if (unspawnNotes[0] != null)
 		{
-			var time:Float = spawnTime; // shit be werid on 4:3
-			if (songSpeed < 1)
-				time /= songSpeed;
-			if (unspawnNotes[0].multSpeed < 1)
-				time /= unspawnNotes[0].multSpeed;
+			var time:Float = spawnTime;
+			if(songSpeed < 1) time /= songSpeed;
+			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
 
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
 			{
@@ -4805,8 +4803,7 @@ class PlayState extends MusicBeatState
 
 			if (SONG.notes[curSection] != null)
 			{
-				if (SONG.notes[curSection].altAnim)
-				{
+				if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection) {
 					altAnim = '-alt';
 				}
 			}
@@ -4902,9 +4899,8 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote)
 			{
 				combo += 1;
+				if(combo > 9999) combo = 9999;
 				popUpScore(note);
-				if (combo > 9999)
-					combo = 9999;
 			}
 			health += note.hitHealth * healthGain;
 
