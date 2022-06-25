@@ -1,6 +1,5 @@
 package;
 
-import flixel.graphics.FlxGraphic;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -53,6 +52,8 @@ import openfl.events.KeyboardEvent;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
 import flixel.util.FlxSave;
+import flixel.input.gamepad.FlxGamepad;
+import flixel.graphics.FlxGraphic;
 import animateatlas.AtlasFrameMaker;
 import Achievements;
 import StageData;
@@ -312,6 +313,8 @@ class PlayState extends MusicBeatState
 
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
+
+	public var isUsingGamepad:Bool = false;
 
 	var precacheList:Map<String, String> = new Map<String, String>();
 
@@ -1382,11 +1385,8 @@ class PlayState extends MusicBeatState
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
 
-		if (!ClientPrefs.controllerMode)
-		{
-			FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
-			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
-		}
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
 		callOnLuas('onCreatePost', []);
@@ -3250,6 +3250,9 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+		isUsingGamepad = !FlxG.keys.justReleased.ANY && !FlxG.keys.pressed.ANY && gamepad != null && !gamepad.justReleased.ANY && gamepad.pressed.ANY;
+
 		if (generatedMusic)
 		{
 			if (!inCutscene)
@@ -4454,7 +4457,7 @@ class PlayState extends MusicBeatState
 			&& startedCountdown
 			&& !paused
 			&& key > -1
-			&& (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || ClientPrefs.controllerMode))
+			&& (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || isUsingGamepad))
 		{
 			if (!boyfriend.stunned && generatedMusic && !endingSong)
 			{
@@ -4597,8 +4600,7 @@ class PlayState extends MusicBeatState
 		var left = controls.NOTE_LEFT;
 		var controlHoldArray:Array<Bool> = [left, down, up, right];
 
-		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if (ClientPrefs.controllerMode)
+		if (!isUsingGamepad)
 		{
 			var controlArray:Array<Bool> = [
 				controls.NOTE_LEFT_P,
@@ -4648,8 +4650,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if (ClientPrefs.controllerMode)
+		if (!isUsingGamepad)
 		{
 			var controlArray:Array<Bool> = [
 				controls.NOTE_LEFT_R,
@@ -5204,11 +5205,9 @@ class PlayState extends MusicBeatState
 		}
 		luaArray = [];
 
-		if (!ClientPrefs.controllerMode)
-		{
-			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
-			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
-		}
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
+
 		super.destroy();
 	}
 

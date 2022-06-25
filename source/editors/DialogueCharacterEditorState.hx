@@ -16,7 +16,6 @@ import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
 import texter.flixel.FlxInputTextRTL;
-import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.ui.FlxButton;
@@ -377,6 +376,10 @@ class DialogueCharacterEditorState extends MusicBeatState
 		tab_group.name = "Character";
 
 		imageInputText = new FlxInputTextRTL(10, 30, 80, character.jsonFile.image, 8);
+		imageInputText.callback = function(text:String, action:String)
+		{
+			character.jsonFile.image = text;
+		}
 		blockPressWhileTypingOn.push(imageInputText);
 		xStepper = new FlxUINumericStepper(imageInputText.x, imageInputText.y + 50, 10, character.jsonFile.position[0], -2000, 2000, 0);
 		yStepper = new FlxUINumericStepper(imageInputText.x + 80, xStepper.y, 10, character.jsonFile.position[1], -2000, 2000, 0);
@@ -522,11 +525,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
-		if (id == FlxInputText.INPUT_ACTION && sender == imageInputText)
-		{
-			character.jsonFile.image = imageInputText.text;
-		}
-		else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
+		if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
 		{
 			if (sender == scaleStepper)
 			{
@@ -583,12 +582,6 @@ class DialogueCharacterEditorState extends MusicBeatState
 				FlxG.sound.volumeUpKeys = [];
 				blockInput = true;
 
-				if (FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.V && Clipboard.text != null)
-				{ // Copy paste
-					inputText.text = ClipboardAdd(inputText.text);
-					inputText.caretIndex = inputText.text.length;
-					getEvent(FlxInputText.INPUT_ACTION, inputText, null, []);
-				}
 				if (FlxG.keys.justPressed.ENTER)
 					inputText.hasFocus = false;
 				break;

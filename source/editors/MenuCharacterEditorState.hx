@@ -16,7 +16,6 @@ import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
 import texter.flixel.FlxInputTextRTL;
-import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.ui.FlxButton;
@@ -175,10 +174,22 @@ class MenuCharacterEditorState extends MusicBeatState
 		tab_group.name = "Character";
 
 		imageInputText = new FlxInputTextRTL(10, 20, 80, characterFile.image, 8);
+		imageInputText.callback = function(text:String, action:String)
+		{
+			characterFile.image = text;
+		}
 		blockPressWhileTypingOn.push(imageInputText);
 		idleInputText = new FlxInputTextRTL(10, imageInputText.y + 35, 100, characterFile.idle_anim, 8);
+		idleInputText.callback = function(text:String, action:String)
+		{
+			characterFile.idle_anim = text;
+		}
 		blockPressWhileTypingOn.push(idleInputText);
 		confirmInputText = new FlxInputTextRTL(10, idleInputText.y + 35, 100, characterFile.confirm_anim, 8);
+		confirmInputText.callback = function(text:String, action:String)
+		{
+			characterFile.confirm_anim = text;
+		}
 		blockPressWhileTypingOn.push(confirmInputText);
 
 		flipXCheckbox = new FlxUICheckBox(10, confirmInputText.y + 30, null, null, "Flip X", 100);
@@ -267,22 +278,7 @@ class MenuCharacterEditorState extends MusicBeatState
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
-		if (id == FlxInputText.INPUT_ACTION && (sender is FlxInputTextRTL))
-		{
-			if (sender == imageInputText)
-			{
-				characterFile.image = imageInputText.text;
-			}
-			else if (sender == idleInputText)
-			{
-				characterFile.idle_anim = idleInputText.text;
-			}
-			else if (sender == confirmInputText)
-			{
-				characterFile.confirm_anim = confirmInputText.text;
-			}
-		}
-		else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
+		if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
 		{
 			if (sender == scaleStepper)
 			{

@@ -16,7 +16,6 @@ import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
 import texter.flixel.FlxInputTextRTL;
-import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.ui.FlxButton;
@@ -129,6 +128,34 @@ class DialogueEditorState extends MusicBeatState
 		tab_group.name = "Dialogue Line";
 
 		characterInputText = new FlxInputTextRTL(10, 20, 80, DialogueCharacter.DEFAULT_CHARACTER, 8);
+		characterInputText.callback = function(text:String, action:String)
+		{
+			character.reloadCharacterJson(text);
+			reloadCharacter();
+			updateTextBox();
+
+			if (character.jsonFile.animations.length > 0)
+			{
+				curAnim = 0;
+				if (character.jsonFile.animations.length > curAnim && character.jsonFile.animations[curAnim] != null)
+				{
+					character.playAnim(character.jsonFile.animations[curAnim].anim, daText.finishedText);
+					animText.text = 'Animation: '
+						+ character.jsonFile.animations[curAnim].anim
+							+ ' ('
+							+ (curAnim + 1)
+							+ ' / '
+							+ character.jsonFile.animations.length
+							+ ') - Press W or S to scroll';
+				}
+				else
+				{
+					animText.text = 'ERROR! NO ANIMATIONS FOUND';
+				}
+				characterAnimSpeed();
+			}
+			dialogueFile.dialogue[curSelected].portrait = text;
+		}
 		blockPressWhileTypingOn.push(characterInputText);
 
 		speedStepper = new FlxUINumericStepper(10, characterInputText.y + 40, 0.005, 0.05, 0, 0.5, 3);
@@ -141,9 +168,19 @@ class DialogueEditorState extends MusicBeatState
 		};
 
 		soundInputText = new FlxInputTextRTL(10, speedStepper.y + 40, 150, '', 8);
+		soundInputText.callback = function(text:String, action:String)
+		{
+			dialogueFile.dialogue[curSelected].sound = text;
+			reloadText(0);
+		}
 		blockPressWhileTypingOn.push(soundInputText);
 
 		lineInputText = new FlxInputTextRTL(10, soundInputText.y + 35, 200, DEFAULT_TEXT, 8);
+		lineInputText.callback = function(text:String, action:String)
+		{
+			reloadText(0);
+			dialogueFile.dialogue[curSelected].text = text;
+		}
 		blockPressWhileTypingOn.push(lineInputText);
 
 		var loadButton:FlxButton = new FlxButton(20, lineInputText.y + 25, "Load Dialogue", function()
@@ -293,48 +330,7 @@ class DialogueEditorState extends MusicBeatState
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
-		if (id == FlxInputText.INPUT_ACTION && (sender is FlxInputTextRTL))
-		{
-			if (sender == characterInputText)
-			{
-				character.reloadCharacterJson(characterInputText.text);
-				reloadCharacter();
-				updateTextBox();
-
-				if (character.jsonFile.animations.length > 0)
-				{
-					curAnim = 0;
-					if (character.jsonFile.animations.length > curAnim && character.jsonFile.animations[curAnim] != null)
-					{
-						character.playAnim(character.jsonFile.animations[curAnim].anim, daText.finishedText);
-						animText.text = 'Animation: '
-							+ character.jsonFile.animations[curAnim].anim
-								+ ' ('
-								+ (curAnim + 1)
-								+ ' / '
-								+ character.jsonFile.animations.length
-								+ ') - Press W or S to scroll';
-					}
-					else
-					{
-						animText.text = 'ERROR! NO ANIMATIONS FOUND';
-					}
-					characterAnimSpeed();
-				}
-				dialogueFile.dialogue[curSelected].portrait = characterInputText.text;
-			}
-			else if (sender == lineInputText)
-			{
-				reloadText(0);
-				dialogueFile.dialogue[curSelected].text = lineInputText.text;
-			}
-			else if (sender == soundInputText)
-			{
-				dialogueFile.dialogue[curSelected].sound = soundInputText.text;
-				reloadText(0);
-			}
-		}
-		else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender == speedStepper))
+		if (id == FlxUINumericStepper.CHANGE_EVENT && (sender == speedStepper))
 		{
 			reloadText(speedStepper.value);
 			dialogueFile.dialogue[curSelected].speed = speedStepper.value;
@@ -385,12 +381,6 @@ class DialogueEditorState extends MusicBeatState
 				FlxG.sound.volumeUpKeys = [];
 				blockInput = true;
 
-				if (FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.V && Clipboard.text != null)
-				{ // Copy paste
-					inputText.text = ClipboardAdd(inputText.text);
-					inputText.caretIndex = inputText.text.length;
-					getEvent(FlxInputText.INPUT_ACTION, inputText, null, []);
-				}
 				if (FlxG.keys.justPressed.ENTER)
 				{
 					if (inputText == lineInputText)

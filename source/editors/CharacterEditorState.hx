@@ -18,9 +18,7 @@ import flixel.util.FlxColor;
 import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
-import flixel.addons.ui.FlxInputText;
 import texter.flixel.FlxInputTextRTL;
-import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
@@ -468,6 +466,11 @@ class CharacterEditorState extends MusicBeatState
 		tab_group.name = "Character";
 
 		imageInputText = new FlxInputTextRTL(15, 30, 200, 'characters/BOYFRIEND', 8);
+		imageInputText.callback = function(text:String, action:String)
+		{
+			char.imageFile = text;
+		}
+
 		var reloadImage:FlxButton = new FlxButton(imageInputText.x + 210, imageInputText.y - 3, "Reload Image", function()
 		{
 			char.imageFile = imageInputText.text;
@@ -490,6 +493,12 @@ class CharacterEditorState extends MusicBeatState
 		});
 
 		healthIconInputText = new FlxInputTextRTL(15, imageInputText.y + 35, 75, leHealthIcon.getCharacter(), 8);
+		healthIconInputText.callback = function(text:String, action:String)
+		{
+			leHealthIcon.changeIcon(text);
+			char.healthIcon = text;
+			updatePresence();
+		}
 
 		singDurationStepper = new FlxUINumericStepper(15, healthIconInputText.y + 45, 0.1, 4, 0, 999, 1);
 
@@ -752,20 +761,7 @@ class CharacterEditorState extends MusicBeatState
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
-		if (id == FlxInputText.INPUT_ACTION && (sender is FlxInputTextRTL))
-		{
-			if (sender == healthIconInputText)
-			{
-				leHealthIcon.changeIcon(healthIconInputText.text);
-				char.healthIcon = healthIconInputText.text;
-				updatePresence();
-			}
-			else if (sender == imageInputText)
-			{
-				char.imageFile = imageInputText.text;
-			}
-		}
-		else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
+		if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
 		{
 			if (sender == scaleStepper)
 			{
@@ -1164,12 +1160,6 @@ class CharacterEditorState extends MusicBeatState
 		{
 			if (inputTexts[i].hasFocus)
 			{
-				if (FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.V && Clipboard.text != null)
-				{ // Copy paste
-					inputTexts[i].text = ClipboardAdd(inputTexts[i].text);
-					inputTexts[i].caretIndex = inputTexts[i].text.length;
-					getEvent(FlxInputText.INPUT_ACTION, inputTexts[i], null, []);
-				}
 				if (FlxG.keys.justPressed.ENTER)
 				{
 					inputTexts[i].hasFocus = false;

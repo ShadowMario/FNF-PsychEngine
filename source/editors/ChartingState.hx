@@ -16,7 +16,6 @@ import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
 import texter.flixel.FlxInputTextRTL;
-import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
@@ -634,6 +633,10 @@ class ChartingState extends MusicBeatState
 		blockPressWhileTypingOn.push(noteSkinInputText);
 
 		noteSplashesInputText = new FlxInputTextRTL(noteSkinInputText.x, noteSkinInputText.y + 35, 150, _song.splashSkin, 8);
+		noteSplashesInputText.callback = function(text:String, action:String)
+		{
+			_song.splashSkin = text;
+		}
 		blockPressWhileTypingOn.push(noteSplashesInputText);
 
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function()
@@ -955,6 +958,17 @@ class ChartingState extends MusicBeatState
 		blockPressWhileTypingOnStepper.push(stepperSusLength);
 
 		strumTimeInputText = new FlxInputTextRTL(10, 65, 180, "0");
+		strumTimeInputText.callback = function(text:String, action:String)
+		{
+			if (curSelectedNote != null)
+			{
+				var value:Float = Std.parseFloat(text);
+				if (Math.isNaN(value))
+					value = 0;
+				curSelectedNote[0] = value;
+				updateGrid();
+			}
+		}
 		tab_group_note.add(strumTimeInputText);
 		blockPressWhileTypingOn.push(strumTimeInputText);
 
@@ -1100,11 +1114,27 @@ class ChartingState extends MusicBeatState
 		var text:FlxText = new FlxText(20, 90, 0, "Value 1:");
 		tab_group_event.add(text);
 		value1InputText = new FlxInputTextRTL(20, 110, 100, "");
+		value1InputText.callback = function(text:String, action:String)
+		{
+			if (curSelectedNote != null)
+			{
+				curSelectedNote[1][curEventSelected][1] = text;
+				updateGrid();
+			}
+		}
 		blockPressWhileTypingOn.push(value1InputText);
 
 		var text:FlxText = new FlxText(20, 130, 0, "Value 2:");
 		tab_group_event.add(text);
 		value2InputText = new FlxInputTextRTL(20, 150, 100, "");
+		value2InputText.callback = function(text:String, action:String)
+		{
+			if (curSelectedNote != null)
+			{
+				curSelectedNote[1][curEventSelected][2] = text;
+				updateGrid();
+			}
+		}
 		blockPressWhileTypingOn.push(value2InputText);
 
 		// New event buttons
@@ -1511,34 +1541,6 @@ class ChartingState extends MusicBeatState
 			else if (wname == 'voices_volume')
 			{
 				vocals.volume = nums.value;
-			}
-		}
-		else if (id == FlxInputText.INPUT_ACTION && (sender is FlxInputTextRTL))
-		{
-			if (sender == noteSplashesInputText)
-			{
-				_song.splashSkin = noteSplashesInputText.text;
-			}
-			else if (curSelectedNote != null)
-			{
-				if (sender == value1InputText)
-				{
-					curSelectedNote[1][curEventSelected][1] = value1InputText.text;
-					updateGrid();
-				}
-				else if (sender == value2InputText)
-				{
-					curSelectedNote[1][curEventSelected][2] = value2InputText.text;
-					updateGrid();
-				}
-				else if (sender == strumTimeInputText)
-				{
-					var value:Float = Std.parseFloat(strumTimeInputText.text);
-					if (Math.isNaN(value))
-						value = 0;
-					curSelectedNote[0] = value;
-					updateGrid();
-				}
 			}
 		}
 
