@@ -1497,13 +1497,13 @@ class PlayState extends MusicBeatState
 		bg.cameras = [camHUD];
 		add(bg);
 
-		var video:MP4Handler = new MP4Handler();
-		video.playVideo(filepath);
+		var video:VideoHandler = new VideoHandler();
+		video.playVideo(filepath, loop, haccelerated, pauseMusic);
 		video.finishCallback = function()
 		{
-      remove(bg);
+			remove(bg);
 			startAndEnd();
-      Paths.clearUnusedMemory();
+			Paths.clearUnusedMemory();
 			return;
 		}
 		return;
