@@ -49,10 +49,6 @@ class Main extends Sprite
 	{
 		super();
 
-		#if CRASH_HANDLER
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		#end
-
 		if (stage != null)
 		{
 			init();
@@ -105,6 +101,10 @@ class Main extends Sprite
 		FlxG.mouse.visible = false;
 		#elseif android
 		FlxG.mouse.visible = false;
+		#end
+
+		#if CRASH_HANDLER
+		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
 	}
 
