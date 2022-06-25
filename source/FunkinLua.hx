@@ -118,9 +118,6 @@ class FunkinLua {
 		set('week', WeekData.weeksList[PlayState.storyWeek]);
 		set('seenCutscene', PlayState.seenCutscene);
 
-		// Block require and os, Should probably have a proper function but this should be good enough for now until someone smarter comes along and recreates a safe version of the OS library
-		set('require', false);
-
 		// Camera poo
 		set('cameraX', 0);
 		set('cameraY', 0);
@@ -2723,15 +2720,17 @@ class FunkinLua {
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
-	static inline var CLENSE:String = "
-	os.execute = nil;
-	os.exit = nil;
-	package.loaded.os.execute = nil;
-	package.loaded.os.exit = nil;
-	process = nil;
-	package.loaded.process = nil;
 
-	"; // Fuck this, I can't figure out linc_lua, so I'mma set everything in Lua itself - Super
+	static inline var CLENSE:String = "
+	os.execute, os.getenv, os.rename, os.remove, os.tmpname = nil, nil, nil, nil, nil
+	io, load, loadfile, loadstring, dofile = nil, nil, nil, nil, nil
+	require, module, package = nil, nil, nil
+	setfenv, getfenv = nil, nil
+	newproxy = nil
+	gcinfo = nil
+	debug = nil
+	jit = nil
+	"; // superpowers04/cyn-8/DragShot
 }
 
 class ModchartSprite extends FlxSprite
