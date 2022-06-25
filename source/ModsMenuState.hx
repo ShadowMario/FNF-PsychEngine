@@ -534,27 +534,16 @@ class ModsMenuState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		if(mods.length < 1)
-		{
-			for (obj in visibleWhenHasMods)
-			{
-				obj.visible = false;
-			}
-			for (obj in visibleWhenNoMods)
-			{
-				obj.visible = true;
-			}
-			return;
-		}
-
+		var noMods:Bool = (mods.length < 1);
 		for (obj in visibleWhenHasMods)
 		{
-			obj.visible = true;
+			obj.visible = !noMods;
 		}
 		for (obj in visibleWhenNoMods)
 		{
-			obj.visible = false;
+			obj.visible = noMods;
 		}
+		if(noMods) return;
 
 		curSelected += change;
 		if(curSelected < 0)

@@ -1463,9 +1463,9 @@ class PlayState extends MusicBeatState
 	}
 
 	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
-		if(modchartObjects.exists(tag))return modchartObjects.get(tag);
-		if(modchartSprites.exists(tag))return modchartSprites.get(tag);
-		if(text && modchartTexts.exists(tag))return modchartTexts.get(tag);
+		if(modchartObjects.exists(tag)) return modchartObjects.get(tag);
+		if(modchartSprites.exists(tag)) return modchartSprites.get(tag);
+		if(text && modchartTexts.exists(tag)) return modchartTexts.get(tag);
 		return null;
 	}
 
@@ -3820,6 +3820,7 @@ class PlayState extends MusicBeatState
 
 				if (storyPlaylist.length <= 0)
 				{
+					WeekData.loadTheFirstEnabledMod();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
 					cancelMusicFadeTween();
@@ -3841,7 +3842,6 @@ class PlayState extends MusicBeatState
 						FlxG.save.flush();
 					}
 					changedDifficulty = false;
-					WeekData.loadTheFirstEnabledMod();
 				}
 				else
 				{
@@ -3885,6 +3885,7 @@ class PlayState extends MusicBeatState
 			else
 			{
 				trace('WENT BACK TO FREEPLAY??');
+				WeekData.loadTheFirstEnabledMod();
 				cancelMusicFadeTween();
 				if(FlxTransitionableState.skipNextTransIn) {
 					CustomFadeTransition.nextCamera = null;
@@ -3892,7 +3893,6 @@ class PlayState extends MusicBeatState
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
-				WeekData.loadTheFirstEnabledMod();
 			}
 			transitioning = true;
 		}
