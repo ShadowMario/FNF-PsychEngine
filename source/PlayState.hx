@@ -4611,7 +4611,7 @@ class PlayState extends MusicBeatState
 		var left = controls.NOTE_LEFT;
 		var controlHoldArray:Array<Bool> = [left, down, up, right];
 
-		if (!isUsingGamepad)
+		if (isUsingGamepad)
 		{
 			var controlArray:Array<Bool> = [
 				controls.NOTE_LEFT_P,
@@ -4661,7 +4661,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (!isUsingGamepad)
+		if (isUsingGamepad)
 		{
 			var controlArray:Array<Bool> = [
 				controls.NOTE_LEFT_R,
