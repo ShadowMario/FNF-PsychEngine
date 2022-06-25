@@ -4,6 +4,7 @@ package;
 import android.Tools;
 import android.Permissions;
 import android.PermissionsList;
+import android.os.Build.VERSION;
 #end
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
@@ -45,8 +46,13 @@ class SUtil
 		#if android
 		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
-			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
-			SUtil.applicationAlert('Permissions', "if you accepted the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');//shitty way to stop the app
+			if (VERSION.SDK_INT > 23 || VERSION.SDK_INT == 23)
+			{
+				Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
+				SUtil.applicationAlert('Permissions', "If you accepted the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
+			}
+			else
+				SUtil.applicationAlert('Permissions', "Please grant the storage permissions in app settings" + '\n' + 'Press Ok io close the app');
 		}
 
 		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
