@@ -164,7 +164,9 @@ class ChartingState extends MusicBeatState
 		0.5,
 		1,
 		2,
+		3,
 		4,
+		6,
 		8,
 		12,
 		16,
@@ -381,7 +383,7 @@ class ChartingState extends MusicBeatState
 		}
 		lastSong = currentSongName;
 
-		zoomTxt = new FlxText(10, 10, 0, "Zoom: 1x", 16);
+		zoomTxt = new FlxText(10, 10, 0, "Zoom: 1 / 1", 16);
 		zoomTxt.scrollFactor.set();
 		add(zoomTxt);
 
@@ -2022,7 +2024,10 @@ class ChartingState extends MusicBeatState
 	}
 
 	function updateZoom() {
-		zoomTxt.text = 'Zoom: ' + zoomList[curZoom] + 'x';
+		var daZoom:Float = zoomList[curZoom];
+		var zoomThing:String = '1 / ' + daZoom;
+		if(daZoom < 1) zoomThing = Math.round(1 / daZoom) + ' / 1';
+		zoomTxt.text = 'Zoom: ' + zoomThing;
 		reloadGridLayer();
 	}
 
