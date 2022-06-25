@@ -1,0 +1,17 @@
+{	
+	"enableReloadKey":false,
+	"centerOptions":true,
+	"alignToCenter":true,
+	"optionX":null,
+	"optionY":null,
+	"scaleX":1,
+	"scaleY":1,
+	"angle":null,
+	"bgX":-80,
+	"bgY":0,
+	"backgroundStatic":"",
+	"backgroundConfirm":"",
+	"colorOnConfirm": [],
+	"options": [],
+	"links": []
+}
