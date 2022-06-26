@@ -2678,7 +2678,7 @@ class FunkinLua {
 				var result: Dynamic = Lua.pcall(lua, args.length, 1, 0);
 				if(result != 0)
 				{
-					//var err = getErrorMessage();
+					var err = getErrorMessage();
 					//if(errorHandler != null)
 					//	errorHandler(err);
 					//else
