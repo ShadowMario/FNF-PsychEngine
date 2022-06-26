@@ -22,7 +22,6 @@ class Note extends FlxSprite
 	public var extraData:Map<String,Dynamic> = [];
 
 	public var strumTime:Float = 0;
-	public var unModifiedStrumTime:Float = 0;
 	public var mustPress:Bool = false;
 	public var noteData:Int = 0;
 	public var canBeHit:Bool = false;
@@ -173,7 +172,6 @@ class Note extends FlxSprite
 		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
-		this.unModifiedStrumTime = strumTime;
 		this.strumTime = strumTime;
 		if(!inEditor) this.strumTime += ClientPrefs.noteOffset;
 

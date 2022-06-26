@@ -1970,7 +1970,6 @@ class ChartingState extends MusicBeatState
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note) {
 			note.alpha = 1;
-			note.strumTime = note.unModifiedStrumTime - _song.offset; // make it change mid time lol
 			
 			note.y = (GRID_SIZE) * zoomList[curZoom] + Math.floor(getYfromStrum((note.strumTime) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps), false));
 			if(curSelectedNote != null) {
