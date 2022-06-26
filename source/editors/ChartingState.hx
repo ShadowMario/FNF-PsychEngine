@@ -485,12 +485,6 @@ class ChartingState extends MusicBeatState
 		stepperSpeed.value = _song.speed;
 		stepperSpeed.name = 'song_speed';
 		blockPressWhileTypingOnStepper.push(stepperSpeed);
-
-		var stepperOffset:FlxUINumericStepper = new FlxUINumericStepper(stepperBPM.x + 100, 70, 1, 0, -2000, 2000, 0);
-		stepperOffset.value = _song.offset;
-		stepperOffset.name = 'song_offset';
-		blockPressWhileTypingOnStepper.push(stepperOffset);
-
 		#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods('characters/'), Paths.mods(Paths.currentModDirectory + '/characters/'), Paths.getPreloadPath('characters/')];
 		for(mod in Paths.getGlobalMods())
@@ -620,7 +614,6 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(loadEventJson);
 		tab_group_song.add(stepperBPM);
 		tab_group_song.add(stepperSpeed);
-		tab_group_song.add(stepperOffset);
 		tab_group_song.add(reloadNotesButton);
 		tab_group_song.add(noteSkinInputText);
 		tab_group_song.add(noteSplashesInputText);
@@ -1433,10 +1426,6 @@ class ChartingState extends MusicBeatState
 			{
 				_song.speed = nums.value;
 			}
-			else if (wname == 'song_offset')
-			{
-				_song.offset = nums.value;
-			}
 			else if (wname == 'song_bpm')
 			{
 				tempBpm = nums.value;
@@ -1969,8 +1958,6 @@ class ChartingState extends MusicBeatState
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note) {
 			note.alpha = 1;
-			
-			note.y = (GRID_SIZE) * zoomList[curZoom] + Math.floor(getYfromStrum((note.strumTime) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps), false));
 			if(curSelectedNote != null) {
 				var noteDataToCheck:Int = note.noteData;
 				if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
