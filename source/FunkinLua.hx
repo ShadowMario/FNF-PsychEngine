@@ -2654,6 +2654,7 @@ class FunkinLua {
 		#if LUA_ALLOWED
 		var v:String = Lua.tostring(lua, -1);
 		if(!isErrorAllowed(v)) v = null;
+		Lua.pop(lua, 1);
 		return v;
 		#end
 	}
