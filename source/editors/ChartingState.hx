@@ -219,7 +219,6 @@ class ChartingState extends MusicBeatState
 				player2: 'dad',
 				gfVersion: 'gf',
 				speed: 1,
-				offset: 0,
 				stage: 'stage',
 				validScore: false
 			};
