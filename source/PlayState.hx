@@ -2501,6 +2501,7 @@ class PlayState extends MusicBeatState
 				phillyGlowGradient = new PhillyGlow.PhillyGlowGradient(-400, 225); //This shit was refusing to properly load FlxGradient so fuck it
 				phillyGlowGradient.visible = false;
 				insert(members.indexOf(blammedLightsBlack) + 1, phillyGlowGradient);
+				if(!ClientPrefs.flashing) phillyGlowGradient.intendedAlpha = 0.7;
 
 				precacheList.set('philly/particle', 'image'); //precache particle image
 				phillyGlowParticles = new FlxTypedGroup<PhillyGlow.PhillyGlowParticle>();
@@ -3347,15 +3348,25 @@ class PlayState extends MusicBeatState
 				var lightId:Int = Std.parseInt(value1);
 				if(Math.isNaN(lightId)) lightId = 0;
 
+				var doFlash:Void->Void = function() {
+					var color:FlxColor = FlxColor.WHITE;
+					if(!ClientPrefs.flashing) color.alphaFloat = 0.5;
+
+					FlxG.camera.flash(color, 0.15, null, true);
+				};
+
 				var chars:Array<Character> = [boyfriend, gf, dad];
 				switch(lightId)
 				{
 					case 0:
 						if(phillyGlowGradient.visible)
 						{
-							FlxG.camera.flash(FlxColor.WHITE, 0.15, null, true);
-							FlxG.camera.zoom += 0.5;
-							if(ClientPrefs.camZooms) camHUD.zoom += 0.1;
+							doFlash();
+							if(ClientPrefs.camZooms)
+							{
+								FlxG.camera.zoom += 0.5;
+								camHUD.zoom += 0.1;
+							}
 
 							blammedLightsBlack.visible = false;
 							phillyWindowEvent.visible = false;
@@ -3376,9 +3387,12 @@ class PlayState extends MusicBeatState
 
 						if(!phillyGlowGradient.visible)
 						{
-							FlxG.camera.flash(FlxColor.WHITE, 0.15, null, true);
-							FlxG.camera.zoom += 0.5;
-							if(ClientPrefs.camZooms) camHUD.zoom += 0.1;
+							doFlash();
+							if(ClientPrefs.camZooms)
+							{
+								FlxG.camera.zoom += 0.5;
+								camHUD.zoom += 0.1;
+							}
 
 							blammedLightsBlack.visible = true;
 							blammedLightsBlack.alpha = 1;
@@ -3389,13 +3403,17 @@ class PlayState extends MusicBeatState
 						else if(ClientPrefs.flashing)
 						{
 							var colorButLower:FlxColor = color;
-							colorButLower.alphaFloat = 0.3;
+							colorButLower.alphaFloat = 0.25;
 							FlxG.camera.flash(colorButLower, 0.5, null, true);
 						}
 
+						var charColor:FlxColor = color;
+						if(!ClientPrefs.flashing) charColor.saturation *= 0.5;
+						else charColor.saturation *= 0.75;
+
 						for (who in chars)
 						{
-							who.color = color;
+							who.color = charColor;
 						}
 						phillyGlowParticles.forEachAlive(function(particle:PhillyGlow.PhillyGlowParticle)
 						{
@@ -3404,9 +3422,8 @@ class PlayState extends MusicBeatState
 						phillyGlowGradient.color = color;
 						phillyWindowEvent.color = color;
 
-						var colorDark:FlxColor = color;
-						colorDark.brightness *= 0.5;
-						phillyStreet.color = colorDark;
+						color.brightness *= 0.5;
+						phillyStreet.color = color;
 
 					case 2: // spawn particles
 						if(!ClientPrefs.lowQuality)
