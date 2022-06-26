@@ -1738,9 +1738,9 @@ class ChartingState extends MusicBeatState
 				updateZoom();
 			}
 
-			if (FlxG.keys.justPressed.TAB #if android || virtualPad.buttonD.justPressed #end)
+			if (FlxG.keys.justPressed.TAB)
 			{
-				if (FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonY.pressed #end)
+				if (FlxG.keys.pressed.SHIFT)
 				{
 					UI_box.selected_tab -= 1;
 					if (UI_box.selected_tab < 0)
@@ -1820,7 +1820,7 @@ class ChartingState extends MusicBeatState
 				}
 			}
 
-			if(!vortex){
+			if(!vortex #if android && virtualPad.buttonD.justPressed #end){
 				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN #if android || virtualPad.buttonUp2.justPressed || virtualPad.buttonDown2.justPressed #end  )
 				{
 					FlxG.sound.music.pause();
