@@ -286,13 +286,13 @@ class FunkinLua {
 				#if (linc_luajit >= "0.0.6")
 				LuaL.error(lua, "bad argument #1 to 'getGlobalFromScript' (string expected, got nil)");
 				#end
-				return;
+				return null;
 			}
 			if(global==null){
 				#if (linc_luajit >= "0.0.6")
 				LuaL.error(lua, "bad argument #2 to 'getGlobalFromScript' (string expected, got nil)");
 				#end
-				return;
+				return null;
 			}
 			var cervix = luaFile + ".lua";
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
@@ -325,26 +325,23 @@ class FunkinLua {
 				{
 					if(luaInstance.scriptName == cervix)
 					{
+						var result:Dynamic;
 						Lua.getglobal(luaInstance.lua, global);
-						if(Lua.isnumber(luaInstance.lua,-1)){
-							Lua.pushnumber(lua, Lua.tonumber(luaInstance.lua, -1));
-						}else if(Lua.isstring(luaInstance.lua,-1)){
-							Lua.pushstring(lua, Lua.tostring(luaInstance.lua, -1));
-						}else if(Lua.isboolean(luaInstance.lua,-1)){
-							Lua.pushboolean(lua, Lua.toboolean(luaInstance.lua, -1));
-						}else{
+						result = Convert.fromLua(luaInstance.lua, -1);
+						Lua.pop(luaInstance.lua, 1);
+						
+						// shit these doesnt work :(
+						/*var success:Bool = Convert.toLua(lua, result);
+						if (!success)
 							Lua.pushnil(lua);
-						}
-						// TODO: table
-
-						Lua.pop(luaInstance.lua,1); // remove the global
-
-						return;
+						
+						return;*/
+						return result;
 					}
 
 				}
 			}
-			Lua.pushnil(lua);
+			return null;
 		});
 		Lua_helper.add_callback(lua, "setGlobalFromScript", function(luaFile:String, global:String, val:Dynamic){ // returns the global from a script
 			var cervix = luaFile + ".lua";
@@ -2670,25 +2667,35 @@ class FunkinLua {
 
 			Lua.getglobal(lua, func);
 			
-			for(arg in args) {
-				Convert.toLua(lua, arg);
-			}
+			#if (linc_luajit >= "0.0.5")
+			if(Lua.isfunction(lua, -1) == true)
+			#else
+			if(Lua.isfunction(lua, -1) == 1)
+			#end
+			{
+				for(arg in args) Convert.toLua(lua, arg);
+				var result: Dynamic = Lua.pcall(lua, args.length, 1, 0);
+				if(result != 0)
+				{
+					//var err = getErrorMessage();
+					//if(errorHandler != null)
+					//	errorHandler(err);
+					//else
+					luaTrace("ERROR (" + func + "): " + err, false, false, FlxColor.RED);
+					//LuaL.error(state,err);
 
-			var result:Null<Int> = Lua.pcall(lua, args.length, 1, 0);
-			var error:Dynamic = getErrorMessage();
-			if(!resultIsAllowed(lua, result))
-			{
-				Lua.pop(lua, 1);
-				if(error != null) luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
+					//Lua.pop(lua, 1);
+					return Function_Continue;
+				}
+				else
+				{
+					var conv:Dynamic = Convert.fromLua(lua, -1);
+					Lua.pop(lua, 1);
+					if(conv == null) conv = Function_Continue;
+					return conv;
+				}
 			}
-			else
-			{
-				var conv:Dynamic = Convert.fromLua(lua, result);
-				Lua.pop(lua, 1);
-				if(conv == null) conv = Function_Continue;
-				return conv;
-			}
-			return Function_Continue;
+			Lua.pop(lua, 1);
 		}
 		catch (e:Dynamic) {
 			trace(e);
