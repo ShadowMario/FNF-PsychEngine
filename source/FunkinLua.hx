@@ -389,7 +389,7 @@ class FunkinLua {
 			}
 			Lua.pushnil(lua);
 		});
-		Lua_helper.add_callback(lua, "getGlobals", function(luaFile:String){ // returns a copy of the specified file's globals
+		/*Lua_helper.add_callback(lua, "getGlobals", function(luaFile:String){ // returns a copy of the specified file's globals
 			var cervix = luaFile + ".lua";
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
 			var doPush = false;
@@ -461,9 +461,9 @@ class FunkinLua {
 							// TODO: table
 
 							if(pop==2)Lua.rawset(lua, tableIdx); // then set it
-			        Lua.pop(luaInstance.lua, 1); // for the loop
-			      }
-			      Lua.pop(luaInstance.lua,1); // end the loop entirely
+							Lua.pop(luaInstance.lua, 1); // for the loop
+						}
+						Lua.pop(luaInstance.lua,1); // end the loop entirely
 						Lua.pushvalue(lua, tableIdx); // push the table onto the stack so it gets returned
 
 						return;
@@ -472,7 +472,7 @@ class FunkinLua {
 				}
 			}
 			Lua.pushnil(lua);
-		});
+		});*/
 		Lua_helper.add_callback(lua, "isRunning", function(luaFile:String){
 			var cervix = luaFile + ".lua";
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
