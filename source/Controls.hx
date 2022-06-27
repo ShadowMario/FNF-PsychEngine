@@ -500,14 +500,14 @@ class Controls extends FlxActionSet
 
 	public function removeFlxInput(Tinputs:Array<FlxActionInput>)
 	{
-		for (action in this.digitalActions)
+		for (actions in this.digitalActions)
 		{
-			while (action.inputs.length --> 0)
+			while (actions.inputs.length-- > 0)
 			{
-				while (Tinputs.length --> 0)
+				while (Tinputs.length-- > 0)
 				{
-					if (Tinputs[Tinputs.length] == action.inputs[action.inputs.length])
-						action.remove(action.inputs[action.inputs.length]);
+					if (Tinputs[Tinputs.length] == actions.inputs[actions.inputs.length])
+						actions.remove(actions.inputs[actions.inputs.length]);
 				}
 			}
 		}
