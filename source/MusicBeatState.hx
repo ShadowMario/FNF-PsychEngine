@@ -37,30 +37,23 @@ class MusicBeatState extends FlxUIState
 	#if android
 	var virtualPad:FlxVirtualPad;
 	var androidControls:AndroidControls;
-	var trackedinputsUI:Array<FlxActionInput> = [];
-	var trackedinputsNOTES:Array<FlxActionInput> = [];
-	#end
-	
-	#if android
-	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode) {
+
+	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
+	{
 		virtualPad = new FlxVirtualPad(DPad, Action);
 		add(virtualPad);
 		controls.setVirtualPadUI(virtualPad, DPad, Action);
-		trackedinputsUI = controls.trackedinputsUI;
-		controls.trackedinputsUI = [];
 	}
-	#end
 
-	#if android
-	public function removeVirtualPad() {
-		controls.removeFlxInput(trackedinputsUI);
+	public function removeVirtualPad()
+	{
+		controls.removeFlxInput(controls.trackedinputsUI);
 		remove(virtualPad);
 	}
-	#end
 
-	#if android
-	public function addAndroidControls() {
-        androidControls = new AndroidControls();
+	public function addAndroidControls()
+	{
+		androidControls = new AndroidControls();
 
 		switch (androidControls.mode)
 		{
@@ -73,22 +66,17 @@ class MusicBeatState extends FlxUIState
 			default:
 		}
 
-		trackedinputsNOTES = controls.trackedinputsNOTES;
-		controls.trackedinputsNOTES = [];
-
 		var camcontrol = new flixel.FlxCamera();
 		FlxG.cameras.add(camcontrol);
 		camcontrol.bgColor.alpha = 0;
+
 		androidControls.cameras = [camcontrol];
-
 		androidControls.visible = false;
-
 		add(androidControls);
 	}
-	#end
 
-	#if android
-        public function addPadCamera() {
+	public function addPadCamera()
+	{
 		var camcontrol = new flixel.FlxCamera();
 		FlxG.cameras.add(camcontrol);
 		camcontrol.bgColor.alpha = 0;
@@ -96,11 +84,12 @@ class MusicBeatState extends FlxUIState
 	}
 	#end
 	
-	override function destroy() {
+	override function destroy()
+	{
 		#if android
-		controls.removeFlxInput(trackedinputsNOTES);
-		controls.removeFlxInput(trackedinputsUI);
-		#end	
+		controls.removeFlxInput(controls.trackedinputsNOTES);
+		controls.removeFlxInput(controls.trackedinputsUI);
+		#end
 		
 		super.destroy();
 	}
