@@ -272,6 +272,9 @@ class PlayState extends MusicBeatState
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
 
+	// Dadbattle x and y stuff
+	public var curCharacter:Float = 0;
+
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -1693,6 +1696,7 @@ class PlayState extends MusicBeatState
 		{
 			case 'ugh':
 				cutsceneHandler.endTime = 12;
+//                              cutsceneHandler.cutsceneTime = 12;
 				cutsceneHandler.music = 'DISTORTO';
 				precacheList.set('wellWellWell', 'sound');
 				precacheList.set('killYou', 'sound');
@@ -1845,6 +1849,8 @@ class PlayState extends MusicBeatState
 				cutsceneHandler.onStart = function()
 				{
 					cutsceneSnd.play(true);
+                                        // get current max cutsceneTime
+                                        trace('Cutscene time for current cutscene: ' + cutsceneHandler.cutsceneTime);
 				};
 
 				cutsceneHandler.timer(15.2, function()
@@ -2419,7 +2425,7 @@ class PlayState extends MusicBeatState
 		}
 		checkEventNote();
 		generatedMusic = true;
-	}
+}
 
 	function eventPushed(event:EventNote) {
 		switch(event.event) {
@@ -2439,22 +2445,34 @@ class PlayState extends MusicBeatState
 				addCharacterToList(newCharacter, charType);
 
 			case 'Dadbattle Spotlight':
+				var charType:Int = 0;
+				switch(event.value1.toLowerCase()) {
+					case '0':
+						charType = 1;
+					default:
+						charType = Std.parseInt(event.value1);
+						if(Math.isNaN(charType)) charType = 0;
+				}
+				var characterToPointTo:String = event.value1;
+				addCharacterToList(characterToPointTo, charType);
 				dadbattleBlack = new BGSprite(null, -800, -400, 0, 0);
 				dadbattleBlack.makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
-				dadbattleBlack.alpha = 0.25;
+				dadbattleBlack.alpha = 0.26;
 				dadbattleBlack.visible = false;
-				add(dadbattleBlack);
 
-				dadbattleLight = new BGSprite('spotlight', 400, -400);
-				dadbattleLight.alpha = 0.375;
+				dadbattleLight = new BGSprite('spotlight');
+				dadbattleLight.alpha = 0.374;
 				dadbattleLight.blend = ADD;
 				dadbattleLight.visible = false;
+                dadbattleLight.x = 420;
+                dadbattleLight.y = -413;
 
 				dadbattleSmokes.alpha = 0.7;
 				dadbattleSmokes.blend = ADD;
 				dadbattleSmokes.visible = false;
 				add(dadbattleLight);
 				add(dadbattleSmokes);
+				add(dadbattleBlack);
 
 				var offsetX = 200;
 				var smoke:BGSprite = new BGSprite('smoke', -1550 + offsetX, 660 + FlxG.random.float(-20, 20), 1.2, 1.05);
@@ -2470,7 +2488,6 @@ class PlayState extends MusicBeatState
 				smoke.active = true;
 				smoke.flipX = true;
 				dadbattleSmokes.add(smoke);
-
 
 			case 'Philly Glow':
 				blammedLightsBlack = new FlxSprite(FlxG.width * -0.5, FlxG.height * -0.5).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
@@ -2928,12 +2945,12 @@ class PlayState extends MusicBeatState
 		if (health > 2)
 			health = 2;
 
-		if (healthBar.percent < 20)
+		if (healthBar.percent < 21)
 			iconP1.animation.curAnim.curFrame = 1;
 		else
 			iconP1.animation.curAnim.curFrame = 0;
 
-		if (healthBar.percent > 80)
+		if (healthBar.percent > 79)
 			iconP2.animation.curAnim.curFrame = 1;
 		else
 			iconP2.animation.curAnim.curFrame = 0;

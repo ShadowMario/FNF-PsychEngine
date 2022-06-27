@@ -41,7 +41,7 @@ class CutsceneHandler extends FlxBasic
 		PlayState.instance.add(this);
 	}
 
-	private var cutsceneTime:Float = 0;
+	public var cutsceneTime:Float = 0; // make this public so that week 7 customs or more can alter??
 	private var firstFrame:Bool = false;
 	override function update(elapsed)
 	{
@@ -54,7 +54,7 @@ class CutsceneHandler extends FlxBasic
 		}
 
 		cutsceneTime += elapsed;
-		if(endTime <= cutsceneTime)
+		if( endTime <= cutsceneTime) // cutsceneTime = 0
 		{
 			finishCallback();
 			if(finishCallback2 != null) finishCallback2();

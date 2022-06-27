@@ -47,7 +47,7 @@ class Alphabet extends FlxSpriteGroup
 	public var typed:Bool = false;
 
 	public var typingSpeed:Float = 0.05;
-	public function new(x:Float, y:Float, text:String = "", ?bold:Bool = false, typed:Bool = false, ?typingSpeed:Float = 0.05, ?textSize:Float = 1)
+	public function new(x:Float, y:Float, text:String = "", ?bold:Bool = false, typed:Bool = false, ?typingSpeed:Float = 0.05, ?textSize:Float = 1, paused:Bool = false)
 	{
 		super(x, y);
 		forceX = Math.NEGATIVE_INFINITY;
@@ -57,6 +57,7 @@ class Alphabet extends FlxSpriteGroup
 		this.text = text;
 		this.typed = typed;
 		isBold = bold;
+		this.paused = paused;
 
 		if (text != "")
 		{
@@ -71,6 +72,14 @@ class Alphabet extends FlxSpriteGroup
 		} else {
 			finishedText = true;
 		}
+
+	    if (paused = true) {
+			typingSpeed = 0;
+		}
+
+/*		if (textSize = 2.0) {
+			finishedText = true;
+		} */
 	}
 
 	public function changeText(newText:String, newTypingSpeed:Float = -1)
@@ -110,6 +119,10 @@ class Alphabet extends FlxSpriteGroup
 			finishedText = true;
 		}
 		x = lastX;
+		
+	    if (paused = true) {
+			typingSpeed = 0;
+		}
 	}
 
 	public function addText()
@@ -213,7 +226,7 @@ class Alphabet extends FlxSpriteGroup
 		_finalText = text;
 		doSplitWords();
 
-		// trace(arrayShit);
+		// loopNum += 1;
 
 		if(soundDialog == null)
 		{

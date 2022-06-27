@@ -178,7 +178,7 @@ class ChartingState extends MusicBeatState
 	var gridLayer:FlxTypedGroup<FlxSprite>;
 
 	public static var quantization:Int = 16;
-	public static var curQuant = 3;
+	public static var curQuant = 3; // this should just be a quantization but idc
 
 	public var quantizations:Array<Int> = [
 		4,
@@ -193,8 +193,6 @@ class ChartingState extends MusicBeatState
 		96,
 		192
 	];
-
-
 
 	var text:String = "";
 	public static var vortex:Bool = false;
