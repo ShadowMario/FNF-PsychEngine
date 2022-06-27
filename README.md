@@ -68,7 +68,7 @@ _____________________________________
   * Also there's the Background girls being spooky during the "Hey!" parts of the Instrumental
 ### Week 7:
   * Animated Cutscenes (no video)
-  * Screen Shake
+  * Screen Zoom
 
 ## Cool new Chart Editor changes and countless bug fixes
 ![](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/docs/img/chart.png?raw=true)
