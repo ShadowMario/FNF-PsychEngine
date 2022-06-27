@@ -1479,8 +1479,6 @@ class PlayState extends MusicBeatState
 	public function startVideo(name:String)
 	{
 		#if VIDEOS_ALLOWED
-		inCutscene = true;
-
 		var filepath:String = Paths.video(name);
 		#if sys
 		if(!FileSystem.exists(filepath))
@@ -1492,12 +1490,23 @@ class PlayState extends MusicBeatState
 			startAndEnd();
 			return;
 		}
-
-		var video:MP4Handler = new MP4Handler();
-		video.playVideo(filepath);
-		video.finishCallback = function()
+		else
 		{
-			startAndEnd();
+			inCutscene = true;
+
+			var bg = new FlxSprite(-FlxG.width, -FlxG.height).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
+			bg.scrollFactor.set();
+			bg.cameras = [camHUD];
+			add(bg);
+
+			var video:MP4Handler = new MP4Handler();
+			video.playVideo(filepath);
+			video.finishCallback = function()
+			{
+				remove(bg);
+				inCutscene = false;// to be sure it will be false -saw
+				startAndEnd();
+			}
 			return;
 		}
 		#else
@@ -1546,11 +1555,7 @@ class PlayState extends MusicBeatState
 			add(psychDialogue);
 		} else {
 			FlxG.log.warn('Your dialogue file is badly formatted!');
-			if(endingSong) {
-				endSong();
-			} else {
-				startCountdown();
-			}
+			startAndEnd();
 		}
 	}
 
