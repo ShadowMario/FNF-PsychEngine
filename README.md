@@ -29,6 +29,7 @@ otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
 * PolybiusProxy - .MP4 Loader Extension
 * Keoiki - Note Splash Animations
 * Smokey - Spritemap Texture Atlas support
+* KadeDev - Fixed some cool stuff on Chart Editor and other PRs
 * Cary - OG Resolution code
 * Nebula_Zorua - VCR Shader code
 _____________________________________
@@ -65,6 +66,9 @@ _____________________________________
 ### Week 6:
   * On Thorns, the HUD is hidden during the cutscene
   * Also there's the Background girls being spooky during the "Hey!" parts of the Instrumental
+### Week 7:
+  * Animated Cutscenes (no video)
+  * Screen Shake
 
 ## Cool new Chart Editor changes and countless bug fixes
 ![](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/docs/img/chart.png?raw=true)
