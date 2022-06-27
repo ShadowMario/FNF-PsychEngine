@@ -2,6 +2,6 @@
 	"name": "Name",
 	"description": "Description",
 	"restart":false,
-	"runGlobally": false,
+	"runsGlobally": false,
 	"color": [170, 0, 255]
 }
