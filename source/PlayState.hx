@@ -1651,6 +1651,8 @@ class PlayState extends MusicBeatState
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		dadGroup.alpha = 0.00001;
 		camHUD.visible = false;
+		// get current max cutsceneTime
+		trace('Cutscene time for current cutscene: ' + cutsceneHandler.cutsceneTime);
 		//inCutscene = true; //this would stop the camera movement, oops
 
 		var tankman:FlxSprite = new FlxSprite(-20, 320);
@@ -1696,7 +1698,7 @@ class PlayState extends MusicBeatState
 		{
 			case 'ugh':
 				cutsceneHandler.endTime = 12;
-//                              cutsceneHandler.cutsceneTime = 12;
+//              cutsceneHandler.cutsceneTime = 12;
 				cutsceneHandler.music = 'DISTORTO';
 				precacheList.set('wellWellWell', 'sound');
 				precacheList.set('killYou', 'sound');
@@ -1849,8 +1851,6 @@ class PlayState extends MusicBeatState
 				cutsceneHandler.onStart = function()
 				{
 					cutsceneSnd.play(true);
-                                        // get current max cutsceneTime
-                                        trace('Cutscene time for current cutscene: ' + cutsceneHandler.cutsceneTime);
 				};
 
 				cutsceneHandler.timer(15.2, function()
@@ -3280,13 +3280,19 @@ class PlayState extends MusicBeatState
 
 				switch(Std.parseInt(value1))
 				{
-					case 1, 2, 3: //enable and target dad
-						if(val == 1) //enable
+					case 0, 1, 2, 3: //enable and target dad
+					    if(val == 0) //disable
+						{
+							dadbattleBlack.visible = false;
+							dadbattleLight.visible = false;
+							dadbattleSmokes.visible = false;
+							defaultCamZoom = 1.05;
+						}
+						else if(val == 1) //enable
 						{
 							dadbattleBlack.visible = true;
 							dadbattleLight.visible = true;
 							dadbattleSmokes.visible = true;
-							defaultCamZoom += 0.12;
 						}
 
 						var who:Character = dad;
