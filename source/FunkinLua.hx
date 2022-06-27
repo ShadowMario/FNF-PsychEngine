@@ -48,9 +48,9 @@ import android.Hardware;
 using StringTools;
 
 class FunkinLua {
-	public static var Function_Stop:Dynamic = 'Function_Stop';
-	public static var Function_Continue:Dynamic = 'Function_Continue';
-	public static var Function_StopLua:Dynamic = 'Function_StopLua';
+	public static var Function_Stop:Dynamic = #if android 'Function_Stop' #else 1 #end;
+	public static var Function_Continue:Dynamic = #if android 'Function_Continue' #else 0 #end;
+	public static var Function_StopLua:Dynamic = #if android 'Function_StopLua' #else 2 #end;
 
 	//public var errorHandler:String->Void;
 	#if LUA_ALLOWED
@@ -91,9 +91,9 @@ class FunkinLua {
 		trace('lua file loaded succesfully:' + script);
 
 		// Lua shit
-		set('Function_StopLua', 'Function_StopLua');
-		set('Function_Stop', 'Function_Stop');
-		set('Function_Continue', 'Function_Continue');
+		set('Function_StopLua', Function_StopLua);
+		set('Function_Stop', Function_Stop);
+		set('Function_Continue', Function_Continue);
 		set('luaDebugMode', false);
 		set('luaDeprecatedWarnings', true);
 		set('inChartEditor', false);
