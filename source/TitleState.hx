@@ -497,6 +497,8 @@ class TitleState extends MusicBeatState
 			{
 				#if (TITLE_SCREEN_EASTER_EGG && android)
 				FlxG.stage.window.textInputEnabled = false;
+				if (FlxG.stage.window.onTextInput.contains(eastereggFunction))
+					FlxG.stage.window.onTextInput.remove(eastereggFunction);
 				#end
 
 				titleText.color = FlxColor.WHITE;
@@ -565,7 +567,8 @@ class TitleState extends MusicBeatState
 				{
 					#if android
 					FlxG.stage.window.textInputEnabled = false;
-					FlxG.stage.window.onTextInput.remove(eastereggFunction);
+					if (FlxG.stage.window.onTextInput.contains(eastereggFunction))
+						FlxG.stage.window.onTextInput.remove(eastereggFunction);
 					#end
 
 					//trace('YOOO! ' + word);
