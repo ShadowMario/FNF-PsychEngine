@@ -100,10 +100,12 @@ class PlayState extends MusicBeatState
 	public var boyfriendMap:Map<String, Boyfriend> = new Map();
 	public var dadMap:Map<String, Character> = new Map();
 	public var gfMap:Map<String, Character> = new Map();
+	public var variables:Map<String, Dynamic> = new Map();
 	#else
 	public var boyfriendMap:Map<String, Boyfriend> = new Map<String, Boyfriend>();
 	public var dadMap:Map<String, Character> = new Map<String, Character>();
 	public var gfMap:Map<String, Character> = new Map<String, Character>();
+	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
 	#end
 
 	public var BF_X:Float = 770;
@@ -144,8 +146,8 @@ class PlayState extends MusicBeatState
 	private var strumLine:FlxSprite;
 
 	//Handles the new epic mega sexy cam code that i've done
-	private var camFollow:FlxPoint;
-	private var camFollowPos:FlxObject;
+	public var camFollow:FlxPoint;
+	public var camFollowPos:FlxObject;
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
 
@@ -1450,9 +1452,9 @@ class PlayState extends MusicBeatState
 
 		if(doPush)
 		{
-			for (lua in luaArray)
+			for (script in luaArray)
 			{
-				if(lua.scriptName == luaFile) return;
+				if(script.scriptName == luaFile) return;
 			}
 			luaArray.push(new FunkinLua(luaFile));
 		}
@@ -1950,7 +1952,7 @@ class PlayState extends MusicBeatState
 		}
 
 		inCutscene = false;
-		var ret:Dynamic = callOnLuas('onStartCountdown', []);
+		var ret:Dynamic = callOnLuas('onStartCountdown', [], false);
 		if(ret != FunkinLua.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
@@ -2877,30 +2879,9 @@ class PlayState extends MusicBeatState
 
 		if (controls.PAUSE && startedCountdown && canPause)
 		{
-			var ret:Dynamic = callOnLuas('onPause', []);
+			var ret:Dynamic = callOnLuas('onPause', [], false);
 			if(ret != FunkinLua.Function_Stop) {
-				persistentUpdate = false;
-				persistentDraw = true;
-				paused = true;
-
-				// 1 / 1000 chance for Gitaroo Man easter egg
-				/*if (FlxG.random.bool(0.1))
-				{
-					// gitaroo man easter egg
-					cancelMusicFadeTween();
-					MusicBeatState.switchState(new GitarooPause());
-				}
-				else {*/
-				if(FlxG.sound.music != null) {
-					FlxG.sound.music.pause();
-					vocals.pause();
-				}
-				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-				//}
-
-				#if desktop
-				DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
-				#end
+				openPauseMenu();
 			}
 		}
 
@@ -3179,6 +3160,32 @@ class PlayState extends MusicBeatState
 		callOnLuas('onUpdatePost', [elapsed]);
 	}
 
+	function openPauseMenu()
+	{
+		persistentUpdate = false;
+		persistentDraw = true;
+		paused = true;
+
+		// 1 / 1000 chance for Gitaroo Man easter egg
+		/*if (FlxG.random.bool(0.1))
+		{
+			// gitaroo man easter egg
+			cancelMusicFadeTween();
+			MusicBeatState.switchState(new GitarooPause());
+		}
+		else {*/
+		if(FlxG.sound.music != null) {
+			FlxG.sound.music.pause();
+			vocals.pause();
+		}
+		openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+		//}
+
+		#if desktop
+		DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+		#end
+	}
+
 	function openChartEditor()
 	{
 		persistentUpdate = false;
@@ -3196,7 +3203,7 @@ class PlayState extends MusicBeatState
 	function doDeathCheck(?skipHealthCheck:Bool = false) {
 		if (((skipHealthCheck && instakillOnMiss) || health <= 0) && !practiceMode && !isDead)
 		{
-			var ret:Dynamic = callOnLuas('onGameOver', []);
+			var ret:Dynamic = callOnLuas('onGameOver', [], false);
 			if(ret != FunkinLua.Function_Stop) {
 				boyfriend.stunned = true;
 				deathCounter++;
@@ -3773,12 +3780,7 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
-		#if LUA_ALLOWED
-		var ret:Dynamic = callOnLuas('onEndSong', []);
-		#else
-		var ret:Dynamic = FunkinLua.Function_Continue;
-		#end
-
+		var ret:Dynamic = callOnLuas('onEndSong', [], false);
 		if(ret != FunkinLua.Function_Stop && !transitioning) {
 			if (SONG.validScore)
 			{
@@ -4171,7 +4173,6 @@ class PlayState extends MusicBeatState
 					callOnLuas('onGhostTap', [key]);
 					if (canMiss) {
 						noteMissPress(key);
-						callOnLuas('noteMissPress', [key]);
 					}
 				}
 
@@ -4766,12 +4767,10 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	private var preventLuaRemove:Bool = false;
 	override function destroy() {
-		preventLuaRemove = true;
-		for (i in 0...luaArray.length) {
-			luaArray[i].call('onDestroy', []);
-			luaArray[i].stop();
+		for (lua in luaArray) {
+			lua.call('onDestroy', []);
+			lua.stop();
 		}
 		luaArray = [];
 
@@ -4780,6 +4779,9 @@ class PlayState extends MusicBeatState
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
+		#if hscript
+		FunkinLua.haxeInterp = null;
+		#end
 		super.destroy();
 	}
 
@@ -4788,12 +4790,6 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.fadeTween.cancel();
 		}
 		FlxG.sound.music.fadeTween = null;
-	}
-
-	public function removeLua(lua:FunkinLua) {
-		if(luaArray != null && !preventLuaRemove) {
-			luaArray.remove(lua);
-		}
 	}
 
 	var lastStepHit:Int = -1;
@@ -4946,26 +4942,20 @@ class PlayState extends MusicBeatState
 		callOnLuas('onSectionHit', []);
 	}
 
-	public function callOnLuas(event:String, args:Array<Dynamic>, ignoreStops=false, ?exclusions:Array<String>):Dynamic {
+	public function callOnLuas(event:String, args:Array<Dynamic>, ignoreStops = true, exclusions:Array<String> = null):Dynamic {
 		var returnVal:Dynamic = FunkinLua.Function_Continue;
 		#if LUA_ALLOWED
 		if(exclusions == null) exclusions = [];
-		for (i in 0...luaArray.length) {
-			if(exclusions.contains(luaArray[i].scriptName)){
+		for (script in luaArray) {
+			if(exclusions.contains(script.scriptName))
 				continue;
-			}
 
-			var ret:Dynamic = luaArray[i].call(event, args);
-			if(ret == FunkinLua.Function_StopLua) {
-				if(ignoreStops)
-					ret = FunkinLua.Function_Continue;
-				else
-					break;
-			}
-
-			if(ret != FunkinLua.Function_Continue) {
+			var ret:Dynamic = script.call(event, args);
+			if(ret == FunkinLua.Function_StopLua && !ignoreStops)
+				break;
+			
+			if(ret != FunkinLua.Function_Continue)
 				returnVal = ret;
-			}
 		}
 		#end
 		//trace(event, returnVal);
@@ -5002,7 +4992,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('misses', songMisses);
 		setOnLuas('hits', songHits);
 
-		var ret:Dynamic = callOnLuas('onRecalculateRating', []);
+		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
 		if(ret != FunkinLua.Function_Stop)
 		{
 			if(totalPlayed < 1) //Prevent divide by 0
