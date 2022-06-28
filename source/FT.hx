@@ -24,7 +24,7 @@ class FT {
 		Sys.exit(1)
 	}
 	
-	public static function forceToString(shit:String):String {
+	public static function forceToString(shit:Dynamic):String {
 		var result:String = '';
 		if (!Std.isOfType(shit, String)) {
 			result = Std.string(shit);
