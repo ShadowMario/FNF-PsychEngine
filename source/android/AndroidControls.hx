@@ -276,9 +276,9 @@ class Menu extends MusicBeatState
 		rightPozition.borderSize = 2.4;
 		add(rightPozition);
 
-		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK to Go Back to Options Menu', 16);
+		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK on your phone to get back in options menu', 16);
 		tipText.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		tipText.borderSize = 2;
+		tipText.borderSize = 2.4;
 		tipText.scrollFactor.set();
 		add(tipText);
 

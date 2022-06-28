@@ -42,21 +42,16 @@ class SUtil
 			if (Build.SDK_INT > 23 || Build.SDK_INT == 23)
 			{
 				Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
-				Permissions.onRequestPermissionsResult = function(i:Int, d:Array<String>, c:Array<Int>)
-				{
-					if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
-						check();
-					else
-					{
-						SUtil.applicationAlert('Permissions? ', "Seems you didn't accepted the permissions expect a crash" + '\n' + 'Press Ok to see what happens');
-						Sys.exit(1);//crash
-					}
-				}
+				SUtil.applicationAlert('Permissions? ', 'IF you accepted the permissions all are good!' + "\nIf you didn't expect a crash" + 'Press Ok to see what happens');
 			}
 			else
-				SUtil.applicationAlert('Permissions?', "Please grant the storage permissions in app settings" + '\n' + 'Press Ok io close the app');
+			{
+				SUtil.applicationAlert('Permissions?', 'Please grant the storage permissions in app settings' + '\nPress Ok io close the app');
+				Sys.exit(1);//crash
+			}
 		}
-		else
+
+		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
 			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/'))
 				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/');
