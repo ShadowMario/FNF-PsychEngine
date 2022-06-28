@@ -469,7 +469,7 @@ class StoryMenuState extends MusicBeatState
 		if (upP)
 			{
 				changeWeek(-1);
-				weekCharacterThing.y += 70;
+/*				weekCharacterThing.y += 70;
 				new FlxTimer().start(0.8, function(tmr:FlxTimer)
 				{
 					new FlxTimer().start(1.0, function(tmr:FlxTimer)
@@ -477,14 +477,14 @@ class StoryMenuState extends MusicBeatState
 						//weekCharacterThing = curWeek;
 						weekCharacterThing.y -= 70;
 					});
-				});
+				}); */
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
 
 			if (downP)
 			{
 				changeWeek(1);
-                weekCharacterThing.y -= 70;
+/*                weekCharacterThing.y -= 70;
 				new FlxTimer().start(0.8, function(tmr:FlxTimer)
 				{
 					new FlxTimer().start(1.0, function(tmr:FlxTimer)
@@ -492,7 +492,7 @@ class StoryMenuState extends MusicBeatState
 						//weekCharacterThing = curWeek;
 						weekCharacterThing.y += 70;
 					});
-				});
+				}); */
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 			} 
 	}
