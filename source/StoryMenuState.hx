@@ -66,12 +66,6 @@ class StoryMenuState extends MusicBeatState
 		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
 		txtWeekTitle.alpha = 0.7;
 
-		var rankText:FlxText = new FlxText(0, 10);
-		rankText.text = 'RANK:';
-		rankText.setFormat(Paths.font("vcr.ttf"), 32);
-		rankText.size = scoreText.size;
-		rankText.screenCenter(X);
-
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
 		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
 		bgSprite = new FlxSprite(0, 56);
@@ -127,12 +121,10 @@ class StoryMenuState extends MusicBeatState
 		}
 
 		WeekData.setDirectoryFromWeek(loadedWeeks[0]);
-		var charArray:Array<String> = loadedWeeks[0].weekCharacters;
+//		var charArray:Array<String> = loadedWeeks[0].weekCharacters;
 		for (char in 0...3)
 		{
-			var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, charArray[char]);
-			weekCharacterThing.y += 70;
-			grpWeekCharacters.add(weekCharacterThing);
+			trace('testimony');
 		}
 
 		difficultySelectors = new FlxGroup();
@@ -175,7 +167,7 @@ class StoryMenuState extends MusicBeatState
 
 		txtTracklist = new FlxText(FlxG.width * 0.05, tracksSprite.y + 60, 0, "", 32);
 		txtTracklist.alignment = CENTER;
-		txtTracklist.font = rankText.font;
+		txtTracklist.font = scoreText.font;
 		txtTracklist.color = 0xFFe55777;
 		add(txtTracklist);
 		// add(rankText);
@@ -196,6 +188,7 @@ class StoryMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		addMenuGuys();
 		// scoreText.setFormat('VCR OSD Mono', 32);
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 30, 0, 1)));
 		if(Math.abs(intendedScore - lerpScore) < 10) lerpScore = intendedScore;
@@ -208,17 +201,37 @@ class StoryMenuState extends MusicBeatState
 		{
 			var upP = controls.UI_UP_P;
 			var downP = controls.UI_DOWN_P;
-			if (upP)
+/*			if (upP)
 			{
 				changeWeek(-1);
+				weekCharacterThing.y += 70;
+				new FlxTimer().start(0.8, function(tmr:FlxTimer)
+				{
+					weekCharacterThing = curWeek - 1;
+					new FlxTimer().start(1.0, function(tmr:FlxTimer)
+					{
+						weekCharacterThing = curWeek;
+						weekCharacterThing.y -= 70;
+					});
+				});
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
 
 			if (downP)
 			{
 				changeWeek(1);
+                weekCharacterThing.y -= 70;
+				new FlxTimer().start(0.8, function(tmr:FlxTimer)
+				{
+                    weekCharacterThing = curWeek - 1;
+					new FlxTimer().start(1.0, function(tmr:FlxTimer)
+					{
+						weekCharacterThing = curWeek;
+						weekCharacterThing.y += 70;
+					});
+				});
 				FlxG.sound.play(Paths.sound('scrollMenu'));
-			}
+			} */
 
 			if (controls.UI_RIGHT)
 				rightArrow.animation.play('press')
@@ -443,6 +456,45 @@ class StoryMenuState extends MusicBeatState
 	function weekIsLocked(name:String):Bool {
 		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
 		return (!leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore)));
+	}
+
+	function addMenuGuys() {
+		var upP = controls.UI_UP_P;
+		var downP = controls.UI_DOWN_P;
+		var charArray:Array<String> = loadedWeeks[0].weekCharacters;
+		var char:Int = 10;
+		var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, charArray[char]);
+		weekCharacterThing.y += 70;
+		grpWeekCharacters.add(weekCharacterThing);
+		if (upP)
+			{
+				changeWeek(-1);
+				weekCharacterThing.y += 70;
+				new FlxTimer().start(0.8, function(tmr:FlxTimer)
+				{
+					new FlxTimer().start(1.0, function(tmr:FlxTimer)
+					{
+						//weekCharacterThing = curWeek;
+						weekCharacterThing.y -= 70;
+					});
+				});
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+			}
+
+			if (downP)
+			{
+				changeWeek(1);
+                weekCharacterThing.y -= 70;
+				new FlxTimer().start(0.8, function(tmr:FlxTimer)
+				{
+					new FlxTimer().start(1.0, function(tmr:FlxTimer)
+					{
+						//weekCharacterThing = curWeek;
+						weekCharacterThing.y += 70;
+					});
+				});
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+			} 
 	}
 
 	function updateText()
