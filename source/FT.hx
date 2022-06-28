@@ -2,6 +2,9 @@ package;
 
 import sys.io.File;
 import sys.FileSystem;
+import lime.app.Application;
+
+using StringTools;
 
 /*  File Tracer made by Sirox  */
 
@@ -21,7 +24,7 @@ class FT {
 
 		File.saveContent(fp, var_name + " = " + thingToSave + "\n");
 		Application.current.window.alert(var_name + " = " + thingToSave, "Trace");
-		Sys.exit(1)
+		Sys.exit(1);
 	}
 	
 	public static function forceToString(shit:Dynamic):String {
