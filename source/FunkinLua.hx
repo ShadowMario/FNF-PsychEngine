@@ -150,7 +150,7 @@ class FunkinLua {
 		set('gfSection', false);
 
 		// Health ig
-		set('getHealth', PlayState.healthBar); // No setHealth version for anyone curious I just put get in front for distinguishable... stuff ig?
+		set('getHealth', PlayState.health); // No setHealth version for anyone curious I just put get in front for distinguishable... stuff ig?
 		set('healthPercent', PlayState.healthBar.percent); // Long name cause idk what to abbreviate to.
 
 		// Stage stuff ig
