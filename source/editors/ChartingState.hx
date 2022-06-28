@@ -69,7 +69,7 @@ class ChartingState extends MusicBeatState
 	];
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
-	public var ignoreWarnings = false; // just so work flows work
+	public var ignoreWarnings = false;
 	var undos = [];
 	var redos = [];
 	var eventStuff:Array<Dynamic> =
@@ -97,10 +97,7 @@ class ChartingState extends MusicBeatState
 	var UI_box:FlxUITabMenu;
 
 	public static var goToPlayState:Bool = false;
-	/**
-	 * Array of notes showing when each section STARTS in STEPS
-	 * Usually rounded up??
-	 */
+
 	public static var curSec:Int = 0;
 	public static var lastSection:Int = 0;
 	private static var lastSong:String = '';
@@ -157,6 +154,7 @@ class ChartingState extends MusicBeatState
 
 	var zoomList:Array<Float> = [
 		0.25,
+                0.35,
 		0.5,
 		1,
 		2,
@@ -227,7 +225,6 @@ class ChartingState extends MusicBeatState
 		// Paths.clearMemory();
 
 		#if desktop
-		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
 		#end
 
@@ -278,7 +275,7 @@ class ChartingState extends MusicBeatState
 
 		addSection();
 
-		// sections = _song.notes;
+		trace("sections = _song.notes"); // trace this so we know lmao
 
 		currentSongName = Paths.formatToSongPath(_song.song);
 		loadSong();
@@ -352,7 +349,7 @@ class ChartingState extends MusicBeatState
 			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
 			tipText.y += i * 12;
 			tipText.setFormat(Paths.font("vcr.ttf"), 14, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
-			//tipText.borderSize = 2;
+			tipText.borderSize = 1.5;
 			tipText.scrollFactor.set();
 			add(tipText);
 		}
@@ -365,7 +362,7 @@ class ChartingState extends MusicBeatState
 		addChartingUI();
 		updateHeads();
 		updateWaveform();
-		//UI_box.selected_tab = 4;
+		//UI_box.selected_tab = 1;
 
 		add(curRenderedSustains);
 		add(curRenderedNotes);
