@@ -123,6 +123,7 @@ class FunkinLua {
 		// Camera poo
 		set('cameraX', 0);
 		set('cameraY', 0);
+		set('cameraSpeed', PlayState.stageData.camera_speed);
 
 		// Screen stuff
 		set('screenWidth', FlxG.width);
@@ -147,6 +148,14 @@ class FunkinLua {
 		set('mustHitSection', false);
 		set('altAnim', false);
 		set('gfSection', false);
+
+		// Health ig
+		set('getHealth', PlayState.healthBar); // No setHealth version for anyone curious I just put get in front for distinguishable... stuff ig?
+		set('healthPercent', PlayState.healthBar.percent); // Long name cause idk what to abbreviate to.
+
+		// Stage stuff ig
+		set('isPixelStage', PlayState.isPixelStage);
+		set('curStage', PlayState.curStage);
 
 		// Gameplay settings
 		set('healthGainMult', PlayState.instance.healthGain);
