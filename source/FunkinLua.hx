@@ -148,6 +148,7 @@ class FunkinLua {
 		set('mustHitSection', false);
 		set('altAnim', false);
 		set('gfSection', false);
+		set('chartingMode', PlayState.chartingMode);
 
 		// Health ig
 		set('getHealth', PlayState.health); // No setHealth version for anyone curious I just put get in front for distinguishable... stuff ig?
