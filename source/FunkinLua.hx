@@ -2505,12 +2505,7 @@ class FunkinLua {
 			instance.set(variable,value);
 		else*/
 
-		switch(Type.typeof(instance)) {
-			case ValueType.TClass(haxe.ds.StringMap) | ValueType.TClass(haxe.ds.ObjectMap) | ValueType.TClass(haxe.ds.IntMap) | ValueType.TClass(haxe.ds.EnumValueMap):
-				instance.set(variable, value);
-			default:
-				Reflect.setProperty(instance, variable, value);
-		};
+		Reflect.setProperty(instance, variable, value);
 		return true;
 	}
 	public static function getVarInArray(instance:Dynamic, variable:String):Any
@@ -2527,13 +2522,7 @@ class FunkinLua {
 			return blah;
 		}
 
-		switch(Type.typeof(instance)) {
-			case ValueType.TClass(haxe.ds.StringMap) | ValueType.TClass(haxe.ds.ObjectMap) | ValueType.TClass(haxe.ds.IntMap) | ValueType.TClass(haxe.ds.EnumValueMap):
-				return instance.get(variable);
-			default:
-				return Reflect.getProperty(instance, variable);
-		};
-		return null;
+		return Reflect.getProperty(instance, variable);
 	}
 
 	inline static function getTextObject(name:String):FlxText
