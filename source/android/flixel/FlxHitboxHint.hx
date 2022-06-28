@@ -22,7 +22,7 @@ class FlxHitboxHint extends FlxButton
 			if (tween != null)
 				tween.cancel();
 
-			tween = FlxTween.num(alpha, 0.75, 0.075, {ease: FlxEase.circInOut}, function(value:Float)
+			tween = FlxTween.num(alpha, 0.6, 0.06, {ease: FlxEase.circInOut}, function(value:Float)
 			{
 				alpha = value;
 			});

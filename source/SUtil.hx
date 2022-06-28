@@ -25,23 +25,16 @@ using StringTools;
 
 class SUtil
 {
-	#if android
-	private static var aDir:String = null; // android dir
-	#end
-
 	public static function getPath():String
 	{
 		#if android
-		if (aDir != null && aDir.length > 0)
-			return aDir;
-		else
-			return aDir = Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
+		return Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
 		#else
 		return '';
 		#end
 	}
 
-	public static function doTheCheck()
+	public static function check()
 	{
 		#if android
 		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
@@ -49,13 +42,21 @@ class SUtil
 			if (Build.SDK_INT > 23 || Build.SDK_INT == 23)
 			{
 				Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
-				SUtil.applicationAlert('Permissions', "If you accepted the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
+				Permissions.onRequestPermissionsResult = function(i:Int, d:Array<String>, c:Array<Int>)
+				{
+					if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
+						check();
+					else
+					{
+						SUtil.applicationAlert('Permissions? ', "Seems you didn't accepted the permissions expect a crash" + '\n' + 'Press Ok to see what happens');
+						Sys.exit(1);//crash
+					}
+				}
 			}
 			else
-				SUtil.applicationAlert('Permissions', "Please grant the storage permissions in app settings" + '\n' + 'Press Ok io close the app');
+				SUtil.applicationAlert('Permissions?', "Please grant the storage permissions in app settings" + '\n' + 'Press Ok io close the app');
 		}
-
-		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
+		else
 		{
 			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/'))
 				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/');
@@ -69,13 +70,13 @@ class SUtil
 			{
 				if (!FileSystem.exists(SUtil.getPath() + 'assets/'))
 				{
-					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					SUtil.applicationAlert('Error!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
 					openLinkAndClose();
 				}
 
 				if (!FileSystem.exists(SUtil.getPath() + 'mods/'))
 				{
-					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					SUtil.applicationAlert('Error!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
 					openLinkAndClose();
 				}
 			}
@@ -83,7 +84,7 @@ class SUtil
 		#end
 	}
 
-	public static function gameCrashCheck()
+	public static function uncaughtErrorHandler()
 	{
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 	}

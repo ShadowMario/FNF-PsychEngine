@@ -84,10 +84,10 @@ class FunkinLua {
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
 				trace('Error on lua script! ' + resultStr);
-				#if (windows || android)
+				#if windows
 				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
 				#else
-				luaTrace('Error loading lua script: "$script"\n' + resultStr, true, false, FlxColor.RED);
+				luaTrace('Error loading lua script: ' + script.replace(SUtil.getPath(), "") + '\n' + resultStr, true, false, FlxColor.RED);
 				#end
 				lua = null;
 				return;
@@ -628,7 +628,7 @@ class FunkinLua {
 					case 'Null Function Pointer', 'SReturn':
 						//nothing
 					default:
-						luaTrace(scriptName + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);
+						luaTrace(scriptName.replace(SUtil.getPath(), "") + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);
 				}
 			}
 			#end
@@ -2328,7 +2328,7 @@ class FunkinLua {
 
 				return true;
 			} catch (e:Dynamic) {
-				luaTrace("Error trying to save " + path + ": " + e, false, false, FlxColor.RED);
+				luaTrace("Error trying to save " + path.replace(SUtil.getPath(), "") + ": " + e, false, false, FlxColor.RED);
 			}
 			return false;
 		});
@@ -2354,7 +2354,7 @@ class FunkinLua {
 					return true;
 				}
 			} catch (e:Dynamic) {
-				luaTrace("Error trying to delete " + path + ": " + e, false, false, FlxColor.RED);
+				luaTrace("Error trying to delete " + path.replace(SUtil.getPath(), "") + ": " + e, false, false, FlxColor.RED);
 			}
 			return false;
 		});
@@ -2532,6 +2532,7 @@ class FunkinLua {
 			haxeInterp.variables.set('Character', Character);
 			haxeInterp.variables.set('Alphabet', Alphabet);
 			haxeInterp.variables.set('StringTools', StringTools);
+			haxeInterp.variables.set('SUtil', SUtil);// this is more like for android because filesaving needs it
 
 			haxeInterp.variables.set('setVar', function(name:String, value:Dynamic)
 			{

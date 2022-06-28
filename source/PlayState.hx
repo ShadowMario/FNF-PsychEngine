@@ -1963,7 +1963,6 @@ class PlayState extends MusicBeatState
 			#if android
 			androidControls.visible = true;
 			#end
-
 			generateStaticArrows(0);
 			generateStaticArrows(1);
 			for (i in 0...playerStrums.length) {
