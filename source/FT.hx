@@ -2,6 +2,9 @@ package;
 
 import sys.io.File;
 import sys.FileSystem;
+import lime.app.Application;
+
+using StringTools;
 
 /*  File Tracer made by Sirox  */
 
