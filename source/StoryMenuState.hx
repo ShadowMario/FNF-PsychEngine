@@ -121,10 +121,12 @@ class StoryMenuState extends MusicBeatState
 		}
 
 		WeekData.setDirectoryFromWeek(loadedWeeks[0]);
-//		var charArray:Array<String> = loadedWeeks[0].weekCharacters;
+		var charArray:Array<String> = loadedWeeks[0].weekCharacters;
 		for (char in 0...3)
 		{
-			trace('testimony');
+			var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, charArray[char]);
+			weekCharacterThing.y += 70;
+			grpWeekCharacters.add(weekCharacterThing);
 		}
 
 		difficultySelectors = new FlxGroup();
@@ -461,11 +463,8 @@ class StoryMenuState extends MusicBeatState
 	function addMenuGuys() {
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
-		var charArray:Array<String> = loadedWeeks[0].weekCharacters;
-		var char:Int = 10;
-		var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, charArray[char]);
-		weekCharacterThing.y += 70;
-		grpWeekCharacters.add(weekCharacterThing);
+//		var charArray:Array<String> = loadedWeeks[0].weekCharacters;
+//		var char:Int = 10;
 		if (upP)
 			{
 				changeWeek(-1);
