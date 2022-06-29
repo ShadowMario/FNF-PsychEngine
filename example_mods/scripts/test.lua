@@ -19,7 +19,7 @@ function onCreatePost()
         image.animation.addByPrefix('singRIGHT', 'Tankman Right Note 1', 24, false);
         image.animation.play('idle');
         image.x = game.boyfriend.x + 200;
-        image.y = game.boyfriend.y - 200;
+        image.y = game.boyfriend.y + 50;
         image.antialiasing = true;
         game.insert(1, image);
         setVar(image, image);
