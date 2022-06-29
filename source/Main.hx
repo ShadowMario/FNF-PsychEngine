@@ -57,6 +57,9 @@ class Main extends Sprite
 		}
 	}
 
+    public static var webmHandler:WebmHandler;
+
+
 	private function init(?E:Event):Void
 	{
 		if (hasEventListener(Event.ADDED_TO_STAGE))

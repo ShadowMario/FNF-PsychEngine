@@ -131,6 +131,10 @@
 	<haxelib name="hscript" />
 	<define name="hscriptPos" />
 
+    <haxelib name="actuate" />
+	<haxelib name="extension-webm" if="windows"/> <!-- Make sure to use https://github.com/KadeDev/extension-webm/ -->
+	<haxelib name="extension-webm" if="mac"/> <!-- Make sure to use https://github.com/KadeDev/extension-webm/ -->
+
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
