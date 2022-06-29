@@ -246,7 +246,7 @@ class Menu extends MusicBeatState
 		add(hbox);
 
 		funitext = new PsychAlphabet(0, 0, 'No Android Controls!', true, false, 0, 1);
-		inputvari.screenCenter();
+		funitext.screenCenter();
 		funitext.visible = false;
 		add(funitext);
 
