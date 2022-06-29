@@ -2463,61 +2463,64 @@ class PlayState extends MusicBeatState
 				addCharacterToList(newCharacter, charType);
 
 			case 'Dadbattle Spotlight':
-				dadbattleBlack = new BGSprite(null, -800, -400, 0, 0);
-				dadbattleBlack.makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
-				dadbattleBlack.alpha = 0.25;
-				dadbattleBlack.visible = false;
-				add(dadbattleBlack);
+				if (WeekData.getWeekFileName() == 'week1' && curStage == 'stage') { // PLEASE SHUT THE FUCK UP
+					dadbattleBlack = new BGSprite(null, -800, -400, 0, 0);
+					dadbattleBlack.makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
+					dadbattleBlack.alpha = 0.25;
+					dadbattleBlack.visible = false;
+					add(dadbattleBlack);
 
-				dadbattleLight = new BGSprite('spotlight', 400, -400);
-				dadbattleLight.alpha = 0.375;
-				dadbattleLight.blend = ADD;
-				dadbattleLight.visible = false;
+					dadbattleLight = new BGSprite('spotlight', 400, -400);
+					dadbattleLight.alpha = 0.375;
+					dadbattleLight.blend = ADD;
+					dadbattleLight.visible = false;
 
-				dadbattleSmokes.alpha = 0.7;
-				dadbattleSmokes.blend = ADD;
-				dadbattleSmokes.visible = false;
-				add(dadbattleLight);
-				add(dadbattleSmokes);
+					dadbattleSmokes.alpha = 0.7;
+					dadbattleSmokes.blend = ADD;
+					dadbattleSmokes.visible = false;
+					add(dadbattleLight);
+					add(dadbattleSmokes);
 
-				var offsetX = 200;
-				var smoke:BGSprite = new BGSprite('smoke', -1550 + offsetX, 660 + FlxG.random.float(-20, 20), 1.2, 1.05);
-				smoke.setGraphicSize(Std.int(smoke.width * FlxG.random.float(1.1, 1.22)));
-				smoke.updateHitbox();
-				smoke.velocity.x = FlxG.random.float(15, 22);
-				smoke.active = true;
-				dadbattleSmokes.add(smoke);
-				var smoke:BGSprite = new BGSprite('smoke', 1550 + offsetX, 660 + FlxG.random.float(-20, 20), 1.2, 1.05);
-				smoke.setGraphicSize(Std.int(smoke.width * FlxG.random.float(1.1, 1.22)));
-				smoke.updateHitbox();
-				smoke.velocity.x = FlxG.random.float(-15, -22);
-				smoke.active = true;
-				smoke.flipX = true;
-				dadbattleSmokes.add(smoke);
-
+					var offsetX = 200;
+					var smoke:BGSprite = new BGSprite('smoke', -1550 + offsetX, 660 + FlxG.random.float(-20, 20), 1.2, 1.05);
+					smoke.setGraphicSize(Std.int(smoke.width * FlxG.random.float(1.1, 1.22)));
+					smoke.updateHitbox();
+					smoke.velocity.x = FlxG.random.float(15, 22);
+					smoke.active = true;
+					dadbattleSmokes.add(smoke);
+					var smoke:BGSprite = new BGSprite('smoke', 1550 + offsetX, 660 + FlxG.random.float(-20, 20), 1.2, 1.05);
+					smoke.setGraphicSize(Std.int(smoke.width * FlxG.random.float(1.1, 1.22)));
+					smoke.updateHitbox();
+					smoke.velocity.x = FlxG.random.float(-15, -22);
+					smoke.active = true;
+					smoke.flipX = true;
+					dadbattleSmokes.add(smoke);
+				}
 
 			case 'Philly Glow':
-				blammedLightsBlack = new FlxSprite(FlxG.width * -0.5, FlxG.height * -0.5).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
-				blammedLightsBlack.visible = false;
-				insert(members.indexOf(phillyStreet), blammedLightsBlack);
+				if (WeekData.getWeekFileName() == 'week3' && curStage == 'philly') { // PLEASE SHUT THE FUCK UP
+					blammedLightsBlack = new FlxSprite(FlxG.width * -0.5, FlxG.height * -0.5).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
+					blammedLightsBlack.visible = false;
+					insert(members.indexOf(phillyStreet), blammedLightsBlack);
 
-				phillyWindowEvent = new BGSprite('philly/window', phillyWindow.x, phillyWindow.y, 0.3, 0.3);
-				phillyWindowEvent.setGraphicSize(Std.int(phillyWindowEvent.width * 0.85));
-				phillyWindowEvent.updateHitbox();
-				phillyWindowEvent.visible = false;
-				insert(members.indexOf(blammedLightsBlack) + 1, phillyWindowEvent);
+					phillyWindowEvent = new BGSprite('philly/window', phillyWindow.x, phillyWindow.y, 0.3, 0.3);
+					phillyWindowEvent.setGraphicSize(Std.int(phillyWindowEvent.width * 0.85));
+					phillyWindowEvent.updateHitbox();
+					phillyWindowEvent.visible = false;
+					insert(members.indexOf(blammedLightsBlack) + 1, phillyWindowEvent);
 
 
-				phillyGlowGradient = new PhillyGlow.PhillyGlowGradient(-400, 225); //This shit was refusing to properly load FlxGradient so fuck it
-				phillyGlowGradient.visible = false;
-				insert(members.indexOf(blammedLightsBlack) + 1, phillyGlowGradient);
-				if(!ClientPrefs.flashing) phillyGlowGradient.intendedAlpha = 0.7;
+					phillyGlowGradient = new PhillyGlow.PhillyGlowGradient(-400, 225); //This shit was refusing to properly load FlxGradient so fuck it
+					phillyGlowGradient.visible = false;
+					insert(members.indexOf(blammedLightsBlack) + 1, phillyGlowGradient);
+					if(!ClientPrefs.flashing) phillyGlowGradient.intendedAlpha = 0.7;
 
-				precacheList.set('philly/particle', 'image'); //precache particle image
-				phillyGlowParticles = new FlxTypedGroup<PhillyGlow.PhillyGlowParticle>();
-				phillyGlowParticles.visible = false;
-				insert(members.indexOf(phillyGlowGradient) + 1, phillyGlowParticles);
-		}
+					precacheList.set('philly/particle', 'image'); //precache particle image
+					phillyGlowParticles = new FlxTypedGroup<PhillyGlow.PhillyGlowParticle>();
+					phillyGlowParticles.visible = false;
+					insert(members.indexOf(phillyGlowGradient) + 1, phillyGlowParticles);
+				}
+			}
 
 		if(!eventPushedMap.exists(event.event)) {
 			eventPushedMap.set(event.event, true);
@@ -3283,37 +3286,39 @@ class PlayState extends MusicBeatState
 	public function triggerEventNote(eventName:String, value1:String, value2:String) {
 		switch(eventName) {
 			case 'Dadbattle Spotlight':
-				var val:Null<Int> = Std.parseInt(value1);
-				if(val == null) val = 0;
+				if (WeekData.getWeekFileName() == 'week1' && curStage == 'stage') {
+					var val:Null<Int> = Std.parseInt(value1);
+					if(val == null) val = 0;
 
-				switch(Std.parseInt(value1))
-				{
-					case 1, 2, 3: //enable and target dad
-						if(val == 1) //enable
-						{
-							dadbattleBlack.visible = true;
-							dadbattleLight.visible = true;
-							dadbattleSmokes.visible = true;
-							defaultCamZoom += 0.12;
-						}
+					switch(Std.parseInt(value1))
+					{
+						case 1, 2, 3: //enable and target dad
+							if(val == 1) //enable
+							{
+								dadbattleBlack.visible = true;
+								dadbattleLight.visible = true;
+								dadbattleSmokes.visible = true;
+								defaultCamZoom += 0.12;
+							}
 
-						var who:Character = dad;
-						if(val > 2) who = boyfriend;
-						//2 only targets dad
-						dadbattleLight.alpha = 0;
-						new FlxTimer().start(0.12, function(tmr:FlxTimer) {
-							dadbattleLight.alpha = 0.375;
-						});
-						dadbattleLight.setPosition(who.getGraphicMidpoint().x - dadbattleLight.width / 2, who.y + who.height - dadbattleLight.height + 50);
+							var who:Character = dad;
+							if(val > 2) who = boyfriend;
+							//2 only targets dad
+							dadbattleLight.alpha = 0;
+							new FlxTimer().start(0.12, function(tmr:FlxTimer) {
+								dadbattleLight.alpha = 0.375;
+							});
+							dadbattleLight.setPosition(who.getGraphicMidpoint().x - dadbattleLight.width / 2, who.y + who.height - dadbattleLight.height + 50);
 
-					default:
-						dadbattleBlack.visible = false;
-						dadbattleLight.visible = false;
-						defaultCamZoom -= 0.12;
-						FlxTween.tween(dadbattleSmokes, {alpha: 0}, 1, {onComplete: function(twn:FlxTween)
-						{
-							dadbattleSmokes.visible = false;
-						}});
+						default:
+							dadbattleBlack.visible = false;
+							dadbattleLight.visible = false;
+							defaultCamZoom -= 0.12;
+							FlxTween.tween(dadbattleSmokes, {alpha: 0}, 1, {onComplete: function(twn:FlxTween)
+							{
+								dadbattleSmokes.visible = false;
+							}});
+					}
 				}
 
 			case 'Hey!':
@@ -3356,15 +3361,16 @@ class PlayState extends MusicBeatState
 				gfSpeed = value;
 
 			case 'Philly Glow':
-				var lightId:Int = Std.parseInt(value1);
-				if(Math.isNaN(lightId)) lightId = 0;
-
-				var doFlash:Void->Void = function() {
-					var color:FlxColor = FlxColor.WHITE;
-					if(!ClientPrefs.flashing) color.alphaFloat = 0.5;
-
-					FlxG.camera.flash(color, 0.15, null, true);
-				};
+				if (WeekData.getWeekFileName() == 'week3' && curStage == 'philly') {
+					var lightId:Int = Std.parseInt(value1);
+					if(Math.isNaN(lightId)) lightId = 0;
+	
+					var doFlash:Void->Void = function() {
+						var color:FlxColor = FlxColor.WHITE;
+						if(!ClientPrefs.flashing) color.alphaFloat = 0.5;
+	
+						FlxG.camera.flash(color, 0.15, null, true);
+					};
 
 				var chars:Array<Character> = [boyfriend, gf, dad];
 				switch(lightId)
@@ -3452,6 +3458,8 @@ class PlayState extends MusicBeatState
 							}
 						}
 						phillyGlowGradient.bop();
+
+					}
 				}
 
 			case 'Kill Henchmen':
@@ -3957,7 +3965,6 @@ class PlayState extends MusicBeatState
 		//
 
 		var rating:FlxSprite = new FlxSprite();
-		var score:Int = 350;
 
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(note, noteDiff);
@@ -3974,7 +3981,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(!practiceMode && !cpuControlled) {
-			songScore += score;
+			songScore += daRating.score;
 			if(!note.ratingDisabled)
 			{
 				songHits++;
