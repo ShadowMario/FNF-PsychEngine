@@ -2906,15 +2906,6 @@ class FunkinLua {
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
-
-	static inline var CLENSE:String = "
-	os.execute, os.getenv, os.rename, os.remove, os.tmpname = nil, nil, nil, nil, nil
-	io, load, loadfile, loadstring, dofile = nil, nil, nil, nil, nil
-	require, module, package = nil, nil, nil
-	newproxy = nil
-	gcinfo = nil
-	jit = nil
-	"; // superpowers04/cyn-8/DragShot
 }
 
 class ModchartSprite extends FlxSprite
