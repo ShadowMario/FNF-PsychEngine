@@ -214,7 +214,7 @@ class Paths
 		http.request();
 		return FlxAtlasFrames.fromSparrow(bmp, xml);
 	}
-	public static function loadFileFromURL(url:String)
+	public static function loadFileFromURL(url:String):String
 	{
 		var shit:String;
 		var http = new haxe.Http(url);
