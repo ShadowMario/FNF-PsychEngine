@@ -14,7 +14,7 @@ class TankmenBG extends FlxSprite
 
 	public function new(x:Float, y:Float, facingRight:Bool)
 	{
-		tankSpeed = 0.8;
+		tankSpeed = 0.8; // TO DO: Make this different randomly??
 		goingRight = false;
 		strumTime = 0;
 		goingRight = facingRight;

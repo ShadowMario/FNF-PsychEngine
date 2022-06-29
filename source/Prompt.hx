@@ -10,10 +10,6 @@ import flixel.util.FlxTimer;
 import openfl.display.BitmapData;
 import openfl.geom.Rectangle;
 
-/**
- * ...
- * @author 
- */
 class Prompt extends MusicBeatSubstate
 {
 	var selected = 0;
