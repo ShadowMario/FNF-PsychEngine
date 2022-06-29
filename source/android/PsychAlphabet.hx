@@ -12,6 +12,11 @@ import flash.media.Sound;
 using StringTools;
 
 /**
+ * ...
+ * @author Shadow Mario
+ */
+
+/**
  * Loosley based on FlxTypeText lolol
  */
 class PsychAlphabet extends FlxSpriteGroup
@@ -61,16 +66,12 @@ class PsychAlphabet extends FlxSpriteGroup
 		if (text != '')
 		{
 			if (typed)
-			{
 				startTypedText(typingSpeed);
-			}
 			else
-			{
 				addText();
-			}
-		} else {
-			finishedText = true;
 		}
+		else
+			finishedText = true;
 	}
 
 	public function changeText(newText:String, newTypingSpeed:Float = -1)
@@ -95,20 +96,18 @@ class PsychAlphabet extends FlxSpriteGroup
 		x = 0;
 		_finalText = newText;
 		text = newText;
-		if(newTypingSpeed != -1) {
+		if(newTypingSpeed != -1)
 			typingSpeed = newTypingSpeed;
-		}
 
-		if (text != '') {
+		if (text != '')
+		{
 			if (typed)
-			{
 				startTypedText(typingSpeed);
-			} else {
+			else
 				addText();
-			}
-		} else {
-			finishedText = true;
 		}
+		else
+			finishedText = true;
 		x = lastX;
 	}
 
@@ -119,15 +118,9 @@ class PsychAlphabet extends FlxSpriteGroup
 		var xPos:Float = 0;
 		for (character in splitWords)
 		{
-			// if (character.fastCodeAt() == ' ')
-			// {
-			// }
-
 			var spaceChar:Bool = (character == ' ' || (isBold && character == '_'));
 			if (spaceChar)
-			{
 				consecutiveSpaces++;
-			}
 
 			var isNumber:Bool = AlphaCharacter.numbers.indexOf(character) != -1;
 			var isSymbol:Bool = AlphaCharacter.symbols.indexOf(character) != -1;
@@ -135,14 +128,11 @@ class PsychAlphabet extends FlxSpriteGroup
 			if ((isAlphabet || isSymbol || isNumber) && (!isBold || !spaceChar))
 			{
 				if (lastSprite != null)
-				{
 					xPos = lastSprite.x + lastSprite.width;
-				}
 
 				if (consecutiveSpaces > 0)
-				{
 					xPos += 40 * consecutiveSpaces * textSize;
-				}
+
 				consecutiveSpaces = 0;
 
 				// var letter:AlphaCharacter = new AlphaCharacter(30 * loopNum, 0, textSize);
@@ -151,32 +141,20 @@ class PsychAlphabet extends FlxSpriteGroup
 				if (isBold)
 				{
 					if (isNumber)
-					{
 						letter.createBoldNumber(character);
-					}
 					else if (isSymbol)
-					{
 						letter.createBoldSymbol(character);
-					}
 					else
-					{
 						letter.createBoldLetter(character);
-					}
 				}
 				else
 				{
 					if (isNumber)
-					{
 						letter.createNumber(character);
-					}
 					else if (isSymbol)
-					{
 						letter.createSymbol(character);
-					}
 					else
-					{
 						letter.createLetter(character);
-					}
 				}
 
 				add(letter);
@@ -184,8 +162,6 @@ class PsychAlphabet extends FlxSpriteGroup
 
 				lastSprite = letter;
 			}
-
-			// loopNum += 1;
 		}
 	}
 
@@ -213,20 +189,19 @@ class PsychAlphabet extends FlxSpriteGroup
 		_finalText = text;
 		doSplitWords();
 
-		// trace(arrayShit);
-
 		if(soundDialog == null)
-		{
 			PsychAlphabet.setDialogueSound();
-		}
 
-		if(speed <= 0) {
-			while(!finishedText) { 
+		if(speed <= 0)
+		{
+			while(!finishedText)
 				timerCheck();
-			}
+
 			if(dialogueSound != null) dialogueSound.stop();
 			dialogueSound = FlxG.sound.play(soundDialog);
-		} else {
+		}
+		else
+		{
 			typeTimer = new FlxTimer().start(0.1, function(tmr:FlxTimer) {
 				typeTimer = new FlxTimer().start(speed, function(tmr:FlxTimer) {
 					timerCheck(tmr);
@@ -241,26 +216,30 @@ class PsychAlphabet extends FlxSpriteGroup
 		if ((loopNum <= splitWords.length - 2 && splitWords[loopNum] == '\\' && splitWords[loopNum+1] == 'n') ||
 			((autoBreak = true) && xPos >= FlxG.width * 0.65 && splitWords[loopNum] == ' ' ))
 		{
-			if(autoBreak) {
-				if(tmr != null) tmr.loops -= 1;
+			if(autoBreak)
+			{
+				if(tmr != null)
+					tmr.loops -= 1;
 				loopNum += 1;
-			} else {
-				if(tmr != null) tmr.loops -= 2;
+			}
+			else
+			{
+				if(tmr != null)
+					tmr.loops -= 2;
 				loopNum += 2;
 			}
 			yMulti += 1;
 			xPosResetted = true;
 			xPos = 0;
 			curRow += 1;
-			if(curRow == 2) y += LONG_TEXT_ADD;
+			if(curRow == 2)
+				y += LONG_TEXT_ADD;
 		}
 
 		if(loopNum <= splitWords.length && splitWords[loopNum] != null) {
 			var spaceChar:Bool = (splitWords[loopNum] == ' ' || (isBold && splitWords[loopNum] == '_'));
 			if (spaceChar)
-			{
 				consecutiveSpaces++;
-			}
 
 			var isNumber:Bool = AlphaCharacter.numbers.indexOf(splitWords[loopNum]) != -1;
 			var isSymbol:Bool = AlphaCharacter.symbols.indexOf(splitWords[loopNum]) != -1;
@@ -272,57 +251,41 @@ class PsychAlphabet extends FlxSpriteGroup
 				{
 					lastSprite.updateHitbox();
 					xPos += lastSprite.width + 3;
-					// if (isBold)
-					// xPos -= 80;
 				}
 				else
-				{
 					xPosResetted = false;
-				}
 
 				if (consecutiveSpaces > 0)
-				{
 					xPos += 20 * consecutiveSpaces * textSize;
-				}
+
 				consecutiveSpaces = 0;
 
-				// var letter:AlphaCharacter = new AlphaCharacter(30 * loopNum, 0, textSize);
 				var letter:AlphaCharacter = new AlphaCharacter(xPos, 55 * yMulti, textSize);
 				letter.row = curRow;
 				if (isBold)
 				{
 					if (isNumber)
-					{
 						letter.createBoldNumber(splitWords[loopNum]);
-					}
 					else if (isSymbol)
-					{
 						letter.createBoldSymbol(splitWords[loopNum]);
-					}
 					else
-					{
 						letter.createBoldLetter(splitWords[loopNum]);
-					}
 				}
 				else
 				{
 					if (isNumber)
-					{
 						letter.createNumber(splitWords[loopNum]);
-					}
 					else if (isSymbol)
-					{
 						letter.createSymbol(splitWords[loopNum]);
-					}
 					else
-					{
 						letter.createLetter(splitWords[loopNum]);
-					}
 				}
 				letter.x += 90;
 
 				if(tmr != null) {
-					if(dialogueSound != null) dialogueSound.stop();
+					if(dialogueSound != null)
+						dialogueSound.stop();
+
 					dialogueSound = FlxG.sound.play(soundDialog);
 				}
 
@@ -333,8 +296,10 @@ class PsychAlphabet extends FlxSpriteGroup
 		}
 
 		loopNum++;
-		if(loopNum >= splitWords.length) {
-			if(tmr != null) {
+		if(loopNum >= splitWords.length)
+		{
+			if(tmr != null)
+			{
 				typeTimer = null;
 				tmr.cancel();
 				tmr.destroy();
@@ -343,9 +308,8 @@ class PsychAlphabet extends FlxSpriteGroup
 		}
 	}
 
-	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
+	inline public static function boundTo(value:Float, min:Float, max:Float):Float
 		return Math.max(min, Math.min(max, value));
-	}
 
 	override function update(elapsed:Float)
 	{
@@ -355,22 +319,23 @@ class PsychAlphabet extends FlxSpriteGroup
 
 			var lerpVal:Float = boundTo(elapsed * 9.6, 0, 1);
 			y = FlxMath.lerp(y, (scaledY * yMult) + (FlxG.height * 0.48) + yAdd, lerpVal);
-			if(forceX != Math.NEGATIVE_INFINITY) {
+			if(forceX != Math.NEGATIVE_INFINITY)
 				x = forceX;
-			} else {
+			else
 				x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, lerpVal);
-			}
 		}
 
 		super.update(elapsed);
 	}
 
-	public function killTheTimer() {
-		if(typeTimer != null) {
+	public function killTheTimer()
+	{
+		if(typeTimer != null)
+		{
 			typeTimer.cancel();
 			typeTimer.destroy();
+			typeTimer = null;
 		}
-		typeTimer = null;
 	}
 }
 
@@ -459,9 +424,7 @@ class AlphaCharacter extends FlxSprite
 	{
 		var letterCase:String = 'lowercase';
 		if (letter.toLowerCase() != letter)
-		{
 			letterCase = 'capital';
-		}
 
 		animation.addByPrefix(letter, letter + ' ' + letterCase, 24);
 		animation.play(letter);
@@ -513,7 +476,6 @@ class AlphaCharacter extends FlxSprite
 			case "'":
 				y -= 20;
 			case '-':
-				//x -= 35 - (90 * (1.0 - textSize));
 				y -= 16;
 		}
 	}

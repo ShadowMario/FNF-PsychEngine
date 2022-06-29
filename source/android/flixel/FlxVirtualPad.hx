@@ -9,6 +9,12 @@ import android.flixel.FlxButton;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.FlxGraphic;
 
+/**
+ * ...
+ * @original author Ka Wing Chin
+ * @modification's author: Saw (M.A. Jigsaw)
+ */
+
 class FlxVirtualPad extends FlxSpriteGroup 
 {
 	public var dPad:FlxSpriteGroup;

@@ -7,6 +7,11 @@ import flixel.graphics.FlxGraphic;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 
+/**
+ * ...
+ * @author: Saw (M.A. Jigsaw)
+ */
+
 class FlxHitboxHint extends FlxButton
 {
 	public function new(X:Float = 0, Y:Float = 0, Frames:String)

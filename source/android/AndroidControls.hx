@@ -14,6 +14,12 @@ import android.flixel.FlxVirtualPad;
 
 using StringTools;
 
+/**
+ * ...
+ * @original author: luckydog
+ * @modifications author: Saw (M.A. Jigsaw)
+ */
+
 class Config
 {
 	var save:FlxSave;
@@ -191,7 +197,10 @@ class Menu extends MusicBeatState
 	var downPozition:FlxText;
 	var leftPozition:FlxText;
 	var rightPozition:FlxText;
+
 	var inputvari:PsychAlphabet;
+	var funitext:PsychAlphabet;
+
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 	var controlitems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Duo', 'Hitbox', 'Keyboard'];
@@ -235,6 +244,11 @@ class Menu extends MusicBeatState
 		hbox = new FlxHitbox();
 		hbox.visible = false;
 		add(hbox);
+
+		funitext = new PsychAlphabet(0, 0, 'No Android Controls!', true, false, 0, 1);
+		inputvari.screenCenter();
+		funitext.visible = false;
+		add(funitext);
 
 		inputvari = new PsychAlphabet(0, 50, controlitems[curSelected], false, false, 0.05, 0.8);
 		inputvari.screenCenter(X);
@@ -386,6 +400,11 @@ class Menu extends MusicBeatState
 			hbox.visible = true;
 		else
 			hbox.visible = false;
+
+		if (daChoice == 'Keyboard')
+			funitext.visible = true;
+		else
+			funitext.visible = false;
 
 		if (daChoice == 'Pad-Custom')
 		{

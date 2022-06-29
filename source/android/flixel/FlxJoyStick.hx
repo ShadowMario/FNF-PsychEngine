@@ -12,6 +12,12 @@ import flixel.math.FlxRect;
 import flixel.util.FlxDestroyUtil;
 import flixel.graphics.frames.FlxAtlasFrames;
 
+/**
+ * ...
+ * @original author Ka Wing Chin
+ * @modification's author: Saw (M.A. Jigsaw)
+ */
+
 class FlxJoyStick extends FlxSpriteGroup
 {
 	public var status:Int = NORMAL;
