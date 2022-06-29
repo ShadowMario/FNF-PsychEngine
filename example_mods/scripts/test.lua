@@ -21,7 +21,7 @@ function onCreatePost()
         image.x = game.boyfriend.x + 200;
         image.y = game.boyfriend.y - 200;
         image.antialiasing = true;
-        game.insert(14, image);
+        game.insert(12, image);
         setVar(image, image);
     ]]);
 end
