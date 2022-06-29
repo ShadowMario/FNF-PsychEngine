@@ -70,6 +70,7 @@ class ChartingState extends MusicBeatState
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
 	public var ignoreWarnings = false;
+	public var debugNotes = false; // enables debug notes (doesnt work as of yet!! shadow please work on this one for me please!)
 	var undos = [];
 	var redos = [];
 	var eventStuff:Array<Dynamic> =
@@ -362,7 +363,6 @@ class ChartingState extends MusicBeatState
 		addChartingUI();
 		updateHeads();
 		updateWaveform();
-		//UI_box.selected_tab = 1;
 
 		add(curRenderedSustains);
 		add(curRenderedNotes);
@@ -375,7 +375,7 @@ class ChartingState extends MusicBeatState
 		}
 		lastSong = currentSongName;
 
-		zoomTxt = new FlxText(10, 10, 0, "Zoom: 1 / 1", 16);
+		zoomTxt = new FlxText(10, 10, 0, "Zoom: " + curZoom + " / 24", 16); // fix zoom txt lmao
 		zoomTxt.scrollFactor.set();
 		add(zoomTxt);
 
@@ -403,7 +403,6 @@ class ChartingState extends MusicBeatState
 		check_voices.callback = function()
 		{
 			_song.needsVoices = check_voices.checked;
-			//trace('CHECKED!');
 		};
 
 		var saveButton:FlxButton = new FlxButton(110, 8, "Save", function()

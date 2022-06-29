@@ -1,1 +1,386 @@
-{"song":{"player1":"bf-car","notes":[{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[[21818.1818181818,-1,"Kill Henchmen","",""]],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[[56727.2727272728,-1,"Kill Henchmen","",""]],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":false},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"sectionNotes":[],"lengthInSteps":16,"mustHitSection":true},{"lengthInSteps":16,"altAnim":false,"typeOfSection":0,"sectionNotes":[],"bpm":110,"changeBPM":false,"mustHitSection":true},{"lengthInSteps":16,"altAnim":false,"typeOfSection":0,"sectionNotes":[],"bpm":110,"changeBPM":false,"mustHitSection":true}],"player2":"mom-car","song":"Satin Panties","validScore":true,"needsVoices":true,"speed":1.8,"bpm":110}}
+{
+	"song": {
+		"events": [
+			[
+				6818.18181818182,
+				[
+					[
+						"Add Camera Zoom",
+						"0.19",
+						"0.05"
+					]
+				]
+			],
+			[
+				7363.63636363636,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				8045.45454545455,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				9000,
+				[
+					[
+						"Add Camera Zoom",
+						"",
+						"0.07"
+					]
+				]
+			],
+			[
+				9272.72727272727,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				9545.45454545455,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				9681.81818181818,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				9954.54545454546,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				10227.2727272727,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				10363.6363636364,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				10636.3636363636,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				10772.7272727273,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				11181.8181818182,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				11454.5454545455,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				11727.2727272727,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				11863.6363636364,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				12136.3636363636,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				12409.0909090909,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				12545.4545454545,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				12681.8181818182,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				12818.1818181818,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				15954.5454545455,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				16090.9090909091,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				16227.2727272727,
+				[
+					[
+						"Add Camera Zoom",
+						"0.18",
+						"0.05"
+					]
+				]
+			],
+			[
+				20318.1818181818,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				24545.4545454546,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				32318.1818181818,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				34772.7272727273,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				38727.2727272727,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				44454.5454545455,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				47863.6363636364,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				53181.8181818182,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				58363.6363636364,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				60545.4545454546,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				62863.6363636364,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				66545.4545454546,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				70772.7272727273,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			],
+			[
+				73578.4090909091,
+				[
+					[
+						"Kill Henchmen",
+						"",
+						""
+					]
+				]
+			]
+		]
+	}
+}
