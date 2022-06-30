@@ -2739,6 +2739,10 @@ class FunkinLua {
 			if(lua == null) return Function_Continue;
 
 			Lua.getglobal(lua, func);
+			var type:Int = Lua.type(lua, -1);
+			if (type != Lua.LUA_TFUNCTION) {
+				return Function_Continue;
+			}
 			
 			for(arg in args) {
 				Convert.toLua(lua, arg);
@@ -2753,7 +2757,7 @@ class FunkinLua {
 			}
 			else
 			{
-				var conv:Dynamic = Convert.fromLua(lua, result);
+				var conv:Dynamic = Convert.fromLua(lua, -1); // it's -1 instead of result idfk how lua works IT DOESNT RETURN WHEN ITS NOT -1
 				Lua.pop(lua, 1);
 				if(conv == null) conv = Function_Continue;
 				return conv;
