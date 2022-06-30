@@ -151,7 +151,7 @@ class FunkinLua {
 		set('chartingMode', PlayState.chartingMode);
 
 		// Health ig
-		set('healthPercent', PlayState.healthBar.percent); // Long name cause idk what to abbreviate to.
+		set('healthPercent', PlayState.instance.healthBar.percent); // Long name cause idk what to abbreviate to.
 
 		// Stage stuff ig
 		set('isPixelStage', PlayState.isPixelStage);
