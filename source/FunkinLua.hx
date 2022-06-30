@@ -2729,6 +2729,24 @@ class FunkinLua {
 		#end
 	}
 
+	// some fuckery fucks with linc_luajit
+	function getResult(l:State, result:Int):Any {
+		var ret:Any = null;
+
+		switch(Lua.type(l, result)) {
+			case Lua.LUA_TNIL:
+				ret = null;
+			case Lua.LUA_TBOOLEAN:
+				ret = Lua.toboolean(l, -1);
+			case Lua.LUA_TNUMBER:
+				ret = Lua.tonumber(l, -1);
+			case Lua.LUA_TSTRING:
+				ret = Lua.tostring(l, -1);
+		}
+		
+		return ret;
+	}
+
 	var lastCalledFunction:String = '';
 	public function call(func:String, args:Array<Dynamic>): Dynamic{
 		#if LUA_ALLOWED
@@ -2757,7 +2775,7 @@ class FunkinLua {
 			}
 			else
 			{
-				var conv:Dynamic = Convert.fromLua(lua, -1); // it's -1 instead of result idfk how lua works IT DOESNT RETURN WHEN ITS NOT -1
+				var conv:Dynamic = cast getResult(lua, result);
 				Lua.pop(lua, 1);
 				if(conv == null) conv = Function_Continue;
 				return conv;
