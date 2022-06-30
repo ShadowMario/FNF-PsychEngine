@@ -1,8 +1,9 @@
 package;
 
 #if (android && MODS_ALLOWED)
-import android.AndroidTools;
-import android.stuff.Permissions;
+import android.Tools;
+import android.Permissions;
+import android.PermissionsList;
 #end
 import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
@@ -13,98 +14,88 @@ import haxe.CallStack;
 import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
-import flash.system.System;
 
 /**
- * author: Saw (M.A. Jigsaw)
+ * ...
+ * @author: Saw (M.A. Jigsaw)
  */
 
 using StringTools;
 
-class SUtil {
+class SUtil
+{
 	#if (android && MODS_ALLOWED)
-	private static var grantedPermsList:Array<Permissions> = AndroidTools.getGrantedPermissions(); 
-	private static var aDir:String = null; // android dir 
-	public static var sPath:String = AndroidTools.getExternalStorageDirectory(); // storage dir
+	private static var aDir:String = null; // android dir
 	#end
 
-	static public function getPath():String {
+	public static function getPath():String
+	{
 		#if (android && MODS_ALLOWED)
-		if (aDir != null && aDir.length > 0) {
+		if (aDir != null && aDir.length > 0)
 			return aDir;
-		} else {
-			aDir = sPath + "/" + "." + Application.current.meta.get("file") + "/";
-		}
-		return aDir;
+		else
+			return aDir = Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
 		#else
-		return "";
+		return '';
 		#end
 	}
 
-	static public function doTheCheck() {
+	public static function doTheCheck()
+	{
 		#if (android && MODS_ALLOWED)
-		if (!grantedPermsList.contains(Permissions.READ_EXTERNAL_STORAGE) || !grantedPermsList.contains(Permissions.WRITE_EXTERNAL_STORAGE)) {
-			if (AndroidTools.sdkVersion > 23 || AndroidTools.sdkVersion == 23) {
-				AndroidTools.requestPermissions([Permissions.READ_EXTERNAL_STORAGE, Permissions.WRITE_EXTERNAL_STORAGE]);
-			}
+		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
+		{
+			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
+			SUtil.applicationAlert('Permissions', "if you accepted the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');//shitty way to stop the app
 		}
 
-		if (!grantedPermsList.contains(Permissions.READ_EXTERNAL_STORAGE) || !grantedPermsList.contains(Permissions.WRITE_EXTERNAL_STORAGE)) {
-			if (AndroidTools.sdkVersion > 23 || AndroidTools.sdkVersion == 23) {
-				SUtil.applicationAlert("Permissions", "If you accepted the permisions for storage, good, you can continue, if you not the game can't run without storage permissions please grant them in app settings" 
-					+ "\n" + "Press Ok To Close The App");
-			} else {
-				SUtil.applicationAlert("Permissions", "The Game can't run without storage permissions please grant them in app settings" 
-					+ "\n" + "Press Ok To Close The App");
-			}
-		}
+		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
+		{
+			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/'))
+				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/');
 
-		if (!FileSystem.exists(sPath + "/" + "." + Application.current.meta.get("file"))){
-			FileSystem.createDirectory(sPath + "/" + "." + Application.current.meta.get("file"));
-		}
-		if (!FileSystem.exists(SUtil.getPath() + "crash")){
-			FileSystem.createDirectory(SUtil.getPath() + "crash");
-		}
-		if (!FileSystem.exists(SUtil.getPath() + "saves")){
-			FileSystem.createDirectory(SUtil.getPath() + "saves");
-		}
-		if (!FileSystem.exists(SUtil.getPath() + "mods") && !FileSystem.exists(SUtil.getPath() + "assets")){
-			File.saveContent(SUtil.getPath() + "Paste the Assets and Mods folders here.txt", "the file name says all");
-		}
-		if (!FileSystem.exists(SUtil.getPath() + "assets")){
-			SUtil.applicationAlert("Instructions:", "You have to copy assets/assets from apk to your internal storage app directory"
-				+ " ( here " + SUtil.getPath() + " )" 
-				+ " if you hadn't have Zarhiver Downloaded, download it and enable the show hidden files option to have the folder visible" 
-				+ "\n" + "Press Ok To Close The App");
-			System.exit(0);
-		}
-		if (!FileSystem.exists(SUtil.getPath() + "mods")){
-			SUtil.applicationAlert("Instructions:", "You have to copy assets/mods from apk to your internal storage app directory" 
-				+ " ( here " + SUtil.getPath() + " )" 
-				+ " if you hadn't have Zarhiver Downloaded, download it and enable the show hidden files option to have the folder visible" 
-				+ "\n" + "Press Ok To Close The App");
-			System.exit(0);
-		}
-		if (FileSystem.exists(SUtil.getPath() + "Paste the Assets and Mods folders here.txt") && FileSystem.exists(SUtil.getPath() + "mods") && FileSystem.exists(SUtil.getPath() + "assets")){
-			FileSystem.deleteFile(SUtil.getPath() + "Paste the Assets and Mods folders here.txt");
+			if (!FileSystem.exists(SUtil.getPath() + 'assets/') && !FileSystem.exists(SUtil.getPath() + 'mods/'))
+			{
+				SUtil.applicationAlert('Error!', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
+				openLinkAndClose();
+			}
+			else
+			{
+				if (!FileSystem.exists(SUtil.getPath() + 'assets/'))
+				{
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					openLinkAndClose();
+				}
+
+				if (!FileSystem.exists(SUtil.getPath() + 'mods/'))
+				{
+					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					openLinkAndClose();
+				}
+			}
 		}
 		#end
 	}
 
-	static public function gameCrashCheck() {
+	public static function gameCrashCheck()
+	{
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 	}
 
-	static public function onCrash(e:UncaughtErrorEvent):Void {
+	static function onCrash(e:UncaughtErrorEvent):Void
+	{
+		var errMsg:String = "";
+		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
-		dateNow = StringTools.replace(dateNow, " ", "_");
-		dateNow = StringTools.replace(dateNow, ":", "'");
-		var path:String = "crash/" + "crash_" + dateNow + ".txt";
-		var errMsg:String = "";
 
-		for (stackItem in callStack) {
-			switch (stackItem) {
+		dateNow = dateNow.replace(" ", "_");
+		dateNow = dateNow.replace(":", "'");
+
+		for (stackItem in callStack)
+		{
+			switch (stackItem)
+			{
 				case FilePos(s, file, line, column):
 					errMsg += file + " (line " + line + ")\n";
 				default:
@@ -112,48 +103,57 @@ class SUtil {
 			}
 		}
 
-		errMsg += e.error;
-
+		errMsg += "\nUncaught Error: " + e.error;
 		#if MODS_ALLOWED
-		if (!FileSystem.exists(SUtil.getPath() + "crash")){
-			FileSystem.createDirectory(SUtil.getPath() + "crash");
-		}
+		if (!FileSystem.exists(SUtil.getPath() + "crash/"))
+			FileSystem.createDirectory(SUtil.getPath() + "crash/");
 
-		File.saveContent(SUtil.getPath() + path, errMsg + "\n");
+		File.saveContent(path, errMsg + "\n");
 		#end
 
 		Sys.println(errMsg);
-		Sys.println("Crash dump saved in " + Path.normalize(path));
-		Sys.println("Making a simple alert ...");
 
-		SUtil.applicationAlert("Uncaught Error :(, The Call Stack: ", errMsg);
-		System.exit(0);
+		Application.current.window.alert(errMsg, "Error!");
+		Sys.exit(1);
 	}
 
-	private static function applicationAlert(title:String, description:String) {
+	private static function applicationAlert(title:String, description:String)
+	{
 		Application.current.window.alert(description, title);
 	}
 
+	private static function openLinkAndClose()
+	{
+		CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
+		Sys.exit(1);
+	}
+
 	#if android
-	static public function saveContent(fileName:String = "file", fileExtension:String = ".json", fileData:String = "you forgot something to add in your code"){
+	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot something to add in your code')
+	{
 		#if (android && MODS_ALLOWED)
-		if (!FileSystem.exists(SUtil.getPath() + "saves")){
-			FileSystem.createDirectory(SUtil.getPath() + "saves");
-		}
+                if (!FileSystem.exists(SUtil.getPath() + "saves")){
+                        FileSystem.createDirectory(SUtil.getPath() + "saves");
+                }
 
-		File.saveContent(SUtil.getPath() + "saves/" + fileName + fileExtension, fileData);
-		SUtil.applicationAlert("Done Action :)", "File Saved Successfully!");
-		#elseif android
+                File.saveContent(SUtil.getPath() + "saves/" + fileName + fileExtension, fileData);
+                SUtil.applicationAlert("Done Action :)", "File Saved Successfully!");
+                #elseif android
+                openfl.system.System.setClipboard(fileData);
+                SUtil.applicationAlert("Done Action :)", "Data Saved to Clipboard Successfully!");
+                #end
+	}
+
+	public static function saveClipboard(fileData:String = 'you forgot something to add in your code')
+	{
 		openfl.system.System.setClipboard(fileData);
-		SUtil.applicationAlert("Done Action :)", "Data Saved to Clipboard Successfully!");
-		#end
+		SUtil.applicationAlert('Done!', 'Data Saved to Clipboard Successfully!');
 	}
 
-	static public function copyContent(copyPath:String, savePath:String) {
-		if (!FileSystem.exists(savePath)){
-			var bytes = OpenFlAssets.getBytes(copyPath);
-			File.saveBytes(savePath, bytes);
-		}
+	public static function copyContent(copyPath:String, savePath:String)
+	{
+		if (!FileSystem.exists(savePath))
+			File.saveBytes(savePath, OpenFlAssets.getBytes(copyPath));
 	}
-        #end
+	#end
 }
