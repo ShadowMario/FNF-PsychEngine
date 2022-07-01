@@ -1531,18 +1531,20 @@ class FunkinLua {
 			}
 			return false;
 		});
-		Lua_helper.add_callback(lua, "thingAnimName", function(obj:String, anim:String, finished:bool) {
-			if(PlayState.instance.modchartSprites.exists(obj)) {
-				PlayState.instance.modchartSprites.get(obj).animOffsets.set(anim, [x, y]);
-				return true;
+		Lua_helper.add_callback(lua, "getCurAnim", function(obj:String, anim:String, done:Bool = false) {
+			if(PlayState.instance.getLuaObject(obj, false)!=null) {
+				/* var item:FlxSprite = PlayState.instance.getLuaObject(obj,false);
+				item.animation.addByIndices(name, prefix, die, '', framerate, false);
+				if(item.animation.curAnim == null) {
+					item.animation.play(name, true);
+				}
+				return true; */
 			}
+			if(obj.animation.curAnim.name == anim) {
 
-			var char:Character = Reflect.getProperty(getInstance(), obj);
-			if(char != null) {
-				char.addOffset(anim, x, y);
-				return true;
+			if(done == true and obj.animation.curAnim.finished == anim)
+
 			}
-			return false;
 		});
 		Lua_helper.add_callback(lua, "playAnim", function(obj:String, name:String, forced:Bool = false, ?reverse:Bool = false, ?startFrame:Int = 0)
 		{
