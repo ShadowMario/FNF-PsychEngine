@@ -1531,15 +1531,16 @@ class FunkinLua {
 			}
 			return false;
 		});
+		
 		Lua_helper.add_callback(lua, "getCurAnim", function(obj:String, anim:String, done:Bool = false) {
-			if(PlayState.instance.getLuaObject(obj, false)!=null) {
-				/* var item:FlxSprite = PlayState.instance.getLuaObject(obj,false);
+			/* if(PlayState.instance.getLuaObject(obj, false)!=null) {
+				var item:FlxSprite = PlayState.instance.getLuaObject(obj,false);
 				item.animation.addByIndices(name, prefix, die, '', framerate, false);
 				if(item.animation.curAnim == null) {
 					item.animation.play(name, true);
 				}
-				return true; */
-			}
+				return true;
+			} */
 			if(obj.animation.curAnim.name == anim) {
 
 			if(done == true and obj.animation.curAnim.finished == anim)
