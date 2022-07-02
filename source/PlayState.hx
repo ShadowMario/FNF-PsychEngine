@@ -1476,7 +1476,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String, loop:Bool = false, haccelerated:Bool = true, pauseMusic:Bool = false)
+	public function startVideo(name:String, loop:Bool = false)
 	{
 		#if VIDEOS_ALLOWED
 		var filepath:String = Paths.video(name);
@@ -1500,7 +1500,7 @@ class PlayState extends MusicBeatState
 			add(bg);
 
 			var video:VideoHandler = new VideoHandler();
-			video.playVideo(filepath, loop, haccelerated, pauseMusic);
+			video.playVideo(filepath, loop);
 			video.finishCallback = function()
 			{
 				remove(bg);
