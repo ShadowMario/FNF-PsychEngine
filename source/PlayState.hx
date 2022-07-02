@@ -1,5 +1,8 @@
 package;
 
+#if cpp
+import lime.media.openal.AL;
+#end
 import flixel.graphics.FlxGraphic;
 #if desktop
 import Discord.DiscordClient;
@@ -190,6 +193,7 @@ class PlayState extends MusicBeatState
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
 	public var practiceMode:Bool = false;
+	public var playbackRate:Float = 1;
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -303,6 +307,7 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		Paths.clearStoredMemory();
+		FlxG.timeScale = 1;
 
 		// for lua
 		instance = this;
@@ -354,6 +359,8 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		playbackRate = ClientPrefs.getGameplaySetting('songspeed', 1);
+		Conductor.playbackRate = playbackRate;
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1334,7 +1341,7 @@ class PlayState extends MusicBeatState
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
 
-		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
+		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000 * playbackRate;
 		callOnLuas('onCreatePost', []);
 
 		super.create();
@@ -1952,6 +1959,7 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', [], false);
 		if(ret != FunkinLua.Function_Stop) {
+			FlxG.timeScale = playbackRate;
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
 			generateStaticArrows(0);
@@ -2196,6 +2204,7 @@ class PlayState extends MusicBeatState
 			vocals.time = time;
 		}
 		vocals.play();
+		setSongPitch();
 		Conductor.songPosition = time;
 		songTime = time;
 	}
@@ -2221,7 +2230,7 @@ class PlayState extends MusicBeatState
 		lastReportedPlayheadPosition = 0;
 
 		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
-		FlxG.sound.music.onComplete = onSongComplete;
+		if (playbackRate == 1) FlxG.sound.music.onComplete = onSongComplete;
 		vocals.play();
 
 		if(startOnTime > 0)
@@ -2229,6 +2238,8 @@ class PlayState extends MusicBeatState
 			setSongTime(startOnTime - 500);
 		}
 		startOnTime = 0;
+
+		setSongPitch();
 
 		if(paused) {
 			//trace('Oopsie doopsie! Paused sound');
@@ -2253,7 +2264,7 @@ class PlayState extends MusicBeatState
 
 		#if desktop
 		// Updating Discord Rich Presence (with Time Left)
-		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
+		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength / playbackRate);
 		#end
 		setOnLuas('songLength', songLength);
 		callOnLuas('onSongStart', []);
@@ -2270,7 +2281,7 @@ class PlayState extends MusicBeatState
 		switch(songSpeedType)
 		{
 			case "multiplicative":
-				songSpeed = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1);
+				songSpeed = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) / playbackRate;
 			case "constant":
 				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
 		}
@@ -2590,6 +2601,7 @@ class PlayState extends MusicBeatState
 	{
 		if (paused)
 		{
+			FlxG.timeScale = 1;
 			if (FlxG.sound.music != null)
 			{
 				FlxG.sound.music.pause();
@@ -2627,6 +2639,7 @@ class PlayState extends MusicBeatState
 	{
 		if (paused)
 		{
+			FlxG.timeScale = playbackRate;
 			if (FlxG.sound.music != null && !startingSong)
 			{
 				resyncVocals();
@@ -2660,7 +2673,7 @@ class PlayState extends MusicBeatState
 			#if desktop
 			if (startTimer != null && startTimer.finished)
 			{
-				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength - Conductor.songPosition - ClientPrefs.noteOffset);
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, (songLength - Conductor.songPosition) / playbackRate - ClientPrefs.noteOffset);
 			}
 			else
 			{
@@ -2679,7 +2692,7 @@ class PlayState extends MusicBeatState
 		{
 			if (Conductor.songPosition > 0.0)
 			{
-				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength - Conductor.songPosition - ClientPrefs.noteOffset);
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, (songLength - Conductor.songPosition) / playbackRate - ClientPrefs.noteOffset);
 			}
 			else
 			{
@@ -2705,17 +2718,39 @@ class PlayState extends MusicBeatState
 
 	function resyncVocals():Void
 	{
-		if(finishTimer != null) return;
+		if (FlxG.sound.music == null || vocals == null || startingSong || endingSong || finishTimer != null) return;
 
+		if (playbackRate != 1) FlxG.sound.music.pause();
 		vocals.pause();
 
-		FlxG.sound.music.play();
-		Conductor.songPosition = FlxG.sound.music.time;
+		if (playbackRate == 1) {
+			FlxG.sound.music.play();
+			Conductor.songPosition = FlxG.sound.music.time;
+		} else {
+			FlxG.sound.music.time = Conductor.songPosition;
+			FlxG.sound.music.play();
+		}
 		if (Conductor.songPosition <= vocals.length)
 		{
 			vocals.time = Conductor.songPosition;
+			vocals.play();
 		}
-		vocals.play();
+	}
+
+	function setSongPitch() {
+		#if cpp
+		if (playbackRate != 1 && !startingSong && !endingSong && !transitioning) {
+			@:privateAccess
+			{
+				var audio = [FlxG.sound.music, vocals];
+				for (i in audio) {
+					if (i != null && i.playing && i._channel != null && i._channel.__source != null && i._channel.__source.__backend != null && i._channel.__source.__backend.handle != null) {
+						AL.sourcef(i._channel.__source.__backend.handle, AL.PITCH, playbackRate);
+					}
+				}
+			}
+		}
+		#end
 	}
 
 	public var paused:Bool = false;
@@ -2731,6 +2766,16 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 		callOnLuas('onUpdate', [elapsed]);
+
+		if (FlxG.sound.music != null && FlxG.sound.music.playing) {
+			setSongPitch();
+		}
+
+		if (playbackRate != 1 && generatedMusic && startedCountdown && !endingSong && !transitioning && FlxG.sound.music != null && FlxG.sound.music.length - Conductor.songPosition <= 20)
+		{
+			Conductor.songPosition = FlxG.sound.music.length;
+			onSongComplete();
+		}
 
 		switch (curStage)
 		{
@@ -2928,6 +2973,7 @@ class PlayState extends MusicBeatState
 			iconP2.animation.curAnim.curFrame = 0;
 
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
+			FlxG.timeScale = 1;
 			persistentUpdate = false;
 			paused = true;
 			cancelMusicFadeTween();
@@ -2966,8 +3012,8 @@ class PlayState extends MusicBeatState
 					if(curTime < 0) curTime = 0;
 					songPercent = (curTime / songLength);
 
-					var songCalc:Float = (songLength - curTime);
-					if(ClientPrefs.timeBarType == 'Time Elapsed') songCalc = curTime;
+					var songCalc:Float = (songLength - curTime) / playbackRate;
+					if(ClientPrefs.timeBarType == 'Time Elapsed') songCalc = curTime / playbackRate;
 
 					var secondsTotal:Int = Math.floor(songCalc / 1000);
 					if(secondsTotal < 0) secondsTotal = 0;
@@ -3152,10 +3198,11 @@ class PlayState extends MusicBeatState
 		if(!endingSong && !startingSong) {
 			if (FlxG.keys.justPressed.ONE) {
 				KillNotes();
-				FlxG.sound.music.onComplete();
+				if (FlxG.sound.music.onComplete != null) FlxG.sound.music.onComplete();
+				else onSongComplete();
 			}
 			if(FlxG.keys.justPressed.TWO) { //Go 10 seconds into the future :O
-				setSongTime(Conductor.songPosition + 10000);
+				setSongTime(Conductor.songPosition + 10000 * playbackRate);
 				clearNotesBefore(Conductor.songPosition);
 			}
 		}
@@ -3177,6 +3224,7 @@ class PlayState extends MusicBeatState
 		/*if (FlxG.random.bool(0.1))
 		{
 			// gitaroo man easter egg
+			FlxG.timeScale = 1;
 			cancelMusicFadeTween();
 			MusicBeatState.switchState(new GitarooPause());
 		}
@@ -3195,6 +3243,7 @@ class PlayState extends MusicBeatState
 
 	function openChartEditor()
 	{
+		FlxG.timeScale = 1;
 		persistentUpdate = false;
 		paused = true;
 		cancelMusicFadeTween();
@@ -3621,7 +3670,7 @@ class PlayState extends MusicBeatState
 				if(Math.isNaN(val1)) val1 = 1;
 				if(Math.isNaN(val2)) val2 = 0;
 
-				var newValue:Float = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
+				var newValue:Float = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1 / playbackRate;
 
 				if(val2 <= 0)
 				{
@@ -3772,6 +3821,8 @@ class PlayState extends MusicBeatState
 		deathCounter = 0;
 		seenCutscene = false;
 
+		FlxG.timeScale = 1;
+
 		#if ACHIEVEMENTS_ALLOWED
 		if(achievementObj != null) {
 			return;
@@ -3815,6 +3866,10 @@ class PlayState extends MusicBeatState
 				{
 					WeekData.loadTheFirstEnabledMod();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					#if cpp
+					@:privateAccess
+					AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, AL.PITCH, 1);
+					#end
 
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
@@ -3885,6 +3940,10 @@ class PlayState extends MusicBeatState
 				}
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				#if cpp
+				@:privateAccess
+				AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, AL.PITCH, 1);
+				#end
 				changedDifficulty = false;
 			}
 			transitioning = true;
@@ -4755,6 +4814,8 @@ class PlayState extends MusicBeatState
 	}
 
 	override function destroy() {
+		FlxG.timeScale = 1;
+		Conductor.playbackRate = 1;
 		for (lua in luaArray) {
 			lua.call('onDestroy', []);
 			lua.stop();
@@ -4783,8 +4844,8 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
-		if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > 20
-			|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20))
+		if (generatedMusic && (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > 20
+			|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20)))
 		{
 			resyncVocals();
 		}

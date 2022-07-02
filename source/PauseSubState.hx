@@ -283,6 +283,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	public static function restartSong(noTrans:Bool = false)
 	{
+		FlxG.timeScale = 1;
 		PlayState.instance.paused = true; // For lua
 		FlxG.sound.music.volume = 0;
 		PlayState.instance.vocals.volume = 0;
@@ -382,6 +383,6 @@ class PauseSubState extends MusicBeatSubstate
 
 	function updateSkipTimeText()
 	{
-		skipTimeText.text = FlxStringUtil.formatTime(Math.max(0, Math.floor(curTime / 1000)), false) + ' / ' + FlxStringUtil.formatTime(Math.max(0, Math.floor(FlxG.sound.music.length / 1000)), false);
+		skipTimeText.text = FlxStringUtil.formatTime(Math.max(0, Math.floor(curTime / Conductor.playbackRate / 1000)), false) + ' / ' + FlxStringUtil.formatTime(Math.max(0, Math.floor(FlxG.sound.music.length / Conductor.playbackRate / 1000)), false);
 	}
 }

@@ -23,6 +23,7 @@ class Conductor
 	public static var songPosition:Float=0;
 	public static var lastSongPos:Float;
 	public static var offset:Float = 0;
+	public static var playbackRate:Float = 1;
 
 	//public static var safeFrames:Int = 10;
 	public static var safeZoneOffset:Float = (ClientPrefs.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
@@ -38,7 +39,7 @@ class Conductor
 		var data:Array<Rating> = PlayState.instance.ratingsData; //shortening cuz fuck u
 		for(i in 0...data.length-1) //skips last window (Shit)
 		{
-			if (diff <= data[i].hitWindow)
+			if (diff <= data[i].hitWindow * playbackRate)
 			{
 				return data[i];
 			}

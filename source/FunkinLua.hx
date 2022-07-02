@@ -154,6 +154,7 @@ class FunkinLua {
 		set('instakillOnMiss', PlayState.instance.instakillOnMiss);
 		set('botPlay', PlayState.instance.cpuControlled);
 		set('practice', PlayState.instance.practiceMode);
+		set('playbackRate', PlayState.instance.playbackRate);
 
 		for (i in 0...4) {
 			set('defaultPlayerStrumX' + i, 0);
@@ -652,6 +653,7 @@ class FunkinLua {
 				name = PlayState.SONG.song;
 			if (difficultyNum == -1)
 				difficultyNum = PlayState.storyDifficulty;
+			FlxG.timeScale = 1;
 
 			var poop = Highscore.formatSong(name, difficultyNum);
 			PlayState.SONG = Song.loadFromJson(poop, name);
@@ -1260,6 +1262,7 @@ class FunkinLua {
 				FlxTransitionableState.skipNextTransIn = true;
 				FlxTransitionableState.skipNextTransOut = true;
 			}
+			FlxG.timeScale = 1;
 
 			PlayState.cancelMusicFadeTween();
 			CustomFadeTransition.nextCamera = PlayState.instance.camOther;
