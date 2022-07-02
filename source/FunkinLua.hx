@@ -1531,19 +1531,24 @@ class FunkinLua {
 			}
 			return false;
 		});
-		
+
+		/* By ImaginationSuperHero52806 and M1 Aether
+	    Thx M1 Aether for you help! Even tho you... kinda basically did everything... even tho I asked for help you kinda just... yeah. */
 		Lua_helper.add_callback(lua, "getCurAnim", function(obj:String, anim:String, done:Bool = false) {
-			if(PlayState.instance.modchartSprites.exists(obj) && PlayState.instance.modchartSprites.get(obj).animation.exists(anim) && PlayState.instance.modchartSprites.get(obj).animation.curAnim != null && PlayState.instance.modchartSprites.get(obj).animation.curAnim.name == anim) {
-				return PlayState.instance.modchartSprites.get(obj).animation.curAnim.finished == done;
-			}
-			/* By ImaginationSuperHero52806 and M1 Aether
-			Thx M1 Aether for you help! Even tho you... kinda basically did everything... even tho I asked for help you kinda just... yeah. */
-			var spr:FlxSprite = Reflect.getProperty(getInstance(), obj);
-			if(spr != null && spr.animation.exists(anim) && spr.animation.curAnim != null && spr.animation.curAnim.name == anim) {
-				return spr.animation.curAnim.finished == done;
-			}
-			return false;
-		});
+			  var spr1:ModchartSprite = PlayState.instance.modchartSprites.get(obj);
+			    if(spr1 != null && spr1.animation.exists(anim) && spr1.animation.curAnim != null && spr1.animation.curAnim.name == anim) {
+					    return spr1.animation.curAnim.finished == done;
+						  }
+						            
+									  var spr:FlxSprite = Reflect.getProperty(getInstance(), obj);
+									    if(spr != null && spr.animation.exists(anim) && spr.animation.curAnim != null && spr.animation.curAnim.name == anim) {
+											    return spr.animation.curAnim.finished == done;
+												  }
+												    return false;
+													});
+										}
+				}
+		})
 		Lua_helper.add_callback(lua, "playAnim", function(obj:String, name:String, forced:Bool = false, ?reverse:Bool = false, ?startFrame:Int = 0)
 		{
 			if(PlayState.instance.getLuaObject(obj, false) != null) {
