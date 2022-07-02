@@ -225,7 +225,7 @@ class FunkinLua {
 
 			if(exclusions==null)exclusions=[];
 
-			Lua.getglobal(lua, 'scriptName');
+			Lua.getglobal(lua, scriptName);
 			var daScriptName = Lua.tostring(lua, -1);
 			Lua.pop(lua, 1);
 			if(ignoreSelf && !exclusions.contains(daScriptName))exclusions.push(daScriptName);
