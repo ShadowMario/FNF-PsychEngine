@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v2.2.4
         with:
           name: linuxBuild-Debug
-          path: 'export/release/linux/bin'
+          path: 'export/debug/linux/bin'
   buildWindows-Debug:
     runs-on: windows-latest
 
@@ -102,7 +102,7 @@ jobs:
         uses: actions/upload-artifact@v2.2.4
         with:
           name: windowsBuild-Debug
-          path: export/release/windows/bin
+          path: export/debug/windows/bin
   buildMac-Debug:
     runs-on: macos-latest
 
@@ -143,4 +143,4 @@ jobs:
         uses: actions/upload-artifact@v2.2.4
         with:
           name: macBuild-Debug
-          path: export/release/macos/bin
+          path: export/debug/macos/bin
