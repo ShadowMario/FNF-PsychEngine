@@ -102,3 +102,5 @@ _____________________________________
 * Some stuff based on Week 7's changes has been put in (Background colors on Freeplay, Note splashes)
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
 * You can listen to a song or adjust Scroll Speed/Damage taken/etc. on Freeplay by pressing Space.
+##  Building
+[![Build](https://github.com/Gibberditoslumber/FNF-PsychEngine/actions/workflows/debug.yml/badge.svg)](https://github.com/Gibberditoslumber/FNF-PsychEngine/actions/workflows/debug.yml)
