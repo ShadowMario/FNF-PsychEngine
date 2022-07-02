@@ -53,9 +53,9 @@ import android.Hardware;
 using StringTools;
 
 class FunkinLua {
-	public static var Function_Stop:Dynamic = #if android 'Function_Stop' #else 1 #end;
-	public static var Function_Continue:Dynamic = #if android 'Function_Continue' #else 0 #end;
-	public static var Function_StopLua:Dynamic = #if android 'Function_StopLua' #else 2 #end;
+	public static var Function_Stop:Dynamic = 1;
+	public static var Function_Continue:Dynamic = 0;
+	public static var Function_StopLua:Dynamic = 2;
 
 	//public var errorHandler:String->Void;
 	#if LUA_ALLOWED
@@ -229,7 +229,7 @@ class FunkinLua {
 
 			if(exclusions==null)exclusions=[];
 
-			Lua.getglobal(lua, 'scriptName');
+			Lua.getglobal(lua, scriptName);
 			var daScriptName = Lua.tostring(lua, -1);
 			Lua.pop(lua, 1);
 			if(ignoreSelf && !exclusions.contains(daScriptName))exclusions.push(daScriptName);
