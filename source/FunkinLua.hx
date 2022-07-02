@@ -631,14 +631,14 @@ class FunkinLua {
 			#end
 		});
 
-		Lua_helper.add_callback(lua, "addHaxeLibrary", function(libName:String, ?libFolder:String = '') {
+		Lua_helper.add_callback(lua, "addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
 			#if hscript
 			initHaxeInterp();
 
 			try {
 				var str:String = '';
-				if(libFolder.length > 0)
-					str = libFolder + '.';
+				if(libPackage.length > 0)
+					str = libPackage + '.';
 
 				haxeInterp.variables.set(libName, Type.resolveClass(str + libName));
 			}
@@ -1175,7 +1175,7 @@ class FunkinLua {
 		{
 			return Reflect.getProperty(FlxG.gamepads.getByID(id).pressed, name);
 		});
-		Lua_helper.add_callback(lua, "gamepadJustReleased", function(id:Int, name:String)
+		Lua_helper.add_callback(lua, "gamepadReleased", function(id:Int, name:String)
 		{
 			return Reflect.getProperty(FlxG.gamepads.getByID(id).justReleased, name);
 		});
@@ -1548,7 +1548,6 @@ class FunkinLua {
 						var luaObj:ModchartSprite = obj;
 
 						var daOffset = luaObj.animOffsets.get(name);
-						trace(daOffset);
 						if (luaObj.animOffsets.exists(name))
 						{
 							luaObj.offset.set(daOffset[0], daOffset[1]);
@@ -2221,14 +2220,14 @@ class FunkinLua {
 			}
 			luaTrace('Save file not initialized: ' + name, false, false, FlxColor.RED);
 		});
-		Lua_helper.add_callback(lua, "getDataFromSave", function(name:String, field:String) {
+		Lua_helper.add_callback(lua, "getDataFromSave", function(name:String, field:String, ?defaultValue:Dynamic = null) {
 			if(PlayState.instance.modchartSaves.exists(name))
 			{
 				var retVal:Dynamic = Reflect.field(PlayState.instance.modchartSaves.get(name).data, field);
 				return retVal;
 			}
 			luaTrace('Save file not initialized: ' + name, false, false, FlxColor.RED);
-			return null;
+			return defaultValue;
 		});
 		Lua_helper.add_callback(lua, "setDataFromSave", function(name:String, field:String, value:Dynamic) {
 			if(PlayState.instance.modchartSaves.exists(name))
