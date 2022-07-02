@@ -1533,19 +1533,17 @@ class FunkinLua {
 		});
 		
 		Lua_helper.add_callback(lua, "getCurAnim", function(obj:String, anim:String, done:Bool = false) {
-			/* if(PlayState.instance.getLuaObject(obj, false)!=null) {
-				var item:FlxSprite = PlayState.instance.getLuaObject(obj,false);
-				item.animation.addByIndices(name, prefix, die, '', framerate, false);
-				if(item.animation.curAnim == null) {
-					item.animation.play(name, true);
-				}
-				return true;
-			} */
-			if(obj.animation.curAnim.name == anim) {
-
-			if(done == true and obj.animation.curAnim.finished == anim)
-
+			if(PlayState.instance.modchartSprites.exists(obj)) {
+				if (PlayState.instance.modchartSprites.get(obj).animation.exists(anim) && PlayState.instance.modchartSprites.get(obj).animation.curAnim != null)
+					return PlayState.instance.modchartSprites.get(obj).animation.curAnim.finished == done;
 			}
+			/* By ImaginationSuperHero52806 and M1 Aether
+			Thx M1 Aether for you help! Even tho you... kinda basically did everything... even tho I asked for help you kinda just... yeah. */
+			var spr:FlxSprite = Reflect.getProperty(getInstance(), obj);
+			if(spr != null && spr.animation.exists(anim) && spr.animation.curAnim != null) {
+				return spr.animation.curAnim.finished == done;
+			}
+			return;
 		});
 		Lua_helper.add_callback(lua, "playAnim", function(obj:String, name:String, forced:Bool = false, ?reverse:Bool = false, ?startFrame:Int = 0)
 		{
