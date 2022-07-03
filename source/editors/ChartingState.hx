@@ -556,6 +556,7 @@ class ChartingState extends MusicBeatState
 
 		tempMap.clear();
 		var stageFile:Array<String> = CoolUtil.coolTextFile(Paths.txt('stageList'));
+		var stages:Array<String> = [];
 		for (i in 0...stageFile.length) { //Prevent duplicates
 			var stageToCheck:String = stageFile[i];
 			if(!tempMap.exists(stageToCheck)) {
