@@ -1532,7 +1532,7 @@ class FunkinLua {
 			return false;
 		});
 
-		Lua_helper.add_callback(lua, "getCurAnim", function(obj:String, anim:String, done:Bool = false) {
+		Lua_helper.add_callback(lua, "ifCurAnim", function(obj:String, anim:String, done:Bool = false) {
 			var spr1:ModchartSprite = PlayState.instance.modchartSprites.get(obj);
 			if(spr1 != null && spr1.animation.exists(anim) && spr1.animation.curAnim != null && spr1.animation.curAnim.name == anim) {
 				return spr1.animation.curAnim.finished == done;
