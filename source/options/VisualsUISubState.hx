@@ -97,6 +97,9 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
+
+		var option:Option = new Option('Show RAM Usage', 'If unchecked, hides RAM Usage from FPS Counter.', 'showRamUsage', 'bool', true);
+		addOption(option);
 		#end
 		
 		var option:Option = new Option('Pause Screen Song:',
