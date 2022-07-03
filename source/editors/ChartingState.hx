@@ -2929,7 +2929,7 @@ class ChartingState extends MusicBeatState
 			}
 		}
 		catch(e) {
-			addTextToDebug("Problem with Loading Song Data \"" + song.toLowerCase() + "\"", 0xFFFF0000);
+			addTextToDebug("Problem with Loading Song data \"" + song.toLowerCase() + "\"", 0xFFFF0000);
 			return;
 		}
 		MusicBeatState.resetState();
@@ -3023,7 +3023,7 @@ class ChartingState extends MusicBeatState
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
-		addTextToDebug("Problem saving Song Data", 0xFFFF0000);
+		addTextToDebug("Problem saving Song data", 0xFFFF0000);
 	}
 
 	function getSectionBeats(?section:Null<Int> = null)
