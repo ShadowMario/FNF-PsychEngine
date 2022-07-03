@@ -25,6 +25,12 @@ class CoolUtil
 	public static var defaultDifficulty:String = 'Normal'; //The chart that has no suffix and starting difficulty on Freeplay/Story Mode
 
 	public static var difficulties:Array<String> = [];
+	public static var lowerDifficulties(get, null):Array<String>;
+	static function get_lowerDifficulties():Array<String> {
+		var copy:Array<String> = [];
+		for (v in difficulties) copy.push(v.toLowerCase());
+		return copy;
+	}
 
 	inline public static function quantize(f:Float, snap:Float){
 		// changed so this actually works lol
