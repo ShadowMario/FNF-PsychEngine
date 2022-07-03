@@ -11,12 +11,21 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.util.FlxDestroyUtil;
 import flixel.graphics.frames.FlxAtlasFrames;
+import openfl.display.BitmapData;
+import openfl.utils.ByteArray;
 
 /**
  * ...
  * @original author Ka Wing Chin
  * @modification's author: Saw (M.A. Jigsaw)
  */
+
+@:keep @:bitmap("assets/preload/images/android/joystick.png")
+class GraphicJoyStickInput extends BitmapData {}
+
+@:keep @:file("assets/preload/images/android/joystick.xml")
+class DataJoyStickInput extends #if (lime_legacy || nme) ByteArray #else ByteArrayData #end {}
+
 class FlxJoyStick extends FlxSpriteGroup
 {
 	public var status:Int = NORMAL;
@@ -67,7 +76,7 @@ class FlxJoyStick extends FlxSpriteGroup
 	function createBase():Void
 	{
 		base = new FlxSprite(0, 0);
-		base.loadGraphic(FlxGraphic.fromFrame(getFrames().getByName('base')));
+		base.loadGraphic(FlxGraphic.fromFrame(getJoyStickInputFrames().getByName('base')));
 		base.resetSizeFromFrame();
 		base.x += -base.width * 0.5;
 		base.y += -base.height * 0.5;
@@ -82,7 +91,7 @@ class FlxJoyStick extends FlxSpriteGroup
 	function createThumb():Void
 	{
 		thumb = new FlxSprite(0, 0);
-		thumb.loadGraphic(FlxGraphic.fromFrame(getFrames().getByName('thumb')));
+		thumb.loadGraphic(FlxGraphic.fromFrame(getJoyStickInputFrames().getByName('thumb')));
 		thumb.resetSizeFromFrame();
 		thumb.scrollFactor.set();
 		thumb.solid = false;
@@ -92,9 +101,16 @@ class FlxJoyStick extends FlxSpriteGroup
 		add(thumb);
 	}
 
-	public static function getFrames():FlxAtlasFrames
+	public static function getJoyStickInputFrames():FlxAtlasFrames
 	{
-		return Paths.getSparrowAtlas('android/joystick');
+		var bitmapData:BitmapData = new GraphicJoyStickInput(0, 0);
+
+		#if html5 // dirty hack for openfl/openfl#682
+		Reflect.setProperty(bitmapData, "width", 408);
+		Reflect.setProperty(bitmapData, "height", 252);
+		#end
+
+		return FlxAtlasFrames.fromSparrow(FlxGraphic.fromBitmapData(bitmapData), Std.string(new DataJoyStickInput()));
 	}
 
 	function createZone():Void

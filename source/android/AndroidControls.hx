@@ -124,14 +124,14 @@ class AndroidControls extends FlxSpriteGroup
 				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
 				add(vpad);
 			case 1:
-				vpad = new FlxVirtualPad(FULL, NONE);
+				vpad = new FlxVirtualPad(LEFT_FULL, NONE);
 				add(vpad);
 			case 2:
-				vpad = new FlxVirtualPad(FULL, NONE);
+				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
 				vpad = config.loadcustom(vpad);
 				add(vpad);
 			case 3:
-				vpad = new FlxVirtualPad(DUO, NONE);
+				vpad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(vpad);
 			case 4:
 				hbox = new FlxHitbox();
@@ -226,10 +226,7 @@ class Menu extends MusicBeatState
 		resetButton = new FlxButton(FlxG.width - 200, 50, "Reset", function()
 		{
 			if (resetButton.visible)
-				openSubState(new Prompt('This action will clear current positions of the pad.\n\nProceed?', 0, function()
-				{
-					reset();
-				}, null, false));
+				reset();
 		});
 		resetButton.setGraphicSize(Std.int(resetButton.width) * 3);
 		resetButton.label.setFormat(null, 16, 0x333333, "center");
@@ -376,7 +373,7 @@ class Menu extends MusicBeatState
 				add(vpad);
 			case 'Pad-Left':
 				remove(vpad);
-				vpad = new FlxVirtualPad(FULL, NONE);
+				vpad = new FlxVirtualPad(LEFT_FULL, NONE);
 				add(vpad);
 			case 'Pad-Custom':
 				remove(vpad);
@@ -385,7 +382,7 @@ class Menu extends MusicBeatState
 				loadCustom();
 			case 'Duo':
 				remove(vpad);
-				vpad = new FlxVirtualPad(DUO, NONE);
+				vpad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(vpad);
 			case 'Hitbox':
 				vpad.visible = false;
