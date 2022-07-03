@@ -2743,6 +2743,9 @@ class PlayState extends MusicBeatState
 			@:privateAccess
 			{
 				var audio = [FlxG.sound.music, vocals];
+				for (sound in modchartSounds) {
+					audio.push(sound);
+				}
 				for (i in audio) {
 					if (i != null && i.playing && i._channel != null && i._channel.__source != null && i._channel.__source.__backend != null && i._channel.__source.__backend.handle != null) {
 						AL.sourcef(i._channel.__source.__backend.handle, AL.PITCH, playbackRate);
