@@ -51,6 +51,7 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
+		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
 		PlayState.isStoryMode = true;
@@ -265,7 +266,6 @@ class StoryMenuState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
 			MusicBeatState.switchState(new MainMenuState());
-			Main.fpsVar.inEditor = false;
 		}
 
 		super.update(elapsed);
@@ -320,7 +320,6 @@ class StoryMenuState extends MusicBeatState
 			{
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 				FreeplayState.destroyFreeplayVocals();
-				Main.fpsVar.inEditor = false;
 			});
 		} else {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
