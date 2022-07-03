@@ -20,6 +20,7 @@ class FlxButton extends FlxTypedButton<FlxText>
 	public static inline var NORMAL:Int = 0;
 	public static inline var HIGHLIGHT:Int = 1;
 	public static inline var PRESSED:Int = 2;
+
 	public var text(get, set):String;
 
 	public function new(X:Float = 0, Y:Float = 0, ?Text:String, ?OnClick:Void->Void)

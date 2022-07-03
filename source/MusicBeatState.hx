@@ -64,18 +64,14 @@ class MusicBeatState extends FlxUIState
 		{
 			case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
 				controls.setVirtualPadNOTES(androidControls.vpad, FULL, NONE);
-				trackedinputsNOTES = controls.trackedinputsNOTES;
-				controls.trackedinputsNOTES = [];
 			case DUO:
 				controls.setVirtualPadNOTES(androidControls.vpad, DUO, NONE);
-				trackedinputsNOTES = controls.trackedinputsNOTES;
-				controls.trackedinputsNOTES = [];
 			case HITBOX:
 				controls.setHitBox(androidControls.hbox);
-				trackedinputsNOTES = controls.trackedinputsNOTES;
-				controls.trackedinputsNOTES = [];
-			default:
 		}
+
+		trackedinputsNOTES = controls.trackedinputsNOTES;
+		controls.trackedinputsNOTES = [];
 
 		var camControls = new flixel.FlxCamera();
 		FlxG.cameras.add(camControls);

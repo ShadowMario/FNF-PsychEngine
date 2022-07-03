@@ -13,8 +13,7 @@ import android.flixel.FlxButton;
  * @original author: luckydog
  * @modifications author: Saw (M.A. Jigsaw)
  */
-
-class FlxHitbox extends FlxSpriteGroup 
+class FlxHitbox extends FlxSpriteGroup
 {
 	public var hitbox:FlxSpriteGroup;
 

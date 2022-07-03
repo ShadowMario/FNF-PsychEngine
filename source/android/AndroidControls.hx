@@ -19,7 +19,6 @@ using StringTools;
  * @original author: luckydog
  * @modifications author: Saw (M.A. Jigsaw)
  */
-
 class Config
 {
 	var save:FlxSave;
@@ -73,7 +72,7 @@ class Config
 			return _pad;
 
 		var tempCount:Int = 0;
-		for(buttons in _pad)
+		for (buttons in _pad)
 		{
 			buttons.x = save.data.buttons[tempCount].x;
 			buttons.y = save.data.buttons[tempCount].y;
@@ -113,7 +112,6 @@ class AndroidControls extends FlxSpriteGroup
 				initControler(3);
 			case HITBOX:
 				initControler(4);
-			default:
 		}
 	}
 
@@ -126,7 +124,7 @@ class AndroidControls extends FlxSpriteGroup
 				add(vpad);
 			case 1:
 				vpad = new FlxVirtualPad(FULL, NONE);
-				add(vpad);	
+				add(vpad);
 			case 2:
 				vpad = new FlxVirtualPad(FULL, NONE);
 				vpad = config.loadcustom(vpad);
@@ -137,7 +135,6 @@ class AndroidControls extends FlxSpriteGroup
 			case 4:
 				hbox = new FlxHitbox();
 				add(hbox);
-			default:
 		}
 	}
 
@@ -145,20 +142,18 @@ class AndroidControls extends FlxSpriteGroup
 	{
 		return switch (modeNum)
 		{
-			case 0: 
+			case 0:
 				VIRTUALPAD_RIGHT;
-			case 1: 
+			case 1:
 				VIRTUALPAD_LEFT;
-			case 2: 
+			case 2:
 				VIRTUALPAD_CUSTOM;
-			case 3: 
+			case 3:
 				DUO;
-			case 4:	
+			case 4:
 				HITBOX;
 			case 5:
 				KEYBOARD;
-			default: 
-				VIRTUALPAD_RIGHT;
 		}
 	}
 
@@ -197,10 +192,8 @@ class Menu extends MusicBeatState
 	var downPozition:FlxText;
 	var leftPozition:FlxText;
 	var rightPozition:FlxText;
-
 	var inputvari:PsychAlphabet;
 	var funitext:PsychAlphabet;
-
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 	var controlitems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Duo', 'Hitbox', 'Keyboard'];
@@ -229,7 +222,10 @@ class Menu extends MusicBeatState
 		resetButton = new FlxButton(FlxG.width - 200, 50, "Reset", function()
 		{
 			if (resetButton.visible)
-				openSubState(new Prompt('This action will clear current positions of the pad.\n\nProceed?', 0, function() {reset();}, null, false));
+				openSubState(new Prompt('This action will clear current positions of the pad.\n\nProceed?', 0, function()
+				{
+					reset();
+				}, null, false));
 		});
 		resetButton.setGraphicSize(Std.int(resetButton.width) * 3);
 		resetButton.label.setFormat(null, 16, 0x333333, "center");
@@ -254,38 +250,36 @@ class Menu extends MusicBeatState
 		inputvari.screenCenter(X);
 		add(inputvari);
 
-		var ui_tex = Paths.getSparrowAtlas('android/menu/arrows');
-
 		leftArrow = new FlxSprite(inputvari.x - 60, inputvari.y + 50);
-		leftArrow.frames = ui_tex;
+		leftArrow.frames = Paths.getSparrowAtlas('android/menu/arrows');
 		leftArrow.animation.addByPrefix('idle', 'arrow left');
 		leftArrow.animation.addByPrefix('press', 'arrow push left');
 		leftArrow.animation.play('idle');
 		add(leftArrow);
 
 		rightArrow = new FlxSprite(inputvari.x + inputvari.width + 10, leftArrow.y);
-		rightArrow.frames = ui_tex;
+		rightArrow.frames = Paths.getSparrowAtlas('android/menu/arrows');
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
 		rightArrow.animation.addByPrefix('press', 'arrow push right', 24, false);
 		rightArrow.animation.play('idle');
 		add(rightArrow);
 
-		upPozition = new FlxText(10, FlxG.height - 104, 0,'Button Up X:' + vpad.buttonUp.x +' Y:' + vpad.buttonUp.y, 16);
+		upPozition = new FlxText(10, FlxG.height - 104, 0, 'Button Up X:' + vpad.buttonUp.x + ' Y:' + vpad.buttonUp.y, 16);
 		upPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		upPozition.borderSize = 2.4;
 		add(upPozition);
 
-		downPozition = new FlxText(10, FlxG.height - 84, 0,'Button Down X:' + vpad.buttonDown.x +' Y:' + vpad.buttonDown.y, 16);
+		downPozition = new FlxText(10, FlxG.height - 84, 0, 'Button Down X:' + vpad.buttonDown.x + ' Y:' + vpad.buttonDown.y, 16);
 		downPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		downPozition.borderSize = 2.4;
 		add(downPozition);
 
-		leftPozition = new FlxText(10, FlxG.height - 64, 0,'Button Left X:' + vpad.buttonLeft.x +' Y:' + vpad.buttonLeft.y, 16);
+		leftPozition = new FlxText(10, FlxG.height - 64, 0, 'Button Left X:' + vpad.buttonLeft.x + ' Y:' + vpad.buttonLeft.y, 16);
 		leftPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		leftPozition.borderSize = 2.4;
 		add(leftPozition);
 
-		rightPozition = new FlxText(10, FlxG.height - 44, 0,'Button RIght x:' + vpad.buttonRight.x +' Y:' + vpad.buttonRight.y, 16);
+		rightPozition = new FlxText(10, FlxG.height - 44, 0, 'Button RIght x:' + vpad.buttonRight.x + ' Y:' + vpad.buttonRight.y, 16);
 		rightPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		rightPozition.borderSize = 2.4;
 		add(rightPozition);
@@ -311,7 +305,7 @@ class Menu extends MusicBeatState
 
 		for (touch in FlxG.touches.list)
 		{
-			if(touch.overlaps(leftArrow) && touch.justPressed)
+			if (touch.overlaps(leftArrow) && touch.justPressed)
 				changeSelection(-1);
 			else if (touch.overlaps(rightArrow) && touch.justPressed)
 				changeSelection(1);
@@ -360,12 +354,12 @@ class Menu extends MusicBeatState
 	function changeSelection(change:Int = 0):Void
 	{
 		curSelected += change;
-	
+
 		if (curSelected < 0)
 			curSelected = controlitems.length - 1;
 		if (curSelected >= controlitems.length)
 			curSelected = 0;
-	
+
 		inputvari.changeText(controlitems[curSelected]);
 
 		var daChoice:String = controlitems[Math.floor(curSelected)];
@@ -434,10 +428,10 @@ class Menu extends MusicBeatState
 
 	function positionsTexts():Void
 	{
-		upPozition.text = 'Button Up X:' + vpad.buttonUp.x +' Y:' + vpad.buttonUp.y;
-		downPozition.text = 'Button Down X:' + vpad.buttonDown.x +' Y:' + vpad.buttonDown.y;
-		leftPozition.text = 'Button Left X:' + vpad.buttonLeft.x +' Y:' + vpad.buttonLeft.y;
-		rightPozition.text = 'Button Right x:' + vpad.buttonRight.x +' Y:' + vpad.buttonRight.y;
+		upPozition.text = 'Button Up X:' + vpad.buttonUp.x + ' Y:' + vpad.buttonUp.y;
+		downPozition.text = 'Button Down X:' + vpad.buttonDown.x + ' Y:' + vpad.buttonDown.y;
+		leftPozition.text = 'Button Left X:' + vpad.buttonLeft.x + ' Y:' + vpad.buttonLeft.y;
+		rightPozition.text = 'Button Right x:' + vpad.buttonRight.x + ' Y:' + vpad.buttonRight.y;
 	}
 
 	function save():Void
@@ -464,7 +458,7 @@ class Menu extends MusicBeatState
 
 	function loadCustom():Void
 	{
-		vpad = config.loadcustom(vpad);	
+		vpad = config.loadcustom(vpad);
 	}
 }
 

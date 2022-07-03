@@ -15,7 +15,6 @@ using StringTools;
  * ...
  * @author Shadow Mario
  */
-
 /**
  * Loosley based on FlxTypeText lolol
  */
@@ -52,6 +51,7 @@ class PsychAlphabet extends FlxSpriteGroup
 	public var typed:Bool = false;
 
 	public var typingSpeed:Float = 0.05;
+
 	public function new(x:Float, y:Float, text:String = '', ?bold:Bool = false, typed:Bool = false, ?typingSpeed:Float = 0.05, ?textSize:Float = 1)
 	{
 		super(x, y);
@@ -76,7 +76,8 @@ class PsychAlphabet extends FlxSpriteGroup
 
 	public function changeText(newText:String, newTypingSpeed:Float = -1)
 	{
-		for (i in 0...lettersArray.length) {
+		for (i in 0...lettersArray.length)
+		{
 			var letter = lettersArray[0];
 			letter.destroy();
 			remove(letter);
@@ -96,7 +97,7 @@ class PsychAlphabet extends FlxSpriteGroup
 		x = 0;
 		_finalText = newText;
 		text = newText;
-		if(newTypingSpeed != -1)
+		if (newTypingSpeed != -1)
 			typingSpeed = newTypingSpeed;
 
 		if (text != '')
@@ -172,59 +173,72 @@ class PsychAlphabet extends FlxSpriteGroup
 
 	var loopNum:Int = 0;
 	var xPos:Float = 0;
+
 	public var curRow:Int = 0;
+
 	var dialogueSound:FlxSound = null;
+
 	private static var soundDialog:Sound = null;
+
 	var consecutiveSpaces:Int = 0;
+
 	public static function setDialogueSound(name:String = '')
 	{
-		if (name == null || name.trim() == '') name = 'dialogue';
+		if (name == null || name.trim() == '')
+			name = 'dialogue';
 		soundDialog = Paths.sound(name);
-		if(soundDialog == null) soundDialog = Paths.sound('dialogue');
+		if (soundDialog == null)
+			soundDialog = Paths.sound('dialogue');
 	}
 
 	var typeTimer:FlxTimer = null;
+
 	public function startTypedText(speed:Float):Void
 	{
 		_finalText = text;
 		doSplitWords();
 
-		if(soundDialog == null)
+		if (soundDialog == null)
 			PsychAlphabet.setDialogueSound();
 
-		if(speed <= 0)
+		if (speed <= 0)
 		{
-			while(!finishedText)
+			while (!finishedText)
 				timerCheck();
 
-			if(dialogueSound != null) dialogueSound.stop();
+			if (dialogueSound != null)
+				dialogueSound.stop();
 			dialogueSound = FlxG.sound.play(soundDialog);
 		}
 		else
 		{
-			typeTimer = new FlxTimer().start(0.1, function(tmr:FlxTimer) {
-				typeTimer = new FlxTimer().start(speed, function(tmr:FlxTimer) {
+			typeTimer = new FlxTimer().start(0.1, function(tmr:FlxTimer)
+			{
+				typeTimer = new FlxTimer().start(speed, function(tmr:FlxTimer)
+				{
 					timerCheck(tmr);
 				}, 0);
 			});
 		}
 	}
 
-	var LONG_TEXT_ADD:Float = -24; //text is over 2 rows long, make it go up a bit
-	public function timerCheck(?tmr:FlxTimer = null) {
+	var LONG_TEXT_ADD:Float = -24; // text is over 2 rows long, make it go up a bit
+
+	public function timerCheck(?tmr:FlxTimer = null)
+	{
 		var autoBreak:Bool = false;
-		if ((loopNum <= splitWords.length - 2 && splitWords[loopNum] == '\\' && splitWords[loopNum+1] == 'n') ||
-			((autoBreak = true) && xPos >= FlxG.width * 0.65 && splitWords[loopNum] == ' ' ))
+		if ((loopNum <= splitWords.length - 2 && splitWords[loopNum] == '\\' && splitWords[loopNum + 1] == 'n')
+			|| ((autoBreak = true) && xPos >= FlxG.width * 0.65 && splitWords[loopNum] == ' '))
 		{
-			if(autoBreak)
+			if (autoBreak)
 			{
-				if(tmr != null)
+				if (tmr != null)
 					tmr.loops -= 1;
 				loopNum += 1;
 			}
 			else
 			{
-				if(tmr != null)
+				if (tmr != null)
 					tmr.loops -= 2;
 				loopNum += 2;
 			}
@@ -232,11 +246,12 @@ class PsychAlphabet extends FlxSpriteGroup
 			xPosResetted = true;
 			xPos = 0;
 			curRow += 1;
-			if(curRow == 2)
+			if (curRow == 2)
 				y += LONG_TEXT_ADD;
 		}
 
-		if(loopNum <= splitWords.length && splitWords[loopNum] != null) {
+		if (loopNum <= splitWords.length && splitWords[loopNum] != null)
+		{
 			var spaceChar:Bool = (splitWords[loopNum] == ' ' || (isBold && splitWords[loopNum] == '_'));
 			if (spaceChar)
 				consecutiveSpaces++;
@@ -282,8 +297,9 @@ class PsychAlphabet extends FlxSpriteGroup
 				}
 				letter.x += 90;
 
-				if(tmr != null) {
-					if(dialogueSound != null)
+				if (tmr != null)
+				{
+					if (dialogueSound != null)
 						dialogueSound.stop();
 
 					dialogueSound = FlxG.sound.play(soundDialog);
@@ -296,9 +312,9 @@ class PsychAlphabet extends FlxSpriteGroup
 		}
 
 		loopNum++;
-		if(loopNum >= splitWords.length)
+		if (loopNum >= splitWords.length)
 		{
-			if(tmr != null)
+			if (tmr != null)
 			{
 				typeTimer = null;
 				tmr.cancel();
@@ -319,7 +335,7 @@ class PsychAlphabet extends FlxSpriteGroup
 
 			var lerpVal:Float = boundTo(elapsed * 9.6, 0, 1);
 			y = FlxMath.lerp(y, (scaledY * yMult) + (FlxG.height * 0.48) + yAdd, lerpVal);
-			if(forceX != Math.NEGATIVE_INFINITY)
+			if (forceX != Math.NEGATIVE_INFINITY)
 				x = forceX;
 			else
 				x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, lerpVal);
@@ -330,7 +346,7 @@ class PsychAlphabet extends FlxSpriteGroup
 
 	public function killTheTimer()
 	{
-		if(typeTimer != null)
+		if (typeTimer != null)
 		{
 			typeTimer.cancel();
 			typeTimer.destroy();
@@ -403,7 +419,7 @@ class AlphaCharacter extends FlxSprite
 			case "'":
 				y -= 20 * textSize;
 			case '-':
-				//x -= 35 - (90 * (1.0 - textSize));
+				// x -= 35 - (90 * (1.0 - textSize));
 				y += 20 * textSize;
 			case '(':
 				x -= 65 * textSize;
