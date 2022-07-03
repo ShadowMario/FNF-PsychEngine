@@ -32,6 +32,7 @@ class ClientPrefs {
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'Tea Time';
 	public static var checkForUpdates:Bool = true;
+	public static var showRamUsage:Bool = false;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -117,6 +118,7 @@ class ClientPrefs {
 		FlxG.save.data.comboOffset = comboOffset;
 		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
+		FlxG.save.data.showRamUsage = showRamUsage;
 
 		FlxG.save.data.ratingOffset = ratingOffset;
 		FlxG.save.data.sickWindow = sickWindow;
@@ -259,6 +261,8 @@ class ClientPrefs {
 		{
 			checkForUpdates = FlxG.save.data.checkForUpdates;
 		}
+		if (FlxG.save.data.showRamUsage != null)
+			showRamUsage = FlxG.save.data.showRamUsage;
 
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', 'ninjamuffin99');
