@@ -71,7 +71,7 @@ class NoteSplash extends FlxSprite
 			animation.add("note3-2", [28, 29, 30, 31], 12, false);
 		} else {
 			frames = Paths.getSparrowAtlas(skin);
-			setGraphicSize(Std.int(1));
+			setGraphicSize(1, 1);
 			for (i in 1...3) {
 				animation.addByPrefix("note0-" + i, "note splash purple " + i, 24, false);
 				animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
