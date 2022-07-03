@@ -40,7 +40,6 @@ import openfl.events.IOErrorEvent;
 import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.ByteArray;
-import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.media.AudioBuffer;
 import haxe.io.Bytes;
@@ -229,8 +228,6 @@ class ChartingState extends MusicBeatState
 		}
 
 		// Paths.clearMemory();
-		
-		Main.fpsVar.inEditor = true;
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -502,13 +499,6 @@ class ChartingState extends MusicBeatState
 		#end
 
 		var tempMap:Map<String, Bool> = new Map<String, Bool>();
-		// FNF
-		if (Paths.fileExists('characterListFNF', TEXT)) {
-			var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterListFNF'));
-			for (i in 0...characters.length) {
-				tempMap.set(characters[i], true);
-			}
-		}
 		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterList'));
 		for (i in 0...characters.length) {
 			tempMap.set(characters[i], true);
@@ -565,19 +555,6 @@ class ChartingState extends MusicBeatState
 		#end
 
 		tempMap.clear();
-		var stages:Array<String> = [];
-		// FNF
-		if (Paths.fileExists('stageListFNF', TEXT)) {
-			var stageFile:Array<String> = CoolUtil.coolTextFile(Paths.txt('stageListFNF'));
-			for (i in 0...stageFile.length) { //Prevent duplicates
-				var stageToCheck:String = stageFile[i];
-				if(!tempMap.exists(stageToCheck)) {
-					stages.push(stageToCheck);
-				}
-				tempMap.set(stageToCheck, true);
-			}
-		}
-		// Psych
 		var stageFile:Array<String> = CoolUtil.coolTextFile(Paths.txt('stageList'));
 		for (i in 0...stageFile.length) { //Prevent duplicates
 			var stageToCheck:String = stageFile[i];
@@ -1676,7 +1653,6 @@ class ChartingState extends MusicBeatState
 			{
 				autosaveSong();
 				FlxG.mouse.visible = false;
-				Main.fpsVar.inEditor = false;
 				PlayState.SONG = _song;
 				FlxG.sound.music.stop();
 				if(vocals != null) vocals.stop();
@@ -1703,7 +1679,6 @@ class ChartingState extends MusicBeatState
 					MusicBeatState.switchState(new editors.MasterEditorMenu());
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				//}
-				Main.fpsVar.inEditor = false;
 				FlxG.mouse.visible = false;
 				return;
 			}
@@ -2953,7 +2928,7 @@ class ChartingState extends MusicBeatState
 			}
 		}
 		catch(e) {
-			addTextToDebug("Problem with Loading Song \"" + song.toLowerCase() + "\"");
+			addTextToDebug("Problem with Loading Song Data \"" + song.toLowerCase() + "\"", 0xFFFF0000);
 			return;
 		}
 		MusicBeatState.resetState();
@@ -3024,7 +2999,7 @@ class ChartingState extends MusicBeatState
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
-		addTextToDebug("Successfully saved LEVEL DATA.", 0xFFFFFFFF);
+		addTextToDebug("Successfully saved Song data");
 	}
 
 	/**
@@ -3047,7 +3022,7 @@ class ChartingState extends MusicBeatState
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
-		addTextToDebug("Problem saving Level data");
+		addTextToDebug("Problem saving Song Data", 0xFFFF0000);
 	}
 
 	function getSectionBeats(?section:Null<Int> = null)
@@ -3059,17 +3034,7 @@ class ChartingState extends MusicBeatState
 		return val != null ? val : 4;
 	}
 	
-	override function updateCurStep():Void 
-	{
-		
-		var lastChange = Conductor.getBPMFromSeconds(Conductor.songPosition);
-
-		var shit = ((Conductor.songPosition ) - lastChange.songTime) / lastChange.stepCrochet;
-		curDecStep = lastChange.stepTime + shit;
-		curStep = lastChange.stepTime + Math.floor(shit);
-	}
-	
-	public function addTextToDebug(text:String, color:FlxColor = 0xFFFF0000) {
+	public function addTextToDebug(text:String, color:FlxColor = 0xFFFFFFFF) {
 		debugGroup.forEachAlive(function(spr:DebugLuaText) {
 			spr.y += 20;
 		});
