@@ -112,6 +112,7 @@ class AndroidControls extends FlxSpriteGroup
 				initControler(3);
 			case HITBOX:
 				initControler(4);
+			default:
 		}
 	}
 
@@ -135,6 +136,7 @@ class AndroidControls extends FlxSpriteGroup
 			case 4:
 				hbox = new FlxHitbox();
 				add(hbox);
+			default:
 		}
 	}
 
@@ -154,6 +156,8 @@ class AndroidControls extends FlxSpriteGroup
 				HITBOX;
 			case 5:
 				KEYBOARD;
+			default:
+				VIRTUALPAD_RIGHT;
 		}
 	}
 
