@@ -1,10 +1,10 @@
 package openfl.display;
 
+import flixel.math.FlxMath;
 import haxe.Timer;
 import openfl.events.Event;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
-import flixel.math.FlxMath;
 #if gl_stats
 import openfl.display._internal.stats.Context3DStats;
 import openfl.display._internal.stats.DrawCallContext;
@@ -32,6 +32,9 @@ class FPS extends TextField
 	**/
 	public var currentFPS(default, null):Int;
 
+	private var memoryMegas:Float = 0;
+	private var memoryTotal:Float = 0;
+
 	@:noCompletion private var cacheCount:Int;
 	@:noCompletion private var currentTime:Float;
 	@:noCompletion private var times:Array<Float>;
@@ -49,7 +52,6 @@ class FPS extends TextField
 		defaultTextFormat = new TextFormat("_sans", 14, color);
 		autoSize = LEFT;
 		multiline = true;
-		text = "FPS: ";
 
 		cacheCount = 0;
 		currentTime = 0;
@@ -82,15 +84,23 @@ class FPS extends TextField
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
-			text = "FPS: " + currentFPS;
-			var memoryMegas:Float = 0;
-			
-			#if openfl
-			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
-			text += "\nMemory: " + memoryMegas + " MB";
-			#end
+			text = "";
+			if (Main.fpsVar != null && text != null || text != '')
+			{
+				Main.fpsVar.visible = true;
+			}
+			if (ClientPrefs.showFPS) text += "FPS: " + currentFPS + '\n';
 
 			textColor = 0xFFFFFFFF;
+
+			#if openfl
+			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
+
+			if (memoryMegas > memoryTotal) memoryTotal = memoryMegas;
+
+			if (ClientPrefs.showMEM) text += memoryMegas + " MB / " + memoryTotal + " MB";
+			#end
+
 			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
 			{
 				textColor = 0xFFFF0000;
