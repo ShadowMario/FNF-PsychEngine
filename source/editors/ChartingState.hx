@@ -2928,17 +2928,21 @@ class ChartingState extends MusicBeatState
 				var diff:String = CoolUtil.difficulties[PlayState.storyDifficulty];
 				if (diff != null) diff = diff.toLowerCase();
 				
+				var success:Bool = false;
 				if (diff != null && diff != defaultDiff) {
 					try {
 						PlayState.SONG = Song.loadFromJson(songLower + "-" + diff, songLower);
+						success = true;
 					}
 					catch(e) {}
 				}
-				PlayState.SONG = Song.loadFromJson(songLower, songLower);
-				
-				// after loaded
-				var ind:Int = CoolUtil.lowerDifficulties.indexOf(defaultDiff);
-				if (ind != -1) PlayState.storyDifficulty = ind;
+				if (!success) {
+					PlayState.SONG = Song.loadFromJson(songLower, songLower);
+					
+					// after loaded
+					var ind:Int = CoolUtil.lowerDifficulties.indexOf(defaultDiff);
+					if (ind != -1) PlayState.storyDifficulty = ind;
+				}
 			}
 		}
 		catch(e) {
