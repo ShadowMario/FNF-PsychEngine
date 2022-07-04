@@ -84,7 +84,7 @@ class ReplaySelectState extends MusicBeatState
         
         else
         {
-            var texts:Array<String> = ['There is no replay!'];
+            var texts:Array<String> = ['There is no replay', 'for $song!'];
 
             for (i in 0...texts.length)
             {
