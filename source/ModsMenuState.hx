@@ -757,6 +757,14 @@ class ModMetadata
 				{
 					this.description = description;
 				}
+				if(name == 'Name')
+				{
+					this.name = folder;
+				}
+				if(description == 'Description')
+				{
+					this.description = "No description provided.";
+				}
 				if(colors != null && colors.length > 2)
 				{
 					this.color = FlxColor.fromRGB(colors[0], colors[1], colors[2]);
