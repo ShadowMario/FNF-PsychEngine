@@ -2720,10 +2720,10 @@ class PlayState extends MusicBeatState
 	{
 		if (FlxG.sound.music == null || vocals == null || startingSong || endingSong || finishTimer != null) return;
 
-		if (playbackRate != 1) FlxG.sound.music.pause();
+		if (playbackRate < 1) FlxG.sound.music.pause();
 		vocals.pause();
 
-		if (playbackRate == 1) {
+		if (playbackRate >= 1) {
 			FlxG.sound.music.play();
 			Conductor.songPosition = FlxG.sound.music.time;
 		} else {
