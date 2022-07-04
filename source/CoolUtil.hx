@@ -74,6 +74,59 @@ class CoolUtil
 
 		return daList;
 	}
+
+	public static function coolReplace(string:String, sub:String, by:String):String
+		return string.split(sub).join(by);
+
+	//Example: "winter-horrorland" to "Winter Horrorland". Used for replays
+	public static function coolSongFormatter(song:String):String
+    {
+        var swag:String = coolReplace(song, '-', ' ');
+        var splitSong:Array<String> = swag.split(' ');
+
+		for (i in 0...splitSong.length)
+		{
+            var firstLetter = splitSong[i].substring(0, 1);
+            var coolSong:String = coolReplace(splitSong[i], firstLetter, firstLetter.toUpperCase());
+			var splitCoolSong:Array<String> = coolSong.split('');
+
+			coolSong = Std.string(splitCoolSong[0]).toUpperCase();
+
+			for (e in 0...splitCoolSong.length)
+				coolSong += Std.string(splitCoolSong[e+1]).toLowerCase();
+			
+			coolSong = coolReplace(coolSong, 'null', '');
+
+            for (l in 0...splitSong.length)
+            {
+                var stringSong:String = Std.string(splitSong[l+1]);
+                var stringFirstLetter:String = stringSong.substring(0, 1);
+				
+				var splitStringSong = stringSong.split('');
+				stringSong = Std.string(splitStringSong[0]).toUpperCase();
+
+				for (l in 0...splitStringSong.length)
+					stringSong += Std.string(splitStringSong[l+1]).toLowerCase();
+
+				stringSong = coolReplace(stringSong, 'null', '');
+
+                coolSong += ' $stringSong';
+            }
+
+			song = coolSong.replace(' Null', '');
+            return song;
+        }
+
+        return swag;
+	}
+
+	#if sys
+	public static function coolPathArray(path:String):Array<String>
+	{
+		return FileSystem.readDirectory(FileSystem.absolutePath(path));
+	}
+	#end
+	
 	public static function listFromString(string:String):Array<String>
 	{
 		var daList:Array<String> = [];

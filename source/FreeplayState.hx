@@ -273,6 +273,7 @@ class FreeplayState extends MusicBeatState
 		var accepted = controls.ACCEPT;
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
+		var alt =  FlxG.keys.justPressed.ALT;
 
 		var shiftMult:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
@@ -316,6 +317,7 @@ class FreeplayState extends MusicBeatState
 		else if (controls.UI_RIGHT_P)
 			changeDiff(1);
 		else if (upP || downP) changeDiff();
+		#if sys else if (alt) MusicBeatState.switchState(new ReplaySelectState(songs[curSelected].songName)); #end
 
 		if (controls.BACK)
 		{

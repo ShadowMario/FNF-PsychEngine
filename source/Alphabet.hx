@@ -30,6 +30,8 @@ class Alphabet extends FlxSpriteGroup
 
 	public var text:String = "";
 
+	public var menuType(default, set):String;
+
 	var _finalText:String = "";
 	var yMulti:Float = 1;
 
@@ -348,14 +350,22 @@ class Alphabet extends FlxSpriteGroup
 		if (isMenuItem)
 		{
 			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
-
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 9.6, 0, 1);
-			y = FlxMath.lerp(y, (scaledY * yMult) + (FlxG.height * 0.48) + yAdd, lerpVal);
-			if(forceX != Math.NEGATIVE_INFINITY) {
-				x = forceX;
-			} else {
-				x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, lerpVal);
+
+			switch (menuType)
+			{
+				case 'Centered':
+					y = FlxMath.lerp(y, (scaledY * yMult) + (FlxG.height * 0.5), 0.32);
+
+				default:
+					y = FlxMath.lerp(y, (scaledY * yMult) + (FlxG.height * 0.48) + yAdd, lerpVal);
+					if(forceX != Math.NEGATIVE_INFINITY) {
+						x = forceX;
+					} else {
+						x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, lerpVal);
+					}
 			}
+
 		}
 
 		super.update(elapsed);
@@ -367,6 +377,15 @@ class Alphabet extends FlxSpriteGroup
 			typeTimer.destroy();
 		}
 		typeTimer = null;
+	}
+
+	inline function set_menuType(value:String)
+	{
+		if (value == 'Centered')
+			screenCenter(X);
+
+		menuType = value;
+		return value;
 	}
 }
 
