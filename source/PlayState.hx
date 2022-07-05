@@ -1698,7 +1698,7 @@ class PlayState extends MusicBeatState
 		{
 			case 'ugh':
 				cutsceneHandler.endTime = 12;
-//              cutsceneHandler.cutsceneTime = 12;
+                //              cutsceneHandler.cutsceneTime = 12;
 				cutsceneHandler.music = 'DISTORTO';
 				precacheList.set('wellWellWell', 'sound');
 				precacheList.set('killYou', 'sound');
@@ -1742,6 +1742,11 @@ class PlayState extends MusicBeatState
 					// We should just kill you but... what the hell, it's been a boring day... let's see what you've got!
 					tankman.animation.play('killYou', true);
 					FlxG.sound.play(Paths.sound('killYou'));
+					if(!ClientPrefs.cursing) {
+					      // It's been a boring day... let's see what you've got!
+					      tankman.animation.play('killYou', true);
+					      FlxG.sound.play(Paths.sound('killYoucensored'));
+					}
 				});
 
 			case 'guns':
@@ -4682,8 +4687,6 @@ class PlayState extends MusicBeatState
 		}
 		phillyTrain.x = FlxG.width + 200;
 		trainMoving = false;
-		// trainSound.stop();
-		// trainSound.time = 0;
 		trainCars = 8;
 		trainFinishing = false;
 		startedMoving = false;
