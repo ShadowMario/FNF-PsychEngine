@@ -37,7 +37,6 @@ class MusicBeatState extends FlxUIState
 	#if android
 	var virtualPad:FlxVirtualPad;
 	var androidControls:AndroidControls;
-
 	var trackedinputsUI:Array<FlxActionInput> = [];
 	var trackedinputsNOTES:Array<FlxActionInput> = [];
 
@@ -45,6 +44,7 @@ class MusicBeatState extends FlxUIState
 	{
 		virtualPad = new FlxVirtualPad(DPad, Action);
 		add(virtualPad);
+
 		controls.setVirtualPadUI(virtualPad, DPad, Action);
 		trackedinputsUI = controls.trackedinputsUI;
 		controls.trackedinputsUI = [];
@@ -52,8 +52,11 @@ class MusicBeatState extends FlxUIState
 
 	public function removeVirtualPad()
 	{
-		controls.removeFlxInput(trackedinputsUI);
-		remove(virtualPad);
+		if (trackedinputsUI != [])
+			controls.removeFlxInput(trackedinputsUI);
+
+		if (virtualPad != null)
+			remove(virtualPad);
 	}
 
 	public function addAndroidControls()
@@ -94,14 +97,17 @@ class MusicBeatState extends FlxUIState
 		}
 	}
 	#end
-	
+
 	override function destroy()
 	{
 		#if android
-		controls.removeFlxInput(trackedinputsNOTES);
-		controls.removeFlxInput(trackedinputsUI);
+		if (trackedinputsNOTES != [])
+			controls.removeFlxInput(trackedinputsNOTES);
+
+		if (trackedinputsUI != [])
+			controls.removeFlxInput(trackedinputsUI);
 		#end
-		
+
 		super.destroy();
 	}
 
