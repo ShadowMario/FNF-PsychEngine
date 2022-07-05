@@ -144,6 +144,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.maxValue = 10;
 		option.changeValue = 0.1;
 		addOption(option);
+		
+		var option:Option = new Option('Cursing',
+			'Gets rid of cursing thats all.',
+			'cursing',
+			'bool',
+			false);
+		addOption(option);
 
 		super();
 	}
