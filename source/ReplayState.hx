@@ -143,10 +143,10 @@ class ReplayState extends PlayState
 		spr.resetAnim = 0.2;
     }
 
-    override function endSong():Void
+    /*override function endSong():Void
     {
         MusicBeatState.switchState(new FreeplayState());
-    }
+    }*/
 
     function getNoteID(time:Float):Int
     {

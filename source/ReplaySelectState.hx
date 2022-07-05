@@ -20,6 +20,7 @@ class ReplaySelectState extends MusicBeatState
 
     var dateText:FlxText;
     var diffText:FlxText;
+    var songText:FlxText;
     
     var songName:String;
 
@@ -74,7 +75,7 @@ class ReplaySelectState extends MusicBeatState
         if (menuItems.length > 0)
             for (i in 0...menuItems.length)
             {
-                var replay:Alphabet = new Alphabet(0, (70 * i) + 30, 'Replay ${i + 1} ($song)', true, false);
+                var replay:Alphabet = new Alphabet(0, (70 * i) + 10, 'Replay ${i + 1} ($song)', true, false);
                 replay.isMenuItem = true;
                 replay.targetY = i;
                 replay.menuType = "Centered";
@@ -88,9 +89,7 @@ class ReplaySelectState extends MusicBeatState
 
             for (i in 0...texts.length)
             {
-                var replay:Alphabet = new Alphabet(0, (70 * i) + 30, texts[i], true, false);
-                replay.isMenuItem = true;
-                replay.targetY = i;
+                var replay:Alphabet = new Alphabet(0, (70 * i) + 10, texts[i], true, false);
                 replay.menuType = "Centered";
                 replay.screenCenter(X);
                 grpMenuShit.add(replay);
@@ -114,6 +113,13 @@ class ReplaySelectState extends MusicBeatState
 		diffText.borderQuality = 2;
         diffText.setFormat("VCR OSD Mono", 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(diffText);
+
+        songText = new FlxText(10, 96, 0, 'Song Name: ${songName.toUpperCase()}', 30);
+        songText.scrollFactor.set();
+        songText.borderSize = 2;
+		songText.borderQuality = 2;
+        songText.setFormat("VCR OSD Mono", 30, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(songText);
 
         super.create();
     }

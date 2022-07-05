@@ -3847,7 +3847,8 @@ class PlayState extends MusicBeatState
 					else
 						length = files.length;
 
-					File.saveContent(Paths.getPreloadPath('replays/$song ${length}.json'), ReplayState.stringify());
+					if (ClientPrefs.saveReplay)
+						File.saveContent(Paths.getPreloadPath('replays/$song ${length}.json'), ReplayState.stringify());
 				}
 				#end
 
