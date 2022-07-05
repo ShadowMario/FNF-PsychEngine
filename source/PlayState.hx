@@ -2058,12 +2058,6 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			for (tween in modchartTweens) {
-				tween.active = false;
-			}
-			for (timer in modchartTimers) {
-				timer.active = false;
-			}
 		}
 
 		super.openSubState(SubState);
@@ -2099,12 +2093,13 @@ class PlayState extends MusicBeatState
 				}
 			}
 			
-			for (tween in modchartTweens) {
-				tween.active = true;
-			}
-			for (timer in modchartTimers) {
-				timer.active = true;
-			}
+			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) {
+				tmr.active = true;
+			});
+	
+			FlxTween.globalManager.forEach(function(twn:FlxTween) {
+				twn.active = true;
+			});
 			paused = false;
 			callOnLuas('onResume', []);
 
@@ -2325,6 +2320,14 @@ class PlayState extends MusicBeatState
 				persistentUpdate = false;
 				persistentDraw = true;
 				paused = true;
+
+				FlxTimer.globalManager.forEach(function(tmr:FlxTimer) {
+					tmr.active = false;
+				});
+		
+				FlxTween.globalManager.forEach(function(twn:FlxTween) {
+					twn.active = false;
+				});
 
 				// 1 / 1000 chance for Gitaroo Man easter egg
 				/*if (FlxG.random.bool(0.1))
@@ -2646,12 +2649,13 @@ class PlayState extends MusicBeatState
 
 				persistentUpdate = false;
 				persistentDraw = false;
-				for (tween in modchartTweens) {
-					tween.active = true;
-				}
-				for (timer in modchartTimers) {
-					timer.active = true;
-				}
+				FlxTimer.globalManager.forEach(function(tmr:FlxTimer) {
+					tmr.active = true;
+				});
+		
+				FlxTween.globalManager.forEach(function(twn:FlxTween) {
+					twn.active = true;
+				});
 				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y));
 
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
