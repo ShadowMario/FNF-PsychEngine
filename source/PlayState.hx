@@ -1,12 +1,17 @@
 package;
 
-import flixel.graphics.FlxGraphic;
-#if desktop
-import Discord.DiscordClient;
-#end
+import Achievements;
+import Conductor.Rating;
+import DialogueBoxPsych;
+import FunkinLua;
+import Note.EventNote;
 import Section.SwagSection;
 import Song.SwagSong;
+import StageData;
 import WiggleEffect.WiggleEffectType;
+import animateatlas.AtlasFrameMaker;
+import editors.CharacterEditorState;
+import editors.ChartingState;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -21,9 +26,14 @@ import flixel.addons.effects.FlxTrailArea;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
+import flixel.effects.particles.FlxEmitter;
+import flixel.effects.particles.FlxParticle;
+import flixel.graphics.FlxGraphic;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxSpriteGroup;
+import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
@@ -34,6 +44,7 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
+import flixel.util.FlxSave;
 import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
@@ -42,23 +53,14 @@ import lime.utils.Assets;
 import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
+import openfl.events.KeyboardEvent;
 import openfl.filters.BitmapFilter;
 import openfl.utils.Assets as OpenFlAssets;
-import editors.ChartingState;
-import editors.CharacterEditorState;
-import flixel.group.FlxSpriteGroup;
-import flixel.input.keyboard.FlxKey;
-import Note.EventNote;
-import openfl.events.KeyboardEvent;
-import flixel.effects.particles.FlxEmitter;
-import flixel.effects.particles.FlxParticle;
-import flixel.util.FlxSave;
-import animateatlas.AtlasFrameMaker;
-import Achievements;
-import StageData;
-import FunkinLua;
-import DialogueBoxPsych;
-import Conductor.Rating;
+
+using StringTools;
+#if desktop
+import Discord.DiscordClient;
+#end
 #if sys
 import sys.FileSystem;
 #end
@@ -67,7 +69,6 @@ import sys.FileSystem;
 import vlc.MP4Handler;
 #end
 
-using StringTools;
 
 class PlayState extends MusicBeatState
 {
@@ -342,8 +343,7 @@ class PlayState extends MusicBeatState
 		rating.noteSplash = false;
 		ratingsData.push(rating);
 
-		// For the "Just the Two of Us" achievement
-		for (i in 0...keysArray.length)
+		for (i in 0...keysArray.length) // For the "Just the Two of Us" achievement
 		{
 			keysPressed.push(false);
 		}
@@ -358,7 +358,6 @@ class PlayState extends MusicBeatState
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 
-		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
 		camOther = new FlxCamera();
@@ -503,7 +502,7 @@ class PlayState extends MusicBeatState
 					stageCurtains.updateHitbox();
 					add(stageCurtains);
 				}
-				dadbattleSmokes = new FlxSpriteGroup(); //troll'd
+				dadbattleSmokes = new FlxSpriteGroup();
 
 			case 'spooky': //Week 2
 				if(!ClientPrefs.lowQuality) {
@@ -523,22 +522,30 @@ class PlayState extends MusicBeatState
 				precacheList.set('thunder_2', 'sound');
 
 			case 'philly': //Week 3
-				if(!ClientPrefs.lowQuality) {
-					var bg:BGSprite = new BGSprite('philly/sky', -100, 0, 0.1, 0.1);
-					add(bg);
-				}
+				var bg:BGSprite = new BGSprite('philly/sky', -100, 0, 0.1, 0.1);
+				add(bg);
+
+/*				if(!ClientPrefs.lowQuality) {
+				var city:BGSprite = new BGSprite('philly/city', -10, 0, 0.3, 0.3);
+				city.setGraphicSize(Std.int(city.width * 0.85));
+				city.updateHitbox();
+				add(city);
+				} */
 
 				var city:BGSprite = new BGSprite('philly/city', -10, 0, 0.3, 0.3);
 				city.setGraphicSize(Std.int(city.width * 0.85));
 				city.updateHitbox();
 				add(city);
 
-				phillyLightsColors = [0xFF31A2FD, 0xFF31FD8C, 0xFFFB33F5, 0xFFFD4531, 0xFFFBA633];
+				phillyLightsColors = [0xFF31A2FD, 0xFF31FD8C, 0xFFFB33F5, 0xFFFD4531, 0xFFFBA633, 0xFFB284BE];
 				phillyWindow = new BGSprite('philly/window', city.x, city.y, 0.3, 0.3);
 				phillyWindow.setGraphicSize(Std.int(phillyWindow.width * 0.85));
 				phillyWindow.updateHitbox();
 				add(phillyWindow);
 				phillyWindow.alpha = 0;
+//				#if windows
+//				phillyWindow.velocity.x = 666;
+//				#end
 
 				if(!ClientPrefs.lowQuality) {
 					var streetBehind:BGSprite = new BGSprite('philly/behindTrain', -40, 50);
@@ -1698,7 +1705,6 @@ class PlayState extends MusicBeatState
 		{
 			case 'ugh':
 				cutsceneHandler.endTime = 12;
-                //              cutsceneHandler.cutsceneTime = 12;
 				cutsceneHandler.music = 'DISTORTO';
 				precacheList.set('wellWellWell', 'sound');
 				precacheList.set('killYou', 'sound');
@@ -1739,14 +1745,16 @@ class PlayState extends MusicBeatState
 					camFollow.x -= 750;
 					camFollow.y -= 100;
 
-					// We should just kill you but... what the hell, it's been a boring day... let's see what you've got!
-					tankman.animation.play('killYou', true);
-					FlxG.sound.play(Paths.sound('killYou'));
-					if(!ClientPrefs.cursing) {
+				        if(!ClientPrefs.cursing) {
 					      // It's been a boring day... let's see what you've got!
 					      tankman.animation.play('killYou', true);
 					      FlxG.sound.play(Paths.sound('killYoucensored'));
 					}
+                                        else {
+					// We should just kill you but... what the hell, it's been a boring day... let's see what you've got!
+					tankman.animation.play('killYou', true);
+					FlxG.sound.play(Paths.sound('killYou'));
+                                        }
 				});
 
 			case 'guns':
@@ -4376,11 +4384,11 @@ class PlayState extends MusicBeatState
 
 		if (!boyfriend.stunned)
 		{
-			health -= 0.05 * healthLoss;
+			health -= 0.05 * healthLoss - 0.2;
 			if(instakillOnMiss)
 			{
 				vocals.volume = 0;
-				doDeathCheck(true);
+				health = 0;
 			}
 
 			if (combo > 5 && gf != null && gf.animOffsets.exists('sad'))
@@ -4397,16 +4405,25 @@ class PlayState extends MusicBeatState
 			RecalculateRating(true);
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
-			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
-			// FlxG.log.add('played imss note');
 
-			/*boyfriend.stunned = true;
+	//		boyfriend.stunned = true;
+	/*		var randomness = FlxG.random.string('true', 'false');
+				if randomness = 'true' {
+					boyfriend.stunned = true;
+					// get stunned for 1/60 of a second, makes you able to
+			    new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
+				  {
+					boyfriend.stunned = false;
+				  });
+				else
+					 boyfriend.stunned = false;
+				}
 
 			// get stunned for 1/60 of a second, makes you able to
 			new FlxTimer().start(1 / 60, function(tmr:FlxTimer)
 			{
 				boyfriend.stunned = false;
-			});*/
+			}); */
 
 			if(boyfriend.hasMissAnimations) {
 				boyfriend.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
@@ -4512,7 +4529,7 @@ class PlayState extends MusicBeatState
 				if(combo > 9999) combo = 9999;
 				popUpScore(note);
 			}
-			health += note.hitHealth * healthGain;
+			health += note.hitHealth * healthGain + 0.2;
 
 			if(!note.noAnimation) {
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
@@ -4633,7 +4650,6 @@ class PlayState extends MusicBeatState
 
 	var trainMoving:Bool = false;
 	var trainFrameTiming:Float = 0;
-
 	var trainCars:Int = 8;
 	var trainFinishing:Bool = false;
 	var trainCooldown:Int = 0;
@@ -4735,6 +4751,9 @@ class PlayState extends MusicBeatState
 				limoCorpse.visible = false;
 				limoCorpseTwo.visible = false;
 				limoKillingState = 1;
+				#if windows
+				limoMetalPole.y = limoMetalPole.y - 2;
+				#end
 
 				#if ACHIEVEMENTS_ALLOWED
 				Achievements.henchmenDeath++;
@@ -4971,7 +4990,6 @@ class PlayState extends MusicBeatState
 				returnVal = ret;
 		}
 		#end
-		//trace(event, returnVal);
 		return returnVal;
 	}
 
