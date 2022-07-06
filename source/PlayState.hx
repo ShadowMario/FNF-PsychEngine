@@ -29,6 +29,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
 import flixel.graphics.FlxGraphic;
+import flixel.graphics.FlxGraphic;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -58,6 +59,9 @@ import openfl.filters.BitmapFilter;
 import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
+#if desktop
+import Discord.DiscordClient;
+#end
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -4526,10 +4530,10 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote)
 			{
 				combo += 1;
-				if(combo > 9999) combo = 9999;
+				if(combo > 10000) combo = 9999;
 				popUpScore(note);
 			}
-			health += note.hitHealth * healthGain + 0.2;
+			health += note.hitHealth * healthGain;
 
 			if(!note.noAnimation) {
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
