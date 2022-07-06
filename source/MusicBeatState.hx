@@ -63,15 +63,15 @@ class MusicBeatState extends FlxUIState
 	{
 		androidControls = new AndroidControls();
 
-		switch (androidControls.mode)
+		switch (AndroidControls.getMode())
 		{
-			case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
-				controls.setVirtualPadNOTES(androidControls.vpad, RIGHT_FULL, NONE);
-			case DUO:
-				controls.setVirtualPadNOTES(androidControls.vpad, BOTH_FULL, NONE);
-			case HITBOX:
-				controls.setHitBox(androidControls.hbox);
-			default:
+			case 0 | 1 | 2: // RIGHT_FULL | LEFT_FULL | CUSTOM
+				controls.setVirtualPadNOTES(androidControls.virtualPad, RIGHT_FULL, NONE);
+			case 3: // BOTH_FULL
+				controls.setVirtualPadNOTES(androidControls.virtualPad, BOTH_FULL, NONE);
+			case 4: // HITBOX
+				controls.setHitBox(androidControls.hitbox);
+			case 5: // KEYBOARD
 		}
 
 		trackedinputsNOTES = controls.trackedinputsNOTES;
@@ -84,6 +84,15 @@ class MusicBeatState extends FlxUIState
 		androidControls.cameras = [camControls];
 		androidControls.visible = false;
 		add(androidControls);
+	}
+
+	public function removeAndroidControls()
+	{
+		if (trackedinputsNOTES != [])
+			controls.removeFlxInput(trackedinputsNOTES);
+
+		if (androidControls != null)
+			remove(androidControls);
 	}
 
 	public function addPadCamera()
@@ -101,6 +110,12 @@ class MusicBeatState extends FlxUIState
 	override function destroy()
 	{
 		#if android
+		if (virtualPad != null)
+			remove(virtualPad);
+
+		if (androidControls != null)
+			remove(androidControls);
+
 		if (trackedinputsNOTES != [])
 			controls.removeFlxInput(trackedinputsNOTES);
 

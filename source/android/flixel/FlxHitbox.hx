@@ -19,11 +19,6 @@ import openfl.utils.ByteArray;
  * @original author: luckydog
  * @modifications author: Saw (M.A. Jigsaw)
  */
-@:keep @:bitmap("assets/preload/images/android/hitbox.png")
-class GraphicHitboxInput extends BitmapData {}
-
-@:keep @:file("assets/preload/images/android/hitbox.xml")
-class DataHitboxInput extends #if (lime_legacy || nme) ByteArray #else ByteArrayData #end {}
 
 class FlxHitbox extends FlxSpriteGroup
 {
@@ -59,13 +54,23 @@ class FlxHitbox extends FlxSpriteGroup
 	{
 		super.destroy();
 
-		hitbox = FlxDestroyUtil.destroy(hitbox);
-		hitbox = null;
+		if (hitbox != null)
+		{
+			hitbox = FlxDestroyUtil.destroy(hitbox);
+			hitbox = null;
+		}
 
-		buttonLeft = null;
-		buttonDown = null;
-		buttonUp = null;
-		buttonRight = null;
+		if (buttonLeft != null)
+			buttonLeft = null;
+
+		if (buttonDown != null)
+			buttonDown = null;
+
+		if (buttonUp != null)
+			buttonUp = null;
+
+		if (buttonRight != null)
+			buttonRight = null;
 	}
 
 	/**
@@ -133,13 +138,6 @@ class FlxHitbox extends FlxSpriteGroup
 
 	public static function getHitboxInputFrames():FlxAtlasFrames
 	{
-		var bitmapData:BitmapData = new GraphicHitboxInput(0, 0);
-
-		#if html5 // dirty hack for openfl/openfl#682
-		Reflect.setProperty(bitmapData, "width", 1280);
-		Reflect.setProperty(bitmapData, "height", 720);
-		#end
-
-		return FlxAtlasFrames.fromSparrow(FlxGraphic.fromBitmapData(bitmapData), Std.string(new DataHitboxInput()));
+		return FlxAtlasFrames.fromSparrow('assets/android/hitbox.png', 'assets/android/hitbox.xml');
 	}
 }

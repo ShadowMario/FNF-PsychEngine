@@ -204,9 +204,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		super.drawDebug();
 
 		if (_spriteLabel != null)
-		{
 			_spriteLabel.drawDebug();
-		}
 	}
 	#end
 
@@ -240,29 +238,20 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		var overlapFound = checkTouchOverlap();
 
 		if (currentInput != null && currentInput.justReleased && overlapFound)
-		{
 			onUpHandler();
-		}
 
 		if (status != FlxButton.NORMAL && (!overlapFound || (currentInput != null && currentInput.justReleased)))
-		{
 			onOutHandler();
-		}
 	}
 
 	function checkTouchOverlap():Bool
 	{
 		var overlap = false;
 		for (camera in cameras)
-		{
 			for (touch in FlxG.touches.list)
-			{
 				if (checkInput(touch, touch, touch.justPressedPosition, camera))
-				{
 					overlap = true;
-				}
-			}
-		}
+
 		return overlap;
 	}
 
@@ -293,13 +282,9 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		else if (status == FlxButton.NORMAL)
 		{
 			if (allowSwiping && input.pressed)
-			{
 				onDownHandler();
-			}
 			else
-			{
 				onOverHandler();
-			}
 		}
 	}
 

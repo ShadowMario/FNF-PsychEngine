@@ -18,11 +18,6 @@ import openfl.utils.ByteArray;
  * @original author Ka Wing Chin
  * @modification's author: Saw (M.A. Jigsaw)
  */
-@:keep @:bitmap("assets/preload/images/android/virtualpad.png")
-class GraphicVirtualInput extends BitmapData {}
-
-@:keep @:file("assets/preload/images/android/virtualpad.xml")
-class DataVirtualInput extends #if (lime_legacy || nme) ByteArray #else ByteArrayData #end {}
 
 class FlxVirtualPad extends FlxSpriteGroup
 {
@@ -72,34 +67,34 @@ class FlxVirtualPad extends FlxSpriteGroup
 		switch (DPad)
 		{
 			case UP_DOWN:
-				dPad.add(add(buttonUp = createButton(0, FlxG.height - 255, 132, 127, 'up', 0xFF00FF00)));
-				dPad.add(add(buttonDown = createButton(0, FlxG.height - 135, 132, 127, 'down', 0xFF00FFFF)));
+				dPad.add(add(buttonUp = createButton(0, FlxG.height - 255, 132, 127, 'up')));
+				dPad.add(add(buttonDown = createButton(0, FlxG.height - 135, 132, 127, 'down')));
 			case LEFT_RIGHT:
-				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 135, 132, 127, 'left', 0xFFFF00FF)));
-				dPad.add(add(buttonRight = createButton(127, FlxG.height - 135, 132, 127, 'right', 0xFFFF0000)));
+				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 135, 132, 127, 'left')));
+				dPad.add(add(buttonRight = createButton(127, FlxG.height - 135, 132, 127, 'right')));
 			case UP_LEFT_RIGHT:
-				dPad.add(add(buttonUp = createButton(105, FlxG.height - 243, 132, 127, 'up', 0xFF00FF00)));
-				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 135, 132, 127, 'left', 0xFFFF00FF)));
-				dPad.add(add(buttonRight = createButton(207, FlxG.height - 135, 132, 127, 'right', 0xFFFF0000)));
+				dPad.add(add(buttonUp = createButton(105, FlxG.height - 243, 132, 127, 'up')));
+				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 135, 132, 127, 'left')));
+				dPad.add(add(buttonRight = createButton(207, FlxG.height - 135, 132, 127, 'right')));
 			case LEFT_FULL:
-				dPad.add(add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up', 0xFF00FF00)));
-				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left', 0xFFFF00FF)));
-				dPad.add(add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right', 0xFFFF0000)));
-				dPad.add(add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down', 0xFF00FFFF)));
+				dPad.add(add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up')));
+				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left')));
+				dPad.add(add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right')));
+				dPad.add(add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down')));
 			case RIGHT_FULL:
-				dPad.add(add(buttonUp = createButton(FlxG.width - 258, FlxG.height - 408, 132, 127, 'up', 0xFF00FF00)));
-				dPad.add(add(buttonLeft = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left', 0xFFFF00FF)));
-				dPad.add(add(buttonRight = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right', 0xFFFF0000)));
-				dPad.add(add(buttonDown = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', 0xFF00FFFF)));
+				dPad.add(add(buttonUp = createButton(FlxG.width - 258, FlxG.height - 408, 132, 127, 'up')));
+				dPad.add(add(buttonLeft = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left')));
+				dPad.add(add(buttonRight = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right')));
+				dPad.add(add(buttonDown = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down')));
 			case BOTH_FULL:
-				dPad.add(add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up', 0xFF00FF00)));
-				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left', 0xFFFF00FF)));
-				dPad.add(add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right', 0xFFFF0000)));
-				dPad.add(add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down', 0xFF00FFFF)));
-				dPad.add(add(buttonUp2 = createButton(FlxG.width - 258, FlxG.height - 408, 132, 127, 'up', 0xFF00FF00)));
-				dPad.add(add(buttonLeft2 = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left', 0xFFFF00FF)));
-				dPad.add(add(buttonRight2 = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right', 0xFFFF0000)));
-				dPad.add(add(buttonDown2 = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', 0xFF00FFFF)));
+				dPad.add(add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up')));
+				dPad.add(add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left')));
+				dPad.add(add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right')));
+				dPad.add(add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down')));
+				dPad.add(add(buttonUp2 = createButton(FlxG.width - 258, FlxG.height - 408, 132, 127, 'up')));
+				dPad.add(add(buttonLeft2 = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left')));
+				dPad.add(add(buttonRight2 = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right')));
+				dPad.add(add(buttonDown2 = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down')));
 			case NONE: // do nothing
 		}
 
@@ -179,12 +174,10 @@ class FlxVirtualPad extends FlxSpriteGroup
 		buttonUp = null;
 		buttonDown = null;
 		buttonRight = null;
-
 		buttonLeft2 = null;
 		buttonUp2 = null;
 		buttonDown2 = null;
 		buttonRight2 = null;
-
 		buttonA = null;
 		buttonB = null;
 		buttonC = null;
@@ -231,14 +224,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 
 	public static function getVirtualInputFrames():FlxAtlasFrames
 	{
-		var bitmapData:BitmapData = new GraphicVirtualInput(0, 0);
-
-		#if html5 // dirty hack for openfl/openfl#682
-		Reflect.setProperty(bitmapData, "width", 1584);
-		Reflect.setProperty(bitmapData, "height", 508);
-		#end
-
-		return FlxAtlasFrames.fromSparrow(FlxGraphic.fromBitmapData(bitmapData), Std.string(new DataVirtualInput()));
+		return FlxAtlasFrames.fromSparrow('assets/android/virtualpad.png', 'assets/android/virtualpad.xml');
 	}
 }
 

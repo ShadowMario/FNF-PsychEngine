@@ -20,12 +20,6 @@ import openfl.utils.ByteArray;
  * @modification's author: Saw (M.A. Jigsaw)
  */
 
-@:keep @:bitmap("assets/preload/images/android/joystick.png")
-class GraphicJoyStickInput extends BitmapData {}
-
-@:keep @:file("assets/preload/images/android/joystick.xml")
-class DataJoyStickInput extends #if (lime_legacy || nme) ByteArray #else ByteArrayData #end {}
-
 class FlxJoyStick extends FlxSpriteGroup
 {
 	public var status:Int = NORMAL;
@@ -103,14 +97,7 @@ class FlxJoyStick extends FlxSpriteGroup
 
 	public static function getJoyStickInputFrames():FlxAtlasFrames
 	{
-		var bitmapData:BitmapData = new GraphicJoyStickInput(0, 0);
-
-		#if html5 // dirty hack for openfl/openfl#682
-		Reflect.setProperty(bitmapData, "width", 408);
-		Reflect.setProperty(bitmapData, "height", 252);
-		#end
-
-		return FlxAtlasFrames.fromSparrow(FlxGraphic.fromBitmapData(bitmapData), Std.string(new DataJoyStickInput()));
+		return FlxAtlasFrames.fromSparrow('assets/android/joystick.png', 'assets/android/joystick.xml');
 	}
 
 	function createZone():Void
@@ -143,7 +130,6 @@ class FlxJoyStick extends FlxSpriteGroup
 	{
 		var offAll:Bool = true;
 
-		// There is no reason to get into the loop if their is already a pointer on the joystick
 		if (_currentTouch != null)
 			_tempTouches.push(_currentTouch);
 		else
@@ -154,8 +140,6 @@ class FlxJoyStick extends FlxSpriteGroup
 
 				for (joystick in _joysticks)
 				{
-					// Check whether the pointer is already taken by another joystick.
-					// TODO: check this place. This line was 'if (joystick != this && joystick._currentTouch != touch && touchInserted == false)'
 					if (joystick == this && joystick._currentTouch != touch && !touchInserted)
 					{
 						_tempTouches.push(touch);
@@ -202,9 +186,6 @@ class FlxJoyStick extends FlxSpriteGroup
 	{
 		var offAll:Bool = true;
 
-		// Use the touch to figure out the world position if it's passed in, as
-		// the screen coordinates passed in touchPoint are wrong
-		// if the control is used in a group, for example.
 		if (Touch != null)
 			TouchPoint.set(Touch.screenX, Touch.screenY);
 
