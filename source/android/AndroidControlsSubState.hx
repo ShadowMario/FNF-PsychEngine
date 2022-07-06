@@ -72,10 +72,10 @@ class AndroidControlsSubState extends FlxSubState
 		hitbox.visible = false;
 		add(hitbox);
 
-		inputvari = new FlxText(0, 50, 0, 'No Android Controls!', 32);
+		funitext = new FlxText(0, 50, 0, 'No Android Controls!', 32);
 		funitext.screenCenter();
 		funitext.visible = false;
-		add(inputvari);
+		add(funitext);
 
 		inputvari = new FlxText(0, 50, 0, '', 32);
 		inputvari.screenCenter(X);
