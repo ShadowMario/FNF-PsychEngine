@@ -38,7 +38,7 @@ class AndroidControlsSubState extends FlxSubState
 	{
 		curSelected = AndroidControls.getMode();
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromHSB(FlxG.random.int(0, 359), FlxG.random.float(0, 0.8), FlxG.random.float(0.3, 1)));
 		bg.alpha = 0;
 		bg.scrollFactor.set();
 		add(bg);
@@ -72,23 +72,27 @@ class AndroidControlsSubState extends FlxSubState
 		hitbox.visible = false;
 		add(hitbox);
 
-		funitext = new FlxText(0, 50, 0, 'No Android Controls!', 32);
-		funitext.screenCenter();
-		funitext.visible = false;
-		add(funitext);
+		inputvari = new FlxText(0, 50, 0, 'No Android Controls!', 32);
+		inputvari.setFormat(null, 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		inputvari.borderSize = 2.4;
+		inputvari.screenCenter();
+		inputvari.visible = false;
+		add(inputvari);
 
-		inputvari = new FlxText(0, 50, 0, '', 32);
+		inputvari = new FlxText(0, 100, 0, '', 32);
+		inputvari.setFormat(null, 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		inputvari.borderSize = 2.4;
 		inputvari.screenCenter(X);
 		add(inputvari);
 
-		leftArrow = new FlxSprite(inputvari.x - 60, inputvari.y);
+		leftArrow = new FlxSprite(inputvari.x - 60, inputvari.y - 50);
 		leftArrow.frames = FlxAtlasFrames.fromSparrow('assets/android/menu/arrows.png', 'assets/android/menu/arrows.xml');
 		leftArrow.animation.addByPrefix('idle', 'arrow left');
 		leftArrow.animation.addByPrefix('press', 'arrow push left');
 		leftArrow.animation.play('idle');
 		add(leftArrow);
 
-		rightArrow = new FlxSprite(inputvari.x + inputvari.width + 10, inputvari.y);
+		rightArrow = new FlxSprite(inputvari.x + inputvari.width + 10, inputvari.y - 50);
 		rightArrow.frames = FlxAtlasFrames.fromSparrow('assets/android/menu/arrows.png', 'assets/android/menu/arrows.xml');
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
 		rightArrow.animation.addByPrefix('press', 'arrow push right', 24, false);
@@ -96,27 +100,27 @@ class AndroidControlsSubState extends FlxSubState
 		add(rightArrow);
 
 		upPozition = new FlxText(10, FlxG.height - 104, 0, 'Button Up X:' + virtualPad.buttonUp.x + ' Y:' + virtualPad.buttonUp.y, 16);
-		upPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		upPozition.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		upPozition.borderSize = 2.4;
 		add(upPozition);
 
 		downPozition = new FlxText(10, FlxG.height - 84, 0, 'Button Down X:' + virtualPad.buttonDown.x + ' Y:' + virtualPad.buttonDown.y, 16);
-		downPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		downPozition.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		downPozition.borderSize = 2.4;
 		add(downPozition);
 
 		leftPozition = new FlxText(10, FlxG.height - 64, 0, 'Button Left X:' + virtualPad.buttonLeft.x + ' Y:' + virtualPad.buttonLeft.y, 16);
-		leftPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		leftPozition.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		leftPozition.borderSize = 2.4;
 		add(leftPozition);
 
 		rightPozition = new FlxText(10, FlxG.height - 44, 0, 'Button RIght x:' + virtualPad.buttonRight.x + ' Y:' + virtualPad.buttonRight.y, 16);
-		rightPozition.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		rightPozition.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		rightPozition.borderSize = 2.4;
 		add(rightPozition);
 
 		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK on your phone to get back in options menu', 16);
-		tipText.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2.4;
 		tipText.scrollFactor.set();
 		add(tipText);
@@ -167,23 +171,23 @@ class AndroidControlsSubState extends FlxSubState
 					}
 					else
 					{
-						moveButton(touch, bindButton, bindButton.x, bindButton.y);
+						moveButton(touch, bindButton);
 						positionsTexts();
 					}
 				}
 				else
 				{
 					if (virtualPad.buttonUp.justPressed)
-						moveButton(touch, virtualPad.buttonUp, virtualPad.buttonUp.x, virtualPad.buttonUp.y);
+						moveButton(touch, virtualPad.buttonUp);
 
 					if (virtualPad.buttonDown.justPressed)
-						moveButton(touch, virtualPad.buttonDown, virtualPad.buttonDown.x, virtualPad.buttonDown.y);
+						moveButton(touch, virtualPad.buttonDown);
 
 					if (virtualPad.buttonRight.justPressed)
-						moveButton(touch, virtualPad.buttonRight, virtualPad.buttonRight.x, virtualPad.buttonRight.y);
+						moveButton(touch, virtualPad.buttonRight);
 
 					if (virtualPad.buttonLeft.justPressed)
-						moveButton(touch, virtualPad.buttonLeft, virtualPad.buttonLeft.x, virtualPad.buttonLeft.y);
+						moveButton(touch, virtualPad.buttonLeft);
 				}
 			}
 		}
@@ -256,14 +260,10 @@ class AndroidControlsSubState extends FlxSubState
 		}
 	}
 
-	var startTouchPos:FlxPoint = new FlxPoint();
-
-	function moveButton(touch:FlxTouch, button:FlxButton, startX:Float, startY:Float):Void
+	function moveButton(touch:FlxTouch, button:FlxButton):Void
 	{
-		touch.getScreenPosition(FlxG.camera, startTouchPos);
-
-		button.x = Math.round((touch.x - startTouchPos.x) + startX);
-		button.y = -Math.round((touch.y - startTouchPos.y) - startY);
+		button.x = touch.x - button.getGraphicMidpoint().x;
+		button.y = touch.y - button.getGraphicMidpoint().y;
 
 		bindButton = button;
 		buttonIsTouched = true;
