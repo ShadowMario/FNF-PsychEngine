@@ -1,13 +1,9 @@
-# RIGHT NOW THE MODS FOLDER DOES NOT WORK ENTIRELY JUST YET!!!
-## THIS IS WORK IN PROGRESS!!!
-
-# QUICK AND DIRTY MOD GUIDE
-
-With the 0.2.6 update, I added a bit of a slightly nicer mod support backend.
-
-It's POLYMOD, which is made by Lars Doucet: https://github.com/larsiusprime/polymod
-
-You may have noticed that there's a new folder in the assets. MODS. Within it you will see 2 files. modList.txt, and a folder called introMod.
-modList.txt will load any folder into the game. Put the folder you want to load into a new line in modList.txt, and reboot the game.
-
-Now you may be wondering, what do I put in the folder? Well later down it'll get a bit more complicated, especially as I'll make the IN-GAME mod loader nicer.
+# HOW 2 MOD
+### Hi uh im shadow and i will teach you HOW 2 MOD!!
+STEP ONE:
+go to mods folder
+STEP 2:
+LEARN THE ENGINE
+STEP 3:
+JUST USE THE GAME FOR ALL YOUR MODDING NEEDS
+### Happy modding! and stay safe folks!
