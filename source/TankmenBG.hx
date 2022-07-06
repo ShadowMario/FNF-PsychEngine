@@ -14,7 +14,8 @@ class TankmenBG extends FlxSprite
 
 	public function new(x:Float, y:Float, facingRight:Bool)
 	{
-		tankSpeed = FlxG.random.float(0.7, 1.1);
+		tankSpeed = FlxG.random.float(0.8, 1.2);
+                trace('tankSpeed equals ' + tankSpeed);
 		goingRight = false;
 		strumTime = 0;
 		goingRight = facingRight;
