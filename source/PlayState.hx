@@ -3969,7 +3969,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(!practiceMode && !cpuControlled) {
-			songScore += daRating.score;
+			songScore += score;
 			if(!note.ratingDisabled)
 			{
 				songHits++;
