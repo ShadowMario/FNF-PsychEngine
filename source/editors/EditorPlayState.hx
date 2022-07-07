@@ -17,7 +17,6 @@ import flixel.system.FlxSound;
 import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
-import flixel.input.gamepad.FlxGamepad;
 import openfl.events.KeyboardEvent;
 import FunkinLua;
 
@@ -324,6 +323,10 @@ class EditorPlayState extends MusicBeatState
 	public var noteKillOffset:Float = 350;
 	public var spawnTime:Float = 2000;
 	override function update(elapsed:Float) {
+		isUsingGamepad = (FlxG.gamepads.numActiveGamepads > 0
+			&& (!FlxG.keys.justReleased.ANY || !FlxG.keys.pressed.ANY)
+			&& (FlxG.gamepads.anyJustReleased(ANY) || FlxG.gamepads.anyPressed(ANY)));
+
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
 			FlxG.sound.music.pause();
@@ -498,11 +501,6 @@ class EditorPlayState extends MusicBeatState
 				}
 			});
 		}
-
-		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
-		isUsingGamepad = gamepad != null
-			&& (!FlxG.keys.justReleased.ANY || !FlxG.keys.released.ANY || !FlxG.keys.justPressed.ANY || !FlxG.keys.pressed.ANY)
-			&& (gamepad.justReleased.ANY || gamepad.released.ANY || gamepad.justPressed.ANY || gamepad.pressed.ANY);
 
 		keyShit();
 
