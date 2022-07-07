@@ -72,12 +72,12 @@ class AndroidControlsSubState extends FlxSubState
 		hitbox.visible = false;
 		add(hitbox);
 
-		inputvari = new FlxText(0, 50, 0, 'No Android Controls!', 32);
-		inputvari.setFormat(null, 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		inputvari.borderSize = 2.4;
-		inputvari.screenCenter();
-		inputvari.visible = false;
-		add(inputvari);
+		funitext = new FlxText(0, 50, 0, 'No Android Controls!', 32);
+		funitext.setFormat(null, 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		funitext.borderSize = 2.4;
+		funitext.screenCenter();
+		funitext.visible = false;
+		add(funitext);
 
 		inputvari = new FlxText(0, 100, 0, '', 32);
 		inputvari.setFormat(null, 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
