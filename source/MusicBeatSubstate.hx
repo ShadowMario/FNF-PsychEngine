@@ -6,8 +6,9 @@ import flixel.FlxSubState;
 import flixel.FlxBasic;
 import flixel.FlxSprite;
 #if android
-import flixel.input.actions.FlxActionInput;
 import android.flixel.FlxVirtualPad;
+import flixel.input.actions.FlxActionInput;
+import flixel.util.FlxDestroyUtil;
 #end
 
 class MusicBeatSubstate extends FlxSubState
@@ -73,6 +74,14 @@ class MusicBeatSubstate extends FlxSubState
 		#end
 
 		super.destroy();
+
+		#if android
+		if (virtualPad != null)
+		{
+			virtualPad = FlxDestroyUtil.destroy(virtualPad);
+			virtualPad = null;
+		}
+		#end
 	}
 
 	override function update(elapsed:Float)

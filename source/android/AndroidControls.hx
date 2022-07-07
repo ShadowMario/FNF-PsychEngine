@@ -5,6 +5,7 @@ import android.flixel.FlxVirtualPad;
 import flixel.FlxG;
 import flixel.math.FlxPoint;
 import flixel.group.FlxSpriteGroup;
+import flixel.util.FlxDestroyUtil;
 
 using StringTools;
 
@@ -62,58 +63,14 @@ class AndroidControls extends FlxSpriteGroup
 
 		if (virtualPad != null)
 		{
-			remove(virtualPad);
+			virtualPad = FlxDestroyUtil.destroy(virtualPad);
 			virtualPad = null;
 		}
 
 		if (hitbox != null)
 		{
-			remove(hitbox);
+			hitbox = FlxDestroyUtil.destroy(hitbox);
 			hitbox = null;
-		}
-	}
-
-	public function resetColors():Void
-	{
-		if (virtualPad != null)
-		{
-			if (virtualPad.buttonUp != null)
-				virtualPad.buttonUp.color = 0xFF00FF00;
-
-			if (virtualPad.buttonLeft != null)
-				virtualPad.buttonLeft.color = 0xFFFF00FF;
-
-			if (virtualPad.buttonRight != null)
-				virtualPad.buttonRight.color = 0xFFFF0000;
-
-			if (virtualPad.buttonDown != null)
-				virtualPad.buttonDown.color = 0xFF00FFFF;
-
-			if (virtualPad.buttonUp2 != null)
-				virtualPad.buttonUp2.color = 0xFF00FF00;
-
-			if (virtualPad.buttonLeft2 != null)
-				virtualPad.buttonLeft2.color = 0xFFFF00FF;
-
-			if (virtualPad.buttonRight2 != null)
-				virtualPad.buttonRight2.color = 0xFFFF0000;
-
-			if (virtualPad.buttonDown2 != null)
-				virtualPad.buttonDown2.color = 0xFF00FFFF;
-		}
-		else if (hitbox != null)
-		{
-			if (hitbox.buttonLeft != null)
-				hitbox.buttonLeft.color = 0xFFFF00FF;
-
-			if (hitbox.buttonDown != null)
-				hitbox.buttonDown.color = 0xFF00FFFF;
-
-			if (hitbox.buttonLeft != null)
-				hitbox.buttonUp.color = 0xFF00FF00;
-
-			if (hitbox.buttonRight != null)
-				hitbox.buttonRight.color = 0xFFFF0000;
 		}
 	}
 

@@ -3386,10 +3386,6 @@ class PlayState extends MusicBeatState
 								who.color = FlxColor.WHITE;
 							}
 							phillyStreet.color = FlxColor.WHITE;
-
-							#if android
-							androidControls.resetColors();
-							#end
 						}
 
 					case 1: //turn on
@@ -3435,10 +3431,6 @@ class PlayState extends MusicBeatState
 
 						color.brightness *= 0.5;
 						phillyStreet.color = color;
-
-						#if android
-						androidControls.color = color;
-						#end
 
 					case 2: // spawn particles
 						if(!ClientPrefs.lowQuality)

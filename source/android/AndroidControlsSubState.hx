@@ -10,7 +10,6 @@ import flixel.group.FlxSpriteGroup;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxSave;
 import flixel.util.FlxColor;
-import flixel.math.FlxPoint;
 import flixel.input.touch.FlxTouch;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -30,7 +29,7 @@ class AndroidControlsSubState extends FlxSubState
 	var rightArrow:FlxSprite;
 	var controlitems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Hitbox', 'Keyboard'];
 	var curSelected:Int = 0;
-	var buttonIsTouched:Bool = false;
+	var buttonBinded:Bool = false;
 	var bindButton:FlxButton;
 	var resetButton:FlxButton;
 
@@ -38,8 +37,8 @@ class AndroidControlsSubState extends FlxSubState
 	{
 		curSelected = AndroidControls.getMode();
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromHSB(FlxG.random.int(0, 359), FlxG.random.float(0, 0.8), FlxG.random.float(0.3, 1)));
-		bg.alpha = 0;
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bg.alpha = 0.6;
 		bg.scrollFactor.set();
 		add(bg);
 
@@ -58,13 +57,12 @@ class AndroidControlsSubState extends FlxSubState
 			}
 		});
 		resetButton.setGraphicSize(Std.int(resetButton.width) * 3);
-		resetButton.label.setFormat(null, 16, 0x333333, "center");
-		resetButton.label.color = FlxColor.fromRGB(0, 238, 40);
-		resetButton.color = FlxColor.fromRGB(158, 158, 158);
+		resetButton.label.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, CENTER);
+		resetButton.color = FlxColor.RED;
 		resetButton.visible = false;
 		add(resetButton);
 
-		virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
+		virtualPad = new FlxVirtualPad(NONE, NONE);
 		virtualPad.visible = false;
 		add(virtualPad);
 
@@ -73,63 +71,59 @@ class AndroidControlsSubState extends FlxSubState
 		add(hitbox);
 
 		funitext = new FlxText(0, 50, 0, 'No Android Controls!', 32);
-		funitext.setFormat(null, 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		funitext.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		funitext.borderSize = 2.4;
 		funitext.screenCenter();
 		funitext.visible = false;
 		add(funitext);
 
 		inputvari = new FlxText(0, 100, 0, '', 32);
-		inputvari.setFormat(null, 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		inputvari.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		inputvari.borderSize = 2.4;
 		inputvari.screenCenter(X);
 		add(inputvari);
 
-		leftArrow = new FlxSprite(inputvari.x - 60, inputvari.y - 50);
+		leftArrow = new FlxSprite(inputvari.x - 60, inputvari.y - 25);
 		leftArrow.frames = FlxAtlasFrames.fromSparrow('assets/android/menu/arrows.png', 'assets/android/menu/arrows.xml');
 		leftArrow.animation.addByPrefix('idle', 'arrow left');
-		leftArrow.animation.addByPrefix('press', 'arrow push left');
 		leftArrow.animation.play('idle');
 		add(leftArrow);
 
-		rightArrow = new FlxSprite(inputvari.x + inputvari.width + 10, inputvari.y - 50);
+		rightArrow = new FlxSprite(inputvari.x + inputvari.width + 10, inputvari.y - 25);
 		rightArrow.frames = FlxAtlasFrames.fromSparrow('assets/android/menu/arrows.png', 'assets/android/menu/arrows.xml');
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
-		rightArrow.animation.addByPrefix('press', 'arrow push right', 24, false);
 		rightArrow.animation.play('idle');
 		add(rightArrow);
 
-		upPozition = new FlxText(10, FlxG.height - 104, 0, 'Button Up X:' + virtualPad.buttonUp.x + ' Y:' + virtualPad.buttonUp.y, 16);
-		upPozition.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		upPozition.borderSize = 2.4;
-		add(upPozition);
-
-		downPozition = new FlxText(10, FlxG.height - 84, 0, 'Button Down X:' + virtualPad.buttonDown.x + ' Y:' + virtualPad.buttonDown.y, 16);
-		downPozition.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		downPozition.borderSize = 2.4;
-		add(downPozition);
-
-		leftPozition = new FlxText(10, FlxG.height - 64, 0, 'Button Left X:' + virtualPad.buttonLeft.x + ' Y:' + virtualPad.buttonLeft.y, 16);
-		leftPozition.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		leftPozition.borderSize = 2.4;
-		add(leftPozition);
-
-		rightPozition = new FlxText(10, FlxG.height - 44, 0, 'Button RIght x:' + virtualPad.buttonRight.x + ' Y:' + virtualPad.buttonRight.y, 16);
-		rightPozition.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		rightPozition.borderSize = 2.4;
-		add(rightPozition);
-
 		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK on your phone to get back in options menu', 16);
-		tipText.setFormat(null, 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2.4;
 		tipText.scrollFactor.set();
 		add(tipText);
 
+		rightPozition = new FlxText(10, FlxG.height - 44, 0, '', 16);
+		rightPozition.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		rightPozition.borderSize = 2.4;
+		add(rightPozition);
+
+		leftPozition = new FlxText(10, FlxG.height - 64, 0, '', 16);
+		leftPozition.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		leftPozition.borderSize = 2.4;
+		add(leftPozition);
+
+		downPozition = new FlxText(10, FlxG.height - 84, 0, '', 16);
+		downPozition.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		downPozition.borderSize = 2.4;
+		add(downPozition);
+
+		upPozition = new FlxText(10, FlxG.height - 104, 0, 'Button Up X:' + virtualPad.buttonUp.x + ' Y:' + virtualPad.buttonUp.y, 16);
+		upPozition.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		upPozition.borderSize = 2.4;
+		add(upPozition);
+
 		changeSelection();
 
 		super.create();
-
-		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 	}
 
 	override function update(elapsed:Float)
@@ -147,9 +141,9 @@ class AndroidControlsSubState extends FlxSubState
 
 		super.update(elapsed);
 
+		inputvari.screenCenter(X);
 		leftArrow.x = inputvari.x - 60;
 		rightArrow.x = inputvari.x + inputvari.width + 10;
-		inputvari.screenCenter(X);
 
 		for (touch in FlxG.touches.list)
 		{
@@ -158,22 +152,17 @@ class AndroidControlsSubState extends FlxSubState
 			else if (touch.overlaps(rightArrow) && touch.justPressed)
 				changeSelection(1);
 
-			var daChoice:String = controlitems[Math.floor(curSelected)];
-
-			if (daChoice == 'Pad-Custom')
+			if (controlitems[Math.floor(curSelected)] == 'Pad-Custom')
 			{
-				if (buttonIsTouched)
+				if (buttonBinded)
 				{
-					if (bindButton.justReleased && touch.justReleased)
+					if (touch.justReleased)
 					{
-						buttonIsTouched = false;
+						buttonBinded = false;
 						bindButton = null;
 					}
 					else
-					{
 						moveButton(touch, bindButton);
-						positionsTexts();
-					}
 				}
 				else
 				{
@@ -190,6 +179,14 @@ class AndroidControlsSubState extends FlxSubState
 						moveButton(touch, virtualPad.buttonLeft);
 				}
 			}
+		}
+
+		if (virtualPad != null)
+		{
+			upPozition.text = 'Button Up X:' + virtualPad.buttonUp.x + ' Y:' + virtualPad.buttonUp.y;
+			downPozition.text = 'Button Down X:' + virtualPad.buttonDown.x + ' Y:' + virtualPad.buttonDown.y;
+			leftPozition.text = 'Button Left X:' + virtualPad.buttonLeft.x + ' Y:' + virtualPad.buttonLeft.y;
+			rightPozition.text = 'Button Right x:' + virtualPad.buttonRight.x + ' Y:' + virtualPad.buttonRight.y;
 		}
 	}
 
@@ -209,71 +206,52 @@ class AndroidControlsSubState extends FlxSubState
 		switch (daChoice)
 		{
 			case 'Pad-Right':
-				remove(virtualPad);
+				hitbox.visible = false;
+
+				virtualpad.destroy();
 				virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
 				add(virtualPad);
 			case 'Pad-Left':
-				remove(virtualPad);
+				hitbox.visible = false;
+
+				virtualpad.destroy();
 				virtualPad = new FlxVirtualPad(LEFT_FULL, NONE);
 				add(virtualPad);
 			case 'Pad-Custom':
-				remove(virtualPad);
+				hitbox.visible = false;
+
+				virtualpad.destroy();
 				virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
 				virtualPad = AndroidControls.getCustom(virtualPad);
 				add(virtualPad);
 			case 'Pad-Duo':
-				remove(virtualPad);
+				hitbox.visible = false;
+
+				virtualpad.destroy();
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(virtualPad);
 			case 'Hitbox':
+				hitbox.visible = true;
 				virtualPad.visible = false;
 			case 'Keyboard':
-				remove(virtualPad);
+				hitbox.visible = false;
 				virtualPad.visible = false;
 		}
 
-		if (daChoice == 'Hitbox')
-			hitbox.visible = true;
-		else
-			hitbox.visible = false;
+		funitext.visible = daChoice == 'Keyboard';
 
-		if (daChoice == 'Keyboard')
-			funitext.visible = true;
-		else
-			funitext.visible = false;
-
-		if (daChoice == 'Pad-Custom')
-		{
-			resetButton.visible = true;
-			upPozition.visible = true;
-			downPozition.visible = true;
-			leftPozition.visible = true;
-			rightPozition.visible = true;
-		}
-		else
-		{
-			resetButton.visible = false;
-			upPozition.visible = false;
-			downPozition.visible = false;
-			leftPozition.visible = false;
-			rightPozition.visible = false;
-		}
+		resetButton.visible = daChoice == 'Pad-Custom';
+		upPozition.visible = daChoice == 'Pad-Custom';
+		downPozition.visible = daChoice == 'Pad-Custom';
+		leftPozition.visible = daChoice == 'Pad-Custom';
+		rightPozition.visible = daChoice == 'Pad-Custom';
 	}
 
 	function moveButton(touch:FlxTouch, button:FlxButton):Void
 	{
-		button.x = touch.x - button.getGraphicMidpoint().x;
-		button.y = touch.y - button.getGraphicMidpoint().y;
-
+		button.x = touch.x - touch.justPressedPosition.x;
+		button.y = touch.y - touch.justPressedPosition.y;
 		bindButton = button;
-		buttonIsTouched = true;
-	}
-
-	function positionsTexts():Void
-	{
-		upPozition.text = 'Button Up X:' + virtualPad.buttonUp.x + ' Y:' + virtualPad.buttonUp.y;
-		downPozition.text = 'Button Down X:' + virtualPad.buttonDown.x + ' Y:' + virtualPad.buttonDown.y;
-		leftPozition.text = 'Button Left X:' + virtualPad.buttonLeft.x + ' Y:' + virtualPad.buttonLeft.y;
-		rightPozition.text = 'Button Right x:' + virtualPad.buttonRight.x + ' Y:' + virtualPad.buttonRight.y;
+		buttonBinded = true;
 	}
 }
