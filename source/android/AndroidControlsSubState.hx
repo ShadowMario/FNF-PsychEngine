@@ -116,7 +116,7 @@ class AndroidControlsSubState extends FlxSubState
 		downPozition.borderSize = 2.4;
 		add(downPozition);
 
-		upPozition = new FlxText(10, FlxG.height - 104, 0, 'Button Up X:' + virtualPad.buttonUp.x + ' Y:' + virtualPad.buttonUp.y, 16);
+		upPozition = new FlxText(10, FlxG.height - 104, 0, '', 16);
 		upPozition.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		upPozition.borderSize = 2.4;
 		add(upPozition);
