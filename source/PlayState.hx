@@ -2742,6 +2742,10 @@ class PlayState extends MusicBeatState
 		}*/
 		callOnLuas('onUpdate', [elapsed]);
 
+		isUsingGamepad = (FlxG.gamepads.numActiveGamepads > 0
+			&& (!FlxG.keys.justReleased.ANY || !FlxG.keys.pressed.ANY)
+			&& (FlxG.gamepads.anyJustReleased(ANY) || FlxG.gamepads.anyPressed(ANY)));
+
 		switch (curStage)
 		{
 			case 'tank':
@@ -3025,11 +3029,6 @@ class PlayState extends MusicBeatState
 				unspawnNotes.splice(index, 1);
 			}
 		}
-
-		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
-		isUsingGamepad = gamepad != null
-			&& (!FlxG.keys.justReleased.ANY || !FlxG.keys.released.ANY || !FlxG.keys.justPressed.ANY || !FlxG.keys.pressed.ANY)
-			&& (gamepad.justReleased.ANY || gamepad.released.ANY || gamepad.justPressed.ANY || gamepad.pressed.ANY);
 
 		if (generatedMusic)
 		{
