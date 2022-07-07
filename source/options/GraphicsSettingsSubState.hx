@@ -44,6 +44,14 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			false); //Default value
 		addOption(option);
 
+        //Cool simple menu lmao
+        var option:Option = new Option('Simple Main Menu',
+			'If checked, disables all menu details and makes it more simple, \n This should decrease loading times for the Main Menu', 
+			'lowEndMode', 
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Anti-Aliasing',
 			'If unchecked, disables anti-aliasing, increases performance\nat the cost of sharper visuals.',
 			'globalAntialiasing',
