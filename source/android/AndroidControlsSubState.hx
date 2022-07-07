@@ -183,10 +183,17 @@ class AndroidControlsSubState extends FlxSubState
 
 		if (virtualPad != null)
 		{
-			upPozition.text = 'Button Up X:' + virtualPad.buttonUp.x + ' Y:' + virtualPad.buttonUp.y;
-			downPozition.text = 'Button Down X:' + virtualPad.buttonDown.x + ' Y:' + virtualPad.buttonDown.y;
-			leftPozition.text = 'Button Left X:' + virtualPad.buttonLeft.x + ' Y:' + virtualPad.buttonLeft.y;
-			rightPozition.text = 'Button Right x:' + virtualPad.buttonRight.x + ' Y:' + virtualPad.buttonRight.y;
+			if (virtualPad.buttonUp != null)
+				upPozition.text = 'Button Up X:' + virtualPad.buttonUp.x + ' Y:' + virtualPad.buttonUp.y;
+
+			if (virtualPad.buttonDown != null)
+				downPozition.text = 'Button Down X:' + virtualPad.buttonDown.x + ' Y:' + virtualPad.buttonDown.y;
+
+			if (virtualPad.buttonLeft != null)
+				leftPozition.text = 'Button Left X:' + virtualPad.buttonLeft.x + ' Y:' + virtualPad.buttonLeft.y;
+
+			if (virtualPad.buttonRight != null)
+				rightPozition.text = 'Button Right x:' + virtualPad.buttonRight.x + ' Y:' + virtualPad.buttonRight.y;
 		}
 	}
 
@@ -207,26 +214,21 @@ class AndroidControlsSubState extends FlxSubState
 		{
 			case 'Pad-Right':
 				hitbox.visible = false;
-
 				virtualPad.destroy();
 				virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
 				add(virtualPad);
 			case 'Pad-Left':
 				hitbox.visible = false;
-
 				virtualPad.destroy();
 				virtualPad = new FlxVirtualPad(LEFT_FULL, NONE);
 				add(virtualPad);
 			case 'Pad-Custom':
 				hitbox.visible = false;
-
 				virtualPad.destroy();
-				virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
-				virtualPad = AndroidControls.getCustom(virtualPad);
+				virtualPad = AndroidControls.getCustom(new FlxVirtualPad(RIGHT_FULL, NONE));
 				add(virtualPad);
 			case 'Pad-Duo':
 				hitbox.visible = false;
-
 				virtualPad.destroy();
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(virtualPad);
@@ -239,7 +241,6 @@ class AndroidControlsSubState extends FlxSubState
 		}
 
 		funitext.visible = daChoice == 'Keyboard';
-
 		resetButton.visible = daChoice == 'Pad-Custom';
 		upPozition.visible = daChoice == 'Pad-Custom';
 		downPozition.visible = daChoice == 'Pad-Custom';
