@@ -501,10 +501,9 @@ class EditorPlayState extends MusicBeatState
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 		isUsingGamepad = gamepad != null
-				&& (!FlxG.keys.justReleased.ANY || !FlxG.keys.released.ANY)
-				&& (!FlxG.keys.justPressed.ANY || !FlxG.keys.pressed.ANY)
-				&& (!gamepad.justReleased.ANY || !gamepad.released.ANY)
-				&& (gamepad.justPressed.ANY || gamepad.pressed.ANY);
+			&& (!FlxG.keys.justReleased.ANY || !FlxG.keys.released.ANY || !FlxG.keys.justPressed.ANY || !FlxG.keys.pressed.ANY)
+			&& (gamepad.justReleased.ANY || gamepad.released.ANY || gamepad.justPressed.ANY || gamepad.pressed.ANY);
+
 		keyShit();
 
 		scoreTxt.text = 'Hits: ' + songHits + ' | Misses: ' + songMisses;
