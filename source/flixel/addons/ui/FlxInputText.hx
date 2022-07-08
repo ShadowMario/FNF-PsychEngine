@@ -480,7 +480,7 @@ class FlxInputText extends FlxText
 	/**
 	 * Inserts a substring into a string at a specific index
 	 *
-	 * @param	Insert			The string to have something inserted into
+	 * @param	Original			The string to have something inserted into
 	 * @param	Insert			The string to insert
 	 * @param	Index			The index to insert at
 	 * @return					Returns the joined string for chaining.
