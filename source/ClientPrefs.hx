@@ -26,7 +26,7 @@ class ClientPrefs {
 		'arrowHSV' => [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],	// Array<Array<Int>>
 		'imagesPersist' => false,									// Bool
 		'ghostTapping' => true,										// Bool
-		'timeBarType' => 'Time Left',								// Bool
+		'timeBarType' => 'Time Left',								// String
 		'scoreZoom' => true,										// Bool
 		'noReset' => false,											// Bool
 		'healthBarAlpha' => 1,										// Float
@@ -60,8 +60,9 @@ class ClientPrefs {
 			reloadControls();
 		}
 	];
-	// Flixel data to load, i.e 'muted' or 'volume'
+	// Flixel data to load, i.e 'mute' or 'volume'
 	public static var flixelData:Map<String, String> = [
+		// FlxG.save.data.*	FlxG.sound.*
 		'volume' => 'volume',
 		'mute' => 'muted'
 	];
