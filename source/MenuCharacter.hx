@@ -37,7 +37,7 @@ class MenuCharacter extends FlxSprite
 		if(character == this.character) return;
 
 		this.character = character;
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = ClientPrefs.getPref('globalAntialiasing');
 		visible = true;
 
 		var dontPlayAnim:Bool = false;
@@ -71,7 +71,7 @@ class MenuCharacter extends FlxSprite
 				}
 				rawJson = Assets.getText(path);
 				#end
-				
+
 				var charFile:MenuCharacterFile = cast Json.parse(rawJson);
 				frames = Paths.getSparrowAtlas('menucharacters/' + charFile.image);
 				animation.addByPrefix('idle', charFile.idle_anim, 24);

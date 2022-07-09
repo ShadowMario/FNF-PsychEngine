@@ -64,7 +64,7 @@ class FunkinLua {
 	#if hscript
 	public static var haxeInterp:Interp = null;
 	#end
-	
+
 	public function new(script:String) {
 		#if LUA_ALLOWED
 		lua = LuaL.newstate();
@@ -176,19 +176,19 @@ class FunkinLua {
 		set('gfName', PlayState.SONG.gfVersion);
 
 		// Some settings, no jokes
-		set('downscroll', ClientPrefs.downScroll);
-		set('middlescroll', ClientPrefs.middleScroll);
-		set('framerate', ClientPrefs.framerate);
-		set('ghostTapping', ClientPrefs.ghostTapping);
-		set('hideHud', ClientPrefs.hideHud);
-		set('timeBarType', ClientPrefs.timeBarType);
-		set('scoreZoom', ClientPrefs.scoreZoom);
-		set('cameraZoomOnBeat', ClientPrefs.camZooms);
-		set('flashingLights', ClientPrefs.flashing);
-		set('noteOffset', ClientPrefs.noteOffset);
-		set('healthBarAlpha', ClientPrefs.healthBarAlpha);
-		set('noResetButton', ClientPrefs.noReset);
-		set('lowQuality', ClientPrefs.lowQuality);
+		set('downscroll', ClientPrefs.getPref('downScroll'));
+		set('middlescroll', ClientPrefs.getPref('middleScroll'));
+		set('framerate', ClientPrefs.getPref('framerate'));
+		set('ghostTapping', ClientPrefs.getPref('ghostTapping'));
+		set('hideHud', ClientPrefs.getPref('hideHud'));
+		set('timeBarType', ClientPrefs.getPref('timeBarType'));
+		set('scoreZoom', ClientPrefs.getPref('scoreZoom'));
+		set('cameraZoomOnBeat', ClientPrefs.getPref('camZooms'));
+		set('flashingLights', ClientPrefs.getPref('flashing'));
+		set('noteOffset', ClientPrefs.getPref('noteOffset'));
+		set('healthBarAlpha', ClientPrefs.getPref('healthBarAlpha'));
+		set('noResetButton', ClientPrefs.getPref('noReset'));
+		set('lowQuality', ClientPrefs.getPref('lowQuality'));
 		set('scriptName', scriptName);
 
 		#if windows
@@ -1438,7 +1438,7 @@ class FunkinLua {
 			{
 				leSprite.loadGraphic(Paths.image(image));
 			}
-			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+			leSprite.antialiasing = ClientPrefs.getPref('globalAntialiasing');
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
@@ -1448,7 +1448,7 @@ class FunkinLua {
 			var leSprite:ModchartSprite = new ModchartSprite(x, y);
 
 			loadFrames(leSprite, image, spriteType);
-			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+			leSprite.antialiasing = ClientPrefs.getPref('globalAntialiasing');
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 		});
 
@@ -2043,7 +2043,7 @@ class FunkinLua {
 			if (text5 == null) text5 = '';
 			luaTrace('' + text1 + text2 + text3 + text4 + text5, true, false);
 		});
-		
+
 		Lua_helper.add_callback(lua, "close", function() {
 			closed = true;
 			return closed;
@@ -2738,7 +2738,7 @@ class FunkinLua {
 			if(lua == null) return Function_Continue;
 
 			Lua.getglobal(lua, func);
-			
+
 			for(arg in args) {
 				Convert.toLua(lua, arg);
 			}
@@ -2854,7 +2854,7 @@ class ModchartSprite extends FlxSprite
 	public function new(?x:Float = 0, ?y:Float = 0)
 	{
 		super(x, y);
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = ClientPrefs.getPref('globalAntialiasing');
 	}
 }
 

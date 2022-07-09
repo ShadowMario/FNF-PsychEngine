@@ -26,7 +26,7 @@ class AttachedSprite extends FlxSprite
 		} else if(file != null) {
 			loadGraphic(Paths.image(file));
 		}
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = ClientPrefs.getPref('globalAntialiasing');
 		scrollFactor.set();
 	}
 
@@ -44,7 +44,7 @@ class AttachedSprite extends FlxSprite
 			if(copyAlpha)
 				alpha = sprTracker.alpha * alphaMult;
 
-			if(copyVisible) 
+			if(copyVisible)
 				visible = sprTracker.visible;
 		}
 	}
