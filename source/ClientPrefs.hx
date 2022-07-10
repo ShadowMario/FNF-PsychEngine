@@ -161,7 +161,7 @@ class ClientPrefs {
 	public static function loadPrefs() {
 		var save:Dynamic = FlxG.save.data;
 		for (setting in prefs.keys()) {
-			var value:Dynamic = Reflect.field(save, setting);
+			var value:Dynamic = Reflect.getProperty(save, setting);
 			if (value != null) {
 				prefs.set(setting, value);
 				if (loadFunctions.exists(setting)) loadFunctions.get(setting)(value); // Call the load function
