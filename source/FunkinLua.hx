@@ -697,6 +697,10 @@ class FunkinLua {
 			}
 		});
 
+		Lua_helper.add_callback(lua, "getPref", function(pref:String, defaultValue:Dynamic) {
+			return ClientPrefs.getPref(pref, defaultValue);
+		});
+
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
 			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
