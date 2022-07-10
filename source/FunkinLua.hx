@@ -697,7 +697,7 @@ class FunkinLua {
 			}
 		});
 
-		Lua_helper.add_callback(lua, "getPref", function(pref:String, defaultValue:Dynamic) {
+		Lua_helper.add_callback(lua, "getPref", function(pref:String, ?defaultValue:Dynamic) {
 			return ClientPrefs.getPref(pref, defaultValue);
 		});
 
