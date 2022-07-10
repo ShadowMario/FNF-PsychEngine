@@ -8,6 +8,7 @@ import llua.Convert;
 import animateatlas.AtlasFrameMaker;
 import flixel.FlxG;
 import flixel.addons.effects.FlxTrail;
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
@@ -646,7 +647,7 @@ class FunkinLua {
 			}
 			#end
 		});
-
+new Blur
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
@@ -2446,7 +2447,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "stringEndsWith", function(str:String, end:String) {
 			return str.endsWith(end);
 		});
-
+		
+		new 
 		call('onCreate', []);
 		#end
 	}
@@ -2454,6 +2456,8 @@ class FunkinLua {
 	#if hscript
 	public function initHaxeInterp()
 	{
+		FlxG.camera.fr
+		FlxSprite().
 		if(haxeInterp == null)
 		{
 			haxeInterp = new Interp();
@@ -2486,6 +2490,7 @@ class FunkinLua {
 
 	public static function setVarInArray(instance:Dynamic, variable:String, value:Dynamic):Any
 	{
+		FlxSprite().pix
 		var shit:Array<String> = variable.split('[');
 		if(shit.length > 1)
 		{
@@ -2553,6 +2558,8 @@ class FunkinLua {
 
 	function loadFrames(spr:FlxSprite, image:String, spriteType:String)
 	{
+		
+		new FlxAtlasFrames.
 		switch(spriteType.toLowerCase().trim())
 		{
 			case "texture" | "textureatlas" | "tex":
