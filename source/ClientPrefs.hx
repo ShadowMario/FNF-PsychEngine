@@ -1,28 +1,27 @@
 package;
 
-import flixel.FlxG;
-import flixel.util.FlxSave;
-import flixel.input.keyboard.FlxKey;
-import flixel.graphics.FlxGraphic;
 import Controls;
+import flixel.FlxG;
+import flixel.input.keyboard.FlxKey;
+import flixel.util.FlxSave;
 
 class ClientPrefs {
 	// A map of every user-made preference
 	public static var prefs:Map<String, Dynamic> = [
-		'downScroll' => false, 										// Bool
-		'middleScroll' => false, 									// Bool
-		'opponentStrums' => true, 									// Bool
-		'showFPS' => true, 											// Bool
-		'flashing' => true, 										// Bool
+		'downScroll' => false,										// Bool
+		'middleScroll' => false,									// Bool
+		'opponentStrums' => true,									// Bool
+		'showFPS' => true,											// Bool
+		'flashing' => true,											// Bool
 		'globalAntialiasing' => true,								// Bool
 		'noteSplashes' => true,										// Bool
-		'lowQuality' => false, 										// Bool
-		'framerate' => 60, 											// Int
-		'cursing' => true, 											// Bool
-		'violence' => true, 										// Bool
-		'camZooms' => true, 										// Bool
-		'hideHud' => false, 										// Bool
-		'noteOffset' => 0, 											// Int
+		'lowQuality' => false,										// Bool
+		'framerate' => 60,											// Int
+		'cursing' => true,											// Bool
+		'violence' => true,											// Bool
+		'camZooms' => true,											// Bool
+		'hideHud' => false,											// Bool
+		'noteOffset' => 0,											// Int
 		'arrowHSV' => [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],	// Array<Array<Int>>
 		'imagesPersist' => false,									// Bool
 		'ghostTapping' => true,										// Bool
@@ -46,7 +45,6 @@ class ClientPrefs {
 	public static var loadFunctions:Map<String, (Dynamic) -> Void> = [
 		'showFPS' => function(showFPS:Bool) { if (Main.fpsVar != null) Main.fpsVar.visible = showFPS; },
 		'framerate' => function(framerate:Int) {
-			// trace('framerate $framerate');
 			if (framerate > FlxG.drawFramerate) {
 				FlxG.updateFramerate = framerate;
 				FlxG.drawFramerate = framerate;
@@ -56,7 +54,6 @@ class ClientPrefs {
 			}
 		},
 		'customControls' => function(controls:Map<String, Array<FlxKey>>) {
-			// trace('reload controls');
 			reloadControls();
 		}
 	];
@@ -134,14 +131,8 @@ class ClientPrefs {
 	public static function saveSettings() {
 		var save:Dynamic = FlxG.save.data;
 
-		for (setting => value in prefs)
-		{
-			// trace('saving $setting!');
-			Reflect.setProperty(save, setting, value);
-		}
-		for (savedAs => map in mapData)
-		{
-			// trace('saving map $savedAs as ${map[1]}!');
+		for (setting => value in prefs) Reflect.setProperty(save, setting, value);
+		for (savedAs => map in mapData) {
 			if (!separateSaves.contains(savedAs))
 				Reflect.setProperty(save, savedAs, Reflect.getProperty(map[0], map[1]));
 		}
@@ -151,16 +142,12 @@ class ClientPrefs {
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', 'ninjamuffin99'); //Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 
-		for (name in separateSaves)
-		{
-			// trace('saving $name in separate save!');
-			if (prefs.exists(name))
-			{
+		for (name in separateSaves) {
+			if (prefs.exists(name)) {
 				Reflect.setProperty(save.data, name, prefs.get(name));
 				continue;
 			}
-			if (mapData.exists(name))
-			{
+			if (mapData.exists(name)) {
 				var map:Array<Dynamic> = mapData.get(name);
 				Reflect.setProperty(save.data, name, Reflect.getProperty(map[0], map[1]));
 				continue;
@@ -173,37 +160,25 @@ class ClientPrefs {
 
 	public static function loadPrefs() {
 		var save:Dynamic = FlxG.save.data;
-		for (setting => _ in prefs) // _ is unused
-		{
-			var value:Dynamic = Reflect.getProperty(save, setting);
-			if (value != null)
-			{
-				// trace('loading $setting!');
-
+		for (setting in prefs.keys()) {
+			var value:Dynamic = Reflect.field(save, setting);
+			if (value != null) {
 				prefs.set(setting, value);
 				if (loadFunctions.exists(setting)) loadFunctions.get(setting)(value); // Call the load function
 			}
 		}
 		// flixel automatically saves your volume!
-		for (setting => name in flixelData)
-		{
-			// trace('loading flixel $setting!');
-
+		for (setting => name in flixelData) {
 			var value:Dynamic = Reflect.getProperty(save, setting);
 			if (value != null) Reflect.setProperty(FlxG.sound, name, value);
 		}
 		// This needs to be loaded differently
-		for (savedAs => map in mapData)
-		{
-			if (!separateSaves.contains(savedAs))
-			{
+		for (savedAs => map in mapData) {
+			if (!separateSaves.contains(savedAs)) {
 				var data:Map<Dynamic, Dynamic> = Reflect.getProperty(save, savedAs);
-				if (data != null)
-				{
-					// trace('loading map $savedAs as ${map[1]}!');
+				if (data != null) {
 					var loadTo:Dynamic = Reflect.getProperty(map[0], map[1]);
-					for (name => value in data)
-					{
+					for (name => value in data) {
 						if (loadTo.exists(name))
 							loadTo.set(name, value);
 					}
@@ -214,27 +189,20 @@ class ClientPrefs {
 
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', 'ninjamuffin99');
-		if (save != null)
-		{
-			for (name in separateSaves)
-			{
+		if (save != null) {
+			for (name in separateSaves) {
 				var data:Dynamic = Reflect.getProperty(save.data, name);
 				if (data != null)
 				{
-					// trace('loading $name in separate save!');
-					if (prefs.exists(name))
-					{
+					if (prefs.exists(name)) {
 						Reflect.setProperty(prefs, name, data);
 						continue;
 					}
-					if (mapData.exists(name))
-					{
+					if (mapData.exists(name)) {
 						var map:Array<Dynamic> = mapData.get(name);
 						var loadTo:Dynamic = Reflect.getProperty(map[0], map[1]);
 
-						// trace('loading map $name as ${map[1]}!');
-						for (name => value in cast(data, Map<Dynamic, Dynamic>))
-						{
+						for (name => value in cast(data, Map<Dynamic, Dynamic>)) {
 							if (loadTo.exists(name))
 								loadTo.set(name, value);
 						}
@@ -247,15 +215,14 @@ class ClientPrefs {
 	}
 
 	inline public static function getGameplaySetting(name:String, defaultValue:Dynamic):Dynamic {
-		return /*PlayState.isStoryMode ? defaultValue : */ (gameplaySettings.exists(name) ? gameplaySettings.get(name) : defaultValue);
+		return gameplaySettings.exists(name) ? gameplaySettings.get(name) : defaultValue;
 	}
 	inline public static function getPref(name:String, ?defaultValue:Dynamic):Dynamic {
 		if (prefs.exists(name)) return prefs.get(name);
 		return defaultValue;
 	}
 
-	public static function reloadControls()
-	{
+	public static function reloadControls() {
 		PlayerSettings.player1.controls.setKeyboardScheme(KeyboardScheme.Solo);
 
 		TitleState.muteKeys = copyKey(keyBinds.get('volume_mute'));
@@ -268,13 +235,14 @@ class ClientPrefs {
 	}
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey> {
 		var copiedArray:Array<FlxKey> = arrayToCopy.copy();
-		var i:Int = 0;
+
 		var len:Int = copiedArray.length;
+		var i:Int = 0;
 
 		while (i < len) {
-			if(copiedArray[i] == NONE) {
+			if (copiedArray[i] == NONE) {
 				copiedArray.remove(NONE);
-				--i;
+				i--;
 			}
 			i++;
 			len = copiedArray.length;
