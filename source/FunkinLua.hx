@@ -700,6 +700,9 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "getPref", function(pref:String, ?defaultValue:Dynamic) {
 			return ClientPrefs.getPref(pref, defaultValue);
 		});
+		Lua_helper.add_callback(lua, "setPref", function(pref:String, ?value:Dynamic = null) {
+			ClientPrefs.prefs.set(pref, value);
+		});
 
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
 			@:privateAccess
