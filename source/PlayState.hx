@@ -4581,11 +4581,11 @@ class PlayState extends MusicBeatState
 		var hue:Float = 0;
 		var sat:Float = 0;
 		var brt:Float = 0;
-		if (data > -1 && data < ClientPrefs.arrowHSV.length)
+		if (data > -1 && data < arrowHSV.length)
 		{
-			hue = ClientPrefs.arrowHSV[data][0] / 360;
-			sat = ClientPrefs.arrowHSV[data][1] / 100;
-			brt = ClientPrefs.arrowHSV[data][2] / 100;
+			hue = arrowHSV[data][0] / 360;
+			sat = arrowHSV[data][1] / 100;
+			brt = arrowHSV[data][2] / 100;
 			if(note != null) {
 				skin = note.noteSplashTexture;
 				hue = note.noteSplashHue;
