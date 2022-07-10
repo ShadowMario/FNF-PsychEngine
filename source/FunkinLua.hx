@@ -781,6 +781,14 @@ class FunkinLua {
 				}
 				return getVarInArray(coverMeInPiss, killMe[killMe.length-1]);
 			}
+			switch (classVar) // Legacy support
+			{
+				case 'ClientPrefs':
+				{
+					var pref:Dynamic = ClientPrefs.getPref(variable);
+					if (pref != null) return pref;
+				}
+			}
 			return getVarInArray(Type.resolveClass(classVar), variable);
 		});
 		Lua_helper.add_callback(lua, "setPropertyFromClass", function(classVar:String, variable:String, value:Dynamic) {
