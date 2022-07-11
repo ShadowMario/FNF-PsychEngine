@@ -4955,11 +4955,8 @@ class PlayState extends MusicBeatState
 			if(ret == FunkinLua.Function_StopLua && !ignoreStops)
 				break;
 	
-			// https://github.com/ShadowMario/FNF-PsychEngine/pull/9392
-			// had to do this because there is a bug in haxe where Stop != Continue doesnt work
-			var bool:Bool = ret == FunkinLua.Function_Continue;
-			if(!bool)
-				returnVal = cast ret;
+			if(ret != FunkinLua.Function_Continue)
+				returnVal = ret;
 		}
 		#end
 		//trace(event, returnVal);
