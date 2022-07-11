@@ -19,7 +19,6 @@ import openfl.utils.ByteArray;
  * @original author Ka Wing Chin
  * @modification's author: Saw (M.A. Jigsaw)
  */
-
 class FlxJoyStick extends FlxSpriteGroup
 {
 	public var status:Int = NORMAL;
@@ -46,12 +45,12 @@ class FlxJoyStick extends FlxSpriteGroup
 	var _amount:Float = 0;
 	var _ease:Float;
 
-	public function new(y:Float = 0, y:Float = 0, radius:Float = 0, ease:Float = 0.25)
+	public function new(X:Float = 0, Y:Float = 0, Radius:Float = 0, Ease:Float = 0.25)
 	{
-		super();
+		super(X, Y);
 
-		_radius = radius;
-		_ease = FlxMath.bound(ease, 0, 60 / FlxG.updateFramerate);
+		_radius = Radius;
+		_ease = FlxMath.bound(Ease, 0, 60 / FlxG.updateFramerate);
 
 		_joysticks.push(this);
 
@@ -60,17 +59,13 @@ class FlxJoyStick extends FlxSpriteGroup
 		createBase();
 		createThumb();
 
-		this.x = x;
-		this.y = y;
-
 		scrollFactor.set();
 		moves = false;
 	}
 
 	function createBase():Void
 	{
-		base = new FlxSprite(0, 0);
-		base.loadGraphic(FlxGraphic.fromFrame(getJoyStickInputFrames().getByName('base')));
+		base = new FlxSprite(0, 0).loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow('assets/android/joystick.png', 'assets/android/joystick.xml').getByName('base')));
 		base.resetSizeFromFrame();
 		base.x += -base.width * 0.5;
 		base.y += -base.height * 0.5;
@@ -84,20 +79,16 @@ class FlxJoyStick extends FlxSpriteGroup
 
 	function createThumb():Void
 	{
-		thumb = new FlxSprite(0, 0);
-		thumb.loadGraphic(FlxGraphic.fromFrame(getJoyStickInputFrames().getByName('thumb')));
+		thumb = new FlxSprite(0, 0).loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow('assets/android/joystick.png', 'assets/android/joystick.xml').getByName('thumb')));
 		thumb.resetSizeFromFrame();
+		thumb.x += -thumb.width * 0.5;
+		thumb.y += -thumb.height * 0.5;
 		thumb.scrollFactor.set();
 		thumb.solid = false;
 		#if FLX_DEBUG
 		thumb.ignoreDrawDebug = true;
 		#end
 		add(thumb);
-	}
-
-	public static function getJoyStickInputFrames():FlxAtlasFrames
-	{
-		return FlxAtlasFrames.fromSparrow('assets/android/joystick.png', 'assets/android/joystick.xml');
 	}
 
 	function createZone():Void

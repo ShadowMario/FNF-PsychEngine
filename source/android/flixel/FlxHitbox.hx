@@ -14,12 +14,10 @@ import openfl.utils.ByteArray;
 
 /**
  * A hitbox.
- * It's easy to set the callbacks and to customize the layout.
+ * It's easy to customize the layout.
  *
- * @original author: luckydog
- * @modifications author: Saw (M.A. Jigsaw)
+ * @author: Saw (M.A. Jigsaw)
  */
-
 class FlxHitbox extends FlxSpriteGroup
 {
 	public var buttonLeft:FlxButton;
@@ -42,53 +40,41 @@ class FlxHitbox extends FlxSpriteGroup
 		scrollFactor.set();
 
 		hitbox = new FlxSpriteGroup();
-		hitbox.scrollFactor.set();
-
 		hitbox.add(add(buttonLeft = createHitbox(0, 0, 'left', 0xFFFF00FF)));
 		hitbox.add(add(buttonDown = createHitbox(FlxG.width / 4, 0, 'down', 0xFF00FFFF)));
 		hitbox.add(add(buttonUp = createHitbox(FlxG.width / 2, 0, 'up', 0xFF00FF00)));
 		hitbox.add(add(buttonRight = createHitbox((FlxG.width / 2) + (FlxG.width / 4), 0, 'right', 0xFFFF0000)));
+		hitbox.scrollFactor.set();
 	}
 
 	override function destroy()
 	{
 		super.destroy();
 
-		if (hitbox != null)
-		{
-			hitbox = FlxDestroyUtil.destroy(hitbox);
-			hitbox = null;
-		}
-
-		if (buttonLeft != null)
-			buttonLeft = null;
-
-		if (buttonDown != null)
-			buttonDown = null;
-
-		if (buttonUp != null)
-			buttonUp = null;
-
-		if (buttonRight != null)
-			buttonRight = null;
+		hitbox = FlxDestroyUtil.destroy(hitbox);
+		hitbox = null;
+		buttonLeft = null;
+		buttonDown = null;
+		buttonUp = null;
+		buttonRight = null;
 	}
 
 	/**
 	 * @param   X          The x-position of the button.
 	 * @param   Y          The y-position of the button.
 	 * @param   Color      The color of the button.
-	 * @param   Callback   The callback for the button.
 	 * @return  The button
 	 */
-	public function createHitbox(X:Float, Y:Float, Graphic:String, ?Color:Int, ?OnClick:Void->Void):FlxButton
+	public function createHitbox(X:Float, Y:Float, Graphic:String, ?Color:Int = 0xFFFFFF):FlxButton
 	{
 		var button:FlxButton = new FlxButton(X, Y);
-		button.loadGraphic(FlxGraphic.fromFrame(getHitboxInputFrames().getByName(Graphic)));
+		button.loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow('assets/android/hitbox.png', 'assets/android/hitbox.xml').getByName(Graphic)));
 		button.setGraphicSize(Std.int(FlxG.width / 4), FlxG.height);
 		button.updateHitbox();
+		button.color = Color;
 		button.alpha = 0.00001;
 
-		var tween:FlxTween = null;
+		var tween:FlxTween;
 
 		button.onDown.callback = function()
 		{
@@ -117,27 +103,14 @@ class FlxHitbox extends FlxSpriteGroup
 			if (tween != null)
 				tween.cancel();
 
-			tween = FlxTween.num(button.alpha, 0.00001, 0.15, {ease: FlxEase.circInOut}, function(value:Float)
+			tween = FlxTween.num(button.alpha, 0.00001, 0.2, {ease: FlxEase.circInOut}, function(value:Float)
 			{
 				button.alpha = value;
 			});
 		}
-
-		if (Color != null)
-			button.color = Color;
-
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
 		#end
-
-		if (OnClick != null)
-			button.onDown.callback = OnClick;
-
 		return button;
-	}
-
-	public static function getHitboxInputFrames():FlxAtlasFrames
-	{
-		return FlxAtlasFrames.fromSparrow('assets/android/hitbox.png', 'assets/android/hitbox.xml');
 	}
 }
