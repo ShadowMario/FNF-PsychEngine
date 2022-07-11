@@ -391,7 +391,7 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 
 		#if android
-		addVirtualPad(LEFT_FULL, A_B_C_D_V_X_Y_Z_UP_DOWN);
+		addVirtualPad(LEFT_FULL, A_B_C_D_V_X_Y_Z);
 		#end
 
 		super.create();
@@ -1850,7 +1850,7 @@ class ChartingState extends MusicBeatState
 			}
 
 			if(!vortex){
-				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN #if android || virtualPad.buttonUp2.justPressed || virtualPad.buttonDown2.justPressed #end  )
+				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN  )
 				{
 					FlxG.sound.music.pause();
 					updateCurStep();
@@ -1858,7 +1858,7 @@ class ChartingState extends MusicBeatState
 					var beat:Float = curDecBeat;
 					var snap:Float = quantization / 4;
 					var increase:Float = 1 / snap;
-					if (FlxG.keys.pressed.UP #if android || virtualPad.buttonUp2.pressed #end)
+					if (FlxG.keys.pressed.UP)
 					{
 						var fuck:Float = CoolUtil.quantize(beat, snap) - increase; //(Math.floor((beat+snap) / snap) * snap);
 						FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
