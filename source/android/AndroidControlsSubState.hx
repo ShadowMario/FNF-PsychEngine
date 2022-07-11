@@ -95,7 +95,7 @@ class AndroidControlsSubState extends FlxSubState
 		rightArrow.animation.play('idle');
 		add(rightArrow);
 
-		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK on your phone to get back in options menu', 16);
+		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK on your phone to get back to the options menu', 16);
 		tipText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2.4;
 		tipText.scrollFactor.set();
@@ -250,9 +250,11 @@ class AndroidControlsSubState extends FlxSubState
 
 	function moveButton(touch:FlxTouch, button:FlxButton):Void
 	{
-		button.x = touch.x - touch.justPressedPosition.x;
-		button.y = touch.y - touch.justPressedPosition.y;
 		bindButton = button;
+
+		bindButton.x = touch.x - (bindButton.width / 2);
+		bindButton.y = touch.y - (0.5 + (bindButton.height / 2));// to be sure the value wil not have .5 in the back of the button offset -saw
+
 		buttonBinded = true;
 	}
 }
