@@ -1700,6 +1700,15 @@ class PlayState extends MusicBeatState
 
 				var wellWellWell:FlxSound = new FlxSound().loadEmbedded(Paths.sound('wellWellWell'));
 				FlxG.sound.list.add(wellWellWell);
+				cutsceneHandler.sounds.push(wellWellWell);
+
+				var beep:FlxSound = new FlxSound().loadEmbedded(Paths.sound('bfBeep'));
+				FlxG.sound.list.add(beep);
+				cutsceneHandler.sounds.push(beep);
+
+				var killYou:FlxSound = new FlxSound().loadEmbedded(Paths.sound('killYou'));
+				FlxG.sound.list.add(killYou);
+				cutsceneHandler.sounds.push(killYou);
 
 				tankman.animation.addByPrefix('wellWell', 'TANK TALK 1 P1', 24, false);
 				tankman.animation.addByPrefix('killYou', 'TANK TALK 1 P2', 24, false);
@@ -1724,7 +1733,7 @@ class PlayState extends MusicBeatState
 				{
 					boyfriend.playAnim('singUP', true);
 					boyfriend.specialAnim = true;
-					FlxG.sound.play(Paths.sound('bfBeep'));
+					beep.play(true);
 				});
 
 				// Move camera to Tankman
@@ -1735,7 +1744,7 @@ class PlayState extends MusicBeatState
 
 					// We should just kill you but... what the hell, it's been a boring day... let's see what you've got!
 					tankman.animation.play('killYou', true);
-					FlxG.sound.play(Paths.sound('killYou'));
+					killYou.play(true);
 				});
 
 			case 'guns':
@@ -1747,6 +1756,7 @@ class PlayState extends MusicBeatState
 
 				var tightBars:FlxSound = new FlxSound().loadEmbedded(Paths.sound('tankSong2'));
 				FlxG.sound.list.add(tightBars);
+				cutsceneHandler.sounds.push(tightBars);
 
 				tankman.animation.addByPrefix('tightBars', 'TANK TALK 2', 24, false);
 				tankman.animation.play('tightBars', true);
@@ -1818,6 +1828,7 @@ class PlayState extends MusicBeatState
 
 				var cutsceneSnd:FlxSound = new FlxSound().loadEmbedded(Paths.sound('stressCutscene'));
 				FlxG.sound.list.add(cutsceneSnd);
+				cutsceneHandler.sounds.push(cutsceneSnd);
 
 				tankman.animation.addByPrefix('godEffingDamnIt', 'TANK TALK 3', 24, false);
 				tankman.animation.play('godEffingDamnIt', true);
