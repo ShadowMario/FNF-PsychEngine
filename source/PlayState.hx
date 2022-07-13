@@ -2159,7 +2159,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	public final divider:String = ' | ';
+	public var divider:String = ' | ';
 	public function updateScore(miss:Bool = false)
 	{
 		scoreTxt.text = 'Score: ' + songScore
