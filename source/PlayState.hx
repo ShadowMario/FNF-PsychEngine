@@ -1263,7 +1263,7 @@ class PlayState extends MusicBeatState
 					if(gf != null) gf.playAnim('scared', true);
 					boyfriend.playAnim('scared', true);
 
-				case "winter-horrorland":
+				/*case "winter-horrorland":
 					var blackScreen:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
 					add(blackScreen);
 					blackScreen.scrollFactor.set();
@@ -1292,7 +1292,7 @@ class PlayState extends MusicBeatState
 								startCountdown();
 							}
 						});
-					});
+					});*/
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
@@ -3910,7 +3910,7 @@ class PlayState extends MusicBeatState
 	#end
 	
 	public var screenGoesBlack:Bool = true;
-	function blackScreen(?charsGoAway:Bool = true, ?screenGoesBlack:Bool = true) { // this can also be used for winter horrorland
+	function blackScreen(?screenGoesBlack:Bool = true) { // this can also be used for winter horrorland
 		if (screenGoesBlack) {
 			camGame.visible = false; //Setting both cams go invisible makes it go black? idk why lol
 			camHUD.visible = false;
@@ -3920,6 +3920,7 @@ class PlayState extends MusicBeatState
 			camHUD.visible = true;
 			camOther.visible = true;
 		}
+		setOnLuas('blackScreen', screenGoesBlack)
 	}
 
 	public function KillNotes() {
