@@ -63,10 +63,6 @@ import Conductor.Rating;
 import sys.FileSystem;
 #end
 
-#if VIDEOS_ALLOWED
-import vlc.MP4Handler;
-#end
-
 using StringTools;
 
 class PlayState extends MusicBeatState
@@ -1476,34 +1472,36 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String)
+	public function playVideo(name:String, atEndOfSong:Bool = false)
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
+		FlxG.sound.music.stop();
 
 		var filepath:String = Paths.video(name);
-		#if sys
-		if(!FileSystem.exists(filepath))
-		#else
-		if(!OpenFlAssets.exists(filepath))
-		#end
-		{
-			FlxG.log.warn('Couldnt find video file: ' + name);
-			startAndEnd();
-			return;
-		}
-
-		var video:MP4Handler = new MP4Handler();
+		var video:VideoHandler = new VideoHandler();
 		video.playVideo(filepath);
 		video.finishCallback = function()
 		{
 			startAndEnd();
 			return;
 		}
-		#else
-		FlxG.log.warn('Platform not supported!');
-		startAndEnd();
-		return;
+		video.finishCallback = function()
+		{
+			if (atEndOfSong)
+			{
+				if (storyPlaylist.length <= 0)
+					FlxG.switchState(new StoryMenuState());
+				else
+				{
+					SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
+					FlxG.switchState(new PlayState());
+				}
+			}
+			else
+				startCountdown();
+		}
+		video.playVideo(Paths.video(name));
 		#end
 	}
 

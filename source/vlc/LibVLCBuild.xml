@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="LibVLCBuild.xsd"?>
+<xml>
+	<files id='haxe'>
+		<compilervalue name='-I' value='${haxelib:hxCodec}/lib/vlc/include/' />
+		<compilervalue name='-I' value='${haxelib:hxCodec}/lib/vlc/src/' />
+	</files>
+
+	<files id='__main__'>
+		<compilervalue name='-I' value='${haxelib:hxCodec}/lib/vlc/include/' />
+		<compilervalue name='-I' value='${haxelib:hxCodec}/lib/vlc/src/' />
+	</files>
+
+	<target id='haxe' tool='linker' if='android'>
+		<lib name='${haxelib:hxCodec}/ndll/Android/libvlc-v7.so' if='HXCPP_ARMV7' />
+		<lib name='${haxelib:hxCodec}/ndll/Android/libvlc-64.so' if='HXCPP_ARM64' />
+	</target>
+	
+	<target id='haxe' tool='linker' if='mac'>
+		<lib name='${haxelib:hxCodec}/lib/vlc/lib/Mac/libvlc.5.dylib'/>
+		<lib name='${haxelib:hxCodec}/lib/vlc/lib/Mac/libvlccore.7.dylib'/>
+	</target>
+
+	<target id='haxe' tool='linker' if='linux'>
+		<lib name='${haxelib:hxCodec}/lib/vlc/lib/Linux/libvlc.so.5' />
+		<lib name='${haxelib:hxCodec}/lib/vlc/lib/Linux/libvlccore.so.9' />
+	</target>
+
+	<target id='haxe' tool='linker' toolid='exe' if='windows'>
+		<section if='HXCPP_M32'>
+			<lib name='${haxelib:hxCodec}/lib/vlc/lib/Windows/libvlc.lib' />
+			<lib name='${haxelib:hxCodec}/lib/vlc/lib/Windows/libvlccore.lib' />
+		</section>
+		<section if='HXCPP_M64'>
+			<lib name='${haxelib:hxCodec}/lib/vlc/lib/Windows64/libvlc.lib' />
+			<lib name='${haxelib:hxCodec}/lib/vlc/lib/Windows64/libvlccore.lib' />
+		</section>
+	</target>
+</xml>

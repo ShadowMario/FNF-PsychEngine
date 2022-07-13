@@ -60,10 +60,21 @@ class FunkinLua {
 	public var camTarget:FlxCamera;
 	public var scriptName:String = '';
 	public var closed:Bool = false;
+	public var inCutscene:Bool = false;
 
 	#if hscript
 	public static var haxeInterp:Interp = null;
 	#end
+
+	function playCutscene(name:String, atEndOfSong:Bool = false)
+		{
+			inCutscene = true;
+			FlxG.sound.music.stop();
+		
+			var video:VideoHandler = new VideoHandler();
+			video.finishCallback = function()
+			video.playVideo(Paths.video(name));
+		}
 	
 	public function new(script:String) {
 		#if LUA_ALLOWED
@@ -80,7 +91,7 @@ class FunkinLua {
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
 				trace('Error on lua script! ' + resultStr);
-				#if windows
+				#if desktop
 				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
 				#else
 				luaTrace('Error loading lua script: "$script"\n' + resultStr, true, false, FlxColor.RED);
@@ -1920,7 +1931,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "startVideo", function(videoFile:String) {
 			#if VIDEOS_ALLOWED
 			if(FileSystem.exists(Paths.video(videoFile))) {
-				PlayState.instance.startVideo(videoFile);
+				PlayState.instance.playVideo(videoFile);
 				return true;
 			} else {
 				luaTrace('Video file not found: ' + videoFile, false, false, FlxColor.RED);
