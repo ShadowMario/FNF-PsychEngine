@@ -76,6 +76,20 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
+		
+		var option:Option = new Option('Health Drain value',
+			'Changes how much health the opponent drains when they sing.',
+			'healthDrainValue',
+			'float',
+			0);
+		option.scrollSpeed = 0.1;
+		option.minValue = 0;
+		option.maxValue = 0.05;
+		option.changeValue = 0.001;
+		addOption(option);
+
+		super();
+	}
 
 		var option:Option = new Option('Hitsound Volume',
 			'Funny notes does \"Tick!\" when you hit them."',
