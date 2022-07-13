@@ -271,6 +271,7 @@ class FreeplayState extends MusicBeatState
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
+		var mouseaccepted = FlxG.mouse.justPressed;
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
 
@@ -303,7 +304,7 @@ class FreeplayState extends MusicBeatState
 				}
 			}
 
-			if(FlxG.mouse.wheel != 0)
+			if(!ClientPrefs.noMouse && FlxG.mouse.wheel != 0)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
 				changeSelection(-shiftMult * FlxG.mouse.wheel, false);
@@ -313,7 +314,7 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.UI_LEFT_P)
 			changeDiff(-1);
-		else if (controls.UI_RIGHT_P)
+		else if (controls.UI_RIGHT_P || (!ClientPrefs.noMouse && FlxG.mouse.justPressedRight))
 			changeDiff(1);
 		else if (upP || downP) changeDiff();
 
@@ -358,7 +359,7 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 
-		else if (accepted)
+		else if (accepted || (!ClientPrefs.noMouse && mouseaccepted))
 		{
 			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);

@@ -77,6 +77,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Disable Mouse Controls',
+		    "If checked, there won't be mouse controls\nin the Freeplay and Story Mode menus.",
+		    'noMouse',
+		    'bool',
+		    false);
+	    addOption(option);
+
 		var option:Option = new Option('Hitsound Volume',
 			'Funny notes does \"Tick!\" when you hit them."',
 			'hitsoundVolume',
