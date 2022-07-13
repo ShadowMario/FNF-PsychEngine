@@ -1,6 +1,5 @@
 package;
 
-import flixel.graphics.FlxGraphic;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -21,6 +20,7 @@ import flixel.addons.effects.FlxTrailArea;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
+import flixel.graphics.FlxGraphic;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -297,6 +297,8 @@ class PlayState extends MusicBeatState
 
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
+
+	public var isUsingGamepad:Bool = false;
 
 	var precacheList:Map<String, String> = new Map<String, String>();
 
@@ -1328,11 +1330,8 @@ class PlayState extends MusicBeatState
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
 
-		if(!ClientPrefs.controllerMode)
-		{
-			FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
-			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
-		}
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
 		callOnLuas('onCreatePost', []);
@@ -2733,6 +2732,10 @@ class PlayState extends MusicBeatState
 		}*/
 		callOnLuas('onUpdate', [elapsed]);
 
+		isUsingGamepad = (FlxG.gamepads.numActiveGamepads > 0
+			&& (!FlxG.keys.justReleased.ANY || !FlxG.keys.pressed.ANY)
+			&& (FlxG.gamepads.anyJustReleased(ANY) || FlxG.gamepads.anyPressed(ANY)));
+
 		switch (curStage)
 		{
 			case 'tank':
@@ -4111,7 +4114,7 @@ class PlayState extends MusicBeatState
 		var key:Int = getKeyFromEvent(eventKey);
 		//trace('Pressed: ' + eventKey);
 
-		if (!cpuControlled && startedCountdown && !paused && key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || ClientPrefs.controllerMode))
+		if (!cpuControlled && startedCountdown && !paused && key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || isUsingGamepad))
 		{
 			if(!boyfriend.stunned && generatedMusic && !endingSong)
 			{
@@ -4245,8 +4248,7 @@ class PlayState extends MusicBeatState
 		var left = controls.NOTE_LEFT;
 		var controlHoldArray:Array<Bool> = [left, down, up, right];
 
-		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(ClientPrefs.controllerMode)
+		if(isUsingGamepad)
 		{
 			var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
 			if(controlArray.contains(true))
@@ -4287,8 +4289,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(ClientPrefs.controllerMode)
+		if(isUsingGamepad)
 		{
 			var controlArray:Array<Bool> = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R];
 			if(controlArray.contains(true))
@@ -4766,15 +4767,12 @@ class PlayState extends MusicBeatState
 		}
 		luaArray = [];
 
-		if(!ClientPrefs.controllerMode)
-		{
-			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
-			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
-		}
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		#if hscript
 		FunkinLua.haxeInterp = null;
 		#end
-		super.destroy();
+    super.destroy();
 	}
 
 	public static function cancelMusicFadeTween() {
