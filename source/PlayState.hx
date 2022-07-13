@@ -3908,6 +3908,19 @@ class PlayState extends MusicBeatState
 		}
 	}
 	#end
+	
+	public var screenGoesBlack:Bool = true;
+	function blackScreen(?charsGoAway:Bool = true, ?screenGoesBlack:Bool = true) { // this can also be used for winter horrorland
+		if (screenGoesBlack) {
+			camGame.visible = false; //Setting both cams go invisible makes it go black? idk why lol
+			camHUD.visible = false;
+			camOther.visible = false; //why not?
+		} else {
+			camGame.visible = true; //Setting them back
+			camHUD.visible = true;
+			camOther.visible = true;
+		}
+	}
 
 	public function KillNotes() {
 		while(notes.length > 0) {
