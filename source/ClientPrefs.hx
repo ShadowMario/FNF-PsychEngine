@@ -23,7 +23,7 @@ class ClientPrefs {
 		'hideHud' => false,											// Bool
 		'noteOffset' => 0,											// Int
 		'arrowHSV' => [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],	// Array<Array<Int>>
-		'imagesPersist' => false,									// Bool
+		// 'imagesPersist' => false,								// Bool
 		'ghostTapping' => true,										// Bool
 		'timeBarType' => 'Time Left',								// String
 		'scoreZoom' => true,										// Bool
