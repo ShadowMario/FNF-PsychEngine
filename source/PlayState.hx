@@ -200,6 +200,9 @@ class PlayState extends MusicBeatState
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
+	
+	public var badoink:FlxText;
+	public var yourInsurance:FlxText;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
@@ -1174,6 +1177,19 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
+		badoink = new FlxText(4, scoreTxt.y + 15, "", 20);
+		badoink.text = '' + SONG.song + ' - ' + storyDifficultyText.toUpperCase();
+		badoink.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.ORANGE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		badoink.scrollFactor.set();
+		badoink.cameras = [camHUD];
+		add(badoink);
+
+		yourInsurance = new FlxText(4, healthBarBG.y - 1, "", 20);
+		yourInsurance.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.GREEN, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		yourInsurance.scrollFactor.set();
+		yourInsurance.screenCenter(X);
+		add(yourInsurance);
+
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
@@ -1192,6 +1208,8 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		yourInsurance.cameras = [camHUD];
+		badoink.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
@@ -2727,10 +2745,7 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
-		/*if (FlxG.keys.justPressed.NINE)
-		{
-			iconP1.swapOldIcon();
-		}*/
+		yourInsurance.text = '' + healthBar.percent;
 		callOnLuas('onUpdate', [elapsed]);
 
 		switch (curStage)
