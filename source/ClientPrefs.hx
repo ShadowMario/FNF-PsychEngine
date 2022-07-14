@@ -215,7 +215,7 @@ class ClientPrefs {
 			comboOffset = FlxG.save.data.comboOffset;
 		}
 		if(FlxG.save.data.healthDrainValue != null) {
-			ratingOffset = FlxG.save.data.healthDrainValue;
+			healthDrainValue = FlxG.save.data.healthDrainValue;
 		}
 		if(FlxG.save.data.ratingOffset != null) {
 			ratingOffset = FlxG.save.data.ratingOffset;
