@@ -131,10 +131,10 @@ class ClientPrefs {
 	public static function saveSettings() {
 		var save:Dynamic = FlxG.save.data;
 
-		for (setting => value in prefs) Reflect.setProperty(save, setting, value);
+		for (setting => value in prefs) Reflect.setField(save, setting, value);
 		for (savedAs => map in mapData) {
 			if (!separateSaves.contains(savedAs))
-				Reflect.setProperty(save, savedAs, Reflect.getProperty(map[0], map[1]));
+				Reflect.setField(save, savedAs, Reflect.field(map[0], map[1]));
 		}
 
 		FlxG.save.flush();
@@ -144,12 +144,12 @@ class ClientPrefs {
 
 		for (name in separateSaves) {
 			if (prefs.exists(name)) {
-				Reflect.setProperty(save.data, name, prefs.get(name));
+				Reflect.setField(save.data, name, prefs.get(name));
 				continue;
 			}
 			if (mapData.exists(name)) {
 				var map:Array<Dynamic> = mapData.get(name);
-				Reflect.setProperty(save.data, name, Reflect.getProperty(map[0], map[1]));
+				Reflect.setField(save.data, name, Reflect.field(map[0], map[1]));
 				continue;
 			}
 		}
@@ -161,7 +161,7 @@ class ClientPrefs {
 	public static function loadPrefs() {
 		var save:Dynamic = FlxG.save.data;
 		for (setting in prefs.keys()) {
-			var value:Dynamic = Reflect.getProperty(save, setting);
+			var value:Dynamic = Reflect.field(save, setting);
 			if (value != null) {
 				prefs.set(setting, value);
 				if (loadFunctions.exists(setting)) loadFunctions.get(setting)(value); // Call the load function
@@ -169,15 +169,15 @@ class ClientPrefs {
 		}
 		// flixel automatically saves your volume!
 		for (setting => name in flixelData) {
-			var value:Dynamic = Reflect.getProperty(save, setting);
-			if (value != null) Reflect.setProperty(FlxG.sound, name, value);
+			var value:Dynamic = Reflect.field(save, setting);
+			if (value != null) Reflect.setField(FlxG.sound, name, value);
 		}
 		// This needs to be loaded differently
 		for (savedAs => map in mapData) {
 			if (!separateSaves.contains(savedAs)) {
-				var data:Map<Dynamic, Dynamic> = Reflect.getProperty(save, savedAs);
+				var data:Map<Dynamic, Dynamic> = Reflect.field(save, savedAs);
 				if (data != null) {
-					var loadTo:Dynamic = Reflect.getProperty(map[0], map[1]);
+					var loadTo:Dynamic = Reflect.field(map[0], map[1]);
 					for (name => value in data) {
 						if (loadTo.exists(name))
 							loadTo.set(name, value);
@@ -191,16 +191,16 @@ class ClientPrefs {
 		save.bind('controls_v2', 'ninjamuffin99');
 		if (save != null) {
 			for (name in separateSaves) {
-				var data:Dynamic = Reflect.getProperty(save.data, name);
+				var data:Dynamic = Reflect.field(save.data, name);
 				if (data != null)
 				{
 					if (prefs.exists(name)) {
-						Reflect.setProperty(prefs, name, data);
+						prefs.set(name, data);
 						continue;
 					}
 					if (mapData.exists(name)) {
 						var map:Array<Dynamic> = mapData.get(name);
-						var loadTo:Dynamic = Reflect.getProperty(map[0], map[1]);
+						var loadTo:Dynamic = Reflect.field(map[0], map[1]);
 
 						for (name => value in cast(data, Map<Dynamic, Dynamic>)) {
 							if (loadTo.exists(name))
