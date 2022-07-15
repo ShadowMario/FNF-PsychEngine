@@ -1682,6 +1682,8 @@ class PlayState extends MusicBeatState
 			startCountdown();
 
 			dadGroup.alpha = 1;
+			gfGroup.alpha = 1;
+			boyfriendGroup.alpha = 1;
 			camHUD.visible = true;
 			boyfriend.animation.finishCallback = null;
 			gf.animation.finishCallback = null;
