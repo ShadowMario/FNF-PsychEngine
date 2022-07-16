@@ -49,7 +49,7 @@ typedef TitleData =
 	gfy:Float,
 	gfscalex:Float,
 	gfscaley:Float,
-	gfantialiasing:String,
+	gfantialiasing:Bool,
 	backgroundSprite:String,
 	bpm:Int
 }
