@@ -78,7 +78,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Disable Mouse Controls',
-		    "If checked, there won't be mouse controls\nin the Freeplay and Story Mode menus.",
+		    "If checked, there won't be mouse controls\nin the Freeplay, Story Mode and Pause menus.",
 		    'noMouse',
 		    'bool',
 		    false);
