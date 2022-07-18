@@ -809,6 +809,17 @@ class FunkinLua {
 				setVarInArray(coverMeInPiss, killMe[killMe.length-1], value);
 				return true;
 			}
+			switch (classVar) // Legacy support
+			{
+				case 'ClientPrefs':
+				{
+					if (ClientPrefs.prefs.exists(variable))
+					{
+						ClientPrefs.prefs.set(variable, value);
+						return true;
+					}
+				}
+			}
 			setVarInArray(Type.resolveClass(classVar), variable, value);
 			return true;
 		});
