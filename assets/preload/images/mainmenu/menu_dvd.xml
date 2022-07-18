@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="menu_dvd.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="dvd basic0000" x="20" y="20" width="280" height="131" pivotX="-99.35" pivotY="7.35"/>
+	<SubTexture name="dvd basic0001" x="20" y="20" width="280" height="131"/>
+	<SubTexture name="dvd basic0002" x="20" y="20" width="280" height="131"/>
+	<SubTexture name="dvd basic0003" x="310" y="20" width="280" height="131"/>
+	<SubTexture name="dvd basic0004" x="310" y="20" width="280" height="131"/>
+	<SubTexture name="dvd basic0005" x="310" y="20" width="280" height="131"/>
+	<SubTexture name="dvd basic0006" x="600" y="20" width="280" height="131"/>
+	<SubTexture name="dvd basic0007" x="600" y="20" width="280" height="131"/>
+	<SubTexture name="dvd basic0008" x="600" y="20" width="280" height="131"/>
+	<SubTexture name="dvd white0000" x="20" y="161" width="349" height="163" pivotX="-64.45" pivotY="24.3" frameX="0" frameY="-1" frameWidth="351" frameHeight="164"/>
+	<SubTexture name="dvd white0001" x="379" y="161" width="350" height="164" frameX="0" frameY="0" frameWidth="351" frameHeight="164"/>
+	<SubTexture name="dvd white0002" x="20" y="335" width="350" height="161" frameX="-1" frameY="-2" frameWidth="351" frameHeight="164"/>
+</TextureAtlas>
