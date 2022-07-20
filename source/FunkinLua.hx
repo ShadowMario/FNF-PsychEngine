@@ -788,10 +788,8 @@ class FunkinLua {
 				}
 				return getVarInArray(coverMeInPiss, killMe[killMe.length-1]);
 			}
-			switch (classVar) // Legacy support
-			{
-				case 'ClientPrefs':
-				{
+			switch (classVar) { // Legacy support
+				case 'ClientPrefs': {
 					var pref:Dynamic = ClientPrefs.getPref(variable);
 					if (pref != null) return pref;
 				}
@@ -809,12 +807,9 @@ class FunkinLua {
 				setVarInArray(coverMeInPiss, killMe[killMe.length-1], value);
 				return true;
 			}
-			switch (classVar) // Legacy support
-			{
-				case 'ClientPrefs':
-				{
-					if (ClientPrefs.prefs.exists(variable))
-					{
+			switch (classVar) { // Legacy support
+				case 'ClientPrefs': {
+					if (ClientPrefs.prefs.exists(variable)) {
 						ClientPrefs.prefs.set(variable, value);
 						return true;
 					}

@@ -192,8 +192,7 @@ class ClientPrefs {
 		if (save != null) {
 			for (name in separateSaves) {
 				var data:Dynamic = Reflect.field(save.data, name);
-				if (data != null)
-				{
+				if (data != null) {
 					if (prefs.exists(name)) {
 						prefs.set(name, data);
 						continue;
