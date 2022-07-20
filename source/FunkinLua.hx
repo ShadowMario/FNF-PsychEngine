@@ -220,49 +220,7 @@ class FunkinLua {
 		// shader shit
 		Lua_helper.add_callback(lua, "initLuaShader", function(name:String, glslVersion:Int = 120) {
 			#if (!flash && MODS_ALLOWED && sys)
-			if(runtimeShaders.exists(name))
-			{
-				luaTrace('Shader $name was already initialized!');
-				return true;
-			}
-
-			var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
-			if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-				foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
-	
-			for(mod in Paths.getGlobalMods())
-				foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
-			
-			for (folder in foldersToCheck)
-			{
-				if(FileSystem.exists(folder))
-				{
-					var frag:String = folder + name + '.frag';
-					var vert:String = folder + name + '.vert';
-					var found:Bool = false;
-					if(FileSystem.exists(frag))
-					{
-						frag = File.getContent(frag);
-						found = true;
-					}
-					else frag = null;
-
-					if (FileSystem.exists(vert))
-					{
-						vert = File.getContent(vert);
-						found = true;
-					}
-					else vert = null;
-
-					if(found)
-					{
-						runtimeShaders.set(name, [frag, vert]);
-						trace('Found shader $name!');
-						return true;
-					}
-				}
-			}
-			luaTrace("Missing shader .frag AND .vert files!", false, false, FlxColor.RED);
+			return initLuaShader(name, glslVersion);
 			#else
 			luaTrace("Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
 			#end
@@ -271,7 +229,7 @@ class FunkinLua {
 		
 		Lua_helper.add_callback(lua, "setSpriteShader", function(obj:String, shader:String) {
 			#if (!flash && MODS_ALLOWED && sys)
-			if(!runtimeShaders.exists(shader))
+			if(!runtimeShaders.exists(shader) && !initLuaShader(shader))
 			{
 				luaTrace('Shader $shader is missing! Initialize it with initLuaShader', false, false, FlxColor.RED);
 				return false;
@@ -2766,6 +2724,54 @@ class FunkinLua {
 		}
 		return null;
 	}
+	
+	function initLuaShader(name:String, ?glslVersion:Int = 120)
+	{
+		if(runtimeShaders.exists(name))
+		{
+			luaTrace('Shader $name was already initialized!');
+			return true;
+		}
+
+		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
+		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
+			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
+
+		for(mod in Paths.getGlobalMods())
+			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
+		
+		for (folder in foldersToCheck)
+		{
+			if(FileSystem.exists(folder))
+			{
+				var frag:String = folder + name + '.frag';
+				var vert:String = folder + name + '.vert';
+				var found:Bool = false;
+				if(FileSystem.exists(frag))
+				{
+					frag = File.getContent(frag);
+					found = true;
+				}
+				else frag = null;
+
+				if (FileSystem.exists(vert))
+				{
+					vert = File.getContent(vert);
+					found = true;
+				}
+				else vert = null;
+
+				if(found)
+				{
+					runtimeShaders.set(name, [frag, vert]);
+					trace('Found shader $name!');
+					return true;
+				}
+			}
+		}
+		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
+		return false;
+	}
 
 	function getGroupStuff(leArray:Dynamic, variable:String) {
 		var killMe:Array<String> = variable.split('.');
@@ -3150,5 +3156,4 @@ class DebugLuaText extends FlxText
 		if(disableTime < 0) disableTime = 0;
 		if(disableTime < 1) alpha = disableTime;
 	}
-
 }
