@@ -2606,8 +2606,6 @@ class PlayState extends MusicBeatState
 	{
 		//funny dissapear transitions
 		//while new strums appear
-		if (!isStoryMode)
-		{
 			for (i in 0...playerStrums.members.length) {
 				var oldStrum:FlxSprite = playerStrums.members[i].clone();
 				oldStrum.x = playerStrums.members[i].x;
@@ -2638,7 +2636,6 @@ class PlayState extends MusicBeatState
 				FlxTween.tween(oldStrum, {alpha: 0}, 1, {onComplete: function(_) {
 					remove(oldStrum);
 				}});
-			}
 		}
 		
 		mania = newValue;
@@ -3627,7 +3624,6 @@ class PlayState extends MusicBeatState
 				newMania = Std.parseInt(value1);
 				if(Math.isNaN(newMania) && newMania < 0 && newMania > 9)
 					newMania = 0;
-
 				changeMania(newMania);
 
 			case 'Change Character':
