@@ -84,6 +84,7 @@ class CreditsState extends MusicBeatState
 			['Psych Engine Extra Keys +'],
 			['tposejank', 			'tposejank',		'Main programmer of ~~the keys~~', 								'https://twitter.com/tpose_jank', 		'4C4C4C'],	
 			['dopadream', 			'dopadream',		'Maintaining and updating ~~the keys~~', 						'https://twitter.com/dopadev', 			'A6A6ED'],
+			['RhysRJJ', 			'rhysrjj',			'Charter for multikey vanilla songs', 							'https://twitter.com/RhysRJJSFM', 		'0E86D4'],
 			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
