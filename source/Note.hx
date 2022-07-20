@@ -146,6 +146,13 @@ class Note extends FlxSprite
 						missHealth = 0.3;
 					}
 					hitCausesMiss = true;
+				case 'Poison Note':
+					ignoreNote = true; //for BOTH sides
+					lowPriority = true; //update lol
+					reloadNote('texture-here'); //Ends with 'NOTE_assets' automaticly, so If is 'POISONNOTE_assets' just do reloadNote('POISON');
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0; //so doesnt mix with cutsom note colors
+					colorSwap.brightness = 0;
 				case 'Alt Animation':
 					animSuffix = '-alt';
 				case 'No Animation':
