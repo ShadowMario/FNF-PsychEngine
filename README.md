@@ -1,5 +1,7 @@
-# Friday Night Funkin' - Psych Engine
-Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
+# Friday Night Funkin' - Psych Engine EK
+Psych Engine EK (extra keys) is a modded version of [Psych Engine](https://gamebanana.com/mods/309789) that uses refurbished code from a now [discontinued project of the same name.](https://gamebanana.com/mods/333373)
+
+The goal of this version is to keep up-to-date with Psych Engine and hopefully not lack any features added in newer versions, as well as eliminating some bugs from the previous version.
 
 ## Installation:
 You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
@@ -17,7 +19,11 @@ If you want video support on your mod, simply do `haxelib install hxCodec` on a 
 
 otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
 
-## Credits:
+## Psych Engine EK Credits:
+* tposejank - Original Programmer
+* dopadream - Update Maintainer & Programmer
+
+## Psych Engine Credits:
 * Shadow Mario - Programmer
 * RiverOaken - Artist
 * Yoshubs - Assistant Programmer
@@ -75,6 +81,10 @@ _____________________________________
 * You can change a note's type on the Editor, it comes with two example types:
   * Alt Animation: Forces an alt animation to play, useful for songs like Ugh/Stress
   * Hey: Forces a "Hey" animation instead of the base Sing animation, if Boyfriend hits this note, Girlfriend will do a "Hey!" too.
+* Multikey support:
+  * You can choose how many keys (through 1-10) specific charts can have.
+  * You can also dynamically change the amount of keys with the "Change Mania" event.
+  * There is no support for 11 keys or more. You do not have more than 10 fingers.
 
 ## Multiple editors to assist you in making your own Mod
 ![Screenshot_3](https://user-images.githubusercontent.com/44785097/144629914-1fe55999-2f18-4cc1-bc70-afe616d74ae5.png)
