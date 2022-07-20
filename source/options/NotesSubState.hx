@@ -1,5 +1,6 @@
 package options;
 
+import flixel.math.FlxPoint;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -7,6 +8,7 @@ import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
@@ -51,7 +53,7 @@ class NotesSubState extends MusicBeatSubstate
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 		
-		blackBG = new FlxSprite(posX - 25).makeGraphic(870, 200, FlxColor.BLACK);
+		blackBG = new FlxSprite(posX - 25).makeGraphic(870, 100, FlxColor.BLACK);
 		blackBG.alpha = 0.4;
 		add(blackBG);
 
@@ -61,17 +63,17 @@ class NotesSubState extends MusicBeatSubstate
 		add(grpNumbers);
 
 		for (i in 0...ClientPrefs.arrowHSV.length) {
-			var yPos:Float = (165 * i) + 35;
+			var yPos:Float = (70 * i) - 33;
 			for (j in 0...3) {
-				var optionText:Alphabet = new Alphabet(0, yPos + 60, Std.string(ClientPrefs.arrowHSV[i][j]), true);
+				var optionText:Alphabet = new Alphabet(0, yPos + 60, Std.string(ClientPrefs.arrowHSV[i][j]), true, false, 0.05, 0.8);
 				optionText.x = posX + (225 * j) + 250;
 				grpNumbers.add(optionText);
 			}
 
 			var note:FlxSprite = new FlxSprite(posX, yPos);
 			note.frames = Paths.getSparrowAtlas('NOTE_assets');
-			var animations:Array<String> = ['purple0', 'blue0', 'green0', 'red0'];
-			note.animation.addByPrefix('idle', animations[i]);
+			var animation:String = Note.keysShit.get(Note.maxMania).get('letters')[i] + '0';
+			note.animation.addByPrefix('idle', animation);
 			note.animation.play('idle');
 			note.antialiasing = ClientPrefs.globalAntialiasing;
 			grpNotes.add(note);
@@ -89,6 +91,10 @@ class NotesSubState extends MusicBeatSubstate
 		add(hsbText);
 
 		changeSelection();
+
+                #if android
+	        addVirtualPad(FULL, A_B_C);
+                #end
 	}
 
 	var changingNote:Bool = false;
@@ -101,7 +107,7 @@ class NotesSubState extends MusicBeatSubstate
 				} else if(controls.UI_RIGHT_P) {
 					updateValue(1);
 					FlxG.sound.play(Paths.sound('scrollMenu'));
-				} else if(controls.RESET) {
+				} else if(controls.RESET #if android || _virtualpad.buttonC.justPressed #end) {
 					resetValue(curSelected, typeSelected);
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 				}
@@ -142,7 +148,7 @@ class NotesSubState extends MusicBeatSubstate
 				changeType(1);
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
-			if(controls.RESET) {
+			if(controls.RESET #if android || _virtualpad.buttonC.justPressed #end) {
 				for (i in 0...3) {
 					resetValue(curSelected, i);
 				}
@@ -173,7 +179,12 @@ class NotesSubState extends MusicBeatSubstate
 
 		if (controls.BACK || (changingNote && controls.ACCEPT)) {
 			if(!changingNote) {
-				close();
+			        #if android
+                                FlxTransitionableState.skipNextTransOut = true;
+			        FlxG.resetState();
+                                #else
+                                close();
+                                #end
 			} else {
 				changeSelection();
 			}
@@ -207,12 +218,12 @@ class NotesSubState extends MusicBeatSubstate
 		for (i in 0...grpNotes.length) {
 			var item = grpNotes.members[i];
 			item.alpha = 0.6;
-			item.scale.set(0.75, 0.75);
+			item.scale.set(0.5, 0.5);
 			if (curSelected == i) {
 				item.alpha = 1;
-				item.scale.set(1, 1);
-				hsbText.y = item.y - 70;
-				blackBG.y = item.y - 20;
+				item.scale.set(0.6, 0.6);
+				hsbText.y = item.y - 40;
+				blackBG.y = item.y + 28;
 			}
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));

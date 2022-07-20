@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="7k.png">
+	<SubTexture name="k1" x="0" y="0" width="182" height="720" frameX="0" frameY="0" frameWidth="182" frameHeight="720"/>
+	<SubTexture name="k2" x="182" y="0" width="182" height="720" frameX="0" frameY="0" frameWidth="182" frameHeight="720"/>
+	<SubTexture name="k3" x="364" y="0" width="182" height="720" frameX="0" frameY="0" frameWidth="182" frameHeight="720"/>
+	<SubTexture name="k4" x="546" y="0" width="182" height="720" frameX="0" frameY="0" frameWidth="182" frameHeight="720"/>
+	<SubTexture name="k5" x="728" y="0" width="182" height="720" frameX="0" frameY="0" frameWidth="182" frameHeight="720"/>
+	<SubTexture name="k6" x="910" y="0" width="182" height="720" frameX="0" frameY="0" frameWidth="182" frameHeight="720"/>
+	<SubTexture name="k7" x="1092" y="0" width="182" height="720" frameX="0" frameY="0" frameWidth="182" frameHeight="720"/>
+</TextureAtlas>

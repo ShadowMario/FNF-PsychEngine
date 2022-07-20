@@ -26,6 +26,9 @@ typedef SwagSong =
 	var gfVersion:String;
 	var stage:String;
 
+	var mania:Null<Int>;
+
+
 	var arrowSkin:String;
 	var splashSkin:String;
 	var validScore:Bool;
@@ -77,6 +80,11 @@ class Song
 				}
 			}
 		}
+
+		if (songJson.mania == null) //yall better not replace this
+            {
+                songJson.mania = Note.defaultMania;
+            }
 	}
 
 	public function new(song, notes, bpm)

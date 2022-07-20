@@ -1,17 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas imagePath="HURTNOTE_assets.png">
-	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="blue hold end0000" x="5" y="5" width="50" height="64"/>
-	<SubTexture name="blue hold piece0000" x="60" y="5" width="50" height="44"/>
-	<SubTexture name="blue0000" x="115" y="5" width="157" height="154"/>
-	<SubTexture name="green hold end0000" x="5" y="5" width="50" height="64"/>
-	<SubTexture name="green hold piece0000" x="60" y="5" width="50" height="44"/>
-	<SubTexture name="green0000" x="277" y="5" width="157" height="154"/>
-	<SubTexture name="purple0000" x="5" y="164" width="154" height="157"/>
-	<SubTexture name="pruple end hold0000" x="5" y="5" width="50" height="64"/>
-	<SubTexture name="purple hold piece0000" x="60" y="5" width="50" height="44"/>
-	<SubTexture name="red hold end0000" x="5" y="5" width="50" height="64"/>
-	<SubTexture name="red hold piece0000" x="60" y="5" width="50" height="44"/>
-	<SubTexture name="red0000" x="164" y="164" width="154" height="157"/>
+	<SubTexture name="A0000" x="0" y="0" width="154" height="157"/>
+	<SubTexture name="A hold0000" x="311" y="0" width="50" height="44"/>
+	<SubTexture name="A tail0000" x="361" y="0" width="50" height="64"/>
+	<SubTexture name="B0000" x="154" y="0" width="157" height="154"/>
+	<SubTexture name="B hold0000" x="311" y="0" width="50" height="44"/>
+	<SubTexture name="B tail0000" x="361" y="0" width="50" height="64"/>
+	<SubTexture name="C0000" x="0" y="157" width="157" height="154"/>
+	<SubTexture name="C hold0000" x="311" y="0" width="50" height="44"/>
+	<SubTexture name="C tail0000" x="361" y="0" width="50" height="64"/>
+	<SubTexture name="D0000" x="157" y="157" width="154" height="157"/>
+	<SubTexture name="D hold0000" x="311" y="0" width="50" height="44"/>
+	<SubTexture name="D tail0000" x="361" y="0" width="50" height="64"/>
+	<SubTexture name="E0000" x="311" y="157" width="169" height="169"/>
+	<SubTexture name="E hold0000" x="311" y="0" width="50" height="44"/>
+	<SubTexture name="E tail0000" x="361" y="0" width="50" height="64"/>
+	<SubTexture name="F0000" x="0" y="0" width="154" height="157"/>
+	<SubTexture name="F hold0000" x="311" y="0" width="50" height="44"/>
+	<SubTexture name="F tail0000" x="361" y="0" width="50" height="64"/>
+	<SubTexture name="G0000" x="154" y="0" width="157" height="154"/>
+	<SubTexture name="G hold0000" x="311" y="0" width="50" height="44"/>
+	<SubTexture name="G tail0000" x="361" y="0" width="50" height="64"/>
+	<SubTexture name="H0000" x="0" y="157" width="157" height="154"/>
+	<SubTexture name="H hold0000" x="311" y="0" width="50" height="44"/>
+	<SubTexture name="H tail0000" x="361" y="0" width="50" height="64"/>
+	<SubTexture name="I0000" x="157" y="157" width="154" height="157"/>
+	<SubTexture name="I hold0000" x="311" y="0" width="50" height="44"/>
+	<SubTexture name="I tail0000" x="361" y="0" width="50" height="64"/>
 </TextureAtlas>
