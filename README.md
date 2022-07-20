@@ -1,5 +1,5 @@
-# Friday Night Funkin' - Psych Engine EK
-Psych Engine EK (extra keys) is a modded version of [Psych Engine](https://gamebanana.com/mods/309789) that uses refurbished code from a now [discontinued project of the same name.](https://gamebanana.com/mods/333373)
+# Friday Night Funkin' - Psych Engine EKPlus
+Psych Engine EKPlus (Extra Keys Plus) is a modded version of [Psych Engine](https://gamebanana.com/mods/309789) that uses refurbished code from a now [discontinued project of a similar name.](https://gamebanana.com/mods/333373)
 
 The goal of this version is to keep up-to-date with Psych Engine and hopefully not lack any features added in newer versions, as well as eliminating some bugs from the previous version.
 
@@ -19,7 +19,7 @@ If you want video support on your mod, simply do `haxelib install hxCodec` on a 
 
 otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
 
-## Psych Engine EK Credits:
+## Psych Engine EKPlus Credits:
 * tposejank - Original Programmer
 * dopadream - Update Maintainer & Programmer
 
