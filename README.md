@@ -1,5 +1,5 @@
-# Friday Night Funkin' - Psych Engine EKPlus
-Psych Engine EKPlus (Extra Keys Plus) is a modded version of [Psych Engine](https://gamebanana.com/mods/309789) that uses refurbished code from a now [discontinued project of a similar name.](https://gamebanana.com/mods/333373)
+# Friday Night Funkin' - Psych Engine EK+
+Psych Engine EK+ (Extra Keys Plus) is a modded version of [Psych Engine](https://gamebanana.com/mods/309789) that uses refurbished code from a now [discontinued project of a similar name.](https://gamebanana.com/mods/333373)
 
 The goal of this version is to keep up-to-date with Psych Engine and hopefully not lack any features added in newer versions, as well as eliminating some bugs from the previous version.
 
