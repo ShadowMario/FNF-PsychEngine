@@ -262,6 +262,7 @@ class PlayState extends MusicBeatState
 	public static var deathCounter:Int = 0;
 
 	public var defaultCamZoom:Float = 1.05;
+	public var defaultHudCamZoom:Float = 1.0;
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
@@ -3055,7 +3056,7 @@ class PlayState extends MusicBeatState
 		if (camZooming)
 		{
 			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
-			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
+			camHUD.zoom = FlxMath.lerp(defaultHudCamZoom, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay), 0, 1));
 		}
 
 		FlxG.watch.addQuick("secShit", curSection);
@@ -3535,6 +3536,15 @@ class PlayState extends MusicBeatState
 					FlxG.camera.zoom += camZoom;
 					camHUD.zoom += hudZoom;
 				}
+
+			case 'Set Camera Zoom':
+					var defCamZoom:Float = Std.parseFloat(value1);
+					var defHudZoom:Float = Std.parseFloat(value2);
+					if(Math.isNaN(defCamZoom)) defCamZoom = defaultCamZoom;
+					if(Math.isNaN(defHudZoom)) defHudZoom = 1;
+
+					defaultCamZoom = defCamZoom;
+					defaultHudCamZoom = defHudZoom;
 
 			case 'Trigger BG Ghouls':
 				if(curStage == 'schoolEvil' && !ClientPrefs.lowQuality) {
