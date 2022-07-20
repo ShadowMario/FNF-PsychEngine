@@ -76,7 +76,7 @@ class Note extends FlxSprite
 	];
 
 	public static var ammo:Array<Int> = [
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+		1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 	];
 
 	public static var pixelScales:Array<Float> = [1.2, 1.15, 1.1, 1, 0.9, 0.83, 0.8, 0.74, 0.7, 0.6, 0.55];

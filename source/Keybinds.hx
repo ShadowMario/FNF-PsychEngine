@@ -16,7 +16,7 @@ class Keybinds
 				ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_three3'))
 			],
 			[
-				ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),	//SWAGGER SOULS??
+				ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),
 				ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_down')),
 				ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_up')),
 				ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right'))

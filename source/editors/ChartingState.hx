@@ -796,10 +796,8 @@ class ChartingState extends MusicBeatState
 			updateGrid();
 		});
 
-		var stepperCopy:FlxUINumericStepper = new FlxUINumericStepper(110, 276, 1, 1, -999, 999, 0);
-		blockPressWhileTypingOnStepper.push(stepperCopy);
-
-		var copyLastButton:FlxButton = new FlxButton(10, 270, "Copy last section", function()
+		var stepperCopy:FlxUINumericStepper = null;
+		var copyLastButton:FlxButton = new FlxButton(10, swapSection.y + 30, "Copy last section", function()
 		{
 			var value:Int = Std.int(stepperCopy.value);
 			if(value == 0) return;
@@ -808,9 +806,9 @@ class ChartingState extends MusicBeatState
 
 			for (note in _song.notes[daSec - value].sectionNotes)
 			{
-				var strum = note[0] + Conductor.stepCrochet * (_song.notes[daSec].sectionBeats * value);
+				var strum = note[0] + Conductor.stepCrochet * (getSectionBeats(daSec) * 4 * value);
 
-				
+
 				var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3]];
 				_song.notes[daSec].sectionNotes.push(copiedNote);
 			}
@@ -822,7 +820,7 @@ class ChartingState extends MusicBeatState
 				var strumTime:Float = event[0];
 				if(endThing > event[0] && event[0] >= startThing)
 				{
-					strumTime += Conductor.stepCrochet * (_song.notes[daSec].sectionBeats * value);
+					strumTime += Conductor.stepCrochet * (getSectionBeats(daSec) * 4 * value);
 					var copiedEventArray:Array<Dynamic> = [];
 					for (i in 0...event[1].length)
 					{
@@ -834,6 +832,12 @@ class ChartingState extends MusicBeatState
 			}
 			updateGrid();
 		});
+		copyLastButton.setGraphicSize(80, 30);
+		copyLastButton.updateHitbox();
+		
+		stepperCopy = new FlxUINumericStepper(copyLastButton.x + 100, copyLastButton.y, 1, 1, -999, 999, 0);
+		blockPressWhileTypingOnStepper.push(stepperCopy);
+
 		var duetButton:FlxButton = new FlxButton(10, 320, "Duet Notes", function()
 		{
 			var duetNotes:Array<Array<Dynamic>> = [];
@@ -1487,6 +1491,13 @@ class ChartingState extends MusicBeatState
 	override function update(elapsed:Float)
 		{
 			curStep = recalculateSteps();
+
+			PlayState.mania = _song.mania;
+
+			var gWidth = GRID_SIZE * (Note.ammo[_song.mania] * 2);
+			camPos.x = -80 + gWidth;
+			strumLine.width = gWidth;
+			rightIcon.x = gWidth / 2 + GRID_SIZE * 2;
 	
 			if(FlxG.sound.music.time < 0) {
 				FlxG.sound.music.pause();
@@ -1621,7 +1632,7 @@ class ChartingState extends MusicBeatState
 				if (FlxG.keys.justPressed.ESCAPE)
 				{
 					autosaveSong();
-					LoadingState.loadAndSwitchState(new editors.EditorPlayState(sectionStartTime()));
+					LoadingState.loadAndSwitchState(new editors.EditorPlayState(sectionStartTime(), _song.mania));
 				}
 				if (FlxG.keys.justPressed.ENTER)
 				{

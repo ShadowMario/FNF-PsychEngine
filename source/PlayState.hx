@@ -3096,7 +3096,7 @@ class PlayState extends MusicBeatState
 			if (!inCutscene) {
 				if(!cpuControlled) {
 					keyShit();
-				} else if(boyfriend.holdTimer > Conductor.stepCrochet * 0.0011 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss')) {
+				} else if(boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss')) {
 					boyfriend.dance();
 					//boyfriend.animation.curAnim.finish();
 				}
@@ -4491,7 +4491,10 @@ class PlayState extends MusicBeatState
 
 		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
 		{
-			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
+			var daAlt = '';
+			if(daNote.noteType == 'Alt Animation') daAlt = '-alt';
+
+			var animToPlay:String = 'sing' + Note.keysShit.get(mania).get('anims')[daNote.noteData] + 'miss' + daAlt;
 			char.playAnim(animToPlay, true);
 		}
 
@@ -4538,6 +4541,7 @@ class PlayState extends MusicBeatState
 
 			if(boyfriend.hasMissAnimations) {
 				boyfriend.playAnim('sing' + Note.keysShit.get(mania).get('anims')[direction] + 'miss', true);
+
 			}
 			vocals.volume = 0;
 		}
@@ -4644,7 +4648,7 @@ class PlayState extends MusicBeatState
 			health += note.hitHealth * healthGain;
 
 			if(!note.noAnimation) {
-				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
+				var animToPlay:String = 'sing' + Note.keysShit.get(mania).get('anims')[note.noteData];
 
 				if(note.gfNote)
 				{
