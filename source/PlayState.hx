@@ -3547,6 +3547,7 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'Screen Shake':
+		if(ClientPrefs.shaking) {
 				var valuesArray:Array<String> = [value1, value2];
 				var targetsArray:Array<FlxCamera> = [camGame, camHUD];
 				for (i in 0...targetsArray.length) {
@@ -3562,6 +3563,7 @@ class PlayState extends MusicBeatState
 						targetsArray[i].shake(intensity, duration);
 					}
 				}
+		}
 
 
 			case 'Change Character':
