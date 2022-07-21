@@ -1330,7 +1330,7 @@ class PlayState extends MusicBeatState
 		}
 
 		precacheList.set('alphabet', 'image');
-	
+
 		#if desktop
 		// Updating Discord Rich Presence.
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
@@ -1363,7 +1363,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		Paths.clearUnusedMemory();
-		
+
 		CustomFadeTransition.nextCamera = camOther;
 	}
 
@@ -1963,10 +1963,10 @@ class PlayState extends MusicBeatState
 
 		var introAlts:Array<String> = introAssets.get('default');
 		if (isPixelStage) introAlts = introAssets.get('pixel');
-		
+
 		for (asset in introAlts)
 			Paths.image(asset);
-		
+
 		Paths.sound('intro3' + introSoundsSuffix);
 		Paths.sound('intro2' + introSoundsSuffix);
 		Paths.sound('intro1' + introSoundsSuffix);
@@ -3976,7 +3976,7 @@ class PlayState extends MusicBeatState
 		Paths.image(pixelShitPart1 + "bad" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "shit" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "combo" + pixelShitPart2);
-		
+
 		for (i in 0...10) {
 			Paths.image(pixelShitPart1 + 'num' + i + pixelShitPart2);
 		}
@@ -5150,7 +5150,7 @@ class PlayState extends MusicBeatState
 							}
 						}
 					case 'toastie':
-						if(/*ClientPrefs.getPref('framerate') <= 60 &&*/ ClientPrefs.getPref('lowQuality') && !ClientPrefs.getPref('globalAntialiasing') /* && !ClientPrefs.getPref('imagesPersist') */) {
+						if(/*ClientPrefs.getPref('framerate') <= 60 &&*/ ClientPrefs.getPref('lowQuality') && !ClientPrefs.getPref('globalAntialiasing')) {
 							unlock = true;
 						}
 					case 'debugger':

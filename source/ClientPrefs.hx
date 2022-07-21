@@ -16,6 +16,7 @@ class ClientPrefs {
 		'globalAntialiasing' => true,								// Bool
 		'noteSplashes' => true,										// Bool
 		'lowQuality' => false,										// Bool
+		'shaders' => false,											// Bool
 		'framerate' => 60,											// Int
 		'cursing' => true,											// Bool
 		'violence' => true,											// Bool
@@ -23,7 +24,6 @@ class ClientPrefs {
 		'hideHud' => false,											// Bool
 		'noteOffset' => 0,											// Int
 		'arrowHSV' => [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],	// Array<Array<Int>>
-		// 'imagesPersist' => false,								// Bool
 		'ghostTapping' => true,										// Bool
 		'timeBarType' => 'Time Left',								// String
 		'scoreZoom' => true,										// Bool
