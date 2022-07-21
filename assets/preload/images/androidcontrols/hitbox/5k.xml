@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="5k.png">
-	<SubTexture name="k1" x="0" y="0" width="256" height="720" frameX="0" frameY="0" frameWidth="256" frameHeight="720"/>
-	<SubTexture name="k2" x="256" y="0" width="256" height="720" frameX="0" frameY="0" frameWidth="256" frameHeight="720"/>
-	<SubTexture name="k3" x="512" y="0" width="256" height="720" frameX="0" frameY="0" frameWidth="256" frameHeight="720"/>
-	<SubTexture name="k4" x="768" y="0" width="256" height="720" frameX="0" frameY="0" frameWidth="256" frameHeight="720"/>
-	<SubTexture name="k5" x="1024" y="0" width="256" height="720" frameX="0" frameY="0" frameWidth="256" frameHeight="720"/>
-</TextureAtlas>

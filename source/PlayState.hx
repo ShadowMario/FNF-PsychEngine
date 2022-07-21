@@ -4481,6 +4481,13 @@ class PlayState extends MusicBeatState
 			doDeathCheck(true);
 		}
 
+		if(daNote.noteType == 'Danger Note') {
+			if(boyfriend.animation.getByName('hurt') != null) {
+					boyfriend.playAnim('hurt', true);
+					boyfriend.specialAnim = true;
+			}
+		}
+
 		//For testing purposes
 		//trace(daNote.missHealth);
 		songMisses++;
@@ -4632,7 +4639,9 @@ class PlayState extends MusicBeatState
 								boyfriend.playAnim('hurt', true);
 								boyfriend.specialAnim = true;
 							}
+
 					}
+					
 				}
 
 				note.wasGoodHit = true;
@@ -4643,7 +4652,7 @@ class PlayState extends MusicBeatState
 					note.destroy();
 				}
 				return;
-			}
+			} 
 
 			if (!note.isSustainNote)
 			{
@@ -4682,7 +4691,7 @@ class PlayState extends MusicBeatState
 						gf.specialAnim = true;
 						gf.heyTimer = 0.6;
 					}
-				}
+				} 
 			}
 
 			if(cpuControlled) {

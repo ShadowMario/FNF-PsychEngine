@@ -214,6 +214,19 @@ class Note extends FlxSprite
 					noAnimation = true;
 				case 'GF Sing':
 					gfNote = true;
+				case 'Danger Note':
+					reloadNote('DANGER');
+					noteSplashTexture = 'DANGERnoteSplashes';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					noMissAnimation = true;
+					if(isSustainNote) {
+						missHealth = 0.3;
+					} else {
+						missHealth = 0.5;
+					}
+					hitCausesMiss = false;
 			}
 			noteType = value;
 		}

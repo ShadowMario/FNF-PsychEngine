@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="3k.png">
-	<SubTexture name="k1" x="0" y="0" width="426" height="720" frameX="0" frameY="0" frameWidth="426" frameHeight="720"/>
-	<SubTexture name="k2" x="426" y="0" width="426" height="720" frameX="0" frameY="0" frameWidth="426" frameHeight="720"/>
-	<SubTexture name="k3" x="852" y="0" width="426" height="720" frameX="0" frameY="0" frameWidth="426" frameHeight="720"/>
-</TextureAtlas>
