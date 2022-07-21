@@ -219,6 +219,8 @@ class FunkinLua {
 
 		// shader shit
 		Lua_helper.add_callback(lua, "initLuaShader", function(name:String, glslVersion:Int = 120) {
+			if(!ClientPrefs.shaders) return false;
+
 			#if (!flash && MODS_ALLOWED && sys)
 			return initLuaShader(name, glslVersion);
 			#else
@@ -228,6 +230,8 @@ class FunkinLua {
 		});
 		
 		Lua_helper.add_callback(lua, "setSpriteShader", function(obj:String, shader:String) {
+			if(!ClientPrefs.shaders) return false;
+
 			#if (!flash && MODS_ALLOWED && sys)
 			if(!runtimeShaders.exists(shader) && !initLuaShader(shader))
 			{
@@ -2727,6 +2731,8 @@ class FunkinLua {
 	
 	function initLuaShader(name:String, ?glslVersion:Int = 120)
 	{
+		if(!ClientPrefs.shaders) return false;
+
 		if(runtimeShaders.exists(name))
 		{
 			luaTrace('Shader $name was already initialized!');
