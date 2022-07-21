@@ -6,14 +6,16 @@ import android.flixel.FlxVirtualPad;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
-import flixel.group.FlxSpriteGroup;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxSave;
 import flixel.util.FlxColor;
 import flixel.input.touch.FlxTouch;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import openfl.utils.Assets;
 
 class AndroidControlsSubState extends FlxSubState
 {
@@ -27,20 +29,19 @@ class AndroidControlsSubState extends FlxSubState
 	var funitext:FlxText;
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
-	var controlitems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Hitbox', 'Keyboard'];
 	var curSelected:Int = 0;
 	var buttonBinded:Bool = false;
 	var bindButton:FlxButton;
 	var resetButton:FlxButton;
+	final controlsItems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Hitbox', 'Keyboard'];
 
 	override function create()
 	{
 		curSelected = AndroidControls.getMode();
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFea71fd;
-		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bg.alpha = 0.6;
+		bg.scrollFactor.set();
 		add(bg);
 
 		resetButton = new FlxButton(FlxG.width - 200, 50, "Reset", function()
@@ -85,13 +86,15 @@ class AndroidControlsSubState extends FlxSubState
 		add(inputvari);
 
 		leftArrow = new FlxSprite(inputvari.x - 60, inputvari.y - 25);
-		leftArrow.frames = FlxAtlasFrames.fromSparrow('assets/android/menu/arrows.png', 'assets/android/menu/arrows.xml');
+		leftArrow.frames = FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/android/menu/arrows.png'),
+			Assets.getText('assets/android/menu/arrows.xml'));
 		leftArrow.animation.addByPrefix('idle', 'arrow left');
 		leftArrow.animation.play('idle');
 		add(leftArrow);
 
 		rightArrow = new FlxSprite(inputvari.x + inputvari.width + 10, inputvari.y - 25);
-		rightArrow.frames = FlxAtlasFrames.fromSparrow('assets/android/menu/arrows.png', 'assets/android/menu/arrows.xml');
+		rightArrow.frames = FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/android/menu/arrows.png'),
+			Assets.getText('assets/android/menu/arrows.xml'));
 		rightArrow.animation.addByPrefix('idle', 'arrow right');
 		rightArrow.animation.play('idle');
 		add(rightArrow);
@@ -129,14 +132,14 @@ class AndroidControlsSubState extends FlxSubState
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.android.justReleased.BACK)
+		if (FlxG.android.justPressed.BACK || FlxG.android.justReleased.BACK)
 		{
 			AndroidControls.setMode(curSelected);
 
-			if (controlitems[Math.floor(curSelected)] == 'Pad-Custom')
-				AndroidControls.setCustom(virtualPad);
+			if (controlsItems[Math.floor(curSelected)] == 'Pad-Custom')
+				AndroidControls.setCustomMode(virtualPad);
 
-			flixel.addons.transition.FlxTransitionableState.skipNextTransOut = true;
+			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
 		}
 
@@ -153,14 +156,14 @@ class AndroidControlsSubState extends FlxSubState
 			else if (touch.overlaps(rightArrow) && touch.justPressed)
 				changeSelection(1);
 
-			if (controlitems[Math.floor(curSelected)] == 'Pad-Custom')
+			if (controlsItems[Math.floor(curSelected)] == 'Pad-Custom')
 			{
 				if (buttonBinded)
 				{
 					if (touch.justReleased)
 					{
-						buttonBinded = false;
 						bindButton = null;
+						buttonBinded = false;
 					}
 					else
 						moveButton(touch, bindButton);
@@ -203,13 +206,13 @@ class AndroidControlsSubState extends FlxSubState
 		curSelected += change;
 
 		if (curSelected < 0)
-			curSelected = controlitems.length - 1;
-		if (curSelected >= controlitems.length)
+			curSelected = controlsItems.length - 1;
+		if (curSelected >= controlsItems.length)
 			curSelected = 0;
 
-		inputvari.text = controlitems[curSelected];
+		inputvari.text = controlsItems[curSelected];
 
-		var daChoice:String = controlitems[Math.floor(curSelected)];
+		var daChoice:String = controlsItems[Math.floor(curSelected)];
 
 		switch (daChoice)
 		{
@@ -226,7 +229,7 @@ class AndroidControlsSubState extends FlxSubState
 			case 'Pad-Custom':
 				hitbox.visible = false;
 				virtualPad.destroy();
-				virtualPad = AndroidControls.getCustom(new FlxVirtualPad(RIGHT_FULL, NONE));
+				virtualPad = AndroidControls.getCustomMode(new FlxVirtualPad(RIGHT_FULL, NONE));
 				add(virtualPad);
 			case 'Pad-Duo':
 				hitbox.visible = false;
@@ -253,8 +256,8 @@ class AndroidControlsSubState extends FlxSubState
 	{
 		bindButton = button;
 
-		bindButton.x = touch.x - (bindButton.width / 2);
-		bindButton.y = touch.y - (0.5 + (bindButton.height / 2));// to be sure the value wil not have .5 in the back of the button offset -saw
+		bindButton.x = touch.x - Std.int(bindButton.width / 2);
+		bindButton.y = touch.y - Std.int(bindButton.height / 2);
 
 		buttonBinded = true;
 	}

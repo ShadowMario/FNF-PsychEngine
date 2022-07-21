@@ -14,6 +14,7 @@ import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.util.FlxDestroyUtil;
 import flixel.input.touch.FlxTouch;
+import openfl.utils.Assets;
 
 class FlxButton extends FlxTypedButton<FlxText>
 {
@@ -134,7 +135,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 
 	function loadDefaultGraphic():Void
 	{
-		loadGraphic('flixel/images/ui/button.png', true, 80, 20);
+		loadGraphic(Assets.getBitmapData('flixel/images/ui/button.png'), true, 80, 20);
 	}
 
 	function setupAnimation(animationName:String, frameIndex:Int):Void

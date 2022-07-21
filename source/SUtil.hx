@@ -128,7 +128,14 @@ class SUtil
 				if (!FileSystem.exists(SUtil.getPath() + 'crash/'))
 					FileSystem.createDirectory(SUtil.getPath() + 'crash/');
 
-				File.saveContent(SUtil.getPath() + 'crash/' + Application.current.meta.get('file') + '_' + FlxStringUtil.formatTime(Sys.time(), true) + '.log', errMsg + "\n");
+				File.saveContent(SUtil.getPath()
+					+ 'crash/'
+					+ Application.current.meta.get('file')
+					+ '_'
+					+ FlxStringUtil.formatTime(Sys.time(), true)
+					+ '.log',
+					errMsg
+					+ "\n");
 			}
 			catch (e:Dynamic)
 				SUtil.applicationAlert('Error!', "Clouldn't save the crash dump because: " + e);
