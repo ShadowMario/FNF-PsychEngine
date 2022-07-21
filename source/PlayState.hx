@@ -4509,7 +4509,7 @@ class PlayState extends MusicBeatState
 				}
 
 				if(note.noteType == 'Poison Note') {
-					healthDrop += 0.1 * elapsed; //can change, BUT NOT TO 0.01, IS SUPER FAST
+					healthDrop += 0.00025; //can change, BUT NOT TO 0.01, IS SUPER FAST
 					healthTaken++;
 				}
 
