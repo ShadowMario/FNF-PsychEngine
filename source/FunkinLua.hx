@@ -8,6 +8,7 @@ import llua.Convert;
 import animateatlas.AtlasFrameMaker;
 import flixel.FlxG;
 import flixel.addons.effects.FlxTrail;
+import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxTween;
@@ -26,6 +27,7 @@ import flixel.FlxSprite;
 import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.filters.BitmapFilter;
+import openfl.filters.ShaderFilter;
 import openfl.utils.Assets;
 import flixel.math.FlxMath;
 import flixel.util.FlxSave;
@@ -254,6 +256,27 @@ class FunkinLua {
 			#else
 			luaTrace("Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
 			#end
+			return false;
+		});
+		
+		Lua_helper.add_callback(lua, "setCameraShader", function(camera:String, shader:String) {
+			#if (!flash && MODS_ALLOWED && sys)
+			if(!runtimeShaders.exists(shader) && !initLuaShader(shader))
+			{
+				luaTrace('Shader $shader is missing! Initialize it with initLuaShader', false, false, FlxColor.RED);
+				return false;
+			}
+			
+			
+			var arr:Array<String> = runtimeShaders.get(shader);
+			cameraFromString(camera).setFilters([new ShaderFilter(new FlxRuntimeShader(arr[0], arr[1]) )]);
+			#else
+			luaTrace("Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
+			#end
+			return false;
+		});
+		Lua_helper.add_callback(lua, "removeCameraShader", function(camera:String) {
+			cameraFromString(camera).setFilters([]);
 			return false;
 		});
 		Lua_helper.add_callback(lua, "removeSpriteShader", function(obj:String) {
@@ -831,7 +854,6 @@ class FunkinLua {
 			}
 			#end
 		});
-new Blur
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
@@ -2632,7 +2654,6 @@ new Blur
 			return str.endsWith(end);
 		});
 		
-		new 
 		call('onCreate', []);
 		#end
 	}
@@ -2640,8 +2661,6 @@ new Blur
 	#if hscript
 	public function initHaxeInterp()
 	{
-		FlxG.camera.fr
-		FlxSprite().
 		if(haxeInterp == null)
 		{
 			haxeInterp = new Interp();
@@ -2674,7 +2693,6 @@ new Blur
 
 	public static function setVarInArray(instance:Dynamic, variable:String, value:Dynamic):Any
 	{
-		FlxSprite().pix
 		var shit:Array<String> = variable.split('[');
 		if(shit.length > 1)
 		{
@@ -2809,7 +2827,6 @@ new Blur
 	function loadFrames(spr:FlxSprite, image:String, spriteType:String)
 	{
 		
-		new FlxAtlasFrames.
 		switch(spriteType.toLowerCase().trim())
 		{
 			case "texture" | "textureatlas" | "tex":
