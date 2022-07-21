@@ -10,6 +10,7 @@ import flixel.FlxG;
 import flixel.addons.effects.FlxTrail;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.graphics.tile.FlxDrawQuadsItem;
 import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
@@ -219,7 +220,6 @@ class FunkinLua {
 		#else
 		set('buildTarget', 'unknown');
 		#end
-
 		// shader shit
 		Lua_helper.add_callback(lua, "initLuaShader", function(name:String, glslVersion:Int = 120) {
 			if(!ClientPrefs.shaders) return false;
@@ -3187,3 +3187,4 @@ class DebugLuaText extends FlxText
 		if(disableTime < 1) alpha = disableTime;
 	}
 }
+
