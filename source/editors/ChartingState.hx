@@ -1462,7 +1462,7 @@ class ChartingState extends MusicBeatState
 			else if(curSelectedNote != null)
 			{
 				// this prevents a crash involving placing an event and then a note but still writing values to the event
-				var keepYourselfSafe = curSelectedNote[1] != null && curSelectedNote[1][curEventSelected] != null;
+				var keepYourselfSafe:Bool = curSelectedNote[1] != null && curSelectedNote[1][curEventSelected] != null;
 				if (keepYourselfSafe && sender == value1InputText) {
 					curSelectedNote[1][curEventSelected][1] = value1InputText.text;
 					updateGrid();
