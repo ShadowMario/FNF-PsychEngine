@@ -16,7 +16,7 @@ class ClientPrefs {
 		'globalAntialiasing' => true,								// Bool
 		'noteSplashes' => true,										// Bool
 		'lowQuality' => false,										// Bool
-		'shaders' => false,											// Bool
+		'shaders' => true,											// Bool
 		'framerate' => 60,											// Int
 		'cursing' => true,											// Bool
 		'violence' => true,											// Bool
