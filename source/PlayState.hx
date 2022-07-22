@@ -2821,7 +2821,7 @@ class PlayState extends MusicBeatState
 
 
 
-		if(ClientPrefs.camMovement) {
+		if(ClientPrefs.camMovement && !PlayState.isPixelStage) {
 			if(camlock) {
 				camFollow.x = camlockx;
 				camFollow.y = camlocky;
@@ -3784,7 +3784,7 @@ class PlayState extends MusicBeatState
 		if (!SONG.notes[curSection].mustHitSection)
 		{
 			moveCamera(true);
-			if(ClientPrefs.camMovement){
+			if(ClientPrefs.camMovement && !PlayState.isPixelStage){
 				campointx = camFollow.x;
 				campointy = camFollow.y;
 				bfturn = false;
@@ -3796,7 +3796,7 @@ class PlayState extends MusicBeatState
 		else
 		{
 			moveCamera(false);
-			if(ClientPrefs.camMovement){
+			if(ClientPrefs.camMovement && !PlayState.isPixelStage){
 				campointx = camFollow.x;
 				campointy = camFollow.y;	
 				bfturn = true;
@@ -4644,7 +4644,7 @@ class PlayState extends MusicBeatState
 		var animToPlay:String = 'sing' + Note.keysShit.get(mania).get('anims')[note.noteData];
 		var camTimer:FlxTimer;
 
-		if (ClientPrefs.camMovement) {
+		if (ClientPrefs.camMovement && !PlayState.isPixelStage) {
 			if(!bfturn) {
 				if(animToPlay == "singLEFT") {
 					camlockx = campointx - camMovement;
@@ -4700,7 +4700,7 @@ class PlayState extends MusicBeatState
 			var animToPlay:String = 'sing' + Note.keysShit.get(mania).get('anims')[note.noteData];
 			var camTimer:FlxTimer;
 	
-			if (ClientPrefs.camMovement) {
+			if (ClientPrefs.camMovement && !PlayState.isPixelStage) {
 				if(bfturn) {
 					if(animToPlay == "singLEFT") {
 						camlockx = campointx - camMovement;
