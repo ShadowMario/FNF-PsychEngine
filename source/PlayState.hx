@@ -1,5 +1,6 @@
 package;
 
+import haxe.Timer;
 import flixel.graphics.FlxGraphic;
 #if desktop
 import Discord.DiscordClient;
@@ -1952,6 +1953,19 @@ class PlayState extends MusicBeatState
 	public var countdownGo:FlxSprite;
 	public static var startOnTime:Float = 0;
 
+	public var camMovement:Float = 40;
+	public var velocity:Float = 1;
+	public var campointx:Float = 0;
+	public var campointy:Float = 0;
+	public var camlockx:Float = 0;
+	public var camlocky:Float = 0;
+	public var camlock:Bool = false;
+	public var bfturn:Bool = false;
+
+
+
+	
+
 	public function startCountdown():Void
 	{
 		if(startedCountdown) {
@@ -2805,6 +2819,15 @@ class PlayState extends MusicBeatState
 
 		callOnLuas('onUpdate', [elapsed]);
 
+
+
+		if(ClientPrefs.camMovement) {
+			if(camlock) {
+				camFollow.x = camlockx;
+				camFollow.y = camlocky;
+			}
+		}
+
 		switch (curStage)
 		{
 			case 'tank':
@@ -3246,6 +3269,8 @@ class PlayState extends MusicBeatState
 		setOnLuas('botPlay', cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
 	}
+
+
 
 	function openPauseMenu()
 	{
@@ -3759,11 +3784,25 @@ class PlayState extends MusicBeatState
 		if (!SONG.notes[curSection].mustHitSection)
 		{
 			moveCamera(true);
+			if(ClientPrefs.camMovement){
+				campointx = camFollow.x;
+				campointy = camFollow.y;
+				bfturn = false;
+				camlock = false;
+				cameraSpeed = 1;
+			}
 			callOnLuas('onMoveCamera', ['dad']);
 		}
 		else
 		{
 			moveCamera(false);
+			if(ClientPrefs.camMovement){
+				campointx = camFollow.x;
+				campointy = camFollow.y;	
+				bfturn = true;
+				camlock = false;
+				cameraSpeed = 1;
+			}
 			callOnLuas('onMoveCamera', ['boyfriend']);
 		}
 	}
@@ -3832,7 +3871,6 @@ class PlayState extends MusicBeatState
 			});
 		}
 	}
-
 
 	public var transitioning = false;
 	public function endSong():Void
@@ -4554,7 +4592,6 @@ class PlayState extends MusicBeatState
 
 			if(boyfriend.hasMissAnimations) {
 				boyfriend.playAnim('sing' + Note.keysShit.get(mania).get('anims')[direction] + 'miss', true);
-
 			}
 			vocals.volume = 0;
 		}
@@ -4604,6 +4641,37 @@ class PlayState extends MusicBeatState
 		StrumPlayAnim(true, Std.int(Math.abs(note.noteData)) % Note.ammo[mania], time);
 		note.hitByOpponent = true;
 
+		var animToPlay:String = 'sing' + Note.keysShit.get(mania).get('anims')[note.noteData];
+		var camTimer:FlxTimer;
+
+		if (ClientPrefs.camMovement) {
+			if(!bfturn) {
+				if(animToPlay == "singLEFT") {
+					camlockx = campointx - camMovement;
+					camlocky = campointy;
+				} else if(animToPlay == "singDOWN") {
+					camlocky = campointy + camMovement;
+					camlockx = campointx;
+				} else if(animToPlay == "singUP") {
+					camlocky = campointy - camMovement;
+					camlockx = campointx;
+				} else if(animToPlay == "singRIGHT") {
+					camlockx = campointx + camMovement;
+					camlocky = campointy;
+				}
+				camTimer = new FlxTimer().start(1);
+				cameraSpeed = velocity;
+				camlock = true;
+				if(camTimer.finished) {
+						camlock = false;
+						cameraSpeed = 1;
+						camFollow.x = campointx;
+						camFollow.y = campointy;
+						camTimer = null;
+				} 
+			}
+		}
+
 		callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
 
 		if (!note.isSustainNote)
@@ -4612,6 +4680,7 @@ class PlayState extends MusicBeatState
 			notes.remove(note, true);
 			note.destroy();
 		}
+		
 	}
 
 	function goodNoteHit(note:Note):Void
@@ -4623,6 +4692,40 @@ class PlayState extends MusicBeatState
 			if (ClientPrefs.hitsoundVolume > 0 && !note.hitsoundDisabled)
 			{
 				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
+			}
+
+			var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
+			if(!note.mustPress) strumGroup = opponentStrums;
+
+			var animToPlay:String = 'sing' + Note.keysShit.get(mania).get('anims')[note.noteData];
+			var camTimer:FlxTimer;
+	
+			if (ClientPrefs.camMovement) {
+				if(bfturn) {
+					if(animToPlay == "singLEFT") {
+						camlockx = campointx - camMovement;
+						camlocky = campointy;
+					} else if(animToPlay == "singDOWN") {
+						camlocky = campointy + camMovement;
+						camlockx = campointx;
+					} else if(animToPlay == "singUP") {
+						camlocky = campointy - camMovement;
+						camlockx = campointx;
+					} else if(animToPlay == "singRIGHT") {
+						camlockx = campointx + camMovement;
+						camlocky = campointy;
+					}
+					camTimer = new FlxTimer().start(1);
+					cameraSpeed = velocity;
+					camlock = true;
+					if(camTimer.finished) {
+							camlock = false;
+							cameraSpeed = 1;
+							camFollow.x = campointx;
+							camFollow.y = campointy;
+							camTimer = null;
+					} 
+				}
 			}
 
 			if(note.hitCausesMiss) {
@@ -4715,6 +4818,8 @@ class PlayState extends MusicBeatState
 			var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
 			var leData:Int = Math.round(Math.abs(note.noteData));
 			var leType:String = note.noteType;
+
+			
 			callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
 
 			if (!note.isSustainNote)
@@ -4725,6 +4830,10 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
+
+
+
+
 
 	function spawnNoteSplashOnNote(note:Note) {
 		if(ClientPrefs.noteSplashes && note != null) {

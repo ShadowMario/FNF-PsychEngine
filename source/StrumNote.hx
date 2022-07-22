@@ -56,7 +56,7 @@ class StrumNote extends FlxSprite
 		if(PlayState.isPixelStage)
 			{
 				loadGraphic(Paths.image('pixelUI/' + texture));
-				width = width / 18;
+				width = width / 10;
 				height = height / 5;
 				antialiasing = false;
 				loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
@@ -66,8 +66,8 @@ class StrumNote extends FlxSprite
 				updateHitbox();
 				antialiasing = false;
 				animation.add('static', [daFrames[noteData]]);
-				animation.add('pressed', [daFrames[noteData] + 18, daFrames[noteData] + 36], 12, false);
-				animation.add('confirm', [daFrames[noteData] + 54, daFrames[noteData] + 72], 24, false);
+				animation.add('pressed', [daFrames[noteData] + 10, daFrames[noteData] + 20], 12, false);
+				animation.add('confirm', [daFrames[noteData] + 30, daFrames[noteData] + 40], 24, false);
 				//i used calculator
 			}
 		else

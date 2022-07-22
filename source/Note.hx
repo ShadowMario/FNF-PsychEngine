@@ -364,13 +364,13 @@ class Note extends FlxSprite
 		if(PlayState.isPixelStage) {
 			if(isSustainNote) {
 				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'));
-				width = width / 18;
+				width = width / 10;
 				height = height / 2;
 				originalHeightForCalcs = height;
 				loadGraphic(Paths.image('pixelUI/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
 			} else {
 				loadGraphic(Paths.image('pixelUI/' + blahblah));
-				width = width / 18;
+				width = width / 10;
 				height = height / 5;
 				loadGraphic(Paths.image('pixelUI/' + blahblah), true, Math.floor(width), Math.floor(height));
 			}
@@ -435,11 +435,11 @@ class Note extends FlxSprite
 		if(isSustainNote) {
 			for (i in 0...gfxLetter.length) {
 				animation.add(gfxLetter[i] + ' hold', [i]);
-				animation.add(gfxLetter[i] + ' tail', [i + 18]);
+				animation.add(gfxLetter[i] + ' tail', [i + 10]);
 			}
 		} else {
 			for (i in 0...gfxLetter.length) {
-				animation.add(gfxLetter[i], [i + 18]);
+				animation.add(gfxLetter[i], [i + 10]);
 			}
 		}
 	}
