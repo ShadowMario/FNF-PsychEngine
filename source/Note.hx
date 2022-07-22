@@ -71,7 +71,7 @@ class Note extends FlxSprite
 		8 => ["letters" => ["A", "B", "C", "D", "E", "F", "G", "H", "I"], "anims" => ["LEFT", "DOWN", "UP", "RIGHT", "UP", "LEFT", "DOWN", "UP", "RIGHT"],
 			 "strumAnims" => ["LEFT", "DOWN", "UP", "RIGHT", "SPACE", "LEFT", "DOWN", "UP", "RIGHT"], "pixelAnimIndex" => [0, 1, 2, 3, 4, 5, 6, 7, 8]],
 
-		9 => ["letters" => ["A", "B", "C", "D", "E", "N", "F", "G", "H", "I"], "anims" => ["LEFT", "DOWN", "UP", "RIGHT", "UP", "UP", "LEFT", "DOWN", "UP", "RIGHT"],
+		9 => ["letters" => ["A", "B", "C", "D", "E", "J", "F", "G", "H", "I"], "anims" => ["LEFT", "DOWN", "UP", "RIGHT", "UP", "UP", "LEFT", "DOWN", "UP", "RIGHT"],
 			 "strumAnims" => ["LEFT", "DOWN", "UP", "RIGHT", "SPACE", "CIRCLE", "LEFT", "DOWN", "UP", "RIGHT"], "pixelAnimIndex" => [0, 1, 2, 3, 4, 13, 5, 6, 7, 8]]
 	];
 
@@ -227,6 +227,19 @@ class Note extends FlxSprite
 						missHealth = 0.5;
 					}
 					hitCausesMiss = false;
+				case 'Kill Note':
+					ignoreNote = mustPress;
+					reloadNote('KILL');
+					noteSplashTexture = 'HURTnoteSplashes';
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					if(isSustainNote) {
+						missHealth = 1;
+					} else {
+						missHealth = 1;
+					}
+					hitCausesMiss = true;
 			}
 			noteType = value;
 		}

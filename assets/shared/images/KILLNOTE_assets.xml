@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="KILLNOTE_assets.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="A0000" x="127" y="7" width="150" height="206"/>
+	<SubTexture name="A hold0000" x="67" y="7" width="50" height="44"/>
+	<SubTexture name="A tail0000" x="7" y="7" width="50" height="64"/>
+</TextureAtlas>
