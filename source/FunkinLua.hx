@@ -215,7 +215,7 @@ class FunkinLua {
 
 		// shader shit
 		Lua_helper.add_callback(lua, "initLuaShader", function(name:String, glslVersion:Int = 120) {
-			if(!ClientPrefs.shaders) return false;
+			if(!ClientPrefs.getPref('shaders')) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
 			return initLuaShader(name, glslVersion);
@@ -224,9 +224,9 @@ class FunkinLua {
 			#end
 			return false;
 		});
-		
+
 		Lua_helper.add_callback(lua, "setSpriteShader", function(obj:String, shader:String) {
-			if(!ClientPrefs.shaders) return false;
+			if(!ClientPrefs.getPref('shaders')) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
 			if(!PlayState.instance.runtimeShaders.exists(shader) && !initLuaShader(shader))
@@ -2749,10 +2749,10 @@ class FunkinLua {
 		}
 		return null;
 	}
-	
+
 	function initLuaShader(name:String, ?glslVersion:Int = 120)
 	{
-		if(!ClientPrefs.shaders) return false;
+		if(!ClientPrefs.getPref('shaders')) return false;
 
 		if(PlayState.instance.runtimeShaders.exists(name))
 		{
@@ -2766,7 +2766,7 @@ class FunkinLua {
 
 		for(mod in Paths.getGlobalMods())
 			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
-		
+
 		for (folder in foldersToCheck)
 		{
 			if(FileSystem.exists(folder))
@@ -3013,7 +3013,7 @@ class FunkinLua {
 			case Lua.LUA_TSTRING:
 				ret = Lua.tostring(l, -1);
 		}
-		
+
 		return ret;
 	}
 
@@ -3031,7 +3031,7 @@ class FunkinLua {
 			if (type != Lua.LUA_TFUNCTION) {
 				return Function_Continue;
 			}
-			
+
 			for(arg in args) {
 				Convert.toLua(lua, arg);
 			}
