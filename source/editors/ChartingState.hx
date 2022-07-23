@@ -45,6 +45,7 @@ import lime.media.AudioBuffer;
 import haxe.io.Bytes;
 import flash.geom.Rectangle;
 import flixel.util.FlxSort;
+import FunkinLua;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -194,7 +195,7 @@ class ChartingState extends MusicBeatState
 		192
 	];
 
-
+	private var debugGroup:FlxTypedGroup<DebugLuaText>;
 
 	var text:String = "";
 	public static var vortex:Bool = false;
@@ -385,6 +386,10 @@ class ChartingState extends MusicBeatState
 		add(zoomTxt);
 
 		updateGrid();
+		
+		debugGroup = new FlxTypedGroup<DebugLuaText>();
+		add(debugGroup);
+		
 		super.create();
 	}
 
@@ -2901,14 +2906,48 @@ class ChartingState extends MusicBeatState
 	{
 		//shitty null fix, i fucking hate it when this happens
 		//make it look sexier if possible
-		if (CoolUtil.difficulties[PlayState.storyDifficulty] != CoolUtil.defaultDifficulty) {
-			if(CoolUtil.difficulties[PlayState.storyDifficulty] == null){
-				PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
-			}else{
-				PlayState.SONG = Song.loadFromJson(song.toLowerCase() + "-" + CoolUtil.difficulties[PlayState.storyDifficulty], song.toLowerCase());
+		try {
+			var defaultDiff:String = CoolUtil.defaultDifficulty.toLowerCase();
+			var songLower:String = song.toLowerCase();
+			
+			var ind:Int = song.lastIndexOf("-");
+			var success:Bool = false;
+			if (ind != -1) {
+				try {
+					PlayState.SONG = Song.loadFromJson(songLower, songLower.substring(0, ind));
+					success = true;
+					
+					// after loaded
+					var diff:String = songLower.substring(ind + 1);
+					var ind:Int = CoolUtil.lowerDifficulties.indexOf(diff);
+					if (ind != -1) PlayState.storyDifficulty = ind;
+				}
+				catch(e) {}
 			}
-		}else{
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+			if (!success) {
+				var diff:String = CoolUtil.difficulties[PlayState.storyDifficulty];
+				if (diff != null) diff = diff.toLowerCase();
+				
+				var success:Bool = false;
+				if (diff != null && diff != defaultDiff) {
+					try {
+						PlayState.SONG = Song.loadFromJson(songLower + "-" + diff, songLower);
+						success = true;
+					}
+					catch(e) {}
+				}
+				if (!success) {
+					PlayState.SONG = Song.loadFromJson(songLower, songLower);
+					
+					// after loaded
+					var ind:Int = CoolUtil.lowerDifficulties.indexOf(defaultDiff);
+					if (ind != -1) PlayState.storyDifficulty = ind;
+				}
+			}
+		}
+		catch(e) {
+			addTextToDebug("Problem with Loading Song data \"" + song.toLowerCase() + "\"", 0xFFFF0000);
+			return;
 		}
 		MusicBeatState.resetState();
 	}
@@ -2978,7 +3017,7 @@ class ChartingState extends MusicBeatState
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
-		FlxG.log.notice("Successfully saved LEVEL DATA.");
+		addTextToDebug("Successfully saved Song data");
 	}
 
 	/**
@@ -3001,7 +3040,7 @@ class ChartingState extends MusicBeatState
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
-		FlxG.log.error("Problem saving Level data");
+		addTextToDebug("Problem saving Song data", 0xFFFF0000);
 	}
 
 	function getSectionBeats(?section:Null<Int> = null)
@@ -3011,6 +3050,24 @@ class ChartingState extends MusicBeatState
 		
 		if(_song.notes[section] != null) val = _song.notes[section].sectionBeats;
 		return val != null ? val : 4;
+	}
+	
+	public function addTextToDebug(text:String, color:FlxColor = 0xFFFFFFFF) {
+		debugGroup.forEachAlive(function(spr:DebugLuaText) {
+			spr.y += 20;
+		});
+
+		if(debugGroup.members.length > 34) {
+			var blah = debugGroup.members[34];
+			blah.destroy();
+			debugGroup.remove(blah);
+		}
+		debugGroup.insert(0, new DebugLuaText(text, debugGroup, color));
+		#if debug
+		FlxG.log.notice(text);
+		#else
+		trace(text);
+		#end
 	}
 }
 
