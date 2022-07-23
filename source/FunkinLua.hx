@@ -2697,8 +2697,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "directoryFileList", function(folder:String) {
 			var list:Array<String> = [];
 			#if sys
-			if(FileSystem.exists(folder)) {
-				for (folder in FileSystem.readDirectory(folder)) {
+			if(FileSystem.exists(SUtil.getPath() + folder)) {
+				for (folder in FileSystem.readDirectory(SUtil.getPath() + folder)) {
 					if (!list.contains(folder)) {
 						list.push(folder);
 					}
