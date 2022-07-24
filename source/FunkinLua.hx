@@ -2629,7 +2629,27 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "stringEndsWith", function(str:String, end:String) {
 			return str.endsWith(end);
 		});
+		Lua_helper.add_callback(lua, "stringSplit", function(str:String, split:String) {
+			return str.split(split);
+		});
+		Lua_helper.add_callback(lua, "stringTrim", function(str:String) {
+			return str.trim();
+		});
 		
+		Lua_helper.add_callback(lua, "directoryFileList", function(folder:String) {
+			var list:Array<String> = [];
+			#if sys
+			if(FileSystem.exists(folder)) {
+				for (folder in FileSystem.readDirectory(folder)) {
+					if (!list.contains(folder)) {
+						list.push(folder);
+					}
+				}
+			}
+			#end
+			return list;
+		});
+
 		call('onCreate', []);
 		#end
 	}
