@@ -255,27 +255,6 @@ class FunkinLua {
 			return false;
 		});
 		
-		Lua_helper.add_callback(lua, "setCameraShader", function(camera:String, shader:String) {
-			if(!ClientPrefs.shaders) return false;
-			#if (!flash && MODS_ALLOWED && sys)
-			if(!PlayState.instance.runtimeShaders.exists(shader) && !initLuaShader(shader))
-			{
-				luaTrace('Shader $shader is missing! Initialize it with initLuaShader', false, false, FlxColor.RED);
-				return false;
-			}
-			
-			
-			var arr:Array<String> = PlayState.instance.runtimeShaders.get(shader);
-			cameraFromString(camera).setFilters([new ShaderFilter(new FlxRuntimeShader(arr[0], arr[1]) )]);
-			#else
-			luaTrace("Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
-			#end
-			return false;
-		});
-		Lua_helper.add_callback(lua, "removeCameraShader", function(camera:String) {
-			cameraFromString(camera).setFilters([]);
-			return false;
-		});
 		Lua_helper.add_callback(lua, "removeSpriteShader", function(obj:String) {
 			var killMe:Array<String> = obj.split('.');
 			var leObj:FlxSprite = getObjectDirectly(killMe[0]);
