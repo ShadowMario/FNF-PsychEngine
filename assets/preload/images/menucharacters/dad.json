@@ -1,11 +1,12 @@
 {
-	
 	"image": "Menu_Dad",
+	"scale": 1,
 	"position": [
 		0,
 		0
 	],
-	"scale": 1,
 	"idle_anim": "M Dad Idle",
-	"confirm_anim": "M Dad Idle"
+	"confirm_anim": "M Dad Idle",
+	"flipX": false,
+	"noAntialiasing": false
 }

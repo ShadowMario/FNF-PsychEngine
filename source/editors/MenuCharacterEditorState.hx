@@ -46,7 +46,8 @@ class MenuCharacterEditorState extends MusicBeatState
 			position: [0, 0],
 			idle_anim: 'M Dad Idle',
 			confirm_anim: 'M Dad Idle',
-			flipX: false
+			flipX: false,
+			noAntialiasing: false
 		};
 		#if desktop
 		// Updating Discord Rich Presence
@@ -136,6 +137,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		opponentCheckbox = new FlxUICheckBox(10, 20, null, null, "Opponent", 100);
 		opponentCheckbox.callback = function()
 		{
+			noAntialiasingCheckbox.y = confirmInputText.y + 10;
 			curTypeSelected = 0;
 			updateCharTypeBox();
 		};
@@ -143,6 +145,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		boyfriendCheckbox = new FlxUICheckBox(opponentCheckbox.x, opponentCheckbox.y + 40, null, null, "Boyfriend", 100);
 		boyfriendCheckbox.callback = function()
 		{
+			noAntialiasingCheckbox.y = confirmInputText.y + 15;
 			curTypeSelected = 1;
 			updateCharTypeBox();
 		};
@@ -150,6 +153,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		girlfriendCheckbox = new FlxUICheckBox(boyfriendCheckbox.x, boyfriendCheckbox.y + 40, null, null, "Girlfriend", 100);
 		girlfriendCheckbox.callback = function()
 		{
+			noAntialiasingCheckbox.y = confirmInputText.y + 10;
 			curTypeSelected = 2;
 			updateCharTypeBox();
 		};
@@ -166,6 +170,7 @@ class MenuCharacterEditorState extends MusicBeatState
 	var confirmDescText:FlxText;
 	var scaleStepper:FlxUINumericStepper;
 	var flipXCheckbox:FlxUICheckBox;
+	var noAntialiasingCheckbox:FlxUICheckBox;
 	function addCharacterUI() {
 		var tab_group = new FlxUI(null, UI_mainbox);
 		tab_group.name = "Character";
@@ -184,6 +189,18 @@ class MenuCharacterEditorState extends MusicBeatState
 			characterFile.flipX = flipXCheckbox.checked;
 		};
 
+		noAntialiasingCheckbox = new FlxUICheckBox(10, confirmInputText.y + 10, null, null, "No Antialiasing", 100);
+		noAntialiasingCheckbox.callback = function()
+		{
+			if (noAntialiasingCheckbox.checked) {
+				grpWeekCharacters.members[curTypeSelected].antialiasing = false;
+				characterFile.noAntialiasing = true;
+			} else {
+				grpWeekCharacters.members[curTypeSelected].antialiasing = ClientPrefs.globalAntialiasing;
+				characterFile.noAntialiasing = false;
+			}
+		};
+
 		var reloadImageButton:FlxButton = new FlxButton(140, confirmInputText.y + 30, "Reload Char", function() {
 			reloadSelectedCharacter();
 		});
@@ -195,6 +212,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		tab_group.add(new FlxText(10, idleInputText.y - 18, 0, 'Idle animation on the .XML:'));
 		tab_group.add(new FlxText(scaleStepper.x, scaleStepper.y - 18, 0, 'Scale:'));
 		tab_group.add(flipXCheckbox);
+		tab_group.add(noAntialiasingCheckbox);
 		tab_group.add(reloadImageButton);
 		tab_group.add(confirmDescText);
 		tab_group.add(imageInputText);
@@ -239,6 +257,11 @@ class MenuCharacterEditorState extends MusicBeatState
 		char.animation.addByPrefix('idle', characterFile.idle_anim, 24);
 		if(curTypeSelected == 1) char.animation.addByPrefix('confirm', characterFile.confirm_anim, 24, false);
 		char.flipX = (characterFile.flipX == true);
+
+		if (noAntialiasingCheckbox.checked)
+			char.antialiasing = false;
+		else
+			char.antialiasing = ClientPrefs.globalAntialiasing;
 
 		char.scale.set(characterFile.scale, characterFile.scale);
 		char.updateHitbox();
@@ -368,6 +391,8 @@ class MenuCharacterEditorState extends MusicBeatState
 					idleInputText.text = characterFile.image;
 					confirmInputText.text = characterFile.image;
 					scaleStepper.value = characterFile.scale;
+					flipXCheckbox.checked = characterFile.flipX;
+					noAntialiasingCheckbox.checked = characterFile.noAntialiasing;
 					updateOffset();
 					_file = null;
 					return;
