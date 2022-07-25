@@ -1306,6 +1306,10 @@ class FunkinLua {
 			return PlayState.instance.health;
 		});
 
+		Lua_helper.add_callback(lua, "removeHealth", function(value:Float = 0) {
+			PlayState.instance.health -= value;
+		});
+
 		Lua_helper.add_callback(lua, "getColorFromHex", function(color:String) {
 			if(!color.startsWith('0x')) color = '0xff' + color;
 			return Std.parseInt(color);
