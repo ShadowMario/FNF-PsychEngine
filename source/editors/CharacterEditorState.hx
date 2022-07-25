@@ -758,7 +758,28 @@ class CharacterEditorState extends MusicBeatState
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
 		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
-			if(sender == healthIconInputText) {
+			if(sender == healthIconInputText && healthIconInputText.text != 'AUX' // Fix crash when using forbidden Windows names.
+				|| healthIconInputText.text != 'CON'
+			    || healthIconInputText.text != 'PRN'
+				|| healthIconInputText.text != 'NUL'
+				|| healthIconInputText.text != 'COM1'
+				|| healthIconInputText.text != 'COM2'
+				|| healthIconInputText.text != 'COM3'
+				|| healthIconInputText.text != 'COM4'
+				|| healthIconInputText.text != 'COM5'
+				|| healthIconInputText.text != 'COM6'
+				|| healthIconInputText.text != 'COM7'
+				|| healthIconInputText.text != 'COM8'
+				|| healthIconInputText.text != 'COM9'
+				|| healthIconInputText.text != 'LPT1'
+				|| healthIconInputText.text != 'LPT2'
+				|| healthIconInputText.text != 'LPT3'
+				|| healthIconInputText.text != 'LPT4'
+				|| healthIconInputText.text != 'LPT5'
+				|| healthIconInputText.text != 'LPT6'
+				|| healthIconInputText.text != 'LPT7'
+				|| healthIconInputText.text != 'LPT8'
+				|| healthIconInputText.text != 'LPT9') {
 				leHealthIcon.changeIcon(healthIconInputText.text);
 				char.healthIcon = healthIconInputText.text;
 				updatePresence();
