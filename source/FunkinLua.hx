@@ -8,6 +8,9 @@ import llua.Convert;
 import animateatlas.AtlasFrameMaker;
 import flixel.FlxG;
 import flixel.addons.effects.FlxTrail;
+import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.graphics.tile.FlxDrawQuadsItem;
 import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
@@ -25,6 +28,7 @@ import flixel.FlxSprite;
 import openfl.Lib;
 import openfl.display.BlendMode;
 import openfl.filters.BitmapFilter;
+import openfl.filters.ShaderFilter;
 import openfl.utils.Assets;
 import flixel.math.FlxMath;
 import flixel.util.FlxSave;
@@ -212,7 +216,6 @@ class FunkinLua {
 		#else
 		set('buildTarget', 'unknown');
 		#end
-
 		// shader shit
 		Lua_helper.add_callback(lua, "initLuaShader", function(name:String, glslVersion:Int = 120) {
 			if(!ClientPrefs.shaders) return false;
@@ -251,6 +254,7 @@ class FunkinLua {
 			#end
 			return false;
 		});
+		
 		Lua_helper.add_callback(lua, "removeSpriteShader", function(obj:String) {
 			var killMe:Array<String> = obj.split('.');
 			var leObj:FlxSprite = getObjectDirectly(killMe[0]);
@@ -826,7 +830,6 @@ class FunkinLua {
 			}
 			#end
 		});
-
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
@@ -2823,6 +2826,7 @@ class FunkinLua {
 
 	function loadFrames(spr:FlxSprite, image:String, spriteType:String)
 	{
+		
 		switch(spriteType.toLowerCase().trim())
 		{
 			case "texture" | "textureatlas" | "tex":
