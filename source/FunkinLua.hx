@@ -3043,11 +3043,15 @@ class FunkinLua {
 
 		lastCalledFunction = func;
 		try {
-			if(lua == null) return Function_Continue;
+			if(lua == null) {
+				Lua.pop(lua, 1);
+				return Function_Continue;
+			}
 
 			Lua.getglobal(lua, func);
 			var type:Int = Lua.type(lua, -1);
 			if (type != Lua.LUA_TFUNCTION) {
+				Lua.pop(lua, 1);
 				return Function_Continue;
 			}
 			
