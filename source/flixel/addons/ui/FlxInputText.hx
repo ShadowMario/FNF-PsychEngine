@@ -308,10 +308,11 @@ class FlxInputText extends FlxText
 
 		#if FLX_MOUSE
 		// Set focus and caretIndex as a response to mouse press
+
 		if (FlxG.mouse.justPressed)
 		{
 			var hadFocus:Bool = hasFocus;
-			if (FlxG.mouse.overlaps(this))
+			if (this.overlapsPoint(FlxG.mouse.getWorldPosition(CoolUtil.daCam),false))
 			{
 				caretIndex = getCaretIndex();
 				hasFocus = true;
