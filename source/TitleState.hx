@@ -654,14 +654,40 @@ class TitleState extends MusicBeatState
 					#else
 					addMoreText('present');
 					#end
+				case 3:
+					case 2:
+					#if PSYCH_WATERMARKS
+					createCoolText(['Original Game Team'], 15);
+					#else
+					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+					#end
+				// credTextShit.visible = true;
+				case 4:
+					case 2:
+					#if PSYCH_WATERMARKS
+					createCoolText(['Vs Trio Tunes Team']
+				case 5:
+					#if PSYCH_WATERMARKS;
+					addMoreText('Tapitaxd12', 15);
+					addMoreText('sr 90s', 15);
+					addMoreText('BoyMusic', 15);
+					addMoreText('Mainolo'), 15);
+					addMoreText('The Real Daog'), 15;
+					addMoreText('A un Random'), 15;
+					addMoreText('TheSpider452'), 15;
+					addMoreText('Tord emo xd'), 15;
+					addMoreText('Crown Star Matter'), 15;
+					#else
+					addMoreText('present');
+					#end
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
-				case 5:
+				case 6:
 					deleteCoolText();
 				// credTextShit.visible = false;
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
-				case 6:
+				case 7:
 					#if PSYCH_WATERMARKS
 					createCoolText(['Not associated', 'with'], -40);
 					#else
