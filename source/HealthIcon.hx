@@ -1,7 +1,6 @@
 package;
 
 import flixel.FlxSprite;
-import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 

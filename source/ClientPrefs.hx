@@ -3,7 +3,6 @@ package;
 import flixel.FlxG;
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
-import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs {

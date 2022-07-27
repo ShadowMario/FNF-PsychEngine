@@ -1,13 +1,9 @@
 package;
 import flixel.*;
-import flixel.FlxSubState;
-import flixel.addons.ui.FlxUIButton;
 import flixel.addons.ui.FlxUIPopup;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
-import openfl.display.BitmapData;
 import openfl.geom.Rectangle;
 
 /**

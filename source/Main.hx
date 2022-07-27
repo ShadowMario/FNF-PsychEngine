@@ -1,10 +1,7 @@
 package;
 
-import flixel.graphics.FlxGraphic;
-import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
-import openfl.Assets;
 import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
@@ -20,7 +17,6 @@ import haxe.io.Path;
 import Discord.DiscordClient;
 import sys.FileSystem;
 import sys.io.File;
-import sys.io.Process;
 #end
 
 using StringTools;
