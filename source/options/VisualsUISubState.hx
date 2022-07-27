@@ -62,6 +62,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+		
+			var option:Option = new Option('Screen Shake',
+			"Uncheck this if you're sensitive to shake!",
+			'shaking',
+			'bool',
+			true);
+		addOption(option);
 
 		var option:Option = new Option('Camera Zooms',
 			"If unchecked, the camera won't zoom in on a beat hit.",
