@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxCamera;
 import flixel.FlxG;
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
@@ -17,6 +18,7 @@ using StringTools;
 
 class CoolUtil
 {
+	public static var daCam:FlxCamera;
 	public static var defaultDifficulties:Array<String> = [
 		'Easy',
 		'Normal',
