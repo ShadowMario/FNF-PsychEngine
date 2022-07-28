@@ -130,6 +130,7 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="hscript" />
 	<define name="hscriptPos" />
+	<haxeflag name="-dce no" />
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
@@ -138,7 +139,7 @@
 	<haxelib name="faxe" if='switch'/>
 	<!--<haxelib name="polymod"/> -->
 	<haxelib name="discord_rpc" if="desktop"/>
-	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
+	<haxelib name="hxcpp-debug-server" if="debug"/>
 
 	<!-- <haxelib name="markdown" /> -->
 	<!-- <haxelib name="HtmlParser" /> -->
