@@ -72,7 +72,7 @@ class FunkinLua {
 	public static var haxeInterp:Interp = null;
 	#end
 	
-	public function new(script:String) {
+	public function new(script:String, ?fromString:Bool = false) {
 		#if LUA_ALLOWED
 		lua = LuaL.newstate();
 		LuaL.openlibs(lua);
@@ -84,6 +84,8 @@ class FunkinLua {
 		//LuaL.dostring(lua, CLENSE);
 		try{
 			var result:Dynamic = LuaL.dofile(lua, script);
+			if (fromString)
+				result = LuaL.dostring(lua, script);
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
 				trace('Error on lua script! ' + resultStr);
