@@ -7,7 +7,11 @@ import flixel.addons.ui.interfaces.IHasParams;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
+#if android
+import android.flixel.FlxButton;
+#else
 import flixel.ui.FlxButton;
+#end
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxStringUtil;
@@ -433,14 +437,44 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 		#if FLX_MOUSE
 		if (dropPanel.visible)
 		{
-			if(list.length > 1 && canScroll) {
-				if(FlxG.mouse.wheel > 0 || FlxG.keys.justPressed.UP) {
+			#if android //thanks gamerbross -saw
+			if(list.length > 1 && canScroll) 
+			{
+				for (swipe in FlxG.swipes)
+				{
+					var f = swipe.startPosition.x - swipe.endPosition.x;
+					var g = swipe.startPosition.y - swipe.endPosition.y;
+					if (25 <= Math.sqrt(f * f + g * g))
+					{
+						if ((-45 <= swipe.startPosition.angleBetween(swipe.endPosition) && 45 >= swipe.startPosition.angleBetween(swipe.endPosition)))
+						{
+							// Go down
+							currentScroll++;
+							if(currentScroll >= list.length) currentScroll = list.length-1;
+							updateButtonPositions();
+						}
+						else if (-180 <= swipe.startPosition.angleBetween(swipe.endPosition) && -135 >= swipe.startPosition.angleBetween(swipe.endPosition) || (135 <= swipe.startPosition.angleBetween(swipe.endPosition) && 180 >= swipe.startPosition.angleBetween(swipe.endPosition)))
+						{
+							// Go up
+							--currentScroll;
+							if(currentScroll < 0) currentScroll = 0;
+							updateButtonPositions();
+						}
+					}
+				}
+			}
+			#else
+			if(list.length > 1 && canScroll) 
+			{
+				if(FlxG.mouse.wheel > 0 || FlxG.keys.justPressed.UP) 
+				{
 					// Go up
 					--currentScroll;
 					if(currentScroll < 0) currentScroll = 0;
 					updateButtonPositions();
 				}
-				else if (FlxG.mouse.wheel < 0 || FlxG.keys.justPressed.DOWN) {
+				else if (FlxG.mouse.wheel < 0 || FlxG.keys.justPressed.DOWN) 
+				{
 					// Go down
 					currentScroll++;
 					if(currentScroll >= list.length) currentScroll = list.length-1;
@@ -452,6 +486,7 @@ class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget impleme
 			{
 				showList(false);
 			}
+			#end
 		}
 		#end
 	}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="joystick.png">
+	<SubTexture name="base" x="0" y="0" width="252" height="252" frameX="0" frameY="0" frameWidth="252" frameHeight="252"/>
+	<SubTexture name="thumb" x="252" y="0" width="156" height="156" frameX="0" frameY="0" frameWidth="156" frameHeight="156"/>
+</TextureAtlas>
