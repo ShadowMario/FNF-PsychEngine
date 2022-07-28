@@ -7,7 +7,6 @@ import sys.FileSystem;
 import openfl.utils.Assets;
 #end
 import haxe.Json;
-import haxe.format.JsonParser;
 import Song;
 
 using StringTools;
