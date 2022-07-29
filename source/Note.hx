@@ -276,6 +276,10 @@ class Note extends FlxSprite
 				case 'Hard':
 					hitHealth = 0.01;
 					missHealth = 0.03;
+                                default:
+
+					hitHealth = 0.02;
+					missHealth = 0.04;
 			}
 
 			if(PlayState.isPixelStage) {
