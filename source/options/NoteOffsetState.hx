@@ -31,7 +31,7 @@ class NoteOffsetState extends MusicBeatState
 	var dumbTexts:FlxTypedGroup<FlxText>;
 
 	var barPercent:Float = 0;
-	var delayMin:Int = 0;
+	var delayMin:Int = -500;
 	var delayMax:Int = 500;
 	var timeBarBG:FlxSprite;
 	var timeBar:FlxBar;
