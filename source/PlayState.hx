@@ -3159,8 +3159,18 @@ class PlayState extends MusicBeatState
 				}
 
 				var angleDir = strumDirection * Math.PI / 180;
-				if (daNote.copyAngle)
-					daNote.angle = strumDirection - 90 + strumAngle;
+				if (daNote.copyAngle){
+					daNote.angle = strumAngle;
+					daNote.angle += strumDirection - 90;
+					if(Math.abs(strumDirection) % 90 == 0 ) daNote.angle -= strumDirection - 90;
+				}
+				if(daNote.isSustainNote){
+					daNote.angle = strumDirection + 90;
+					if(daNote.angle == 180 && strumScroll == true){
+						daNote.angle = 0;
+					}
+				}
+
 
 				if(daNote.copyAlpha)
 					daNote.alpha = strumAlpha;
