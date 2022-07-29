@@ -155,9 +155,9 @@ class FunkinLua {
 		set('version', MainMenuState.psychEngineVersion.trim());
 
 		set('inGameOver', false);
-		set('mustHitSection', false);
-		set('altAnim', false);
-		set('gfSection', false);
+		set('mustHitSection', PlayState.SONG.notes[0].mustHitSection);
+		set('altAnim', PlayState.SONG.notes[0].altAnim);
+		set('gfSection', PlayState.SONG.notes[0].gfSection);
 
 		// Gameplay settings
 		set('healthGainMult', PlayState.instance.healthGain);
@@ -1232,20 +1232,6 @@ class FunkinLua {
 			}
 			return boobs;
 		});
-		Lua_helper.add_callback(lua, "noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
-			cancelTween(tag);
-			if(note < 0) note = 0;
-			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
-
-			if(testicle != null) {
-				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, {angle: value}, duration, {ease: getFlxEaseByString(ease),
-					onComplete: function(twn:FlxTween) {
-						PlayState.instance.callOnLuas('onTweenCompleted', [tag]);
-						PlayState.instance.modchartTweens.remove(tag);
-					}
-				}));
-			}
-		});
 		Lua_helper.add_callback(lua, "noteTweenAlpha", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
@@ -1359,6 +1345,15 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "getColorFromHex", function(color:String) {
 			if(!color.startsWith('0x')) color = '0xff' + color;
 			return Std.parseInt(color);
+		});
+		Lua_helper.add_callback(lua, "getColorFromRGB", function(color:String) {
+			var bitch:Array<String> = color.split(',');
+			var ass:Array<Int> = [];
+			for (i in 0...bitch.length) {
+				ass.push(Std.parseInt(bitch[i]));
+			}
+			var hex:FlxColor = FlxColor.fromRGB(ass[0], ass[1], ass[2]);
+			return hex.toHexString();
 		});
 
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
@@ -1952,6 +1947,31 @@ class FunkinLua {
 				pee.destroy();
 				PlayState.instance.modchartSprites.remove(tag);
 			}
+		});
+
+		Lua_helper.add_callback(lua, "setColorSwap", function(obj:String, hue:Float = 0, saturation:Float = 0, brightness:Float = 0) {
+			var real = PlayState.instance.getLuaObject(obj);
+			var color:ColorSwap = new ColorSwap();
+			color.hue = hue;
+			color.saturation = saturation;
+			color.brightness = brightness;
+			if(real!=null) {
+				real.shader = color.shader;
+				return true;
+			}
+
+			var killMe:Array<String> = obj.split('.');
+			var object:FlxSprite = getObjectDirectly(killMe[0]);
+			if(killMe.length > 1) {
+				object = getVarInArray(getPropertyLoopThingWhatever(killMe), killMe[killMe.length-1]);
+			}
+
+			if(object != null) {
+				object.shader = color.shader;
+				return true;
+			}
+			luaTrace("Object " + obj + " doesn't exist!", false, false, FlxColor.RED);
+			return false;
 		});
 
 		Lua_helper.add_callback(lua, "luaSpriteExists", function(tag:String) {
@@ -3075,11 +3095,15 @@ class FunkinLua {
 
 		lastCalledFunction = func;
 		try {
-			if(lua == null) return Function_Continue;
+			if(lua == null) {
+				Lua.pop(lua, 1);
+				return Function_Continue;
+			}
 
 			Lua.getglobal(lua, func);
 			var type:Int = Lua.type(lua, -1);
 			if (type != Lua.LUA_TFUNCTION) {
+				Lua.pop(lua, 1);
 				return Function_Continue;
 			}
 			
