@@ -47,7 +47,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
-		
+
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",
 			'timeBarType',
@@ -88,7 +88,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		option.decimals = 1;
 		addOption(option);
-		
+
 		#if !mobile
 		var option:Option = new Option('FPS Counter',
 			'If unchecked, hides FPS Counter.',
@@ -98,7 +98,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
 		#end
-		
+
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",
 			'pauseMusic',
@@ -107,7 +107,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			['None', 'Breakfast', 'Tea Time']);
 		addOption(option);
 		option.onChange = onChangePauseMusic;
-		
+
 		#if CHECK_FOR_UPDATES
 		var option:Option = new Option('Check for Updates',
 			'On Release builds, turn this on to check for updates when you start the game.',
@@ -123,10 +123,10 @@ class VisualsUISubState extends BaseOptionsMenu
 	var changedMusic:Bool = false;
 	function onChangePauseMusic()
 	{
-		if(ClientPrefs.pauseMusic == 'None')
+		if(ClientPrefs.getPref('pauseMusic') == 'None')
 			FlxG.sound.music.volume = 0;
 		else
-			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)));
+			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.getPref('pauseMusic'))));
 
 		changedMusic = true;
 	}
@@ -141,7 +141,7 @@ class VisualsUISubState extends BaseOptionsMenu
 	function onChangeFPSCounter()
 	{
 		if(Main.fpsVar != null)
-			Main.fpsVar.visible = ClientPrefs.showFPS;
+			Main.fpsVar.visible = ClientPrefs.getPref('showFPS');
 	}
 	#end
 }

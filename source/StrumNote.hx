@@ -14,9 +14,9 @@ class StrumNote extends FlxSprite
 	public var direction:Float = 90;//plan on doing scroll directions soon -bb
 	public var downScroll:Bool = false;//plan on doing scroll directions soon -bb
 	public var sustainReduce:Bool = true;
-	
+
 	private var player:Int;
-	
+
 	public var texture(default, set):String = null;
 	private function set_texture(value:String):String {
 		if(texture != value) {
@@ -88,7 +88,7 @@ class StrumNote extends FlxSprite
 			animation.addByPrefix('purple', 'arrowLEFT');
 			animation.addByPrefix('red', 'arrowRIGHT');
 
-			antialiasing = ClientPrefs.globalAntialiasing;
+			antialiasing = ClientPrefs.getPref('globalAntialiasing');
 			setGraphicSize(Std.int(width * 0.7));
 
 			switch (Math.abs(noteData) % 4)
@@ -153,11 +153,12 @@ class StrumNote extends FlxSprite
 			colorSwap.saturation = 0;
 			colorSwap.brightness = 0;
 		} else {
-			if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
+			var arrowHSV:Array<Array<Int>> = ClientPrefs.getPref('arrowHSV');
+			if (noteData > -1 && noteData < arrowHSV.length)
 			{
-				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
+				colorSwap.hue = arrowHSV[noteData][0] / 360;
+				colorSwap.saturation = arrowHSV[noteData][1] / 100;
+				colorSwap.brightness = arrowHSV[noteData][2] / 100;
 			}
 
 			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
