@@ -149,14 +149,23 @@ class PauseSubState extends MusicBeatSubstate
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
+		var mouseaccepted = FlxG.mouse.justPressed;
+
+		var shiftMult:Int = 1;
+		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
 
 		if (upP)
 		{
-			changeSelection(-1);
+			changeSelection(-shiftMult);
 		}
 		if (downP)
 		{
-			changeSelection(1);
+			changeSelection(shiftMult);
+		}
+
+		if(!ClientPrefs.noMouse && FlxG.mouse.wheel != 0)
+			{
+				changeSelection(-shiftMult * FlxG.mouse.wheel);
 		}
 
 		var daSelected:String = menuItems[curSelected];
@@ -190,7 +199,7 @@ class PauseSubState extends MusicBeatSubstate
 				}
 		}
 
-		if (accepted && (cantUnpause <= 0 || !ClientPrefs.controllerMode))
+		if ((accepted || (!ClientPrefs.noMouse && mouseaccepted)) && (cantUnpause <= 0 || !ClientPrefs.controllerMode))
 		{
 			if (menuItems == difficultyChoices)
 			{
