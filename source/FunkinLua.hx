@@ -134,6 +134,7 @@ class FunkinLua {
 		// Camera poo
 		set('cameraX', 0);
 		set('cameraY', 0);
+		set('cameraSpeed', PlayState.stageData.camera_speed);
 
 		// Screen stuff
 		set('screenWidth', FlxG.width);
@@ -158,6 +159,14 @@ class FunkinLua {
 		set('mustHitSection', false);
 		set('altAnim', false);
 		set('gfSection', false);
+		set('chartingMode', PlayState.chartingMode);
+
+		// Health ig
+		set('healthPercent', PlayState.instance.healthBar.percent); // Long name cause idk what to abbreviate to.
+
+		// Stage stuff ig
+		set('isPixelStage', PlayState.isPixelStage);
+		set('curStage', PlayState.curStage);
 
 		// Gameplay settings
 		set('healthGainMult', PlayState.instance.healthGain);
@@ -1419,6 +1428,7 @@ class FunkinLua {
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
+				//case 'debug': key = PlayState.instance.getControl('DEBUG'); // figuring this out.
 				case 'space': key = FlxG.keys.justPressed.SPACE;//an extra key for convinience
 			}
 			return key;
@@ -1430,6 +1440,10 @@ class FunkinLua {
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
+				case 'accept': key = PlayState.instance.getControl('ACCEPT');
+				case 'back': key = PlayState.instance.getControl('BACK');
+				case 'pause': key = PlayState.instance.getControl('PAUSE');
+				case 'reset': key = PlayState.instance.getControl('RESET');
 				case 'space': key = FlxG.keys.pressed.SPACE;//an extra key for convinience
 			}
 			return key;
@@ -1441,6 +1455,10 @@ class FunkinLua {
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_R');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP_R');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_R');
+				case 'accept': key = PlayState.instance.getControl('ACCEPT');
+				case 'back': key = PlayState.instance.getControl('BACK');
+				case 'pause': key = PlayState.instance.getControl('PAUSE');
+				case 'reset': key = PlayState.instance.getControl('RESET');
 				case 'space': key = FlxG.keys.justReleased.SPACE;//an extra key for convinience
 			}
 			return key;
