@@ -32,7 +32,11 @@ class Main extends Sprite
 	var initialState:Class<FlxState> = TitleState; // The FlxState the game starts with.
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
 	var framerate:Int = 60; // How many frames per second the game should run at.
-	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
+	#if HAXEFLIXEL_LOGO
+	var skipSplash:Bool = false;
+	#else
+	var skipSplash:Bool = true; // CRINGE! Why would you hide it????
+	#end
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 	public static var fpsVar:FPS;
 
