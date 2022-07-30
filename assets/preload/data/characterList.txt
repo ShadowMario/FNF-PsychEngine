@@ -18,6 +18,8 @@ senpai
 senpai-angry
 spirit
 bf-pixel-opponent
+pico-player
+example-bf
 gf-tankmen
 tankman
 pico-speaker

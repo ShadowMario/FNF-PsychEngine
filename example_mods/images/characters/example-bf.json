@@ -1,0 +1,195 @@
+{ "frames": {
+   "bfPixel DOWN MISS 0000": {
+    "frame": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel DOWN MISS 0001": {
+    "frame": { "x": 75, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel DOWN 0000": {
+    "frame": { "x": 150, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel DOWN 0001": {
+    "frame": { "x": 225, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel IDLE 0000": {
+    "frame": { "x": 300, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel IDLE 0001": {
+    "frame": { "x": 375, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel IDLE 0002": {
+    "frame": { "x": 450, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel IDLE 0003": {
+    "frame": { "x": 525, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel IDLE 0004": {
+    "frame": { "x": 600, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel LEFT MISS 0000": {
+    "frame": { "x": 675, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel LEFT MISS 0001": {
+    "frame": { "x": 750, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel LEFT 0000": {
+    "frame": { "x": 825, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel LEFT 0001": {
+    "frame": { "x": 900, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel RIGHT MISS 0000": {
+    "frame": { "x": 975, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel RIGHT MISS 0001": {
+    "frame": { "x": 1050, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel RIGHT 0000": {
+    "frame": { "x": 1125, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel RIGHT 0001": {
+    "frame": { "x": 1200, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel UP MISS 0000": {
+    "frame": { "x": 1275, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel UP MISS 0001": {
+    "frame": { "x": 1350, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel UP 0000": {
+    "frame": { "x": 1425, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   },
+   "bfPixel UP 0001": {
+    "frame": { "x": 1500, "y": 0, "w": 75, "h": 75 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 75 },
+    "sourceSize": { "w": 75, "h": 75 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.21-dev",
+  "image": "example-bf.png",
+  "format": "RGBA8888",
+  "size": { "w": 1575, "h": 75 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "DOWN MISS", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "DOWN", "from": 2, "to": 3, "direction": "forward" },
+   { "name": "IDLE", "from": 4, "to": 8, "direction": "forward" },
+   { "name": "LEFT MISS", "from": 9, "to": 10, "direction": "forward" },
+   { "name": "LEFT", "from": 11, "to": 12, "direction": "forward" },
+   { "name": "RIGHT MISS", "from": 13, "to": 14, "direction": "forward" },
+   { "name": "RIGHT", "from": 15, "to": 16, "direction": "forward" },
+   { "name": "UP MISS", "from": 17, "to": 18, "direction": "forward" },
+   { "name": "UP", "from": 19, "to": 20, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
