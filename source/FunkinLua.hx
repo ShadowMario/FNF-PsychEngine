@@ -1049,6 +1049,15 @@ class FunkinLua {
 			cancelTimer(tag);
 		});
 
+		Lua_helper.add_callback(lua, "difficultyHealthTweak", function(difficulty:String, healthGain:Float = 0.02, healthLoss:Float = 0.04) { //lua
+			if (CoolUtil.difficultyString == difficulty) {
+				note.hitHealth = healthGain;
+				note.missHealth = healthLoss;
+			}
+		});
+			
+			
+			
 		/*Lua_helper.add_callback(lua, "getPropertyAdvanced", function(varsStr:String) {
 			var variables:Array<String> = varsStr.replace(' ', '').split(',');
 			var leClass:Class<Dynamic> = Type.resolveClass(variables[0]);
