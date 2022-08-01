@@ -255,12 +255,26 @@ class MenuCharacterEditorState extends MusicBeatState
 	}
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
+		var forbidden:Array<String> = ['AUX', 'CON', 'PRN', 'NUL']; // thanks kingyomoma
+		for (i in 1...9) {
+			forbidden.push('COM$i');
+			forbidden.push('LPT$i');
+		}
 		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
 			if(sender == imageInputText) {
+				for(donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				characterFile.image = imageInputText.text;
 			} else if(sender == idleInputText) {
+				for(donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				characterFile.idle_anim = idleInputText.text;
 			} else if(sender == confirmInputText) {
+				for(donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				characterFile.confirm_anim = confirmInputText.text;
 			}
 		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {

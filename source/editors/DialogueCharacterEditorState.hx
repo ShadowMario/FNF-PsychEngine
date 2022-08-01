@@ -1,5 +1,6 @@
 package editors;
 
+import cpp.abi.Abi;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -484,6 +485,14 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
 		if(id == FlxUIInputText.CHANGE_EVENT && sender == imageInputText) {
+			var forbidden:Array<String> = ['AUX', 'CON', 'PRN', 'NUL']; // thanks kingyomoma
+			for (i in 1...9) {
+				forbidden.push('COM$i');
+				forbidden.push('LPT$i');
+			}
+            for(donot in forbidden) {
+				if(sender.text == donot) return;
+			}
 			character.jsonFile.image = imageInputText.text;
 		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
 			if(sender == scaleStepper) {

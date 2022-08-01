@@ -372,24 +372,47 @@ class WeekEditorState extends MusicBeatState
 	}
 	
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
+		var forbidden:Array<String> = ['AUX', 'CON', 'PRN', 'NUL']; // thanks kingyomoma
+		for (i in 1...9) {
+			forbidden.push('COM$i');
+			forbidden.push('LPT$i');
+		}
 		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
 			if(sender == weekFileInputText) {
+				for (donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				weekFileName = weekFileInputText.text.trim();
 				reloadWeekThing();
 			} else if(sender == opponentInputText || sender == boyfriendInputText || sender == girlfriendInputText) {
+				for (fuckyou in forbidden){
+					if(sender.text == fuckyou) return;
+				}
 				weekFile.weekCharacters[0] = opponentInputText.text.trim();
 				weekFile.weekCharacters[1] = boyfriendInputText.text.trim();
 				weekFile.weekCharacters[2] = girlfriendInputText.text.trim();
 				updateText();
 			} else if(sender == backgroundInputText) {
+				for(donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				weekFile.weekBackground = backgroundInputText.text.trim();
 				reloadBG();
 			} else if(sender == displayNameInputText) {
+				for(donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				weekFile.storyName = displayNameInputText.text.trim();
 				updateText();
 			} else if(sender == weekNameInputText) {
+				for(donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				weekFile.weekName = weekNameInputText.text.trim();
 			} else if(sender == songsInputText) {
+				for(donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				var splittedText:Array<String> = songsInputText.text.trim().split(',');
 				for (i in 0...splittedText.length) {
 					splittedText[i] = splittedText[i].trim();
@@ -412,8 +435,14 @@ class WeekEditorState extends MusicBeatState
 				}
 				updateText();
 			} else if(sender == weekBeforeInputText) {
+				for(donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				weekFile.weekBefore = weekBeforeInputText.text.trim();
 			} else if(sender == difficultiesInputText) {
+				for(donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				weekFile.difficulties = difficultiesInputText.text.trim();
 			}
 		}

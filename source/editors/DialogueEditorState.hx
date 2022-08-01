@@ -262,9 +262,17 @@ class DialogueEditorState extends MusicBeatState
 	}
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
+		var forbidden:Array<String> = ['AUX', 'CON', 'PRN', 'NUL']; // thanks kingyomoma
+		for (i in 1...9) {
+			forbidden.push('COM$i');
+			forbidden.push('LPT$i');
+		}
 		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
 			if (sender == characterInputText)
 			{
+				for (donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				character.reloadCharacterJson(characterInputText.text);
 				reloadCharacter();
 				updateTextBox();
@@ -283,11 +291,17 @@ class DialogueEditorState extends MusicBeatState
 			}
 			else if(sender == lineInputText)
 			{
+				for (donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				reloadText(0);
 				dialogueFile.dialogue[curSelected].text = lineInputText.text;
 			}
 			else if(sender == soundInputText)
 			{
+				for (donot in forbidden){
+					if(sender.text == donot) return;
+				}
 				dialogueFile.dialogue[curSelected].sound = soundInputText.text;
 				reloadText(0);
 			}
