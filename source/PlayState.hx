@@ -3739,6 +3739,97 @@ class PlayState extends MusicBeatState
 					});
 				}
 
+			case 'Health Function':
+				var stuuf:Float = Std.parseInt(value2);
+				switch(value1.toLowerCase()) {
+					case 'set' | 'sethealth':
+						health = stuff;
+					case 'add' | 'addhealth':
+						health += stuff;
+					case 'remove' | 'removehealth':
+						health -= stuff;
+				}
+
+			case 'Char Tween Alpha':
+				var char:String == 'all';
+				var people:Array<Character> = [boyfriend, gf, dad];
+				var opacity:Float = Std.parseInt();
+				switch(value1.toLowerCase().trim()) {
+					case 'dad' | 'opponent':
+						char = 'dad';
+					case 'bf' | 'boyfriend' | 'player':
+						char = 'bf';
+					case 'gf' | 'girlfriend':
+						char = 'gf';
+					case 'all' | 'everyone':
+						char = 'all';
+					default:
+						char = 'all';
+				}
+
+				switch(char) {
+					case 'dad':
+						FlxTween.tween(dad, {alpha: opacity}, 1, {ease: FlxEase.quadInOut, onComplete:
+							function (twn:FlxTween)
+							{
+								dad.alpha = opacity;
+							}
+						});
+
+					case 'bf':
+						FlxTween.tween(alpha, {alpha: opacity}, 1, {ease: FlxEase.quadInOut, onComplete:
+							function (twn:FlxTween)
+							{
+								boyfriend.alpha = opacity;
+							}
+						});
+
+					case 'gf':
+						FlxTween.tween(gf, {alpha: opacity}, 1, {ease: FlxEase.quadInOut, onComplete:
+							function (twn:FlxTween)
+							{
+								gf.alpha = opacity;
+							}
+						});
+
+					case 'all':
+						FlxTween.tween(dad, {alpha: opacity}, 1, {ease: FlxEase.quadInOut, onComplete:
+							function (twn:FlxTween)
+							{
+								dad.alpha = opacity;
+							}
+						});
+
+						FlxTween.tween(alpha, {alpha: opacity}, 1, {ease: FlxEase.quadInOut, onComplete:
+							function (twn:FlxTween)
+							{
+								boyfriend.alpha = opacity;
+							}
+						});
+
+						FlxTween.tween(gf, {alpha: opacity}, 1, {ease: FlxEase.quadInOut, onComplete:
+							function (twn:FlxTween)
+							{
+								gf.alpha = opacity;
+							}
+						});
+				}
+		
+			case 'Screen Effect':
+				var effected:Bool = false;
+				if(!effected)
+					var whiteScreen:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.WHITE);
+					add(whiteScreen);
+					dad.color = FlxColor.BLACK;
+					boyfriend.color = FlxColor.BLACK;
+					gf.color = FlxColor.BLACK;
+				} else {
+					remove(whiteScreen);
+					dad.color = FlxColor.WHITE; //if this is the wrong way to reverse it, someone please how to do it correctly
+					boyfriend.color = FlxColor.WHITE;
+					gf.color = FlxColor.WHITE;
+				}
+
 			case 'Set Property':
 				var killMe:Array<String> = value1.split('.');
 				if(killMe.length > 1) {
@@ -3746,6 +3837,7 @@ class PlayState extends MusicBeatState
 				} else {
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
+						
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
