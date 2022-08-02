@@ -15,6 +15,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
+import flash.system.System;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.effects.FlxTrail;
 import flixel.addons.effects.FlxTrailArea;
@@ -306,6 +307,9 @@ class PlayState extends MusicBeatState
 	private var keysArray:Array<Dynamic>;
 
 	var precacheList:Map<String, String> = new Map<String, String>();
+	
+	public var image:BGSprite;
+	public var imageAnim:String = 'idle';
 
 	override public function create()
 	{
@@ -3829,6 +3833,40 @@ class PlayState extends MusicBeatState
 					boyfriend.color = FlxColor.WHITE;
 					gf.color = FlxColor.WHITE;
 				}
+
+			case 'Change Icon':
+				var iconToChange:String = value2;
+				switch(value1.toLowerCase().trim()) {
+					case 'dad' | 'opponent' | 'father':
+						iconP2.changeIcon(iconToChange);
+
+					case 'bf' | 'boyfriend' | 'player':
+						iconP1.changeIcon(iconToChange);
+					default:
+						iconP2.changeIcon(iconToChange);
+				}
+				reloadHealthBarColors();
+
+			case 'Crash Game': //Credit goes to Wither/Theoyeah
+				System.exit(0);
+
+			case 'Add Image':
+				image:BGSprite = new BGSprite(value1, 0, 0, 1, 1);
+
+			case 'Add Animated Image':
+				imageAnim = value2;
+				image:BGSprite = new BGSprite(value1, 0, 0, 1, 1, [value2], false);
+
+			case 'Set Image Cords':
+				var v1:Int = Std.parseInt(value1);
+				var v2:Int = Std.parseInt(value2);
+				image.setCords(v1, v2);
+
+			case 'Image Play Animation':
+				image.animation.play(imageAnim);
+
+			case 'Change Stage': //probaly doesnt work :/
+				curStage = value1;
 
 			case 'Set Property':
 				var killMe:Array<String> = value1.split('.');
