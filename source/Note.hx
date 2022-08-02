@@ -265,6 +265,22 @@ class Note extends FlxSprite
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
 			}
+			
+			switch(CoolUtil.difficultyString()) {
+				case 'Easy':
+					hitHealth = 0.06;
+					missHealth = 0.02;
+				case 'Normal':
+					hitHealth = 0.02;
+					missHealth = 0.04;
+				case 'Hard':
+					hitHealth = 0.01;
+					missHealth = 0.03;
+                                default:
+
+					hitHealth = 0.02;
+					missHealth = 0.04;
+			}
 
 			if(PlayState.isPixelStage) {
 				scale.y *= PlayState.daPixelZoom;
