@@ -4381,9 +4381,10 @@ class PlayState extends MusicBeatState
 	{
 		// HOLDING
 		var parsedHoldArray:Array<Bool> = parseKeys();
+		var controllerMode:Bool = ClientPrefs.getPref('controllerMode');
 
 		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(ClientPrefs.getPref('controllerMode'))
+		if(controllerMode)
 		{
 			var parsedArray:Array<Bool> = parseKeys('_P');
 			if(parsedArray.contains(true))
@@ -4425,7 +4426,7 @@ class PlayState extends MusicBeatState
 		}
 
 		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(ClientPrefs.getPref('controllerMode') || strumsBlocked.contains(true))
+		if(controllerMode || strumsBlocked.contains(true))
 		{
 			var parsedArray:Array<Bool> = parseKeys('_R');
 			if(parsedArray.contains(true))
