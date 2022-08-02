@@ -5,7 +5,6 @@ import flixel.addons.ui.FlxUIState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxState;
 import flixel.FlxCamera;
-import flixel.FlxBasic
 
 class MusicBeatState extends FlxUIState
 {
