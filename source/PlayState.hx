@@ -3744,7 +3744,7 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'Health Function':
-				var stuuf:Float = Std.parseInt(value2);
+				var stuff:Float = Std.parseInt(value2);
 				switch(value1.toLowerCase()) {
 					case 'set' | 'sethealth':
 						health = stuff;
@@ -3860,7 +3860,8 @@ class PlayState extends MusicBeatState
 			case 'Set Image Cords':
 				var v1:Int = Std.parseInt(value1);
 				var v2:Int = Std.parseInt(value2);
-				image.setCords(v1, v2);
+				image.x = v1;
+				image.y = v1;
 
 			case 'Image Play Animation':
 				image.animation.play(imageAnim);
