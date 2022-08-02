@@ -93,9 +93,9 @@ class CharacterEditorState extends MusicBeatState
 		camMenu.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camEditor);
-		FlxG.cameras.add(camHUD);
-		FlxG.cameras.add(camMenu);
-		FlxCamera.defaultCameras = [camEditor];
+		FlxG.cameras.add(camHUD, false);
+		FlxG.cameras.add(camMenu, false);
+		FlxG.cameras.setDefaultDrawTarget(camEditor, true);
 
 		bgLayer = new FlxTypedGroup<FlxSprite>();
 		add(bgLayer);
@@ -1100,6 +1100,7 @@ class CharacterEditorState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		MusicBeatState.camBeat = FlxG.camera;
 		if(char.animationsArray[curAnim] != null) {
 			textAnim.text = char.animationsArray[curAnim].anim;
 
