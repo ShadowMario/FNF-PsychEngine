@@ -1,6 +1,7 @@
 package animateatlas.tilecontainer;
 
 import openfl.display.Tileset;
+import haxe.Constraints.Constructible;
 import openfl.display.BitmapData;
 import animateatlas.JSONData.AnimationData;
 import animateatlas.JSONData.ElementData;

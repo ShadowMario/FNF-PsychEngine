@@ -1,6 +1,7 @@
 package animateatlas.tilecontainer;
 
 import openfl.display.Tileset;
+import animateatlas.JSONData.PointData;
 import openfl.errors.ArgumentError;
 import openfl.geom.Rectangle;
 import openfl.errors.Error;
@@ -15,7 +16,9 @@ import animateatlas.JSONData.BitmapPosData;
 import animateatlas.JSONData.Matrix3DData;
 import animateatlas.JSONData.LayerFrameData;
 import animateatlas.JSONData.ColorData;
+import openfl.geom.Matrix;
 import openfl.geom.ColorTransform;
+import openfl.display.DisplayObjectContainer;
 import openfl.display.TileContainer;
 import openfl.display.Tile;
 
