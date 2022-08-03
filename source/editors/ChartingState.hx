@@ -91,8 +91,15 @@ class ChartingState extends MusicBeatState
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
 		['Set Property', "Value 1: Variable name\nValue 2: New value"],
 		['Health Function', "Value 1: Function (sethealth, addhealth, removehealth).\nValue:healths to set/health to add/health to remove."],
-		['Char Tween Alpha', "Value 1: Character/nValue 2: Alpha"],
-		['Screen Effect', "No values needed."]
+		['Char Tween Alpha', "Value 1: Character\n Value 2: Alpha"],
+		['Screen Effect', "No values needed."],
+		['Change Icon', "Vaule 1: Character\nValue 2: Icon"],
+		['Crash Game', "No values needed."],
+		['Add Image', "Adds an image on the stage.\n Value 1: Image"],
+		['Add Animated Image', "Adds an animated image on the stage.\ Value 1: Image\nValue 2: prefix/xml animation"],
+		['Set Image Cords', "Sets an image's x and y on the stage."],
+		['Image Play Animation', "Plays an image's anination."],
+		['Change Stage', "Changes the stage.\nValue 1: Stage"],
 	];
 
 	var _file:FileReference;
