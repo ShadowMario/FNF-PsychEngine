@@ -306,6 +306,10 @@ class PlayState extends MusicBeatState
 	private var keysArray:Array<Dynamic>;
 	private var controlArray:Array<String>;
 
+	// Poison function
+	public var healthDrop:Float = 0;
+	public var healthTaken:Int = 0;
+
 	var precacheList:Map<String, String> = new Map<String, String>();
 
 	override public function create()
@@ -2835,6 +2839,7 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		health -= healthDrop;
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -4633,6 +4638,11 @@ class PlayState extends MusicBeatState
 				{
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
+				}
+
+				if(note.noteType == 'Poison Note') {
+					healthDrop += 0.00025; //can change, BUT NOT TO 0.01, IS SUPER FAST
+					healthTaken++;
 				}
 
 				if(note.noteType == 'Hey!') {
