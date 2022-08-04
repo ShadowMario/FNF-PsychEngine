@@ -80,7 +80,10 @@ class AndroidControls extends FlxSpriteGroup
 	public static function getMode():Int
 	{
 		if (FlxG.save.data.androidControlsMode == null)
+		{
 			FlxG.save.data.androidControlsMode = 0;
+			FlxG.save.flush();
+		}
 
 		return FlxG.save.data.androidControlsMode;
 	}

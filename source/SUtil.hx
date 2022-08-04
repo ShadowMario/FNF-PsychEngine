@@ -1,6 +1,7 @@
 package;
 
 #if android
+import android.Hardware;
 import android.Permissions;
 import android.PermissionsList;
 import android.os.Build.VERSION;
@@ -41,12 +42,13 @@ class SUtil
 				/**
 				 * Basically for now i can't force the app to stop while its requesting a android permission, so this makes the app to stop while its requesting the specific permission
 				 */
-				SUtil.applicationAlert('Permissions? ',
-					'If you accepted the permissions you are all good!' + "\nIf you didn't then expect a crash" + 'Press Ok to see what happens');
+				Application.current.window.alert('If you accepted the permissions you are all good!' + "\nIf you didn't then expect a crash"
+					+ 'Press Ok to see what happens',
+					'Permissions?');
 			}
 			else
 			{
-				SUtil.applicationAlert('Permissions?', 'Please grant the storage permissions in app settings' + '\nPress Ok io close the app');
+				Application.current.window.alert('Please grant the game storage permissions in app settings' + '\nPress Ok io close the app', 'Permissions?');
 				System.exit(1);
 			}
 		}
@@ -57,27 +59,47 @@ class SUtil
 			if (!FileSystem.exists(SUtil.getPath()))
 				FileSystem.createDirectory(SUtil.getPath());
 
-			if (!FileSystem.exists(SUtil.getPath() + 'assets/') && !FileSystem.exists(SUtil.getPath() + 'mods/'))
+			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 			{
-				SUtil.applicationAlert('Error!', "Whoops, seems like you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
+				Application.current.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.",
+					'Error!');
 				FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
+				System.exit(1);
+			}
+			else if ((FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
+				&& (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods')))
+			{
+				Application.current.window.alert("Why did you create two files called assets and mods instead of copying the folders from the apk?, expect a crash.",
+					'Error!');
 				System.exit(1);
 			}
 			else
 			{
-				if (!FileSystem.exists(SUtil.getPath() + 'assets/'))
+				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
 				{
-					SUtil.applicationAlert('Error!',
-						"Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					Application.current.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.",
+						'Error!');
 					FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
 					System.exit(1);
 				}
-
-				if (!FileSystem.exists(SUtil.getPath() + 'mods/'))
+				else if (FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
 				{
-					SUtil.applicationAlert('Error!',
-						"Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
+					Application.current.window.alert("Why did you create a file called assets instead of copying the assets directory from the apk?, expect a crash.",
+						'Error!');
+					System.exit(1);
+				}
+
+				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
+				{
+					Application.current.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.",
+						'Error!');
 					FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
+					System.exit(1);
+				}
+				else if (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods'))
+				{
+					Application.current.window.alert("Why did you create a file called mods instead of copying the mods directory from the apk?, expect a crash.",
+						'Error!');
 					System.exit(1);
 				}
 			}
@@ -98,7 +120,7 @@ class SUtil
 	}
 
 	/**
-	 * Uncaught error handler original made by: sqirra-rng
+	 * Uncaught error handler, original made by: sqirra-rng
 	 */
 	public static function uncaughtErrorHandler()
 	{
@@ -121,32 +143,22 @@ class SUtil
 			errMsg += u.error;
 
 			Sys.println(errMsg);
-			SUtil.applicationAlert('Error!', errMsg);
+			Application.current.window.alert(errMsg, 'Error!');
 
 			try
 			{
-				if (!FileSystem.exists(SUtil.getPath() + 'crash/'))
-					FileSystem.createDirectory(SUtil.getPath() + 'crash/');
+				if (!FileSystem.exists(SUtil.getPath() + 'crash'))
+					FileSystem.createDirectory(SUtil.getPath() + 'crash');
 
-				File.saveContent(SUtil.getPath()
-					+ 'crash/'
-					+ Application.current.meta.get('file')
-					+ '_'
-					+ FlxStringUtil.formatTime(Sys.time(), true)
-					+ '.log',
-					errMsg
-					+ "\n");
+				File.saveContent(SUtil.getPath() + 'crash/' + Application.current.meta.get('file') + '_'
+					+ FlxStringUtil.formatTime(Date.now().getTime(), true) + '.log',
+					errMsg + "\n");
 			}
 			catch (e:Dynamic)
-				SUtil.applicationAlert('Error!', "Clouldn't save the crash dump because: " + e);
+				Hardware.toast("Error!\nClouldn't save the crash dump because:\n" + e, 2);
 
 			System.exit(1);
 		});
-	}
-
-	static function applicationAlert(title:String, description:String)
-	{
-		Application.current.window.alert(description, title);
 	}
 
 	#if android
@@ -154,14 +166,14 @@ class SUtil
 	{
 		try
 		{
-			if (!FileSystem.exists(SUtil.getPath() + 'saves/'))
-				FileSystem.createDirectory(SUtil.getPath() + 'saves/');
+			if (!FileSystem.exists(SUtil.getPath() + 'saves'))
+				FileSystem.createDirectory(SUtil.getPath() + 'saves');
 
 			File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
-			SUtil.applicationAlert('Done!', 'File Saved Successfully!');
+			Hardware.toast("File Saved Successfully!", 2);
 		}
 		catch (e:Dynamic)
-			SUtil.applicationAlert('Error!', "Clouldn't save the file because: " + e);
+			Hardware.toast("Error!\nClouldn't save the file because:\n" + e, 2);
 	}
 
 	public static function copyContent(copyPath:String, savePath:String)
@@ -172,7 +184,7 @@ class SUtil
 				File.saveBytes(savePath, OpenFlAssets.getBytes(copyPath));
 		}
 		catch (e:Dynamic)
-			SUtil.applicationAlert('Error!', "Clouldn't copy the file because: " + e);
+			Hardware.toast("Error!\nClouldn't copy the file because:\n" + e, 2);
 	}
 	#end
 }

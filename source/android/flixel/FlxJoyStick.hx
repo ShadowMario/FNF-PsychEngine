@@ -2,48 +2,113 @@ package android.flixel;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.graphics.FlxGraphic;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.touch.FlxTouch;
 import flixel.math.FlxAngle;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+import flixel.graphics.FlxGraphic;
 import flixel.util.FlxDestroyUtil;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.Assets;
 
 /**
- * ...
- * @original author Ka Wing Chin
- * @modification's author: Saw (M.A. Jigsaw)
+ * A virtual thumbstick - useful for input on mobile devices.
+ *
+ * @author Ka Wing Chin
+ * @modification author Saw (M.A. Jigsaw) to work only with touch and to use custom assets
  */
 class FlxJoyStick extends FlxSpriteGroup
 {
-	public var status:Int = NORMAL;
-
-	static inline var NORMAL:Int = 0;
-	static inline var HIGHLIGHT:Int = 1;
-	static inline var PRESSED:Int = 2;
-
-	public var thumb:FlxSprite;
-	public var base:FlxSprite;
-
+	/**
+	 * This function is called when the button is released.
+	 */
 	public var onUp:Void->Void;
+
+	/**
+	 * This function is called when the button is pressed down.
+	 */
 	public var onDown:Void->Void;
+
+	/**
+	 * This function is called when the touch goes over the button.
+	 */
 	public var onOver:Void->Void;
+
+	/**
+	 * This function is called when the button is hold down.
+	 */
 	public var onPressed:Void->Void;
 
-	static var _joysticks:Array<FlxJoyStick> = [];
+	/**
+	 * Used with public variable status, means not highlighted or pressed.
+	 */
+	static inline var NORMAL:Int = 0;
 
+	/**
+	 * Used with public variable status, means highlighted (usually from touch over).
+	 */
+	static inline var HIGHLIGHT:Int = 1;
+
+	/**
+	 * Used with public variable status, means pressed (usually from touch click).
+	 */
+	static inline var PRESSED:Int = 2;
+
+	/**
+	 * Shows the current state of the button.
+	 */
+	public var status:Int = NORMAL;
+
+	/**
+	 * The background of the joystick, also known as the base.
+	 */
+	public var base:FlxSprite;
+
+	public var thumb:FlxSprite;
+
+	/**
+	 * A list of analogs that are currently active.
+	 */
+	static var _analogs:Array<FlxJoyStick> = [];
+
+	/**
+	 * The current pointer that's active on the analog.
+	 */
 	var _currentTouch:FlxTouch;
+
+	/**
+	 * Helper array for checking touches
+	 */
 	var _tempTouches:Array<FlxTouch> = [];
+
+	/**
+	 * The area which the joystick will react.
+	 */
 	var _zone:FlxRect = FlxRect.get();
+
+	/**
+	 * The radius in which the stick can move.
+	 */
 	var _radius:Float = 0;
-	var _direction:Float = 0;
-	var _amount:Float = 0;
+
+	public var _direction:Float = 0;
+	public var _amount:Float = 0;
+
+	/**
+	 * The speed of easing when the thumb is released.
+	 */
 	var _ease:Float;
 
+	/**
+	 * Create a virtual thumbstick - useful for input on android devices.
+	 *
+	 * @param   X            The X-coordinate of the point in space.
+	 * @param   Y            The Y-coordinate of the point in space.
+	 * @param   Radius       The radius where the thumb can move. If 0, half the base's width will be used.
+	 * @param   Ease         Used to smoothly back thumb to center. Must be between 0 and (FlxG.updateFrameRate / 60).
+	 */
 	public function new(X:Float = 0, Y:Float = 0, Radius:Float = 0, Ease:Float = 0.25)
 	{
 		super(X, Y);
@@ -51,17 +116,21 @@ class FlxJoyStick extends FlxSpriteGroup
 		_radius = Radius;
 		_ease = FlxMath.bound(Ease, 0, 60 / FlxG.updateFramerate);
 
-		_joysticks.push(this);
+		_analogs.push(this);
 
 		_point = FlxPoint.get();
 
 		createBase();
 		createThumb();
+		createZone();
 
 		scrollFactor.set();
 		moves = false;
 	}
 
+	/**
+	 * Creates the background of the analog stick.
+	 */
 	function createBase():Void
 	{
 		base = new FlxSprite(0,
@@ -79,10 +148,14 @@ class FlxJoyStick extends FlxSpriteGroup
 		add(base);
 	}
 
+	/**
+	 * Creates the thumb of the analog stick.
+	 */
 	function createThumb():Void
 	{
 		thumb = new FlxSprite(0,
-			0).loadGraphic(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/android/joystick.png'), Assets.getText('assets/android/joystick.xml'))
+			0).loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/android/joystick.png'),
+				Assets.getText('assets/android/joystick.xml'))
 				.getByName('thumb')));
 		thumb.resetSizeFromFrame();
 		thumb.x += -thumb.width * 0.5;
@@ -95,7 +168,11 @@ class FlxJoyStick extends FlxSpriteGroup
 		add(thumb);
 	}
 
-	function createZone():Void
+	/**
+	 * Creates the touch zone. It's based on the size of the background.
+	 * The thumb will react when the touch is in the zone.
+	 */
+	public function createZone():Void
 	{
 		if (base != null && _radius == 0)
 			_radius = base.width * 0.5;
@@ -103,13 +180,16 @@ class FlxJoyStick extends FlxSpriteGroup
 		_zone.set(x - _radius, y - _radius, 2 * _radius, 2 * _radius);
 	}
 
+	/**
+	 * Clean up memory.
+	 */
 	override public function destroy():Void
 	{
 		super.destroy();
 
 		_zone = FlxDestroyUtil.put(_zone);
 
-		_joysticks.remove(this);
+		_analogs.remove(this);
 		onUp = null;
 		onDown = null;
 		onOver = null;
@@ -121,21 +201,29 @@ class FlxJoyStick extends FlxSpriteGroup
 		_tempTouches = null;
 	}
 
+	/**
+	 * Update the behavior.
+	 */
 	override public function update(elapsed:Float):Void
 	{
 		var offAll:Bool = true;
 
+		// There is no reason to get into the loop if their is already a pointer on the analog
 		if (_currentTouch != null)
+		{
 			_tempTouches.push(_currentTouch);
+		}
 		else
 		{
 			for (touch in FlxG.touches.list)
 			{
 				var touchInserted:Bool = false;
 
-				for (joystick in _joysticks)
+				for (analog in _analogs)
 				{
-					if (joystick == this && joystick._currentTouch != touch && !touchInserted)
+					// Check whether the pointer is already taken by another analog.
+					// TODO: check this place. This line was 'if (analog != this && analog._currentTouch != touch && touchInserted == false)'
+					if (analog == this && analog._currentTouch != touch && !touchInserted)
 					{
 						_tempTouches.push(touch);
 						touchInserted = true;
@@ -146,9 +234,9 @@ class FlxJoyStick extends FlxSpriteGroup
 
 		for (touch in _tempTouches)
 		{
-			_point = touch.getWorldPosition(FlxG.camera, _point);
+			_point.set(touch.screenX, touch.screenY);
 
-			if (!updateJoystick(_point, touch.pressed, touch.justPressed, touch.justReleased, touch))
+			if (!updateAnalog(_point, touch.pressed, touch.justPressed, touch.justReleased, touch))
 			{
 				offAll = false;
 				break;
@@ -177,12 +265,9 @@ class FlxJoyStick extends FlxSpriteGroup
 		super.update(elapsed);
 	}
 
-	function updateJoystick(TouchPoint:FlxPoint, Pressed:Bool, JustPressed:Bool, JustReleased:Bool, ?Touch:FlxTouch):Bool
+	function updateAnalog(TouchPoint:FlxPoint, Pressed:Bool, JustPressed:Bool, JustReleased:Bool, Touch:FlxTouch):Bool
 	{
 		var offAll:Bool = true;
-
-		if (Touch != null)
-			TouchPoint.set(Touch.screenX, Touch.screenY);
 
 		if (_zone.containsPoint(TouchPoint) || (status == PRESSED))
 		{
@@ -195,11 +280,8 @@ class FlxJoyStick extends FlxSpriteGroup
 
 				status = PRESSED;
 
-				if (JustPressed)
-				{
-					if (onDown != null)
-						onDown();
-				}
+				if (JustPressed && onDown != null)
+					onDown();
 
 				if (status == PRESSED)
 				{
@@ -245,11 +327,17 @@ class FlxJoyStick extends FlxSpriteGroup
 		return offAll;
 	}
 
+	/**
+	 * Returns the angle in degrees.
+	 */
 	public function getAngle():Float
 	{
 		return _direction * FlxAngle.TO_DEG;
 	}
 
+	/**
+	 * Whether the thumb is pressed or not.
+	 */
 	public var pressed(get, never):Bool;
 
 	inline function get_pressed():Bool
@@ -257,6 +345,9 @@ class FlxJoyStick extends FlxSpriteGroup
 		return status == PRESSED;
 	}
 
+	/**
+	 * Whether the thumb is just pressed or not.
+	 */
 	public var justPressed(get, never):Bool;
 
 	function get_justPressed():Bool
@@ -267,6 +358,9 @@ class FlxJoyStick extends FlxSpriteGroup
 		return false;
 	}
 
+	/**
+	 * Whether the thumb is just released or not.
+	 */
 	public var justReleased(get, never):Bool;
 
 	function get_justReleased():Bool
@@ -277,7 +371,7 @@ class FlxJoyStick extends FlxSpriteGroup
 		return false;
 	}
 
-	override function set_x(X:Float):Float
+	override public function set_x(X:Float):Float
 	{
 		super.set_x(X);
 		createZone();
@@ -285,7 +379,7 @@ class FlxJoyStick extends FlxSpriteGroup
 		return X;
 	}
 
-	override function set_y(Y:Float):Float
+	override public function set_y(Y:Float):Float
 	{
 		super.set_y(Y);
 		createZone();

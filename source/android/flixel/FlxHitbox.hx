@@ -39,6 +39,9 @@ class FlxHitbox extends FlxSpriteGroup
 		add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), 0, 'right', 0xFFFF0000));
 	}
 
+	/**
+	 * Clean up memory.
+	 */
 	override function destroy()
 	{
 		super.destroy();
@@ -51,7 +54,7 @@ class FlxHitbox extends FlxSpriteGroup
 
 	private function createHint(X:Float, Y:Float, Graphic:String, ?Color:Int = 0xFFFFFF):FlxButton
 	{
-		var hintTween:FlxTween;
+		var hintTween:FlxTween = null;
 		var hint:FlxButton = new FlxButton(X, Y);
 		hint.loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/android/hitbox.png'),
 			Assets.getText('assets/android/hitbox.xml'))
@@ -66,7 +69,7 @@ class FlxHitbox extends FlxSpriteGroup
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.num(hint.alpha, 0.6, 0.06, {ease: FlxEase.circInOut}, function(value:Float)
+			hintTween = FlxTween.num(hint.alpha, alpha, Std.int(alpha / 10), {ease: FlxEase.circInOut}, function(value:Float)
 			{
 				hint.alpha = value;
 			});

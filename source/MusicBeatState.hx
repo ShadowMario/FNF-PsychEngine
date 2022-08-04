@@ -47,6 +47,7 @@ class MusicBeatState extends FlxUIState
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
 		virtualPad = new FlxVirtualPad(DPad, Action);
+		virtualPad.alpha = 0.6;
 		add(virtualPad);
 
 		controls.setVirtualPadUI(virtualPad, DPad, Action);
@@ -66,6 +67,7 @@ class MusicBeatState extends FlxUIState
 	public function addAndroidControls()
 	{
 		androidControls = new AndroidControls();
+		androidControls.alpha = 0.6;
 
 		switch (AndroidControls.getMode())
 		{
