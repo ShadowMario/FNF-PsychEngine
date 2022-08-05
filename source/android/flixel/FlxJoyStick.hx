@@ -142,6 +142,8 @@ class FlxJoyStick extends FlxSpriteGroup
 		base.y += -base.height * 0.5;
 		base.scrollFactor.set();
 		base.solid = false;
+		base.immovable = true;
+		base.alpha = 0.8;
 		#if FLX_DEBUG
 		base.ignoreDrawDebug = true;
 		#end
@@ -162,6 +164,8 @@ class FlxJoyStick extends FlxSpriteGroup
 		thumb.y += -thumb.height * 0.5;
 		thumb.scrollFactor.set();
 		thumb.solid = false;
+		thumb.immovable = true;
+		thumb.alpha = 0.8;
 		#if FLX_DEBUG
 		thumb.ignoreDrawDebug = true;
 		#end

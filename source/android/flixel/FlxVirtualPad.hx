@@ -144,10 +144,12 @@ class FlxVirtualPad extends FlxSpriteGroup
 		buttonUp = null;
 		buttonDown = null;
 		buttonRight = null;
+
 		buttonLeft2 = null;
 		buttonUp2 = null;
 		buttonDown2 = null;
 		buttonRight2 = null;
+
 		buttonA = null;
 		buttonB = null;
 		buttonC = null;
@@ -171,6 +173,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		button.immovable = true;
 		button.scrollFactor.set();
 		button.color = Color;
+		button.alpha = 0.8;
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
 		#end

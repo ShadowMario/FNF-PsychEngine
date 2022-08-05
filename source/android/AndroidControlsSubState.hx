@@ -30,15 +30,13 @@ class AndroidControlsSubState extends FlxSubState
 	var funitext:FlxText;
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
-	var curSelected:Int = 0;
+	var curSelected:Int = AndroidControls.getMode();
 	var buttonBinded:Bool = false;
 	var bindButton:FlxButton;
 	var resetButton:FlxButton;
 
 	override function create()
 	{
-		curSelected = AndroidControls.getMode();
-
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height,
 			FlxColor.fromHSB(FlxG.random.int(0, 359), FlxG.random.float(0, 0.8), FlxG.random.float(0.3, 1)));
 		bg.alpha = 0.00001; // no lag on tween
@@ -70,7 +68,6 @@ class AndroidControlsSubState extends FlxSubState
 		add(virtualPad);
 
 		hitbox = new FlxHitbox();
-		hitbox.alpha = 0.6;
 		hitbox.visible = false;
 		add(hitbox);
 
@@ -131,7 +128,7 @@ class AndroidControlsSubState extends FlxSubState
 
 		super.create();
 
-		FlxTween.tween(bg, {alpha: 0.6}, 1, {ease: FlxEase.circInOut});
+		FlxTween.tween(bg, {alpha: 0.8}, 1, {ease: FlxEase.elasticInOut});
 	}
 
 	override function update(elapsed:Float)
@@ -224,25 +221,21 @@ class AndroidControlsSubState extends FlxSubState
 				hitbox.visible = false;
 				virtualPad.destroy();
 				virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
-				virtualPad.alpha = 0.6;
 				add(virtualPad);
 			case 'Pad-Left':
 				hitbox.visible = false;
 				virtualPad.destroy();
 				virtualPad = new FlxVirtualPad(LEFT_FULL, NONE);
-				virtualPad.alpha = 0.6;
 				add(virtualPad);
 			case 'Pad-Custom':
 				hitbox.visible = false;
 				virtualPad.destroy();
 				virtualPad = AndroidControls.getCustomMode(new FlxVirtualPad(RIGHT_FULL, NONE));
-				virtualPad.alpha = 0.6;
 				add(virtualPad);
 			case 'Pad-Duo':
 				hitbox.visible = false;
 				virtualPad.destroy();
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
-				virtualPad.alpha = 0.6;
 				add(virtualPad);
 			case 'Hitbox':
 				hitbox.visible = true;

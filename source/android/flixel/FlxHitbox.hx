@@ -12,7 +12,7 @@ import flixel.group.FlxSpriteGroup;
 import openfl.utils.Assets;
 
 /**
- * A hitbox.
+ * A zone with 4 buttons (A hitbox).
  * It's easy to customize the layout.
  *
  * @author: Saw (M.A. Jigsaw)
@@ -25,7 +25,7 @@ class FlxHitbox extends FlxSpriteGroup
 	public var buttonRight:FlxButton = new FlxButton(0, 0);
 
 	/**
-	 * Create a hitbox.
+	 * Create the zone.
 	 */
 	public function new()
 	{
@@ -61,6 +61,8 @@ class FlxHitbox extends FlxSpriteGroup
 			.getByName(Graphic)));
 		hint.setGraphicSize(Std.int(FlxG.width / 4), FlxG.height);
 		hint.updateHitbox();
+		hint.solid = false;
+		hint.immovable = true;
 		hint.scrollFactor.set();
 		hint.color = Color;
 		hint.alpha = 0.00001;
@@ -69,30 +71,14 @@ class FlxHitbox extends FlxSpriteGroup
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.num(hint.alpha, alpha, 0.1, {ease: FlxEase.circInOut}, function(value:Float)
-			{
-				hint.alpha = value;
-			});
+			hintTween = FlxTween.tween(hint, {alpha: 0.8}, 0.001, {ease: FlxEase.elasticInOut});
 		}
 		hint.onUp.callback = function()
 		{
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.num(hint.alpha, 0.00001, 0.1, {ease: FlxEase.circInOut}, function(value:Float)
-			{
-				hint.alpha = value;
-			});
-		}
-		hint.onOut.callback = function()
-		{
-			if (hintTween != null)
-				hintTween.cancel();
-
-			hintTween = FlxTween.num(hint.alpha, 0.00001, 0.1, {ease: FlxEase.circInOut}, function(value:Float)
-			{
-				hint.alpha = value;
-			});
+			hintTween = FlxTween.tween(hint, {alpha: 0.00001}, 0.001, {ease: FlxEase.elasticInOut});
 		}
 		#if FLX_DEBUG
 		hint.ignoreDrawDebug = true;
