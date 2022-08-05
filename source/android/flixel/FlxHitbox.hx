@@ -69,7 +69,7 @@ class FlxHitbox extends FlxSpriteGroup
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.num(hint.alpha, this.alpha, Std.int(this.alpha / 10), {ease: FlxEase.circInOut}, function(value:Float)
+			hintTween = FlxTween.num(hint.alpha, alpha, 0.1, {ease: FlxEase.circInOut}, function(value:Float)
 			{
 				hint.alpha = value;
 			});
@@ -79,7 +79,7 @@ class FlxHitbox extends FlxSpriteGroup
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.num(hint.alpha, 0.00001, 0.15, {ease: FlxEase.circInOut}, function(value:Float)
+			hintTween = FlxTween.num(hint.alpha, 0.00001, 0.1, {ease: FlxEase.circInOut}, function(value:Float)
 			{
 				hint.alpha = value;
 			});
@@ -89,7 +89,7 @@ class FlxHitbox extends FlxSpriteGroup
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.num(hint.alpha, 0.00001, 0.2, {ease: FlxEase.circInOut}, function(value:Float)
+			hintTween = FlxTween.num(hint.alpha, 0.00001, 0.1, {ease: FlxEase.circInOut}, function(value:Float)
 			{
 				hint.alpha = value;
 			});
