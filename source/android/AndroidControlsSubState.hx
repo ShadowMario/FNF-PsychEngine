@@ -128,7 +128,7 @@ class AndroidControlsSubState extends FlxSubState
 
 		super.create();
 
-		FlxTween.tween(bg, {alpha: 0.8}, 1, {ease: FlxEase.elasticInOut});
+		FlxTween.tween(bg, {alpha: 0.6}, 1, {ease: FlxEase.circInOut});
 	}
 
 	override function update(elapsed:Float)

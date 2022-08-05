@@ -71,6 +71,23 @@ class AndroidControls extends FlxSpriteGroup
 		}
 	}
 
+	public static function setOpacity(opacity:Float = 0.6):Void
+	{
+		FlxG.save.data.androidControlsOpacity = opacity;
+		FlxG.save.flush();
+	}
+
+	public static function getOpacity():Float
+	{
+		if (FlxG.save.data.androidControlsOpacity == null)
+		{
+			FlxG.save.data.androidControlsOpacity = 0.6;
+			FlxG.save.flush();
+		}
+
+		return FlxG.save.data.androidControlsOpacity;
+	}
+
 	public static function setMode(mode:Int = 0):Void
 	{
 		FlxG.save.data.androidControlsMode = mode;

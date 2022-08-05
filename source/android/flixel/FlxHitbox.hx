@@ -33,10 +33,10 @@ class FlxHitbox extends FlxSpriteGroup
 
 		scrollFactor.set();
 
-		add(buttonLeft = createHint(0, 0, 'left', 0xFFFF00FF));
-		add(buttonDown = createHint(FlxG.width / 4, 0, 'down', 0xFF00FFFF));
-		add(buttonUp = createHint(FlxG.width / 2, 0, 'up', 0xFF00FF00));
-		add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), 0, 'right', 0xFFFF0000));
+		add(buttonLeft = createHint(0, 0, 'left', 0xFF00FF));
+		add(buttonDown = createHint(FlxG.width / 4, 0, 'down', 0x00FFFF));
+		add(buttonUp = createHint(FlxG.width / 2, 0, 'up', 0x00FF00));
+		add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), 0, 'right', 0xFF0000));
 	}
 
 	/**
@@ -52,7 +52,7 @@ class FlxHitbox extends FlxSpriteGroup
 		buttonRight = null;
 	}
 
-	private function createHint(X:Float, Y:Float, Graphic:String, ?Color:Int = 0xFFFFFF):FlxButton
+	private function createHint(X:Float, Y:Float, Graphic:String, Color:Int = 0xFFFFFF):FlxButton
 	{
 		var hintTween:FlxTween = null;
 		var hint:FlxButton = new FlxButton(X, Y);
@@ -71,15 +71,23 @@ class FlxHitbox extends FlxSpriteGroup
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.tween(hint, {alpha: 0.8}, 0.001, {ease: FlxEase.elasticInOut});
+			hintTween = FlxTween.tween(hint, {alpha: AndroidControls.getOpacity()}, 0.001, {ease: FlxEase.circInOut, onComplete: function(twn:FlxTween)
+			{
+				hintTween = null;
+			}});
 		}
 		hint.onUp.callback = function()
 		{
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.tween(hint, {alpha: 0.00001}, 0.001, {ease: FlxEase.elasticInOut});
+			hintTween = FlxTween.tween(hint, {alpha: 0.00001}, 0.001, {ease: FlxEase.circInOut,	onComplete: function(twn:FlxTween)
+			{
+				hintTween = null;
+			}});
 		}
+		hint.onOver.callback = hint.onDown.callback;
+		hint.onOut.callback = hint.onUp.callback;
 		#if FLX_DEBUG
 		hint.ignoreDrawDebug = true;
 		#end
