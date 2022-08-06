@@ -15,27 +15,29 @@ _____________________________________
 
 ### Build Instructions For Android:
 
-1. Download
+1. Download.
 * [JDK](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) - Download version `11` of it
 * [Android Studio](https://developer.android.com/studio) - I recomend you to download the latest version
 * [NDK](https://developer.android.com/ndk/downloads/older_releases?hl=fi) - Download version `r21e` (This is the version recomended by Lime)
 
-2. Install JDK, Android Studio 
+2. Install JDK, Android Studio.
 Unzip the NDK (the NDK does not need to be installed because its a zip archive)
 
 3. We need to set up Android Studio for this go to android studio and find android sdk (in settings -> Appearance & Behavior -> system settings -> android sdk)
 ![andr](https://user-images.githubusercontent.com/59097731/104179652-44346000-541d-11eb-8ad1-1e4dfae304a8.PNG)
 ![andr2](https://user-images.githubusercontent.com/59097731/104179943-a9885100-541d-11eb-8f69-7fb5a4bfdd37.PNG)
 
-4. You Need to install extension-androidtools
+4. You Need to install extension-androidtools.
 
 To install `extension-androidtools` run this: `haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools` on a CMD/PowerShell window
 
-5. And run command `lime setup android` in CMD/PowerShell (You need to insert the program paths)
+5. Run command `lime setup android` in CMD/PowerShell (You need to insert the program paths)
 
 6. Open project in CMD/PowerShell `cd (path to fnf source)`
-And run command `lime build android -final`
-The apk will be generated in this path (path to source)\export\release\android\bin\app\build\outputs\apk\debug
+
+Run command `lime build android -final`.
+The APK will be generated in this path:
+(the path is from source folder) `export\release\android\bin\app\build\outputs\apk\debug`.
 _____________________________________
 
 If you want video support on your mod, simply run `haxelib install hxCodec` on a CMD/PowerShell window
