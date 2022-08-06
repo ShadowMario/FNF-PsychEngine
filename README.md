@@ -1,4 +1,4 @@
-# Friday Night Funkin' - Psych Engine
+# Friday Night Funkin' - Psych Engine With Android Support
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
@@ -6,16 +6,43 @@ You must have [the most up-to-date version of Haxe](https://haxe.org/download/),
 
 Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
 
-To install LuaJIT do this: `haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit` on a Command prompt/PowerShell
+To install LuaJIT do this: `haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit` on a CMD/PowerShell window
 
 ...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
 
+If you get an error about StatePointer when using Lua, run `haxelib remove linc_luajit` into CMD/PowerShell, then re-install linc_luajit.
+_____________________________________
 
-If you get an error about StatePointer when using Lua, run `haxelib remove linc_luajit` into Command Prompt/PowerShell, then re-install linc_luajit.
+### Build Instructions For Android:
 
-If you want video support on your mod, simply do `haxelib install hxCodec` on a Command prompt/PowerShell
+1. Download.
+* [JDK](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) - Download version `11` of it
+* [Android Studio](https://developer.android.com/studio) - I recomend you to download the latest version
+* [NDK](https://developer.android.com/ndk/downloads/older_releases?hl=fi) - Download version `r21e` (This is the version recomended by Lime)
 
-otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
+2. Install JDK, Android Studio.
+Unzip the NDK (the NDK does not need to be installed because its a zip archive)
+
+3. We need to set up Android Studio for this go to android studio and find android sdk (in settings -> Appearance & Behavior -> system settings -> android sdk)
+![andr](https://user-images.githubusercontent.com/59097731/104179652-44346000-541d-11eb-8ad1-1e4dfae304a8.PNG)
+![andr2](https://user-images.githubusercontent.com/59097731/104179943-a9885100-541d-11eb-8f69-7fb5a4bfdd37.PNG)
+
+4. You Need to install extension-androidtools.
+
+To install `extension-androidtools` run this: `haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools` on a CMD/PowerShell window
+
+5. Run command `lime setup android` in CMD/PowerShell (You need to insert the program paths)
+
+6. Open project in CMD/PowerShell `cd (path to fnf source)`
+
+Run command `lime build android -final`.
+The APK will be generated in this path:
+(the path is from source folder) `export\release\android\bin\app\build\outputs\apk\debug`.
+_____________________________________
+
+If you want video support on your mod, simply run `haxelib install hxCodec` on a CMD/PowerShell window
+
+Otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
 
 ## Credits:
 * Shadow Mario - Programmer
@@ -32,6 +59,9 @@ otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
 * Keoiki - Note Splash Animations
 * Smokey - Sprite Atlas Support
 * Nebula the Zorua - LUA JIT Fork and some Lua reworks
+
+### Android Support
+* Saw (M.A. Jigsaw) - All the things needed for this engine to support android
 _____________________________________
 
 # Features
@@ -44,7 +74,6 @@ _____________________________________
 ## Mod Support
 * Probably one of the main points of this engine, you can code in .lua files outside of the source code, making your own weeks without even messing with the source!
 * Comes with a Mod Organizing/Disabling Menu.
-
 
 ## Atleast one change to every week:
 ### Week 1:

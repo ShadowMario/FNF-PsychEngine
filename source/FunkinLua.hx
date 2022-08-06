@@ -53,12 +53,16 @@ import hscript.Interp;
 import Discord;
 #end
 
+#if android
+import android.Hardware;
+#end
+
 using StringTools;
 
 class FunkinLua {
-	public static var Function_Stop:Dynamic = 1;
-	public static var Function_Continue:Dynamic = 0;
-	public static var Function_StopLua:Dynamic = 2;
+	public static var Function_Stop:Dynamic = #if android 'Function_Stop' #else 1 #end;
+	public static var Function_Continue:Dynamic = #if android 'Function_Continue' #else 0 #end;
+	public static var Function_StopLua:Dynamic = #if android 'Function_StopLua' #else 2 #end;
 
 	//public var errorHandler:String->Void;
 	#if LUA_ALLOWED
@@ -87,7 +91,7 @@ class FunkinLua {
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
 				trace('Error on lua script! ' + resultStr);
-				#if windows
+				#if (windows || android)
 				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
 				#else
 				luaTrace('Error loading lua script: "$script"\n' + resultStr, true, false, FlxColor.RED);
@@ -446,7 +450,7 @@ class FunkinLua {
 
 			if(exclusions==null)exclusions=[];
 
-			Lua.getglobal(lua, 'scriptName');
+			Lua.getglobal(lua, scriptName);
 			var daScriptName = Lua.tostring(lua, -1);
 			Lua.pop(lua, 1);
 			if(ignoreSelf && !exclusions.contains(daScriptName))exclusions.push(daScriptName);
@@ -478,12 +482,12 @@ class FunkinLua {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			}
-			else if(FileSystem.exists(cervix))
+			else if(FileSystem.exists(SUtil.getPath() + cervix))
 			{
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = SUtil.getPath() + Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
@@ -533,12 +537,12 @@ class FunkinLua {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			}
-			else if(FileSystem.exists(cervix))
+			else if(FileSystem.exists(SUtil.getPath() + cervix))
 			{
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = SUtil.getPath() + Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
@@ -586,12 +590,12 @@ class FunkinLua {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			}
-			else if(FileSystem.exists(cervix))
+			else if(FileSystem.exists(SUtil.getPath() + cervix))
 			{
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = SUtil.getPath() + Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
@@ -625,12 +629,12 @@ class FunkinLua {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			}
-			else if(FileSystem.exists(cervix))
+			else if(FileSystem.exists(SUtil.getPath() + cervix))
 			{
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = SUtil.getPath() + Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
@@ -709,12 +713,12 @@ class FunkinLua {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			}
-			else if(FileSystem.exists(cervix))
+			else if(FileSystem.exists(SUtil.getPath() + cervix))
 			{
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = SUtil.getPath() + Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
@@ -749,12 +753,12 @@ class FunkinLua {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			}
-			else if(FileSystem.exists(cervix))
+			else if(FileSystem.exists(SUtil.getPath() + cervix))
 			{
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = SUtil.getPath() + Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
@@ -794,12 +798,12 @@ class FunkinLua {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			}
-			else if(FileSystem.exists(cervix))
+			else if(FileSystem.exists(SUtil.getPath() + cervix))
 			{
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = SUtil.getPath() + Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
@@ -845,7 +849,7 @@ class FunkinLua {
 					case 'Null Function Pointer', 'SReturn':
 						//nothing
 					default:
-						luaTrace(scriptName + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);
+						luaTrace(scriptName.replace(SUtil.getPath(), "") + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);
 				}
 			}
 			#end
@@ -863,7 +867,7 @@ class FunkinLua {
 				haxeInterp.variables.set(libName, Type.resolveClass(str + libName));
 			}
 			catch (e:Dynamic) {
-				luaTrace(scriptName + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);
+				luaTrace(scriptName.replace(SUtil.getPath(), "") + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);
 			}
 			#end
 		});
@@ -1232,6 +1236,40 @@ class FunkinLua {
 			}
 			return boobs;
 		});
+		Lua_helper.add_callback(lua, "touchJustPressed", function(button:String) {
+			var boobs = false;
+			#if android
+			for (touch in FlxG.touches.list) {
+				if (touch.justPressed) {
+					boobs = true;
+				}
+			}
+			#end
+			return boobs;
+		});
+		Lua_helper.add_callback(lua, "touchPressed", function(button:String) {
+			var boobs = false;
+			#if android
+			for (touch in FlxG.touches.list) {
+				if (touch.pressed) {
+					boobs = true;
+				}
+			}
+			#end
+			return boobs;
+		});
+		Lua_helper.add_callback(lua, "touchReleased", function(button:String) {
+			var boobs = false;
+			#if android
+			for (touch in FlxG.touches.list) {
+				if (touch.justReleased) {
+					boobs = true;
+				}
+			}
+			#end
+			return boobs;
+		});
+
 		Lua_helper.add_callback(lua, "noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
@@ -1590,6 +1628,24 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "getMouseY", function(camera:String) {
 			var cam:FlxCamera = cameraFromString(camera);
 			return FlxG.mouse.getScreenPosition(cam).y;
+		});
+		Lua_helper.add_callback(lua, "getTouchX", function(camera:String) {
+			#if android
+			var cam:FlxCamera = cameraFromString(camera);
+			for (touch in FlxG.touches.list) {
+				return touch.getScreenPosition(cam).x;
+			}
+			#end
+			return 0;
+		});
+		Lua_helper.add_callback(lua, "getTouchY", function(camera:String) {
+			#if android
+			var cam:FlxCamera = cameraFromString(camera);
+			for (touch in FlxG.touches.list) {
+				return touch.getScreenPosition(cam).y;
+			}
+			#end
+			return 0;
 		});
 
 		Lua_helper.add_callback(lua, "getMidpointX", function(variable:String) {
@@ -2119,7 +2175,7 @@ class FunkinLua {
 			path = Paths.modsJson(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 			if(!FileSystem.exists(path))
 			#end
-				path = Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
+				path = SUtil.getPath() + Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 
 			luaTrace('Trying to load dialogue: ' + path);
 
@@ -2285,6 +2341,11 @@ class FunkinLua {
 			#end
 		});
 
+		Lua_helper.add_callback(lua, "vibration", function(milliseconds:Int) {
+			#if android
+			Hardware.vibrate(milliseconds);
+			#end
+		});
 
 		// LUA TEXTS
 		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
@@ -2471,7 +2532,7 @@ class FunkinLua {
 			#if MODS_ALLOWED
 			if(absolute)
 			{
-				return FileSystem.exists(filename);
+				return FileSystem.exists(SUtil.getPath() + filename);
 			}
 
 			var path:String = Paths.modFolders(filename);
@@ -2479,7 +2540,7 @@ class FunkinLua {
 			{
 				return true;
 			}
-			return FileSystem.exists(Paths.getPath('assets/$filename', TEXT));
+			return FileSystem.exists(SUtil.getPath() + Paths.getPath('assets/$filename', TEXT));
 			#else
 			if(absolute)
 			{
@@ -2494,11 +2555,11 @@ class FunkinLua {
 				if(!absolute)
 					File.saveContent(Paths.mods(path), content);
 				else
-					File.saveContent(path, content);
+					File.saveContent(SUtil.getPath() + path, content);
 
 				return true;
 			} catch (e:Dynamic) {
-				luaTrace("Error trying to save " + path + ": " + e, false, false, FlxColor.RED);
+				luaTrace("Error trying to save " + path.replace(SUtil.getPath(), "") + ": " + e, false, false, FlxColor.RED);
 			}
 			return false;
 		});
@@ -2517,14 +2578,14 @@ class FunkinLua {
 				}
 				#end
 
-				var lePath:String = Paths.getPath(path, TEXT);
+				var lePath:String = SUtil.getPath() + Paths.getPath(path, TEXT);
 				if(Assets.exists(lePath))
 				{
 					FileSystem.deleteFile(lePath);
 					return true;
 				}
 			} catch (e:Dynamic) {
-				luaTrace("Error trying to delete " + path + ": " + e, false, false, FlxColor.RED);
+				luaTrace("Error trying to delete " + path.replace(SUtil.getPath(), "") + ": " + e, false, false, FlxColor.RED);
 			}
 			return false;
 		});
@@ -2688,8 +2749,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "directoryFileList", function(folder:String) {
 			var list:Array<String> = [];
 			#if sys
-			if(FileSystem.exists(folder)) {
-				for (folder in FileSystem.readDirectory(folder)) {
+			if(FileSystem.exists(SUtil.getPath() + folder)) {
+				for (folder in FileSystem.readDirectory(SUtil.getPath() + folder)) {
 					if (!list.contains(folder)) {
 						list.push(folder);
 					}
@@ -2726,6 +2787,7 @@ class FunkinLua {
 			haxeInterp.variables.set('ShaderFilter', openfl.filters.ShaderFilter);
 			#end
 			haxeInterp.variables.set('StringTools', StringTools);
+			haxeInterp.variables.set('SUtil', SUtil);// this is more like for android because filesaving needs it
 
 			haxeInterp.variables.set('setVar', function(name:String, value:Dynamic)
 			{
