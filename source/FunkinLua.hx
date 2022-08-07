@@ -3089,7 +3089,7 @@ class FunkinLua {
 
 			var result:Null<Int> = Lua.pcall(lua, args.length, 1, 0);
 			var error:Dynamic = getErrorMessage();
-			if(!resultIsAllowed(lua, result))
+			if(!resultIsAllowed(lua, result) || error != null)
 			{
 				Lua.pop(lua, 1);
 				if(error != null) luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
