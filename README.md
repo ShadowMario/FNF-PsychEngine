@@ -16,7 +16,7 @@ If you get an error about StatePointer when using Lua, run `haxelib remove linc_
 If you want video support on your mod, simply do `haxelib install hxCodec` on a Command prompt/PowerShell
 
 otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
-
+(Conpile the game your self lol)
 ## Credits:
 * Shadow Mario - Programmer
 * RiverOaken - Artist
