@@ -242,6 +242,7 @@ class StoryMenuState extends MusicBeatState
 				else
 					leftArrow2.animation.play('idle');
 
+<<<<<<< HEAD
 				if (controls.UI_RIGHT_P)
 					changeWeek(1);
 					FlxG.sound.play(Paths.sound('scrollmenu'));
@@ -254,6 +255,19 @@ class StoryMenuState extends MusicBeatState
 					rightArrow2.animation.play('press')
 				else
 					rightArrow2.animation.play('idle');
+=======
+			if(FlxG.mouse.wheel != 0)
+			{
+				FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+				changeWeek(-FlxG.mouse.wheel);
+				changeDifficulty();
+			}
+
+			if (controls.UI_RIGHT)
+				rightArrow.animation.play('press')
+			else
+				rightArrow.animation.play('idle');
+>>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
 
 			}
 				
