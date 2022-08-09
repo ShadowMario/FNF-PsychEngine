@@ -1259,7 +1259,7 @@ class PlayState extends MusicBeatState
 					add(whiteScreen);
 					whiteScreen.scrollFactor.set();
 					whiteScreen.blend = ADD;
-					camHUD.visible = false;
+					FlxTween.tween(camHUD, {alpha: 0}, 0.8);
 					snapCamFollowToPos(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
 					inCutscene = true;
 
@@ -1268,7 +1268,7 @@ class PlayState extends MusicBeatState
 						ease: FlxEase.linear,
 						onComplete: function(twn:FlxTween)
 						{
-							camHUD.visible = true;
+							FlxTween.tween(camHUD, {alpha: 1}, 0.8);
 							remove(whiteScreen);
 							startCountdown();
 						}
@@ -1281,7 +1281,7 @@ class PlayState extends MusicBeatState
 					var blackScreen:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
 					add(blackScreen);
 					blackScreen.scrollFactor.set();
-					camHUD.visible = false;
+					FlxTween.tween(camHUD, {alpha: 0}, 0.8);
 					inCutscene = true;
 
 					FlxTween.tween(blackScreen, {alpha: 0}, 0.7, {
@@ -1297,7 +1297,7 @@ class PlayState extends MusicBeatState
 
 					new FlxTimer().start(0.8, function(tmr:FlxTimer)
 					{
-						camHUD.visible = true;
+						FlxTween.tween(camHUD, {alpha: 1}, 0.8);
 						remove(blackScreen);
 						FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
 							ease: FlxEase.quadInOut,
@@ -1671,7 +1671,7 @@ class PlayState extends MusicBeatState
 			if (songName == 'thorns')
 			{
 				add(red);
-				camHUD.visible = false;
+				FlxTween.tween(camHUD, {alpha: 0}, 0.8);
 			}
 		}
 
@@ -1708,7 +1708,7 @@ class PlayState extends MusicBeatState
 									FlxG.camera.fade(FlxColor.WHITE, 0.01, true, function()
 									{
 										add(dialogueBox);
-										camHUD.visible = true;
+										FlxTween.tween(camHUD, {alpha: 1}, 0.8);
 									}, true);
 								});
 								new FlxTimer().start(3.2, function(deadTime:FlxTimer)
@@ -1737,7 +1737,7 @@ class PlayState extends MusicBeatState
 
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		dadGroup.alpha = 0.00001;
-		camHUD.visible = false;
+		FlxTween.tween(camHUD, {alpha: 0}, 0.8);
 		//inCutscene = true; //this would stop the camera movement, oops
 
 		var tankman:FlxSprite = new FlxSprite(-20, 320);
@@ -1772,7 +1772,7 @@ class PlayState extends MusicBeatState
 			startCountdown();
 
 			dadGroup.alpha = 1;
-			camHUD.visible = true;
+			FlxTween.tween(camHUD, {alpha: 1}, 0.8);
 			boyfriend.animation.finishCallback = null;
 			gf.animation.finishCallback = null;
 			gf.dance();
