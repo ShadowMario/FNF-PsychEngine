@@ -60,6 +60,7 @@ class TitleState extends MusicBeatState
 	public static var initialized:Bool = false;
 
 	var blackScreen:FlxSprite;
+	var backgroundTitle:FlxSprite;
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
@@ -244,7 +245,6 @@ class TitleState extends MusicBeatState
 			/*var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
 			diamond.persist = true;
 			diamond.destroyOnNoUse = false;
-
 			FlxTransitionableState.defaultTransIn = new TransitionData(FADE, FlxColor.BLACK, 1, new FlxPoint(0, -1), {asset: diamond, width: 32, height: 32},
 				new FlxRect(-300, -300, FlxG.width * 1.8, FlxG.height * 1.8));
 			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, new FlxPoint(0, 1),
@@ -290,8 +290,12 @@ class TitleState extends MusicBeatState
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-		// logoBl.screenCenter();
+		logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
+
+		backgroundTitle = new FlxSprite().loadGraphic(Paths.image('TitleBG'));
+		backgroundTitle.screenCenter();
+		backgroundTitle.antialiasing = ClientPrefs.globalAntialiasing;
 
 		swagShader = new ColorSwap();
 		gfDance = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
@@ -327,10 +331,18 @@ class TitleState extends MusicBeatState
 				gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+
+
 		}
 		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
+<<<<<<< HEAD
+		add(backgroundTitle);
+		
+		//add(gfDance);
+=======
 
 		add(gfDance);
+>>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
 		gfDance.shader = swagShader.shader;
 		add(logoBl);
 		logoBl.shader = swagShader.shader;
@@ -382,7 +394,7 @@ class TitleState extends MusicBeatState
 		logo.antialiasing = ClientPrefs.globalAntialiasing;
 		// add(logo);
 
-		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
+	     FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
 		// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
 
 		credGroup = new FlxGroup();
@@ -641,44 +653,61 @@ class TitleState extends MusicBeatState
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
+					createCoolText(['Psyde Engine by'], 15);
 					#else
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
 				// credTextShit.visible = true;
 				case 4:
 					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15);
-					addMoreText('RiverOaken', 15);
-					addMoreText('shubs', 15);
-					#else
-					addMoreText('present');
+					addMoreText('aeorrFF', 15);
+					addMoreText('KarvDev', 15);
 					#end
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
+<<<<<<< HEAD
+				case 7:
+=======
 				case 5:
+>>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
 					deleteCoolText();
 				// credTextShit.visible = false;
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
+<<<<<<< HEAD
+				case 8:
+=======
 				case 6:
+>>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
 					#if PSYCH_WATERMARKS
 					createCoolText(['Not associated', 'with'], -40);
 					#else
 					createCoolText(['In association', 'with'], -40);
 					#end
+<<<<<<< HEAD
+				case 9:
+					addMoreText('newgrounds', -40);
+					ngSpr.visible = true;
+				// credTextShit.text += '\nNewgrounds';
+				case 10:
+=======
 				case 8:
 					addMoreText('newgrounds', -40);
 					ngSpr.visible = true;
 				// credTextShit.text += '\nNewgrounds';
 				case 9:
+>>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
 					deleteCoolText();
 					ngSpr.visible = false;
 				// credTextShit.visible = false;
 
-				// credTextShit.text = 'Shoutouts Tom Fulp';
+				// credTextShit.text = 'Shoutouts to the Engines Developer';
 				// credTextShit.screenCenter();
+<<<<<<< HEAD
+				case 11:
+=======
 				case 10:
+>>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
 					createCoolText([curWacky[0]]);
 				// credTextShit.visible = true;
 				case 12:
@@ -697,7 +726,11 @@ class TitleState extends MusicBeatState
 				// credTextShit.text += '\nNight';
 				case 16:
 					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+<<<<<<< HEAD
+                
+=======
 
+>>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
 				case 17:
 					skipIntro();
 			}
