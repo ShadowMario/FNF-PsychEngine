@@ -2,12 +2,10 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-<<<<<<< HEAD
-	<app title="Friday Night Funkin': Psyde Engine" file="PsydeEngine" packageName="com.cursedUs64.psydengine" package="com.cursedUs64.psydengine" main="Main" version=" 0.2_week6" company="KarvDev and cursedUs64" />
-=======
-	<app title="Friday Night Funkin': Psych Engine" file="PsychEngine" packageName="com.shadowmario.psychengine" package="com.shadowmario.psychengine" main="Main" version="0.2.8" company="ShadowMario" />
->>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
 
+	<app title="Friday Night Funkin': Psyde Engine" file="PsydeEngine" packageName="com.cursedUs64.psydengine" package="com.cursedUs64.psydengine" main="Main" version=" 0.2_week6" company="KarvDev and cursedUs64" />
+
+	
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
 
@@ -51,14 +49,13 @@
 	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
-<<<<<<< HEAD
-	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/> 
-=======
+
+	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
 	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild"/> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
 	<define name="CRASH_HANDLER" if="desktop release" />
->>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
+
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
@@ -115,13 +112,13 @@
 	<assets path="assets/week7"         library="week7"         exclude="*.ogg" if="web"/>
 	<assets path="assets/week7"         library="week7"         exclude="*.mp3" unless="web"/>
 	
-<<<<<<< HEAD
+
 	<assets path='example_mods' rename='assets' embed='false' if="MODS_ALLOWED"/>
-=======
+
 	<section if="MODS_ALLOWED">
 		<assets path='example_mods' rename='mods' embed='false'/>
 	</section>
->>>>>>> 1b0c8cef6e3c01b145a5459daf0f98ec30cc47e1
+
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
 	<!-- <template path='mods' /> -->
 	
