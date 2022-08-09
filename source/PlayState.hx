@@ -55,6 +55,8 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
+import openfl.filters.ShaderFilter;
+import Shaders;
 #if sys
 import sys.FileSystem;
 #end
@@ -67,16 +69,16 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2], //From 0% to 19%
-		['Shit', 0.4], //From 20% to 39%
-		['Bad', 0.5], //From 40% to 49%
-		['Bruh', 0.6], //From 50% to 59%
-		['Meh', 0.69], //From 60% to 68%
-		['Nice', 0.7], //69%
-		['Good', 0.8], //From 70% to 79%
-		['Great', 0.9], //From 80% to 89%
-		['Sick!', 1], //From 90% to 99%
-		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['', 0.2], //From 0% to 19%
+		['', 0.4], //From 20% to 39%
+		['', 0.5], //From 40% to 49%
+		['', 0.6], //From 50% to 59%
+		['', 0.69], //From 60% to 68%
+		['', 0.7], //69%
+		['', 0.8], //From 70% to 79%
+		['', 0.9], //From 80% to 89%
+		['', 1], //From 90% to 99%
+		['', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
@@ -184,6 +186,11 @@ class PlayState extends MusicBeatState
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
+
+	public var shaderUpdates:Array<Float->Void> = [];
+	public var camGameShaders:Array<ShaderEffect> = [];
+	public var camHUDShaders:Array<ShaderEffect> = [];
+	public var camOtherShaders:Array<ShaderEffect> = [];
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
@@ -732,12 +739,12 @@ class PlayState extends MusicBeatState
 		// "GLOBAL" SCRIPTS
 		#if LUA_ALLOWED
 		var filesPushed:Array<String> = [];
-		var foldersToCheck:Array<String> = [Paths.getPreloadPath('scripts/')];
+		var foldersToCheck:Array<String> = [Paths.getPreloadPath('add-ons/')];
 
 		#if MODS_ALLOWED
-		foldersToCheck.insert(0, Paths.mods('scripts/'));
+		foldersToCheck.insert(0, Paths.mods('add-ons/'));
 		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/scripts/'));
+			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/add-ons/'));
 		#end
 
 		for (folder in foldersToCheck)
@@ -774,6 +781,7 @@ class PlayState extends MusicBeatState
 		if(doPush) 
 			luaArray.push(new FunkinLua(luaFile));
 		#end
+
 
 		if(!modchartSprites.exists('blammedLightsBlack')) { //Creates blammed light black fade in case you didn't make your own
 			blammedLightsBlack = new ModchartSprite(FlxG.width * -0.5, FlxG.height * -0.5);
@@ -876,8 +884,8 @@ class PlayState extends MusicBeatState
 		strumLine.scrollFactor.set();
 
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
-		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
-		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 16);
+		timeTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.PURPLE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
@@ -1032,15 +1040,15 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 		reloadHealthBarColors();
 
-		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 16);
+		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.GREEN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
-		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
-		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 16);
+		botplayTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.GREEN, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
@@ -1175,6 +1183,11 @@ class PlayState extends MusicBeatState
 		CoolUtil.precacheSound('missnote1');
 		CoolUtil.precacheSound('missnote2');
 		CoolUtil.precacheSound('missnote3');
+		if (ClientPrefs.playHitSounds)
+		{
+			CoolUtil.precacheSound('Tick');
+			FlxG.sound.play(Paths.sound('Tick'), 0);
+		}
 
 		if (PauseSubState.songName != null) {
 			CoolUtil.precacheMusic(PauseSubState.songName);
@@ -1198,6 +1211,11 @@ class PlayState extends MusicBeatState
 		
 		super.create();
 
+		if (curSong.toLowerCase() == "song name" && ClientPrefs.shaders){
+			if (curSong.toLowerCase() == "")
+			addShaderToCamera('camGame', new VCRDistortionEffect(0.1, true, true, true));
+			addShaderToCamera('camHUD', new VCRDistortionEffect(0.1, true, true, true));
+		}
 		Paths.clearUnusedMemory();
 		CustomFadeTransition.nextCamera = camOther;
 	}
@@ -1311,6 +1329,106 @@ class PlayState extends MusicBeatState
 		}
 		#end
 	}
+
+	public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
+      
+      
+      
+        switch(cam.toLowerCase()) {
+            case 'camhud' | 'hud':
+                    camHUDShaders.push(effect);
+                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+                    for(i in camHUDShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camHUD.setFilters(newCamEffects);
+            case 'camother' | 'other':
+                    camOtherShaders.push(effect);
+                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+                    for(i in camOtherShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camOther.setFilters(newCamEffects);
+            case 'camgame' | 'game':
+                    camGameShaders.push(effect);
+                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+                    for(i in camGameShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camGame.setFilters(newCamEffects);
+            default:
+                if(modchartSprites.exists(cam)) {
+                    Reflect.setProperty(modchartSprites.get(cam),"shader",effect.shader);
+                } else if(modchartTexts.exists(cam)) {
+                    Reflect.setProperty(modchartTexts.get(cam),"shader",effect.shader);
+                } else {
+                    var OBJ = Reflect.getProperty(PlayState.instance,cam);
+                    Reflect.setProperty(OBJ,"shader", effect.shader);
+                }
+            
+            
+                
+                
+        }
+      
+      
+      
+      
+  }
+
+  public function removeShaderFromCamera(cam:String,effect:ShaderEffect){
+      
+      
+    switch(cam.toLowerCase()) {
+        case 'camhud' | 'hud': 
+            	camHUDShaders.remove(effect);
+				var newCamEffects:Array<BitmapFilter>=[];
+				for(i in camHUDShaders){
+				newCamEffects.push(new ShaderFilter(i.shader));
+    }
+      	camHUD.setFilters(newCamEffects);
+        case 'camother' | 'other': 
+                camOtherShaders.remove(effect);
+                var newCamEffects:Array<BitmapFilter>=[];
+                for(i in camOtherShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camOther.setFilters(newCamEffects);
+            default: 
+                camGameShaders.remove(effect);
+                var newCamEffects:Array<BitmapFilter>=[];
+                for(i in camGameShaders){
+                  newCamEffects.push(new ShaderFilter(i.shader));
+                }
+                camGame.setFilters(newCamEffects);
+        }
+        
+      
+  }
+    
+    
+  public function clearShaderFromCamera(cam:String){
+      
+      
+    switch(cam.toLowerCase()) {
+            case 'camhud' | 'hud': 
+                camHUDShaders = [];
+                var newCamEffects:Array<BitmapFilter>=[];
+                camHUD.setFilters(newCamEffects);
+            case 'camother' | 'other': 
+                camOtherShaders = [];
+                var newCamEffects:Array<BitmapFilter>=[];
+                camOther.setFilters(newCamEffects);
+            default: 
+                camGameShaders = [];
+                var newCamEffects:Array<BitmapFilter>=[];
+                camGame.setFilters(newCamEffects);
+        }
+        
+      
+  }
+
+
 	
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
 		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION
@@ -2308,9 +2426,9 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		if(ratingName == '?') {
-			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
+			scoreTxt.text = 'Score Progress: ' + songScore + ' // Combo Breaks: ' + songMisses + ' // Acc: ' + ratingName;
 		} else {
-			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC;//peeps wanted no integer rating
+			scoreTxt.text = 'Score Progress: ' + songScore + ' // Combo Breaks: ' + songMisses + ' // Acc: ' + ratingName + ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + '';//peeps wanted no integer rating
 		}
 
 		if(botplayTxt.visible) {
@@ -2615,6 +2733,9 @@ class PlayState extends MusicBeatState
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
+		for (i in shaderUpdates){
+			i(elapsed);
+		}
 	}
 
 	function openChartEditor()
@@ -2632,7 +2753,7 @@ class PlayState extends MusicBeatState
 
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
 	function doDeathCheck(?skipHealthCheck:Bool = false) {
-		if (((skipHealthCheck && instakillOnMiss) || health <= 0) && !practiceMode && !isDead)
+		if (((skipHealthCheck && instakillOnMiss) || health <= 0) && !practiceMode && !isDead && !ClientPrefs.easyMode)
 		{
 			var ret:Dynamic = callOnLuas('onGameOver', []);
 			if(ret != FunkinLua.Function_Stop) {
@@ -2771,7 +2892,7 @@ class PlayState extends MusicBeatState
 							if(char.colorTween != null) {
 								char.colorTween.cancel();
 							}
-							char.colorTween = FlxTween.color(char, 1, FlxColor.WHITE, color, {onComplete: function(twn:FlxTween) {
+							char.colorTween = FlxTween.color(char, 1, FlxColor.GREEN, color, {onComplete: function(twn:FlxTween) {
 								char.colorTween = null;
 							}, ease: FlxEase.quadInOut});
 						}
@@ -2840,7 +2961,7 @@ class PlayState extends MusicBeatState
 						if(char.colorTween != null) {
 							char.colorTween.cancel();
 						}
-						char.colorTween = FlxTween.color(char, 1, char.color, FlxColor.WHITE, {onComplete: function(twn:FlxTween) {
+						char.colorTween = FlxTween.color(char, 1, char.color, FlxColor.GREEN, {onComplete: function(twn:FlxTween) {
 							char.colorTween = null;
 						}, ease: FlxEase.quadInOut});
 					}
@@ -3334,6 +3455,9 @@ class PlayState extends MusicBeatState
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
 		//trace(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
 
+		if (ClientPrefs.playHitSounds)
+			FlxG.sound.play(Paths.sound('Tick'));
+
 		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
 
@@ -3374,10 +3498,6 @@ class PlayState extends MusicBeatState
 		}
 		note.rating = daRating;
 
-		if(daRating == 'sick' && !note.noteSplashDisabled)
-		{
-			spawnNoteSplashOnNote(note);
-		}
 
 		if(!practiceMode && !cpuControlled) {
 			songScore += score;
@@ -3431,6 +3551,8 @@ class PlayState extends MusicBeatState
 		rating.visible = (!ClientPrefs.hideHud && showRating);
 		rating.x += ClientPrefs.comboOffset[0];
 		rating.y -= ClientPrefs.comboOffset[1];
+
+
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 		comboSpr.cameras = [camHUD];
@@ -3567,7 +3689,7 @@ class PlayState extends MusicBeatState
 							sortedNotesList.push(daNote);
 							//notesDatas.push(daNote.noteData);
 						}
-						canMiss = true;
+						canMiss = false;  // i did this for kids playing it lmaooo    -aeorrff
 					}
 				});
 				sortedNotesList.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
@@ -4419,11 +4541,11 @@ class PlayState extends MusicBeatState
 
 			// Rating FC
 			ratingFC = "";
-			if (sicks > 0) ratingFC = "SFC";
-			if (goods > 0) ratingFC = "GFC";
-			if (bads > 0 || shits > 0) ratingFC = "FC";
-			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-			else if (songMisses >= 10) ratingFC = "Clear";
+			if (sicks > 0) ratingFC = "";
+			if (goods > 0) ratingFC = "";
+			if (bads > 0 || shits > 0) ratingFC = "";
+			if (songMisses > 0 && songMisses < 10) ratingFC = "";
+			else if (songMisses >= 10) ratingFC = "";
 		}
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);

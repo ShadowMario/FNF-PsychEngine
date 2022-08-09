@@ -7,11 +7,12 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs {
-	public static var downScroll:Bool = false;
-	public static var middleScroll:Bool = false;
+	public static var downScroll:Bool = true;
+	public static var middleScroll:Bool = true;
 	public static var showFPS:Bool = true;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
+	public static var playHitSounds:Bool = true;
 	public static var noteSplashes:Bool = true;
 	public static var lowQuality:Bool = false;
 	public static var framerate:Int = 60;
@@ -46,7 +47,7 @@ class ClientPrefs {
 		'healthgain' => 1.0,
 		'healthloss' => 1.0,
 		'instakill' => false,
-		'practice' => false,
+		// 'practice' => false,
 		'botplay' => false,
 		'opponentplay' => false
 	];
@@ -57,6 +58,8 @@ class ClientPrefs {
 	public static var goodWindow:Int = 90;
 	public static var badWindow:Int = 135;
 	public static var safeFrames:Float = 10;
+	public static var easyMode:Bool = false;
+	public static var shaders:Bool = false; // scrapped
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -95,6 +98,7 @@ class ClientPrefs {
 		FlxG.save.data.middleScroll = middleScroll;
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.flashing = flashing;
+		FlxG.save.data.playHitSounds = playHitSounds;
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
@@ -103,6 +107,8 @@ class ClientPrefs {
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.noteOffset = noteOffset;
+		FlxG.save.data.shaders = shaders; // scrapped
+		FlxG.save.data.easyMode = easyMode;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.imagesPersist = imagesPersist;
@@ -146,6 +152,14 @@ class ClientPrefs {
 			if(Main.fpsVar != null) {
 				Main.fpsVar.visible = showFPS;
 			}
+
+
+
+		// Hitsounds
+		}
+		if (FlxG.save.data.playHitSounds != null)
+		{
+			playHitSounds = FlxG.save.data.playHitSounds;
 		}
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
@@ -237,6 +251,12 @@ class ClientPrefs {
 			{
 				gameplaySettings.set(name, value);
 			}
+		}
+		// if(FlxG.save.data.shaders != null){ // scrapped
+		// 	shaders = FlxG.save.data.shaders; // scrapped
+		// } // scrapped
+		if(FlxG.save.data.easyMode != null){
+			easyMode = FlxG.save.data.easyMode;
 		}
 		
 		// flixel automatically saves your volume!
