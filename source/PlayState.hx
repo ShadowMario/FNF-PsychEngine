@@ -307,6 +307,19 @@ class PlayState extends MusicBeatState
 	private var controlArray:Array<String>;
 
 	var precacheList:Map<String, String> = new Map<String, String>();
+	
+	// Anim Block stuff
+	var blockers:Array<String> = [
+		'dodge',
+		'attack',
+		'scared',
+		'hurt',
+		'hey',
+		'cheer',
+		'ugh'
+	];
+	var allowSing:Bool = true;
+	var animTimer:Float = 1;
 
 	override public function create()
 	{
@@ -2839,6 +2852,23 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
+		
+		for(i in 0...blockers.length) { 
+			if (boyfriend.animation.curAnim.name.startsWith(blockers[i]) && !boyfriend.animation.curAnim.finished) {
+				allowSing = false;
+			}
+			new FlxTimer().start(animTimer, function(tmr:FlxTimer) {
+				allowSing = true;
+			});
+
+			switch(boyfriend.animation.curAnim.name) {
+				case 'hurt' | 'scared' | 'dodge':
+					animTimer = 1;
+				case 'hey' | 'cheer' | 'ugh':
+					animTimer = 0.6;
+				}
+		}
+
 		callOnLuas('onUpdate', [elapsed]);
 
 		switch (curStage)
@@ -4625,13 +4655,13 @@ class PlayState extends MusicBeatState
 				{
 					if(gf != null)
 					{
-						gf.playAnim(animToPlay + note.animSuffix, true);
+						if (allowSing) gf.playAnim(animToPlay + note.animSuffix, true);
 						gf.holdTimer = 0;
 					}
 				}
 				else
 				{
-					boyfriend.playAnim(animToPlay + note.animSuffix, true);
+					if (allowSing) boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
 				}
 
