@@ -1370,7 +1370,6 @@ class PlayState extends MusicBeatState
 					Paths.music(key);
 			}
 		}
-		Paths.clearUnusedMemory();
 		
 		CustomFadeTransition.nextCamera = camOther;
 	}
@@ -4890,6 +4889,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	@:access(flixel.FlxGame)
 	override function destroy() {
 		for (lua in luaArray) {
 			lua.call('onDestroy', []);
@@ -4905,6 +4905,10 @@ class PlayState extends MusicBeatState
 		#if hscript
 		FunkinLua.haxeInterp = null;
 		#end
+
+		if(!(cast FlxG.game._requestedState is PlayState)) {
+			Paths.clearUnusedMemory();
+		}
 		super.destroy();
 	}
 
