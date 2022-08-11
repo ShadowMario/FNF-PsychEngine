@@ -307,6 +307,19 @@ class PlayState extends MusicBeatState
 	private var controlArray:Array<String>;
 
 	var precacheList:Map<String, String> = new Map<String, String>();
+	
+	var blockers:Array<String> = [
+		'attack',
+		'dodge',
+		'hey',
+		'hurt',
+		'cheer',
+		'scared',
+	];
+	
+	var animTime:Float = 0;
+	
+	var allowSinging:Bool = true;
 
 	override public function create()
 	{
@@ -2835,10 +2848,19 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
-		/*if (FlxG.keys.justPressed.NINE)
-		{
-			iconP1.swapOldIcon();
-		}*/
+		switch(boyfriend.animation.curAnim.name) {
+			case 'hurt' | 'dodge' | 'scared':
+				animTime = 1;
+				allowSinging = false;
+			case 'hey':
+				animTime = 0.6;
+				allowSinging = false;
+		}
+		
+		new FlxTimer().start(animTimer, function(tmr:FlxTimer) {
+			allowSinging = true;
+		}
+
 		callOnLuas('onUpdate', [elapsed]);
 
 		switch (curStage)
@@ -4468,7 +4490,7 @@ class PlayState extends MusicBeatState
 		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
 		{
 			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
-			char.playAnim(animToPlay, true);
+			if(opponentSing)char.playAnim(animToPlay, true);
 		}
 
 		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
@@ -4631,7 +4653,7 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					boyfriend.playAnim(animToPlay + note.animSuffix, true);
+					if(allowSinging) boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
 				}
 
