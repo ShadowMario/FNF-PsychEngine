@@ -44,14 +44,14 @@ class FlxUIInputText extends FlxInputText implements IResizable implements IFlxU
 				case FlxInputText.INPUT_ACTION: // text was input
 					FlxUI.event(INPUT_EVENT, this, text, params);
 					FlxUI.event(CHANGE_EVENT, this, text, params);
-             			case FlxInputText.COPY_ACTION: // text was copied
-                    			FlxUI.event(COPY_EVENT, this, text, params);
-                		case FlxInputText.PASTE_ACTION: // text was pasted
-                    			FlxUI.event(PASTE_EVENT, this, text, params);
-                    			FlxUI.event(CHANGE_EVENT, this, text, params);
-                		case FlxInputText.CUT_ACTION: // text was cut
-                    			FlxUI.event(CUT_EVENT, this, text, params);
-                    			FlxUI.event(CHANGE_EVENT, this, text, params);
+				case FlxInputText.COPY_ACTION: // text was copied
+					FlxUI.event(COPY_EVENT, this, text, params);
+				case FlxInputText.PASTE_ACTION: // text was pasted
+					FlxUI.event(PASTE_EVENT, this, text, params);
+					FlxUI.event(CHANGE_EVENT, this, text, params);
+				case FlxInputText.CUT_ACTION: // text was cut
+					FlxUI.event(CUT_EVENT, this, text, params);
+					FlxUI.event(CHANGE_EVENT, this, text, params);
 			}
 		}
 	}

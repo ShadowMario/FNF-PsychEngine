@@ -25,39 +25,43 @@ class CutsceneHandler extends FlxBasic
 	public var endTime:Float = 0;
 	public var objects:Array<FlxSprite> = [];
 	public var music:String = null;
+
 	public function new()
 	{
 		super();
 
 		timer(0, function()
 		{
-			if(music != null)
+			if (music != null)
 			{
 				FlxG.sound.playMusic(Paths.music(music), 0, false);
 				FlxG.sound.music.fadeIn();
 			}
-			if(onStart != null) onStart();
+			if (onStart != null)
+				onStart();
 		});
 		PlayState.instance.add(this);
 	}
 
 	private var cutsceneTime:Float = 0;
 	private var firstFrame:Bool = false;
+
 	override function update(elapsed)
 	{
 		super.update(elapsed);
 
-		if(FlxG.state != PlayState.instance || !firstFrame)
+		if (FlxG.state != PlayState.instance || !firstFrame)
 		{
 			firstFrame = true;
 			return;
 		}
 
 		cutsceneTime += elapsed;
-		if(endTime <= cutsceneTime)
+		if (endTime <= cutsceneTime)
 		{
 			finishCallback();
-			if(finishCallback2 != null) finishCallback2();
+			if (finishCallback2 != null)
+				finishCallback2();
 
 			for (spr in objects)
 			{
@@ -65,13 +69,13 @@ class CutsceneHandler extends FlxBasic
 				PlayState.instance.remove(spr);
 				spr.destroy();
 			}
-			
+
 			kill();
 			destroy();
 			PlayState.instance.remove(this);
 		}
-		
-		while(timedEvents.length > 0 && timedEvents[0][0] <= cutsceneTime)
+
+		while (timedEvents.length > 0 && timedEvents[0][0] <= cutsceneTime)
 		{
 			timedEvents[0][1]();
 			timedEvents.splice(0, 1);

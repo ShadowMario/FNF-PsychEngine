@@ -4,7 +4,6 @@ import Section.SwagSection;
 import haxe.Json;
 import haxe.format.JsonParser;
 import lime.utils.Assets;
-
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -25,7 +24,6 @@ typedef SwagSong =
 	var player2:String;
 	var gfVersion:String;
 	var stage:String;
-
 	var arrowSkin:String;
 	var splashSkin:String;
 	var validScore:Bool;
@@ -48,13 +46,13 @@ class Song
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
-		if(songJson.gfVersion == null)
+		if (songJson.gfVersion == null)
 		{
 			songJson.gfVersion = songJson.player3;
 			songJson.player3 = null;
 		}
 
-		if(songJson.events == null)
+		if (songJson.events == null)
 		{
 			songJson.events = [];
 			for (secNum in 0...songJson.notes.length)
@@ -64,16 +62,17 @@ class Song
 				var i:Int = 0;
 				var notes:Array<Dynamic> = sec.sectionNotes;
 				var len:Int = notes.length;
-				while(i < len)
+				while (i < len)
 				{
 					var note:Array<Dynamic> = notes[i];
-					if(note[1] < 0)
+					if (note[1] < 0)
 					{
 						songJson.events.push([note[0], [[note[2], note[3], note[4]]]]);
 						notes.remove(note);
 						len = notes.length;
 					}
-					else i++;
+					else
+						i++;
 				}
 			}
 		}
@@ -89,17 +88,19 @@ class Song
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
 		var rawJson = null;
-		
+
 		var formattedFolder:String = Paths.formatToSongPath(folder);
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
 		#if MODS_ALLOWED
 		var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
-		if(FileSystem.exists(moddyFile)) {
+		if (FileSystem.exists(moddyFile))
+		{
 			rawJson = File.getContent(moddyFile).trim();
 		}
 		#end
 
-		if(rawJson == null) {
+		if (rawJson == null)
+		{
 			#if sys
 			rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
 			#else
@@ -130,7 +131,8 @@ class Song
 				daBpm = songData.bpm; */
 
 		var songJson:Dynamic = parseJSONshit(rawJson);
-		if(jsonInput != 'events') StageData.loadDirectory(songJson);
+		if (jsonInput != 'events')
+			StageData.loadDirectory(songJson);
 		onLoadJson(songJson);
 		return songJson;
 	}
