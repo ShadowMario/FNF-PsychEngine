@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  buildLinux:
+  Linux Build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -59,9 +59,9 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: linuxBuild
+          name: StefanBETA Engine' Linux Support
           path: 'export/release/linux/bin'
-  buildWindows:
+  Windows Build:
     runs-on: windows-latest
 
     steps:
@@ -101,9 +101,9 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: windowsBuild
+          name: StefanBETA Engine' Windows Support
           path: export/release/windows/bin
-  buildMac:
+  Mac Build:
     runs-on: macos-latest
 
     steps:
@@ -142,9 +142,9 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: macBuild
+          name: StefanBETA Engine' Mac Support
           path: export/release/macos/bin
-  buildAndroid:
+  Android Build:
     name: buildAndroid
     runs-on: ubuntu-latest
     steps:
@@ -206,5 +206,5 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: androidBuild
+          name: StefanBETA Engine' Android Support
           path: export/release/android/bin/app/build/outputs/apk/debug
