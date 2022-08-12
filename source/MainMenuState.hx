@@ -25,7 +25,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '0.6.2'; //This is also used for Discord RPC
+	public static var psychEngineVersion:String = '1.5.0b'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -35,10 +35,7 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		#if MODS_ALLOWED 'mods', #end
-		#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
-		#if !switch 'donate', #end
 		'options'
 	];
 
@@ -46,6 +43,8 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+
+	var char:FlxSprite;
 
 	override function create()
 	{
@@ -111,14 +110,14 @@ class MainMenuState extends MusicBeatState
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(0, (i * 140)  + offset);
-			menuItem.scale.x = scale;
+			//menuItem.scale.x = scale;
 			menuItem.scale.y = scale;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
-			menuItem.screenCenter(X);
+			//menuItem.screenCenter(X);
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
 			if(optionShit.length < 6) scr = 0;
@@ -127,14 +126,22 @@ class MainMenuState extends MusicBeatState
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 		}
-
+	}
+	position();
+	if (scrollEffect ==  true){
+		for (i in menuItems.members){
+			i.y = (FlxG.height) + (i.position) * 300;
+			i.angle = (i.position * 0.3) * -55;
+			FlxTween.tween(i, {y: (FlxG.height / 2) + i.position * 300 - (i.height / 2), angle: i.position * -15}, 0.4, {ease: FlxEase.cubeOut});
+		}
+	}
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "StefanBETA Engine' Verzija: " + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' Verzija: " + Application.current.meta.get('version'), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -162,6 +169,40 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		super.create();
+
+		switch (FlxG.random.int(1, 3))
+            {
+            case 1:
+			char = new FlxSprite(820, 170).loadGraphic(Paths.image('mainmenu/bf'));//put your cords and image here
+			char.frames = Paths.getSparrowAtlas('mainmenu/BOYFRIEND');//here put the name of the xml
+			char.animation.addByPrefix('idleB', 'BF idle dance', 24, true);//on 'idle normal' change it to your xml one
+			char.animation.play('idleB');//you can rename the anim however you want to
+			char.scrollFactor.set();
+			FlxG.sound.play(Paths.sound('confirmMenu'), 2);
+			char.flipX = true;//this is for flipping it to look left instead of right you can make it however you want
+			char.antialiasing = ClientPrefs.globalAntialiasing;
+			add(char);
+
+            case 2:
+			char = new FlxSprite(790, 200).loadGraphic(Paths.image('mainmenu/bf-holding-gf'));
+			char.frames = Paths.getSparrowAtlas('mainmenu/bfAndGF');
+			char.animation.addByPrefix('idleBHG', 'BF idle dance w gf', 24, true);
+			char.animation.play('idleBHG');
+			char.scrollFactor.set();
+			char.antialiasing = ClientPrefs.globalAntialiasing;
+			add(char);
+              
+			case 3:
+			char = new FlxSprite(810, 120).loadGraphic(Paths.image('mainmenu/tankman'));
+			char.frames = Paths.getSparrowAtlas('mainmenu/tankmanCaptain');
+			char.animation.addByPrefix('idleT', 'Tankman Idle Dance', 24, true);
+			char.animation.play('idleT');
+			char.scrollFactor.set();
+			char.flipX = true;
+			char.antialiasing = ClientPrefs.globalAntialiasing;
+			add(char);
+		}
+
 	}
 
 	#if ACHIEVEMENTS_ALLOWED
@@ -273,7 +314,13 @@ class MainMenuState extends MusicBeatState
 
 		menuItems.forEach(function(spr:FlxSprite)
 		{
+			if (scrollEffect == true){
 			spr.screenCenter(X);
+			spr.x -= 350;
+			}
+			else{
+			//spr.screenCenter(X);
+			}
 		});
 	}
 
