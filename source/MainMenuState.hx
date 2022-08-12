@@ -307,7 +307,7 @@ class MainMenuState extends MusicBeatState
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.screenCenter(X);
-			spr.x -= 350;
+			spr.x -= 300;
 			//spr.screenCenter(X);
 		});
 	}
