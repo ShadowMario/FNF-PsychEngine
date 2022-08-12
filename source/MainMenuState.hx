@@ -126,15 +126,7 @@ class MainMenuState extends MusicBeatState
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 		}
-	}
-	position();
-	if (scrollEffect ==  true){
-		for (i in menuItems.members){
-			i.y = (FlxG.height) + (i.position) * 300;
-			i.angle = (i.position * 0.3) * -55;
-			FlxTween.tween(i, {y: (FlxG.height / 2) + i.position * 300 - (i.height / 2), angle: i.position * -15}, 0.4, {ease: FlxEase.cubeOut});
-		}
-	}
+
 		FlxG.camera.follow(camFollowPos, null, 1);
 
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "StefanBETA Engine' Verzija: " + psychEngineVersion, 12);
