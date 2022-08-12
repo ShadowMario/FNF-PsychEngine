@@ -2303,7 +2303,7 @@ class PlayState extends MusicBeatState
 		callOnLuas('onUpdateScore', [miss]);
 	}
 
-	public function setSongTime(time:Float)
+	public function setSongTime(time:Float);
 	{
 		if(time < 0) time = 0;
 
