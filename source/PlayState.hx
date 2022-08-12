@@ -5169,7 +5169,7 @@ class PlayState extends MusicBeatState
 		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice', false) || ClientPrefs.getGameplaySetting('botplay', false));
 		for (i in 0...achievesToCheck.length) {
 			var achievementName:String = achievesToCheck[i];
-			if (achievementName.endsWith('nomiss')) // any FC achievements, custom ones should end with "nomiss" for automatic setup
+			if (achievementName.contains(WeekData.getWeekFileName()) && achievementName.endsWith('nomiss')) // any FC achievements, custom ones should end with "nomiss" for automatic setup
 			{
 				if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD'
 					&& storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
