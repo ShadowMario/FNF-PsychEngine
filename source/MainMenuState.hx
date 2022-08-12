@@ -165,18 +165,18 @@ class MainMenuState extends MusicBeatState
 		switch (FlxG.random.int(1, 3))
             {
             case 1:
-			char = new FlxSprite(820, 170).loadGraphic(Paths.image('mainmenu/bf'));//put your cords and image here
+			char = new FlxSprite(780, 170).loadGraphic(Paths.image('mainmenu/bf'));//put your cords and image here
 			char.frames = Paths.getSparrowAtlas('mainmenu/BOYFRIEND');//here put the name of the xml
 			char.animation.addByPrefix('idleB', 'BF idle dance', 24, true);//on 'idle normal' change it to your xml one
 			char.animation.play('idleB');//you can rename the anim however you want to
 			char.scrollFactor.set();
 			FlxG.sound.play(Paths.sound('confirmMenu'), 2);
-			char.flipX = true;//this is for flipping it to look left instead of right you can make it however you want
+			char.flipX = false;//this is for flipping it to look left instead of right you can make it however you want
 			char.antialiasing = ClientPrefs.globalAntialiasing;
 			add(char);
 
             case 2:
-			char = new FlxSprite(790, 200).loadGraphic(Paths.image('mainmenu/bf-holding-gf'));
+			char = new FlxSprite(730, 200).loadGraphic(Paths.image('mainmenu/bf-holding-gf'));
 			char.frames = Paths.getSparrowAtlas('mainmenu/bfAndGF');
 			char.animation.addByPrefix('idleBHG', 'BF idle dance w gf', 24, true);
 			char.animation.play('idleBHG');
