@@ -306,13 +306,11 @@ class MainMenuState extends MusicBeatState
 
 		menuItems.forEach(function(spr:FlxSprite)
 		{
-			if (scrollEffect == true){
 			spr.screenCenter(X);
 			spr.x -= 350;
 			}
 			else{
 			//spr.screenCenter(X);
-			}
 		});
 	}
 
