@@ -2304,7 +2304,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public function setSongTime(time:Float);
-	{
+
 		if(time < 0) time = 0;
 
 		FlxG.sound.music.pause();
