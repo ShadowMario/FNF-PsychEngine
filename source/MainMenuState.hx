@@ -308,8 +308,6 @@ class MainMenuState extends MusicBeatState
 		{
 			spr.screenCenter(X);
 			spr.x -= 350;
-			}
-			else{
 			//spr.screenCenter(X);
 		});
 	}
