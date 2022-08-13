@@ -82,16 +82,16 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2], //From 0% to 19%
-		['Shit', 0.4], //From 20% to 39%
-		['Bad', 0.5], //From 40% to 49%
-		['Bruh', 0.6], //From 50% to 59%
-		['Meh', 0.69], //From 60% to 68%
-		['Nice', 0.7], //69%
-		['Good', 0.8], //From 70% to 79%
-		['Great', 0.9], //From 80% to 89%
-		['Sick!', 1], //From 90% to 99%
-		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['Ti Si Los!', 0.2], //From 0% to 19%
+		['What The Freak?!', 0.4], //From 20% to 39%
+		['Nedovoljan Si!', 0.5], //From 40% to 49%
+		['Dovoljan Si!', 0.6], //From 50% to 59%
+		['Dobar Si!', 0.69], //From 60% to 68%
+		['Vrlo Dobar Si!', 0.7], //69%
+		['Odlican Si!', 0.8], //From 70% to 79%
+		['Super Si!', 0.9], //From 80% to 89%
+		['Bolesno!', 1], //From 90% to 99%
+		['Perfektno!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
@@ -1037,7 +1037,7 @@ class PlayState extends MusicBeatState
 		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
-		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
+		timeBar.createFilledBar(0xFF000000, 0xFFAC1C);
 		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.alpha = 0;
 		timeBar.visible = showTime;
@@ -1188,7 +1188,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
-		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "ROBOTSKA MEHANIKA", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
@@ -2276,10 +2276,10 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Misses: ' + songMisses
-		+ ' | Rating: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
+		scoreTxt.text = 'Rezultat: ' + songScore
+		+ ' | Greska: ' + songMisses
+		+ ' | Ocena: ' + ratingName
+		+ (ratingName != 'Nepoznato' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -5159,11 +5159,11 @@ class PlayState extends MusicBeatState
 
 			// Rating FC
 			ratingFC = "";
-			if (sicks > 0) ratingFC = "SFC";
-			if (goods > 0) ratingFC = "GFC";
-			if (bads > 0 || shits > 0) ratingFC = "FC";
-			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-			else if (songMisses >= 10) ratingFC = "Clear";
+			if (sicks > 0) ratingFC = "Bolesni Celi Kombo";
+			if (goods > 0) ratingFC = "Odlican Celi Kombo";
+			if (bads > 0 || shits > 0) ratingFC = "Celi Kombo";
+			if (songMisses > 0 && songMisses < 10) ratingFC = "Nemas Kombo";
+			else if (songMisses >= 10) ratingFC = "Cisto";
 		}
 		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);
@@ -5190,32 +5190,32 @@ class PlayState extends MusicBeatState
 							switch(weekName) //I know this is a lot of duplicated code, but it's easier readable and you can add weeks with different names than the achievement tag
 							{
 								case 'week1':
-									if(achievementName == 'week1_nomiss') unlock = true;
+									if(achievementName == 'week1_nomiss') unlock = false;
 								case 'week2':
-									if(achievementName == 'week2_nomiss') unlock = true;
+									if(achievementName == 'week2_nomiss') unlock = false;
 								case 'week3':
-									if(achievementName == 'week3_nomiss') unlock = true;
+									if(achievementName == 'week3_nomiss') unlock = false;
 								case 'week4':
-									if(achievementName == 'week4_nomiss') unlock = true;
+									if(achievementName == 'week4_nomiss') unlock = false;
 								case 'week5':
-									if(achievementName == 'week5_nomiss') unlock = true;
+									if(achievementName == 'week5_nomiss') unlock = false;
 								case 'week6':
-									if(achievementName == 'week6_nomiss') unlock = true;
+									if(achievementName == 'week6_nomiss') unlock = false;
 								case 'week7':
-									if(achievementName == 'week7_nomiss') unlock = true;
+									if(achievementName == 'week7_nomiss') unlock = false;
 							}
 						}
 					case 'ur_bad':
 						if(ratingPercent < 0.2 && !practiceMode) {
-							unlock = true;
+							unlock = false;
 						}
 					case 'ur_good':
 						if(ratingPercent >= 1 && !usedPractice) {
-							unlock = true;
+							unlock = false;
 						}
 					case 'roadkill_enthusiast':
 						if(Achievements.henchmenDeath >= 100) {
-							unlock = true;
+							unlock = false;
 						}
 					case 'oversinging':
 						if(boyfriend.holdTimer >= 10 && !usedPractice) {
@@ -5223,7 +5223,7 @@ class PlayState extends MusicBeatState
 						}
 					case 'hype':
 						if(!boyfriendIdled && !usedPractice) {
-							unlock = true;
+							unlock = false;
 						}
 					case 'two_keys':
 						if(!usedPractice) {
