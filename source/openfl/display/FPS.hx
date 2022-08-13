@@ -46,7 +46,7 @@ class FPS extends TextField
 		currentFPS = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat("_vcr.tff", 14, color);
+		defaultTextFormat = new TextFormat("_vcr.tff", 20, color);
 		autoSize = LEFT;
 		multiline = true;
 		text = "Brzina Smenjivanja Slike: ";
