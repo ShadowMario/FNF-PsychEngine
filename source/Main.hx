@@ -10,6 +10,7 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
+import lime.system.System;
 
 //crash handler stuff
 #if CRASH_HANDLER
@@ -37,6 +38,8 @@ class Main extends Sprite
 	public static var fpsVar:FPS;
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
+	
+	public static var path:String = System.applicationStorageDirectory;
 
 	public static function main():Void
 	{
