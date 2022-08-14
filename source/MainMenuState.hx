@@ -31,6 +31,8 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
+
+	var background2:FlxSprite;
 	
 	var optionShit:Array<String> = [
 		'story_mode',
@@ -81,6 +83,19 @@ class MainMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
+		var background:FlxSprite = new FlxSprite().loadGraphic(Paths.image('mainmenu/menuBG'));
+		background.scrollFactor.set();
+		background.screenCenter();
+		background.antialiasing = ClientPrefs.globalAntialiasing;
+		add(background);
+
+		var bgScroll:FlxBackdrop = new FlxBackdrop(Paths.image('mainmenu/mainBG'), 5, 5, true, true, -33, -32);
+		bgScroll.scrollFactor.set();
+		bgScroll.screenCenter();
+		bgScroll.velocity.set(50, 50);
+		bgScroll.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bgScroll);
+
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
@@ -94,7 +109,15 @@ class MainMenuState extends MusicBeatState
 		magenta.visible = false;
 		magenta.antialiasing = ClientPrefs.globalAntialiasing;
 		magenta.color = 0xFFfd719b;
-		add(magenta);
+		//add(magenta);
+		
+		background2 = new FlxSprite().loadGraphic(Paths.image('mainmenu/menuBG'));
+		background2.scrollFactor.set();
+		background2.screenCenter();
+		background2.visible = false;
+		background2.antialiasing = ClientPrefs.globalAntialiasing;
+		background2.color = FlxColor.MAGENTA;
+		add(background2);
 		
 		// magenta.scrollFactor.set();
 
@@ -251,7 +274,8 @@ class MainMenuState extends MusicBeatState
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-					if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+					if(ClientPrefs.flashing) FlxFlicker.flicker(background2, 1.1, 0.15, false);
+					if(ClientPrefs.flashing) FlxFlicker.flicker(char, 1.1, 0.15, false);
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
