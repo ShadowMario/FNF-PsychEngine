@@ -31,7 +31,6 @@ class FPS extends TextField
 		The current frame rate, expressed using frames-per-second
 	**/
 	public var currentFPS(default, null):Int;
-	private var memoryMegasPeak:Float = 0;
 
 	@:noCompletion private var cacheCount:Int;
 	@:noCompletion private var currentTime:Float;
@@ -44,13 +43,13 @@ class FPS extends TextField
 		this.x = x;
 		this.y = y;
 
-		currentFPS = 144;
+		currentFPS = 0;
 		selectable = false;
-		mouseEnabled = true;
-		defaultTextFormat =  new TextFormat (Paths.font("vcr.ttf"), 13, color); //this is how to change you're fonts, piss babies
+		mouseEnabled = false;
+		defaultTextFormat = new TextFormat("vcr.ttf", 25, color);
 		autoSize = LEFT;
 		multiline = true;
-		text = "FPS: ";
+		text = "Brzina Smenjivanja Slike: ";
 
 		cacheCount = 0;
 		currentTime = 0;
@@ -88,16 +87,13 @@ class FPS extends TextField
 			
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
-			
-			if (memoryMegas > memoryMegasPeak) memoryMegasPeak = memoryMegas;
-
-			if (ClientPrefs.showMEM) text += "\nMEM: " + memoryMegas + " RAM" + "\nMEM PEAK: " + memoryMegasPeak + " RAM";
+			text += "\nMemorija: " + memoryMegas + " Megabajta";
 			#end
 
-			textColor = 0xFF9C9C9C;
+			textColor = 0xFFA500;
 			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
 			{
-				textColor = 0xFFFF0037;
+				textColor = 0xFF800080;
 			}
 
 			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
