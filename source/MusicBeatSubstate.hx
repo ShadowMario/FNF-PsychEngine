@@ -1,15 +1,15 @@
 package;
 
-import Conductor.BPMChangeEvent;
-import flixel.FlxG;
-import flixel.FlxSubState;
-import flixel.FlxBasic;
-import flixel.FlxSprite;
 #if android
 import android.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
 #end
+import Conductor.BPMChangeEvent;
+import flixel.FlxG;
+import flixel.FlxSubState;
+import flixel.FlxBasic;
+import flixel.FlxSprite;
 
 class MusicBeatSubstate extends FlxSubState
 {
