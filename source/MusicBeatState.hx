@@ -1,5 +1,11 @@
 package;
 
+#if android
+import android.AndroidControls;
+import android.flixel.FlxVirtualPad;
+import flixel.input.actions.FlxActionInput;
+import flixel.util.FlxDestroyUtil;
+#end
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -14,12 +20,6 @@ import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
-#if android
-import android.AndroidControls;
-import android.flixel.FlxVirtualPad;
-import flixel.input.actions.FlxActionInput;
-import flixel.util.FlxDestroyUtil;
-#end
 
 class MusicBeatState extends FlxUIState
 {
@@ -66,7 +66,6 @@ class MusicBeatState extends FlxUIState
 	public function addAndroidControls()
 	{
 		androidControls = new AndroidControls();
-		androidControls.alpha = 0.8;
 
 		switch (AndroidControls.getMode())
 		{
@@ -83,7 +82,7 @@ class MusicBeatState extends FlxUIState
 		controls.trackedinputsNOTES = [];
 
 		var camControls = new flixel.FlxCamera();
-		FlxG.cameras.add(camControls);
+		FlxG.cameras.add(camControls, false);
 		camControls.bgColor.alpha = 0;
 
 		androidControls.cameras = [camControls];
