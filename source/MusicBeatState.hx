@@ -66,7 +66,8 @@ class MusicBeatState extends FlxUIState
 	public function addAndroidControls()
 	{
 		androidControls = new AndroidControls();
-
+    androidControls.alpha = 0.8;
+    
 		switch (AndroidControls.getMode())
 		{
 			case 0 | 1 | 2: // RIGHT_FULL | LEFT_FULL | CUSTOM
