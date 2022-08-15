@@ -6,7 +6,6 @@ import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.addons.display.FlxBackdrop;
 import flixel.FlxCamera;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
@@ -32,8 +31,6 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
-
-	var background2:FlxSprite;
 	
 	var optionShit:Array<String> = [
 		'story_mode',
@@ -84,19 +81,6 @@ class MainMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
-		var background:FlxSprite = new FlxSprite().loadGraphic(Paths.image('mainmenu/menuBG'));
-		background.scrollFactor.set();
-		background.screenCenter();
-		background.antialiasing = ClientPrefs.globalAntialiasing;
-		add(background);
-
-		var bgScroll:FlxBackdrop = new FlxBackdrop(Paths.image('mainmenu/mainBG'), 5, 5, true, true, -33, -32);
-		bgScroll.scrollFactor.set();
-		bgScroll.screenCenter();
-		bgScroll.velocity.set(50, 50);
-		bgScroll.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bgScroll);
-
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
@@ -110,15 +94,7 @@ class MainMenuState extends MusicBeatState
 		magenta.visible = false;
 		magenta.antialiasing = ClientPrefs.globalAntialiasing;
 		magenta.color = 0xFFfd719b;
-		//add(magenta);
-		
-		background2 = new FlxSprite().loadGraphic(Paths.image('mainmenu/menuBG'));
-		background2.scrollFactor.set();
-		background2.screenCenter();
-		background2.visible = false;
-		background2.antialiasing = ClientPrefs.globalAntialiasing;
-		background2.color = FlxColor.MAGENTA;
-		add(background2);
+		add(magenta);
 		
 		// magenta.scrollFactor.set();
 
@@ -153,11 +129,10 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Modifikovani Psych Engine",12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Srpski Psych Engine",12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "StefanBETA Engine' Verzija: " + psychEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "SB Engine' Verzija: " + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -204,7 +179,7 @@ class MainMenuState extends MusicBeatState
 			add(char);
 
             case 2:
-			char = new FlxSprite(730, 200).loadGraphic(Paths.image('mainmenu/bf-holding-gf'));
+			char = new FlxSprite(700, 200).loadGraphic(Paths.image('mainmenu/bf-holding-gf'));
 			char.frames = Paths.getSparrowAtlas('mainmenu/bfAndGF');
 			char.animation.addByPrefix('idleBHG', 'BF idle dance w gf', 24, true);
 			char.animation.play('idleBHG');
@@ -279,8 +254,7 @@ class MainMenuState extends MusicBeatState
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-					if(ClientPrefs.flashing) FlxFlicker.flicker(background2, 1.1, 0.15, false);
-					if(ClientPrefs.flashing) FlxFlicker.flicker(char, 1.1, 0.15, false);
+					if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
@@ -336,7 +310,7 @@ class MainMenuState extends MusicBeatState
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.screenCenter(X);
-			spr.x -= 300;
+			spr.x -= 250;
 			//spr.screenCenter(X);
 		});
 	}
