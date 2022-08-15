@@ -175,7 +175,7 @@ or if you're running on Windows 11, install this dependency instead of the Windo
 * If you don't want video support for your mod, [delete the ``"VIDEOS_ALLOWED"`` line on ``Project.xml``](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/Project.xml#L50).
 * If you're running Visual Studio Community 2022, then install these dependencies:
 ```
-MSVC v143 - VS 2022 - C++ x64/x68 build tools (Latest)
+MSVC v143 - VS 2022 - C++ x64/x86 build tools (Latest)
 Windows 10 SDK (10.0.20348.0)
 ```
 or if you're on Windows 11 *with* Visual Studio Community 2022, install this one instead of the Windows 10 one: ``Windows 11 SDK (10.0.22621.0)``.
