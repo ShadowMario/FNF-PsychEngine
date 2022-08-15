@@ -16,6 +16,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
   * [Compiling (Web and Desktop)](#compiling)
     * [Compiling Web](#compiling-web)
     * [Compiling Desktop](#compile-desktop)
+* [A Few Things to Note (Building)](#things-to-note)
 
 ## Credits: <a name="credits"></a>
 * [Shadow Mario](https://twitter.com/Shadow_Mario_) - Programmer;
@@ -164,8 +165,22 @@ MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest)
 Windows 10 SDK (10.0.20348.0)
 ```
 
+or if you're running on Windows 11, install this dependency instead of the Windows 10 one: ``Windows 11 SDK (10.0.22000.0)``.
+
 * Once the dependencies download and install, you can open up a command line in the project's directory and run ``lime test windows -debug``.
   * Once it finishes building, you can run Psych Engine from the .exe file under ``export\release\windows\bin``.
+
+## A Few Things to Note (Building): <a name="things-to-note"></a>
+* If you don't want your mod to run .lua scripts, [delete the ``"LUA_ALLOWED"`` line on ``Project.xml``](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/Project.xml#L48).
+* If you don't want video support for your mod, [delete the ``"VIDEOS_ALLOWED"`` line on ``Project.xml``](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/Project.xml#L50).
+* If you're running Visual Studio Community 2022, then install these dependencies:
+```
+MSVC v143 - VS 2022 - C++ x64/x68 build tools (Latest)
+Windows 10 SDK (10.0.20348.0)
+```
+or if you're on Windows 11 *with* Visual Studio Community 2022, install this one instead of the Windows 10 one: ``Windows 11 SDK (10.0.22621.0)``.
+* Regarding the Windows 10/11 SDK dependencies, the number in the parentheses might not be accurate to this guide.
+  * Whatever the case might be, just install the **latest version**. (highest number in the parentheses)
 
 <p align="center">
   <img src="https://cdn.discordapp.com/attachments/922853801835257867/983893786885246986/psychservericon.png" width="235.5" height="235.5" /></a>
