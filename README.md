@@ -32,12 +32,12 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 * [Keoiki](https://twitter.com/Keoiki_) - Note Splash Animations;
 * [Smokey](https://twitter.com/Smokey_5_) - Spriteatlas Support;
 * [Nebula The Zorua](https:/github.com/nebulazorua) - Lua API Rework, Better Chart Beat Snapping, Workflow Fix;
-* [and the rest of the Psych Engine contributors](https://github.com/ShadowMario/FNF-PsychEngine/pulls).
+
+[and the rest of the Psych Engine's contributors](https://github.com/ShadowMario/FNF-PsychEngine/pulls).
 
 # Features: <a name="features"></a>
 
 ## Attractive Dialogue Boxes:
-
 <img src="https://user-images.githubusercontent.com/110774369/184693742-fe3b02cb-3389-4d27-956f-a0357014365c.gif" width="640" height="360"/>
 
 ## Mod Support:
@@ -91,14 +91,14 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 * Each Week has its own separate background, except for ``Tutorial`` and ``Week 1`` as they share the same one.
 * Each Menu Character is its own individual spritesheet, which makes modifying it easier.
 
-## Credits Menu
+## Credits Menu:
 <img src="https://cdn.discordapp.com/attachments/875771733699883058/1008822321936617572/unknown.png" width="640" height="360"/>
                                                                                                                          
 * Each item has its own Icon, Name, Description and Redirect Link. 
 
 (Upon pressing ``Enter`` on the currently selected item, it'll open up a browser tab and send you to that link)
 
-## Awards / Achievements
+## Awards / Achievements:
 <img src="https://cdn.discordapp.com/attachments/875771733699883058/1008830226584850452/unknown.png" width="640" height="360"/>
 
 <img src="https://cdn.discordapp.com/attachments/875771733699883058/1008830233023102986/unknown.png" width="640" height="360"/>
@@ -119,7 +119,8 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 * Some changes based on the ``Week 7 Update``:
   * Background Colors in ``Freeplay``, Note Splashes, etc.
 * Resetting Score in ``Freeplay`` or Story Mode using the Reset key. (default: ``R``)
-* Listening to a Song in ``Freeplay`` by pressing ``Space`` or adjusting the Scroll Speed/Damage Taken/etc. using Gameplay Modifiers by pressing ``Ctrl`` in either ``Freeplay`` or ``Story Mode``.
+* Listening to a Song in ``Freeplay`` by pressing ``Space``;
+* Gameplay Modifiers (allowing you to adjust Scroll Speed, Damage Taken, etc.) by pressing ``Ctrl`` in either ``Freeplay`` or ``Story Mode``.
 
 # Building: <a name="building"></a>
 ## Installing Necessary Programs / Prerequisites: <a name="programs-prerequisites"></a>
