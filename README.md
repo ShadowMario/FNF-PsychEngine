@@ -21,7 +21,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 ## Credits: <a name="credits"></a>
 * [Shadow Mario](https://twitter.com/Shadow_Mario_) - Programmer;
 * [RiverOaken](https://twitter.com/RiverOaken) - Artist;
-* [shubs](https://twitter.com/yoshubs) - Assistant Programmer, New Input System, New Asset Caching System.
+* [Yoshubs](https://twitter.com/yoshubs) - Assistant Programmer, New Input System, New Asset Caching System.
 
 ### Special Thanks: <a name="special-thanks"></a>
 * [bbpanzu](https://twitter.com/bbsub3) - Former Programmer;
