@@ -74,7 +74,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 ## Multiple Editors (some reworked, some new):
 <img src="https://cdn.discordapp.com/attachments/875771733699883058/1008819926221463592/unknown.png" width="773.3" height="376"/>
 
-* These Editors are accessible through builds that are directly **downloaded from the ``GitHub Releases``** or builds that are **compiled from source code**.
+* These Editors are accessible through builds that are directly **downloaded from ``GitHub Releases``** or builds that are **compiled from source code**.
 
 ## Chart Editor Rework:
 <img src="https://cdn.discordapp.com/attachments/875771733699883058/1008816086319382648/PsychEngine_WWghdNeZaK.png" width="640" height="360"/>
@@ -88,15 +88,14 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 ## Story Mode Menu Rework:
 <img src="https://cdn.discordapp.com/attachments/875771733699883058/1008820871110074448/unknown.png" width="640" height="360"/>
 
-* Each Week has its own separate background, except for ``Tutorial`` and ``Week 1`` as they share the same one.
+* Each Week has its own separate background. (except for ``Tutorial`` and ``Week 1`` as they share the same one)
 * Each Menu Character is its own individual spritesheet, which makes modifying it easier.
 
 ## Credits Menu:
 <img src="https://cdn.discordapp.com/attachments/875771733699883058/1008822321936617572/unknown.png" width="640" height="360"/>
                                                                                                                          
-* Each item has its own Icon, Name, Description and Redirect Link. 
-
-(Upon pressing ``Enter`` on the currently selected item, it'll open up a browser tab and send you to that link)
+* Each credits item has its own Icon, Name, Description and Redirect Link. 
+    * (Upon pressing ``Enter`` on the currently selected credits item, it'll open up a browser tab and send you to that link)
 
 ## Awards / Achievements:
 <img src="https://cdn.discordapp.com/attachments/875771733699883058/1008830226584850452/unknown.png" width="640" height="360"/>
@@ -105,7 +104,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 
 * Psych comes with 16 awards/achievements. To name some:
   * ``Debugger``, ``Roadkill Enthusiast``, ``Hyperactive``, ``Just the Two of Us``, etc.
-* All of the 16 awards/achievements are *examples* that you can mess with and learn how they work.
+* All of the 16 awards/achievements are *examples* that you can mess with and learn how each one works.
   * (Check ``Achievements.hx`` and search for ``"checkForAchievement"`` in ``PlayState.hx``)
 
 ## Options Menu:
@@ -114,12 +113,12 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 * Pretty self-explanatory, it's a custom and more advanced (in terms of the ``Week 7 Update``) Options Menu, that allows you to modify the game to your liking.
 
 # Bonus Features: <a name="bonus-features"></a>
-* Enemy strums now glow just like the players.
+* Enemy strums now glow once a note is hit, just like player strums.
 * Lag no longer impacts camera movement and player icon scaling.
 * Some changes based on the ``Week 7 Update``:
   * Background Colors in ``Freeplay``, Note Splashes, etc.
-* Resetting Score in ``Freeplay`` or Story Mode using the Reset key. (default: ``R``)
-* Listening to a Song in ``Freeplay`` by pressing ``Space``;
+* Resetting Score in ``Freeplay`` or ``Story Mode`` using the Reset key. (default: ``R``)
+* The ability to listen to a song in ``Freeplay`` (by pressing ``Space``);
 * Gameplay Modifiers (allowing you to adjust Scroll Speed, Damage Taken, etc.) by pressing ``Ctrl`` in either ``Freeplay`` or ``Story Mode``.
 
 # Building: <a name="building"></a>
@@ -165,9 +164,10 @@ To run it from desktop (Windows, Mac or Linux), it's a little more complicated.
 MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest)
 Windows 10 SDK (10.0.20348.0)
 ```
-
-or if you're running on Windows 11, install this dependency instead of the Windows 10 one: ``Windows 11 SDK (10.0.22000.0)``.
-
+or if you're running on Windows 11 *with* Visual Studio Community 2019, install this dependency instead of the Windows 10 one:
+```
+Windows 11 SDK (10.0.22000.0)
+```
 * Once the dependencies download and install, you can open up a command line in the project's directory and run ``lime test windows -debug``.
   * Once it finishes building, you can run Psych Engine from the .exe file under ``export\release\windows\bin``.
 
@@ -179,9 +179,13 @@ or if you're running on Windows 11, install this dependency instead of the Windo
 MSVC v143 - VS 2022 - C++ x64/x86 build tools (Latest)
 Windows 10 SDK (10.0.20348.0)
 ```
-or if you're on Windows 11 *with* Visual Studio Community 2022, install this one instead of the Windows 10 one: ``Windows 11 SDK (10.0.22621.0)``.
+or if you're on Windows 11 *with* Visual Studio Community 2022, install this dependency instead of the Windows 10 one:
+```
+Windows 11 SDK (10.0.22621.0)
+```
 * Regarding the Windows 10/11 SDK dependencies, the number in the parentheses might not be accurate to this guide.
-  * Whatever the case might be, just install the **latest version**. (highest number in the parentheses)
+  * Whatever the case might be, just install the **latest version** (highest number in the parentheses), ***unless*** it's *specifically* told that you need a certain 
+Windows SDK to run Psych.
 
 <p align="center">
   <img src="https://cdn.discordapp.com/attachments/922853801835257867/983893786885246986/psychservericon.png" width="235.5" height="235.5" /></a>
