@@ -20,7 +20,7 @@ class NSFWState extends MusicBeatState
 	{
 		super.create();
 
-		bg = new FlxSprite(0, 0).loadGraphic(Paths.image('Poruka'));
+		bg = new FlxSprite(0, 0).loadGraphic(Paths.image('message'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		bg.screenCenter();
 		add(bg);
@@ -47,7 +47,7 @@ class NSFWState extends MusicBeatState
 		}
 
 		if (FlxG.keys.justPressed.Y #if android || _virtualpad.buttonB.justPressed #end) {
-			CoolUtil.browserLoad('https://www.patreon.com/Goobler');
+			CoolUtil.browserLoad('https://youtube.com/c/StefanBETATM');
 		}
 
 		super.update(elapsed);
