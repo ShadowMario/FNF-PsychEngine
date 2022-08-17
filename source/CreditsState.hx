@@ -85,11 +85,11 @@ class CreditsState extends MusicBeatState
 			['StefanBETA2008',	'stefan',				'Oficijalni Programer I Koder Za SB Engine. Preplati Se Na Njega Do 500 Preplatnika',	'https://youtube.com/c/StefanBETATM', 	'FFA500'],
 			['MatejaMorixs',	'mateja',				'Moj Najbolji Burazer 1 Godinu Na Discord.\nPreplati Se Kod Mog Drugara Do 1000 Preplatnika',	'https://youtube.com/channel/UCCdvpSLgY1EuWIzvrHMNWqg', 	'ff0000'],
 			['MihajloMOXI',	'mihajlo',				'Moj Najbolji Burazer 1 Godinu Na Discord.\nPreplati Se Kod Mog Drugara Do 1000 Preplatnika',	'https://youtube.com/channel/UCfb1s-V35QbwsrAkwvrH5cA', 	'800080'],
-			['']
+			[''],
 			['Android Podrska']
 			['Saw (M.A. Jigsaw)',	'jigsaw',				'Oficijalni Programer Za Psych Engine\nSa Android Podrskom.',	'https://www.youtube.com/channel/UC2Sk7vtPzOvbVzdVTWrribQ', 	'444444'],
 			['Goldie',				'goldie',			'Umetnik Za Virtualni Hitboks I Dugmad',										'https://www.youtube.com/channel/UCjTi9Hfl1Eb5Bgk5gksmsbA', 	'444444'],
-			['']
+			[''],
 			['SB Engine Server']
 			['Stefanov Discord Server',	'discord',			'Udjite Na Stefanov Discord Server. \n Do 100 Membera',											'https://discord.gg/n8RPeMSEzr', 								'5165F6'],
 			[''],
