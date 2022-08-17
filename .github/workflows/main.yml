@@ -172,7 +172,7 @@ jobs:
 
       - name: Install Haxelib
         run: |
-            haxelib setup ~/haxelib
+          haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null
           haxelib install lime
           haxelib install openfl
@@ -186,6 +186,7 @@ jobs:
           haxelib git linc_luajit https://github.com/MAJigsaw77/linc_luajit
           haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools.git
           haxelib list
+
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
 
