@@ -171,7 +171,7 @@ class FreeplayState extends MusicBeatState
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
 
-		// JUST DOIN THIS SHIT FOR TESTING!!!
+		// Samo Ovo Uredite Ako Hocete Za Test!!!
 		/* 
 			var md:String = Markdown.markdownToHtml(Assets.getText('CHANGELOG.md'));
 
@@ -194,28 +194,28 @@ class FreeplayState extends MusicBeatState
 
 		#if PRELOAD_ALL
 			#if android
-			var leText:String = "Press X to listen to the Song / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+			var leText:String = "Pritisnite X Da Poslusate Pesmu / Pritisnite C Da Otovrite Opcije Za Bolje Igranje. / Pritisnite Y Da Ponovo Podesite.";
 			var size:Int = 16;
 			#else
-			var leText:String = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
+			var leText:String = "Pritisnite SPACE Da Poslusate Pesmu / Pritisnite CTRL Da Otvorite Opcije Za Bolje Igranje. / Pritisnite RESET Da Ponovo Podesite.";
 			var size:Int = 16;
 			#end
 		#else
 			#if android
-			var leText:String = "Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+			var leText:String = "Pritisnite C Da Otvorite Opcije Ta Bolje Igranje / Pritisnite Y Da Ponovo Podesite.";
 			var size:Int = 18;
 			#else
-			var leText:String = "Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
+			var leText:String = "Pritisnite CTRL Da Otovrite Opcije Za Bolje Igranje / Pritisnite RESET Da Ponovo Podesite.";
 			var size:Int = 18;
 			#end
 		#end
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
-		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
+		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, CENTER);
 		text.scrollFactor.set();
 		add(text);
 
 		#if android
-		addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
+		addVirtualPad(LEFT_FULL, A_B_C_X_Y);
 		virtualPad.y = -26;
 		#end
 
@@ -281,7 +281,7 @@ class FreeplayState extends MusicBeatState
 			ratingSplit[1] += '0';
 		}
 
-		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
+		scoreText.text = 'LICNI REZULTAT: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
 		positionHighscore();
 
 		var upP = controls.UI_UP_P;

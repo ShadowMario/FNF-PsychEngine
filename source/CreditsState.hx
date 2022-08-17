@@ -81,33 +81,40 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-			['Android Support'],
-			['Saw (M.A. Jigsaw)',	'jigsaw',				'Main Programmer of Psych Engine\nWith Android Support',	'https://www.youtube.com/channel/UC2Sk7vtPzOvbVzdVTWrribQ', 	'444444'],
-			['Goldie',				'goldie',			'Virtual Pad Artist',										'https://www.youtube.com/channel/UCjTi9Hfl1Eb5Bgk5gksmsbA', 	'444444'],
-			['Join our Discord!',	'discord',			'If you dare...',											'https://discord.gg/42bGcJG26x', 								'5165F6'],
+			['SB Engine Tim'],
+			['StefanBETA2008',	'stefan',				'Oficijalni Programer I Koder Za SB Engine. Preplati Se Na Njega Do 500 Preplatnika',	'https://youtube.com/c/StefanBETATM', 	'FFA500'],
+			['MatejaMorixs',	'mateja',				'Moj Najbolji Burazer 1 Godinu Na Discord.\nPreplati Se Kod Mog Drugara Do 1000 Preplatnika',	'https://youtube.com/channel/UCCdvpSLgY1EuWIzvrHMNWqg', 	'ff0000'],
+			['MihajloMOXI',	'mihajlo',				'Moj Najbolji Burazer 1 Godinu Na Discord.\nPreplati Se Kod Mog Drugara Do 1000 Preplatnika',	'https://youtube.com/channel/UCfb1s-V35QbwsrAkwvrH5cA', 	'800080'],
+			['']
+			['Android Podrska']
+			['Saw (M.A. Jigsaw)',	'jigsaw',				'Oficijalni Programer Za Psych Engine\nSa Android Podrskom.',	'https://www.youtube.com/channel/UC2Sk7vtPzOvbVzdVTWrribQ', 	'444444'],
+			['Goldie',				'goldie',			'Umetnik Za Virtualni Hitboks I Dugmad',										'https://www.youtube.com/channel/UCjTi9Hfl1Eb5Bgk5gksmsbA', 	'444444'],
+			['']
+			['SB Engine Server']
+			['Stefanov Discord Server',	'discord',			'Udjite Na Stefanov Discord Server. \n Do 100 Membera',											'https://discord.gg/n8RPeMSEzr', 								'5165F6'],
 			[''],
-			['Psych Engine Team'],
-			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
-			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],
-			['shubs',				'shubs',			'Additional Programmer of Psych Engine',						'https://twitter.com/yoshubs',			'5E99DF'],
+			['Psych Engine Tim'],
+			['Shadow Mario',		'shadowmario',		'Oficijalni Programer Za Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
+			['RiverOaken',			'river',			'Oficijalni Umetnik/Animator Za Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],
+			['shubs',				'shubs',			'Pomocni Programer Za Psych Engine',						'https://twitter.com/yoshubs',			'5E99DF'],
 			[''],
-			['Former Engine Members'],
-			['bb-panzu',			'bb',				'Ex-Programmer of Psych Engine',								'https://twitter.com/bbsub3',			'3E813A'],
+			['Former Engine Memberi'],
+			['bb-panzu',			'bb',				'Eks-Programer Za Psych Engine',								'https://twitter.com/bbsub3',			'3E813A'],
 			[''],
-			['Engine Contributors'],
-			['iFlicky',				'flicky',			'Composer of Psync and Tea Time\nMade the Dialogue Sounds',		'https://twitter.com/flicky_i',			'9E29CF'],
-			['SqirraRNG',			'sqirra',			'Crash Handler and Base code for\nChart Editor\'s Waveform',	'https://twitter.com/gedehari',			'E1843A'],
-			['PolybiusProxy',		'proxy',			'.MP4 Video Loader Library (hxCodec)',							'https://twitter.com/polybiusproxy',	'DCD294'],
-			['KadeDev',				'kade',				'Fixed some cool stuff on Chart Editor\nand other PRs',			'https://twitter.com/kade0912',			'64A250'],
-			['Keoiki',				'keoiki',			'Note Splash Animations',										'https://twitter.com/Keoiki_',			'D2D2D2'],
-			['Nebula the Zorua',	'nebula',			'LUA JIT Fork and some Lua reworks',							'https://twitter.com/Nebula_Zorua',		'7D40B2'],
-			['Smokey',				'smokey',			'Sprite Atlas Support',											'https://twitter.com/Smokey_5_',		'483D92'],
+			['Engine Zaradnici'],
+			['iFlicky',				'flicky',			'Kompozitor Za Psync I Tea Time\nNapravio Je Dijalog Zvuk',		'https://twitter.com/flicky_i',			'9E29CF'],
+			['SqirraRNG',			'sqirra',			'Crash Rukovolac I Obican Kod Za\nEditor Grafikona I\ Waveform',	'https://twitter.com/gedehari',			'E1843A'],
+			['PolybiusProxy',		'proxy',			'.MP4 Video Ucitavac Biblioteke (hxCodec)',							'https://twitter.com/polybiusproxy',	'DCD294'],
+			['KadeDev',				'kade',				'Popravio Kul Stvari Na Editor Grafikona\nI Ostalo',			'https://twitter.com/kade0912',			'64A250'],
+			['Keoiki',				'keoiki',			'Animacije Za Prskanje Strelica',										'https://twitter.com/Keoiki_',			'D2D2D2'],
+			['Nebula the Zorua',	'nebula',			'LUA JIT Preradjivanja',							'https://twitter.com/Nebula_Zorua',		'7D40B2'],
+			['Smokey',				'smokey',			'Sprite Atlas Podrska',											'https://twitter.com/Smokey_5_',		'483D92'],
 			[''],
-			["Funkin' Crew"],
-			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",							'https://twitter.com/ninja_muffin99',	'CF2D2D'],
-			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",								'https://twitter.com/PhantomArcade3K',	'FADC45'],
-			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",								'https://twitter.com/evilsk8r',			'5ABD4B'],
-			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",								'https://twitter.com/kawaisprite',		'378FC7']
+			["Funkin' Posada"],
+			['ninjamuffin99',		'ninjamuffin99',	"Oficijalni Kreator Za Friday Night Funkin.'",							'https://twitter.com/ninja_muffin99',	'CF2D2D'],
+			['PhantomArcade',		'phantomarcade',	"Oficijalni Animator Za Friday Night Funkin'",								'https://twitter.com/PhantomArcade3K',	'FADC45'],
+			['evilsk8r',			'evilsk8r',			"Oficijalni Animator Za Friday Night Funkin'",								'https://twitter.com/evilsk8r',			'5ABD4B'],
+			['kawaisprite',			'kawaisprite',		"Oficijalni Kompozitor Za Friday Night Funkin'",								'https://twitter.com/kawaisprite',		'378FC7']
 		];
 		
 		for(i in pisspoop){

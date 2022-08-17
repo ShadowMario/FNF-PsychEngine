@@ -21,7 +21,7 @@ import sys.io.File;
 
 /**
  * ...
- * @author: Saw (M.A. Jigsaw)
+ * @author: Stefan{BETA}™(S.M)
  */
 class SUtil
 {
@@ -41,13 +41,13 @@ class SUtil
 				/**
 				 * Basically for now i can't force the app to stop while its requesting a android permission, so this makes the app to stop while its requesting the specific permission
 				 */
-				Application.current.window.alert('If you accepted the permissions you are all good!' + "\nIf you didn't then expect a crash"
-					+ 'Press Ok to see what happens',
-					'Permissions?');
+				Application.current.window.alert('Ako Ste Prihvatili Pristup, Vi Ste Onda Super.' + "\nAko Niste Primetili Nijedak Crash Ili Problem."
+					+ 'Pritisnite OK Dugme Da Vidite Sledece.',
+					'SB Engine: ');
 			}
 			else
 			{
-				Application.current.window.alert('Please grant the game storage permissions in app settings' + '\nPress Ok io close the app', 'Permissions?');
+				Application.current.window.alert('Molimo Vas Da  Date Pristup Memorijskom Prostoru Na Podesavanjima.' + '\nPritisnite OK Da Zatvorite SB Engine.', 'SB Engine: ');
 				System.exit(1);
 			}
 		}
@@ -60,8 +60,8 @@ class SUtil
 
 			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 			{
-				Application.current.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.",
-					'Error!');
+				Application.current.window.alert("Ups, Izgleda Da Niste Postavili Dve Fasickle Pod Nazivom: /assets I /mods. \nMolim Vas Da Pogledate Tutorijal.",
+					'SB Engine: ');
 				FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
 				System.exit(1);
 			}
@@ -69,7 +69,7 @@ class SUtil
 				&& (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods')))
 			{
 				Application.current.window.alert("Why did you create two files called assets and mods instead of copying the folders from the apk?, expect a crash.",
-					'Error!');
+					'SB Engine: ');
 				System.exit(1);
 			}
 			else
@@ -155,7 +155,7 @@ class SUtil
 			}
 			catch (e:Dynamic)
 				#if android
-				Hardware.toast("Error!\nClouldn't save the crash dump because:\n" + e, 2);
+				Hardware.toast("SB Engine: \nNemoze Se Sacuvati Greska:\n" + e, 2);
 				#end
 
 			System.exit(1);
@@ -171,10 +171,10 @@ class SUtil
 				FileSystem.createDirectory(SUtil.getPath() + 'saves');
 
 			File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
-			Hardware.toast("File Saved Successfully!", 2);
+			Hardware.toast("Dadoteka Uspesno Sacuvana na Fasciklu; saves", 2);
 		}
 		catch (e:Dynamic)
-			Hardware.toast("Error!\nClouldn't save the file because:\n" + e, 2);
+			Hardware.toast("SB Engine: \nNemoze Se Sacuvati Dadoteka:\n" + e, 2);
 	}
 
 	public static function copyContent(copyPath:String, savePath:String)
@@ -185,7 +185,7 @@ class SUtil
 				File.saveBytes(savePath, OpenFlAssets.getBytes(copyPath));
 		}
 		catch (e:Dynamic)
-			Hardware.toast("Error!\nClouldn't copy the file because:\n" + e, 2);
+			Hardware.toast("SB Engine:\nNemoze Se Kopirati Dadoteka:\n" + e, 2);
 	}
 	#end
 }
