@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 Poslovi:
-  # This workflow contains a single job called "SB Engine"
+  # This workflow contains a single job called "jobs"
   LinuxSupport:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
