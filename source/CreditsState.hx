@@ -90,7 +90,7 @@ class CreditsState extends MusicBeatState
 			['Saw (M.A. Jigsaw)',	'jigsaw',				'Oficijalni Programer Za Psych Engine\nSa Android Podrskom.',	'https://www.youtube.com/channel/UC2Sk7vtPzOvbVzdVTWrribQ', 	'444444'],
 			['Goldie',				'goldie',			'Umetnik Za Virtualni Hitboks I Dugmad',										'https://www.youtube.com/channel/UCjTi9Hfl1Eb5Bgk5gksmsbA', 	'444444'],
 			[''],
-			['SB Engine Server']
+			['SB Engine Server'],
 			['Stefanov Discord Server',	'discord',			'Udjite Na Stefanov Discord Server. \n Do 100 Membera',											'https://discord.gg/n8RPeMSEzr', 								'5165F6'],
 			[''],
 			['Psych Engine Tim'],
