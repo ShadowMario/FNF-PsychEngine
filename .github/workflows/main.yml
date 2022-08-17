@@ -183,7 +183,6 @@ jobs:
           haxelib install hscript
           haxelib install flixel-addons
           haxelib install hxCodec
-          haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git
           haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools.git
           haxelib list
 
