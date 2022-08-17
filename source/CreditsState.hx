@@ -103,7 +103,7 @@ class CreditsState extends MusicBeatState
 			[''],
 			['Engine Zaradnici'],
 			['iFlicky',				'flicky',			'Kompozitor Za Psync I Tea Time\nNapravio Je Dijalog Zvuk',		'https://twitter.com/flicky_i',			'9E29CF'],
-			['SqirraRNG',			'sqirra',			'Crash Rukovolac I Obican Kod Za\nEditor Grafikona I\ Waveform',	'https://twitter.com/gedehari',			'E1843A'],
+			['SqirraRNG',			'sqirra',			'Crash Rukovolac I Obican Kod Za Editor Grafikona I Waveform',	'https://twitter.com/gedehari',			'E1843A'],
 			['PolybiusProxy',		'proxy',			'.MP4 Video Ucitavac Biblioteke (hxCodec)',							'https://twitter.com/polybiusproxy',	'DCD294'],
 			['KadeDev',				'kade',				'Popravio Kul Stvari Na Editor Grafikona\nI Ostalo',			'https://twitter.com/kade0912',			'64A250'],
 			['Keoiki',				'keoiki',			'Animacije Za Prskanje Strelica',										'https://twitter.com/Keoiki_',			'D2D2D2'],
