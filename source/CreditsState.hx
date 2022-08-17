@@ -86,7 +86,7 @@ class CreditsState extends MusicBeatState
 			['MatejaMorixs',	'mateja',				'Moj Najbolji Burazer 1 Godinu Na Discord.\nPreplati Se Kod Mog Drugara Do 1000 Preplatnika',	'https://youtube.com/channel/UCCdvpSLgY1EuWIzvrHMNWqg', 	'ff0000'],
 			['MihajloMOXI',	'mihajlo',				'Moj Najbolji Burazer 1 Godinu Na Discord.\nPreplati Se Kod Mog Drugara Do 1000 Preplatnika',	'https://youtube.com/channel/UCfb1s-V35QbwsrAkwvrH5cA', 	'800080'],
 			[''],
-			['Android Podrska']
+			['Android Podrska'],
 			['Saw (M.A. Jigsaw)',	'jigsaw',				'Oficijalni Programer Za Psych Engine\nSa Android Podrskom.',	'https://www.youtube.com/channel/UC2Sk7vtPzOvbVzdVTWrribQ', 	'444444'],
 			['Goldie',				'goldie',			'Umetnik Za Virtualni Hitboks I Dugmad',										'https://www.youtube.com/channel/UCjTi9Hfl1Eb5Bgk5gksmsbA', 	'444444'],
 			[''],
