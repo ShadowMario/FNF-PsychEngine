@@ -59,7 +59,7 @@ Poslovi:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: Friday Night Funkin': SB Engine Linux Build
+          name: LinuxBuild
           path: 'export/release/linux/bin'
   WindowsSupport:
     runs-on: windows-latest
@@ -101,7 +101,7 @@ Poslovi:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: Friday Night Funkin': SB Engine Windows Build
+          name: WindowsBuild
           path: export/release/windows/bin
   MacSupport:
     runs-on: macos-latest
@@ -142,7 +142,7 @@ Poslovi:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: Friday Night Funkin': SB Engine Mac Build
+          name: MacBuild
           path: export/release/macos/bin
   AndroidSupport:
     name: AndroidSupport
@@ -206,5 +206,5 @@ Poslovi:
       - name: Postavljam Artefakt
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: Friday Night Funkin': SB Engine Android Build
+          name: AndroidBuild
           path: export/release/android/bin/app/build/outputs/apk/Program
