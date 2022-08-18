@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://media.discordapp.net/attachments/922853801835257867/983128071244763176/psychnewlogo.png" width="640" height="312.6" /></a>
+  <img src="https://files.catbox.moe/loqsf3.png" width="640" height="312.6" /></a>
 </p>
 
 # Friday Night Funkin': Psych Engine
@@ -38,7 +38,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 # Features: <a name="features"></a>
 
 ## Attractive Dialogue Boxes:
-<img src="https://user-images.githubusercontent.com/110774369/184693742-fe3b02cb-3389-4d27-956f-a0357014365c.gif" width="640" height="360"/>
+<img src="https://files.catbox.moe/om96ip.gif" width="640" height="360"/>
 
 ## Mod Support:
 * Support for Lua and being able to code in .lua files, giving you the ability to make custom weeks, events, scripts, and a ton more, without tinkering with the source code.
@@ -72,12 +72,12 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 * Some funky camera events at the beginning of ``Ugh``, making the song *pop*.
 
 ## Multiple Editors (some reworked, some new):
-<img src="https://cdn.discordapp.com/attachments/875771733699883058/1008819926221463592/unknown.png" width="773.3" height="376"/>
+<img src="https://files.catbox.moe/u97ahu.png" width="773.3" height="376"/>
 
 * These Editors are accessible through builds that are directly **downloaded from ``GitHub Releases``** or builds that are **compiled from source code**.
 
 ## Chart Editor Rework:
-<img src="https://cdn.discordapp.com/attachments/875771733699883058/1008816086319382648/PsychEngine_WWghdNeZaK.png" width="640" height="360"/>
+<img src="https://files.catbox.moe/vtbi8h.png" width="640" height="360"/>
 
 * ``Event`` notes:
   * "bookmarks" that trigger a specific action/event that was originally hardcoded in the base game;
@@ -86,21 +86,20 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 * A note's type can be changed within the Editor, that can either play or stop animations.
 
 ## Story Mode Menu Rework:
-<img src="https://cdn.discordapp.com/attachments/875771733699883058/1008820871110074448/unknown.png" width="640" height="360"/>
+<img src="https://files.catbox.moe/warpfk.png" width="640" height="360"/>
 
 * Each Week has its own separate background. (except for ``Tutorial`` and ``Week 1`` as they share the same one)
 * Each Menu Character is its own individual spritesheet, which makes modifying it easier.
 
 ## Credits Menu:
-<img src="https://cdn.discordapp.com/attachments/875771733699883058/1008822321936617572/unknown.png" width="640" height="360"/>
+<img src="https://files.catbox.moe/rutu2f.png" width="640" height="360"/>
                                                                                                                          
 * Each credits item has its own Icon, Name, Description and Redirect Link. 
     * (Upon pressing ``Enter`` on the currently selected credits item, it'll open up a browser tab and send you to that link)
 
 ## Awards / Achievements:
-<img src="https://cdn.discordapp.com/attachments/875771733699883058/1008830226584850452/unknown.png" width="640" height="360"/>
-
-<img src="https://cdn.discordapp.com/attachments/875771733699883058/1008830233023102986/unknown.png" width="640" height="360"/>
+<img src="https://files.catbox.moe/ih4hp3.png" width="640" height="360"/>
+<img src="https://files.catbox.moe/l02sgc.png" width="640" height="360"/>
 
 * Psych comes with 16 awards/achievements. To name some:
   * ``Debugger``, ``Roadkill Enthusiast``, ``Hyperactive``, ``Just the Two of Us``, etc.
@@ -108,7 +107,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
   * (Check ``Achievements.hx`` and search for ``"checkForAchievement"`` in ``PlayState.hx``)
 
 ## Options Menu:
-<img src="https://cdn.discordapp.com/attachments/875771733699883058/1008825275611619498/unknown.png" width="640" height="360"/>
+<img src="https://files.catbox.moe/43g8pp.png" width="640" height="360"/>
 
 * Pretty self-explanatory, it's a custom and more advanced (in terms of the ``Week 7 Update``) Options Menu, that allows you to modify the game to your liking.
 
@@ -188,5 +187,5 @@ Windows 11 SDK (10.0.22621.0)
 Windows SDK to run Psych.
 
 <p align="center">
-  <img src="https://cdn.discordapp.com/attachments/922853801835257867/983893786885246986/psychservericon.png" width="235.5" height="235.5" /></a>
+  <img src="https://files.catbox.moe/y36uzc.png" width="235.5" height="235.5" /></a>
 </p>
