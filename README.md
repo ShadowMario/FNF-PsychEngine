@@ -38,7 +38,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 # Features: <a name="features"></a>
 
 ## Attractive Dialogue Boxes:
-<img src="https://files.catbox.moe/om96ip.gif" width="640" height="360"/>
+<img src="https://user-images.githubusercontent.com/110774369/184693742-fe3b02cb-3389-4d27-956f-a0357014365c.gif" width="640" height="360"/>
 
 ## Mod Support:
 * Support for Lua and being able to code in .lua files, giving you the ability to make custom weeks, events, scripts, and a ton more, without tinkering with the source code.
