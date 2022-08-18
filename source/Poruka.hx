@@ -11,7 +11,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 
-class NSFWState extends MusicBeatState
+class Poruka extends MusicBeatState
 {
 	public static var wasThere:Bool = false;
 	var bg:FlxSprite;
