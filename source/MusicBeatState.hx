@@ -12,6 +12,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
+import flixel.FlxCamera;
 import flixel.FlxBasic;
 
 class MusicBeatState extends FlxUIState
@@ -26,10 +27,13 @@ class MusicBeatState extends FlxUIState
 	private var curDecBeat:Float = 0;
 	private var controls(get, never):Controls;
 
+	public static var camBeat:FlxCamera;
+
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
 	override function create() {
+		camBeat = FlxG.camera;
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
 
@@ -82,18 +86,21 @@ class MusicBeatState extends FlxUIState
 	{
 		if(curStep < 0) return;
 
+		var lastSection:Int = curSection;
 		curSection = 0;
-		stepsToDo = Math.round(getBeatsOnSection() * 4);
+		stepsToDo = 0;
 		for (i in 0...PlayState.SONG.notes.length)
 		{
 			if (PlayState.SONG.notes[i] != null)
 			{
 				stepsToDo += Math.round(getBeatsOnSection() * 4);
-				if(stepsToDo > curStep) return;
+				if(stepsToDo > curStep) break;
 				
 				curSection++;
 			}
 		}
+
+		if(curSection > lastSection) sectionHit();
 	}
 
 	private function updateBeat():Void
@@ -157,7 +164,7 @@ class MusicBeatState extends FlxUIState
 
 	public function sectionHit():Void
 	{
-		//trace('Section: ' + curSection);
+		//trace('Section: ' + curSection + ', Beat: ' + curBeat + ', Step: ' + curStep);
 	}
 
 	function getBeatsOnSection()

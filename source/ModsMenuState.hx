@@ -522,27 +522,16 @@ class ModsMenuState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		if(mods.length < 1)
-		{
-			for (obj in visibleWhenHasMods)
-			{
-				obj.visible = false;
-			}
-			for (obj in visibleWhenNoMods)
-			{
-				obj.visible = true;
-			}
-			return;
-		}
-
+		var noMods:Bool = (mods.length < 1);
 		for (obj in visibleWhenHasMods)
 		{
-			obj.visible = true;
+			obj.visible = !noMods;
 		}
 		for (obj in visibleWhenNoMods)
 		{
-			obj.visible = false;
+			obj.visible = noMods;
 		}
+		if(noMods) return;
 
 		curSelected += change;
 		if(curSelected < 0)
@@ -755,6 +744,14 @@ class ModMetadata
 				if(description != null && description.length > 0)
 				{
 					this.description = description;
+				}
+				if(name == 'Name')
+				{
+					this.name = folder;
+				}
+				if(description == 'Description')
+				{
+					this.description = "No description provided.";
 				}
 				if(colors != null && colors.length > 2)
 				{

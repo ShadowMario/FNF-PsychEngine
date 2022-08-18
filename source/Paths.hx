@@ -410,7 +410,11 @@ class Paths
 	}
 
 	inline static public function formatToSongPath(path:String) {
-		return path.toLowerCase().replace(' ', '-');
+		var invalidChars = ~/[~&\\;:<>#]/;
+		var hideChars = ~/[.,'"%?!]/;
+
+		var path = invalidChars.split(path.replace(' ', '-')).join("-");
+		return hideChars.split(path).join("").toLowerCase();
 	}
 
 	// completely rewritten asset loading? fuck!
@@ -545,11 +549,13 @@ class Paths
 	static public function getGlobalMods()
 		return globalMods;
 
-	static public function pushGlobalMods(){ // prob a better way to do this but idc
+	static public function pushGlobalMods() // prob a better way to do this but idc
+	{
 		globalMods = [];
-		if (FileSystem.exists("modsList.txt"))
+		var path:String = 'modsList.txt';
+		if(FileSystem.exists(path))
 		{
-			var list:Array<String> = CoolUtil.listFromString(File.getContent("modsList.txt"));
+			var list:Array<String> = CoolUtil.coolTextFile(path);
 			for (i in list)
 			{
 				var dat = i.split("|");
@@ -565,7 +571,7 @@ class Paths
 								var global:Bool = Reflect.getProperty(stuff, "runsGlobally");
 								if(global)globalMods.push(dat[0]);
 							}
-						}catch(e:Dynamic){
+						} catch(e:Dynamic){
 							trace(e);
 						}
 					}
