@@ -61,7 +61,7 @@ class OutdatedState extends MusicBeatState
 		addVirtualPad(NONE, A);
 		#end
 
-		FlxTween.angle(sbLogo, sbLogo.angle, -10, 2, (ease: FlxEase.quartInOut);
+		FlxTween.angle(sbLogo, sbLogo.angle, -10, 2, (ease: FlxEase);
 
 		new FlxTimer().start(2, function(tmr:FlxTimer);
 		{
@@ -75,17 +75,17 @@ class OutdatedState extends MusicBeatState
 		new FlxTimer().start(2, function(tmr:FlxTimer)
 		{
 			if (sbLogo.angle == -10)
-				FlxTween.angle(sbLogo, sbLogo.angle, 10, 2, {ease: FlxEase.quartInOut});
+				FlxTween.angle(sbLogo, sbLogo.angle, 10, 2, {ease: FlxEase});
 			else
-				FlxTween.angle(sbLogo, sbLogo.angle, -10, 2, {ease: FlxEase.quartInOut});
+				FlxTween.angle(sbLogo, sbLogo.angle, -10, 2, {ease: FlxEase});
 		}, 0);
 
 		new FlxTimer().start(0.8, function(tmr:FlxTimer)
 		{
 			if (sbLogo.alpha == 0.8)
-				FlxTween.tween(sbLogo, {alpha: 1}, 0.8, {ease: FlxEase.quartInOut});
+				FlxTween.tween(sbLogo, {alpha: 1}, 0.8, {ease: FlxEase.});
 			else
-				FlxTween.tween(sbLogo, {alpha: 0.8}, 0.8, {ease: FlxEase.quartInOut});
+				FlxTween.tween(sbLogo, {alpha: 0.8}, 0.8, {ease: FlxEase});
 		}, 0);
 
 	override function update(elapsed:Float)
