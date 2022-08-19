@@ -42,7 +42,7 @@ class FlashingState extends MusicBeatState
 			Vi Ste Upozoreni! Vas SB Engine",
 			32);
 		#end
-		warnText.setFormat("_Sans", 32, FlxColor.ORANGE, CENTER);
+		warnText.setFormat("VCR OSD Mono", 32, FlxColor.ORANGE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
 
