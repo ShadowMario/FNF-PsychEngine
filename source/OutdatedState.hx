@@ -62,9 +62,8 @@ class OutdatedState extends MusicBeatState
 		#end
 	}
 
-		FlxTween.color(bg, 2, bg.color, FlxColor.fromString(bgColors[colorRotation]));
-		FlxTween.angle(sbLogo, sbLogo.angle, -10, 2, {ease: FlxEase.quartInOut});
-
+		FlxTween.color(bg, 2, bg.color, FlxColor.fromString(bgColors[colorRotation));
+		FlxTween.angle(sbLogo, sbLogo.angle, -10, 2, {ease: FlxEase.quartInOut);
 
 		new FlxTimer().start(2, function(tmr:FlxTimer)
 		{
@@ -90,7 +89,6 @@ class OutdatedState extends MusicBeatState
 			else
 				FlxTween.tween(sbLogo, {alpha: 0.8}, 0.8, {ease: FlxEase.quartInOut});
 		}, 0);
-
 
 	override function update(elapsed:Float)
 	{
