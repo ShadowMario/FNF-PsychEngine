@@ -55,7 +55,7 @@ jobs:
           haxelib install hscript
           haxelib install flixel-addons
           haxelib install hxCodec
-          haxelib git linc_luajit https://github.com/jigsaw-4277821/linc_luajit.git
+          haxelib git linc_luajit https://github.com/MAJigsaw77/linc_luajit
           haxelib list
 
       - name: Create Version Tag
