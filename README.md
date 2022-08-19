@@ -33,7 +33,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 * [Smokey](https://twitter.com/Smokey_5_) - Spriteatlas Support;
 * [Nebula The Zorua](https:/github.com/nebulazorua) - Lua API Rework, Better Chart Beat Snapping, Workflow Fix;
 
-[and the rest of the Psych Engine's contributors](https://github.com/ShadowMario/FNF-PsychEngine/pulls).
+[and the rest of the Psych Engine's contributors](https://github.com/ShadowMario/FNF-PsychEngine/graphs/contributors).
 
 # Features: <a name="features"></a>
 
