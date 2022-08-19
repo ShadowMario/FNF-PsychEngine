@@ -60,7 +60,6 @@ class OutdatedState extends MusicBeatState
 		#if android
 		addVirtualPad(NONE, A);
 		#end
-	}
 
 		FlxTween.angle(sbLogo, sbLogo.angle, -10, 2, (ease: FlxEase.quartInOut);
 
