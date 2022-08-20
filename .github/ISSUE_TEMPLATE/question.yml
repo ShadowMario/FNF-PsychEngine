@@ -1,9 +1,9 @@
-name: Question
-description: Ask about something here.
-labels: [question]
+name: Pitanje
+description: Pitajte O Nečemu Ovde.
+labels: [Pitanja]
 body:
   - type: textarea
     attributes:
-      label: What is your question?
+      label: Koja Su Vaša Pitanja?
     validations:
       required: true

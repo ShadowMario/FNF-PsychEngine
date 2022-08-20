@@ -1,10 +1,10 @@
 name: Missing Documentation
-description: Ask for documentation if something is missing.
-labels: [documentation]
+description: Tražite Dokumentaciju Ako Nešto Nedostaje.
+labels: [Dokumentacija]
 body:
   - type: textarea
     attributes:
-      label: What needs to be documented?
-      description: 'For example: "There is no page explaining how to create an Achievement!"'
+      label: Šta Treba Dokumentovati?
+      description: 'Na Primer: „Ne Postoji Dtranica Koja Objašnjava Kako Da Napravite Dostignuće!'
     validations:
       required: true

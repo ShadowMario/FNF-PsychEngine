@@ -1,18 +1,18 @@
-name: Bug report
-description: Report bugs with the engine here
-labels: [bug]
+name: Bag Prijava
+description: Opišite Ovde Grešku Za SBEngine Ovde
+labels: [Bag]
 body:
   - type: textarea
-    id: description
+    id: Descripcija
     attributes:
-      label: "Describe your bug here."
+      label: "Opišite Svoju Grešku Ovde."
     validations:
       required: true
 
   - type: textarea
     id: terminal
     attributes:
-      label: "Command Prompt/Terminal logs (if existing)"
+      label: "Command Prompt/Terminal logs (Ako Postoji)"
       render: bash
     validations:
       required: false
@@ -20,31 +20,29 @@ body:
   - type: dropdown
     id: modding
     attributes:
-      label: "Are you modding a build from source or with Lua?"
+      label: "Da Li Modifikujete Gradnju Iz Izvora Ili Sa Lua-om?"
       options:
         - Lua
-        - Source
+        - Izvor
     validations:
       required: true
 
   - type: dropdown
     id: btarget
     attributes:
-      label: "What is your build target?"
+      label: "Koji Je Vaš Cilj Izgradnje"
       options:
         - "Windows"
         - "Linux"
         - "Mac"
-        - "HTML5"
-        - "Flash/Air-based target"
-        - "Neko, HashLink, or other build system"
+        - "Android"
     validations:
       required: true
 
   - type: input
     id: buildsummary
     attributes:
-      label: "Did you edit anything in this build? If so, mention or summarize your changes."
-      placeholder: "Yes, I edited ClientPrefs.hx and tried to add a new setting"
+      label: "Da Li Ste Nešto Izmenili U Ovoj Verziji? Ako Jeste, Spomenite Lli Sumirajte Svoje Promene"
+      placeholder: "Da, Izmenio Sam ClientPrefs.hx I Pokušao Da Dodam Novo Podešavanje"
     validations:
       required: true

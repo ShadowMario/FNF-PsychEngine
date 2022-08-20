@@ -1,43 +1,48 @@
-name: Help me!
-description: If you need help using the engine.
-labels: [help wanted]
+name: Pomozi Mi!
+description: Ako Vam Treba Pomoć Za SBEngine.
+labels: [Pomoć Potrebna]
 body:
   - type: textarea
-    id: description
+    id: Descripcija
     attributes:
-      label: "Describe your problem here."
+      label: "Opišite Svoju Pomoć Ovde."
     validations:
       required: true
+
+  - type: textarea
+    id: terminal
+    attributes:
+      label: "Command Prompt/Terminal logs (Ako Postoji)"
+      render: bash
+    validations:
+      required: false
 
   - type: dropdown
     id: modding
     attributes:
-      label: "Are you modding a build from source or with Lua?"
+      label: "Da Li Modifikujete Gradnju Iz Izvora Ili Sa Lua-om?"
       options:
         - Lua
-        - Source
+        - Izvor
     validations:
       required: true
 
   - type: dropdown
     id: btarget
     attributes:
-      label: "What is your build target?"
+      label: "Koji Je Vaš Cilj Izgradnje"
       options:
-        - "Windows x64"
-        - "Windows x86/x32"
+        - "Windows"
         - "Linux"
         - "Mac"
-        - "HTML5/Browser"
-        - "Flash/Air-based target"
-        - "Neko, HashLink, or other build system"
+        - "Android"
     validations:
       required: true
 
   - type: input
     id: buildsummary
     attributes:
-      label: "Did you edit anything in this build? If so, mention or summarize your changes."
-      placeholder: "Yes, I edited ClientPrefs.hx and tried to add a new setting"
+      label: "Da Li Ste Nešto Izmenili U Ovoj Verziji? Ako Jeste, Spomenite Lli Sumirajte Svoje Promene"
+      placeholder: "Da, Izmenio Sam ClientPrefs.hx I Pokušao Da Dodam Novo Podešavanje"
     validations:
-      required: false
+      required: true
