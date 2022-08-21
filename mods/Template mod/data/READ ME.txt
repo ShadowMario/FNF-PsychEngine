@@ -1,0 +1,11 @@
+=================================================
+                  Data folder
+=================================================
+
+Drag and drop chart folders here in a tree like this:
+
+data/song name/song name-hard.json
+data/song name/song name.json
+data/song name/song name-easy.json
+
+freeplaySonglist.json documentation -> 

@@ -1,0 +1,25 @@
+﻿{"ATLAS": {"SPRITES":[ 
+{"SPRITE" : {"name": "0000","x":213,"y":524,"w":98,"h":118,"rotated": false}},
+{"SPRITE" : {"name": "0001","x":725,"y":600,"w":256,"h":123,"rotated": false}},
+{"SPRITE" : {"name": "0002","x":826,"y":271,"w":122,"h":67,"rotated": false}},
+{"SPRITE" : {"name": "0003","x":826,"y":0,"w":191,"h":120,"rotated": false}},
+{"SPRITE" : {"name": "0004","x":928,"y":120,"w":90,"h":151,"rotated": false}},
+{"SPRITE" : {"name": "0005","x":826,"y":120,"w":102,"h":147,"rotated": false}},
+{"SPRITE" : {"name": "0006","x":1017,"y":0,"w":1,"h":4,"rotated": false}},
+{"SPRITE" : {"name": "0007","x":420,"y":358,"w":305,"h":371,"rotated": false}},
+{"SPRITE" : {"name": "0008","x":0,"y":0,"w":420,"h":359,"rotated": false}},
+{"SPRITE" : {"name": "0009","x":420,"y":0,"w":406,"h":358,"rotated": false}},
+{"SPRITE" : {"name": "0010","x":0,"y":359,"w":336,"h":165,"rotated": false}},
+{"SPRITE" : {"name": "0011","x":311,"y":524,"w":90,"h":103,"rotated": false}},
+{"SPRITE" : {"name": "0012","x":725,"y":358,"w":215,"h":242,"rotated": false}},
+{"SPRITE" : {"name": "0013","x":0,"y":524,"w":213,"h":240,"rotated": false}}
+]},
+"meta": {
+"app": "Adobe Animate",
+"version": "21.0.1.37179",
+"image": "spritemap1.png",
+"format": "RGBA8888",
+"size": {"w":1018,"h":764},
+"resolution": "1"
+}
+}

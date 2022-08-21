@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="ui_buttons.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="back button0000" x="16" y="16" width="212" height="115" pivotX="9.5" pivotY="4.8"/>
+	<SubTexture name="cancel button0000" x="244" y="16" width="212" height="115" pivotX="9.45" pivotY="4.75"/>
+	<SubTexture name="down arrow button0000" x="472" y="16" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="down button0000" x="596" y="16" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="exit button0000" x="720" y="16" width="212" height="115" pivotX="9.45" pivotY="4.75"/>
+	<SubTexture name="left arrow button0000" x="16" y="148" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="left button0000" x="140" y="148" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="less info button0000" x="264" y="148" width="338" height="120" pivotX="108.45" pivotY="7.3"/>
+	<SubTexture name="more info button0000" x="618" y="148" width="338" height="120" pivotX="108.45" pivotY="7.3"/>
+	<SubTexture name="no button0000" x="16" y="284" width="212" height="115" pivotX="9.45" pivotY="4.75"/>
+	<SubTexture name="pause button0000" x="244" y="284" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="right arrow button0000" x="368" y="284" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="right button0000" x="492" y="284" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="save button0000" x="616" y="284" width="212" height="115" pivotX="9.5" pivotY="4.85"/>
+	<SubTexture name="select button0000" x="16" y="416" width="212" height="115" pivotX="9.45" pivotY="4.75"/>
+	<SubTexture name="skip button0000" x="244" y="416" width="212" height="115" pivotX="9.5" pivotY="4.85"/>
+	<SubTexture name="up arrow button0000" x="472" y="416" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="up button0000" x="596" y="416" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="x button0000" x="720" y="416" width="108" height="116" pivotX="4.95" pivotY="5.2"/>
+	<SubTexture name="yes button0000" x="16" y="548" width="212" height="115" pivotX="9.45" pivotY="4.75"/>
+</TextureAtlas>

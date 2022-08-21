@@ -1,0 +1,31 @@
+{
+    "medals": [
+        {
+            "name": "Friday Night Funker",
+            "desc": "Start the game",
+            "img": {
+                "src": "medals",
+                "anim": "gf",
+                "fps": 24
+            }
+        },
+        {
+            "name": "Just like the game",
+            "desc": "Funk on a Friday (real time)",
+            "img": {
+                "src": "medals",
+                "anim": "friday",
+                "fps": 24
+            }
+        },
+        {
+            "name": "SPOOKY TIME",
+            "desc": "Beat Week 1 in Story Mode",
+            "img": {
+                "src": "medals",
+                "anim": "spooky",
+                "fps": 24
+            }
+        }
+    ]
+}

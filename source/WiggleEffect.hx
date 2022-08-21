@@ -30,11 +30,6 @@ class WiggleEffect
 		shader.uTime.value[0] += elapsed;
 	}
 
-	public function setValue(value:Float):Void
-	{
-		shader.uTime.value[0] = value;
-	}
-
 	function set_effectType(v:WiggleEffectType):WiggleEffectType
 	{
 		effectType = v;
@@ -64,10 +59,12 @@ class WiggleEffect
 	}
 }
 
-class WiggleShader extends FlxShader
+class WiggleShader extends FlxFixedShader
 {
 	@:glFragmentSource('
 		#pragma header
+        
+
 		//uniform float tx, ty; // x,y waves phase
 		uniform float uTime;
 		

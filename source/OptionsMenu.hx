@@ -1,0 +1,1 @@
+typedef OptionsMenu = options.screens.OptionMain;

@@ -1,0 +1,110 @@
+{
+    "color" : "#A5004D",
+    "flipX" : false,
+    "pixel" : false,
+    "globalOffset" : {
+        "x" : 0,
+        "y" : 350
+    },
+    "animsIndices" : [
+        {
+            "name" : "danceLeft",
+            "anim" : "GF Dancing Beat",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : -9,
+            "loop" : false,
+            "animPrefixKeys" : [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        },
+        {
+            "name" : "danceRight",
+            "anim" : "GF Dancing Beat",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : -9,
+            "loop" : false,
+            "animPrefixKeys" : [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+        },
+        {
+            "name" : "sad",
+            "anim" : "gf sad",
+            "framerate" : 24,
+            "x" : -2,
+            "y" : -2,
+            "loop" : false,
+            "animPrefixKeys" : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        },
+        {
+            "name" : "hairBlow",
+            "anim" : "GF Dancing Beat Hair blowing",
+            "framerate" : 24,
+            "x" : 45,
+            "y" : -8,
+            "loop" : true,
+            "animPrefixKeys" : [0, 1, 2, 3]
+        },
+        {
+            "name" : "hairFall",
+            "anim" : "GF Dancing Beat Hair Landing",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : -9,
+            "loop" : false,
+            "animPrefixKeys" : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        }
+    ],
+    "anims" : [
+        {
+            "name" : "cheer",
+            "anim" : "GF Cheer",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 0,
+            "loop" : false
+        },
+        {
+            "name" : "singLEFT",
+            "anim" : "GF left note",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : -19,
+            "loop" : false
+        },
+        {
+            "name" : "singRIGHT",
+            "anim" : "GF Right Note",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : -20,
+            "loop" : false
+        },
+        {
+            "name" : "singDOWN",
+            "anim" : "GF Down Note",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : -20,
+            "loop" : false
+        },
+        {
+            "name" : "singUP",
+            "anim" : "GF Up Note",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 4,
+            "loop" : false
+        },
+        {
+            "name" : "scared",
+            "anim" : "GF FEAR",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 4,
+            "loop" : false
+        }
+    ],
+    "idleDanceSteps" : [
+        "danceRight",
+        "danceLeft"
+    ]
+}

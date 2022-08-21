@@ -5,8 +5,6 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.util.FlxSignal;
 
-// import ui.DeviceManager;
-// import props.Player;
 class PlayerSettings
 {
 	static public var numPlayers(default, null) = 0;
@@ -29,9 +27,6 @@ class PlayerSettings
 	#else
 	public var controls:Controls;
 	#end
-
-	// public var avatar:Player;
-	// public var camera(get, never):PlayCamera;
 
 	function new(id, scheme)
 	{
@@ -147,8 +142,6 @@ class PlayerSettings
 
 			player2.controls.addDefaultGamepad(1);
 		}
-
-		// DeviceManager.init();
 	}
 
 	static public function reset()

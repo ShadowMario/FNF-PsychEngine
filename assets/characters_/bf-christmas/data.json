@@ -1,0 +1,144 @@
+{
+    "color" : "#31B0D1",
+    "flipX" : true,
+    "pixel" : false,
+    "globalOffset" : {
+        "x" : 0,
+        "y" : 0
+    },
+    "animsIndices" : [],
+    "anims" : [
+        {
+            "name" : "idle",
+            "anim" : "BF idle dance",
+            "framerate" : 24,
+            "x" : -5,
+            "y" : 0,
+            "loop" : false
+        },
+        {
+            "name" : "singLEFT",
+            "anim" : "BF NOTE LEFT0",
+            "framerate" : 24,
+            "x" : 12,
+            "y" : -6,
+            "loop" : false
+        },
+        {
+            "name" : "singDOWN",
+            "anim" : "BF NOTE DOWN0",
+            "framerate" : 24,
+            "x" : -10,
+            "y" : -50,
+            "loop" : false
+        },
+        {
+            "name" : "singUP",
+            "anim" : "BF NOTE UP0",
+            "framerate" : 24,
+            "x" : -29,
+            "y" : 27,
+            "loop" : false
+        },
+        {
+            "name" : "singRIGHT",
+            "anim" : "BF NOTE RIGHT0",
+            "framerate" : 24,
+            "x" : -38,
+            "y" : -7,
+            "loop" : false
+        },
+        {
+            "name" : "singLEFTmiss",
+            "anim" : "BF NOTE LEFT MISS",
+            "framerate" : 24,
+            "x" : 12,
+            "y" : 24,
+            "loop" : false
+        },
+        {
+            "name" : "singDOWNmiss",
+            "anim" : "BF NOTE DOWN MISS",
+            "framerate" : 24,
+            "x" : -11,
+            "y" : -19,
+            "loop" : false
+        },
+        {
+            "name" : "singUPmiss",
+            "anim" : "BF NOTE UP MISS",
+            "framerate" : 24,
+            "x" : -29,
+            "y" : 27,
+            "loop" : false
+        },
+        {
+            "name" : "singRIGHTmiss",
+            "anim" : "BF NOTE RIGHT MISS",
+            "framerate" : 24,
+            "x" : -30,
+            "y" : 21,
+            "loop" : false
+        },
+        {
+            "name" : "hey",
+            "anim" : "BF HEY",
+            "framerate" : 24,
+            "x" : 7,
+            "y" : 4,
+            "loop" : false
+        },
+        {
+            "name" : "singDODGE",
+            "anim" : "boyfriend dodge",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 0,
+            "loop" : false
+        },
+        {
+            "name" : "hit",
+            "anim" : "BF hit",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 0,
+            "loop" : false
+        },
+        {
+            "name" : "firstDeath",
+            "anim" : "BF dies",
+            "framerate" : 24,
+            "x" : 37,
+            "y" : 11,
+            "loop" : false
+        },
+        {
+            "name" : "deathLoop",
+            "anim" : "BF Dead Loop",
+            "framerate" : 24,
+            "x" : 37,
+            "y" : 5,
+            "loop" : true
+        },
+        {
+            "name" : "deathConfirm",
+            "anim" : "BF Dead confirm",
+            "framerate" : 24,
+            "x" : 37,
+            "y" : 69,
+            "loop" : false
+        },
+        {
+            "name" : "scared",
+            "anim" : "BF idle shaking",
+            "framerate" : 24,
+            "x" : -4,
+            "y" : 0,
+            "loop" : false
+        }
+    ],
+    "idleDanceSteps" : [
+        "idle",
+        ""
+    ]
+}

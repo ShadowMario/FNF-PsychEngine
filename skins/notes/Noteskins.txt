@@ -1,0 +1,15 @@
+╔═══════════════════════════════════════════════════╗
+║ How to install noteskins                          ║
+╟───────────────────────────────────────────────────╢
+║ To install a noteskin, download any mod that have ║
+║ NOTE_assets.png and NOTE_assets.xml               ║
+║                                                   ║
+║ Then, open the engine, go to Options > Open Skin  ║
+║ Folder, rename the files to whatever you want and ║
+║ drag and drop the skin in the notes folder.       ║
+║ For example, the folder would look like that :    ║
+║                                                   ║
+║ - Noteskins.txt                                   ║
+║ - Skin.png                                        ║
+║ - Skin.xml                                        ║
+╚═══════════════════════════════════════════════════╝

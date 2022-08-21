@@ -1,0 +1,87 @@
+{
+    "color" : "#AF66CE",
+    "flipX" : false,
+    "pixel" : false,
+    "globalOffset" : {
+        "x" : -500,
+        "y" : 0
+    },
+    "animsIndices" : [],
+    "anims" : [
+        {
+            "name" : "idle",
+            "anim" : "Parent Christmas Idle",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 0,
+            "loop" : false
+        },
+        {
+            "name" : "singUP",
+            "anim" : "Parent Up Note Dad",
+            "framerate" : 24,
+            "x" : -47,
+            "y" : 24,
+            "loop" : false
+        },
+        {
+            "name" : "singDOWN",
+            "anim" : "Parent Down Note Dad",
+            "framerate" : 24,
+            "x" : -31,
+            "y" : -29,
+            "loop" : false
+        },
+        {
+            "name" : "singLEFT",
+            "anim" : "Parent Left Note Dad",
+            "framerate" : 24,
+            "x" : -30,
+            "y" : 16,
+            "loop" : false
+        },
+        {
+            "name" : "singRIGHT",
+            "anim" : "Parent Right Note Dad",
+            "framerate" : 24,
+            "x" : -1,
+            "y" : -23,
+            "loop" : false
+        },
+        {
+            "name" : "singUP-alt",
+            "anim" : "Parent Up Note Mom",
+            "framerate" : 24,
+            "x" : -47,
+            "y" : 24,
+            "loop" : false
+        },
+        {
+            "name" : "singDOWN-alt",
+            "anim" : "Parent Down Note Mom",
+            "framerate" : 24,
+            "x" : -30,
+            "y" : -27,
+            "loop" : false
+        },
+        {
+            "name" : "singLEFT-alt",
+            "anim" : "Parent Left Note Mom",
+            "framerate" : 24,
+            "x" : -30,
+            "y" : 15,
+            "loop" : false
+        },
+        {
+            "name" : "singRIGHT-alt",
+            "anim" : "Parent Right Note Mom",
+            "framerate" : 24,
+            "x" : -1,
+            "y" : -24,
+            "loop" : false
+        }
+    ],
+    "idleDanceSteps" : [
+        "idle"
+    ]
+}

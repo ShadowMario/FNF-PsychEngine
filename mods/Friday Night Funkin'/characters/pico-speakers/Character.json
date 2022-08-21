@@ -1,0 +1,107 @@
+{
+	"arrowColors": [
+		"#FFFFFF",
+		"#FFFFFF",
+		"#FFFFFF",
+		"#FFFFFF"
+	],
+	"camOffset": {
+		"x": 0,
+		"y": 0
+	},
+	"globalOffset": {
+		"x": 0,
+		"y": 0
+	},
+	"healthbarColor": "#B0CE58",
+	"flipX": false,
+	"anims": [
+		{
+			"indices": null,
+			"x": 0,
+			"y": 0,
+			"anim": "Pico shoot 1",
+			"loop": false,
+			"name": "shoot1",
+			"framerate": 24
+		},
+		{
+			"indices": null,
+			"x": -1,
+			"y": -128,
+			"anim": "Pico shoot 2",
+			"loop": false,
+			"name": "shoot2",
+			"framerate": 24
+		},
+		{
+			"indices": null,
+			"x": 412,
+			"y": -64,
+			"anim": "Pico shoot 3",
+			"loop": false,
+			"name": "shoot3",
+			"framerate": 24
+		},
+		{
+			"indices": null,
+			"x": 439,
+			"y": -19,
+			"anim": "Pico shoot 4",
+			"loop": true,
+			"name": "shoot4-idle",
+			"framerate": 24
+		},
+		{
+			"indices": null,
+			"x": 439,
+			"y": -19,
+			"anim": "Pico shoot 4",
+			"loop": false,
+			"name": "shoot4",
+			"framerate": 24
+		},
+		{
+			"indices": null,
+			"x": 412,
+			"y": -64,
+			"anim": "Pico shoot 3",
+			"loop": true,
+			"name": "shoot3-idle",
+			"framerate": 24
+		},
+		{
+			"indices": null,
+			"x": -1,
+			"y": -128,
+			"anim": "Pico shoot 2",
+			"loop": true,
+			"name": "shoot2-idle",
+			"framerate": 24
+		},
+		{
+			"indices": null,
+			"x": 0,
+			"y": 0,
+			"anim": "Pico shoot 1",
+			"loop": false,
+			"name": "shoot1-idle",
+			"framerate": 24
+		}
+	],
+	"danceSteps": [
+		"idle"
+	],
+	"antialiasing": true,
+	"healthIconSteps": [
+		[
+			20,
+			0
+		],
+		[
+			0,
+			1
+		]
+	],
+	"scale": 1
+}

@@ -1,0 +1,82 @@
+{
+    "alignment": "center",
+    "bgScroll": true,
+    "flickerColor": "#FD719B",
+    "autoPos": true,
+    "defaultBehaviour": true,
+    "autoCamPos": true,
+    "options": [
+        {
+            "name": "Story Mode",
+            "image": "FNF_main_menu_assets",
+            "staticAnim": "story mode basic",
+            "selectedAnim": "story mode white",
+            "instant": false,
+            "callback": "onStoryMode",
+            "devModeOnly": false
+        },
+        {
+            "name": "Freeplay",
+            "image": "FNF_main_menu_assets",
+            "staticAnim": "freeplay basic",
+            "selectedAnim": "freeplay white",
+            "instant": false,
+            "callback": "onFreeplay",
+            "devModeOnly": false
+        },
+        {
+            "name": "Mods",
+            "image": "FNF_main_menu_assets",
+            "staticAnim": "mods basic",
+            "selectedAnim": "mods white",
+            "instant": false,
+            "callback": "onMods",
+            "devModeOnly": false
+        },
+        {
+            "name": "Medals",
+            "image": "FNF_main_menu_assets",
+            "staticAnim": "medals basic",
+            "selectedAnim": "medals white",
+            "instant": false,
+            "callback": "onMedals",
+            "devModeOnly": false
+        },
+        {
+            "name": "Toolbox",
+            "image": "FNF_main_menu_assets",
+            "staticAnim": "toolbox basic",
+            "selectedAnim": "toolbox white",
+            "instant": false,
+            "callback": "onToolbox",
+            "devModeOnly": true
+        },
+        {
+            "name": "Donate",
+            "image": "FNF_main_menu_assets",
+            "staticAnim": "donate basic",
+            "selectedAnim": "donate white",
+            "instant": true,
+            "callback": "onDonate",
+            "devModeOnly": false
+        },
+        {
+            "name": "Credits",
+            "image": "FNF_main_menu_assets",
+            "staticAnim": "credits basic",
+            "selectedAnim": "credits white",
+            "instant": false,
+            "callback": "onCredits",
+            "devModeOnly": false
+        },
+        {
+            "name": "Options",
+            "image": "FNF_main_menu_assets",
+            "staticAnim": "options basic",
+            "selectedAnim": "options white",
+            "instant": false,
+            "callback": "onOptions",
+            "devModeOnly": false
+        }
+    ]
+}

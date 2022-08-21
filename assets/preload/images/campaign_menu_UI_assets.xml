@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas imagePath="campaign_menu_UI_assets.png">
-	<!-- Created with Adobe Animate version 20.0.0.17400 -->
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="arrow left0000" x="2" y="2" width="48" height="85"/>
-	<SubTexture name="arrow push left0000" x="60" y="2" width="42" height="75"/>
-	<SubTexture name="arrow push right0000" x="112" y="2" width="41" height="74"/>
-	<SubTexture name="arrow right0000" x="163" y="2" width="47" height="85"/>
-	<SubTexture name="lock0000" x="220" y="2" width="67" height="93"/>
+	<SubTexture name="EASY0000" x="20" y="20" width="196" height="65" pivotX="0" pivotY="0"/>
+	<SubTexture name="HARD0000" x="226" y="20" width="211" height="67" pivotX="0" pivotY="0"/>
+	<SubTexture name="NORMAL0000" x="20" y="97" width="308" height="67" pivotX="0" pivotY="0"/>
+	<SubTexture name="arrow left0000" x="338" y="97" width="48" height="85" pivotX="0" pivotY="0"/>
+	<SubTexture name="arrow push left0000" x="396" y="97" width="42" height="75" pivotX="0" pivotY="0"/>
+	<SubTexture name="arrow push right0000" x="448" y="97" width="41" height="74" pivotX="0" pivotY="0"/>
+	<SubTexture name="arrow right0000" x="20" y="192" width="47" height="85" pivotX="0" pivotY="0"/>
+	<SubTexture name="lock0000" x="77" y="192" width="67" height="93" pivotX="0" pivotY="0"/>
 </TextureAtlas>

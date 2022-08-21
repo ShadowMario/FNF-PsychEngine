@@ -1,0 +1,10 @@
+// New dialogue shit or whatever
+// 1st Parameter : Character's file
+// 2nd Parameter : Character's Animation
+// 3rd Parameter : Bubble's animation (normal or loud)
+// 4st Parameter : Audio file
+// 5st Parameter : Audio library
+bf:normal:normal:right:none:none:Penis
+dad:normal:normal:left:none:none:Hi and welcome to the episode 14 of Twitch controls chaos
+bf:normal:normal:right:none:none:Michael is in witness protection
+dad:normal:normal:left:none:none:NO FUCK YOU

@@ -1,0 +1,87 @@
+{
+    "color" : "#B7D855",
+    "flipX" : true,
+    "pixel" : false,
+    "globalOffset" : {
+        "x" : 0,
+        "y" : 300
+    },
+    "animsIndices" : [],
+    "anims" : [
+        {
+            "name" : "idle",
+            "anim" : "Pico Idle Dance",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 0,
+            "loop" : true
+        },
+        {
+            "name" : "singUP",
+            "anim" : "pico Up note0",
+            "framerate" : 24,
+            "x" : -29,
+            "y" : 27,
+            "loop" : false
+        },
+        {
+            "name" : "singDOWN",
+            "anim" : "Pico Down Note0",
+            "framerate" : 24,
+            "x" : 200,
+            "y" : -70,
+            "loop" : false
+        },
+        {
+            "name" : "singLEFT",
+            "anim" : "Pico Note Right0",
+            "framerate" : 24,
+            "x" : 65,
+            "y" : 9,
+            "loop" : false
+        },
+        {
+            "name" : "singRIGHT",
+            "anim" : "Pico NOTE LEFT0",
+            "framerate" : 24,
+            "x" : -68,
+            "y" : -7,
+            "loop" : false
+        },
+        {
+            "name" : "singLEFTmiss",
+            "anim" : "Pico Note Right Miss",
+            "framerate" : 24,
+            "x" : 62,
+            "y" : 64,
+            "loop" : false
+        },
+        {
+            "name" : "singRIGHTmiss",
+            "anim" : "Pico NOTE LEFT miss",
+            "framerate" : 24,
+            "x" : -60,
+            "y" : 41,
+            "loop" : false
+        },
+        {
+            "name" : "singUPmiss",
+            "anim" : "pico Up note miss",
+            "framerate" : 24,
+            "x" : -19,
+            "y" : 67,
+            "loop" : false
+        },
+        {
+            "name" : "singDOWNmiss",
+            "anim" : "Pico Down Note MISS",
+            "framerate" : 24,
+            "x" : 210,
+            "y" : -28,
+            "loop" : false
+        }
+    ],
+    "idleDanceSteps" : [
+        "idle"
+    ]
+}

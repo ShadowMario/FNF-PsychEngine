@@ -1,0 +1,7 @@
+// These are meant for the updater, but use them as you wish!
+
+You can create medals in the Toolbox and unlock them in scripts via Medals.unlock("Medal Name").
+You could customise your note colors?
+You could change your Boyfriend skin?
+If you got any trouble with scripting, you can open the logs via pressing F6.
+You can see a pie of your score by pressing Ctrl in the Freeplay menu.

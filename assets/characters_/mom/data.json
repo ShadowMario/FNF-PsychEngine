@@ -1,0 +1,55 @@
+{
+    "color" : "#D8558E",
+    "flipX" : false,
+    "pixel" : false,
+    "globalOffset" : {
+        "x" : 0,
+        "y" : 0
+    },
+    "animsIndices" : [],
+    "anims" : [
+        {
+            "name" : "idle",
+            "anim" : "Mom Idle",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 0,
+            "loop" : true
+        },
+        {
+            "name" : "singLEFT",
+            "anim" : "Mom Left Pose",
+            "framerate" : 24,
+            "x" : 250,
+            "y" : -23,
+            "loop" : true
+        },
+        {
+            "name" : "singRIGHT",
+            "anim" : "Mom Pose Left",
+            "framerate" : 24,
+            "x" : 10,
+            "y" : -60,
+            "loop" : true
+        },
+        {
+            "name" : "singDOWN",
+            "anim" : "MOM DOWN POSE",
+            "framerate" : 24,
+            "x" : 20,
+            "y" : -160,
+            "loop" : true
+        },
+        {
+            "name" : "singUP",
+            "anim" : "Mom Up Pose",
+            "framerate" : 24,
+            "x" : 14,
+            "y" : 71,
+            "loop" : true
+        }
+    ],
+    "idleDanceSteps" : [
+        "idle"
+    ]
+}

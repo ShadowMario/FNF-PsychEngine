@@ -1,0 +1,28 @@
+{
+    "name": "Friday Night Funkin'",
+    "description": "What would Friday Night Funkin' be... Without Friday Night Funkin' ?\r\nYoshiCrafter Engine \"port\" of the original game.\r\nWarning : Do not remove, engine depends on it.",
+    "titleBarName": "Friday Night Funkin'",
+    "skinnableBFs": ["bf", "bf-car", "bf-christmas", "bf-dead"],
+    "skinnableGFs": ["gf", "gf-car", "gf-christmas", "gf-philly"],
+    "BFskins": [
+        {
+            "name" : "Boyfriend",
+            "char" : "bf"
+        }
+    ],
+    "GFskins": [
+        {
+            "name" : "Girlfriend",
+            "char" : "gf"
+        }
+    ],
+    "keyNumbers": [4],
+    "dependencies": ["yoshicrafterengine"],
+    "settings": [
+        {
+            "name": "Blammed effects",
+            "value": "bool"
+        }
+    ],
+    "locked": true
+}

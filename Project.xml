@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
+
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Psych Engine" file="PsychEngine" packageName="com.shadowmario.psychengine" package="com.shadowmario.psychengine" main="Main" version="0.2.8" company="ShadowMario" />
+	<app title="Friday Night Funkin' - YoshiCrafter Engine" packageName="com.yoshicrafter29.yoshiengine" package="com.yoshicrafter29.yoshiengine" main="Main" version="0.2.7.1" company="YoshiCrafter29" />
+	<app file="YoshiCrafterEngine" if="windows" />
+	<app file="YoshiCrafterEngine_Linux" if="linux" />
+	<app file="YoshiCrafterEngine_Mac" if="mac" />
+	<app file="YoshiCrafterEngine_Android" if="android" />
+	<!-- <app file="Yoshi Engine (x64)" unless="32bit" /> -->
+	<haxedef name="X64_BITS" unless="32bit"/>
 
+	<haxedef name="HXCPP_CHECK_POINTER" if="release" />
+	<haxedef name="HXCPP_STACK_LINE" if="release" />
+	<haxedef name="HXCPP_DEBUG_LINK" if="release" />
+	<haxedef name="hscriptPos" /> <!-- for logging -->
+	<haxedef name="newgrounds" if="windows"/>
+	<!-- <haxedef name="lua" unless="android"/> -->
+	
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
-
-	<!-- NOTE TO SELF: DISABLE THIS IF ISSUES ARE FOUND -->
-	<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB"/> <!-- stable luas PUT AFTER FIRST LINE WITH APP NAME AND ETC -->
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -30,7 +41,8 @@
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
+	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false" allow-shaders="true" require-shaders="true"/>
+	
 
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
@@ -39,81 +51,41 @@
 
 	<set name="BUILD_DIR" value="export/debug" if="debug" />
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
-	<set name="BUILD_DIR" value="export/32bit" if="32bits" />
+	<!-- <set name="BUILD_DIR" value="export/32bit" if="32bit" /> -->
 
 	<classpath name="source" />
-	
-	<!-- PSYCH ENGINE CUSTOMIZATION -->
-	<define name="MODS_ALLOWED" if="desktop" />
-	<define name="LUA_ALLOWED" if="desktop" />
-	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
-	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
-	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild"/> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
-	<define name="CRASH_HANDLER" if="desktop release" />
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
-	<section if="TITLE_SCREEN_EASTER_EGG">
-		<assets path="assets/secrets" rename="assets" exclude="*.ogg" if="web"/>
-		<assets path="assets/secrets" rename="assets" exclude="*.mp3"  unless="web"/>
-	</section>
-
-	<!-- DONT ENABLE THIS -->
-	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
-
-	<!-- <define name="PRELOAD_ALL" /> -->
+	<assets path="assets/preload" rename="assets" exclude="*.mp3" unless="web"/>
+	
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
 	
-	<library name="videos"        preload="true" />
 	<section if="PRELOAD_ALL">
-		<library name="songs"         preload="true" />
-		<library name="shared"        preload="true" />
-		<library name="week2"         preload="true" />
-		<library name="week3"         preload="true" />
-		<library name="week4"         preload="true" />
-		<library name="week5"         preload="true" />
-		<library name="week6"         preload="true" />
-		<library name="week7"         preload="true" />
+		<library name="shared"   	preload="true" />
+		<library name="tutorial" 	preload="true" />
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
-		<library name="songs"         preload="true" />
-		<library name="shared"        preload="false" />
-		<library name="week2"         preload="false" />
-		<library name="week3"         preload="false" />
-		<library name="week4"         preload="false" />
-		<library name="week5"         preload="false" />
-		<library name="week6"         preload="false" />
-		<library name="week7"         preload="false" />
+		<library name="shared"   	preload="false" />
 	</section>
 	
-	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/shared"        library="shared"        exclude="*.ogg" if="web"/>
-	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
-	<assets path="assets/week2"         library="week2"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week2"         library="week2"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week3"         library="week3"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week3"         library="week3"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week4"         library="week4"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week4"         library="week4"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week5"         library="week5"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week5"         library="week5"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week6"         library="week6"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week6"         library="week6"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week7"         library="week7"         exclude="*.ogg" if="web"/>
-	<assets path="assets/week7"         library="week7"         exclude="*.mp3" unless="web"/>
+	<assets path="assets/shared"   		library="shared"   exclude="*.ogg" if="web"/>
+	<assets path="assets/shared"   		library="shared"   exclude="*.mp3" unless="web"/>
+
+	<!-- Videos will only work on Windows builds, sorry Android and Linux users -->
+	<assets path="plugins/" rename='' if="windows"/>
+	<assets path="dlls/" rename='' if="windows"/>
 	
-	<section if="MODS_ALLOWED">
-		<assets path='example_mods' rename='mods' embed='false'/>
-	</section>
-	<assets path='art/readme.txt' rename='do NOT readme.txt' />
+	<assets path='mods' library="mods" embed='false' unless="mobile"/>
+	<assets path='skins' rename='skins' embed='false' unless="mobile"/>
+	<assets path='art/readme.txt' rename='do NOT readme.txt'/>
+	<assets path='art/mod.url' rename='How to make a mod.url' if="windows" />
+	<assets path='Launch.bat' if="windows"/>
+	<!-- <assets path="documentation" rename="docs"/> -->
 	<!-- <template path='mods' /> -->
 	
-	<!-- assets path="CHANGELOG.md" rename='changelog.txt' -->
+	<assets path="CHANGELOG.md" rename='changelog.txt'/>
 
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
 		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO
@@ -123,22 +95,26 @@
 	<assets path="assets/fonts" embed='true'/>
 	<!-- _______________________________ Libraries ______________________________ -->
 
-	<haxelib name="flixel" />
 	<haxedev set='webgl' />
+	<haxelib name="hxCodec"/> <!-- new mp4 cutscenes handler yippee!! !-->
 
-	<!--In case you want to use the addons package-->
-	<haxelib name="flixel-addons" />
-	<haxelib name="hscript" />
-	<define name="hscriptPos" />
+	<!-- yoshicrafter29 flixel comes bundled in with addons and ui as well so dw -->
+	<haxelib name="flixel-yc29" rename="flixel" />
+	
+	<haxelib name="hscript-yoshiengine" />
 
-	<!--In case you want to use the ui package-->
-	<haxelib name="flixel-ui" />
-	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
-	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
+	<haxelib name="newgrounds" if="windows"/>
 	<haxelib name="faxe" if='switch'/>
-	<!--<haxelib name="polymod"/> -->
+	<!-- <haxelib name="hxvm-lua"/>
+	<haxelib name="linc_lua"/> -->
+	<haxelib name="linc_luajit" /> <!-- https://github.com/nebulazorua/linc_luajit --> 
+	
+	<!-- <haxelib name="flixel-animate"/> -->
 	<haxelib name="discord_rpc" if="desktop"/>
-	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
+	<haxedef name="enable_updates"/> <!-- DISABLE IF DOING EXE MOD !-->
+	<haxelib name="hxp"/>
+	<!-- <haxelib name="hxssl"/> -->
+	<haxelib name="flixel-textureatlas-yoshiengine"/> <!-- haxelib git flixel-textureatlas-yoshiengine https://github.com/YoshiCrafter29/Flixel-TextureAtlas-YoshiCrafterEngine !-->
 
 	<!-- <haxelib name="markdown" /> -->
 	<!-- <haxelib name="HtmlParser" /> -->
@@ -172,28 +148,50 @@
 	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
 
-	<!--Allow working memory greater than 1 Gig-->
-	<!--haxedef name="HXCPP_GC_BIG_BLOCKS"-->
-	
-	<!-- Show debug traces for hxCodec -->
-	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
-	
 	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
-	
-	<!--Used for Izzy Engine's crash handler-->
-	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
-	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
+	<!-- <haxedef name="HXCPP_PROFILER" if="profiler"/> -->
+
+	<haxedef name="ENABLE_LUA" /> <!-- LUA -->
+	<!-- <haxedef name="secretCharter" /> -->
 
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	
-	<icon path="art/icon16.png" size='16'/>
-	<icon path="art/icon32.png" size='32'/>
-	<icon path="art/icon64.png" size='64'/>
-	<icon path="art/iconOG.png" />
+	<icon path="art/logo_new.png"/>
+	<icon path="art/icons/16.png" size='16'/>
+	<icon path="art/icons/24.png" size='24'/>
+	<icon path="art/icons/32.png" size='32'/>
+	<icon path="art/icons/40.png" size='40'/>
+	<icon path="art/icons/48.png" size='48'/>
+	<icon path="art/icons/64.png" size='64'/>
+	<icon path="art/icons/96.png" size='96'/>
+	<icon path="art/icons/128.png" size='128'/>
+	<icon path="art/icons/256.png" size='256'/>
+
+
+	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
+	<haxedef name="NG_LOGIN" if="newgrounds" />
+
+	<!-- Android stuff -->
+	<android permission="android.permission.ACCESS_NETWORK_STATE"/>
+	<android permission="android.permission.INTERNET"/>
+	<android permission="android.permission.VIBRATE"/>
+	<android permission="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<android permission="android.permission.READ_EXTERNAL_STORAGE"/>
+	<haxedef name="MOBILE_UI" if="android"/>
+	
+	<!-- <haxeflag name="dce" value="no" /> -->
+	<haxeflag name="-dce" value="no" />
+	<haxeflag name="-xml" value="yoshicrafterengine/doc.xml" />
+	<haxedef name="official" />
+	<!-- <haxedef name="ycebeta"/> -->
+	
+	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
+	
+	<!-- <haxedef name="noHandler" /> -->
 </project>

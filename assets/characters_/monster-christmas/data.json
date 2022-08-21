@@ -1,0 +1,55 @@
+{
+    "color" : "#F3FF6E",
+    "flipX" : false,
+    "pixel" : false,
+    "globalOffset" : {
+        "x" : 0,
+        "y" : 100
+    },
+    "animsIndices" : [],
+    "anims" : [
+        {
+            "name" : "idle",
+            "anim" : "monster idle",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 0,
+            "loop" : false
+        },
+        {
+            "name" : "singLEFT",
+            "anim" : "Monster left note",
+            "framerate" : 24,
+            "x" : -30,
+            "y" : 0,
+            "loop" : false
+        },
+        {
+            "name" : "singRIGHT",
+            "anim" : "Monster Right note",
+            "framerate" : 24,
+            "x" : -51,
+            "y" : 0,
+            "loop" : false
+        },
+        {
+            "name" : "singDOWN",
+            "anim" : "monster down",
+            "framerate" : 24,
+            "x" : -30,
+            "y" : -40,
+            "loop" : false
+        },
+        {
+            "name" : "singUP",
+            "anim" : "monster up note",
+            "framerate" : 24,
+            "x" : -20,
+            "y" : 50,
+            "loop" : false
+        }
+    ],
+    "idleDanceSteps" : [
+        "idle"
+    ]
+}

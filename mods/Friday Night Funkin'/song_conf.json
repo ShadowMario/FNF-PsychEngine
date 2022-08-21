@@ -1,0 +1,171 @@
+{
+	"songs": [
+		{
+			"scripts": [
+				"stages/default_stage",
+				"modcharts/tutorial"
+			],
+			"name": "Tutorial"
+		},
+		{
+			"scripts": [
+				"stages/default_stage",
+				"modcharts/bopeebo"
+			],
+			"name": "Bopeebo"
+		},
+		{
+			"scripts": [
+				"stages/default_stage",
+				"modcharts/fresh"
+			],
+			"name": "Fresh"
+		},
+		{
+			"scripts": [
+				"stages/default_stage",
+				"modcharts/dadbattle"
+			],
+			"name": "Dadbattle"
+		},
+		{
+			"scripts": [
+				"stages/halloween"
+			],
+			"name": "Spookeez"
+		},
+		{
+			"scripts": [
+				"stages/halloween"
+			],
+			"name": "South"
+		},
+		{
+			"scripts": [
+				"stages/halloween",
+				"modcharts/monster"
+			],
+			"name": "Monster"
+		},
+		{
+			"scripts": [
+				"stages/philly"
+			],
+			"name": "Pico"
+		},
+		{
+			"scripts": [
+				"stages/philly"
+			],
+			"name": "Philly"
+		},
+		{
+			"scripts": [
+				"stages/philly",
+				"modcharts/blammed"
+			],
+			"name": "Blammed"
+		},
+		{
+			"scripts": [
+				"stages/limo"
+			],
+			"name": "Satin-Panties"
+		},
+		{
+			"scripts": [
+				"stages/limo"
+			],
+			"name": "High"
+		},
+		{
+			"scripts": [
+				"stages/limo",
+				"modcharts/milf"
+			],
+			"name": "MILF",
+			"difficulties": [
+				{
+					"scripts": [
+						"characters/silf/modchart",
+						"characters/silf/ui"
+					],
+					"name": "sexy"
+				}
+			]
+		},
+		{
+			"scripts": [
+				"stages/mall"
+			],
+			"name": "Cocoa"
+		},
+		{
+			"scripts": [
+				"stages/mall"
+			],
+			"end_cutscene": "cutscenes/week5-eggnog",
+			"name": "Eggnog"
+		},
+		{
+			"scripts": [
+				"stages/mall-evil"
+			],
+			"cutscene": "cutscenes/week5-monster",
+			"name": "Winter-Horrorland"
+		},
+		{
+			"scripts": [
+				"stages/school",
+				"modcharts/week6"
+			],
+			"cutscene": "cutscenes/weeb-dialogue",
+			"name": "Senpai"
+		},
+		{
+			"scripts": [
+				"stages/school",
+				"modcharts/week6"
+			],
+			"cutscene": "cutscenes/weeb-dialogue",
+			"name": "Roses"
+		},
+		{
+			"scripts": [
+				"stages/school-evil",
+				"modcharts/week6"
+			],
+			"cutscene": "cutscenes/weeb-dialogue",
+			"name": "Thorns"
+		},
+		{
+			"scripts": [
+				"stages/tank"
+			],
+			"cutscene": "cutscenes/ugh-cutscene",
+			"name": "Ugh"
+		},
+		{
+			"scripts": [
+				"stages/tank"
+			],
+			"cutscene": "cutscenes/guns-cutscene",
+			"name": "Guns"
+		},
+		{
+			"scripts": [
+				"stages/tank",
+				"Friday Night Funkin':/modcharts/stress"
+			],
+			"cutscene": "cutscenes/stress-cutscene",
+			"name": "Stress"
+		},
+		{
+			"scripts": [],
+			"difficulties": [],
+			"end_cutscene": null,
+			"cutscene": null,
+			"name": "test"
+		}
+	]
+}

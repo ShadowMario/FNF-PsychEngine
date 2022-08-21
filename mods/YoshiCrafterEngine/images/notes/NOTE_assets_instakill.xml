@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="NOTE_assets_instakill.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="blue0000" x="0" y="0" width="180" height="177" pivotX="10" pivotY="10"/>
+	<SubTexture name="green0000" x="180" y="0" width="180" height="177" pivotX="10" pivotY="10"/>
+	<SubTexture name="hold end0000" x="360" y="0" width="74" height="87" pivotX="10" pivotY="10"/>
+	<SubTexture name="hold piece0000" x="434" y="0" width="74" height="67" pivotX="10" pivotY="10"/>
+	<SubTexture name="purple0000" x="0" y="177" width="177" height="180" pivotX="10" pivotY="10"/>
+	<SubTexture name="red0000" x="177" y="177" width="177" height="180" pivotX="10" pivotY="10"/>
+</TextureAtlas>

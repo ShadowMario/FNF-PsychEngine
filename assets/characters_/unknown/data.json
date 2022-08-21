@@ -1,0 +1,57 @@
+{
+    "color" : "#AF66CE",
+    "flipX" : false,
+    "pixel" : false,
+    "globalOffset" : {
+        "x" : 0,
+        "y" : 0
+    },
+    "anims" : [
+        {
+            "name" : "idle",
+            "anim" : "Dad idle dance",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 0,
+            "loop" : false
+        },
+        {
+            "name" : "singUP",
+            "anim" : "Dad Sing note UP",
+            "framerate" : 24,
+            "x" : -6,
+            "y" : 50,
+            "loop" : true
+        },
+        {
+            "name" : "singRIGHT",
+            "anim" : "dad sing note right",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : 27,
+            "loop" : true
+        },
+        {
+            "name" : "singDOWN",
+            "anim" : "Dad Sing Note DOWN",
+            "framerate" : 24,
+            "x" : 0,
+            "y" : -30,
+            "loop" : true
+        },
+        {
+            "name" : "singLEFT",
+            "anim" : "Dad Sing Note LEFT",
+            "framerate" : 24,
+            "x" : -10,
+            "y" : 10,
+            "loop" : true
+        }
+    ],
+    "animsIndices" : [
+        
+    ],
+    "idleDanceSteps" : [
+        "idle"
+    ]
+}

@@ -1,0 +1,121 @@
+{
+    "credits" : [
+        {
+            "name" : "YoshiCrafter29",
+            "role" : "Engine developer & Doge GF's n°1 fan.",
+            "icon" : "credits/yoshicrafter29",
+            "urls" : [
+                {
+                    "name" : "YouTube",
+                    "url" : "https://www.youtube.com/channel/UCyV3oiWZy3oSMQ1M-ZKW_0w"
+                },
+                {
+                    "name" : "Twitter",
+                    "url" : "https://twitter.com/YoshiCrafter29"
+                },
+                {
+                    "name" : "GitHub",
+                    "url" : "https://github.com/YoshiCrafter29"
+                }
+            ]
+        },
+        {
+            "name" : "Siivkoi",
+            "role" : "Artist & Animator - Note Splashes & Drew the update and loading screen background (and drew this icon). Made the secret Yoshi song and is very based imo",
+            "icon" : "credits/siivkoi",
+            "urls" : [
+                {
+                    "name" : "Twitter",
+                    "url" : "https://twitter.com/SillySil220"
+                },
+                {
+                    "name" : "YouTube",
+                    "url" : "https://www.youtube.com/channel/UCV_ClJ6D0NuOsfhckxGWZzA"
+                },
+                {
+                    "name" : "Newgrounds",
+                    "url" : "https://siivkoi.newgrounds.com/"
+                }
+            ]
+        },
+        {
+            "name" : "CaptainKirb",
+            "role" : "Helper - Made YouTube tutorials and helped me out with some stuff",
+            "icon" : "credits/captainkirb",
+            "urls" : [
+                {
+                    "name" : "YouTube",
+                    "url" : "https://www.youtube.com/channel/UCLr5zAesggUSXlLd9J6vfjw"
+                },
+                {
+                    "name" : "Twitter",
+                    "url" : "https://twitter.com/kirb_captain"
+                }
+            ]
+        },
+        {
+            "name" : "KiyuuuSama",
+            "role" : "Artist - Drew the icons & the engine's logo",
+            "icon" : "credits/kiyuusama",
+            "urls" : [
+                {
+                    "name" : "Twitter",
+                    "url" : "https://twitter.com/KiyuuuSama"
+                },
+                {
+                    "name" : "YouTube",
+                    "url" : "https://www.youtube.com/channel/UC5vO3P1ZoZWrSy8upg3xBww"
+                }
+            ]
+        },
+        {
+            "name" : "PolybiusProxy",
+            "role" : "MP4 Video Cutscene support",
+            "icon" : "credits/polybius",
+            "urls" : [
+                {
+                    "name" : "GitHub",
+                    "url" : "https://github.com/PolybiusProxy"
+                },
+                {
+                    "name" : "Twitter",
+                    "url" : "https://twitter.com/polybiusproxy"
+                }
+            ]
+        },
+        {
+            "name" : "Smokey",
+            "role" : "Adobe Animate Atlas extension developer",
+            "icon" : "credits/empty",
+            "urls" : [
+                {
+                    "name" : "Twitter",
+                    "url" : "https://twitter.com/Smokey_5_"
+                },
+                {
+                    "name" : "Github",
+                    "url" : "https://github.com/Smokey555"
+                },
+                {
+                    "name" : "GitHub Repo",
+                    "url" : "https://github.com/Smokey555/Flixel-TextureAtlas"
+                }
+            ]
+        },
+        {
+            "name" : "Engine Socials",
+            "role" : "Join the official Discord Server, or follow the engine's Twitter!",
+            "icon" : "credits/empty",
+            "urls" : [
+                {
+                    "name" : "Discord Server",
+                    "url" : "https://discord.com/invite/5tC7vf3wSK"
+                },
+                {
+                    "name" : "Twitter",
+                    "url" : "https://twitter.com/FNFYoshiEngine"
+                }
+            ]
+        }
+    ]
+}

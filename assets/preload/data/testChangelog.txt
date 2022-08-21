@@ -1,0 +1,52 @@
+- Every assets can now be customisable
+- Added Medals
+- Fixed Memory Leak Issues
+- Fixed a LOT of bugs
+- Better optimisation
+- Fixed Outdated code
+- New Blammed Neons
+- Freeplay UI Update
+- Added support for widescreen and custom resolutions (via scripts)
+- Added Main Menu JSON
+- Fixed FlxTimer and FlxTween callback instability
+- Fixed import, can now be used like in source
+- Fixed Freeze when chart doesnt exist
+- Toolbox UI Upgrade
+- Added documentation
+- Added ability to add scripts without song configuration (drop in data/your song/)
+- Added customisable Discord RPC ("discordRpc" in config.json)
+- Deleted skins are now handled correctly
+- "Shit" rating can now be obtained again
+- Nerfed Complex mode accuracy, its now easier to get high percentage accuracies
+- Added "Copy Last Sections" in charter
+- Optimised some settings (and removed useless ones)
+- Added support for custom intros (see documentation)
+- Added Logs limit
+- Added support for Psych Engine characters
+- New Week Editor
+- BF and GF can now be edited in week editor
+- You can now set a custom on select SFX in the week editor per week.
+- Added command line arguments (YoshiCrafterEngine /help)
+- Fixed FlxColor
+- Enhanced base game weeks (hi gray!!)
+- Added importScript
+- Added ModSprite and ModSubState
+- Alphabet.json + Outlines
+- You can now use PlayState values directly (ex: "boyfriend" instead of "PlayState.boyfriend")
+- Optimized BF and GF's spritesheet
+- Upgraded Week 6 shader
+- Added console input in logs
+- Fixed broken sustains when strums were rotated
+- Added antimash (can be disabled via antimash = false;)
+- Added flashing lights warning
+- Added ModClass
+- Fixed Alphabet word wrap
+- Re-added Instakill and Hurt Notes
+- Updated milliseconds thingy
+- Fixed End Cutscenes being broken and playing on Freeplay songs
+- Added F5 to reload PlayState during end cutscenes (dev mode only)
+- Added support for Psych Engine charts custom notes and event handler (onPsychEvent)
+- Added support for Change BPM in charter
+- .git folder are now ignored in the assets system to prevent freezes
+- Added Change Difficulty and Developer Options pane (to prevent too many options in the pause menu)
+- Added custom cursor (images/cursor.png)

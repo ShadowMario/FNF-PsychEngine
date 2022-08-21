@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="outdatedAssets.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="backspace to skip0000" x="16" y="16" width="273" height="106" pivotX="0" pivotY="0"/>
+	<SubTexture name="enter to update0000" x="16" y="138" width="302" height="106" pivotX="0" pivotY="0"/>
+	<SubTexture name="space to check github0000" x="16" y="260" width="310" height="106" pivotX="0" pivotY="0"/>
+</TextureAtlas>

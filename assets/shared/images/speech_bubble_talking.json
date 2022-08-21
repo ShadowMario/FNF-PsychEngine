@@ -1,0 +1,37 @@
+{
+    "anims": [
+        {
+            "name": "normal right",
+            "anim": "speech bubble normal",
+            "openAnim": "Speech Bubble Normal Open",
+            "fps": 24,
+            "offset": [0, -70],
+            "flipX": false,
+            "antialiasing": true,
+            "scale": 1,
+            "sfx": "pixelText"
+        },
+        {
+            "name": "normal left",
+            "anim": "speech bubble normal",
+            "openAnim": "Speech Bubble Normal Open",
+            "fps": 24,
+            "offset": [0, -70],
+            "flipX": true,
+            "antialiasing": true,
+            "scale": 1,
+            "sfx": "pixelText"
+        },
+        {
+            "name": "loud",
+            "anim": "AHH speech bubble",
+            "openAnim": "speech bubble loud open",
+            "fps": 24,
+            "offset": [0, 0],
+            "flipX": false,
+            "antialiasing": true,
+            "scale": 1,
+            "sfx": "pixelText"
+        }
+    ]
+}

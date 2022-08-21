@@ -3,11 +3,12 @@ package;
 typedef SwagSection =
 {
 	var sectionNotes:Array<Dynamic>;
-	var sectionBeats:Float;
+	var lengthInSteps:Int;
 	var typeOfSection:Int;
 	var mustHitSection:Bool;
-	var gfSection:Bool;
-	var bpm:Float;
+	@:optional var duetCamera:Bool;
+	@:optional var duetCameraSlide:Null<Float>;
+	var bpm:Int;
 	var changeBPM:Bool;
 	var altAnim:Bool;
 }
@@ -16,19 +17,18 @@ class Section
 {
 	public var sectionNotes:Array<Dynamic> = [];
 
-	public var sectionBeats:Float = 4;
-	public var gfSection:Bool = false;
+	public var lengthInSteps:Int = 16;
 	public var typeOfSection:Int = 0;
 	public var mustHitSection:Bool = true;
+	public var duetCamera:Bool = false;
 
 	/**
 	 *	Copies the first section into the second section!
 	 */
 	public static var COPYCAT:Int = 0;
 
-	public function new(sectionBeats:Float = 4)
+	public function new(lengthInSteps:Int = 16)
 	{
-		this.sectionBeats = sectionBeats;
-		trace('test created section: ' + sectionBeats);
+		this.lengthInSteps = lengthInSteps;
 	}
 }

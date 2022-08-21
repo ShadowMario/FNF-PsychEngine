@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="NOTE_assets_damage.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="blue0000" x="0" y="0" width="157" height="154" pivotX="0" pivotY="0"/>
+	<SubTexture name="green0000" x="157" y="0" width="157" height="154" pivotX="0" pivotY="0"/>
+	<SubTexture name="hold end0000" x="314" y="0" width="50" height="64" pivotX="0" pivotY="0"/>
+	<SubTexture name="hold piece0000" x="364" y="0" width="50" height="44" pivotX="0" pivotY="0"/>
+	<SubTexture name="purple0000" x="0" y="154" width="154" height="157" pivotX="0" pivotY="0"/>
+	<SubTexture name="red0000" x="154" y="154" width="154" height="157" pivotX="0" pivotY="0"/>
+</TextureAtlas>

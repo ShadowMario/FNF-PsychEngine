@@ -1,0 +1,19 @@
+{
+    "updateLog" : [
+        "1.7.0 - CUSTOM STATES AND MENUS",
+        "",
+        "- /!\\ Added Custom States",
+        "- /!\\ New updater! Yoshi Engine updates now can be installed in game (windows only for now, bg art by siivkoi)",
+        "- Added support for replaceable menu assets",
+        "- Fixed Downscroll's long strums behaving weirdly",
+        "- Pitch support for FlxSounds (including music)",
+        "- Fixed input system issues and note shaking.",
+        "- Fixed FlxBar and FlxCamera",
+        "- Removed akifox-asynchttp",
+        "- Fixed the Play Song feature in Freeplay",
+		"- Fixed Stage Editor import bug",
+        "- Fixed Vocals desync issue"
+    ],
+    "version" : [1,7,0],
+    "url" : "https://github.com/YoshiCrafter29/YoshiEngine/releases/latest"
+}

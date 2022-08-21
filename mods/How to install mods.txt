@@ -1,0 +1,8 @@
+╔═══════════════════════════════════════════════════════════╗
+║                   How to install a mod                    ║
+╟───────────────────────────────────────────────────────────╢
+║ 1. Download any Crafter Engine mod                          ║
+║ 2. Open the archive and copy the mod folder               ║
+║ 3. Paste it in the mods folder in the game directory      ║
+║ 4. Restart the engine and enjoy !                         ║
+╚═══════════════════════════════════════════════════════════╝

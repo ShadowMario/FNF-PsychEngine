@@ -3,9 +3,16 @@ package;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 
+/**
+* Simple class for the Background Girls in Week 6
+*/
 class BackgroundGirls extends FlxSprite
 {
-	var isPissed:Bool = true;
+	/**
+	 * Creates the background girls at the specified location (not upscaled automatically)
+	 * @param   x              Background Girls's x position
+	 * @param   y              Background Girls's y position
+	 */
 	public function new(x:Float, y:Float)
 	{
 		super(x, y);
@@ -13,26 +20,25 @@ class BackgroundGirls extends FlxSprite
 		// BG fangirls dissuaded
 		frames = Paths.getSparrowAtlas('weeb/bgFreaks');
 
-		swapDanceType();
+		animation.addByIndices('danceLeft', 'BG girls group', CoolUtil.numberArray(14), "", 24, false);
+		animation.addByIndices('danceRight', 'BG girls group', CoolUtil.numberArray(30, 15), "", 24, false);
 
 		animation.play('danceLeft');
 	}
 
 	var danceDir:Bool = false;
-
-	public function swapDanceType():Void
+	/**	
+	 * Override the default animations by the scared ones, making the girls scared.
+	 */
+	public function getScared():Void
 	{
-		isPissed = !isPissed;
-		if(!isPissed) { //Gets unpissed
-			animation.addByIndices('danceLeft', 'BG girls group', CoolUtil.numberArray(14), "", 24, false);
-			animation.addByIndices('danceRight', 'BG girls group', CoolUtil.numberArray(30, 15), "", 24, false);
-		} else { //Pisses
-			animation.addByIndices('danceLeft', 'BG fangirls dissuaded', CoolUtil.numberArray(14), "", 24, false);
-			animation.addByIndices('danceRight', 'BG fangirls dissuaded', CoolUtil.numberArray(30, 15), "", 24, false);
-		}
+		animation.addByIndices('danceLeft', 'BG fangirls dissuaded', CoolUtil.numberArray(14), "", 24, false);
+		animation.addByIndices('danceRight', 'BG fangirls dissuaded', CoolUtil.numberArray(30, 15), "", 24, false);
 		dance();
 	}
-
+	/**
+	 * Make the background girls dance
+	 */
 	public function dance():Void
 	{
 		danceDir = !danceDir;

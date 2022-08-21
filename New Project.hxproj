@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project version="2">
+  <!-- Output SWF options -->
+  <output>
+    <movie outputType="CustomBuild" />
+    <movie input="" />
+    <movie path="Project.xml" />
+    <movie fps="30" />
+    <movie width="640" />
+    <movie height="480" />
+    <movie version="0" />
+    <movie minorVersion="0" />
+    <movie platform="Lime" />
+    <movie background="#FFFFFF" />
+  </output>
+  <!-- Other classes to be compiled into your SWF -->
+  <classpaths>
+    <class path="C:\HaxeToolkit\haxe\lib\flixel\4,10,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,1,0\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\7,9,0\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel-addons\git" />
+    <class path="C:\HaxeToolkit\haxe\lib\hscript\2,4,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\flixel-ui\2,4,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\newgrounds\1,1,5\lib\Source" />
+    <class path="C:\HaxeToolkit\haxe\lib\linc_luajit\git" />
+    <class path="C:\HaxeToolkit\haxe\lib\discord_rpc\git" />
+    <class path="C:\HaxeToolkit\haxe\lib\hxcpp\4,2,1" />
+    <class path="source" />
+    <class path="export\release\windows\haxe" />
+  </classpaths>
+  <!-- Build options -->
+  <build>
+    <option directives="flixel=4.10.0&#xA;openfl=9.1.0&#xA;lime=7.9.0&#xA;flixel-addons=2.11.0&#xA;hscript=2.4.0&#xA;flixel-ui=2.4.0&#xA;newgrounds=1.1.5&#xA;linc_luajit=0.0.3&#xA;linc_discord-rpc=1.0.0&#xA;discord_rpc=1.0.0&#xA;hxcpp=4.2.1&#xA;PRELOAD_ALL&#xA;lime-openal&#xA;ENABLE_LUA&#xA;native&#xA;lime-curl&#xA;openfl-native&#xA;lime-harfbuzz&#xA;enable_updates&#xA;hscriptPos&#xA;FLX_NO_FOCUS_LOST_SCREEN&#xA;NG_LOGIN&#xA;tools=7.9.0&#xA;HXCPP_CHECK_POINTER&#xA;lime-cairo&#xA;FLX_NO_DEBUG&#xA;X64_BITS&#xA;HXCPP_STACK_LINE&#xA;lime-opengl&#xA;no-compilation&#xA;NAPE_RELEASE_BUILD&#xA;HXCPP_DEBUG_LINK&#xA;newgrounds&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;windows&#xA;desktop" />
+    <option flashStrict="False" />
+    <option noInlineOnDebug="False" />
+    <option mainClass="ApplicationMain" />
+    <option enabledebug="False" />
+    <option additional="--macro openfl.utils._internal.ExtraParamsMacro.include()&#xA;--macro lime._internal.macros.DefineMacro.run()&#xA;--remap flash:openfl&#xA;--macro flixel.system.macros.FlxDefines.run()&#xA;-dce no&#xA;-xml crafterengine/doc.xml" />
+  </build>
+  <!-- haxelib libraries -->
+  <haxelib>
+    <!-- example: <library name="..." /> -->
+  </haxelib>
+  <!-- Class files to compile (other referenced classes will automatically be included) -->
+  <compileTargets>
+    <compile path="source\Main.hx" />
+  </compileTargets>
+  <!-- Paths to exclude from the Project Explorer tree -->
+  <hiddenPaths>
+    <hidden path="obj" />
+  </hiddenPaths>
+  <!-- Executed before build -->
+  <preBuildCommand>"$(CompilerPath)/haxelib" run lime build "$(OutputFile)" $(TargetBuild) -$(BuildConfig) -Dfdb -dce no</preBuildCommand>
+  <!-- Executed after build -->
+  <postBuildCommand alwaysRun="False" />
+  <!-- Other project options -->
+  <options>
+    <option showHiddenPaths="False" />
+    <option testMovie="Custom" />
+    <option testMovieCommand="lime test windows -dce no" />
+  </options>
+  <!-- Plugin storage -->
+  <storage />
+</project>

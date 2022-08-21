@@ -1,0 +1,13 @@
+{
+	"songs": [
+		{
+			"scripts": [
+				"stages/your-stage"
+			],
+			"difficulties": null,
+			"end_cutscene": null,
+			"cutscene": null,
+			"name": "yoshi"
+		}
+	]
+}

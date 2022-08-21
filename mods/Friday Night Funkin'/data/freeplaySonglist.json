@@ -1,0 +1,151 @@
+{
+    "songs" : [
+        {
+            "name" : "Tutorial",
+            "char" : "gf",
+            "color" : "#9271FD",
+            "bpm" : 100
+        },
+
+
+        {
+            "name" : "Bopeebo",
+            "char" : "dad",
+            "color" : "#9271FD",
+            "bpm" : 100
+        },
+        {
+            "name" : "Fresh",
+            "char" : "dad",
+            "color" : "#9271FD",
+            "bpm" : 120
+        },
+        {
+            "name" : "Dadbattle",
+            "displayName" : "Dad Battle",
+            "char" : "dad",
+            "color" : "#9271FD",
+            "bpm" : 180
+        },
+
+
+        {
+            "name" : "Spookeez",
+            "char" : "spooky",
+            "color" : "#223344",
+            "bpm" : 150
+        },
+        {
+            "name" : "South",
+            "char" : "spooky",
+            "color" : "#223344",
+            "bpm" : 165
+        },
+        {
+            "name" : "Monster",
+            "char" : "monster",
+            "color" : "#223344",
+            "bpm" : 95
+        },
+
+
+        {
+            "name" : "Pico",
+            "char" : "pico",
+            "color" : "#941653",
+            "bpm" : 150
+        },
+        {
+            "name" : "Philly",
+            "displayName" : "Philly Nice",
+            "char" : "pico",
+            "color" : "#941653",
+            "bpm" : 175
+        },
+        {
+            "name" : "Blammed",
+            "char" : "pico",
+            "color" : "#941653",
+            "bpm" : 165
+        },
+
+
+        {
+            "name" : "Satin-Panties",
+            "char" : "mom",
+            "color" : "#FC96D7",
+            "bpm" : 110
+        },
+        {
+            "name" : "High",
+            "char" : "mom",
+            "color" : "#FC96D7",
+            "bpm" : 125
+        },
+        {
+            "name" : "MILF",
+            "char" : "mom",
+            "color" : "#FC96D7",
+            "bpm" : 180
+        },
+
+        
+        {
+            "name" : "Cocoa",
+            "char" : "parents-christmas",
+            "color" : "#A0D1FF",
+            "bpm" : 100
+        },
+        {
+            "name" : "Eggnog",
+            "char" : "parents-christmas",
+            "color" : "#A0D1FF",
+            "bpm" : 150
+        },
+        {
+            "name" : "Winter-Horrorland",
+            "char" : "monster",
+            "color" : "#A0D1FF",
+            "bpm" : 95
+        },
+
+        
+        {
+            "name" : "Senpai",
+            "char" : "senpai",
+            "color" : "#FF78BF",
+            "bpm" : 144
+        },
+        {
+            "name" : "Roses",
+            "char" : "senpai",
+            "color" : "#FF78BF",
+            "bpm" : 120
+        },
+        {
+            "name" : "Thorns",
+            "char" : "spirit",
+            "color" : "#FF78BF",
+            "bpm" : 190
+        },
+        
+        {
+            "name" : "Ugh",
+            "char" : "tankman",
+            "color" : "#444444",
+            "bpm": 160
+        },
+        {
+            "name" : "Guns",
+            "char" : "tankman",
+            "color" : "#444444",
+            "bpm": 185
+        },
+        {
+            "name" : "Stress",
+            "char" : "tankman",
+            "color" : "#444444",
+            "bpm": 178
+        }
+    ]
+}

@@ -1,0 +1,114 @@
+{
+    "weeks" : [
+        {
+            "name" : "",
+            "songs" : ["Tutorial"],
+            "buttonSprite" : "images/storymenu/week0.png",
+            "dad" :
+            {
+                "file" : "images/storymenu/campaign_menu_UI_characters",
+                "animation" : "Dad idle dance BLACK LINE",
+                "scale" : 0.5,
+                "flipX" : false,
+                "offset" : [120,200]
+            }
+        },
+        {
+            "name" : "DADDY DEAREST",
+            "songs" : ["Bopeebo", "Fresh", "Dadbattle"],
+            "buttonSprite" : "images/storymenu/week1.png",
+            "dad" :
+            {
+                "file" : "images/storymenu/campaign_menu_UI_characters",
+                "animation" : "Dad idle dance BLACK LINE",
+                "scale" : 0.5,
+                "flipX" : false,
+                "offset" : [120,200]
+            }
+        },
+        {
+            "name" : "SPOOKY MONTH",
+            "songs" : ["Spookeez", "South", "Monster"],
+            "buttonSprite" : "images/storymenu/week2.png",
+            "dad" :
+            {
+                "file" : "images/storymenu/campaign_menu_UI_characters",
+                "animation" : "spooky dance idle BLACK LINES",
+                "scale" : 0.75,
+                "flipX" : false,
+                "offset" : [200,100]
+            }
+        },
+        {
+            "name" : "PICO",
+            "songs" : ["Pico", "Philly", "Blammed"],
+            "buttonSprite" : "images/storymenu/week3.png",
+            "dad" :
+            {
+                "file" : "images/storymenu/campaign_menu_UI_characters",
+                "animation" : "Pico Idle Dance",
+                "scale" : 0.75,
+                "flipX" : true,
+                "offset" : [150,60]
+            }
+        },
+        {
+            "name" : "MOMMY MUST MURDER",
+            "songs" : ["Satin-Panties", "High", "MILF"],
+            "buttonSprite" : "images/storymenu/week4.png",
+            "dad" :
+            {
+                "file" : "images/storymenu/campaign_menu_UI_characters",
+                "animation" : "Mom Idle BLACK LINES",
+                "scale" : 0.5,
+                "flipX" : false,
+                "offset" : [100,200]
+            }
+        },
+        {
+            "name" : "RED SNOW",
+            "songs" : ["Cocoa", "Eggnog", "Winter-Horrorland"],
+            "buttonSprite" : "images/storymenu/week5.png",
+            "dad" :
+            {
+                "file" : "images/storymenu/campaign_menu_UI_characters",
+                "animation" : "Parent Christmas Idle",
+                "scale" : 0.5,
+                "flipX" : false,
+                "offset" : [400,200]
+            }
+        },
+        {
+            "name" : "HATING SIMULATOR ft. MOAWLING",
+            "songs" : ["Senpai", "Roses", "Thorns"],
+            "buttonSprite" : "images/storymenu/week6.png",
+            "dad" :
+            {
+                "file" : "images/storymenu/campaign_menu_UI_characters",
+                "animation" : "SENPAI idle Black Lines",
+                "scale" : 0.85,
+                "flipX" : false,
+                "offset" : [130,-25]
+            }
+        },
+        {
+			"songs": [
+				"Ugh",
+				"Guns",
+				"Stress"
+			],
+			"dad": {
+				"animation": "Tankman Menu BLACK",
+				"file": "images/storymenu/campaign_menu_UI_characters",
+				"scale": 1,
+				"offset": [
+					100,
+					-25
+				],
+				"flipX": false
+			},
+			"name": "TANKMAN",
+			"buttonSprite": "images/storymenu/week7.png"
+		}
+    ]
+}

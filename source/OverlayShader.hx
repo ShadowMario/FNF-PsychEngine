@@ -2,10 +2,11 @@ package;
 
 import flixel.system.FlxAssets.FlxShader;
 
-class OverlayShader extends FlxShader
+class OverlayShader extends FlxFixedShader
 {
 	@:glFragmentSource('
 		#pragma header
+        
 		uniform vec4 uBlendColor;
 
 		vec3 blendLighten(base:Vec3, blend:Vec3) : Vec3 {
