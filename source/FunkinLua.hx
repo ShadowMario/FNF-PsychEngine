@@ -72,9 +72,10 @@ class FunkinLua {
 	public var closed:Bool = false;
 
 	#if hscript
-	public static var hscript:HScript = null;
-	#end
-	
+	public var hscript:HScript = null;
+	public static var hscriptVars:Map<String, Dynamic> = new Map();
+	#end	
+
 	public function new(script:String) {
 		#if LUA_ALLOWED
 		lua = LuaL.newstate();
@@ -104,6 +105,8 @@ class FunkinLua {
 		}
 		scriptName = script;
 		initHaxeModule();
+		setVars();
+
 
 		trace('lua file loaded succesfully:' + script);
 
@@ -889,7 +892,8 @@ class FunkinLua {
 				if(libPackage.length > 0)
 					str = libPackage + '.';
 
-				hscript.variables.set(libName, Type.resolveClass(str + libName));
+				hscriptVars.set(libName, Type.resolveClass(str + libName));
+				hscript.setKeys();
 			}
 			catch (e:Dynamic) {
 				luaTrace(scriptName + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);
@@ -2754,7 +2758,7 @@ class FunkinLua {
 		if(hscript == null)
 		{
 			trace('initializing haxe interp for: $scriptName');
-			hscript = new HScript(); //TO DO: Fix issue with 2 scripts not being able to use the same variable names
+			hscript = new HScript();
 		}
 	}
 	#end
@@ -3206,6 +3210,40 @@ class FunkinLua {
 		#end
 	}
 
+	public function setVars():Void
+	{
+		FunkinLua.hscriptVars.set('FlxG', FlxG);
+		FunkinLua.hscriptVars.set('FlxSprite', FlxSprite);
+		FunkinLua.hscriptVars.set('FlxCamera', FlxCamera);
+		FunkinLua.hscriptVars.set('FlxTimer', FlxTimer);
+		FunkinLua.hscriptVars.set('FlxTween', FlxTween);
+		FunkinLua.hscriptVars.set('FlxEase', FlxEase);
+		FunkinLua.hscriptVars.set('PlayState', PlayState);
+		FunkinLua.hscriptVars.set('game', PlayState.instance);
+		FunkinLua.hscriptVars.set('Paths', Paths);
+		FunkinLua.hscriptVars.set('Conductor', Conductor);
+		FunkinLua.hscriptVars.set('ClientPrefs', ClientPrefs);
+		FunkinLua.hscriptVars.set('Character', Character);
+		FunkinLua.hscriptVars.set('Alphabet', Alphabet);
+		FunkinLua.hscriptVars.set('CustomSubstate', CustomSubstate);
+		#if !flash
+		FunkinLua.hscriptVars.set('FlxRuntimeShader', FlxRuntimeShader);
+		FunkinLua.hscriptVars.set('ShaderFilter', openfl.filters.ShaderFilter);
+		#end
+		FunkinLua.hscriptVars.set('StringTools', StringTools);
+
+		FunkinLua.hscriptVars.set('setVar', function(name:String, value:Dynamic)
+		{
+			PlayState.instance.variables.set(name, value);
+		});
+		FunkinLua.hscriptVars.set('getVar', function(name:String)
+		{
+			var result:Dynamic = null;
+			if(PlayState.instance.variables.exists(name)) result = PlayState.instance.variables.get(name);
+			return result;
+		});
+	}
+
 	#if LUA_ALLOWED
 	public function getBool(variable:String) {
 		var result:String = null;
@@ -3225,6 +3263,10 @@ class FunkinLua {
 		if(lua == null) {
 			return;
 		}
+
+		#if hscript
+		if(hscript != null) hscript = null;
+		#end
 
 		Lua.close(lua);
 		lua = null;
@@ -3334,36 +3376,15 @@ class HScript
 	public function new()
 	{
 		interp = new Interp();
-		interp.variables.set('FlxG', FlxG);
-		interp.variables.set('FlxSprite', FlxSprite);
-		interp.variables.set('FlxCamera', FlxCamera);
-		interp.variables.set('FlxTimer', FlxTimer);
-		interp.variables.set('FlxTween', FlxTween);
-		interp.variables.set('FlxEase', FlxEase);
-		interp.variables.set('PlayState', PlayState);
-		interp.variables.set('game', PlayState.instance);
-		interp.variables.set('Paths', Paths);
-		interp.variables.set('Conductor', Conductor);
-		interp.variables.set('ClientPrefs', ClientPrefs);
-		interp.variables.set('Character', Character);
-		interp.variables.set('Alphabet', Alphabet);
-		interp.variables.set('CustomSubstate', CustomSubstate);
-		#if !flash
-		interp.variables.set('FlxRuntimeShader', FlxRuntimeShader);
-		interp.variables.set('ShaderFilter', openfl.filters.ShaderFilter);
-		#end
-		interp.variables.set('StringTools', StringTools);
+		setKeys();
+	}
 
-		interp.variables.set('setVar', function(name:String, value:Dynamic)
-		{
-			PlayState.instance.variables.set(name, value);
-		});
-		interp.variables.set('getVar', function(name:String)
-		{
-			var result:Dynamic = null;
-			if(PlayState.instance.variables.exists(name)) result = PlayState.instance.variables.get(name);
-			return result;
-		});
+	public function setKeys()
+	{
+		var vars = FunkinLua.hscriptVars;
+		for (i in vars.keys())
+			if (!interp.variables.exists(i))
+				interp.variables.set(i, vars.get(i));
 	}
 
 	public function execute(codeToRun:String):Dynamic
