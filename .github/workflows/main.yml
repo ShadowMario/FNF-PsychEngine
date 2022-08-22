@@ -11,7 +11,7 @@ on:
     branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
-  push, pull_request, workflow_dispatch:
+  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -48,7 +48,7 @@ jobs:
           haxelib install actuate 1.8.9 --quiet
           haxelib install box2d 1.2.3 --quiet
           haxelib git extension-androidtools https://github.com/91ebagacm/extension-androidtools.git
-          haxelib git extension-webview https://github.com/MAJigsaw77/extension-webview.git
+          haxelib git extension-webview https://github.com/91ebagacm/extension-webview.git
           haxelib install flixel-addons 2.11.0 --quiet
           haxelib install flixel-demos 2.8.1 --quiet
           haxelib install flixel-templates 2.6.6 --quiet
