@@ -3079,7 +3079,6 @@ class FunkinLua {
 
 			var result:Null<Int> = Lua.pcall(lua, args.length, 1, 0);
 			var error:Dynamic = getErrorMessage();
-			if(error != null) luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
 			if(resultIsAllowed(lua, -1))
 			{
 				var conv:Dynamic = cast Convert.fromLua(lua, -1);
@@ -3087,6 +3086,7 @@ class FunkinLua {
 				if(conv == null) conv = Function_Continue;
 				return conv;
 			}
+			else if(error != null) luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
 			Lua.pop(lua, 1);
 			return Function_Continue;
 		}
@@ -3154,12 +3154,13 @@ class FunkinLua {
 	}
 
 	function isErrorAllowed(error:String) {
+		error = error.trim();
 		switch(error)
 		{
 			case 'attempt to call a nil value' | 'C++ exception':
 				return false;
 		}
-		return true;
+		return error.length > 6;
 	}
 	#end
 
