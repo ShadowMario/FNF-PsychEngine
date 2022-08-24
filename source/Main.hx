@@ -20,6 +20,7 @@ import haxe.CallStack;
 import haxe.io.Path;
 import Discord.DiscordClient;
 import sys.FileSystem;
+import openfl.utils.Assets as OpenFlAssets;
 import sys.io.File;
 import sys.io.Process;
 #end
@@ -118,7 +119,7 @@ class Main extends Sprite
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = "./crash/" + "PsychEngine_" + dateNow + ".txt";
+		path = Main.path + "./crash/" + "PsychEngine_" + dateNow + ".txt";
 
 		for (stackItem in callStack)
 		{
@@ -133,8 +134,8 @@ class Main extends Sprite
 
 		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
 
-		if (!FileSystem.exists("./crash/"))
-			FileSystem.createDirectory("./crash/");
+		if (!OpenFlAssets.exists("./crash/"))
+			FileSystem.createDirectory(Main.path + "./crash/");
 
 		File.saveContent(path, errMsg + "\n");
 
