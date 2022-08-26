@@ -1174,26 +1174,17 @@ class PlayState extends MusicBeatState
 		startingSong = true;
 
 		// SONG SPECIFIC SCRIPTS
-		#if LUA_ALLOWED
+    #if (LUA_ALLOWED)
 		var doPush:Bool = false;
-
-		if(openfl.utils.Assets.exists("assets/data/" + Paths.formatToSongPath(SONG.song) + "/" + "script.lua"))
-		{
-			var path = Paths.luaAsset("data/" + Paths.formatToSongPath(SONG.song) + "/" + "script");
-			var luaFile = openfl.Assets.getBytes(path);
-
-			FileSystem.createDirectory(Main.path + "assets/data");
-			FileSystem.createDirectory(Main.path + "assets/data/");
-			FileSystem.createDirectory(Main.path + "assets/data/" + Paths.formatToSongPath(SONG.song));
-																				  
-
-			File.saveBytes(Paths.lua("data/" + Paths.formatToSongPath(SONG.song) + "/" + "script"), luaFile);
-
-			doPush = true;
-		}
+		var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/script.lua' + '/script1.lua';
+			luaFile = Paths.getPreloadPath(luaFile);
+			if(OpenFlAssets.exists(luaFile)) {
+				doPush = true;
+			}
+		
 		if(doPush) 
-			luaArray.push(new FunkinLua(Paths.lua("data/" + Paths.formatToSongPath(SONG.song) + "/" + "script")));
-		#end //thx random
+			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
+		#end
 
 		var daSong:String = Paths.formatToSongPath(curSong);
 		if (isStoryMode && !seenCutscene)
