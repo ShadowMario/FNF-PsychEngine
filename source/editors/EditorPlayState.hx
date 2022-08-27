@@ -18,6 +18,7 @@ import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
+import openfl.utils.Assets as OpenFlAssets;
 import FunkinLua;
 
 using StringTools;
@@ -114,9 +115,9 @@ class EditorPlayState extends MusicBeatState
 		generateSong(PlayState.SONG.song);
 		#if (LUA_ALLOWED && MODS_ALLOWED)
 		for (notetype in noteTypeMap.keys()) {
-			var luaToLoad:String = Paths.modFolders('custom_notetypes/' + notetype + '.lua');
-			if(sys.FileSystem.exists(luaToLoad)) {
-				var lua:editors.EditorLua = new editors.EditorLua(luaToLoad);
+			var luaToLoad:String = 'custom_notetypes/' + notetype + '.lua';
+			if(OpenFlAssets.exists(luaToLoad)) {
+				var lua:editors.EditorLua = new editors.EditorLua(Assets2File.getPath(luaToLoad));
 				new FlxTimer().start(0.1, function (tmr:FlxTimer) {
 					lua.stop();
 					lua = null;
