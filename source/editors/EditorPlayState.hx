@@ -117,7 +117,7 @@ class EditorPlayState extends MusicBeatState
 		for (notetype in noteTypeMap.keys()) {
 			var luaToLoad:String = 'custom_notetypes/' + notetype + '.lua';
 			if(OpenFlAssets.exists(luaToLoad)) {
-				var lua:editors.EditorLua = new editors.EditorLua(Assets2File.getPath(luaToLoad));
+				var lua:editors.EditorLua = new editors.EditorLua(Asset2File.getPath(luaToLoad));
 				new FlxTimer().start(0.1, function (tmr:FlxTimer) {
 					lua.stop();
 					lua = null;
