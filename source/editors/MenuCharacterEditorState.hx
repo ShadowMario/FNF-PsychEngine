@@ -24,6 +24,7 @@ import MenuCharacter;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
+import openfl.utils.Assets;
 import flash.net.FileFilter;
 import haxe.Json;
 #if sys
@@ -355,7 +356,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		if(_file.__path != null) fullPath = _file.__path;
 
 		if(fullPath != null) {
-			var rawJson:String = File.getContent(fullPath);
+			var rawJson:String = Assets.getText(fullPath);
 			if(rawJson != null) {
 				var loadedChar:MenuCharacterFile = cast Json.parse(rawJson);
 				if(loadedChar.idle_anim != null && loadedChar.confirm_anim != null) //Make sure it's really a character
