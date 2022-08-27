@@ -478,7 +478,7 @@ class FunkinLua {
 				#end
 				return;
 			}
-			PlayState.instance.setOnLuas(varName, scriptVar)
+			PlayState.instance.setOnLuas(varName, scriptVar);
 		});
 
 		Lua_helper.add_callback(lua, "callOnLuas", function(?funcName:String, ?args:Array<Dynamic>, ignoreStops=false, ignoreSelf=true, ?exclusions:Array<String>){
