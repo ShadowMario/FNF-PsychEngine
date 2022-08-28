@@ -19,6 +19,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
 import FunkinLua;
+import Conductor.Rating;
 
 using StringTools;
 
@@ -41,7 +42,8 @@ class EditorPlayState extends MusicBeatState
 	var startOffset:Float = 0;
 	var startPos:Float = 0;
 
-	public function new(startPos:Float) {
+	public function new(startPos:Float)
+	{
 		this.startPos = startPos;
 		Conductor.songPosition = startPos - startOffset;
 
@@ -78,9 +80,8 @@ class EditorPlayState extends MusicBeatState
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_up')),
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right'))
 		];
-		
-		strumLine = new FlxSprite(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
-		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
+
+		strumLine = new FlxSprite(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, (ClientPrefs.downScroll ? FlxG.height - 150 : 50)).makeGraphic(FlxG.width, 10);
 		strumLine.scrollFactor.set();
 		
 		comboGroup = new FlxTypedGroup<FlxSprite>();
@@ -93,11 +94,6 @@ class EditorPlayState extends MusicBeatState
 
 		generateStaticArrows(0);
 		generateStaticArrows(1);
-		/*if(ClientPrefs.middleScroll) {
-			opponentStrums.forEachAlive(function (note:StrumNote) {
-				note.visible = false;
-			});
-		}*/
 		
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		add(grpNoteSplashes);
@@ -159,7 +155,6 @@ class EditorPlayState extends MusicBeatState
 		add(tipText);
 		FlxG.mouse.visible = false;
 
-		//sayGo();
 		if(!ClientPrefs.controllerMode)
 		{
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
@@ -168,26 +163,6 @@ class EditorPlayState extends MusicBeatState
 		super.create();
 	}
 
-	function sayGo() {
-		var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image('go'));
-		go.scrollFactor.set();
-
-		go.updateHitbox();
-
-		go.screenCenter();
-		go.antialiasing = ClientPrefs.globalAntialiasing;
-		add(go);
-		FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
-			ease: FlxEase.cubeInOut,
-			onComplete: function(twn:FlxTween)
-			{
-				go.destroy();
-			}
-		});
-		FlxG.sound.play(Paths.sound('introGo'), 0.6);
-	}
-
-	//var songScore:Int = 0;
 	var songHits:Int = 0;
 	var songMisses:Int = 0;
 	var startingSong:Bool = true;
@@ -363,17 +338,6 @@ class EditorPlayState extends MusicBeatState
 			var fakeCrochet:Float = (60 / PlayState.SONG.bpm) * 1000;
 			notes.forEachAlive(function(daNote:Note)
 			{
-				/*if (daNote.y > FlxG.height)
-				{
-					daNote.active = false;
-					daNote.visible = false;
-				}
-				else
-				{
-					daNote.visible = true;
-					daNote.active = true;
-				}*/
-
 				// i am so fucking sorry for this if condition
 				var strumX:Float = 0;
 				var strumY:Float = 0;
@@ -501,7 +465,7 @@ class EditorPlayState extends MusicBeatState
 
 		keyShit();
 		scoreTxt.text = 'Hits: ' + songHits + ' | Misses: ' + songMisses;
-		sectionTxt.text = 'Beat: ' + curSection;
+		sectionTxt.text = 'Section: ' + curSection;
 		beatTxt.text = 'Beat: ' + curBeat;
 		stepTxt.text = 'Step: ' + curStep;
 		super.update(elapsed);
@@ -574,13 +538,10 @@ class EditorPlayState extends MusicBeatState
 				var sortedNotesList:Array<Note> = [];
 				notes.forEachAlive(function(daNote:Note)
 				{
-					if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit && !daNote.isSustainNote)
+					if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit && !daNote.isSustainNote && !daNote.blockHit)
 					{
 						if(daNote.noteData == key)
-						{
 							sortedNotesList.push(daNote);
-							//notesDatas.push(daNote.noteData);
-						}
 						canMiss = true;
 					}
 				});
@@ -724,26 +685,28 @@ class EditorPlayState extends MusicBeatState
 	{
 		if (!note.wasGoodHit)
 		{
-			switch(note.noteType) {
-				case 'Hurt Note': //Hurt note
-					noteMiss();
-					--songMisses;
-					if(!note.isSustainNote) {
-						if(!note.noteSplashDisabled) {
-							spawnNoteSplashOnNote(note);
-						}
-					}
+			if (ClientPrefs.hitsoundVolume > 0 && !note.hitsoundDisabled)
+			{
+				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
+			}
 
-					note.wasGoodHit = true;
-					vocals.volume = 0;
+			if(note.hitCausesMiss) {
+				noteMiss();
+				--songMisses;
+				if(!note.noteSplashDisabled && !note.isSustainNote) {
+					spawnNoteSplashOnNote(note);
+				}
 
-					if (!note.isSustainNote)
-					{
-						note.kill();
-						notes.remove(note, true);
-						note.destroy();
-					}
-					return;
+				note.wasGoodHit = true;
+				vocals.volume = 0;
+
+				if (!note.isSustainNote)
+				{
+					note.kill();
+					notes.remove(note, true);
+					note.destroy();
+				}
+				return;
 			}
 
 			if (!note.isSustainNote)
@@ -778,7 +741,6 @@ class EditorPlayState extends MusicBeatState
 	{
 		combo = 0;
 
-		//songScore -= 10;
 		songMisses++;
 
 		FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
@@ -787,53 +749,37 @@ class EditorPlayState extends MusicBeatState
 
 	var COMBO_X:Float = 400;
 	var COMBO_Y:Float = 340;
-	private function popUpScore(note:Note = null):Void
+	private function popUpScore(note:Note):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
+		var placement:String = Std.string(combo);
+		var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
+
+		coolText.x = COMBO_X;
+		coolText.y = COMBO_Y;
 
 		vocals.volume = 1;
 
-		var placement:String = Std.string(combo);
-
-		var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
-		coolText.x = COMBO_X;
-		coolText.y = COMBO_Y;
-		//
-
 		var rating:FlxSprite = new FlxSprite();
-		//var score:Int = 350;
-
 		var daRating:String = "sick";
 
 		if (noteDiff > Conductor.safeZoneOffset * 0.75)
 		{
 			daRating = 'shit';
-			//score = 50;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.5)
 		{
 			daRating = 'bad';
-			//score = 100;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.25)
 		{
 			daRating = 'good';
-			//score = 200;
 		}
 
 		if(daRating == 'sick' && !note.noteSplashDisabled)
 		{
 			spawnNoteSplashOnNote(note);
 		}
-		//songScore += score;
-
-		/* if (combo > 60)
-				daRating = 'sick';
-			else if (combo > 12)
-				daRating = 'good'
-			else if (combo > 4)
-				daRating = 'bad';
-			*/
 
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
@@ -931,13 +877,8 @@ class EditorPlayState extends MusicBeatState
 
 			daLoop++;
 		}
-		/* 
-			trace(combo);
-			trace(seperatedScore);
-			*/
 
 		coolText.text = Std.string(seperatedScore);
-		// comboGroup.add(coolText);
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2, {
 			startDelay: Conductor.crochet * 0.001
