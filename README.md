@@ -31,7 +31,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 * [PolybiusProxy](https://twitter.com/polybiusproxy) - [hxCodec](https://github.com/polybiusproxy/hxCodec) (.mp4 video loader library);
 * [Keoiki](https://twitter.com/Keoiki_) - Note Splash Animations;
 * [Smokey](https://twitter.com/Smokey_5_) - Spriteatlas Support;
-* [Nebula The Zorua](https:/github.com/nebulazorua) - Lua API Rework, Better Chart Beat Snapping, Workflow Fix;
+* [Nebula The Zorua](https://github.com/nebulazorua) - Lua API Rework, Better Chart Beat Snapping, Workflow Fix;
 
 [and the rest of the Psych Engine's contributors](https://github.com/ShadowMario/FNF-PsychEngine/graphs/contributors).
 
