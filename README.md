@@ -28,7 +28,7 @@ Engine that is intended to fix many of vanilla FNF's issues and aiming to be an 
 * [SqirraRNG](https://twitter.com/gedehari) - Crash Handler, Chart Editor Waveform;
 * [KadeDev](https://twitter.com/kade0912) - Constant Scroll Speeds, Accurate Note Quantization;
 * [iFlicky](https://twitter.com/flicky_i) - Composer of [Psync](https://youtu.be/mX9sgiSUf5g) and [Tea Time](https://youtu.be/a7ksO5xVJU8), Dialogue Sounds;
-* [PolybiusProxy](https://twitter.com/polybiusproxy) - [hxCodec](https:/github.com/polybiusproxy/hxCodec) (.mp4 video loader library);
+* [PolybiusProxy](https://twitter.com/polybiusproxy) - [hxCodec](https://github.com/polybiusproxy/hxCodec) (.mp4 video loader library);
 * [Keoiki](https://twitter.com/Keoiki_) - Note Splash Animations;
 * [Smokey](https://twitter.com/Smokey_5_) - Spriteatlas Support;
 * [Nebula The Zorua](https:/github.com/nebulazorua) - Lua API Rework, Better Chart Beat Snapping, Workflow Fix;
