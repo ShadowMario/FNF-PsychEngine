@@ -75,9 +75,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descBox.alpha = 0.6;
 		add(descBox);
 
-		var titleText:Alphabet = new Alphabet(0, 0, title, true, false, 0, 0.6);
-		titleText.x += 60;
-		titleText.y += 40;
+		var titleText:Alphabet = new Alphabet(75, 40, title, true);
+		titleText.scaleX = 0.6;
+		titleText.scaleY = 0.6;
 		titleText.alpha = 0.4;
 		add(titleText);
 
@@ -89,12 +89,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 		for (i in 0...optionsArray.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, 70 * i, optionsArray[i].name, false, false);
+			var optionText:Alphabet = new Alphabet(290, 260, optionsArray[i].name, false);
 			optionText.isMenuItem = true;
-			optionText.x += 300;
 			/*optionText.forceX = 300;
 			optionText.yMult = 90;*/
-			optionText.xAdd = 200;
 			optionText.targetY = i;
 			grpOptions.add(optionText);
 
@@ -105,7 +103,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				checkboxGroup.add(checkbox);
 			} else {
 				optionText.x -= 80;
-				optionText.xAdd -= 80;
+				optionText.startPosition.x -= 80;
+				//optionText.xAdd -= 80;
 				var valueText:AttachedText = new AttachedText('' + optionsArray[i].getValue(), optionText.width + 80);
 				valueText.sprTracker = optionText;
 				valueText.copyAlpha = true;
@@ -113,6 +112,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				grpTexts.add(valueText);
 				optionsArray[i].setChild(valueText);
 			}
+			//optionText.snapToPosition(); //Don't ignore me when i ask for not making a fucking pull request to uncomment this line ok
 
 			if(optionsArray[i].showBoyfriend && boyfriend == null)
 			{
