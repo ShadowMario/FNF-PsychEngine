@@ -190,11 +190,6 @@
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 
-<!-- Internal Audio Record Support for old devices -->
-	<android target-sdk-version="29" />
-	<android gradle-version="5.4.1" />
-	<android gradle-plugin="3.5.0" /> 
-
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
