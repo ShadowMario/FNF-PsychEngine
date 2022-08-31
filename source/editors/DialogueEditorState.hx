@@ -28,6 +28,7 @@ import flash.net.FileFilter;
 import haxe.Json;
 import DialogueBoxPsych;
 import lime.system.Clipboard;
+import Alphabet;
 #if sys
 import sys.io.File;
 #end
@@ -38,7 +39,7 @@ class DialogueEditorState extends MusicBeatState
 {
 	var character:DialogueCharacter;
 	var box:FlxSprite;
-	var daText:Alphabet;
+	var daText:TypedAlphabet;
 
 	var selectedText:FlxText;
 	var animText:FlxText;
@@ -231,7 +232,6 @@ class DialogueEditorState extends MusicBeatState
 	private static var DEFAULT_BUBBLETYPE:String = "normal";
 	function reloadText(speed:Float = 0.05) {
 		if(daText != null) {
-			daText.killTheTimer();
 			daText.kill();
 			remove(daText);
 			daText.destroy();
@@ -241,9 +241,11 @@ class DialogueEditorState extends MusicBeatState
 
 		var textToType:String = lineInputText.text;
 		if(textToType == null || textToType.length < 1) textToType = ' ';
-	
-		Alphabet.setDialogueSound(soundInputText.text);
-		daText = new Alphabet(DialogueBoxPsych.DEFAULT_TEXT_X, DialogueBoxPsych.DEFAULT_TEXT_Y, textToType, false, true, speed, 0.7);
+
+		daText = new TypedAlphabet(DialogueBoxPsych.DEFAULT_TEXT_X, DialogueBoxPsych.DEFAULT_TEXT_Y, textToType, speed, false);
+		daText.sound = soundInputText.text;
+		daText.scaleX = 0.7;
+		daText.scaleY = 0.7;
 		add(daText);
 
 		if(speed > 0) {
