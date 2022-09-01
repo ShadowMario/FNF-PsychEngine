@@ -44,17 +44,17 @@ jobs:
 
       - name: Install Haxelib
         run: |
-          haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null
-          haxelib install lime 7.9.0
-          haxelib install openfl 9.1.0
-          haxelib --never install flixel
-          haxelib run lime setup flixel
-          haxelib install flixel-tools
-          haxelib install flixel-ui
-          haxelib install hscript
-          haxelib install flixel-addons
-          haxelib install hxCodec
+          haxelib --quiet setup ~/haxelib
+          haxelib --quiet install hxcpp > /dev/null
+          haxelib --quiet install lime 7.9.0
+          haxelib --quiet install openfl 9.1.0
+          haxelib --quiet --never install flixel
+          haxelib --quiet run lime setup flixel
+          haxelib --quiet install flixel-tools
+          haxelib --quiet install flixel-ui
+          haxelib --quiet install hscript
+          haxelib --quiet install flixel-addons
+          haxelib --quiet install hxCodec
           haxelib git linc_luajit https://github.com/MAJigsaw77/linc_luajit
           haxelib list
 
