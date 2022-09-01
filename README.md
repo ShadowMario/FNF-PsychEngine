@@ -17,6 +17,11 @@ If you want video support on your mod, simply do `haxelib install hxCodec` on a 
 
 otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
 
+## Android Port Credits:
+
+* Its-me-a-guy - Psych Engine Port and Removed Mod Folder
+* Dxgamer - Coder Help
+
 ## Credits:
 * Shadow Mario - Programmer
 * RiverOaken - Artist
