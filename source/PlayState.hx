@@ -4146,7 +4146,7 @@ class PlayState extends MusicBeatState
 
 		insert(members.indexOf(strumLineNotes), rating);
 		
-		if (ClientPrefs.optimizeRatings)
+		if (!ClientPrefs.comboStacking)
 		{
 			if (lastRating != null) lastRating.kill();
 			lastRating = rating;
@@ -4183,7 +4183,7 @@ class PlayState extends MusicBeatState
 		{
 			insert(members.indexOf(strumLineNotes), comboSpr);
 		}
-		if (ClientPrefs.optimizeRatings)
+		if (!ClientPrefs.comboStacking)
 		{
 			if (lastCombo != null) lastCombo.kill();
 			lastCombo = comboSpr;
@@ -4207,7 +4207,7 @@ class PlayState extends MusicBeatState
 			numScore.x += ClientPrefs.comboOffset[2];
 			numScore.y -= ClientPrefs.comboOffset[3];
 			
-			if (ClientPrefs.optimizeRatings)
+			if (!ClientPrefs.comboStacking)
 				lastScore.push(numScore);
 
 			if (!PlayState.isPixelStage)
