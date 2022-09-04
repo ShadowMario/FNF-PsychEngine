@@ -65,11 +65,11 @@ class StrumNote extends FlxSprite
 				case 0:
 					animation.add('static', [0]);
 					animation.add('pressed', [4, 8], 12, false);
-					animation.add('confirm', [12, 16], 24, false);
+					animation.add('confirm', [12, 16], 12, false);
 				case 1:
 					animation.add('static', [1]);
 					animation.add('pressed', [5, 9], 12, false);
-					animation.add('confirm', [13, 17], 24, false);
+					animation.add('confirm', [13, 17], 12, false);
 				case 2:
 					animation.add('static', [2]);
 					animation.add('pressed', [6, 10], 12, false);
@@ -77,7 +77,7 @@ class StrumNote extends FlxSprite
 				case 3:
 					animation.add('static', [3]);
 					animation.add('pressed', [7, 11], 12, false);
-					animation.add('confirm', [15, 19], 24, false);
+					animation.add('confirm', [15, 19], 12, false);
 			}
 		}
 		else
