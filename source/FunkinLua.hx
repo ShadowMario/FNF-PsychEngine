@@ -2617,6 +2617,7 @@ class FunkinLua {
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
 		Lua_helper.add_callback(lua, "doTweenX", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
+			luaTrace("doTweenX is deprecated! Use playAnim instead", false, true);
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if(penisExam != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(penisExam, {x: value}, duration, {ease: getFlxEaseByString(ease),
@@ -2630,6 +2631,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "doTweenY", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
+			luaTrace("doTweenY is deprecated! Use playAnim instead", false, true);
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if(penisExam != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(penisExam, {y: value}, duration, {ease: getFlxEaseByString(ease),
@@ -2643,6 +2645,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "doTweenAngle", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
+			luaTrace("doTweenAngle is deprecated! Use playAnim instead", false, true);
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if(penisExam != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(penisExam, {angle: value}, duration, {ease: getFlxEaseByString(ease),
@@ -2656,6 +2659,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "doTweenAlpha", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
+			luaTrace("doTweenAlpha is deprecated! Use playAnim instead", false, true);
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if(penisExam != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(penisExam, {alpha: value}, duration, {ease: getFlxEaseByString(ease),
@@ -2669,6 +2673,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "doTweenZoom", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
+			luaTrace("doTweenZoom is deprecated! Use playAnim instead", false, true);
 			var penisExam:Dynamic = tweenShit(tag, vars);
 			if(penisExam != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(penisExam, {zoom: value}, duration, {ease: getFlxEaseByString(ease),
@@ -2682,6 +2687,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "noteTweenX", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+			luaTrace("noteTweenX is deprecated! Use playAnim instead", false, true);
 			cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
@@ -2696,6 +2702,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "noteTweenY", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+			luaTrace("noteTweenY is deprecated! Use playAnim instead", false, true);
 			cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
@@ -2710,6 +2717,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+			luaTrace("noteTweenAngle is deprecated! Use playAnim instead", false, true);
 			cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
@@ -2724,6 +2732,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "noteTweenDirection", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
+			luaTrace("noteTweenDirection is deprecated! Use playAnim instead", false, true);
 			cancelTween(tag);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
