@@ -121,7 +121,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			"If unchecked, Ratings and Combo won't stack, saving on System Memory and making them easier to read",
 			'comboStacking',
 			'bool',
-			true]);
+			true);
 		addOption(option);
 
 		super();
