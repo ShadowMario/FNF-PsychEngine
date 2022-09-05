@@ -1088,15 +1088,15 @@ class FunkinLua {
 		});
 
 		// gay ass tweens
-		Lua_helper.add_callback(lua, "doTween", function(tag:String, property:String, vars:String, value:Dynamic, duration:Float, ease:String) {
-			var penisExam:Dynamic = tweenShit(tag, vars);
+		Lua_helper.add_callback(lua, "doTween", function(tagNVars:Array<String>, property:String, value:Dynamic, duration:Float, ease:String) {
+			var penisExam:Dynamic = tweenShit(tagNVars[0], tagNVars[1]);
 			var gayAssAnon = {}
 			Reflect.setField(gayAssAnon, property, value);
 			if(penisExam != null) {
-				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(penisExam, gayAssAnon, duration, {ease: getFlxEaseByString(ease),
+				PlayState.instance.modchartTweens.set(tagNVars[0], FlxTween.tween(penisExam, gayAssAnon, duration, {ease: getFlxEaseByString(ease),
 					onComplete: function(twn:FlxTween) {
-						PlayState.instance.callOnLuas('onTweenCompleted', [tag]);
-						PlayState.instance.modchartTweens.remove(tag);
+						PlayState.instance.callOnLuas('onTweenCompleted', [tagNVars[0]]);
+						PlayState.instance.modchartTweens.remove(tagNVars[0]);
 					}
 				}));
 			}else{
@@ -1123,18 +1123,18 @@ class FunkinLua {
 		});
 		
 		// bisexual note tween
-		Lua_helper.add_callback(lua, "noteTween", function(tag:String, property:String, note:Int, value:Dynamic, duration:Float, ease:String) {
-			cancelTween(tag);
+		Lua_helper.add_callback(lua, "noteTween", function(tagNnote:Array<Dynamic>, property:String, value:Dynamic, duration:Float, ease:String) {
+			cancelTween(tagNnote[0]);
 			var gayAssAnon = {}
 			Reflect.setField(gayAssAnon, property, value);
 			if(note < 0) note = 0;
-			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
+			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[tagNnote[1] % PlayState.instance.strumLineNotes.length];
 
 			if(testicle != null) {
-				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, gayAssAnon, duration, {ease: getFlxEaseByString(ease),
+				PlayState.instance.modchartTweens.set(tagNnote[0], FlxTween.tween(testicle, gayAssAnon, duration, {ease: getFlxEaseByString(ease),
 					onComplete: function(twn:FlxTween) {
-						PlayState.instance.callOnLuas('onTweenCompleted', [tag]);
-						PlayState.instance.modchartTweens.remove(tag);
+						PlayState.instance.callOnLuas('onTweenCompleted', [tagNnote[0]]);
+						PlayState.instance.modchartTweens.remove(tagNnote[0]);
 					}
 				}));
 			}
