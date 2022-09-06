@@ -465,7 +465,7 @@ class FunkinLua {
 			return runningScripts;
 		});
 
-		Lua_helper.add_callback(lua, "setOnLuas", function(?varName:String, ?scriptVar:String){
+		Lua_helper.add_callback(lua, "setOnLuas", function(?varName:String, ?scriptVar:Dynamic){
 			if(varName==null){
 				#if (linc_luajit >= "0.0.6")
 				LuaL.error(lua, "bad argument #1 to 'setOnLuas' (string expected, got nil)");
