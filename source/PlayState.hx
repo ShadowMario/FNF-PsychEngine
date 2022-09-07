@@ -108,6 +108,7 @@ class PlayState extends MusicBeatState
 	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
 	public var modchartSaves:Map<String, FlxSave> = new Map<String, FlxSave>();
+	public var modchartGroups:Map<String, ModchartGroup> = new Map();
 	#else
 	public var boyfriendMap:Map<String, Boyfriend> = new Map<String, Boyfriend>();
 	public var dadMap:Map<String, Character> = new Map<String, Character>();
@@ -119,6 +120,7 @@ class PlayState extends MusicBeatState
 	public var modchartSounds:Map<String, FlxSound> = new Map();
 	public var modchartTexts:Map<String, ModchartText> = new Map();
 	public var modchartSaves:Map<String, FlxSave> = new Map();
+	public var modchartGroups:Map<String, ModchartGroup> = new Map();
 	#end
 
 	public var BF_X:Float = 770;
@@ -4933,10 +4935,6 @@ class PlayState extends MusicBeatState
 			lua.stop();
 		}
 		luaArray = [];
-
-		#if hscript
-		if(FunkinLua.hscript != null) FunkinLua.hscript = null;
-		#end
 
 		if(!ClientPrefs.controllerMode)
 		{
