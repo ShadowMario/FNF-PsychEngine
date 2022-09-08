@@ -1088,15 +1088,17 @@ class FunkinLua {
 		});
 
 		// gay ass tweens
-		Lua_helper.add_callback(lua, "doTween", function(tagNVars:Array<String>, property:String, value:Dynamic, duration:Float, ease:String) {
-			var penisExam:Dynamic = tweenShit(tagNVars[0], tagNVars[1]);
+		Lua_helper.add_callback(lua, "doTween", function(tag:String, variable:String, fieldsNValues:Dynamic, duration:Float, ease:String) {
+			var penisExam:Dynamic = tweenShit(tag, variable);
 			var gayAssAnon = {}
-			Reflect.setField(gayAssAnon, property, value);
+			for (field in fieldsNValues.keys()) 
+				Reflect.setField(gayAssAnon, field, fieldsNValues[field]);
+
 			if(penisExam != null) {
 				PlayState.instance.modchartTweens.set(tagNVars[0], FlxTween.tween(penisExam, gayAssAnon, duration, {ease: getFlxEaseByString(ease),
 					onComplete: function(twn:FlxTween) {
-						PlayState.instance.callOnLuas('onTweenCompleted', [tagNVars[0]]);
-						PlayState.instance.modchartTweens.remove(tagNVars[0]);
+						PlayState.instance.callOnLuas('onTweenCompleted', [tag]);
+						PlayState.instance.modchartTweens.remove(tag);
 					}
 				}));
 			}else{
