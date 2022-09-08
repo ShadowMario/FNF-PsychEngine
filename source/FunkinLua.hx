@@ -1102,7 +1102,7 @@ class FunkinLua {
 					}
 				}));
 			}else{
-				luaTrace('Couldnt find object: ' + vars, false, false, FlxColor.RED);
+				luaTrace('Couldnt find object: ' + variable, false, false, FlxColor.RED);
 			}
 		});
 		Lua_helper.add_callback(lua, "doTweenColor", function(tag:String, vars:String, targetColor:String, duration:Float, ease:String) {
