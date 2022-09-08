@@ -1095,7 +1095,7 @@ class FunkinLua {
 				Reflect.setField(gayAssAnon, field, fieldsNValues[field]);
 
 			if(penisExam != null) {
-				PlayState.instance.modchartTweens.set(tagNVars[0], FlxTween.tween(penisExam, gayAssAnon, duration, {ease: getFlxEaseByString(ease),
+				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(penisExam, gayAssAnon, duration, {ease: getFlxEaseByString(ease),
 					onComplete: function(twn:FlxTween) {
 						PlayState.instance.callOnLuas('onTweenCompleted', [tag]);
 						PlayState.instance.modchartTweens.remove(tag);
