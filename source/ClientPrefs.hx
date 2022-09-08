@@ -33,6 +33,7 @@ class ClientPrefs {
 		'hitsoundVolume' => 0,										// Float
 		'pauseMusic' => 'Tea Time',									// String
 		'checkForUpdates' => true,									// Bool
+		'comboStacking' => true,									// Bool
 
 		'comboOffset' => [0, 0, 0, 0],								// Array<Int>
 		'ratingOffset' => 0,										// Int
