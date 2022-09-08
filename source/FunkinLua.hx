@@ -1128,8 +1128,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "noteTween", function(tag:String, note:Int, fieldsNValues:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			var gayAssAnon = {}
-			for (field in fieldNValues.keys())
-				Reflect.setField(gayAssAnon, field, fieldNValues[field]);
+			for (field in fieldsNValues.keys())
+				Reflect.setField(gayAssAnon, field, fieldsNValues[field]);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
 
