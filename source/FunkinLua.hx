@@ -123,7 +123,6 @@ class FunkinLua {
 		// Camera poo
 		set('cameraX', 0);
 		set('cameraY', 0);
-		set('cameraSpeed', PlayState.stageData.camera_speed);
 
 		// Screen stuff
 		set('screenWidth', FlxG.width);
