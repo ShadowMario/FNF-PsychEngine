@@ -3544,19 +3544,31 @@ class CustomSubstate extends MusicBeatSubstate
 #if hscript
 class HScript
 {
-	static var parser:Parser = new Parser();
+	var parser:Parser;
 	public var interp:Interp;
 
 	public function new()
 	{
 		interp = new Interp();
+		parser = new Parser();
+
 		setVars();
 	}
 
 	public function setVar(key:String, data:Dynamic):Map<String, Dynamic>
 	{
 		FunkinLua.hscriptVars.set(key, data);
-		return interp.variables = FunkinLua.hscriptVars.copy();
+		
+		for (i in FunkinLua.hscriptVars.keys())
+			if (!exists(i))
+				interp.variables.set(i, FunkinLua.hscriptVars.get(i));
+
+		return interp.variables;
+	}
+
+	public function exists(i:String):Bool
+	{
+		return interp.variables.exists(i);
 	}
 
 	public function call(key:String, args:Array<Dynamic>):Dynamic
@@ -3571,9 +3583,9 @@ class HScript
 	public function execute(codeToRun:String):Dynamic
 	{
 		@:privateAccess
-		HScript.parser.line = 1;
-		HScript.parser.allowTypes = true;
-		return interp.execute(HScript.parser.parseString(codeToRun));
+		parser.line = 1;
+		parser.allowTypes = true;
+		return interp.execute(parser.parseString(codeToRun));
 	}
 
 	public function setVars():Void
