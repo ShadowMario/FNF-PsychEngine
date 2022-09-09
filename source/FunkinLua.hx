@@ -1090,12 +1090,8 @@ class FunkinLua {
 		// gay ass tweens
 		Lua_helper.add_callback(lua, "doTween", function(tag:String, variable:String, fieldsNValues:Dynamic, duration:Float, ease:String) {
 			var penisExam:Dynamic = tweenShit(tag, variable);
-			var gayAssAnon = {}
-			for (field in fieldsNValues.keys()) 
-				Reflect.setField(gayAssAnon, field, fieldsNValues[field]);
-
 			if(penisExam != null) {
-				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(penisExam, gayAssAnon, duration, {ease: getFlxEaseByString(ease),
+				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(penisExam, fieldsNValues, duration, {ease: getFlxEaseByString(ease),
 					onComplete: function(twn:FlxTween) {
 						PlayState.instance.callOnLuas('onTweenCompleted', [tag]);
 						PlayState.instance.modchartTweens.remove(tag);
@@ -1127,14 +1123,11 @@ class FunkinLua {
 		// bisexual note tween
 		Lua_helper.add_callback(lua, "noteTween", function(tag:String, note:Int, fieldsNValues:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
-			var gayAssAnon = {}
-			for (field in fieldsNValues.keys())
-				Reflect.setField(gayAssAnon, field, fieldsNValues[field]);
 			if(note < 0) note = 0;
 			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
 
 			if(testicle != null) {
-				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, gayAssAnon, duration, {ease: getFlxEaseByString(ease),
+				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, fieldsNValues, duration, {ease: getFlxEaseByString(ease),
 					onComplete: function(twn:FlxTween) {
 						PlayState.instance.callOnLuas('onTweenCompleted', [tag]);
 						PlayState.instance.modchartTweens.remove(tag);
