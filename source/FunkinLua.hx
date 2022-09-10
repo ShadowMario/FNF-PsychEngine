@@ -3414,6 +3414,7 @@ class FunkinLua {
 
 		Convert.toLua(lua, data);
 		Lua.setglobal(lua, variable);
+		hscript.setVar(variable, data);
 		#end
 	}
 
