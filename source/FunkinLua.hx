@@ -32,6 +32,7 @@ import flixel.math.FlxMath;
 import flixel.util.FlxSave;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.system.FlxAssets.FlxShader;
+import flixel.text.FlxText.FlxTextBorderStyle;
 
 #if !flash
 import flixel.addons.display.FlxRuntimeShader;
@@ -2351,7 +2352,9 @@ class FunkinLua {
 				obj.fieldWidth = width;
 			}
 		});
-		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Int, color:String) {
+		//do these 2 work at all??
+		//Future me: yes they do
+		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Int, quality:Int, color:String) {
 			var obj:FlxText = getTextObject(tag);
 			if(obj != null)
 			{
@@ -2359,7 +2362,26 @@ class FunkinLua {
 				if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
 
 				obj.borderSize = size;
+				obj.borderQuality = quality;
 				obj.borderColor = colorNum;
+			}
+		});
+		Lua_helper.add_callback(lua, "setTextBorderStyle", function(tag:String, borderStyle:String = 'NONE') {
+			var obj:FlxText = getTextObject(tag);
+			if(obj != null)
+			{
+				obj.borderStyle = NONE;
+				switch(borderStyle.trim().toLowerCase())
+				{
+					case 'none':
+						obj.borderStyle = NONE;
+					case 'shadow':
+						obj.borderStyle = SHADOW;
+					case 'outline':
+						obj.borderStyle = OUTLINE;
+					case 'outline_fast':
+						obj.borderStyle = OUTLINE_FAST;
+				}
 			}
 		});
 		Lua_helper.add_callback(lua, "setTextColor", function(tag:String, color:String) {
@@ -2466,6 +2488,22 @@ class FunkinLua {
 				PlayState.instance.modchartTexts.remove(tag);
 			}
 		});
+
+		//OMG dont work
+		/*
+		Lua_helper.add_callback(lua, "resizeGame", function(tag:String, width:Int, height:Int) {
+			FlxG.resizeGame(width, height);
+		});
+
+		Lua_helper.add_callback(lua, "resizeWindow", function(tag:String, width:Int, height:Int) {
+			FlxG.resizeWindow(width, height);
+		});
+
+		Lua_helper.add_callback(lua, "resizeBoth", function(tag:String, width:Int, height:Int) {
+			FlxG.resizeGame(width, height);
+			FlxG.resizeWindow(width, height);
+		});
+		*/
 
 		Lua_helper.add_callback(lua, "initSaveData", function(name:String, ?folder:String = 'psychenginemods') {
 			if(!PlayState.instance.modchartSaves.exists(name))

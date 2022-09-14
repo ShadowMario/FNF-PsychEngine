@@ -77,6 +77,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Score Text Zoom on Hit',
+			"If checked, Makes the Score text shorter, \nshowing only Score and Misses",
+			'short',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Health Bar Transparency',
 			'How much transparent should the health bar and icons be.',
 			'healthBarAlpha',

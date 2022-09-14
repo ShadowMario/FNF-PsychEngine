@@ -77,6 +77,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Optimize',
+			"If checked, Removes Stage And Player, \nBoosting FPS For Low-End PC'S",
+			'optimize',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Hitsound Volume',
 			'Funny notes does \"Tick!\" when you hit them."',
 			'hitsoundVolume',
