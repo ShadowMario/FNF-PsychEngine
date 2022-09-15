@@ -76,6 +76,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+		
+		var option:Option = new Option('Icon Colored Health Bar',
+			"If unchecked, the health bar will have set colors\nrather than colors based on the icons.",
+			'coloredHealthBar',
+			'bool',
+			true);
+		addOption(option);
 
 		var option:Option = new Option('Health Bar Transparency',
 			'How much transparent should the health bar and icons be.',
