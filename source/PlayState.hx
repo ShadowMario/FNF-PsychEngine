@@ -1490,8 +1490,12 @@ class PlayState extends MusicBeatState
 	}
 
 	public function reloadHealthBarColors() {
-		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
-			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+		var dadCol = dad.healthColorArray;
+		var bfCol = boyfriend.healthColorArray;
+		if (ClientPrefs.coloredHealthBar)
+			healthBar.createFilledBar(FlxColor.fromRGB(dadCol[0], dadCol[1], dadCol[2]), FlxColor.fromRGB(bfCol[0], bfCol[1], bfCol[2]));
+		else
+			healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 
 		healthBar.updateBar();
 	}
