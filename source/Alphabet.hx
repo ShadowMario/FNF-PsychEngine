@@ -276,6 +276,14 @@ class AlphaCharacter extends FlxSprite
 		's'  => null, 't'  => null, 'u'  => null, 'v'  => null, 'w'  => null, 'x'  => null,
 		'y'  => null, 'z'  => null,
 		
+		//special
+		'á'  => {anim: 'á', offsetsBold: [0, 37]},
+		'é'  => {offsetsBold: [0, 35]},
+		'í'  => {anim: 'í', offsetsBold: [0, 35]},
+		'ó'  => {anim: 'ó', offsetsBold: [0, 40]},
+		'ú'  => {anim: 'ú', offsetsBold: [0, 33]},
+		'ñ'  => {offsetsBold: [0, 25]},
+		
 		//numbers
 		'0'  => null, '1'  => null, '2'  => null, '3'  => null, '4'  => null,
 		'5'  => null, '6'  => null, '7'  => null, '8'  => null, '9'  => null,
@@ -384,7 +392,10 @@ class AlphaCharacter extends FlxSprite
 	public static function isTypeAlphabet(c:String) // thanks kade
 	{
 		var ascii = StringTools.fastCodeAt(c, 0);
-		return (ascii >= 65 && ascii <= 90) || (ascii >= 97 && ascii <= 122);
+		return (ascii >= 65 && ascii <= 90) || (ascii >= 97 && ascii <= 122) || //A-Z, a-z
+		(c == 'ñ' || c == 'Ñ') || // Ñ, ñ (ascii code wouldn't pick it up)
+		(c == 'á' || c == 'é' || c == 'í' || c == 'ó' || c == 'ú') || // á, é, í, ó, ú
+		(c == 'Á' || c == 'É' || c == 'Í' || c == 'Ó' || c == 'Ú'); //Á, É, Í, Ó, Ú
 	}
 
 	private function set_image(name:String)
