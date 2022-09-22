@@ -5111,6 +5111,9 @@ class PlayState extends MusicBeatState
 			if(exclusions.contains(script.scriptName))
 				continue;
 
+			var scriptContent:String = '' + File.getContent(script.scriptName);
+			if (!scriptContent.contains('function $event')) continue;
+			
 			var ret:Dynamic = script.call(event, args);
 			if(ret == FunkinLua.Function_StopLua && !ignoreStops)
 				break;
