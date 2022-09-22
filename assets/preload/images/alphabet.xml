@@ -2,6 +2,7 @@
 <TextureAtlas imagePath="alphabet.png">
 	<!-- Created with Adobe Animate version 22.0.7.214 -->
 	<!-- http://www.adobe.com/products/animate.html -->
+	<!-- Spanish and portuguese characters by Maru#0376 -->
 	<SubTexture name="# normal0000" x="514" y="431" width="39" height="44"/>
 	<SubTexture name="# normal0001" x="514" y="431" width="39" height="44"/>
 	<SubTexture name="# normal0002" x="626" y="431" width="39" height="44"/>
