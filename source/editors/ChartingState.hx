@@ -2689,8 +2689,7 @@ class ChartingState extends MusicBeatState
 		if(height < 1) height = 1; //Prevents error of invalid height
 
 		var colorList:Array<String> = ['c24b99', '00ffff', '12fa05', 'f9393f'];
-		var susColor:Int = Std.parseInt(colorList[note.noteData]);
-		if(!colorList[note.noteData].startsWith('0x')) susColor = Std.parseInt('0xff' + colorList[note.noteData]);
+		var susColor:Int = Std.parseInt('0xff' + colorList[note.noteData]);
 
 		var spr:FlxSprite = new FlxSprite(note.x + (GRID_SIZE * 0.5) - 4, note.y + GRID_SIZE / 2).makeGraphic(8, height, susColor);
 		return spr;
