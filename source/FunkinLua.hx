@@ -460,7 +460,6 @@ class FunkinLua {
 			var shader:FlxRuntimeShader = getShader(obj);
 			if(shader == null) return;
 
-			#if MODS_ALLOWED
 			// trace('bitmapdatapath: $bitmapdataPath');
 			var value = Paths.image(bitmapdataPath);
 			if(value != null && value.bitmap != null)
@@ -468,7 +467,6 @@ class FunkinLua {
 				// trace('Found bitmapdata. Width: ${value.bitmap.width} Height: ${value.bitmap.height}');
 				shader.setSampler2D(prop, value.bitmap);
 			}
-			#end
 			#else
 			luaTrace("setShaderSampler2D: Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
 			#end
