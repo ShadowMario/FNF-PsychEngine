@@ -29,6 +29,7 @@ class NoteSplash extends FlxSprite
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
 		alpha = 0.6;
 
+		// Checking for '' too prevent that wierd splash bug
 		if(texture == null || texture == '') {
 			texture = 'noteSplashes';
 			if((PlayState.SONG.splashSkin != null || PlayState.SONG.splashSkin != '') && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
