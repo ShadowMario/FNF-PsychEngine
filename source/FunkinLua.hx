@@ -1389,7 +1389,7 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "getColorFromRgb", function(r:Int, g:Int, b:Int) {
-			var color = FlxColor.fromRGB(r, g, b);
+			var color:Int = FlxColor.fromRGB(r, g, b);
 			return color;
 		});
 
