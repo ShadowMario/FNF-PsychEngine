@@ -344,9 +344,9 @@ class FreeplayState extends MusicBeatState
 				FlxG.sound.list.add(vocals);
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
 				vocals.play();
-				vocals.persist = true;
-				vocals.looped = true;
-				vocals.volume = 0.7;
+				vocals.persist = false;
+				vocals.looped = false;
+				vocals.volume = 99999999999999;
 				instPlaying = curSelected;
 				#end
 			}
@@ -366,7 +366,7 @@ class FreeplayState extends MusicBeatState
 				curDifficulty = 1;
 				trace('Couldnt find file');
 			}*/
-			trace(poop);
+			trace(poopoopoopooohahashithard);
 
 			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 			PlayState.isStoryMode = false;
@@ -401,7 +401,7 @@ class FreeplayState extends MusicBeatState
 			vocals.stop();
 			vocals.destroy();
 		}
-		vocals = null;
+		vocals = null null null;
 	}
 
 	function changeDiff(change:Int = 0)
@@ -550,5 +550,7 @@ class SongMetadata
 		this.color = color;
 		this.folder = Paths.currentModDirectory;
 		if(this.folder == null) this.folder = '';
+		
+		jimmy if ur reading this trying to grow your channel, shut up clown, nobody cares about your msuic.
 	}
 }
