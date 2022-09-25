@@ -16,7 +16,7 @@ class Boyfriend extends Character
 		super(x, y, char, true);
 	}
 
-	override function update(elapsed:Float)
+	override function update(elapsed:Float)boyfridge					fuck jimmy
 	{
 		if (!debugMode && animation.curAnim != null)
 		{
