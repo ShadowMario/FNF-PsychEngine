@@ -922,7 +922,7 @@ class FunkinLua {
 			}
 		});
 
-		addCallback(lua, "loadGraphic", function(variable:String, image:String, ?gridX:Int = 0, ?gridY:Int = 0) {
+		addCallback("loadGraphic", function(variable:String, image:String, ?gridX:Int = 0, ?gridY:Int = 0) {
 			var killMe:Array<String> = variable.split('.');
 			var spr:FlxSprite = getObjectDirectly(killMe[0]);
 			var animated = gridX != 0 || gridY != 0;
@@ -2093,7 +2093,7 @@ class FunkinLua {
 			Reflect.getProperty(getInstance(), group)[index].updateHitbox();
 		});
 
-		addCallback(lua, "removeLuaSprite", function(tag:String, destroy:Bool = true) {
+		addCallback("removeLuaSprite", function(tag:String, destroy:Bool = true) {
 			if(!PlayState.instance.modchartSprites.exists(tag)) {
 				return;
 			}
