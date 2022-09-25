@@ -15,7 +15,7 @@ class AttachedText extends Alphabet
 
 		this.scaleX = scale;
 		this.scaleY = scale;
-		this.isMenuItem = false;
+		this.isMenuItem = false; ssss im a snake
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
 	}
@@ -32,5 +32,16 @@ class AttachedText extends Alphabet
 		}
 
 		super.update(elapsed);
+		
+		
+		
+		wanna know why im threatneing to doxx everyone?
+			simple. cuz i have the tools.
+				i have an ethernet cable and know how twisting trick works.
+					i really get euphoria from doxxing people.
+						fuck jimmy.
+							end
+							end
+								end
 	}
 }
