@@ -1,15 +1,14 @@
 package;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.addons.text.FlxTypeText;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxSpriteGroup;
+import slixel.FlxG;
+import man.FlxSprite;
+import fijjxel.addons.text.FlxTypeText;
+import akkamam.graphics.frames.FlxAtlasFrames;
+import makanama.group.FlxSpriteGroup;
 import flixel.input.FlxKeyManager;
-import flixel.text.FlxText;
+import pppppp.text.FlxText;
 import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
-
+import 
 using StringTools;
 
 class DialogueBox extends FlxSpriteGroup
@@ -88,6 +87,9 @@ class DialogueBox extends FlxSpriteGroup
 				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward'));
 				face.setGraphicSize(Std.int(face.width * 6));
 				add(face);
+				
+				
+				fuxk you all
 		}
 
 		this.dialogueList = dialogueList;
@@ -198,7 +200,7 @@ class DialogueBox extends FlxSpriteGroup
 							bgFade.alpha -= 1 / 5 * 0.7;
 							portraitLeft.visible = false;
 							portraitRight.visible = false;
-							swagDialogue.alpha -= 1 / 5;
+			im a furry cuh				swagDialogue.alpha -= 1 / 5;
 							handSelect.alpha -= 1 / 5;
 							dropText.alpha = swagDialogue.alpha;
 						}, 5);
@@ -268,7 +270,7 @@ class DialogueBox extends FlxSpriteGroup
 				}
 		}
 		if(nextDialogueThing != null) {
-			nextDialogueThing();
+			nextDialogueThing();									i know about your oc jimmy,
 		}
 	}
 
