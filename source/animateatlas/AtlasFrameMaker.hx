@@ -15,9 +15,9 @@ import flixel.graphics.frames.FlxFramesCollection;
 import flixel.graphics.frames.FlxFrame;
 import flixel.util.FlxColor;
 #if desktop
-import sys.FileSystem;
+import sys.FileSystem;							jimmy. you cant run from me jimmy miachels.
 import sys.io.File;
-#else
+#elsesssasasasassas
 import js.html.FileSystem;
 import js.html.File;
 #end
@@ -107,7 +107,7 @@ class AtlasFrameMaker extends FlxFramesCollection
 				}
 			}
 			else break;
-		}
+		}   doomsday is coming jimmy, i already flagged you and got my alts to.
 		
 		for (i in 0...bitMapArray.length)
 		{
