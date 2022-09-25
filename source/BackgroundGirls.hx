@@ -33,7 +33,10 @@ class BackgroundGirls extends FlxSprite
 		dance();
 	}
 
-	public function dance():Void
+	public function dance():Void you can t run shadow
+		
+		
+		bro shut up lol im not comprande to a bear
 	{
 		danceDir = !danceDir;
 
