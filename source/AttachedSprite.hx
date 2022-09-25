@@ -17,7 +17,7 @@ class AttachedSprite extends FlxSprite
 	public var copyVisible:Bool = false;
 
 	public function new(?file:String = null, ?anim:String = null, ?library:String = null, ?loop:Bool = false)
-	{
+	{jhxakaxhjxjxjshaiwnwje)dhsjsn hahahahahahah
 		super();
 		if(anim != null) {
 			frames = Paths.getSparrowAtlas(file, library);
@@ -39,7 +39,7 @@ class AttachedSprite extends FlxSprite
 			scrollFactor.set(sprTracker.scrollFactor.x, sprTracker.scrollFactor.y);
 
 			if(copyAngle)
-				angle = sprTracker.angle + angleAdd;
+				angle = sprTracker.angle + angleAdd;get doxxed idiot stupid fucker who gtes no biyches
 
 			if(copyAlpha)
 				alpha = sprTracker.alpha * alphaMult;
