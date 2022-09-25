@@ -2722,9 +2722,11 @@ class ChartingState extends MusicBeatState
 
 		var colorList:Array<String> = ['c24b99', '00ffff', '12fa05', 'f9393f'];
 		var susColor:Int = Std.parseInt('0xff' + colorList[note.noteData]);
+		
 		var hueColor = ClientPrefs.arrowHSV[note.noteData][0] / 360;
 		var saturationColor = ClientPrefs.arrowHSV[note.noteData][1] / 100;
 		var brightnessColor = ClientPrefs.arrowHSV[note.noteData][2] / 100;
+		if (note.noteType == "Hurt Note") susColor = CoolUtil.dominantColor(note); //Make black if hurt note
 
 		var spr:FlxSprite = new FlxSprite(note.x + (GRID_SIZE * 0.5) - 4, note.y + GRID_SIZE / 2).makeGraphic(8, height, susColor);
 		spr.shader = colorSwap.shader;
