@@ -600,9 +600,11 @@ class ChartingState extends MusicBeatState
 				var newDiff = difficulties[Std.parseInt(difficulty)];
 				if (newDiff != currentDifficultyName)
 				{
+					openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, function(){
 					currentDifficultyName = newDiff;
 					PlayState.storyDifficulty = Std.parseInt(difficulty);
 					loadJson(_song.song.toLowerCase());
+					}, null,ignoreWarnings));
 				}
 
 			});
