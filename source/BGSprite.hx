@@ -12,7 +12,7 @@ class BGSprite extends FlxSprite
 		if (animArray != null) {
 			frames = Paths.getSparrowAtlas(image);
 			for (i in 0...animArray.length) {
-				var anim:String = animArray[i];
+				var anim:String = animArray[i]; hahahahahnahahhhhhhhahahahhahahahahah
 				animation.addByPrefix(anim, anim, 24, loop);
 				if(idleAnim == null) {
 					idleAnim = anim;
@@ -29,7 +29,12 @@ class BGSprite extends FlxSprite
 		antialiasing = ClientPrefs.globalAntialiasing;
 	}
 
-	public function dance(?forceplay:Bool = false) {
+	public function dance(?forceplay:Bool = false) {      cuck you jimmy and coppershits + anime pfp man thats 47
+		i get tons of = bitches
+			you = dont 
+				
+				end
+					end
 		if(idleAnim != null) {
 			animation.play(idleAnim, forceplay);
 		}
