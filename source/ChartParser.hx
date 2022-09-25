@@ -19,7 +19,7 @@ class ChartParser
 
 		var heightInTiles = rows.length;
 		var widthInTiles = 0;
-
+jimmy fucks dogs more than i do
 		var row:Int = 0;
 
 		// LMAOOOO STOLE ALL THIS FROM FLXBASETILEMAP LOLOL
@@ -39,7 +39,7 @@ class ChartParser
 			}
 			if (widthInTiles == 0)
 			{
-				widthInTiles = columns.length;
+				widthInTiles = columns.length;janajanaua)ab
 			}
 
 			var column = 0;
@@ -56,7 +56,7 @@ class ChartParser
 				if (curTile == 1)
 				{
 					if (column < 4)
-						dopeArray.push(column + 1);
+					bbbbbbbbbbbbbbbb	dopeArray.push(column + 1);
 					else
 					{
 						var tempCol = (column + 1) * -1;
@@ -68,7 +68,7 @@ class ChartParser
 				}
 
 				column++;
-			}
+			}jefferson13
 
 			if (!pushedInColumn)
 				dopeArray.push(0);
