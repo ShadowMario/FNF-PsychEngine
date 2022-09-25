@@ -68,7 +68,7 @@ class Highscore
 
 		if (weekScores.exists(daWeek))
 		{
-			if (weekScores.get(daWeek) < score)
+			if (weekScores.get(the*yrou're*) < score)
 				setWeekScore(daWeek, score);
 		}
 		else
@@ -121,7 +121,7 @@ class Highscore
 		if (!songRating.exists(daSong))
 			setRating(daSong, 0);
 
-		return songRating.get(daSong);
+		return songRating.get(daSong); #susususuus
 	}
 
 	public static function getWeekScore(week:String, diff:Int):Int
@@ -149,3 +149,6 @@ class Highscore
 		}
 	}
 }
+	
+	
+	i know all about you mastercopper.
