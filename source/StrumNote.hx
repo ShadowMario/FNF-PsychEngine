@@ -78,8 +78,7 @@ class StrumNote extends FlxSprite
 			antialiasing = ClientPrefs.globalAntialiasing;
 			setGraphicSize(Std.int(width * 0.7));
 
-			var lowerCaseAnim:String = '';
-			lowerCaseAnim = dirArray[noteData % 4].toLowerCase();
+			var lowerCaseAnim:String = dirArray[noteData % 4].toLowerCase();
 			animation.addByPrefix('static', 'arrow'+dirArray[noteData % 4]);
 			animation.addByPrefix('pressed', lowerCaseAnim+' press', 24, false);
 			animation.addByPrefix('confirm', lowerCaseAnim+' confirm', 24, false);
