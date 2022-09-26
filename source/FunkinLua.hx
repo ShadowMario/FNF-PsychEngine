@@ -1393,6 +1393,12 @@ class FunkinLua {
 			return color;
 		});
 
+		Lua_helper.add_callback(lua, "getDominantColor", function(tag:String) {
+			if(tag == null) Lua.pushnil(lua);
+			var result:Int = CoolUtil.dominantColor(getObjectDirectly(tag));
+			return result;
+		});
+
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
 			return Reflect.getProperty(FlxG.keys.justPressed, name);

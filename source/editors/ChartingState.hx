@@ -2721,6 +2721,7 @@ class ChartingState extends MusicBeatState
 		var shader = colorSwap.shader;
 
 		var colorList:Array<String> = ['c24b99', '00ffff', '12fa05', 'f9393f'];
+		if (PlayState.isPixelStage) colorList = ['e276ff', '3dcaff', '71e300', 'ff884e'];
 		var susColor:Int = Std.parseInt('0xff' + colorList[note.noteData]);
 		
 		var hueColor = ClientPrefs.arrowHSV[note.noteData][0] / 360;
