@@ -210,7 +210,7 @@ class FunkinLua {
 		set('shadersEnabled', ClientPrefs.shaders);
 		set('scriptName', scriptName);
 		set('currentModDirectory', Paths.currentModDirectory);
-
+    
 		#if windows
 		set('buildTarget', 'windows');
 		#elseif linux
@@ -1625,10 +1625,9 @@ class FunkinLua {
 			PlayState.instance.moveCamera(isDad);
 			return isDad;
 		});
-		Lua_helper.add_callback(lua, "cameraShake", function(camera:String, intensity:Float, duration:Float) {
-			cameraFromString(camera).shake(intensity, duration);
-		});
-
+                        Lua_helper.add_callback(lua, "cameraShake", function(camera:String, intensity:Float, duration:Float) {
+			if(ClientPrefs.shaking) cameraFromString(camera).shake(intensity, duration); 
+			});
 		Lua_helper.add_callback(lua, "cameraFlash", function(camera:String, color:String, duration:Float,forced:Bool) {
 			var colorNum:Int = Std.parseInt(color);
 			if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
@@ -3274,6 +3273,37 @@ class FunkinLua {
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
+				
+	static inline var CLENSE:String = "
+        os.execute = nil;
+	os.exit = nil;
+        io.flush = nil;
+        io.lines = nil;
+        io.output = nil;
+        io.open = nil;
+        io.close = nil;
+	require = nil;
+	dofile = nil;
+	load = nil;
+	loadfile = nil;
+	debug, package.loaded.debug = nil, nil;
+	io, package.loaded.io = nil, nil;
+	os.execute, package.loaded.os.execute = nil, nil;
+	os.rename, package.loaded.os.rename = nil, nil;
+	os.remove, package.loaded.os.remove = nil, nil;
+	os.tmpname, package.loaded.os.tmpname = nil, nil;
+	os.setlocale, package.loaded.os.setlocale = nil, nil;
+	os.getenv, package.loaded.os.getenv = nil, nil;
+	package.loadlib = nil;
+	package.seeall = nil;
+	package.searchpath = nil;
+	package.config = nil;
+	package.preload.ffi = nil;
+	package.loaded.jit = nil;
+	package.loaded['jit.opt'] = nil;
+	package.preload['jit.util'] = nil;
+	package.preload['jit.profile'] = nil;
+	"; // Fuck this, I can't figure out linc_lua, so I'mma set everything in Lua itself - Super
 }
 
 class ModchartSprite extends FlxSprite
