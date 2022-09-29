@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="diego.png"><SubTexture name="diego down0000" x="0" y="0" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego down0001" x="189" y="0" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego dance left0000" x="378" y="0" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego dance left0001" x="0" y="286" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego dance left0002" x="189" y="286" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego dance right0000" x="378" y="286" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego dance right0001" x="0" y="572" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego dance right0002" x="189" y="572" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego right0000" x="378" y="572" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego right0001" x="0" y="858" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego hey0000" x="189" y="858" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego up0000" x="378" y="858" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego up0001" x="0" y="1144" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego left0000" x="189" y="1144" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+<SubTexture name="diego left0001" x="378" y="1144" width="189" height="286" frameX="0" frameY="0" frameWidth="189" frameHeight="286" />
+</TextureAtlas>

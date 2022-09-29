@@ -1,0 +1,100 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 12,
+			"anim": "danceLeft",
+			"loop": false,
+			"name": "diego dance left"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 12,
+			"anim": "danceRight",
+			"loop": false,
+			"name": "diego dance right"
+		},
+		{
+			"offsets": [
+				14,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "hey",
+			"loop": false,
+			"name": "diego hey"
+		},
+		{
+			"offsets": [
+				10,
+				-1
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "diego right"
+		},
+		{
+			"offsets": [
+				10,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "diego down"
+		},
+		{
+			"offsets": [
+				-20,
+				-3
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "diego up"
+		},
+		{
+			"offsets": [
+				-40,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "diego left"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/diego",
+	"position": [
+		0,
+		350
+	],
+	"healthicon": "diego",
+	"flip_x": false,
+	"healthbar_colors": [
+		100,
+		195,
+		255
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1.6
+}
