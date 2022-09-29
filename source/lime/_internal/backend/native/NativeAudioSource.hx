@@ -19,10 +19,15 @@ import lime.utils.UInt8Array;
 class NativeAudioSource
 {
 	private static var STREAM_BUFFER_SIZE = 48000;
+	#if (native_audio_buffers && !macro)
+	private static var STREAM_NUM_BUFFERS = Std.parseInt(haxe.macro.Compiler.getDefine("native_audio_buffers"));
+	#else
 	private static var STREAM_NUM_BUFFERS = 3;
+	#end
 	private static var STREAM_TIMER_FREQUENCY = 100;
 
 	private var buffers:Array<ALBuffer>;
+	private var bufferTimeBlocks:Array<Float>;
 	private var completed:Bool;
 	private var dataLength:Int;
 	private var format:Int;
@@ -99,10 +104,12 @@ class NativeAudioSource
 			dataLength = Std.int(Int64.toInt(vorbisFile.pcmTotal()) * parent.buffer.channels * (parent.buffer.bitsPerSample / 8));
 
 			buffers = new Array();
+			bufferTimeBlocks = new Array();
 
 			for (i in 0...STREAM_NUM_BUFFERS)
 			{
 				buffers.push(AL.createBuffer());
+				bufferTimeBlocks.push(0);
 			}
 
 			handle = AL.createSource();
@@ -173,7 +180,7 @@ class NativeAudioSource
 		{
 			setCurrentTime(getCurrentTime());
 
-			streamTimer = new Timer(Std.int(STREAM_TIMER_FREQUENCY / __pitch));
+			streamTimer = new Timer(STREAM_TIMER_FREQUENCY);
 			streamTimer.run = streamTimer_onRun;
 		}
 		else
@@ -209,6 +216,12 @@ class NativeAudioSource
 		#if lime_vorbis
 		var buffer = new UInt8Array(length);
 		var read = 0, total = 0, readMax;
+
+		for (i in 0...STREAM_NUM_BUFFERS-1)
+		{
+			bufferTimeBlocks[i] = bufferTimeBlocks[i + 1];
+		}
+		bufferTimeBlocks[STREAM_NUM_BUFFERS-1] = vorbisFile.timeTell();
 
 		while (total < length)
 		{
@@ -289,6 +302,15 @@ class NativeAudioSource
 			}
 
 			AL.sourceQueueBuffers(handle, numBuffers, buffers);
+
+			// OpenAL can unexpectedly stop playback if the buffers run out
+			// of data, which typically happens if an operation (such as
+			// resizing a window) freezes the main thread.
+			// If AL is supposed to be playing but isn't, restart it here.
+			if (playing && handle != null && AL.getSourcei(handle, AL.SOURCE_STATE) == AL.STOPPED)
+			{
+				AL.sourcePlay(handle);
+			}
 		}
 		#end
 	}
@@ -311,6 +333,8 @@ class NativeAudioSource
 		{
 			timer.stop();
 		}
+
+		setCurrentTime(0);
 	}
 
 	// Event Handlers
@@ -349,7 +373,7 @@ class NativeAudioSource
 		{
 			if (stream)
 			{
-				var time = (Std.int(parent.buffer.__srcVorbisFile.timeTell() * 1000) + Std.int(AL.getSourcef(handle, AL.SEC_OFFSET) * 1000)) - parent.offset;
+				var time = (Std.int(bufferTimeBlocks[0] * 1000) + Std.int(AL.getSourcef(handle, AL.SEC_OFFSET) * 1000)) - parent.offset;
 				if (time < 0) return 0;
 				return time;
 			}
@@ -372,6 +396,12 @@ class NativeAudioSource
 
 	public function setCurrentTime(value:Int):Int
 	{
+		// `setCurrentTime()` has side effects and is never safe to skip.
+		/* if (value == getCurrentTime())
+		{
+			return value;
+		} */
+
 		if (handle != null)
 		{
 			if (stream)
@@ -410,44 +440,18 @@ class NativeAudioSource
 				timer.stop();
 			}
 
-			var timeRemaining = getLength() - value;
+			var timeRemaining = Std.int((getLength() - value) / getPitch());
 
 			if (timeRemaining > 0)
 			{
-				//trace('current pitch: $__pitch');
 				completed = false;
-				timer = new Timer(Std.int(timeRemaining / __pitch));
+				timer = new Timer(timeRemaining);
 				timer.run = timer_onRun;
 			}
 			else
 			{
 				playing = false;
 				completed = true;
-			}
-		}
-
-		return value;
-	}
-
-	var __pitch:Float = 1;
-	public function updatePitch(value:Float):Float
-	{
-		//trace('updated pitch: $value');
-		__pitch = value;
-		if (playing)
-		{
-			if (timer != null)
-			{
-				timer.stop();
-			}
-
-			var timeRemaining = getLength() - getCurrentTime();
-
-			if (timeRemaining > 0)
-			{
-				completed = false;
-				timer = new Timer(Std.int(timeRemaining / __pitch));
-				timer.run = timer_onRun;
 			}
 		}
 
@@ -495,11 +499,11 @@ class NativeAudioSource
 				timer.stop();
 			}
 
-			var timeRemaining = value - getCurrentTime();
+			var timeRemaining = Std.int((value - getCurrentTime()) / getPitch());
 
 			if (timeRemaining > 0)
 			{
-				timer = new Timer(Std.int(timeRemaining / __pitch));
+				timer = new Timer(timeRemaining);
 				timer.run = timer_onRun;
 			}
 		}
@@ -515,6 +519,44 @@ class NativeAudioSource
 	public function setLoops(value:Int):Int
 	{
 		return loops = value;
+	}
+
+	public function getPitch():Float
+	{
+		if (handle != null)
+		{
+			return AL.getSourcef(handle, AL.PITCH);
+		}
+		else
+		{
+			return 1;
+		}
+	}
+
+	public function setPitch(value:Float):Float
+	{
+		if (playing && value != getPitch())
+		{
+			if (timer != null)
+			{
+				timer.stop();
+			}
+
+			var timeRemaining = Std.int((getLength() - getCurrentTime()) / value);
+
+			if (timeRemaining > 0)
+			{
+				timer = new Timer(timeRemaining);
+				timer.run = timer_onRun;
+			}
+		}
+
+		if (handle != null)
+		{
+			AL.sourcef(handle, AL.PITCH, value);
+		}
+
+		return value;
 	}
 
 	public function getPosition():Vector4

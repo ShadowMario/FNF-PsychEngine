@@ -598,9 +598,7 @@ class FlxSound extends FlxBasic
 			{
 				#if cpp
 				@:privateAccess
-				lime.media.openal.AL.sourcef(this._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, _pitch);
-				if(_updatePitch) this._channel.__source.__backend.updatePitch(_pitch);
-				_updatePitch = false;
+				this._channel.__source.__backend.setPitch(_pitch);
 				// trace('changing $name pitch new $_pitch');
 				#end
 			}
@@ -753,10 +751,8 @@ class FlxSound extends FlxBasic
 		return _pitch;
 	}
 
-	var _updatePitch:Bool = false;
 	function set_pitch(v:Float):Float
 	{
-		_updatePitch = true;
 		return _pitch = v;
 	}
 
