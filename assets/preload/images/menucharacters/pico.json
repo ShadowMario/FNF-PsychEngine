@@ -1,10 +1,12 @@
 {
-	"idle_anim": "M Pico Idle",
 	"image": "Menu_Pico",
+	"scale": 1,
 	"position": [
 		0,
 		-120
 	],
-	"scale": 1,
-	"confirm_anim": "M Dad Idle"
+	"idle_anim": "M Pico Idle",
+	"confirm_anim": "M Dad Idle",
+	"flipX": false,
+	"noAntialiasing": false
 }
