@@ -11,10 +11,11 @@ import editors.ChartingState;
 using StringTools;
 
 typedef EventNote = {
-	strumTime:Float,
-	event:String,
-	value1:String,
-	value2:String
+	public var strumTime:Float;
+	public var event:String;
+	public var value1:String;
+	public var value2:String;
+	public var ?value3:String;
 }
 
 class Note extends FlxSprite
@@ -47,6 +48,7 @@ class Note extends FlxSprite
 	public var eventLength:Int = 0;
 	public var eventVal1:String = '';
 	public var eventVal2:String = '';
+	public var eventVal3:String = '';
 
 	public var colorSwap:ColorSwap;
 	public var inEditor:Bool = false;
