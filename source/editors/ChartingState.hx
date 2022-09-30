@@ -18,6 +18,7 @@ import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUINumericStepper;
+import flixel.addons.ui.FlxUISlider;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
 import flixel.addons.transition.FlxTransitionableState;
@@ -1208,6 +1209,18 @@ class ChartingState extends MusicBeatState
 	#end
 	var instVolume:FlxUINumericStepper;
 	var voicesVolume:FlxUINumericStepper;
+
+	var playbackRate_Slider:FlxUISlider;
+	var playbackRate(default, set):Float = 1;
+
+	function set_playbackRate(value:Float):Float {
+		playbackRate = value;
+		if(vocals != null) vocals.pitch = playbackRate;
+		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000 * value;
+		FlxG.sound.music.pitch = playbackRate;
+		return value;
+	}
+
 	function addChartingUI() {
 		var tab_group_chart = new FlxUI(null, UI_box);
 		tab_group_chart.name = 'Charting';
@@ -1340,6 +1353,12 @@ class ChartingState extends MusicBeatState
 		voicesVolume.name = 'voices_volume';
 		blockPressWhileTypingOnStepper.push(voicesVolume);
 
+		var playbackRate_Slider = new FlxUISlider(this, 'playbackRate', waveformUseVoices.x-5, 110, 0.25, 2, 150,
+		10, 20, FlxColor.WHITE, FlxColor.BLACK);
+		var default_playbackRate:FlxButton = new FlxButton(playbackRate_Slider.x , check_vortex.y, 'Default Rate', function() {
+			set_playbackRate(1);
+		});
+
 		tab_group_chart.add(new FlxText(metronomeStepper.x, metronomeStepper.y - 15, 0, 'BPM:'));
 		tab_group_chart.add(new FlxText(metronomeOffsetStepper.x, metronomeOffsetStepper.y - 15, 0, 'Offset (ms):'));
 		tab_group_chart.add(new FlxText(instVolume.x, instVolume.y - 15, 0, 'Inst Volume'));
@@ -1352,6 +1371,8 @@ class ChartingState extends MusicBeatState
 		tab_group_chart.add(waveformUseInstrumental);
 		tab_group_chart.add(waveformUseVoices);
 		#end
+		tab_group_chart.add(playbackRate_Slider);
+		tab_group_chart.add(default_playbackRate);
 		tab_group_chart.add(instVolume);
 		tab_group_chart.add(voicesVolume);
 		tab_group_chart.add(check_mute_inst);
