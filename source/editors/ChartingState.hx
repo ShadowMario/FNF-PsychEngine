@@ -88,8 +88,12 @@ class ChartingState extends MusicBeatState
 		['Alt Idle Animation', "Sets a specified suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (Dad, BF or GF)\nValue 2: New suffix (Leave it blank to disable)"],
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
-		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
+		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds.\nValue 3: (Optional) Ease name for the change tween."],
 		['Set Property', "Value 1: Variable name\nValue 2: New value"]
+	];
+
+	var needsValue3:Array<String> = [
+		'Change Scroll Speed',
 	];
 
 	var _file:FileReference;
@@ -151,6 +155,8 @@ class ChartingState extends MusicBeatState
 
 	var value1InputText:FlxUIInputText;
 	var value2InputText:FlxUIInputText;
+	var value3InputText:FlxUIInputText;
+	var value3Text:FlxText;
 	var currentSongName:String;
 
 	var zoomTxt:FlxText;
@@ -193,8 +199,6 @@ class ChartingState extends MusicBeatState
 		96,
 		192
 	];
-
-
 
 	var text:String = "";
 	public static var vortex:Bool = false;
@@ -1011,11 +1015,22 @@ class ChartingState extends MusicBeatState
 			if(FileSystem.exists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = haxe.io.Path.join([directory, file]);
-					if (!FileSystem.isDirectory(path) && file != 'readme.txt' && file.endsWith('.txt')) {
+					if (!FileSystem.isDirectory(path) && file != 'readme.txt' && file.endsWith('.txt')) 
+					{
 						var fileToCheck:String = file.substr(0, file.length - 4);
 						if(!eventPushedMap.exists(fileToCheck)) {
 							eventPushedMap.set(fileToCheck, true);
 							eventStuff.push([fileToCheck, File.getContent(path)]);
+						}
+					}
+
+					if (!FileSystem.isDirectory(path) && file.endsWith('.lua'))
+					{
+						var lua:FunkinLua = new FunkinLua(path);
+						if (lua.needsValue3)
+						{
+							var fileToCheck:String = file.substr(0, file.length - 4);
+							needsValue3.push(fileToCheck);
 						}
 					}
 				}
@@ -1025,7 +1040,7 @@ class ChartingState extends MusicBeatState
 		eventPushedMap = null;
 		#end
 
-		descText = new FlxText(20, 200, 0, eventStuff[0][0]);
+		descText = new FlxText(20, 240, 0, eventStuff[0][0]);
 
 		var leEvents:Array<String> = [];
 		for (i in 0...eventStuff.length) {
@@ -1056,6 +1071,13 @@ class ChartingState extends MusicBeatState
 		tab_group_event.add(text);
 		value2InputText = new FlxUIInputText(20, 150, 100, "");
 		blockPressWhileTypingOn.push(value2InputText);
+
+		value3Text = new FlxText(20, 170, 0, "Value 3:");
+		tab_group_event.add(value3Text);
+		value3InputText = new FlxUIInputText(20, 190, 100, "");
+		value3InputText.visible = needsValue3.contains(eventDropDown.selectedLabel);
+		value3Text.visible = value3InputText.visible;
+		blockPressWhileTypingOn.push(value3InputText);
 
 		// New event buttons
 		var removeButton:FlxButton = new FlxButton(eventDropDown.x + eventDropDown.width + 10, eventDropDown.y, '-', function()
@@ -1135,6 +1157,7 @@ class ChartingState extends MusicBeatState
 		tab_group_event.add(descText);
 		tab_group_event.add(value1InputText);
 		tab_group_event.add(value2InputText);
+		tab_group_event.add(value3InputText);
 		tab_group_event.add(eventDropDown);
 
 		UI_box.addGroup(tab_group_event);
@@ -1461,12 +1484,16 @@ class ChartingState extends MusicBeatState
 			}
 			else if(curSelectedNote != null)
 			{
-				if(sender == value1InputText) {
+				if(sender == value1InputText && curSelectedNote[1][curEventSelected][1] != null) {
 					curSelectedNote[1][curEventSelected][1] = value1InputText.text;
 					updateGrid();
 				}
-				else if(sender == value2InputText) {
+				else if(sender == value2InputText && curSelectedNote[1][curEventSelected][2] != null) {
 					curSelectedNote[1][curEventSelected][2] = value2InputText.text;
+					updateGrid();
+				}
+				else if (sender == value3InputText && curSelectedNote[1][curEventSelected][3] != null) {
+					curSelectedNote[1][curEventSelected][3] = value3InputText.text;
 					updateGrid();
 				}
 				else if(sender == strumTimeInputText) {
@@ -1542,6 +1569,8 @@ class ChartingState extends MusicBeatState
 		FlxG.watch.addQuick('daBeat', curBeat);
 		FlxG.watch.addQuick('daStep', curStep);
 
+		value3InputText.visible = needsValue3.contains(eventDropDown.selectedLabel);
+		value3Text.visible = value3InputText.visible;
 
 		if (FlxG.mouse.x > gridBG.x
 			&& FlxG.mouse.x < gridBG.x + gridBG.width
@@ -2508,6 +2537,7 @@ class ChartingState extends MusicBeatState
 				}
 				value1InputText.text = curSelectedNote[1][curEventSelected][1];
 				value2InputText.text = curSelectedNote[1][curEventSelected][2];
+				value3InputText.text = curSelectedNote[1][curEventSelected][3];
 			}
 			strumTimeInputText.text = '' + curSelectedNote[0];
 		}
@@ -2575,6 +2605,9 @@ class ChartingState extends MusicBeatState
 				curRenderedNotes.add(note);
 
 				var text:String = 'Event: ' + note.eventName + ' (' + Math.floor(note.strumTime) + ' ms)' + '\nValue 1: ' + note.eventVal1 + '\nValue 2: ' + note.eventVal2;
+				if (note.eventVal3 != '' && note.eventVal3 != null)
+					text += '\nValue 3: ' + note.eventVal3;
+
 				if(note.eventLength > 1) text = note.eventLength + ' Events:\n' + note.eventName;
 
 				var daText:AttachedFlxText = new AttachedFlxText(0, 0, 400, text, 12);
@@ -2643,6 +2676,7 @@ class ChartingState extends MusicBeatState
 			{
 				note.eventVal1 = i[1][0][1];
 				note.eventVal2 = i[1][0][2];
+				note.eventVal3 = i[1][0][3];
 			}
 			note.noteData = -1;
 			daNoteInfo = -1;
@@ -2832,7 +2866,8 @@ class ChartingState extends MusicBeatState
 			var event = eventStuff[Std.parseInt(eventDropDown.selectedId)][0];
 			var text1 = value1InputText.text;
 			var text2 = value2InputText.text;
-			_song.events.push([noteStrum, [[event, text1, text2]]]);
+			var text3 = value3InputText.text;
+			_song.events.push([noteStrum, [[event, text1, text2, text3]]]);
 			curSelectedNote = _song.events[_song.events.length - 1];
 			curEventSelected = 0;
 			changeEventSelected();
