@@ -476,7 +476,7 @@ class Paths
 				if (dat[1] == "1")
 				{
 					var folder = dat[0];
-					var path = Paths.mods(folder + '/pack.json');
+					var path = Paths.mods(folder + '/pack.json'); //TODO:marius: rewrite using ModInfo
 					if(FileSystem.exists(path)) {
 						try{
 							var rawJson:String = File.getContent(path);

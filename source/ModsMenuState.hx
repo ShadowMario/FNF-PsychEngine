@@ -25,7 +25,7 @@ import openfl.display.BitmapData;
 import flash.geom.Rectangle;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
-import sys.io.File;
+import Mods.ModInfo;
 /*import haxe.zip.Reader;
 import haxe.zip.Entry;
 import haxe.zip.Uncompress;
@@ -35,7 +35,7 @@ using StringTools;
 
 class ModsMenuState extends MusicBeatState
 {
-	var mods:Array<ModMetadata> = [];
+	var mods:Array<ModMenuEntry> = [];
 	static var changedAThing = false;
 	var bg:FlxSprite;
 	var intendedColor:Int;
@@ -132,7 +132,7 @@ class ModsMenuState extends MusicBeatState
 
 		buttonToggle = new FlxButton(startX, 0, "ON", function()
 		{
-			if(mods[curSelected].restart)
+			if(mods[curSelected].info.restart)
 			{
 				needaReset = true;
 			}
@@ -178,7 +178,7 @@ class ModsMenuState extends MusicBeatState
 
 		startX -= 100;
 		buttonTop = new FlxButton(startX, 0, "TOP", function() {
-			var doRestart:Bool = (mods[0].restart || mods[curSelected].restart);
+			var doRestart:Bool = (mods[0].info.restart || mods[curSelected].info.restart);
 			for (i in 0...curSelected) //so it shifts to the top instead of replacing the top one
 			{
 				moveMod(-1, true);
@@ -207,7 +207,7 @@ class ModsMenuState extends MusicBeatState
 			}
 			for (mod in mods)
 			{
-				if (mod.restart)
+				if (mod.info.restart)
 				{
 					needaReset = true;
 					break;
@@ -233,7 +233,7 @@ class ModsMenuState extends MusicBeatState
 			}
 			for (mod in mods)
 			{
-				if (mod.restart)
+				if (mod.info.restart)
 				{
 					needaReset = true;
 					break;
@@ -326,10 +326,10 @@ class ModsMenuState extends MusicBeatState
 				continue;
 			}
 
-			var newMod:ModMetadata = new ModMetadata(values[0]);
+			var newMod:ModMenuEntry = new ModMenuEntry(Paths.mods(values[0]), i);
 			mods.push(newMod);
 
-			newMod.alphabet = new Alphabet(0, 0, mods[i].name, true);
+			newMod.alphabet = new Alphabet(0, 0, newMod.info.name, true);
 			var scale:Float = Math.min(840 / newMod.alphabet.width, 1);
 			newMod.alphabet.scaleX = scale;
 			newMod.alphabet.scaleY = scale;
@@ -368,7 +368,7 @@ class ModsMenuState extends MusicBeatState
 		if(mods.length < 1)
 			bg.color = defaultColor;
 		else
-			bg.color = mods[curSelected].color;
+			bg.color = mods[curSelected].info.color;
 
 		intendedColor = bg.color;
 		changeSelection();
@@ -418,7 +418,7 @@ class ModsMenuState extends MusicBeatState
 	{
 		if(mods.length > 1)
 		{
-			var doRestart:Bool = (mods[0].restart);
+			var doRestart:Bool = (mods[0].info.restart);
 
 			var newPos:Int = curSelected + change;
 			if(newPos < 0)
@@ -437,13 +437,13 @@ class ModsMenuState extends MusicBeatState
 				modsList[curSelected] = modsList[newPos];
 				modsList[newPos] = lastArray;
 
-				var lastMod:ModMetadata = mods[curSelected];
+				var lastMod:ModMenuEntry = mods[curSelected];
 				mods[curSelected] = mods[newPos];
 				mods[newPos] = lastMod;
 			}
 			changeSelection(change);
 
-			if(!doRestart) doRestart = mods[curSelected].restart;
+			if(!doRestart) doRestart = mods[curSelected].info.restart;
 			if(!skipResetCheck && doRestart) needaReset = true;
 		}
 	}
@@ -540,7 +540,7 @@ class ModsMenuState extends MusicBeatState
 		else if(curSelected >= mods.length)
 			curSelected = 0;
 
-		var newColor:Int = mods[curSelected].color;
+		var newColor:Int = mods[curSelected].info.color;
 		if(newColor != intendedColor) {
 			if(colorTween != null) {
 				colorTween.cancel();
@@ -561,8 +561,8 @@ class ModsMenuState extends MusicBeatState
 			{
 				mod.alphabet.alpha = 1;
 				selector.sprTracker = mod.alphabet;
-				descriptionTxt.text = mod.description;
-				if (mod.restart){//finna make it to where if nothing changed then it won't reset
+				descriptionTxt.text = mod.info.description;
+				if (mod.info.restart){//finna make it to where if nothing changed then it won't reset
 					descriptionTxt.text += " (This Mod will restart the game!)";
 				}
 
@@ -708,72 +708,14 @@ class ModsMenuState extends MusicBeatState
 	}*/
 }
 
-class ModMetadata
+class ModMenuEntry
 {
-	public var folder:String;
-	public var name:String;
-	public var description:String;
-	public var color:FlxColor;
-	public var restart:Bool;//trust me. this is very important
 	public var alphabet:Alphabet;
 	public var icon:AttachedSprite;
+	public var info:ModInfo;
 
-	public function new(folder:String)
+	public function new(folder:String, iteration:Int)
 	{
-		this.folder = folder;
-		this.name = folder;
-		this.description = "No description provided.";
-		this.color = ModsMenuState.defaultColor;
-		this.restart = false;
-
-		//Try loading json
-		var path = Paths.mods(folder + '/pack.json');
-		if(FileSystem.exists(path)) {
-			var rawJson:String = File.getContent(path);
-			if(rawJson != null && rawJson.length > 0) {
-				var stuff:Dynamic = Json.parse(rawJson);
-					//using reflects cuz for some odd reason my haxe hates the stuff.var shit
-					var colors:Array<Int> = Reflect.getProperty(stuff, "color");
-					var description:String = Reflect.getProperty(stuff, "description");
-					var name:String = Reflect.getProperty(stuff, "name");
-					var restart:Bool = Reflect.getProperty(stuff, "restart");
-
-				if(name != null && name.length > 0)
-				{
-					this.name = name;
-				}
-				if(description != null && description.length > 0)
-				{
-					this.description = description;
-				}
-				if(name == 'Name')
-				{
-					this.name = folder;
-				}
-				if(description == 'Description')
-				{
-					this.description = "No description provided.";
-				}
-				if(colors != null && colors.length > 2)
-				{
-					this.color = FlxColor.fromRGB(colors[0], colors[1], colors[2]);
-				}
-
-				this.restart = restart;
-				/*
-				if(stuff.name != null && stuff.name.length > 0)
-				{
-					this.name = stuff.name;
-				}
-				if(stuff.description != null && stuff.description.length > 0)
-				{
-					this.description = stuff.description;
-				}
-				if(stuff.color != null && stuff.color.length > 2)
-				{
-					this.color = FlxColor.fromRGB(stuff.color[0], stuff.color[1], stuff.color[2]);
-				}*/
-			}
-		}
+		this.info = new ModInfo(folder);
 	}
 }
