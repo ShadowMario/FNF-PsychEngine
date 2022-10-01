@@ -1214,7 +1214,7 @@ class ChartingState extends MusicBeatState
 	var playbackRate(default, set):Float = 1;
 
 	function set_playbackRate(value:Float):Float {
-		playbackRate = value;
+		playbackRate = FlxMath.roundDecimal(value,2);
 		if(vocals != null) vocals.pitch = playbackRate;
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000 * value;
 		FlxG.sound.music.pitch = playbackRate;
