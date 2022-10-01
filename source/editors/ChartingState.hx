@@ -1353,9 +1353,9 @@ class ChartingState extends MusicBeatState
 		voicesVolume.name = 'voices_volume';
 		blockPressWhileTypingOnStepper.push(voicesVolume);
 
-		var playbackRate_Slider = new FlxUISlider(this, 'playbackRate', waveformUseVoices.x-5, 110, 0.25, 2, 150,
-		10, 20, FlxColor.WHITE, FlxColor.BLACK);
-		var default_playbackRate:FlxButton = new FlxButton(playbackRate_Slider.x , check_vortex.y, 'Default Rate', function() {
+		var playbackRate_Slider = new FlxUISlider(this, 'playbackRate', waveformUseVoices.x-5, check_vortex.y-15, 0.25, 2, 150,
+		10, 10, FlxColor.WHITE, FlxColor.BLACK);
+		var default_playbackRate:FlxButton = new FlxButton(playbackRate_Slider.x , mouseScrollingQuant.y, 'Default Rate', function() {
 			set_playbackRate(1);
 		});
 
