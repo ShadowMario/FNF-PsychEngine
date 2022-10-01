@@ -1208,6 +1208,19 @@ class ChartingState extends MusicBeatState
 	#end
 	var instVolume:FlxUINumericStepper;
 	var voicesVolume:FlxUINumericStepper;
+
+	var chartPlaybackRate(default, set):Float = 1;
+	var chartPlaybackRateStepper:FlxUINumericStepper;
+
+	function set_chartPlaybackRate(value:Float):Float {
+		chartPlaybackRate = value;
+		if(vocals != null) {
+			vocals.pitch = chartPlaybackRate;
+		}
+		FlxG.sound.music.pitch = chartPlaybackRate;
+		return value;
+	}
+
 	function addChartingUI() {
 		var tab_group_chart = new FlxUI(null, UI_box);
 		tab_group_chart.name = 'Charting';
@@ -1327,6 +1340,10 @@ class ChartingState extends MusicBeatState
 				FlxG.save.data.chart_noAutoScroll = disableAutoScrolling.checked;
 			}
 		);
+		chartPlaybackRateStepper = new FlxUINumericStepper(metronomeOffsetStepper.x + 100, 55, 0.25, 1, 0.5, 3, 2);
+		chartPlaybackRateStepper.name = 'playback_rate';
+		blockPressWhileTypingOnStepper.push(chartPlaybackRateStepper);
+
 		if (FlxG.save.data.chart_noAutoScroll == null) FlxG.save.data.chart_noAutoScroll = false;
 		disableAutoScrolling.checked = FlxG.save.data.chart_noAutoScroll;
 
@@ -1352,6 +1369,8 @@ class ChartingState extends MusicBeatState
 		tab_group_chart.add(waveformUseInstrumental);
 		tab_group_chart.add(waveformUseVoices);
 		#end
+		tab_group_chart.add(chartPlaybackRateStepper);
+		tab_group_chart.add(new FlxText(chartPlaybackRateStepper.x, chartPlaybackRateStepper.y - 15, 0, 'Playback Rate (in editor)'));
 		tab_group_chart.add(instVolume);
 		tab_group_chart.add(voicesVolume);
 		tab_group_chart.add(check_mute_inst);
@@ -1485,6 +1504,10 @@ class ChartingState extends MusicBeatState
 			else if (wname == 'voices_volume')
 			{
 				vocals.volume = nums.value;
+			}
+			else if (wname == 'playback_rate')
+			{
+				chartPlaybackRate = nums.value;
 			}
 		}
 		else if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
@@ -1757,8 +1780,10 @@ class ChartingState extends MusicBeatState
 						vocals.pause();
 						vocals.time = FlxG.sound.music.time;
 						vocals.play();
+						vocals.pitch = chartPlaybackRate;
 					}
 					FlxG.sound.music.play();
+					FlxG.sound.music.pitch = chartPlaybackRate;
 				}
 			}
 
