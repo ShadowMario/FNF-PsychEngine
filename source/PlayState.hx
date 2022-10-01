@@ -4140,6 +4140,12 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
+		
+		if (defaultCamZoom >= 0.6) {
+			showCombo = false;
+			showComboNum = false; //helps with bf getting blocked bby ratings
+			showRating = false;
+		}
 
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
 		rating.cameras = [camHUD];
