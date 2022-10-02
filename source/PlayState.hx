@@ -4141,7 +4141,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart2 = '-pixel';
 		}
 		
-		if (defaultCamZoom >= 0.6) {
+		if (defaultCamZoom <= 0.6) {
 			showCombo = false;
 			showComboNum = false; //helps with bf getting blocked bby ratings
 			showRating = false;
