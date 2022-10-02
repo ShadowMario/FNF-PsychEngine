@@ -7654,7 +7654,7 @@
 		"player2": "aumsum-narrator-new",
 		"gfVersion": "gf",
 		"events": [],
-		"player3": null,
+		"player3": "gf",
 		"song": "Glitch",
 		"needsVoices": true,
 		"validScore": true,
