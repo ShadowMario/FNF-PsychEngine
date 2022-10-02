@@ -26,28 +26,20 @@ local characterList = { -- The list of characters
 		displayName = "Festive Boyfriend",
 	},
 	{
-		name = "aumsum-new",
+		name = "aumsum",
 		displayName = "AumSum",
-	},
-	{
-		name = "aumsum-angrie",
-		displayName = "Angry AumSum",
-	},
-	{
-		name = "aumsum-bf",
-		displayName = "AumSum BF",
 	},
 	{
 		name = "aumsum-narrator-new",
 		displayName = "AumSum Narrator",
 	},
 	{
-		name = "aumsum-bruh",
-		displayName = "AumSum bruh",
+		name = "diego-player",
+		displayName = "Diego",
 	},
 	{
-		name = "aumsussy",
-		displayName = "AumSUSSY",
+		name = "aumxpunged",
+		displayName = "3D AumSum",
 	},
 }
 

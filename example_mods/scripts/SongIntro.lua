@@ -7,32 +7,17 @@ IntroTagWidth = 15	--Width of the box's tag thingy.
 
 --actual script
 function onCreate()
-	--the tag at the end of the box
-	makeLuaSprite('JukeBoxTag', 'empty', -305-IntroTagWidth, 15)
-	makeGraphic('JukeBoxTag', 300+IntroTagWidth, 100, IntroTagColor)
+        makeLuaSprite('JukeBoxTag', 'songheadings/aumsumHeading', -305-IntroTagWidth, 30)
 	setObjectCamera('JukeBoxTag', 'other')
 	addLuaSprite('JukeBoxTag', true)
-
-	--the box
-	makeLuaSprite('JukeBox', 'empty', -305-IntroTagWidth, 15)
-	makeGraphic('JukeBox', 300, 100, '000000')
-	setObjectCamera('JukeBox', 'other')
-	addLuaSprite('JukeBox', true)
 	
 	--the text for the "Now Playing" bit
-	makeLuaText('JukeBoxText', songName, 300, -305-IntroTagWidth, 30)
+	makeLuaText('JukeBoxText', songName, 300, -305-IntroTagWidth, 38)
 	setTextAlignment('JukeBoxText', 'left')
 	setObjectCamera('JukeBoxText', 'other')
 	setTextSize('JukeBoxText', IntroTextSize)
         setTextColor('JukeBoxText', 'FFDD00')
 	addLuaText('JukeBoxText')
-	
-	--text for the song name
-	makeLuaText('JukeBoxSubText', 'AumSum Funkin', 300, -305-IntroTagWidth, 60)
-	setTextAlignment('JukeBoxSubText', 'left')
-	setObjectCamera('JukeBoxSubText', 'other')
-	setTextSize('JukeBoxSubText', IntroSubTextSize)
-	addLuaText('JukeBoxSubText')
 end
 
 --motion functions
