@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="aumsum_new.png">
+<SubTexture name="aumsum idle0000" x="0" y="0" width="537" height="628" frameX="-42" frameY="-89" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum idle0001" x="537" y="0" width="529" height="637" frameX="-47" frameY="-80" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum idle0002" x="1066" y="0" width="512" height="653" frameX="-55" frameY="-64" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum idle0003" x="0" y="653" width="493" height="663" frameX="-65" frameY="-54" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum left0000" x="493" y="653" width="476" height="634" frameX="-74" frameY="-83" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum left0001" x="969" y="653" width="468" height="644" frameX="-77" frameY="-73" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum right0000" x="0" y="1316" width="470" height="655" frameX="-77" frameY="-62" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum right0001" x="470" y="1316" width="471" height="657" frameX="-76" frameY="-60" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum up0000" x="941" y="1316" width="474" height="717" frameX="-75" frameY="0" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum up0001" x="0" y="2033" width="507" height="700" frameX="-58" frameY="-17" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum down0000" x="507" y="2033" width="624" height="551" frameX="0" frameY="-166" frameWidth="594" frameHeight="687" />
+<SubTexture name="aumsum down0001" x="1131" y="2033" width="621" height="589" frameX="-1" frameY="-128" frameWidth="594" frameHeight="687" />
+</TextureAtlas>

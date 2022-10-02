@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				2,
+				20
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "lion three sing right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-10,
+				189
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "lion three sing up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				183,
+				41
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "lion three sing left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				35,
+				-23
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "lion three sing down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				20
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "lion three idle dance",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/lion3",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "lion-three",
+	"flip_x": false,
+	"healthbar_colors": [
+		102,
+		80,
+		104
+	],
+	"camera_position": [
+		100,
+		100
+	],
+	"sing_duration": 6.1,
+	"scale": 0.7
+}

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="AumSum_Narrator_New.png">
+	<!-- Created with Adobe Animate version 22.0.6.202 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="aumsum narrator idle dance0000" x="0" y="0" width="218" height="678" frameX="0" frameY="-34" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0001" x="0" y="0" width="218" height="678" frameX="0" frameY="-34" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0002" x="218" y="0" width="209" height="686" frameX="-2" frameY="-26" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0003" x="218" y="0" width="209" height="686" frameX="-2" frameY="-26" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0004" x="427" y="0" width="192" height="699" frameX="-5" frameY="-13" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0005" x="427" y="0" width="192" height="699" frameX="-5" frameY="-13" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0006" x="619" y="0" width="187" height="706" frameX="-4" frameY="-6" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0007" x="619" y="0" width="187" height="706" frameX="-4" frameY="-6" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0008" x="806" y="0" width="186" height="712" frameX="-5" frameY="0" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0009" x="806" y="0" width="186" height="712" frameX="-5" frameY="0" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0010" x="806" y="0" width="186" height="712" frameX="-5" frameY="0" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator idle dance0011" x="806" y="0" width="186" height="712" frameX="-5" frameY="0" frameWidth="218" frameHeight="712"/>
+	<SubTexture name="aumsum narrator sing down0000" x="992" y="0" width="271" height="610" frameX="-1" frameY="-34" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0001" x="992" y="0" width="271" height="610" frameX="-1" frameY="-34" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0002" x="1263" y="0" width="257" height="623" frameX="-3" frameY="-21" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0003" x="1263" y="0" width="257" height="623" frameX="-3" frameY="-21" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0004" x="1520" y="0" width="240" height="634" frameX="0" frameY="-10" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0005" x="1520" y="0" width="240" height="634" frameX="0" frameY="-10" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0006" x="1760" y="0" width="230" height="640" frameX="-1" frameY="-4" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0007" x="1760" y="0" width="230" height="640" frameX="-1" frameY="-4" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0008" x="1990" y="0" width="219" height="644" frameX="-7" frameY="0" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0009" x="1990" y="0" width="219" height="644" frameX="-7" frameY="0" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0010" x="1990" y="0" width="219" height="644" frameX="-7" frameY="0" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing down0011" x="1990" y="0" width="219" height="644" frameX="-7" frameY="0" frameWidth="272" frameHeight="644"/>
+	<SubTexture name="aumsum narrator sing left0000" x="2209" y="0" width="247" height="695" frameX="0" frameY="-6" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0001" x="2209" y="0" width="247" height="695" frameX="0" frameY="-6" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0002" x="2456" y="0" width="238" height="697" frameX="-18" frameY="-4" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0003" x="2456" y="0" width="238" height="697" frameX="-18" frameY="-4" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0004" x="2694" y="0" width="228" height="699" frameX="-37" frameY="-2" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0005" x="2694" y="0" width="228" height="699" frameX="-37" frameY="-2" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0006" x="2922" y="0" width="224" height="700" frameX="-48" frameY="-1" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0007" x="2922" y="0" width="224" height="700" frameX="-48" frameY="-1" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0008" x="3146" y="0" width="220" height="701" frameX="-54" frameY="0" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0009" x="3146" y="0" width="220" height="701" frameX="-54" frameY="0" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0010" x="3146" y="0" width="220" height="701" frameX="-54" frameY="0" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing left0011" x="3146" y="0" width="220" height="701" frameX="-54" frameY="0" frameWidth="274" frameHeight="701"/>
+	<SubTexture name="aumsum narrator sing right0000" x="3366" y="0" width="271" height="709" frameX="-17" frameY="-2" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0001" x="3366" y="0" width="271" height="709" frameX="-17" frameY="-2" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0002" x="3637" y="0" width="261" height="709" frameX="-16" frameY="-2" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0003" x="3637" y="0" width="261" height="709" frameX="-16" frameY="-2" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0004" x="0" y="712" width="260" height="710" frameX="-9" frameY="-1" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0005" x="0" y="712" width="260" height="710" frameX="-9" frameY="-1" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0006" x="260" y="712" width="259" height="710" frameX="-4" frameY="-1" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0007" x="260" y="712" width="259" height="710" frameX="-4" frameY="-1" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0008" x="519" y="712" width="257" height="711" frameX="0" frameY="0" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0009" x="519" y="712" width="257" height="711" frameX="0" frameY="0" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0010" x="519" y="712" width="257" height="711" frameX="0" frameY="0" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing right0011" x="519" y="712" width="257" height="711" frameX="0" frameY="0" frameWidth="288" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0000" x="776" y="712" width="248" height="711" frameX="-1" frameY="0" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0001" x="776" y="712" width="248" height="711" frameX="-1" frameY="0" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0002" x="1024" y="712" width="247" height="708" frameX="-4" frameY="-2" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0003" x="1024" y="712" width="247" height="708" frameX="-4" frameY="-2" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0004" x="1271" y="712" width="249" height="705" frameX="-4" frameY="-5" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0005" x="1271" y="712" width="249" height="705" frameX="-4" frameY="-5" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0006" x="1520" y="712" width="252" height="704" frameX="-2" frameY="-6" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0007" x="1520" y="712" width="252" height="704" frameX="-2" frameY="-6" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0008" x="1772" y="712" width="253" height="702" frameX="0" frameY="-8" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0009" x="1772" y="712" width="253" height="702" frameX="0" frameY="-8" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0010" x="1772" y="712" width="253" height="702" frameX="0" frameY="-8" frameWidth="254" frameHeight="711"/>
+	<SubTexture name="aumsum narrator sing up0011" x="1772" y="712" width="253" height="702" frameX="0" frameY="-8" frameWidth="254" frameHeight="711"/>
+</TextureAtlas>

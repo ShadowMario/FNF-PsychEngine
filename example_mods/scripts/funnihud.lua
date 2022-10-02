@@ -9,21 +9,21 @@ function onCreatePost()
   setProperty('timeBarBG.visible',false)
   setProperty('timeBar.visible',false)
   setProperty('scoreTxt.visible',false)
-  setTextFont('botplayTxt', 'COMIC.TTF')
-  setTextFont('timeTxt', 'COMIC.TTF')
+  setTextFont('botplayTxt', 'segoeprb.ttf')
+  setTextFont('timeTxt', 'segoeprb.ttf')
 
 
   makeLuaText('ghudscoreTxt', 'Score: 0 | Misses: 0 | Accuracy: 0%', 1280, 0, (downscroll and 114 or 686));
   setTextBorder("ghudscoreTxt", 2, '000000')
   setTextAlignment('ghudscoreTxt', 'CENTER')
-  setTextFont('ghudscoreTxt', 'COMIC.TTF')
+  setTextFont('ghudscoreTxt', 'segoeprb.ttf')
   setTextSize('ghudscoreTxt', 20)
   addLuaText('ghudscoreTxt')
 
   makeLuaText('ghudsong', (songName .. ' - ' .. getProperty('storyDifficultyText')), 1280, 2, (downscroll and 0 or 695));
   setTextBorder("ghudsong", 1.8, '000000')
   setTextAlignment('ghudsong', 'LEFT')
-  setTextFont('ghudsong', 'COMIC.TTF')
+  setTextFont('ghudsong', 'segoeprb.ttf')
   setTextSize('ghudsong', 17)
   addLuaText('ghudsong')
 
@@ -71,31 +71,8 @@ function onCountdownTick(counter)
           characterPlayAnim('gf','cheer',true)
       end
 end
-------- ICON BOP SYSTEM (LAZTRIX,ft. bbpanzu) --------------
+------- oh --------------
 function onBeatHit()
-  setProperty('iconP2.scale.x',1)
-  turnvalue = 20
-  if curBeat % 2 == 0 then
-  turnvalue = -20
-  end
-    if curBeat % 1 == 0 then
-      setProperty('bficon.scale.y',0.6)
-      doTweenY('bfic','bficon.scale',1,crochet/1000,'circOut')
-      setProperty('dadicon.scale.y',1.4)
-      doTweenY('dadic','dadicon.scale',1,crochet/1000,'circOut')
-  setProperty('iconP2.angle',turnvalue)
-  setProperty('iconP1.angle',-turnvalue)
-  doTweenAngle('iconTween1','iconP1',0,crochet/1000,'circOut')
-  doTweenAngle('iconTween2','iconP2',0,crochet/1000,'circOut')
-  end
-  if curBeat % 2 == 0 then
-    setProperty('bficon.scale.y',1.4)
-    doTweenY('bfic','bficon.scale',1,crochet/1000,'circOut')
-    setProperty('dadicon.scale.y',0.6)
-    doTweenY('dadic','dadicon.scale',1,crochet/1000,'circOut')
-  end
-end
-
   if curBeat % 4 == 0 then
   setProperty('timeTxt.scale.x',1.15)
   setProperty('timeTxt.scale.y',1.15)

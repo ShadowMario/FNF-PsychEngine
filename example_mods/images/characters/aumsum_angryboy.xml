@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bambi_angryboy.png">
+	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="DaveAngry idle dance0000" x="0" y="0" width="825" height="1110"/>
+	<SubTexture name="DaveAngry idle dance0001" x="796" y="0" width="825" height="1110"/>
+	<SubTexture name="DaveAngry idle dance0002" x="1592" y="0" width="825" height="1110"/>
+	<SubTexture name="DaveAngry Sing Note DOWN0000" x="2388" y="0" width="796" height="1100"/>
+	<SubTexture name="DaveAngry Sing Note DOWN0001" x="3184" y="0" width="796" height="1100"/>
+	<SubTexture name="DaveAngry Sing Note LEFT0000" x="0" y="1100" width="796" height="1100"/>
+	<SubTexture name="DaveAngry Sing Note LEFT0001" x="796" y="1100" width="796" height="1100"/>
+	<SubTexture name="DaveAngry Sing Note RIGHT0000" x="1592" y="1100" width="796" height="1100"/>
+	<SubTexture name="DaveAngry Sing Note RIGHT0001" x="2388" y="1100" width="796" height="1100"/>
+	<SubTexture name="DaveAngry Sing Note UP0000" x="3184" y="1100" width="796" height="1100"/>
+	<SubTexture name="DaveAngry Sing Note UP0001" x="0" y="2200" width="796" height="1100"/>
+</TextureAtlas>

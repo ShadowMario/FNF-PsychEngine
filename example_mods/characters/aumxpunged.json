@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				-2,
+				-1
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "DaveAngry Sing Note UP",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-2,
+				-1
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "DaveAngry Sing Note RIGHT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-2,
+				-1
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "DaveAngry Sing Note LEFT",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-2,
+				-1
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "DaveAngry Sing Note DOWN",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				-2,
+				-1
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "DaveAngry idle dance",
+			"indices": []
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/aumsum_angryboy",
+	"position": [
+		-130,
+		-100
+	],
+	"healthicon": "aumsum-3d",
+	"flip_x": false,
+	"healthbar_colors": [
+		229,
+		229,
+		229
+	],
+	"camera_position": [
+		150,
+		-80
+	],
+	"sing_duration": 4,
+	"scale": 1.05
+}

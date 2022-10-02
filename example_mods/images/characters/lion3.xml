@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Untitled-1.png">
+	<!-- Created with Adobe Animate version 22.0.2.168 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="lion three idle dance0000" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0001" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0002" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0003" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0004" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0005" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0006" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0007" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0008" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0009" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0010" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0011" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0012" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0013" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three idle dance0014" x="0" y="0" width="747" height="911"/>
+	<SubTexture name="lion three sing down0000" x="747" y="0" width="854" height="525" frameX="0" frameY="-324" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0001" x="747" y="0" width="854" height="525" frameX="0" frameY="-324" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0002" x="1601" y="0" width="790" height="589" frameX="-32" frameY="-260" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0003" x="1601" y="0" width="790" height="589" frameX="-32" frameY="-260" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0004" x="2391" y="0" width="750" height="701" frameX="-52" frameY="-148" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0005" x="2391" y="0" width="750" height="701" frameX="-52" frameY="-148" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0006" x="3141" y="0" width="726" height="789" frameX="-64" frameY="-60" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0007" x="3141" y="0" width="726" height="789" frameX="-64" frameY="-60" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0008" x="3867" y="0" width="702" height="849" frameX="-76" frameY="0" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0009" x="3867" y="0" width="702" height="849" frameX="-76" frameY="0" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0010" x="3867" y="0" width="702" height="849" frameX="-76" frameY="0" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0011" x="3867" y="0" width="702" height="849" frameX="-76" frameY="0" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0012" x="3867" y="0" width="702" height="849" frameX="-76" frameY="0" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0013" x="3867" y="0" width="702" height="849" frameX="-76" frameY="0" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing down0014" x="3867" y="0" width="702" height="849" frameX="-76" frameY="0" frameWidth="854" frameHeight="849"/>
+	<SubTexture name="lion three sing left0000" x="4569" y="0" width="965" height="941"/>
+	<SubTexture name="lion three sing left0001" x="4569" y="0" width="965" height="941"/>
+	<SubTexture name="lion three sing left0002" x="5534" y="0" width="858" height="941" frameX="-107" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0003" x="5534" y="0" width="858" height="941" frameX="-107" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0004" x="6392" y="0" width="784" height="941" frameX="-181" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0005" x="6392" y="0" width="784" height="941" frameX="-181" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0006" x="7176" y="0" width="729" height="941" frameX="-236" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0007" x="7176" y="0" width="729" height="941" frameX="-236" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0008" x="0" y="941" width="689" height="941" frameX="-276" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0009" x="0" y="941" width="689" height="941" frameX="-276" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0010" x="0" y="941" width="689" height="941" frameX="-276" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0011" x="0" y="941" width="689" height="941" frameX="-276" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0012" x="0" y="941" width="689" height="941" frameX="-276" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0013" x="0" y="941" width="689" height="941" frameX="-276" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing left0014" x="0" y="941" width="689" height="941" frameX="-276" frameY="0" frameWidth="965" frameHeight="941"/>
+	<SubTexture name="lion three sing right0000" x="689" y="941" width="1078" height="941"/>
+	<SubTexture name="lion three sing right0001" x="689" y="941" width="1078" height="941"/>
+	<SubTexture name="lion three sing right0002" x="1767" y="941" width="972" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0003" x="1767" y="941" width="972" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0004" x="2739" y="941" width="898" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0005" x="2739" y="941" width="898" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0006" x="3637" y="941" width="834" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0007" x="3637" y="941" width="834" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0008" x="4471" y="941" width="774" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0009" x="4471" y="941" width="774" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0010" x="4471" y="941" width="774" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0011" x="4471" y="941" width="774" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0012" x="4471" y="941" width="774" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0013" x="4471" y="941" width="774" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing right0014" x="4471" y="941" width="774" height="941" frameX="0" frameY="0" frameWidth="1078" frameHeight="941"/>
+	<SubTexture name="lion three sing up0000" x="5245" y="941" width="582" height="1154" frameX="-60" frameY="0" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0001" x="5245" y="941" width="582" height="1154" frameX="-60" frameY="0" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0002" x="5827" y="941" width="598" height="1122" frameX="-52" frameY="-32" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0003" x="5827" y="941" width="598" height="1122" frameX="-52" frameY="-32" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0004" x="6425" y="941" width="638" height="1069" frameX="-32" frameY="-84" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0005" x="6425" y="941" width="638" height="1069" frameX="-32" frameY="-84" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0006" x="7063" y="941" width="654" height="1053" frameX="-24" frameY="-100" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0007" x="7063" y="941" width="654" height="1053" frameX="-24" frameY="-100" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0008" x="0" y="2095" width="702" height="1033" frameX="0" frameY="-120" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0009" x="0" y="2095" width="702" height="1033" frameX="0" frameY="-120" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0010" x="0" y="2095" width="702" height="1033" frameX="0" frameY="-120" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0011" x="0" y="2095" width="702" height="1033" frameX="0" frameY="-120" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0012" x="0" y="2095" width="702" height="1033" frameX="0" frameY="-120" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0013" x="0" y="2095" width="702" height="1033" frameX="0" frameY="-120" frameWidth="702" frameHeight="1154"/>
+	<SubTexture name="lion three sing up0014" x="0" y="2095" width="702" height="1033" frameX="0" frameY="-120" frameWidth="702" frameHeight="1154"/>
+</TextureAtlas>

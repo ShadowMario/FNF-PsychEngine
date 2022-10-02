@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				22
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "lion one sing right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				95
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "lion one sing up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				20
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "lion one idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				87,
+				21
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "lion one sing left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				87,
+				21
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "lion one sing down",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/lion1",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "lion-one",
+	"flip_x": false,
+	"healthbar_colors": [
+		195,
+		98,
+		5
+	],
+	"camera_position": [
+		100,
+		50
+	],
+	"sing_duration": 6.1,
+	"scale": 0.7
+}

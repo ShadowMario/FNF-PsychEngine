@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Untitled-1.png">
+	<!-- Created with Adobe Animate version 22.0.2.168 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="lion two down0000" x="0" y="0" width="790" height="729" frameX="0" frameY="-223" frameWidth="790" frameHeight="953"/>
+	<SubTexture name="lion two down0001" x="0" y="0" width="790" height="729" frameX="0" frameY="-223" frameWidth="790" frameHeight="953"/>
+	<SubTexture name="lion two down0002" x="790" y="0" width="718" height="831" frameX="-37" frameY="-122" frameWidth="790" frameHeight="953"/>
+	<SubTexture name="lion two down0003" x="790" y="0" width="718" height="831" frameX="-37" frameY="-122" frameWidth="790" frameHeight="953"/>
+	<SubTexture name="lion two down0004" x="1508" y="0" width="694" height="925" frameX="-50" frameY="-28" frameWidth="790" frameHeight="953"/>
+	<SubTexture name="lion two down0005" x="1508" y="0" width="694" height="925" frameX="-50" frameY="-28" frameWidth="790" frameHeight="953"/>
+	<SubTexture name="lion two down0006" x="2202" y="0" width="662" height="950" frameX="-65" frameY="0" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two down0007" x="2202" y="0" width="662" height="950" frameX="-65" frameY="0" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two down0008" x="2202" y="0" width="662" height="950" frameX="-65" frameY="0" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two down0009" x="2202" y="0" width="662" height="950" frameX="-65" frameY="0" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two down0010" x="2202" y="0" width="662" height="950" frameX="-65" frameY="0" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two down0011" x="2202" y="0" width="662" height="950" frameX="-65" frameY="0" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two down0012" x="2202" y="0" width="662" height="950" frameX="-65" frameY="0" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two down0013" x="2202" y="0" width="662" height="950" frameX="-65" frameY="0" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two down0014" x="2202" y="0" width="662" height="950" frameX="-65" frameY="0" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two idle0000" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0001" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0002" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0003" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0004" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0005" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0006" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0007" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0008" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0009" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0010" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0011" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0012" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0013" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two idle0014" x="2202" y="0" width="662" height="950"/>
+	<SubTexture name="lion two left0000" x="2864" y="0" width="852" height="950" frameX="0" frameY="0" frameWidth="854" frameHeight="951"/>
+	<SubTexture name="lion two left0001" x="2864" y="0" width="852" height="950" frameX="0" frameY="0" frameWidth="854" frameHeight="951"/>
+	<SubTexture name="lion two left0002" x="0" y="950" width="758" height="950" frameX="-95" frameY="-1" frameWidth="854" frameHeight="951"/>
+	<SubTexture name="lion two left0003" x="0" y="950" width="758" height="950" frameX="-95" frameY="-1" frameWidth="854" frameHeight="951"/>
+	<SubTexture name="lion two left0004" x="758" y="950" width="696" height="950" frameX="-158" frameY="-1" frameWidth="854" frameHeight="951"/>
+	<SubTexture name="lion two left0005" x="758" y="950" width="696" height="950" frameX="-158" frameY="-1" frameWidth="854" frameHeight="951"/>
+	<SubTexture name="lion two left0006" x="2202" y="0" width="662" height="950" frameX="-190" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two left0007" x="2202" y="0" width="662" height="950" frameX="-190" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two left0008" x="2202" y="0" width="662" height="950" frameX="-190" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two left0009" x="2202" y="0" width="662" height="950" frameX="-190" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two left0010" x="2202" y="0" width="662" height="950" frameX="-190" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two left0011" x="2202" y="0" width="662" height="950" frameX="-190" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two left0012" x="2202" y="0" width="662" height="950" frameX="-190" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two left0013" x="2202" y="0" width="662" height="950" frameX="-190" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two left0014" x="2202" y="0" width="662" height="950" frameX="-190" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two right0000" x="1454" y="950" width="899" height="950" frameX="0" frameY="0" frameWidth="899" frameHeight="951"/>
+	<SubTexture name="lion two right0001" x="1454" y="950" width="899" height="950" frameX="0" frameY="0" frameWidth="899" frameHeight="951"/>
+	<SubTexture name="lion two right0002" x="2353" y="950" width="807" height="950" frameX="-1" frameY="-1" frameWidth="899" frameHeight="951"/>
+	<SubTexture name="lion two right0003" x="2353" y="950" width="807" height="950" frameX="-1" frameY="-1" frameWidth="899" frameHeight="951"/>
+	<SubTexture name="lion two right0004" x="3160" y="950" width="695" height="950" frameX="-2" frameY="-1" frameWidth="899" frameHeight="951"/>
+	<SubTexture name="lion two right0005" x="3160" y="950" width="695" height="950" frameX="-2" frameY="-1" frameWidth="899" frameHeight="951"/>
+	<SubTexture name="lion two right0006" x="2202" y="0" width="662" height="950" frameX="-1" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two right0007" x="2202" y="0" width="662" height="950" frameX="-1" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two right0008" x="2202" y="0" width="662" height="950" frameX="-1" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two right0009" x="2202" y="0" width="662" height="950" frameX="-1" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two right0010" x="2202" y="0" width="662" height="950" frameX="-1" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two right0011" x="2202" y="0" width="662" height="950" frameX="-1" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two right0012" x="2202" y="0" width="662" height="950" frameX="-1" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two right0013" x="2202" y="0" width="662" height="950" frameX="-1" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two right0014" x="2202" y="0" width="662" height="950" frameX="-1" frameY="-1" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two up0000" x="0" y="1900" width="554" height="1030" frameX="-53" frameY="0" frameWidth="662" frameHeight="1031"/>
+	<SubTexture name="lion two up0001" x="0" y="1900" width="554" height="1030" frameX="-53" frameY="0" frameWidth="662" frameHeight="1031"/>
+	<SubTexture name="lion two up0002" x="554" y="1900" width="586" height="1004" frameX="-38" frameY="-27" frameWidth="662" frameHeight="1031"/>
+	<SubTexture name="lion two up0003" x="554" y="1900" width="586" height="1004" frameX="-38" frameY="-27" frameWidth="662" frameHeight="1031"/>
+	<SubTexture name="lion two up0004" x="1140" y="1900" width="619" height="968" frameX="-23" frameY="-63" frameWidth="662" frameHeight="1031"/>
+	<SubTexture name="lion two up0005" x="1140" y="1900" width="619" height="968" frameX="-23" frameY="-63" frameWidth="662" frameHeight="1031"/>
+	<SubTexture name="lion two up0006" x="2202" y="0" width="662" height="950" frameX="0" frameY="-79" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two up0007" x="2202" y="0" width="662" height="950" frameX="0" frameY="-79" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two up0008" x="2202" y="0" width="662" height="950" frameX="0" frameY="-79" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two up0009" x="2202" y="0" width="662" height="950" frameX="0" frameY="-79" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two up0010" x="2202" y="0" width="662" height="950" frameX="0" frameY="-79" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two up0011" x="2202" y="0" width="662" height="950" frameX="0" frameY="-79" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two up0012" x="2202" y="0" width="662" height="950" frameX="0" frameY="-79" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two up0013" x="2202" y="0" width="662" height="950" frameX="0" frameY="-79" frameWidth="662" frameHeight="950"/>
+	<SubTexture name="lion two up0014" x="2202" y="0" width="662" height="950" frameX="0" frameY="-79" frameWidth="662" frameHeight="950"/>
+</TextureAtlas>
