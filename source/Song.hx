@@ -23,7 +23,6 @@ typedef SwagSong =
 
 	var player1:String;
 	var player2:String;
-	var player3:String; //deprecated, now replaced by gfVersion
 	var gfVersion:String;
 	var stage:String;
 
@@ -43,13 +42,11 @@ class Song
 	public var splashSkin:String;
 	public var speed:Float = 1;
 	public var stage:String;
-
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
-	public var player3:String = 'gf'; //deprecated
 	public var gfVersion:String = 'gf';
 
-	private static function onLoadJson(songJson:SwagSong) // Convert old charts to newest format
+	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
 		if(songJson.gfVersion == null)
 		{
@@ -132,7 +129,7 @@ class Song
 				daSong = songData.song;
 				daBpm = songData.bpm; */
 
-		var songJson:SwagSong = parseJSONshit(rawJson);
+		var songJson:Dynamic = parseJSONshit(rawJson);
 		if(jsonInput != 'events') StageData.loadDirectory(songJson);
 		onLoadJson(songJson);
 		return songJson;

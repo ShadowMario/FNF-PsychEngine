@@ -6,3 +6,4 @@ mall
 mallEvil
 school
 schoolEvil
+tank
