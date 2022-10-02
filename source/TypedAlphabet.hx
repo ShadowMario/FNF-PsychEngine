@@ -31,11 +31,6 @@ class TypedAlphabet extends Alphabet
 		super.set_text(newText);
 
 		resetDialogue();
-		for (letter in letters)
-		{
-			letter.visible = false;
-			//trace('test');
-		}
 		return newText;
 	}
 
@@ -61,6 +56,8 @@ class TypedAlphabet extends Alphabet
 				{
 					finishedText = true;
 					if(onFinish != null) onFinish();
+					_timeToUpdate = 0;
+					break;
 				}
 				_timeToUpdate = 0;
 			}
@@ -86,6 +83,10 @@ class TypedAlphabet extends Alphabet
 		_curLetter = -1;
 		finishedText = false;
 		_timeToUpdate = 0;
+		for (letter in letters)
+		{
+			letter.visible = false;
+		}
 	}
 
 	public function finishText()
