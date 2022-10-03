@@ -12,7 +12,7 @@ function onCreate()
 	addLuaSprite('JukeBoxTag', true)
 	
 	--the text for the "Now Playing" bit
-	makeLuaText('JukeBoxText', songName, 300, -305-IntroTagWidth, 38)
+	makeLuaText('JukeBoxText', songName .. "BPM:" .. getProperty('SONG.bpm'), 300, -305-IntroTagWidth, 38)
 	setTextAlignment('JukeBoxText', 'left')
 	setObjectCamera('JukeBoxText', 'other')
 	setTextSize('JukeBoxText', IntroTextSize)
