@@ -394,19 +394,6 @@ class Paths
 		return currentTrackedSounds.get(gottenPath);
 	}
 
-	static public function getSubdirectories(rootFolder: String):Array<String> {
-		var list:Array<String> = [];
-		if(FileSystem.exists(rootFolder)) {
-			for (folder in FileSystem.readDirectory(rootFolder)) {
-				var path = haxe.io.Path.join([rootFolder, folder]);
-				if (sys.FileSystem.isDirectory(path)) {
-					list.push(folder);
-				}
-			}
-		}
-		return list;
-	}
-
 	#if MODS_ALLOWED
 	inline static public function mods(key:String = '') {
 		return 'mods/' + key;
@@ -489,7 +476,7 @@ class Paths
 				if (dat[1] == "1")
 				{
 					var folder = dat[0];
-					var path = Paths.mods(folder + '/pack.json'); //TODO:marius: rewrite using ModInfo
+					var path = Paths.mods(folder + '/pack.json');
 					if(FileSystem.exists(path)) {
 						try{
 							var rawJson:String = File.getContent(path);
@@ -508,7 +495,6 @@ class Paths
 		return globalMods;
 	}
 
-	//TODO:marius: should eventually be removed
 	static public function getModDirectories():Array<String> {
 		var list:Array<String> = [];
 		var modsFolder:String = mods();

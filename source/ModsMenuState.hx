@@ -25,10 +25,7 @@ import openfl.display.BitmapData;
 import flash.geom.Rectangle;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
-import Mods.ModInfo;
-import Mods.ModsListEntry;
-import Mods.ModsList;
-import haxe.io.Path;
+import sys.io.File;
 /*import haxe.zip.Reader;
 import haxe.zip.Entry;
 import haxe.zip.Uncompress;
@@ -38,7 +35,7 @@ using StringTools;
 
 class ModsMenuState extends MusicBeatState
 {
-	var mods:Array<ModMenuEntry> = [];
+	var mods:Array<ModMetadata> = [];
 	static var changedAThing = false;
 	var bg:FlxSprite;
 	var intendedColor:Int;
@@ -61,6 +58,8 @@ class ModsMenuState extends MusicBeatState
 
 	var installButton:FlxButton;
 	var removeButton:FlxButton;
+
+	var modsList:Array<Dynamic> = [];
 
 	var visibleWhenNoMods:Array<FlxBasic> = [];
 	var visibleWhenHasMods:Array<FlxBasic> = [];
@@ -90,7 +89,35 @@ class ModsMenuState extends MusicBeatState
 		noModsTxt.screenCenter();
 		visibleWhenNoMods.push(noModsTxt);
 
-		var modsList: ModsList = ModsList.loadDefaultModsList();
+		var path:String = 'modsList.txt';
+		if(FileSystem.exists(path))
+		{
+			var leMods:Array<String> = CoolUtil.coolTextFile(path);
+			for (i in 0...leMods.length)
+			{
+				if(leMods.length > 1 && leMods[0].length > 0) {
+					var modSplit:Array<String> = leMods[i].split('|');
+					if(!Paths.ignoreModFolders.contains(modSplit[0].toLowerCase()))
+					{
+						addToModsList([modSplit[0], (modSplit[1] == '1')]);
+						//trace(modSplit[1]);
+					}
+				}
+			}
+		}
+
+		// FIND MOD FOLDERS
+		var boolshit = true;
+		if (FileSystem.exists("modsList.txt")){
+			for (folder in Paths.getModDirectories())
+			{
+				if(!Paths.ignoreModFolders.contains(folder))
+				{
+					addToModsList([folder, true]); //i like it false by default. -bb //Well, i like it True! -Shadow
+				}
+			}
+		}
+		saveTxt();
 
 		selector = new AttachedSprite();
 		selector.xAdd = -205;
@@ -103,15 +130,13 @@ class ModsMenuState extends MusicBeatState
 		//attached buttons
 		var startX:Int = 1120;
 
-		//TODO:marius: add the ability to edit GlobalEnabled (and only display it if the mod have info.global)
 		buttonToggle = new FlxButton(startX, 0, "ON", function()
 		{
-			if(mods[curSelected].info.restart)
+			if(mods[curSelected].restart)
 			{
 				needaReset = true;
 			}
-			mods[curSelected].entry.disabled = !mods[curSelected].entry.disabled;
-			mods[curSelected].entry.globalEnabled = !mods[curSelected].entry.disabled;
+			modsList[curSelected][1] = !modsList[curSelected][1];
 			updateButtonToggle();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 		});
@@ -153,7 +178,7 @@ class ModsMenuState extends MusicBeatState
 
 		startX -= 100;
 		buttonTop = new FlxButton(startX, 0, "TOP", function() {
-			var doRestart:Bool = (mods[0].info.restart || mods[curSelected].info.restart);
+			var doRestart:Bool = (mods[0].restart || mods[curSelected].restart);
 			for (i in 0...curSelected) //so it shifts to the top instead of replacing the top one
 			{
 				moveMod(-1, true);
@@ -176,14 +201,16 @@ class ModsMenuState extends MusicBeatState
 
 		startX -= 190;
 		buttonDisableAll = new FlxButton(startX, 0, "DISABLE ALL", function() {
+			for (i in modsList)
+			{
+				i[1] = false;
+			}
 			for (mod in mods)
 			{
-				mod.entry.disabled = true;
-				mod.entry.globalEnabled = false;
-
-				if (mod.info.restart)
+				if (mod.restart)
 				{
 					needaReset = true;
+					break;
 				}
 			}
 			updateButtonToggle();
@@ -200,12 +227,16 @@ class ModsMenuState extends MusicBeatState
 
 		startX -= 190;
 		buttonEnableAll = new FlxButton(startX, 0, "ENABLE ALL", function() {
-			for (mod in mods) {
-				mod.entry.disabled = false;
-				mod.entry.globalEnabled = true;
-
-				if (mod.info.restart) {
+			for (i in modsList)
+			{
+				i[1] = true;
+			}
+			for (mod in mods)
+			{
+				if (mod.restart)
+				{
 					needaReset = true;
+					break;
 				}
 			}
 			updateButtonToggle();
@@ -285,14 +316,20 @@ class ModsMenuState extends MusicBeatState
 		visibleWhenHasMods.push(descriptionTxt);
 
 		var i:Int = 0;
-		while (i < modsList.values.length)
+		var len:Int = modsList.length;
+		while (i < modsList.length)
 		{
-			var entry:ModsListEntry = modsList.values[i];
+			var values:Array<Dynamic> = modsList[i];
+			if(!FileSystem.exists(Paths.mods(values[0])))
+			{
+				modsList.remove(modsList[i]);
+				continue;
+			}
 
-			var newMod:ModMenuEntry = new ModMenuEntry(Path.join([modsList.folder, entry.dirName]), entry);
+			var newMod:ModMetadata = new ModMetadata(values[0]);
 			mods.push(newMod);
 
-			newMod.alphabet = new Alphabet(0, 0, newMod.info.name, true);
+			newMod.alphabet = new Alphabet(0, 0, mods[i].name, true);
 			var scale:Float = Math.min(840 / newMod.alphabet.width, 1);
 			newMod.alphabet.scaleX = scale;
 			newMod.alphabet.scaleY = scale;
@@ -301,7 +338,7 @@ class ModsMenuState extends MusicBeatState
 			add(newMod.alphabet);
 			//Don't ever cache the icons, it's a waste of loaded memory
 			var loadedIcon:BitmapData = null;
-			var iconToUse:String = Path.join([modsList.folder, entry.dirName, 'pack.png']);
+			var iconToUse:String = Paths.mods(values[0] + '/pack.png');
 			if(FileSystem.exists(iconToUse))
 			{
 				loadedIcon = BitmapData.fromFile(iconToUse);
@@ -331,7 +368,7 @@ class ModsMenuState extends MusicBeatState
 		if(mods.length < 1)
 			bg.color = defaultColor;
 		else
-			bg.color = mods[curSelected].info.color;
+			bg.color = mods[curSelected].color;
 
 		intendedColor = bg.color;
 		changeSelection();
@@ -350,14 +387,30 @@ class ModsMenuState extends MusicBeatState
 		}
 		return arr;
 	}*/
+	function addToModsList(values:Array<Dynamic>)
+	{
+		for (i in 0...modsList.length)
+		{
+			if(modsList[i][0] == values[0])
+			{
+				//trace(modsList[i][0], values[0]);
+				return;
+			}
+		}
+		modsList.push(values);
+	}
 
-	function updateButtonToggle() {
-		if (mods[curSelected].entry.disabled) {
-			buttonToggle.label.text = 'OFF';
-			buttonToggle.color = FlxColor.RED;
-		} else {
+	function updateButtonToggle()
+	{
+		if (modsList[curSelected][1])
+		{
 			buttonToggle.label.text = 'ON';
 			buttonToggle.color = FlxColor.GREEN;
+		}
+		else
+		{
+			buttonToggle.label.text = 'OFF';
+			buttonToggle.color = FlxColor.RED;
 		}
 	}
 
@@ -365,30 +418,47 @@ class ModsMenuState extends MusicBeatState
 	{
 		if(mods.length > 1)
 		{
+			var doRestart:Bool = (mods[0].restart);
+
 			var newPos:Int = curSelected + change;
-			if(newPos < 0) {
-				newPos = mods.length - 1;
-			} else if (newPos >= mods.length) {
-				newPos = 0;
+			if(newPos < 0)
+			{
+				modsList.push(modsList.shift());
+				mods.push(mods.shift());
 			}
-			var modBackup:ModMenuEntry = mods[curSelected];
-			mods[curSelected] = mods[newPos];
-			mods[newPos] = modBackup;
+			else if(newPos >= mods.length)
+			{
+				modsList.insert(0, modsList.pop());
+				mods.insert(0, mods.pop());
+			}
+			else
+			{
+				var lastArray:Array<Dynamic> = modsList[curSelected];
+				modsList[curSelected] = modsList[newPos];
+				modsList[newPos] = lastArray;
+
+				var lastMod:ModMetadata = mods[curSelected];
+				mods[curSelected] = mods[newPos];
+				mods[newPos] = lastMod;
+			}
 			changeSelection(change);
 
-			var doRestart = mods[curSelected].info.restart || mods[newPos].info.restart;
+			if(!doRestart) doRestart = mods[curSelected].restart;
 			if(!skipResetCheck && doRestart) needaReset = true;
 		}
 	}
 
-	function saveModsList()
+	function saveTxt()
 	{
-		var modsList: ModsList = ModsList.loadDefaultModsList(true);
-		for (mod in mods) {
-			modsList.values.push(mod.entry);
+		var fileStr:String = '';
+		for (values in modsList)
+		{
+			if(fileStr.length > 0) fileStr += '\n';
+			fileStr += values[0] + '|' + (values[1] ? '1' : '0');
 		}
-		modsList.save();
-		ModsList.activeMods = modsList.getLoadedMods();
+
+		var path:String = 'modsList.txt';
+		File.saveContent(path, fileStr);
 		Paths.pushGlobalMods();
 	}
 
@@ -409,7 +479,7 @@ class ModsMenuState extends MusicBeatState
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			FlxG.mouse.visible = false;
-			saveModsList();
+			saveTxt();
 			if(needaReset)
 			{
 				//MusicBeatState.switchState(new TitleState());
@@ -470,7 +540,7 @@ class ModsMenuState extends MusicBeatState
 		else if(curSelected >= mods.length)
 			curSelected = 0;
 
-		var newColor:Int = mods[curSelected].info.color;
+		var newColor:Int = mods[curSelected].color;
 		if(newColor != intendedColor) {
 			if(colorTween != null) {
 				colorTween.cancel();
@@ -491,8 +561,8 @@ class ModsMenuState extends MusicBeatState
 			{
 				mod.alphabet.alpha = 1;
 				selector.sprTracker = mod.alphabet;
-				descriptionTxt.text = mod.info.description;
-				if (mod.info.restart){//finna make it to where if nothing changed then it won't reset
+				descriptionTxt.text = mod.description;
+				if (mod.restart){//finna make it to where if nothing changed then it won't reset
 					descriptionTxt.text += " (This Mod will restart the game!)";
 				}
 
@@ -638,15 +708,72 @@ class ModsMenuState extends MusicBeatState
 	}*/
 }
 
-class ModMenuEntry
+class ModMetadata
 {
+	public var folder:String;
+	public var name:String;
+	public var description:String;
+	public var color:FlxColor;
+	public var restart:Bool;//trust me. this is very important
 	public var alphabet:Alphabet;
 	public var icon:AttachedSprite;
-	public var info:ModInfo;
-	public var entry:ModsListEntry;
 
-	public function new(folder:String, entry:ModsListEntry) {
-		this.info = new ModInfo(folder, false);
-		this.entry = entry;
+	public function new(folder:String)
+	{
+		this.folder = folder;
+		this.name = folder;
+		this.description = "No description provided.";
+		this.color = ModsMenuState.defaultColor;
+		this.restart = false;
+
+		//Try loading json
+		var path = Paths.mods(folder + '/pack.json');
+		if(FileSystem.exists(path)) {
+			var rawJson:String = File.getContent(path);
+			if(rawJson != null && rawJson.length > 0) {
+				var stuff:Dynamic = Json.parse(rawJson);
+					//using reflects cuz for some odd reason my haxe hates the stuff.var shit
+					var colors:Array<Int> = Reflect.getProperty(stuff, "color");
+					var description:String = Reflect.getProperty(stuff, "description");
+					var name:String = Reflect.getProperty(stuff, "name");
+					var restart:Bool = Reflect.getProperty(stuff, "restart");
+
+				if(name != null && name.length > 0)
+				{
+					this.name = name;
+				}
+				if(description != null && description.length > 0)
+				{
+					this.description = description;
+				}
+				if(name == 'Name')
+				{
+					this.name = folder;
+				}
+				if(description == 'Description')
+				{
+					this.description = "No description provided.";
+				}
+				if(colors != null && colors.length > 2)
+				{
+					this.color = FlxColor.fromRGB(colors[0], colors[1], colors[2]);
+				}
+
+				this.restart = restart;
+				/*
+				if(stuff.name != null && stuff.name.length > 0)
+				{
+					this.name = stuff.name;
+				}
+				if(stuff.description != null && stuff.description.length > 0)
+				{
+					this.description = stuff.description;
+				}
+				if(stuff.color != null && stuff.color.length > 2)
+				{
+					this.color = FlxColor.fromRGB(stuff.color[0], stuff.color[1], stuff.color[2]);
+				}*/
+			}
+		}
 	}
 }
