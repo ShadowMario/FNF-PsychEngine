@@ -3282,7 +3282,8 @@ class FunkinLua {
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
-
+}
+		
 class ModchartSprite extends FlxSprite
 {
 	public var wasAdded:Bool = false;
