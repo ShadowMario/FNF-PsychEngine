@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="aumbruh.png">
+<SubTexture name="aumbruh down0000" x="1695" y="947" width="390" height="324" frameX="-91" frameY="-258" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh down0001" x="1695" y="1271" width="427" height="312" frameX="-72" frameY="-270" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh down0002" x="1695" y="486" width="390" height="461" frameX="-91" frameY="-121" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh down0003" x="410" y="582" width="257" height="547" frameX="-157" frameY="-35" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh down0004" x="571" y="1131" width="284" height="523" frameX="-144" frameY="-59" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh idle0000" x="450" y="2063" width="554" height="201" frameX="-9" frameY="-381" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh idle0001" x="0" y="2063" width="450" height="258" frameX="-61" frameY="-324" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh idle0002" x="2221" y="0" width="303" height="281" frameX="-134" frameY="-301" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh idle0003" x="0" y="0" width="236" height="582" frameX="-168" frameY="0" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh idle0004" x="855" y="1131" width="292" height="519" frameX="-140" frameY="-63" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh idle0005" x="0" y="1131" width="278" height="527" frameX="-147" frameY="-55" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh left0000" x="0" y="582" width="410" height="549" frameX="-81" frameY="-33" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh left0001" x="236" y="0" width="445" height="567" frameX="-63" frameY="-15" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh left0002" x="1065" y="0" width="330" height="552" frameX="-121" frameY="-30" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh left0003" x="1147" y="1131" width="344" height="511" frameX="-114" frameY="-71" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh left0004" x="278" y="1131" width="293" height="525" frameX="-139" frameY="-57" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh right0000" x="925" y="582" width="358" height="539" frameX="-107" frameY="-43" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh right0001" x="681" y="0" width="384" height="554" frameX="-94" frameY="-28" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh right0002" x="1635" y="1658" width="482" height="295" frameX="-45" frameY="-287" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh right0003" x="1395" y="0" width="300" height="533" frameX="-136" frameY="-49" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh right0004" x="0" y="1131" width="278" height="527" frameX="-147" frameY="-55" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh up0000" x="1063" y="1658" width="572" height="301" frameX="0" frameY="-55" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh up0001" x="536" y="1658" width="527" height="395" frameX="-22" frameY="-55" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh up0002" x="0" y="1658" width="536" height="405" frameX="-18" frameY="-55" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh up0003" x="1695" y="0" width="526" height="486" frameX="-23" frameY="-55" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh up0004" x="667" y="582" width="258" height="541" frameX="-157" frameY="-63" frameWidth="552" frameHeight="584" />
+<SubTexture name="aumbruh up0005" x="1395" y="533" width="264" height="531" frameX="-154" frameY="-55" frameWidth="552" frameHeight="584" />
+</TextureAtlas>
