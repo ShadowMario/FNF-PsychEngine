@@ -44,6 +44,7 @@ class Paths
 		'images',
 		'stages',
 		'weeks',
+		'haxescript',
 		'fonts',
 		'scripts',
 		'achievements'

@@ -47,6 +47,7 @@
 	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
+	<define name="HAXE_EXTENSION" unless="web || neko" />
 	<!--<define name="BIG_MEM" />-->
 	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
@@ -132,6 +133,8 @@
 	<haxelib name="hscript" />
 	<define name="hscriptPos" />
 	<haxeflag name="-dce no" />
+
+	<haxelib name="SScript" if="HAXE_EXTENSION"/>
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />

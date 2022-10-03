@@ -1,0 +1,1 @@
+Your .hxs files for your haxescript scripts go here!
