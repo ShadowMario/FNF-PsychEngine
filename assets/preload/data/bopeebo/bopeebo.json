@@ -1,7 +1,5 @@
 {
 	"song": {
-		"player1": "bf",
-		"player2": "dad",
 		"notes": [
 			{
 				"lengthInSteps": 16,
@@ -14,12 +12,12 @@
 					[
 						600,
 						3,
-						600
+						450
 					],
 					[
 						1200,
 						3,
-						525
+						450
 					]
 				],
 				"mustHitSection": false
@@ -35,12 +33,12 @@
 					[
 						3000,
 						3,
-						600
+						450
 					],
 					[
 						3600,
 						3,
-						525
+						450
 					]
 				],
 				"mustHitSection": true
@@ -61,7 +59,7 @@
 					[
 						6000,
 						3,
-						525
+						450
 					]
 				],
 				"mustHitSection": false
@@ -82,7 +80,7 @@
 					[
 						8400,
 						3,
-						525
+						450
 					]
 				],
 				"mustHitSection": true
@@ -108,7 +106,7 @@
 					[
 						10800,
 						1,
-						525
+						450
 					]
 				],
 				"mustHitSection": false
@@ -134,7 +132,7 @@
 					[
 						13200,
 						1,
-						525
+						450
 					]
 				],
 				"mustHitSection": true
@@ -160,7 +158,7 @@
 					[
 						15600,
 						2,
-						525
+						450
 					]
 				],
 				"mustHitSection": false
@@ -186,7 +184,7 @@
 					[
 						18000,
 						2,
-						525
+						450
 					]
 				],
 				"mustHitSection": true
@@ -207,7 +205,7 @@
 					[
 						19800,
 						1,
-						900
+						750
 					]
 				],
 				"mustHitSection": false
@@ -228,7 +226,7 @@
 					[
 						22200,
 						1,
-						900
+						750
 					]
 				],
 				"mustHitSection": true
@@ -249,7 +247,7 @@
 					[
 						24600,
 						0,
-						900
+						750
 					]
 				],
 				"mustHitSection": false
@@ -270,7 +268,7 @@
 					[
 						27000,
 						0,
-						900
+						750
 					]
 				],
 				"mustHitSection": true
@@ -291,7 +289,7 @@
 					[
 						29400,
 						0,
-						1125
+						1050
 					]
 				],
 				"mustHitSection": false
@@ -312,7 +310,7 @@
 					[
 						31800,
 						0,
-						1125
+						1050
 					],
 					[
 						33300,
@@ -343,7 +341,7 @@
 					[
 						34800,
 						1,
-						525
+						600
 					],
 					[
 						35700,
@@ -374,7 +372,7 @@
 					[
 						37200,
 						1,
-						525
+						600
 					]
 				],
 				"mustHitSection": true
@@ -395,7 +393,7 @@
 					[
 						39600,
 						0,
-						525
+						450
 					]
 				],
 				"mustHitSection": false
@@ -416,7 +414,7 @@
 					[
 						42000,
 						0,
-						525
+						450
 					]
 				],
 				"mustHitSection": true
@@ -509,7 +507,7 @@
 					[
 						49200,
 						0,
-						375
+						450
 					]
 				],
 				"mustHitSection": false
@@ -530,7 +528,7 @@
 					[
 						51600,
 						0,
-						375
+						450
 					]
 				],
 				"mustHitSection": true
@@ -541,7 +539,7 @@
 					[
 						52800,
 						3,
-						1725
+						1800
 					]
 				],
 				"mustHitSection": false
@@ -552,7 +550,7 @@
 					[
 						55200,
 						3,
-						1725
+						1800
 					]
 				],
 				"mustHitSection": true
@@ -573,7 +571,7 @@
 					[
 						58200,
 						0,
-						1125
+						1050
 					]
 				],
 				"mustHitSection": false
@@ -594,7 +592,7 @@
 					[
 						60600,
 						0,
-						1125
+						1050
 					],
 					[
 						62100,
@@ -625,7 +623,7 @@
 					[
 						63600,
 						1,
-						525
+						600
 					],
 					[
 						64500,
@@ -656,7 +654,7 @@
 					[
 						66000,
 						1,
-						525
+						600
 					]
 				],
 				"mustHitSection": true
@@ -687,7 +685,7 @@
 					[
 						68400,
 						1,
-						525
+						450
 					]
 				],
 				"mustHitSection": false
@@ -718,7 +716,7 @@
 					[
 						70800,
 						1,
-						525
+						450
 					],
 					[
 						71700,
@@ -749,7 +747,7 @@
 					[
 						73200,
 						1,
-						525
+						600
 					],
 					[
 						74100,
@@ -780,71 +778,19 @@
 					[
 						75600,
 						1,
-						525
+						600
 					]
 				],
 				"mustHitSection": true
-			},
-			{
-				"sectionNotes": [],
-				"typeOfSection": 0,
-				"lengthInSteps": 16,
-				"altAnim": false,
-				"mustHitSection": true,
-				"changeBPM": false,
-				"bpm": 100
-			},
-			{
-				"sectionNotes": [],
-				"typeOfSection": 0,
-				"lengthInSteps": 16,
-				"altAnim": false,
-				"mustHitSection": true,
-				"changeBPM": false,
-				"bpm": 100
-			},
-			{
-				"sectionNotes": [],
-				"typeOfSection": 0,
-				"lengthInSteps": 16,
-				"altAnim": false,
-				"mustHitSection": true,
-				"changeBPM": false,
-				"bpm": 100
-			},
-			{
-				"lengthInSteps": 16,
-				"altAnim": false,
-				"typeOfSection": 0,
-				"sectionNotes": [],
-				"bpm": 100,
-				"changeBPM": false,
-				"mustHitSection": true
-			},
-			{
-				"lengthInSteps": 16,
-				"altAnim": false,
-				"typeOfSection": 0,
-				"sectionNotes": [],
-				"bpm": 100,
-				"changeBPM": false,
-				"mustHitSection": true
-			},
-			{
-				"lengthInSteps": 16,
-				"altAnim": false,
-				"typeOfSection": 0,
-				"sectionNotes": [],
-				"bpm": 100,
-				"changeBPM": false,
-				"mustHitSection": true
 			}
 		],
+		"player1": "bf",
+		"player2": "dad",
 		"player3": "gf",
 		"song": "Bopeebo",
 		"needsVoices": true,
 		"validScore": true,
-		"speed": 1,
+		"speed": 1.2,
 		"bpm": 100
 	}
 }
