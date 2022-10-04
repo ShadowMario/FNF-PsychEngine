@@ -1,104 +1,191 @@
-# Friday Night Funkin' - Psych Engine
-Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
+<p align="center">
+  <img src="https://files.catbox.moe/loqsf3.png" width="640" height="312.6" /></a>
+</p>
 
-## Installation:
-You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
+# Friday Night Funkin': Psych Engine
 
-Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
+Engine that is intended to fix many of vanilla FNF's issues and aiming to be an easier alternative to new mod-makers, while keeping a casual play ascept. Originally intended for the [Mind Games Mod](https://gamebanana.com/mods/301107).
 
-To install LuaJIT do this: `haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit` on a Command prompt/PowerShell
+# Table of Contents:
+* [Credits](#credits)
+  * [Special Thanks](#special-thanks)
+* [Features](#features)
+* [Bonus Features](#bonus-features)
+* [Building](#building)
+  * [Installing Necessary Programs / Prerequisites](#programs-prerequisites)
+  * [Compiling (Web and Desktop)](#compiling)
+    * [Compiling Web](#compiling-web)
+    * [Compiling Desktop](#compile-desktop)
+* [A Few Things to Note (Building)](#things-to-note)
 
-...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
+## Credits: <a name="credits"></a>
+* [Shadow Mario](https://twitter.com/Shadow_Mario_) - Programmer;
+* [RiverOaken](https://twitter.com/RiverOaken) - Artist;
+* [Yoshubs](https://twitter.com/yoshubs) - Assistant Programmer, New Input System, New Asset Caching System.
 
+### Special Thanks: <a name="special-thanks"></a>
+* [bbpanzu](https://twitter.com/bbsub3) - Former Programmer;
+* [SqirraRNG](https://twitter.com/gedehari) - Crash Handler, Chart Editor Waveform;
+* [KadeDev](https://twitter.com/kade0912) - Constant Scroll Speeds, Accurate Note Quantization;
+* [iFlicky](https://twitter.com/flicky_i) - Composer of [Psync](https://youtu.be/mX9sgiSUf5g) and [Tea Time](https://youtu.be/a7ksO5xVJU8), Dialogue Sounds;
+* [PolybiusProxy](https://twitter.com/polybiusproxy) - [hxCodec](https://github.com/polybiusproxy/hxCodec) (.mp4 video loader library);
+* [Keoiki](https://twitter.com/Keoiki_) - Note Splash Animations;
+* [Smokey](https://twitter.com/Smokey_5_) - Spriteatlas Support;
+* [Nebula The Zorua](https://github.com/nebulazorua) - Lua API Rework, Better Chart Beat Snapping, Workflow Fix;
 
-If you get an error about StatePointer when using Lua, run `haxelib remove linc_luajit` into Command Prompt/PowerShell, then re-install linc_luajit.
+[and the rest of the Psych Engine's contributors](https://github.com/ShadowMario/FNF-PsychEngine/graphs/contributors).
 
-If you want video support on your mod, simply do `haxelib install hxCodec` on a Command prompt/PowerShell
+# Features: <a name="features"></a>
 
-otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
+## Attractive Dialogue Boxes:
+<img src="https://user-images.githubusercontent.com/110774369/184693742-fe3b02cb-3389-4d27-956f-a0357014365c.gif" width="640" height="360"/>
 
-## Credits:
-* Shadow Mario - Programmer
-* RiverOaken - Artist
-* Yoshubs - Assistant Programmer
+## Mod Support:
+* Support for Lua and being able to code in .lua files, giving you the ability to make custom weeks, events, scripts, and a ton more, without tinkering with the source code.
+* Psych comes with its own mod management menu, where you can easily enable or disable mods.
 
-### Special Thanks
-* bbpanzu - Ex-Programmer
-* shubs - New Input System
-* SqirraRNG - Crash Handler and Base code for Chart Editor's Waveform
-* KadeDev - Fixed some cool stuff on Chart Editor and other PRs
-* iFlicky - Composer of Psync and Tea Time, also made the Dialogue Sounds
-* PolybiusProxy - .MP4 Video Loader Library (hxCodec)
-* Keoiki - Note Splash Animations
-* Smokey - Sprite Atlas Support
-* Nebula the Zorua - LUA JIT Fork and some Lua reworks
-_____________________________________
-
-# Features
-
-## Attractive animated dialogue boxes:
-
-![](https://user-images.githubusercontent.com/44785097/127706669-71cd5cdb-5c2a-4ecc-871b-98a276ae8070.gif)
-
-
-## Mod Support
-* Probably one of the main points of this engine, you can code in .lua files outside of the source code, making your own weeks without even messing with the source!
-* Comes with a Mod Organizing/Disabling Menu.
-
-
-## Atleast one change to every week:
+## Changes to Each Vanilla Week:
 ### Week 1:
-  * New Dad Left sing sprite
-  * Unused stage lights are now used
+* Daddy Dearest has a re-animated left pose;
+* The unused stage lights make their way back into the week;
+* Custom ``Dadbattle Spotlight`` event.
 ### Week 2:
-  * Both BF and Skid & Pump does "Hey!" animations
-  * Thunders does a quick light flash and zooms the camera in slightly
-  * Added a quick transition/cutscene to Monster
+* An unused ``Hey!`` animation for Skid and Pump makes it way back into ``Spookeez``;
+* Thunder now zooms in the camera slightly while also doing a quick flash;
+* Transition between ``South`` and ``Monster``.
 ### Week 3:
-  * BF does "Hey!" during Philly Nice
-  * Blammed has a cool new colors flash during that sick part of the song
+* Boyfriend plays a ``Hey!`` animation in ``Philly Nice`` whenever it is heard in the Instrumental.
+* ``Philly Glow``, a full-of-color funky event, specifically coded for this Week, plays at the drop of ``Blammed``.
 ### Week 4:
-  * Better hair physics for Mom/Boyfriend (Maybe even slightly better than Week 7's :eyes:)
-  * Henchmen die during all songs. Yeah :(
+* Re-animated hair physics for Mom and Boyfriend. ~~(Maybe even better than Week 7's)~~
+* Unused event where *all* of Mother Mearest's Henchmen die because of them hitting a street light now makes its way back into the Week.
 ### Week 5:
-  * Bottom Boppers and GF does "Hey!" animations during Cocoa and Eggnog
-  * On Winter Horrorland, GF bops her head slower in some parts of the song.
+* The Bottom Boppers and Girlfriend play a ``Hey!`` animation when one is heard in the Instrumental of ``Cocoa`` and ``Eggnog``.
+* ``Winter Horrorland`` has its new transition that was originally implemented in the ``Week 7 update``, after finishing ``Eggnog``.
+* Girlfriend's head bop slows down during some parts of ``Winter Horrorland``.
 ### Week 6:
-  * On Thorns, the HUD is hidden during the cutscene
-  * Also there's the Background girls being spooky during the "Hey!" parts of the Instrumental
+* The little arrow sprite at the bottom right of the dialogue box is now properly scaled, like in the ``Week 7 Update``.
+* The transition from ``Roses`` to ``Thorns`` has the HUD hidden.
+* The Background Girls have recieved a **spooky make-over** in ``Thorns``, summoning them during the ``Hey!`` parts of the Instrumental.
+### Week 7:
+* Cutscenes now play in-game, thanks to Psych's custom Cutscene Handler.
+* Some funky camera events at the beginning of ``Ugh``, making the song *pop*.
 
-## Cool new Chart Editor changes and countless bug fixes
-![](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/docs/img/chart.png?raw=true)
-* You can now chart "Event" notes, which are bookmarks that trigger specific actions that usually were hardcoded on the vanilla version of the game.
-* Your song's BPM can now have decimal values
-* You can manually adjust a Note's strum time if you're really going for milisecond precision
-* You can change a note's type on the Editor, it comes with two example types:
-  * Alt Animation: Forces an alt animation to play, useful for songs like Ugh/Stress
-  * Hey: Forces a "Hey" animation instead of the base Sing animation, if Boyfriend hits this note, Girlfriend will do a "Hey!" too.
+## Multiple Editors (some reworked, some new):
+<img src="https://files.catbox.moe/u97ahu.png" width="773.3" height="376"/>
 
-## Multiple editors to assist you in making your own Mod
-![Screenshot_3](https://user-images.githubusercontent.com/44785097/144629914-1fe55999-2f18-4cc1-bc70-afe616d74ae5.png)
-* Working both for Source code modding and Downloaded builds!
+* These Editors are accessible through builds that are directly **downloaded from ``GitHub Releases``** or builds that are **compiled from source code**.
 
-## Story mode menu rework:
-![](https://i.imgur.com/UB2EKpV.png)
-* Added a different BG to every song (less Tutorial)
-* All menu characters are now in individual spritesheets, makes modding it easier.
+## Chart Editor Rework:
+<img src="https://files.catbox.moe/vtbi8h.png" width="640" height="360"/>
 
-## Credits menu
-![Screenshot_1](https://user-images.githubusercontent.com/44785097/144632635-f263fb22-b879-4d6b-96d6-865e9562b907.png)
-* You can add a head icon, name, description and a Redirect link for when the player presses Enter while the item is currently selected.
+* ``Event`` notes:
+  * "bookmarks" that trigger a specific action/event that was originally hardcoded in the base game;
+* The engine supports song BPMs that have decimal values;
+* The ability to manually adjust a note's strum time, if going for milisecond precision;
+* A note's type can be changed within the Editor, that can either play or stop animations.
 
-## Awards/Achievements
-* The engine comes with 16 example achievements that you can mess with and learn how it works (Check Achievements.hx and search for "checkForAchievement" on PlayState.hx)
+## Story Mode Menu Rework:
+<img src="https://files.catbox.moe/warpfk.png" width="640" height="360"/>
 
-## Options menu:
-* You can change Note colors, Delay and Combo Offset, Controls and Preferences there.
- * On Preferences you can toggle Downscroll, Middlescroll, Anti-Aliasing, Framerate, Low Quality, Note Splashes, Flashing Lights, etc.
+* Each Week has its own separate background. (except for ``Tutorial`` and ``Week 1`` as they share the same one)
+* Each Menu Character is its own individual spritesheet, which makes modifying it easier.
 
-## Other gameplay features:
-* When the enemy hits a note, their strum note also glows.
-* Lag doesn't impact the camera movement and player icon scaling anymore.
-* Some stuff based on Week 7's changes has been put in (Background colors on Freeplay, Note splashes)
-* You can reset your Score on Freeplay/Story Mode by pressing Reset button.
-* You can listen to a song or adjust Scroll Speed/Damage taken/etc. on Freeplay by pressing Space.
+## Credits Menu:
+<img src="https://files.catbox.moe/rutu2f.png" width="640" height="360"/>
+                                                                                                                         
+* Each credits item has its own Icon, Name, Description and Redirect Link. 
+    * (Upon pressing ``Enter`` on the currently selected credits item, it'll open up a browser tab and send you to that link)
+
+## Awards / Achievements:
+<img src="https://files.catbox.moe/ih4hp3.png" width="640" height="360"/>
+<img src="https://files.catbox.moe/l02sgc.png" width="640" height="360"/>
+
+* Psych comes with 16 awards/achievements. To name some:
+  * ``Debugger``, ``Roadkill Enthusiast``, ``Hyperactive``, ``Just the Two of Us``, etc.
+* All of the 16 awards/achievements are *examples* that you can mess with and learn how each one works.
+  * (Check ``Achievements.hx`` and search for ``"checkForAchievement"`` in ``PlayState.hx``)
+
+## Options Menu:
+<img src="https://files.catbox.moe/43g8pp.png" width="640" height="360"/>
+
+* Pretty self-explanatory, it's a custom and more advanced (in terms of the ``Week 7 Update``) Options Menu, that allows you to modify the game to your liking.
+
+# Bonus Features: <a name="bonus-features"></a>
+* Enemy strums now glow once a note is hit, just like player strums.
+* Lag no longer impacts camera movement and player icon scaling.
+* Some changes based on the ``Week 7 Update``:
+  * Background Colors in ``Freeplay``, Note Splashes, etc.
+* Resetting Score in ``Freeplay`` or ``Story Mode`` using the Reset key. (default: ``R``)
+* The ability to listen to a song in ``Freeplay`` (by pressing ``Space``);
+* Gameplay Modifiers (allowing you to adjust Scroll Speed, Damage Taken, etc.) by pressing ``Ctrl`` in either ``Freeplay`` or ``Story Mode``.
+
+# Building: <a name="building"></a>
+## Installing Necessary Programs / Prerequisites: <a name="programs-prerequisites"></a>
+* Install the **up-to-date version** of [Haxe](https://haxe.org/download/).
+
+* Install [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/) using either Command Prompt or Powershell.
+
+* Other installations you'd need are the **additional libraries** that Psych uses. 
+  * A fully updated list will be in ``Project.xml`` (starting from [line 124](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/Project.xml#L124) all the way to [line 148](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/Project.xml#L148)), however, here's the current ones you need:
+```
+haxelib install flixel
+haxelib install flixel-addons
+haxelib install flixel-ui
+haxelib install hscript
+haxelib install hxCodec
+```
+* Next up, install [Git](https://git-scm.com/) and follow the instructions to install the application properly.
+  * Afterwards, open up Command Prompt or Powershell and run the following commands:
+```
+haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
+```
+
+This will install  ``linc/LuaJIT`` (which is used for executing .lua files (scripts)) and ``linc/discord-RPC`` (which is used to display Rich Presence on your Discord profile).
+
+## Compiling (Web and Desktop): <a name="compiling"></a>
+### Compiling Web: <a name="compiling-web"></a>
+* After installing all the required programs, it's easy to compile the game. 
+  * You can run ``lime test html5 -debug`` in the root of the project to build and run the Web / HTML5 version. 
+  * ([Command prompt navigation guide here, in case you get lost](https://ninjamuffin99.newgrounds.com/news/post/1090480).)
+
+### Compiling Desktop: <a name="compile-desktop"></a>
+To run it from desktop (Windows, Mac or Linux), it's a little more complicated.
+
+* For Linux, you only need to open a terminal in the project directory and run ``lime test linux -debug`` and run the executable file in ``export/release/linux/bin``.
+
+* For Mac, ``lime test mac -debug`` *should* work, if not, the Internet surely has a guide on how to compile Haxe stuff for Mac.
+
+* For Windows, however, you need to install [Visual Studio Community 2019](https://docs.microsoft.com/en-us/visualstudio/releases/2019/release-notes).
+  * After Visual Studio finishes installing and launches, switch from the ``Workload`` to ``Individual components`` section in the top left of the window. When you've done that, search for the following dependencies:
+```
+MSVC v142 - VS 2019 C++ x64/x86 build tools (Latest)
+Windows 10 SDK (10.0.20348.0)
+```
+or if you're running on Windows 11 *with* Visual Studio Community 2019, install this dependency instead of the Windows 10 one:
+```
+Windows 11 SDK (10.0.22000.0)
+```
+* Once the dependencies download and install, you can open up a command line in the project's directory and run ``lime test windows -debug``.
+  * Once it finishes building, you can run Psych Engine from the .exe file under ``export\release\windows\bin``.
+
+## A Few Things to Note (Building): <a name="things-to-note"></a>
+* If you don't want your mod to run .lua scripts, [delete the ``"LUA_ALLOWED"`` line on ``Project.xml``](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/Project.xml#L48).
+* If you don't want video support for your mod, [delete the ``"VIDEOS_ALLOWED"`` line on ``Project.xml``](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/Project.xml#L50).
+* If you're running Visual Studio Community 2022, then install these dependencies:
+```
+MSVC v143 - VS 2022 - C++ x64/x86 build tools (Latest)
+Windows 10 SDK (10.0.20348.0)
+```
+or if you're on Windows 11 *with* Visual Studio Community 2022, install this dependency instead of the Windows 10 one:
+```
+Windows 11 SDK (10.0.22621.0)
+```
+* Regarding the Windows 10/11 SDK dependencies, the number in the parentheses might not be accurate to this guide.
+  * Whatever the case might be, just install the **latest version** (highest number in the parentheses), ***unless*** it's *specifically* told that you need a certain 
+Windows SDK to run Psych.
+
+<p align="center">
+  <img src="https://files.catbox.moe/y36uzc.png" width="235.5" height="235.5" /></a>
+</p>
