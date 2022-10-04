@@ -48,7 +48,7 @@ jobs:
           haxelib git hxCodec https://github.com/polybiusproxy/hxcodec
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib install hscript
-          haxelib git SScript https://github.com/TahirRollingArch/SScript.git
+          haxelib git SScript https://github.com/TheWorldMachinima/SScript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
@@ -90,7 +90,7 @@ jobs:
           haxelib git hxCodec https://github.com/polybiusproxy/hxcodec
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib install hscript
-          haxelib git SScript https://github.com/TahirRollingArch/SScript.git
+          haxelib git SScript https://github.com/TheWorldMachinima/SScript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
@@ -133,7 +133,7 @@ jobs:
           haxelib git hxCodec https://github.com/polybiusproxy/hxcodec
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib install hscript
-          haxelib git SScript https://github.com/TahirRollingArch/SScript.git
+          haxelib git SScript https://github.com/TheWorldMachinima/SScript
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
