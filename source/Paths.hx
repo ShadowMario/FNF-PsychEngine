@@ -46,7 +46,8 @@ class Paths
 		'weeks',
 		'fonts',
 		'scripts',
-		'achievements'
+		'achievements',
+		'example_mod'
 	];
 	#end
 

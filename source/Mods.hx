@@ -110,18 +110,17 @@ class ModsList {
 		}
 	}
 
-	//TODO:marius: what to do if the folder is removed? Should I just list the subdirectory, and then match it existing modsList.txt entry, skipping non-existant entry.
 	public function load() {
-		//TODO:marius: also look for sub-directory of this.folder that contains a pack.json (which are not loaded)
 		this.values = [];
 		var modsDirectoryList = Paths.getSubdirectories(this.folder);
+
+		// Load mods in modsList.txt which have an existing folder (ignore them otherwise)
 		if (FileSystem.exists(this.modsListPath)) {
 			var lines:Array<String> = CoolUtil.coolTextFile(this.modsListPath);
 			for (line in lines) {
 				var modSplit:Array<String> = line.split('|');
 				if (modSplit.length >= 2) {
 					//TODO:marius: is this ignoreModsFolders usefull? A mod won’t be in the list unless it is manually added.
-					//TODO:marius: perform auto mod finding for subfolder in the mod folder
 					if(!Paths.ignoreModFolders.contains(modSplit[0].toLowerCase()) && modSplit[0] != "" && modsDirectoryList.contains(modSplit[0])) {	
 						var disabled:Bool = false;
 						var globalEnabled:Bool = true;
@@ -140,6 +139,8 @@ class ModsList {
 				}
 			}
 		}
+
+		// load mods not in modsList.txt
 		for (modDirName in modsDirectoryList) {
 			if (!Paths.ignoreModFolders.contains(modDirName)) {
 				if (!Lambda.exists(this.values, function(info) return info.dirName == modDirName)) {
@@ -160,7 +161,6 @@ class ModsList {
 		File.saveContent(this.modsListPath, fileStr);
 	}
 
-	//TODO:marius: make use of this function
 	public function getLoadedMods(): Array<ModInfo> {
 		var result: Array<ModInfo> = [];
 		for (modEntry in this.values) {
@@ -182,7 +182,6 @@ class ModsList {
 		}*/
 	}
 
-	//TODO:marius: make use of this function
 	static public function loadActiveMods() {
 		ModsList.activeMods = ModsList.loadDefaultModsList().getLoadedMods();
 		ModsList.globalActiveMods = ModsList.activeMods.filter(function (modinfo) return modinfo.useAsGlobal());

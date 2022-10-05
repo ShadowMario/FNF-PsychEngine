@@ -388,7 +388,7 @@ class ModsMenuState extends MusicBeatState
 			modsList.values.push(mod.entry);
 		}
 		modsList.save();
-		ModsList.activeMods = modsList.getLoadedMods();
+		ModsList.loadActiveMods;
 		Paths.pushGlobalMods();
 	}
 
