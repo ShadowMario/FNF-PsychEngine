@@ -471,11 +471,12 @@ class Paths
 		return 'mods/' + key;
 	}
 
+	//TODO:marius: eventually get rid of that
 	public static var globalMods:Array<String> = [];
 
 	static public function getGlobalMods()
 		return globalMods;
-
+	
 	static public function pushGlobalMods() // prob a better way to do this but idc
 	{
 		globalMods = [];

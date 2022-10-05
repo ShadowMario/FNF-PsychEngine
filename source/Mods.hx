@@ -69,7 +69,7 @@ class ModInfo {
 		}
     }
 
-	public function usedAsGlobal(): Bool {
+	public function useAsGlobal(): Bool {
 		return this.global && this.globalEnabled;
 	}
 }
@@ -95,8 +95,10 @@ class ModsList {
 	public var folder: String;
 	public var modsListPath: String;
 	public var values: Array<ModsListEntry>;
-	// Mods that should be considered (filtering on usedAsGlobal() when necessary)
-	static public var activeMods: Array<ModInfo>;
+	// Mods that should be considered as active, with stuff being displayed in lists.
+	public static var activeMods: Array<ModInfo>;
+	// Global mods, which can perform changes everywhere, instead of just adding new stuff in lists.
+	public static var globalActiveMods: Array<ModInfo>;
 
 	public function new(folder: String, modsListPath: String, ?skipLoad: Bool) {
 		this.folder = folder;
@@ -171,6 +173,7 @@ class ModsList {
 
 	static public function loadDefaultModsList(?skipLoad: Bool): ModsList {
 		//TODO:marius: temporary, until everything is switched to use this function.
+		//TODO:marius: make sure it also checks if mods are installed, even if there is no modsList.txt
 		//if (FileSystem.exists("modsList.txt")) {
 		return new ModsList("mods", "modsList.txt", skipLoad);
 		/*} else {
@@ -180,7 +183,8 @@ class ModsList {
 	}
 
 	//TODO:marius: make use of this function
-	static public function loadLoadedMods() {
+	static public function loadActiveMods() {
 		ModsList.activeMods = ModsList.loadDefaultModsList().getLoadedMods();
+		ModsList.globalActiveMods = ModsList.activeMods.filter(function (modinfo) return modinfo.useAsGlobal());
 	}
 }
