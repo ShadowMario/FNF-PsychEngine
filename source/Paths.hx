@@ -113,6 +113,7 @@ class Paths
 		openfl.Assets.cache.clear("songs");
 	}
 
+	//TODO:marius: eventually get rid of it or at least convert it to ModInfo
 	static public var currentModDirectory:String = '';
 	static public var currentLevel:String;
 	static public function setCurrentLevel(name:String)

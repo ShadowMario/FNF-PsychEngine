@@ -103,8 +103,8 @@ class Main extends Sprite
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
 
-		#if MODS_ENABLED
-		ModsList.loadActiveMods();
+		#if MODS_ALLOWED
+		Mods.ModsList.loadActiveMods();
 		#end
 	}
 
