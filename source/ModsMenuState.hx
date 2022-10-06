@@ -103,7 +103,6 @@ class ModsMenuState extends MusicBeatState
 		//attached buttons
 		var startX:Int = 1120;
 
-		//TODO:marius: add the ability to edit GlobalEnabled (and only display it if the mod have info.global)
 		buttonToggle = new FlxButton(startX, 0, "ON", function()
 		{
 			if(mods[curSelected].info.restart)
@@ -111,7 +110,6 @@ class ModsMenuState extends MusicBeatState
 				needaReset = true;
 			}
 			mods[curSelected].entry.disabled = !mods[curSelected].entry.disabled;
-			mods[curSelected].entry.globalEnabled = !mods[curSelected].entry.disabled;
 			updateButtonToggle();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 		});
@@ -179,7 +177,6 @@ class ModsMenuState extends MusicBeatState
 			for (mod in mods)
 			{
 				mod.entry.disabled = true;
-				mod.entry.globalEnabled = false;
 
 				if (mod.info.restart)
 				{
@@ -202,7 +199,6 @@ class ModsMenuState extends MusicBeatState
 		buttonEnableAll = new FlxButton(startX, 0, "ENABLE ALL", function() {
 			for (mod in mods) {
 				mod.entry.disabled = false;
-				mod.entry.globalEnabled = true;
 
 				if (mod.info.restart) {
 					needaReset = true;
@@ -646,7 +642,7 @@ class ModMenuEntry
 	public var entry:ModsListEntry;
 
 	public function new(folder:String, entry:ModsListEntry) {
-		this.info = new ModInfo(folder, false);
+		this.info = new ModInfo(folder);
 		this.entry = entry;
 	}
 }

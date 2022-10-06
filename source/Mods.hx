@@ -72,14 +72,10 @@ class ModInfo {
 	public var color:FlxColor;
 	public var restart:Bool; //trust me. this is very important
 	public var global:Bool;
-	public var globalEnabled:Bool;
-    
-	// globalEnabled define if this mods should be used to modify content instead of just adding new ones
-	// That is, a mod not globalEnabled can add new weeks, but can’t change the mainMenuBackground
-    public function new(folder: String, globalEnabled: Bool) {
+
+    public function new(folder: String) {
         this.folder = folder;
         this.dirName = Path.withoutDirectory(Path.removeTrailingSlashes(folder));
-		this.globalEnabled = globalEnabled;
         this.loadPackInfo();
     }
 
@@ -123,22 +119,21 @@ class ModInfo {
 			}
 		}
     }
-
+	
+	// put as a dedicate function if we want to later add the option to enable a mod without side effect.
+	// Will probably need a double-check that everything that should use this or globalActiveMods
 	public function useAsGlobal(): Bool {
-		return this.global && this.globalEnabled;
+		return this.global;
 	}
 }
 
 class ModsListEntry {
 	public var dirName: String;
-	// True to use the mods globally, allowing, for example, to change the main menu background
-	public var globalEnabled: Bool;
 	// True to not load the mods at all (including its weeks)
 	public var disabled: Bool;
 
-	public function new(dirName: String, globalEnabled: Bool, disabled: Bool) {
+	public function new(dirName: String, disabled: Bool) {
 		this.dirName = dirName;
-		this.globalEnabled = globalEnabled;
 		this.disabled = disabled;
 	}
 }
@@ -178,18 +173,9 @@ class ModsList {
 					//TODO:marius: is this ignoreModsFolders usefull? A mod won’t be in the list unless it is manually added.
 					if(!Paths.ignoreModFolders.contains(modSplit[0].toLowerCase()) && modSplit[0] != "" && modsDirectoryList.contains(modSplit[0])) {	
 						var disabled:Bool = false;
-						var globalEnabled:Bool = true;
 						if(modSplit[1] == '0')
 							disabled = true;
-							globalEnabled = false;
-						if (modSplit.length >= 3) {
-							if (modSplit[2] == '0') {
-								globalEnabled = false;
-							} else if (modSplit[2] == '1') {
-								globalEnabled = true;
-							}
-						}
-						this.values.push(new ModsListEntry(modSplit[0], globalEnabled, disabled));
+						this.values.push(new ModsListEntry(modSplit[0], disabled));
 					}
 				}
 			}
@@ -199,8 +185,7 @@ class ModsList {
 		for (modDirName in modsDirectoryList) {
 			if (!Paths.ignoreModFolders.contains(modDirName)) {
 				if (!Lambda.exists(this.values, function(info) return info.dirName == modDirName)) {
-					//TODO:marius: reconsider if putting globalEnabled true for newly added mods is a good idea
-					this.values.push(new ModsListEntry(modDirName, true, false));
+					this.values.push(new ModsListEntry(modDirName, false));
 				}
 			}
 		}
@@ -211,7 +196,7 @@ class ModsList {
 		for (modEntry in this.values)
 		{
 			if (fileStr.length > 0) fileStr += '\n';
-			fileStr += modEntry.dirName + '|' + (modEntry.disabled ? '0' : '1') + '|' + (modEntry.globalEnabled ? '1' : '0');
+			fileStr += modEntry.dirName + '|' + (modEntry.disabled ? '0' : '1');
 		}
 		File.saveContent(this.modsListPath, fileStr);
 	}
@@ -220,7 +205,7 @@ class ModsList {
 		var result: Array<ModInfo> = [];
 		for (modEntry in this.values) {
 			if (!modEntry.disabled) {
-				result.push(new ModInfo(Path.join([this.folder, modEntry.dirName]), modEntry.globalEnabled));
+				result.push(new ModInfo(Path.join([this.folder, modEntry.dirName])));
 			}
 		}
 		return result;
