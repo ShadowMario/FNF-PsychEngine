@@ -85,7 +85,7 @@ class CreditsState extends MusicBeatState
 		add(grpOptions);
 
 		#if MODS_ALLOWED
-		for (mod in Mods.ModsList.activeMods) {
+		for (mod in Mods.ModsList.activeModsNoAssets) {
 			var creditsFilePath = Path.join([mod.folder, 'data/credits.txt']);
 
 			if (FileSystem.exists(creditsFilePath))

@@ -9,7 +9,6 @@ import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import haxe.Json;
 import haxe.format.JsonParser;
-import Mods.FolderOrMod;
 import Mods.ModInfo;
 import Mods.ModsList;
 
@@ -93,27 +92,17 @@ class WeekData {
 	{
 		weeksList = [];
 		weeksLoaded.clear();
-		var directories:Array<FolderOrMod> = [FolderOrMod.new_folder(Paths.getPreloadPath())];
-		#if MODS_ALLOWED
-		for (mod in ModsList.activeMods) {
-			directories.push(FolderOrMod.new_mod(mod));
-		}
-		#end
 
 		var baseWeeks:Array<String> = CoolUtil.coolTextFile(Paths.getPreloadPath('weeks/weekList.txt'));
 		for (i in 0...baseWeeks.length) {
-			for (directory in directories) {
-				var fileToCheck:String = Path.join([directory.get_folder(), 'weeks', baseWeeks[i] + '.json']);
+			// the game assets are at the end of activeMods
+			for (mod in ModsList.activeMods) {
+				var fileToCheck:String = Path.join([mod.folder, 'weeks', baseWeeks[i] + '.json']);
 				if(!weeksLoaded.exists(baseWeeks[i])) {
 					var week:WeekFile = getWeekFile(fileToCheck);
 					if(week != null) {
 						var weekFile:WeekData = new WeekData(week, baseWeeks[i]);
-
-						#if MODS_ALLOWED
-						if(directory.is_mod()) {
-							weekFile.mod = directory.get_mod();
-						}
-						#end
+						weekFile.mod = mod;
 
 						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay))) {
 							weeksLoaded.set(baseWeeks[i], weekFile);
@@ -125,7 +114,7 @@ class WeekData {
 		}
 
 		#if MODS_ALLOWED
-		for (mod in ModsList.activeMods) {
+		for (mod in ModsList.activeModsNoAssets) {
 			var directory:String = Path.join([mod.folder, 'weeks']);
 			if(FileSystem.exists(directory)) {
 				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(directory + 'weekList.txt');
@@ -159,12 +148,7 @@ class WeekData {
 			if(week != null)
 			{
 				var weekFile:WeekData = new WeekData(week, weekToCheck);
-				#if MODS_ALLOWED
-				if(mod != null)
-				{
-					weekFile.mod = mod;
-				}
-				#end
+				weekFile.mod = mod;
 				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay))
 				{
 					weeksLoaded.set(weekToCheck, weekFile);
@@ -209,17 +193,19 @@ class WeekData {
 		ModsList.currentMod = null;
 		if(data != null && data.mod != null) {
 			Paths.currentModDirectory = data.mod.dirName;
-			ModsList.currentMod = data.mod;
+			if (!data.mod.isGameAssets) {
+				ModsList.currentMod = data.mod;
+			}
 		}
 	}
 
 	public static function loadTheFirstEnabledMod()
 	{
 		Paths.currentModDirectory = '';
+		ModsList.currentMod = ModsList.activeMods[0];
 		
 		#if MODS_ALLOWED
-		ModsList.currentMod = ModsList.activeMods[0];
-		if (ModsList.activeMods.length >= 1) {
+		if (ModsList.activeMods[0] != null) {
 			Paths.currentModDirectory = ModsList.activeMods[0].dirName;
 		}
 		#end

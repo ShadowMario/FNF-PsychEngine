@@ -7,64 +7,12 @@ import haxe.Json;
 import lime.system.System.applicationStorageDirectory;
 #end
 
-private enum FolderOrModEnum {
-	Folder(f:String);
-	#if MODS_ALLOWED
-	Mod(m:ModInfo);
-	#end
-}
-
-class FolderOrMod {
-	private var storage: FolderOrModEnum;
-
-	private function new(storage: FolderOrModEnum) {
-		this.storage = storage;
-	}
-
-	#if MODS_ALLOWED
-	public static function new_mod(modinfo: ModInfo): FolderOrMod {
-		return new FolderOrMod(Mod(modinfo));
-	}
-	#end
-
-	public static function new_folder(folder: String): FolderOrMod {
-		return new FolderOrMod(Folder(folder));
-	}
-
-	public function get_folder(): String {
-		return switch (this.storage) {
-			case Folder(folder): folder;
-			#if MODS_ALLOWED
-			case Mod(mod): mod.folder;
-			#end
-		}
-	}
-
-	public function get_mod(): Null<ModInfo> {
-		return switch (this.storage) {
-			case Folder(_): null;
-			#if MODS_ALLOWED
-			case Mod(mod): mod;
-			#end
-		}
-	}
-
-	public function is_mod(): Bool {
-		return switch (this.storage) {
-			case Folder(_): false;
-			#if MODS_ALLOWED
-			case Mod(_): true;
-			#end
-		}
-	}
-}
-
-#if MODS_ALLOWED
 // Represent information about a mod
 class ModInfo {
     // The directory in which the mod is store. May be absolute or relative
     public var folder:String;
     // The name of the last directory that contain the mod
+	//TODO:marius: remove when there is no use for it anymore
     public var dirName:String;
     // The name of the mod itself, as displayer in the UI
 	public var name:String;
@@ -72,13 +20,30 @@ class ModInfo {
 	public var color:FlxColor;
 	public var restart:Bool; //trust me. this is very important
 	public var global:Bool;
+	public var isGameAssets: Bool = false;
 
+	// if folder is "assets", load the assets data instead of a standard mod with pack.json
     public function new(folder: String) {
-        this.folder = folder;
-        this.dirName = Path.withoutDirectory(Path.removeTrailingSlashes(folder));
-        this.loadPackInfo();
+		this.folder = folder;
+		if (folder == "assets") {
+			this.isGameAssets = true;
+			this.dirName = '';
+			this.name = "Psych Engine";
+			this.description = "The assets of Psych Engine. This mod (and description) shouldn’t appear in any visible mod list.";
+			this.color = ModsMenuState.defaultColor;
+			this.restart = false;
+			this.global = true;
+		} else {
+			#if MODS_ALLOWED
+        	this.dirName = Path.withoutDirectory(Path.removeTrailingSlashes(folder));
+        	this.loadPackInfo();
+			#else
+			throw haxe.Exception.thrown("The game tried to load a mod at " + folder + " but mod loading is statically disabled!!!");
+			#end
+		}
     }
 
+	#if MODS_ALLOWED
     public function loadPackInfo() {
         this.name = this.dirName;
 		this.description = "No description provided.";
@@ -119,6 +84,7 @@ class ModInfo {
 			}
 		}
     }
+	#end
 	
 	// put as a dedicate function if we want to later add the option to enable a mod without side effect.
 	// Will probably need a double-check that everything that should use this or globalActiveMods
@@ -127,6 +93,7 @@ class ModInfo {
 	}
 }
 
+#if MODS_ALLOWED
 class ModsListEntry {
 	public var dirName: String;
 	// True to not load the mods at all (including its weeks)
@@ -137,21 +104,33 @@ class ModsListEntry {
 		this.disabled = disabled;
 	}
 }
+#end
 
 // A directory containing mods, and the related modsList.txt info, if it exist
 // There are up to two modsList the game will interact with: The one in the game folder, and the one in the user folder
 // The one in the game folder will be used if there is already a modsList.txt here, otherwise, it will use the one the user folder
 class ModsList {
+	#if MODS_ALLOWED
 	public var folder: String;
 	public var modsListPath: String;
 	public var values: Array<ModsListEntry>;
+	#end
+	// Keep these arrays even if mods are disabled. Game assets are also handled as mods for simplicity purpose.
+
+	#if MODS_ALLOWED
+	// Active mods excluding the game assets
+	public static var activeModsNoAssets: Array<ModInfo>;
+	#end
+
 	// Mods that should be considered as active, with stuff being displayed in lists.
 	public static var activeMods: Array<ModInfo>;
 	// Global mods, which can perform changes everywhere, instead of just adding new stuff in lists.
 	public static var globalActiveMods: Array<ModInfo>;
-	// The currenctly active mod, if any. Equivalent to currentModDirectory with ModInfo
+	// The currenctly active mod, if any. Equivalent to currentModDirectory with ModInfo.
+	// May contain the game assets pseudo-mod when using content from it
 	public static var currentMod: Null<ModInfo>;
 
+	#if MODS_ALLOWED
 	public function new(folder: String, modsListPath: String, ?skipLoad: Bool) {
 		this.folder = folder;
 		this.modsListPath = modsListPath;
@@ -223,10 +202,18 @@ class ModsList {
 			return new ModsList(Path.join([applicationStorageDirectory, "mods/"]), Path.join([applicationStorageDirectory, "modsList.txt"]), skipLoad);
 		}*/
 	}
+	#end
 
 	static public function loadActiveMods() {
-		ModsList.activeMods = ModsList.loadDefaultModsList().getLoadedMods();
+		#if MODS_ALLOWED
+		ModsList.activeModsNoAssets = ModsList.loadDefaultModsList().getLoadedMods();
+		ModsList.activeMods = ModsList.activeModsNoAssets.copy();
+		#else
+		ModsList.activeMods = [];
+		#end
+		ModsList.activeMods.push(new ModInfo("assets"));
+		#if MODS_ALLOWED
 		ModsList.globalActiveMods = ModsList.activeMods.filter(function (modinfo) return modinfo.useAsGlobal());
+		#end
 	}
 }
-#end
