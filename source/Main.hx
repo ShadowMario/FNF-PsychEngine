@@ -82,6 +82,11 @@ class Main extends Sprite
 		}
 	
 		ClientPrefs.loadDefaultKeys();
+
+		#if MODS_ALLOWED
+		Mods.ModsList.loadActiveMods();
+		#end
+		
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
 		#if !mobile
@@ -101,10 +106,6 @@ class Main extends Sprite
 		
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		#end
-
-		#if MODS_ALLOWED
-		Mods.ModsList.loadActiveMods();
 		#end
 	}
 

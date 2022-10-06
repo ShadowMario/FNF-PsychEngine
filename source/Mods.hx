@@ -1,10 +1,65 @@
+#if MODS_ALLOWED
 import flixel.util.FlxColor;
 import sys.FileSystem;
 import sys.io.File;
 import haxe.io.Path;
 import haxe.Json;
 import lime.system.System.applicationStorageDirectory;
+#end
 
+private enum FolderOrModEnum {
+	Folder(f:String);
+	#if MODS_ALLOWED
+	Mod(m:ModInfo);
+	#end
+}
+
+class FolderOrMod {
+	private var storage: FolderOrModEnum;
+
+	private function new(storage: FolderOrModEnum) {
+		this.storage = storage;
+	}
+
+	#if MODS_ALLOWED
+	public static function new_mod(modinfo: ModInfo): FolderOrMod {
+		return new FolderOrMod(Mod(modinfo));
+	}
+	#end
+
+	public static function new_folder(folder: String): FolderOrMod {
+		return new FolderOrMod(Folder(folder));
+	}
+
+	public function get_folder(): String {
+		return switch (this.storage) {
+			case Folder(folder): folder;
+			#if MODS_ALLOWED
+			case Mod(mod): mod.folder;
+			#end
+		}
+	}
+
+	public function get_mod(): Null<ModInfo> {
+		return switch (this.storage) {
+			case Folder(_): null;
+			#if MODS_ALLOWED
+			case Mod(mod): mod;
+			#end
+		}
+	}
+
+	public function is_mod(): Bool {
+		return switch (this.storage) {
+			case Folder(_): false;
+			#if MODS_ALLOWED
+			case Mod(_): true;
+			#end
+		}
+	}
+}
+
+#if MODS_ALLOWED
 // Represent information about a mod
 class ModInfo {
     // The directory in which the mod is store. May be absolute or relative
@@ -78,7 +133,7 @@ class ModsListEntry {
 	public var dirName: String;
 	// True to use the mods globally, allowing, for example, to change the main menu background
 	public var globalEnabled: Bool;
-	// True to not load the mods at all (including it’s weeks)
+	// True to not load the mods at all (including its weeks)
 	public var disabled: Bool;
 
 	public function new(dirName: String, globalEnabled: Bool, disabled: Bool) {
@@ -187,3 +242,4 @@ class ModsList {
 		ModsList.globalActiveMods = ModsList.activeMods.filter(function (modinfo) return modinfo.useAsGlobal());
 	}
 }
+#end
