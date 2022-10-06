@@ -125,6 +125,7 @@ class FunkinLua {
 		set('songName', PlayState.SONG.song);
 		set('songPath', Paths.formatToSongPath(PlayState.SONG.song));
 		set('startedCountdown', false);
+		set('curStage', PlayState.SONG.stage);
 
 		set('isStoryMode', PlayState.isStoryMode);
 		set('difficulty', PlayState.storyDifficulty);
@@ -167,6 +168,7 @@ class FunkinLua {
 		// Gameplay settings
 		set('healthGainMult', PlayState.instance.healthGain);
 		set('healthLossMult', PlayState.instance.healthLoss);
+		set('playbackRate', PlayState.instance.playbackRate);
 		set('instakillOnMiss', PlayState.instance.instakillOnMiss);
 		set('botPlay', PlayState.instance.cpuControlled);
 		set('practice', PlayState.instance.practiceMode);
@@ -1813,8 +1815,6 @@ class FunkinLua {
 						{
 							luaObj.offset.set(daOffset[0], daOffset[1]);
 						}
-						else
-							luaObj.offset.set(0, 0);
 					}
 				}
 				return true;
@@ -3116,24 +3116,6 @@ class FunkinLua {
 		#end
 	}
 
-	// some fuckery fucks with linc_luajit
-	function getResult(l:State, result:Int):Any {
-		var ret:Any = null;
-
-		switch(Lua.type(l, result)) {
-			case Lua.LUA_TNIL:
-				ret = null;
-			case Lua.LUA_TBOOLEAN:
-				ret = Lua.toboolean(l, -1);
-			case Lua.LUA_TNUMBER:
-				ret = Lua.tonumber(l, -1);
-			case Lua.LUA_TSTRING:
-				ret = Lua.tostring(l, -1);
-		}
-		
-		return ret;
-	}
-
 	var lastCalledFunction:String = '';
 	public function call(func:String, args:Array<Dynamic>): Dynamic{
 		#if LUA_ALLOWED
@@ -3146,6 +3128,7 @@ class FunkinLua {
 			Lua.getglobal(lua, func);
 			var type:Int = Lua.type(lua, -1);
 			if (type != Lua.LUA_TFUNCTION) {
+				Lua.pop(lua, 1);
 				return Function_Continue;
 			}
 			
@@ -3155,18 +3138,15 @@ class FunkinLua {
 
 			var result:Null<Int> = Lua.pcall(lua, args.length, 1, 0);
 			var error:Dynamic = getErrorMessage();
-			if(!resultIsAllowed(lua, result))
+			if(resultIsAllowed(lua, -1))
 			{
-				Lua.pop(lua, 1);
-				if(error != null) luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
-			}
-			else
-			{
-				var conv:Dynamic = cast getResult(lua, result);
+				var conv:Dynamic = cast Convert.fromLua(lua, -1);
 				Lua.pop(lua, 1);
 				if(conv == null) conv = Function_Continue;
 				return conv;
 			}
+			else if(error != null) luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
+			Lua.pop(lua, 1);
 			return Function_Continue;
 		}
 		catch (e:Dynamic) {
@@ -3233,12 +3213,13 @@ class FunkinLua {
 	}
 
 	function isErrorAllowed(error:String) {
+		error = error.trim();
 		switch(error)
 		{
 			case 'attempt to call a nil value' | 'C++ exception':
 				return false;
 		}
-		return true;
+		return error.length > 6;
 	}
 	#end
 
