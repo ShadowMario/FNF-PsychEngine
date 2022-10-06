@@ -14,6 +14,8 @@ import flixel.util.FlxColor;
 import flixel.system.FlxSound;
 #if MODS_ALLOWED
 import sys.FileSystem;
+import Mods.ModInfo;
+import Mods.ModsList;
 #end
 
 using StringTools;
@@ -29,7 +31,7 @@ class MasterEditorMenu extends MusicBeatState
 		'Chart Editor'
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
-	private var directories:Array<String> = [null];
+	private var directories:Array<Null<ModInfo>> = [null];
 
 	private var curSelected = 0;
 	private var curDirectory = 0;
@@ -70,12 +72,15 @@ class MasterEditorMenu extends MusicBeatState
 		directoryTxt.scrollFactor.set();
 		add(directoryTxt);
 		
-		for (folder in Paths.getModDirectories())
-		{
-			directories.push(folder);
+		for (mod in ModsList.activeMods) {
+			directories.push(mod);
 		}
 
-		var found:Int = directories.indexOf(Paths.currentModDirectory);
+		var found:Int = Lambda.findIndex(directories, function (mod) {
+			if (mod != null) {
+				return Paths.currentModDirectory == mod.dirName;
+			} else { return false; }
+		});
 		if(found > -1) curDirectory = found;
 		changeDirectory();
 		#end
@@ -176,11 +181,11 @@ class MasterEditorMenu extends MusicBeatState
 			curDirectory = 0;
 	
 		WeekData.setDirectoryFromWeek();
-		if(directories[curDirectory] == null || directories[curDirectory].length < 1)
+		if (directories[curDirectory] == null)
 			directoryTxt.text = '< No Mod Directory Loaded >';
 		else
 		{
-			Paths.currentModDirectory = directories[curDirectory];
+			Paths.currentModDirectory = directories[curDirectory].dirName;
 			directoryTxt.text = '< Loaded Mod Directory: ' + Paths.currentModDirectory + ' >';
 		}
 		directoryTxt.text = directoryTxt.text.toUpperCase();

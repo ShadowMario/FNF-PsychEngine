@@ -20,6 +20,7 @@ import openfl.utils.Assets as OpenFlAssets;
 import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
+import Mods.ModInfo;
 #end
 
 using StringTools;
@@ -85,7 +86,7 @@ class FreeplayState extends MusicBeatState
 				{
 					colors = [146, 113, 253];
 				}
-				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]), leWeek.mod);
 			}
 		}
 		WeekData.loadTheFirstEnabledMod();
@@ -122,8 +123,11 @@ class FreeplayState extends MusicBeatState
 				songText.scaleX = maxWidth / songText.width;
 			}
 			songText.snapToPosition();
-
-			Paths.currentModDirectory = songs[i].folder;
+			if (songs[i].mod != null) {
+				Paths.currentModDirectory = songs[i].mod.dirName;
+			} else {
+				Paths.currentModDirectory = '';
+			}
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
 			icon.sprTracker = songText;
 
@@ -206,9 +210,9 @@ class FreeplayState extends MusicBeatState
 		super.closeSubState();
 	}
 
-	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
+	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int, mod: Null<ModInfo>)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter, color));
+		songs.push(new SongMetadata(songName, weekNum, songCharacter, color, mod));
 	}
 
 	function weekIsLocked(name:String):Bool {
@@ -333,7 +337,11 @@ class FreeplayState extends MusicBeatState
 				#if PRELOAD_ALL
 				destroyFreeplayVocals();
 				FlxG.sound.music.volume = 0;
-				Paths.currentModDirectory = songs[curSelected].folder;
+				if (songs[curSelected].mod != null) {
+					Paths.currentModDirectory = songs[curSelected].mod.dirName;
+				} else {
+					Paths.currentModDirectory = "";
+				}
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				if (PlayState.SONG.needsVoices)
@@ -480,7 +488,11 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 		
-		Paths.currentModDirectory = songs[curSelected].folder;
+		if (songs[curSelected].mod != null) {
+			Paths.currentModDirectory = songs[curSelected].mod.dirName;
+		} else {
+			Paths.currentModDirectory = "";
+		}
 		PlayState.storyWeek = songs[curSelected].week;
 
 		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
@@ -540,15 +552,14 @@ class SongMetadata
 	public var week:Int = 0;
 	public var songCharacter:String = "";
 	public var color:Int = -7179779;
-	public var folder:String = "";
+	public var mod:Null<ModInfo>;
 
-	public function new(song:String, week:Int, songCharacter:String, color:Int)
+	public function new(song:String, week:Int, songCharacter:String, color:Int, mod: Null<ModInfo>)
 	{
 		this.songName = song;
 		this.week = week;
 		this.songCharacter = songCharacter;
 		this.color = color;
-		this.folder = Paths.currentModDirectory;
-		if(this.folder == null) this.folder = '';
+		this.mod = mod;
 	}
 }

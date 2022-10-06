@@ -470,7 +470,7 @@ class Paths
 				return fileToCheck;
 
 		}
-		return 'mods/' + key;
+		return mods(currentModDirectory + '/' + key);
 	}
 
 	//TODO:marius: eventually get rid of that
