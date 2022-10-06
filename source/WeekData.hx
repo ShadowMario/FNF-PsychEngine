@@ -206,8 +206,10 @@ class WeekData {
 
 	public static function setDirectoryFromWeek(?data:WeekData = null) {
 		Paths.currentModDirectory = '';
+		ModsList.currentMod = null;
 		if(data != null && data.mod != null) {
 			Paths.currentModDirectory = data.mod.dirName;
+			ModsList.currentMod = data.mod;
 		}
 	}
 
@@ -216,6 +218,7 @@ class WeekData {
 		Paths.currentModDirectory = '';
 		
 		#if MODS_ALLOWED
+		ModsList.currentMod = ModsList.activeMods[0];
 		if (ModsList.activeMods.length >= 1) {
 			Paths.currentModDirectory = ModsList.activeMods[0].dirName;
 		}

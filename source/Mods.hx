@@ -149,6 +149,8 @@ class ModsList {
 	public static var activeMods: Array<ModInfo>;
 	// Global mods, which can perform changes everywhere, instead of just adding new stuff in lists.
 	public static var globalActiveMods: Array<ModInfo>;
+	// The currenctly active mod, if any. Equivalent to currentModDirectory with ModInfo
+	public static var currentMod: Null<ModInfo>;
 
 	public function new(folder: String, modsListPath: String, ?skipLoad: Bool) {
 		this.folder = folder;

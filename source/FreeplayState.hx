@@ -21,6 +21,7 @@ import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
 import Mods.ModInfo;
+import Mods.ModsList;
 #end
 
 using StringTools;
@@ -123,6 +124,7 @@ class FreeplayState extends MusicBeatState
 				songText.scaleX = maxWidth / songText.width;
 			}
 			songText.snapToPosition();
+			ModsList.currentMod = songs[i].mod;
 			if (songs[i].mod != null) {
 				Paths.currentModDirectory = songs[i].mod.dirName;
 			} else {
@@ -337,6 +339,7 @@ class FreeplayState extends MusicBeatState
 				#if PRELOAD_ALL
 				destroyFreeplayVocals();
 				FlxG.sound.music.volume = 0;
+				ModsList.currentMod = songs[curSelected].mod;
 				if (songs[curSelected].mod != null) {
 					Paths.currentModDirectory = songs[curSelected].mod.dirName;
 				} else {
@@ -488,6 +491,7 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 		
+		ModsList.currentMod = songs[curSelected].mod;
 		if (songs[curSelected].mod != null) {
 			Paths.currentModDirectory = songs[curSelected].mod.dirName;
 		} else {

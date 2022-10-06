@@ -17,6 +17,7 @@ import flixel.tweens.FlxEase;
 import sys.FileSystem;
 import sys.io.File;
 import haxe.io.Path;
+import Mods.ModsList;
 #end
 import lime.utils.Assets;
 
@@ -142,6 +143,7 @@ class CreditsState extends MusicBeatState
 
 			if(isSelectable) {
 				if (creditsStuff[i].icon_name != null) {
+					ModsList.currentMod = creditsStuff[i].mod_info;
 					if(creditsStuff[i].mod_info != null)
 					{
 						Paths.currentModDirectory = creditsStuff[i].mod_info.dirName;
@@ -154,6 +156,7 @@ class CreditsState extends MusicBeatState
 					// using a FlxGroup is too much fuss!
 					iconArray.push(icon);
 					add(icon);
+					ModsList.currentMod = null;
 					Paths.currentModDirectory = '';
 				}
 
