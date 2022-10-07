@@ -20,7 +20,9 @@ import lime.app.Application;
 import Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
+#if sys
 import sys.FileSystem;
+#end
 
 using StringTools;
 
@@ -53,9 +55,14 @@ class MainMenuState extends MusicBeatState
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();
 		#end
-		if (FileSystem.exists("disable_mods_menu.txt")) {
+		#if sys
+		if (FileSystem("disable_mods_menu.txt")) {
 			this.optionShit.remove("mods");
 		}
+		#else
+		this.optionShit.remove("mods");
+		#end
+
 		WeekData.loadTheFirstEnabledMod();
 
 		#if desktop

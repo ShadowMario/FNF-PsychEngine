@@ -2867,6 +2867,7 @@ class FunkinLua {
 		return null;
 	}
 	
+	#if LUA_ALLOWED
 	function initLuaShader(name:String, ?glslVersion:Int = 120)
 	{
 		if(!ClientPrefs.shaders) return false;
@@ -2916,6 +2917,7 @@ class FunkinLua {
 		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
 		return false;
 	}
+	#end
 
 	function getGroupStuff(leArray:Dynamic, variable:String) {
 		var killMe:Array<String> = variable.split('.');
@@ -3108,12 +3110,11 @@ class FunkinLua {
 		#end
 	}
 
+	#if LUA_ALLOWED
 	function getErrorMessage() {
-		#if LUA_ALLOWED
 		var v:String = Lua.tostring(lua, -1);
 		if(!isErrorAllowed(v)) v = null;
 		return v;
-		#end
 	}
 
 	// some fuckery fucks with linc_luajit
@@ -3133,6 +3134,7 @@ class FunkinLua {
 		
 		return ret;
 	}
+	#end
 
 	var lastCalledFunction:String = '';
 	public function call(func:String, args:Array<Dynamic>): Dynamic{

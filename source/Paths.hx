@@ -272,7 +272,7 @@ class Paths
 
 	inline static public function font(key:String)
 	{
-		return getRessourcePath('fonts/' + key);
+		return Paths.getRessourcePath('fonts/' + key);
 	}
 
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
@@ -390,7 +390,9 @@ class Paths
 		localTrackedAssets.push(gottenPath);
 		return currentTrackedSounds.get(gottenPath);
 	}
-
+	
+	//TODO:marius: universalGetSubDirectories and universalGetSubFiles
+	#if sys
 	static public function getSubdirectories(rootFolder: String):Array<String> {
 		var list:Array<String> = [];
 		if(FileSystem.exists(rootFolder)) {
@@ -403,6 +405,7 @@ class Paths
 		}
 		return list;
 	}
+	#end
 
 	#if MODS_ALLOWED
 	//TODO:marius should probably get rid of them too
@@ -453,6 +456,7 @@ class Paths
 	static public function modFolders(key:String, useGameAssets: Bool = false) {
 		return Paths.getRessourcePath(key, false, !useGameAssets, false);
 	}
+	#end
 
 	// modFolders under another name
 	//TODO:marius: maybe eventually remove modFolders, and get rid of ignoreGameAssets
@@ -477,6 +481,7 @@ class Paths
 		return null;
 	}
 
+	#if MODS_ALLOWED
 	//TODO:marius: eventually get rid of that
 	public static var globalMods:Array<String> = [];
 

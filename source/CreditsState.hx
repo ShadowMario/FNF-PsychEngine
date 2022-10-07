@@ -13,12 +13,8 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
-#if MODS_ALLOWED
-import sys.FileSystem;
-import sys.io.File;
 import haxe.io.Path;
 import Mods.ModsList;
-#end
 import lime.utils.Assets;
 
 using StringTools;
@@ -84,13 +80,14 @@ class CreditsState extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
+		//TODO:marius: just add a data/credits.txt to the assets
 		#if MODS_ALLOWED
 		for (mod in Mods.ModsList.activeModsNoAssets) {
 			var creditsFilePath = Path.join([mod.folder, 'data/credits.txt']);
 
-			if (FileSystem.exists(creditsFilePath))
+			if (Paths.universalExists(creditsFilePath))
 			{
-				var firstarray:Array<String> = File.getContent(creditsFilePath).split('\n');
+				var firstarray:Array<String> = Paths.universalGetText(creditsFilePath).split('\n');
 				for(i in firstarray)
 				{
 					var arr:Array<String> = i.replace('\\n', '\n').split("::");

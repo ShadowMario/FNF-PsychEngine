@@ -1,10 +1,9 @@
-#if MODS_ALLOWED
 import flixel.util.FlxColor;
-import sys.FileSystem;
-import sys.io.File;
 import haxe.io.Path;
 import haxe.Json;
 import lime.system.System.applicationStorageDirectory;
+#if sys
+import sys.io.File;
 #end
 
 // Represent information about a mod
@@ -30,7 +29,7 @@ class ModInfo {
 			this.dirName = '';
 			this.name = "Psych Engine";
 			this.description = "The assets of Psych Engine. This mod (and description) shouldn’t appear in any visible mod list.";
-			this.color = ModsMenuState.defaultColor;
+			this.color = 0xFF665AFF;
 			this.restart = false;
 			this.global = true;
 		} else {
@@ -38,7 +37,7 @@ class ModInfo {
         	this.dirName = Path.withoutDirectory(Path.removeTrailingSlashes(folder));
         	this.loadPackInfo();
 			#else
-			throw haxe.Exception.thrown("The game tried to load a mod at " + folder + " but mod loading is statically disabled!!!");
+			throw "The game tried to load a mod at " + folder + " but mod loading is statically disabled!!!";
 			#end
 		}
     }
@@ -53,8 +52,8 @@ class ModInfo {
         
         //Try loading json
 		var path = Path.join([this.folder, 'pack.json']);
-		if(FileSystem.exists(path)) {
-			var rawJson:String = File.getContent(path);
+		if(Paths.universalExists(path)) {
+			var rawJson:String = Paths.universalGetText(path);
 			if(rawJson != null && rawJson.length > 0) {
 				var parsedJson:Dynamic = Json.parse(rawJson);
                 var colors:Null<Array<Dynamic>> = cast(parsedJson.colors, Null<Array<Dynamic>>);
@@ -146,7 +145,7 @@ class ModsList {
 		var modsDirectoryList = Paths.getSubdirectories(this.folder);
 
 		// Load mods in modsList.txt which have an existing folder (ignore them otherwise)
-		if (FileSystem.exists(this.modsListPath)) {
+		if (Paths.universalExists(this.modsListPath)) {
 			var lines:Array<String> = CoolUtil.coolTextFile(this.modsListPath);
 			for (line in lines) {
 				var modSplit:Array<String> = line.split('|');
@@ -172,6 +171,7 @@ class ModsList {
 		}
 	}
 
+	#if sys
 	public function save() {
 		var fileStr:String = '';
 		for (modEntry in this.values)
@@ -181,6 +181,7 @@ class ModsList {
 		}
 		File.saveContent(this.modsListPath, fileStr);
 	}
+	#end
 
 	public function getLoadedMods(): Array<ModInfo> {
 		var result: Array<ModInfo> = [];
@@ -195,7 +196,7 @@ class ModsList {
 	static public function loadDefaultModsList(?skipLoad: Bool): ModsList {
 		//TODO:marius: temporary, until everything is switched to use this function.
 		//TODO:marius: make sure it also checks if mods are installed, even if there is no modsList.txt
-		//if (FileSystem.exists("modsList.txt")) {
+		//if (Paths.universalExists("modsList.txt")) {
 		return new ModsList("mods", "modsList.txt", skipLoad);
 		/*} else {
 			//TODO:marius: make sure this end up being an appropriate directory. End up being ~/.local/share/ShadowMario/PsychEngine on Linux.
@@ -221,8 +222,6 @@ class ModsList {
 		ModsList.activeMods = [];
 		#end
 		ModsList.activeMods.push(new ModInfo("assets"));
-		#if MODS_ALLOWED
 		ModsList.globalActiveMods = ModsList.activeMods.filter(function (modinfo) return modinfo.useAsGlobal());
-		#end
 	}
 }

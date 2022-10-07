@@ -17,8 +17,6 @@ import flixel.tweens.FlxTween;
 import lime.utils.Assets;
 import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
-import sys.io.File;
-import sys.FileSystem;
 import haxe.Json;
 import haxe.format.JsonParser;
 import openfl.display.BitmapData;
@@ -298,7 +296,7 @@ class ModsMenuState extends MusicBeatState
 			//Don't ever cache the icons, it's a waste of loaded memory
 			var loadedIcon:BitmapData = null;
 			var iconToUse:String = Path.join([modsList.folder, entry.dirName, 'pack.png']);
-			if(FileSystem.exists(iconToUse))
+			if(Paths.universalExists(iconToUse))
 			{
 				loadedIcon = BitmapData.fromFile(iconToUse);
 			}
