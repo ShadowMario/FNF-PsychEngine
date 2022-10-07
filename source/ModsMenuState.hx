@@ -383,7 +383,6 @@ class ModsMenuState extends MusicBeatState
 		}
 		modsList.save();
 		ModsList.loadActiveMods();
-		Paths.pushGlobalMods();
 	}
 
 	var noModsSine:Float = 0;

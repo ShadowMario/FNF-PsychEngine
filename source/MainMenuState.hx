@@ -52,9 +52,6 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-		#if MODS_ALLOWED
-		Paths.pushGlobalMods();
-		#end
 		#if sys
 		if (FileSystem.exists("disable_mods_menu.txt")) {
 			this.optionShit.remove("mods");
