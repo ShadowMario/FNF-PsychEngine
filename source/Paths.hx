@@ -13,6 +13,7 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;
 import flixel.FlxSprite;
+import haxe.io.Path;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -271,13 +272,7 @@ class Paths
 
 	inline static public function font(key:String)
 	{
-		#if MODS_ALLOWED
-		var file:String = modsFont(key);
-		if(FileSystem.exists(file)) {
-			return file;
-		}
-		#end
-		return 'assets/fonts/$key';
+		return getRessourcePath('fonts/' + key);
 	}
 
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
@@ -414,10 +409,6 @@ class Paths
 		return 'mods/' + key;
 	}
 
-	inline static public function modsFont(key:String) {
-		return modFolders('fonts/' + key);
-	}
-
 	inline static public function modsJson(key:String) {
 		return modFolders('data/' + key + '.json');
 	}
@@ -456,21 +447,32 @@ class Paths
 		return modFolders('achievements/' + key + '.json');
 	}*/
 
-	static public function modFolders(key:String) {
-		if(currentModDirectory != null && currentModDirectory.length > 0) {
-			var fileToCheck:String = mods(currentModDirectory + '/' + key);
-			if(FileSystem.exists(fileToCheck)) {
-				return fileToCheck;
+	// Search the given file first in the current mod (if it exist),
+	// else in the list of list of global mods (including Psych Engine’s data)
+	static public function modFolders(key:String, useGameAssets: Bool = false) {
+		return Paths.getRessourcePath(key, false, !useGameAssets, false);
+	}
+
+	// modFolders under another name
+	//TODO:marius: maybe eventually remove modFolders, and get rid of ignoreGameAssets
+	static public function getRessourcePath(key, ignoreMod: Bool = false, ignoreGameAssets: Bool = false, reportError:Bool = true) {
+		for(mod in Mods.ModsList.getCurrentThenGlobalMods()) {
+			if (ignoreGameAssets && mod.isGameAssets) {
+				continue;
 			}
-		}
-
-		for(mod in getGlobalMods()){
-			var fileToCheck:String = mods(mod + '/' + key);
-			if(FileSystem.exists(fileToCheck))
+			if (ignoreMod && !mod.isGameAssets) {
+				continue;
+			}
+			var fileToCheck:String = Path.join([mod.folder, key]);
+			if(FileSystem.exists(fileToCheck) || OpenFlAssets.exists(fileToCheck))
 				return fileToCheck;
-
 		}
-		return mods(currentModDirectory + '/' + key);
+
+		if (reportError) {
+			trace("Error: Can’t get the ressource file " + key);
+		}
+		
+		return null;
 	}
 
 	//TODO:marius: eventually get rid of that

@@ -204,6 +204,15 @@ class ModsList {
 	}
 	#end
 
+	// Return a list with the current loaded mod if it exist, and then all the global mods (include Psych Engine’s data)
+	static public function getCurrentThenGlobalMods() {
+		if (ModsList.currentMod == null) {
+			return ModsList.globalActiveMods;
+		} else {
+			return [ModsList.currentMod].concat(ModsList.globalActiveMods);
+		}
+	}
+
 	static public function loadActiveMods() {
 		#if MODS_ALLOWED
 		ModsList.activeModsNoAssets = ModsList.loadDefaultModsList().getLoadedMods();
