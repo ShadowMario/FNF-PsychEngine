@@ -56,7 +56,7 @@ class MainMenuState extends MusicBeatState
 		Paths.pushGlobalMods();
 		#end
 		#if sys
-		if (FileSystem("disable_mods_menu.txt")) {
+		if (FileSystem.exists("disable_mods_menu.txt")) {
 			this.optionShit.remove("mods");
 		}
 		#else

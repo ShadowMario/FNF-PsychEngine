@@ -80,7 +80,7 @@ class CreditsState extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-		//TODO:marius: just add a data/credits.txt to the assets
+		//TODO:marius: just add a data/credits.txt to the assets and a universal listDirectory?
 		#if MODS_ALLOWED
 		for (mod in Mods.ModsList.activeModsNoAssets) {
 			var creditsFilePath = Path.join([mod.folder, 'data/credits.txt']);

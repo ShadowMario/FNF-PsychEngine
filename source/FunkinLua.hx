@@ -32,6 +32,8 @@ import flixel.math.FlxMath;
 import flixel.util.FlxSave;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.system.FlxAssets.FlxShader;
+import Mods.ModsList;
+import haxe.io.Path;
 
 #if !flash
 import flixel.addons.display.FlxRuntimeShader;
@@ -2877,31 +2879,25 @@ class FunkinLua {
 			luaTrace('Shader $name was already initialized!');
 			return true;
 		}
-
-		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
-		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
-
-		for(mod in Paths.getGlobalMods())
-			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
 		
-		for (folder in foldersToCheck)
-		{
-			if(FileSystem.exists(folder))
+		//TODO:marius: find a mod to check if this work
+		for (mod in ModsList.getCurrentThenGlobalMods()) {
+			var folder = Path.join([mod.folder, "shaders"]);
+			if(Paths.universalExists(folder))
 			{
 				var frag:String = folder + name + '.frag';
 				var vert:String = folder + name + '.vert';
 				var found:Bool = false;
-				if(FileSystem.exists(frag))
+				if(Paths.universalExists(frag))
 				{
-					frag = File.getContent(frag);
+					frag = Paths.universalGetText(frag);
 					found = true;
 				}
 				else frag = null;
 
-				if (FileSystem.exists(vert))
+				if (Paths.universalExists(vert))
 				{
-					vert = File.getContent(vert);
+					vert = Paths.universalGetText(vert);
 					found = true;
 				}
 				else vert = null;
