@@ -405,6 +405,7 @@ class Paths
 	}
 
 	#if MODS_ALLOWED
+	//TODO:marius should probably get rid of them too
 	inline static public function mods(key:String = '') {
 		return 'mods/' + key;
 	}
@@ -464,8 +465,9 @@ class Paths
 				continue;
 			}
 			var fileToCheck:String = Path.join([mod.folder, key]);
-			if(FileSystem.exists(fileToCheck) || OpenFlAssets.exists(fileToCheck))
+			if (Paths.universalExists(fileToCheck)) {
 				return fileToCheck;
+			}
 		}
 
 		if (reportError) {
@@ -528,4 +530,21 @@ class Paths
 		return list;
 	}
 	#end
+
+	static public function universalGetText(path): Null<String> {
+		#if sys
+		if (FileSystem.exists(path)) {
+			return File.getContent(path);
+		}
+		#end
+		return OpenFlAssets.getText(path);
+	}
+
+	static public function universalExists(path): Bool {
+		return
+		#if sys
+		FileSystem.exists(path) ||
+		#end
+		OpenFlAssets.exists(path);
+	}
 }

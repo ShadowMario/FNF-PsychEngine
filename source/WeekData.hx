@@ -117,7 +117,7 @@ class WeekData {
 		for (mod in ModsList.activeModsNoAssets) {
 			var directory:String = Path.join([mod.folder, 'weeks']);
 			if(FileSystem.exists(directory)) {
-				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(directory + 'weekList.txt');
+				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(Path.join([directory, 'weekList.txt']));
 				for (daWeek in listOfWeeks)
 				{
 					var path:String = Path.join([directory, daWeek + '.json']);

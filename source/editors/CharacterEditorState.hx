@@ -33,6 +33,7 @@ import Character;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import lime.system.Clipboard;
 import flixel.animation.FlxAnimation;
+import Mods.ModsList;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -1045,11 +1046,8 @@ class CharacterEditorState extends MusicBeatState
 
 		#if MODS_ALLOWED
 		characterList = [];
-		var directories:Array<String> = [Paths.mods('characters/'), Paths.mods(Paths.currentModDirectory + '/characters/'), Paths.getPreloadPath('characters/')];
-		for(mod in Paths.getGlobalMods())
-			directories.push(Paths.mods(mod + '/characters/'));
-		for (i in 0...directories.length) {
-			var directory:String = directories[i];
+		for (mod in ModsList.getCurrentThenGlobalMods()) {
+			var directory = haxe.io.Path.join([mod.folder, "characters"]);
 			if(FileSystem.exists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = haxe.io.Path.join([directory, file]);
