@@ -531,4 +531,46 @@ class Paths
 		}
 		return false;
 	}
+
+	static private function universalReadDirectory(path, listFile: Bool, listFolder: Bool): Array<String> {
+		#if sys
+		if (FileSystem.exists(path) && FileSystem.isDirectory(path)) {
+			var list = [];
+			for (entry in FileSystem.readDirectory(path)) {
+				var entryPath = Path.join([path, entry]);
+				var isDirectory = FileSystem.isDirectory(entryPath);
+				if ((listFile && !isDirectory) || (listFolder && isDirectory)) {
+					list.push(entry);
+				}
+			};
+			//Do not try to check for additional files in the embedded assets.
+			//It should probably not have what we want to get a list for
+			//on native.
+			return list;
+		}
+		#end
+		var list = [];
+		var pathWithTrailingSlash = Path.addTrailingSlash(path);
+		for (asset in OpenFlAssets.list(null)) {
+			if (asset.startsWith(pathWithTrailingSlash)) {
+				var assetTrimmed = asset.substr(pathWithTrailingSlash.length);
+				var entry = assetTrimmed.split("/")[0];
+				// if the sum of these two element are equal, then the concatenuation
+				// of them have the same length as "asset" (and form it).
+				var isDirectory = asset.length != pathWithTrailingSlash.length + entry.length;
+				if ((listFile && !isDirectory) || (listFolder && isDirectory)) {
+					list.push(entry);
+				}
+			}
+		}
+		return list;
+	}
+
+	static public function universalGetSubFiles(path): Array<String> {
+		return universalReadDirectory(path, true, false);
+	}
+
+	static public function universalGetSubDirectories(path): Array<String> {
+		return universalReadDirectory(path, false, true);
+	}
 }

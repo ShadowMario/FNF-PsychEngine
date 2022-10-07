@@ -93,51 +93,20 @@ class WeekData {
 		weeksList = [];
 		weeksLoaded.clear();
 
-		var baseWeeks:Array<String> = CoolUtil.coolTextFile(Paths.getPreloadPath('weeks/weekList.txt'));
-		for (i in 0...baseWeeks.length) {
-			// the game assets are at the end of activeMods
-			for (mod in ModsList.activeMods) {
-				var fileToCheck:String = Path.join([mod.folder, 'weeks', baseWeeks[i] + '.json']);
-				if(!weeksLoaded.exists(baseWeeks[i])) {
-					var week:WeekFile = getWeekFile(fileToCheck);
-					if(week != null) {
-						var weekFile:WeekData = new WeekData(week, baseWeeks[i]);
-						weekFile.mod = mod;
-
-						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay))) {
-							weeksLoaded.set(baseWeeks[i], weekFile);
-							weeksList.push(baseWeeks[i]);
-						}
-					}
-				}
-			}
-		}
-
-		#if MODS_ALLOWED
-		for (mod in ModsList.activeModsNoAssets) {
+		for (mod in ModsList.activeMods) {
 			var directory:String = Path.join([mod.folder, 'weeks']);
-			if(FileSystem.exists(directory)) {
-				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(Path.join([directory, 'weekList.txt']));
-				for (daWeek in listOfWeeks)
+			if(Paths.universalFolderExists(directory)) {
+				for (file in Paths.universalGetSubFiles(directory))
 				{
-					var path:String = Path.join([directory, daWeek + '.json']);
-					if(sys.FileSystem.exists(path))
+					var path = Path.join([directory, file]);
+					if (file.endsWith('.json'))
 					{
-						addWeek(daWeek, path, mod);
-					}
-				}
-
-				for (file in FileSystem.readDirectory(directory))
-				{
-					var path = haxe.io.Path.join([directory, file]);
-					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json'))
-					{
+						//addWeek check if it has already been loaded
 						addWeek(file.substr(0, file.length - 5), path, mod);
 					}
 				}
 			}
 		}
-		#end
 	}
 
 	private static function addWeek(weekToCheck:String, path:String, mod:Null<Mods.ModInfo>)

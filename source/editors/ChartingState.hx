@@ -493,9 +493,9 @@ class ChartingState extends MusicBeatState
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "characters"]);
 			if(Paths.universalFolderExists(directory)) {
-				for (file in FileSystem.readDirectory(directory)) {
+				for (file in Paths.universalGetSubFiles(directory)) {
 					var path = Path.join([directory, file]);
-					if (!FileSystem.isDirectory(path) && file.endsWith('.json')) {
+					if (file.endsWith('.json')) {
 						var charToCheck:String = file.substr(0, file.length - 5);
 						if(!charToCheck.endsWith('-dead') && !tempMap.exists(charToCheck)) {
 							tempMap.set(charToCheck, true);
@@ -535,9 +535,9 @@ class ChartingState extends MusicBeatState
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "stages"]);
 			if(Paths.universalFolderExists(directory)) {
-				for (file in FileSystem.readDirectory(directory)) {
+				for (file in Paths.universalGetSubFiles(directory)) {
 					var path = Path.join([directory, file]);
-					if (!FileSystem.isDirectory(path) && file.endsWith('.json')) {
+					if (file.endsWith('.json')) {
 						var stageToCheck:String = file.substr(0, file.length - 5);
 						if(!tempMap.exists(stageToCheck)) {
 							tempMap.set(stageToCheck, true);
