@@ -469,7 +469,7 @@ class Paths
 				continue;
 			}
 			var fileToCheck:String = Path.join([mod.folder, key]);
-			if (Paths.universalExists(fileToCheck)) {
+			if (Paths.universalFileExists(fileToCheck)) {
 				return fileToCheck;
 			}
 		}
@@ -507,11 +507,28 @@ class Paths
 		return OpenFlAssets.getText(path);
 	}
 
-	static public function universalExists(path): Bool {
-		return
+	static public function universalFileExists(path): Bool {
 		#if sys
-		FileSystem.exists(path) ||
+		if (FileSystem.exists(path) && !FileSystem.isDirectory(path)) {
+			return true;
+		}
 		#end
-		OpenFlAssets.exists(path);
+		return OpenFlAssets.exists(path);
+	}
+
+	static public function universalFolderExists(path): Bool {
+		#if sys
+		if (FileSystem.exists(path) && FileSystem.isDirectory(path)) {
+			return true;
+		}
+		#end
+		// check if there is an asset file with a path that start with path + "/"
+		var pathWithTrailingSlash = Path.addTrailingSlash(path);
+		for (asset in OpenFlAssets.list(null)) {
+			if (asset.startsWith(pathWithTrailingSlash)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

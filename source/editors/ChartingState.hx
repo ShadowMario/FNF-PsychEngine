@@ -492,7 +492,7 @@ class ChartingState extends MusicBeatState
 		var tempMap:Map<String, Bool> = new Map<String, Bool>();
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "characters"]);
-			if(Paths.universalExists(directory)) {
+			if(Paths.universalFolderExists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = Path.join([directory, file]);
 					if (!FileSystem.isDirectory(path) && file.endsWith('.json')) {
@@ -534,7 +534,7 @@ class ChartingState extends MusicBeatState
 		var stages:Array<String> = [];
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "stages"]);
-			if(Paths.universalExists(directory)) {
+			if(Paths.universalFolderExists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = Path.join([directory, file]);
 					if (!FileSystem.isDirectory(path) && file.endsWith('.json')) {
@@ -908,7 +908,7 @@ class ChartingState extends MusicBeatState
 		#if LUA_ALLOWED
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "custom_notetypes"]);
-			if(Paths.universalExists(directory)) {
+			if(Paths.universalFolderExists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = Path.join([directory, file]);
 					if (!FileSystem.isDirectory(path) && file.endsWith('.lua')) {
@@ -961,7 +961,7 @@ class ChartingState extends MusicBeatState
 		var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "custom_events"]);
-			if(Paths.universalExists(directory)) {
+			if(Paths.universalFolderExists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = Path.join([directory, file]);
 					if (!FileSystem.isDirectory(path) && file != 'readme.txt' && file.endsWith('.txt')) {

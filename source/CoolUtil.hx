@@ -61,7 +61,7 @@ class CoolUtil
 	public static function coolTextFile(path:String):Array<String>
 	{
 		var daList:Array<String> = [];
-		if (Paths.universalExists(path)) {
+		if (Paths.universalFileExists(path)) {
 			daList = Paths.universalGetText(path).trim().split('\n');
 		}
 		for (i in 0...daList.length)
