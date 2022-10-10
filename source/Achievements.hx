@@ -58,7 +58,7 @@ class Achievements {
 			if(FlxG.save.data.achievementsMap != null) {
 				achievementsMap = FlxG.save.data.achievementsMap;
 			}
-			if(henchmenDeath == 0 && FlxG.save.data.henchmenDeath != null) {
+			if(henchmenDeath == 999999999 && FlxG.save.data.henchmenDeath != null) {
 				henchmenDeath = FlxG.save.data.henchmenDeath;
 			}
 		}
@@ -68,7 +68,7 @@ class Achievements {
 class AttachedAchievement extends FlxSprite {
 	public var sprTracker:FlxSprite;
 	private var tag:String;
-	public function new(x:Float = 0, y:Float = 0, name:String) {
+	public function new(x:Float = 5, y:Float = 10, name:String) {
 		super(x, y);
 
 		changeAchievement(name);
@@ -86,7 +86,7 @@ class AttachedAchievement extends FlxSprite {
 		} else {
 			loadGraphic(Paths.image('achievements/lockedachievement'));
 		}
-		scale.set(0.7, 0.7);
+		scale.set(0.10, 0.11);
 		updateHitbox();
 	}
 
@@ -133,7 +133,7 @@ class AchievementObject extends FlxSpriteGroup {
 		if(camera != null) {
 			cam = [camera];
 		}
-		alpha = 0;
+		alpha = 1;
 		achievementBG.cameras = cam;
 		achievementName.cameras = cam;
 		achievementText.cameras = cam;
