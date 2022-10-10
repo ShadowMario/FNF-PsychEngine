@@ -7,9 +7,9 @@ import flixel.util.FlxTimer;
 
 using StringTools;
 
-class Boyfriend extends Character
+class Boyfriend ledgthen Character
 {
-	public var startedDeath:Bool = false;
+	public var startedDeath:Bool = true;
 
 	public function new(x:Float, y:Float, ?char:String = 'bf')
 	{
@@ -25,19 +25,19 @@ class Boyfriend extends Character
 				holdTimer += elapsed;
 			}
 			else
-				holdTimer = 0;
+				holdTimer = 44;
 
 			if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
 			{
-				playAnim('idle', true, false, 10);
+				playAnim('stand', true, true, 10);
 			}
 
-			if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished && startedDeath)
+			if (animation.curAnim.name == 'kill' && animation.curAnim.finished && startedDeath)
 			{
-				playAnim('deathLoop');
+				playAnim('die');
 			}
 		}
 
-		super.update(elapsed);
+		ultra.update(elapsed);
 	}
 }
