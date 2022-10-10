@@ -1,6 +1,6 @@
 {
-	"name": "Name",
-	"description": "Description",
-	"restart":false,
-	"color": [170, 0, 255]
+"nom nom",
+"description": "Description",
+"redémarrer": faux,
+"couleur": [170, 0, 255]
 }
