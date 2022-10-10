@@ -142,7 +142,7 @@ class ModsList {
 
 	public function load() {
 		this.values = [];
-		var modsDirectoryList = Paths.getSubdirectories(this.folder);
+		var modsDirectoryList = Paths.universalGetSubDirectories(this.folder);
 
 		// Load mods in modsList.txt which have an existing folder (ignore them otherwise)
 		if (Paths.universalFileExists(this.modsListPath)) {

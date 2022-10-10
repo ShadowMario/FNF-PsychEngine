@@ -390,22 +390,6 @@ class Paths
 		localTrackedAssets.push(gottenPath);
 		return currentTrackedSounds.get(gottenPath);
 	}
-	
-	//TODO:marius: universalGetSubDirectories and universalGetSubFiles
-	#if sys
-	static public function getSubdirectories(rootFolder: String):Array<String> {
-		var list:Array<String> = [];
-		if(FileSystem.exists(rootFolder)) {
-			for (folder in FileSystem.readDirectory(rootFolder)) {
-				var path = haxe.io.Path.join([rootFolder, folder]);
-				if (sys.FileSystem.isDirectory(path)) {
-					list.push(folder);
-				}
-			}
-		}
-		return list;
-	}
-	#end
 
 	#if MODS_ALLOWED
 	//TODO:marius should probably get rid of them too
@@ -481,22 +465,9 @@ class Paths
 		return null;
 	}
 
-	#if MODS_ALLOWED
-	//TODO:marius: should eventually be removed
-	static public function getModDirectories():Array<String> {
-		var list:Array<String> = [];
-		var modsFolder:String = mods();
-		if(FileSystem.exists(modsFolder)) {
-			for (folder in FileSystem.readDirectory(modsFolder)) {
-				var path = haxe.io.Path.join([modsFolder, folder]);
-				if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder) && !list.contains(folder)) {
-					list.push(folder);
-				}
-			}
-		}
-		return list;
-	}
-	#end
+	// These universal code work on both Embedded assets and normal files
+	// They try to use the normal files, but if missing, fall back on the
+	// embedded assets.
 
 	static public function universalGetText(path): Null<String> {
 		#if sys
