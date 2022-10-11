@@ -1048,8 +1048,8 @@ class CharacterEditorState extends MusicBeatState
 		characterList = [];
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory = haxe.io.Path.join([mod.folder, "characters"]);
-			if(Paths.universalFolderExists(directory)) {
-				for (file in Paths.universalGetSubFiles(directory)) {
+			if(UniPath.folderExists(directory)) {
+				for (file in UniPath.getSubFiles(directory)) {
 					var path = Path.join([directory, file]);
 					if (file.endsWith('.json')) {
 						var charToCheck:String = file.substr(0, file.length - 5);

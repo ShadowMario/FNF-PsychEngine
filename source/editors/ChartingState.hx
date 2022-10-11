@@ -492,8 +492,8 @@ class ChartingState extends MusicBeatState
 		var tempMap:Map<String, Bool> = new Map<String, Bool>();
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "characters"]);
-			if(Paths.universalFolderExists(directory)) {
-				for (file in Paths.universalGetSubFiles(directory)) {
+			if(UniPath.folderExists(directory)) {
+				for (file in UniPath.getSubFiles(directory)) {
 					var path = Path.join([directory, file]);
 					if (file.endsWith('.json')) {
 						var charToCheck:String = file.substr(0, file.length - 5);
@@ -534,8 +534,8 @@ class ChartingState extends MusicBeatState
 		var stages:Array<String> = [];
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "stages"]);
-			if(Paths.universalFolderExists(directory)) {
-				for (file in Paths.universalGetSubFiles(directory)) {
+			if(UniPath.folderExists(directory)) {
+				for (file in UniPath.getSubFiles(directory)) {
 					var path = Path.join([directory, file]);
 					if (file.endsWith('.json')) {
 						var stageToCheck:String = file.substr(0, file.length - 5);
@@ -908,7 +908,7 @@ class ChartingState extends MusicBeatState
 		#if LUA_ALLOWED
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "custom_notetypes"]);
-			if(Paths.universalFolderExists(directory)) {
+			if(UniPath.folderExists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = Path.join([directory, file]);
 					if (!FileSystem.isDirectory(path) && file.endsWith('.lua')) {
@@ -961,7 +961,7 @@ class ChartingState extends MusicBeatState
 		var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var directory:String = Path.join([mod.folder, "custom_events"]);
-			if(Paths.universalFolderExists(directory)) {
+			if(UniPath.folderExists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = Path.join([directory, file]);
 					if (!FileSystem.isDirectory(path) && file != 'readme.txt' && file.endsWith('.txt')) {
@@ -2414,7 +2414,7 @@ class ChartingState extends MusicBeatState
 	function loadHealthIconFromCharacter(char:String) {
 		var path: Null<String> = Paths.getRessourcePath('characters/' + char + '.json');
 
-		var rawJson = Paths.universalGetText(path);
+		var rawJson = UniPath.getText(path);
 
 		var json:Character.CharacterFile = cast Json.parse(rawJson);
 		return json.healthicon;

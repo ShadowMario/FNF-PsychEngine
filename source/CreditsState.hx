@@ -85,9 +85,9 @@ class CreditsState extends MusicBeatState
 		for (mod in Mods.ModsList.activeModsNoAssets) {
 			var creditsFilePath = Path.join([mod.folder, 'data/credits.txt']);
 
-			if (Paths.universalFileExists(creditsFilePath))
+			if (UniPath.fileExists(creditsFilePath))
 			{
-				var firstarray:Array<String> = Paths.universalGetText(creditsFilePath).split('\n');
+				var firstarray:Array<String> = UniPath.getText(creditsFilePath).split('\n');
 				for(i in firstarray)
 				{
 					var arr:Array<String> = i.replace('\\n', '\n').split("::");

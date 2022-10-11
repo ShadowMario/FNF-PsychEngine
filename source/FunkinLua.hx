@@ -2883,21 +2883,21 @@ class FunkinLua {
 		//TODO:marius: find a mod to check if this work
 		for (mod in ModsList.getCurrentThenGlobalMods()) {
 			var folder = Path.join([mod.folder, "shaders"]);
-			if(Paths.universalFolderExists(folder))
+			if(UniPath.folderExists(folder))
 			{
 				var frag:String = folder + name + '.frag';
 				var vert:String = folder + name + '.vert';
 				var found:Bool = false;
-				if(Paths.universalFileExists(frag))
+				if(UniPath.fileExists(frag))
 				{
-					frag = Paths.universalGetText(frag);
+					frag = UniPath.getText(frag);
 					found = true;
 				}
 				else frag = null;
 
-				if (Paths.universalFileExists(vert))
+				if (UniPath.fileExists(vert))
 				{
-					vert = Paths.universalGetText(vert);
+					vert = UniPath.getText(vert);
 					found = true;
 				}
 				else vert = null;

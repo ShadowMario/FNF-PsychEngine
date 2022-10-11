@@ -95,8 +95,8 @@ class WeekData {
 
 		for (mod in ModsList.activeMods) {
 			var directory:String = Path.join([mod.folder, 'weeks']);
-			if(Paths.universalFolderExists(directory)) {
-				for (file in Paths.universalGetSubFiles(directory))
+			if(UniPath.folderExists(directory)) {
+				for (file in UniPath.getSubFiles(directory))
 				{
 					var path = Path.join([directory, file]);
 					if (file.endsWith('.json'))
@@ -128,16 +128,7 @@ class WeekData {
 	}
 
 	private static function getWeekFile(path:String):WeekFile {
-		var rawJson:String = null;
-		#if MODS_ALLOWED
-		if(FileSystem.exists(path)) {
-			rawJson = File.getContent(path);
-		}
-		#else
-		if(OpenFlAssets.exists(path)) {
-			rawJson = Assets.getText(path);
-		}
-		#end
+		var rawJson:String = UniPath.getText(path);
 
 		if(rawJson != null && rawJson.length > 0) {
 			return cast Json.parse(rawJson);

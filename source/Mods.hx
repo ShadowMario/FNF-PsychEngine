@@ -52,8 +52,8 @@ class ModInfo {
         
         //Try loading json
 		var path = Path.join([this.folder, 'pack.json']);
-		if(Paths.universalFileExists(path)) {
-			var rawJson:String = Paths.universalGetText(path);
+		if(UniPath.fileExists(path)) {
+			var rawJson:String = UniPath.getText(path);
 			if(rawJson != null && rawJson.length > 0) {
 				var parsedJson:Dynamic = Json.parse(rawJson);
                 var colors:Null<Array<Dynamic>> = cast(parsedJson.colors, Null<Array<Dynamic>>);
@@ -142,10 +142,10 @@ class ModsList {
 
 	public function load() {
 		this.values = [];
-		var modsDirectoryList = Paths.universalGetSubDirectories(this.folder);
+		var modsDirectoryList = UniPath.getSubDirectories(this.folder);
 
 		// Load mods in modsList.txt which have an existing folder (ignore them otherwise)
-		if (Paths.universalFileExists(this.modsListPath)) {
+		if (UniPath.fileExists(this.modsListPath)) {
 			var lines:Array<String> = CoolUtil.coolTextFile(this.modsListPath);
 			for (line in lines) {
 				var modSplit:Array<String> = line.split('|');
@@ -196,7 +196,7 @@ class ModsList {
 	static public function loadDefaultModsList(?skipLoad: Bool): ModsList {
 		//TODO:marius: temporary, until everything is switched to use this function.
 		//TODO:marius: make sure it also checks if mods are installed, even if there is no modsList.txt
-		//if (Paths.universalFileExists("modsList.txt")) {
+		//if (UniPath.fileExists("modsList.txt")) {
 		return new ModsList("mods", "modsList.txt", skipLoad);
 		/*} else {
 			//TODO:marius: make sure this end up being an appropriate directory. End up being ~/.local/share/ShadowMario/PsychEngine on Linux.
