@@ -4531,12 +4531,15 @@ class PlayState extends MusicBeatState
 		RecalculateRating(true);
 
 		var char:Character = boyfriend;
+		setOnLuas('gfNote', false);
 		if(daNote.gfNote) {
+			setOnLuas('gfNote', true);
 			char = gf;
 		}
-
+		
 		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
 		{
+			setOnLuas('gfNote', false);
 			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
 			char.playAnim(animToPlay, true);
 		}
@@ -4611,12 +4614,15 @@ class PlayState extends MusicBeatState
 
 			var char:Character = dad;
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
+			setOnLuas('gfNote', false);
 			if(note.gfNote) {
+				setOnLuas('gfNote', true);
 				char = gf;
 			}
-
+			
 			if(char != null)
 			{
+				setOnLuas('gfNote', false);
 				char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
 			}
@@ -4693,14 +4699,17 @@ class PlayState extends MusicBeatState
 
 				if(note.gfNote)
 				{
+					setOnLuas('gfNote', false);
 					if(gf != null)
 					{
+						setOnLuas('gfNote', true);
 						gf.playAnim(animToPlay + note.animSuffix, true);
 						gf.holdTimer = 0;
 					}
 				}
 				else
 				{
+					setOnLuas('gfNote', false);
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
 				}
