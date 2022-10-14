@@ -1921,7 +1921,7 @@ class PlayState extends MusicBeatState
 					gfCutscene.alpha = 0.00001;
 				}
 
-				picoCutscene.anim.addBySymbol('anim', 'Pico Badass', 24, false);
+				picoCutscene.anim.addBySymbol('anim', 'PicoAtlas', 24, false);
 				addBehindGF(picoCutscene);
 				picoCutscene.alpha = 0.00001;
 
