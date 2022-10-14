@@ -1977,7 +1977,7 @@ class PlayState extends MusicBeatState
 						{
 							gfCutscene.visible = false;
 							picoCutscene.alpha = 1;
-							picoCutscene.anim.play('anim', true);
+							picoCutscene.animation.play('anim', true);
 
 							boyfriendGroup.alpha = 1;
 							boyfriendCutscene.visible = false;
