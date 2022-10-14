@@ -59,6 +59,9 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
+// texture atlas stuff
+import flxanimate.*;
+import flxanimate.FlxAnimate;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -217,7 +220,7 @@ class PlayState extends MusicBeatState
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
 
-	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
+	var dialogue:Array<String> = null;
 	var dialogueJson:DialogueFile = null;
 
 	var dadbattleBlack:BGSprite;
@@ -323,6 +326,8 @@ class PlayState extends MusicBeatState
 	public static var lastCombo:FlxSprite;
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
+
+	public var freeplayCutscene:Bool = true; // this is mainly for debugging purposes atm
 
 	override public function create()
 	{
@@ -747,10 +752,6 @@ class PlayState extends MusicBeatState
 				GameOverSubstate.endSoundName = 'gameOverEnd-pixel';
 				GameOverSubstate.characterName = 'bf-pixel-dead';
 
-				/*if(!ClientPrefs.lowQuality) { //Does this even do something?
-					var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
-					var waveEffectFG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
-				}*/
 				var posX = 400;
 				var posY = 200;
 				if(!ClientPrefs.lowQuality) {
@@ -1079,12 +1080,7 @@ class PlayState extends MusicBeatState
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
 
-		// startCountdown();
-
 		generateSong(SONG.song);
-
-		// After all characters being loaded, it makes then invisible 0.01s later so that the player won't freeze when you change characters
-		// add(strumLine);
 
 		camFollow = new FlxPoint();
 		camFollowPos = new FlxObject(0, 0, 1, 1);
@@ -1268,7 +1264,7 @@ class PlayState extends MusicBeatState
 		#end
 
 		var daSong:String = Paths.formatToSongPath(curSong);
-		if (isStoryMode && !seenCutscene)
+		if (isStoryMode && !seenCutscene || freeplayCutscene)
 		{
 			switch (daSong)
 			{
@@ -1786,7 +1782,7 @@ class PlayState extends MusicBeatState
 		var gfCutscene:FlxSprite = new FlxSprite(gf.x - 104, gf.y + 122);
 		gfCutscene.antialiasing = ClientPrefs.globalAntialiasing;
 		cutsceneHandler.push(gfCutscene);
-		var picoCutscene:FlxSprite = new FlxSprite(gf.x - 849, gf.y - 264);
+		var picoCutscene:FlxAnimate = new FlxAnimate(gf.x - 849, gf.y - 264, 'week7:assets/week7/images/cutscenes/stressPico');
 		picoCutscene.antialiasing = ClientPrefs.globalAntialiasing;
 		cutsceneHandler.push(picoCutscene);
 		var boyfriendCutscene:FlxSprite = new FlxSprite(boyfriend.x + 5, boyfriend.y + 20);
@@ -1925,8 +1921,7 @@ class PlayState extends MusicBeatState
 					gfCutscene.alpha = 0.00001;
 				}
 
-				picoCutscene.frames = AtlasFrameMaker.construct('cutscenes/stressPico');
-				picoCutscene.animation.addByPrefix('anim', 'Pico Badass', 24, false);
+				picoCutscene.anim.addBySymbol('anim', 'Pico Badass', 24, false);
 				addBehindGF(picoCutscene);
 				picoCutscene.alpha = 0.00001;
 
@@ -1986,7 +1981,7 @@ class PlayState extends MusicBeatState
 						{
 							gfCutscene.visible = false;
 							picoCutscene.alpha = 1;
-							picoCutscene.animation.play('anim', true);
+							picoCutscene.anim.play('anim', true);
 
 							boyfriendGroup.alpha = 1;
 							boyfriendCutscene.visible = false;
