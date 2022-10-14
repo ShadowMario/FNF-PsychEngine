@@ -59,9 +59,6 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
-// texture atlas stuff
-import flxanimate.*;
-import flxanimate.FlxAnimate;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -1782,7 +1779,7 @@ class PlayState extends MusicBeatState
 		var gfCutscene:FlxSprite = new FlxSprite(gf.x - 104, gf.y + 122);
 		gfCutscene.antialiasing = ClientPrefs.globalAntialiasing;
 		cutsceneHandler.push(gfCutscene);
-		var picoCutscene:FlxAnimate = new FlxAnimate(gf.x - 849, gf.y - 264, 'week7:assets/week7/images/cutscenes/stressPico');
+		var picoCutscene:FlxSprite = new FlxSprite(gf.x - 849, gf.y - 264);
 		picoCutscene.antialiasing = ClientPrefs.globalAntialiasing;
 		cutsceneHandler.push(picoCutscene);
 		var boyfriendCutscene:FlxSprite = new FlxSprite(boyfriend.x + 5, boyfriend.y + 20);
@@ -1921,7 +1918,8 @@ class PlayState extends MusicBeatState
 					gfCutscene.alpha = 0.00001;
 				}
 
-				picoCutscene.anim.addBySymbol('anim', 'PicoAtlas', 24, false);
+				picoCutscene.frames = AtlasFrameMaker.construct('cutscenes/stressPico');
+				picoCutscene.animation.addByPrefix('anim', 'Pico Badass', 24, false);
 				addBehindGF(picoCutscene);
 				picoCutscene.alpha = 0.00001;
 
