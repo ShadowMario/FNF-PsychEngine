@@ -324,8 +324,6 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
-	public var freeplayCutscene:Bool = true; // this is mainly for debugging purposes atm
-
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -1261,7 +1259,7 @@ class PlayState extends MusicBeatState
 		#end
 
 		var daSong:String = Paths.formatToSongPath(curSong);
-		if (isStoryMode && !seenCutscene || freeplayCutscene)
+		if (isStoryMode && !seenCutscene)
 		{
 			switch (daSong)
 			{
