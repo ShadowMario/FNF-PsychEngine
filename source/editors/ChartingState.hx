@@ -1491,8 +1491,7 @@ class ChartingState extends MusicBeatState
 			switch (sender)
 			{
 				case 'playbackSpeed':
-					set_playbackSpeed(Std.int(sliderRate.value));
-				default:
+					playbackSpeed = Std.int(sliderRate.value);
 			}
 		}
 
