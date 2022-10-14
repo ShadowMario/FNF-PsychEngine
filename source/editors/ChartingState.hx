@@ -145,13 +145,7 @@ class ChartingState extends MusicBeatState
 	var curSelectedNote:Array<Dynamic> = null;
 
 	var tempBpm:Float = 0;
-	var playbackSpeed(default, set):Float = 1;
-
-	function set_playbackSpeed(value:Float)
-	{
-		playbackSpeed = value;
-		return playbackSpeed;
-	}
+	var playbackSpeed:Float = 1;
 
 	var vocals:FlxSound = null;
 
@@ -1497,8 +1491,7 @@ class ChartingState extends MusicBeatState
 			switch (sender)
 			{
 				case 'playbackSpeed':
-					set_playbackSpeed(Std.int(sliderRate.value));
-				default:
+					playbackSpeed = Std.int(sliderRate.value);
 			}
 		}
 
