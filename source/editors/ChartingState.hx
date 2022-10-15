@@ -221,7 +221,7 @@ class ChartingState extends MusicBeatState
 				speed: 1,
 				stage: 'stage',
 				validScore: false,
-				autoZoom: true  // The default value would be better if stays as true, Nex decided so but if you want you can change it (not recommended tho)
+				autoZoom: true
 			};
 			addSection();
 			PlayState.SONG = _song;
