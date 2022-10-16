@@ -3136,7 +3136,7 @@ class FunkinLua {
 			switch(status) {
 				case Lua.LUA_ERRRUN: return "Runtime Error";
 				case Lua.LUA_ERRMEM: return "Memory Allocation Error";
-				case Lua.LUA_ERRERR: return "Crtical Error";
+				case Lua.LUA_ERRERR: return "Critical Error";
 			}
 			return "Unknown Error";
 		}
