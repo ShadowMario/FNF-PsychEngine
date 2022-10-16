@@ -5301,7 +5301,7 @@ class PlayState extends MusicBeatState
 							}
 						}
 					case 'toastie':
-						if(/*ClientPrefs..getPref('framerate') <= 60 &&*/ !ClientPrefs.getPref('shaders') && ClientPrefs.getPref('lowQuality') && !ClientPrefs.getPref('globalAntialiasing')) {
+						if(/*ClientPrefs.getPref('framerate') <= 60 &&*/ !ClientPrefs.getPref('shaders') && ClientPrefs.getPref('lowQuality') && !ClientPrefs.getPref('globalAntialiasing')) {
 							unlock = true;
 						}
 					case 'debugger':
