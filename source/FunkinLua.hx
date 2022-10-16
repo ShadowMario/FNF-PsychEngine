@@ -3153,7 +3153,7 @@ class FunkinLua {
 		lastCalledFunction = func;
 		try {
 			if(lua == null) return Function_Continue;
-			
+
 			Lua.getglobal(lua, func);
 			var type:Int = Lua.type(lua, -1);
 
