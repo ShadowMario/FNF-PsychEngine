@@ -305,6 +305,7 @@ class PlayState extends MusicBeatState
 	public static var instance:PlayState;
 	public var luaArray:Array<FunkinLua> = [];
 	public var achievementArray:Array<FunkinLua> = [];
+	public var achievementWeeks:Array<String> = [];
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
 
@@ -915,7 +916,7 @@ class PlayState extends MusicBeatState
 		#end
 
 		//CUSTOM ACHIVEMENTS
-		#if (MODS_ALLOWED && LUA_ALLOWED)
+		#if (MODS_ALLOWED && LUA_ALLOWED && ACHIEVEMENTS_ALLOWED)
 		var luaFiles:Array<String> = Achievements.getModAchievements().copy();
 		if(luaFiles.length > 0){
 			for(luaFile in luaFiles)
@@ -923,6 +924,18 @@ class PlayState extends MusicBeatState
 				var lua = new FunkinLua(luaFile);
 				luaArray.push(lua);
 				achievementArray.push(lua);
+			}
+		}
+
+		var achievementMetas = Achievements.getModAchievementMetas().copy();
+		for (i in achievementMetas) {
+			if(i.lua_code != null) {
+				var lua = new FunkinLua(null, i.lua_code);
+				luaArray.push(lua);
+				achievementArray.push(lua);
+			}
+			if(i.week_nomiss != null) {
+				achievementWeeks.push(i.week_nomiss);
 			}
 		}
 		#end
@@ -3944,8 +3957,9 @@ class PlayState extends MusicBeatState
 			var achieve:String = checkForAchievement(['week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss',
 				'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad',
 				'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
+			var customAchieves:String = checkForAchievement(achievementWeeks);
 
-			if(achieve != null) {
+			if(achieve != null || customAchieves != null) {
 				startAchievement(achieve);
 				return;
 			}
@@ -5255,7 +5269,7 @@ class PlayState extends MusicBeatState
 		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice', false) || ClientPrefs.getGameplaySetting('botplay', false));
 		for (i in 0...achievesToCheck.length) {
 			var achievementName:String = achievesToCheck[i];
-			if(!Achievements.isAchievementUnlocked(achievementName) && !cpuControlled) {
+			if(!Achievements.isAchievementUnlocked(achievementName) && !cpuControlled && Achievements.exists(achievementName)) {
 				var unlock:Bool = false;
 				
 				if (achievementName.contains(WeekData.getWeekFileName()) && achievementName.endsWith('nomiss')) // any FC achievements, name should be "weekFileName_nomiss", e.g: "weekd_nomiss";
