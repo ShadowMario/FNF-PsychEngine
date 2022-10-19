@@ -188,6 +188,8 @@
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 
+	<error value="Seems like you're not using NebulaZoruas fork of luajit, please use it instead." if="${linc_luajit != https://github.com/nebulazorua/linc_luajit.git}" />
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
