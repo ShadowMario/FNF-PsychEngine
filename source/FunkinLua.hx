@@ -2748,8 +2748,13 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "stringEndsWith", function(str:String, end:String) {
 			return str.endsWith(end);
 		});
-		Lua_helper.add_callback(lua, "stringSplit", function(str:String, split:String) {
-			return str.split(split);
+		Lua_helper.add_callback(lua, "stringSplit", function(str:String, split:String, trimContents:Bool = false) {
+			if(trimContents) {
+				str.split(split);
+				return str.trim(split);
+			} else {
+				return str.split(split);
+			}
 		});
 		Lua_helper.add_callback(lua, "stringTrim", function(str:String) {
 			return str.trim();
