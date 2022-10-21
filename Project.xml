@@ -191,7 +191,7 @@
 	<!-- I was trying to make it so it'd give you an error if your not using NebulaZoruas fork of linc_luajit but I couldn't figure it out. -->
 	<error value="Seems like you're not using NebulaZoruas github fork of luajit, please use it instead." if="${linc_luajit == 0.0.4}" />
 
-	<error value="Seems like you're using Haxe ${haxe}, please update!" if="${haxe == 4.1.5}" />
+	<error value="Seems like you're using Haxe ${haxe}, please update!" if="${haxe == 4.1.5}" unless="linux"/>
 
 	<!-- _________________________________ Custom _______________________________ -->
 
