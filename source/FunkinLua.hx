@@ -3198,7 +3198,7 @@ class FunkinLua {
 
 	#if LUA_ALLOWED
 	inline function resultIsAllowed(type:Int):Bool {
-		return type >= Lua.LUA_TNIL && type < Lua.LUA_TTABLE && type != Lua.LUA_TLIGHTUSERDATA;
+		return type >= Lua.LUA_TNIL && type <= Lua.LUA_TTABLE && type != Lua.LUA_TLIGHTUSERDATA;
 	}
 	#end
 
