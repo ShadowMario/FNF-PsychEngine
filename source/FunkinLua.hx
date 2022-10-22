@@ -256,7 +256,7 @@ class FunkinLua {
 			if(!ClientPrefs.shaders) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
-			return initLuaShader(name, glslVersion);
+			return PlayState.instance.initLuaShader(name, glslVersion);
 			#else
 			luaTrace("initLuaShader: Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
 			#end
@@ -267,7 +267,7 @@ class FunkinLua {
 			if(!ClientPrefs.shaders) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
-			if(!PlayState.instance.runtimeShaders.exists(shader) && !initLuaShader(shader))
+			if(!PlayState.instance.runtimeShaders.exists(shader) && !PlayState.instance.initLuaShader(shader))
 			{
 				luaTrace('setSpriteShader: Shader $shader is missing!', false, false, FlxColor.RED);
 				return false;
@@ -3139,61 +3139,64 @@ class FunkinLua {
 
 		if (v != null) v = v.trim();
 		if (v == null || v == "") {
-			switch(status) {
-				case Lua.LUA_ERRRUN: return "Runtime Error";
-				case Lua.LUA_ERRMEM: return "Memory Allocation Error";
-				case Lua.LUA_ERRERR: return "Critical Error";
+			return switch(status) {
+				case Lua.LUA_ERRRUN: "Runtime Error";
+				case Lua.LUA_ERRMEM: "Memory Allocation Error";
+				case Lua.LUA_ERRERR: "Critical Error";
+				default: "Unknown Error";
 			}
-			return "Unknown Error";
 		}
 
 		return v;
 		#end
-		return null;
 	}
 
 	var lastCalledFunction:String = '';
 	public function call(func:String, args:Array<Dynamic>):Dynamic {
 		#if LUA_ALLOWED
-		if(closed) return Function_Continue;
-
+		if (closed || lua == null || func == null || args == null) return Function_Continue;
 		lastCalledFunction = func;
-		try {
-			if(lua == null) return Function_Continue;
 
-			Lua.getglobal(lua, func);
-			var type:Int = Lua.type(lua, -1);
+		// Get the function.
+		Lua.getglobal(lua, func);
+		var type:Int = Lua.type(lua, -1);
 
-			if (type != Lua.LUA_TFUNCTION) {
-				if (type > Lua.LUA_TNIL)
-					luaTrace("ERROR (" + func + "): attempt to call a " + typeToString(type) + " value", false, false, FlxColor.RED);
-
-				Lua.pop(lua, 1);
-				return Function_Continue;
-			}
-
-			for (arg in args) Convert.toLua(lua, arg);
-			var status:Int = Lua.pcall(lua, args.length, 1, 0);
-
-			// Checks if it's not successful, then show a error.
-			if (status != Lua.LUA_OK) {
-				var error:String = getErrorMessage(status);
-				luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
-				return Function_Continue;
-			}
-
-			// If successful, pass and then return the result.
-			var result:Dynamic = cast Convert.fromLua(lua, -1);
-			if (result == null) result = Function_Continue;
+		// Check if it's a valid function.
+		if (type != Lua.LUA_TFUNCTION) {
+			if (type > Lua.LUA_TNIL)
+				luaTrace("ERROR (" + func + "): attempt to call a " + Lua.typename(lua, type) + " value as a callback", false, false, FlxColor.RED);
 
 			Lua.pop(lua, 1);
-			return result;
+			return Function_Continue;
 		}
-		catch (e:Dynamic) {
-			trace(e);
+
+		// Insert the arguments then calls the function.
+		for (arg in args) Convert.toLua(lua, arg);
+		var status:Int = Lua.pcall(lua, args.length, 1, 0);
+
+		// Checks if it's not successful, then show a error.
+		if (status != Lua.LUA_OK) {
+			var error:String = getErrorMessage(status);
+			luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
+			return Function_Continue;
 		}
-		#end
+
+		// If successful, checks if a returned value is a valid type, else pass and then return the result.
+		var resultType:Int = Lua.type(lua, -1);
+		if (!resultIsAllowed(resultType)) {
+			luaTrace("WARNING (" + func + "): unsupported returned value type (\"" + Lua.typename(lua, resultType) + "\")", false, false, FlxColor.RED);
+			Lua.pop(lua, 1);
+			return Function_Continue;
+		}
+
+		var result:Dynamic = cast Convert.fromLua(lua, -1);
+		if (result == null) result = Function_Continue;
+
+		Lua.pop(lua, 1);
+		return result;
+		#else
 		return Function_Continue;
+		#end
 	}
 
 	static function addAnimByIndices(obj:String, name:String, prefix:String, indices:String, framerate:Int = 24, loop:Bool = false)
@@ -3245,19 +3248,11 @@ class FunkinLua {
 		return coverMeInPiss;
 	}
 
-	function typeToString(type:Int):String {
-		#if LUA_ALLOWED
-		switch(type) {
-			case Lua.LUA_TBOOLEAN: return "boolean";
-			case Lua.LUA_TNUMBER: return "number";
-			case Lua.LUA_TSTRING: return "string";
-			case Lua.LUA_TTABLE: return "table";
-			case Lua.LUA_TFUNCTION: return "function";
-		}
-		if (type <= Lua.LUA_TNIL) return "nil";
-		#end
-		return "unknown";
+	#if LUA_ALLOWED
+	inline function resultIsAllowed(type:Int):Bool {
+		return type >= Lua.LUA_TNIL && type < Lua.LUA_TTABLE && type != Lua.LUA_TLIGHTUSERDATA;
 	}
+	#end
 
 	public function set(variable:String, data:Dynamic) {
 		#if LUA_ALLOWED
