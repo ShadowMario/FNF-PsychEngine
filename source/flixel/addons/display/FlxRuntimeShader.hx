@@ -350,7 +350,7 @@ class FlxRuntimeShader extends FlxShader
 		}
 	}
 
-	#if (openfl < "9.2.0")
+	//#if (openfl < "9.3.0")
 	private var __fieldList:Array<String> = null;
 	private function thisHasField(name:String) {
 		// Reflect.hasField(this, name) is REALLY expensive so we use a cache.
@@ -360,7 +360,7 @@ class FlxRuntimeShader extends FlxShader
 		}
 		return __fieldList.indexOf(name) != -1;
 	}
-	#end
+	//#end
 
 	/**
 	 * The parent function that initializes the shader.
