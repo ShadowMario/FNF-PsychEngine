@@ -3094,6 +3094,8 @@ class FunkinLua {
 		}
 
 		return v;
+		#else
+		return null;
 		#end
 	}
 
