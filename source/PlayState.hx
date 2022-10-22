@@ -1487,7 +1487,6 @@ class PlayState extends MusicBeatState
 		}
 		playbackRate = value;
 		FlxAnimationController.globalSpeed = value;
-		trace('Anim speed: ' + FlxAnimationController.globalSpeed);
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000 * value;
 		setOnLuas('playbackRate', playbackRate);
 		return value;
