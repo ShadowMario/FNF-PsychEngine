@@ -17,6 +17,10 @@ If you want video support on your mod, simply do `haxelib install hxCodec` on a 
 
 otherwise, you can delete the "VIDEOS_ALLOWED" Line on Project.xml
 
+If you wanna use spritemaps install `haxelib install flxanimate` on a Command prompt/PowerShell
+
+and if you don't you can simply delete the "haxelib name="flxAnimate" Line on Project.xml along with "import flxanimate.FlxAnimate;" on playstate.hx.
+
 ## Credits:
 * Shadow Mario - Programmer
 * RiverOaken - Artist

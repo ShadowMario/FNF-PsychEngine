@@ -8,6 +8,7 @@ import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
 import flixel.FlxBasic;
+import flxanimate.FlxAnimate;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxGame;

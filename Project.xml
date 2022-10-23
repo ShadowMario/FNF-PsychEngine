@@ -131,6 +131,9 @@
 	<haxelib name="hscript" />
 	<define name="hscriptPos" />
 
+    <!--Adobe support-->
+	<haxelib name="flxAnimate" />
+
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
