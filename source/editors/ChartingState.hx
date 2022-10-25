@@ -1,5 +1,6 @@
 package editors;
 
+import haxe.io.Path;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -2987,8 +2988,33 @@ class ChartingState extends MusicBeatState
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + ".json");
+			_file.save(data.trim(), convPathShit(getCurrrentDataPath()));
 		}
+	}
+
+	function getCurrrentDataPath():String {
+		var diffSuffix:String = 
+			CoolUtil.difficulties[PlayState.storyDifficulty] != null && 
+			CoolUtil.difficulties[PlayState.storyDifficulty] != CoolUtil.defaultDifficulty
+			? "-" + CoolUtil.difficulties[PlayState.storyDifficulty].toLowerCase() 
+			: "";
+
+		var path:String;
+		#if MODS_ALLOWED
+		path = Paths.modsJson(currentSongName + "/" + currentSongName + diffSuffix);
+		if (!FileSystem.exists(path))
+		#end
+			path = Paths.json(currentSongName + "/" + currentSongName + diffSuffix);
+
+		return path;
+	}
+
+	function convPathShit(path:String):String {
+		path = Path.normalize(Sys.getCwd() + path);
+		#if windows
+		path = path.replace("/", "\\");
+		#end
+		return path;
 	}
 
 	function sortByTime(Obj1:Array<Dynamic>, Obj2:Array<Dynamic>):Int
@@ -3014,7 +3040,7 @@ class ChartingState extends MusicBeatState
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(data.trim(), "events.json");
+			_file.save(data.trim(), convPathShit(Path.directory(getCurrrentDataPath()) + "/events.json"));
 		}
 	}
 
