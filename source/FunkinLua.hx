@@ -34,7 +34,7 @@ import flixel.util.FlxSave;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.system.FlxAssets.FlxShader;
 
-#if !flash
+#if (!flash && sys)
 import flixel.addons.display.FlxRuntimeShader;
 #end
 
@@ -2891,6 +2891,7 @@ class FunkinLua {
 		return PlayState.instance.modchartTexts.exists(name) ? PlayState.instance.modchartTexts.get(name) : Reflect.getProperty(PlayState.instance, name);
 	}
 
+	#if (!flash && sys)
 	public function getShader(obj:String):FlxRuntimeShader
 	{
 		var killMe:Array<String> = obj.split('.');
@@ -2906,11 +2907,13 @@ class FunkinLua {
 		}
 		return null;
 	}
-
+	#end
+	
 	function initLuaShader(name:String, ?glslVersion:Int = 120)
 	{
 		if(!ClientPrefs.getPref('shaders')) return false;
 
+		#if (!flash && sys)
 		if(PlayState.instance.runtimeShaders.exists(name))
 		{
 			luaTrace('Shader $name was already initialized!');
@@ -2938,7 +2941,7 @@ class FunkinLua {
 				}
 				else frag = null;
 
-				if (FileSystem.exists(vert))
+				if(FileSystem.exists(vert))
 				{
 					vert = File.getContent(vert);
 					found = true;
@@ -2954,6 +2957,9 @@ class FunkinLua {
 			}
 		}
 		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
+		#else
+		luaTrace('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);
+		#end
 		return false;
 	}
 
@@ -3148,16 +3154,28 @@ class FunkinLua {
 		#end
 	}
 
-	function getErrorMessage() {
+	function getErrorMessage(status:Int):String {
 		#if LUA_ALLOWED
 		var v:String = Lua.tostring(lua, -1);
-		if(!isErrorAllowed(v)) v = null;
+		Lua.pop(lua, 1);
+
+		if (v != null) v = v.trim();
+		if (v == null || v == "") {
+			switch(status) {
+				case Lua.LUA_ERRRUN: return "Runtime Error";
+				case Lua.LUA_ERRMEM: return "Memory Allocation Error";
+				case Lua.LUA_ERRERR: return "Critical Error";
+			}
+			return "Unknown Error";
+		}
+
 		return v;
 		#end
+		return null;
 	}
 
 	var lastCalledFunction:String = '';
-	public function call(func:String, args:Array<Dynamic>): Dynamic{
+	public function call(func:String, args:Array<Dynamic>):Dynamic {
 		#if LUA_ALLOWED
 		if(closed) return Function_Continue;
 
@@ -3167,27 +3185,31 @@ class FunkinLua {
 
 			Lua.getglobal(lua, func);
 			var type:Int = Lua.type(lua, -1);
+
 			if (type != Lua.LUA_TFUNCTION) {
+				if (type > Lua.LUA_TNIL)
+					luaTrace("ERROR (" + func + "): attempt to call a " + typeToString(type) + " value", false, false, FlxColor.RED);
+
 				Lua.pop(lua, 1);
 				return Function_Continue;
 			}
 
-			for(arg in args) {
-				Convert.toLua(lua, arg);
+			for (arg in args) Convert.toLua(lua, arg);
+			var status:Int = Lua.pcall(lua, args.length, 1, 0);
+
+			// Checks if it's not successful, then show a error.
+			if (status != Lua.LUA_OK) {
+				var error:String = getErrorMessage(status);
+				luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
+				return Function_Continue;
 			}
 
-			var result:Null<Int> = Lua.pcall(lua, args.length, 1, 0);
-			var error:Dynamic = getErrorMessage();
-			if(resultIsAllowed(lua, -1))
-			{
-				var conv:Dynamic = cast Convert.fromLua(lua, -1);
-				Lua.pop(lua, 1);
-				if(conv == null) conv = Function_Continue;
-				return conv;
-			}
-			else if(error != null) luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
+			// If successful, pass and then return the result.
+			var result:Dynamic = cast Convert.fromLua(lua, -1);
+			if (result == null) result = Function_Continue;
+
 			Lua.pop(lua, 1);
-			return Function_Continue;
+			return result;
 		}
 		catch (e:Dynamic) {
 			trace(e);
@@ -3245,23 +3267,19 @@ class FunkinLua {
 		return coverMeInPiss;
 	}
 
-
-	#if LUA_ALLOWED
-	function resultIsAllowed(leLua:State, leResult:Null<Int>) { //Makes it ignore warnings
-		var type:Int = Lua.type(leLua, leResult);
-		return type >= Lua.LUA_TNIL && type < Lua.LUA_TTABLE && type != Lua.LUA_TLIGHTUSERDATA;
-	}
-
-	function isErrorAllowed(error:String) {
-		error = error.trim();
-		switch(error)
-		{
-			case 'attempt to call a nil value' | 'C++ exception':
-				return false;
+	function typeToString(type:Int):String {
+		#if LUA_ALLOWED
+		switch(type) {
+			case Lua.LUA_TBOOLEAN: return "boolean";
+			case Lua.LUA_TNUMBER: return "number";
+			case Lua.LUA_TSTRING: return "string";
+			case Lua.LUA_TTABLE: return "table";
+			case Lua.LUA_TFUNCTION: return "function";
 		}
-		return error.length > 6;
+		if (type <= Lua.LUA_TNIL) return "nil";
+		#end
+		return "unknown";
 	}
-	#end
 
 	public function set(variable:String, data:Dynamic) {
 		#if LUA_ALLOWED
@@ -3416,10 +3434,10 @@ class HScript
 		interp.variables.set('Character', Character);
 		interp.variables.set('Alphabet', Alphabet);
 		interp.variables.set('CustomSubstate', CustomSubstate);
-		#if !flash
+		#if (!flash && sys)
 		interp.variables.set('FlxRuntimeShader', FlxRuntimeShader);
-		interp.variables.set('ShaderFilter', openfl.filters.ShaderFilter);
 		#end
+		interp.variables.set('ShaderFilter', openfl.filters.ShaderFilter);
 		interp.variables.set('StringTools', StringTools);
 
 		interp.variables.set('setVar', function(name:String, value:Dynamic)
