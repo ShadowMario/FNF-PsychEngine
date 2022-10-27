@@ -37,6 +37,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
+import gamejolt.GJClient;
 
 using StringTools;
 typedef TitleData =
@@ -214,6 +215,7 @@ class TitleState extends MusicBeatState
 				DiscordClient.initialize();
 				Application.current.onExit.add (function (exitCode) {
 					DiscordClient.shutdown();
+					#if GAMEJOLT_ALLOWED GJClient.logout(); #end
 				});
 			}
 			#end
