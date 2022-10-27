@@ -36,7 +36,7 @@ class VisualsUISubState extends BaseOptionsMenu
 
 		var option:Option = new Option('Note Splashes',
 			"Set the alpha for the Note Splashes, usually shown when hitting \"Sick!\" notes.",
-			'noteSplashes',
+			'splashOpacity',
 			'percent',
 			1);
 		option.scrollSpeed = 1.6;
