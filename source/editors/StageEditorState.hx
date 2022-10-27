@@ -15,7 +15,10 @@ class StageEditorState extends MusicBeatState
     public var yInput:FlxInputText;
     public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
-
+    public var console:FlxText;
+    public var spriteArray:Array<FlxSprite> = [];
+    public var loadedSpriteArray:Array<String> = [];
+    public var idArray:Array<String> = [];
     override function create() 
     {
         FlxG.mouse.visible = true;
@@ -60,9 +63,30 @@ class StageEditorState extends MusicBeatState
             var sprite:FlxSprite = new FlxSprite(Std.parseInt(xInput.text), Std.parseInt(yInput.text));
             sprite.loadGraphic(Paths.image(graphicName.text));
             add(sprite);
+            spriteArray.push(sprite);
+            loadedSpriteArray.push(graphicName.text);
+            var genID:String = '';
+            for (i in 0...7)
+            {
+                genID += FlxG.random.int(0, 10);
+            }
+            idArray.push(genID);
+            console.text += '\nAdded graphic: ' + graphicName.text + ', ID is ' + genID + ' (you need the id for manipulating an object)';
+
+            graphicName.text = '';
+            xInput.text = '';
+            yInput.text = '';
         });
         add(addGraphic);
         addGraphic.cameras = [camHUD];
+
+        var consoleLogDesc = new FlxText(10, FlxG.height - 300,'Console Log');
+        add(consoleLogDesc);
+        consoleLogDesc.cameras = [camHUD];
+
+        console = new FlxText(10, FlxG.height - 290, '');
+        add(console);
+        console.cameras = [camHUD];
 
         super.create();
     }
