@@ -53,6 +53,8 @@ import hscript.Interp;
 import hscript.Expr;
 #end
 
+import CoolUtil.FileSaveContext;
+
 #if desktop
 import Discord;
 #end
@@ -378,6 +380,13 @@ class FunkinLua {
 			Lua.pushnil(lua);
 			return null;
 			#end
+		});
+		Lua_helper.add_callback(lua, "promptSaveFile", function(fileName:String, content:String, extension:String) {
+			CoolUtil.saveFile({
+				fileDefaultName: fileName,
+				format: extension,
+				content: content
+			});
 		});
 		Lua_helper.add_callback(lua, "getShaderFloatArray", function(obj:String, prop:String) {
 			#if (!flash && MODS_ALLOWED && sys)
