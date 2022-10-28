@@ -2299,12 +2299,21 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	public var displayRatings:Bool = true;
+	public var scoreSeparator:String = ' | ';
+
 	public function updateScore(miss:Bool = false)
 	{
-		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Misses: ' + songMisses
-		+ ' | Rating: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
+		// text will always reset to this, may be more readable than what i did previously; -Ghost/Gabriela
+		scoreTxt.text = 'Score: ' + songScore;
+
+		if (displayRatings)
+		{
+			scoreTxt.text += scoreSeparator + 'Misses: ' + songMisses;
+			scoreTxt.text += scoreSeparator + 'Rating: ' + ratingName;
+			scoreTxt.text += ratingName != '?' ? ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%) - $ratingFC' : '';
+		}
+		scoreTxt.text += '\n'; // to ensure text won't display as cropped i guess;
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
