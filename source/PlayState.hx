@@ -2304,16 +2304,18 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		// text will always reset to this, may be more readable than what i did previously; -Ghost/Gabriela
-		scoreTxt.text = 'Score: ' + songScore;
+		// may be more readable than what i did previously; -Ghost/Gabriela
+		var tempScore:String = 'Score: ' + songScore;
 
 		if (displayRatings)
 		{
-			scoreTxt.text += scoreSeparator + 'Misses: ' + songMisses;
-			scoreTxt.text += scoreSeparator + 'Rating: ' + ratingName;
-			scoreTxt.text += ratingName != '?' ? ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%) - $ratingFC' : '';
+			tempScore += scoreSeparator + 'Misses: ' + songMisses;
+			tempScore += scoreSeparator + 'Rating: ' + ratingName;
+			tempScore += ratingName != '?' ? ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%) - $ratingFC' : '';
 		}
-		scoreTxt.text += '\n'; // to ensure text won't display as cropped i guess;
+		tempScore += '\n'; // to ensure text won't display as cropped i guess;
+
+		scoreTxt.text = tempScore;
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
