@@ -444,6 +444,11 @@ class TitleState extends MusicBeatState
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			System.exit(0); // If it 1 or -1 it will have a problem
+		}
+
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
 
 		#if mobile
