@@ -165,6 +165,10 @@ class ClientPrefs {
 		if(FlxG.save.data.splashOpacity != null) {
 			splashOpacity = FlxG.save.data.splashOpacity;
 		}
+		else if(FlxG.save.data.noteSplashes != null {
+			splashOpacity = FlxG.save.data.noteSplashes ? 0.6 : 0;
+			FlxG.save.data.noteSplashes = null;
+		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
 		}
