@@ -22,16 +22,23 @@ class StageEditorState extends MusicBeatState
     public var idArray:Array<String> = [];
     public var zoomInput:FlxInputText;
     public var idInput:FlxInputText;
+    public var inputs:Array<FlxInputText> = [];
+    public var bf:Character;
+    public var dad:Character;
+    public var camChars:FlxCamera;
 
     override function create() 
     {
         FlxG.mouse.visible = true;
 
         camGame = new FlxCamera();
+        camChars = new FlxCamera();
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
+        camChars.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
+        FlxG.cameras.add(camChars, false);
 		FlxG.cameras.add(camHUD, false);
 
         graphicName = new FlxInputText(10,30,200);
@@ -95,6 +102,7 @@ class StageEditorState extends MusicBeatState
         zoomInput = new FlxInputText(10,140,50);
         add(zoomInput);
         zoomInput.cameras = [camHUD];
+        zoomInput.text = '1';
 
         var zoomTxt:FlxText = new FlxText(10,120,'Stage Zoom');
         add(zoomTxt);
@@ -125,13 +133,13 @@ class StageEditorState extends MusicBeatState
         add(removeGraphic);
         removeGraphic.cameras = [camHUD];
 
-        var saveStage:FlxButton = new FlxButton(0,FlxG.height - 90, "Save Stage as .pyst", function()
+        var saveStage:FlxButton = new FlxButton(10,300, "Save Stage as .pyst", function()
         {
             var string:String = '';
             for (num in 0...spriteArray.length)      
             {
                 var i = spriteArray[num];
-                string += '\nSTAGESPRITE:' + i.x + ',' + i.y + '/' + loadedSpriteArray[num];
+                string += (num != 0 ? '\n' : '') + 'STAGESPRITE:' + i.x + ',' + i.y + '/' + loadedSpriteArray[num];
             }
             string += '\nSTAGEINFO:' + camGame.zoom + '/' + '0,0-0,0';
             CoolUtil.saveFile({
@@ -143,13 +151,30 @@ class StageEditorState extends MusicBeatState
         add(saveStage);
         saveStage.cameras = [camHUD];
 
+        bf = new Character(500,500,'bf');
+        add(bf);
+        bf.flipX = !bf.flipX;
+        bf.cameras = [camChars];
+
+        dad = new Character(300,500,'dad');
+        add(dad);
+
+        dad.cameras = [camChars];
+
         super.create();
     }
 
     override function update(e:Float) {
         super.update(e);
 
-        if (controls.BACK)
+        inputs = [graphicName, xInput, yInput, zoomInput, idInput];
+        var smthHasFocus:Bool = false;
+        for (i in inputs)
+        {
+            if (i.hasFocus) smthHasFocus = true;
+        }
+
+        if (controls.BACK && !smthHasFocus)
         {
             Main.fpsVar.x = 10;
             Main.fpsVar.y = 0;
@@ -164,5 +189,7 @@ class StageEditorState extends MusicBeatState
         }
 
         camGame.zoom = Std.parseFloat(zoomInput.text);
+
+        camChars.zoom = camGame.zoom;
     }
 }
