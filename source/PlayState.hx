@@ -4186,11 +4186,17 @@ class PlayState extends MusicBeatState
 
 		for (i in precisions) remove(i);
 
-		var precision:FlxText = new FlxText(playerStrums.members[1].x + playerStrums.members[1].width / 2, playerStrums.members[0].y - 40, '' + Math.round(Conductor.songPosition - note.strumTime) + ' ms');
+		var precision:FlxText = new FlxText(0, (ClientPrefs.downScroll ? playerStrums.members[0].y + 110 : playerStrums.members[0].y - 40), '' + Math.round(Conductor.songPosition - note.strumTime) + ' ms');
 		precision.cameras = [camOther];
-		precision.y += 3;
+
+		if (ClientPrefs.downScroll) precision.y -= 3;
+		else precision.y += 3;
+
+		precision.x = (playerStrums.members[1].x + playerStrums.members[1].width / 2) - precision.width / 2;
+
 		precision.setFormat(Paths.font("vcr.ttf"), 21, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		FlxTween.tween(precision, {y: precision.y - 3}, 0.01, {ease: FlxEase.bounceOut});
+
+		FlxTween.tween(precision, {y: (ClientPrefs.downScroll ? precision.y + 3 : precision.y - 3)}, 0.01, {ease: FlxEase.bounceOut});
 		
 
 		precisions.push(precision);
