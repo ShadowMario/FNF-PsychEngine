@@ -2200,11 +2200,13 @@ class FunkinLua {
 			return false;
 
 			#else
-			if(PlayState.instance.endingSong) {
-				PlayState.instance.endSong();
-			} else {
-				PlayState.instance.startCountdown();
-			}
+			new FlxTimer().start(0.05, function(tmr:FlxTimer) {
+				if(PlayState.instance.endingSong) {
+					PlayState.instance.endSong();
+				} else {
+					PlayState.instance.startCountdown();
+				}
+			});
 			return true;
 			#end
 		});
