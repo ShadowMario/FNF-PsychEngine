@@ -15,8 +15,14 @@ import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
 
+#if GAMEJOLT_ALLOWED
+import gamejolt.GJClient;
+#end
+
 class MusicBeatState extends FlxUIState
 {
+	private var pinged:Bool = false;
+
 	private var curSection:Int = 0;
 	private var stepsToDo:Int = 0;
 
@@ -64,6 +70,11 @@ class MusicBeatState extends FlxUIState
 					rollbackSection();
 			}
 		}
+
+		#if GAMEJOLT_ALLOWED
+		if (curStep % 16 == 0 && !pinged) {GJClient.pingSession(); pinged = true;}
+		else if (curStep % 16 == 7) pinged = false;
+		#end
 
 		if(FlxG.save.data != null) FlxG.save.data.fullscreen = FlxG.fullscreen;
 

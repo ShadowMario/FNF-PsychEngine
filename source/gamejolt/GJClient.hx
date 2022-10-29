@@ -9,11 +9,11 @@ import haxe.crypto.Sha1;
 
 /**
  * A completely original GameJolt Client made by GamerPablito, using Haxe Crypto Encripting and Http tools
- * to gather info about the GameJolt API with ease
+ * to gather info about the GameJolt API with ease.
  * 
- * Originally made for the game Friday Night Funkin', but it can also be used for every game made with HaxeFlixel
+ * Originally made for the game Friday Night Funkin', but it can also be used for every game made with HaxeFlixel.
  * 
- * No extra extensions required (except the basic Flixel and Haxe ones)
+ * No extra extensions required (except the basic Flixel and Haxe ones).
  */
 class GJClient
 {
@@ -28,17 +28,17 @@ class GJClient
     */
 
     /**
-     * It tells you if you're actually logged in or not (Read Only, don't change it!)
+     * It tells you if you're actually logged in or not (Read Only, don't change it!).
      */
     public static var logged:Bool = false; // Logged in or not
 
     /**
-     * If `true`, the functions will use `Md5` encriptation for data processing; if `false`, they'll use `Sha1` encriptation instead
+     * If `true`, the functions will use `Md5` encriptation for data processing; if `false`, they'll use `Sha1` encriptation instead.
      */
     public static var useMd5:Bool = true;
 
     /**
-     * It tells you if you have enabled the auto-login option (Read Only, if you want to change it manually you must use `toggleAutoLogin()`)
+     * It tells you if you have enabled the auto-login option (Read Only, if you want to change it manually you must use `toggleAutoLogin()`).
      */
     public static var autoLogin:Bool = true;
 
@@ -71,7 +71,7 @@ class GJClient
         if (hasLoginInfo())
         {
             authUser(
-                function () {printMsg('GUI Parameters Changed: New User -> ${getUser()} | New Token -> ${getToken()}');},
+                function () {printMsg('GUI Parameters Changed: New User -> ${getUser()} | New Token -> ${getToken()}'); toggleAutoLogin(true);},
                 function ()
                 {
                     FlxG.save.data.user = temp_user;
@@ -149,8 +149,9 @@ class GJClient
      * 
      * Won't do anything if you're not logged so don't worry, the game won't crash.
      * 
-     * @param id The ID of the trophie to achieve (Required)
+     * @param id The ID of the trophie to achieve.
      * @param onSuccess Put a function with actions here, they'll be processed if the process finish successfully.
+     *                    It will also contain the achieved trophie data in order to be used for other creative purposes.
      * @param onFail Put a function with actions here, they'll be processed if an error has ocurred during the process.
      */
     public static function trophieAdd(id:Int, ?onSuccess:Trophie -> Void, ?onFail:() -> Void)
@@ -190,11 +191,12 @@ class GJClient
      * 
      * Won't do anything if you're not logged so don't worry, the game won't crash.
      * 
-     * @param id The ID of the trophie to remove (Required)
+     * @param id The ID of the trophie to remove.
      * @param onSuccess Put a function with actions here, they'll be processed if the process finish successfully.
+     *                    It will also contain the removed trophie data in order to be used for other creative purposes.
      * @param onFail Put a function with actions here, they'll be processed if an error has ocurred during the process.
      */
-    public static function trophieRemove(id:Int, ?onSuccess:() -> Void, ?onFail:() -> Void)
+    public static function trophieRemove(id:Int, ?onSuccess:Trophie -> Void, ?onFail:() -> Void)
     {
         var daList = getTrophiesList();
 
@@ -210,7 +212,7 @@ class GJClient
                         if (troph.achieved != false)
                         {
                             printMsg('Trophie "${troph.title}" has been quitted from ${getUser()}!');
-                            if (onSuccess != null) onSuccess();
+                            if (onSuccess != null) onSuccess(troph);
                         }
                         else printMsg('Trophie "${troph.title}" is not taken by ${getUser()} yet!');
                         break;
@@ -250,7 +252,7 @@ class GJClient
         var daParams:Array<Array<String>> = [];
 
         if (table_id != null) daParams.push(['table_id', Std.string(table_id)]);
-        if (delimiter != null) daParams.push([delimiter > 0 ? 'better_than' : 'worse_than', Std.string(Math.abs(delimiter))]);
+        if (delimiter != null) daParams.push([delimiter >= 0 ? 'better_than' : 'worse_than', Std.string(Math.abs(delimiter))]);
 
         if (limit <= 0) limit = 1;
         if (limit > 100) limit = 100;
@@ -279,9 +281,9 @@ class GJClient
      * @param score_value The score itself. Example: 500.
      * @param extraInfo If you want to, you can give extra information about how the score was obtained,
      *                    useful to make game developers know if the player obtained that score legally, but this is completely optional.
-     * @param table_id The score table ID where the new score will be submitted to (if `null`, the score will be submitted from the "Primary" score table in your game)
+     * @param table_id The score table ID where the new score will be submitted to (if `null`, the score will be submitted from the "Primary" score table in your game).
      * @param onSuccess Put a function with actions here, they'll be processed if the process finish successfully.
-     *                    It will also contain the score data in order to be used for other creative purposes.
+     *                    It will also contain the submitted score data in order to be used for other creative purposes.
      * @param onFail Put a function with actions here, they'll be processed if an error has ocurred during the process.
      */
     public static function submitNewScore(score_content:String, score_value:Int, ?extraInfo:String, ?table_id:Int, ?onSuccess:Score -> Void, ?onFail:() -> Void)
@@ -325,8 +327,8 @@ class GJClient
      * Gives you the global rank you got in a certain score table in your game.
      * This is given according to the top score you have in that table.
      * 
-     * @param table_id The score sable ID where the rank will be obtained from (if `null`, the rank will be given from the "Primary" score table in your game)
-     * @return The global rank obtained from the score table (It returns -1 if the process was failed)
+     * @param table_id The score sable ID where the rank will be obtained from (if `null`, the rank will be given from the "Primary" score table in your game).
+     * @return The global rank obtained from the score table (It returns -1 if the process was failed).
      */
     public static function getGlobalRank(?table_id:Int):Int
     {
@@ -352,9 +354,10 @@ class GJClient
      * Useful for re-open a session when a new GUI is setted by `setUserInfo()`,
      * or if you closed your session by decision of yours (without erasing your GUI, using `logout()`, otherwise re-use `setUserInfo()`).
      * 
-     * (Do not compare with the `initialize()` function)
+     * (Do not compare with the `initialize()` function).
      * 
-     * @param onSuccess Put a function with actions here, they'll be processed if the process finish successfully. It will also contain the new data fetched from the new logged user.
+     * @param onSuccess Put a function with actions here, they'll be processed if the process finish successfully.
+     *                    It will also contain the new data fetched from the new logged user for other creative purposes.
      * @param onFail Put a function with actions here, they'll be processed if an error has ocurred during the process.
      */
     public static function login(?onSuccess:User -> Void, ?onFail:() -> Void)
@@ -405,6 +408,7 @@ class GJClient
     /**
      * If there's a session active, this function keeps the session active, so it needs to be placed in somewhere it can be executed repeatedly.
      * 
+     * @param onPing Put a function with actions here, they'll be processed every time a ping is made successfully.
      * @param onFail Put a function with actions here, they'll be processed if an error has ocurred during the process.  
      */
     public static function pingSession(?onPing:() -> Void, ?onFail:() -> Void)
@@ -455,11 +459,12 @@ class GJClient
 
     /**
      * This initialize the client in general.
-     * It opens your session ans sync your data according to the saved GUI data for a better experience when the user comes back.
+     * It opens your session and sync your data according to the saved GUI data for a better experience when the user comes back.
      * 
      * (Do not compare with the `login()` function)
      * 
      * @param onSuccess Put a function with actions here, they'll be processed if the process finish successfully. It will also contain the new data fetched from the new logged user.
+     *                    It will also contain the user data obtained in order to be used for other creative purposes.
      * @param onFail Put a function with actions here, they'll be processed if an error has ocurred during the process.
      */
     public static function initialize(?onSuccess:User -> Void, ?onFail:() -> Void)
@@ -476,16 +481,17 @@ class GJClient
 
     // INTERNAL FUNCTIONS (DON'T ALTER IF YOU DON'T KNOW WHAT YOU'RE DOING!!)
 
-    static function hasLoginInfo():Bool
-    {
-        return getUser() != null && getToken() != null;
-    }
+    static var noDataWarned:Bool = false;
+
+    static function hasLoginInfo():Bool {return getUser() != null && getToken() != null;}
+
+    static function hasGameInfo():Bool {return GJKeys.id != 0 && GJKeys.key != '';}
 
     static function printMsg(message:String) {Sys.println(printPrefix + ' ' + message);}
 
     static function urlConstruct(command:String, ?action:String, ?params:Array<Array<String>>, userAllowed:Bool = true, tokenAllowed:Bool = true):Null<Http>
     {
-        if (hasLoginInfo())
+        if (hasLoginInfo() && hasGameInfo())
         {
             var mainURL:String = "http://api.gamejolt.com/api/game/v1_2/";
 
@@ -504,6 +510,8 @@ class GJClient
     
             return new Http(mainURL);
         }
+
+        if (!hasGameInfo() && !noDataWarned) {printMsg('Game data was not provided!'); noDataWarned = true;}
 
         return null;
     }

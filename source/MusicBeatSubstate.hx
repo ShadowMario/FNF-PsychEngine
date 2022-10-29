@@ -6,12 +6,18 @@ import flixel.FlxSubState;
 import flixel.FlxBasic;
 import flixel.FlxSprite;
 
+#if GAMEJOLT_ALLOWED
+import gamejolt.GJClient;
+#end
+
 class MusicBeatSubstate extends FlxSubState
 {
 	public function new()
 	{
 		super();
 	}
+
+	private var pinged:Bool = false;
 
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
@@ -34,9 +40,12 @@ class MusicBeatSubstate extends FlxSubState
 		updateCurStep();
 		updateBeat();
 
-		if (oldStep != curStep && curStep > 0)
-			stepHit();
+		if (oldStep != curStep && curStep > 0) stepHit();
 
+		#if GAMEJOLT_ALLOWED
+		if (curStep % 16 == 0 && !pinged) {GJClient.pingSession(); pinged = true;}
+		else if (curStep % 16 == 7) pinged = false;
+		#end
 
 		super.update(elapsed);
 	}

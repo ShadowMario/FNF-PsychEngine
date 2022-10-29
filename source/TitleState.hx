@@ -37,7 +37,10 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
+
+#if GAMEJOLT_ALLOWED
 import gamejolt.GJClient;
+#end
 
 using StringTools;
 typedef TitleData =
