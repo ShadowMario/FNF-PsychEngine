@@ -33,6 +33,7 @@ enum abstract Action(String) to String from String
 	var NOTE_UP_P = "note_up-press";
 	var NOTE_LEFT_P = "note_left-press";
 	var NOTE_RIGHT_P = "note_right-press";
+	d
 	var NOTE_DOWN_P = "note_down-press";
 	var NOTE_UP_R = "note_up-release";
 	var NOTE_LEFT_R = "note_left-release";
