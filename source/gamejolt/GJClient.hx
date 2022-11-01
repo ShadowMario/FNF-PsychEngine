@@ -98,23 +98,70 @@ class GJClient
     }
 
     /**
-     * If GUI is already setted up in the application, it throws the user data in a .json format.
-     * 
-     * Very useful if you want to use the actual user's GUI for some parts of your game.
+     * This function fetches the information of any user in GameJolt, according to the ID inserted.
      * 
      * @see The `formats` folder, to get more info about how formats are setted like.
      * 
+     * @param id The ID of the user to fetch the info from (leave `null` if you wanna fetch the info from the actual user logged in).
      * @param onSuccess Put a function with actions here, they'll be processed if the process finish successfully.
      * @param onFail Put a function with actions here, they'll be processed if an error has ocurred during the process.
-     * @return The GUI in .json format (or `null` if any data is available in the application to use yet).
+     * @return The Data fetched form the user (or `null` if that info doesn't exist)
      */
-    public static function getUserData(?onSuccess:() -> Void, ?onFail:() -> Void):Null<User>
+    public static function getUserData(?id:Int, ?onSuccess:() -> Void, ?onFail:() -> Void):Null<User>
     {
-        var urlData = urlResult(urlConstruct('users', null, null, true, false),
-        function () {printMsg('${getUser()}\'s data fetched sucessfully!'); if (onSuccess != null) onSuccess();},
-        function () {printMsg('${getUser()}\'s data fetching failed!'); if (onFail != null) onFail();});
-        var daFormat:Null<User> = urlData != null ? cast urlData.users[0] : null;
+        var daUser:Null<String> = null;
+        var daFormat:Null<User> = null;
+
+        var daParam:Null<Array<Array<String>>> = id != null ? [['user_id', Std.string(id)]] : null;
+        var urlData = urlResult(urlConstruct('users', null, daParam, id == null, false), onSuccess);
+
+        if (urlData != null)
+        {
+            daUser = urlData.users[0].developer_name;
+            daFormat = cast urlData.users[0];
+            printMsg('$daUser\'s data fetched sucessfully!');
+        }
+        else if (onFail != null) onFail();
+
         return daFormat;
+    }
+
+    /**
+     * Throws the friend list of the user that's actually logged in.
+     * 
+     * Not only that, it will throw the individual info of every friend that's fetched here!
+     * 
+     * @param onSuccess Put a function with actions here, they'll be processed if the process finish successfully.
+     * @param onFail Put a function with actions here, they'll be processed if an error has ocurred during the process.
+     * @return The long list of every friend's data.
+     */
+    public static function getFriendsList(?onSuccess:() -> Void, ?onFail:() -> Void):Null<Array<User>>
+    {
+        var urlData = urlResult(urlConstruct('friends'), null, onFail);
+
+        if (urlData != null && logged)
+        {
+            var friendList:Array<User> = [];
+            var fetchedFriends:Array<Dynamic> = urlData.friends;
+            
+            for (person in fetchedFriends)
+            {
+                var daFriend:Null<User> = getUserData(person.friend_id);
+                if (daFriend != null) friendList.push(daFriend);
+                printMsg('Fetched Friend: ${daFriend.developer_name} (@${daFriend.username})');
+            }
+
+            printMsg('Friends list fetched correctly!');
+            if (onSuccess != null) onSuccess();
+            return friendList;
+        }
+        else
+        {
+            printMsg('Friends list fetching failed!');
+            if (onFail != null) onFail();
+        }
+
+        return null;
     }
 
     /**
