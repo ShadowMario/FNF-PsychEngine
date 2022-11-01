@@ -19,14 +19,14 @@ class Popup extends FlxUIGroup
     var daBG:FlxSprite;
 
     // Size Parameters
-    var boxWidth:Int = Std.int(FlxG.width * (1/3));
-    var boxHeight:Int = Std.int(FlxG.height * (1/6));
+    var boxWidth:Int = Std.int(FlxG.width * (1/2.6));
+    var boxHeight:Int = Std.int(FlxG.height * (1/5.5));
 
     // Miscellaneous Stuff
     var titleFont:String = Paths.font("pixel.otf");
     var descFont:String = Paths.font("vcr.ttf");
-    var titleSize:Int = 28;
-    var descSize:Int = 20;
+    var titleSize:Int = 24;
+    var descSize:Int = 18;
 
     public function new(title:String, desc:String, ?delay:Float, ?image:String, ?bg:String)
     {
@@ -58,7 +58,7 @@ class Popup extends FlxUIGroup
         daImage.y = (daBG.height/2) - (daImage.height/2);
 
         var separation:Float = (daImage.x * 2) + daImage.width;
-        var delimitation:Float = daBG.width - separation - daImage.x;
+        var delimitation:Float = daBG.width * 0.3;
 
         titleBox = new FlxText(separation, daImage.y, delimitation, title);
         titleBox.setFormat(titleFont, titleSize, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);

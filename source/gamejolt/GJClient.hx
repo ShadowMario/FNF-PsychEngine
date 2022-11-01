@@ -110,10 +110,10 @@ class GJClient
      */
     public static function getUserData(?onSuccess:() -> Void, ?onFail:() -> Void):Null<User>
     {
-        var urlData = urlResult(urlConstruct('users'),
+        var urlData = urlResult(urlConstruct('users', null, null, true, false),
         function () {printMsg('${getUser()}\'s data fetched sucessfully!'); if (onSuccess != null) onSuccess();},
         function () {printMsg('${getUser()}\'s data fetching failed!'); if (onFail != null) onFail();});
-        var daFormat:Null<User> = urlData != null && logged ? cast urlData.users[0] : null;
+        var daFormat:Null<User> = urlData != null ? cast urlData.users[0] : null;
         return daFormat;
     }
 
@@ -365,8 +365,10 @@ class GJClient
         var urlData = urlResult(urlConstruct('sessions', 'open'),
         function ()
         {
+            var userData = getUserData();
+
             if (!logged) {printMsg('Logged Successfully! Welcome back ${getUser()}!');}
-            if (onSuccess != null && !logged) onSuccess(cast getUserData());
+            if (onSuccess != null && !logged && userData != null) onSuccess(userData);
             logged = true;
             autoLogin = autoLoginToggle();
         },
@@ -512,6 +514,7 @@ class GJClient
         }
 
         if (!hasGameInfo() && !noDataWarned) {printMsg('Game data was not provided!'); noDataWarned = true;}
+        if (!hasLoginInfo() && !noDataWarned) {printMsg('User data was not provided!'); noDataWarned = true;}
 
         return null;
     }
