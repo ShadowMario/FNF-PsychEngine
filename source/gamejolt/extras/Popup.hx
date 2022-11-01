@@ -58,7 +58,7 @@ class Popup extends FlxUIGroup
         daImage.y = (daBG.height/2) - (daImage.height/2);
 
         var separation:Float = (daImage.x * 2) + daImage.width;
-        var delimitation:Float = daBG.width * 0.3;
+        var delimitation:Float = daBG.width - separation - daImage.x;
 
         titleBox = new FlxText(separation, daImage.y, delimitation, title);
         titleBox.setFormat(titleFont, titleSize, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
@@ -70,8 +70,10 @@ class Popup extends FlxUIGroup
 
         descBox = new FlxText(separation, daBG.height, delimitation, desc);
         descBox.setFormat(descFont, descSize, FlxColor.WHITE, LEFT, OUTLINE, FlxColor.BLACK);
+        /*
         descBox.wordWrap = false;
         descBox.autoSize = true;
+        */
         descBox.updateHitbox();
         descBox.borderColor = FlxColor.BLACK;
         descBox.y = (daBG.height * (2/3)) - (descBox.height / 2);
