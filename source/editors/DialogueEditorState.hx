@@ -341,6 +341,7 @@ class DialogueEditorState extends MusicBeatState
 			super.update(elapsed);
 			return;
 		}
+	}
 
 		if(character.animation.curAnim != null) {
 			if(daText.finishedText) {
