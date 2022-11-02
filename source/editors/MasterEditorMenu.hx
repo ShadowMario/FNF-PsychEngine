@@ -21,10 +21,10 @@ using StringTools;
 class MasterEditorMenu extends MusicBeatState
 {
 	var options:Array<String> = [
-		'Week Editor',
-		'Menu Character Editor',
-		'Dialogue Editor',
-		'Dialogue Portrait Editor',
+		//'Week Editor',
+		//'Menu Character Editor',
+		//'Dialogue Editor',
+		//'Dialogue Portrait Editor',
 		'Character Editor',
 		'Chart Editor'
 	];
@@ -85,7 +85,6 @@ class MasterEditorMenu extends MusicBeatState
 		
 		#if android
 		addVirtualPad(LEFT_FULL, A_B);
-		virtualPad.y = -42;
 		#end
 		
 		super.create();
