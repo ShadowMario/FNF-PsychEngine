@@ -24,7 +24,6 @@ import android.flixel.FlxButton;
 #else
 import flixel.ui.FlxButton;
 #end
-import flixel.ui.FlxButton;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
@@ -330,7 +329,7 @@ class DialogueEditorState extends MusicBeatState
 				dialogueFile.dialogue[curSelected].speed = 0.0;
 			}
 		}
-	
+	}
 
 	var curSelected:Int = 0;
 	var curAnim:Int = 0;
@@ -341,7 +340,6 @@ class DialogueEditorState extends MusicBeatState
 			super.update(elapsed);
 			return;
 		}
-	}
 
 		if(character.animation.curAnim != null) {
 			if(daText.finishedText) {
@@ -470,12 +468,12 @@ class DialogueEditorState extends MusicBeatState
 			animText.text = 'ERROR! NO ANIMATIONS FOUND';
 		}
 		characterAnimSpeed();
-		
+
 		#if !android
 		selectedText.text = 'Line: (' + (curSelected + 1) + ' / ' + dialogueFile.dialogue.length + ') - Press A or D to scroll';
 		#else
 		selectedText.text = 'Line: (' + (curSelected + 1) + ' / ' + dialogueFile.dialogue.length + ') - Press Left or Right Button to scroll';
-		#end	
+		#end
 	}
 
 	function characterAnimSpeed() {
