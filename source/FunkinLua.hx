@@ -528,7 +528,7 @@ class FunkinLua {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			}
-			else if(FileSystem.exists(SUtil.getPath() + ervixx))
+			else if(FileSystem.exists(SUtil.getPath() + cervix))
 			{
 				doPush = true;
 			}
