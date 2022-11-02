@@ -31,7 +31,6 @@ import flash.net.FileFilter;
 import haxe.Json;
 import DialogueBoxPsych;
 import lime.system.Clipboard;
-import Alphabet;
 #if sys
 import sys.io.File;
 #end
@@ -42,7 +41,7 @@ class DialogueEditorState extends MusicBeatState
 {
 	var character:DialogueCharacter;
 	var box:FlxSprite;
-	var daText:TypedAlphabet;
+	var daText:Alphabet;
 
 	var selectedText:FlxText;
 	var animText:FlxText;
@@ -107,17 +106,12 @@ class DialogueEditorState extends MusicBeatState
 		animText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		animText.scrollFactor.set();
 		add(animText);
-		
-		daText = new TypedAlphabet(DialogueBoxPsych.DEFAULT_TEXT_X, DialogueBoxPsych.DEFAULT_TEXT_Y, DEFAULT_TEXT);
-		daText.scaleX = 0.7;
-		daText.scaleY = 0.7;
-		add(daText);
 		changeText();
-		
+
 		#if android
 		addVirtualPad(LEFT_FULL, A_B_C);
 		#end
-		
+
 		super.create();
 	}
 
@@ -146,6 +140,7 @@ class DialogueEditorState extends MusicBeatState
 		tab_group.name = "Dialogue Line";
 
 		characterInputText = new FlxUIInputText(10, 20, 80, DialogueCharacter.DEFAULT_CHARACTER, 8);
+		characterInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		blockPressWhileTypingOn.push(characterInputText);
 
 		speedStepper = new FlxUINumericStepper(10, characterInputText.y + 40, 0.005, 0.05, 0, 0.5, 3);
@@ -158,9 +153,11 @@ class DialogueEditorState extends MusicBeatState
 		};
 
 		soundInputText = new FlxUIInputText(10, speedStepper.y + 40, 150, '', 8);
+		soundInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		blockPressWhileTypingOn.push(soundInputText);
 		
 		lineInputText = new FlxUIInputText(10, soundInputText.y + 35, 200, DEFAULT_TEXT, 8);
+		lineInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		blockPressWhileTypingOn.push(lineInputText);
 
 		#if !android
@@ -259,25 +256,29 @@ class DialogueEditorState extends MusicBeatState
 	private static var DEFAULT_TEXT:String = "coolswag";
 	private static var DEFAULT_SPEED:Float = 0.05;
 	private static var DEFAULT_BUBBLETYPE:String = "normal";
-	function reloadText(skipDialogue:Bool) {
+	function reloadText(speed:Float = 0.05) {
+		if(daText != null) {
+			daText.killTheTimer();
+			daText.kill();
+			remove(daText);
+			daText.destroy();
+		}
+
+		if(Math.isNaN(speed) || speed < 0.001) speed = 0.0;
+
 		var textToType:String = lineInputText.text;
 		if(textToType == null || textToType.length < 1) textToType = ' ';
+	
+		Alphabet.setDialogueSound(soundInputText.text);
+		daText = new Alphabet(DialogueBoxPsych.DEFAULT_TEXT_X, DialogueBoxPsych.DEFAULT_TEXT_Y, textToType, false, true, speed, 0.7);
+		add(daText);
 
-		daText.text = textToType;
-		daText.resetDialogue();
-
-		if(skipDialogue) 
-			daText.finishText();
-		else if(daText.delay > 0)
-		{
+		if(speed > 0) {
 			if(character.jsonFile.animations.length > curAnim && character.jsonFile.animations[curAnim] != null) {
 				character.playAnim(character.jsonFile.animations[curAnim].anim);
 			}
 			characterAnimSpeed();
 		}
-
-		daText.y = DialogueBoxPsych.DEFAULT_TEXT_Y;
-		if(daText.rows > 2) daText.y -= DialogueBoxPsych.LONG_TEXT_ADD;
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -436,18 +437,11 @@ class DialogueEditorState extends MusicBeatState
 		angryCheckbox.checked = (curDialogue.boxState == 'angry');
 		speedStepper.value = curDialogue.speed;
 
-		if (curDialogue.sound == null) curDialogue.sound = '';
-		soundInputText.text = curDialogue.sound;
-
-		daText.delay = speedStepper.value;
-		daText.sound = soundInputText.text;
-		if(daText.sound != null && daText.sound.trim() == '') daText.sound = 'dialogue';
-
 		curAnim = 0;
 		character.reloadCharacterJson(characterInputText.text);
 		reloadCharacter();
-		reloadText(false);
 		updateTextBox();
+		reloadText(curDialogue.speed);
 
 		var leLength:Int = character.jsonFile.animations.length;
 		if(leLength > 0) {
@@ -484,6 +478,16 @@ class DialogueEditorState extends MusicBeatState
 			else if(rate > 48) rate = 48;
 			character.animation.curAnim.frameRate = rate;
 		}
+	}
+
+	function ClipboardAdd(prefix:String = ''):String {
+		if(prefix.toLowerCase().endsWith('v')) //probably copy paste attempt
+		{
+			prefix = prefix.substring(0, prefix.length-1);
+		}
+
+		var text:String = prefix + Clipboard.text.replace('\n', '');
+		return text;
 	}
 
 	var _file:FileReference = null;
