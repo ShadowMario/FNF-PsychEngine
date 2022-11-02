@@ -397,7 +397,9 @@ class DialogueCharacterEditorState extends MusicBeatState
 			saveCharacter();
 		});
 		tab_group.add(reloadImageButton);
+		#if !android
 		tab_group.add(loadButton);
+		#end
 		tab_group.add(saveButton);
 		UI_mainbox.addGroup(tab_group);
 	}
@@ -764,14 +766,18 @@ class DialogueCharacterEditorState extends MusicBeatState
 		var data:String = Json.stringify(character.jsonFile, "\t");
 		if (data.length > 0)
 		{
+		  
 			var splittedImage:Array<String> = imageInputText.text.trim().split('_');
 			var characterName:String = splittedImage[0].toLowerCase().replace(' ', '');
-
+			#if android
+			SUtil.saveContent(characterName, ".json", data);
+			#else
 			_file = new FileReference();
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data, characterName + ".json");
+			#end
 		}
 	}
 
