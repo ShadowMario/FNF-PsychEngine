@@ -312,15 +312,23 @@ class DialogueEditorState extends MusicBeatState
 				}
 				dialogueFile.dialogue[curSelected].portrait = characterInputText.text;
 			}
+			dialogueFile.dialogue[curSelected].portrait = characterInputText.text;
+			reloadText(false);
+			updateTextBox();
 			else if(sender == lineInputText)
 			{
-				reloadText(0);
-				dialogueFile.dialogue[curSelected].text = lineInputText.text;
+								dialogueFile.dialogue[curSelected].text = lineInputText.text;
+
+				daText.text = lineInputText.text;
+				if(daText.text == null) daText.text = '';
+				reloadText(true);
 			}
 			else if(sender == soundInputText)
 			{
+				daText.finishText();
 				dialogueFile.dialogue[curSelected].sound = soundInputText.text;
-				reloadText(0);
+				daText.sound = soundInputText.text;
+				if(daText.sound == null) daText.sound = '';
 			}
 		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender == speedStepper)) {
 			reloadText(speedStepper.value);
@@ -328,6 +336,8 @@ class DialogueEditorState extends MusicBeatState
 			if(Math.isNaN(dialogueFile.dialogue[curSelected].speed) || dialogueFile.dialogue[curSelected].speed == null || dialogueFile.dialogue[curSelected].speed < 0.001) {
 				dialogueFile.dialogue[curSelected].speed = 0.0;
 			}
+			daText.delay = dialogueFile.dialogue[curSelected].speed;
+			reloadText(false);
 		}
 	}
 
