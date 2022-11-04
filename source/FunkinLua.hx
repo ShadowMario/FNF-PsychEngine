@@ -123,7 +123,7 @@ class FunkinLua {
 		// Camera poo
 		set('cameraX', 0);
 		set('cameraY', 0);
-
+		set('cameraSpeed', PlayState.cameraSpeed);
 		// Screen stuff
 		set('screenWidth', FlxG.width);
 		set('screenHeight', FlxG.height);
@@ -1127,8 +1127,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addHealth", function(value:Float = 0) {
 			PlayState.instance.health += value;
 		});
-		Lua_helper.add_callback(lua, "getHealth", function() {
-			return PlayState.instance.health;
+		Lua_helper.add_callback(lua, "getHealth", function(percent:Bool = false) {
+			if (percent == true) {return PlayState.instance.healthBar.percent} else {return PlayState.instance.health}
 		});
 
 		Lua_helper.add_callback(lua, "getColorFromHex", function(color:String) {
