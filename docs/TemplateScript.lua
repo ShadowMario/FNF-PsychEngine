@@ -59,7 +59,7 @@ end
 function onPause()
 	-- Called when you press Pause while not on a cutscene/etc
 	-- return Function_Stop if you want to stop the player from pausing the game
-	return Function_Continue;
+	return Function_Continue
 end
 
 function onResume()
@@ -69,7 +69,7 @@ end
 function onGameOver()
 	-- You died! Called every single frame your health is lower (or equal to) zero
 	-- return Function_Stop if you want to stop the player from going into the game over screen
-	return Function_Continue;
+	return Function_Continue
 end
 
 function onGameOverConfirm(retry)
@@ -117,32 +117,32 @@ function onRecalculateRating()
 	-- return Function_Stop if you want to do your own rating calculation,
 	-- use setRatingPercent() to set the number on the calculation and setRatingString() to set the funny rating name
 	-- NOTE: THIS IS CALLED BEFORE THE CALCULATION!!!
-	return Function_Continue;
+	return Function_Continue
 end
 
 function onMoveCamera(focus)
 	if focus == 'boyfriend' then
 		-- called when the camera focus on boyfriend
-	elseif focus == 'dad' then
+	end
+	if focus == 'dad' then
 		-- called when the camera focus on dad
 	end
 end
-
 
 -- Event notes hooks
 function onEvent(name, value1, value2)
 	-- event note triggered
 	-- triggerEvent() does not call this function!!
 
-	-- print('Event triggered: ', name, value1, value2);
+	-- print('Event triggered: ', name, value1, value2)
 end
 
 function eventEarlyTrigger(name)
 	--[[
 	Here's a port of the Kill Henchmen early trigger but on Lua instead of Haxe:
 
-	if name == 'Kill Henchmen'
-		return 280;
+	if name == 'Kill Henchmen' then
+		return 280
 
 	This makes the "Kill Henchmen" event be triggered 280 miliseconds earlier so that the kill sound is perfectly timed with the song
 	]]--
@@ -161,19 +161,23 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	-- loops = how many loops it will have done when it ends completely
 	-- loopsLeft = how many are remaining
 end
+
 function onCheckForAchievement(name)
 	
 	--deals with achievement checks
 	
 	--EX:
 --[[
+  health = getHealth()
+  songPosition = getSongPosition()
+	
   if name == 'sick-full-combo' and getProperty('bads') == 0 and getProperty('goods') == 0 and getProperty('shits') == 0 and getProperty('endingSong') then
     return Function_Continue
   end
-  if name == 'bad-health-finish' and getProperty('health') < 0.01 and getProperty('endingSong') then
+  if name == 'bad-health-finish' and health < 0.01 and getProperty('endingSong') then
     return Function_Continue
   end
-  if name == 'halfway' and getSongPosition >  getPropertyFromClass('flixel.FlxG','sound.music.length')/2 then
+  if name == 'halfway' and songPosition > getPropertyFromClass('flixel.FlxG','sound.music.length')/2 then
     return Function_Continue
   end
 	
