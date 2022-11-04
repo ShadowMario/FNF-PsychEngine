@@ -920,15 +920,16 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1, ?weekJson:String = null) {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
-			if (difficultyNum == -1)
+			if (difficultyNum <= -1)
 				difficultyNum = PlayState.storyDifficulty;
-			// MEGA FIX DIFFS BETWEEN WEEKS WILL NOW FUCKING WORK WOOOOOOOOOOOOW
+			// MEGA FIX, DIFFS BETWEEN WEEKS WILL NOW FUCKING WORK WOOOOOOOOOOOOW
 			if (weekJson == null || weekJson.length < 1) {
-				weekJson = WeekData.weeksList[PlayState.storyWeek];
+				weekJson = WeekData.weeksList[PlayState.storyWeek].difficulties;
 			} else {
-				weekJson = PlayState.storyDifficulty;
+				weekJson = weekJson.difficulties;
 			}
 
+			CoolUtil.difficulties = weekJson;
 			var poop = Highscore.formatSong(name, difficultyNum);
 			PlayState.SONG = Song.loadFromJson(poop, name);
 			PlayState.storyDifficulty = difficultyNum;
