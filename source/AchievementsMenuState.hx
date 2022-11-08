@@ -5,13 +5,16 @@ import Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxG;
+
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
-import flixel.text.FlxText;
+import flixel.
+text.FlxText;
 import flixel.util.FlxColor;
-import lime.utils.Assets;
+import
+lime.utils.Assets;
 import flixel.FlxSubState;
 import Achievements;
 
@@ -21,10 +24,13 @@ class AchievementsMenuState extends MusicBeatState
 {
 	#if ACHIEVEMENTS_ALLOWED
 	var options:Array<String> = [];
-	private var grpOptions:FlxTypedGroup<Alphabet>;
+	private
+	var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
-	private var achievementArray:Array<AttachedAchievement> = [];
-	private var achievementIndex:Array<Int> = [];
+	private 
+	var achievementArray:Array<AttachedAchievement> = [];
+	private var achievementInde
+	:Array<Int> = [];
 	private var descText:FlxText;
 
 	override function create() {
@@ -44,7 +50,10 @@ class AchievementsMenuState extends MusicBeatState
 
 		Achievements.loadAchievements();
 		for (i in 0...Achievements.achievementsStuff.length) {
-			if(!Achievements.achievementsStuff[i][3] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
+			if(!Achievements.achievementsStuff[i][3]
+			   
+			   
+			   || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
 				options.push(Achievements.achievementsStuff[i]);
 				achievementIndex.push(i);
 			}
@@ -52,9 +61,12 @@ class AchievementsMenuState extends MusicBeatState
 
 		for (i in 0...options.length) {
 			var achieveName:String = Achievements.achievementsStuff[achievementIndex[i]][2];
-			var optionText:Alphabet = new Alphabet(280, 300, Achievements.isAchievementUnlocked(achieveName) ? Achievements.achievementsStuff[achievementIndex[i]][0] : '?', false);
+			var op
+			    tionText:Alphabet = new Alphabet(280, 300, Achievements.isAchievementUnlocked(achieveName
+													 ) ? Achievements.achievementsStuff[achievementIndex[i]][0] : '?', false);
 			optionText.isMenuItem = true;
-			optionText.targetY = i - curSelected;
+			optionText.targetY 
+				= i - curSelected;
 			optionText.snapToPosition();
 			grpOptions.add(optionText);
 
