@@ -116,7 +116,8 @@ class AchievementsMenuState extends MusicBeatState
 			}
 		}
 		descText.text = Achievements.achievementsStuff[achievementIndex[curSelected]][1];
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.6
+			      );
 	}
 	#end
 }
