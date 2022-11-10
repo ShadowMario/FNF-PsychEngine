@@ -117,10 +117,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 					var path = haxe.io.Path.join([directory, file]);
 					if (!FileSystem.isDirectory(path) && file != 'readme.txt' && file.endsWith('.txt')) {
 						var fileToCheck:String = file.substr(0, file.length - 4);
-						var tag:String = File.getContent(path);
+						var contentArray:Array<String> = File.getContent(path).split(",");
+						var type:String = contentArray[0];
+						var tag:String = contentArray[1];
 						if(!customGameplayChangers.exists(tag)) {
 							customGameplayChangers.set(tag, false);
-							var option:GameplayOption = new GameplayOption(fileToCheck, tag, 'bool', false);
+							var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, false);
 							optionsArray.push(option);
 						}
 					}
