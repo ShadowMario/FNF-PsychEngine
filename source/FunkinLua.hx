@@ -2769,7 +2769,7 @@ class FunkinLua {
 			return list;
 		});
 
-		Lua_helper.add_callback(lua, "getGameplayChangerBool", function(tag:String) {
+		Lua_helper.add_callback(lua, "getGameplayChangerValue", function(tag:String) {
 			return ClientPrefs.getGameplaySetting(tag, false);
 		});
 
