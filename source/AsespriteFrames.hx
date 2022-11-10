@@ -103,7 +103,6 @@ class AsespriteFrames extends FlxAtlasFrames
 		var offset:FlxPoint = FlxPoint.get(FrameData.spriteSourceSize.x, FrameData.spriteSourceSize.y);
 		var angle:FlxFrameAngle = FlxFrameAngle.ANGLE_0;
 		var frameRect:FlxRect = null;
-		var duration:Float = FrameData.duration / 1000;
 		if (rotated)
 		{
 			frameRect = FlxRect.get(FrameData.frame.x, FrameData.frame.y, FrameData.frame.h, FrameData.frame.w);
@@ -114,7 +113,11 @@ class AsespriteFrames extends FlxAtlasFrames
 			frameRect = FlxRect.get(FrameData.frame.x, FrameData.frame.y, FrameData.frame.w, FrameData.frame.h);
 		}
 
-		Frames.addAseFrame(frameRect, sourceSize, offset, name, angle, duration);
+		if (FrameData.duration==null)
+			Frames.addAtlasFrame(frameRect, sourceSize, offset, name, angle);
+		else{
+			Frames.addAseFrame(frameRect, sourceSize, offset, name, angle, FrameData.duration / 1000);
+		}
 	}
 
 	public function addAseFrame(frame:FlxRect, sourceSize:FlxPoint, offset:FlxPoint, ?name:String, angle:FlxFrameAngle = 0, flipX:Bool = false,
