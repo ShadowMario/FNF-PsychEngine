@@ -118,6 +118,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 					if (!FileSystem.isDirectory(path) && file != 'readme.txt' && file.endsWith('.txt')) {
 						var fileToCheck:String = file.substr(0, file.length - 4);
 						var contentArray:Array<String> = File.getContent(path).split(",");
+						for(i in 0...contentArray.length)
+							if(contentArray[i].isSpace(0))
+								contentArray[i] = contentArray[i].substr(1, contentArray[i].length); // Remove space
+
 						var type:String = contentArray[0];
 						var tag:String = contentArray[1];
 						
