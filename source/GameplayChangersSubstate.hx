@@ -120,10 +120,27 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 						var contentArray:Array<String> = File.getContent(path).split(",");
 						var type:String = contentArray[0];
 						var tag:String = contentArray[1];
+						
 						if(!customGameplayChangers.exists(tag)) {
 							customGameplayChangers.set(tag, false);
-							var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, false);
-							optionsArray.push(option);
+							contentArray.remove(type);
+							contentArray.remove(tag);
+							switch(type)
+							{
+								case 'int' | 'float' | 'percent':
+									var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, contentArray[0]);
+									option.scrollSpeed = Std.parseFloat(contentArray[1]);
+									option.minValue = contentArray[2];
+									option.maxValue = contentArray[3];
+									option.changeValue = contentArray[4];
+									option.displayFormat = contentArray[5];
+									option.decimals = Std.parseInt(contentArray[6]);
+									optionsArray.push(option);
+
+								case 'string':
+									var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, contentArray[0], contentArray);
+									optionsArray.push(option);
+							}
 						}
 					}
 				}
