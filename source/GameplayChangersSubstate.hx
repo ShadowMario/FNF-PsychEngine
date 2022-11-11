@@ -140,6 +140,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 								case 'string':
 									var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, contentArray[0], contentArray);
 									optionsArray.push(option);
+
+								case 'bool':
+									var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, contentArray[0]);
+									optionsArray.push(option);
 							}
 						}
 					}
