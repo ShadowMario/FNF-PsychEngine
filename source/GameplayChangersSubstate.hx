@@ -120,7 +120,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 						var contentArray:Array<String> = File.getContent(path).split(",");
 						for(i in 0...contentArray.length)
 							if(contentArray[i].isSpace(0))
-								contentArray[i] = contentArray[i].substr(1, contentArray[i].length); // Remove space
+								contentArray[i] = contentArray[i].trim(); // Remove space
 
 						var type:String = contentArray[0];
 						var tag:String = contentArray[1];
@@ -134,9 +134,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 								case 'int' | 'float' | 'percent':
 									var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, contentArray[0]);
 									option.scrollSpeed = Std.parseFloat(contentArray[1]);
-									option.minValue = contentArray[2];
-									option.maxValue = contentArray[3];
-									option.changeValue = contentArray[4];
+									option.minValue = Std.parseFloat(contentArray[2]);
+									option.maxValue = Std.parseFloat(contentArray[3]);
+									option.changeValue = Std.parseFloat(contentArray[4]);
 									option.displayFormat = contentArray[5];
 									option.decimals = Std.parseInt(contentArray[6]);
 									optionsArray.push(option);
