@@ -49,7 +49,7 @@ class CoolUtil
 		return Paths.formatToSongPath(fileSuffix);
 	}
 
-	public static function difficultyString():String
+	inline public static function difficultyString():String
 	{
 		return difficulties[PlayState.storyDifficulty].toUpperCase();
 	}
@@ -60,32 +60,19 @@ class CoolUtil
 
 	public static function coolTextFile(path:String):Array<String>
 	{
-		var daList:Array<String> = [];
 		#if sys
-		if(FileSystem.exists(path)) daList = File.getContent(path).trim().split('\n');
+		if(FileSystem.exists(path)) return [for (i in File.getContent(path).trim().split('\n')) i.trim()];
 		#else
-		if(Assets.exists(path)) daList = Assets.getText(path).trim().split('\n');
+		if(Assets.exists(path)) return [for (i in Assets.getText(path).trim().split('\n')) i.trim()];
 		#end
-
-		for (i in 0...daList.length)
-		{
-			daList[i] = daList[i].trim();
-		}
-
-		return daList;
+		return [];
 	}
-	public static function listFromString(string:String):Array<String>
+	
+	inline public static function listFromString(string:String):Array<String>
 	{
-		var daList:Array<String> = [];
-		daList = string.trim().split('\n');
-
-		for (i in 0...daList.length)
-		{
-			daList[i] = daList[i].trim();
-		}
-
-		return daList;
+		return [for (i in string.trim().split('\n')) i.trim());
 	}
+			
 	public static function dominantColor(sprite:flixel.FlxSprite):Int{
 		var countByColor:Map<Int, Int> = [];
 		for(col in 0...sprite.frameWidth){
@@ -112,14 +99,9 @@ class CoolUtil
 		return maxKey;
 	}
 
-	public static function numberArray(max:Int, ?min = 0):Array<Int>
+	inline public static function numberArray(max:Int, ?min = 0):Array<Int>
 	{
-		var dumbArray:Array<Int> = [];
-		for (i in min...max)
-		{
-			dumbArray.push(i);
-		}
-		return dumbArray;
+		return [for (i in min...max) i];
 	}
 
 	//uhhhh does this even work at all? i'm starting to doubt
@@ -131,7 +113,7 @@ class CoolUtil
 		Paths.music(sound, library);
 	}
 
-	public static function browserLoad(site:String) {
+	inline public static function browserLoad(site:String) {
 		#if linux
 		Sys.command('/usr/bin/xdg-open', [site]);
 		#else
