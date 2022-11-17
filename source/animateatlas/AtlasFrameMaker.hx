@@ -13,6 +13,7 @@ import animateatlas.displayobject.SpriteMovieClip;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxFramesCollection;
 import flixel.graphics.frames.FlxFrame;
+import flixel.util.FlxColor;
 #if desktop
 import sys.FileSystem;
 import sys.io.File;
@@ -36,7 +37,7 @@ class AtlasFrameMaker extends FlxFramesCollection
 	*
 	*/
 
-	public static function construct(key:String,?_excludeArray:Array<String> = null):FlxFramesCollection
+	public static function construct(key:String,?_excludeArray:Array<String> = null, ?noAntialiasing:Bool = false):FlxFramesCollection
 	{
 		// widthoffset = _widthoffset;
 		// heightoffset = _heightoffset;
@@ -46,7 +47,7 @@ class AtlasFrameMaker extends FlxFramesCollection
 
 		if (Paths.fileExists('images/$key/spritemap1.json', TEXT))
 		{
-			PlayState.instance.addTextToDebug("Only Spritemaps made with Adobe Animate 2018 are supported");
+			PlayState.instance.addTextToDebug("Only Spritemaps made with Adobe Animate 2018 are supported", FlxColor.RED);
 			trace("Only Spritemaps made with Adobe Animate 2018 are supported");
 			return null;
 		}
@@ -56,7 +57,7 @@ class AtlasFrameMaker extends FlxFramesCollection
 
 		var graphic:FlxGraphic = Paths.image('$key/spritemap');
 		var ss:SpriteAnimationLibrary = new SpriteAnimationLibrary(animationData, atlasData, graphic.bitmap);
-		var t:SpriteMovieClip = ss.createAnimation();
+		var t:SpriteMovieClip = ss.createAnimation(noAntialiasing);
 		if(_excludeArray == null)
 		{
 			_excludeArray = t.getFrameLabels();
