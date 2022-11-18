@@ -2299,12 +2299,25 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	public var tempScore:String = "";
+	public var scoreSeparator:String = ' | ';
+	public var displayRatings:Bool = true;
+
 	public function updateScore(miss:Bool = false)
 	{
-		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Misses: ' + songMisses
-		+ ' | Rating: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
+		// of course I would go back and fix my code, of COURSE @BeastlyGhost;
+		tempScore = "Score: " + songScore;
+
+		if (displayRatings)
+		{
+			tempScore += scoreSeparator + "Misses: " + songMisses;
+			tempScore += scoreSeparator + "Rating: " + ratingName;
+			tempScore += (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%)' : '');
+			tempScore += (ratingFC != null && ratingFC != '' ? ' - $ratingFC' : '');
+		}
+		tempScore += '\n';
+
+		scoreTxt.text = tempScore;
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -2741,28 +2754,18 @@ class PlayState extends MusicBeatState
 				vocals.pause();
 			}
 
-			if (startTimer != null && !startTimer.finished)
-				startTimer.active = false;
-			if (finishTimer != null && !finishTimer.finished)
-				finishTimer.active = false;
-			if (songSpeedTween != null)
-				songSpeedTween.active = false;
+			// "uhh but gabby, this is unoptimized" shut the fuck up @BeastlyGhost
+			FlxTimer.globalManager.forEach(function(tmr:FlxTimer)
+			{
+				if (!tmr.finished)
+					tmr.active = false;
+			});
 
-			if(carTimer != null) carTimer.active = false;
-
-			var chars:Array<Character> = [boyfriend, gf, dad];
-			for (char in chars) {
-				if(char != null && char.colorTween != null) {
-					char.colorTween.active = false;
-				}
-			}
-
-			for (tween in modchartTweens) {
-				tween.active = false;
-			}
-			for (timer in modchartTimers) {
-				timer.active = false;
-			}
+			FlxTween.globalManager.forEach(function(twn:FlxTween)
+			{
+				if (!twn.finished)
+					twn.active = false;
+			});
 		}
 
 		super.openSubState(SubState);
@@ -2777,28 +2780,18 @@ class PlayState extends MusicBeatState
 				resyncVocals();
 			}
 
-			if (startTimer != null && !startTimer.finished)
-				startTimer.active = true;
-			if (finishTimer != null && !finishTimer.finished)
-				finishTimer.active = true;
-			if (songSpeedTween != null)
-				songSpeedTween.active = true;
+			FlxTimer.globalManager.forEach(function(tmr:FlxTimer)
+			{
+				if (!tmr.finished)
+					tmr.active = true;
+			});
 
-			if(carTimer != null) carTimer.active = true;
+			FlxTween.globalManager.forEach(function(twn:FlxTween)
+			{
+				if (!twn.finished)
+					twn.active = true;
+			});
 
-			var chars:Array<Character> = [boyfriend, gf, dad];
-			for (char in chars) {
-				if(char != null && char.colorTween != null) {
-					char.colorTween.active = true;
-				}
-			}
-
-			for (tween in modchartTweens) {
-				tween.active = true;
-			}
-			for (timer in modchartTimers) {
-				timer.active = true;
-			}
 			paused = false;
 			callOnLuas('onResume', []);
 
@@ -5232,7 +5225,7 @@ class PlayState extends MusicBeatState
 			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
 			else if (songMisses >= 10) ratingFC = "Clear";
 		}
-		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
+		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce @BeastlyGhost
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
 		setOnLuas('ratingFC', ratingFC);
