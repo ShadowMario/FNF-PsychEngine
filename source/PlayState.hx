@@ -3306,7 +3306,6 @@ class PlayState extends MusicBeatState
 
 	function openPauseMenu()
 	{
-	
 		// "uhh but gabby, this is unoptimized" shut the fuck up @BeastlyGhost
 		FlxTimer.globalManager.forEach(function(tmr:FlxTimer)
 		{
