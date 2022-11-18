@@ -2753,19 +2753,6 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.pause();
 				vocals.pause();
 			}
-
-			// "uhh but gabby, this is unoptimized" shut the fuck up @BeastlyGhost
-			FlxTimer.globalManager.forEach(function(tmr:FlxTimer)
-			{
-				if (!tmr.finished)
-					tmr.active = false;
-			});
-
-			FlxTween.globalManager.forEach(function(twn:FlxTween)
-			{
-				if (!twn.finished)
-					twn.active = false;
-			});
 		}
 
 		super.openSubState(SubState);
@@ -3319,6 +3306,20 @@ class PlayState extends MusicBeatState
 
 	function openPauseMenu()
 	{
+	
+		// "uhh but gabby, this is unoptimized" shut the fuck up @BeastlyGhost
+		FlxTimer.globalManager.forEach(function(tmr:FlxTimer)
+		{
+			if (!tmr.finished)
+				tmr.active = false;
+		});
+
+		FlxTween.globalManager.forEach(function(twn:FlxTween)
+		{
+			if (!twn.finished)
+				twn.active = false;
+		});
+
 		persistentUpdate = false;
 		persistentDraw = true;
 		paused = true;
