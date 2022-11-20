@@ -1,4 +1,4 @@
 Main Credits
-CharlesCatYT::charles::Main Programmer and Director of the Mod::https://twitter.com/Shadow_Mario_::0xFFFFDD33
-Isaiah::isaiah::Second Director of the Mod::https://twitter.com/bbsub3::0xFFFFDD33
-Eventretta::eventretta::Stage Editor::https://twitter.com/bbsub3::0xFFFFDD33
+CharlesCatYT::charles::Main Programmer and Director of the Mod::https://github.com/ShadowMilky::0xFFFFDD33
+Isaiah::isaiah::Second Director of the Mod::https://github.com/IsaiahModsOfficial::0xFFFFDD33
+Eventretta::eventretta::Stage Editor::https://github.com/Eventretta::0xFFFFDD33
