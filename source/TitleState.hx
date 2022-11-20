@@ -41,13 +41,15 @@ import openfl.Assets;
 using StringTools;
 typedef TitleData =
 {
-
 	titlex:Float,
 	titley:Float,
 	startx:Float,
 	starty:Float,
 	gfx:Float,
 	gfy:Float,
+	gfscalex:Float,
+	gfscaley:Float,
+	gfantialiasing:Bool,
 	backgroundSprite:String,
 	bpm:Int
 }
@@ -323,7 +325,8 @@ class TitleState extends MusicBeatState
 				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		}
-		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
+		gfDance.scale.set(titleJSON.gfscalex, titleJSON.gfscaley);
+		gfDance.antialiasing = titleJSON.gfantialiasing;
 
 		add(gfDance);
 		gfDance.shader = swagShader.shader;
