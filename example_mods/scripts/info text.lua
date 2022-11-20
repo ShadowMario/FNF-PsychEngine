@@ -18,7 +18,9 @@ local Quotes = {
     "hell nah aumsum have merch (its in www.aumsum.com)",
     "Don't swear on your YouTube Video or else Susuan Wojkcicki will come to your house",
     "Copyright Striked",
-    "This video is not available on YouTube"
+    "This video is not available on YouTube",
+    "Demonitized",
+    "No play button?"
     
 }
 
@@ -30,7 +32,7 @@ end
 
 
 function onCreatePost()
-    makeLuaText('songText', songName .. ' - ' .. getProperty('storyDifficultyText') .. ' | YouTube Engine (PE 0.6.3) | ' .. Quotes[getRandomInt(1, 15)], 0, 2, 701);
+    makeLuaText('songText', songName .. ' - ' .. getProperty('storyDifficultyText') .. ' | YouTube Engine (PE 0.6.3) | ' .. Quotes[getRandomInt(1, 20)], 0, 2, 701);
     setTextAlignment('songText', 'left');
     setTextSize('songText', 15);
     setTextBorder('songText', 1, '000000');
