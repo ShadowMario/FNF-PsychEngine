@@ -7,12 +7,12 @@ tnhx = -10
 function onCreate()
     makeLuaText("tnh", 'Total Notes Hit: 0', 250, tnhx, 259);
     setTextFont('tnh', font)
-    makeLuaText("cm", 'wombocombos: 0', 200, -getProperty('tnh.x') + cmoffset, getProperty('tnh.y') + cmy);
-    makeLuaText("sick", 'FRFR: 0', 200, getProperty('cm.x'), getProperty('cm.y') + 30);
-    makeLuaText("good", 'nice: 0', 200, getProperty('cm.x'), getProperty('sick.y') + 30);
-    makeLuaText("bad", 'get gid: 0', 200, getProperty('cm.x'), getProperty('good.y') + 30);
-    makeLuaText("shit", 'fuckups: 0', 200, getProperty('cm.x'), getProperty('bad.y') + 30);
-    makeLuaText("miss", 'kys: 0', 200, getProperty('cm.x'), getProperty('shit.y') + 30);
+    makeLuaText("cm", 'Combos: 0', 200, -getProperty('tnh.x') + cmoffset, getProperty('tnh.y') + cmy);
+    makeLuaText("sick", 'Sick: 0', 200, getProperty('cm.x'), getProperty('cm.y') + 30);
+    makeLuaText("good", 'Good: 0', 200, getProperty('cm.x'), getProperty('sick.y') + 30);
+    makeLuaText("bad", 'Bad: 0', 200, getProperty('cm.x'), getProperty('good.y') + 30);
+    makeLuaText("shit", 'Shit: 0', 200, getProperty('cm.x'), getProperty('bad.y') + 30);
+    makeLuaText("miss", 'Upset YouTube: 0', 200, getProperty('cm.x'), getProperty('shit.y') + 30);
     setObjectCamera("tnh", 'other');
     setTextSize('tnh', 20);
     addLuaText("tnh");
