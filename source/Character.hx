@@ -33,6 +33,8 @@ typedef CharacterFile = {
 	var flip_x:Bool;
 	var no_antialiasing:Bool;
 	var healthbar_colors:Array<Int>;
+
+	var gameover_properties:Array<String>;
 }
 
 typedef AnimArray = {
@@ -70,6 +72,12 @@ class Character extends FlxSprite
 	public var cameraPosition:Array<Float> = [0, 0];
 
 	public var hasMissAnimations:Bool = false;
+
+	//Used for Game Over Properties
+	public var deathChar:String = 'bf-dead';
+	public var deathSound:String = 'fnf_loss_sfx';
+	public var deathConfirm:String = 'gameOverEnd';
+	public var deathMusic:String = 'gameOver';
 
 	//Used on Character Editor
 	public var imageFile:String = '';
@@ -194,6 +202,14 @@ class Character extends FlxSprite
 				if(json.no_antialiasing) {
 					antialiasing = false;
 					noAntialiasing = true;
+				}
+
+				if (json.gameover_properties != null)
+				{
+					deathChar = json.gameover_properties[0];
+					deathSound = json.gameover_properties[1];
+					deathMusic = json.gameover_properties[2];
+					deathConfirm = json.gameover_properties[3];
 				}
 
 				if(json.healthbar_colors != null && json.healthbar_colors.length > 2)
