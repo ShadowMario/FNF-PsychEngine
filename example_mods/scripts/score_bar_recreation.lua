@@ -1,5 +1,5 @@
 scoreName = "Score"
-missesName = "Misses"
+missesName = "Copyright Strikes"
 ratingNames = "Rating"
 function onUpdate()
     if not getProperty('ratingName') == '?' then
