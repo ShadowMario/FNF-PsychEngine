@@ -76,7 +76,7 @@ class FunkinLua {
 	public static var hscript:HScript = null;
 	#end
 	
-	public function new(script:String) {
+	public function new(script:String, ?scriptCode:String) {
 		#if LUA_ALLOWED
 		lua = LuaL.newstate();
 		LuaL.openlibs(lua);
@@ -87,7 +87,7 @@ class FunkinLua {
 
 		//LuaL.dostring(lua, CLENSE);
 		try{
-			var result:Dynamic = LuaL.dofile(lua, script);
+			var result:Int = scriptCode != null ? LuaL.dostring(lua, scriptCode) : LuaL.dofile(lua, script);
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
 				trace('Error on lua script! ' + resultStr);
@@ -249,6 +249,26 @@ class FunkinLua {
 				return true;
 			}
 			return false;
+		});
+
+		Lua_helper.add_callback(lua, "giveAchievement", function(name:String){
+			var me = this;
+			if(Achievements.isAchievementUnlocked(name)||!PlayState.instance.achievementArray.contains(me))
+			{
+				if(!PlayState.instance.achievementArray.contains(me)){
+					luaTrace("giveAchievement: This lua file is not a custom achievement lua.", false, false, FlxColor.RED);
+				}
+
+				return false;
+			}
+			@:privateAccess
+			if(PlayState.instance != null) {
+				Achievements.unlockAchievement(name);
+				PlayState.instance.startAchievement(name);
+				ClientPrefs.saveSettings();
+				return true;
+			}
+			else return false;
 		});
 
 		// shader shit
@@ -1731,7 +1751,6 @@ class FunkinLua {
 				default: PlayState.instance.boyfriend.dance();
 			}
 		});
-
 		Lua_helper.add_callback(lua, "makeLuaSprite", function(tag:String, image:String, x:Float, y:Float) {
 			tag = tag.replace('.', '');
 			resetSpriteTag(tag);
