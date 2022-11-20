@@ -15,7 +15,11 @@ local Quotes = {
     "This is YOUR Daily Does of Internet",
     "I've over dosed on ketamine and I'm going to die",
     "Oh, AumSum.",
-    "hell nah aumsum have merch (its in www.aumsum.com)"
+    "hell nah aumsum have merch (its in www.aumsum.com)",
+    "Don't swear on your YouTube Video or else Susuan Wojkcicki will come to your house",
+    "Copyright Striked",
+    "This video is not available on YouTube"
+    
 }
 
 function onCreate()
