@@ -772,9 +772,9 @@ class CharacterEditorState extends MusicBeatState
 			{
 				reloadCharacterImage();
 				char.jsonScale = sender.value;
-				char.setGraphicSize(Std.int(char.width * char.jsonScale));
+				char.scale.set(char.jsonScale, char.jsonScale);
 				char.updateHitbox();
-				ghostChar.setGraphicSize(Std.int(ghostChar.width * char.jsonScale));
+				ghostChar.scale.set(char.jsonScale, char.jsonScale);
 				ghostChar.updateHitbox();
 				reloadGhost();
 				updatePointerPos();
