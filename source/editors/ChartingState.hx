@@ -1450,6 +1450,7 @@ class ChartingState extends MusicBeatState
 			if (wname == 'section_beats')
 			{
 				_song.notes[curSec].sectionBeats = nums.value;
+				_song.notes[curSec].lengthInSteps = Std.int(nums.value);
 				reloadGridLayer();
 			}
 			else if (wname == 'song_speed')
@@ -2753,10 +2754,11 @@ class ChartingState extends MusicBeatState
 		return spr;
 	}
 
-	private function addSection(sectionBeats:Float = 4):Void
+	private function addSection(sectionBeats:Float = 4, lengthInSteps:Int = 16):Void
 	{
 		var sec:SwagSection = {
 			sectionBeats: sectionBeats,
+			lengthInSteps: lengthInSteps,
 			bpm: _song.bpm,
 			changeBPM: false,
 			mustHitSection: true,
