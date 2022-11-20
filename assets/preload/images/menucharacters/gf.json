@@ -1,11 +1,12 @@
 {
-	
 	"image": "Menu_GF",
+	"scale": 1,
 	"position": [
 		0,
 		-25
 	],
-	"scale": 1,
 	"idle_anim": "M GF Idle",
-	"confirm_anim": "M GF Idle"
+	"confirm_anim": "M Dad Idle",
+	"flipX": false,
+	"noAntialiasing": false
 }

@@ -1,11 +1,12 @@
 {
-	
 	"image": "Menu_BF",
+	"scale": 1,
 	"position": [
 		15,
 		-40
 	],
-	"scale": 1,
 	"idle_anim": "M BF Idle",
-	"confirm_anim": "M bf HEY"
+	"confirm_anim": "M bf HEY",
+	"flipX": false,
+	"noAntialiasing": false
 }

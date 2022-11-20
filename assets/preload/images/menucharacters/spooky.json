@@ -1,10 +1,12 @@
 {
-	"idle_anim": "M Spooky Kids Idle",
 	"image": "Menu_Spooky_Kids",
+	"scale": 1,
 	"position": [
 		0,
 		-80
 	],
-	"scale": 1,
-	"confirm_anim": "M Dad Idle"
+	"idle_anim": "M Spooky Kids Idle",
+	"confirm_anim": "M Dad Idle",
+	"flipX": false,
+	"noAntialiasing": false
 }
