@@ -5,9 +5,11 @@ local Quotes = {
     "What if HScript Disappared?",
     "No AumSum?",
     "Thanks to Heli Pro Gamer for the fix!",
+    "hi my name is carmen winstead im 17 years old",
     "No OpenFL?",
     "MOM GET THE CAMERA",
     "YouTube is gonna copyright strike you if you die!",
+    "DONT PUT AUMSUM IN DALL E WORST MISTAKE OF MY LIFE",
     "oh noes arnold got his finger cut",
     "what a loser, getting his mod cancelled",
     "This is YOUR Daily Does of Internet",
@@ -24,7 +26,7 @@ end
 
 
 function onCreatePost()
-    makeLuaText('songText', songName .. ' - ' .. getProperty('storyDifficultyText') .. ' | YouTube Engine (PE 0.6.3) | ' .. Quotes[getRandomInt(1, 11)], 0, 2, 701);
+    makeLuaText('songText', songName .. ' - ' .. getProperty('storyDifficultyText') .. ' | YouTube Engine (PE 0.6.3) | ' .. Quotes[getRandomInt(1, 15)], 0, 2, 701);
     setTextAlignment('songText', 'left');
     setTextSize('songText', 15);
     setTextBorder('songText', 1, '000000');
