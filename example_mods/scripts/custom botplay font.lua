@@ -1,4 +1,4 @@
 function onStartCountdown()
-     setTextString('botplayTxt', 'I HAVE 192,198,952 MISSES ON THIS SONG')
+     setTextString('botplayTxt', 'AUTOPLAY')
 setTextFont('botplayTxt', "youtube-sans-medium.ttf");
 end
