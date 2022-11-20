@@ -307,6 +307,24 @@ class Paths
 		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
 		#end
 	}
+	// AsespriteFrames.fromTexturePackerJson
+
+	inline static public function asespriteJson(key:String, ?library:String)
+	{
+		#if MODS_ALLOWED
+		var imageLoaded:FlxGraphic = returnGraphic(key);
+		var jsonExists:Bool = false;
+		if (FileSystem.exists(modsImageJson(key)))
+		{
+			jsonExists = true;
+		}
+
+		return AsespriteFrames.fromTexturePackerJson((imageLoaded != null ? imageLoaded : image(key, library)),
+			(jsonExists ? File.getContent(modsImageJson(key)) : file('images/$key.json', library)));
+		#else
+		return AsespriteFrames.fromTexturePackerJson(image(key, library), file('images/$key.json', library));
+		#end
+	}
 
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
@@ -406,6 +424,11 @@ class Paths
 
 	inline static public function modsJson(key:String) {
 		return modFolders('data/' + key + '.json');
+	}
+
+	inline static public function modsImageJson(key:String)
+	{
+		return modFolders('images/' + key + '.json');
 	}
 
 	inline static public function modsVideo(key:String) {

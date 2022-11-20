@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "lime",
+			"command": "test",
+			"targetConfiguration": "Windows / Debug",
+			"problemMatcher": [
+				"$haxe-absolute",
+				"$haxe",
+				"$haxe-error",
+				"$haxe-trace"
+			],
+			"label": "lime: test windows -debug",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
