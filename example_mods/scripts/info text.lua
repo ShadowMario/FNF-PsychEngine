@@ -1,7 +1,7 @@
 currentDifficulty = 'its still fucked';
 
 function onCreate()
-    makeLuaText('songText', songName .. " " .. currentDifficulty .. " - Youtube Engine 0.6.3", 0, 2, 701);
+    makeLuaText('songText', songName .. " " .. currentDifficulty .. " - YouTube Engine 0.6.3", 0, 2, 701);
     setTextAlignment('songText', 'left');
     setTextSize('songText', 15);
     setTextBorder('songText', 1, '000000');
