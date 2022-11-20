@@ -1,6 +1,12 @@
 package;
 
 import flixel.FlxG;
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#else
+import openfl.utils.Assets;
+#end
 
 using StringTools;
 
@@ -102,8 +108,24 @@ class Highscore
 	}
 
 	public static function formatSong(song:String, diff:Int):String
-	{
-		return Paths.formatToSongPath(song) + CoolUtil.getDifficultyFilePath(diff);
+	{	
+		var diffic:String = CoolUtil.getDifficultyFilePath(diff);
+		var daJson:String = Paths.formatToSongPath(song) + diffic;
+
+		var newDiff:String = CoolUtil.checkJsonFilePath(Paths.formatToSongPath(song), diffic, diff);
+		if(newDiff != null)
+		{
+			if (diffic.length > 0) 
+			{
+				daJson = Paths.formatToSongPath(song);
+			}
+			else
+			{
+				daJson = Paths.formatToSongPath(song) + newDiff;
+			}
+		}
+
+		return daJson;
 	}
 
 	public static function getScore(song:String, diff:Int):Int

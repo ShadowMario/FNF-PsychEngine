@@ -196,6 +196,7 @@ class PlayState extends MusicBeatState
 
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
+	public static var exitingSong:Bool = false;
 	public var startingSong:Bool = false;
 	private var updateTime:Bool = true;
 	public static var changedDifficulty:Bool = false;
@@ -1693,6 +1694,7 @@ class PlayState extends MusicBeatState
 			precacheList.set('dialogue', 'sound');
 			precacheList.set('dialogueClose', 'sound');
 			psychDialogue = new DialogueBoxPsych(dialogueFile, song);
+			PlayState.instance.callOnLuas('onStartDialogue', [dialogueFile]);
 			psychDialogue.scrollFactor.set();
 			if(endingSong) {
 				psychDialogue.finishThing = function() {
@@ -3096,6 +3098,8 @@ class PlayState extends MusicBeatState
 			iconP2.animation.curAnim.curFrame = 0;
 
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
+			callOnLuas('onOpenCharacterEditor', []);
+			exitingSong = true;
 			persistentUpdate = false;
 			paused = true;
 			cancelMusicFadeTween();
@@ -3386,6 +3390,8 @@ class PlayState extends MusicBeatState
 
 	function openChartEditor()
 	{
+		callOnLuas('onOpenChartEditor', []);
+		exitingSong = true;
 		persistentUpdate = false;
 		paused = true;
 		cancelMusicFadeTween();
@@ -4004,6 +4010,8 @@ class PlayState extends MusicBeatState
 
 				if (storyPlaylist.length <= 0)
 				{
+					callOnLuas('onExitSong', []);
+					exitingSong = true;
 					WeekData.loadTheFirstEnabledMod();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
@@ -4030,6 +4038,9 @@ class PlayState extends MusicBeatState
 				else
 				{
 					var difficulty:String = CoolUtil.getDifficultyFilePath();
+					
+					var newDiff:String = CoolUtil.checkJsonFilePath(Paths.formatToSongPath(PlayState.storyPlaylist[0]), difficulty, storyDifficulty);
+					if(newDiff != null) difficulty = newDiff;
 
 					trace('LOADING NEXT SONG');
 					trace(Paths.formatToSongPath(PlayState.storyPlaylist[0]) + difficulty);
@@ -4068,6 +4079,8 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
+				callOnLuas('onExitSong', []);
+				exitingSong = true;
 				trace('WENT BACK TO FREEPLAY??');
 				WeekData.loadTheFirstEnabledMod();
 				cancelMusicFadeTween();

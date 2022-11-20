@@ -90,6 +90,8 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (controls.BACK)
 		{
 			FlxG.sound.music.stop();
+			PlayState.instance.callOnLuas('onExitSong', []);
+			PlayState.exitingSong = true;
 			PlayState.deathCounter = 0;
 			PlayState.seenCutscene = false;
 			PlayState.chartingMode = false;

@@ -258,6 +258,8 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case "Exit to menu":
+					PlayState.instance.callOnLuas('onExitSong', []);
+					PlayState.exitingSong = true;
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 
@@ -289,6 +291,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	public static function restartSong(noTrans:Bool = false)
 	{
+		PlayState.instance.callOnLuas('onRestartSong', []);
 		PlayState.instance.paused = true; // For lua
 		FlxG.sound.music.volume = 0;
 		PlayState.instance.vocals.volume = 0;

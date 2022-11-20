@@ -162,6 +162,18 @@ class FreeplayState extends MusicBeatState
 
 		if(lastDifficultyName == '')
 		{
+			var defDiff:String = WeekData.getCurrentWeek().defaultDifficulty;
+			if(defDiff != null) defDiff = defDiff.trim();
+
+			if(defDiff != null && defDiff.length > 0)
+			{
+				CoolUtil.defaultDifficulty = defDiff;
+			}
+			else
+			{
+				CoolUtil.defaultDifficulty = 'Normal';
+			}
+
 			lastDifficultyName = CoolUtil.defaultDifficulty;
 		}
 		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
@@ -512,10 +524,22 @@ class FreeplayState extends MusicBeatState
 				CoolUtil.difficulties = diffs;
 			}
 		}
+
+		var defDiff:String = WeekData.getCurrentWeek().defaultDifficulty;
+		if(defDiff != null) defDiff = defDiff.trim();
+
+		if(defDiff != null && defDiff.length > 0)
+		{
+			CoolUtil.defaultDifficulty = defDiff;
+		}
+		else
+		{
+			CoolUtil.defaultDifficulty = 'Normal';
+		}
 		
 		if(CoolUtil.difficulties.contains(CoolUtil.defaultDifficulty))
 		{
-			curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
+			curDifficulty = Math.round(Math.max(0, CoolUtil.difficulties.indexOf(CoolUtil.defaultDifficulty)));
 		}
 		else
 		{

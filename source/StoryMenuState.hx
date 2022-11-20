@@ -149,6 +149,18 @@ class StoryMenuState extends MusicBeatState
 		CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
 		if(lastDifficultyName == '')
 		{
+			var defDiff:String = WeekData.getCurrentWeek().defaultDifficulty;
+			if(defDiff != null) defDiff = defDiff.trim();
+
+			if(defDiff != null && defDiff.length > 0)
+			{
+				CoolUtil.defaultDifficulty = defDiff;
+			}
+			else
+			{
+				CoolUtil.defaultDifficulty = 'Normal';
+			}
+
 			lastDifficultyName = CoolUtil.defaultDifficulty;
 		}
 		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
@@ -316,6 +328,9 @@ class StoryMenuState extends MusicBeatState
 			var diffic = CoolUtil.getDifficultyFilePath(curDifficulty);
 			if(diffic == null) diffic = '';
 
+			var newDiff:String = CoolUtil.checkJsonFilePath(Paths.formatToSongPath(PlayState.storyPlaylist[0]), diffic, curDifficulty);
+			if(newDiff != null) diffic = newDiff;
+
 			PlayState.storyDifficulty = curDifficulty;
 
 			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
@@ -434,9 +449,21 @@ class StoryMenuState extends MusicBeatState
 			}
 		}
 		
+		var defDiff:String = WeekData.getCurrentWeek().defaultDifficulty;
+		if(defDiff != null) defDiff = defDiff.trim();
+
+		if(defDiff != null && defDiff.length > 0)
+		{
+			CoolUtil.defaultDifficulty = defDiff;
+		}
+		else
+		{
+			CoolUtil.defaultDifficulty = 'Normal';
+		}
+
 		if(CoolUtil.difficulties.contains(CoolUtil.defaultDifficulty))
 		{
-			curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
+			curDifficulty = Math.round(Math.max(0, CoolUtil.difficulties.indexOf(CoolUtil.defaultDifficulty)));
 		}
 		else
 		{
