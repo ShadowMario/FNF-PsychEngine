@@ -28,7 +28,7 @@ function onCreate()
 	addLuaText('JukeBoxText')
 	
 	--text for the song name
-	makeLuaText('JukeBoxSubText', 'FNF Vs AumSum', 300, -305-IntroTagWidth, 60)
+	makeLuaText('JukeBoxSubText', 'FNF YT Anim Peril', 300, -305-IntroTagWidth, 60)
 	setTextAlignment('JukeBoxSubText', 'left')
 	setObjectCamera('JukeBoxSubText', 'other')
 	setTextSize('JukeBoxSubText', IntroSubTextSize)
