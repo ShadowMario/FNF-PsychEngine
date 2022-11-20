@@ -1,0 +1,2 @@
+all linux and mac action builds for now have been failed 
+so, sorry mac users we will cut aseprite support from mac and linux builds soon
