@@ -16,6 +16,10 @@ import flixel.FlxSubState;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#end
 import flixel.util.FlxSave;
 import haxe.Json;
 import flixel.tweens.FlxEase;
@@ -94,6 +98,66 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
 		optionsArray.push(option);
+
+		#if LUA_ALLOWED
+		var customGameplayChangers:Map<String, Bool> = new Map<String, Bool>();
+		var directories:Array<String> = [];
+
+		#if MODS_ALLOWED
+		directories.push(Paths.mods('custom_gamechangers/'));
+		directories.push(Paths.mods(Paths.currentModDirectory + '/custom_gamechangers/'));
+		for(mod in Paths.getGlobalMods())
+			directories.push(Paths.mods(mod + '/custom_gamechangers/'));
+		#end
+
+		for (i in 0...directories.length) {
+			var directory:String = directories[i];
+			if(FileSystem.exists(directory)) {
+				for (file in FileSystem.readDirectory(directory)) {
+					var path = haxe.io.Path.join([directory, file]);
+					if (!FileSystem.isDirectory(path) && file != 'readme.txt' && file.endsWith('.txt')) {
+						var fileToCheck:String = file.substr(0, file.length - 4);
+						var contentArray:Array<String> = File.getContent(path).split(",");
+						for(i in 0...contentArray.length)
+							if(contentArray[i].isSpace(0))
+								contentArray[i] = contentArray[i].trim(); // Remove space
+
+						var type:String = contentArray[0];
+						var tag:String = contentArray[1];
+						
+						if(!customGameplayChangers.exists(tag)) {
+							customGameplayChangers.set(tag, false);
+							contentArray.remove(type);
+							contentArray.remove(tag);
+							switch(type)
+							{
+								case 'int' | 'float' | 'percent':
+									var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, contentArray[0]);
+									option.scrollSpeed = Std.parseFloat(contentArray[1]);
+									option.minValue = Std.parseFloat(contentArray[2]);
+									option.maxValue = Std.parseFloat(contentArray[3]);
+									option.changeValue = Std.parseFloat(contentArray[4]);
+									option.displayFormat = contentArray[5];
+									option.decimals = Std.parseInt(contentArray[6]);
+									optionsArray.push(option);
+
+								case 'string':
+									var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, contentArray[0], contentArray);
+									optionsArray.push(option);
+
+								case 'bool':
+									var option:GameplayOption = new GameplayOption(fileToCheck, tag, type, contentArray[0]);
+									optionsArray.push(option);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		customGameplayChangers.clear();
+		customGameplayChangers = null;
+		#end
 	}
 
 	public function getOptionByName(name:String)
