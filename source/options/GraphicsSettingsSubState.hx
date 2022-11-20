@@ -74,6 +74,35 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.onChange = onChangeFramerate;
 		#end
 
+		#if desktop //no need for this at other platforms cuz only desktop has fullscreen as false by default (MAYBE I'LL TRY TO MAKE IT FOR FULLSCREEN MODE TOO)
+		var option:Option = new Option('Screen Resolution',
+			'Choose your preferred screen resolution.',
+			'screenRes',
+			'string',
+			'1280x720',
+			['640x360', '852x480', '960x540', '1280x720', '1920x1080', '3840x2160']);
+		addOption(option);
+		option.onChange = onChangeScreenRes;
+		
+		var option:Option = new Option('Fullscreen',
+			'Should the game be maximized?',
+			'fullscreen',
+			'bool',
+			false);
+		addOption(option);
+		option.onChange = function() FlxG.fullscreen = ClientPrefs.fullscreen;
+		#end
+
+		/*
+		var option:Option = new Option('Persistent Cached Data',
+			'If checked, images loaded will stay in memory\nuntil the game is closed, this increases memory usage,\nbut basically makes reloading times instant.',
+			'imagesPersist',
+			'bool',
+			false);
+		option.onChange = onChangePersistentData; //Persistent Cached Data changes FlxGraphic.defaultPersist
+		addOption(option);
+		*/
+
 		super();
 	}
 
@@ -87,6 +116,17 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 				sprite.antialiasing = ClientPrefs.globalAntialiasing;
 			}
 		}
+	}
+
+	function onChangeScreenRes()
+	{
+		var res = ClientPrefs.screenRes.split('x');
+		FlxG.resizeWindow(Std.parseInt(res[0]), Std.parseInt(res[1]));
+
+		FlxG.fullscreen = false;
+
+		if(!FlxG.fullscreen)
+			FlxG.fullscreen = ClientPrefs.fullscreen;
 	}
 
 	function onChangeFramerate()
