@@ -1,65 +1,69 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-5,
 				0
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "idle",
-			"loop": false,
-			"name": "bf aumsum idle"
+			"fps": 24,
+			"name": "bf aumsum idle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				7,
 				16
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singLEFTmiss",
-			"loop": false,
-			"name": "bf aumsum left miss"
+			"fps": 24,
+			"name": "bf aumsum left miss",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				1,
-				-22
+				-42
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singDOWNmiss",
-			"loop": false,
-			"name": "bf aumsum down miss"
+			"fps": 24,
+			"name": "bf aumsum down miss",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-7,
 				16
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singRIGHTmiss",
-			"loop": false,
-			"name": "bf aumsum right miss"
+			"fps": 24,
+			"name": "bf aumsum right miss",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-39,
-				28
+				35
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singUPmiss",
-			"loop": false,
-			"name": "bf aumsum up miss"
+			"fps": 24,
+			"name": "bf aumsum up miss",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-1,
 				2
 			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "bf aumsum left",
 			"indices": [
 				0,
 				1,
@@ -73,17 +77,17 @@
 				9,
 				10,
 				11
-			],
-			"fps": 24,
-			"anim": "singLEFT",
-			"loop": false,
-			"name": "bf aumsum left"
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-6,
 				1
 			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "bf aumsum right",
 			"indices": [
 				0,
 				1,
@@ -97,41 +101,17 @@
 				9,
 				10,
 				11
-			],
-			"fps": 24,
-			"anim": "singRIGHT",
-			"loop": false,
-			"name": "bf aumsum right"
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-26,
 				14
 			],
-			"indices": [
-				0,
-				1,
-				2,
-				3,
-				4,
-				5,
-				6,
-				7,
-				8,
-				9,
-				10,
-				11
-			],
-			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
-			"name": "bf aumsum up"
-		},
-		{
-			"offsets": [
-				1,
-				-28
-			],
+			"fps": 24,
+			"name": "bf aumsum up",
 			"indices": [
 				0,
 				1,
@@ -145,51 +125,77 @@
 				9,
 				10,
 				11
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				-48
 			],
-			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
-			"name": "bf aumsum down"
+			"fps": 24,
+			"name": "bf aumsum down",
+			"indices": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				90,
 				0
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "firstDeath",
-			"loop": false,
-			"name": "bf aumsum first death"
+			"fps": 24,
+			"name": "bf aumsum first death",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				90,
 				0
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "deathLoop",
-			"loop": false,
-			"name": "bf aumsum dead loop"
+			"fps": 24,
+			"name": "bf aumsum dead loop",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				90,
 				40
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "deathConfirm",
-			"loop": false,
-			"name": "bf aumsum dead confirm"
+			"fps": 24,
+			"name": "bf aumsum dead confirm",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
+	"gameover_properties": [
+		"bf-dead",
+		"fnf_loss_sfx",
+		"gameOver",
+		"gameOverEnd"
+	],
 	"image": "characters/bf_aumsum_assets",
 	"position": [
 		0,
-		350
+		360
 	],
 	"healthicon": "bf",
 	"flip_x": true,
@@ -203,5 +209,5 @@
 		0
 	],
 	"sing_duration": 4,
-	"scale": 1
+	"scale": 1.5
 }

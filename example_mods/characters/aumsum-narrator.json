@@ -1,0 +1,84 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				84,
+				-11
+			],
+			"indices": [],
+			"fps": 40,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "aumsum narrator sing left"
+		},
+		{
+			"offsets": [
+				53,
+				-58
+			],
+			"indices": [],
+			"fps": 40,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "aumsum narrator sing down"
+		},
+		{
+			"offsets": [
+				59,
+				3
+			],
+			"indices": [],
+			"fps": 40,
+			"anim": "singUP",
+			"loop": false,
+			"name": "aumsum narrator sing up"
+		},
+		{
+			"offsets": [
+				12,
+				-1
+			],
+			"indices": [],
+			"fps": 40,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "aumsum narrator sing right"
+		},
+		{
+			"offsets": [
+				1,
+				0
+			],
+			"indices": [],
+			"fps": 40,
+			"anim": "idle",
+			"loop": false,
+			"name": "aumsum narrator idle dance"
+		}
+	],
+	"no_antialiasing": false,
+	"gameover_properties": [
+		"bf-dead",
+		"fnf_loss_sfx",
+		"gameOver",
+		"gameOverEnd"
+	],
+	"image": "characters/AumSum_Narrator_Newer",
+	"position": [
+		100,
+		30
+	],
+	"healthicon": "aumsum-narrator-new",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		216,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}
