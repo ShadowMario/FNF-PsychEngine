@@ -11,9 +11,15 @@ Audio Offset Menu
 
 ## Modding Support
 LUA Script Editor / LUA Notepad
+
 Notetype Editor 
+
 Event Editor
+
 Custom Main Menu through JSON
+
 Main Menu Editor
+
 Custom State Support
+
 State Editor
