@@ -2017,6 +2017,14 @@ class FunkinLua {
 				PlayState.instance.modchartSprites.remove(tag);
 			}
 		});
+		
+		Lua_helper.add_callback(lua, "stampSprite", function(sprite:String, brush:String, x:Float, y:Float) {
+			if(!PlayState.instance.modchartSprites.exists(sprite) || !PlayState.instance.modchartSprites.exists(brush))
+				return;
+			PlayState.instance.modchartSprites.get(sprite).stamp(PlayState.instance.modchartSprites.get(sprite), x, y);
+			return true;
+		});
+
 
 		Lua_helper.add_callback(lua, "luaSpriteExists", function(tag:String) {
 			return PlayState.instance.modchartSprites.exists(tag);
