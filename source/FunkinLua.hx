@@ -1074,6 +1074,28 @@ class FunkinLua {
 			setVarInArray(Type.resolveClass(classVar), variable, value);
 			return true;
 		});
+		
+		Lua_helper.add_callback(lua, "callFromObject", function(variable:String, arguments:Array<Dynamic>) {
+			var result:Dynamic = null;
+			var killMe:Array<String> = variable.split('.');
+			if(killMe.length > 1)
+				result = getVarInArray(getPropertyLoopThingWhatever(killMe), killMe[killMe.length-1]);
+			else
+				result = getVarInArray(getInstance(), variable);
+			return Reflect.callMethod(null, result, arguments);
+		});
+		Lua_helper.add_callback(lua, "callFromClass", function(classVar:String, variable:String, arguments:Array<Dynamic>) {
+			@:privateAccess
+			var killMe:Array<String> = variable.split('.');
+			if(killMe.length > 1) {
+				var coverMeInPiss:Dynamic = getVarInArray(Type.resolveClass(classVar), killMe[0]);
+				for (i in 1...killMe.length-1) {
+					coverMeInPiss = getVarInArray(coverMeInPiss, killMe[i]);
+				}
+				return Reflect.callMethod(null, getVarInArray(coverMeInPiss, killMe[killMe.length-1]), arguments);
+			}
+			return Reflect.callMethod(null, getVarInArray(Type.resolveClass(classVar), variable), arguments);
+		});
 
 		//shitass stuff for epic coders like me B)  *image of obama giving himself a medal*
 		Lua_helper.add_callback(lua, "getObjectOrder", function(obj:String) {
