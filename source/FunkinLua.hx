@@ -1075,7 +1075,7 @@ class FunkinLua {
 			return true;
 		});
 		
-		Lua_helper.add_callback(lua, "callFromObject", function(variable:String, arguments:Array<Dynamic>) {
+		Lua_helper.add_callback(lua, "callFromObject", function(variable:String, ?arguments:Array<Dynamic> = []) {
 			var result:Dynamic = null;
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1)
@@ -1084,7 +1084,7 @@ class FunkinLua {
 				result = getVarInArray(getInstance(), variable);
 			return Reflect.callMethod(null, result, arguments);
 		});
-		Lua_helper.add_callback(lua, "callFromClass", function(classVar:String, variable:String, arguments:Array<Dynamic>) {
+		Lua_helper.add_callback(lua, "callFromClass", function(classVar:String, variable:String, ?arguments:Array<Dynamic> = []) {
 			@:privateAccess
 			var killMe:Array<String> = variable.split('.');
 			if(killMe.length > 1) {
