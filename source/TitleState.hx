@@ -642,7 +642,7 @@ class TitleState extends MusicBeatState
 				case 2:
 					#if PSYCH_WATERMARKS
 					createCoolText(['Psych Engine by'], 15);
-					#else
+					#elseif VANILLA_WATERMARKS
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
 				// credTextShit.visible = true;
@@ -651,7 +651,7 @@ class TitleState extends MusicBeatState
 					addMoreText('Shadow Mario', 15);
 					addMoreText('RiverOaken', 15);
 					addMoreText('shubs', 15);
-					#else
+					#elseif VANILLA_WATERMARKS
 					addMoreText('present');
 					#end
 				// credTextShit.text += '\npresent...';
@@ -664,7 +664,7 @@ class TitleState extends MusicBeatState
 				case 6:
 					#if PSYCH_WATERMARKS
 					createCoolText(['Not associated', 'with'], -40);
-					#else
+					#elseif VANILLA_WATERMARKS
 					createCoolText(['In association', 'with'], -40);
 					#end
 				case 8:
