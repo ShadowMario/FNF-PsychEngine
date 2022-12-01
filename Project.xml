@@ -50,6 +50,8 @@
 	<!--<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>-->
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild"/> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
+	<define name="MP3_ALLOWED"/>
+	<define name="WAV_ALLOWED"/>
 	<define name="CRASH_HANDLER" if="desktop release" />
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
