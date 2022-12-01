@@ -93,7 +93,7 @@ class FPS extends TextField
 			
 			if (memoryMegas > memoryMegasPeak) memoryMegasPeak = memoryMegas;
 
-			if (ClientPrefs.showMEM) text += "\nMEM: " + memoryMegas + " RAM" + "\nMEM PEAK: " + memoryMegasPeak + " RAM";
+			text += "\nMEM: " + memoryMegas + " RAM" + "\nMEM PEAK: " + memoryMegasPeak + " RAM";
 			#end
 
 			textColor = 0xFFFFFFFF;
