@@ -3840,11 +3840,18 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'Set Property':
-				var killMe:Array<String> = value1.split('.');
+				var trueVal:Dynamic = null;
+				var killMe:Array<String> = value1.split(',');
+				if (killMe.length > 1 && killMe[1].toLowerCase().replace(" ", "") == "bool") {
+					if (value2 == "true") trueVal = true;
+					else if (value2 == "false") trueVal = false;
+				}
+
+				killMe = killMe[0].split('.');
 				if(killMe.length > 1) {
-					FunkinLua.setVarInArray(FunkinLua.getPropertyLoopThingWhatever(killMe, true, true), killMe[killMe.length-1], value2);
+					FunkinLua.setVarInArray(FunkinLua.getPropertyLoopThingWhatever(killMe, true, true), killMe[killMe.length-1], trueVal != null ? trueVal : value2);
 				} else {
-					FunkinLua.setVarInArray(this, value1, value2);
+					FunkinLua.setVarInArray(this, value1, trueVal != null ? trueVal : value2);
 				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
