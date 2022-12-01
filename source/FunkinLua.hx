@@ -73,6 +73,7 @@ class FunkinLua {
 	public var camTarget:FlxCamera;
 	public var scriptName:String = '';
 	public var closed:Bool = false;
+	public var variables:Map<String, Dynamic> = [];
 
 	#if hscript
 	public static var hscript:HScript = null;
@@ -907,6 +908,36 @@ class FunkinLua {
 				return;
 			}
 			luaTrace("removeLuaScript: Script doesn't exist!", false, false, FlxColor.RED);
+		});
+		
+		Lua_helper.add_callback(lua, "setVariable", function(variable:String, value:Dynamic, ?theScript:String) {
+			theScript = (theScript == null ? scriptName : theScript); 
+			if (theScript == scriptName)
+				variables.set(variable, value);
+			else{
+				for (luaInstance in PlayState.instance.luaArray){
+					var nom:Array<String> = luaInstance.scriptName.split('/');
+					if (nom[nom.length-1].substr(0, -".lua".length) == theScript)
+						luaInstance.variables.set(variable, value);
+				}
+			}
+			return true;
+		});
+		Lua_helper.add_callback(lua, "getVariable", function(variable:String, ?theScript:String) {
+			var luaScript:FunkinLua = this;
+
+			if (theScript != null){
+				for (luaInstance in PlayState.instance.luaArray){
+					var nom:Array<String> = luaInstance.scriptName.split('/');
+					if (nom[nom.length-1].substr(0, -".lua".length) == theScript)
+						luaScript = luaInstance;
+				}
+			}
+			if (luaScript.variables.exists(variable))
+				return luaScript.variables.get(variable);
+			else
+				luaTrace('getVariable: Variable ('+variable+') Does Not Exist' , false, false, FlxColor.RED);
+			return null;
 		});
 
 		Lua_helper.add_callback(lua, "runHaxeCode", function(codeToRun:String) {
