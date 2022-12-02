@@ -484,7 +484,7 @@ class FunkinLua {
 
 			return runningScripts;
 		});
-
+		
 		Lua_helper.add_callback(lua, "setOnLuas", function(?varName:String, ?valueInput:Dynamic){
 			if(varName==null){
 				#if (linc_luajit >= "0.0.6")
