@@ -465,20 +465,15 @@ class FunkinLua {
 			return runningScripts;
 		});
 
-		Lua_helper.add_callback(lua, "setOnLuas", function(?varName:String, ?scriptVar:Dynamic){
+		Lua_helper.add_callback(lua, "setOnLuas", function(?varName:String, ?valueInput:Dynamic){
 			if(varName==null){
 				#if (linc_luajit >= "0.0.6")
 				LuaL.error(lua, "bad argument #1 to 'setOnLuas' (string expected, got nil)");
 				#end
 				return;
 			}
-			if(scriptVar==null){
-				#if (linc_luajit >= "0.0.6")
-				LuaL.error(lua, "bad argument #2 to 'setOnLuas' (string expected, got nil)");
-				#end
-				return;
-			}
-			PlayState.instance.setOnLuas(varName, scriptVar);
+
+			PlayState.instance.setOnLuas(varName, valueInput);
 		});
 
 		Lua_helper.add_callback(lua, "callOnLuas", function(?funcName:String, ?args:Array<Dynamic>, ignoreStops=false, ignoreSelf=true, ?exclusions:Array<String>){
