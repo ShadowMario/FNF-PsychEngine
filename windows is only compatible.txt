@@ -1,2 +1,3 @@
+most 32 bit pcs are laggy with this sorry for that ig
 all linux and mac action builds for now have been failed 
 so, sorry mac users we will cut aseprite support from mac and linux builds soon
