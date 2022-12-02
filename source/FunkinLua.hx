@@ -923,11 +923,15 @@ class FunkinLua {
 			if (difficultyNum <= -1)
 				difficultyNum = PlayState.storyDifficulty;
 			// MEGA FIX, DIFFS BETWEEN WEEKS WILL NOW FUCKING WORK WOOOOOOOOOOOOW
-			if (weekJson == null || weekJson.length < 1) {
-				weekJson = WeekData.weeksList[PlayState.storyWeek].difficulties;
-			} else {
-				weekJson = weekJson.difficulties;
-			}
+			var identifier;
+			if (weekJson == null || weekJson.length < 1) 
+				identifier = WeekData.weeksList[PlayState.storyWeek];
+			else 
+				identifier = weekJson;
+
+			if (identifier != null) 
+				CoolUtil.difficulties = WeekData.weeksLoaded.get(identifier).difficulties;
+
 
 			CoolUtil.difficulties = weekJson;
 			var poop = Highscore.formatSong(name, difficultyNum);
