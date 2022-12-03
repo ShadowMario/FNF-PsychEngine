@@ -2,7 +2,7 @@
 color 0a
 cd ..
 echo BUILDING GAME
-lime build windows -debug
+haxelib run lime build windows -debug
 echo.
 echo done.
 pause
