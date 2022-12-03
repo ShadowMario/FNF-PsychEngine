@@ -15,7 +15,6 @@ class ClientPrefs {
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
 	public static var lowQuality:Bool = false;
-	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
 	public static var violence:Bool = true;
@@ -23,6 +22,7 @@ class ClientPrefs {
 	public static var hideHud:Bool = false;
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
+	public static var imagesPersist:Bool = false;
 	public static var ghostTapping:Bool = true;
 	public static var timeBarType:String = 'Time Left';
 	public static var scoreZoom:Bool = true;
@@ -101,7 +101,6 @@ class ClientPrefs {
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
-		FlxG.save.data.shaders = shaders;
 		FlxG.save.data.framerate = framerate;
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
@@ -109,6 +108,7 @@ class ClientPrefs {
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
+		FlxG.save.data.imagesPersist = imagesPersist;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.scoreZoom = scoreZoom;
@@ -165,9 +165,6 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
-		}
-		if(FlxG.save.data.shaders != null) {
-			shaders = FlxG.save.data.shaders;
 		}
 		if(FlxG.save.data.framerate != null) {
 			framerate = FlxG.save.data.framerate;
