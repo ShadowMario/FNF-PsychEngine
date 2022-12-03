@@ -1764,14 +1764,14 @@ class FunkinLua {
 			if (leftHex.length > 1) {
 				if(!leftHex.startsWith('0x')) left = Std.parseInt('0xff' + leftHex);
 			} else {
-				left = FlxColor.fromRGB(PlayState.dad.healthColorArray[0], PlayState.dad.healthColorArray[1], PlayState.dad.healthColorArray[2]);
+				left = FlxColor.fromRGB(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
 			}
 			
 			var right:FlxColor = Std.parseInt(rightHex);
-			if (rightHex > 1) {
+			if (rightHex.length > 1) {
 				if(!rightHex.startsWith('0x')) right = Std.parseInt('0xff' + rightHex);
 			} else {
-				right = FlxColor.fromRGB(PlayState.boyfriend.healthColorArray[0], PlayState.boyfriend.healthColorArray[1], PlayState.boyfriend.healthColorArray[2]);
+				right = FlxColor.fromRGB(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
 			}
 
 
