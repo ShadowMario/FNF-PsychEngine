@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="brewstew_bf.png">
+	<!-- Created with Adobe Animate version 23.0.0.407 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="bf brewstew dead confirm0000" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0001" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0002" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0003" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0004" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0005" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0006" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0007" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0008" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0009" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0010" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0011" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0012" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0013" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0014" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0015" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0016" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0017" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0018" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0019" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0020" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0021" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0022" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0023" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0024" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0025" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0026" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0027" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0028" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0029" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0030" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0031" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead confirm0032" x="0" y="0" width="369" height="274"/>
+	<SubTexture name="bf brewstew dead loop0000" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0001" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0002" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0003" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0004" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0005" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0006" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0007" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0008" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0009" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0010" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0011" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0012" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0013" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0014" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0015" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0016" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0017" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0018" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0019" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0020" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0021" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0022" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0023" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0024" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0025" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0026" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0027" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0028" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0029" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0030" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0031" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dead loop0032" x="369" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0000" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0001" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0002" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0003" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0004" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0005" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0006" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0007" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0008" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0009" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0010" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0011" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0012" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0013" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0014" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0015" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0016" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0017" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0018" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0019" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0020" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0021" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0022" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0023" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0024" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0025" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0026" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0027" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0028" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0029" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0030" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0031" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0032" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0033" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0034" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0035" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0036" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0037" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0038" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0039" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0040" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0041" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0042" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0043" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0044" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0045" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0046" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0047" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0048" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0049" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0050" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0051" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0052" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0053" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0054" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0055" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew dies0056" x="737" y="0" width="368" height="290"/>
+	<SubTexture name="bf brewstew down0000" x="1105" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down0001" x="1105" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down0002" x="1394" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down0003" x="1394" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down0004" x="1394" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down0005" x="1394" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down0006" x="1394" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down0007" x="1394" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down0008" x="1394" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down0009" x="1394" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0000" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0001" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0002" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0003" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0004" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0005" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0006" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0007" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0008" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew down miss0009" x="1683" y="0" width="289" height="366"/>
+	<SubTexture name="bf brewstew idle0000" x="0" y="366" width="289" height="368"/>
+	<SubTexture name="bf brewstew left0000" x="289" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left0001" x="289" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left0002" x="585" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left0003" x="585" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left0004" x="585" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left0005" x="585" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left0006" x="585" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left0007" x="585" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left0008" x="585" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left0009" x="585" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew left miss0000" x="881" y="366" width="296" height="368"/>
+	<SubTexture name="bf brewstew right0000" x="1177" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right0001" x="1177" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right0002" x="1480" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right0003" x="1480" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right0004" x="1480" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right0005" x="1480" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right0006" x="1480" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right0007" x="1480" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right0008" x="1480" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right0009" x="1480" y="366" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0000" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0001" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0002" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0003" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0004" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0005" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0006" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0007" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0008" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew right miss0009" x="0" y="735" width="303" height="369"/>
+	<SubTexture name="bf brewstew up0000" x="303" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up0001" x="303" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up0002" x="595" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up0003" x="595" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up0004" x="595" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up0005" x="595" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up0006" x="595" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up0007" x="595" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up0008" x="595" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up0009" x="595" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0000" x="887" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0001" x="887" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0002" x="887" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0003" x="887" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0004" x="887" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0005" x="887" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0006" x="887" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0007" x="887" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0008" x="887" y="735" width="292" height="370"/>
+	<SubTexture name="bf brewstew up miss0009" x="887" y="735" width="292" height="370"/>
+</TextureAtlas>
