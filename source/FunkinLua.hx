@@ -123,7 +123,8 @@ class FunkinLua {
 		// Camera poo
 		set('cameraX', 0);
 		set('cameraY', 0);
-		set('cameraSpeed', PlayState.cameraSpeed);
+		set('cameraSpeed', PlayState.instance.cameraSpeed);
+		
 		// Screen stuff
 		set('screenWidth', FlxG.width);
 		set('screenHeight', FlxG.height);
@@ -147,11 +148,11 @@ class FunkinLua {
 		set('mustHitSection', false);
 		set('altAnim', false);
 		set('gfSection', false);
-		set('chartingMode', PlayState.chartingMode);
+		set('chartingMode', PlayState.instance.chartingMode);
 
 		// Stage stuff ig
-		set('isPixelStage', PlayState.isPixelStage);
-		set('curStage', PlayState.curStage);
+		set('isPixelStage', PlayState.instance.isPixelStage);
+		set('curStage', PlayState.instance.curStage);
 
 		// Gameplay settings
 		set('healthGainMult', PlayState.instance.healthGain);
@@ -1128,7 +1129,11 @@ class FunkinLua {
 			PlayState.instance.health += value;
 		});
 		Lua_helper.add_callback(lua, "getHealth", function(percent:Bool = false) {
-			if (percent == true) {return PlayState.instance.healthBar.percent} else {return PlayState.instance.health}
+			if (percent == true) {
+				return PlayState.instance.healthBar.percent;
+			} else {
+				return PlayState.instance.health;
+			}
 		});
 
 		Lua_helper.add_callback(lua, "getColorFromHex", function(color:String) {
@@ -1193,39 +1198,37 @@ class FunkinLua {
 				case 'accept': key = PlayState.instance.getControl('ACCEPT');
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
-				case 'reset': key = PlayState.instance.getControl('RESET');
-				//case 'debug': key = PlayState.instance.getControl('DEBUG'); // figuring this out.
-				case 'space': key = FlxG.keys.justPressed.SPACE;//an extra key for convinience
+				case 'reset': key = PlayState.instance.getControl('RESET'); // Only on JustPressed cause yeah.
+				case 'debug': key = ClientPrefs.keyBinds.get('debug_1'); // Only on JustPressed cause yeah.
+				case 'space': key = FlxG.keys.justPressed.SPACE; //an extra key for convinience
 			}
 			return key;
 		});
 		Lua_helper.add_callback(lua, "keyPressed", function(name:String) {
 			var key:Bool = false;
 			switch(name) {
-				case 'left': key = PlayState.instance.getControl('NOTE_LEFT');
-				case 'down': key = PlayState.instance.getControl('NOTE_DOWN');
-				case 'up': key = PlayState.instance.getControl('NOTE_UP');
-				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
+				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_P');
+				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_P');
+				case 'up': key = PlayState.instance.getControl('NOTE_UP_P');
+				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_P');
 				case 'accept': key = PlayState.instance.getControl('ACCEPT');
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
-				case 'reset': key = PlayState.instance.getControl('RESET');
-				case 'space': key = FlxG.keys.pressed.SPACE;//an extra key for convinience
+				case 'space': key = FlxG.keys.justPressed.SPACE; //an extra key for convinience
 			}
 			return key;
 		});
 		Lua_helper.add_callback(lua, "keyReleased", function(name:String) {
 			var key:Bool = false;
 			switch(name) {
-				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_R');
-				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_R');
-				case 'up': key = PlayState.instance.getControl('NOTE_UP_R');
-				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_R');
+				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_P');
+				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_P');
+				case 'up': key = PlayState.instance.getControl('NOTE_UP_P');
+				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_P');
 				case 'accept': key = PlayState.instance.getControl('ACCEPT');
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
-				case 'reset': key = PlayState.instance.getControl('RESET');
-				case 'space': key = FlxG.keys.justReleased.SPACE;//an extra key for convinience
+				case 'space': key = FlxG.keys.justPressed.SPACE; //an extra key for convinience
 			}
 			return key;
 		});
@@ -1292,6 +1295,7 @@ class FunkinLua {
 			WeekData.loadTheFirstEnabledMod();
 			return true;
 		});
+
 		Lua_helper.add_callback(lua, "getSongPosition", function() {
 			return Conductor.songPosition;
 		});
@@ -1336,6 +1340,7 @@ class FunkinLua {
 					PlayState.instance.boyfriendGroup.y = value;
 			}
 		});
+
 		Lua_helper.add_callback(lua, "cameraSetTarget", function(target:String) {
 			var isDad:Bool = false;
 			if(target == 'dad') {
@@ -1344,6 +1349,7 @@ class FunkinLua {
 			PlayState.instance.moveCamera(isDad);
 			return isDad;
 		});
+
 		Lua_helper.add_callback(lua, "cameraShake", function(camera:String, intensity:Float, duration:Float) {
 			cameraFromString(camera).shake(intensity, duration);
 		});
@@ -1358,6 +1364,7 @@ class FunkinLua {
 			if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
 			cameraFromString(camera).fade(colorNum, duration,false,null,forced);
 		});
+
 		Lua_helper.add_callback(lua, "setRatingPercent", function(value:Float) {
 			PlayState.instance.ratingPercent = value;
 		});
@@ -1367,6 +1374,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setRatingFC", function(value:String) {
 			PlayState.instance.ratingFC = value;
 		});
+
 		Lua_helper.add_callback(lua, "getMouseX", function(camera:String) {
 			var cam:FlxCamera = cameraFromString(camera);
 			return FlxG.mouse.getScreenPosition(cam).x;
@@ -1416,6 +1424,7 @@ class FunkinLua {
 
 			return 0;
 		});
+
 		Lua_helper.add_callback(lua, "getScreenPositionX", function(variable:String) {
 			var killMe:Array<String> = variable.split('.');
 			var obj:FlxSprite = getObjectDirectly(killMe[0]);
@@ -1436,6 +1445,7 @@ class FunkinLua {
 
 			return 0;
 		});
+
 		Lua_helper.add_callback(lua, "characterDance", function(character:String) {
 			switch(character.toLowerCase()) {
 				case 'dad': PlayState.instance.dad.dance();
@@ -1750,10 +1760,26 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "setHealthBarColors", function(leftHex:String, rightHex:String) {
+			var leftBlank = false;
 			var left:FlxColor = Std.parseInt(leftHex);
-			if(!leftHex.startsWith('0x')) left = Std.parseInt('0xff' + leftHex);
+			if (leftHex.length > 1) {
+				leftBlank = false;
+				if(!leftHex.startsWith('0x')) left = Std.parseInt('0xff' + leftHex);
+			} else {
+				leftBlank = true;
+				left = FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
+			}
+			
+			var rightBlank = false;
 			var right:FlxColor = Std.parseInt(rightHex);
-			if(!rightHex.startsWith('0x')) right = Std.parseInt('0xff' + rightHex);
+			if (rightHex > 1) {
+				rightBlank = false;
+				if(!rightHex.startsWith('0x')) right = Std.parseInt('0xff' + rightHex);
+			} else {
+				rightBlank = true;
+				right = FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]);
+			}
+
 
 			PlayState.instance.healthBar.createFilledBar(left, right);
 			PlayState.instance.healthBar.updateBar();
@@ -1898,6 +1924,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "getRandomBool", function(chance:Float = 50) {
 			return FlxG.random.bool(chance);
 		});
+
 		Lua_helper.add_callback(lua, "startDialogue", function(dialogueFile:String, music:String = null) {
 			var path:String;
 			#if MODS_ALLOWED
@@ -2078,7 +2105,6 @@ class FunkinLua {
 			var leText:ModchartText = new ModchartText(x, y, text, width);
 			PlayState.instance.modchartTexts.set(tag, leText);
 		});
-
 		Lua_helper.add_callback(lua, "setTextString", function(tag:String, text:String) {
 			var obj:FlxText = getTextObject(tag);
 			if(obj != null)
@@ -2149,7 +2175,6 @@ class FunkinLua {
 				}
 			}
 		});
-
 		Lua_helper.add_callback(lua, "getTextString", function(tag:String) {
 			var obj:FlxText = getTextObject(tag);
 			if(obj != null)
@@ -2315,7 +2340,7 @@ class FunkinLua {
 			return Paths.getTextFromFile(path, ignoreModFolders);
 		});
 
-		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY
+		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY... AND STOP FUCKING USING THEM!!!!!!!
 		Lua_helper.add_callback(lua, "objectPlayAnimation", function(obj:String, name:String, forced:Bool = false, ?startFrame:Int = 0) {
 			luaTrace("objectPlayAnimation is deprecated! Use playAnim instead", false, true);
 			if(PlayState.instance.getLuaObject(obj,false) != null) {
@@ -2462,7 +2487,7 @@ class FunkinLua {
 			return str.endsWith(end);
 		});
 
-		call('onCreate', []);
+		call('onCreate', []); // why tf is onCreate here????? --@ImaginationSuperHero528
 		#end
 	}
 
