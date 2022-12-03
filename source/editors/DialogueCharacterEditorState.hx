@@ -29,7 +29,6 @@ import DialogueBoxPsych;
 import flixel.FlxCamera;
 import flixel.group.FlxSpriteGroup;
 import lime.system.Clipboard;
-import Alphabet;
 #if sys
 import sys.io.File;
 #end
@@ -39,7 +38,7 @@ using StringTools;
 class DialogueCharacterEditorState extends MusicBeatState
 {
 	var box:FlxSprite;
-	var daText:TypedAlphabet = null;
+	var daText:Alphabet = null;
 
 	private static var TIP_TEXT_MAIN:String =
 	'JKLI - Move camera (Hold Shift to move 4x faster)
@@ -75,6 +74,8 @@ class DialogueCharacterEditorState extends MusicBeatState
 	var curAnim:Int = 0;
 
 	override function create() {
+		Alphabet.setDialogueSound();
+
 		persistentUpdate = persistentDraw = true;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -151,12 +152,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 		reloadCharacter();
 		updateTextBox();
-
-		daText = new TypedAlphabet(DialogueBoxPsych.DEFAULT_TEXT_X, DialogueBoxPsych.DEFAULT_TEXT_Y, '', 0.05, false);
-		daText.scaleX = 0.7;
-		daText.scaleY = 0.7;
-		daText.text = DEFAULT_TEXT;
-		hudGroup.add(daText);
+		reloadText();
 
 		addEditorBox();
 		FlxG.mouse.visible = true;
@@ -420,6 +416,18 @@ class DialogueCharacterEditorState extends MusicBeatState
 	}
 
 	private static var DEFAULT_TEXT:String = 'Lorem ipsum dolor sit amet';
+	function reloadText() {
+		if(daText != null) {
+			daText.killTheTimer();
+			daText.kill();
+			hudGroup.remove(daText);
+			daText.destroy();
+		}
+		daText = new Alphabet(0, 0, DEFAULT_TEXT, false, true, 0.05, 0.7);
+		daText.x = DialogueBoxPsych.DEFAULT_TEXT_X;
+		daText.y = DialogueBoxPsych.DEFAULT_TEXT_Y;
+		hudGroup.add(daText);
+	}
 
 	function reloadCharacter() {
 		var charsArray:Array<DialogueCharacter> = [character, ghostLoop, ghostIdle];
@@ -531,8 +539,8 @@ class DialogueCharacterEditorState extends MusicBeatState
 			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
 			if(FlxG.keys.justPressed.SPACE && UI_mainbox.selected_tab_id == 'Character') {
 				character.playAnim(character.jsonFile.animations[curAnim].anim);
-				daText.resetDialogue();
 				updateTextBox();
+				reloadText();
 			}
 
 			//lots of Ifs lol get trolled
@@ -637,7 +645,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 					offsetIdleText.visible = false;
 					animText.visible = true;
 					updateTextBox();
-					daText.resetDialogue();
+					reloadText();
 					
 					if(curAnim < 0) curAnim = character.jsonFile.animations.length - 1;
 					else if(curAnim >= character.jsonFile.animations.length) curAnim = 0;
@@ -720,7 +728,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 					reloadAnimationsDropDown();
 					updateCharTypeBox();
 					updateTextBox();
-					daText.resetDialogue();
+					reloadText();
 					imageInputText.text = character.jsonFile.image;
 					scaleStepper.value = character.jsonFile.scale;
 					xStepper.value = character.jsonFile.position[0];
