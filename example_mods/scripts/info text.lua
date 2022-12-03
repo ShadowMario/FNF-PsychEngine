@@ -20,7 +20,7 @@ local Quotes = {
     "Copyright Striked",
     "This video is not available on YouTube",
     "Demonitized",
-    "No play button?"
+    "No gold play button?"
     
 }
 
