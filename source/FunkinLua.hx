@@ -148,11 +148,11 @@ class FunkinLua {
 		set('mustHitSection', false);
 		set('altAnim', false);
 		set('gfSection', false);
-		set('chartingMode', PlayState.instance.chartingMode);
+		set('chartingMode', PlayState.chartingMode);
 
 		// Stage stuff ig
-		set('isPixelStage', PlayState.instance.isPixelStage);
-		set('curStage', PlayState.instance.curStage);
+		set('isPixelStage', PlayState.isPixelStage);
+		set('curStage', PlayState.curStage);
 
 		// Gameplay settings
 		set('healthGainMult', PlayState.instance.healthGain);
@@ -1199,7 +1199,7 @@ class FunkinLua {
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET'); // Only on JustPressed cause yeah.
-				case 'debug': key = ClientPrefs.keyBinds.get('debug_1'); // Only on JustPressed cause yeah.
+				// case 'debug': key = ClientPrefs.keyBinds.get('debug_1'); // Only on JustPressed cause yeah.
 				case 'space': key = FlxG.keys.justPressed.SPACE; //an extra key for convinience
 			}
 			return key;
@@ -1760,23 +1760,17 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "setHealthBarColors", function(leftHex:String, rightHex:String) {
-			var leftBlank = false;
 			var left:FlxColor = Std.parseInt(leftHex);
 			if (leftHex.length > 1) {
-				leftBlank = false;
 				if(!leftHex.startsWith('0x')) left = Std.parseInt('0xff' + leftHex);
 			} else {
-				leftBlank = true;
 				left = FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
 			}
 			
-			var rightBlank = false;
 			var right:FlxColor = Std.parseInt(rightHex);
 			if (rightHex > 1) {
-				rightBlank = false;
 				if(!rightHex.startsWith('0x')) right = Std.parseInt('0xff' + rightHex);
 			} else {
-				rightBlank = true;
 				right = FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]);
 			}
 
