@@ -51,10 +51,10 @@ class NoteOffsetState extends MusicBeatState
 		camOther.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camHUD);
-		FlxG.cameras.add(camOther);
+		FlxG.cameras.add(camHUD, false);
+		FlxG.cameras.add(camOther, false);
 
-		FlxCamera.defaultCameras = [camGame];
+		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		CustomFadeTransition.nextCamera = camOther;
 		FlxG.camera.scroll.set(120, 130);
 
@@ -142,7 +142,9 @@ class NoteOffsetState extends MusicBeatState
 
 		// Note delay stuff
 		
-		beatText = new Alphabet(0, 0, 'Beat Hit!', true, false, 0.05, 0.6);
+		beatText = new Alphabet(0, 0, 'Beat Hit!', true);
+		beatText.scaleX = 0.6;
+		beatText.scaleY = 0.6;
 		beatText.x += 260;
 		beatText.alpha = 0;
 		beatText.acceleration.y = 250;
