@@ -63,8 +63,7 @@ class NotesSubState extends MusicBeatSubstate
 		for (i in 0...ClientPrefs.arrowHSV.length) {
 			var yPos:Float = (165 * i) + 35;
 			for (j in 0...3) {
-				var optionText:Alphabet = new Alphabet(0, yPos + 60, Std.string(ClientPrefs.arrowHSV[i][j]), true);
-				optionText.x = posX + (225 * j) + 250;
+				var optionText:Alphabet = new Alphabet(posX + (225 * j) + 250, yPos + 60, Std.string(ClientPrefs.arrowHSV[i][j]), true);
 				grpNumbers.add(optionText);
 			}
 
@@ -84,8 +83,9 @@ class NotesSubState extends MusicBeatSubstate
 			shaderArray.push(newShader);
 		}
 
-		hsbText = new Alphabet(0, 0, "Hue    Saturation  Brightness", false, false, 0, 0.65);
-		hsbText.x = posX + 240;
+		hsbText = new Alphabet(posX + 560, 0, "Hue    Saturation  Brightness", false);
+		hsbText.scaleX = 0.6;
+		hsbText.scaleY = 0.6;
 		add(hsbText);
 
 		changeSelection();
@@ -247,8 +247,13 @@ class NotesSubState extends MusicBeatSubstate
 		}
 
 		var item = grpNumbers.members[(selected * 3) + type];
-		item.changeText('0');
-		item.offset.x = (40 * (item.lettersArray.length - 1)) / 2;
+		item.text = '0';
+
+		var add = (40 * (item.letters.length - 1)) / 2;
+		for (letter in item.letters)
+		{
+			letter.offset.x += add;
+		}
 	}
 	function updateValue(change:Float = 0) {
 		curValue += change;
@@ -273,8 +278,13 @@ class NotesSubState extends MusicBeatSubstate
 		}
 
 		var item = grpNumbers.members[(curSelected * 3) + typeSelected];
-		item.changeText(Std.string(roundedValue));
-		item.offset.x = (40 * (item.lettersArray.length - 1)) / 2;
-		if(roundedValue < 0) item.offset.x += 10;
+		item.text = Std.string(roundedValue);
+
+		var add = (40 * (item.letters.length - 1)) / 2;
+		for (letter in item.letters)
+		{
+			letter.offset.x += add;
+			if(roundedValue < 0) letter.offset.x += 10;
+		}
 	}
 }
