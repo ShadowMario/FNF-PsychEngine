@@ -1,13 +1,13 @@
-# RIGHT NOW THE MODS FOLDER DOES NOT WORK ENTIRELY JUST YET!!!
-## THIS IS WORK IN PROGRESS!!!
+# BRIEF OVERVIEW OF PSYCH ENGINE!
 
-# QUICK AND DIRTY MOD GUIDE
+YouTube Engine aims to make Modding easier and modular for every newbie coder and user
+it's core features introduce:
 
-With the 0.2.6 update, I added a bit of a slightly nicer mod support backend.
-
-It's POLYMOD, which is made by Lars Doucet: https://github.com/larsiusprime/polymod
-
-You may have noticed that there's a new folder in the assets. MODS. Within it you will see 2 files. modList.txt, and a folder called introMod.
-modList.txt will load any folder into the game. Put the folder you want to load into a new line in modList.txt, and reboot the game.
-
-Now you may be wondering, what do I put in the folder? Well later down it'll get a bit more complicated, especially as I'll make the IN-GAME mod loader nicer.
+* A Softcoded Achievements System to engage on Replayability of the main weeks
+* New Gameplay Features and Song Events that further enhance the main game's experience
+* Quality of Life improvements, such as a full options menu, customizable note colors, and more!
+* A Mod Menu, where mods can be enabled, disabled and sorted through
+* In-game Editors to make modding much easier, including a revamped Chart Editor, and a stage editor
+* A powerful and easy to learn Lua Scripting System
+* A equally powerful, in-lua hscript implementation
+* Support for different screen resolutions including fullscreen
