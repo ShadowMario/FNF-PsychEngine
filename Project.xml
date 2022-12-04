@@ -192,8 +192,32 @@
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	
-	<icon path="art/icon16.png" size='16'/>
-	<icon path="art/icon32.png" size='32'/>
-	<icon path="art/icon64.png" size='64'/>
-	<icon path="art/iconOG.png" />
+	<section if="PSYCH_WATERMARKS">
+		<icon path="art/icons-psy/icon16.png" size="16"/>
+		<icon path="art/icons-psy/icon24.png" size="24"/>
+		<icon path="art/icons-psy/icon32.png" size="32"/>
+		<icon path="art/icons-psy/icon40.png" size="40"/>
+		<icon path="art/icons-psy/icon48.png" size="48"/>
+		<icon path="art/icons-psy/icon64.png" size="64"/>
+		<icon path="art/icons-psy/icon96.png" size="96"/>
+		<icon path="art/icons-psy/icon128.png" size="128"/>
+		<icon path="art/icons-psy/icon256.png" size="256"/>
+		<icon path="art/icons-psy/icon512.png" size="512"/>
+		<icon path="art/icons-psy/icon768.png" size="768"/>
+		<icon path="art/icons-psy/iconOG.png"/>
+	</section>
+	<section unless="PSYCH_WATERMARKS">
+		<icon path="art/icons/icon16.png" size="16"/>
+		<icon path="art/icons/icon24.png" size="24"/>
+		<icon path="art/icons/icon32.png" size="32"/>
+		<icon path="art/icons/icon40.png" size="40"/>
+		<icon path="art/icons/icon48.png" size="48"/>
+		<icon path="art/icons/icon64.png" size="64"/>
+		<icon path="art/icons/icon96.png" size="96"/>
+		<icon path="art/icons/icon128.png" size="128"/>
+		<icon path="art/icons/icon256.png" size="256"/>
+		<icon path="art/icons/icon512.png" size="512"/>
+		<icon path="art/icons/icon768.png" size="768"/>
+		<icon path="art/icons/iconOG.png"/>
+	</section>
 </project>
