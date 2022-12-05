@@ -110,10 +110,12 @@ class Main extends Sprite
 		#end
 
 		#if desktop
-		FlxG.stage.application.window.onClose.add(function()
-		{
-			DiscordClient.shutdown();
-		});
+		if (!DiscordClient.isInitialized) {
+			DiscordClient.initialize();
+			FlxG.stage.application.window.onClose.add(function(exitCode) {
+				DiscordClient.shutdown();
+			});
+		}
 		#end
 	}
 
