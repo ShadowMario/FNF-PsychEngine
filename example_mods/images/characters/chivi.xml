@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <TextureAtlas imagePath="chivi.png">
-<SubTexture name="chivi down0000" x="0" y="0" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi down0001" x="519" y="0" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi idle0000" x="1038" y="0" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi idle0001" x="0" y="727" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi idle0002" x="519" y="727" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi idle0003" x="1038" y="727" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi left0000" x="1557" y="0" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi left0001" x="1557" y="727" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi right0000" x="2076" y="0" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi right0001" x="2076" y="727" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi up0000" x="0" y="1454" width="519" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
-<SubTexture name="chivi up0001" x="519" y="1454" width="518" height="727" frameX="0" frameY="0" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi down0000" x="404" y="1435" width="397" height="637" frameX="-131" frameY="-100" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi down0001" x="0" y="1435" width="404" height="648" frameX="-125" frameY="-89" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi idle0000" x="2080" y="686" width="355" height="680" frameX="-172" frameY="-57" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi idle0001" x="1717" y="0" width="363" height="688" frameX="-165" frameY="-49" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi idle0002" x="0" y="737" width="367" height="698" frameX="-161" frameY="-39" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi idle0003" x="852" y="0" width="379" height="710" frameX="-149" frameY="-27" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi left0000" x="367" y="737" width="495" height="698" frameX="-33" frameY="-39" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi left0001" x="1231" y="0" width="486" height="705" frameX="-41" frameY="-32" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi right0000" x="2080" y="0" width="528" height="686" frameX="0" frameY="-51" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi right0001" x="862" y="737" width="495" height="697" frameX="-33" frameY="-40" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi up0000" x="434" y="0" width="418" height="726" frameX="-110" frameY="-11" frameWidth="509" frameHeight="717" />
+<SubTexture name="chivi up0001" x="0" y="0" width="434" height="737" frameX="-94" frameY="0" frameWidth="509" frameHeight="717" />
 </TextureAtlas>
