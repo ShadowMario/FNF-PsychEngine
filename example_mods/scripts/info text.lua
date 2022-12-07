@@ -11,6 +11,7 @@ local Quotes = {
     "YouTube is gonna copyright strike you if you die!",
     "DONT PUT AUMSUM IN DALL E WORST MISTAKE OF MY LIFE",
     "oh noes arnold got his finger cut",
+    "Hey there! Welcome to Life Noggin",
     "what a loser, getting his mod cancelled",
     "This is YOUR Daily Does of Internet",
     "I've over dosed on ketamine and I'm going to die",
