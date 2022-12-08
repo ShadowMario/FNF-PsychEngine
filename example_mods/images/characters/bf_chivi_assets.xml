@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bf_chivi_assets.png">
+	<!-- Created with Adobe Animate version 23.0.0.407 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="bf chivi down0000" x="0" y="0" width="300" height="523" frameX="0" frameY="-20" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi down0001" x="0" y="0" width="300" height="523" frameX="0" frameY="-20" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi down0002" x="0" y="0" width="300" height="523" frameX="0" frameY="-20" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi down0003" x="300" y="0" width="292" height="536" frameX="-6" frameY="-7" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi down0004" x="300" y="0" width="292" height="536" frameX="-6" frameY="-7" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi down0005" x="592" y="0" width="309" height="543" frameX="-9" frameY="0" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi down0006" x="592" y="0" width="309" height="543" frameX="-9" frameY="0" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi down0007" x="592" y="0" width="309" height="543" frameX="-9" frameY="0" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi down0008" x="592" y="0" width="309" height="543" frameX="-9" frameY="0" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi down0009" x="592" y="0" width="309" height="543" frameX="-9" frameY="0" frameWidth="318" frameHeight="543"/>
+	<SubTexture name="bf chivi idle0000" x="901" y="0" width="299" height="524" frameX="-14" frameY="-28" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0001" x="901" y="0" width="299" height="524" frameX="-14" frameY="-28" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0002" x="901" y="0" width="299" height="524" frameX="-14" frameY="-28" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0003" x="1200" y="0" width="313" height="533" frameX="-9" frameY="-19" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0004" x="1200" y="0" width="313" height="533" frameX="-9" frameY="-19" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0005" x="1513" y="0" width="350" height="550" frameX="0" frameY="-2" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0006" x="1513" y="0" width="350" height="550" frameX="0" frameY="-2" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0007" x="0" y="550" width="358" height="552" frameX="-4" frameY="0" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0008" x="0" y="550" width="358" height="552" frameX="-4" frameY="0" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0009" x="0" y="550" width="358" height="552" frameX="-4" frameY="0" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0010" x="0" y="550" width="358" height="552" frameX="-4" frameY="0" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0011" x="0" y="550" width="358" height="552" frameX="-4" frameY="0" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0012" x="0" y="550" width="358" height="552" frameX="-4" frameY="0" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0013" x="0" y="550" width="358" height="552" frameX="-4" frameY="0" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi idle0014" x="0" y="550" width="358" height="552" frameX="-4" frameY="0" frameWidth="362" frameHeight="552"/>
+	<SubTexture name="bf chivi left0000" x="358" y="550" width="375" height="555" frameX="0" frameY="0" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0001" x="358" y="550" width="375" height="555" frameX="0" frameY="0" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0002" x="358" y="550" width="375" height="555" frameX="0" frameY="0" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0003" x="733" y="550" width="369" height="554" frameX="-4" frameY="-1" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0004" x="733" y="550" width="369" height="554" frameX="-4" frameY="-1" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0005" x="1102" y="550" width="360" height="553" frameX="-17" frameY="-2" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0006" x="1102" y="550" width="360" height="553" frameX="-17" frameY="-2" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0007" x="1102" y="550" width="360" height="553" frameX="-17" frameY="-2" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0008" x="1102" y="550" width="360" height="553" frameX="-17" frameY="-2" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0009" x="1102" y="550" width="360" height="553" frameX="-17" frameY="-2" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi left0010" x="1102" y="550" width="360" height="553" frameX="-17" frameY="-2" frameWidth="377" frameHeight="555"/>
+	<SubTexture name="bf chivi right0000" x="1462" y="550" width="345" height="555"/>
+	<SubTexture name="bf chivi right0001" x="1462" y="550" width="345" height="555"/>
+	<SubTexture name="bf chivi right0002" x="1462" y="550" width="345" height="555"/>
+	<SubTexture name="bf chivi right0003" x="0" y="1105" width="333" height="555" frameX="-8" frameY="0" frameWidth="345" frameHeight="555"/>
+	<SubTexture name="bf chivi right0004" x="0" y="1105" width="333" height="555" frameX="-8" frameY="0" frameWidth="345" frameHeight="555"/>
+	<SubTexture name="bf chivi right0005" x="333" y="1105" width="335" height="552" frameX="-9" frameY="-3" frameWidth="345" frameHeight="555"/>
+	<SubTexture name="bf chivi right0006" x="333" y="1105" width="335" height="552" frameX="-9" frameY="-3" frameWidth="345" frameHeight="555"/>
+	<SubTexture name="bf chivi right0007" x="333" y="1105" width="335" height="552" frameX="-9" frameY="-3" frameWidth="345" frameHeight="555"/>
+	<SubTexture name="bf chivi right0008" x="333" y="1105" width="335" height="552" frameX="-9" frameY="-3" frameWidth="345" frameHeight="555"/>
+	<SubTexture name="bf chivi right0009" x="333" y="1105" width="335" height="552" frameX="-9" frameY="-3" frameWidth="345" frameHeight="555"/>
+	<SubTexture name="bf chivi up0000" x="668" y="1105" width="407" height="571" frameX="-4" frameY="0" frameWidth="411" frameHeight="571"/>
+	<SubTexture name="bf chivi up0001" x="668" y="1105" width="407" height="571" frameX="-4" frameY="0" frameWidth="411" frameHeight="571"/>
+	<SubTexture name="bf chivi up0002" x="668" y="1105" width="407" height="571" frameX="-4" frameY="0" frameWidth="411" frameHeight="571"/>
+	<SubTexture name="bf chivi up0003" x="1075" y="1105" width="407" height="567" frameX="-3" frameY="-4" frameWidth="411" frameHeight="571"/>
+	<SubTexture name="bf chivi up0004" x="1075" y="1105" width="407" height="567" frameX="-3" frameY="-4" frameWidth="411" frameHeight="571"/>
+	<SubTexture name="bf chivi up0005" x="1482" y="1105" width="410" height="558" frameX="0" frameY="-13" frameWidth="411" frameHeight="571"/>
+	<SubTexture name="bf chivi up0006" x="1482" y="1105" width="410" height="558" frameX="0" frameY="-13" frameWidth="411" frameHeight="571"/>
+	<SubTexture name="bf chivi up0007" x="1482" y="1105" width="410" height="558" frameX="0" frameY="-13" frameWidth="411" frameHeight="571"/>
+	<SubTexture name="bf chivi up0008" x="1482" y="1105" width="410" height="558" frameX="0" frameY="-13" frameWidth="411" frameHeight="571"/>
+	<SubTexture name="bf chivi up0009" x="1482" y="1105" width="410" height="558" frameX="0" frameY="-13" frameWidth="411" frameHeight="571"/>
+</TextureAtlas>
