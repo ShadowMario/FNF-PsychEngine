@@ -43,9 +43,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		optionsArray.push(goption);
 
 		var option:GameplayOption = new GameplayOption('Scroll Speed', 'scrollspeed', 'float', 1);
-		option.scrollSpeed = 1.5;
-		option.minValue = 0.5;
-		option.changeValue = 0.1;
+		option.scrollSpeed = 2.0;
+		option.minValue = 0.35;
+		option.changeValue = 0.05;
+		option.decimals = 2;
 		if (goption.getValue() != "constant")
 		{
 			option.displayFormat = '%vX';
@@ -58,13 +59,16 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		}
 		optionsArray.push(option);
 
-		/*var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
+		#if !html5
+		var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
 		option.scrollSpeed = 1;
 		option.minValue = 0.5;
-		option.maxValue = 2.5;
-		option.changeValue = 0.1;
+		option.maxValue = 3.0;
+		option.changeValue = 0.05;
 		option.displayFormat = '%vX';
-		optionsArray.push(option);*/
+		option.decimals = 2;
+		optionsArray.push(option);
+		#end
 
 		var option:GameplayOption = new GameplayOption('Health Gain Multiplier', 'healthgain', 'float', 1);
 		option.scrollSpeed = 2.5;
@@ -125,24 +129,26 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		for (i in 0...optionsArray.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, 70 * i, optionsArray[i].name, true, false, 0.05, 0.8);
+			var optionText:Alphabet = new Alphabet(200, 360, optionsArray[i].name, true);
 			optionText.isMenuItem = true;
-			optionText.x += 300;
-			/*optionText.forceX = 300;
-			optionText.yMult = 90;*/
-			optionText.xAdd = 120;
+			optionText.scaleX = 0.8;
+			optionText.scaleY = 0.8;
 			optionText.targetY = i;
 			grpOptions.add(optionText);
 
 			if(optionsArray[i].type == 'bool') {
+				optionText.x += 110;
+				optionText.startPosition.x += 110;
+				optionText.snapToPosition();
 				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
-				checkbox.offsetY = -60;
+				checkbox.offsetX -= 32;
+				checkbox.offsetY = -120;
 				checkbox.ID = i;
 				checkboxGroup.add(checkbox);
-				optionText.xAdd += 80;
 			} else {
-				var valueText:AttachedText = new AttachedText('' + optionsArray[i].getValue(), optionText.width + 80, true, 0.8);
+				optionText.snapToPosition();
+				var valueText:AttachedText = new AttachedText(Std.string(optionsArray[i].getValue()), optionText.width, -72, true, 0.8);
 				valueText.sprTracker = optionText;
 				valueText.copyAlpha = true;
 				valueText.ID = i;
@@ -260,9 +266,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 							curOption.change();
 							FlxG.sound.play(Paths.sound('scrollMenu'));
 						} else if(curOption.type != 'string') {
-							holdValue += curOption.scrollSpeed * elapsed * (controls.UI_LEFT ? -1 : 1);
-							if(holdValue < curOption.minValue) holdValue = curOption.minValue;
-							else if (holdValue > curOption.maxValue) holdValue = curOption.maxValue;
+							holdValue = Math.max(curOption.minValue, Math.min(curOption.maxValue, holdValue + curOption.scrollSpeed * elapsed * (controls.UI_LEFT ? -1 : 1)));
 
 							switch(curOption.type)
 							{
@@ -270,7 +274,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 									curOption.setValue(Math.round(holdValue));
 								
 								case 'float' | 'percent':
-									curOption.setValue(FlxMath.roundDecimal(holdValue, curOption.decimals));
+									var blah:Float = Math.max(curOption.minValue, Math.min(curOption.maxValue, holdValue + curOption.changeValue - (holdValue % curOption.changeValue)));
+									curOption.setValue(FlxMath.roundDecimal(blah, curOption.decimals));
 							}
 							updateTextFrom(curOption);
 							curOption.change();
@@ -481,7 +486,7 @@ class GameplayOption
 	private function set_text(newValue:String = '')
 	{
 		if(child != null) {
-			child.changeText(newValue);
+			child.text = newValue;
 		}
 		return null;
 	}
