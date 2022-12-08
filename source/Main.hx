@@ -66,16 +66,12 @@ class Main extends Sprite
 
 		setupGame();
 	}
-
+	
 	private function setupGame():Void
 	{
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
-		var res = ClientPrefs.screenRes.split('x');
-		gameWidth = Std.parseInt(res[0]);
-		gameHeight = Std.parseInt(res[1]);
-		
 		if (zoom == -1)
 		{
 			var ratioX:Float = stageWidth / gameWidth;
@@ -86,7 +82,7 @@ class Main extends Sprite
 		}
 	
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash, startFullscreen));
+		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
