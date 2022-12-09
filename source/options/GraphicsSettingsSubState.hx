@@ -60,6 +60,13 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			true); //Default value
 		addOption(option);
 
+		var option:Option = new Option('Dark Mode',
+			'It's self-explanatory.',
+			'enableDark',
+			'bool',
+			true);
+		addOption(option);
+
 		#if !html5 //Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		var option:Option = new Option('Framerate',
 			"Pretty self explanatory, isn't it?",

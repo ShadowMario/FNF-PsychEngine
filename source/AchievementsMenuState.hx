@@ -32,12 +32,24 @@ class AchievementsMenuState extends MusicBeatState
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
-		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
-		menuBG.updateHitbox();
-		menuBG.screenCenter();
-		menuBG.antialiasing = ClientPrefs.globalAntialiasing;
-		add(menuBG);
+        if (ClientPrefs.enableDark)
+		{
+		    var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('darkmode/menuBGBlueDark'));
+		    menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+		    menuBG.updateHitbox();
+		    menuBG.screenCenter();
+		    menuBG.antialiasing = ClientPrefs.globalAntialiasing;
+		    add(menuBG);
+		}
+		else
+		{
+			var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		    menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+		    menuBG.updateHitbox();
+		    menuBG.screenCenter();
+		    menuBG.antialiasing = ClientPrefs.globalAntialiasing;
+		    add(menuBG);
+		}
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);

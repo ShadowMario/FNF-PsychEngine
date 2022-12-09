@@ -45,9 +45,18 @@ class CreditsState extends MusicBeatState
 		#end
 
 		persistentUpdate = true;
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		add(bg);
-		bg.screenCenter();
+		if (ClientPrefs.enableDark)
+		{
+		    bg = new FlxSprite().loadGraphic(Paths.image('darkmode/menuDesatDark'));
+		    add(bg);
+		    bg.screenCenter();
+		}
+		else
+		{
+			bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		    add(bg);
+		    bg.screenCenter();
+		}
 		
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
