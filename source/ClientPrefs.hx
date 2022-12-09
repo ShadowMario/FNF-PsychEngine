@@ -33,6 +33,7 @@ class ClientPrefs {
 	public static var fullscreen:Bool = false;
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'Tea Time';
+	public static var judgementCounter:Bool = true;
 	public static var checkForUpdates:Bool = true;
 	public static var comboStacking = true;
 	public static var gameplaySettings:Map<String, Dynamic> = [
@@ -132,6 +133,7 @@ class ClientPrefs {
 		FlxG.save.data.fullscreen = fullscreen;
 		FlxG.save.data.hitsoundVolume = hitsoundVolume;
 		FlxG.save.data.pauseMusic = pauseMusic;
+		FlxG.save.data.judgementCounter = judgementCounter;
 		FlxG.save.data.checkForUpdates = checkForUpdates;
 		FlxG.save.data.comboStacking = comboStacking;
 	
@@ -147,6 +149,11 @@ class ClientPrefs {
 	public static function loadPrefs() {
 		if(FlxG.save.data.downScroll != null) {
 			downScroll = FlxG.save.data.downScroll;
+		}
+		if(FlxG.save.data.judgementCounter != null) {
+
+			judgementCounter = FlxG.save.data.judgementCounter;
+
 		}
 		if(FlxG.save.data.middleScroll != null) {
 			middleScroll = FlxG.save.data.middleScroll;
