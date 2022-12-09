@@ -61,7 +61,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Dark Mode',
-			'It's self-explanatory.',
+			'Every dark mode ever.',
 			'enableDark',
 			'bool',
 			true);
