@@ -145,8 +145,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 
 		if (controls.BACK) {
-			close();
-			FlxG.sound.play(Paths.sound('cancelMenu'));
+			closeState();
 		}
 
 		if(nextAccept <= 0)
@@ -173,7 +172,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 						if(pressed) {
 							var add:Dynamic = null;
 							if(curOption.type != 'string') {
-								add = controls.UI_LEFT ? -curOption.changeValue : curOption.changeValue;
+								add = curOption.changeValue * (controls.UI_LEFT ? -1 : 1);
 							}
 
 							switch(curOption.type)
@@ -350,4 +349,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			checkbox.daValue = (optionsArray[checkbox.ID].getValue() == true);
 		}
 	}
+
+	function closeState() {
+		close();
+		FlxG.sound.play(Paths.sound('cancelMenu'));
+	};
 }

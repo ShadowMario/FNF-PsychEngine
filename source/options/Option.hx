@@ -115,6 +115,9 @@ class Option
 	{
 		Reflect.setProperty(ClientPrefs, variable, value);
 	}
+	public function getVariable() {
+		return variable;
+	}
 
 	public function setChild(child:Alphabet)
 	{

@@ -10,6 +10,7 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
 import flixel.FlxSubState;
@@ -29,7 +30,7 @@ using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', #if MODS_ALLOWED 'Mod Options' #end];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -49,6 +50,9 @@ class OptionsState extends MusicBeatState
 				openSubState(new options.GameplaySettingsSubState());
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
+			case 'Mod Options':
+				FlxG.switchState(new options.ModOptionSelectState()); // openSubState(new options.ModOptions());
+				FlxTransitionableState.skipNextTransOut = true;
 		}
 	}
 
@@ -58,6 +62,10 @@ class OptionsState extends MusicBeatState
 	override function create() {
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
+		#end
+
+		#if MODS_ALLOWED
+			if (!Paths.optionsExist()) options.remove('Mod Options');
 		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));

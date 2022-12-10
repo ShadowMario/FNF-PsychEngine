@@ -7,11 +7,13 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
+import flixel.math.FlxAngle;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -42,10 +44,17 @@ class MainMenuState extends MusicBeatState
 		'options'
 	];
 
+	var backdrops:FlxBackdrop;
+
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+
+	var radiusX:Int;
+	var radiusY:Int;
+	var originX:Float;
+	var originY:Float;
 
 	override function create()
 	{
@@ -73,13 +82,20 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
+		radiusX = 500;
+		radiusY = 300;
+
+		originX = FlxG.width - 50;
+		originY = FlxG.height - 50;
+
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.color = 0xFF8029B6;
 		add(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -95,8 +111,16 @@ class MainMenuState extends MusicBeatState
 		magenta.visible = false;
 		magenta.antialiasing = ClientPrefs.globalAntialiasing;
 		magenta.color = 0xFFfd719b;
-		add(magenta);
-		
+		add(magenta);	
+		backdrops = new FlxBackdrop(Paths.image('PsychLogo'), 0, 0, true, true, 25, 25); // also from tgt
+		backdrops.alpha = 0.75;
+		backdrops.x -= 35;
+		add(backdrops);
+
+		var circle:FlxSprite = new FlxSprite(originX - 250/1.5, originY - radiusY / 1.5).loadGraphic(Paths.image('mainmenu/stupidCircle'));
+		circle.scrollFactor.set(0, 0);
+		add(circle);
+
 		// magenta.scrollFactor.set();
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
@@ -120,11 +144,9 @@ class MainMenuState extends MusicBeatState
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
-			var scr:Float = (optionShit.length - 4) * 0.135;
-			if(optionShit.length < 6) scr = 0;
-			menuItem.scrollFactor.set(0, scr);
+			menuItem.scrollFactor.set();
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
+			menuItem.setGraphicSize(Std.int(menuItem.width * 0.85));
 			menuItem.updateHitbox();
 		}
 
@@ -172,6 +194,20 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		menuItems.forEach(function(object:FlxSprite) // "borrowed" code from Tails Gets Trolled V3 menu
+			{
+				var input = (object.ID - curSelected - 4) * FlxAngle.asRadians(360 / (menuItems.length * 1.5));
+				var desiredX = FlxMath.fastSin(input)*radiusX;
+				var desiredY = (FlxMath.fastCos(input)*radiusY);
+
+				if (curSelected == object.ID && object.width >= 420)
+					desiredX -= object.width - 420;
+
+				object.x = FlxMath.lerp(object.x, originX - object.width / 2 + desiredX + (radiusX/4), .125*(elapsed/(1/60)));
+				object.y = FlxMath.lerp(object.y, originY + desiredY, .125*(elapsed/(1/60)));
+			}
+		);
+
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -179,7 +215,7 @@ class MainMenuState extends MusicBeatState
 		}
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
-		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
+		//camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
 		if (!selectedSomethin)
 		{
@@ -264,12 +300,10 @@ class MainMenuState extends MusicBeatState
 			#end
 		}
 
-		super.update(elapsed);
+		backdrops.x += .5*(elapsed/(1/60));
+		backdrops.y += .5*(elapsed/(1/60));
 
-		menuItems.forEach(function(spr:FlxSprite)
-		{
-			spr.screenCenter(X);
-		});
+		super.update(elapsed);
 	}
 
 	function changeItem(huh:Int = 0)
