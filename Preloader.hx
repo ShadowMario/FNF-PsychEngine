@@ -8,6 +8,8 @@ import flash.display.BlendMode;
 import flash.display.Sprite;
 import flash.Lib;
 import flixel.FlxG;
+
+// THIS IS USELESS BRUH
  
 @:bitmap("art/preloaderArt.png") class LogoImage extends BitmapData { }
  
