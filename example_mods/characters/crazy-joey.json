@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "idle",
+			"loop": false,
+			"name": "joey idle"
+		},
+		{
+			"offsets": [
+				-12,
+				0
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "singUP",
+			"loop": false,
+			"name": "joey up"
+		},
+		{
+			"offsets": [
+				-10,
+				-3
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "joey left"
+		},
+		{
+			"offsets": [
+				-45,
+				-6
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "joey down"
+		},
+		{
+			"offsets": [
+				19,
+				0
+			],
+			"indices": [],
+			"fps": 30,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "joey right"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/crazy_joey",
+	"position": [
+		130,
+		220
+	],
+	"healthicon": "joey",
+	"flip_x": false,
+	"healthbar_colors": [
+		240,
+		92,
+		8
+	],
+	"camera_position": [
+		-40,
+		-20
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}
