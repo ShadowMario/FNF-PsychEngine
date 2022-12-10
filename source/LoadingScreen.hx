@@ -35,9 +35,6 @@ class LoadingScreen extends MusicBeatState
 	function new(target:FlxState, stopMusic:Bool, directory:String)
 	{
 		super();
-		this.target = target;
-		this.stopMusic = stopMusic;
-		this.directory = directory;
 	}
 
 	var funkay:FlxSprite;
@@ -55,27 +52,16 @@ class LoadingScreen extends MusicBeatState
 		funkay.screenCenter();
 
 		
-		initSongsManifest().onComplete
-		(
-			function (lib)
-			{
-				callbacks = new MultiCallback(onLoad);
-				var introComplete = callbacks.add("introComplete");
 				/*if (PlayState.SONG != null) {
 					checkLoadSong(getSongPath());
 					if (PlayState.SONG.needsVoices)
 						checkLoadSong(getVocalPath());
 				}*/
-				checkLibrary("shared");
-				if(directory != null && directory.length > 0 && directory != 'shared') {
-					checkLibrary(directory);
-				}
 
 				var fadeTime = 0.5;
 				FlxG.camera.fade(FlxG.camera.bgColor, fadeTime, true);
 				new FlxTimer().start(fadeTime + MIN_TIME, function(_) introComplete());
-			}
-		);
+	
 	}
 	
 	function checkLoadSong(path:String)
