@@ -3815,6 +3815,7 @@ class PlayState extends MusicBeatState
 		{
 			moveCamera('gf');
 			callOnLuas('onMoveCamera', ['gf']);
+			return;
 		}
 
 		if (!SONG.notes[curSection].mustHitSection)
