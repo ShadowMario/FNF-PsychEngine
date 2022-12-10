@@ -112,7 +112,7 @@ class MainMenuState extends MusicBeatState
 		magenta.antialiasing = ClientPrefs.globalAntialiasing;
 		magenta.color = 0xFFfd719b;
 		add(magenta);	
-		backdrops = new FlxBackdrop(Paths.image('PsychLogo'), 0, 0, true, true, 25, 25); // also from tgt
+		backdrops = new FlxBackdrop(Paths.image('PsychLogo'), XY, 0, 1); // also from tgt
 		backdrops.alpha = 0.75;
 		backdrops.x -= 35;
 		add(backdrops);
