@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="crazy_joey.png">
+	<!-- Created with Adobe Animate version 23.0.0.407 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="joey down0000" x="0" y="0" width="276" height="514" frameX="0" frameY="-3" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey down0001" x="0" y="0" width="276" height="514" frameX="0" frameY="-3" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey down0002" x="0" y="0" width="276" height="514" frameX="0" frameY="-3" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey down0003" x="276" y="0" width="270" height="517" frameX="0" frameY="0" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey down0004" x="276" y="0" width="270" height="517" frameX="0" frameY="0" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey down0005" x="276" y="0" width="270" height="517" frameX="0" frameY="0" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey down0006" x="276" y="0" width="270" height="517" frameX="0" frameY="0" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey down0007" x="276" y="0" width="270" height="517" frameX="0" frameY="0" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey down0008" x="276" y="0" width="270" height="517" frameX="0" frameY="0" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey down0009" x="276" y="0" width="270" height="517" frameX="0" frameY="0" frameWidth="276" frameHeight="517"/>
+	<SubTexture name="joey idle0000" x="546" y="0" width="282" height="509" frameX="0" frameY="-14" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0001" x="546" y="0" width="282" height="509" frameX="0" frameY="-14" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0002" x="546" y="0" width="282" height="509" frameX="0" frameY="-14" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0003" x="546" y="0" width="282" height="509" frameX="0" frameY="-14" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0004" x="828" y="0" width="283" height="515" frameX="-10" frameY="-8" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0005" x="828" y="0" width="283" height="515" frameX="-10" frameY="-8" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0006" x="828" y="0" width="283" height="515" frameX="-10" frameY="-8" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0007" x="1111" y="0" width="280" height="523" frameX="-20" frameY="0" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0008" x="1111" y="0" width="280" height="523" frameX="-20" frameY="0" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0009" x="1111" y="0" width="280" height="523" frameX="-20" frameY="0" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0010" x="1111" y="0" width="280" height="523" frameX="-20" frameY="0" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0011" x="1111" y="0" width="280" height="523" frameX="-20" frameY="0" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0012" x="1111" y="0" width="280" height="523" frameX="-20" frameY="0" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0013" x="1111" y="0" width="280" height="523" frameX="-20" frameY="0" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey idle0014" x="1111" y="0" width="280" height="523" frameX="-20" frameY="0" frameWidth="300" frameHeight="523"/>
+	<SubTexture name="joey left0000" x="1391" y="0" width="315" height="520" frameX="0" frameY="0" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey left0001" x="1391" y="0" width="315" height="520" frameX="0" frameY="0" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey left0002" x="1391" y="0" width="315" height="520" frameX="0" frameY="0" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey left0003" x="1706" y="0" width="309" height="517" frameX="-7" frameY="-3" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey left0004" x="1706" y="0" width="309" height="517" frameX="-7" frameY="-3" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey left0005" x="1706" y="0" width="309" height="517" frameX="-7" frameY="-3" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey left0006" x="1706" y="0" width="309" height="517" frameX="-7" frameY="-3" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey left0007" x="1706" y="0" width="309" height="517" frameX="-7" frameY="-3" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey left0008" x="1706" y="0" width="309" height="517" frameX="-7" frameY="-3" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey left0009" x="1706" y="0" width="309" height="517" frameX="-7" frameY="-3" frameWidth="316" frameHeight="520"/>
+	<SubTexture name="joey right0000" x="0" y="523" width="390" height="523"/>
+	<SubTexture name="joey right0001" x="0" y="523" width="390" height="523"/>
+	<SubTexture name="joey right0002" x="0" y="523" width="390" height="523"/>
+	<SubTexture name="joey right0003" x="390" y="523" width="370" height="523" frameX="-6" frameY="0" frameWidth="390" frameHeight="523"/>
+	<SubTexture name="joey right0004" x="390" y="523" width="370" height="523" frameX="-6" frameY="0" frameWidth="390" frameHeight="523"/>
+	<SubTexture name="joey right0005" x="390" y="523" width="370" height="523" frameX="-6" frameY="0" frameWidth="390" frameHeight="523"/>
+	<SubTexture name="joey right0006" x="390" y="523" width="370" height="523" frameX="-6" frameY="0" frameWidth="390" frameHeight="523"/>
+	<SubTexture name="joey right0007" x="390" y="523" width="370" height="523" frameX="-6" frameY="0" frameWidth="390" frameHeight="523"/>
+	<SubTexture name="joey right0008" x="390" y="523" width="370" height="523" frameX="-6" frameY="0" frameWidth="390" frameHeight="523"/>
+	<SubTexture name="joey right0009" x="390" y="523" width="370" height="523" frameX="-6" frameY="0" frameWidth="390" frameHeight="523"/>
+	<SubTexture name="joey up0000" x="760" y="523" width="272" height="523" frameX="0" frameY="0" frameWidth="288" frameHeight="523"/>
+	<SubTexture name="joey up0001" x="760" y="523" width="272" height="523" frameX="0" frameY="0" frameWidth="288" frameHeight="523"/>
+	<SubTexture name="joey up0002" x="760" y="523" width="272" height="523" frameX="0" frameY="0" frameWidth="288" frameHeight="523"/>
+	<SubTexture name="joey up0003" x="1032" y="523" width="276" height="522" frameX="-12" frameY="-1" frameWidth="288" frameHeight="523"/>
+	<SubTexture name="joey up0004" x="1032" y="523" width="276" height="522" frameX="-12" frameY="-1" frameWidth="288" frameHeight="523"/>
+	<SubTexture name="joey up0005" x="1032" y="523" width="276" height="522" frameX="-12" frameY="-1" frameWidth="288" frameHeight="523"/>
+	<SubTexture name="joey up0006" x="1032" y="523" width="276" height="522" frameX="-12" frameY="-1" frameWidth="288" frameHeight="523"/>
+	<SubTexture name="joey up0007" x="1032" y="523" width="276" height="522" frameX="-12" frameY="-1" frameWidth="288" frameHeight="523"/>
+	<SubTexture name="joey up0008" x="1032" y="523" width="276" height="522" frameX="-12" frameY="-1" frameWidth="288" frameHeight="523"/>
+	<SubTexture name="joey up0009" x="1032" y="523" width="276" height="522" frameX="-12" frameY="-1" frameWidth="288" frameHeight="523"/>
+</TextureAtlas>
