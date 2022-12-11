@@ -77,7 +77,7 @@ class FPS extends TextField
 		}
 
 		var currentCount = times.length;
-		currentFPS = Math.round((currentCount + cacheCount) / 2);
+		currentFPS = FlxMath.roundDecimal((currentCount + cacheCount) / 2, 1);
 		if (currentFPS > ClientPrefs.framerate) currentFPS = ClientPrefs.framerate;
 
 		if (currentCount != cacheCount /*&& visible*/)
