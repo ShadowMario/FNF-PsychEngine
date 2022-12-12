@@ -2481,9 +2481,7 @@ class PlayState extends MusicBeatState
 				var gottaHitNote:Bool = section.mustHitSection;
 
 				if (songNotes[1] > 3)
-				{
 					gottaHitNote = !section.mustHitSection;
-				}
 
 				var oldNote:Note;
 				if (unspawnNotes.length > 0)
@@ -2493,21 +2491,17 @@ class PlayState extends MusicBeatState
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				swagNote.mustPress = gottaHitNote;
-				swagNote.sustainLength = songNotes[2];
+				swagNote.sustainLength = Math.round(songNotes[2] / Conductor.stepCrochet) * Conductor.stepCrochet;
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
-
 				swagNote.scrollFactor.set();
-
-				var susLength:Float = swagNote.sustainLength;
-
-				susLength = susLength / Conductor.stepCrochet;
 				unspawnNotes.push(swagNote);
 
-				var floorSus:Int = Math.floor(susLength);
+				var floorSus:Int = Math.round(swagNote.sustainLength / Conductor.stepCrochet);
 				if(floorSus > 0) {
-					for (susNote in 0...floorSus+1)
+					if(floorSus == 1) floorSus++;
+					for (susNote in 0...floorSus)
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
@@ -2519,32 +2513,6 @@ class PlayState extends MusicBeatState
 						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
-
-						if (sustainNote.mustPress)
-						{
-							sustainNote.x += FlxG.width / 2; // general offset
-						}
-						else if(ClientPrefs.middleScroll)
-						{
-							sustainNote.x += 310;
-							if(daNoteData > 1) //Up and Right
-							{
-								sustainNote.x += FlxG.width / 2 + 25;
-							}
-						}
-					}
-				}
-
-				if (swagNote.mustPress)
-				{
-					swagNote.x += FlxG.width / 2; // general offset
-				}
-				else if(ClientPrefs.middleScroll)
-				{
-					swagNote.x += 310;
-					if(daNoteData > 1) //Up and Right
-					{
-						swagNote.x += FlxG.width / 2 + 25;
 					}
 				}
 
