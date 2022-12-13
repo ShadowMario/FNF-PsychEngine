@@ -87,6 +87,10 @@ class FunkinLua {
 
 		//LuaL.dostring(lua, CLENSE);
 		try{
+			Lua.getglobal(lua, "package");
+			Lua.pushstring(lua, Paths.getLuaPackagePath());
+			Lua.setfield(lua, -2, "path");
+			Lua.pop(lua, 1);
 			var result:Dynamic = LuaL.dofile(lua, script);
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
