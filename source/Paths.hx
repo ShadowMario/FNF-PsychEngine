@@ -527,8 +527,8 @@ class Paths
 			#if sys
 			path = FileSystem.absolutePath(path);
 			#end
-			paths.push(haxe.io.Path.join([path, '?.lua']));
-			paths.push(haxe.io.Path.join([path, '?', 'init.lua']));
+			paths.push(Path.join([path, '?.lua']));
+			paths.push(Path.join([path, '?', 'init.lua']));
 		}
 		return paths.join(';');
 	}
