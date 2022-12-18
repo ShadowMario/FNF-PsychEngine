@@ -13,7 +13,9 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.tweens.FlxTween.FlxTweenType;
 import lime.utils.Assets;
 import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
@@ -49,6 +51,12 @@ class FreeplayState extends MusicBeatState
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+
+	var errorBG:FlxSprite;
+	var errorText:FlxText;
+
+	var errBGTwn:FlxTween;
+	var errTxtTwn:FlxTween;
 
 	override function create()
 	{
@@ -197,6 +205,13 @@ class FreeplayState extends MusicBeatState
 		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
+
+		errorBG = makeErrorBG();
+		add(errorBG);
+
+		errorText = makeErrorText();
+		add(errorText);
+
 		super.create();
 	}
 
@@ -231,6 +246,80 @@ class FreeplayState extends MusicBeatState
 				num++;
 		}
 	}*/
+
+	public static function makeErrorBG() {
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 160, 0xFF000000);
+		bg.scrollFactor.set();
+		bg.alpha = 0;
+		bg.screenCenter();
+		return bg;
+	}
+
+	public static function makeErrorText() {
+		var text:FlxText = new FlxText(0, 0, FlxG.width, '', 32);
+		text.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		text.scrollFactor.set();
+		text.alpha = 0;
+		text.screenCenter();
+		return text;
+	}
+	
+	private static function getPathWithDir(songFolder:String, songLowercase:String):String {
+		return 'mods/${Paths.currentModDirectory}/data/$songFolder/$songLowercase.json';
+	}
+
+	public static function getErrorMessage(prefix:String, songFolder:String, songLowercase:String):String {
+		var formattedSong:String = Song.getSongPath(songFolder, songLowercase);
+		var songString:String = Paths.json(formattedSong);
+		var modsSongString:String = Paths.modsJson(formattedSong);
+		var modDirString:String = '';
+
+		if (Paths.currentModDirectory.length < 1) {
+			return 'Error! Chart not found;\n${prefix}MISSING FILE AT:\n\'$songString\' or\n\'$modsSongString\'';
+		} else {
+			modDirString = getPathWithDir(songFolder, songLowercase);
+			return 'Error! Chart not found;\n${prefix}MISSING FILE AT:\n\'$songString\',\n\'$modsSongString\' or\n\'$modDirString\'';
+		}
+	}
+
+	function coolErrorTween() {
+		if(errBGTwn != null) {
+			errBGTwn.cancel();
+			errBGTwn.destroy();
+			errorBG.alpha = 0;
+		}
+		if(errTxtTwn != null) {
+			errTxtTwn.cancel();
+			errTxtTwn.destroy();
+			errorText.alpha = 0;
+		}
+
+		errBGTwn = FlxTween.tween(errorBG, {alpha: 0.6}, 0.5, {
+			ease: FlxEase.sineOut,
+			onComplete: function(twn:FlxTween) {
+				errBGTwn = FlxTween.tween(errorBG, {alpha: 0}, 0.5, {
+					startDelay: 3,
+					ease: FlxEase.sineOut,
+					onComplete: function(twn:FlxTween) {
+						errBGTwn = null;
+					}
+				});
+			}
+		});
+		
+		errTxtTwn = FlxTween.tween(errorText, {alpha: 1}, 0.5, {
+			ease: FlxEase.sineOut,
+			onComplete: function(twn:FlxTween) {
+				errTxtTwn = FlxTween.tween(errorText, {alpha: 0}, 0.5, {
+					startDelay: 3,
+					ease: FlxEase.sineOut,
+					onComplete: function(twn:FlxTween) {
+						errTxtTwn = null;
+					}
+				});
+			}
+		});
+	}
 
 	var instPlaying:Int = -1;
 	public static var vocals:FlxSound = null;
@@ -334,58 +423,114 @@ class FreeplayState extends MusicBeatState
 				destroyFreeplayVocals();
 				FlxG.sound.music.volume = 0;
 				Paths.currentModDirectory = songs[curSelected].folder;
-				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				if (PlayState.SONG.needsVoices)
-					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-				else
-					vocals = new FlxSound();
 
-				FlxG.sound.list.add(vocals);
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
-				vocals.play();
-				vocals.persist = true;
-				vocals.looped = true;
-				vocals.volume = 0.7;
-				instPlaying = curSelected;
+				var songFolder:String = songs[curSelected].songName.toLowerCase();
+				var songLowercase:String = Highscore.formatSong(songFolder, curDifficulty);
+				PlayState.SONG = Song.loadFromJson(songLowercase, songFolder);
+				
+				if (PlayState.SONG != null) {
+					if (PlayState.SONG.needsVoices)
+						vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+					else
+						vocals = new FlxSound();
+	
+					FlxG.sound.list.add(vocals);
+					FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
+					vocals.play();
+					vocals.persist = true;
+					vocals.looped = true;
+					vocals.volume = 0.7;
+					instPlaying = curSelected;
+				} else {
+					errorText.text = getErrorMessage('cannot play song, ', songFolder, songLowercase);
+					errorText.screenCenter();
+
+					coolErrorTween();
+				}
 				#end
 			}
 		}
 
 		else if (accepted)
 		{
-			persistentUpdate = false;
-			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
-			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
+			var songFolder:String = Paths.formatToSongPath(songs[curSelected].songName);
+			var songLowercase:String = Highscore.formatSong(songFolder, curDifficulty);
 			/*#if MODS_ALLOWED
-			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
+			if(!sys.FileSystem.exists(Paths.modsJson(songFolder + '/' + songLowercase)) && !sys.FileSystem.exists(Paths.json(songFolder + '/' + songLowercase))) {
 			#else
-			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
+			if(!OpenFlAssets.exists(Paths.json(songFolder + '/' + songLowercase))) {
 			#end
-				poop = songLowercase;
+				songLowercase = songFolder;
 				curDifficulty = 1;
 				trace('Couldnt find file');
 			}*/
-			trace(poop);
+			//trace(songLowercase);
 
-			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
+			PlayState.SONG = Song.loadFromJson(songLowercase, songFolder);
 
-			trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
-			if(colorTween != null) {
-				colorTween.cancel();
+			if (PlayState.SONG != null) {
+				persistentUpdate = false;
+				
+				PlayState.isStoryMode = false;
+				PlayState.storyDifficulty = curDifficulty;
+
+				trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
+				if(colorTween != null) {
+					colorTween.cancel();
+				}
+				
+				if (FlxG.keys.pressed.SHIFT){
+					LoadingState.loadAndSwitchState(new ChartingState());
+				}else{
+					LoadingState.loadAndSwitchState(new PlayState());
+				}
+
+				FlxG.sound.music.volume = 0;
+						
+				destroyFreeplayVocals();
+			} else {
+				errorText.text = getErrorMessage('', songFolder, songLowercase);
+				errorText.screenCenter();
+
+				coolErrorTween();
+				/*
+				if(errBGTwn != null) {
+					errBGTwn.cancel();
+					errBGTwn.destroy();
+					errorBG.alpha = 0;
+				}
+				if(errTxtTwn != null) {
+					errTxtTwn.cancel();
+					errTxtTwn.destroy();
+					errorText.alpha = 0;
+				}
+
+				errBGTwn = FlxTween.tween(errorBG, {alpha: 0.6}, 0.5, {
+					ease: FlxEase.sineOut,
+					onComplete: function(twn:FlxTween) {
+						errBGTwn = FlxTween.tween(errorBG, {alpha: 0}, 0.5, {
+							startDelay: 3,
+							ease: FlxEase.sineOut,
+							onComplete: function(twn:FlxTween) {
+								errBGTwn = null;
+							}
+						});
+					}
+				});
+				
+				errTxtTwn = FlxTween.tween(errorText, {alpha: 1}, 0.5, {
+					ease: FlxEase.sineOut,
+					onComplete: function(twn:FlxTween) {
+						errTxtTwn = FlxTween.tween(errorText, {alpha: 0}, 0.5, {
+							startDelay: 3,
+							ease: FlxEase.sineOut,
+							onComplete: function(twn:FlxTween) {
+								errTxtTwn = null;
+							}
+						});
+					}
+				});*/
 			}
-			
-			if (FlxG.keys.pressed.SHIFT){
-				LoadingState.loadAndSwitchState(new ChartingState());
-			}else{
-				LoadingState.loadAndSwitchState(new PlayState());
-			}
-
-			FlxG.sound.music.volume = 0;
-					
-			destroyFreeplayVocals();
 		}
 		else if(controls.RESET)
 		{

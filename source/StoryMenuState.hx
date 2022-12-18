@@ -12,6 +12,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
@@ -48,6 +49,12 @@ class StoryMenuState extends MusicBeatState
 	var rightArrow:FlxSprite;
 
 	var loadedWeeks:Array<WeekData> = [];
+
+	var errorText:FlxText;
+	var errorBG:FlxSprite;
+
+	var errTxtTwn:FlxTween;
+	var errBGTwn:FlxTween;
 
 	override function create()
 	{
@@ -182,6 +189,12 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 		add(txtWeekTitle);
 
+		errorBG = FreeplayState.makeErrorBG();
+		add(errorBG);
+
+		errorText = FreeplayState.makeErrorText();
+		add(errorText);
+
 		changeWeek();
 		changeDifficulty();
 
@@ -285,22 +298,6 @@ class StoryMenuState extends MusicBeatState
 	{
 		if (!weekIsLocked(loadedWeeks[curWeek].fileName))
 		{
-			if (stopspamming == false)
-			{
-				FlxG.sound.play(Paths.sound('confirmMenu'));
-
-				grpWeekText.members[curWeek].startFlashing();
-
-				for (char in grpWeekCharacters.members)
-				{
-					if (char.character != '' && char.hasConfirmAnimation)
-					{
-						char.animation.play('confirm');
-					}
-				}
-				stopspamming = true;
-			}
-
 			// We can't use Dynamic Array .copy() because that crashes HTML5, here's a workaround.
 			var songArray:Array<String> = [];
 			var leWeek:Array<Dynamic> = loadedWeeks[curWeek].songs;
@@ -311,21 +308,84 @@ class StoryMenuState extends MusicBeatState
 			// Nevermind that's stupid lmao
 			PlayState.storyPlaylist = songArray;
 			PlayState.isStoryMode = true;
-			selectedWeek = true;
 
 			var diffic = CoolUtil.getDifficultyFilePath(curDifficulty);
 			if(diffic == null) diffic = '';
 
 			PlayState.storyDifficulty = curDifficulty;
+			
+			var songFolder:String = PlayState.storyPlaylist[0].toLowerCase();
+			var songLowercase:String = songFolder + diffic;
+			PlayState.SONG = Song.loadFromJson(songLowercase, songFolder);
 
-			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
-			PlayState.campaignScore = 0;
-			PlayState.campaignMisses = 0;
-			new FlxTimer().start(1, function(tmr:FlxTimer)
+			if (PlayState.SONG != null)
 			{
-				LoadingState.loadAndSwitchState(new PlayState(), true);
-				FreeplayState.destroyFreeplayVocals();
-			});
+				if (stopspamming == false)
+				{
+					FlxG.sound.play(Paths.sound('confirmMenu'));
+	
+					grpWeekText.members[curWeek].startFlashing();
+	
+					for (char in grpWeekCharacters.members)
+					{
+						if (char.character != '' && char.hasConfirmAnimation)
+						{
+							char.animation.play('confirm');
+						}
+					}
+					stopspamming = true;
+				}
+
+				selectedWeek = true;
+	
+				PlayState.campaignScore = 0;
+				PlayState.campaignMisses = 0;
+				new FlxTimer().start(1, function(tmr:FlxTimer)
+				{
+					LoadingState.loadAndSwitchState(new PlayState(), true);
+					FreeplayState.destroyFreeplayVocals();
+				});
+			} else {
+				errorText.text = FreeplayState.getErrorMessage('cannot play week, ', songFolder, songLowercase);
+				errorText.screenCenter();
+
+				if(errBGTwn != null) {
+					errBGTwn.cancel();
+					errBGTwn.destroy();
+					errorBG.alpha = 0;
+				}
+				if(errTxtTwn != null) {
+					errTxtTwn.cancel();
+					errTxtTwn.destroy();
+					errorText.alpha = 0;
+				}
+
+				errBGTwn = FlxTween.tween(errorBG, {alpha: 0.6}, 0.5, {
+					ease: FlxEase.sineOut,
+					onComplete: function(twn:FlxTween) {
+						errBGTwn = FlxTween.tween(errorBG, {alpha: 0}, 0.5, {
+							startDelay: 3,
+							ease: FlxEase.sineOut,
+							onComplete: function(twn:FlxTween) {
+								errBGTwn = null;
+							}
+						});
+					}
+				});
+				
+				errTxtTwn = FlxTween.tween(errorText, {alpha: 1}, 0.5, {
+					ease: FlxEase.sineOut,
+					onComplete: function(twn:FlxTween) {
+						errTxtTwn = FlxTween.tween(errorText, {alpha: 0}, 0.5, {
+							startDelay: 3,
+							ease: FlxEase.sineOut,
+							onComplete: function(twn:FlxTween) {
+								errTxtTwn = null;
+							}
+						});
+					}
+				});
+			}
 		} else {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
