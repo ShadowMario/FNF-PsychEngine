@@ -50,11 +50,11 @@ class StoryMenuState extends MusicBeatState
 
 	var loadedWeeks:Array<WeekData> = [];
 
-	var errorText:FlxText;
-	var errorBG:FlxSprite;
+	//var errorText:FlxText;
+	//var errorBG:FlxSprite;
 
-	var errTxtTwn:FlxTween;
-	var errBGTwn:FlxTween;
+	//var errTxtTwn:FlxTween;
+	//var errBGTwn:FlxTween;
 
 	override function create()
 	{
@@ -189,11 +189,13 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 		add(txtWeekTitle);
 
-		errorBG = FreeplayState.makeErrorBG();
-		add(errorBG);
+		//errorBG = FreeplayState.makeErrorBG();
+		//add(errorBG);
 
-		errorText = FreeplayState.makeErrorText();
-		add(errorText);
+		//errorText = FreeplayState.makeErrorText();
+		//add(errorText);
+		errorDisplay = new ErrorDisplay();
+		errorDisplay.addDisplay(this);
 
 		changeWeek();
 		changeDifficulty();
@@ -346,6 +348,9 @@ class StoryMenuState extends MusicBeatState
 					FreeplayState.destroyFreeplayVocals();
 				});
 			} else {
+				errorDisplay.text = getErrorMessage(missChart, 'cannot play week, $missFile', songFolder, songLowercase);
+				errorDisplay.displayError();
+				/*
 				errorText.text = FreeplayState.getErrorMessage('cannot play week, ', songFolder, songLowercase);
 				errorText.screenCenter();
 
@@ -384,7 +389,7 @@ class StoryMenuState extends MusicBeatState
 							}
 						});
 					}
-				});
+				});*/
 			}
 		} else {
 			FlxG.sound.play(Paths.sound('cancelMenu'));

@@ -180,11 +180,11 @@ class ChartingState extends MusicBeatState
 	var waveformSprite:FlxSprite;
 	var gridLayer:FlxTypedGroup<FlxSprite>;
 
-	var errorBG:FlxSprite;
-	var errorText:FlxText;
+	//var errorBG:FlxSprite;
+	//var errorText:FlxText;
 
-	var errBGTwn:FlxTween;
-	var errTxtTwn:FlxTween;
+	//var errBGTwn:FlxTween;
+	//var errTxtTwn:FlxTween;
 
 	public static var quantization:Int = 16;
 	public static var curQuant = 3;
@@ -395,11 +395,13 @@ class ChartingState extends MusicBeatState
 		zoomTxt.scrollFactor.set();
 		add(zoomTxt);
 
-		errorBG = FreeplayState.makeErrorBG();
-		add(errorBG);
+		//errorBG = FreeplayState.makeErrorBG();
+		//add(errorBG);
 
-		errorText = FreeplayState.makeErrorText();
-		add(errorText);
+		//errorText = FreeplayState.makeErrorText();
+		//add(errorText);
+		errorDisplay = new ErrorDisplay();
+		errorDisplay.addDisplay(this);
 
 		updateGrid();
 		super.create();
@@ -2979,6 +2981,9 @@ class ChartingState extends MusicBeatState
 			PlayState.SONG = loadedSong;
 			MusicBeatState.resetState();
 		} else {
+			errorDisplay.text = getErrorMessage(missChart, 'cannot load JSON, $missFile', songFolder, songFolder);
+			errorDisplay.displayError();
+			/*
 			errorText.text = FreeplayState.getErrorMessage('cannot load JSON, ', songFolder, songFolder);
 			errorText.screenCenter();
 
@@ -3017,7 +3022,7 @@ class ChartingState extends MusicBeatState
 						}
 					});
 				}
-			});
+			});*/
 		}
 	}
 

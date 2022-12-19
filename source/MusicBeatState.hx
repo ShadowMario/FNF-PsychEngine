@@ -27,10 +27,34 @@ class MusicBeatState extends FlxUIState
 	private var curDecBeat:Float = 0;
 	private var controls(get, never):Controls;
 
+	private var errorDisplay:ErrorDisplay;
+	private var missChart:String = 'Error! Chart not found;';
+	private var missFile:String = 'MISSING FILE AT:';
+
 	public static var camBeat:FlxCamera;
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
+
+	private static function getPathWithDir(songFolder:String, songLowercase:String):String
+	{
+		return 'mods/${Paths.currentModDirectory}/data/$songFolder/$songLowercase.json';
+	}
+
+	public function getErrorMessage(error:String, reason:String, songFolder:String, songLowercase:String):String
+	{
+		var formattedSong:String = Song.getSongPath(songFolder, songLowercase);
+		var songString:String = Paths.json(formattedSong);
+		var modsSongString:String = Paths.modsJson(formattedSong);
+		var modDirString:String = '';
+
+		if (Paths.currentModDirectory.length < 1) {
+			return error + '\n$reason\n\'$songString\' or\n\'$modsSongString\'';
+		} else {
+			modDirString = getPathWithDir(songFolder, songLowercase);
+			return error + '\n$reason\n\'$songString\',\n\'$modsSongString\' or\n\'$modDirString\'';
+		}
+	}
 
 	override function create() {
 		camBeat = FlxG.camera;

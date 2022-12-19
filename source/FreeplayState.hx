@@ -52,11 +52,12 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
-	var errorBG:FlxSprite;
-	var errorText:FlxText;
+	//var errorDisplay:ErrorDisplay;
+	//var errorBG:FlxSprite;
+	//var errorText:FlxText;
 
-	var errBGTwn:FlxTween;
-	var errTxtTwn:FlxTween;
+	//var errBGTwn:FlxTween;
+	//var errTxtTwn:FlxTween;
 
 	override function create()
 	{
@@ -206,11 +207,13 @@ class FreeplayState extends MusicBeatState
 		text.scrollFactor.set();
 		add(text);
 
-		errorBG = makeErrorBG();
-		add(errorBG);
+		errorDisplay = new ErrorDisplay();
+		errorDisplay.addDisplay(this);
+		//errorBG = makeErrorBG();
+		//add(errorBG);
 
-		errorText = makeErrorText();
-		add(errorText);
+		//errorText = makeErrorText();
+		//add(errorText);
 
 		super.create();
 	}
@@ -246,7 +249,7 @@ class FreeplayState extends MusicBeatState
 				num++;
 		}
 	}*/
-
+	/*
 	public static function makeErrorBG() {
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 160, 0xFF000000);
 		bg.scrollFactor.set();
@@ -320,7 +323,7 @@ class FreeplayState extends MusicBeatState
 			}
 		});
 	}
-
+	*/
 	var instPlaying:Int = -1;
 	public static var vocals:FlxSound = null;
 	var holdTime:Float = 0;
@@ -441,11 +444,13 @@ class FreeplayState extends MusicBeatState
 					vocals.looped = true;
 					vocals.volume = 0.7;
 					instPlaying = curSelected;
-				} else {
+				} else {/*
 					errorText.text = getErrorMessage('cannot play song, ', songFolder, songLowercase);
 					errorText.screenCenter();
 
-					coolErrorTween();
+					coolErrorTween();*/
+					errorDisplay.text = getErrorMessage(missChart, 'chart required to play audio, $missFile', songFolder, songLowercase);
+					errorDisplay.displayError();
 				}
 				#end
 			}
@@ -488,48 +493,13 @@ class FreeplayState extends MusicBeatState
 				FlxG.sound.music.volume = 0;
 						
 				destroyFreeplayVocals();
-			} else {
+			} else {/*
 				errorText.text = getErrorMessage('', songFolder, songLowercase);
 				errorText.screenCenter();
 
-				coolErrorTween();
-				/*
-				if(errBGTwn != null) {
-					errBGTwn.cancel();
-					errBGTwn.destroy();
-					errorBG.alpha = 0;
-				}
-				if(errTxtTwn != null) {
-					errTxtTwn.cancel();
-					errTxtTwn.destroy();
-					errorText.alpha = 0;
-				}
-
-				errBGTwn = FlxTween.tween(errorBG, {alpha: 0.6}, 0.5, {
-					ease: FlxEase.sineOut,
-					onComplete: function(twn:FlxTween) {
-						errBGTwn = FlxTween.tween(errorBG, {alpha: 0}, 0.5, {
-							startDelay: 3,
-							ease: FlxEase.sineOut,
-							onComplete: function(twn:FlxTween) {
-								errBGTwn = null;
-							}
-						});
-					}
-				});
-				
-				errTxtTwn = FlxTween.tween(errorText, {alpha: 1}, 0.5, {
-					ease: FlxEase.sineOut,
-					onComplete: function(twn:FlxTween) {
-						errTxtTwn = FlxTween.tween(errorText, {alpha: 0}, 0.5, {
-							startDelay: 3,
-							ease: FlxEase.sineOut,
-							onComplete: function(twn:FlxTween) {
-								errTxtTwn = null;
-							}
-						});
-					}
-				});*/
+				coolErrorTween();*/
+				errorDisplay.text = getErrorMessage(missChart, 'cannot play song, $missFile', songFolder, songLowercase);
+				errorDisplay.displayError();
 			}
 		}
 		else if(controls.RESET)
