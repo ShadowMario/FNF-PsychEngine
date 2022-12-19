@@ -52,13 +52,6 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
-	//var errorDisplay:ErrorDisplay;
-	//var errorBG:FlxSprite;
-	//var errorText:FlxText;
-
-	//var errBGTwn:FlxTween;
-	//var errTxtTwn:FlxTween;
-
 	override function create()
 	{
 		//Paths.clearStoredMemory();
@@ -209,11 +202,6 @@ class FreeplayState extends MusicBeatState
 
 		errorDisplay = new ErrorDisplay();
 		errorDisplay.addDisplay(this);
-		//errorBG = makeErrorBG();
-		//add(errorBG);
-
-		//errorText = makeErrorText();
-		//add(errorText);
 
 		super.create();
 	}
@@ -249,81 +237,6 @@ class FreeplayState extends MusicBeatState
 				num++;
 		}
 	}*/
-	/*
-	public static function makeErrorBG() {
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 160, 0xFF000000);
-		bg.scrollFactor.set();
-		bg.alpha = 0;
-		bg.screenCenter();
-		return bg;
-	}
-
-	public static function makeErrorText() {
-		var text:FlxText = new FlxText(0, 0, FlxG.width, '', 32);
-		text.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		text.scrollFactor.set();
-		text.alpha = 0;
-		text.screenCenter();
-		return text;
-	}
-	
-	private static function getPathWithDir(songFolder:String, songLowercase:String):String {
-		return 'mods/${Paths.currentModDirectory}/data/$songFolder/$songLowercase.json';
-	}
-
-	public static function getErrorMessage(prefix:String, songFolder:String, songLowercase:String):String {
-		var formattedSong:String = Song.getSongPath(songFolder, songLowercase);
-		var songString:String = Paths.json(formattedSong);
-		var modsSongString:String = Paths.modsJson(formattedSong);
-		var modDirString:String = '';
-
-		if (Paths.currentModDirectory.length < 1) {
-			return 'Error! Chart not found;\n${prefix}MISSING FILE AT:\n\'$songString\' or\n\'$modsSongString\'';
-		} else {
-			modDirString = getPathWithDir(songFolder, songLowercase);
-			return 'Error! Chart not found;\n${prefix}MISSING FILE AT:\n\'$songString\',\n\'$modsSongString\' or\n\'$modDirString\'';
-		}
-	}
-
-	function coolErrorTween() {
-		if(errBGTwn != null) {
-			errBGTwn.cancel();
-			errBGTwn.destroy();
-			errorBG.alpha = 0;
-		}
-		if(errTxtTwn != null) {
-			errTxtTwn.cancel();
-			errTxtTwn.destroy();
-			errorText.alpha = 0;
-		}
-
-		errBGTwn = FlxTween.tween(errorBG, {alpha: 0.6}, 0.5, {
-			ease: FlxEase.sineOut,
-			onComplete: function(twn:FlxTween) {
-				errBGTwn = FlxTween.tween(errorBG, {alpha: 0}, 0.5, {
-					startDelay: 3,
-					ease: FlxEase.sineOut,
-					onComplete: function(twn:FlxTween) {
-						errBGTwn = null;
-					}
-				});
-			}
-		});
-		
-		errTxtTwn = FlxTween.tween(errorText, {alpha: 1}, 0.5, {
-			ease: FlxEase.sineOut,
-			onComplete: function(twn:FlxTween) {
-				errTxtTwn = FlxTween.tween(errorText, {alpha: 0}, 0.5, {
-					startDelay: 3,
-					ease: FlxEase.sineOut,
-					onComplete: function(twn:FlxTween) {
-						errTxtTwn = null;
-					}
-				});
-			}
-		});
-	}
-	*/
 	var instPlaying:Int = -1;
 	public static var vocals:FlxSound = null;
 	var holdTime:Float = 0;

@@ -180,12 +180,6 @@ class ChartingState extends MusicBeatState
 	var waveformSprite:FlxSprite;
 	var gridLayer:FlxTypedGroup<FlxSprite>;
 
-	//var errorBG:FlxSprite;
-	//var errorText:FlxText;
-
-	//var errBGTwn:FlxTween;
-	//var errTxtTwn:FlxTween;
-
 	public static var quantization:Int = 16;
 	public static var curQuant = 3;
 
@@ -394,12 +388,7 @@ class ChartingState extends MusicBeatState
 		zoomTxt = new FlxText(10, 10, 0, "Zoom: 1 / 1", 16);
 		zoomTxt.scrollFactor.set();
 		add(zoomTxt);
-
-		//errorBG = FreeplayState.makeErrorBG();
-		//add(errorBG);
-
-		//errorText = FreeplayState.makeErrorText();
-		//add(errorText);
+		
 		errorDisplay = new ErrorDisplay();
 		errorDisplay.addDisplay(this);
 
@@ -2983,46 +2972,6 @@ class ChartingState extends MusicBeatState
 		} else {
 			errorDisplay.text = getErrorMessage(missChart, 'cannot load JSON, $missFile', songFolder, songFolder);
 			errorDisplay.displayError();
-			/*
-			errorText.text = FreeplayState.getErrorMessage('cannot load JSON, ', songFolder, songFolder);
-			errorText.screenCenter();
-
-			if(errBGTwn != null) {
-				errBGTwn.cancel();
-				errBGTwn.destroy();
-				errorBG.alpha = 0;
-			}
-			if(errTxtTwn != null) {
-				errTxtTwn.cancel();
-				errTxtTwn.destroy();
-				errorText.alpha = 0;
-			}
-
-			errBGTwn = FlxTween.tween(errorBG, {alpha: 0.6}, 0.5, {
-				ease: FlxEase.sineOut,
-				onComplete: function(twn:FlxTween) {
-					errBGTwn = FlxTween.tween(errorBG, {alpha: 0}, 0.5, {
-						startDelay: 3,
-						ease: FlxEase.sineOut,
-						onComplete: function(twn:FlxTween) {
-							errBGTwn = null;
-						}
-					});
-				}
-			});
-			
-			errTxtTwn = FlxTween.tween(errorText, {alpha: 1}, 0.5, {
-				ease: FlxEase.sineOut,
-				onComplete: function(twn:FlxTween) {
-					errTxtTwn = FlxTween.tween(errorText, {alpha: 0}, 0.5, {
-						startDelay: 3,
-						ease: FlxEase.sineOut,
-						onComplete: function(twn:FlxTween) {
-							errTxtTwn = null;
-						}
-					});
-				}
-			});*/
 		}
 	}
 

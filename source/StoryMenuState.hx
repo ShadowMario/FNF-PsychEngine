@@ -50,12 +50,6 @@ class StoryMenuState extends MusicBeatState
 
 	var loadedWeeks:Array<WeekData> = [];
 
-	//var errorText:FlxText;
-	//var errorBG:FlxSprite;
-
-	//var errTxtTwn:FlxTween;
-	//var errBGTwn:FlxTween;
-
 	override function create()
 	{
 		Paths.clearStoredMemory();
@@ -189,11 +183,6 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 		add(txtWeekTitle);
 
-		//errorBG = FreeplayState.makeErrorBG();
-		//add(errorBG);
-
-		//errorText = FreeplayState.makeErrorText();
-		//add(errorText);
 		errorDisplay = new ErrorDisplay();
 		errorDisplay.addDisplay(this);
 
@@ -350,46 +339,6 @@ class StoryMenuState extends MusicBeatState
 			} else {
 				errorDisplay.text = getErrorMessage(missChart, 'cannot play week, $missFile', songFolder, songLowercase);
 				errorDisplay.displayError();
-				/*
-				errorText.text = FreeplayState.getErrorMessage('cannot play week, ', songFolder, songLowercase);
-				errorText.screenCenter();
-
-				if(errBGTwn != null) {
-					errBGTwn.cancel();
-					errBGTwn.destroy();
-					errorBG.alpha = 0;
-				}
-				if(errTxtTwn != null) {
-					errTxtTwn.cancel();
-					errTxtTwn.destroy();
-					errorText.alpha = 0;
-				}
-
-				errBGTwn = FlxTween.tween(errorBG, {alpha: 0.6}, 0.5, {
-					ease: FlxEase.sineOut,
-					onComplete: function(twn:FlxTween) {
-						errBGTwn = FlxTween.tween(errorBG, {alpha: 0}, 0.5, {
-							startDelay: 3,
-							ease: FlxEase.sineOut,
-							onComplete: function(twn:FlxTween) {
-								errBGTwn = null;
-							}
-						});
-					}
-				});
-				
-				errTxtTwn = FlxTween.tween(errorText, {alpha: 1}, 0.5, {
-					ease: FlxEase.sineOut,
-					onComplete: function(twn:FlxTween) {
-						errTxtTwn = FlxTween.tween(errorText, {alpha: 0}, 0.5, {
-							startDelay: 3,
-							ease: FlxEase.sineOut,
-							onComplete: function(twn:FlxTween) {
-								errTxtTwn = null;
-							}
-						});
-					}
-				});*/
 			}
 		} else {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
