@@ -35,7 +35,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('Note Splash Opacity:',
-			"Set the alpha for the Note Splashes, usually shown when hitting \"Sick!\" notes.",
+			"Set the alpha for the Note Splashes, shown when hitting \"Sick!\" notes.",
 			'splashOpacity',
 			'percent',
 			1);

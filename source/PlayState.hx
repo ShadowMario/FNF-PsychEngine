@@ -2304,16 +2304,19 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		// may be more readable than what i did previously; -Ghost/Gabriela
+		// may be more readable than what i did previously @BeasltyGhost
 		var tempScore:String = 'Score: ' + songScore;
 
 		if (displayRatings)
 		{
 			tempScore += scoreSeparator + 'Misses: ' + songMisses;
 			tempScore += scoreSeparator + 'Rating: ' + ratingName;
-			tempScore += ratingName != '?' ? ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%) - $ratingFC' : '';
+			tempScore += (ratingName != '?' ? ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' : '');
+			tempScore += (ratingFC != null && ratingFC != '' ? ' - $ratingFC' : '');
 		}
-		tempScore += '\n'; // to ensure text won't display as cropped i guess;
+
+		// hacky method to expand the bottom of the score text, so it doesn't cut off during beat zooms
+		tempScore += '\n';
 
 		scoreTxt.text = tempScore;
 
@@ -5243,7 +5246,7 @@ class PlayState extends MusicBeatState
 			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
 			else if (songMisses >= 10) ratingFC = "Clear";
 		}
-		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
+		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce @BeasltyGhost
 		setOnLuas('rating', ratingPercent);
 		setOnLuas('ratingName', ratingName);
 		setOnLuas('ratingFC', ratingFC);
