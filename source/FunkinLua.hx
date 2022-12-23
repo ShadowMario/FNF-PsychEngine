@@ -2021,7 +2021,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "stampSprite", function(sprite:String, brush:String, x:Float, y:Float) {
 			if(!PlayState.instance.modchartSprites.exists(sprite) || !PlayState.instance.modchartSprites.exists(brush))
 				return;
-			PlayState.instance.modchartSprites.get(sprite).stamp(PlayState.instance.modchartSprites.get(sprite), x, y);
+			PlayState.instance.modchartSprites.get(sprite).stamp(PlayState.instance.modchartSprites.get(brush), x, y);
 			return true;
 		});
 
