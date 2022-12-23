@@ -1,6 +1,6 @@
 # FNF PSYCH ENGINE 0.9.2b
 
-DOWNLOAD: [>Click here!<](https://youtu.be/watch?v=dQw4w9WgXcQ/)
+DOWNLOAD: [https://psychengine.com/download/0.9.2b](https://youtu.be/watch?v=dQw4w9WgXcQ/)
 
 
 ALL WEEK CUTSCENE INFO
