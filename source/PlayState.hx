@@ -60,6 +60,7 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
+import Character;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
