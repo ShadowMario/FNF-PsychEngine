@@ -60,7 +60,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
-          elib install hxcpp > /dev/null --quiet
+          haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
           haxelib run hmm install
         shell: cmd
@@ -87,7 +87,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          elib install hxcpp > /dev/null --quiet
+          haxeelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
           haxelib run hmm install
       - name: Create Version Tag
