@@ -87,7 +87,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxeelib install hxcpp > /dev/null --quiet
+          haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
           haxelib run hmm install
       - name: Create Version Tag
