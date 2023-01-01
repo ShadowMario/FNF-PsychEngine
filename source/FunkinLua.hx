@@ -73,7 +73,7 @@ class FunkinLua {
 	public var closed:Bool = false;
 
 	#if hscript
-	public static var hscript:HScript = null;
+	public var hscript:HScript = null;
 	#end
 	
 	public function new(script:String) {
@@ -2789,7 +2789,7 @@ class FunkinLua {
 		if(hscript == null)
 		{
 			trace('initializing haxe interp for: $scriptName');
-			hscript = new HScript(); //TO DO: Fix issue with 2 scripts not being able to use the same variable names
+			hscript = new HScript();
 		}
 	}
 	#end
@@ -3293,6 +3293,7 @@ class FunkinLua {
 
 		Lua.close(lua);
 		lua = null;
+		hscript = null;
 		#end
 	}
 
