@@ -1850,6 +1850,7 @@ class ChartingState extends MusicBeatState
 						curQuant = 0;
 
 					quantization = quantizations[curQuant];
+					updateText();
 				}
 
 				if(FlxG.keys.justPressed.LEFT){
@@ -1858,6 +1859,7 @@ class ChartingState extends MusicBeatState
 						curQuant = quantizations.length-1;
 
 					quantization = quantizations[curQuant];
+					updateText();
 				}
 				quant.animation.play('q', true, false, curQuant);
 			}
@@ -1901,6 +1903,7 @@ class ChartingState extends MusicBeatState
 						vocals.pause();
 						vocals.time = FlxG.sound.music.time;
 					}
+					updateText();
 
 					var dastrum = 0;
 
@@ -1994,13 +1997,6 @@ class ChartingState extends MusicBeatState
 		FlxG.sound.music.pitch = playbackSpeed;
 		vocals.pitch = playbackSpeed;
 
-		bpmTxt.text =
-		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
-		"\nSection: " + curSec +
-		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) +
-		"\n\nStep: " + curStep +
-		"\n\nBeat Snap: " + quantization + "th";
-
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note) {
 			note.alpha = 1;
@@ -2055,7 +2051,20 @@ class ChartingState extends MusicBeatState
 			}
 		}
 		lastConductorPos = Conductor.songPosition;
+
+		if (FlxG.sound.music.playing)
+			updateText();
+	
 		super.update(elapsed);
+	}
+
+	function updateText() {
+		bpmTxt.text =
+		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
+		"\nSection: " + curSec +
+		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) +
+		"\n\nStep: " + curStep +
+		"\n\nBeat Snap: " + quantization + "th";
 	}
 
 	function updateZoom() {
