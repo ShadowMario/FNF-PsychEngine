@@ -909,7 +909,7 @@ class PlayState extends MusicBeatState
 				var meta:Achievements.AchievementMeta = try Json.parse(File.getContent(luaFile.substring(0, luaFile.length - 4) + '.json')) catch(e) throw e;
 				if (meta != null)
 				{
-					if (meta.song != null && meta.song.length > 0 && SONG.song.toLowerCase().replace(' ', '-') != meta.song.toLowerCase().replace(' ', '-'))
+					if ((meta.global == null || meta.global.length < 1) && meta.song != null && meta.song.length > 0 && SONG.song.toLowerCase().replace(' ', '-') != meta.song.toLowerCase().replace(' ', '-'))
 						continue;
 
 					var lua = new FunkinLua(luaFile);
@@ -920,19 +920,22 @@ class PlayState extends MusicBeatState
 		}
 
 		var achievementMetas = Achievements.getModAchievementMetas().copy();
-		for (i in achievementMetas) {
-			if(i.song != null)
+		for (i in achievementMetas) { 
+			if (i.global == null || i.global.length < 1)
 			{
-				if(i.song.length > 0 && SONG.song.toLowerCase().replace(' ', '-') != i.song.toLowerCase().replace(' ', '-'))
-					continue;
-			}
-			if(i.lua_code != null) {
-				var lua = new FunkinLua(null, i.lua_code);
-				addAbilityToUnlockAchievements(lua);
-				achievementsArray.push(lua);
-			}
-			if(i.week_nomiss != null) {
-				achievementWeeks.push(i.week_nomiss + '_nomiss');
+				if(i.song != null)
+				{
+					if(i.song.length > 0 && SONG.song.toLowerCase().replace(' ', '-') != i.song.toLowerCase().replace(' ', '-'))
+						continue;
+				}
+				if(i.lua_code != null) {
+					var lua = new FunkinLua(null, i.lua_code);
+					addAbilityToUnlockAchievements(lua);
+					achievementsArray.push(lua);
+				}
+				if(i.week_nomiss != null) {
+					achievementWeeks.push(i.week_nomiss + '_nomiss');
+				}
 			}
 		}
 		#end

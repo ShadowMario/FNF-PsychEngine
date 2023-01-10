@@ -95,7 +95,7 @@ class Achievements {
 	}
 
 	public static function loadAchievements():Void {
-		#if MODS_ALLOWED
+		#if (MODS_ALLOWED && ACHIEVEMENTS_ALLOWED)
 		loadModAchievements();
 		#end
 
@@ -109,7 +109,7 @@ class Achievements {
 		}
 	}
 
-	#if MODS_ALLOWED
+	#if (MODS_ALLOWED && ACHIEVEMENTS_ALLOWED)
 	public static function loadModAchievements() {
 		achievementsStuff = copyAchievements.copy();
 		var oldPath:Array<String> = Paths.globalMods.copy();
@@ -125,10 +125,9 @@ class Achievements {
 							if (meta.global != null && meta.global.length > 0 && !FileSystem.exists(i + l.substring(0, l.length - 4) + 'lua'))
 								throw "(" + l + ") global needs a lua file to work.\nCreate a lua file named \"" + l.substring(0, l.length - 5) + "\" in \"" + i + "\".";
 
-							if(meta.clearAchievements)
-								achievementsStuff=[];
-
 							if(meta.global==null||meta.global.length<1){
+								if(meta.clearAchievements)
+									achievementsStuff=[];
 								var achievement:Array<Dynamic> = [];
 								achievement.push(meta.name);
 								achievement.push(meta.desc);
