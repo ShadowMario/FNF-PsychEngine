@@ -73,10 +73,10 @@ class EditorPlayState extends MusicBeatState
 		add(bg);
 
 		keysArray = [
-			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),
-			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_down')),
-			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_up')),
-			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right'))
+			ClientPrefs.keyBinds.get('note_left').copy(),
+			ClientPrefs.keyBinds.get('note_down').copy(),
+			ClientPrefs.keyBinds.get('note_up').copy(),
+			ClientPrefs.keyBinds.get('note_right').copy()
 		];
 		
 		strumLine = new FlxSprite(ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
