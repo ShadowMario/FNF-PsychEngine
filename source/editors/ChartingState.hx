@@ -91,6 +91,15 @@ class ChartingState extends MusicBeatState
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
+		[
+			'Play Video Sprite', 
+
+			"Value 1: Video Name (must be on the \"Videos\" Folder
+			Value 2: X Position, Y Position, Opacity, Camera
+			X and Y and Opacity are Float Values (e.g 1.5)
+			Camera is a String (e.g: 'world')
+			values are separated by commas."
+		],
 		['Set Property', "Value 1: Variable name\nValue 2: New value"]
 	];
 

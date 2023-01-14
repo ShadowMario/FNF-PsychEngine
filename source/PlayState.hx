@@ -72,8 +72,7 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-import VideoHandler;
-import VideoSprite;
+import handlers.VideoHandlerPsych;
 #end
 
 using StringTools;
@@ -1554,29 +1553,72 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
+	public function loadVideo(name:String) {
+		#if VIDEOS_ALLOWED
+		inCutscene = true;
+
+		var video:VideoHandlerPsych = new VideoHandlerPsych();
+		if (video.exists(name)) {
+			video.loadCutscene(name);
+		}
+		#else
+		FlxG.log.warn('Platform not supported!');
+		startAndEnd();
+		#end
+	}
+
 	public function startVideo(name:String)
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
 
-		var filepath:String = Paths.video(name);
-		#if sys
-		if(!FileSystem.exists(filepath))
-		#else
-		if(!OpenFlAssets.exists(filepath))
-		#end
+		var video:VideoHandlerPsych = new VideoHandlerPsych(function()
 		{
-			FlxG.log.warn('Couldnt find video file: ' + name);
 			startAndEnd();
 			return;
+		});
+
+		if (video.exists(name)) {
+			video.startVideo(name);
 		}
 
-		var video:VideoHandler = new VideoHandler();
-		video.playVideo(filepath);
-		video.finishCallback = function()
+		#else
+		FlxG.log.warn('Platform not supported!');
+		startAndEnd();
+		return;
+		#end
+	}
+
+	/**
+		Renders a Video Sprite on Screen
+		@param name [the Video Name in the "assets/videos" folder]
+		@param x [the Horizontal Position of the Rendered Video]
+		@param y [the Vertical Position of the Rendered Video]
+		@param op [the Opacity of the Rendered Video]
+		@param strCamera [the camera that should be used for rendering the video (e.g: hud)]
+		@param loop [if the Video should play from the start once it's done]
+		@param pauseMusic [if the Current Song should be paused while playing the video]
+	**/
+	public function startVideoSprite(name:String, x:Float = 0, y:Float = 0, op:Float = 1, strCamera:String = 'world',
+		?loop:Bool = false, ?pauseMusic:Bool = false)
+	{
+		#if VIDEOS_ALLOWED
+		var myCamera:FlxCamera = camGame;
+		// stinks but whatever
+		switch (strCamera) {
+			case 'alt' | 'other' | 'above': myCamera = camOther;
+			case 'hud' | 'ui' | 'interface': myCamera = camHUD;
+			default: myCamera = camGame;
+		}
+
+		var video:VideoHandlerPsych = new VideoHandlerPsych(function()
 		{
 			startAndEnd();
 			return;
+		});
+
+		if (video.exists(name)) {
+			video.startVideoSprite(x, y, op, name, myCamera, loop, pauseMusic);
 		}
 		#else
 		FlxG.log.warn('Platform not supported!');
@@ -1585,12 +1627,10 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	function startAndEnd()
+	public function startAndEnd()
 	{
-		if(endingSong)
-			endSong();
-		else
-			startCountdown();
+		var exec:Void->Void = endingSong ? endSong : startCountdown;
+		exec();
 	}
 
 	var dialogueCount:Int = 0;
@@ -1721,7 +1761,7 @@ class PlayState extends MusicBeatState
 
 	function tankIntro()
 	{
-		var cutsceneHandler:CutsceneHandler = new CutsceneHandler();
+		var cutsceneHandler:handlers.CutsceneHandler = new handlers.CutsceneHandler();
 
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		dadGroup.alpha = 0.00001;
@@ -2602,6 +2642,9 @@ class PlayState extends MusicBeatState
 				phillyGlowParticles = new FlxTypedGroup<PhillyGlow.PhillyGlowParticle>();
 				phillyGlowParticles.visible = false;
 				insert(members.indexOf(phillyGlowGradient) + 1, phillyGlowParticles);
+
+			case 'Play Video Sprite':
+				loadVideo(Std.string(event.value1));
 		}
 
 		if(!eventPushedMap.exists(event.event)) {
@@ -3742,6 +3785,21 @@ class PlayState extends MusicBeatState
 						}
 					});
 				}
+
+			case 'Play Video Sprite':
+				var contents:Array<Dynamic> = [0, 0, 1, 'world'];
+				if (Std.string(value2) != null && Std.string(value2).length > 1) {
+					contents = Std.string(value2).split(',');
+				}
+
+				var x:Float = Std.parseFloat(contents[0]);
+				var y:Float = Std.parseFloat(contents[1]);
+				var op:Float = Std.parseFloat(contents[2]);
+				var cam:String = Std.string(contents[3]);
+
+				trace(contents);
+
+				startVideoSprite(Std.string(value1), x, y, op, cam);
 
 			case 'Set Property':
 				var killMe:Array<String> = value1.split('.');
