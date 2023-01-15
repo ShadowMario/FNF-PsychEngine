@@ -72,7 +72,7 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-import handlers.VideoHandlerPsych;
+import handlers.PsychVideo;
 #end
 
 using StringTools;
@@ -1555,15 +1555,13 @@ class PlayState extends MusicBeatState
 
 	public function loadVideo(name:String) {
 		#if VIDEOS_ALLOWED
-		inCutscene = true;
-
-		var video:VideoHandlerPsych = new VideoHandlerPsych();
-		if (video.exists(name)) {
-			video.loadCutscene(name);
-		}
+		var videoHandler:PsychVideo = new PsychVideo();
+		videoHandler.loadCutscene(name);
+		return;
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
+		return;
 		#end
 	}
 
@@ -1571,17 +1569,12 @@ class PlayState extends MusicBeatState
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
-
-		var video:VideoHandlerPsych = new VideoHandlerPsych(function()
-		{
+		var videoHandler:PsychVideo = new PsychVideo(function() {
 			startAndEnd();
 			return;
 		});
-
-		if (video.exists(name)) {
-			video.startVideo(name);
-		}
-
+		videoHandler.startVideo(name);
+		return;
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
@@ -1611,15 +1604,17 @@ class PlayState extends MusicBeatState
 			default: myCamera = camGame;
 		}
 
-		var video:VideoHandlerPsych = new VideoHandlerPsych(function()
-		{
+		var videoHandler:PsychVideo = new PsychVideo(function() {
 			startAndEnd();
 			return;
 		});
+		var video:FlxSprite = null;
 
-		if (video.exists(name)) {
-			video.startVideoSprite(x, y, op, name, myCamera, loop, pauseMusic);
-		}
+		video = videoHandler.startVideoSprite(x, y, op, name, myCamera, loop, pauseMusic);
+		if (video == null) return;
+		add(video);
+
+		return;
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
@@ -2735,6 +2730,7 @@ class PlayState extends MusicBeatState
 				songSpeedTween.active = false;
 
 			if(carTimer != null) carTimer.active = false;
+			PsychVideo.isActive(false);
 
 			var chars:Array<Character> = [boyfriend, gf, dad];
 			for (char in chars) {
@@ -2800,6 +2796,8 @@ class PlayState extends MusicBeatState
 			#end
 		}
 
+		PsychVideo.isActive(false);
+
 		super.closeSubState();
 	}
 
@@ -2819,6 +2817,8 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
+		PsychVideo.isActive(true);
+
 		super.onFocus();
 	}
 
@@ -2830,6 +2830,8 @@ class PlayState extends MusicBeatState
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		}
 		#end
+
+		PsychVideo.isActive(false);
 
 		super.onFocusLost();
 	}
@@ -3319,20 +3321,12 @@ class PlayState extends MusicBeatState
 		persistentDraw = true;
 		paused = true;
 
-		// 1 / 1000 chance for Gitaroo Man easter egg
-		/*if (FlxG.random.bool(0.1))
-		{
-			// gitaroo man easter egg
-			cancelMusicFadeTween();
-			MusicBeatState.switchState(new GitarooPause());
-		}
-		else {*/
 		if(FlxG.sound.music != null) {
 			FlxG.sound.music.pause();
 			vocals.pause();
 		}
+
 		openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-		//}
 
 		#if desktop
 		DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
@@ -3796,8 +3790,6 @@ class PlayState extends MusicBeatState
 				var y:Float = Std.parseFloat(contents[1]);
 				var op:Float = Std.parseFloat(contents[2]);
 				var cam:String = Std.string(contents[3]);
-
-				trace(contents);
 
 				startVideoSprite(Std.string(value1), x, y, op, cam);
 
@@ -4984,8 +4976,11 @@ class PlayState extends MusicBeatState
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
+
 		FlxAnimationController.globalSpeed = 1;
 		FlxG.sound.music.pitch = 1;
+		PsychVideo.clearAll();
+
 		super.destroy();
 	}
 
