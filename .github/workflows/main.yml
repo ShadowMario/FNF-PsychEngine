@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   buildLinux:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,8 +31,12 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
-          sudo apt-get install libvlc-dev
-          sudo apt-get install libvlccore-dev
+          sudo apt-get update
+          sudo apt-get install gcc-multilib g++-multilib haxe -y
+          sudo apt-get install libvlc-dev -y
+          sudo apt-get install libvlccore-dev -y
+          sudo apt-get install vlc-bin -y
+          sudo apt-get install libidn12 -y
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
