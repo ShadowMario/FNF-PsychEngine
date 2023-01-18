@@ -38,19 +38,24 @@ class PauseSubState extends MusicBeatSubstate
 		super();
 		if(CoolUtil.difficulties.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
+		if (PlayState.storyPlaylist.length > 1 && PlayState.isStoryMode)
+		{
+			menuItemsOG.insert(2, "Skip Song");
+		}
+
 		if(PlayState.chartingMode)
 		{
-			menuItemsOG.insert(2, 'Leave Charting Mode');
+			menuItemsOG.insert(3, 'Leave Charting Mode');
 			
 			var num:Int = 0;
 			if(!PlayState.instance.startingSong)
 			{
 				num = 1;
-				menuItemsOG.insert(3, 'Skip Time');
+				menuItemsOG.insert(4, 'Skip Time');
 			}
-			menuItemsOG.insert(3 + num, 'End Song');
-			menuItemsOG.insert(4 + num, 'Toggle Practice Mode');
-			menuItemsOG.insert(5 + num, 'Toggle Botplay');
+			menuItemsOG.insert(5 + num, 'End Song');
+			menuItemsOG.insert(6 + num, 'Toggle Practice Mode');
+			menuItemsOG.insert(7 + num, 'Toggle Botplay');
 		}
 		menuItems = menuItemsOG;
 
@@ -224,6 +229,8 @@ class PauseSubState extends MusicBeatSubstate
 					practiceText.visible = PlayState.instance.practiceMode;
 				case "Restart Song":
 					restartSong();
+				case "Skip Song":
+					PlayState.instance.endSong();
 				case "Leave Charting Mode":
 					restartSong();
 					PlayState.chartingMode = false;
