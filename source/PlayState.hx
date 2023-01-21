@@ -2848,7 +2848,7 @@ class PlayState extends MusicBeatState
 					while (i > 0)
 					{
 						var particle = phillyGlowParticles.members[i];
-						if(particle.alpha < 0)
+						if(particle.alpha == 0)
 						{
 							particle.kill();
 							phillyGlowParticles.remove(particle, true);
