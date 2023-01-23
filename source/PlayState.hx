@@ -2775,6 +2775,7 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
+		callOnLuas('onFocus', []);
 		super.onFocus();
 	}
 
@@ -2787,6 +2788,7 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
+		callOnLuas('onFocusLost', []);
 		super.onFocusLost();
 	}
 
