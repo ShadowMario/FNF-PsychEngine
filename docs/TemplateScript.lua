@@ -161,3 +161,13 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	-- loops = how many loops it will have done when it ends completely
 	-- loopsLeft = how many are remaining
 end
+
+
+-- Window/Game hooks
+function onFocus()
+    -- called when the game receives focus
+end
+
+function onFocusLost()
+    -- called when the game loses focus
+end
