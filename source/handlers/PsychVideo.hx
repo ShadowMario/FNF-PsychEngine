@@ -8,8 +8,8 @@ import openfl.Assets as OpenFlAssets;
 import sys.FileSystem;
 #end
 #if VIDEOS_ALLOWED
-import VideoHandler;
-import VideoSprite;
+import hxcodec.VideoHandler;
+import hxcodec.VideoSprite;
 
 /**
 	Handles the execution of Video Cutscenes and Video Sprites with hxCodec
@@ -83,7 +83,7 @@ class PsychVideo {
 		return newSprite;
 	}
 
-	/* // hacky methods to pause videos and such // */
+	// * hacky methods to pause videos and such * //
 
 	public static function isActive(?resume:Bool):Void {
 		for (v in 0...videos.length) { // all videos
