@@ -61,6 +61,13 @@ import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
 
+#if LUA_ALLOWED
+import llua.Lua;
+import llua.LuaL;
+import llua.State;
+import llua.Convert;
+#end
+
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
@@ -301,6 +308,8 @@ class PlayState extends MusicBeatState
 	var keysPressed:Array<Bool> = [];
 	var boyfriendIdleTime:Float = 0.0;
 	var boyfriendIdled:Bool = false;
+	var achievementsArray:Array<FunkinLua> = [];
+	var achievementWeeks:Array<String> = [];
 
 	// Lua shit
 	public static var instance:PlayState;
@@ -864,6 +873,71 @@ class PlayState extends MusicBeatState
 		luaDebugGroup = new FlxTypedGroup<DebugLuaText>();
 		luaDebugGroup.cameras = [camOther];
 		add(luaDebugGroup);
+		#end
+
+		function addAbilityToUnlockAchievements(funkinLua:FunkinLua)
+		{
+			var lua = funkinLua.lua;
+			if (lua != null){
+				Lua_helper.add_callback(lua, "giveAchievement", function(name:String){
+					if (luaArray.contains(funkinLua))
+						throw 'Illegal attempt to unlock ' + name;
+					@:privateAccess
+					if (Achievements.isAchievementUnlocked(name))
+						return "Achievement " + name + " is already unlocked!";
+					if (!Achievements.exists(name))
+						return "Achievement " + name + " does not exist."; 
+					if(instance != null) { 
+						Achievements.unlockAchievement(name);
+						instance.startAchievement(name);
+						ClientPrefs.saveSettings();
+						return "Unlocked achievement " + name + "!";
+					}
+					else return "Instance is null.";
+				});
+		
+			}
+		}
+
+		//CUSTOM ACHIVEMENTS
+		#if (MODS_ALLOWED && LUA_ALLOWED && ACHIEVEMENTS_ALLOWED)
+		var luaFiles:Array<String> = Achievements.getModAchievements().copy();
+		if(luaFiles.length > 0)
+		{
+			for(luaFile in luaFiles)
+			{
+				var meta:Achievements.AchievementMeta = try Json.parse(File.getContent(luaFile.substring(0, luaFile.length - 4) + '.json')) catch(e) throw e;
+				if (meta != null)
+				{
+					if ((meta.global == null || meta.global.length < 1) && meta.song != null && meta.song.length > 0 && SONG.song.toLowerCase().replace(' ', '-') != meta.song.toLowerCase().replace(' ', '-'))
+						continue;
+
+					var lua = new FunkinLua(luaFile);
+					addAbilityToUnlockAchievements(lua);
+					achievementsArray.push(lua);
+				}
+			}
+		}
+
+		var achievementMetas = Achievements.getModAchievementMetas().copy();
+		for (i in achievementMetas) { 
+			if (i.global == null || i.global.length < 1)
+			{
+				if(i.song != null)
+				{
+					if(i.song.length > 0 && SONG.song.toLowerCase().replace(' ', '-') != i.song.toLowerCase().replace(' ', '-'))
+						continue;
+				}
+				if(i.lua_code != null) {
+					var lua = new FunkinLua(null, i.lua_code);
+					addAbilityToUnlockAchievements(lua);
+					achievementsArray.push(lua);
+				}
+				if(i.week_nomiss != null) {
+					achievementWeeks.push(i.week_nomiss + '_nomiss');
+				}
+			}
+		}
 		#end
 
 		// "GLOBAL" SCRIPTS
@@ -3879,9 +3953,10 @@ class PlayState extends MusicBeatState
 			var achieve:String = checkForAchievement(['week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss',
 				'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad',
 				'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
+			var customAchieve:String = checkForAchievement(achievementWeeks);
 
-			if(achieve != null) {
-				startAchievement(achieve);
+			if(achieve != null || customAchieve != null) {
+				startAchievement(customAchieve != null ? customAchieve : achieve);
 				return;
 			}
 		}
@@ -5141,6 +5216,8 @@ class PlayState extends MusicBeatState
 				returnVal = myValue;
 			}
 		}
+		for (i in achievementsArray)
+			i.call(event, args);
 		#end
 		return returnVal;
 	}
@@ -5151,6 +5228,8 @@ class PlayState extends MusicBeatState
 			luaArray[i].set(variable, arg);
 		}
 		#end
+		for(i in achievementsArray)
+			i.set(variable, arg);
 	}
 
 	function StrumPlayAnim(isDad:Bool, id:Int, time:Float) {
@@ -5226,7 +5305,7 @@ class PlayState extends MusicBeatState
 		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice', false) || ClientPrefs.getGameplaySetting('botplay', false));
 		for (i in 0...achievesToCheck.length) {
 			var achievementName:String = achievesToCheck[i];
-			if(!Achievements.isAchievementUnlocked(achievementName) && !cpuControlled) {
+			if(!Achievements.isAchievementUnlocked(achievementName) && !cpuControlled && Achievements.exists(achievementName)) {
 				var unlock:Bool = false;
 				
 				if (achievementName.contains(WeekData.getWeekFileName()) && achievementName.endsWith('nomiss')) // any FC achievements, name should be "weekFileName_nomiss", e.g: "weekd_nomiss";
