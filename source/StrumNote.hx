@@ -2,13 +2,14 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxColor;
 import flixel.graphics.frames.FlxAtlasFrames;
 
 using StringTools;
 
 class StrumNote extends FlxSprite
 {
-	private var colorSwap:ColorSwap;
+	private var colorMask:ColorMask;
 	public var resetAnim:Float = 0;
 	private var noteData:Int = 0;
 	public var direction:Float = 90;//plan on doing scroll directions soon -bb
@@ -27,8 +28,7 @@ class StrumNote extends FlxSprite
 	}
 
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
-		colorSwap = new ColorSwap();
-		shader = colorSwap.shader;
+		colorMask = new ColorMask();
 		noteData = leData;
 		this.player = player;
 		this.noteData = leData;
@@ -36,6 +36,7 @@ class StrumNote extends FlxSprite
 
 		var skin:String = 'NOTE_assets';
 		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
+		else shader = colorMask.shader;
 		texture = skin; //Load texture and anims
 
 		scrollFactor.set();
@@ -149,15 +150,20 @@ class StrumNote extends FlxSprite
 		centerOffsets();
 		centerOrigin();
 		if(animation.curAnim == null || animation.curAnim.name == 'static') {
-			colorSwap.hue = 0;
-			colorSwap.saturation = 0;
-			colorSwap.brightness = 0;
+			colorMask.rCol = 0xFF87A3AD;
+			colorMask.gCol = FlxColor.BLACK;
 		} else {
-			if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
+			if (noteData > -1 && noteData < ClientPrefs.arrowRGB.length)
 			{
-				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
+				colorMask.rCol = FlxColor.fromRGB(ClientPrefs.arrowRGB[noteData][0], ClientPrefs.arrowRGB[noteData][1], ClientPrefs.arrowRGB[noteData][2]);
+				colorMask.gCol = colorMask.rCol.getDarkened(0.6);
+
+				if (animation.curAnim.name == 'pressed')
+				{
+					var color:FlxColor = colorMask.rCol;
+					colorMask.rCol = FlxColor.fromHSL(color.hue, color.saturation * 0.5, color.lightness * 1.2);
+					colorMask.gCol = 0xFF201E31;
+				}
 			}
 
 			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
