@@ -4710,20 +4710,38 @@ class PlayState extends MusicBeatState
 
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
 		var skin:String = 'noteSplashes';
+		if(ClientPrefs.arrowMode == 'HSV') skin += '_old';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 
+		var hue:Float = 0;
+		var sat:Float = 0;
+		var brt:Float = 0;
 		var col:FlxColor = FlxColor.WHITE;
-		if (data > -1 && data < ClientPrefs.arrowRGB.length)
+		if (ClientPrefs.arrowMode == 'RGB' && data > -1 && data < ClientPrefs.arrowRGB.length)
 		{
 			col = ClientPrefs.arrowRGB[data][0];
 			if(note != null) {
-				skin = note.noteSplashTexture;
 				col = note.noteSplashColor;
 			}
 		}
+		else if (ClientPrefs.arrowMode == 'HSV' && data > -1 && data < ClientPrefs.arrowHSV.length)
+		{
+			hue = ClientPrefs.arrowHSV[data][0] / 360;
+			sat = ClientPrefs.arrowHSV[data][1] / 100;
+			brt = ClientPrefs.arrowHSV[data][2] / 100;
+			if(note != null) {
+				hue = note.noteSplashHue;
+				sat = note.noteSplashSat;
+				brt = note.noteSplashBrt;
+			}
+		}
+
+		if(note != null) {
+			skin = note.noteSplashTexture;
+		}
 
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-		splash.setupNoteSplash(x, y, data, skin, col);
+		splash.setupNoteSplash(x, y, data, skin, col, hue, sat, brt);
 		grpNoteSplashes.add(splash);
 	}
 
