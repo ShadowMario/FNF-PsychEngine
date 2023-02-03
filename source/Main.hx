@@ -155,7 +155,9 @@ class Main extends Sprite
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
 		Application.current.window.alert(errMsg, "Error!");
+                #if desktop
 		DiscordClient.shutdown();
+                #end
 		Sys.exit(1);
 	}
 	#end
