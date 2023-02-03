@@ -24,6 +24,7 @@ using StringTools;
 class CreditsState extends MusicBeatState
 {
 	var curSelected:Int = -1;
+	var clicks:Int = 0;
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var iconArray:Array<AttachedSprite> = [];
@@ -80,7 +81,10 @@ class CreditsState extends MusicBeatState
 		}
 		#end
 
-		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color 
+			['Android Port'],
+			['idklool', 'nothing', 'Hi I ported this again', 'https://youtube.com/@BoyfriendFNF', 'FFFFFF'],
+			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],
@@ -158,6 +162,11 @@ class CreditsState extends MusicBeatState
 		bg.color = getCurrentBGColor();
 		intendedColor = bg.color;
 		changeSelection();
+		
+		#if mobile
+		addVirtualPad(UP_DOWN, A_B);
+		#end
+		
 		super.create();
 	}
 
@@ -205,7 +214,22 @@ class CreditsState extends MusicBeatState
 			}
 
 			if(controls.ACCEPT && (creditsStuff[curSelected][3] == null || creditsStuff[curSelected][3].length > 4)) {
+			  if (curSelected == 1) {
+			    clicks += 1
+			    if (clicks == 6) {
+			      CoolUtil.browserLoad('https://youtube.com/@idklool12'); // hi
+			    } else {
+			      CoolUtil.browserLoad(creditsStuff[curSelected][3]);
+			    }
+			  }
+			  
+			  if (clicks >= 6) {
+			    clicks == 0;
+			  }
+			  
+			  if (curSelected != 1) {
 				CoolUtil.browserLoad(creditsStuff[curSelected][3]);
+			  }
 			}
 			if (controls.BACK)
 			{
