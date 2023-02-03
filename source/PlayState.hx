@@ -1315,8 +1315,7 @@ class PlayState extends MusicBeatState
 	
 		#if desktop
 		// Updating Discord Rich Presence.
-		var setIcon:HealthIcon = iconP2;
-		if (opponentPlay) {setIcon = iconP1;} else {setIcon = iconP2;}
+		var setIcon:HealthIcon = (opponentPlay ? iconP1 : iconP2);
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", setIcon.getCharacter());
 		#end
 
@@ -2354,8 +2353,7 @@ class PlayState extends MusicBeatState
 
 		#if desktop
 		// Updating Discord Rich Presence (with Time Left)
-		var setIcon:HealthIcon = iconP2;
-		if (opponentPlay) {setIcon = iconP1;} else {setIcon = iconP2;}
+		var setIcon:HealthIcon = (opponentPlay ? iconP1 : iconP2);
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", setIcon.getCharacter(), true, songLength);
 		#end
 		setOnLuas('songLength', songLength);
@@ -2751,8 +2749,7 @@ class PlayState extends MusicBeatState
 			callOnLuas('onResume', []);
 
 			#if desktop
-			var setIcon:HealthIcon = iconP2;
-			if (opponentPlay) {setIcon = iconP1;} else {setIcon = iconP2;}
+			var setIcon:HealthIcon = (opponentPlay ? iconP1 : iconP2);
 			if (startTimer != null && startTimer.finished)
 				{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", setIcon.getCharacter(), true, songLength - Conductor.songPosition - ClientPrefs.noteOffset);
@@ -2770,15 +2767,8 @@ class PlayState extends MusicBeatState
 	override public function onFocus():Void
 	{
 		#if desktop
-		var notCurrentlyDead = health > 0;
-		var setIcon:HealthIcon = iconP2;
-		if (opponentPlay) {
-			setIcon = iconP1;
-			notCurrentlyDead = health < 2;
-		} else {
-			setIcon = iconP2;
-			notCurrentlyDead = health > 0;
-		}
+		var notCurrentlyDead = (opponentPlay ? health < 2 : health > 0);
+		var setIcon:HealthIcon = (opponentPlay ? iconP1 : iconP2);
 		if (notCurrentlyDead && !paused)
 		{
 			if (Conductor.songPosition > 0.0)
@@ -2798,8 +2788,7 @@ class PlayState extends MusicBeatState
 	override public function onFocusLost():Void
 	{
 		#if desktop
-		var notCurrentlyDead = health > 0;
-		if (opponentPlay) {notCurrentlyDead = health < 2;} else {notCurrentlyDead = health > 0;}
+		var notCurrentlyDead = (opponentPlay ? health < 2 : health > 0);
 		if (notCurrentlyDead && !paused)
 		{
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
@@ -2971,8 +2960,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(!inCutscene) {
-			var char:Character = boyfriend;
-			if (opponentPlay) {char = dad;} else {char = boyfriend;}
+			var char:Character = (opponentPlay ? dad : boyfriend);
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed * playbackRate, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 			if(!startingSong && !endingSong && char.animation.curAnim != null && char.animation.curAnim.name.startsWith('idle')) {
@@ -3129,8 +3117,7 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
-			var char:Character = boyfriend;
-			if (opponentPlay) {char = dad;} else {char = boyfriend;}
+			var char:Character = (opponentPlay ? dad : boyfriend);
 			if(!cpuControlled) {
 				keyShit();
 			} else if(char.animation.curAnim != null && char.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * char.singDuration && char.animation.curAnim.name.startsWith('sing') && !char.animation.curAnim.name.endsWith('miss')) {
@@ -3346,8 +3333,7 @@ class PlayState extends MusicBeatState
 		{
 			var ret:Dynamic = callOnLuas('onGameOver', [], false);
 			if(ret != FunkinLua.Function_Stop) {
-				var char:Character = boyfriend;
-				if (opponentPlay) {char = dad;} else {char = boyfriend;}
+				var char:Character = (opponentPlay ? dad : boyfriend);
 				char.stunned = true;
 				deathCounter++;
 
@@ -4292,8 +4278,7 @@ class PlayState extends MusicBeatState
 
 		if (!cpuControlled && startedCountdown && !paused && key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || ClientPrefs.controllerMode))
 		{
-			var char:Character = boyfriend;
-			if (opponentPlay) {char = dad;} else {char = boyfriend;}
+			var char:Character = (opponentPlay ? dad : boyfriend);
 			if(!char.stunned && generatedMusic && !endingSong)
 			{
 				//more accurate hit time for the ratings?
@@ -4437,8 +4422,7 @@ class PlayState extends MusicBeatState
 		}
 
 		// FlxG.watch.addQuick('asdfa', upP);
-		var char:Character = boyfriend;
-		if (opponentPlay) {char = dad;} else {char = boyfriend;}
+		var char:Character = (opponentPlay ? dad : boyfriend);
 		if (startedCountdown && !char.stunned && generatedMusic)
 		{
 			// rewritten inputs???
@@ -4518,8 +4502,7 @@ class PlayState extends MusicBeatState
 		totalPlayed++;
 		RecalculateRating(true);
 
-		var char:Character = boyfriend;
-		if (opponentPlay) {char = dad;} else {char = boyfriend;}
+		var char:Character = (opponentPlay ? dad : boyfriend);
 		if(daNote.gfNote) {
 			char = gf;
 		}
@@ -4537,8 +4520,7 @@ class PlayState extends MusicBeatState
 	{
 		if(ClientPrefs.ghostTapping) return; //fuck it
 
-		var char:Character = boyfriend;
-		if (opponentPlay) {char = dad;} else {char = boyfriend;}
+		var char:Character = (opponentPlay ? dad : boyfriend);
 		if (!char.stunned)
 		{
 			health -= 0.05 * healthLoss;
