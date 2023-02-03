@@ -215,7 +215,7 @@ class CreditsState extends MusicBeatState
 
 			if(controls.ACCEPT && (creditsStuff[curSelected][3] == null || creditsStuff[curSelected][3].length > 4)) {
 			  if (curSelected == 1) {
-			    clicks += 1
+			    clicks += 1;
 			    if (clicks == 6) {
 			      CoolUtil.browserLoad('https://youtube.com/@idklool12'); // hi
 			    } else {
