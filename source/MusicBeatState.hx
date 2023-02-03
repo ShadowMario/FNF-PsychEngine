@@ -67,7 +67,7 @@ class MusicBeatState extends FlxUIState
 			remove(virtualPad);
 	}
 
-	public function addMobileControls(DefaultDrawTarget:Bool = true)
+	public function addMobileControls(DefaultDrawTarget:Bool = false)
 	{
 		if (mobileControls != null)
 			removeMobileControls();
@@ -106,7 +106,7 @@ class MusicBeatState extends FlxUIState
 			remove(mobileControls);
 	}
 
-	public function addVirtualPadCamera(DefaultDrawTarget:Bool = true)
+	public function addVirtualPadCamera(DefaultDrawTarget:Bool = false)
 	{
 		if (virtualPad != null)
 		{
