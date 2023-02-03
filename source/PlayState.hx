@@ -1189,7 +1189,7 @@ class PlayState extends MusicBeatState
 		// SONG SPECIFIC SCRIPTS
 		#if LUA_ALLOWED
 		var doPush:Bool = false;
-		if (OpenFlAssets.exists('data/' + Paths.formatToSongPath(SONG.song) + '/script.lua') {
+		if (OpenFlAssets.exists('data/' + Paths.formatToSongPath(SONG.song) + '/script.lua')) {
 		  doPush = true;
 		}
 		
@@ -1199,7 +1199,7 @@ class PlayState extends MusicBeatState
 		
 		#if LUA_ALLOWED
 		var doPush:Bool = false;
-		if (OpenFlAssets.exists('data/' + Paths.formatToSongPath(SONG.song) + '/script1.lua') {
+		if (OpenFlAssets.exists('data/' + Paths.formatToSongPath(SONG.song) + '/script1.lua')) {
 		  doPush = true;
 		}
 		
