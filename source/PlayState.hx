@@ -3800,6 +3800,7 @@ class PlayState extends MusicBeatState
 						for (i in 0...opponentStrums.members.length) {FlxTween.tween(opponentStrums.members[i], {x: prevStrumX[1][i].x}, (0.75), {ease: FlxEase.circOut});}
 						for (i in 0...playerStrums.members.length) {FlxTween.tween(playerStrums.members[i], {x: prevStrumX[0][i].x}, (0.75), {ease: FlxEase.circOut});}
 					} // else if (value2 == 'false') {trace('FUCK YOU NOTHING HAPPENED');}
+					setOnLuas('opponentPlay', opponentPlay);
 				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
