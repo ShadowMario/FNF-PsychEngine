@@ -3786,6 +3786,21 @@ class PlayState extends MusicBeatState
 				} else {
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
+			case 'Trigger Opponent Play':
+				if (value1 != null) {
+					if (value1 == 'on') {opponentPlay = true;}
+					else if (value1 == 'off') {opponentPlay = false;}
+					else if (value1 == 'swap') {opponentPlay = !opponentPlay;}
+
+					// FlxTween.tween(dadbattleSmokes, {alpha: 0}, 1, {onComplete: function(twn:FlxTween) {dadbattleSmokes.visible = false;}});
+					if (value2.length < 1) value2 = 'true';
+					if (value2 == 'true') {
+						// Plz work tweens ;(
+						var prevStrumX/*:FlxTypedGroup<StrumNote>*/ = [opponentStrums.members, playerStrums.members];
+						for (i in 0...opponentStrums.members.length) {FlxTween.tween(opponentStrums.members[i], {x: prevStrumX[1][i].x}, (0.75), {ease: FlxEase.circOut});}
+						for (i in 0...playerStrums.members.length) {FlxTween.tween(playerStrums.members[i], {x: prevStrumX[0][i].x}, (0.75), {ease: FlxEase.circOut});}
+					} // else if (value2 == 'false') {trace('FUCK YOU NOTHING HAPPENED');}
+				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
