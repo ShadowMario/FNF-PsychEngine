@@ -917,7 +917,7 @@ class FunkinLua {
 			#end
 		});
 
-		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1, ?weekJson:String = null) {
+		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1, ?weekJson:String = 'tutorial') {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
 			if (difficultyNum <= -1)
