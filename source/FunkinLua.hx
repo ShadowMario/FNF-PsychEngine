@@ -3389,4 +3389,5 @@ class CustomSubstate extends MusicBeatSubstate
 	{
 		instance = this;
 
-}s
+}
+}
