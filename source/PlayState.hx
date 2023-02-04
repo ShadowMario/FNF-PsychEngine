@@ -207,7 +207,7 @@ class PlayState extends MusicBeatState
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
 	public var practiceMode:Bool = false;
-	public var opponentPlay:Bool = false;
+	public var opponentPlay:Bool = false; // YEAH BABY
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -389,7 +389,7 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
-		opponentPlay = ClientPrefs.getGameplaySetting('opponentplay', false);
+		opponentPlay = ClientPrefs.getGameplaySetting('opponentplay', false); // OoO
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -2637,10 +2637,16 @@ class PlayState extends MusicBeatState
 		{
 			// FlxG.log.add(i);
 			var targetAlpha:Float = 1;
-			if (player < 1)
-			{
-				if(!ClientPrefs.opponentStrums) targetAlpha = 0;
-				else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
+			if (player < 1) {
+				if (!opponentPlay) {
+					if(!ClientPrefs.opponentStrums) targetAlpha = 0;
+					else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
+				}
+			} else {
+				if (opponentPlay) {
+					if(!ClientPrefs.opponentStrums) targetAlpha = 0;
+					else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
+				}
 			}
 
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
@@ -2659,10 +2665,17 @@ class PlayState extends MusicBeatState
 			if (player == 1)
 			{
 				playerStrums.add(babyArrow);
+				if(ClientPrefs.middleScroll && opponentPlay)
+				{
+					babyArrow.x += 310;
+					if(i > 1) { //Up and Right
+						babyArrow.x += FlxG.width / 2 + 25;
+					}
+				}
 			}
 			else
 			{
-				if(ClientPrefs.middleScroll)
+				if(ClientPrefs.middleScroll && !opponentPlay)
 				{
 					babyArrow.x += 310;
 					if(i > 1) { //Up and Right
@@ -3198,16 +3211,19 @@ class PlayState extends MusicBeatState
 
 						if (!daNote.mustPress && daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote)
 						{
-							if (opponentPlay) {goodNoteHit(daNote);} else {opponentNoteHit(daNote);}
+							// if (opponentPlay) {goodNoteHit(daNote);} else {opponentNoteHit(daNote);}
+							opponentPlay ? goodNoteHit(daNote) : opponentNoteHit(daNote);
 						}
-
+						
 						if(!daNote.blockHit && daNote.mustPress && cpuControlled && daNote.canBeHit) {
 							if(daNote.isSustainNote) {
 								if(daNote.canBeHit) {
-									if (opponentPlay) {opponentNoteHit(daNote);} else {goodNoteHit(daNote);}
+									// if (opponentPlay) {opponentNoteHit(daNote);} else {goodNoteHit(daNote);}
+									opponentPlay ? opponentNoteHit(daNote) : goodNoteHit(daNote);
 								}
 							} else if(daNote.strumTime <= Conductor.songPosition || daNote.isSustainNote) {
-								if (opponentPlay) {opponentNoteHit(daNote);} else {goodNoteHit(daNote);}
+								// if (opponentPlay) {opponentNoteHit(daNote);} else {goodNoteHit(daNote);}
+								opponentPlay ? opponentNoteHit(daNote) : goodNoteHit(daNote);
 							}
 						}
 
@@ -4321,7 +4337,8 @@ class PlayState extends MusicBeatState
 
 						// eee jack detection before was not super good
 						if (!notesStopped) {
-							if (opponentPlay) {opponentNoteHit(epicNote);} else {goodNoteHit(epicNote);}
+							// if (opponentPlay) {opponentNoteHit(epicNote);} else {goodNoteHit(epicNote);}
+							opponentPlay ? opponentNoteHit(epicNote) : goodNoteHit(epicNote);
 							pressNotes.push(epicNote);
 						}
 
@@ -4431,7 +4448,8 @@ class PlayState extends MusicBeatState
 				// hold note functions
 				if (strumsBlocked[daNote.noteData] != true && daNote.isSustainNote && parsedHoldArray[daNote.noteData] && daNote.canBeHit
 				&& daNote.mustPress == !opponentPlay && !daNote.tooLate && daNote.wasGoodHit == opponentPlay && !daNote.blockHit) {
-					if (opponentPlay) {opponentNoteHit(daNote);} else {goodNoteHit(daNote);}
+					// if (opponentPlay) {opponentNoteHit(daNote);} else {goodNoteHit(daNote);}
+					opponentPlay ? opponentNoteHit(daNote) : goodNoteHit(daNote);
 				}
 			});
 
