@@ -115,6 +115,7 @@ class FunkinLua {
 		set('luaDebugMode', false);
 		set('luaDeprecatedWarnings', true);
 		set('inChartEditor', false);
+		set('scriptName', scriptName);
 
 		// Song/Week shit
 		set('curBpm', Conductor.bpm);
@@ -148,6 +149,7 @@ class FunkinLua {
 		set('screenHeight', FlxG.height);
 
 		// PlayState cringe ass nae nae bullcrap
+		set('curSection', 0);
 		set('curBeat', 0);
 		set('curStep', 0);
 		set('curDecBeat', 0);
@@ -215,7 +217,6 @@ class FunkinLua {
 		set('noResetButton', ClientPrefs.noReset);
 		set('lowQuality', ClientPrefs.lowQuality);
 		set('shadersEnabled', ClientPrefs.shaders);
-		set('scriptName', scriptName);
 		set('currentModDirectory', Paths.currentModDirectory);
 
 		#if windows
@@ -1380,12 +1381,8 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addHealth", function(value:Float = 0) {
 			PlayState.instance.health += value;
 		});
-		Lua_helper.add_callback(lua, "getHealth", function(percent:Bool = false) {
-			if (percent == true) {
-				return PlayState.instance.healthBar.percent;
-			} else {
-				return PlayState.instance.health;
-			}
+		Lua_helper.add_callback(lua, "getHealth", function(?percent:Bool = false) {
+			if (percent) {return PlayState.instance.healthBar.percent;} else {return PlayState.instance.health;}
 		});
 
 		Lua_helper.add_callback(lua, "getColorFromHex", function(color:String) {
@@ -1591,10 +1588,13 @@ class FunkinLua {
 			switch(type.toLowerCase()) {
 				case 'dad' | 'opponent':
 					PlayState.instance.dadGroup.x = value;
+					PlayState.instance.dad.x = value + PlayState.instance.dad.positionArray[0];
 				case 'gf' | 'girlfriend':
 					PlayState.instance.gfGroup.x = value;
+					PlayState.instance.gf.x = value + PlayState.instance.gf.positionArray[0];
 				default:
 					PlayState.instance.boyfriendGroup.x = value;
+					PlayState.instance.boyfriend.x = value + PlayState.instance.boyfriend.positionArray[0];
 			}
 		});
 		Lua_helper.add_callback(lua, "getCharacterY", function(type:String) {
@@ -1611,19 +1611,31 @@ class FunkinLua {
 			switch(type.toLowerCase()) {
 				case 'dad' | 'opponent':
 					PlayState.instance.dadGroup.y = value;
+					PlayState.instance.dad.y = value + PlayState.instance.dad.positionArray[1];
 				case 'gf' | 'girlfriend':
 					PlayState.instance.gfGroup.y = value;
+					PlayState.instance.gf.y = value + PlayState.instance.gf.positionArray[1];
 				default:
 					PlayState.instance.boyfriendGroup.y = value;
+					PlayState.instance.boyfriend.y = value + PlayState.instance.boyfriend.positionArray[1];
 			}
 		});
 
 		Lua_helper.add_callback(lua, "cameraSetTarget", function(target:String) {
 			var isDad:Bool = false;
-			if(target == 'dad') {
-				isDad = true;
+			if(target == 'dad') {isDad = true;}
+			if (target != 'gf') {
+				PlayState.instance.moveCamera(isDad);
+			} else {
+				if (PlayState.instance.gf != null) {
+					camFollow.set(PlayState.instance.gf.getMidpoint().x, PlayState.instance.gf.getMidpoint().y);
+					camFollow.x += PlayState.instance.gf.cameraPosition[0] + girlfriendCameraOffset[0];
+					camFollow.y += PlayState.instance.gf.cameraPosition[1] + girlfriendCameraOffset[1];
+					PlayState.instance.tweenCamIn();
+					PlayState.instance.callOnLuas('onMoveCamera', ['gf']);
+					return;
+				}
 			}
-			PlayState.instance.moveCamera(isDad);
 			return isDad;
 		});
 
@@ -2776,7 +2788,7 @@ class FunkinLua {
 			return list;
 		});
 
-		call('onCreate', []); // why tf is onCreate here????? --@ImaginationSuperHero528
+		call('onCreate', []);
 		#end
 	}
 

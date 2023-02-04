@@ -3266,6 +3266,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
+		setOnLuas('cameraSpeed', cameraSpeed);
 		callOnLuas('onUpdatePost', [elapsed]);
 	}
 
