@@ -311,7 +311,7 @@ class FlxInputText extends FlxText
 		if (FlxG.mouse.justPressed)
 		{
 			var hadFocus:Bool = hasFocus;
-			if (mouseOverlapping())
+			if (FlxG.mouse.overlaps(this))
 			{
 				caretIndex = getCaretIndex();
 				hasFocus = true;
@@ -326,18 +326,6 @@ class FlxInputText extends FlxText
 			}
 		}
 		#end
-	}
-	
-	function mouseOverlapping()
-	{
-		var mousePoint = FlxG.mouse.getScreenPosition(camera);
-		var objPoint = this.getScreenPosition(null, camera);
-		if(mousePoint.x >= objPoint.x && mousePoint.y >= objPoint.y &&
-			mousePoint.x < objPoint.x + this.width && mousePoint.y < objPoint.y + this.height)
-		{
-			return true;
-		}
-		return false;
 	}
 
 	/**

@@ -131,7 +131,7 @@ class Option
 	private function set_text(newValue:String = '')
 	{
 		if(child != null) {
-			child.text = newValue;
+			child.changeText(newValue);
 		}
 		return null;
 	}
