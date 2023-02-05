@@ -86,6 +86,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
 
+		var option:GameplayOption = new GameplayOption('Play as Opponent', 'opponentplay', 'bool', false);
+		optionsArray.push(option);
+
 		var option:GameplayOption = new GameplayOption('Instakill on Miss', 'instakill', 'bool', false);
 		optionsArray.push(option);
 
@@ -93,9 +96,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		optionsArray.push(option);
 		
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
-		optionsArray.push(option);
-
-		var option:GameplayOption = new GameplayOption('Play as Opponent', 'opponentplay', 'bool', false);
 		optionsArray.push(option);
 	}
 
