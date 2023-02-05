@@ -2679,13 +2679,13 @@ class PlayState extends MusicBeatState
 				opponentStrums.add(babyArrow);
 			}
 
+			strumLineNotes.add(babyArrow);
+			babyArrow.postAddedToGroup();
+
 			// Fuck this I'm just gonna have it do this.
 			var prevStrumData/*:FlxTypedGroup<StrumNote>*/ = [opponentStrums.members, playerStrums.members];
 			for (i in 0...opponentStrums.members.length) {opponentStrums.members[i].x = prevStrumData[1][i].x;}
 			for (i in 0...playerStrums.members.length) {playerStrums.members[i].x = prevStrumData[0][i].x;}
-
-			strumLineNotes.add(babyArrow);
-			babyArrow.postAddedToGroup();
 		}
 	}
 
