@@ -3702,7 +3702,7 @@ class PlayState extends MusicBeatState
 							var lastAlpha:Float = dad.alpha;
 							dad.alpha = 0.00001;
 							dad = dadMap.get(value2);
-							if(!dad.curCharacter != gf.curCharacter) {
+							if(dad.curCharacter != gf.curCharacter) {
 								if(wasGf && gf != null) {
 									gf.visible = true;
 								}
