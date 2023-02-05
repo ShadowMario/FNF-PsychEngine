@@ -2054,6 +2054,14 @@ class PlayState extends MusicBeatState
 
 			generateStaticArrows(0);
 			generateStaticArrows(1);
+
+			// Fuck this I'm just gonna have it do this.
+			/* Also did it out here cause in generateStaticArrows it would crash
+			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
+			var prevStrumData/*:FlxTypedGroup<StrumNote>*/ = [opponentStrums.members, playerStrums.members];
+			for (i in 0...opponentStrums.members.length) {opponentStrums.members[i].x = prevStrumData[1][i].x;}
+			for (i in 0...playerStrums.members.length) {playerStrums.members[i].x = prevStrumData[0][i].x;}
+
 			for (i in 0...playerStrums.length) {
 				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
@@ -2681,11 +2689,6 @@ class PlayState extends MusicBeatState
 
 			strumLineNotes.add(babyArrow);
 			babyArrow.postAddedToGroup();
-
-			// Fuck this I'm just gonna have it do this.
-			var prevStrumData/*:FlxTypedGroup<StrumNote>*/ = [opponentStrums.members, playerStrums.members];
-			for (i in 0...opponentStrums.members.length) {opponentStrums.members[i].x = prevStrumData[1][i].x;}
-			for (i in 0...playerStrums.members.length) {playerStrums.members[i].x = prevStrumData[0][i].x;}
 		}
 	}
 
