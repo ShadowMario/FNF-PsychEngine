@@ -3794,7 +3794,7 @@ class PlayState extends MusicBeatState
 
 					// FlxTween.tween(dadbattleSmokes, {alpha: 0}, 1, {onComplete: function(twn:FlxTween) {dadbattleSmokes.visible = false;}});
 					if (value2.length < 1) value2 = 'true';
-					if (value2 == 'true') {
+					if (value2 == 'true' && ClientPrefs.middleScroll) {
 						// Plz work tweens ;(
 						var prevStrumX/*:FlxTypedGroup<StrumNote>*/ = [opponentStrums.members, playerStrums.members];
 						for (i in 0...opponentStrums.members.length) {FlxTween.tween(opponentStrums.members[i], {x: prevStrumX[1][i].x}, (0.75), {ease: FlxEase.circOut});}
