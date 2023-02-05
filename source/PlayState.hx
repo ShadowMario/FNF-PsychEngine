@@ -2061,7 +2061,6 @@ class PlayState extends MusicBeatState
 			for (i in 0...opponentStrums.length) {
 				setOnLuas('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
 				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
-				//if(ClientPrefs.middleScroll) opponentStrums.members[i].visible = false;
 			}
 
 			startedCountdown = true;
@@ -2194,9 +2193,7 @@ class PlayState extends MusicBeatState
 					{
 						note.copyAlpha = false;
 						note.alpha = note.multAlpha;
-						if(ClientPrefs.middleScroll && note.mustPress == opponentPlay) {
-							note.alpha *= 0.35;
-						}
+						if(ClientPrefs.middleScroll && note.mustPress == opponentPlay) note.alpha *= 0.35;
 					}
 				});
 				callOnLuas('onCountdownTick', [swagCounter]);
@@ -2684,8 +2681,8 @@ class PlayState extends MusicBeatState
 
 			// Fuck this I'm just gonna have it do this.
 			var prevStrumData/*:FlxTypedGroup<StrumNote>*/ = [opponentStrums.members, playerStrums.members];
-			for (i in 0...opponentStrums.members.length) opponentStrums.members[i].x = prevStrumData[1][i].x;
-			for (i in 0...playerStrums.members.length) playerStrums.members[i].x = prevStrumData[0][i].x;
+			for (i in 0...opponentStrums.members.length) {opponentStrums.members[i].x = prevStrumData[1][i].x;}
+			for (i in 0...playerStrums.members.length) {playerStrums.members[i].x = prevStrumData[0][i].x;}
 
 			strumLineNotes.add(babyArrow);
 			babyArrow.postAddedToGroup();
@@ -3797,8 +3794,8 @@ class PlayState extends MusicBeatState
 				if (value2.length < 1) value2 = 'true';
 				if (value2 == 'true' && ClientPrefs.middleScroll) {
 					var prevStrumData/*:FlxTypedGroup<StrumNote>*/ = [opponentStrums.members, playerStrums.members];
-					for (i in 0...opponentStrums.members.length) FlxTween.tween(opponentStrums.members[i], {x: prevStrumData[1][i].x, alpha: prevStrumData[1][i].alpha}, 0.75, {ease: FlxEase.circOut});
-					for (i in 0...playerStrums.members.length) FlxTween.tween(playerStrums.members[i], {x: prevStrumData[0][i].x, alpha: prevStrumData[0][i].alpha}, 0.75, {ease: FlxEase.circOut});
+					for (i in 0...opponentStrums.members.length) {FlxTween.tween(opponentStrums.members[i], {x: prevStrumData[1][i].x, alpha: prevStrumData[1][i].alpha}, 0.75, {ease: FlxEase.circOut});}
+					for (i in 0...playerStrums.members.length) {FlxTween.tween(playerStrums.members[i], {x: prevStrumData[0][i].x, alpha: prevStrumData[0][i].alpha}, 0.75, {ease: FlxEase.circOut});}
 				} // else if (value2 == 'false') {trace('FUCK YOU NOTHING HAPPENED');}
 
 				setOnLuas('opponentPlay', opponentPlay);
