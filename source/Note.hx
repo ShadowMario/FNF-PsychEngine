@@ -7,6 +7,10 @@ import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flash.display.BitmapData;
 import editors.ChartingState;
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#end
 
 using StringTools;
 
@@ -95,6 +99,7 @@ class Note extends FlxSprite
 
 	public var hitsoundDisabled:Bool = false;
 
+
 	private function set_multSpeed(value:Float):Float {
 		resizeByRatio(value / multSpeed);
 		multSpeed = value;
@@ -120,6 +125,7 @@ class Note extends FlxSprite
 	}
 
 	private function set_noteType(value:String):String {
+		var luaPrefix:String = '';
 		noteSplashTexture = PlayState.SONG.splashSkin;
 		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
 		{
@@ -152,6 +158,16 @@ class Note extends FlxSprite
 					noMissAnimation = true;
 				case 'GF Sing':
 					gfNote = true;
+				case '':
+
+				default:
+					#if MODS_ALLOWED
+					luaPrefix = value.split(" ")[0].toUpperCase();
+					if (FileSystem.exists(Paths.image(luaPrefix)))
+						reloadNote(luaPrefix, 'NOTE_assets');
+					else
+						trace('Rename $value texture to ${luaPrefix}NOTE_assets');
+					#end
 			}
 			noteType = value;
 		}
@@ -292,13 +308,6 @@ class Note extends FlxSprite
 				offsetX += lastNoteOffsetXForPixelAutoAdjusting;
 				lastNoteOffsetXForPixelAutoAdjusting = (width - 7) * (PlayState.daPixelZoom / 2);
 				offsetX -= lastNoteOffsetXForPixelAutoAdjusting;
-
-				/*if(animName != null && !animName.endsWith('end'))
-				{
-					lastScaleY /= lastNoteScaleToo;
-					lastNoteScaleToo = (6 / height);
-					lastScaleY *= lastNoteScaleToo;
-				}*/
 			}
 		} else {
 			frames = Paths.getSparrowAtlas(blahblah);
