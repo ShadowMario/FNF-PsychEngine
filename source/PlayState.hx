@@ -4180,8 +4180,7 @@ class PlayState extends MusicBeatState
 
 		insert(members.indexOf(strumLineNotes), rating);
 		
-		if (!ClientPrefs.comboStacking)
-		{
+		if (!ClientPrefs.comboStacking) {
 			if (lastRating != null) lastRating.kill();
 			lastRating = rating;
 		}
