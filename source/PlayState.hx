@@ -4313,7 +4313,7 @@ class PlayState extends MusicBeatState
 		if (!cpuControlled && startedCountdown && !paused && key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || ClientPrefs.controllerMode))
 		{
 			var char:Character = opponentPlay ? dad : boyfriend;
-			if(!char.stunned && generatedMusic && !endingSong)
+			if (!char.stunned && generatedMusic && !endingSong)
 			{
 				//more accurate hit time for the ratings?
 				var lastTime:Float = Conductor.songPosition;
