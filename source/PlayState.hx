@@ -4593,7 +4593,7 @@ class PlayState extends MusicBeatState
 			opponentPlay ? litPlayerHit(note) : litOppoHit(note);
 			if (Paths.formatToSongPath(SONG.song) != 'tutorial') camZooming = true;
 
-			if(note.hitCausesMiss && opponentPlay) {
+			if(note.hitCausesMiss) {
 				noteMiss(note);
 				if (!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(note);
