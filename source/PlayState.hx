@@ -4686,9 +4686,7 @@ class PlayState extends MusicBeatState
 						gf.playAnim(animToPlay + note.animSuffix, true);
 						gf.holdTimer = 0;
 					}
-				}
-				else
-				{
+				} else {
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
 				}
