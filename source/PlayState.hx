@@ -4608,10 +4608,9 @@ class PlayState extends MusicBeatState
 				doDeathCheck(true);
 			}
 
-			if (combo > 5 && gf != null && gf.animOffsets.exists('sad'))
-				gf.playAnim('sad');
+			if (combo > 5 && gf != null && gf.animOffsets.exists('sad')) gf.playAnim('sad');
+			
 			combo = 0;
-
 			if (!practiceMode) songScore -= 10;
 			if (!endingSong) songMisses++;
 			totalPlayed++;
