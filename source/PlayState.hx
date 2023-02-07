@@ -2020,8 +2020,8 @@ class PlayState extends MusicBeatState
 			for (i in 0...opponentStrums.length) {
 				setOnLuas('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
 				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
-				defaultOpponentStrum.x[i] = opponentStrums.members[i].x;
-				defaultOpponentStrum.y[i] = opponentStrums.members[i].y;
+				// defaultOpponentStrum.x[i] = opponentStrums.members[i].x;
+				// defaultOpponentStrum.y[i] = opponentStrums.members[i].y;
 			}
 
 			startedCountdown = true;
@@ -2166,11 +2166,11 @@ class PlayState extends MusicBeatState
 			/* Also did it out here cause in generateStaticArrows it would break
 			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
 			for (i in 0...opponentStrums.members.length) {
-				opponentStrums.members[i].x = defaultPlayerStrum.x[i];
+				opponentStrums.members[i].x = playerStrums.members[i].x;
 				opponentStrums.members[i].alpha = 1;
 			}
 			for (i in 0...playerStrums.members.length) {
-				playerStrums.members[i].x = defaultOpponentStrum.x[i];
+				playerStrums.members[i].x = opponentStrums.members[i].x;
 				playerStrums.members[i].alpha = 0.5;
 			}
 		}
