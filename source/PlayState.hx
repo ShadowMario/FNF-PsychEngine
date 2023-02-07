@@ -3212,6 +3212,7 @@ class PlayState extends MusicBeatState
 							}
 						}
 
+						if ()
 						if (daNote.mustPress == opponentPlay && daNote.wasGoodHit == !opponentPlay && daNote.hitByOpponent == opponentPlay && !daNote.ignoreNote)
 						{
 							opponentPlay ? goodNoteHit(daNote) : opponentNoteHit(daNote);
