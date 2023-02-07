@@ -425,8 +425,7 @@ class PlayState extends MusicBeatState
 		if (isStoryMode) {
 			detailsText = "Story Mode: " + WeekData.getCurrentWeek().weekName;
 		}
-		else
-		{
+		else {
 			detailsText = "Freeplay";
 		}
 
@@ -1278,8 +1277,7 @@ class PlayState extends MusicBeatState
 			}
 			seenCutscene = true;
 		}
-		else
-		{
+		else {
 			startCountdown();
 		}
 		RecalculateRating();
@@ -3013,8 +3011,7 @@ class PlayState extends MusicBeatState
 			else if (!startedCountdown)
 				Conductor.songPosition = -Conductor.crochet * 5;
 		}
-		else
-		{
+		else {
 			if (!paused)
 			{
 				songTime += FlxG.game.ticks - previousFrameTime;
@@ -3768,8 +3765,7 @@ class PlayState extends MusicBeatState
 			moveCamera(true);
 			callOnLuas('onMoveCamera', ['dad']);
 		}
-		else
-		{
+		else {
 			moveCamera(false);
 			callOnLuas('onMoveCamera', ['boyfriend']);
 		}
@@ -3784,8 +3780,7 @@ class PlayState extends MusicBeatState
 			camFollow.y += dad.cameraPosition[1] + opponentCameraOffset[1];
 			tweenCamIn();
 		}
-		else
-		{
+		else {
 			camFollow.set(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
 			camFollow.x -= boyfriend.cameraPosition[0] - boyfriendCameraOffset[0];
 			camFollow.y += boyfriend.cameraPosition[1] + boyfriendCameraOffset[1];
@@ -4130,8 +4125,7 @@ class PlayState extends MusicBeatState
 			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
 			comboSpr.antialiasing = ClientPrefs.globalAntialiasing;
 		}
-		else
-		{
+		else {
 			rating.setGraphicSize(Std.int(rating.width * daPixelZoom * 0.85));
 			comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.85));
 		}
@@ -5070,8 +5064,7 @@ class PlayState extends MusicBeatState
 			luaArray.push(new FunkinLua(luaToLoad));
 			return true;
 		}
-		else
-		{
+		else {
 			luaToLoad = Paths.getPreloadPath(luaFile);
 			if (FileSystem.exists(luaToLoad))
 			{
