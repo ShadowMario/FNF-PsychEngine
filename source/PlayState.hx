@@ -4524,7 +4524,7 @@ class PlayState extends MusicBeatState
 		if (opponentPlay) health += daNote.missHealth * healthLoss;
 		else health -= daNote.missHealth * healthLoss;
 		
-		if(instakillOnMiss)
+		if (instakillOnMiss)
 		{
 			if (SONG.needsVoices) vocals.volume = 0;
 			doDeathCheck(true);
