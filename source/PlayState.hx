@@ -4740,8 +4740,7 @@ class PlayState extends MusicBeatState
 			var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
 			if (opponentPlay) strumGroup = opponentStrums;
 			var spr = strumGroup.members[note.noteData];
-			if(spr != null)
-			{
+			if(spr != null) {
 				spr.playAnim('confirm', true);
 			}
 		}
