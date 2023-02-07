@@ -2077,14 +2077,14 @@ class PlayState extends MusicBeatState
 			for (i in 0...playerStrums.length) {
 				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
-				// defaultPlayerStrum.x[i] = playerStrums.members[i].x;
-				// defaultPlayerStrum.y[i] = playerStrums.members[i].y;
+				defaultPlayerStrum.x[i] = playerStrums.members[i].x;
+				defaultPlayerStrum.y[i] = playerStrums.members[i].y;
 			}
 			for (i in 0...opponentStrums.length) {
 				setOnLuas('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
 				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
-				// defaultOpponentStrum.x[i] = opponentStrums.members[i].x;
-				// defaultOpponentStrum.y[i] = opponentStrums.members[i].y;
+				defaultOpponentStrum.x[i] = opponentStrums.members[i].x;
+				defaultOpponentStrum.y[i] = opponentStrums.members[i].y;
 			}
 
 			startedCountdown = true;
