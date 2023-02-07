@@ -3706,8 +3706,8 @@ class PlayState extends MusicBeatState
 				
 				if (value2.length < 1) value2 = 'true';
 				if (value2 == 'true' && ClientPrefs.middleScroll) {
-					for (i in 0...opponentStrums.members.length) FlxTween.tween(opponentStrums.members[i], {x: defaultPlayerStrum.x[i], alpha: opponentPlay ? 1 : 0.5}, 0.35, {ease: FlxEase.circOut});
-					for (i in 0...playerStrums.members.length) FlxTween.tween(playerStrums.members[i], {x: defaultOpponentStrum.x[i], alpha: opponentPlay ? 0.5 : 1}, 0.35, {ease: FlxEase.circOut});
+					for (i in 0...opponentStrums.members.length) FlxTween.tween(opponentStrums.members[i], {x: playerStrums.members[i].x, alpha: opponentPlay ? 1 : 0.5}, 0.35, {ease: FlxEase.circOut});
+					for (i in 0...playerStrums.members.length) FlxTween.tween(playerStrums.members[i], {x: opponentStrums.members[i].x, alpha: opponentPlay ? 0.5 : 1}, 0.35, {ease: FlxEase.circOut});
 				} // else if (value2 == 'false') {trace('FUCK YOU NOTHING HAPPENED LMFAO');}
 
 				// So strums don't look wierd after switch.
