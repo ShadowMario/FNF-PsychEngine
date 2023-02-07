@@ -3211,8 +3211,7 @@ class PlayState extends MusicBeatState
 								daNote.y += 27.5 * ((SONG.bpm / 100) - 1) * (songSpeed - 1);
 							}
 						}
-
-						if ()
+						
 						if (daNote.mustPress == opponentPlay && daNote.wasGoodHit == !opponentPlay && daNote.hitByOpponent == opponentPlay && !daNote.ignoreNote)
 						{
 							opponentPlay ? goodNoteHit(daNote) : opponentNoteHit(daNote);
