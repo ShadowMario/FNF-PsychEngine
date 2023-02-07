@@ -182,7 +182,6 @@ class PlayState extends MusicBeatState
 
 	public var gfSpeed:Int = 1;
 	public var health:Float = 1;
-	public var maxHealth:Float = 2; // fuck you, cause yes --@RodneyAnImaginativePerson
 	public var combo:Int = 0;
 
 	private var healthBarBG:AttachedSprite;
@@ -1096,7 +1095,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'health', 0, maxHealth);
+			'health', 0, 2);
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -2717,7 +2716,7 @@ class PlayState extends MusicBeatState
 	override public function onFocus():Void
 	{
 		#if desktop
-		var notCurrentlyDead = opponentPlay ? health < maxHealth : health > 0;
+		var notCurrentlyDead = opponentPlay ? health < 2 : health > 0;
 		var setIcon:HealthIcon = opponentPlay ? iconP1 : iconP2;
 		if (notCurrentlyDead && !paused) {
 			if (Conductor.songPosition > 0.0) {
@@ -2736,7 +2735,7 @@ class PlayState extends MusicBeatState
 	override public function onFocusLost():Void
 	{
 		#if desktop
-		var notCurrentlyDead = opponentPlay ? health < maxHealth : health > 0;
+		var notCurrentlyDead = opponentPlay ? health < 2 : health > 0;
 		var setIcon:HealthIcon = opponentPlay ? iconP1 : iconP2;
 		if (notCurrentlyDead && !paused) {
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", setIcon.getCharacter());
@@ -2955,8 +2954,8 @@ class PlayState extends MusicBeatState
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 
-		if (health > maxHealth)
-			health = maxHealth;
+		if (health > 2)
+			health = 2;
 
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
@@ -3256,7 +3255,7 @@ class PlayState extends MusicBeatState
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
 	function doDeathCheck(?skipHealthCheck:Bool = false) {
 		var shallDie = ((skipHealthCheck && instakillOnMiss) || health <= 0);
-		if (opponentPlay) {shallDie = ((skipHealthCheck && instakillOnMiss) || health >= maxHealth);}
+		if (opponentPlay) {shallDie = ((skipHealthCheck && instakillOnMiss) || health >= 2);}
 
 		if (shallDie && !practiceMode && !isDead) {
 			var ret:Dynamic = callOnLuas('onGameOver', [], false);
@@ -3700,9 +3699,13 @@ class PlayState extends MusicBeatState
 				}
 			case 'Trigger Opponent Play':
 				if (value1.length < 1) value1 = 'swap';
-				if (value1 == 'on') {opponentPlay = true;}
-				else if (value1 == 'off') {opponentPlay = false;}
-				else if (value1 == 'swap') {opponentPlay = !opponentPlay;}
+
+				if (opponentPlay ? health < 1.61 : health < 0.4)
+					health = opponentPlay ? 1.61 : 0.4;
+
+				if (value1 == 'on') opponentPlay = true;
+				else if (value1 == 'off') opponentPlay = false;
+				else if (value1 == 'swap') opponentPlay = !opponentPlay;
 				
 				if (value2.length < 1) value2 = 'true';
 				if (value2 == 'true' && ClientPrefs.middleScroll) {
