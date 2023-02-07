@@ -4594,7 +4594,7 @@ class PlayState extends MusicBeatState
 
 	function noteMissPress(direction:Int = 1):Void //You pressed a key when there was no notes to press for this key
 	{
-		if(ClientPrefs.ghostTapping) return; //fuck it
+		if (ClientPrefs.ghostTapping) return; //fuck it
 
 		var char:Character = opponentPlay ? dad : boyfriend;
 		if (!char.stunned)
@@ -4612,8 +4612,8 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			combo = 0;
 
-			if(!practiceMode) songScore -= 10;
-			if(!endingSong) songMisses++;
+			if (!practiceMode) songScore -= 10;
+			if (!endingSong) songMisses++;
 			totalPlayed++;
 			RecalculateRating(true);
 
