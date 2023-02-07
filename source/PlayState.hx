@@ -4605,7 +4605,7 @@ class PlayState extends MusicBeatState
 			
 			if(instakillOnMiss)
 			{
-				vocals.volume = 0;
+				if (SONG.needsVoices) vocals.volume = 0;
 				doDeathCheck(true);
 			}
 
@@ -4636,8 +4636,7 @@ class PlayState extends MusicBeatState
 
 			if(char.hasMissAnimations) {
 				char.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
-			}
-			vocals.volume = 0;
+			if (SONG.needsVoices) vocals.volume = 0;
 		}
 		callOnLuas('noteMissPress', [direction]);
 	}
