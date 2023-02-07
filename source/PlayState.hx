@@ -4526,14 +4526,14 @@ class PlayState extends MusicBeatState
 		
 		if(instakillOnMiss)
 		{
-			vocals.volume = 0;
+			if (SONG.needsVoices) vocals.volume = 0;
 			doDeathCheck(true);
 		}
 
 		//For testing purposes
 		//trace(daNote.missHealth);
 		songMisses++;
-		vocals.volume = 0;
+		if (SONG.needsVoices) vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
 
 		totalPlayed++;
