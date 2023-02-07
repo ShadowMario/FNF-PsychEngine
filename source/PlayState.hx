@@ -4423,9 +4423,8 @@ class PlayState extends MusicBeatState
 	{
 		if (key != NONE)
 			for (i in 0...keysArray.length)
-				for (j in 0...keysArray[i].length) {
+				for (j in 0...keysArray[i].length)
 					if (key == keysArray[i][j]) return i;
-				}
 		return -1;
 	}
 
