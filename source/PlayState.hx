@@ -2211,6 +2211,19 @@ class PlayState extends MusicBeatState
 				// generateSong('fresh');
 			}, 5);
 		}
+		if (ClientPrefs.middleScroll && opponentPlay) {
+			// Fuck this I'm just gonna have it do this.
+			/* Also did it out here cause in generateStaticArrows it would break
+			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
+			for (i in 0...opponentStrums.members.length) {
+				opponentStrums.members[i].x = prev;
+				opponentStrums.members[i].alpha = 1;
+			}
+			for (i in 0...playerStrums.members.length) {
+				playerStrums.members[i].x = prevStrumData[0][i].x;
+				playerStrums.members[i].alpha = 0.5;
+			}
+		}
 	}
 
 	public function addBehindGF(obj:FlxObject)
