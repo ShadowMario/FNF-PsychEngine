@@ -2216,11 +2216,11 @@ class PlayState extends MusicBeatState
 			/* Also did it out here cause in generateStaticArrows it would break
 			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
 			for (i in 0...opponentStrums.members.length) {
-				opponentStrums.members[i].x = prev;
+				opponentStrums.members[i].x = defaultPlayerStrum.x[i];
 				opponentStrums.members[i].alpha = 1;
 			}
 			for (i in 0...playerStrums.members.length) {
-				playerStrums.members[i].x = prevStrumData[0][i].x;
+				playerStrums.members[i].x = defaultOpponentStrum.x[i];
 				playerStrums.members[i].alpha = 0.5;
 			}
 		}
