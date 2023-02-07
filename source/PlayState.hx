@@ -4827,6 +4827,11 @@ class PlayState extends MusicBeatState
 
 		callOnLuas('litOppoHit', [notes.members.indexOf(note), opponentPlay ? Math.round(Math.abs(note.noteData)) : Math.abs(note.noteData), note.noteType, note.isSustainNote]);
 	}
+	
+	function sharedMissData(note:Note):Void
+	{
+		
+	}
 
 	public function spawnNoteSplashOnNote(note:Note) {
 		if (ClientPrefs.noteSplashes && note != null && note.mustPress == !opponentPlay) {
