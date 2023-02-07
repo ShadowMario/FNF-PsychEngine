@@ -4421,16 +4421,10 @@ class PlayState extends MusicBeatState
 
 	private function getKeyFromEvent(key:FlxKey):Int
 	{
-		if(key != NONE)
-		{
-			for (i in 0...keysArray.length)
-			{
-				for (j in 0...keysArray[i].length)
-				{
-					if(key == keysArray[i][j])
-					{
-						return i;
-					}
+		if (key != NONE) {
+			for (i in 0...keysArray.length) {
+				for (j in 0...keysArray[i].length) {
+					if (key == keysArray[i][j]) return i;
 				}
 			}
 		}
