@@ -172,8 +172,8 @@ class PlayState extends MusicBeatState
 	public var playerStrums:FlxTypedGroup<StrumNote>;
 	public var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 
-	// public var defaultPlayerStrum:Array<Dynamic> = [x:Array<Float> = []];
-	// public var defaultOpponentStrum:Array<Float> = [];
+	// private static var defaultPlayerStrum:Array<Dynamic> = [x:Array<Float> = []];
+	// private static var defaultOpponentStrum:Array<Float> = [];
 
 	public var camZooming:Bool = false;
 	public var camZoomingMult:Float = 1;
