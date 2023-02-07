@@ -3706,6 +3706,7 @@ class PlayState extends MusicBeatState
 				for (i in 0...strumLineNotes.members.length) strumLineNotes.members[i].playAnim('static', true);
 
 				setOnLuas('opponentPlay', opponentPlay);
+				trace('opponentPlay has been triggered');
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
@@ -4397,7 +4398,7 @@ class PlayState extends MusicBeatState
 		if (daNote.gfNote) char = gf;
 
 		if (char != null && !daNote.noMissAnimation && char.hasMissAnimations) {
-			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
+			var animToPlay:String = singAnimations[daNote.noteData] + 'miss' + daNote.animSuffix;
 			char.playAnim(animToPlay, true);
 		}
 		callOnLuas(opponentPlay ? 'opponentNoteMiss' : 'noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
@@ -4436,7 +4437,7 @@ class PlayState extends MusicBeatState
 				char.stunned = false;
 			});*/
 
-			if (char.hasMissAnimations) char.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
+			if (char.hasMissAnimations) char.playAnim(singAnimations[direction] + 'miss', true);
 			if (SONG.needsVoices) vocals.volume = 0;
 		}
 		callOnLuas('noteMissPress', [direction]);
@@ -4479,7 +4480,7 @@ class PlayState extends MusicBeatState
 				}
 
 				var char:Character = dad;
-				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
+				var animToPlay:String = singAnimations[note.noteData] + altAnim;
 				if (note.gfNote) {
 					char = gf;
 				}
@@ -4492,7 +4493,7 @@ class PlayState extends MusicBeatState
 			}
 			note.hitByOpponent = true;
 
-			callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
+			callOnLuas('opponentNoteHit', [notes.members.indexOf(note), note.noteData, note.noteType, note.isSustainNote]);
 
 			if (!note.isSustainNote) {
 				note.kill();
@@ -4532,7 +4533,7 @@ class PlayState extends MusicBeatState
 			}
 
 			if (!note.noAnimation) {
-				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
+				var animToPlay:String = singAnimations[note.noteData];
 
 				if (note.gfNote) {
 					if (gf != null) {
@@ -4559,7 +4560,7 @@ class PlayState extends MusicBeatState
 			}
 			note.wasGoodHit = true;
 			
-			callOnLuas('goodNoteHit', [notes.members.indexOf(note), Math.round(Math.abs(note.noteData)), note.noteType, note.isSustainNote]);
+			callOnLuas('goodNoteHit', [notes.members.indexOf(note), note.noteData, note.noteType, note.isSustainNote]);
 
 			if (!note.isSustainNote) {
 				note.kill();
@@ -4587,7 +4588,7 @@ class PlayState extends MusicBeatState
 		if (cpuControlled) {
 			var time:Float = 0.15;
 			if (note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) time += 0.15;
-			StrumPlayAnim(false, Std.int(Math.abs(note.noteData)), time * playbackRate);
+			StrumPlayAnim(false, note.noteData, time * playbackRate);
 		} else {
 			var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
 			if (opponentPlay) strumGroup = opponentStrums;
@@ -4602,7 +4603,7 @@ class PlayState extends MusicBeatState
 
 		if (SONG.needsVoices) vocals.volume = 1;
 
-		callOnLuas('litPlayerHit', [notes.members.indexOf(note), opponentPlay ? Math.abs(note.noteData) : Math.round(Math.abs(note.noteData)), note.noteType, note.isSustainNote]);
+		callOnLuas('litPlayerHit', [notes.members.indexOf(note), note.noteData, note.noteType, note.isSustainNote]);
 	}
 
 	function litOppoHit(note:Note):Void
@@ -4611,9 +4612,9 @@ class PlayState extends MusicBeatState
 
 		var time:Float = 0.15;
 		if (note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) time += 0.15;
-		StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time * playbackRate);
+		StrumPlayAnim(true, note.noteData, time * playbackRate);
 
-		callOnLuas('litOppoHit', [notes.members.indexOf(note), opponentPlay ? Math.round(Math.abs(note.noteData)) : Math.abs(note.noteData), note.noteType, note.isSustainNote]);
+		callOnLuas('litOppoHit', [notes.members.indexOf(note), note.noteData, note.noteType, note.isSustainNote]);
 	}
 
 	public function spawnNoteSplashOnNote(note:Note) {
