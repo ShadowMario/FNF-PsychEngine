@@ -4678,13 +4678,11 @@ class PlayState extends MusicBeatState
 				return;
 			}
 
-			if(!note.noAnimation) {
+			if (!note.noAnimation) {
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
 
-				if(note.gfNote)
-				{
-					if(gf != null)
-					{
+				if(note.gfNote) {
+					if(gf != null) {
 						gf.playAnim(animToPlay + note.animSuffix, true);
 						gf.holdTimer = 0;
 					}
