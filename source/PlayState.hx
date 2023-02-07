@@ -4654,7 +4654,7 @@ class PlayState extends MusicBeatState
 		{
 			opponentPlay ? litOppoHit(note) : litPlayerHit(note);
 
-			if(note.hitCausesMiss && !opponentPlay) {
+			if(note.hitCausesMiss) {
 				noteMiss(note);
 				if(!note.noteSplashDisabled && !note.isSustainNote)
 					spawnNoteSplashOnNote(note);
