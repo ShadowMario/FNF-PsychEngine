@@ -4656,11 +4656,10 @@ class PlayState extends MusicBeatState
 
 			if(note.hitCausesMiss) {
 				if (!opponentPlay) noteMiss(note);
-				if(!note.noteSplashDisabled && !note.isSustainNote)
+				if (!note.noteSplashDisabled && !note.isSustainNote)
 					spawnNoteSplashOnNote(note);
 
-				if(!note.noMissAnimation)
-				{
+				if (!note.noMissAnimation) {
 					switch(note.noteType) {
 						case 'Hurt Note': //Hurt note
 							if(boyfriend.animation.getByName('hurt') != null) {
@@ -4671,8 +4670,7 @@ class PlayState extends MusicBeatState
 				}
 
 				note.wasGoodHit = true;
-				if (!note.isSustainNote)
-				{
+				if (!note.isSustainNote) {
 					note.kill();
 					notes.remove(note, true);
 					note.destroy();
