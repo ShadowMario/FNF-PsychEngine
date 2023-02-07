@@ -2909,12 +2909,9 @@ class PlayState extends MusicBeatState
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 			if (!startingSong && !endingSong && char.animation.curAnim != null && char.animation.curAnim.name.startsWith('idle')) {
 				playerIdleTime += elapsed;
-				if (playerIdleTime >= 0.15) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
-					playerIdled = true;
-				}
-			} else {
-				playerIdleTime = 0;
-			}
+				// Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
+				if (playerIdleTime >= 0.15) playerIdled = true;
+			} else playerIdleTime = 0;
 		}
 
 		super.update(elapsed);
@@ -2934,9 +2931,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene) {
-			openChartEditor();
-		}
+		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene) openChartEditor();
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
@@ -3040,7 +3035,7 @@ class PlayState extends MusicBeatState
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time) {
 				var dunceNote:Note = unspawnNotes[0];
 				notes.insert(0, dunceNote);
-				dunceNote.spawned=true;
+				dunceNote.spawned = true;
 				callOnLuas('onSpawnNote', [notes.members.indexOf(dunceNote), dunceNote.noteData, dunceNote.noteType, dunceNote.isSustainNote]);
 
 				var index:Int = unspawnNotes.indexOf(dunceNote);
@@ -3084,17 +3079,11 @@ class PlayState extends MusicBeatState
 						strumY += daNote.offsetY;
 						strumAngle += daNote.offsetAngle;
 						strumAlpha *= daNote.multAlpha;
-
+						
 						if (strumScroll) //Downscroll
-						{
-							//daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
 							daNote.distance = (0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed * daNote.multSpeed);
-						}
 						else //Upscroll
-						{
-							//daNote.y = (strumY - 0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed);
 							daNote.distance = (-0.45 * (Conductor.songPosition - daNote.strumTime) * songSpeed * daNote.multSpeed);
-						}
 
 						var angleDir = strumDirection * Math.PI / 180;
 						if (daNote.copyAngle)
@@ -3124,7 +3113,7 @@ class PlayState extends MusicBeatState
 							}
 						}
 						
-						if (daNote.mustPress == opponentPlay && daNote.wasGoodHit == !opponentPlay && daNote.hitByOpponent == opponentPlay && !daNote.ignoreNote)
+						if (!daNote.blockHit && daNote.mustPress == opponentPlay && daNote.wasGoodHit == !opponentPlay && daNote.hitByOpponent == opponentPlay && !daNote.ignoreNote)
 						{
 							opponentPlay ? goodNoteHit(daNote) : opponentNoteHit(daNote);
 						}
@@ -3187,7 +3176,7 @@ class PlayState extends MusicBeatState
 					notes.forEachAlive(function(daNote:Note)
 					{
 						daNote.canBeHit = false;
-						daNote.wasGoodHit = false;
+						opponentPlay ? daNote.hitByOpponent = false : daNote.wasGoodHit = false;
 					});
 				}
 			}
