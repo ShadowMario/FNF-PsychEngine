@@ -3259,7 +3259,7 @@ class PlayState extends MusicBeatState
 					if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
 					{
 						if (daNote.mustPress == !opponentPlay && !cpuControlled && !daNote.ignoreNote && !endingSong && (daNote.tooLate || daNote.wasGoodHit == opponentPlay)) {
-							opponentPlay ? opponentNoteMiss(daNote) : noteMiss(daNote);
+							noteMiss(daNote);
 						}
 						daNote.active = false;
 						daNote.visible = false;
@@ -4594,7 +4594,7 @@ class PlayState extends MusicBeatState
 			if (Paths.formatToSongPath(SONG.song) != 'tutorial') camZooming = true;
 
 			if(note.hitCausesMiss && !opponentPlay) {
-				opponentNoteMiss(note);
+				noteMiss(note);
 				if (!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(note);
 				}
