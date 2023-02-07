@@ -4539,7 +4539,7 @@ class PlayState extends MusicBeatState
 		totalPlayed++;
 		RecalculateRating(true);
 
-		var char:Character = boyfriend;
+		var char:Character = opponentPlay ? dad : boyfriend;
 		if (daNote.gfNote) char = gf;
 
 		if (char != null && !daNote.noMissAnimation && char.hasMissAnimations)
