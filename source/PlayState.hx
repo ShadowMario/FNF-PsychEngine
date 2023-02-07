@@ -4634,8 +4634,7 @@ class PlayState extends MusicBeatState
 				char.stunned = false;
 			});*/
 
-			if(char.hasMissAnimations) {
-				char.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
+			if(char.hasMissAnimations) char.playAnim(singAnimations[Std.int(Math.abs(direction))] + 'miss', true);
 			if (SONG.needsVoices) vocals.volume = 0;
 		}
 		callOnLuas('noteMissPress', [direction]);
