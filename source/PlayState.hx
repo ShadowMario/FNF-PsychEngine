@@ -1330,21 +1330,6 @@ class PlayState extends MusicBeatState
 		}
 		callOnLuas('onCreatePost', []);
 
-		if (ClientPrefs.middleScroll && opponentPlay) {
-			// Fuck this I'm just gonna have it do this.
-			/* Also did it out here cause in generateStaticArrows it would break
-			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
-			var prevStrumData/*:FlxTypedGroup<StrumNote>*/ = [opponentStrums.members, playerStrums.members];
-			for (i in 0...opponentStrums.members.length) {
-				opponentStrums.members[i].x = prevStrumData[1][i].x;
-				opponentStrums.members[i].alpha = prevStrumData[1][i].alpha;
-			}
-			for (i in 0...playerStrums.members.length) {
-				playerStrums.members[i].x = prevStrumData[0][i].x;
-				playerStrums.members[i].alpha = prevStrumData[0][i].alpha;
-			}
-		}
-
 		super.create();
 
 		cacheCountdown();
