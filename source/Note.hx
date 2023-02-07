@@ -159,14 +159,16 @@ class Note extends FlxSprite
 				case 'GF Sing':
 					gfNote = true;
 				case '':
-
+					//normal notes retain the noteskin texture
+				case 'Hey!':
+					// hey notes retain the noteskin texture
 				default:
 					#if MODS_ALLOWED
 					luaPrefix = value.split(" ")[0].toUpperCase();
-					if (FileSystem.exists(Paths.image(luaPrefix)))
+					if (Paths.image(luaPrefix + 'NOTE_assets')!= null)
 						reloadNote(luaPrefix, 'NOTE_assets');
 					else
-						trace('Rename $value texture to ${luaPrefix}NOTE_assets');
+						trace('Suggestion: rename $value texture to ${luaPrefix}NOTE_assets');
 					#end
 			}
 			noteType = value;
