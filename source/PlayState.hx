@@ -4596,7 +4596,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!note.hitByOpponent)
 		{
-			opponentPlay ? litPlayerHit(note, dad) : litOppoHit(note, dad);
+			opponentPlay ? litPlayerHit(note) : litOppoHit(note);
 			if (Paths.formatToSongPath(SONG.song) != 'tutorial') camZooming = true;
 
 			if(note.hitCausesMiss && !opponentPlay) {
@@ -4658,7 +4658,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!note.wasGoodHit)
 		{
-			opponentPlay ? litOppoHit(note, boyfriend) : litPlayerHit(note, boyfriend);
+			opponentPlay ? litOppoHit(note) : litPlayerHit(note);
 
 			if(note.hitCausesMiss && !opponentPlay) {
 				noteMiss(note);
@@ -4732,7 +4732,7 @@ class PlayState extends MusicBeatState
 
 	// These functions will contain most of the code bewteen hits that is the same (ex: vocals.volume = 1)
 	// Useful for general hits between the actually player and opponent
-	function litPlayerHit(note:Note, char:Character):Void
+	function litPlayerHit(note:Note):Void
 	{
 		if (cpuControlled && (note.ignoreNote || note.hitCausesMiss)) return;
 
@@ -4767,7 +4767,7 @@ class PlayState extends MusicBeatState
 		callOnLuas('litPlayerHit', [notes.members.indexOf(note), opponentPlay ? Math.abs(note.noteData) : Math.round(Math.abs(note.noteData)), note.noteType, note.isSustainNote]);
 	}
 
-	function litOppoHit(note:Note, char:Character):Void
+	function litOppoHit(note:Note):Void
 	{
 		if (SONG.needsVoices) vocals.volume = 1;
 
@@ -4776,11 +4776,6 @@ class PlayState extends MusicBeatState
 		StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time * playbackRate);
 
 		callOnLuas('litOppoHit', [notes.members.indexOf(note), opponentPlay ? Math.round(Math.abs(note.noteData)) : Math.abs(note.noteData), note.noteType, note.isSustainNote]);
-	}
-	
-	function sharedMissData(note:Note):Void
-	{
-		
 	}
 
 	public function spawnNoteSplashOnNote(note:Note) {
