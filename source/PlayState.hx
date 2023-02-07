@@ -4547,49 +4547,7 @@ class PlayState extends MusicBeatState
 			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
 			char.playAnim(animToPlay, true);
 		}
-		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
-	}
-
-	function opponentNoteMiss(daNote:Note):Void {
-		//Dupe note remove
-		notes.forEachAlive(function(note:Note) {
-			if (daNote != note && daNote.mustPress == !opponentPlay && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 1) {
-				note.kill();
-				notes.remove(note, true);
-				note.destroy();
-			}
-		});
-		combo = 0;
-		if (opponentPlay) health += daNote.missHealth * healthLoss;
-		else health -= daNote.missHealth * healthLoss;
-		
-		if(instakillOnMiss)
-		{
-			vocals.volume = 0;
-			doDeathCheck(true);
-		}
-
-		//For testing purposes
-		//trace(daNote.missHealth);
-		songMisses++;
-		vocals.volume = 0;
-		if(!practiceMode) songScore -= 10;
-
-		totalPlayed++;
-		RecalculateRating(true);
-
-		var char:Character = dad;
-		if(daNote.gfNote) {
-			char = gf;
-		}
-
-		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
-		{
-			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
-			char.playAnim(animToPlay, true);
-		}
-
-		callOnLuas('opponentNoteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
+		callOnLuas(opponentPlay ? 'opponentNoteMiss' : 'noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
 	}
 
 	function noteMissPress(direction:Int = 1):Void //You pressed a key when there was no notes to press for this key
