@@ -3678,22 +3678,30 @@ class PlayState extends MusicBeatState
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
 			case 'Trigger Opponent Play':
-				if (opponentPlay ? health > 1.61 : health < 0.4)
-					health = opponentPlay ? 1.61 / healthGain : 0.4 * healthGain;
-				
+				if (!practiceMode && (opponentPlay ? health > 1.61 : health < 0.4))
+					health = opponentPlay ? 1.61 : 0.4;
+
 				if (value1.length < 1) value1 = 'swap';
-				if (value1 == 'on') opponentPlay = true;
-				else if (value1 == 'off') opponentPlay = false;
-				else if (value1 == 'swap') opponentPlay = !opponentPlay;
+				if (value1 == 'on') value1 == true;
+				else if (value1 == 'off') value1 == false;
 				
+				var oppoPlayBefore:Bool = opponentPlay;
+				if (value1 == 'swap') opponentPlay = !opponentPlay;
+				else opponentPlay = value1;
+
 				if (value2.length < 1) value2 = 'true';
 				if (value2 == 'true' && ClientPrefs.middleScroll) {
-					for (i in 0...opponentStrums.members.length) FlxTween.tween(opponentStrums.members[i], {x: playerStrums.members[i].x, alpha: opponentPlay ? 1 : 0.5}, 0.35, {ease: FlxEase.circOut});
-					for (i in 0...playerStrums.members.length) FlxTween.tween(playerStrums.members[i], {x: opponentStrums.members[i].x, alpha: opponentPlay ? 0.5 : 1}, 0.35, {ease: FlxEase.circOut});
-				} // else if (value2 == 'false') {trace('FUCK YOU NOTHING HAPPENED LMFAO');}
+					if (opponentPlay != oppoPlayBefore) {
+						for (i in 0...opponentStrums.members.length) FlxTween.tween(opponentStrums.members[i], {x: playerStrums.members[i].x, alpha: opponentPlay ? 1 : 0.5}, 0.35, {ease: FlxEase.circOut});
+						for (i in 0...playerStrums.members.length) FlxTween.tween(playerStrums.members[i], {x: opponentStrums.members[i].x, alpha: opponentPlay ? 0.5 : 1}, 0.35, {ease: FlxEase.circOut});
+					}
+				} // else if (value2 == 'false') trace('FUCK YOU NOTHING HAPPENED LMFAO');
 
-				// So strums don't look wierd after switch.
+				// So they don't look wierd after switch.
 				for (i in 0...strumLineNotes.members.length) strumLineNotes.members[i].playAnim('static', true);
+				dad.dance();
+				gf.dance();
+				boyfriend.dance();
 
 				setOnLuas('opponentPlay', opponentPlay);
 				trace('"Opponent Play" has been triggered');
