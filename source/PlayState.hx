@@ -388,10 +388,10 @@ class PlayState extends MusicBeatState
 		// Gameplay settings
 		healthGain = ClientPrefs.getGameplaySetting('healthgain', 1);
 		healthLoss = ClientPrefs.getGameplaySetting('healthloss', 1);
+		opponentPlay = ClientPrefs.getGameplaySetting('opponentplay', false); // OoO
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
-		opponentPlay = ClientPrefs.getGameplaySetting('opponentplay', false); // OoO
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
