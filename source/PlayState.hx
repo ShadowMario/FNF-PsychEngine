@@ -3682,8 +3682,8 @@ class PlayState extends MusicBeatState
 					health = opponentPlay ? 1.61 : 0.4;
 
 				if (value1.length < 1) value1 = 'swap';
-				if (value1 == 'on') value1 == true;
-				else if (value1 == 'off') value1 == false;
+				if (value1 == 'on') value1 = true;
+				else if (value1 == 'off') value1 = false;
 				
 				var oppoPlayBefore:Bool = opponentPlay;
 				if (value1 == 'swap') opponentPlay = !opponentPlay;
