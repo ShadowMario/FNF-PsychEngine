@@ -3682,13 +3682,13 @@ class PlayState extends MusicBeatState
 					health = opponentPlay ? 1.61 : 0.4;
 
 				var realValue1:Dynamic = !opponentPlay
-				if (value1.length < 1) value1 = 'swap';
-				if (value1 == 'on') value1 = true;
-				else if (value1 == 'off') value1 = false;
+				if (value1.length < 1) realValue1 = 'swap';
+				if (value1 == 'on') realValue1 = true;
+				else if (value1 == 'off') realValue1 = false;
 				
 				var oppoPlayBefore:Bool = opponentPlay;
-				if (value1 == 'swap') opponentPlay = !opponentPlay;
-				else opponentPlay = value1;
+				if (realValue1 == 'swap') opponentPlay = !opponentPlay;
+				else opponentPlay = realValue1;
 
 				if (value2.length < 1) value2 = 'true';
 				if (value2 == 'true' && ClientPrefs.middleScroll) {
