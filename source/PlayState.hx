@@ -3681,7 +3681,7 @@ class PlayState extends MusicBeatState
 				if (!practiceMode && (opponentPlay ? health > 1.61 : health < 0.4))
 					health = opponentPlay ? 1.61 : 0.4;
 
-				var realValue1:Dynamic = !opponentPlay
+				var realValue1:Dynamic = !opponentPlay;
 				if (value1.length < 1) realValue1 = 'swap';
 				if (value1 == 'on') realValue1 = true;
 				else if (value1 == 'off') realValue1 = false;
