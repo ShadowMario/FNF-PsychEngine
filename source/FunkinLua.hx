@@ -1600,12 +1600,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "cameraSetTarget", function(target:String) {
-			var isDad:Bool = false;
-			if(target == 'dad') {
-				isDad = true;
-			}
-			PlayState.instance.moveCamera(isDad);
-			return isDad;
+			PlayState.instance.moveCamera(target);
 		});
 		Lua_helper.add_callback(lua, "cameraShake", function(camera:String, intensity:Float, duration:Float) {
 			cameraFromString(camera).shake(intensity, duration);
