@@ -606,11 +606,10 @@ class WeekEditorFreeplayState extends MusicBeatState
 
 		for (i in 0...weekFile.songs.length)
 		{
-			var songText:Alphabet = new Alphabet(90, 320, weekFile.songs[i][0], true);
+			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, weekFile.songs[i][0], true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
-			songText.snapToPosition();
 
 			var icon:HealthIcon = new HealthIcon(weekFile.songs[i][1]);
 			icon.sprTracker = songText;
