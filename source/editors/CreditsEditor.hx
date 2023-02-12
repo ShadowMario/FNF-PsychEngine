@@ -20,22 +20,20 @@ import sys.io.File;
 import lime.utils.Assets;
 
 import flixel.FlxCamera;
+import flixel.ui.FlxButton;
+import flixel.ui.FlxSpriteButton;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.FlxInputText;
-import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.ui.FlxUIInputText;
-import flixel.addons.ui.FlxUINumericStepper;
-import flixel.addons.ui.FlxUISlider;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
-import flixel.ui.FlxButton;
-import flixel.ui.FlxSpriteButton;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flash.net.FileFilter;
+import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
-import openfl.net.FileReference;
-import flash.net.FileFilter;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
 
@@ -48,25 +46,29 @@ class CreditsEditor extends MusicBeatState
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var iconArray:Array<AttachedSprite> = [];
 	private var creditsStuff:Array<Array<String>> = [];
+	private var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
+	public var ignoreWarnings = false;
+
+	public var camGame:FlxCamera;
+	public var camUI:FlxCamera;
+	public var camOther:FlxCamera;
 
 	var bg:FlxSprite;
 	var descText:FlxText;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 	var descBox:AttachedSprite;
-
-	var offsetThing:Float = -75;
-
-	var camUI:FlxCamera;
 	var UI_box:FlxUITabMenu;
 
+	var offsetThing:Float = -75;
+	
 	var text:String = "";
 
 	override function create()
 	{
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
+		DiscordClient.changePresence("Credits Editor", null);
 		#end
 
 		persistentUpdate = true;
@@ -78,19 +80,26 @@ class CreditsEditor extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 		
+		camGame = new FlxCamera();
 		camUI = new FlxCamera();
+		camOther = new FlxCamera();
 		camUI.bgColor.alpha = 0;
+		camOther.bgColor.alpha = 0;
+
+		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camUI, false);
-		FlxG.cameras.setDefaultDrawTarget(FlxG.camera, true);
+		FlxG.cameras.add(camOther, false);
+		FlxG.cameras.setDefaultDrawTarget(camGame, true);
+		CustomFadeTransition.nextCamera = camOther;
 
 		var tabs = [
-			{name: "Credit", label: 'Credit'}
+			{name: 'Credits', label: 'Credits'}
 		];
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
 		UI_box.cameras = [camUI];
-		UI_box.resize(260, 400);
-		UI_box.x = 840;
+		UI_box.resize(270, 380);
+		UI_box.x = 940;
 		UI_box.y = 25;
 		UI_box.scrollFactor.set();
 		add(UI_box);
@@ -98,10 +107,12 @@ class CreditsEditor extends MusicBeatState
 
 		text =
 		"W/S or Up/Down - Change selected item
-		\nSpace - Get selected item data
 		\nEnter - Apply changes
+		\nSpace - Get selected item data
 		\nDelete - Delete selected item
 		\nR - Reset inputs
+		\n1 - Add title
+		\n2 - Add credit
 		";
 
 		var tipTextArray:Array<String> = text.split('\n');
@@ -115,16 +126,9 @@ class CreditsEditor extends MusicBeatState
 			tipText.cameras = [camUI];
 		}
 
-		addCreditUI();
+		addCreditsUI();
 
-		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-			['Tittle'],
-			['Person',	'',	'Informations go here...',	'',	'e1e1e1']
-		];
-		
-		for(i in pisspoop){
-			creditsStuff.push(i);
-		}
+		creditsStuff = templateArray();
 
 		descBox = new AttachedSprite();
 		descBox.makeGraphic(1, 1, FlxColor.BLACK);
@@ -152,18 +156,125 @@ class CreditsEditor extends MusicBeatState
 		super.create();
 	}
 
-	function pushAtPos(pos:Int, data:Array<String>){
-		var daStuff:Array<Array<String>> = [];
-		for(i in 0...creditsStuff.length){
-			if(i == pos){
-				daStuff.push(data);
-			}
-			daStuff.push(creditsStuff[i]);
-		}
-		if(pos == creditsStuff.length){
-			daStuff.push(data);
-		}
-		creditsStuff = daStuff;
+	// Title inputs vars
+	var titleInput:FlxUIInputText;
+	var titleJump:FlxUICheckBox;
+	// Credits inputs vars
+	var creditNameInput:FlxUIInputText;
+	var iconInput:FlxUIInputText;
+	var iconExistCheck:FlxSprite;
+	var descInput:FlxUIInputText;
+	var linkInput:FlxUIInputText;
+	var colorInput:FlxUIInputText;
+	var colorSquare:FlxSprite;
+
+	function addCreditsUI():Void
+	{
+		var yDist:Float = 20;
+		titleInput = new FlxUIInputText(60, 20, 180, '', 8);
+		titleJump = new FlxUICheckBox(20, titleInput.y + yDist, null, null, 'Space betwen titles', 110);
+		titleJump.textX += 3;
+		titleJump.textY += 4;
+		if (FlxG.save.data.jumpTitle == null) FlxG.save.data.jumpTitle = true;
+		titleJump.checked = FlxG.save.data.jumpTitle;
+		titleJump.callback = function()
+		{
+			FlxG.save.data.jumpTitle = titleJump.checked;
+		};
+		var titleAdd:FlxButton = new FlxButton(20, titleJump.y + yDist + 10, "Add Title", function()
+		{
+			addTitle();
+		});
+
+		blockPressWhileTypingOn.push(titleInput);
+
+		creditNameInput = new FlxUIInputText(60, titleInput.y + 100, 180, '', 8);
+		iconInput = new FlxUIInputText(60, creditNameInput.y + yDist, 155, '', 8);
+		iconExistCheck = new FlxSprite(iconInput.x + 165, iconInput.y).makeGraphic(15, 15, 0xFFFFFFFF);
+		descInput = new FlxUIInputText(100, iconInput.y + yDist, 140, '', 8);
+		linkInput = new FlxUIInputText(60, descInput.y + yDist, 180, '', 8);
+		colorInput = new FlxUIInputText(60, linkInput.y + yDist, 70, '', 8);
+		colorSquare = new FlxSprite(colorInput.x + 80, colorInput.y).makeGraphic(15, 15, 0xFFFFFFFF);
+		var getIconColor:FlxButton = new FlxButton(colorSquare.x + 23, colorSquare.y - 2, "Get Icon Color", function()
+			{
+				var icon:String;
+				if(iconInput.text != null && iconInput.text.length > 0) icon = iconInput.text;
+				else icon = creditsStuff[curSelected][1];
+
+				var pathIcon:String;
+				if(Paths.fileExists('images/credits/' + icon + '.png', IMAGE)) pathIcon = 'credits/' + icon;
+				else pathIcon = 'credits/none';
+
+				var iconSprite:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image(pathIcon));				
+				var daColor:String = StringTools.hex(CoolUtil.dominantColor(iconSprite)).substring(2, this.length);
+				colorInput.text = daColor;
+
+				iconSprite.kill();
+				iconSprite = null;
+				iconColorShow();
+			});
+		var creditAdd:FlxButton = new FlxButton(20, colorInput.y + yDist + 10, "Add credit", function()
+		{
+			addCredit();
+		});
+		
+		blockPressWhileTypingOn.push(creditNameInput);
+		blockPressWhileTypingOn.push(iconInput);
+		blockPressWhileTypingOn.push(linkInput);
+		blockPressWhileTypingOn.push(descInput);
+		blockPressWhileTypingOn.push(colorInput);
+		
+		var resetAll:FlxButton = new FlxButton(50, 300, "Reset all", function()
+		{
+			openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, function(){
+				creditsStuff = templateArray();
+				updateCreditObjects();
+				curSelected = 1;
+				changeSelection();
+			}, null,ignoreWarnings));
+		});
+		resetAll.color = FlxColor.RED;
+		resetAll.label.color = FlxColor.WHITE;
+		var loadFile:FlxButton = new FlxButton(resetAll.x, resetAll.y + 25, "Load Credits", function()
+		{
+			loadCredits();
+		});
+		var saveFile:FlxButton = new FlxButton(loadFile.x + 90, loadFile.y, "Save Credits", function()
+		{
+			saveCredits();
+		});
+
+		var tab_group_credits = new FlxUI(null, UI_box);
+		tab_group_credits.name = "Credits";
+
+		tab_group_credits.add(titleInput);
+		tab_group_credits.add(new FlxText(titleInput.x - 40, titleInput.y, 0, 'Title:'));
+		tab_group_credits.add(titleJump);
+
+		tab_group_credits.add(creditNameInput);
+		tab_group_credits.add(iconInput);
+		tab_group_credits.add(makeSquareBorder(iconExistCheck, 18));
+		tab_group_credits.add(iconExistCheck);
+		tab_group_credits.add(descInput);
+		tab_group_credits.add(linkInput);
+		tab_group_credits.add(colorInput);
+		tab_group_credits.add(makeSquareBorder(colorSquare, 18));
+		tab_group_credits.add(colorSquare);
+		tab_group_credits.add(getIconColor);
+		tab_group_credits.add(new FlxText(creditNameInput.x - 40, creditNameInput.y, 0, 'Name:'));
+		tab_group_credits.add(new FlxText(iconInput.x - 40, iconInput.y, 0, 'Icon:'));
+		tab_group_credits.add(new FlxText(descInput.x - 80, descInput.y, 0, 'Description:'));
+		tab_group_credits.add(new FlxText(linkInput.x - 40, linkInput.y, 0, 'Link:'));
+		tab_group_credits.add(new FlxText(colorInput.x - 40, colorInput.y, 0, 'Color:'));
+		tab_group_credits.add(titleAdd);
+		tab_group_credits.add(creditAdd);
+
+		tab_group_credits.add(loadFile);
+		tab_group_credits.add(saveFile);
+		tab_group_credits.add(resetAll);
+
+		UI_box.addGroup(tab_group_credits);
+		showIconExist(iconInput.text);
 	}
 
 	function updateCreditObjects(){
@@ -196,9 +307,8 @@ class CreditsEditor extends MusicBeatState
 					Paths.currentModDirectory = creditsStuff[i][5];
 				}
 
-				var pathExists:Bool = Paths.fileExists('images/credits/' + creditsStuff[i][1] + '.png', IMAGE);
 				var icon:AttachedSprite;
-				if(pathExists) icon = new AttachedSprite('credits/' + creditsStuff[i][1]);
+				if(Paths.fileExists('images/credits/' + creditsStuff[i][1] + '.png', IMAGE)) icon = new AttachedSprite('credits/' + creditsStuff[i][1]);
 				else {
 					icon = new AttachedSprite('credits/unknow'); // If icon didnt load it will load the unknow icon.
 					if(creditsStuff[i][1] == null || creditsStuff[i][1] == '') icon = new AttachedSprite('credits/none');
@@ -218,11 +328,11 @@ class CreditsEditor extends MusicBeatState
 		}
 	}
 
-	function addCredit(){		
+	function addCredit(){
 		var daData:Array<String> = [];
-		daData.push('Person');
+		daData.push('User');
 		daData.push('');
-		daData.push('Informations go here...');
+		daData.push('Description here...');
 		daData.push('');
 		daData.push('e1e1e1');
 
@@ -232,12 +342,12 @@ class CreditsEditor extends MusicBeatState
 		changeSelection();
 	}
 
-	function addTittle(){
+	function addTitle(){
 		var daData:Array<String> = [];
-		daData.push('Tittle');
+		daData.push('Title');
 		pushAtPos(curSelected + 1, daData);
 
-		if(tittleJump.checked){
+		if(titleJump.checked){
 			var daData:Array<String> = [];
 			pushAtPos(curSelected + 1, daData);
 		}
@@ -246,164 +356,53 @@ class CreditsEditor extends MusicBeatState
 		changeSelection();
 	}
 
-	function cleanInputs(){
-		tittleInput.text = '';
-		creditNameInput.text = '';
-		iconInput.text = '';
-		descInput.text = '';
-		linkInput.text = '';
-		colorInput.text = '';
-		iconColor(iconInput.text);
-	}
-	function goToInputs(){
-		if(curSelIsTittle){
-			tittleInput.text = creditsStuff[curSelected][0];
+	function dataGoToInputs(){
+		if(curSelIsTitle){
+			titleInput.text = creditsStuff[curSelected][0];
 		} else {
 			creditNameInput.text = creditsStuff[curSelected][0];
 			iconInput.text = creditsStuff[curSelected][1];
 			descInput.text = creditsStuff[curSelected][2];
 			linkInput.text = creditsStuff[curSelected][3];
 			colorInput.text = creditsStuff[curSelected][4];
-			iconColor(iconInput.text);
+			showIconExist(iconInput.text);
+			iconColorShow();
 		}
 	}
-
-	private var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
-	var tittleInput:FlxUIInputText;
-	var tittleJump:FlxUICheckBox = null;
-
-	var creditNameInput:FlxUIInputText;
-	var iconInput:FlxUIInputText;
-	var iconExistCheck:FlxSprite;
-	var descInput:FlxUIInputText;
-	var linkInput:FlxUIInputText;
-	var colorInput:FlxUIInputText;
-	var colorSquare:FlxSprite;
-	function addCreditUI():Void
-	{
-		var yDist:Float = 20;
-		tittleInput = new FlxUIInputText(60, 20, 180, '', 8);
-		tittleJump = new FlxUICheckBox(20, tittleInput.y + yDist, null, null, 'Space betwen tittles', 180);
-		if (FlxG.save.data.jumpTittle == null) FlxG.save.data.jumpTittle = true;
-		tittleJump.checked = FlxG.save.data.jumpTittle;
-		tittleJump.callback = function()
-		{
-			FlxG.save.data.jumpTittle = tittleJump.checked;
-		};
-		var tittleAdd:FlxButton = new FlxButton(20, tittleJump.y + yDist, "Add Tittle", function()
-			{
-				addTittle();
-			});
-
-		blockPressWhileTypingOn.push(tittleInput);
-
-		creditNameInput = new FlxUIInputText(60, tittleInput.y + 100, 180, '', 8);
-		iconInput = new FlxUIInputText(60, creditNameInput.y + yDist, 155, '', 8);
-		iconExistCheck = new FlxSprite(iconInput.x + 165, iconInput.y).makeGraphic(15, 15, 0xFFFFFFFF);
-		descInput = new FlxUIInputText(100, iconInput.y + yDist, 140, '', 8);
-		linkInput = new FlxUIInputText(60, descInput.y + yDist, 180, '', 8);
-		colorInput = new FlxUIInputText(60, linkInput.y + yDist, 70, '', 8);
-		colorSquare = new FlxSprite(colorInput.x + 80, colorInput.y).makeGraphic(15, 15, 0xFFFFFFFF);
-		var getIconColor:FlxButton = new FlxButton(colorSquare.x + 23, colorSquare.y - 2, "Get Icon Color", function()
-			{
-				var icon:String;
-				if(iconInput.text != null && iconInput.text.length > 0) icon = iconInput.text;
-				else icon = creditsStuff[curSelected][1];
-
-				var daIcon:String;
-				var pathExists:Bool = Paths.fileExists('images/credits/' + icon + '.png', IMAGE);
-				if(pathExists) daIcon = 'credits/' + icon;
-				else daIcon = 'credits/none';
-
-				var iconSprite:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image(daIcon));				
-				var daColor:String = StringTools.hex(CoolUtil.dominantColor(iconSprite)).substring(2, this.length);
-				colorInput.text = daColor;
-
-				iconSprite.kill();
-			});
-		var creditAdd:FlxButton = new FlxButton(20, colorInput.y + 25, "Add credit", function()
-			{
-				addCredit();
-			});
-		
-		blockPressWhileTypingOn.push(creditNameInput);
-		blockPressWhileTypingOn.push(iconInput);
-		blockPressWhileTypingOn.push(linkInput);
-		blockPressWhileTypingOn.push(descInput);
-		blockPressWhileTypingOn.push(colorInput);
-		
-		var loadFile:FlxButton = new FlxButton(50, 320, "Load Credits", function()
-			{
-				loadCredits();
-			});
-		var saveFile:FlxButton = new FlxButton(loadFile.x + 90, loadFile.y, "Save Credits", function()
-			{
-				saveCredits();
-			});
-		var resetAll:FlxButton = new FlxButton(loadFile.x, loadFile.y - 25, "reset all", function()
-			{
-				creditsStuff = [
-					['Tittle'],
-					['Person',	'',	'Informations go here...',	'',	'e1e1e1']
-				];
-				updateCreditObjects();
-				changeSelection();
-			});
-		resetAll.color = FlxColor.RED;
-		resetAll.label.color = FlxColor.WHITE;
-
-		var tab_group_credit = new FlxUI(null, UI_box);
-		tab_group_credit.name = "Credit";
-
-		tab_group_credit.add(tittleInput);
-		tab_group_credit.add(new FlxText(tittleInput.x - 40, tittleInput.y, 0, 'Tittle:'));
-		tab_group_credit.add(tittleJump);
-
-		tab_group_credit.add(creditNameInput);
-		tab_group_credit.add(iconInput);
-		tab_group_credit.add(iconExistCheck);
-		tab_group_credit.add(descInput);
-		tab_group_credit.add(linkInput);
-		tab_group_credit.add(colorInput);
-		tab_group_credit.add(colorSquare);
-		tab_group_credit.add(getIconColor);
-		tab_group_credit.add(new FlxText(creditNameInput.x - 40, creditNameInput.y, 0, 'Name:'));
-		tab_group_credit.add(new FlxText(iconInput.x - 40, iconInput.y, 0, 'Icon:'));
-		tab_group_credit.add(new FlxText(descInput.x - 80, descInput.y, 0, 'Description:'));
-		tab_group_credit.add(new FlxText(linkInput.x - 40, linkInput.y, 0, 'Link:'));
-		tab_group_credit.add(new FlxText(colorInput.x - 40, colorInput.y, 0, 'Color:'));
-		tab_group_credit.add(tittleAdd);
-		tab_group_credit.add(creditAdd);
-
-		tab_group_credit.add(loadFile);
-		tab_group_credit.add(saveFile);
-		tab_group_credit.add(resetAll);
-
-		UI_box.addGroup(tab_group_credit);
-		iconColor(iconInput.text);
+	
+	function cleanInputs(){
+		titleInput.text = '';
+		creditNameInput.text = '';
+		iconInput.text = '';
+		descInput.text = '';
+		linkInput.text = '';
+		colorInput.text = '';
+		showIconExist(iconInput.text);
 	}
 
-	function updateDaInfo(){
-		if(curSelIsTittle){
-			if(tittleInput.text != null && tittleInput.text.length > 0) creditsStuff[curSelected][0] = tittleInput.text;
-			else creditsStuff[curSelected][0] = 'Tittle';
+	function setItemData(){
+		if(curSelIsTitle){
+			if(titleInput.text != null && titleInput.text.length > 0) creditsStuff[curSelected][0] = titleInput.text;
+			else creditsStuff[curSelected][0] = 'Title';
 		} else {
 			if(creditNameInput.text != null && creditNameInput.text.length > 0) creditsStuff[curSelected][0] = creditNameInput.text;
-			else creditsStuff[curSelected][0] = 'Person';
+			else creditsStuff[curSelected][0] = 'User';
 	
 			creditsStuff[curSelected][1] = iconInput.text;		
 	
 			if(descInput.text != null && descInput.text.length > 0) creditsStuff[curSelected][2] = descInput.text;
-			else creditsStuff[curSelected][2] = 'Informations go here...';
+			else creditsStuff[curSelected][2] = 'Description here...';
 	
 			creditsStuff[curSelected][3] = linkInput.text;
 			
-			if(colorInput.text != null && colorInput.text.length > 0) creditsStuff[curSelected][4] = colorInput.text;
-			else creditsStuff[curSelected][4] = 'e1e1e1';
+			if(colorInput.text != null && colorInput.text.length > 0) {
+				creditsStuff[curSelected][4] = colorInput.text;
+			} else { creditsStuff[curSelected][4] = 'e1e1e1'; }
 		}
 	}
 
-	function deleteDaStuff(){
+	function deleteSelItem(){
+		if(curSelected == 0 || creditsStuff.length <= 1) return; // you trying to delete the first title? why dont you edit it...
 		var daStuff:Array<Array<String>> = [];
 		for(i in 0...creditsStuff.length){
 			if(!unselectableCheck(curSelected)){
@@ -411,10 +410,8 @@ class CreditsEditor extends MusicBeatState
 					daStuff.push(creditsStuff[i]);
 				}
 			} else {
-				if(curSelected == 0) return; // you trying to delete the first tittle? why dont you edit it...
-
 				var shit:Bool = true;
-				if(nullCheck(curSelected - 1)){ // remove space betwen tittle's
+				if(nullCheck(curSelected - 1)){ // remove space betwen title's
 					var u:Int = curSelected - 1;
 					if(i == u) shit = false;
 				}
@@ -425,13 +422,35 @@ class CreditsEditor extends MusicBeatState
 			}
 		}
 		creditsStuff = daStuff;
+
 		if(curSelected > (creditsStuff.length - 1)) curSelected = creditsStuff.length;
 		do {
 			curSelected -= 1;
 		} while(nullCheck(curSelected));
-
+		
 		updateCreditObjects();
 		changeSelection();
+	}
+
+	function templateArray(){
+		return([
+			['Title'],
+			['User',	'',	'Description here...',	'',	'e1e1e1']
+		]);
+	}
+
+	function pushAtPos(pos:Int, data:Array<String>){
+		var daStuff:Array<Array<String>> = [];
+		for(i in 0...creditsStuff.length){
+			if(i == pos){
+				daStuff.push(data);
+			}
+			daStuff.push(creditsStuff[i]);
+		}
+		if(pos == creditsStuff.length){
+			daStuff.push(data);
+		}
+		creditsStuff = daStuff;
 	}
 
 	var quitting:Bool = false;
@@ -442,11 +461,6 @@ class CreditsEditor extends MusicBeatState
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
-
-		var daColor:Int;
-		if(colorInput.text != null && colorInput.text.length > 0) daColor = Std.parseInt('0xFF' + colorInput.text);
-		else daColor = Std.parseInt('0xFFe1e1e1');
-		colorSquare.color = daColor;
 
 		var blockInput:Bool = false;
 		for (inputText in blockPressWhileTypingOn) {
@@ -464,27 +478,20 @@ class CreditsEditor extends MusicBeatState
 			if(creditsStuff.length > 1)
 			{
 				var shiftMult:Int = 1;
-				if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
+				//if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
 
-				var upP = controls.UI_UP_P;
-				var downP = controls.UI_DOWN_P;
-
-				if(FlxG.keys.pressed.R){
-					cleanInputs();
-				}
-
-				if (upP)
+				if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP)
 				{
 					changeSelection(-shiftMult);
 					holdTime = 0;
 				}
-				if (downP)
+				if (FlxG.keys.justPressed.S || FlxG.keys.justPressed.DOWN)
 				{
 					changeSelection(shiftMult);
 					holdTime = 0;
 				}
 
-				if(controls.UI_DOWN || controls.UI_UP)
+				if((FlxG.keys.justPressed.S || FlxG.keys.justPressed.DOWN) || (FlxG.keys.justPressed.W || FlxG.keys.justPressed.UP))
 				{
 					var checkLastHold:Int = Math.floor((holdTime - 0.5) * 10);
 					holdTime += elapsed;
@@ -498,17 +505,31 @@ class CreditsEditor extends MusicBeatState
 			}
 
 			if(FlxG.keys.justPressed.ENTER) {
-				updateDaInfo();
+				setItemData();
 				updateCreditObjects();
 				changeSelection();
 			}
+
 			if(FlxG.keys.justPressed.SPACE) {
-				goToInputs();
+				dataGoToInputs();
 			}
+
 			if(FlxG.keys.justPressed.DELETE) {
-				deleteDaStuff();
+				deleteSelItem();
 			}
-			if (controls.BACK)
+
+			if(FlxG.keys.pressed.R){
+				cleanInputs();
+			}
+
+			if(FlxG.keys.justPressed.ONE) {
+				addTitle();
+			}
+			if(FlxG.keys.justPressed.TWO) {
+				addCredit();
+			}
+
+			if (FlxG.keys.justPressed.BACKSPACE)
 			{
 				if(colorTween != null) {
 					colorTween.cancel();
@@ -531,7 +552,7 @@ class CreditsEditor extends MusicBeatState
 	}
 
 	var moveTween:FlxTween = null;
-	var curSelIsTittle:Bool = false;
+	var curSelIsTitle:Bool = false;
 	function changeSelection(change:Int = 0)
 	{
 		if(change != 0) FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
@@ -542,8 +563,9 @@ class CreditsEditor extends MusicBeatState
 			if (curSelected >= creditsStuff.length)
 				curSelected = 0;
 		} while(nullCheck(curSelected));
-		curSelIsTittle = false;
-		if(unselectableCheck(curSelected)) curSelIsTittle = true;
+
+		if(unselectableCheck(curSelected)) curSelIsTitle = true;
+		else curSelIsTitle = false;
 
 		var newColor:Int;
 		if(unselectableCheck(curSelected)) newColor =  Std.parseInt('0xFFe1e1e1');
@@ -574,10 +596,10 @@ class CreditsEditor extends MusicBeatState
 				}
 			}
 		}
-
+		
+		descText.text = creditsStuff[curSelected][2];
 		descBox.visible = !unselectableCheck(curSelected);	
 		descText.visible = !unselectableCheck(curSelected);
-		descText.text = creditsStuff[curSelected][2];
 
 		if(change != 0){
 			descText.y = FlxG.height - descText.height + offsetThing - 60;
@@ -589,26 +611,6 @@ class CreditsEditor extends MusicBeatState
 		descBox.updateHitbox();
 	}
 
-	function getCurrentBGColor() {
-		var bgColor:String = creditsStuff[curSelected][4];
-		if(!bgColor.startsWith('0x')) {
-			bgColor = '0xFF' + bgColor;
-		}
-		return Std.parseInt(bgColor);
-	}
-
-	function iconColor(text:String){
-		var daColor:Int;
-		if(text.length == 0){
-			daColor = Std.parseInt('0xFFFFC31E');
-		} else {
-			var pathExists:Bool = Paths.fileExists('images/credits/' + text + '.png', IMAGE);
-			if(!pathExists) daColor = Std.parseInt('0xFFFF004C');
-			else daColor = Std.parseInt('0xFF00FF37');
-		}
-		iconExistCheck.color = daColor;
-	}
-
 	private function unselectableCheck(num:Int):Bool {
 		return creditsStuff[num].length <= 1;
 	}
@@ -617,15 +619,60 @@ class CreditsEditor extends MusicBeatState
 		return false;
 	}
 
+	function getCurrentBGColor() {
+		var bgColor:String = creditsStuff[curSelected][4];
+		if(!bgColor.startsWith('0x')) {
+			bgColor = '0xFF' + bgColor;
+		}
+		return Std.parseInt(bgColor);
+	}
+
+	function makeSquareBorder(object:FlxSprite, size:Int){ // Just to make color squares look a little nice and easier to see
+		var x:Float = object.x;
+		var y:Float = object.y;
+		var offset:Float = 1.5;
+
+		var border:FlxSprite = new FlxSprite(x - offset, y - offset).makeGraphic(size, size, 0xFF000000);
+		return(border);
+	}
+
+	function showIconExist(text:String){
+		var daColor:Int;
+		if(text.length == 0){
+			daColor = Std.parseInt('0xFFFFC31E'); // no input then
+		} else {
+			if(!Paths.fileExists('images/credits/' + text + '.png', IMAGE)) daColor = Std.parseInt('0xFFFF004C'); // icon not found
+			else daColor = Std.parseInt('0xFF00FF37'); // icon was found
+		}
+		iconExistCheck.color = daColor;
+	}
+
+	function iconColorShow(){
+		if(colorInput.text.length > 10) return;
+		var daColor:Int;
+		if(colorInput.text != null && colorInput.text.length > 0) {
+
+			if(!colorInput.text.startsWith('0xFF')) {
+				daColor = Std.parseInt('0xFF' + colorInput.text);
+			} else { daColor = Std.parseInt(colorInput.text); }
+			
+		} else { daColor = Std.parseInt('0xFFe1e1e1'); }
+		colorSquare.color = daColor;
+	}
+
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
 		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
 			if(sender == iconInput) {
-				iconColor(iconInput.text);
+				showIconExist(iconInput.text);
+			}
+			if(sender == colorInput) {
+				iconColorShow();
 			}
 		}
 	}
 
+	// Save & Load functions
 	var _file:FileReference;
 	function onSaveComplete(_):Void
 	{
@@ -636,9 +683,6 @@ class CreditsEditor extends MusicBeatState
 		FlxG.log.notice("Successfully saved file.");
 	}
 
-	/**
-		* Called when the save file dialog is cancelled.
-		*/
 	function onSaveCancel(_):Void
 	{
 		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
@@ -647,9 +691,6 @@ class CreditsEditor extends MusicBeatState
 		_file = null;
 	}
 
-	/**
-		* Called if there is an error while saving the gameplay recording.
-		*/
 	function onSaveError(_):Void
 	{
 		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
@@ -709,7 +750,6 @@ class CreditsEditor extends MusicBeatState
 					creditsStuff.push(arr);
 				}
 				updateCreditObjects();
-				
 				return;
 			}
 		}
@@ -720,28 +760,21 @@ class CreditsEditor extends MusicBeatState
 		#end
 	}
 
-	/**
-		* Called when the save file dialog is cancelled.
-		*/
-		
-		function onLoadCancel(_):Void
-		{
-			_file.removeEventListener(Event.SELECT, onLoadComplete);
-			_file.removeEventListener(Event.CANCEL, onLoadCancel);
-			_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
-			_file = null;
-			trace("Cancelled file loading.");
-		}
-			
-			/**
-				* Called if there is an error while saving the gameplay recording.
-				*/
-		function onLoadError(_):Void
-		{
-			_file.removeEventListener(Event.SELECT, onLoadComplete);
-			_file.removeEventListener(Event.CANCEL, onLoadCancel);
-			_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
-			_file = null;
-			trace("Problem loading file");
-		}			
+	function onLoadCancel(_):Void
+	{
+		_file.removeEventListener(Event.SELECT, onLoadComplete);
+		_file.removeEventListener(Event.CANCEL, onLoadCancel);
+		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+		_file = null;
+		trace("Cancelled file loading.");
+	}
+	
+	function onLoadError(_):Void
+	{
+		_file.removeEventListener(Event.SELECT, onLoadComplete);
+		_file.removeEventListener(Event.CANCEL, onLoadCancel);
+		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+		_file = null;
+		trace("Problem loading file");
+	}
 }
