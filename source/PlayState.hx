@@ -72,7 +72,9 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-import hxcodec.VideoHandler;
+#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler
+#elseif (hxCodec >= "2.6.0") import VideoHandler;
+#else import vlc.MP4Handler as VideoHandler; #end
 #end
 
 using StringTools;
