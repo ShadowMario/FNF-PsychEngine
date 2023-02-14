@@ -1,0 +1,3 @@
+Makes the notes shake
+Value 1: Amount
+Value 2: Nothing
