@@ -2,6 +2,7 @@ local shakeAmount = 0
 
 local defaultNotePos = {}
 
+-- ALTER be like
 function onCreatePost()
 	for i = 0,getProperty('opponentStrums.length') do 
         x = getPropertyFromGroup('opponentStrums', i, 'x')
