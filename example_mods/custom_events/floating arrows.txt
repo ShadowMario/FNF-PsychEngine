@@ -1,5 +1,0 @@
-Moves the arrows up and down
-
-Yeah,it's kinda a bit broken on the trigger...
-
-For it to trigger,leave value 1 and 2 blank
