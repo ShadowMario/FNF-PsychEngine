@@ -1,0 +1,50 @@
+{
+	"songs": [
+		[
+			"unpredictability",
+			"lime",
+			[
+				0,
+				13,
+				0
+			]
+		],
+		[
+			"disparity",
+			"lime",
+			[
+				60,
+				0,
+				0
+			]
+		],
+		[
+			"Knock-out",
+			"lime",
+			[
+				135,
+				0,
+				13
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "lime",
+	"difficulties": "hard",
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"storyName": "Week 5 - Lime's Week : THE AIRSHIP",
+	"weekName": "the airship",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}
