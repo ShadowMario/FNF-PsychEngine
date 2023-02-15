@@ -1,0 +1,50 @@
+{
+	"songs": [
+		[
+			"toxic tank",
+			"coral",
+			[
+				120,
+				0,
+				95
+			]
+		],
+		[
+			"files and folders",
+			"coral",
+			[
+				0,
+				0,
+				255
+			]
+		],
+		[
+			"geepers",
+			"coral",
+			[
+				0,
+				0,
+				0
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "coral",
+	"difficulties": "hard",
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"storyName": "Coral's Week - Week 4 : the airsship",
+	"weekName": "the airship week4",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}
