@@ -8,13 +8,8 @@
 
 function onCreate()
 	-- background shit
-	makeLuaSprite('TheMountainsBack', 'TheMountainsBack', -600, -300);
-	setScrollFactor('TheMountainsBack', 0.9, 0.9);
-	
-	makeLuaSprite('TheMountainsBottom', 'TheMountainsBottom', -650, 600);
-	setScrollFactor('TheMountainsBottom', 0.9, 0.9);
-	scaleObject('TheMountainsBottom', 1.1, 1.1);
+	makeLuaSprite('TheMountains', 'TheMountains', 0, 0);
+	setScrollFactor('TheMountains', 0.3, 0.3);
 
-	addLuaSprite('TheMountainsBack', false);
-	addLuaSprite('TheMountainsBottom', false);
+	addLuaSprite('TheMountains', false);
 end

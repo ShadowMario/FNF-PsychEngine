@@ -8,13 +8,8 @@
 
 function onCreate()
 	-- background shit
-	makeLuaSprite('BlandTownBack', 'BlandTownBack', -600, -300);
-	setScrollFactor('BlandTownBack', 0.9, 0.9);
-	
-	makeLuaSprite('BlandTownBottom', 'BlandTownBottom', -650, 600);
-	setScrollFactor('BlandTownBottom', 0.9, 0.9);
-	scaleObject('BlandTownBottom', 1.1, 1.1);
+	makeLuaSprite('BlandTown', 'BlandTown', 0, 0);
+	setScrollFactor('BlandTown', 0.3, 0.3);
 
-	addLuaSprite('BlandTownBack', false);
-	addLuaSprite('BlandTownBottom', false);
+	addLuaSprite('BlandTown', false);
 end
