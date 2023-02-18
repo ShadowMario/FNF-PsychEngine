@@ -6,6 +6,6 @@ remember: some soundfonts are full chromatic scales, or insterments
 
 insterments : .txt file + .ogg file 
 
-chromatic scales : .ogg file (possibly pre-sliced)
+chromatic scales : .mp3 files (possibly pre-sliced)
 
 dwp : .dwp file
