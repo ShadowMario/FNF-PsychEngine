@@ -1,0 +1,1 @@
+If your gonna use this scale, you have to 'dull auto slice' it in 'slicex'
