@@ -1,0 +1,9 @@
+-- EVENT COPIED FROM ECHO ENGINE -- 
+
+Flashes the screen
+
+Value 1 : Speed
+
+Vaule 2 : Just leave blank
+
+Original Echo Engine Event From jmxamougusmodder
