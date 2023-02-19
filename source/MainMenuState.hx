@@ -243,8 +243,8 @@ class MainMenuState extends MusicBeatState
 									case 'mods':
 										MusicBeatState.switchState(new ModsMenuState());
 									#end
-									case 'awards':
-										MusicBeatState.switchState(new AchievementsMenuState());
+									case 'shop':
+										MusicBeatState.switchState(new ShopState());
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
