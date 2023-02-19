@@ -3,7 +3,7 @@ package; // DONT USE YET PLEASE
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.FlxText;
+import flixel.text.FlxText;
 import flixel.util.FlxArrayUtil;
 
 class ShopState extends FlxState
