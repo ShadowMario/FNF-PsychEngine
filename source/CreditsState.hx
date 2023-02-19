@@ -87,7 +87,7 @@ class CreditsState extends MusicBeatState
 			['WarlyFarly_unity',				'unity',			'Additonal Composer of VS Stupid',						'https://gamejolt.com/@WarlyFarly_Unity',		'FF0000'],
 			['Voosomni',                            'VOO',               'Additonal Artist of VS Stupid',                    '',           'E6CEA0'],
 			['Tyler',  'sus',  'An Animator ( Animated Corals Sprites )',  'https://twitter.com/TylerSt48813004', 'FFFFFF'],
-			['Thaorfaje',  'shhh',   'Another Animator',  '',  '000000'],
+			['Thaorfaje',  'shhh',   'Another Animator',  '',  'FFFFFF'],
 			[''],
 			['Exclusive Team Members'],
 			['Stefan2008',          '2008',      'EX Programmer of VS STUPID', 'https://twitter.com/StefanBETA123',      'FFA500'],
