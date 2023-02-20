@@ -45,6 +45,7 @@ class ShopState extends FlxState
         playerMoney = 0;
     }
     
+    // coltin I swear to god
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
