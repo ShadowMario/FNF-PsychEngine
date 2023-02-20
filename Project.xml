@@ -36,7 +36,6 @@
 	<classpath name="source" />
 	
 	<!-- PSYCH ENGINE CUSTOMIZATION -->
-	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="SOUNDFONTS_ALLOWED" if="desktop" /> <!-- DELETE THIS TO REMOVE THE SOUNDFONTS FOLDER -->
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
