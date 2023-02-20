@@ -38,6 +38,7 @@
 	<!-- PSYCH ENGINE CUSTOMIZATION -->
 	<define name="SOUNDFONTS_ALLOWED" if="desktop" /> <!-- DELETE THIS TO REMOVE THE SOUNDFONTS FOLDER -->
 	<define name="LUA_ALLOWED" if="desktop" />
+	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<define name="CRASH_HANDLER" if="desktop release" />
@@ -68,10 +69,7 @@
 	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
 	<assets path="assets/shared"        library="shared"        exclude="*.ogg" if="web"/>
 	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
-	
-	<section if="MODS_ALLOWED">
-		<assets path='example_mods' rename='mods' embed='false'/>
-	</section>
+
 	<section if="SOUNDFONTS_ALLOWED">
 		<assets path='soundfonts' rename='chromatic scales' embed='false'/>
 	</section>
