@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.util.FlxArrayUtil;
+import flixel.input.mouse.FlxMouseEventManager;
 
 class ShopState extends FlxState
 {
@@ -53,7 +54,7 @@ class ShopState extends FlxState
         // Check if player clicks on an item
         for(i in 0...items.length)
         {
-            if(FlxG.mouse.justPressed && items[i].overlaps(FlxG.mouse.x, FlxG.mouse.y))
+            FlxMouseEventManager.add(items[i], function onMouseDown(e:FlxSprite)
             {
                 // Deduct the price of the item from player's money
                 if(playerMoney >= (i + 1) * 10)
@@ -62,12 +63,12 @@ class ShopState extends FlxState
                     moneyText.text = "Tri-Coins: " + playerMoney;
                     
                     // Remove the item from the shop
-                    remove(items[i]);
-                    FlxArrayUtil.removeAt(items, i);
+                    remove(e);
+                    FlxArrayUtil.removeAt(e, i);
                     remove(itemTexts[i]);
                     FlxArrayUtil.removeAt(itemTexts, i);
                 }
-            }
+            });
         }
         
         // Check if player clicks on the shopkeeper to add money
