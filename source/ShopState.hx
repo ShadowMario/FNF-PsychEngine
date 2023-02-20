@@ -54,7 +54,7 @@ class ShopState extends FlxState
         // Check if player clicks on an item
         for(i in 0...items.length)
         {
-            FlxMouseEventManager.add(items[i], function onMouseDown(e:FlxSprite)
+            FlxMouseEventManager.instance.add(items[i], function onMouseDown(e:FlxSprite)
             {
                 // Deduct the price of the item from player's money
                 if(playerMoney >= (i + 1) * 10)
@@ -64,9 +64,9 @@ class ShopState extends FlxState
                     
                     // Remove the item from the shop
                     remove(e);
-                    FlxArrayUtil.removeAt(e, i);
+                    items.splice(i, 1);
                     remove(itemTexts[i]);
-                    FlxArrayUtil.removeAt(itemTexts, i);
+                    itemTexts.splice(i, 1);
                 }
             });
         }
