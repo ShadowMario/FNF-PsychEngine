@@ -1,0 +1,9 @@
+Value 1: The you want it
+Value 2: color you want the text
+
+example: 
+
+enjoy this mod!
+FF0000
+
+the result is red "enjoy this mod!" text

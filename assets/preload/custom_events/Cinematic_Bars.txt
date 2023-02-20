@@ -1,0 +1,9 @@
+-- EVENT COPIED FROM FRY ENGINE --
+
+Black bars that are horizontal placed on the screen
+
+Value 1 : ON / OFF - '1' for on, '2' for off
+
+Value 2 : SPEED
+
+Original Fry Engine Event From WarlyFarly_Unity
