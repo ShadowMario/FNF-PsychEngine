@@ -90,7 +90,7 @@ class TitleState extends MusicBeatState
 		Paths.clearUnusedMemory();
 
 		#if LUA_ALLOWED
-		Paths.pushGlobalMods();
+		Class<Paths>.pushGlobalMods(); //will thi work?
 		#end
 		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
 		WeekData.loadTheFirstEnabledMod();
