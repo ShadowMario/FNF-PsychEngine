@@ -7,7 +7,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxArrayUtil;
 import flixel.input.mouse.FlxMouseEventManager;
 
-class ShopState extends FlxState
+class ShopState extends MusicBeatState
 {
     private var shopkeeper:FlxSprite;
     private var items:Array<FlxSprite>;
@@ -69,6 +69,11 @@ class ShopState extends FlxState
                     itemTexts.splice(i, 1);
                 }
             });
+        }
+
+        if (FlxG.keys.justPressed.ESCAPE){
+            MusicBeatState.switchState(new MainMenuState());
+            FlxG.sound.play(Paths.sound('cancelMenu'));
         }
         
         // Check if player clicks on the shopkeeper to add money
