@@ -72,11 +72,11 @@ class ShopState extends FlxState
         }
         
         // Check if player clicks on the shopkeeper to add money
-        if(FlxG.mouse.justPressed && shopkeeper.overlaps(FlxG.mouse.x, FlxG.mouse.y))
+        FlxMouseEventManager.instance.add(shopkeeper, function onMouseDown(e:FlxSprite)
         {
             playerMoney += 10;
             moneyText.text = "Tri-Coins: " + playerMoney;
-            trace("...");
-        }
+            trace("bought item with money left: " + playerMoney);
+        });
     }
 }
