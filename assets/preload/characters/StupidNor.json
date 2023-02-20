@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				839,
+				147
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "Idle"
+		},
+		{
+			"offsets": [
+				814,
+				227
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "singUP"
+		},
+		{
+			"offsets": [
+				819,
+				60
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "singDOWN"
+		},
+		{
+			"offsets": [
+				810,
+				149
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "singRIGHT"
+		},
+		{
+			"offsets": [
+				826,
+				151
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "singLEFT"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/StupidNor",
+	"position": [
+		840,
+		530
+	],
+	"healthicon": "stupidnor",
+	"flip_x": false,
+	"healthbar_colors": [
+		221,
+		114,
+		220
+	],
+	"camera_position": [
+		-1162,
+		-80
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}
