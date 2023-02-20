@@ -53,7 +53,7 @@ class ShopState extends FlxState
         // Check if player clicks on an item
         for(i in 0...items.length)
         {
-            if(FlxG.mouse.justPressed && items[i].overlapsPoint(FlxG.mouse.x, FlxG.mouse.y))
+            if(FlxG.mouse.justPressed && items[i].overlaps(FlxG.mouse.x, FlxG.mouse.y))
             {
                 // Deduct the price of the item from player's money
                 if(playerMoney >= (i + 1) * 10)
@@ -71,7 +71,7 @@ class ShopState extends FlxState
         }
         
         // Check if player clicks on the shopkeeper to add money
-        if(FlxG.mouse.justPressed && shopkeeper.overlapsPoint(FlxG.mouse.x, FlxG.mouse.y))
+        if(FlxG.mouse.justPressed && shopkeeper.overlaps(FlxG.mouse.x, FlxG.mouse.y))
         {
             playerMoney += 10;
             moneyText.text = "Tri-Coins: " + playerMoney;
