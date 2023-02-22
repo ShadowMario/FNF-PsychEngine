@@ -372,6 +372,7 @@ class Paths
 	}
 
 	public static var currentTrackedSounds:Map<String, Sound> = [];
+	
 	public static function returnSound(path:String, key:String, ?library:String) {
 		#if MODS_ALLOWED
 		var file:String = modsSounds(path, key);
@@ -388,15 +389,7 @@ class Paths
 		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
 		// trace(gottenPath);
 		if(!currentTrackedSounds.exists(gottenPath))
-		#if MODS_ALLOWED
-			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
-		#else
-		{
-			var folder:String = '';
-			if(path == 'songs') folder = 'songs:';
-
-			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
-		}
+			currentTrackedSounds.set(gottenPath, Sound.fromFile('./${gottenPath}'));
 		
 		#end
 		localTrackedAssets.push(gottenPath);
