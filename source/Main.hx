@@ -107,11 +107,12 @@ class Main extends Sprite
 		FlxG.mouse.visible = false;
 		#end
 		
-		#if CRASH_HANDLER
+		#if (CRASH_HANDLER && !hl)
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		#if hl
-		hl.Api.setErrorHandler(onCrash);
 		#end
+		
+		#if (CRASH_HANDLER && hl)
+		hl.Api.setErrorHandler(onCrash);
 		#end
 
 		#if discord_rpc
