@@ -1,6 +1,6 @@
 package options;
 
-#if desktop
+#if discord_rpc
 import Discord.DiscordClient;
 #end
 import flash.text.TextField;

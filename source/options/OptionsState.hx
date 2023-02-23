@@ -1,6 +1,6 @@
 package options;
 
-#if desktop
+#if discord_rpc
 import Discord.DiscordClient;
 #end
 import flash.text.TextField;
@@ -55,7 +55,7 @@ class OptionsState extends MusicBeatState
 	var selectorRight:Alphabet;
 
 	override function create() {
-		#if desktop
+		#if discord_rpc
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 

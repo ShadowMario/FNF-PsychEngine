@@ -1,5 +1,7 @@
 package;
 
+import haxe.EnumFlags;
+import haxe.Exception;
 import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.FlxGame;
@@ -12,7 +14,7 @@ import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
 
-#if desktop
+#if discord_rpc
 import Discord.DiscordClient;
 #end
 
@@ -107,9 +109,12 @@ class Main extends Sprite
 		
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
+		#if hl
+		hl.Api.setErrorHandler(onCrash);
+		#end
 		#end
 
-		#if desktop
+		#if discord_rpc
 		if (!DiscordClient.isInitialized) {
 			DiscordClient.initialize();
 			Application.current.window.onClose.add(function() {
@@ -122,8 +127,13 @@ class Main extends Sprite
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
 	// very cool person for real they don't get enough credit for their work
 	#if CRASH_HANDLER
-	function onCrash(e:UncaughtErrorEvent):Void
+	function onCrash(e:Dynamic):Void
 	{
+		var message:String = "";
+		if ((e is UncaughtErrorEvent))
+			message = e.error;
+		else
+			message = try Std.string(e) catch(_:Exception) "Unknown";
 		var errMsg:String = "";
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
@@ -145,7 +155,7 @@ class Main extends Sprite
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nUncaught Error: " + message + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
 
 		if (!FileSystem.exists("./crash/"))
 			FileSystem.createDirectory("./crash/");
@@ -155,8 +165,17 @@ class Main extends Sprite
 		Sys.println(errMsg);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
+		#if hl
+		var flags:EnumFlags<hl.UI.DialogFlags> = new EnumFlags<hl.UI.DialogFlags>();
+		flags.set(IsError);
+		hl.UI.dialog("Error!", errMsg, flags);
+		#else
 		Application.current.window.alert(errMsg, "Error!");
+		#end
+
+		#if discord_rpc
 		DiscordClient.shutdown();
+		#end
 		Sys.exit(1);
 	}
 	#end
