@@ -26,6 +26,10 @@ import sys.io.File;
 import sys.io.Process;
 #end
 
+#if (hxCodec > "2.5.1")
+#error "hxCodec is greater than 2.5.1, please use 2.5.1 instead"
+#end
+
 using StringTools;
 
 class Main extends Sprite
