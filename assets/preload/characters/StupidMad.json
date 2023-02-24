@@ -3,80 +3,64 @@
 		{
 			"loop": false,
 			"offsets": [
-				54,
-				72
+				50,
+				50
 			],
-			"anim": "singLEFT",
+			"anim": "idle",
 			"fps": 24,
-			"name": "left",
+			"name": "Idle-alt",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
 				42,
-				60
+				108
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "singRIGHT-alt",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				84,
+				42
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "singLEFT-alt",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				92,
+				-40
 			],
 			"anim": "singDOWN",
 			"fps": 24,
-			"name": "down",
+			"name": "singDOWN-alt",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
 				46,
-				140
+				160
 			],
 			"anim": "singUP",
 			"fps": 24,
-			"name": "up",
+			"name": "singUP-alt",
 			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				50,
-				60
-			],
-			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "right",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				50,
-				50
-			],
-			"anim": "idle",
-			"fps": 24,
-			"name": "idle",
-			"indices": [
-				1,
-				2,
-				3,
-				4,
-				5,
-				6,
-				7,
-				8,
-				9,
-				10,
-				11,
-				12,
-				13,
-				14,
-				15
-			]
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/StupidMad",
 	"position": [
-		100,
-		560
+		40,
+		420
 	],
 	"healthicon": "stupidmad",
 	"flip_x": false,
@@ -86,9 +70,9 @@
 		37
 	],
 	"camera_position": [
-		-350,
-		-30
+		-340,
+		50
 	],
 	"sing_duration": 6.1,
-	"scale": 2.5
+	"scale": 1.4
 }
