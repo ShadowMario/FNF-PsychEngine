@@ -91,10 +91,7 @@ class ChartingState extends MusicBeatState
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
-		['Set Property', "Value 1: Variable name\nValue 2: New value"],
-		['Cinematic Bars', "-- EVENT COPIED FROM FRY ENGINE -- \nBlack bars that are horizontal placed on the screen\nValue 1 : ON / OFF - '1' for on, '2' for off\nValue 2 : SPEED\nOriginal Fry Engine Event From WarlyFarly_Unity"],
-		['Camera Flash', "-- EVENT COPIED FROM ECHO ENGINE -- \nFlashes the screen\nValue 1 : Speed\nVaule 2 : Just leave blank\nOriginal Echo Engine Event From jmxamougusmodder"],
-		['Shakey Strums', "Makes the notes shake for the opponent\nValue 1: Amount\nValue 2: Nothing\nNote: Don't make value 1 decimals\nit is possible, but not recommended."]
+		['Set Property', "Value 1: Variable name\nValue 2: New value"]
 	];
 
 	var _file:FileReference;
