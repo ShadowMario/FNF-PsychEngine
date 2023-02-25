@@ -92,9 +92,9 @@ class ChartingState extends MusicBeatState
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
 		['Set Property', "Value 1: Variable name\nValue 2: New value"],
-		['Cinematic Bars', "-- EVENT COPIED FROM FRY ENGINE -- \Black bars that are horizontal placed on the screen\Value 1 : ON / OFF - '1' for on, '2' for off\Value 2 : SPEED\Original Fry Engine Event From WarlyFarly_Unity"],
-		['Camera Flash', "-- EVENT COPIED FROM ECHO ENGINE -- \Flashes the screen\Value 1 : Speed\Vaule 2 : Just leave blank\Original Echo Engine Event From jmxamougusmodder"],
-		['Shakey Strums', "Makes the notes shake for the opponent\Value 1: Amount\Value 2: Nothing\Note: Don't make value 1 decimals\it is possible, but not recommended."]
+		['Cinematic Bars', "-- EVENT COPIED FROM FRY ENGINE -- \nBlack bars that are horizontal placed on the screen\nValue 1 : ON / OFF - '1' for on, '2' for off\nValue 2 : SPEED\nOriginal Fry Engine Event From WarlyFarly_Unity"],
+		['Camera Flash', "-- EVENT COPIED FROM ECHO ENGINE -- \nFlashes the screen\nValue 1 : Speed\nVaule 2 : Just leave blank\nOriginal Echo Engine Event From jmxamougusmodder"],
+		['Shakey Strums', "Makes the notes shake for the opponent\nValue 1: Amount\nValue 2: Nothing\nNote: Don't make value 1 decimals\nit is possible, but not recommended."]
 	];
 
 	var _file:FileReference;
