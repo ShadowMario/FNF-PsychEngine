@@ -1,5 +1,0 @@
-Makes the notes shake for the opponent
-Value 1: Amount
-Value 2: Nothing
-Note: Don't make value 1 decimals
-it is possible, but not recommended.
