@@ -13,29 +13,29 @@ class ColorMask
 	private function set_rCol(value:FlxColor)
 	{
 		rCol = value;
-		shader.rCol.value = [rCol.red, rCol.green, rCol.blue];
+		shader.rCol.value = [rCol.redFloat, rCol.greenFloat, rCol.blueFloat];
 		return rCol;
 	}
 
 	private function set_gCol(value:FlxColor)
 	{
 		gCol = value;
-		shader.gCol.value = [gCol.red, gCol.green, gCol.blue];
+		shader.gCol.value = [gCol.redFloat, gCol.greenFloat, gCol.blueFloat];
 		return gCol;
 	}
 
 	private function set_bCol(value:FlxColor)
 	{
 		bCol = value;
-		shader.bCol.value = [bCol.red, bCol.green, bCol.blue];
+		shader.bCol.value = [bCol.redFloat, bCol.greenFloat, bCol.blueFloat];
 		return bCol;
 	}
 
 	public function new()
 	{
-		shader.rCol.value = [rCol.red, rCol.green, rCol.blue];
-		shader.gCol.value = [gCol.red, gCol.green, gCol.blue];
-		shader.bCol.value = [bCol.red, bCol.green, bCol.blue];
+		shader.rCol.value = [rCol.redFloat, rCol.greenFloat, rCol.blueFloat];
+		shader.gCol.value = [gCol.redFloat, gCol.greenFloat, gCol.blueFloat];
+		shader.bCol.value = [bCol.redFloat, bCol.greenFloat, bCol.blueFloat];
 	}
 }
 
@@ -48,19 +48,14 @@ class ColorMaskShader extends FlxShader
 	uniform vec3 gCol;
 	uniform vec3 bCol;
 
-	vec3 rgb(vec3 col)
-	{
-		return col / vec3(255.0);
-	}
-
 	void main()
 	{
 		vec4 texture = flixel_texture2D(bitmap, openfl_TextureCoordv.xy) / openfl_Alphav;
 		float alpha = texture.a * openfl_Alphav;
 
-		vec3 rCol = rgb(rCol);
-		vec3 gCol = rgb(gCol);
-		vec3 bCol = rgb(bCol);
+		vec3 rCol = rCol;
+		vec3 gCol = gCol;
+		vec3 bCol = bCol;
 
 		vec3 red = mix(vec3(0.0), rCol, texture.r);
 		vec3 green = mix(vec3(0.0), gCol, texture.g);
