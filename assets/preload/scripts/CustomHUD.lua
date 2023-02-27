@@ -8,6 +8,14 @@ function onCreatePost() --everything written by Rhy
     addLuaText('score', "Score: ", 0, 150, 150)
     setObjectCamera('score', 'other')
 
+    makeLuaText('Vs Stupid v1 ( DEMO BUILD )', "Vs Stupid v1 ( DEMO BUILD )", 0, 15, 600) --watermark mod text
+    setTextSize('Vs Stupid v1 ( DEMO BUILD )', 24)
+    setTextFont('Vs Stupid v1 ( DEMO BUILD )', 'PhantomMuff.ttf')
+    setTextColor('Vs Stupid v1 ( DEMO BUILD )', 'FF000000')
+    addLuaText('Vs Stupid v1 ( DEMO BUILD )', "Vs Stupid v1 ( DEMO BUILD )", 0, 150, 150)
+    setObjectCamera('Vs Stupid v1 ( DEMO BUILD )', 'other')
+
+
     makeLuaText('misses', "Misses: ", 0, 15, 400) --misses
     setTextSize('misses', 24)
     setTextFont('misses', 'PhantomMuff.ttf')
@@ -22,11 +30,11 @@ function onCreatePost() --everything written by Rhy
     addLuaText('ratingName', "Rating: ", 0, 150, 150)
     setObjectCamera('ratingName', 'other')
 
-    makeLuaText('difficultyName', "DFFC: ", 0, 15, 455) --ratingFC
+    makeLuaText('difficultyName', "Difficulty: ", 0, 15, 455) --ratingFC
     setTextSize('difficultyName', 24)
     setTextFont('difficultyName', 'PhantomMuff.ttf')
     setTextColor('difficultyName', 'FF000000')
-    addLuaText('difficultyName', "DFFC: ", 0, 150, 150)
+    addLuaText('difficultyName', "Difficulty: ", 0, 150, 150)
     setObjectCamera('difficultyName', 'other')
 
 end
@@ -39,6 +47,6 @@ function onUpdatePost()
 
     setTextString('ratingName', 'Rating: '.. getPropertyFromClass(ratingName))
 
-    setTextString('difficultyName', "DFFC: ".. getPropertyFromClass(difficultyName))
+    setTextString('difficultyName', "Difficulty: ".. getPropertyFromClass(difficultyName))
 
 end
