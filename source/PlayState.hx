@@ -57,7 +57,7 @@ import flixel.animation.FlxAnimationController;
 import animateatlas.AtlasFrameMaker;
 import Achievements;
 import StageData;
-import FunkinLua;
+import psychlua.FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
 
@@ -188,7 +188,7 @@ class PlayState extends MusicBeatState
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
 
-	public var ratingsData:Array<Rating> = [];
+	public var ratingsData:Array<Rating> = Rating.loadDefault();
 	public var sicks:Int = 0;
 	public var goods:Int = 0;
 	public var bads:Int = 0;
@@ -325,6 +325,8 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
+	public var songName:String;
+
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -351,27 +353,6 @@ class PlayState extends MusicBeatState
 			'NOTE_UP',
 			'NOTE_RIGHT'
 		];
-
-		//Ratings
-		ratingsData.push(new Rating('sick')); //default rating
-
-		var rating:Rating = new Rating('good');
-		rating.ratingMod = 0.7;
-		rating.score = 200;
-		rating.noteSplash = false;
-		ratingsData.push(rating);
-
-		var rating:Rating = new Rating('bad');
-		rating.ratingMod = 0.4;
-		rating.score = 100;
-		rating.noteSplash = false;
-		ratingsData.push(rating);
-
-		var rating:Rating = new Rating('shit');
-		rating.ratingMod = 0;
-		rating.score = 50;
-		rating.noteSplash = false;
-		ratingsData.push(rating);
 
 		// For the "Just the Two of Us" achievement
 		for (i in 0...keysArray.length)
@@ -431,34 +412,11 @@ class PlayState extends MusicBeatState
 		#end
 
 		GameOverSubstate.resetVariables();
-		var songName:String = Paths.formatToSongPath(SONG.song);
-
-		curStage = SONG.stage;
-		//trace('stage is: ' + curStage);
+		songName = Paths.formatToSongPath(SONG.song);
 		if(SONG.stage == null || SONG.stage.length < 1) {
-			switch (songName)
-			{
-				case 'spookeez' | 'south' | 'monster':
-					curStage = 'spooky';
-				case 'pico' | 'blammed' | 'philly' | 'philly-nice':
-					curStage = 'philly';
-				case 'milf' | 'satin-panties' | 'high':
-					curStage = 'limo';
-				case 'cocoa' | 'eggnog':
-					curStage = 'mall';
-				case 'winter-horrorland':
-					curStage = 'mallEvil';
-				case 'senpai' | 'roses':
-					curStage = 'school';
-				case 'thorns':
-					curStage = 'schoolEvil';
-				case 'ugh' | 'guns' | 'stress':
-					curStage = 'tank';
-				default:
-					curStage = 'stage';
-			}
+			SONG.stage = StageData.vanillaSongStage(songName);
 		}
-		SONG.stage = curStage;
+		curStage = SONG.stage;
 
 		var stageData:StageFile = StageData.getStageFile(curStage);
 		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
@@ -833,7 +791,7 @@ class PlayState extends MusicBeatState
 				if(!ClientPrefs.lowQuality) foregroundSprites.add(new BGSprite('tank3', 1300, 1200, 3.5, 2.5, ['fg']));
 		}
 
-		switch(Paths.formatToSongPath(SONG.song))
+		switch(songName)
 		{
 			case 'stress':
 				GameOverSubstate.characterName = 'bf-holding-gf-dead';
@@ -1346,78 +1304,6 @@ class PlayState extends MusicBeatState
 		if(eventNotes.length < 1) checkEventNote();
 	}
 
-	#if (!flash && sys)
-	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
-	public function createRuntimeShader(name:String):FlxRuntimeShader
-	{
-		if(!ClientPrefs.shaders) return new FlxRuntimeShader();
-
-		#if (!flash && MODS_ALLOWED && sys)
-		if(!runtimeShaders.exists(name) && !initLuaShader(name))
-		{
-			FlxG.log.warn('Shader $name is missing!');
-			return new FlxRuntimeShader();
-		}
-
-		var arr:Array<String> = runtimeShaders.get(name);
-		return new FlxRuntimeShader(arr[0], arr[1]);
-		#else
-		FlxG.log.warn("Platform unsupported for Runtime Shaders!");
-		return null;
-		#end
-	}
-
-	public function initLuaShader(name:String, ?glslVersion:Int = 120)
-	{
-		if(!ClientPrefs.shaders) return false;
-
-		if(runtimeShaders.exists(name))
-		{
-			FlxG.log.warn('Shader $name was already initialized!');
-			return true;
-		}
-
-		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
-		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
-
-		for(mod in Paths.getGlobalMods())
-			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
-		
-		for (folder in foldersToCheck)
-		{
-			if(FileSystem.exists(folder))
-			{
-				var frag:String = folder + name + '.frag';
-				var vert:String = folder + name + '.vert';
-				var found:Bool = false;
-				if(FileSystem.exists(frag))
-				{
-					frag = File.getContent(frag);
-					found = true;
-				}
-				else frag = null;
-
-				if (FileSystem.exists(vert))
-				{
-					vert = File.getContent(vert);
-					found = true;
-				}
-				else vert = null;
-
-				if(found)
-				{
-					runtimeShaders.set(name, [frag, vert]);
-					//trace('Found shader $name!');
-					return true;
-				}
-			}
-		}
-		FlxG.log.warn('Missing shader $name .frag AND .vert files!');
-		return false;
-	}
-	#end
-
 	function set_songSpeed(value:Float):Float
 	{
 		if(generatedMusic)
@@ -1650,7 +1536,6 @@ class PlayState extends MusicBeatState
 		senpaiEvil.screenCenter();
 		senpaiEvil.x += 300;
 
-		var songName:String = Paths.formatToSongPath(SONG.song);
 		if (songName == 'roses' || songName == 'thorns')
 		{
 			remove(black);
@@ -1722,7 +1607,6 @@ class PlayState extends MusicBeatState
 	{
 		var cutsceneHandler:CutsceneHandler = new CutsceneHandler();
 
-		var songName:String = Paths.formatToSongPath(SONG.song);
 		dadGroup.alpha = 0.00001;
 		camHUD.visible = false;
 		//inCutscene = true; //this would stop the camera movement, oops
@@ -2067,9 +1951,6 @@ class PlayState extends MusicBeatState
 			callOnLuas('onCountdownStarted', []);
 
 			var swagCounter:Int = 0;
-
-			if(startOnTime < 0) startOnTime = 0;
-
 			if (startOnTime > 0) {
 				clearNotesBefore(startOnTime);
 				setSongTime(startOnTime - 350);
@@ -2395,10 +2276,7 @@ class PlayState extends MusicBeatState
 		noteData = songData.notes;
 
 		var playerCounter:Int = 0;
-
 		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
-
-		var songName:String = Paths.formatToSongPath(SONG.song);
 		var file:String = Paths.json(songName + '/events');
 		#if MODS_ALLOWED
 		if (FileSystem.exists(Paths.modsJson(songName + '/events')) || FileSystem.exists(file)) {
@@ -2429,7 +2307,6 @@ class PlayState extends MusicBeatState
 			{
 				var daStrumTime:Float = songNotes[0];
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
-
 				var gottaHitNote:Bool = section.mustHitSection;
 
 				if (songNotes[1] > 3)
