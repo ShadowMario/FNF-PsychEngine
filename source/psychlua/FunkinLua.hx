@@ -2697,7 +2697,7 @@ class FunkinLua {
 			FlxG.sound.music.fadeOut(duration, toValue);
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
-
+    
 		// Regex
 		Lua_helper.add_callback(lua, "regexMatch", function(str:String, toMatch:String, flag:String = "i") {
 			return new EReg(str, flag).match(toMatch);
