@@ -2715,6 +2715,41 @@ class FunkinLua {
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
 
+		// Regex
+		Lua_helper.add_callback(lua, "regexMatch", function(str:String, toMatch:String, flag:String = "i") {
+			return new EReg(str, flag).match(toMatch);
+		});
+		Lua_helper.add_callback(lua, "regexSubMatch", function(str:String, toMatch:String, pos:Int, len:Int = -1, flag:String = "i") {
+			return new EReg(str, flag).matchSub(toMatch, pos, len);
+		});
+		Lua_helper.add_callback(lua, "regexFindMatchAt", function(str:String, toMatch:String, n:Int, flag:String = "i") {
+			var theData = new EReg(str, flag);
+			theData.match(toMatch);
+			return theData.matched(n);
+		});
+		Lua_helper.add_callback(lua, "regexFindFirstMatch", function(str:String, toMatch:String, flag:String = "i") {
+			var theData = new EReg(str, flag);
+			theData.match(toMatch);
+			return theData.matchedLeft();
+		});
+		Lua_helper.add_callback(lua, "regexFindLastMatch", function(str:String, toMatch:String, flag:String = "i") {
+			var theData = new EReg(str, flag);
+			theData.match(toMatch);
+			return theData.matchedRight();
+		});
+		Lua_helper.add_callback(lua, "regexMatchPosition", function(str:String, toMatch:String, flag:String = "i") {
+			var data = new EReg(str, flag);
+			data.match(toMatch);
+			var theData = data.matchedPos();
+			return [theData.pos, theData.len];
+		});
+		Lua_helper.add_callback(lua, "regexReplace", function(str:String, toReplace:String, replacement:String, flag:String = "i") {
+			return new EReg(str, flag).replace(toReplace, replacement);
+		});
+		Lua_helper.add_callback(lua, "regexSplit", function(str:String, toSplit:String, flag:String = "i") {
+			return new EReg(str, flag).split(toSplit);
+		});
+
 		// Other stuff
 		Lua_helper.add_callback(lua, "stringStartsWith", function(str:String, start:String) {
 			return str.startsWith(start);
