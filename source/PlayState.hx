@@ -75,6 +75,13 @@ import sys.io.File;
 import vlc.MP4Handler;
 #end
 
+#if LUA_ALLOWED
+import psychlua.DebugLuaText;
+import psychlua.ModchartSprite;
+import psychlua.ModchartText;
+import psychlua.LuaUtils;
+#end
+
 using StringTools;
 
 class PlayState extends MusicBeatState
@@ -3622,9 +3629,9 @@ class PlayState extends MusicBeatState
 			case 'Set Property':
 				var killMe:Array<String> = value1.split('.');
 				if(killMe.length > 1) {
-					FunkinLua.setVarInArray(FunkinLua.getPropertyLoopThingWhatever(killMe, true, true), killMe[killMe.length-1], value2);
+					LuaUtils.setVarInArray(LuaUtils.getPropertyLoop(killMe, true, true), killMe[killMe.length-1], value2);
 				} else {
-					FunkinLua.setVarInArray(this, value1, value2);
+					LuaUtils.setVarInArray(this, value1, value2);
 				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
