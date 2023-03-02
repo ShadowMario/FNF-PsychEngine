@@ -2732,7 +2732,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "regexSplit", function(str:String, toSplit:String, flag:String = "i") {
 			return new EReg(str, flag).split(toSplit);
 		});
-		
+
 		// Other stuff
 		Lua_helper.add_callback(lua, "stringStartsWith", function(str:String, start:String) {
 			return str.startsWith(start);
