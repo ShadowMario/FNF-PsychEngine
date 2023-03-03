@@ -196,10 +196,7 @@ class PlayState extends MusicBeatState
 	public var timeBar:FlxBar;
 
 	public var ratingsData:Array<Rating> = Rating.loadDefault();
-	public var sicks:Int = 0;
-	public var goods:Int = 0;
-	public var bads:Int = 0;
-	public var shits:Int = 0;
+	public var fullComboFunction:Void->Void = null;
 
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -346,6 +343,21 @@ class PlayState extends MusicBeatState
 		debugKeysCharacter = ClientPrefs.keyBinds.get('debug_2').copy();
 		PauseSubState.songName = null; //Reset to default
 		playbackRate = ClientPrefs.getGameplaySetting('songspeed', 1);
+		fullComboFunction = function() {
+			var sicks = ratingsData[0].hits;
+			var goods = ratingsData[1].hits;
+			var bads = ratingsData[2].hits;
+			var shits = ratingsData[3].hits;
+
+			ratingFC = 'Clear';
+			if(songMisses < 1) {
+				if (bads > 0 || shits > 0) ratingFC = 'FC';
+				else if (goods > 0) ratingFC = 'GFC';
+				else if (sicks > 0) ratingFC = 'SFC';
+			} else if (songMisses < 10) {
+				ratingFC = 'SDCB';
+			}
+		};
 
 		keysArray = [
 			ClientPrefs.keyBinds.get('note_left').copy(),
@@ -3945,7 +3957,7 @@ class PlayState extends MusicBeatState
 
 		totalNotesHit += daRating.ratingMod;
 		note.ratingMod = daRating.ratingMod;
-		if(!note.ratingDisabled) daRating.increase();
+		if(!note.ratingDisabled) daRating.hits++;
 		note.rating = daRating.name;
 		score = daRating.score;
 
@@ -5074,14 +5086,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
-
-			// Rating FC
-			ratingFC = "";
-			if (sicks > 0) ratingFC = "SFC";
-			if (goods > 0) ratingFC = "GFC";
-			if (bads > 0 || shits > 0) ratingFC = "FC";
-			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
-			else if (songMisses >= 10) ratingFC = "Clear";
+			fullComboFunction();
 		}
 		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);
