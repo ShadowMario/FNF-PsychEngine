@@ -69,7 +69,7 @@ class NoteOffsetState extends MusicBeatState
 		stageFront.updateHitbox();
 		add(stageFront);
 
-		if(!ClientPrefs.lowQuality) {
+		if(!ClientPrefs.data.lowQuality) {
 			var stageLight:BGSprite = new BGSprite('stage_light', -125, -100, 0.9, 0.9);
 			stageLight.setGraphicSize(Std.int(stageLight.width * 1.1));
 			stageLight.updateHitbox();
@@ -107,7 +107,7 @@ class NoteOffsetState extends MusicBeatState
 		rating.cameras = [camHUD];
 		rating.setGraphicSize(Std.int(rating.width * 0.7));
 		rating.updateHitbox();
-		rating.antialiasing = ClientPrefs.globalAntialiasing;
+		rating.antialiasing = ClientPrefs.data.antialiasing;
 		
 		add(rating);
 
@@ -128,7 +128,7 @@ class NoteOffsetState extends MusicBeatState
 			numScore.cameras = [camHUD];
 			numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			numScore.updateHitbox();
-			numScore.antialiasing = ClientPrefs.globalAntialiasing;
+			numScore.antialiasing = ClientPrefs.data.antialiasing;
 			comboNums.add(numScore);
 			daLoop++;
 		}
@@ -158,7 +158,7 @@ class NoteOffsetState extends MusicBeatState
 		timeTxt.visible = false;
 		timeTxt.cameras = [camHUD];
 
-		barPercent = ClientPrefs.noteOffset;
+		barPercent = ClientPrefs.data.noteOffset;
 		updateNoteDelay();
 		
 		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(Paths.image('timeBar'));
@@ -236,21 +236,21 @@ class NoteOffsetState extends MusicBeatState
 						switch(i)
 						{
 							case 0:
-								ClientPrefs.comboOffset[0] -= addNum;
+								ClientPrefs.data.comboOffset[0] -= addNum;
 							case 1:
-								ClientPrefs.comboOffset[0] += addNum;
+								ClientPrefs.data.comboOffset[0] += addNum;
 							case 2:
-								ClientPrefs.comboOffset[1] += addNum;
+								ClientPrefs.data.comboOffset[1] += addNum;
 							case 3:
-								ClientPrefs.comboOffset[1] -= addNum;
+								ClientPrefs.data.comboOffset[1] -= addNum;
 							case 4:
-								ClientPrefs.comboOffset[2] -= addNum;
+								ClientPrefs.data.comboOffset[2] -= addNum;
 							case 5:
-								ClientPrefs.comboOffset[2] += addNum;
+								ClientPrefs.data.comboOffset[2] += addNum;
 							case 6:
-								ClientPrefs.comboOffset[3] += addNum;
+								ClientPrefs.data.comboOffset[3] += addNum;
 							case 7:
-								ClientPrefs.comboOffset[3] -= addNum;
+								ClientPrefs.data.comboOffset[3] -= addNum;
 						}
 					}
 				}
@@ -266,16 +266,16 @@ class NoteOffsetState extends MusicBeatState
 					startMousePos.y - comboNums.y >= 0 && startMousePos.y - comboNums.y <= comboNums.height)
 				{
 					holdingObjectType = true;
-					startComboOffset.x = ClientPrefs.comboOffset[2];
-					startComboOffset.y = ClientPrefs.comboOffset[3];
+					startComboOffset.x = ClientPrefs.data.comboOffset[2];
+					startComboOffset.y = ClientPrefs.data.comboOffset[3];
 					//trace('yo bro');
 				}
 				else if (startMousePos.x - rating.x >= 0 && startMousePos.x - rating.x <= rating.width &&
 						 startMousePos.y - rating.y >= 0 && startMousePos.y - rating.y <= rating.height)
 				{
 					holdingObjectType = false;
-					startComboOffset.x = ClientPrefs.comboOffset[0];
-					startComboOffset.y = ClientPrefs.comboOffset[1];
+					startComboOffset.x = ClientPrefs.data.comboOffset[0];
+					startComboOffset.y = ClientPrefs.data.comboOffset[1];
 					//trace('heya');
 				}
 			}
@@ -290,17 +290,17 @@ class NoteOffsetState extends MusicBeatState
 				{
 					var mousePos:FlxPoint = FlxG.mouse.getScreenPosition(camHUD);
 					var addNum:Int = holdingObjectType ? 2 : 0;
-					ClientPrefs.comboOffset[addNum + 0] = Math.round((mousePos.x - startMousePos.x) + startComboOffset.x);
-					ClientPrefs.comboOffset[addNum + 1] = -Math.round((mousePos.y - startMousePos.y) - startComboOffset.y);
+					ClientPrefs.data.comboOffset[addNum + 0] = Math.round((mousePos.x - startMousePos.x) + startComboOffset.x);
+					ClientPrefs.data.comboOffset[addNum + 1] = -Math.round((mousePos.y - startMousePos.y) - startComboOffset.y);
 					repositionCombo();
 				}
 			}
 
 			if(controls.RESET)
 			{
-				for (i in 0...ClientPrefs.comboOffset.length)
+				for (i in 0...ClientPrefs.data.comboOffset.length)
 				{
-					ClientPrefs.comboOffset[i] = 0;
+					ClientPrefs.data.comboOffset[i] = 0;
 				}
 				repositionCombo();
 			}
@@ -309,12 +309,12 @@ class NoteOffsetState extends MusicBeatState
 		{
 			if(controls.UI_LEFT_P)
 			{
-				barPercent = Math.max(delayMin, Math.min(ClientPrefs.noteOffset - 1, delayMax));
+				barPercent = Math.max(delayMin, Math.min(ClientPrefs.data.noteOffset - 1, delayMax));
 				updateNoteDelay();
 			}
 			else if(controls.UI_RIGHT_P)
 			{
-				barPercent = Math.max(delayMin, Math.min(ClientPrefs.noteOffset + 1, delayMax));
+				barPercent = Math.max(delayMin, Math.min(ClientPrefs.data.noteOffset + 1, delayMax));
 				updateNoteDelay();
 			}
 
@@ -409,12 +409,12 @@ class NoteOffsetState extends MusicBeatState
 	function repositionCombo()
 	{
 		rating.screenCenter();
-		rating.x = coolText.x - 40 + ClientPrefs.comboOffset[0];
-		rating.y -= 60 + ClientPrefs.comboOffset[1];
+		rating.x = coolText.x - 40 + ClientPrefs.data.comboOffset[0];
+		rating.y -= 60 + ClientPrefs.data.comboOffset[1];
 
 		comboNums.screenCenter();
-		comboNums.x = coolText.x - 90 + ClientPrefs.comboOffset[2];
-		comboNums.y += 80 - ClientPrefs.comboOffset[3];
+		comboNums.x = coolText.x - 90 + ClientPrefs.data.comboOffset[2];
+		comboNums.y += 80 - ClientPrefs.data.comboOffset[3];
 		reloadTexts();
 	}
 
@@ -443,16 +443,16 @@ class NoteOffsetState extends MusicBeatState
 			switch(i)
 			{
 				case 0: dumbTexts.members[i].text = 'Rating Offset:';
-				case 1: dumbTexts.members[i].text = '[' + ClientPrefs.comboOffset[0] + ', ' + ClientPrefs.comboOffset[1] + ']';
+				case 1: dumbTexts.members[i].text = '[' + ClientPrefs.data.comboOffset[0] + ', ' + ClientPrefs.data.comboOffset[1] + ']';
 				case 2: dumbTexts.members[i].text = 'Numbers Offset:';
-				case 3: dumbTexts.members[i].text = '[' + ClientPrefs.comboOffset[2] + ', ' + ClientPrefs.comboOffset[3] + ']';
+				case 3: dumbTexts.members[i].text = '[' + ClientPrefs.data.comboOffset[2] + ', ' + ClientPrefs.data.comboOffset[3] + ']';
 			}
 		}
 	}
 
 	function updateNoteDelay()
 	{
-		ClientPrefs.noteOffset = Math.round(barPercent);
+		ClientPrefs.data.noteOffset = Math.round(barPercent);
 		timeTxt.text = 'Current offset: ' + Math.floor(barPercent) + ' ms';
 	}
 

@@ -46,7 +46,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 
 		var option:Option = new Option('Anti-Aliasing',
 			'If unchecked, disables anti-aliasing, increases performance\nat the cost of sharper visuals.',
-			'globalAntialiasing',
+			'data.antialiasing',
 			'bool',
 			true);
 		option.showBoyfriend = true;
@@ -84,22 +84,22 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			var sprite:Dynamic = sprite; //Make it check for FlxSprite instead of FlxBasic
 			var sprite:FlxSprite = sprite; //Don't judge me ok
 			if(sprite != null && (sprite is FlxSprite) && !(sprite is FlxText)) {
-				sprite.antialiasing = ClientPrefs.globalAntialiasing;
+				sprite.antialiasing = ClientPrefs.data.antialiasing;
 			}
 		}
 	}
 
 	function onChangeFramerate()
 	{
-		if(ClientPrefs.framerate > FlxG.drawFramerate)
+		if(ClientPrefs.data.framerate > FlxG.drawFramerate)
 		{
-			FlxG.updateFramerate = ClientPrefs.framerate;
-			FlxG.drawFramerate = ClientPrefs.framerate;
+			FlxG.updateFramerate = ClientPrefs.data.framerate;
+			FlxG.drawFramerate = ClientPrefs.data.framerate;
 		}
 		else
 		{
-			FlxG.drawFramerate = ClientPrefs.framerate;
-			FlxG.updateFramerate = ClientPrefs.framerate;
+			FlxG.drawFramerate = ClientPrefs.data.framerate;
+			FlxG.updateFramerate = ClientPrefs.data.framerate;
 		}
 	}
 }

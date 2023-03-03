@@ -25,7 +25,7 @@ class Conductor
 	public static var offset:Float = 0;
 
 	//public static var safeFrames:Int = 10;
-	public static var safeZoneOffset:Float = (ClientPrefs.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
+	public static var safeZoneOffset:Float = 0; // is calculated in create(), is safeFrames in milliseconds
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
@@ -170,7 +170,7 @@ class Rating
 		this.name = name;
 		this.image = name;
 		this.counter = name + 's';
-		this.hitWindow = Reflect.field(ClientPrefs, name + 'Window');
+		this.hitWindow = Reflect.field(ClientPrefs.data, name + 'Window');
 		if(hitWindow == null)
 		{
 			hitWindow = 0;
