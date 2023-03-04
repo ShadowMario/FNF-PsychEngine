@@ -36,6 +36,10 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import openfl.Assets;
 
+import menus.StoryMenuState;
+import menus.OutdatedState;
+import menus.MainMenuState;
+
 using StringTools;
 typedef TitleData =
 {

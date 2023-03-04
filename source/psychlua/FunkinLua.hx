@@ -32,7 +32,12 @@ import flixel.addons.display.FlxRuntimeShader;
 import sys.FileSystem;
 import sys.io.File;
 #end
-import DialogueBoxPsych;
+
+import cutscenes.DialogueBoxPsych;
+
+import menus.MainMenuState;
+import menus.StoryMenuState;
+import menus.FreeplayState;
 
 import psychlua.LuaUtils;
 import psychlua.LuaUtils.LuaTweenOptions;

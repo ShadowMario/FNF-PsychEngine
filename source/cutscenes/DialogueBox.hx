@@ -1,4 +1,4 @@
-package;
+package cutscenes;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
