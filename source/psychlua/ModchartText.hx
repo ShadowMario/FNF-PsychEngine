@@ -1,7 +1,6 @@
 package psychlua;
 
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
+
 
 class ModchartText extends FlxText
 {

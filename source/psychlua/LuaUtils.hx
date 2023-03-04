@@ -1,18 +1,12 @@
 package psychlua;
 
-import flixel.FlxG;
-import flixel.FlxCamera;
-import flixel.FlxSprite;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
+import backend.WeekData;
+
 import openfl.display.BlendMode;
 import animateatlas.AtlasFrameMaker;
 import Type.ValueType;
 
-import flixel.util.FlxTimer;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
-
+import substates.GameOverSubstate;
 
 #if LUA_ALLOWED
 import llua.Lua;

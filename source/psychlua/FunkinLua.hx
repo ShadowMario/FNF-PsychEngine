@@ -1,6 +1,9 @@
 package psychlua;
 
-import openfl.display.BitmapData;
+import backend.WeekData;
+import backend.Highscore;
+import backend.Song;
+
 #if LUA_ALLOWED
 import llua.Lua;
 import llua.LuaL;
@@ -8,19 +11,12 @@ import llua.State;
 import llua.Convert;
 #end
 
-import flixel.FlxG;
-import flixel.tweens.FlxTween;
-import flixel.text.FlxText;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.system.FlxSound;
-import flixel.util.FlxTimer;
-import flixel.FlxSprite;
-import flixel.FlxCamera;
-import flixel.util.FlxColor;
-import flixel.FlxBasic;
-import flixel.FlxObject;
 import openfl.Lib;
 import openfl.utils.Assets;
+import openfl.display.BitmapData;
+import flixel.FlxBasic;
+import flixel.FlxObject;
+import flixel.system.FlxSound;
 import flixel.addons.transition.FlxTransitionableState;
 import Type.ValueType;
 
@@ -35,9 +31,15 @@ import sys.io.File;
 
 import cutscenes.DialogueBoxPsych;
 
-import menus.MainMenuState;
-import menus.StoryMenuState;
-import menus.FreeplayState;
+import objects.StrumNote;
+import objects.Character;
+
+import states.MainMenuState;
+import states.StoryMenuState;
+import states.FreeplayState;
+
+import substates.PauseSubState;
+import substates.GameOverSubstate;
 
 import psychlua.LuaUtils;
 import psychlua.LuaUtils.LuaTweenOptions;
@@ -45,10 +47,6 @@ import psychlua.HScript;
 import psychlua.DebugLuaText;
 import psychlua.ModchartSprite;
 import psychlua.ModchartText;
-
-#if desktop
-import Discord;
-#end
 
 using StringTools;
 
