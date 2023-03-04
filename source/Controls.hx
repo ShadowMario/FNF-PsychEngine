@@ -150,18 +150,11 @@ class Controls
 		return false;
 	}
 
-
 	// IGNORE THESE
 	public static var instance:Controls;
 	public function new()
 	{
-		//nothing, haxe just wants it
-	}
-	
-	public static function init()
-	{
-		instance = new Controls();
-		instance.keyboardBinds = ClientPrefs.keyBinds;
-		instance.gamepadBinds = ClientPrefs.gamepadBinds;
+		keyboardBinds = ClientPrefs.keyBinds;
+		gamepadBinds = ClientPrefs.gamepadBinds;
 	}
 }

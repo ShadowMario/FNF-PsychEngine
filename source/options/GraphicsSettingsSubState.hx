@@ -46,7 +46,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 
 		var option:Option = new Option('Anti-Aliasing',
 			'If unchecked, disables anti-aliasing, increases performance\nat the cost of sharper visuals.',
-			'data.antialiasing',
+			'antialiasing',
 			'bool',
 			true);
 		option.showBoyfriend = true;
