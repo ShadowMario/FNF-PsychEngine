@@ -26,7 +26,8 @@ class MasterEditorMenu extends MusicBeatState
 		'Dialogue Editor',
 		'Dialogue Portrait Editor',
 		'Character Editor',
-		'Chart Editor'
+		'Chart Editor',
+		'Unused Shop Menu'//probably works....
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
@@ -126,6 +127,8 @@ class MasterEditorMenu extends MusicBeatState
 					LoadingState.loadAndSwitchState(new DialogueEditorState(), false);
 				case 'Chart Editor'://felt it would be cool maybe
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
+				case 'Unused Shop Menu'://left this as'unused'
+					LoadingState.loadAndSwitchState(new ShopState(), false);
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
@@ -177,11 +180,11 @@ class MasterEditorMenu extends MusicBeatState
 	
 		WeekData.setDirectoryFromWeek();
 		if(directories[curDirectory] == null || directories[curDirectory].length < 1)
-			directoryTxt.text = '< No Mod Directory Loaded >';
+			directoryTxt.text = '< NOTHING LOADED >:( >';//obviously a joke thingie
 		else
 		{
 			Paths.currentModDirectory = directories[curDirectory];
-			directoryTxt.text = '< Loaded Mod Directory: ' + Paths.currentModDirectory + ' >';
+			directoryTxt.text = '< SHIT THAT LOADED: ' + Paths.currentModDirectory + ' >';//so funny
 		}
 		directoryTxt.text = directoryTxt.text.toUpperCase();
 	}
