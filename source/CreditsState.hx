@@ -24,7 +24,6 @@ using StringTools;
 class CreditsState extends MusicBeatState
 {
 	var curSelected:Int = -1;
-	var clicks:Int = 0;
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var iconArray:Array<AttachedSprite> = [];
@@ -214,22 +213,7 @@ class CreditsState extends MusicBeatState
 			}
 
 			if(controls.ACCEPT && (creditsStuff[curSelected][3] == null || creditsStuff[curSelected][3].length > 4)) {
-			  if (curSelected == 1) {
-			    clicks += 1;
-			    if (clicks == 6) {
-			      CoolUtil.browserLoad('https://youtube.com/@idklool12'); // hi
-			    } else {
-			      CoolUtil.browserLoad(creditsStuff[curSelected][3]);
-			    }
-			  }
-			  
-			  if (clicks >= 6) {
-			    clicks == 0;
-			  }
-			  
-			  if (curSelected != 1) {
 				CoolUtil.browserLoad(creditsStuff[curSelected][3]);
-			  }
 			}
 			if (controls.BACK)
 			{
