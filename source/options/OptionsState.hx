@@ -1,13 +1,6 @@
 package options;
 
-#if desktop
-import Discord.DiscordClient;
-#end
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.group.FlxGroup.FlxTypedGroup;
-
-import menus.MainMenuState;
+import states.MainMenuState;
 
 using StringTools;
 

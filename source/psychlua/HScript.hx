@@ -6,6 +6,8 @@ import hscript.Interp;
 import hscript.Expr;
 #end
 
+import objects.Character;
+
 class HScript
 {
 	#if hscript

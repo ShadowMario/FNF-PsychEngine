@@ -1,7 +1,7 @@
 package;
 
 import flixel.graphics.FlxGraphic;
-import flixel.FlxG;
+
 import flixel.FlxGame;
 import flixel.FlxState;
 import openfl.Assets;
@@ -11,10 +11,8 @@ import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
+import states.TitleState;
 
-#if desktop
-import Discord.DiscordClient;
-#end
 
 //crash handler stuff
 #if CRASH_HANDLER

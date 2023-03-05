@@ -1,19 +1,18 @@
 package cutscenes;
 
 import cutscenes.DialogueCharacter;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.group.FlxSpriteGroup;
-import flixel.util.FlxColor;
+
+
 import haxe.Json;
 import haxe.format.JsonParser;
 import openfl.utils.Assets;
-import Alphabet;
 
 #if sys
 import sys.FileSystem;
 import sys.io.File;
 #end
+
+import objects.TypedAlphabet;
 
 using StringTools;
 
