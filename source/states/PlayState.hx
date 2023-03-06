@@ -58,8 +58,11 @@ import vlc.MP4Handler;
 import objects.Note.EventNote;
 import objects.*;
 import states.stages.objects.*;
+
 #if LUA_ALLOWED
 import psychlua.*;
+#else
+import psychlua.LuaUtils;
 #end
 
 using StringTools;
@@ -90,23 +93,27 @@ class PlayState extends MusicBeatState
 	public var dadMap:Map<String, Character> = new Map();
 	public var gfMap:Map<String, Character> = new Map();
 	public var variables:Map<String, Dynamic> = new Map();
-	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
-	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
-	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
-	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
-	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
-	public var modchartSaves:Map<String, FlxSave> = new Map<String, FlxSave>();
+		#if LUA_ALLOWED
+		public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
+		public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
+		public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
+		public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
+		public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
+		public var modchartSaves:Map<String, FlxSave> = new Map<String, FlxSave>();
+		#end
 	#else
 	public var boyfriendMap:Map<String, Boyfriend> = new Map<String, Boyfriend>();
 	public var dadMap:Map<String, Character> = new Map<String, Character>();
 	public var gfMap:Map<String, Character> = new Map<String, Character>();
 	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
-	public var modchartTweens:Map<String, FlxTween> = new Map();
-	public var modchartSprites:Map<String, ModchartSprite> = new Map();
-	public var modchartTimers:Map<String, FlxTimer> = new Map();
-	public var modchartSounds:Map<String, FlxSound> = new Map();
-	public var modchartTexts:Map<String, ModchartText> = new Map();
-	public var modchartSaves:Map<String, FlxSave> = new Map();
+		#if LUA_ALLOWED
+		public var modchartTweens:Map<String, FlxTween> = new Map();
+		public var modchartSprites:Map<String, ModchartSprite> = new Map();
+		public var modchartTimers:Map<String, FlxTimer> = new Map();
+		public var modchartSounds:Map<String, FlxSound> = new Map();
+		public var modchartTexts:Map<String, ModchartText> = new Map();
+		public var modchartSaves:Map<String, FlxSave> = new Map();
+		#end
 	#end
 
 	public var BF_X:Float = 770;
@@ -287,7 +294,9 @@ class PlayState extends MusicBeatState
 	// Lua shit
 	public static var instance:PlayState;
 	public var luaArray:Array<FunkinLua> = [];
+	#if LUA_ALLOWED
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
+	#end
 	public var introSoundsSuffix:String = '';
 
 	// Debug buttons
@@ -1402,9 +1411,11 @@ class PlayState extends MusicBeatState
 	}
 
 	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
+		#if MODS_ALLOWED
 		if(modchartSprites.exists(tag)) return modchartSprites.get(tag);
 		if(text && modchartTexts.exists(tag)) return modchartTexts.get(tag);
 		if(variables.exists(tag)) return variables.get(tag);
+		#end
 		return null;
 	}
 
@@ -2537,12 +2548,14 @@ class PlayState extends MusicBeatState
 				}
 			}
 
+			#if LUA_ALLOWED
 			for (tween in modchartTweens) {
 				tween.active = false;
 			}
 			for (timer in modchartTimers) {
 				timer.active = false;
 			}
+			#end
 		}
 
 		super.openSubState(SubState);
@@ -2573,12 +2586,14 @@ class PlayState extends MusicBeatState
 				}
 			}
 
+			#if LUA_ALLOWED
 			for (tween in modchartTweens) {
 				tween.active = true;
 			}
 			for (timer in modchartTimers) {
 				timer.active = true;
 			}
+			#end
 			paused = false;
 			callOnLuas('onResume', []);
 
@@ -3145,12 +3160,14 @@ class PlayState extends MusicBeatState
 
 				persistentUpdate = false;
 				persistentDraw = false;
+				#if LUA_ALLOWED
 				for (tween in modchartTweens) {
 					tween.active = true;
 				}
 				for (timer in modchartTimers) {
 					timer.active = true;
 				}
+				#end
 				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y));
 
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
