@@ -172,8 +172,10 @@ class PlayState extends MusicBeatState
 	public var playerStrums:FlxTypedGroup<StrumNote>;
 	public var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 
-	// private static var defaultPlayerStrum = {x : Array<Int>, y : Array<Int>};
-	// private static var defaultOpponentStrum = {x : Array<Int>, y : Array<Int>};
+	private static var defaultPlayerStrumX:Array<Float> = [0, 0, 0, 0];
+	private static var defaultPlayerStrumY:Array<Float> = [0, 0, 0, 0];
+	private static var defaultOpponentStrumX:Array<Float> = [0, 0, 0, 0];
+	private static var defaultOpponentStrumY:Array<Float> = [0, 0, 0, 0];
 
 	public var camZooming:Bool = false;
 	public var camZoomingMult:Float = 1;
@@ -1270,6 +1272,19 @@ class PlayState extends MusicBeatState
 		} else {
 			startCountdown();
 		}
+		if (ClientPrefs.middleScroll && opponentPlay) {
+			// Fuck this I'm just gonna have it do this.
+			/* Also did it out here cause in generateStaticArrows it would break
+			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
+			for (i in 0...opponentStrums.members.length) {
+				opponentStrums.members[i].x = defaultPlayerStrumX[i];
+				opponentStrums.members[i].alpha = 1;
+			}
+			for (i in 0...playerStrums.members.length) {
+				playerStrums.members[i].x = defaultOpponentStrumX[i];
+				playerStrums.members[i].alpha = 0.5;
+			}
+		}
 		RecalculateRating();
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
@@ -2011,16 +2026,16 @@ class PlayState extends MusicBeatState
 			generateStaticArrows(1);
 
 			for (i in 0...playerStrums.length) {
-				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
-				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
-				// defaultPlayerStrum.x[i] = playerStrums.members[i].x;
-				// defaultPlayerStrum.y[i] = playerStrums.members[i].y;
+				defaultPlayerStrumX[i] = playerStrums.members[i].x;
+				defaultPlayerStrumY[i] = playerStrums.members[i].y;
+				setOnLuas('defaultPlayerStrumX' + i, defaultPlayerStrumX[i]);
+				setOnLuas('defaultPlayerStrumY' + i, defaultPlayerStrumY[i]);
 			}
 			for (i in 0...opponentStrums.length) {
-				setOnLuas('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
-				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
-				// defaultOpponentStrum.x[i] = opponentStrums.members[i].x;
-				// defaultOpponentStrum.y[i] = opponentStrums.members[i].y;
+				defaultOpponentStrumX[i] = opponentStrums.members[i].x;
+				defaultOpponentStrumY[i] = opponentStrums.members[i].y;
+				setOnLuas('defaultOpponentStrumX' + i, defaultOpponentStrumX[i]);
+				setOnLuas('defaultOpponentStrumY' + i, defaultOpponentStrumY[i]);
 			}
 
 			startedCountdown = true;
@@ -2159,19 +2174,6 @@ class PlayState extends MusicBeatState
 				swagCounter += 1;
 				// generateSong('fresh');
 			}, 5);
-		}
-		if (ClientPrefs.middleScroll && opponentPlay) {
-			// Fuck this I'm just gonna have it do this.
-			/* Also did it out here cause in generateStaticArrows it would break
-			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
-			for (i in 0...opponentStrums.members.length) {
-				opponentStrums.members[i].x = playerStrums.members[i].x;
-				opponentStrums.members[i].alpha = 1;
-			}
-			for (i in 0...playerStrums.members.length) {
-				playerStrums.members[i].x = opponentStrums.members[i].x;
-				playerStrums.members[i].alpha = 0.5;
-			}
 		}
 	}
 
@@ -3693,8 +3695,8 @@ class PlayState extends MusicBeatState
 				if (value2.length < 1) value2 = 'true';
 				if (value2 == 'true' && ClientPrefs.middleScroll) {
 					if (opponentPlay != oppoPlayBefore) {
-						for (i in 0...opponentStrums.members.length) FlxTween.tween(opponentStrums.members[i], {x: playerStrums.members[i].x, alpha: opponentPlay ? 1 : 0.5}, 0.35, {ease: FlxEase.circOut});
-						for (i in 0...playerStrums.members.length) FlxTween.tween(playerStrums.members[i], {x: opponentStrums.members[i].x, alpha: opponentPlay ? 0.5 : 1}, 0.35, {ease: FlxEase.circOut});
+						for (i in 0...opponentStrums.members.length) FlxTween.tween(opponentStrums.members[i], {x: defaultPlayerStrumX[i], alpha: opponentPlay ? 1 : 0.5}, 0.35, {ease: FlxEase.circOut});
+						for (i in 0...playerStrums.members.length) FlxTween.tween(playerStrums.members[i], {x: defaultOpponentStrumX[i], alpha: opponentPlay ? 0.5 : 1}, 0.35, {ease: FlxEase.circOut});
 					}
 				} // else if (value2 == 'false') trace('FUCK YOU NOTHING HAPPENED LMFAO');
 
@@ -4333,7 +4335,6 @@ class PlayState extends MusicBeatState
 			notes.forEachAlive(function(daNote:Note) {
 				// hold note functions
 				if (strumsBlocked[daNote.noteData] != true && daNote.isSustainNote && parsedHoldArray[daNote.noteData] && daNote.canBeHit && daNote.mustPress == !opponentPlay && !daNote.tooLate && (opponentPlay ? !daNote.hitByOpponent : !daNote.wasGoodHit) && !daNote.blockHit) {
-					trace('keyShit()');
 					opponentPlay ? opponentNoteHit(daNote) : goodNoteHit(daNote);
 				}
 			});
