@@ -1272,19 +1272,6 @@ class PlayState extends MusicBeatState
 		} else {
 			startCountdown();
 		}
-		if (ClientPrefs.middleScroll && opponentPlay) {
-			// Fuck this I'm just gonna have it do this.
-			/* Also did it out here cause in generateStaticArrows it would break
-			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
-			for (i in 0...opponentStrums.members.length) {
-				opponentStrums.members[i].x = defaultPlayerStrumX[i];
-				opponentStrums.members[i].alpha = 1;
-			}
-			for (i in 0...playerStrums.members.length) {
-				playerStrums.members[i].x = defaultOpponentStrumX[i];
-				playerStrums.members[i].alpha = 0.5;
-			}
-		}
 		RecalculateRating();
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
@@ -1310,6 +1297,21 @@ class PlayState extends MusicBeatState
 		if (!ClientPrefs.controllerMode) {
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
+		}
+		if (ClientPrefs.middleScroll && opponentPlay) {
+			// Fuck this I'm just gonna have it do this.
+			/* Also did it out here cause in generateStaticArrows it would break
+			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
+			var lastAlpha = [opponentStrums.members[0].alpha, playerStrums.members[0].alpha];
+			for (i in 0...opponentStrums.members.length) {
+				opponentStrums.members[i].x = defaultPlayerStrumX[i];
+				opponentStrums.members[i].alpha = lastAlpha[1];
+			}
+			for (i in 0...playerStrums.members.length) {
+				playerStrums.members[i].x = defaultOpponentStrumX[i];
+				playerStrums.members[i].alpha = lastAlpha[0];
+			}
+			/* FUCK THIS UGH */ saveStrumPos(false); saveStrumPos(true);
 		}
 		callOnLuas('onCreatePost', []);
 
@@ -2010,6 +2012,24 @@ class PlayState extends MusicBeatState
 		Paths.sound('introGo' + introSoundsSuffix);
 	}
 
+	private function saveStrumPos(isPlayer:Bool):Void {
+		if (isPlayer) {
+			for (i in 0...playerStrums.length) {
+				defaultPlayerStrumX[i] = playerStrums.members[i].x;
+				defaultPlayerStrumY[i] = playerStrums.members[i].y;
+				setOnLuas('defaultPlayerStrumX' + i, defaultPlayerStrumX[i]);
+				setOnLuas('defaultPlayerStrumY' + i, defaultPlayerStrumY[i]);
+			}
+		} else {
+			for (i in 0...opponentStrums.length) {
+				defaultOpponentStrumX[i] = opponentStrums.members[i].x;
+				defaultOpponentStrumY[i] = opponentStrums.members[i].y;
+				setOnLuas('defaultOpponentStrumX' + i, defaultOpponentStrumX[i]);
+				setOnLuas('defaultOpponentStrumY' + i, defaultOpponentStrumY[i]);
+			}
+		}
+	}
+
 	public function startCountdown():Void
 	{
 		if (startedCountdown) {
@@ -2025,18 +2045,8 @@ class PlayState extends MusicBeatState
 			generateStaticArrows(0);
 			generateStaticArrows(1);
 
-			for (i in 0...playerStrums.length) {
-				defaultPlayerStrumX[i] = playerStrums.members[i].x;
-				defaultPlayerStrumY[i] = playerStrums.members[i].y;
-				setOnLuas('defaultPlayerStrumX' + i, defaultPlayerStrumX[i]);
-				setOnLuas('defaultPlayerStrumY' + i, defaultPlayerStrumY[i]);
-			}
-			for (i in 0...opponentStrums.length) {
-				defaultOpponentStrumX[i] = opponentStrums.members[i].x;
-				defaultOpponentStrumY[i] = opponentStrums.members[i].y;
-				setOnLuas('defaultOpponentStrumX' + i, defaultOpponentStrumX[i]);
-				setOnLuas('defaultOpponentStrumY' + i, defaultOpponentStrumY[i]);
-			}
+			saveStrumPos(true);
+			saveStrumPos(false);
 
 			startedCountdown = true;
 			Conductor.songPosition = -Conductor.crochet * 5;
@@ -3115,7 +3125,7 @@ class PlayState extends MusicBeatState
 							}
 						}
 						
-						if (!daNote.blockHit && daNote.mustPress == opponentPlay && (daNote.wasGoodHit && !daNote.hitByOpponent) && !daNote.ignoreNote)
+						if (!daNote.blockHit && daNote.mustPress == opponentPlay && ((opponentPlay ? daNote.hitByOpponent : daNote.wasGoodHit) && (opponentPlay ? !daNote.wasGoodHit : !daNote.hitByOpponent)) && !daNote.ignoreNote)
 						{
 							opponentPlay ? goodNoteHit(daNote) : opponentNoteHit(daNote);
 						}
@@ -3683,22 +3693,38 @@ class PlayState extends MusicBeatState
 				if (!practiceMode && (opponentPlay ? health > 1.61 : health < 0.4))
 					health = opponentPlay ? 1.61 : 0.4;
 
+				// var sameAsBefore:Bool = false;
 				var realValue1:Dynamic = !opponentPlay;
 				if (value1.length < 1) realValue1 = 'swap';
 				if (value1 == 'on') realValue1 = true;
 				else if (value1 == 'off') realValue1 = false;
 				
-				var oppoPlayBefore:Bool = opponentPlay;
 				if (realValue1 == 'swap') opponentPlay = !opponentPlay;
 				else opponentPlay = realValue1;
 
 				if (value2.length < 1) value2 = 'true';
 				if (value2 == 'true' && ClientPrefs.middleScroll) {
-					if (opponentPlay != oppoPlayBefore) {
-						for (i in 0...opponentStrums.members.length) FlxTween.tween(opponentStrums.members[i], {x: defaultPlayerStrumX[i], alpha: opponentPlay ? 1 : 0.5}, 0.35, {ease: FlxEase.circOut});
-						for (i in 0...playerStrums.members.length) FlxTween.tween(playerStrums.members[i], {x: defaultOpponentStrumX[i], alpha: opponentPlay ? 0.5 : 1}, 0.35, {ease: FlxEase.circOut});
-					}
-				} // else if (value2 == 'false') trace('FUCK YOU NOTHING HAPPENED LMFAO');
+					// if (!sameAsBefore) {
+						var oppoMove:FlxTween;
+						for (i in 0...opponentStrums.members.length) {
+							oppoMove = FlxTween.tween(opponentStrums.members[i], {x: defaultPlayerStrumX[i], alpha: opponentPlay ? 1 : 0.5}, 0.35 / playbackRate, {ease: FlxEase.circOut, onComplete:
+								function (twn:FlxTween) {
+									saveStrumPos(false);
+									oppoMove = null;
+								}
+							});
+						}
+						var playMove:FlxTween;
+						for (i in 0...playerStrums.members.length) {
+							playMove = FlxTween.tween(playerStrums.members[i], {x: defaultOpponentStrumX[i], alpha: opponentPlay ? 0.5 : 1}, 0.35 / playbackRate, {ease: FlxEase.circOut, onComplete:
+								function (twn:FlxTween) {
+									saveStrumPos(true);
+									playMove = null;
+								}
+							});
+						}
+					// }
+				} else if (value2 == 'false') trace('FUCK YOU NOTHING HAPPENED LMFAO');		
 
 				// So they don't look wierd after switch.
 				for (i in 0...strumLineNotes.members.length) strumLineNotes.members[i].playAnim('static', true);
@@ -3707,7 +3733,7 @@ class PlayState extends MusicBeatState
 				boyfriend.dance();
 
 				setOnLuas('opponentPlay', opponentPlay);
-				trace('"Opponent Play" has been triggered');
+				trace('"Opponent Play" has been triggered, set to $opponentPlay.');
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
