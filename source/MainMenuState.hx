@@ -32,7 +32,7 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
-	private var char1:Character - Null;
+	private var char1:Character = Null;
 	
 	var optionShit:Array<String> = [
 		'story_mode',
