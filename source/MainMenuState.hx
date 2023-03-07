@@ -32,7 +32,7 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
-	private var char1:Character = Null;
+	//private var char1:Character = Null;
 	
 	var optionShit:Array<String> = [
 		'story_mode',
@@ -129,10 +129,10 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
                 
-		char1 = new Character(800, -130, 'bf', true);
+		/*char1 = new Character(800, -130, 'bf', true);
 		char1.setGraphicSize(Std.int(char1.width * 0.8));
 		add(char1);
-		char1.visible = false;
+		char1.visible = false;*/
 		
 		
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Vs Stupid v" + vsStupidVersion, 12);
