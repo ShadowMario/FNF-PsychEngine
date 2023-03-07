@@ -1,6 +1,6 @@
 function opponentNoteHit()
     health = getProperty('health')
-    if getProperty('health') > 0.09 then
+    if getProperty('health') > 0.57 then
         setProperty('health', health- 0.01);
     end
 end
