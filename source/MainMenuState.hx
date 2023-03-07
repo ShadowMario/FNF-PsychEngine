@@ -32,7 +32,6 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
-	//private var char1:Character = Null;
 	
 	var optionShit:Array<String> = [
 		'story_mode',
@@ -128,11 +127,7 @@ class MainMenuState extends MusicBeatState
 		}
 
 		FlxG.camera.follow(camFollowPos, null, 1);
-                
-		/*char1 = new Character(800, -130, 'bf', true);
-		char1.setGraphicSize(Std.int(char1.width * 0.8));
-		add(char1);
-		char1.visible = false;*/
+      
 		
 		
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Vs Stupid v" + vsStupidVersion, 12);
@@ -190,19 +185,7 @@ class MainMenuState extends MusicBeatState
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
-		if (optionShit[curSelected] == 'story_mode')
-		{
-		 changeItem(-1);
-		 changeItem(1);
-			
-		  char1.dance();
-		  char1.updateHitbox();
-		  char1.visible = true;
-		}
-		else
-		{
-		  char1.visible = false;
-		}
+		
 		
 		if (!selectedSomethin)
 		{
