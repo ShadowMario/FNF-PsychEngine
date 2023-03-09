@@ -20,22 +20,21 @@ class Boyfriend extends Character
 	{
 		if (!debugMode && animation.curAnim != null)
 		{
-			if (animation.curAnim.name.startsWith('sing'))
-			{
-				holdTimer += elapsed;
-			}
-			else
-				holdTimer = 0;
-
-			if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
-			{
+			if (animation.curAnim.name.startsWith('sing')) holdTimer += elapsed;
+			else {if (!PlayState.instance.opponentPlay) holdTimer = 0;}
+			
+			if (PlayState.instance.opponentPlay) {
+				if (holdTimer >= Conductor.stepCrochet * (0.0011 / (FlxG.sound.music != null ? FlxG.sound.music.pitch : 1)) * singDuration) {
+					dance();
+					holdTimer = 0;
+				}
+			} else {
+				if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
 				playAnim('idle', true, false, 10);
 			}
 
 			if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished && startedDeath)
-			{
 				playAnim('deathLoop');
-			}
 		}
 
 		super.update(elapsed);

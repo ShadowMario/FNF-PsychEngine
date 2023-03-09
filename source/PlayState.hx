@@ -1302,14 +1302,8 @@ class PlayState extends MusicBeatState
 			// Fuck this I'm just gonna have it do this.
 			/* Also did it out here cause in generateStaticArrows it would break
 			on entering PlayState and idk why. --@RodneyAnImaginativePerson */
-			for (i in 0...opponentStrums.length) {
-				opponentStrums.members[i].x = defaultPlayerStrumX[i];
-				opponentStrums.members[i].alpha = 1;
-			}
-			for (i in 0...playerStrums.length) {
-				playerStrums.members[i].x = defaultOpponentStrumX[i];
-				playerStrums.members[i].alpha = 0.5;
-			}
+			for (i in 0...opponentStrums.length) opponentStrums.members[i].x = defaultPlayerStrumX[i];
+			for (i in 0...playerStrums.length) playerStrums.members[i].x = defaultOpponentStrumX[i];
 			/* FUCK THIS UGH */ saveStrumPos(false); saveStrumPos(true);
 		}
 		callOnLuas('onCreatePost', []);
@@ -2590,8 +2584,8 @@ class PlayState extends MusicBeatState
 		switch(event.event) {
 			case 'Kill Henchmen': // Better timing so that the kill sound matches the beat intended
 				return 280; // Plays 280ms before the actual position
-			case 'Trigger Opponent Play': // Better timing so that the kill sound matches the beat intended
-				return -20;
+			case 'Trigger Opponent Play': // Better timing when placing on a note
+				return -85; // Triggers a note (or grid square) before
 		}
 		return 0;
 	}
@@ -2607,9 +2601,16 @@ class PlayState extends MusicBeatState
 		for (i in 0...4) {
 			// FlxG.log.add(i);
 			var targetAlpha:Float = 1;
-			if (player < 1) {
-				if (!ClientPrefs.opponentStrums) targetAlpha = 0;
-				else if (ClientPrefs.middleScroll) targetAlpha = 0.35;
+			if (player == 0) {
+				if (!opponentPlay) {
+					if (!ClientPrefs.opponentStrums) targetAlpha = 0;
+					else if (ClientPrefs.middleScroll) targetAlpha = 0.35;
+				}
+			} else {
+				if (opponentPlay) {
+					if (!ClientPrefs.opponentStrums) targetAlpha = 0;
+					else if (ClientPrefs.middleScroll) targetAlpha = 0.35;
+				}
 			}
 
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
@@ -3199,7 +3200,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		#end
-		if (FlxG.keys.justPressed.TAB && (!endingSong && !startingSong)) triggerEventNote('Trigger Opponent Play', '', '');
+		if (FlxG.keys.justPressed.TAB) triggerEventNote('Trigger Opponent Play', '', '');
 		
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
@@ -3711,13 +3712,13 @@ class PlayState extends MusicBeatState
 				} else trace('FUCK YOU NOTHING HAPPENED LMFAO');
 
 				// So they don't look wierd after switch.
-				var timerShit = function() {
-					dad.dance(); gf.dance(); boyfriend.dance();
-					for (i in 0...strumLineNotes.length) strumLineNotes.members[i].playAnim('static', true);
-					trace('triggered timerShit');
-				};
+				var timerShit = function() {dad.dance(); gf.dance(); boyfriend.dance();};
 				timerShit(); // timer jic
-				new FlxTimer().start(0.35 / playbackRate, function(tmr:FlxTimer) timerShit());
+				new FlxTimer().start(0.15 / playbackRate, function(tmr:FlxTimer) {
+					timerShit();
+					for (i in 0...strumLineNotes.length)
+						strumLineNotes.members[i].playAnim('static', true);
+				});
 
 				setOnLuas('opponentPlay', opponentPlay);
 				trace('"Opponent Play" has been triggered, set to $opponentPlay.');
@@ -4362,7 +4363,6 @@ class PlayState extends MusicBeatState
 			}
 			else if (char.animation.curAnim != null && char.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * char.singDuration && char.animation.curAnim.name.startsWith('sing') && !char.animation.curAnim.name.endsWith('miss')) {
 				char.dance();
-				//char.animation.curAnim.finish();
 			}
 		}
 
