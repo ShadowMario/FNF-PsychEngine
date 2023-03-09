@@ -3,8 +3,6 @@ package options;
 import flixel.input.keyboard.FlxKey;
 import objects.AttachedText;
 
-using StringTools;
-
 class ControlsSubState extends MusicBeatSubstate {
 	private static var curSelected:Int = 1;
 	private static var curAlt:Bool = false;

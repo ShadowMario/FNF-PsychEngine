@@ -22,8 +22,6 @@ import objects.TypedAlphabet;
 import cutscenes.DialogueBoxPsych;
 import cutscenes.DialogueCharacter;
 
-using StringTools;
-
 class DialogueCharacterEditorState extends MusicBeatState
 {
 	var box:FlxSprite;

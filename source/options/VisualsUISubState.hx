@@ -1,21 +1,5 @@
 package options;
 
-import flash.text.TextField;
-
-import flixel.addons.display.FlxGridOverlay;
-
-import lime.utils.Assets;
-import flixel.FlxSubState;
-import flash.text.TextField;
-
-import flixel.util.FlxSave;
-import haxe.Json;
-import flixel.input.keyboard.FlxKey;
-import flixel.graphics.FlxGraphic;
-import Controls;
-
-using StringTools;
-
 class VisualsUISubState extends BaseOptionsMenu
 {
 	public function new()

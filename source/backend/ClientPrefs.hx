@@ -1,10 +1,8 @@
 package backend;
 
-
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
 import flixel.input.gamepad.FlxGamepadInputID;
-import flixel.graphics.FlxGraphic;
 import Controls;
 
 import states.TitleState;

@@ -12,12 +12,8 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
-
 import flixel.util.FlxSave;
-
 import openfl.utils.Assets;
-
-using StringTools;
 
 //
 // Things to trivialize some dumb stuff like splitting strings on older Lua

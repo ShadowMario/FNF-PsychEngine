@@ -1,9 +1,5 @@
 package objects;
 
-
-import flixel.graphics.frames.FlxAtlasFrames;
-
-
 class MenuItem extends FlxSprite
 {
 	public var targetY:Float = 0;

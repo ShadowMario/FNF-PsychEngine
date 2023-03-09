@@ -15,8 +15,6 @@ import llua.State;
 import llua.Convert;
 #end
 
-using StringTools;
-
 typedef LuaTweenOptions = {
 	type:FlxTweenType,
 	startDelay:Float,

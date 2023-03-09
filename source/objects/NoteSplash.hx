@@ -1,6 +1,5 @@
 package objects;
 
-import flixel.graphics.frames.FlxAtlasFrames;
 import shaders.ColorSwap;
 
 class NoteSplash extends FlxSprite

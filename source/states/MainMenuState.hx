@@ -14,8 +14,6 @@ import objects.AchievementPopup;
 
 import states.editors.MasterEditorMenu;
 
-using StringTools;
-
 class MainMenuState extends MusicBeatState
 {
 	public static var psychEngineVersion:String = '0.6.4b'; //This is also used for Discord RPC

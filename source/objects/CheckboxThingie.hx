@@ -1,7 +1,5 @@
 package objects;
 
-import flixel.graphics.frames.FlxAtlasFrames;
-
 class CheckboxThingie extends FlxSprite
 {
 	public var sprTracker:FlxSprite;

@@ -30,8 +30,6 @@ import objects.MenuItem;
 
 import states.editors.MasterEditorMenu;
 
-using StringTools;
-
 class WeekEditorState extends MusicBeatState
 {
 	var txtWeekTitle:FlxText;

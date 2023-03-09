@@ -6,8 +6,6 @@ import backend.Highscore;
 import flixel.FlxSubState;
 import objects.HealthIcon;
 
-using StringTools;
-
 class ResetScoreSubState extends MusicBeatSubstate
 {
 	var bg:FlxSprite;

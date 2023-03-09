@@ -10,8 +10,6 @@ import sys.FileSystem;
 
 import backend.Section;
 
-using StringTools;
-
 typedef SwagSong =
 {
 	var song:String;

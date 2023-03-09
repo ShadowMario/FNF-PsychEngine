@@ -48,8 +48,6 @@ import psychlua.DebugLuaText;
 import psychlua.ModchartSprite;
 import psychlua.ModchartText;
 
-using StringTools;
-
 class FunkinLua {
 	public static var Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
 	public static var Function_Continue:Dynamic = "##PSYCHLUA_FUNCTIONCONTINUE";

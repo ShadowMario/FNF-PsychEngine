@@ -1,12 +1,6 @@
 package cutscenes;
 
-
 import flixel.addons.text.FlxTypeText;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.input.FlxKeyManager;
-
-
-using StringTools;
 
 class DialogueBox extends FlxSpriteGroup
 {

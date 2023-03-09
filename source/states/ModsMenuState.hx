@@ -21,8 +21,6 @@ import haxe.zip.Entry;
 import haxe.zip.Uncompress;
 import haxe.zip.Writer;*/
 
-using StringTools;
-
 class ModsMenuState extends MusicBeatState
 {
 	var mods:Array<ModMetadata> = [];

@@ -40,14 +40,12 @@ import objects.AttachedSprite;
 import objects.Character;
 import substates.Prompt;
 
-using StringTools;
 
 #if sys
 import flash.media.Sound;
 import sys.FileSystem;
 import sys.io.File;
 #end
-
 
 @:access(flixel.system.FlxSound._sound)
 @:access(openfl.media.Sound.__buffer)

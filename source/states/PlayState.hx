@@ -65,8 +65,6 @@ import psychlua.*;
 import psychlua.LuaUtils;
 #end
 
-using StringTools;
-
 class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;

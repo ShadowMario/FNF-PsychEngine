@@ -10,8 +10,6 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 
-using StringTools;
-
 class CoolUtil
 {
 	inline public static function quantize(f:Float, snap:Float){

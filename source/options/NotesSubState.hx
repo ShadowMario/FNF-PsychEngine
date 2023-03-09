@@ -2,8 +2,6 @@ package options;
 
 import shaders.ColorSwap;
 
-using StringTools;
-
 class NotesSubState extends MusicBeatSubstate
 {
 	private static var curSelected:Int = 0;

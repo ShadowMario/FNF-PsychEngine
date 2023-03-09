@@ -1,8 +1,5 @@
 package objects;
 
-
-using StringTools;
-
 class AttachedSprite extends FlxSprite
 {
 	public var sprTracker:FlxSprite;

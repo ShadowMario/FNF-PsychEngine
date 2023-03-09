@@ -1,14 +1,8 @@
 package objects;
 
-import flixel.graphics.frames.FlxAtlasFrames;
-
-import flash.display.BitmapData;
 import states.editors.ChartingState;
 
-
 import shaders.ColorSwap;
-
-using StringTools;
 
 typedef EventNote = {
 	strumTime:Float,

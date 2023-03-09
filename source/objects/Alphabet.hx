@@ -1,10 +1,6 @@
 package objects;
 
-
 import flixel.math.FlxPoint;
-import flash.media.Sound;
-
-using StringTools;
 
 enum Alignment
 {

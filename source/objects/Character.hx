@@ -2,9 +2,6 @@ package objects;
 
 import animateatlas.AtlasFrameMaker;
 
-import flixel.addons.effects.FlxTrail;
-import flixel.animation.FlxBaseAnimation;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxSort;
 
 #if MODS_ALLOWED
@@ -14,13 +11,10 @@ import sys.FileSystem;
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
 import haxe.Json;
-import haxe.format.JsonParser;
 
 import backend.Song;
 import backend.Section;
 import states.stages.objects.TankmenBG;
-
-using StringTools;
 
 typedef CharacterFile = {
 	var animations:Array<AnimArray>;

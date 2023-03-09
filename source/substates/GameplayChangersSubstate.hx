@@ -3,8 +3,6 @@ package substates;
 import objects.AttachedText;
 import objects.CheckboxThingie;
 
-using StringTools;
-
 class GameplayChangersSubstate extends MusicBeatSubstate
 {
 	private var curOption:GameplayOption = null;

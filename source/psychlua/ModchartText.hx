@@ -1,7 +1,5 @@
 package psychlua;
 
-
-
 class ModchartText extends FlxText
 {
 	public var wasAdded:Bool = false;

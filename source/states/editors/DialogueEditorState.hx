@@ -20,8 +20,6 @@ import objects.TypedAlphabet;
 import cutscenes.DialogueBoxPsych;
 import cutscenes.DialogueCharacter;
 
-using StringTools;
-
 class DialogueEditorState extends MusicBeatState
 {
 	var character:DialogueCharacter;

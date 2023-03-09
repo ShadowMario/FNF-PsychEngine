@@ -7,8 +7,6 @@ import sys.io.File;
 
 import objects.AttachedSprite;
 
-using StringTools;
-
 class CreditsState extends MusicBeatState
 {
 	var curSelected:Int = -1;

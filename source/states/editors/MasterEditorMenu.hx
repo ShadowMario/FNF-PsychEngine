@@ -11,8 +11,6 @@ import objects.Character;
 import states.MainMenuState;
 import states.FreeplayState;
 
-using StringTools;
-
 class MasterEditorMenu extends MusicBeatState
 {
 	var options:Array<String> = [

@@ -27,8 +27,6 @@ import objects.HealthIcon;
 import sys.FileSystem;
 #end
 
-using StringTools;
-
 class CharacterEditorState extends MusicBeatState
 {
 	var char:Character;
