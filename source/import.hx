@@ -7,6 +7,7 @@ import backend.MusicBeatSubstate;
 import backend.CustomFadeTransition;
 import backend.ClientPrefs;
 import backend.Conductor;
+import backend.Difficulty;
 
 import objects.Alphabet;
 import objects.BGSprite;
