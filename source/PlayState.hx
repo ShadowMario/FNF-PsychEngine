@@ -3063,7 +3063,6 @@ class PlayState extends MusicBeatState
 				keyShit();
 			} else if (char.animation.curAnim != null && char.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * char.singDuration && char.animation.curAnim.name.startsWith('sing') && !char.animation.curAnim.name.endsWith('miss')) {
 				char.dance();
-				//char.animation.curAnim.finish();
 			}
       
 			if (!inCutscene) {
@@ -3071,7 +3070,6 @@ class PlayState extends MusicBeatState
 					keyShit();
 				} else if (char.animation.curAnim != null && char.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * char.singDuration && char.animation.curAnim.name.startsWith('sing') && !char.animation.curAnim.name.endsWith('miss')) {
 					char.dance();
-					//char.animation.curAnim.finish();
 				}
 
 				if (startedCountdown)
@@ -4348,13 +4346,16 @@ class PlayState extends MusicBeatState
 			if (parsedHoldArray.contains(true) && !endingSong) {
 				#if ACHIEVEMENTS_ALLOWED
 				var achieve:String = checkForAchievement(['oversinging']);
-				if (achieve != null) {
-					startAchievement(achieve);
-				}
+				if (achieve != null) startAchievement(achieve);
 				#end
-			}
-			else if (char.animation.curAnim != null && char.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * char.singDuration && char.animation.curAnim.name.startsWith('sing') && !char.animation.curAnim.name.endsWith('miss')) {
+			} else if (char.animation.curAnim != null && char.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * char.singDuration && char.animation.curAnim.name.startsWith('sing') && !char.animation.curAnim.name.endsWith('miss')) {
 				char.dance();
+			}
+
+			if (opponentPlay && gf != null) { // WOOPS
+				if (gf.animation.curAnim != null && gf.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * gf.singDuration && gf.animation.curAnim.name.startsWith('sing') && !gf.animation.curAnim.name.endsWith('miss')) {
+					gf.dance();
+				}
 			}
 		}
 
