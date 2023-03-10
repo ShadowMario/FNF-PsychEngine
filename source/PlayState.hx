@@ -2585,7 +2585,7 @@ class PlayState extends MusicBeatState
 			case 'Kill Henchmen': // Better timing so that the kill sound matches the beat intended
 				return 280; // Plays 280ms before the actual position
 			case 'Trigger Opponent Play': // Better timing when placing on a note
-				return -85; // Triggers a note (or grid square) before
+				return -83.3333333333333; // Triggers a note (or grid square) before, oh and fuck you it's a long ass number, round my ass >:)
 		}
 		return 0;
 	}
@@ -3249,7 +3249,7 @@ class PlayState extends MusicBeatState
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
 	function doDeathCheck(?skipHealthCheck:Bool = false) {
 		var shallDie = ((skipHealthCheck && instakillOnMiss) || health <= 0);
-		if (opponentPlay) {shallDie = ((skipHealthCheck && instakillOnMiss) || health >= 2);}
+		if (opponentPlay) shallDie = ((skipHealthCheck && instakillOnMiss) || health >= 2);
 
 		if (shallDie && !practiceMode && !isDead) {
 			var ret:Dynamic = callOnLuas('onGameOver', [], false);
@@ -3692,11 +3692,9 @@ class PlayState extends MusicBeatState
 					FunkinLua.setVarInArray(this, value1, value2);
 				}
 			case 'Trigger Opponent Play':
-				if (!practiceMode && (opponentPlay ? health > 1.61 : health < 0.4)) {
-					health = 1; //opponentPlay ? 1.61 : 0.4; // Doesn't work 100% of the time so fuck this!
-				}
+				health = 2 - health; // technically flips the health bar in a sense ig
 
-				// var sameAsBefore:Bool = false;
+				var prevState:Bool = opponentPlay;
 				var realValue1:Dynamic = !opponentPlay;
 				if (value1.length < 1) realValue1 = 'swap';
 				if (value1 == 'on') realValue1 = true;
@@ -3706,22 +3704,16 @@ class PlayState extends MusicBeatState
 				else opponentPlay = realValue1;
 
 				if (value2.length < 1) value2 = 'true';
-				if ((value2 == 'true' && ClientPrefs.middleScroll) /*&& !sameAsBefore*/) {
+				if ((value2 == 'true' && ClientPrefs.middleScroll) && (prevState != opponentPlay)) {
 					for (i in 0...opponentStrums.length) FlxTween.tween(opponentStrums.members[i], {x: defaultPlayerStrumX[i], alpha: opponentPlay ? 1 : 0.5}, 0.35 / playbackRate, {ease: FlxEase.circOut, onComplete: function (twn:FlxTween) {saveStrumPos(false);}});
 					for (i in 0...playerStrums.length) FlxTween.tween(playerStrums.members[i], {x: defaultOpponentStrumX[i], alpha: opponentPlay ? 0.5 : 1}, 0.35 / playbackRate, {ease: FlxEase.circOut, onComplete: function (twn:FlxTween) {saveStrumPos(true);}});
-				} else trace('FUCK YOU NOTHING HAPPENED LMFAO');
+				} // else trace('FUCK YOU NOTHING HAPPENED LMFAO');
 
 				// So they don't look wierd after switch.
-				var timerShit = function() {dad.dance(); gf.dance(); boyfriend.dance();};
-				timerShit(); // timer jic
-				new FlxTimer().start(0.15 / playbackRate, function(tmr:FlxTimer) {
-					timerShit();
-					for (i in 0...strumLineNotes.length)
-						strumLineNotes.members[i].playAnim('static', true);
-				});
+				for (i in 0...strumLineNotes.length) strumLineNotes.members[i].playAnim('static', true);
 
 				setOnLuas('opponentPlay', opponentPlay);
-				trace('"Opponent Play" has been triggered, set to $opponentPlay.');
+				// trace('"Opponent Play" has been triggered, set to $opponentPlay.');
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
