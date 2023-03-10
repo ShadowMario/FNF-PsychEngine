@@ -1051,6 +1051,10 @@ class FunkinLua {
 			return true;
 		});
 
+		Lua_helper.add_callback(lua, "saveStrumPos", function(isPlayer:Bool) {
+			PlayState.instance.saveStrumPos(isPlayer);
+		});
+
 		//shitass stuff for epic coders like me B)  *image of obama giving himself a medal*
 		Lua_helper.add_callback(lua, "getObjectOrder", function(obj:String) {
 			var killMe:Array<String> = obj.split('.');

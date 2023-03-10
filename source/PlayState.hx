@@ -2051,7 +2051,7 @@ class PlayState extends MusicBeatState
 		Paths.sound('introGo' + introSoundsSuffix);
 	}
 
-	private function saveStrumPos(isPlayer:Bool):Void {
+	public function saveStrumPos(isPlayer:Bool):Void {
 		if (isPlayer) {
 			for (i in 0...playerStrums.length) {
 				defaultPlayerStrumX[i] = playerStrums.members[i].x;
@@ -2675,7 +2675,6 @@ class PlayState extends MusicBeatState
 			babyArrow.downScroll = ClientPrefs.downScroll;
 			if (!isStoryMode && !skipArrowStartTween)
 			{
-				//babyArrow.y -= 10;
 				babyArrow.alpha = 0;
 				FlxTween.tween(babyArrow, {alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
@@ -4514,9 +4513,7 @@ class PlayState extends MusicBeatState
 			if (SONG.needsVoices) vocals.volume = 0;
 			doDeathCheck(true);
 		}
-
-		//For testing purposes
-		//trace(daNote.missHealth);
+		
 		songMisses++;
 		if (SONG.needsVoices) vocals.volume = 0;
 		if (!practiceMode) songScore -= 10;
