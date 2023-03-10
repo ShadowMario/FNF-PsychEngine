@@ -3198,9 +3198,9 @@ class PlayState extends MusicBeatState
 				setSongTime(Conductor.songPosition + 10000);
 				clearNotesBefore(Conductor.songPosition);
 			}
+			if (FlxG.keys.justPressed.THREE) triggerEventNote('Trigger Opponent Play', '', '');
 		}
 		#end
-		if (FlxG.keys.justPressed.TAB) triggerEventNote('Trigger Opponent Play', '', '');
 		
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
