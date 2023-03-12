@@ -97,7 +97,7 @@ class MainMenuState extends MusicBeatState
 		
 		// thank you, memehoovy for helping me with this code <3
 		
-		var menuCharacter:FlxSprite = new FlxSprite(-40).loadGraphic(Paths.image('StupidNor_MainMenu'));
+		var menuCharacter:FlxSprite = new FlxSprite(75).loadGraphic(Paths.image('StupidNor_MainMenu'));
 		add(menuCharacter);
 		
 		// magenta.scrollFactor.set();
