@@ -95,6 +95,11 @@ class MainMenuState extends MusicBeatState
 		magenta.color = 0xFFfd719b;
 		add(magenta);
 		
+		// thank you, memehoovy for helping me with this code <3
+		
+		var menuCharacter:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('StupidNor_MainMenu'));
+		add(menuCharacter);
+		
 		// magenta.scrollFactor.set();
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
