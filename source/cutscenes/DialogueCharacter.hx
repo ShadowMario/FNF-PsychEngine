@@ -5,9 +5,8 @@ import haxe.Json;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
-#else
-import lime.utils.Assets;
 #end
+import lime.utils.Assets;
 
 typedef DialogueAnimArray = {
 	var anim:String;

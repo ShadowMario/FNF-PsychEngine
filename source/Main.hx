@@ -23,7 +23,6 @@ import sys.io.File;
 import sys.io.Process;
 #end
 
-
 class Main extends Sprite
 {
 	var game = {
