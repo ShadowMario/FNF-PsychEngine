@@ -1858,9 +1858,22 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "setHealthBarColors", function(leftHex:String, rightHex:String) {
 			var left:FlxColor = Std.parseInt(leftHex);
-			if(!leftHex.startsWith('0x')) left = Std.parseInt('0xff' + leftHex);
 			var right:FlxColor = Std.parseInt(rightHex);
-			if(!rightHex.startsWith('0x')) right = Std.parseInt('0xff' + rightHex);
+
+			if (leftHex != null && leftHex != '') {				
+				if (!leftHex.startsWith('0x')) {
+					left = Std.parseInt('0xff' + leftHex);
+				}
+			} else {
+				left = FlxColor.fromRGB(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
+			}
+			if (rightHex != null && rightHex != '') {
+				if (!rightHex.startsWith('0x')) {
+					right = Std.parseInt('0xff' + rightHex);
+				}
+			} else {
+				right = FlxColor.fromRGB(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
+			}
 
 			PlayState.instance.healthBar.createFilledBar(left, right);
 			PlayState.instance.healthBar.updateBar();
