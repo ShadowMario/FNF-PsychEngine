@@ -253,8 +253,6 @@ class ExtraFunctions
 			var json = Paths.modFolders('data/' + jsonStr + '.json');
 			var foundJson:Bool;
 			
-			trace(Assets.exists(json));
-
 			#if sys
 				if (FileSystem.exists(json)) {
 					foundJson = true;
