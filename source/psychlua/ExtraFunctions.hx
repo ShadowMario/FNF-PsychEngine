@@ -249,7 +249,7 @@ class ExtraFunctions
 			return list;
 		});
 		
-		Lua_helper.add_callback(lua, "parseJsonData", function(jsonStr:String, varName:String) {
+		Lua_helper.add_callback(lua, "parseJson", function(jsonStr:String, varName:String) {
 			var json = Paths.modFolders('data/' + jsonStr + '.json');
 			var foundJson:Bool;
 			
@@ -259,7 +259,7 @@ class ExtraFunctions
 				if (FileSystem.exists(json)) {
 					foundJson = true;
 				} else {
-					luaTrace('parseJsonData: Invalid json file path!', false, false, FlxColor.RED);
+					luaTrace('parseJson: Invalid json file path!', false, false, FlxColor.RED);
 					foundJson = false;
 					return;	
 				}
@@ -267,7 +267,7 @@ class ExtraFunctions
 				if (Assets.exists(json)) {
 					foundJson = true;
 				} else {
-					luaTrace('parseJsonData: Invalid json file path!', false, false, FlxColor.RED);
+					luaTrace('parseJson: Invalid json file path!', false, false, FlxColor.RED);
 					foundJson = false;
 					return;	
 				}
