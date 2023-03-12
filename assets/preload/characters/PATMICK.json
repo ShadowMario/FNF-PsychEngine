@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				0,
-				0
+				-461
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "idle",
-			"loop": false,
-			"name": "IDLEBOOP"
+			"fps": 24,
+			"name": "IDLEBOOP",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				0,
-				0
+				70,
+				-410
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
-			"name": "LEFTBOOP"
+			"fps": 24,
+			"name": "LEFTBOOP",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				0,
-				0
+				-29,
+				-476
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
-			"name": "DOWNBOOP"
+			"fps": 24,
+			"name": "DOWNBOOP",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				0,
-				0
+				20,
+				-380
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
-			"name": "UPBOOP"
+			"fps": 24,
+			"name": "UPBOOP",
+			"indices": []
 		},
 		{
-			"offsets": [
-				0,
-				0
-			],
-			"indices": [],
-			"fps": 24,
-			"anim": "singRIGHT",
 			"loop": false,
-			"name": "RIGHTBOOP"
+			"offsets": [
+				40,
+				-435
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "RIGHTBOOP",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
@@ -70,8 +70,8 @@
 		161
 	],
 	"camera_position": [
-		0,
-		0
+		-210,
+		520
 	],
 	"sing_duration": 6.1,
 	"scale": 1
