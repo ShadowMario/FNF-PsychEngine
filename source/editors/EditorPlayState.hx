@@ -501,7 +501,7 @@ class EditorPlayState extends MusicBeatState
 
 		keyShit();
 		scoreTxt.text = 'Hits: ' + songHits + ' | Misses: ' + songMisses;
-		sectionTxt.text = 'Beat: ' + curSection;
+		sectionTxt.text = 'Section: ' + curSection;
 		beatTxt.text = 'Beat: ' + curBeat;
 		stepTxt.text = 'Step: ' + curStep;
 		super.update(elapsed);
@@ -606,7 +606,7 @@ class EditorPlayState extends MusicBeatState
 
 					}
 				}
-				else if (canMiss && ClientPrefs.ghostTapping) {
+				else if (canMiss) {
 					noteMiss();
 				}
 
@@ -776,6 +776,8 @@ class EditorPlayState extends MusicBeatState
 
 	function noteMiss():Void
 	{
+		if (ClientPrefs.ghostTapping) return;
+
 		combo = 0;
 
 		//songScore -= 10;
