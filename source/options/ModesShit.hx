@@ -29,7 +29,7 @@ import openfl.Lib;
 
 using StringTools;
 
-class GraphicsSettingsSubState extends BaseOptionsMenu
+class ModesShit extends BaseOptionsMenu
 {
 	public function new()
 	{
@@ -46,7 +46,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 
 		var option:Option = new Option('Erect',
 			'If checked, This will only enable [ erect ] as a mode' // you should've read the goddamn option title >:(
-		          'erectYes',
+		         'erectYes',
 			'bool',
 			false);
 
