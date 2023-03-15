@@ -49,6 +49,7 @@ class ModesShit extends BaseOptionsMenu
 		         'erectYes',
 			'bool',
 			false);
+		addOption(option);
 
 		var option:Option = new Option('D-Sides + Remixed', // d-sides mods these days Xdddd
 			'If checked, This will add 2 modes, remixed and d-sides.',
