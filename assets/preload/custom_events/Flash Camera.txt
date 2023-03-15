@@ -1,0 +1,4 @@
+flashes the camera
+
+value 1 - speed
+value 2 - nothing

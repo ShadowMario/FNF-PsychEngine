@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="AngelRed.png">
+	<!-- Created with Adobe Animate version 22.0.3.179 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Angel Red0000" x="0" y="0" width="49" height="48"/>
+	<SubTexture name="Angel Red0001" x="49" y="0" width="49" height="48"/>
+</TextureAtlas>

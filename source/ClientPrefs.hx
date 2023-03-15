@@ -7,10 +7,10 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs {
-	public static var normalYes:Bool = true;
-	public static var erectYes:Bool = false;
-	public static var sideYes:Bool = false;
-	public static var encoreYes:Bool = false;
+	public static var normalYes:Bool = true; // Easy,Normal,Hard
+	public static var erectYes:Bool = false; // Erect
+	public static var sideYes:Bool = false;  // D-sides,Remixed
+	public static var encoreYes:Bool = false; // Encore
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
 	public static var opponentStrums:Bool = true;

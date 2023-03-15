@@ -30,6 +30,7 @@ shop menu is hidden from the main menu--until i fix the postion
 yes--scroll speeds are now 4 >:)
 the charting--is like dave and bambi
 shoutouts to crazy dany--for remaking art <3
+<<<<<<< HEAD
 i got so lazy--i just copied shit :00000
 NO WAY--ITS SASTER
 I want--Clownfoes discord
@@ -41,3 +42,8 @@ tucky--fuckys
 2020 2021 2022 2023--random numbers
 always remember--dont eat numbers
 4234--445
+=======
+So much--LEAN
+So unfunny--why are we here?
+Vs stupid v2--leaked on Twitter
+>>>>>>> 4230be3ce3b8997caa2a10541e6eec7d873b6305

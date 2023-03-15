@@ -92,10 +92,10 @@ class ChartingState extends MusicBeatState
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
 		['Set Property', "Value 1: Variable name\nValue 2: New value"],
-		['CinematicBars', "Black shitty lines on the screen\nValue 1: 1 is on, 2 is off\nValue 2: Speed"],
+		/*['CinematicBars', "Black shitty lines on the screen\nValue 1: 1 is on, 2 is off\nValue 2: Speed"],
 		['Flash Camera', "Flashes the screen\nValue 1: speed"],//not defining value 2, you just basically leave it blank
 		['OpponentShakeyStrums', "Shakes the opponents notes\nValue 1: Amount\nNote: you can't stop the strums once their triggered"],//value 2, AGAIN is just blank
-		['Bubbles Week Events', "Background characters, its simple"]//not correctly coded in yet...
+		['Bubbles Week Events', "Background characters, its simple"]//not correctly coded in yet...*/
 	];
 
 	var _file:FileReference;
@@ -1699,6 +1699,9 @@ class ChartingState extends MusicBeatState
 
 
 			if (FlxG.keys.justPressed.BACKSPACE) {
+				// Protect against lost data when quickly leaving the chart editor.
+				autosaveSong();
+				
 				PlayState.chartingMode = false;
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
