@@ -23,10 +23,10 @@ class SongCard extends FlxSprite
         trace(dataArray.length);
 
         var songName = new FlxText(0, 0, 0, "", 24);
-        songName.setFormat(Paths.font("arial.ttf"), 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        songName.setFormat(Paths.font("fontybot.ttf"), 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 
         var artist = new FlxText(0, 30, 0, "", 24);
-        artist.setFormat(Paths.font("arial.ttf"), 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        artist.setFormat(Paths.font("fontybot.ttf"), 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 
         songName.text = dataArray[0];
         artist.text = dataArray[1];
