@@ -49,7 +49,7 @@ class OptionsState extends MusicBeatState
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
 			case 'Modes':
-			      LoadingState.loadAndSwitchState(new options.ModeShit());
+			      LoadingState.loadAndSwitchState(new options.ModesShit());
 		}
 	}
 
