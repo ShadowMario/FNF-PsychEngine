@@ -45,8 +45,8 @@ class ModesShit extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Erect',
-			'If checked, This will only enable [ erect ] as a mode' // you should've read the goddamn option title >:(
-		         'erectYes',
+			'If checked, This will only enable [ erect ] as a mode', // you should've read the goddamn option title >:(
+		        'erectYes',
 			'bool',
 			false);
 		addOption(option);
