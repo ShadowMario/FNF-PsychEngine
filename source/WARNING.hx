@@ -8,7 +8,6 @@ import.flixel.FlxText;
 
 */
 
-using StringTools;
 
 class ERROR! {
 public static var WARNING:Array<Dynamic> = [
