@@ -73,3 +73,4 @@ class ModesShit extends BaseOptionsMenu
 	 im gonna be able to make encore, d-sides, remixed, and erect songs 
 	 with my LAZY team ( half of the team is offline and they do nothing )*/
 	 //statement = true;
+}
