@@ -11,13 +11,13 @@ class WarningState extends MusicBeatState {
     public function new(){
         var key = ClientPrefs.keybinds.copy();
 
-        if (#if cpp Math.abs(cpp.vm.Gc.memInfo(0) #elseif sys cast(cast(System.totalMemory, UInt), Float))){
+        if (#if cpp Math.abs(cpp.vm.Gc.memInfo(0) #elseif sys cast(cast(System.totalMemory, UInt), Float) #end)){
             warning = new FlxText(0, 0, 0, 
             "WARNING: you're PC might not be powerful enough to run the mod,\nare you sure you want to continue?" + key[10] + " for YES\n" + key[11] + " for NO", 
             32);
             add(warning);
         }
-        #else
+        #if (!cpp || !sys)
         trace("Memory info not available/compatible with the current target platform");
         MusicBeatState.switchState(new TitleState());
         #end
