@@ -38,13 +38,13 @@
 		""
 	],
 	"storyName": "Bubble's Week - Week 2",
-	"weekName": "week2",
+	"weekName": "Bubble's Week",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
 	"hideStoryMode": false,
-	"weekBefore": "tutorial",
+	"weekBefore": "",
 	"startUnlocked": true
 }

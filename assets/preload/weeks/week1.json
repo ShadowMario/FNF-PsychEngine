@@ -38,13 +38,13 @@
 		""
 	],
 	"storyName": "Stupid's Week - Week 1",
-	"weekName": "week1",
+	"weekName": "Stupid's Week",
 	"freeplayColor": [
 		146,
 		113,
 		253
 	],
 	"hideStoryMode": false,
-	"weekBefore": "tutorial",
+	"weekBefore": "",
 	"startUnlocked": true
 }
