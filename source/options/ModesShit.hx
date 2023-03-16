@@ -69,6 +69,10 @@ class ModesShit extends BaseOptionsMenu
 		super();
 	}
 
+	  if (controls.BACK) {
+	  close();
+	  FlxG.sound.play(Paths.sound('cancelMenu'));
+	  }
 	/*there is no FUCKING GODDAMN WAY 
 	 im gonna be able to make encore, d-sides, remixed, and erect songs 
 	 with my LAZY team ( half of the team is offline and they do nothing )*/
