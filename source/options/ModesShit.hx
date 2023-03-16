@@ -29,7 +29,7 @@ import openfl.Lib;
 
 using StringTools;
 
-class GraphicsSettingsSubState extends BaseOptionsMenu
+class ModesShit extends BaseOptionsMenu
 {
 	public function new()
 	{
@@ -45,10 +45,11 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Erect',
-			'If checked, This will only enable [ erect ] as a mode' // you should've read the goddamn option title >:(
-			'erectYes',
+			'If checked, This will only enable [ erect ] as a mode', // you should've read the goddamn option title >:(
+		        'erectYes',
 			'bool',
 			false);
+		addOption(option);
 
 		var option:Option = new Option('D-Sides + Remixed', // d-sides mods these days Xdddd
 			'If checked, This will add 2 modes, remixed and d-sides.',
@@ -72,3 +73,4 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 	 im gonna be able to make encore, d-sides, remixed, and erect songs 
 	 with my LAZY team ( half of the team is offline and they do nothing )*/
 	 //statement = true;
+}
