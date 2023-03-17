@@ -45,8 +45,8 @@ class DiscordClient
 		DiscordRpc.presence({
 			details: "In the Menus",
 			state: null,
-			largeImageKey: 'StupidNor blep',
-			largeImageText: "FNF VS Stupid"
+			largeImageKey: 'StupidNor',
+			largeImageText: "Vs Stupid v1 DEMO"
 		});
 	}
 
