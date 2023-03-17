@@ -79,6 +79,7 @@ import VideoHandler as MP4Handler;
 #else 
 import vlc.MP4Handler;
 #end
+#end
 
 using StringTools;
 
