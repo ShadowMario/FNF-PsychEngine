@@ -99,7 +99,7 @@ class MainMenuState extends MusicBeatState
 		
 		var menuCharacter:FlxSprite = new FlxSprite(500).loadGraphic(Paths.image('StupidNor_MainMenu'));
 		add(menuCharacter);
-		StupidNor_MainMenu.screenCenter(); // wowowowow
+		menuCharacter.screenCenter(); // wowowowow
 		
 		// magenta.scrollFactor.set();
 
@@ -131,10 +131,7 @@ class MainMenuState extends MusicBeatState
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 		}
-
 		FlxG.camera.follow(camFollowPos, null, 1);
-      
-		
 		
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Vs Stupid v" + vsStupidVersion, 12);
 		versionShit.scrollFactor.set();
