@@ -94,7 +94,8 @@ class UserInterface extends FlxGroup
 		if (ClientPrefs.data.downScroll)
 			healthBarBG.y = 0.11 * FlxG.height;
 
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, '', 0, 2);
+		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, '',
+			0, 2);
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.alpha = ClientPrefs.data.healthBarAlpha;
@@ -118,7 +119,7 @@ class UserInterface extends FlxGroup
 		scoreTxt.borderSize = 1.25;
 		add(scoreTxt);
 
-        var botPosition:Float = (FlxG.width / 2) - 248;
+		var botPosition:Float = (FlxG.width / 2) - 248;
 
 		botplayTxt = new FlxText(400, botPosition + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -134,13 +135,13 @@ class UserInterface extends FlxGroup
 	{
 		super.update(elapsed);
 
-        /*
-        if (FlxG.keys.justPressed.NINE)
-			iconP1.swapOldIcon();
-        */
+		/*
+			if (FlxG.keys.justPressed.NINE)
+				iconP1.swapOldIcon();
+		 */
 
-        // fix for health percentage
-        healthBar.percent = game.health * 50;
+		// fix for health percentage
+		healthBar.percent = game.health * 50;
 
 		if (botplayTxt != null && botplayTxt.visible)
 		{
@@ -190,7 +191,7 @@ class UserInterface extends FlxGroup
 		}
 	}
 
-    // for lua
+	// for lua
 	public var separator:String = ' | ';
 
 	// don't know if structures are accesible with lua, if not, then use hscript @BeastlyGabi
@@ -209,10 +210,10 @@ class UserInterface extends FlxGroup
 
 		var scoreString:String = 'Score: ' + game.songScore;
 
-        if (scoreDisplays.misses)
-		    scoreString += separator + 'Misses: ' + game.songMisses;
-        if (scoreDisplays.ratingName)
-		    scoreString += separator + 'Rating: ' + game.ratingName;
+		if (scoreDisplays.misses)
+			scoreString += separator + 'Misses: ' + game.songMisses;
+		if (scoreDisplays.ratingName)
+			scoreString += separator + 'Rating: ' + game.ratingName;
 		if (game.ratingName != '?' && scoreDisplays.ratingPercent)
 			scoreString += ' (${Highscore.floorDecimal(game.ratingPercent * 100, 2)}%)';
 
