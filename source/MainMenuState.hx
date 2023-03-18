@@ -98,18 +98,13 @@ class MainMenuState extends MusicBeatState
 		// thank you, memehoovy for helping me with this code <3
 		
 		var menuCharacter:FlxSprite = new FlxSprite(500).loadGraphic(Paths.image('StupidNor_MainMenu'));
-		add(menuCharacter);
 		menuCharacter.screenCenter(); // wowowowow
-		
-		// magenta.scrollFactor.set();
+		add(menuCharacter);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
 		var scale:Float = 1;
-		/*if(optionShit.length > 6) {
-			scale = 6 / optionShit.length;
-		}*/
 
 		for (i in 0...optionShit.length)
 		{
