@@ -98,9 +98,9 @@ class MainMenuState extends MusicBeatState
 		// thank you, memehoovy for helping me with this code <3
 		// you're welcome <333
 		
-		var menuCharacter:FlxSprite = new FlxSprite(500).loadGraphic(Paths.image('StupidNor_MainMenu'));
+		var menuCharacter:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('StupidNor_MainMenu'));
 		menuCharacter.screenCenter(); // wowowowow
-		menuCharacter.scrollFactor.set(60, 0);
+		menuCharacter.scrollFactor.set(0, 0);
 		add(menuCharacter);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
