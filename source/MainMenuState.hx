@@ -96,6 +96,7 @@ class MainMenuState extends MusicBeatState
 		add(magenta);
 		
 		// thank you, memehoovy for helping me with this code <3
+		// you're welcome <333
 		
 		var menuCharacter:FlxSprite = new FlxSprite(500).loadGraphic(Paths.image('StupidNor_MainMenu'));
 		menuCharacter.screenCenter(); // wowowowow
@@ -140,8 +141,6 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-
-		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
 
