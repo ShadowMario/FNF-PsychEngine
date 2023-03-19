@@ -96,19 +96,17 @@ class MainMenuState extends MusicBeatState
 		add(magenta);
 		
 		// thank you, memehoovy for helping me with this code <3
+		// you're welcome <333
 		
-		var menuCharacter:FlxSprite = new FlxSprite(500).loadGraphic(Paths.image('StupidNor_MainMenu'));
+		var menuCharacter:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('StupidNor_MainMenu'));
+		menuCharacter.screenCenter(); // wowowowow
+		menuCharacter.scrollFactor.set(0, 0);
 		add(menuCharacter);
-		
-		// magenta.scrollFactor.set();
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
 		var scale:Float = 1;
-		/*if(optionShit.length > 6) {
-			scale = 6 / optionShit.length;
-		}*/
 
 		for (i in 0...optionShit.length)
 		{
@@ -130,10 +128,7 @@ class MainMenuState extends MusicBeatState
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 		}
-
 		FlxG.camera.follow(camFollowPos, null, 1);
-      
-		
 		
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Vs Stupid v" + vsStupidVersion, 12);
 		versionShit.scrollFactor.set();
@@ -147,8 +142,6 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-
-		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
 
@@ -189,8 +182,6 @@ class MainMenuState extends MusicBeatState
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
-
-		
 		
 		if (!selectedSomethin)
 		{
