@@ -33,7 +33,7 @@ class ModesShit extends BaseOptionsMenu
 {
 	public function new()
 	{
-		title = 'Modes';
+		title = 'Modes'; //this can be called difficultys instead
 		rpcTitle = 'Modes'; //for Discord Rich Presence
 
 
@@ -51,15 +51,24 @@ class ModesShit extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('D-Sides + Remixed', // d-sides mods these days Xdddd
-			'If checked, This will add 2 modes, remixed and d-sides.',
+		var option:Option = new Option('D-Sides', // d-sides mods these days Xdddd
+			'If checked, this will ad d-sides as a mode.',
 			'sideYes', 
 			'bool',
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Remixed', // im splitting it >:]]
+		'If checked, this will add remixed as a mode',
+		'remixYes', 
+		'bool',
+		false);
+	addOption(option);
+		
+		
+
 		//stop committing and telling me that Vs Stupid should have encore remixes, I'm gonna add them in v2.
-		var option:Option = new Option('< Encore >',
+		var option:Option = new Option('Encore', // stupid thing with "<>"
 			"If checked, This will enable encore mode",
 			'encoreYes',
 			'bool',
