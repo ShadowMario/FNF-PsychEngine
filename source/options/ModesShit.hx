@@ -28,14 +28,12 @@ import Controls;
 import openfl.Lib;
 
 using StringTools;
-
 class ModesShit extends BaseOptionsMenu
 {
 	public function new()
 	{
 		title = 'Modes';
 		rpcTitle = 'Modes'; //for Discord Rich Presence
-
 
 		var option:Option = new Option('Neutral',
 			'If checked, This will enable modes: Easy,Normal,Hard',
