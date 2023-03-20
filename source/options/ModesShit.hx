@@ -50,7 +50,7 @@ class ModesShit extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('D-Sides', // d-sides mods these days Xdddd
-			'If checked, this will ad d-sides as a mode.',
+			'If checked, this will add d-sides as a mode.',
 			'sideYes', 
 			'bool',
 			false);

@@ -28,7 +28,6 @@ typedef SwagSong =
 
 	var arrowSkin:String;
 	var splashSkin:String;
-	var validScore:Bool;
 }
 
 class Song
@@ -110,9 +109,9 @@ class Song
 		if (rawJson == null)
 			throw "Could not find JSON file in: " + formattedFolder; 
 
-		while (!rawJson.endsWith("}"))
-		{
-			rawJson = rawJson.substr(0, rawJson.length - 1);
+		if (rawJson != null){
+			while (!rawJson.endsWith("}"))
+				rawJson = rawJson.substr(0, rawJson.length - 1);
 		}
 
 		var songJson:Dynamic = parseJSONshit(rawJson);
@@ -123,8 +122,6 @@ class Song
 
 	public static function parseJSONshit(rawJson:String):SwagSong
 	{
-		var swagShit:SwagSong = cast Json.parse(rawJson).song;
-		swagShit.validScore = true;
-		return swagShit;
+		return cast Json.parse(rawJson).song;
 	}
 }
