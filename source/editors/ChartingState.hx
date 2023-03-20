@@ -211,8 +211,8 @@ class ChartingState extends MusicBeatState
 		else
 		{
 			CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
-
-			_song = {
+		}
+		 _song = {
 				song: 'Test',
 				notes: [],
 				events: [],
