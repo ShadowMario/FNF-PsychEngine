@@ -223,14 +223,9 @@ class ChartingState extends MusicBeatState
 				player1: 'bf',
 				player2: 'dad',
 				gfVersion: 'gf',
-<<<<<<< HEAD
 				speed: 4, //fuck 1 scroll speeds
 				stage: 'stage',
 				validScore: false
-=======
-				speed: 1,
-				stage: 'stage'
->>>>>>> 6c16bafd98a55e7f85bb78a7eaf0afb1179deabc
 			};
 			addSection();
 			PlayState.SONG = _song;
