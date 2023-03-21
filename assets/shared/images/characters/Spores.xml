@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="Spores.png">
+<SubTexture name="spores idle0000" x="371" y="489" width="184" height="230" frameX="-30" frameY="-22" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores idle0001" x="555" y="489" width="183" height="229" frameX="-30" frameY="-23" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores idle0002" x="570" y="236" width="181" height="234" frameX="-28" frameY="-18" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores up0000" x="0" y="0" width="173" height="252" frameX="-35" frameY="0" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores up0001" x="173" y="0" width="179" height="249" frameX="-41" frameY="-3" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores down0000" x="187" y="489" width="184" height="232" frameX="-32" frameY="-20" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores down0001" x="0" y="489" width="187" height="234" frameX="-29" frameY="-18" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores right0000" x="352" y="0" width="218" height="239" frameX="-41" frameY="-13" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores right0001" x="0" y="252" width="212" height="237" frameX="-44" frameY="-15" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores left0000" x="212" y="252" width="215" height="237" frameX="0" frameY="-15" frameWidth="251" frameHeight="244" />
+<SubTexture name="spores left0001" x="570" y="0" width="210" height="236" frameX="-9" frameY="-16" frameWidth="251" frameHeight="244" />
+</TextureAtlas>

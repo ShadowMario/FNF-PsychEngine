@@ -1,0 +1,83 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singDOWN",
+			"fps": 18,
+			"name": "spores down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singRIGHT",
+			"fps": 18,
+			"name": "spores right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singUP",
+			"fps": 18,
+			"name": "spores up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singLEFT",
+			"fps": 18,
+			"name": "spores left",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [
+				1,
+				0,
+				1,
+				2
+			],
+			"fps": 12,
+			"anim": "idle",
+			"loop": false,
+			"name": "spores idle"
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/Spores",
+	"position": [
+		20,
+		270
+	],
+	"healthicon": "Spores-icon",
+	"flip_x": false,
+	"healthbar_colors": [
+		193,
+		193,
+		193
+	],
+	"camera_position": [
+		-330,
+		-200
+	],
+	"sing_duration": 6,
+	"scale": 3
+}
