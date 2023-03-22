@@ -209,31 +209,28 @@ class ChartingState extends MusicBeatState
 		if (PlayState.SONG != null)
 			_song = PlayState.SONG;
 		else
-		{
 			CoolUtil.difficulties = CoolUtil.defaultDifficulties.copy();
-		}
-		 _song = {
-				song: 'Test',
-				notes: [],
-				events: [],
-				bpm: 150.0,
-				needsVoices: true,
-				arrowSkin: '',
-				splashSkin: 'noteSplashes',//idk it would crash if i didn't
-				player1: 'bf',
-				player2: 'dad',
-				gfVersion: 'gf',
-				speed: 4, //fuck 1 scroll speeds
-				stage: 'stage',
-				validScore: false
-			};
-			addSection();
-			PlayState.SONG = _song;
-		}
+		_song = {
+			song: 'Test',
+			notes: [],
+			events: [],
+			bpm: 150.0,
+			needsVoices: true,
+			arrowSkin: '',
+			splashSkin: 'noteSplashes',//idk it would crash if i didn't
+			player1: 'bf',
+			player2: 'dad',
+			gfVersion: 'gf',
+			speed: 4, //fuck 1 scroll speeds
+			stage: 'stage',
+			validScore: false
+		};
+		addSection();
+		PlayState.SONG = _song;
 
 		#if desktop
 		// Updating Discord Rich Presence
-               	DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
+		DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
 		#end
 
 		vortex = FlxG.save.data.chart_vortex;
