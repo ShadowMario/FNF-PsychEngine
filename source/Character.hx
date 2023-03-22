@@ -296,7 +296,7 @@ class Character extends FlxSprite
 				else {if (PlayState.instance.opponentPlay) holdTimer = 0;}
 				
 				if (!PlayState.instance.opponentPlay) {
-					if (holdTimer >= Conductor.stepCrochet * (0.0011 / (FlxG.sound.music != null ? FlxG.sound.music.pitch : 1)) * singDuration) {
+					if (holdTimer >= Conductor.stepCrochet * 0.0011 * singDuration) {
 						dance();
 						holdTimer = 0;
 					}
@@ -308,6 +308,7 @@ class Character extends FlxSprite
 				if(animation.curAnim.finished && animation.getByName(animation.curAnim.name + '-loop') != null)
 					playAnim(animation.curAnim.name + '-loop');
 			}
+			
 		}
 		super.update(elapsed);
 	}
