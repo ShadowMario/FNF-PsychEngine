@@ -224,6 +224,7 @@ class ChartingState extends MusicBeatState
 			speed: 4, //fuck 1 scroll speeds
 			stage: 'stage',
 			validScore: false
+			
 		};
 		addSection();
 		PlayState.SONG = _song;
