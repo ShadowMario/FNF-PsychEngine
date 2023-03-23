@@ -72,9 +72,7 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
-#else import vlc.MP4Handler; #end
+import vlc.MP4Handler;
 #end
 
 using StringTools;
@@ -2070,7 +2068,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
-	
+
 	public function startCountdown():Void
 	{
 		if(startedCountdown) {
@@ -2992,7 +2990,7 @@ class PlayState extends MusicBeatState
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 			if (!startingSong && !endingSong && char.animation.curAnim != null && char.animation.curAnim.name.startsWith('idle')) {
 				playerIdleTime += elapsed;
-				// Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some players
+				// Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
 				if (playerIdleTime >= 0.15) playerIdled = true;
 			} else playerIdleTime = 0;
 		}
@@ -4577,7 +4575,7 @@ class PlayState extends MusicBeatState
 		if (!note.hitByOpponent) {
 			opponentPlay ? litPlayerHit(note) : litOppoHit(note);
 			if (Paths.formatToSongPath(SONG.song) != 'tutorial') camZooming = true;
-			
+
 			if (note.hitCausesMiss) {
 				note.hitByOpponent = true;
 				if (!note.isSustainNote)
@@ -4619,21 +4617,15 @@ class PlayState extends MusicBeatState
 			}
 			note.hitByOpponent = true;
 
-			if(cpuControlled) {
-				var time:Float = 0.15;
-				if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
-					time += 0.15;
-				}
-				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)), time);
-			} else {
-				var spr = playerStrums.members[note.noteData];
-				if(spr != null)
-				{
-					spr.playAnim('confirm', true);
-				}
+			callOnLuas('opponentNoteHit', [notes.members.indexOf(note), note.noteData, note.noteType, note.isSustainNote]);
+
+			if (!note.isSustainNote) {
+				note.kill();
+				notes.remove(note, true);
+				note.destroy();
 			}
-			note.wasGoodHit = true;
-			vocals.volume = 1;
+		}
+	}
 
 	function goodNoteHit(note:Note):Void
 	{
@@ -4976,7 +4968,7 @@ class PlayState extends MusicBeatState
 		if(FunkinLua.hscript != null) FunkinLua.hscript = null;
 		#end
 
-		if(!ClientPrefs.controllerMode)
+		if (!ClientPrefs.controllerMode)
 		{
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
