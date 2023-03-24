@@ -62,6 +62,7 @@ import states.stages.BaseStage;
 import states.stages.objects.*;
 
 #if LUA_ALLOWED
+import llua.Lua;
 import psychlua.*;
 #else
 import psychlua.LuaUtils;
@@ -3203,6 +3204,10 @@ class PlayState extends MusicBeatState
 			lua.stop();
 		}
 		luaArray = [];
+
+		#if LUA_ALLOWED
+		Lua_helper.callbacks.clear();
+		#end
 
 		#if hscript
 		if(FunkinLua.hscript != null) FunkinLua.hscript = null;
