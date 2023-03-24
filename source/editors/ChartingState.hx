@@ -221,7 +221,6 @@ class ChartingState extends MusicBeatState
 				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage',
-				validScore: false
 			};
 			addSection();
 			PlayState.SONG = _song;
