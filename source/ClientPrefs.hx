@@ -7,6 +7,7 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs {
+	public static var vanillaV2:Bool = false;
 	public static var remixYes:Bool = false; // splitted
 	public static var normalYes:Bool = true; // Easy,Normal,Hard
 	public static var erectYes:Bool = false; // Erect
