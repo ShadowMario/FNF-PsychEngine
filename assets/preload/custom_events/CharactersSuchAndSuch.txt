@@ -1,0 +1,9 @@
+This is exclucive for Bubbles week only!
+
+Value 1: Name of sprite
+
+Make the character / object in your stage and put it outside of the camera
+
+Value 2: Blank
+
+Thanks dd4m0n on gamebanana for making this request! ( you know who you are )
