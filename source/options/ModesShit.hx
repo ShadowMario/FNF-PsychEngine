@@ -33,7 +33,7 @@ class ModesShit extends BaseOptionsMenu
 	public function new()
 	{
 		title = 'Modes'; //this can be called difficultys instead
-		rpcTitle = 'Modes'; //for Discord Rich Presence
+		rpcTitle = 'Modes Menu'; //for Discord Rich Presence
 
 		var option:Option = new Option('Neutral',
 			'If checked, This will enable modes: Easy,Normal,Hard',
