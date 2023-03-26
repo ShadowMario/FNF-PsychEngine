@@ -27,8 +27,7 @@ class MasterEditorMenu extends MusicBeatState
 		'Dialogue Portrait Editor',
 		'Character Editor',
 		'Chart Editor',
-		'Unused Shop Menu',//probably works....
-		'Lua Editor'
+		'Unused Shop Menu'//probably works....
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
@@ -130,8 +129,6 @@ class MasterEditorMenu extends MusicBeatState
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
 				case 'Unused Shop Menu'://left this as'unused'
 					LoadingState.loadAndSwitchState(new ShopState(), false);
-				case 'Lua Editor':
-					LoadingState.loadAndSwitchState(new EditorLua(), false);
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
