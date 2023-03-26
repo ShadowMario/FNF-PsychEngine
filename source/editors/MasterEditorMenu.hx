@@ -27,7 +27,7 @@ class MasterEditorMenu extends MusicBeatState
 		'Dialogue Portrait Editor',
 		'Character Editor',
 		'Chart Editor',
-		'Unused Shop Menu'//probably works....
+		'Unused Shop Menu',//probably works....
 		'Lua Editor'
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
