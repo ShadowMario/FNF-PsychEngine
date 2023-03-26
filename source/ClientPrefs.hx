@@ -119,6 +119,7 @@ class ClientPrefs {
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
+		FlxG.save.data.comboOffset = comboOffset;
 		FlxG.save.data.encoreYes = encoreYes;
 		FlxG.save.data.sideYes = sideYes;
 		FlxG.save.data.erectYes = erectYes;
