@@ -187,12 +187,6 @@ class ClientPrefs {
 				FlxG.updateFramerate = framerate;
 			}
 		}
-		/*if(FlxG.save.data.cursing != null) {
-			cursing = FlxG.save.data.cursing;
-		}
-		if(FlxG.save.data.violence != null) {
-			violence = FlxG.save.data.violence;
-		}*/
 		if(FlxG.save.data.camZooms != null) {
 			camZooms = FlxG.save.data.camZooms;
 		}
@@ -248,6 +242,19 @@ class ClientPrefs {
 		if(FlxG.save.data.pauseMusic != null) {
 			pauseMusic = FlxG.save.data.pauseMusic;
 		}
+		if(FlxG.save.data.encoreYes != null)
+			encoreYes = FlxG.save.data.encoreYes;
+		if(FlxG.save.data.sideYes != null)
+			sideYes = FlxG.save.data.sideYes;
+		if(FlxG.save.data.erectYes != null)
+			erectYes = FlxG.save.data.erectYes;
+		if(FlxG.save.data.normalYes != null)
+			normalYes = FlxG.save.data.normalYes;
+		if(FlxG.save.data.remixYes != null)
+			remixYes = FlxG.save.data.remixYes;
+		if(FlxG.save.data.vanillaV2 != null)
+			vanillaV2 = FlxG.save.data.vanillaV2;
+
 		if(FlxG.save.data.gameplaySettings != null)
 		{
 			var savedMap:Map<String, Dynamic> = FlxG.save.data.gameplaySettings;
