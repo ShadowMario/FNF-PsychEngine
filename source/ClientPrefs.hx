@@ -110,8 +110,6 @@ class ClientPrefs {
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.shaders = shaders;
 		FlxG.save.data.framerate = framerate;
-		//FlxG.save.data.cursing = cursing;
-		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
@@ -121,7 +119,12 @@ class ClientPrefs {
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
-		FlxG.save.data.comboOffset = comboOffset;
+		FlxG.save.data.encoreYes = encoreYes;
+		FlxG.save.data.sideYes = sideYes;
+		FlxG.save.data.erectYes = erectYes;
+		FlxG.save.data.normalYes = normalYes;
+		FlxG.save.data.remixYes = remixYes;
+		FlxG.save.data.vanillaV2 = vanillaV2;
 		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 
