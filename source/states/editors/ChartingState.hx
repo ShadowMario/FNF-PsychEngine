@@ -1305,7 +1305,7 @@ class ChartingState extends MusicBeatState
 		blockPressWhileTypingOnStepper.push(voicesVolume);
 		
 		#if !html5
-		sliderRate = new FlxUISlider(this, 'playbackSpeed', 120, 120, 0.5, 3, 150, null, 5, FlxColor.WHITE, FlxColor.BLACK);
+		sliderRate = new FlxUISlider(this, 'playbackSpeed', 120, 120, 0.5, 3, 150, 15, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderRate.nameLabel.text = 'Playback Rate';
 		tab_group_chart.add(sliderRate);
 		#end
@@ -3044,11 +3044,15 @@ class ChartingState extends MusicBeatState
 
 	function getSectionBeats(?section:Null<Int> = null)
 	{
-		if (section == null) section = curSec;
 		var val:Null<Float> = null;
-		
-		if(_song.notes[section] != null) val = _song.notes[section].sectionBeats;
-		return val != null ? val : 4;
+		if (section == null)
+			section = curSec;
+
+		if(_song.notes[section] == null || _song.notes[section].sectionBeats == 0)
+			val = 4;
+		else
+			val = _song.notes[section].sectionBeats;
+		return val;
 	}
 }
 

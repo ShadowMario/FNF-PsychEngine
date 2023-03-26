@@ -64,6 +64,8 @@ class Song
 				while(i < len)
 				{
 					var note:Array<Dynamic> = notes[i];
+					trace(note);
+					
 					if(note[1] < 0)
 					{
 						songJson.events.push([note[0], [[note[2], note[3], note[4]]]]);

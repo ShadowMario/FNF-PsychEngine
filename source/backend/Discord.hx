@@ -1,12 +1,13 @@
 package backend;
 
-import Sys.sleep;
-import discord_rpc.DiscordRpc;
-
 #if LUA_ALLOWED
 import llua.Lua;
 import llua.State;
 #end
+
+#if DISCORD
+import Sys.sleep;
+import discord_rpc.DiscordRpc;
 
 class DiscordClient
 {
@@ -99,3 +100,35 @@ class DiscordClient
 	}
 	#end
 }
+#else
+
+class DiscordClient { // stub
+	public static var isInitialized:Bool = false;
+	public function new() {}
+	
+	public static function shutdown()
+		return null;
+
+	
+	static function onReady()
+		return null;
+
+	static function onError(_code:Int, _message:String)
+		return null;
+
+	static function onDisconnected(_code:Int, _message:String)
+		return null;
+
+	public static function initialize()
+		return null;
+
+	public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
+		return null;
+
+	#if LUA_ALLOWED
+	public static function addLuaCallbacks(lua:State)
+		return null;
+	#end
+}
+
+#end
