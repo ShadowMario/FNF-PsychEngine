@@ -3197,30 +3197,28 @@ class PlayState extends MusicBeatState
 						}
 
 						var center:Float = strumY + Note.swagWidth / 2;
-						if(strumGroup.members[daNote.noteData].sustainReduce && daNote.isSustainNote && (daNote.mustPress || !daNote.ignoreNote) &&
-							(!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+						if (strumGroup.members[daNote.noteData].sustainReduce
+							&& daNote.isSustainNote
+							&& (daNote.mustPress || !daNote.ignoreNote)
+							&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 						{
 							if (strumScroll)
 							{
-								if(daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= center)
-								{
-									var swagRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
-									swagRect.height = (center - daNote.y) / daNote.scale.y;
-									swagRect.y = daNote.frameHeight - swagRect.height;
+								var swagRect:FlxRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
 
-									daNote.clipRect = swagRect;
-								}
+								var result:Int = Std.int((daNote.y + daNote.height) - center);
+								if (result > 0)
+									swagRect.y = result / daNote.scale.y;
+								daNote.clipRect = swagRect;
 							}
 							else
 							{
-								if (daNote.y + daNote.offset.y * daNote.scale.y <= center)
-								{
-									var swagRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
-									swagRect.y = (center - daNote.y) / daNote.scale.y;
-									swagRect.height -= swagRect.y;
+								var swagRect:FlxRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
 
-									daNote.clipRect = swagRect;
-								}
+								var result:Int = Std.int(center - daNote.y);
+								if (result > 0)
+									swagRect.y = result / daNote.scale.y;
+								daNote.clipRect = swagRect;
 							}
 						}
 
