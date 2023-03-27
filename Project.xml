@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Vs Stupid: v1 ( DEMO RELEASE )" file="VS STUPID DEMO RELEASE" packageName="com.myfnf.vsstupid" package="com.myfnf.vsstupid" main="Main" version="0.2.8" company="MyFnf" />
+	<app title="Vs Stupid: v1 ( DEMO RELEASE )" file="Stupid v1" packageName="com.myfnf.vsstupid" package="com.myfnf.vsstupid" main="Main" version="0.2.8" company="MyFnf" />
 
 	<!-- NOTE TO SELF: DISABLE THIS IF ISSUES ARE FOUND -->
 	<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB"/> <!-- stable luas PUT AFTER FIRST LINE WITH APP NAME AND ETC -->
@@ -72,7 +72,6 @@
 	</section>
 
 	<assets path="assets/fonts" />
-	<assets path="assets/Impostor" />
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />

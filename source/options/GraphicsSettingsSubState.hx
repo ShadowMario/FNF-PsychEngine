@@ -74,6 +74,14 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.onChange = onChangeFramerate;
 		#end
 
+		var option:Option = new Option('Vs Stupid v2 Vanilla assets',
+			"This will enable some v2 features \n( DONT USE CUZ ITS BETA AND ITS USELESS )",
+			'vanillaV2',
+			'bool',
+			false);
+		addOption(option);
+		
+		
 		super();
 	}
 

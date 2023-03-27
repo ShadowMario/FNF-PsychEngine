@@ -7,6 +7,7 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs {
+	public static var vanillaV2:Bool = false;
 	public static var remixYes:Bool = false; // splitted
 	public static var normalYes:Bool = true; // Easy,Normal,Hard
 	public static var erectYes:Bool = false; // Erect
@@ -109,8 +110,6 @@ class ClientPrefs {
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.shaders = shaders;
 		FlxG.save.data.framerate = framerate;
-		//FlxG.save.data.cursing = cursing;
-		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
@@ -121,6 +120,12 @@ class ClientPrefs {
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
 		FlxG.save.data.comboOffset = comboOffset;
+		FlxG.save.data.encoreYes = encoreYes;
+		FlxG.save.data.sideYes = sideYes;
+		FlxG.save.data.erectYes = erectYes;
+		FlxG.save.data.normalYes = normalYes;
+		FlxG.save.data.remixYes = remixYes;
+		FlxG.save.data.vanillaV2 = vanillaV2;
 		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 
@@ -186,12 +191,6 @@ class ClientPrefs {
 				FlxG.updateFramerate = framerate;
 			}
 		}
-		/*if(FlxG.save.data.cursing != null) {
-			cursing = FlxG.save.data.cursing;
-		}
-		if(FlxG.save.data.violence != null) {
-			violence = FlxG.save.data.violence;
-		}*/
 		if(FlxG.save.data.camZooms != null) {
 			camZooms = FlxG.save.data.camZooms;
 		}
@@ -247,6 +246,19 @@ class ClientPrefs {
 		if(FlxG.save.data.pauseMusic != null) {
 			pauseMusic = FlxG.save.data.pauseMusic;
 		}
+		if(FlxG.save.data.encoreYes != null)
+			encoreYes = FlxG.save.data.encoreYes;
+		if(FlxG.save.data.sideYes != null)
+			sideYes = FlxG.save.data.sideYes;
+		if(FlxG.save.data.erectYes != null)
+			erectYes = FlxG.save.data.erectYes;
+		if(FlxG.save.data.normalYes != null)
+			normalYes = FlxG.save.data.normalYes;
+		if(FlxG.save.data.remixYes != null)
+			remixYes = FlxG.save.data.remixYes;
+		if(FlxG.save.data.vanillaV2 != null)
+			vanillaV2 = FlxG.save.data.vanillaV2;
+
 		if(FlxG.save.data.gameplaySettings != null)
 		{
 			var savedMap:Map<String, Dynamic> = FlxG.save.data.gameplaySettings;
