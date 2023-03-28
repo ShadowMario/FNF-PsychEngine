@@ -494,13 +494,9 @@ class TitleState extends MusicBeatState
 		}
 	}
 
-	function deleteCoolText()
+	inline function deleteCoolText()
 	{
-		while (textGroup.members.length > 0)
-		{
-			credGroup.remove(textGroup.members[0], true);
-			textGroup.remove(textGroup.members[0], true);
-		}
+		while (textGroup != null && textGroup.members.length > 0) for (i in [credGroup, textGroup]) i.remove(textGroup.members[0], true);
 	}
 
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
