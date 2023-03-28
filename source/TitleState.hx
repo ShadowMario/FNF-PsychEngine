@@ -68,8 +68,6 @@ class TitleState extends MusicBeatState
 
 	var curWacky:Array<String> = [];
 
-	var wackyImage:FlxSprite;
-
 	#if TITLE_SCREEN_EASTER_EGG
 	var easterEggKeys:Array<String> = [
 		'SHADOW', 'RIVER', 'SHUBS', 'BBPANZU'
@@ -78,11 +76,7 @@ class TitleState extends MusicBeatState
 	var easterEggKeysBuffer:String = '';
 	#end
 
-	var mustUpdate:Bool = false;
-
 	var titleJSON:TitleData;
-
-	public static var updateVersion:String = '';
 
 	override public function create():Void
 	{
@@ -405,11 +399,7 @@ class TitleState extends MusicBeatState
 
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
-					if (mustUpdate) {
-						MusicBeatState.switchState(new OutdatedState());
-					} else {
-						MusicBeatState.switchState(new MainMenuState());
-					}
+					MusicBeatState.switchState(new MainMenuState());
 					closedState = true;
 				});
 			}
