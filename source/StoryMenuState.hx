@@ -184,7 +184,7 @@ class StoryMenuState extends MusicBeatState
 		add(txtWeekTitle);
 
 		errorDisplay = new ErrorDisplay();
-		errorDisplay.addDisplay(this);
+		errorDisplay.addDisplay();
 
 		changeWeek();
 		changeDifficulty();

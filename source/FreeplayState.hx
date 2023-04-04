@@ -201,7 +201,7 @@ class FreeplayState extends MusicBeatState
 		add(text);
 
 		errorDisplay = new ErrorDisplay();
-		errorDisplay.addDisplay(this);
+		errorDisplay.addDisplay();
 
 		super.create();
 	}
