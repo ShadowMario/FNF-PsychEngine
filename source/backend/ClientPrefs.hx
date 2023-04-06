@@ -34,6 +34,7 @@ class SaveVariables {
 	public var pauseMusic:String = 'Tea Time';
 	public var checkForUpdates:Bool = true;
 	public var comboStacking:Bool = true;
+	public var discordRPC:String = 'Normal';
 	public var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -156,6 +157,11 @@ class ClientPrefs {
 		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 		FlxG.save.flush();
+
+		#if desktop  // Putting this here so the game does it only when saved and not on as onChange (Giving proper time to the rpc to shutdown)  - Nex
+		if (data.discordRPC == 'Deactivated' && DiscordClient.isInitialized) DiscordClient.shutdown();
+		else if (data.discordRPC != 'Deactivated' && !DiscordClient.isInitialized) DiscordClient.initialize();
+		#end
 
 		//Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		var save:FlxSave = new FlxSave();
