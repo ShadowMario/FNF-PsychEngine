@@ -1546,7 +1546,7 @@ class PlayState extends MusicBeatState
 		inCutscene = true;
 
 		var filepath:String = Paths.video(name);
-		#if sys
+		#if desktop
 		if(!FileSystem.exists(filepath))
 		#else
 		if(!OpenFlAssets.exists(filepath))
@@ -1558,7 +1558,7 @@ class PlayState extends MusicBeatState
 		}
 
 		var video:MP4Handler = new MP4Handler();
-		video.playVideo(filepath);
+		video.playVideo(Asset2File.getPath(filepath));
 		video.finishCallback = function()
 		{
 			startAndEnd();
