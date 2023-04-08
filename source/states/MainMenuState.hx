@@ -44,10 +44,10 @@ class MainMenuState extends MusicBeatState
 		#end
 		WeekData.loadTheFirstEnabledMod();
 
-		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
-		#end
+		
+		debugKeys = ClientPrefs.keyBinds.get('debug_1').copy();
 
 		camGame = new FlxCamera();
 		camAchievement = new FlxCamera();

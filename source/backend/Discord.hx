@@ -89,7 +89,7 @@ class DiscordClient
 		#end
 	}
 
-	public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
+	#if !DISCORD_ALLOWED inline #end public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
 	{
 		#if DISCORD_ALLOWED
 		var startTimestamp:Float = 0;
@@ -132,9 +132,7 @@ class DiscordClient
 	#if LUA_ALLOWED
 	public static function addLuaCallbacks(lua:State) {
 		Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
-			#if DISCORD_ALLOWED
 			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
-			#end
 		});
 	}
 	#end

@@ -25,10 +25,8 @@ class CreditsState extends MusicBeatState
 
 	override function create()
 	{
-		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
-		#end
 
 		persistentUpdate = true;
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));

@@ -1,7 +1,5 @@
 
-#if DISCORD_ALLOWED
 import backend.Discord;
-#end
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.CustomFadeTransition;
