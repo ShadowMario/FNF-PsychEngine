@@ -55,7 +55,7 @@ jobs:
           haxelib --quiet install flixel-ui
           haxelib --quiet install hscript
           haxelib --quiet install flixel-addons
-          haxelib git hxCodec https://github.com/JonnycatMeow/hxCodec-old
+          haxelib --quiet install hxCodec
           haxelib git linc_luajit https://github.com/Sirox228/linc_luajit
           haxelib list
 
