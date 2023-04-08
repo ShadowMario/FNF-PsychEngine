@@ -132,7 +132,9 @@ class DiscordClient
 	#if LUA_ALLOWED
 	public static function addLuaCallbacks(lua:State) {
 		Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
+			#if DISCORD_ALLOWED
 			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
+			#end
 		});
 	}
 	#end

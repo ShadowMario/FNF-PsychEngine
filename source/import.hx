@@ -1,5 +1,5 @@
 
-#if desktop
+#if DISCORD_ALLOWED
 import backend.Discord;
 #end
 import backend.MusicBeatState;
