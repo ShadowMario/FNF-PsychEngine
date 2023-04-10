@@ -51,7 +51,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Health Bar Visibility',
-			'How much visible should the health bar and icons be.',
+			'How visible the health bar and icons should be.',
 			'healthBarAlpha',
 			'percent',
 			1);
