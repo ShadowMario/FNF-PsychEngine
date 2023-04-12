@@ -159,6 +159,8 @@ class ChartingState extends MusicBeatState
 	var zoomTxt:FlxText;
 
 	var zoomList:Array<Float> = [
+		0.0625,
+		0.125,
 		0.25,
 		0.5,
 		1,
@@ -169,7 +171,12 @@ class ChartingState extends MusicBeatState
 		8,
 		12,
 		16,
-		24
+		24,
+		32,
+		48,
+		64,
+		128,
+		192
 	];
 	var curZoom:Int = 2;
 
@@ -194,7 +201,8 @@ class ChartingState extends MusicBeatState
 		48,
 		64,
 		96,
-		192
+		192,
+		384
 	];
 
 
@@ -1719,6 +1727,14 @@ class ChartingState extends MusicBeatState
 				curZoom++;
 				updateZoom();
 			}
+			if (FlxG.keys.pressed.C && !FlxG.keys.pressed.CONTROL)
+				if (!FlxG.mouse.overlaps(curRenderedNotes)) //lmao cant place notes when your cursor already overlaps one
+					if (FlxG.mouse.x > gridBG.x
+						&& FlxG.mouse.x < gridBG.x + gridBG.width
+						&& FlxG.mouse.y > gridBG.y
+						&& FlxG.mouse.y < gridBG.y + gridBG.height)
+							if (!FlxG.keys.pressed.CONTROL) //stop crashing
+								addNote(); //allows you to draw notes by holding left click
 
 			if (FlxG.keys.justPressed.TAB)
 			{

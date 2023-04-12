@@ -72,9 +72,7 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
-#else import vlc.MP4Handler; #end
+import vlc.MP4Handler;
 #end
 
 using StringTools;
@@ -85,16 +83,16 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2], //From 0% to 19%
-		['Shit', 0.4], //From 20% to 39%
+		['you suck ass lol', 0.2], //From 0% to 19%
+		['you aint doin good', 0.4], //From 20% to 39%
 		['Bad', 0.5], //From 40% to 49%
 		['Bruh', 0.6], //From 50% to 59%
 		['Meh', 0.69], //From 60% to 68%
-		['Nice', 0.7], //69%
-		['Good', 0.8], //From 70% to 79%
-		['Great', 0.9], //From 80% to 89%
-		['Sick!', 1], //From 90% to 99%
-		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+		['funny number', 0.7], //69%
+		['nice', 0.8], //From 70% to 79%
+		['awesome', 0.9], //From 80% to 89%
+		['thats amazing', 1], //From 90% to 99%
+		['PERFECT!!!!!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 
 	//event variables
@@ -149,7 +147,7 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 
-	public var spawnTime:Float = 2000;
+	public var spawnTime:Float = 1000;
 
 	public var vocals:FlxSound;
 
@@ -180,7 +178,7 @@ class PlayState extends MusicBeatState
 	private var curSong:String = "";
 
 	public var gfSpeed:Int = 1;
-	public var health:Float = 1;
+	public var health:Float = 1.5;
 	public var combo:Int = 0;
 
 	private var healthBarBG:AttachedSprite;
@@ -219,6 +217,8 @@ class PlayState extends MusicBeatState
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
+
+	var notesHitArray:Array<Date> = [];
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
@@ -1113,7 +1113,7 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'health', 0, 2);
+			'health', 0, 3);
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -2256,11 +2256,6 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Misses: ' + songMisses
-		+ ' | Rating: ' + ratingName
-		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
-
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {
@@ -2390,6 +2385,7 @@ class PlayState extends MusicBeatState
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
+		notes.visible = ClientPrefs.showNotes; //that was easier than expected
 
 		var noteData:Array<SwagSection>;
 
@@ -2822,7 +2818,6 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 		callOnLuas('onUpdate', [elapsed]);
-
 		switch (curStage)
 		{
 			case 'tank':
@@ -2966,14 +2961,39 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		var nps:Int = 0;
+	    var maxNPS:Int = 0;
+
+		{
+			var balls = notesHitArray.length-1;
+			while (balls >= 0)
+			{
+				var cock:Date = notesHitArray[balls];
+				if (cock != null && cock.getTime() + 1000 / playbackRate < Date.now().getTime())
+					notesHitArray.remove(cock);
+				else
+					balls = 0;
+				balls--;
+			}
+			nps = notesHitArray.length;
+			if (nps > maxNPS)
+				maxNPS = nps;
+		}
+
 		super.update(elapsed);
 
 		setOnLuas('curDecStep', curDecStep);
 		setOnLuas('curDecBeat', curDecBeat);
 
+		scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Rating: ' + ratingName;
+		if(cpuControlled) 
+			scoreTxt.text = 'Botplay Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Rating: funny botplay mode!!!!!';
+		if(ratingName != '?')
+			scoreTxt.text += ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC;
+
 		if(botplayTxt.visible) {
 			botplaySine += 180 * elapsed;
-			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
+			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180 * playbackRate);
 		}
 
 		if (controls.PAUSE && startedCountdown && canPause)
@@ -2992,21 +3012,19 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
-		iconP1.scale.set(mult, mult);
-		iconP1.updateHitbox();
+		iconP1.centerOffsets();
+		iconP2.centerOffsets();
 
-		var mult:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
-		iconP2.scale.set(mult, mult);
+		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 
 		var iconOffset:Int = 26;
 
-		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
-		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
+		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 
-		if (health > 2)
-			health = 2;
+		if (health > 3)
+			health = 3;
 
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
@@ -4103,7 +4121,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
-
+		if (!cpuControlled) {
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
 		rating.cameras = [camHUD];
 		rating.screenCenter();
@@ -4248,6 +4266,7 @@ class PlayState extends MusicBeatState
 			},
 			startDelay: Conductor.crochet * 0.002 / playbackRate
 		});
+		}
 	}
 
 	public var strumsBlocked:Array<Bool> = [];
@@ -4576,7 +4595,7 @@ class PlayState extends MusicBeatState
 		if (SONG.needsVoices)
 			vocals.volume = 1;
 
-		var time:Float = 0.15;
+		var time:Float = 0.15 / playbackRate;
 		if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 			time += 0.15;
 		}
@@ -4634,7 +4653,7 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote)
 			{
 				combo += 1;
-				if(combo > 9999) combo = 9999;
+				notesHitArray.unshift(Date.now());
 				popUpScore(note);
 			}
 			health += note.hitHealth * healthGain;
@@ -4672,7 +4691,7 @@ class PlayState extends MusicBeatState
 			}
 
 			if(cpuControlled) {
-				var time:Float = 0.15;
+				var time:Float = 0.15 / playbackRate;
 				if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 					time += 0.15;
 				}
@@ -4987,6 +5006,28 @@ class PlayState extends MusicBeatState
 		{
 			gf.dance();
 		}
+		if (curBeat % gfSpeed == 0) {
+		curBeat % (gfSpeed * 2) == 0 * playbackRate ? {
+		iconP1.scale.set(1.1, 0.8);
+		iconP2.scale.set(1.1, 1.3);
+
+		FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 / playbackRate, {ease: FlxEase.quadOut});
+		FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 / playbackRate, {ease: FlxEase.quadOut});
+		} : {
+		iconP1.scale.set(1.1, 1.3);
+		iconP2.scale.set(1.1, 0.8);
+
+		FlxTween.angle(iconP2, -15, 0, Conductor.crochet / 1300 / playbackRate, {ease: FlxEase.quadOut});
+		FlxTween.angle(iconP1, 15, 0, Conductor.crochet / 1300 / playbackRate, {ease: FlxEase.quadOut});
+		}
+
+		FlxTween.tween(iconP1, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 / playbackRate * gfSpeed, {ease: FlxEase.quadOut});
+		FlxTween.tween(iconP2, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 / playbackRate * gfSpeed, {ease: FlxEase.quadOut});
+
+		iconP1.updateHitbox();
+		iconP2.updateHitbox();
+		} 
+
 		if (curBeat % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
 		{
 			boyfriend.dance();
