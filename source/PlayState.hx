@@ -77,7 +77,7 @@ import hxcodec.VideoHandler as MP4Handler;
 #elseif (hxCodec == "2.6.0") 
 import VideoHandler as MP4Handler;
 #else 
-import vlc.MP4Handler;
+import VideoHandler as MP4Handler;
 #end
 #end
 
