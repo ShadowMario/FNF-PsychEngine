@@ -46,7 +46,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib --quiet setup /home/runner/haxelib
-          haxelib --quiet install hxcpp 4.2.1
+          haxelib --quiet install hxcpp
           haxelib --quiet install lime 7.9.0
           haxelib --quiet install openfl 9.1.0
           haxelib --quiet --never install flixel 4.11.0
