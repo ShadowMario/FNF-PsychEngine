@@ -1,4 +1,4 @@
-local que = initModule("assets/scripts/Dust Icons.lua")
+local que = initModule("assets/data/bopeebo/Dust Icons.lua")
 function onStartCountdown(elapsed)
 
 	doTweenAngle('turn', 'camGame', 1.5, crochet/300, 'sineInOut')
