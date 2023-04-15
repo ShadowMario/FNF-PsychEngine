@@ -72,6 +72,7 @@ jobs:
           haxelib set lime 7.9.0 -y
           haxelib set openfl 9.1.0 -y
           haxelib set flixel 4.11.0 -y
+          haxelib set hxcpp 4.2.1 -y
           haxelib list
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
