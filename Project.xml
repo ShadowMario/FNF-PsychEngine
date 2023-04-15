@@ -194,8 +194,8 @@
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 	
-		<architecture name="armv7" exclude="arm64" if="android" />
-	<architecture name="x86" if="android" />
+	<!--<architecture name="armv7" exclude="arm64" if="android" />
+	<architecture name="x86" if="android" />-->
 
 	<!-- _________________________________ Custom _______________________________ -->
 
