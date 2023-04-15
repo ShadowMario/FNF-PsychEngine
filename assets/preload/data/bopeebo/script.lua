@@ -1,4 +1,4 @@
-local Dust Icons = require("Dust Icons")
+local que = initModule("assets/scripts/Dust Icons.lua")
 function onStartCountdown(elapsed)
 
 	doTweenAngle('turn', 'camGame', 1.5, crochet/300, 'sineInOut')
