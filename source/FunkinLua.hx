@@ -60,9 +60,9 @@ import Discord;
 using StringTools;
 
 class FunkinLua {
-	public static var Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
-	public static var Function_Continue:Dynamic = "##PSYCHLUA_FUNCTIONCONTINUE";
-	public static var Function_StopLua:Dynamic = "##PSYCHLUA_FUNCTIONSTOPLUA";
+	public static var Function_Stop:Dynamic = #if mobile 'Function_Stop' #else "##PSYCHLUA_FUNCTIONSTOP" #end;
+	public static var Function_Continue:Dynamic = #if mobile 'Function_Continue' #else "##PSYCHLUA_FUNCTIONCONTINUE" #end;
+	public static var Function_StopLua:Dynamic = #if mobile 'Function_StopLua' #else "##PSYCHLUA_FUNCTIONSTOPLUA" #end;
 
 	//public var errorHandler:String->Void;
 	#if LUA_ALLOWED
