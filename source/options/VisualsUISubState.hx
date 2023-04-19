@@ -56,6 +56,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
 		addOption(option);
 
+		var option:Option = new Option('Icon Bounce:',
+			"Which icon bounce would you like?",
+			'iconBounceType',
+			'string',
+			'Golden Apple',
+			['Golden Apple', 'Dave and Bambi', 'Old Psych', 'New Psych']);
+		addOption(option);
+
 		var option:Option = new Option('Flashing Lights',
 			"Uncheck this if you're sensitive to flashing lights!",
 			'flashing',
@@ -71,7 +79,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Show Notes',
-			"If unchecked, the notes will be invisible. \nthis currently crashes the game, don't \nuncheck until this is fixed",
+			"If unchecked, the notes will be invisible. /nYou can still play them though!",
 			'showNotes',
 			'bool',
 			true);
