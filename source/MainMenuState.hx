@@ -33,19 +33,20 @@ class MainMenuState extends MusicBeatState
 	private var camAchievement:FlxCamera;
 	
 	var optionShit:Array<String> = [
-		'story_mode',
-		'freeplay',
-		#if MODS_ALLOWED 'mods', #end
-		#if ACHIEVEMENTS_ALLOWED 'awards', #end
+		'play',
+		'extras',
 		'credits',
-		#if !switch 'donate', #end
-		'options'
 	];
 
-	var magenta:FlxSprite;
+	var char:FlxSprite;
+	var backdrop:FlxBackdrop;
+
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+
+	var gfDance:FlxSprite;      //to put the gf on the menu mme
+	var danceLeft:Bool = false;
 
 	override function create()
 	{
@@ -74,62 +75,124 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('backgrounds/space'));
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
-		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+        
+        backdrop = new FlxBackdrop(Paths.image('mainmenu/grid'), 0.2, 0, true, true);
+		backdrop.velocity.set(200, 110);
+		backdrop.updateHitbox();
+		backdrop.alpha = 0.5;
+		backdrop.screenCenter(X);
+		add(backdrop);
+        
+        var bga:FlxSprite = new FlxSprite(120).loadGraphic(Paths.image('bgthing'));
+		bga.setGraphicSize(Std.int(bg.width * 1.175));
+		bga.updateHitbox();
+		bga.screenCenter();
+		bga.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bga);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 		add(camFollowPos);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		magenta.scrollFactor.set(0, yScroll);
-		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-		magenta.updateHitbox();
-		magenta.screenCenter();
-		magenta.visible = false;
-		magenta.antialiasing = ClientPrefs.globalAntialiasing;
-		magenta.color = 0xFFfd719b;
-		add(magenta);
-		
-		// magenta.scrollFactor.set();
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
 		var scale:Float = 1;
-		/*if(optionShit.length > 6) {
-			scale = 6 / optionShit.length;
-		}*/
+		
 
 		for (i in 0...optionShit.length)
-		{
+		
+			// Play Menu
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
-			var menuItem:FlxSprite = new FlxSprite(0, (i * 140)  + offset);
+			var menuItem:FlxSprite = new FlxSprite(120, 100).loadGraphic(Paths.image('mainmenu/play');
 			menuItem.scale.x = scale;
 			menuItem.scale.y = scale;
-			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
-			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
-			menuItem.animation.play('idle');
-			menuItem.ID = i;
-			menuItem.screenCenter(X);
+			menuItem.ID = 0;
+			menuItem.setGraphicSize(Std.int(menuItem.width * 0.70));
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
 			if(optionShit.length < 6) scr = 0;
 			menuItem.scrollFactor.set(0, scr);
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
-		}
+            
+            	char = new FlxSprite(-100, -270).loadGraphic(Paths.image('backgrounds/play'));//put your cords and image here
+				char.frames = Paths.getSparrowAtlas('mainmenu/bambiRemake');//here put the name of the xml
+				char.animation.addByPrefix('idleR', 'bambi idle', 24, true);//on 'idle normal' change it to your xml one
+				char.animation.play('idleR');//you can rename the anim however you want to
+				char.scrollFactor.set();
+				char.antialiasing = ClientPrefs.globalAntialiasing;
+				add(char);
 
-		FlxG.camera.follow(camFollowPos, null, 1);
 
+			// Extras Menu
+			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
+			var menuItem:FlxSprite = new FlxSprite(120, 250)).loadGraphic(Paths.image('mainmenu/extras');
+			menuItem.scale.x = scale;
+			menuItem.scale.y = scale;
+			menuItem.ID = 1;
+			menuItem.setGraphicSize(Std.int(menuItem.width * 0.70));
+			menuItems.add(menuItem);
+			var scr:Float = (optionShit.length - 4) * 0.135;
+			if(optionShit.length < 6) scr = 1;
+			menuItem.scrollFactor.set(1, scr);
+			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
+			menuItem.updateHitbox();
+
+            	char = new FlxSprite(-100, -270).loadGraphic(Paths.image('backgrounds/extras'));//put your cords and image here
+				char.frames = Paths.getSparrowAtlas('mainmenu/bambiRemake');//here put the name of the xml
+				char.animation.addByPrefix('idleR', 'bambi idle', 24, true);//on 'idle normal' change it to your xml one
+				char.animation.play('idleR');//you can rename the anim however you want to
+				char.scrollFactor.set();
+				char.antialiasing = ClientPrefs.globalAntialiasing;
+				add(char);
+
+			// Credits
+			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
+			var menuItem:FlxSprite = new FlxSprite(120, 400)).loadGraphic(Paths.image('mainmenu/credits');
+			menuItem.scale.x = scale;
+			menuItem.scale.y = scale;
+			menuItem.ID = 2;
+			menuItem.setGraphicSize(Std.int(menuItem.width * 0.70));
+			menuItems.add(menuItem);
+			var scr:Float = (optionShit.length - 4) * 0.135;
+			if(optionShit.length < 6) scr = 2;
+			menuItem.scrollFactor.set(2, scr);
+			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
+			menuItem.updateHitbox();
+
+            	char = new FlxSprite(-100, -270).loadGraphic(Paths.image('backgrounds/credits'));//put your cords and image here
+				char.frames = Paths.getSparrowAtlas('mainmenu/bambiRemake');//here put the name of the xml
+				char.animation.addByPrefix('idleR', 'bambi idle', 24, true);//on 'idle normal' change it to your xml one
+				char.animation.play('idleR');//you can rename the anim however you want to
+				char.scrollFactor.set();
+				char.antialiasing = ClientPrefs.globalAntialiasing;
+				add(char);
+
+			// Options
+			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
+			var menuItem:FlxSprite = new FlxSprite(120, 550)).loadGraphic(Paths.image('mainmenu/' + optionShit[1]);
+			menuItem.scale.x = scale;
+			menuItem.scale.y = scale;
+			menuItem.ID = 3;
+			menuItem.setGraphicSize(Std.int(menuItem.width * 0.70));
+			menuItems.add(menuItem);
+			var scr:Float = (optionShit.length - 4) * 0.135;
+			if(optionShit.length < 6) scr = 3;
+			menuItem.scrollFactor.set(3, scr);
+			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
+			menuItem.updateHitbox();
+
+
+		
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -139,7 +202,7 @@ class MainMenuState extends MusicBeatState
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-		// NG.core.calls.event.logEvent('swag').send();
+	
 
 		changeItem();
 
@@ -213,7 +276,6 @@ class MainMenuState extends MusicBeatState
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-					if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
@@ -235,16 +297,10 @@ class MainMenuState extends MusicBeatState
 
 								switch (daChoice)
 								{
-									case 'story_mode':
-										MusicBeatState.switchState(new StoryMenuState());
-									case 'freeplay':
-										MusicBeatState.switchState(new FreeplayState());
-									#if MODS_ALLOWED
-									case 'mods':
-										MusicBeatState.switchState(new ModsMenuState());
-									#end
-									case 'awards':
-										MusicBeatState.switchState(new AchievementsMenuState());
+									case 'play':
+										MusicBeatState.switchState(new PlayMenuState());
+									case 'extras':
+										MusicBeatState.switchState(new ExtrasMenuState());
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
@@ -268,7 +324,7 @@ class MainMenuState extends MusicBeatState
 
 		menuItems.forEach(function(spr:FlxSprite)
 		{
-			spr.screenCenter(X);
+	
 		});
 	}
 
