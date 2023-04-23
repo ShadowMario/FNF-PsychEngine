@@ -63,6 +63,10 @@ class SaveVariables {
 	public var badWindow:Int = 135;
 	public var safeFrames:Float = 10;
 
+	#if MODS_ALLOWED
+	public var modsOptsSaves:Map<String, Map<String, Dynamic>> = [];
+	#end
+
 	public function new()
 	{
 		//Why does haxe needs this again?

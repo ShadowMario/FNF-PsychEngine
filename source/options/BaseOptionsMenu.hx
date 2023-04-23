@@ -81,7 +81,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 					var json = Json.parse(rawJson);
 					var option:Option = new Option(file.replace('.json', ''),
 						'An option for ' + Json.parse(File.getContent(Paths.mods(folder + '/pack.json'))).name, getMainField(json),
-						getMainField(json), getMainField(json), getMainField(json));
+						getMainField(json), getMainField(json), getMainField(json), folder);
 					
 					for (field in Reflect.fields(json)) {
 						Reflect.setField(option, field, Reflect.field(json, field));

@@ -6,6 +6,10 @@ class Option
 	public var text(get, set):String;
 	public var onChange:Void->Void = null; //Pressed enter (on Bool type options) or pressed/held left/right (on other types)
 
+	#if MODS_ALLOWED
+	private var fromJson:String = null;
+	#end
+
 	public var type(get, default):String = 'bool'; //bool, int (or integer), float (or fl), percent, string (or str)
 	// Bool will use checkboxes
 	// Everything else will use a text
@@ -27,7 +31,7 @@ class Option
 	public var description:String = '';
 	public var name:String = 'Unknown';
 
-	public function new(name:String, description:String = '', variable:String, type:String = 'bool', defaultValue:Dynamic = 'null variable value', ?options:Array<String> = null)
+	public function new(name:String, description:String = '', variable:String, type:String = 'bool', defaultValue:Dynamic = 'null variable value', ?options:Array<String> = null #if MODS_ALLOWED, ?fromJson:String = null #end)
 	{
 		this.name = name;
 		this.description = description;
@@ -35,6 +39,9 @@ class Option
 		this.type = type;
 		this.defaultValue = defaultValue;
 		this.options = options;
+		#if MODS_ALLOWED
+		this.fromJson = fromJson;
+		#end
 
 		if(defaultValue == 'null variable value')
 		{
@@ -86,11 +93,22 @@ class Option
 
 	public function getValue():Dynamic
 	{
+		#if MODS_ALLOWED
+		if (fromJson != null) {
+			if (ClientPrefs.data.modsOptsSaves.exists(fromJson) && ClientPrefs.data.modsOptsSaves[fromJson].exists(variable)) {
+				return ClientPrefs.data.modsOptsSaves[fromJson][variable];
+			} else return null;
+		}
+		#end
 		return Reflect.getProperty(ClientPrefs.data, variable);
 	}
 	public function setValue(value:Dynamic)
 	{
-		Reflect.setProperty(ClientPrefs.data, variable, value);
+		#if MODS_ALLOWED
+		if (fromJson != null) {
+			if (!ClientPrefs.data.modsOptsSaves.exists(fromJson)) ClientPrefs.data.modsOptsSaves.set(fromJson, []);
+			ClientPrefs.data.modsOptsSaves[fromJson][variable] = value;
+		} else #end Reflect.setProperty(ClientPrefs.data, variable, value);
 	}
 
 	public function setChild(child:Alphabet)
