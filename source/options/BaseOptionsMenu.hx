@@ -1,5 +1,12 @@
 package options;
 
+#if MODS_ALLOWED
+import flixel.util.FlxStringUtil;
+import sys.FileSystem;
+import sys.io.File;
+import haxe.Json;
+#end
+
 import objects.CheckboxThingie;
 import objects.AttachedText;
 import objects.Character;
@@ -65,6 +72,26 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descText.borderSize = 2.4;
 		add(descText);
 
+		#if MODS_ALLOWED
+		for (folder in Paths.getActiveModsDir()) {
+			var path:String = Paths.mods(folder + '/options/' + FlxStringUtil.getClassName(this, true));
+			if(FileSystem.exists(path)) for(file in FileSystem.readDirectory(path)) if(file.endsWith('.json')) {
+				var rawJson = File.getContent(path + '/' + file);
+				if (rawJson != null && rawJson.length > 0) {
+					var json = Json.parse(rawJson);
+					var option:Option = new Option(file.replace('.json', ''),
+						'An option for ' + Json.parse(File.getContent(Paths.mods(folder + '/pack.json'))).name, getMainField(json),
+						getMainField(json), getMainField(json), getMainField(json));
+					
+					for (field in Reflect.fields(json)) {
+						Reflect.setField(option, field, Reflect.field(json, field));
+					}
+					addOption(option);
+				}
+			}
+		}
+		#end
+
 		for (i in 0...optionsArray.length)
 		{
 			var optionText:Alphabet = new Alphabet(290, 260, optionsArray[i].name, false);
@@ -102,6 +129,18 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		changeSelection();
 		reloadCheckboxes();
 	}
+
+	#if MODS_ALLOWED
+	var loops:Int = 0;
+	var mainFields:Array<String> = ['variable', 'type', 'defaultValue', 'options'];
+	function getMainField(json:Dynamic):Dynamic {  // Just to simplify the work up there  - Nex
+		if (loops == mainFields.length) loops = 0;
+		var daVal:Dynamic = Reflect.field(json, mainFields[loops]);
+		Reflect.deleteField(json, mainFields[loops]);
+		loops++;
+		return daVal;
+	}
+	#end
 
 	public function addOption(option:Option) {
 		if(optionsArray == null || optionsArray.length < 1) optionsArray = [];
