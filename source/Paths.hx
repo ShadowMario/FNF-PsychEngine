@@ -99,7 +99,6 @@ class Paths
 		for (key in currentTrackedSounds.keys()) {
 			if (!localTrackedAssets.contains(key)
 			&& !dumpExclusions.contains(key) && key != null) {
-				//trace('test: ' + dumpExclusions, key);
 				Assets.cache.clear(key);
 				currentTrackedSounds.remove(key);
 			}
@@ -112,9 +111,7 @@ class Paths
 	static public var currentModDirectory:String = '';
 	static public var currentLevel:String;
 	static public function setCurrentLevel(name:String)
-	{
 		currentLevel = name.toLowerCase();
-	}
 
 	public static function getPath(file:String, type:AssetType, ?library:Null<String> = null)
 	{
@@ -139,54 +136,37 @@ class Paths
 	}
 
 	static public function getLibraryPath(file:String, library = "preload")
-	{
 		return if (library == "preload" || library == "default") getPreloadPath(file); else getLibraryPathForce(file, library);
-	}
 
 	inline static function getLibraryPathForce(file:String, library:String, ?level:String)
 	{
 		if(level == null) level = library;
-		var returnPath = '$library:assets/$level/$file';
-		return returnPath;
+		return '$library:assets/$level/$file';
 	}
 
 	inline public static function getPreloadPath(file:String = '')
-	{
 		return 'assets/$file';
-	}
 
 	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
-	{
 		return getPath(file, type, library);
-	}
 
 	inline static public function txt(key:String, ?library:String)
-	{
 		return getPath('data/$key.txt', TEXT, library);
-	}
 
 	inline static public function xml(key:String, ?library:String)
-	{
 		return getPath('data/$key.xml', TEXT, library);
-	}
 
 	inline static public function json(key:String, ?library:String)
-	{
 		return getPath('data/$key.json', TEXT, library);
-	}
 
 	inline static public function shaderFragment(key:String, ?library:String)
-	{
 		return getPath('shaders/$key.frag', TEXT, library);
-	}
+
 	inline static public function shaderVertex(key:String, ?library:String)
-	{
 		return getPath('shaders/$key.vert', TEXT, library);
-	}
+
 	inline static public function lua(key:String, ?library:String)
-	{
 		return getPath('$key.lua', TEXT, library);
-	}
 
 	static public function video(key:String)
 	{
@@ -200,30 +180,20 @@ class Paths
 	}
 
 	static public function sound(key:String, ?library:String):Sound
-	{
-		var sound:Sound = returnSound('sounds', key, library);
-		return sound;
-	}
+		return returnSound('sounds', key, library);
 
 	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
-	{
 		return sound(key + FlxG.random.int(min, max), library);
-	}
 
 	inline static public function music(key:String, ?library:String):Sound
-	{
-		var file:Sound = returnSound('music', key, library);
-		return file;
-	}
+		return returnSound('music', key, library);
 
 	inline static public function voices(song:String):Any
 	{
 		#if html5
 		return 'songs:assets/songs/${formatToSongPath(song)}/Voices.$SOUND_EXT';
 		#else
-		var songKey:String = '${formatToSongPath(song)}/Voices';
-		var voices = returnSound('songs', songKey);
-		return voices;
+		return returnSound('songs', '${formatToSongPath(song)}/Inst');
 		#end
 	}
 
@@ -232,18 +202,12 @@ class Paths
 		#if html5
 		return 'songs:assets/songs/${formatToSongPath(song)}/Inst.$SOUND_EXT';
 		#else
-		var songKey:String = '${formatToSongPath(song)}/Inst';
-		var inst = returnSound('songs', songKey);
-		return inst;
+		return returnSound('songs', '${formatToSongPath(song)}/Inst');
 		#end
 	}
 
 	inline static public function image(key:String, ?library:String):FlxGraphic
-	{
-		// streamlined the assets process more
-		var returnAsset:FlxGraphic = returnGraphic(key, library);
-		return returnAsset;
-	}
+		return returnGraphic(key, library);
 
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
@@ -372,7 +336,6 @@ class Paths
 		#end
 
 		var path = getPath('images/$key.png', IMAGE, library);
-		//trace(path);
 		if (OpenFlAssets.exists(path, IMAGE)) {
 			if(!currentTrackedAssets.exists(path)) {
 				var newGraphic:FlxGraphic = FlxG.bitmap.add(path, false, path);
@@ -401,7 +364,6 @@ class Paths
 		// I hate this so god damn much
 		var gottenPath:String = getPath('$path/$key.$SOUND_EXT', SOUND, library);
 		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
-		// trace(gottenPath);
 		if(!currentTrackedSounds.exists(gottenPath))
 		#if MODS_ALLOWED
 			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
@@ -418,51 +380,42 @@ class Paths
 	}
 
 	#if MODS_ALLOWED
-	inline static public function mods(key:String = '') {
+	inline static public function mods(key:String = '')
 		return 'mods/' + key;
-	}
 
-	inline static public function modsFont(key:String) {
+	inline static public function modsFont(key:String)
 		return modFolders('fonts/' + key);
-	}
 
-	inline static public function modsJson(key:String) {
+	inline static public function modsJson(key:String)
 		return modFolders('data/' + key + '.json');
-	}
 
-	inline static public function modsVideo(key:String) {
+	inline static public function modsVideo(key:String)
 		return modFolders('videos/' + key + '.' + VIDEO_EXT);
-	}
 
-	inline static public function modsSounds(path:String, key:String) {
+	inline static public function modsSounds(path:String, key:String)
 		return modFolders(path + '/' + key + '.' + SOUND_EXT);
-	}
 
-	inline static public function modsImages(key:String) {
+	inline static public function modsImages(key:String)
 		return modFolders('images/' + key + '.png');
-	}
 
-	inline static public function modsXml(key:String) {
+	inline static public function modsXml(key:String)
 		return modFolders('images/' + key + '.xml');
-	}
 
-	inline static public function modsTxt(key:String) {
+	inline static public function modsTxt(key:String)
 		return modFolders('images/' + key + '.txt');
-	}
 
-	/* Goes unused for now
+	// These are unused for now
 
+	/*
 	inline static public function modsShaderFragment(key:String, ?library:String)
-	{
-		return modFolders('shaders/'+key+'.frag');
-	}
+		return modFolders('shaders/' + key + '.frag');
+
 	inline static public function modsShaderVertex(key:String, ?library:String)
-	{
-		return modFolders('shaders/'+key+'.vert');
-	}
-	inline static public function modsAchievements(key:String) {
+		return modFolders('shaders/' + key + '.vert');
+
+	inline static public function modsAchievements(key:String)
 		return modFolders('achievements/' + key + '.json');
-	}*/
+	*/
 
 	static public function modFolders(key:String) {
 		if(currentModDirectory != null && currentModDirectory.length > 0) {
