@@ -169,6 +169,38 @@ class ExtraFunctions
 			}
 			funk.luaTrace('setDataFromSave: Save file not initialized: ' + name, false, false, FlxColor.RED);
 		});
+		Lua_helper.add_callback(lua, "getOptionSave", function(variable:String, isJson:Bool = false, ?modName:String = null) {
+			if (!isJson) {
+				return Reflect.getProperty(ClientPrefs.data, variable);
+			} else if (isJson) {
+				#if MODS_ALLOWED
+				if (modName == null) modName = Paths.currentModDirectory;
+				if (ClientPrefs.data.modsOptsSaves.exists(modName) && ClientPrefs.data.modsOptsSaves[modName].exists(variable)) {
+					return ClientPrefs.data.modsOptsSaves[modName][variable];
+				}
+				#else
+				funk.luaTrace('getOptionSave: Platform unsupported for Json Options!', false, false, FlxColor.RED);
+				#end
+			}
+			return null;
+		});
+		Lua_helper.add_callback(lua, "setOptionSave", function(variable:String, value:Dynamic, isJson:Bool = false, ?modName:String = null) {
+			if (!isJson) {
+				Reflect.setProperty(ClientPrefs.data, variable, value);
+				return Reflect.getProperty(ClientPrefs.data, variable) != null ? true : false;
+			} else if (isJson) {
+				#if MODS_ALLOWED
+				if (modName == null) modName = Paths.currentModDirectory;
+				if (ClientPrefs.data.modsOptsSaves.exists(modName) && ClientPrefs.data.modsOptsSaves[modName].exists(variable)) {
+					ClientPrefs.data.modsOptsSaves[modName][variable] = value;
+					return true;
+				}
+				#else
+				funk.luaTrace('setOptionSave: Platform unsupported for Json Options!', false, false, FlxColor.RED);
+				#end
+			}
+			return false;
+		});
 
 		// File management
 		Lua_helper.add_callback(lua, "checkFileExists", function(filename:String, ?absolute:Bool = false) {
