@@ -509,8 +509,9 @@ class Paths
 		return globalMods;
 	}
 
-	static public function getModDirectories():Array<String> {
+	static public function getModDirectories(inclMainFol:Bool = false):Array<String> {
 		var list:Array<String> = [];
+		if (inclMainFol) list.push('');
 		var modsFolder:String = mods();
 		if(FileSystem.exists(modsFolder)) {
 			for (folder in FileSystem.readDirectory(modsFolder)) {
@@ -523,8 +524,9 @@ class Paths
 		return list;
 	}
 
-	static public function getActiveModsDir():Array<String> {
+	static public function getActiveModsDir(inclMainFol:Bool = false):Array<String> {
 		var finalList:Array<String> = [];
+		if (inclMainFol) finalList.push('');  // This will include the main mods folder  - Nex_isDumb
 		var path:String = 'modsList.txt';
 		if(FileSystem.exists(path))
 		{

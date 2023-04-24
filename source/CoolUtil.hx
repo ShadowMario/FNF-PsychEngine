@@ -87,6 +87,26 @@ class CoolUtil
 		return dumbArray;
 	}
 
+	public static function getOptionDefVal(type:String, ?options:Array<String> = null):Dynamic
+	{
+		switch(type)
+		{
+			case 'bool':
+				return false;
+			case 'int' | 'float':
+				return 0;
+			case 'percent':
+				return 1;
+			case 'string':
+				if(options.length > 0) {
+					return options[0];
+				} else {
+					return '';
+				}
+		}
+		return null;
+	}
+
 	//uhhhh does this even work at all? i'm starting to doubt
 	public static function precacheSound(sound:String, ?library:String = null):Void {
 		Paths.sound(sound, library);

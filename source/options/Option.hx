@@ -7,7 +7,7 @@ class Option
 	public var onChange:Void->Void = null; //Pressed enter (on Bool type options) or pressed/held left/right (on other types)
 
 	#if MODS_ALLOWED
-	private var fromJson:String = null;
+	public var fromJson:Array<String> = null; //Only used if the option is from a modpack json
 	#end
 
 	public var type(get, default):String = 'bool'; //bool, int (or integer), float (or fl), percent, string (or str)
@@ -31,7 +31,7 @@ class Option
 	public var description:String = '';
 	public var name:String = 'Unknown';
 
-	public function new(name:String, description:String = '', variable:String, type:String = 'bool', defaultValue:Dynamic = 'null variable value', ?options:Array<String> = null #if MODS_ALLOWED, ?fromJson:String = null #end)
+	public function new(name:String, description:String = '', variable:String, type:String = 'bool', defaultValue:Dynamic = 'null variable value', ?options:Array<String> = null #if MODS_ALLOWED, ?fromJson:Array<String> = null #end)
 	{
 		this.name = name;
 		this.description = description;
@@ -43,22 +43,8 @@ class Option
 		this.fromJson = fromJson;
 		#end
 
-		if(defaultValue == 'null variable value')
-		{
-			switch(type)
-			{
-				case 'bool':
-					defaultValue = false;
-				case 'int' | 'float':
-					defaultValue = 0;
-				case 'percent':
-					defaultValue = 1;
-				case 'string':
-					defaultValue = '';
-					if(options.length > 0) {
-						defaultValue = options[0];
-					}
-			}
+		if(defaultValue == 'null variable value') {
+			defaultValue = CoolUtil.getOptionDefVal(type, options);
 		}
 
 		if(getValue() == null) {
@@ -95,8 +81,8 @@ class Option
 	{
 		#if MODS_ALLOWED
 		if (fromJson != null) {
-			if (ClientPrefs.data.modsOptsSaves.exists(fromJson) && ClientPrefs.data.modsOptsSaves[fromJson].exists(variable)) {
-				return ClientPrefs.data.modsOptsSaves[fromJson][variable];
+			if (ClientPrefs.data.modsOptsSaves.exists(fromJson[0]) && ClientPrefs.data.modsOptsSaves[fromJson[0]].exists(variable)) {
+				return ClientPrefs.data.modsOptsSaves[fromJson[0]][variable];
 			} else return null;
 		}
 		#end
@@ -106,8 +92,8 @@ class Option
 	{
 		#if MODS_ALLOWED
 		if (fromJson != null) {
-			if (!ClientPrefs.data.modsOptsSaves.exists(fromJson)) ClientPrefs.data.modsOptsSaves.set(fromJson, []);
-			ClientPrefs.data.modsOptsSaves[fromJson][variable] = value;
+			if (!ClientPrefs.data.modsOptsSaves.exists(fromJson[0])) ClientPrefs.data.modsOptsSaves.set(fromJson[0], []);
+			ClientPrefs.data.modsOptsSaves[fromJson[0]][variable] = value;
 		} else #end Reflect.setProperty(ClientPrefs.data, variable, value);
 	}
 

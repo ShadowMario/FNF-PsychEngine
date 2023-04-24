@@ -73,15 +73,18 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		add(descText);
 
 		#if MODS_ALLOWED
-		for (folder in Paths.getActiveModsDir()) {
-			var path:String = Paths.mods(folder + '/options/' + FlxStringUtil.getClassName(this, true));
+		for (folder in Paths.getActiveModsDir(true)) {
+			var path:String = haxe.io.Path.join([Paths.mods(), folder, 'options', FlxStringUtil.getClassName(this, true)]);
 			if(FileSystem.exists(path)) for(file in FileSystem.readDirectory(path)) if(file.endsWith('.json')) {
 				var rawJson = File.getContent(path + '/' + file);
 				if (rawJson != null && rawJson.length > 0) {
 					var json = Json.parse(rawJson);
-					var option:Option = new Option(file.replace('.json', ''),
-						'An option for ' + Json.parse(File.getContent(Paths.mods(folder + '/pack.json'))).name, getMainField(json),
-						getMainField(json), getMainField(json), getMainField(json), folder);
+					var modName:String = folder != '' ? Json.parse(File.getContent(Paths.mods(folder + '/pack.json'))).name : '???';
+					var option:Option = new Option(
+						file.replace('.json', ''), 'An option for ' + modName,
+						getMainField(json), getMainField(json), getMainField(json),
+						getMainField(json), [folder, folder != '' ? modName : '']
+					);
 					
 					for (field in Reflect.fields(json)) {
 						Reflect.setField(option, field, Reflect.field(json, field));
@@ -133,7 +136,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	#if MODS_ALLOWED
 	var loops:Int = 0;
 	var mainFields:Array<String> = ['variable', 'type', 'defaultValue', 'options'];
-	function getMainField(json:Dynamic):Dynamic {  // Just to simplify the work up there  - Nex
+	function getMainField(json:Dynamic):Dynamic {  // Just to simplify the work up there  - Nex_isDumb
 		if (loops == mainFields.length) loops = 0;
 		var daVal:Dynamic = Reflect.field(json, mainFields[loops]);
 		Reflect.deleteField(json, mainFields[loops]);
