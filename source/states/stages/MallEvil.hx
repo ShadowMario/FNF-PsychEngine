@@ -1,5 +1,6 @@
 package states.stages;
 
+import flixel.math.FlxPoint;
 import states.stages.objects.*;
 
 class MallEvil extends BaseStage
@@ -35,9 +36,8 @@ class MallEvil extends BaseStage
 		inCutscene = true;
 
 		FlxG.sound.play(Paths.sound('Lights_Turn_On'));
-		FlxG.camera.focusOn(camFollow);
 		FlxG.camera.zoom = 1.5;
-		snapCamFollowToPos(400, -2050);
+		FlxG.camera.focusOn(new FlxPoint(400, -2050));
 
 		// blackout at the start
 		var blackScreen:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);

@@ -98,10 +98,10 @@ class ClientPrefs {
 		'debug_2'		=> [EIGHT]
 	];
 	public static var gamepadBinds:Map<String, Array<FlxGamepadInputID>> = [
-		'note_up'		=> [DPAD_UP, LEFT_STICK_DIGITAL_UP, RIGHT_STICK_DIGITAL_UP, Y],
-		'note_left'		=> [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT, RIGHT_STICK_DIGITAL_LEFT, X],
-		'note_down'		=> [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN, RIGHT_STICK_DIGITAL_DOWN, A],
-		'note_right'	=> [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT, RIGHT_STICK_DIGITAL_RIGHT, B],
+		'note_up'		=> [DPAD_UP, Y],
+		'note_left'		=> [DPAD_LEFT, X],
+		'note_down'		=> [DPAD_DOWN, A],
+		'note_right'	=> [DPAD_RIGHT, B],
 		
 		'ui_up'			=> [DPAD_UP, LEFT_STICK_DIGITAL_UP],
 		'ui_left'		=> [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT],
@@ -111,13 +111,41 @@ class ClientPrefs {
 		'accept'		=> [A, START],
 		'back'			=> [B],
 		'pause'			=> [START],
-		'reset'			=> [8]
+		'reset'			=> [BACK]
 	];
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
+	public static var defaultButtons:Map<String, Array<FlxGamepadInputID>> = null;
+
+	public static function resetKeys(controller:Null<Bool> = null) //Null = both, False = Keyboard, True = Controller
+	{
+		if(controller != true)
+		{
+			for (key in keyBinds.keys())
+			{
+				if(defaultKeys.exists(key))
+					keyBinds.set(key, defaultKeys.get(key).copy());
+			}
+		}
+		if(controller != false)
+		{
+			for (button in gamepadBinds.keys())
+			{
+				if(defaultButtons.exists(button))
+					gamepadBinds.set(button, defaultButtons.get(button).copy());
+			}
+		}
+	}
+
+	public static function clearInvalidKeys(key:String) {
+		var keyBind:Array<FlxKey> = keyBinds.get(key);
+		var gamepadBind:Array<FlxGamepadInputID> = gamepadBinds.get(key);
+		while(keyBind != null && keyBind.contains(NONE)) keyBind.remove(NONE);
+		while(gamepadBind != null && gamepadBind.contains(NONE)) gamepadBind.remove(NONE);
+	}
 
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
-		//trace(defaultKeys);
+		defaultButtons = gamepadBinds.copy();
 	}
 
 	public static function saveSettings() {
@@ -189,7 +217,7 @@ class ClientPrefs {
 					if(gamepadBinds.exists(control)) gamepadBinds.set(control, keys);
 				}
 			}
-			reloadControls();
+			reloadVolumeKeys();
 		}
 	}
 
@@ -197,12 +225,24 @@ class ClientPrefs {
 		return /*PlayState.isStoryMode ? defaultValue : */ (data.gameplaySettings.exists(name) ? data.gameplaySettings.get(name) : defaultValue);
 	}
 
-	public static function reloadControls() {
+	public static function reloadVolumeKeys() {
 		TitleState.muteKeys = keyBinds.get('volume_mute').copy();
 		TitleState.volumeDownKeys = keyBinds.get('volume_down').copy();
 		TitleState.volumeUpKeys = keyBinds.get('volume_up').copy();
-		FlxG.sound.muteKeys = TitleState.muteKeys;
-		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+		toggleVolumeKeys(true);
+	}
+	public static function toggleVolumeKeys(turnOn:Bool) {
+		if(turnOn)
+		{
+			FlxG.sound.muteKeys = TitleState.muteKeys;
+			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+		}
+		else
+		{
+			FlxG.sound.muteKeys = [];
+			FlxG.sound.volumeDownKeys = [];
+			FlxG.sound.volumeUpKeys = [];
+		}
 	}
 }

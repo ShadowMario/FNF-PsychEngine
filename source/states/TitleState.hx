@@ -103,10 +103,8 @@ class TitleState extends MusicBeatState
 		}
 		#end*/
 
+		FlxG.fixedTimestep = false;
 		FlxG.game.focusLostFramerate = 60;
-		FlxG.sound.muteKeys = muteKeys;
-		FlxG.sound.volumeDownKeys = volumeDownKeys;
-		FlxG.sound.volumeUpKeys = volumeUpKeys;
 		FlxG.keys.preventDefaultKeys = [TAB];
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
@@ -426,7 +424,7 @@ class TitleState extends MusicBeatState
 		}
 		
 		if (newTitle) {
-			titleTimer += CoolUtil.boundTo(elapsed, 0, 1);
+			titleTimer += FlxMath.bound(elapsed, 0, 1);
 			if (titleTimer > 2) titleTimer -= 2;
 		}
 
