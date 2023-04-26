@@ -76,8 +76,23 @@ class HScript
 		});
 	}
 
+    	public static function getImports(code:String):Array<String> {
+    	    var imports:Array<String> = [];
+    	    var re:EReg = ~/import\s+([\w\.]+);/;
+    	    while (re.match(code)) {
+    	        imports.push(re.matched(1));
+    	        code = re.matchedRight();
+    	    }
+    	    return imports;
+    	}
+	
 	public function execute(codeToRun:String, ?funcToRun:String = null, ?funcArgs:Array<Dynamic>):Dynamic
 	{
+		for (imports in getImports(codeToRun)){
+			var splitted:Array<String> = imports.split('.');
+			interp.variables.set(splitted[splitted.length - 1], Type.resolveClass(imports));
+		}
+        	code = ~/import\s+.+?\n/g.replace(codeToRun, ""); // delete all imports
 		@:privateAccess
 		HScript.parser.line = 1;
 		HScript.parser.allowTypes = true;
