@@ -150,7 +150,7 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 
-	public var spawnTime:Float = 1000;
+	public var spawnTime:Float = 2000;
 
 	public var vocals:FlxSound;
 
@@ -3931,7 +3931,7 @@ class PlayState extends MusicBeatState
 
 		var ret:Dynamic = callOnLuas('onEndSong', [], false);
 		if(ret != FunkinLua.Function_Stop && !transitioning) {
-			if (SONG.validScore)
+			if (SONG.validScore && !cpuControlled)
 			{
 				#if !switch
 				var percent:Float = ratingPercent;
@@ -4125,13 +4125,15 @@ class PlayState extends MusicBeatState
 			spawnNoteSplashOnNote(note);
 		}
 
-		if(!practiceMode && !cpuControlled) {
+		if(!practiceMode) {
 			songScore += score;
 			if(!note.ratingDisabled)
 			{
 				songHits++;
 				totalPlayed++;
+				if(!cpuControlled) {
 				RecalculateRating(false);
+				}
 			}
 		}
 
