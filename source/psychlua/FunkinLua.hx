@@ -894,6 +894,15 @@ class FunkinLua {
 			#end
 		});
 
+		Lua_helper.add_callback(lua, "callOnHscript", function(functionName:String = "trace", ?arguments:Array<Dynamic> = []){
+			var ret:Dynamic = null;
+			if (interp.variables.exists(functionName))
+				ret = Reflect.callMethod(null, interp.variables.get(functionName), arguments);
+			else
+				luaTrace(scriptName + ":" + lastCalledFunction + " - " + "$functionName does not Exist", false, false, FlxColor.RED);
+			return ret
+		});
+
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
