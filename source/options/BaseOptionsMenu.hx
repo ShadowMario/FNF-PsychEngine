@@ -25,6 +25,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	private var boyfriend:Character = null;
 	private var descBox:FlxSprite;
 	private var descText:FlxText;
+	#if MODS_ALLOWED
+	private var modDisp:FlxText;
+	#end
 
 	public var title:String;
 	public var rpcTitle:String;
@@ -73,17 +76,24 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		add(descText);
 
 		#if MODS_ALLOWED
+		modDisp = new FlxText(descBox.getGraphicMidpoint().x, descBox.y, descText.fieldWidth, "", 20);
+		modDisp.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		modDisp.scrollFactor.set();
+		modDisp.borderSize = 1.4;
+		add(modDisp);
+
 		for (folder in Paths.getActiveModsDir(true)) {
 			var path:String = haxe.io.Path.join([Paths.mods(), folder, 'options', FlxStringUtil.getClassName(this, true)]);
 			if(FileSystem.exists(path)) for(file in FileSystem.readDirectory(path)) if(file.endsWith('.json')) {
 				var rawJson = File.getContent(path + '/' + file);
 				if (rawJson != null && rawJson.length > 0) {
 					var json = Json.parse(rawJson);
-					var modName:String = folder != '' ? Json.parse(File.getContent(Paths.mods(folder + '/pack.json'))).name : '???';
+					var modName:String = Json.parse(File.getContent(Paths.mods(folder + '/pack.json'))).name;
 					var option:Option = new Option(
-						file.replace('.json', ''), 'An option for ' + modName,
+						file.replace('.json', ''), folder != '' ? 'An option for ' + modName :
+						'An option inside the Main Global Folder.', getMainField(json),
 						getMainField(json), getMainField(json), getMainField(json),
-						getMainField(json), [folder, folder != '' ? modName : '']
+						[folder, folder != '' ? modName : '']
 					);
 					
 					for (field in Reflect.fields(json)) {
@@ -338,6 +348,15 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descBox.setPosition(descText.x - 10, descText.y - 10);
 		descBox.setGraphicSize(Std.int(descText.width + 20), Std.int(descText.height + 25));
 		descBox.updateHitbox();
+
+		#if MODS_ALLOWED
+		if (optionsArray[curSelected].fromJson != null) {
+			modDisp.text = optionsArray[curSelected].fromJson[1];
+			if (modDisp.text == '') modDisp.text = 'Main Global Folder';
+			modDisp.setPosition(descBox.getGraphicMidpoint().x, descBox.y - 15);
+		}
+		else modDisp.text = '';
+		#end
 
 		if(boyfriend != null)
 		{

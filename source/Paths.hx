@@ -492,7 +492,7 @@ class Paths
 		globalMods = [];
 		for (folder in getActiveModsDir())
 		{
-			var path = Paths.mods(folder + '/pack.json');
+			var path = mods(folder + '/pack.json');
 			if(FileSystem.exists(path)) {
 				try{
 					var rawJson:String = File.getContent(path);

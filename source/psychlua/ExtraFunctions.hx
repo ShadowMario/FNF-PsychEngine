@@ -200,7 +200,7 @@ class ExtraFunctions
 					}
 				}
 			}
-			return ClientPrefs.data.modsOptsSaves;
+			return ClientPrefs.data.modsOptsSaves.toString();
 			#else
 			funk.luaTrace('loadJsonOptions: Platform unsupported for Json Options!', false, false, FlxColor.RED);
 			return false;
@@ -237,6 +237,10 @@ class ExtraFunctions
 				#end
 			}
 			return false;
+		});
+		Lua_helper.add_callback(lua, "saveSettings", function() {
+			ClientPrefs.saveSettings();
+			return true;
 		});
 
 		// File management
