@@ -851,7 +851,7 @@ class FunkinLua {
 			luaTrace("removeLuaScript: Script doesn't exist!", false, false, FlxColor.RED);
 		});
 
-		Lua_helper.add_callback(lua, "runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null) {
+		Lua_helper.add_callback(lua, "runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null) {
 			var retVal:Dynamic = null;
 
 			#if hscript
@@ -865,7 +865,7 @@ class FunkinLua {
 						hscript.interp.variables.set(key, Reflect.field(varsToBring, key));
 					}
 				}
-				retVal = hscript.execute(codeToRun);
+				retVal = hscript.execute(codeToRun, funcToRun, funcArgs);
 			}
 			catch (e:Dynamic) {
 				luaTrace(scriptName + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);

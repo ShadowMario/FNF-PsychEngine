@@ -76,12 +76,31 @@ class HScript
 		});
 	}
 
-	public function execute(codeToRun:String):Dynamic
+	public function execute(codeToRun:String, ?funcToRun:String = null, ?funcArgs:Array<Dynamic>):Dynamic
 	{
 		@:privateAccess
 		HScript.parser.line = 1;
 		HScript.parser.allowTypes = true;
-		return interp.execute(HScript.parser.parseString(codeToRun));
+		var expr:Expr = HScript.parser.parseString(codeToRun);
+		try {
+			var value:Dynamic = interp.execute(HScript.parser.parseString(codeToRun));
+			if(funcToRun != null)
+			{
+				//trace('Executing $funcToRun');
+				if(interp.variables.exists(funcToRun))
+				{
+					//trace('$funcToRun exists, executing...');
+					if(funcArgs == null) funcArgs = [];
+					value = Reflect.callMethod(null, interp.variables.get(funcToRun), funcArgs);
+				}
+			}
+			return value;
+		}
+		catch(e:haxe.Exception)
+		{
+			trace(e);
+			return null;
+		}
 	}
 	#end
 }
