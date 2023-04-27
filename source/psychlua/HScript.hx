@@ -6,6 +6,15 @@ import hscript.Interp;
 import hscript.Expr;
 #end
 
+#if LUA_ALLOWED
+import llua.Lua;
+import llua.LuaL;
+import llua.State;
+import llua.Convert;
+#end
+
+import haxe.Exception;
+
 import objects.Character;
 
 class HScript
@@ -84,23 +93,88 @@ class HScript
 		var expr:Expr = HScript.parser.parseString(codeToRun);
 		try {
 			var value:Dynamic = interp.execute(HScript.parser.parseString(codeToRun));
-			if(funcToRun != null)
-			{
-				//trace('Executing $funcToRun');
-				if(interp.variables.exists(funcToRun))
-				{
-					//trace('$funcToRun exists, executing...');
-					if(funcArgs == null) funcArgs = [];
-					value = Reflect.callMethod(null, interp.variables.get(funcToRun), funcArgs);
-				}
-			}
-			return value;
+			return (funcToRun != null) ? executeFunction(funcToRun, funcArgs) : value;
 		}
-		catch(e:haxe.Exception)
+		catch(e:Exception)
 		{
 			trace(e);
 			return null;
 		}
+	}
+
+	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>)
+	{
+		if(funcToRun != null)
+		{
+			//trace('Executing $funcToRun');
+			if(interp.variables.exists(funcToRun))
+			{
+				//trace('$funcToRun exists, executing...');
+				if(funcArgs == null) funcArgs = [];
+				return Reflect.callMethod(null, interp.variables.get(funcToRun), funcArgs);
+			}
+		}
+		return null;
+	}
+
+	#if LUA_ALLOWED
+	public static function implement(funk:FunkinLua)
+	{
+		var lua:State = funk.lua;
+		Lua_helper.add_callback(lua, "runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null) {
+			var retVal:Dynamic = null;
+
+			#if hscript
+			HScript.initHaxeModule();
+			try {
+				if(varsToBring != null)
+				{
+					for (key in Reflect.fields(varsToBring))
+					{
+						//trace('Key $key: ' + Reflect.field(varsToBring, key));
+						FunkinLua.hscript.interp.variables.set(key, Reflect.field(varsToBring, key));
+					}
+				}
+				retVal = FunkinLua.hscript.execute(codeToRun, funcToRun, funcArgs);
+			}
+			catch (e:Dynamic) {
+				funk.luaTrace(funk.scriptName + ":" + funk.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
+			}
+			#else
+			funk.luaTrace("runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
+			#end
+
+			if(retVal != null && !LuaUtils.isOfTypes(retVal, [Bool, Int, Float, String, Array])) retVal = null;
+			return retVal;
+		});
+		
+		Lua_helper.add_callback(lua, "runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic> = null) {
+			try {
+				return FunkinLua.hscript.executeFunction(funcToRun, funcArgs);
+			}
+			catch(e:Exception)
+			{
+				funk.luaTrace(Std.string(e));
+				return null;
+			}
+		});
+
+		Lua_helper.add_callback(lua, "addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
+			#if hscript
+			HScript.initHaxeModule();
+			try {
+				var str:String = '';
+				if(libPackage.length > 0)
+					str = libPackage + '.';
+
+				FunkinLua.hscript.variables.set(libName, Type.resolveClass(str + libName));
+			}
+			catch (e:Dynamic) {
+				funk.luaTrace(funk.scriptName + ":" + funk.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
+			}
+			#end
+		});
+		#end
 	}
 	#end
 }
