@@ -905,8 +905,12 @@ class PlayState extends MusicBeatState
 		#if (MODS_ALLOWED && LUA_ALLOWED)
 		startLuasOnFolder('stages/' + curStage + '.lua');
 		#end
-
+			if(ClientPrefs.communityGameMode)
+			{
+				SONG.gfVersion = 'gf-bent';
+			}
 		var gfVersion:String = SONG.gfVersion;
+		
 		if(gfVersion == null || gfVersion.length < 1)
 		{
 			switch (curStage)
@@ -923,12 +927,14 @@ class PlayState extends MusicBeatState
 					gfVersion = 'gf';
 			}
 
+
 			switch(Paths.formatToSongPath(SONG.song))
 			{
 				case 'stress':
 					gfVersion = 'pico-speaker';
 			}
 			SONG.gfVersion = gfVersion; //Fix for the Chart Editor
+
 		}
 
 		if (!stageData.hide_girlfriend)
