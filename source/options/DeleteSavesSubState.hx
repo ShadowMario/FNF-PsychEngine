@@ -88,6 +88,16 @@ class DeleteSavesSubState extends MusicBeatSubstate
             }
             else daList.insert(0, toCheck);
         }
+
+        if (daList.length > 0)
+        {
+            for (i in 0...daList.length)
+            {
+                var modName:Alphabet = new Alphabet(200, 360, daList[i][0] == '' ? 'Main Global Folder' : daList[i][0], true);
+                modName.isMenuItem = true;
+                grpName.add(modName);
+            }
+        }
         loadOptions();
     }
 
@@ -95,11 +105,8 @@ class DeleteSavesSubState extends MusicBeatSubstate
     {
         if (mod != null) {
             ClientPrefs.data.modsOptsSaves.remove(mod[0]);
+            grpName.remove(grpName.members[daList.indexOf(mod)], true);
             daList.remove(mod);
-        }
-
-        while (grpName.members.length > 0) {
-            grpName.remove(grpName.members[0], true);
         }
 
         if (daList.length > 0)
@@ -107,11 +114,8 @@ class DeleteSavesSubState extends MusicBeatSubstate
             noModsTxt.visible = false;
             for (i in 0...daList.length)
             {
-                var modName:Alphabet = new Alphabet(200, 360, daList[i][0] == '' ? 'Main Global Folder' : daList[i][0], true);
-                modName.isMenuItem = true;
-                modName.targetY = i;
-                modName.snapToPosition();
-                grpName.add(modName);
+                grpName.members[i].targetY = i;
+                grpName.members[i].snapToPosition();
             }
             changeSelection(0, mod == null);
         }
@@ -141,6 +145,10 @@ class DeleteSavesSubState extends MusicBeatSubstate
             if (controls.RESET) {
                 ClientPrefs.data.modsOptsSaves = [];
                 daList = [];
+                while (grpName.members.length > 0) {
+                    grpName.remove(grpName.members[0], true);
+                }
+                
                 loadOptions();
                 FlxG.sound.play(Paths.sound('cancelMenu'));
             }
