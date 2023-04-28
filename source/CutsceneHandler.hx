@@ -8,7 +8,11 @@ import flixel.FlxSprite;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
+#if (flixel > "5.3.0")
+import flixel.system.FlxSound;
+#else
 import flixel.sound.FlxSound;
+#end
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;

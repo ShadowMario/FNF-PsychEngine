@@ -11,7 +11,11 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+#if (flixel > "5.3.0")
+import flixel.system.FlxSound;
+#else
 import flixel.sound.FlxSound;
+#end
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
