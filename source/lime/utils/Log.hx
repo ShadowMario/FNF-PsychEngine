@@ -3,6 +3,7 @@ package lime.utils;
 import haxe.PosInfos;
 import sys.io.File;
 import sys.FileSystem;
+import openfl.utils.Assets as OpenFlAssets;
 import openfl.Lib; // I FORGOR
 
 using StringTools; // AGAIN
@@ -36,11 +37,10 @@ class Log
 
 			if (throwErrors)
 			{
-                                if (!FileSystem.exists(SUtil.getPath() + 'logs'))
-					FileSystem.createDirectory(SUtil.getPath() + 'logs');
+                                if (!OpenFlAssets.exists('logs'))
+					FileSystem.createDirectory('logs');
 
-				File.saveContent(SUtil.getPath()
-					+ 'logs/'
+				File.saveContent('logs/'
 					+ Lib.application.meta.get('file')
 					+ '-'
 					+ Date.now().toString().replace(' ', '-').replace(':', "'")
