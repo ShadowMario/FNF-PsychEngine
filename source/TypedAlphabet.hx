@@ -6,10 +6,10 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
-#if (flixel > "5.3.0")
-import flixel.system.FlxSound;
-#else
+#if (flixel >= "5.3.0")
 import flixel.sound.FlxSound;
+#else
+import flixel.system.FlxSound;
 #end
 import flash.media.Sound;
 
