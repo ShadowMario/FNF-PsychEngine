@@ -82,7 +82,7 @@ class CreditsState extends MusicBeatState
 			['PolybiusProxy',		'proxy',			'.MP4 Video Loader Library (hxCodec)',							'https://twitter.com/polybiusproxy',	'DCD294'],
 			['KadeDev',				'kade',				'Fixed some cool stuff on Chart Editor\nand other PRs',			'https://twitter.com/kade0912',			'64A250'],
 			['Keoiki',				'keoiki',			'Note Splash Animations',										'https://twitter.com/Keoiki_',			'D2D2D2'],
-			['superpowers04',		'superpowers04',	'LUA JIT Fork',													'https://twitter.com/superpowers04',	'B957ED'],
+			['superpowers04',		'superpowers04',	'linc_luaJIT Fork\n and some small lua stuff',													'https://www.guilded.gg/u/superpowers04/up/posts/925764311',	'B957ED'],
 			['Smokey',				'smokey',			'Sprite Atlas Support',											'https://twitter.com/Smokey_5_',		'483D92'],
 			[''],
 			["Funkin' Crew"],
