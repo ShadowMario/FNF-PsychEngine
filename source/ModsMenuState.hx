@@ -79,7 +79,7 @@ class ModsMenuState extends MusicBeatState
 		final backKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('back'));
 
 		for (key in backKey){
-			noModsTxt = new FlxText(0, 0, FlxG.width, 'NO MODS HAVE BEEN INSTALLED\nPRESS ${InputFormatter.getKeyName(key)} TO EXIT', 48);
+			noModsTxt = new FlxText(0, 0, FlxG.width, 'NO MODS HAVE BEEN INSTALLED\nPRESS ${InputFormatter.getKeyName(key).toUpperCase()} TO EXIT', 48);
 		}
 		if(FlxG.random.bool(0.1)) noModsTxt.text += '\nBITCH.'; //meanie
 		noModsTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
