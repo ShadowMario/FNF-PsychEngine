@@ -124,6 +124,12 @@
 		176,
 		209
 	],
+	"gameover_properties": [
+		"bf-holding-gf-dead",
+		"fnf_loss_sfx",
+		"gameOver",
+		"gameOverEnd"
+	],
 	"camera_position": [
 		0,
 		0
