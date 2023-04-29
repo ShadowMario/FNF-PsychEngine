@@ -38,9 +38,9 @@ class Log
 			if (throwErrors)
 			{
                                 if (!OpenFlAssets.exists('logs'))
-					FileSystem.createDirectory('logs');
+					FileSystem.createDirectory(Asset2File.path + 'logs');
 
-				File.saveContent('logs/'
+				File.saveContent(Assets2File.path + 'logs/'
 					+ Lib.application.meta.get('file')
 					+ '-'
 					+ Date.now().toString().replace(' ', '-').replace(':', "'")
