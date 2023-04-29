@@ -2284,6 +2284,311 @@ class FunkinLua {
 				PlayState.instance.modchartTexts.remove(tag);
 			}
 		});
+    
+		Lua_helper.add_callback(lua, "initSaveData", function(name:String, ?folder:String = 'psychenginemods') {
+			if(!PlayState.instance.modchartSaves.exists(name))
+			{
+				var save:FlxSave = new FlxSave();
+				// folder goes unused for flixel 5 users. @BeastlyGhost
+				save.bind(name, CoolUtil.getSavePath() + '/' + folder);
+				PlayState.instance.modchartSaves.set(name, save);
+				return;
+			}
+			luaTrace('initSaveData: Save file already initialized: ' + name);
+		});
+		Lua_helper.add_callback(lua, "flushSaveData", function(name:String) {
+			if(PlayState.instance.modchartSaves.exists(name))
+			{
+				PlayState.instance.modchartSaves.get(name).flush();
+				return;
+			}
+			luaTrace('flushSaveData: Save file not initialized: ' + name, false, false, FlxColor.RED);
+		});
+		Lua_helper.add_callback(lua, "getDataFromSave", function(name:String, field:String, ?defaultValue:Dynamic = null) {
+			if(PlayState.instance.modchartSaves.exists(name))
+			{
+				var retVal:Dynamic = Reflect.field(PlayState.instance.modchartSaves.get(name).data, field);
+				return retVal;
+			}
+			luaTrace('getDataFromSave: Save file not initialized: ' + name, false, false, FlxColor.RED);
+			return defaultValue;
+		});
+		Lua_helper.add_callback(lua, "setDataFromSave", function(name:String, field:String, value:Dynamic) {
+			if(PlayState.instance.modchartSaves.exists(name))
+			{
+				Reflect.setField(PlayState.instance.modchartSaves.get(name).data, field, value);
+				return;
+			}
+			luaTrace('setDataFromSave: Save file not initialized: ' + name, false, false, FlxColor.RED);
+		});
+
+		Lua_helper.add_callback(lua, "checkFileExists", function(filename:String, ?absolute:Bool = false) {
+			#if MODS_ALLOWED
+			if(absolute)
+			{
+				return FileSystem.exists(filename);
+			}
+
+			var path:String = Paths.modFolders(filename);
+			if(FileSystem.exists(path))
+			{
+				return true;
+			}
+			return FileSystem.exists(Paths.getPath('assets/$filename', TEXT));
+			#else
+			if(absolute)
+			{
+				return Assets.exists(filename);
+			}
+			return Assets.exists(Paths.getPath('assets/$filename', TEXT));
+			#end
+		});
+		Lua_helper.add_callback(lua, "saveFile", function(path:String, content:String, ?absolute:Bool = false)
+		{
+			try {
+				if(!absolute)
+					File.saveContent(Paths.mods(path), content);
+				else
+					File.saveContent(path, content);
+
+				return true;
+			} catch (e:Dynamic) {
+				luaTrace("saveFile: Error trying to save " + path + ": " + e, false, false, FlxColor.RED);
+			}
+			return false;
+		});
+		Lua_helper.add_callback(lua, "deleteFile", function(path:String, ?ignoreModFolders:Bool = false)
+		{
+			try {
+				#if MODS_ALLOWED
+				if(!ignoreModFolders)
+				{
+					var lePath:String = Paths.modFolders(path);
+					if(FileSystem.exists(lePath))
+					{
+						FileSystem.deleteFile(lePath);
+						return true;
+					}
+				}
+				#end
+
+				var lePath:String = Paths.getPath(path, TEXT);
+				if(Assets.exists(lePath))
+				{
+					FileSystem.deleteFile(lePath);
+					return true;
+				}
+			} catch (e:Dynamic) {
+				luaTrace("deleteFile: Error trying to delete " + path + ": " + e, false, false, FlxColor.RED);
+			}
+			return false;
+		});
+		Lua_helper.add_callback(lua, "getTextFromFile", function(path:String, ?ignoreModFolders:Bool = false) {
+			return Paths.getTextFromFile(path, ignoreModFolders);
+		});
+
+		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY
+		Lua_helper.add_callback(lua, "objectPlayAnimation", function(obj:String, name:String, forced:Bool = false, ?startFrame:Int = 0) {
+			luaTrace("objectPlayAnimation is deprecated! Use playAnim instead", false, true);
+			if(PlayState.instance.getLuaObject(obj,false) != null) {
+				PlayState.instance.getLuaObject(obj,false).animation.play(name, forced, false, startFrame);
+				return true;
+			}
+
+			var spr:FlxSprite = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
+			if(spr != null) {
+				spr.animation.play(name, forced, false, startFrame);
+				return true;
+			}
+			return false;
+		});
+		Lua_helper.add_callback(lua, "characterPlayAnim", function(character:String, anim:String, ?forced:Bool = false) {
+			luaTrace("characterPlayAnim is deprecated! Use playAnim instead", false, true);
+			switch(character.toLowerCase()) {
+				case 'dad':
+					if(PlayState.instance.dad.animOffsets.exists(anim))
+						PlayState.instance.dad.playAnim(anim, forced);
+				case 'gf' | 'girlfriend':
+					if(PlayState.instance.gf != null && PlayState.instance.gf.animOffsets.exists(anim))
+						PlayState.instance.gf.playAnim(anim, forced);
+				default:
+					if(PlayState.instance.boyfriend.animOffsets.exists(anim))
+						PlayState.instance.boyfriend.playAnim(anim, forced);
+			}
+		});
+		Lua_helper.add_callback(lua, "luaSpriteMakeGraphic", function(tag:String, width:Int, height:Int, color:String) {
+			luaTrace("luaSpriteMakeGraphic is deprecated! Use makeGraphic instead", false, true);
+			if(PlayState.instance.modchartSprites.exists(tag)) {
+				var colorNum:Int = Std.parseInt(color);
+				if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
+
+				PlayState.instance.modchartSprites.get(tag).makeGraphic(width, height, colorNum);
+			}
+		});
+		Lua_helper.add_callback(lua, "luaSpriteAddAnimationByPrefix", function(tag:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true) {
+			luaTrace("luaSpriteAddAnimationByPrefix is deprecated! Use addAnimationByPrefix instead", false, true);
+			if(PlayState.instance.modchartSprites.exists(tag)) {
+				var cock:ModchartSprite = PlayState.instance.modchartSprites.get(tag);
+				cock.animation.addByPrefix(name, prefix, framerate, loop);
+				if(cock.animation.curAnim == null) {
+					cock.animation.play(name, true);
+				}
+			}
+		});
+		Lua_helper.add_callback(lua, "luaSpriteAddAnimationByIndices", function(tag:String, name:String, prefix:String, indices:String, framerate:Int = 24) {
+			luaTrace("luaSpriteAddAnimationByIndices is deprecated! Use addAnimationByIndices instead", false, true);
+			if(PlayState.instance.modchartSprites.exists(tag)) {
+				var strIndices:Array<String> = indices.trim().split(',');
+				var die:Array<Int> = [];
+				for (i in 0...strIndices.length) {
+					die.push(Std.parseInt(strIndices[i]));
+				}
+				var pussy:ModchartSprite = PlayState.instance.modchartSprites.get(tag);
+				pussy.animation.addByIndices(name, prefix, die, '', framerate, false);
+				if(pussy.animation.curAnim == null) {
+					pussy.animation.play(name, true);
+				}
+			}
+		});
+		Lua_helper.add_callback(lua, "luaSpritePlayAnimation", function(tag:String, name:String, forced:Bool = false) {
+			luaTrace("luaSpritePlayAnimation is deprecated! Use playAnim instead", false, true);
+			if(PlayState.instance.modchartSprites.exists(tag)) {
+				PlayState.instance.modchartSprites.get(tag).animation.play(name, forced);
+			}
+		});
+		Lua_helper.add_callback(lua, "setLuaSpriteCamera", function(tag:String, camera:String = '') {
+			luaTrace("setLuaSpriteCamera is deprecated! Use setObjectCamera instead", false, true);
+			if(PlayState.instance.modchartSprites.exists(tag)) {
+				PlayState.instance.modchartSprites.get(tag).cameras = [LuaUtils.cameraFromString(camera)];
+				return true;
+			}
+			luaTrace("Lua sprite with tag: " + tag + " doesn't exist!");
+			return false;
+		});
+		Lua_helper.add_callback(lua, "setLuaSpriteScrollFactor", function(tag:String, scrollX:Float, scrollY:Float) {
+			luaTrace("setLuaSpriteScrollFactor is deprecated! Use setScrollFactor instead", false, true);
+			if(PlayState.instance.modchartSprites.exists(tag)) {
+				PlayState.instance.modchartSprites.get(tag).scrollFactor.set(scrollX, scrollY);
+				return true;
+			}
+			return false;
+		});
+		Lua_helper.add_callback(lua, "scaleLuaSprite", function(tag:String, x:Float, y:Float) {
+			luaTrace("scaleLuaSprite is deprecated! Use scaleObject instead", false, true);
+			if(PlayState.instance.modchartSprites.exists(tag)) {
+				var shit:ModchartSprite = PlayState.instance.modchartSprites.get(tag);
+				shit.scale.set(x, y);
+				shit.updateHitbox();
+				return true;
+			}
+			return false;
+		});
+		Lua_helper.add_callback(lua, "getPropertyLuaSprite", function(tag:String, variable:String) {
+			luaTrace("getPropertyLuaSprite is deprecated! Use getProperty instead", false, true);
+			if(PlayState.instance.modchartSprites.exists(tag)) {
+				var killMe:Array<String> = variable.split('.');
+				if(killMe.length > 1) {
+					var coverMeInPiss:Dynamic = Reflect.getProperty(PlayState.instance.modchartSprites.get(tag), killMe[0]);
+					for (i in 1...killMe.length-1) {
+						coverMeInPiss = Reflect.getProperty(coverMeInPiss, killMe[i]);
+					}
+					return Reflect.getProperty(coverMeInPiss, killMe[killMe.length-1]);
+				}
+				return Reflect.getProperty(PlayState.instance.modchartSprites.get(tag), variable);
+			}
+			return null;
+		});
+		Lua_helper.add_callback(lua, "setPropertyLuaSprite", function(tag:String, variable:String, value:Dynamic) {
+			luaTrace("setPropertyLuaSprite is deprecated! Use setProperty instead", false, true);
+			if(PlayState.instance.modchartSprites.exists(tag)) {
+				var killMe:Array<String> = variable.split('.');
+				if(killMe.length > 1) {
+					var coverMeInPiss:Dynamic = Reflect.getProperty(PlayState.instance.modchartSprites.get(tag), killMe[0]);
+					for (i in 1...killMe.length-1) {
+						coverMeInPiss = Reflect.getProperty(coverMeInPiss, killMe[i]);
+					}
+					Reflect.setProperty(coverMeInPiss, killMe[killMe.length-1], value);
+					return true;
+				}
+				Reflect.setProperty(PlayState.instance.modchartSprites.get(tag), variable, value);
+				return true;
+			}
+			luaTrace("setPropertyLuaSprite: Lua sprite with tag: " + tag + " doesn't exist!");
+			return false;
+		});
+		Lua_helper.add_callback(lua, "musicFadeIn", function(duration:Float, fromValue:Float = 0, toValue:Float = 1) {
+			FlxG.sound.music.fadeIn(duration, fromValue, toValue);
+			luaTrace('musicFadeIn is deprecated! Use soundFadeIn instead.', false, true);
+
+		});
+		Lua_helper.add_callback(lua, "musicFadeOut", function(duration:Float, toValue:Float = 0) {
+			FlxG.sound.music.fadeOut(duration, toValue);
+			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
+		});
+    
+		// Regex
+		Lua_helper.add_callback(lua, "regexMatch", function(str:String, toMatch:String, flag:String = "i") {
+			return new EReg(str, flag).match(toMatch);
+		});
+		Lua_helper.add_callback(lua, "regexSubMatch", function(str:String, toMatch:String, pos:Int, len:Int = -1, flag:String = "i") {
+			return new EReg(str, flag).matchSub(toMatch, pos, len);
+		});
+		Lua_helper.add_callback(lua, "regexFindMatchAt", function(str:String, toMatch:String, n:Int, flag:String = "i") {
+			var theData = new EReg(str, flag);
+			theData.match(toMatch);
+			return theData.matched(n);
+		});
+		Lua_helper.add_callback(lua, "regexFindFirstMatch", function(str:String, toMatch:String, flag:String = "i") {
+			var theData = new EReg(str, flag);
+			theData.match(toMatch);
+			return theData.matchedLeft();
+		});
+		Lua_helper.add_callback(lua, "regexFindLastMatch", function(str:String, toMatch:String, flag:String = "i") {
+			var theData = new EReg(str, flag);
+			theData.match(toMatch);
+			return theData.matchedRight();
+		});
+		Lua_helper.add_callback(lua, "regexMatchPosition", function(str:String, toMatch:String, flag:String = "i") {
+			var data = new EReg(str, flag);
+			data.match(toMatch);
+			var theData = data.matchedPos();
+			return [theData.pos, theData.len];
+		});
+		Lua_helper.add_callback(lua, "regexReplace", function(str:String, toReplace:String, replacement:String, flag:String = "i") {
+			return new EReg(str, flag).replace(toReplace, replacement);
+		});
+		Lua_helper.add_callback(lua, "regexSplit", function(str:String, toSplit:String, flag:String = "i") {
+			return new EReg(str, flag).split(toSplit);
+		});
+
+		// Other stuff
+		Lua_helper.add_callback(lua, "stringStartsWith", function(str:String, start:String) {
+			return str.startsWith(start);
+		});
+		Lua_helper.add_callback(lua, "stringEndsWith", function(str:String, end:String) {
+			return str.endsWith(end);
+		});
+		Lua_helper.add_callback(lua, "stringSplit", function(str:String, split:String) {
+			return str.split(split);
+		});
+		Lua_helper.add_callback(lua, "stringTrim", function(str:String) {
+			return str.trim();
+		});
+		
+		Lua_helper.add_callback(lua, "directoryFileList", function(folder:String) {
+			var list:Array<String> = [];
+			#if sys
+			if(FileSystem.exists(folder)) {
+				for (folder in FileSystem.readDirectory(folder)) {
+					if (!list.contains(folder)) {
+						list.push(folder);
+					}
+				}
+			}
+			#end
+			return list;
+		});
+    
 		psychlua.DeprecatedFunctions.implement(this);
 		psychlua.ExtraFunctions.implement(this);
 		#if hscript HScript.implement(this); #end
