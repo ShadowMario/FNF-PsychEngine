@@ -33,7 +33,7 @@
     {
       "name": "hxcpp",
       "type": "haxelib",
-      "version": null
+      "version": "4.2.1"
     },
     {
       "name": "tjson",
