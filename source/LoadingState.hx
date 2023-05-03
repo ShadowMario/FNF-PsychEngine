@@ -65,11 +65,13 @@ class LoadingState extends MusicBeatState
 			{
 				callbacks = new MultiCallback(onLoad);
 				var introComplete = callbacks.add("introComplete");
-				/*if (PlayState.SONG != null) {
+				#if html5
+				if (PlayState.SONG != null) {
 					checkLoadSong(getSongPath());
 					if (PlayState.SONG.needsVoices)
 						checkLoadSong(getVocalPath());
-				}*/
+				}
+				#end
 				checkLibrary("shared");
 				if(directory != null && directory.length > 0 && directory != 'shared') {
 					checkLibrary(directory);
@@ -135,6 +137,7 @@ class LoadingState extends MusicBeatState
 		MusicBeatState.switchState(target);
 	}
 	
+	#if html5
 	static function getSongPath()
 	{
 		return Paths.inst(PlayState.SONG.song);
@@ -144,6 +147,7 @@ class LoadingState extends MusicBeatState
 	{
 		return Paths.voices(PlayState.SONG.song);
 	}
+	#end
 	
 	inline static public function loadAndSwitchState(target:FlxState, stopMusic = false)
 	{
