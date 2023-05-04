@@ -1,49 +1,43 @@
 {
   "dependencies": [
     {
-      "name": "lime",
-      "type": "haxelib",
-      "version": null
-    },
-    {
-      "name": "openfl",
-      "type": "haxelib",
-      "version": null
+      "name": "discord_rpc",
+      "type": "git",
+      "dir": null,
+      "ref": "2d83fa8",
+      "url": "https://github.com/Aidan63/linc_discord-rpc"
     },
     {
       "name": "flixel",
       "type": "haxelib",
-      "version": null
+      "version": "4.11.0"
     },
     {
       "name": "flixel-addons",
       "type": "haxelib",
-      "version": null
+      "version": "2.11.0"
     },
     {
       "name": "flixel-tools",
       "type": "haxelib",
-      "version": null
+      "version": "1.5.1"
     },
     {
       "name": "flixel-ui",
       "type": "haxelib",
-      "version": null
+      "version": "2.5.0"
     },
     {
-      "name": "hxcpp",
+      "name": "hscript",
       "type": "haxelib",
-      "version": null
+      "version": "2.5.0"
     },
     {
-      "name": "tjson",
-      "type": "haxelib",
-      "version": null
-    },
-    {
-      "name": "hxjsonast",
-      "type": "haxelib",
-      "version": null
+      "name": "hscript-ex",
+      "type": "git",
+      "dir": null,
+      "ref": "6d5e4fa",
+      "url": "https://github.com/ianharrigan/hscript-ex"
     },
     {
       "name": "hxCodec",
@@ -51,35 +45,41 @@
       "version": "2.5.1"
     },
     {
-      "name": "hscript",
+      "name": "hxcpp",
       "type": "haxelib",
-      "version": null
+      "version": "4.3.2"
     },
     {
       "name": "hxcpp-debug-server",
       "type": "haxelib",
-      "version": null
+      "version": "1.2.4"
     },
     {
-      "name": "discord_rpc",
-      "type": "git",
-      "dir": null,
-      "ref": "master",
-      "url": "https://github.com/Aidan63/linc_discord-rpc"
+      "name": "hxjsonast",
+      "type": "haxelib",
+      "version": "1.1.0"
     },
     {
-      "name": "hscript-ex",
-      "type": "git",
-      "dir": null,
-      "ref": "master",
-      "url": "https://github.com/ianharrigan/hscript-ex"
+      "name": "lime",
+      "type": "haxelib",
+      "version": "8.0.1"
     },
     {
       "name": "linc_luajit",
       "type": "git",
       "dir": null,
-      "ref": "master",
+      "ref": "bcb4254",
       "url": "https://github.com/nebulazorua/linc_luajit"
+    },
+    {
+      "name": "openfl",
+      "type": "haxelib",
+      "version": "9.2.1"
+    },
+    {
+      "name": "tjson",
+      "type": "haxelib",
+      "version": "1.4.0"
     }
   ]
 }
