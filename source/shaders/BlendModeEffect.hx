@@ -1,6 +1,5 @@
 package shaders;
 
-
 import openfl.display.ShaderParameter;
 
 typedef BlendModeShader =

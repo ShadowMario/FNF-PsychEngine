@@ -5,8 +5,6 @@ import objects.AttachedText;
 import objects.Character;
 import options.Option;
 
-using StringTools;
-
 class BaseOptionsMenu extends MusicBeatSubstate
 {
 	private var curOption:Option = null;

@@ -13,7 +13,6 @@ import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
 
-
 //crash handler stuff
 #if CRASH_HANDLER
 import openfl.events.UncaughtErrorEvent;
@@ -23,8 +22,6 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 #end
-
-using StringTools;
 
 class Main extends Sprite
 {

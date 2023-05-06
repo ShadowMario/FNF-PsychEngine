@@ -1,7 +1,5 @@
 package objects;
 
-import flixel.graphics.frames.FlxAtlasFrames;
-
 class BGSprite extends FlxSprite
 {
 	private var idleAnim:String;

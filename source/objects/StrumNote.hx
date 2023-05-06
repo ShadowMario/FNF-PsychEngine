@@ -1,11 +1,6 @@
 package objects;
 
-
-
-
 import shaders.ColorSwap;
-
-using StringTools;
 
 class StrumNote extends FlxSprite
 {

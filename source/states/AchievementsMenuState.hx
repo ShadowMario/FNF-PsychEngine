@@ -3,8 +3,6 @@ package states;
 import backend.Achievements;
 import objects.AttachedAchievement;
 
-using StringTools;
-
 class AchievementsMenuState extends MusicBeatState
 {
 	#if ACHIEVEMENTS_ALLOWED

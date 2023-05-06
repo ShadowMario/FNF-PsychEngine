@@ -1,6 +1,5 @@
 package;
 
-
 import flixel.graphics.frames.FlxAtlasFrames;
 
 class GitarooPause extends MusicBeatState

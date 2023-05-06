@@ -1,12 +1,5 @@
 package objects;
 
-
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.system.FlxSound;
-import flash.media.Sound;
-
-using StringTools;
-
 class TypedAlphabet extends Alphabet
 {
 	public var onFinish:Void->Void = null;

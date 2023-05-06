@@ -1,12 +1,6 @@
 package cutscenes;
 
-
 import flixel.FlxBasic;
-import flixel.FlxObject;
-import flixel.graphics.atlas.FlxAtlas;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.system.FlxSound;
-import animateatlas.AtlasFrameMaker;
 import flixel.util.FlxSort;
 
 class CutsceneHandler extends FlxBasic

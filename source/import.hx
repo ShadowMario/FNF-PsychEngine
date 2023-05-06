@@ -7,6 +7,7 @@ import backend.MusicBeatSubstate;
 import backend.CustomFadeTransition;
 import backend.ClientPrefs;
 import backend.Conductor;
+import backend.Difficulty;
 
 import objects.Alphabet;
 import objects.BGSprite;
@@ -25,3 +26,5 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
+
+using StringTools;

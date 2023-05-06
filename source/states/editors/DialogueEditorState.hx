@@ -20,8 +20,6 @@ import objects.TypedAlphabet;
 import cutscenes.DialogueBoxPsych;
 import cutscenes.DialogueCharacter;
 
-using StringTools;
-
 class DialogueEditorState extends MusicBeatState
 {
 	var character:DialogueCharacter;
@@ -319,9 +317,7 @@ class DialogueEditorState extends MusicBeatState
 		var blockInput:Bool = false;
 		for (inputText in blockPressWhileTypingOn) {
 			if(inputText.hasFocus) {
-				FlxG.sound.muteKeys = [];
-				FlxG.sound.volumeDownKeys = [];
-				FlxG.sound.volumeUpKeys = [];
+				ClientPrefs.toggleVolumeKeys(false);
 				blockInput = true;
 
 				if(FlxG.keys.justPressed.ENTER) {
@@ -337,9 +333,7 @@ class DialogueEditorState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			ClientPrefs.toggleVolumeKeys(true);
 			if(FlxG.keys.justPressed.SPACE) {
 				reloadText(false);
 			}

@@ -21,8 +21,6 @@ import haxe.zip.Entry;
 import haxe.zip.Uncompress;
 import haxe.zip.Writer;*/
 
-using StringTools;
-
 class ModsMenuState extends MusicBeatState
 {
 	var mods:Array<ModMetadata> = [];
@@ -584,7 +582,7 @@ class ModsMenuState extends MusicBeatState
 			}
 			else
 			{
-				mod.alphabet.y = FlxMath.lerp(mod.alphabet.y, intendedPos, CoolUtil.boundTo(elapsed * 12, 0, 1));
+				mod.alphabet.y = FlxMath.lerp(mod.alphabet.y, intendedPos, FlxMath.bound(elapsed * 12, 0, 1));
 			}
 
 			if(i == curSelected)

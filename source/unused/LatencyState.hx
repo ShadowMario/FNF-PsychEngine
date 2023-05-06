@@ -1,6 +1,5 @@
 package;
 
-
 import flixel.FlxState;
 
 class LatencyState extends FlxState

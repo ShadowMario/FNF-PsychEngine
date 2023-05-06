@@ -1,10 +1,6 @@
 package cutscenes;
 
-import cutscenes.DialogueCharacter;
-
-
 import haxe.Json;
-import haxe.format.JsonParser;
 import openfl.utils.Assets;
 
 #if sys
@@ -14,7 +10,7 @@ import sys.io.File;
 
 import objects.TypedAlphabet;
 
-using StringTools;
+import cutscenes.DialogueCharacter;
 
 // Gonna try to kind of make it compatible to Forever Engine,
 // love u Shubs no homo :flushedh4:
@@ -106,11 +102,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 	public static var DEFAULT_CHAR_Y:Float = 60;
 
 	function spawnCharacters() {
-		#if (haxe >= "4.0.0")
-		var charsMap:Map<String, Bool> = new Map();
-		#else
 		var charsMap:Map<String, Bool> = new Map<String, Bool>();
-		#end
 		for (i in 0...dialogueList.dialogue.length) {
 			if(dialogueList.dialogue[i] != null) {
 				var charToAdd:String = dialogueList.dialogue[i].portrait;

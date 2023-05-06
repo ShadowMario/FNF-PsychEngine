@@ -15,6 +15,8 @@ class BackgroundTank extends BGSprite
 
 	override function update(elapsed:Float)
 	{
+		super.update(elapsed);
+
 		tankAngle += elapsed * tankSpeed;
 		angle = tankAngle - 90 + 15;
 		x = offsetX + 1500 * Math.cos(Math.PI / 180 * (tankAngle + 180));

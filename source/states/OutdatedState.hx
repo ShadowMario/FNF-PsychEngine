@@ -1,8 +1,5 @@
 package states;
 
-
-
-
 class OutdatedState extends MusicBeatState
 {
 	public static var leftState:Bool = false;

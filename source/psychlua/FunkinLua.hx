@@ -48,8 +48,6 @@ import psychlua.DebugLuaText;
 import psychlua.ModchartSprite;
 import psychlua.ModchartText;
 
-using StringTools;
-
 class FunkinLua {
 	public static var Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
 	public static var Function_Continue:Dynamic = "##PSYCHLUA_FUNCTIONCONTINUE";
@@ -81,11 +79,11 @@ class FunkinLua {
 			var result:Dynamic = LuaL.dofile(lua, script);
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
-				trace('Error on lua script! ' + resultStr);
+				trace(resultStr);
 				#if windows
 				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
 				#else
-				luaTrace('Error loading lua script: "$script"\n' + resultStr, true, false, FlxColor.RED);
+				luaTrace('$script\n$resultStr', true, false, FlxColor.RED);
 				#end
 				lua = null;
 				return;
@@ -95,7 +93,7 @@ class FunkinLua {
 			return;
 		}
 		scriptName = script;
-		HScript.initHaxeModule();
+		#if hscript HScript.initHaxeModule(); #end
 
 		trace('lua file loaded succesfully:' + script);
 
@@ -122,9 +120,8 @@ class FunkinLua {
 		set('isStoryMode', PlayState.isStoryMode);
 		set('difficulty', PlayState.storyDifficulty);
 
-		var difficultyName:String = CoolUtil.difficulties[PlayState.storyDifficulty];
-		set('difficultyName', difficultyName);
-		set('difficultyPath', Paths.formatToSongPath(difficultyName));
+		set('difficultyName', Difficulty.getString());
+		set('difficultyPath', Paths.formatToSongPath(Difficulty.getString()));
 		set('weekRaw', PlayState.storyWeek);
 		set('week', WeekData.weeksList[PlayState.storyWeek]);
 		set('seenCutscene', PlayState.seenCutscene);
@@ -854,49 +851,6 @@ class FunkinLua {
 			luaTrace("removeLuaScript: Script doesn't exist!", false, false, FlxColor.RED);
 		});
 
-		Lua_helper.add_callback(lua, "runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null) {
-			var retVal:Dynamic = null;
-
-			#if hscript
-			HScript.initHaxeModule();
-			try {
-				if(varsToBring != null)
-				{
-					for (key in Reflect.fields(varsToBring))
-					{
-						//trace('Key $key: ' + Reflect.field(varsToBring, key));
-						hscript.interp.variables.set(key, Reflect.field(varsToBring, key));
-					}
-				}
-				retVal = hscript.execute(codeToRun);
-			}
-			catch (e:Dynamic) {
-				luaTrace(scriptName + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);
-			}
-			#else
-			luaTrace("runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
-			#end
-
-			if(retVal != null && !LuaUtils.isOfTypes(retVal, [Bool, Int, Float, String, Array])) retVal = null;
-			return retVal;
-		});
-
-		Lua_helper.add_callback(lua, "addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
-			#if hscript
-			HScript.initHaxeModule();
-			try {
-				var str:String = '';
-				if(libPackage.length > 0)
-					str = libPackage + '.';
-
-				hscript.variables.set(libName, Type.resolveClass(str + libName));
-			}
-			catch (e:Dynamic) {
-				luaTrace(scriptName + ":" + lastCalledFunction + " - " + e, false, false, FlxColor.RED);
-			}
-			#end
-		});
-
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
 			if(name == null || name.length < 1)
 				name = PlayState.SONG.song;
@@ -1390,7 +1344,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic) {
 			var value1:String = arg1;
 			var value2:String = arg2;
-			PlayState.instance.triggerEventNote(name, value1, value2);
+			PlayState.instance.triggerEventNote(name, value1, value2, Conductor.songPosition);
 			//trace('Triggered event: ' + name + ', ' + value1 + ', ' + value2);
 			return true;
 		});
@@ -2332,13 +2286,14 @@ class FunkinLua {
 		});
 		psychlua.DeprecatedFunctions.implement(this);
 		psychlua.ExtraFunctions.implement(this);
+		#if hscript HScript.implement(this); #end
 
 		call('onCreate', []);
 		#end
 	}
 
 	//main
-	var lastCalledFunction:String = '';
+	public var lastCalledFunction:String = '';
 	public function call(func:String, args:Array<Dynamic>):Dynamic {
 		#if LUA_ALLOWED
 		if(closed) return Function_Continue;
@@ -2407,6 +2362,7 @@ class FunkinLua {
 	//clone functions
 	function oldTweenFunction(tag:String, vars:String, tweenValue:Any, duration:Float, ease:String, funcName:String)
 	{
+		#if LUA_ALLOWED
 		var target:Dynamic = LuaUtils.tweenPrepare(tag, vars);
 		if(target != null) {
 			PlayState.instance.modchartTweens.set(tag, FlxTween.tween(target, tweenValue, duration, {ease: LuaUtils.getTweenEaseByString(ease),
@@ -2418,6 +2374,7 @@ class FunkinLua {
 		} else {
 			luaTrace('$funcName: Couldnt find object: $vars', false, false, FlxColor.RED);
 		}
+		#end
 	}
 
 	static function addAnimByIndices(obj:String, name:String, prefix:String, indices:String, framerate:Int = 24, loop:Bool = false)
@@ -2513,31 +2470,12 @@ class FunkinLua {
 		return null;
 	}
 	#end
-
-	public function createRuntimeShader(name:String):FlxRuntimeShader
-	{
-		if(!ClientPrefs.data.shaders) return new FlxRuntimeShader();
-
-		#if (!flash && MODS_ALLOWED && sys)
-		if(!runtimeShaders.exists(name) && !initLuaShader(name))
-		{
-			FlxG.log.warn('Shader $name is missing!');
-			return new FlxRuntimeShader();
-		}
-
-		var arr:Array<String> = runtimeShaders.get(name);
-		return new FlxRuntimeShader(arr[0], arr[1]);
-		#else
-		FlxG.log.warn("Platform unsupported for Runtime Shaders!");
-		return null;
-		#end
-	}
 	
 	public function initLuaShader(name:String, ?glslVersion:Int = 120)
 	{
 		if(!ClientPrefs.data.shaders) return false;
 
-		#if (!flash && sys)
+		#if (MODS_ALLOWED && !flash && sys)
 		if(runtimeShaders.exists(name))
 		{
 			luaTrace('Shader $name was already initialized!');

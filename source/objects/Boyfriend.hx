@@ -1,10 +1,5 @@
 package objects;
 
-
-import flixel.graphics.frames.FlxAtlasFrames;
-
-using StringTools;
-
 class Boyfriend extends Character
 {
 	public var startedDeath:Bool = false;

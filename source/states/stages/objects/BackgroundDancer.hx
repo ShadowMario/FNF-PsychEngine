@@ -1,6 +1,5 @@
 package states.stages.objects;
 
-
 import flixel.graphics.frames.FlxAtlasFrames;
 
 class BackgroundDancer extends FlxSprite
