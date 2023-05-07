@@ -56,6 +56,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
 		addOption(option);
 
+		var option:Option = new Option('HUD Type:',
+			"Which HUD would you like?",
+			'hudType',
+			'string',
+			'VS Impostor',
+			['VS Impostor', 'Kade Engine', 'Dave & Bambi', 'Psych Engine']);
+		addOption(option);
+
 		var option:Option = new Option('Icon Bounce:',
 			"Which icon bounce would you like?",
 			'iconBounceType',
@@ -79,7 +87,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Show Notes',
-			"If unchecked, the notes will be invisible. /nYou can still play them though!",
+			"If unchecked, the notes will be invisible. You can still play them though!",
 			'showNotes',
 			'bool',
 			true);
