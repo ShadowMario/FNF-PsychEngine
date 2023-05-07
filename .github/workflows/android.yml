@@ -41,7 +41,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.0
+          haxe-version: 4.3.1
 
       - name: Install Haxelib
         run: |
