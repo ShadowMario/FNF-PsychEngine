@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				17,
+				-8
+			],
+			"anim": "idle",
+			"fps": 14,
+			"name": "CorruptCleveland idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				529,
+				19
+			],
+			"anim": "singLEFT",
+			"fps": 14,
+			"name": "CorruptCleveland left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-15,
+				-221
+			],
+			"anim": "singDOWN",
+			"fps": 14,
+			"name": "CorruptCleveland down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				17,
+				-89
+			],
+			"anim": "singRIGHT",
+			"fps": 14,
+			"name": "CorruptCleveland right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				73,
+				-50
+			],
+			"anim": "singUP",
+			"fps": 14,
+			"name": "CorruptCleveland up",
+			"indices": []
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/CorruptCleveland",
+	"position": [
+		-150,
+		-130
+	],
+	"healthicon": "clevelandcorruptedFV",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		185,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.1
+}

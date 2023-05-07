@@ -1,0 +1,100 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				1050,
+				370
+			],
+			"anim": "singDOWN",
+			"fps": 13,
+			"name": "QuagmireTwinkle3 down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1040,
+				370
+			],
+			"anim": "singRIGHT",
+			"fps": 13,
+			"name": "QuagmireTwinkle3 right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1050,
+				370
+			],
+			"anim": "singUP",
+			"fps": 13,
+			"name": "QuagmireTwinkle3 up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1050,
+				370
+			],
+			"anim": "singLEFT",
+			"fps": 13,
+			"name": "QuagmireTwinkle3 left",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				1050,
+				370
+			],
+			"anim": "idle",
+			"fps": 13,
+			"name": "QuagmireTwinkle3 idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1050,
+				370
+			],
+			"anim": "stab",
+			"fps": 13,
+			"name": "QuagmireTwinkle3 stab",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1050,
+				370
+			],
+			"anim": "unstab",
+			"fps": 4,
+			"name": "QuagmireTwinkle3 unstab",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/QuagmireTwinkle3",
+	"position": [
+		50,
+		-20
+	],
+	"healthicon": "quagmireTwinkle3",
+	"flip_x": true,
+	"healthbar_colors": [
+		213,
+		0,
+		0
+	],
+	"camera_position": [
+		300,
+		-270
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "peterrooten idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "peterrooten left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "peterrooten down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "peterrooten up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "peterrooten right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1179,
+				550
+			],
+			"anim": "unfunnied",
+			"fps": 24,
+			"name": "peterrooten unfunnied",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/peterrooten",
+	"position": [
+		50,
+		-20
+	],
+	"healthicon": "peterrooten",
+	"flip_x": true,
+	"healthbar_colors": [
+		29,
+		96,
+		1
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

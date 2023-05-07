@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				56,
+				-2
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "JoeFv left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				59,
+				1
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "JoeFv down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				80,
+				1
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "JoeFv right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				58,
+				0
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "JoeFv up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				59,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "JoeFv idle",
+			"indices": []
+		},
+		{
+			"offsets": [
+				59,
+				-1
+			],
+			"indices": [],
+			"fps": 15,
+			"anim": "enter",
+			"loop": false,
+			"name": "JoeFv enter"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/JoeFv",
+	"position": [
+		-110,
+		-20
+	],
+	"healthicon": "JoeFv",
+	"flip_x": true,
+	"healthbar_colors": [
+		236,
+		28,
+		36
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				2,
+				1
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "stewierooten right"
+		},
+		{
+			"offsets": [
+				1,
+				1
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "stewierooten left"
+		},
+		{
+			"offsets": [
+				1,
+				1
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "stewierooten down"
+		},
+		{
+			"offsets": [
+				4,
+				1
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "stewierooten up"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "shock",
+			"loop": false,
+			"name": "stewierooten shock"
+		},
+		{
+			"offsets": [
+				1,
+				1
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "stewierooten idle"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/stewierooten",
+	"position": [
+		260,
+		360
+	],
+	"healthicon": "rootenduo",
+	"flip_x": true,
+	"healthbar_colors": [
+		0,
+		95,
+		0
+	],
+	"camera_position": [
+		10,
+		-30
+	],
+	"sing_duration": 6.1,
+	"scale": 1.1
+}

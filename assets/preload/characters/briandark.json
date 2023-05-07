@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				1,
+				1
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "idle",
+			"loop": true,
+			"name": "brianrooten idle"
+		},
+		{
+			"offsets": [
+				1,
+				1
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "brianrooten right"
+		},
+		{
+			"offsets": [
+				0,
+				1
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "brianrooten down"
+		},
+		{
+			"offsets": [
+				1,
+				1
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "brianrooten left"
+		},
+		{
+			"offsets": [
+				4,
+				1
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "singUP",
+			"loop": false,
+			"name": "brianrooten up"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/briandark",
+	"position": [
+		-320,
+		180
+	],
+	"healthicon": "briandark",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		0
+	],
+	"camera_position": [
+		40,
+		-120
+	],
+	"sing_duration": 6.1,
+	"scale": 1.1
+}

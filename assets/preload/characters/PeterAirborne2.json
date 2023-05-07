@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Peter idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				85,
+				-9
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Peter left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-28,
+				-14
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Peter down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-28,
+				47
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Peter up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-21,
+				2
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Peter right",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/PeterAirborne2",
+	"position": [
+		-400,
+		-20
+	],
+	"healthicon": "squad2",
+	"flip_x": true,
+	"healthbar_colors": [
+		100,
+		120,
+		175
+	],
+	"camera_position": [
+		10,
+		-90
+	],
+	"sing_duration": 6.1,
+	"scale": 0.9
+}

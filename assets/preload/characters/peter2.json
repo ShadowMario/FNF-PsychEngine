@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "peterrooten idle"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "peterrooten left"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "peterrooten down"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "peterrooten up"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "peterrooten right"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/peter2",
+	"position": [
+		-400,
+		-20
+	],
+	"healthicon": "squad2",
+	"flip_x": false,
+	"healthbar_colors": [
+		100,
+		148,
+		188
+	],
+	"camera_position": [
+		10,
+		-90
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

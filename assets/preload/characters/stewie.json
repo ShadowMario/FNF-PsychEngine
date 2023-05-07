@@ -1,0 +1,100 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				2,
+				1
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Stewie right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				1
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Stewie down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				1
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Stewie left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				4,
+				1
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Stewie up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				1
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Stewie idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				5,
+				1
+			],
+			"anim": "talk",
+			"fps": 24,
+			"name": "Stewie talk",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				222,
+				1
+			],
+			"anim": "gunshot",
+			"fps": 24,
+			"name": "Stewie gunshot",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Stewie",
+	"position": [
+		150,
+		150
+	],
+	"healthicon": "stewie",
+	"flip_x": false,
+	"healthbar_colors": [
+		100,
+		0,
+		20
+	],
+	"camera_position": [
+		210,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.1
+}
