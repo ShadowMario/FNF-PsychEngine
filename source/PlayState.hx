@@ -135,6 +135,7 @@ class PlayState extends MusicBeatState
 	public var songSpeedTween:FlxTween;
 	public var songSpeed(default, set):Float = 1;
 	public var songSpeedType:String = "multiplicative";
+
 	public var noteKillOffset:Float = 350;
 
 	public var playbackRate(default, set):Float = 1;
@@ -149,6 +150,8 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
+	public static var loops:Int = 0;
+	public static var speedUpType:String = "scroll speed";
 
 	public var spawnTime:Float = 2000;
 
@@ -196,6 +199,8 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
+	public var nps:Int = 0;
+	public var maxNPS:Int = 0;
 
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -210,6 +215,7 @@ class PlayState extends MusicBeatState
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
 	public var practiceMode:Bool = false;
+
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -1526,6 +1532,7 @@ class PlayState extends MusicBeatState
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
 
+
 		if(!ClientPrefs.controllerMode)
 		{
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
@@ -2245,6 +2252,7 @@ class PlayState extends MusicBeatState
 		Paths.sound('intro2' + introSoundsSuffix);
 		Paths.sound('intro1' + introSoundsSuffix);
 		Paths.sound('introGo' + introSoundsSuffix);
+
 	}
 
 	public function startCountdown():Void
@@ -2342,7 +2350,7 @@ class PlayState extends MusicBeatState
 						countdownReady.screenCenter();
 						countdownReady.antialiasing = antialias;
 						insert(members.indexOf(notes), countdownReady);
-						FlxTween.tween(countdownReady, {/*y: countdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+						FlxTween.tween(countdownReady, {/*y: countdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000 / playbackRate, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
 							{
@@ -2362,7 +2370,7 @@ class PlayState extends MusicBeatState
 						countdownSet.screenCenter();
 						countdownSet.antialiasing = antialias;
 						insert(members.indexOf(notes), countdownSet);
-						FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+						FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000 / playbackRate, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
 							{
@@ -2384,7 +2392,7 @@ class PlayState extends MusicBeatState
 						countdownGo.screenCenter();
 						countdownGo.antialiasing = antialias;
 						insert(members.indexOf(notes), countdownGo);
-						FlxTween.tween(countdownGo, {/*y: countdownGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+						FlxTween.tween(countdownGo, {/*y: countdownGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000 / playbackRate, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
 							{
@@ -3169,9 +3177,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		var nps:Int = 0;
-	    var maxNPS:Int = 0;
-
 		{
 			var balls = notesHitArray.length-1;
 			while (balls >= 0)
@@ -3196,9 +3201,9 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Accuracy: ';
 		if(cpuControlled) 
 			scoreTxt.text = 'Bot Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Botplay Mode';
-		if(ratingName != '?')
+		if(ratingName != '?' && !cpuControlled)
 			scoreTxt.text += Highscore.floorDecimal(ratingPercent * 100, 2) + '% | ' + ratingFC + ratingCool;
-			else
+			else if (!cpuControlled)
 			scoreTxt.text += '0% | N/A';
 		}
 		if (ClientPrefs.hudType == 'Dave & Bambi') {
@@ -3533,6 +3538,10 @@ class PlayState extends MusicBeatState
 			}
 			if(FlxG.keys.justPressed.TWO) { //Go 10 seconds into the future :O
 				setSongTime(Conductor.songPosition + 10000);
+				clearNotesBefore(Conductor.songPosition);
+			}
+			if(FlxG.keys.justPressed.THREE) { //Go 10 seconds into the future :O
+				setSongTime(Conductor.songPosition - 10000);
 				clearNotesBefore(Conductor.songPosition);
 			}
 		}
@@ -4099,7 +4108,6 @@ class PlayState extends MusicBeatState
 	public function finishSong(?ignoreNoteOffset:Bool = false):Void
 	{
 		var finishCallback:Void->Void = endSong; //In case you want to change it in a specific song.
-
 		updateTime = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
@@ -4110,7 +4118,7 @@ class PlayState extends MusicBeatState
 			finishTimer = new FlxTimer().start(ClientPrefs.noteOffset / 1000, function(tmr:FlxTimer) {
 				finishCallback();
 			});
-		}
+		}	
 	}
 
 
@@ -4124,12 +4132,13 @@ class PlayState extends MusicBeatState
 					health -= 0.05 * healthLoss;
 				}
 			});
+		{
 			for (daNote in unspawnNotes) {
 				if(daNote.strumTime < songLength - Conductor.safeZoneOffset) {
 					health -= 0.05 * healthLoss;
 				}
 			}
-
+		}
 			if(doDeathCheck()) {
 				return;
 			}
@@ -4296,6 +4305,23 @@ class PlayState extends MusicBeatState
 		}
 		unspawnNotes = [];
 		eventNotes = [];
+	}
+
+	public static function restartSong(noTrans:Bool = true)
+	{
+		PlayState.instance.paused = true; // For lua
+		FlxG.sound.music.volume = 0;
+		PlayState.instance.vocals.volume = 0;
+
+		if(noTrans)
+		{
+			FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+		}
+		else
+		{
+			MusicBeatState.resetState();
+		}
 	}
 
 	public var totalPlayed:Int = 0;

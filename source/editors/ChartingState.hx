@@ -178,7 +178,7 @@ class ChartingState extends MusicBeatState
 		128,
 		192
 	];
-	var curZoom:Int = 2;
+	var curZoom:Int = 4;
 
 	private var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
 	private var blockPressWhileTypingOnStepper:Array<FlxUINumericStepper> = [];
@@ -202,7 +202,8 @@ class ChartingState extends MusicBeatState
 		64,
 		96,
 		192,
-		384
+		384,
+		768
 	];
 
 
@@ -356,6 +357,7 @@ class ChartingState extends MusicBeatState
 		\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
+		\nC - Draw your charts! Easier charting for your Bambi fansongs lmao
 		\n
 		\nEsc - Test your chart inside Chart Editor
 		\nEnter - Play your chart
@@ -1323,7 +1325,7 @@ class ChartingState extends MusicBeatState
 		blockPressWhileTypingOnStepper.push(voicesVolume);
 		
 		#if !html5
-		sliderRate = new FlxUISlider(this, 'playbackSpeed', 120, 120, 0.5, 3, 150, null, 5, FlxColor.WHITE, FlxColor.BLACK);
+		sliderRate = new FlxUISlider(this, 'playbackSpeed', 120, 120, 0.25, 4, 150, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderRate.nameLabel.text = 'Playback Rate';
 		tab_group_chart.add(sliderRate);
 		#end
@@ -2005,10 +2007,10 @@ class ChartingState extends MusicBeatState
 			playbackSpeed = 1;
 		//
 
-		if (playbackSpeed <= 0.5)
-			playbackSpeed = 0.5;
-		if (playbackSpeed >= 3)
-			playbackSpeed = 3;
+		if (playbackSpeed <= 0.25)
+			playbackSpeed = 0.25;
+		if (playbackSpeed >= 4)
+			playbackSpeed = 4;
 
 		FlxG.sound.music.pitch = playbackSpeed;
 		vocals.pitch = playbackSpeed;
