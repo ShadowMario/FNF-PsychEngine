@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				59,
+				0
+			],
+			"anim": "idle",
+			"fps": 13,
+			"name": "QuagmireTwinkle4 idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				68,
+				-3
+			],
+			"anim": "singRIGHT",
+			"fps": 13,
+			"name": "QuagmireTwinkle4 right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				58,
+				0
+			],
+			"anim": "singUP",
+			"fps": 13,
+			"name": "QuagmireTwinkle4 up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				58,
+				1
+			],
+			"anim": "singLEFT",
+			"fps": 13,
+			"name": "QuagmireTwinkle4 left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				59,
+				1
+			],
+			"anim": "singDOWN",
+			"fps": 13,
+			"name": "QuagmireTwinkle4 down",
+			"indices": []
+		},
+		{
+			"offsets": [
+				60,
+				-1
+			],
+			"indices": [],
+			"fps": 15,
+			"anim": "giggity",
+			"loop": true,
+			"name": "QuagmireTwinkle4 giggity"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/QuagmireTwinkle4",
+	"position": [
+		40,
+		-20
+	],
+	"healthicon": "icon-quagmireTwinkle4",
+	"flip_x": true,
+	"healthbar_colors": [
+		236,
+		28,
+		36
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "idle",
+			"loop": true,
+			"name": "PeterDL2 Idle"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singDOWN",
+			"loop": true,
+			"name": "PeterDL2 Down"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singLEFT",
+			"loop": true,
+			"name": "PeterDL2 Left"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singRIGHT",
+			"loop": true,
+			"name": "PeterDL2 Right"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singUP",
+			"loop": true,
+			"name": "PeterDL2 Up"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/PeterDL2",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "icon-peterDL2",
+	"flip_x": false,
+	"healthbar_colors": [
+		29,
+		96,
+		1
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.4
+}

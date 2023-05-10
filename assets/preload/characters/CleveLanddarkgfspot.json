@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				148,
+				-13
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "CleveLand left"
+		},
+		{
+			"offsets": [
+				27,
+				-6
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "CleveLand down"
+		},
+		{
+			"offsets": [
+				10,
+				26
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "CleveLand up"
+		},
+		{
+			"offsets": [
+				19,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "CleveLand idle"
+		},
+		{
+			"offsets": [
+				-39,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "CleveLand right"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/CleveLanddark",
+	"position": [
+		-70,
+		0
+	],
+	"healthicon": "squaddark",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 0.9
+}

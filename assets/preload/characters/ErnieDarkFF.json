@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-114,
+				-21
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "Down"
+		},
+		{
+			"offsets": [
+				31,
+				197
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "Up"
+		},
+		{
+			"offsets": [
+				-90,
+				8
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "Right"
+		},
+		{
+			"offsets": [
+				130,
+				82
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "Left"
+		},
+		{
+			"offsets": [
+				-4,
+				6
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": true,
+			"name": "Idle"
+		},
+		{
+			"offsets": [
+				-93,
+				38
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "Hit",
+			"loop": false,
+			"name": "Hit"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/ErnieCorruptDark",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "ernie",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		216,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

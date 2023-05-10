@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				321,
+				351
+			],
+			"loop": true,
+			"fps": 13,
+			"anim": "idle",
+			"indices": [],
+			"name": "CorruptStewiePh2 idle"
+		},
+		{
+			"offsets": [
+				504,
+				601
+			],
+			"loop": false,
+			"fps": 13,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "CorruptStewiePh2 right"
+		},
+		{
+			"offsets": [
+				512,
+				599
+			],
+			"loop": false,
+			"fps": 13,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "CorruptStewiePh2 down"
+		},
+		{
+			"offsets": [
+				328,
+				421
+			],
+			"loop": false,
+			"fps": 13,
+			"anim": "singUP",
+			"indices": [],
+			"name": "CorruptStewiePh2 up"
+		},
+		{
+			"offsets": [
+				180,
+				474
+			],
+			"loop": false,
+			"fps": 13,
+			"anim": "shoot",
+			"indices": [],
+			"name": "CorruptStewiePh2 shoot"
+		},
+		{
+			"offsets": [
+				521,
+				361
+			],
+			"loop": false,
+			"fps": 13,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "CorruptStewiePh2 left"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/CorruptStewiePh2",
+	"position": [
+		120,
+		290
+	],
+	"healthicon": "stewieTwinkleph2",
+	"flip_x": false,
+	"healthbar_colors": [
+		136,
+		0,
+		27
+	],
+	"camera_position": [
+		-220,
+		-410
+	],
+	"sing_duration": 9.99999999999999,
+	"scale": 1.1
+}

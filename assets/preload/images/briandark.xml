@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="briandark.png"><SubTexture name="brianrooten down0000" x="1022" y="802" width="297" height="369" frameX="-361" frameY="-87" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten down0001" x="590" y="1177" width="290" height="345" frameX="-375" frameY="-111" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten down0002" x="297" y="1177" width="293" height="352" frameX="-372" frameY="-104" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten down0003" x="1335" y="1530" width="304" height="324" frameX="-374" frameY="-132" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten down0004" x="0" y="1177" width="297" height="353" frameX="-372" frameY="-103" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0000" x="242" y="802" width="266" height="373" frameX="-376" frameY="-82" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0001" x="1393" y="0" width="272" height="365" frameX="-371" frameY="-90" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0002" x="327" y="0" width="245" height="400" frameX="-374" frameY="-55" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0003" x="1137" y="0" width="256" height="383" frameX="-372" frameY="-72" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0004" x="1137" y="383" width="254" height="383" frameX="-373" frameY="-72" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0005" x="567" y="404" width="263" height="386" frameX="-369" frameY="-69" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0006" x="508" y="802" width="261" height="373" frameX="-365" frameY="-82" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0007" x="841" y="396" width="248" height="393" frameX="-378" frameY="-62" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0008" x="0" y="802" width="242" height="375" frameX="-373" frameY="-80" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten idle0009" x="769" y="802" width="253" height="371" frameX="-373" frameY="-84" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten left0000" x="1263" y="1177" width="385" height="343" frameX="-166" frameY="-114" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten left0001" x="936" y="1530" width="399" height="326" frameX="-151" frameY="-130" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten left0002" x="880" y="1177" width="383" height="345" frameX="-166" frameY="-111" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten left0003" x="2126" y="1214" width="426" height="299" frameX="-120" frameY="-157" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten left0004" x="2126" y="1513" width="423" height="295" frameX="-112" frameY="-161" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten left0005" x="2126" y="613" width="424" height="301" frameX="-123" frameY="-155" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten left0006" x="1665" y="342" width="390" height="334" frameX="-154" frameY="-122" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten left0007" x="1665" y="1007" width="405" height="330" frameX="-155" frameY="-126" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten right0000" x="473" y="1530" width="463" height="327" frameX="-363" frameY="-121" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten right0001" x="1639" y="1530" width="454" height="291" frameX="-371" frameY="-157" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten right0002" x="1665" y="0" width="461" height="342" frameX="-370" frameY="-106" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten right0003" x="2126" y="311" width="481" height="302" frameX="-380" frameY="-146" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten right0004" x="2126" y="0" width="489" height="311" frameX="-390" frameY="-137" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten right0005" x="2126" y="914" width="479" height="300" frameX="-383" frameY="-148" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten right0006" x="0" y="1530" width="473" height="333" frameX="-371" frameY="-115" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten right0007" x="1665" y="676" width="459" height="331" frameX="-371" frameY="-117" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten up0000" x="572" y="0" width="269" height="399" frameX="-315" frameY="-57" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten up0001" x="841" y="0" width="296" height="396" frameX="-291" frameY="-60" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten up0002" x="284" y="404" width="283" height="397" frameX="-305" frameY="-59" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten up0003" x="0" y="0" width="327" height="404" frameX="-265" frameY="-52" frameWidth="920" frameHeight="580" />
+<SubTexture name="brianrooten up0004" x="0" y="404" width="284" height="398" frameX="-304" frameY="-58" frameWidth="920" frameHeight="580" />
+</TextureAtlas>

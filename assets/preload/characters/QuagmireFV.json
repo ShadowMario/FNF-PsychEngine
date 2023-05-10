@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				59,
+				3
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "QuagmireFV right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				56,
+				-2
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "QuagmireFV left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				59,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "QuagmireFV idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				58,
+				0
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "QuagmireFV up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				59,
+				1
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "QuagmireFV down",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/QuagmireFV",
+	"position": [
+		40,
+		-20
+	],
+	"healthicon": "quagmireFV",
+	"flip_x": true,
+	"healthbar_colors": [
+		213,
+		0,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

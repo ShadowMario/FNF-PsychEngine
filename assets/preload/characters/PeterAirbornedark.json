@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Peter idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				75,
+				-8
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Peter left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-24,
+				-12
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Peter down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-24,
+				41
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Peter up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-19,
+				3
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Peter right",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/PeterAirbornedark",
+	"position": [
+		-400,
+		-20
+	],
+	"healthicon": "squaddark",
+	"flip_x": true,
+	"healthbar_colors": [
+		0,
+		0,
+		0
+	],
+	"camera_position": [
+		10,
+		-90
+	],
+	"sing_duration": 6.1,
+	"scale": 0.9
+}

@@ -89,6 +89,11 @@ class NotesSubState extends MusicBeatSubstate
 		add(hsbText);
 
 		changeSelection();
+
+		#if mobile
+		addVirtualPad(LEFT_FULL, A_B_C);
+		addVirtualPadCamera();
+		#end
 	}
 
 	var changingNote:Bool = false;
@@ -142,7 +147,7 @@ class NotesSubState extends MusicBeatSubstate
 				changeType(1);
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
-			if(controls.RESET) {
+			if(controls.RESET #if mobile || virtualPad.buttonC.justPressed #end) {
 				for (i in 0...3) {
 					resetValue(curSelected, i);
 				}
@@ -173,7 +178,12 @@ class NotesSubState extends MusicBeatSubstate
 
 		if (controls.BACK || (changingNote && controls.ACCEPT)) {
 			if(!changingNote) {
-				close();
+			#if mobile
+			flixel.addons.transition.FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+			#else
+			close();
+			#end
 			} else {
 				changeSelection();
 			}

@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-6,
+				-10
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "Down"
+		},
+		{
+			"offsets": [
+				-18,
+				47
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "Up"
+		},
+		{
+			"offsets": [
+				3,
+				17
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "Right"
+		},
+		{
+			"offsets": [
+				-3,
+				6
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "Left"
+		},
+		{
+			"offsets": [
+				-4,
+				6
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "Idle"
+		},
+		{
+			"offsets": [
+				157,
+				4
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "Hit",
+			"loop": false,
+			"name": "Hit"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/PeterErnie",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "peterFF",
+	"flip_x": true,
+	"healthbar_colors": [
+		29,
+		96,
+		1
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

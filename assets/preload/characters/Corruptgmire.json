@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-95,
+				41
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Right"
+		},
+		{
+			"offsets": [
+				167,
+				30
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Left"
+		},
+		{
+			"offsets": [
+				-17,
+				-26
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Down"
+		},
+		{
+			"offsets": [
+				-76,
+				204
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "Up"
+		},
+		{
+			"offsets": [
+				-39,
+				84
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "Idle"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Corruptgmire",
+	"position": [
+		70,
+		40
+	],
+	"healthicon": "mire",
+	"flip_x": false,
+	"healthbar_colors": [
+		236,
+		28,
+		36
+	],
+	"camera_position": [
+		-430,
+		-220
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

@@ -1,0 +1,100 @@
+{
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 14,
+			"name": "Familydark idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singDOWN",
+			"fps": 14,
+			"name": "Familydark down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singUP",
+			"fps": 14,
+			"name": "Familydark up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "singLEFT",
+			"fps": 14,
+			"name": "Familydark left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1,
+				1
+			],
+			"anim": "singRIGHT",
+			"fps": 14,
+			"name": "Familydark right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-80,
+				-140
+			],
+			"anim": "bfattack",
+			"fps": 14,
+			"name": "Familydark bfattack",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-75,
+				-139
+			],
+			"anim": "popout",
+			"fps": 14,
+			"name": "Familydark popout",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Familydark",
+	"position": [
+		-520,
+		-500
+	],
+	"healthicon": "familydark",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

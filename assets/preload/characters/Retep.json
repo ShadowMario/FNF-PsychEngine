@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "idle",
+			"loop": true,
+			"name": "RetepSoloFV idle"
+		},
+		{
+			"offsets": [
+				-210,
+				10
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "RetepSoloFV down"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "RetepSoloFV left"
+		},
+		{
+			"offsets": [
+				-197,
+				13
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "RetepSoloFV right"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 14,
+			"anim": "singUP",
+			"loop": false,
+			"name": "RetepSoloFV up"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/RetepSoloFV",
+	"position": [
+		-50,
+		-50
+	],
+	"healthicon": "retepFV",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		255,
+		255
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

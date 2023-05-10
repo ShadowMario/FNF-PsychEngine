@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": true,
+			"fps": 14,
+			"anim": "idle",
+			"indices": [],
+			"name": "PeterDL Idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-134,
+				-97
+			],
+			"anim": "talk",
+			"fps": 14,
+			"name": "PeterDL speech",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singUP",
+			"loop": true,
+			"name": "PeterDL Up"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singDOWN",
+			"loop": true,
+			"name": "PeterDL Down"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singLEFT",
+			"loop": true,
+			"name": "PeterDL Left"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singRIGHT",
+			"loop": true,
+			"name": "PeterDL Right"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/PeterDL",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "icon-peterDL1",
+	"flip_x": false,
+	"healthbar_colors": [
+		29,
+		96,
+		1
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.4
+}

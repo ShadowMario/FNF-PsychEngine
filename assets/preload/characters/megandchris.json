@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": true,
+			"fps": 14,
+			"anim": "idle",
+			"indices": [],
+			"name": "MegandChris idle"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 14,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "MegandChris left"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": true,
+			"fps": 14,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "MegandChris down"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": true,
+			"fps": 14,
+			"anim": "singUP",
+			"indices": [],
+			"name": "MegandChris up"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": true,
+			"fps": 14,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "MegandChris right"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/MegandChris",
+	"position": [
+		-530,
+		-270
+	],
+	"healthicon": "PeterChrisMeg",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		60,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

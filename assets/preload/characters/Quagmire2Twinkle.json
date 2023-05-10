@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "QuagmireTwinkle2 idle"
+		},
+		{
+			"offsets": [
+				-308,
+				-224
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "QuagmireTwinkle2 down"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "QuagmireTwinkle2 left"
+		},
+		{
+			"offsets": [
+				-314,
+				1
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "QuagmireTwinkle2 up"
+		},
+		{
+			"offsets": [
+				43,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "QuagmireTwinkle2 right"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/QuagmireTwinkle2",
+	"position": [
+		40,
+		-20
+	],
+	"healthicon": "icon-quagmireTwinkle2",
+	"flip_x": true,
+	"healthbar_colors": [
+		213,
+		0,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

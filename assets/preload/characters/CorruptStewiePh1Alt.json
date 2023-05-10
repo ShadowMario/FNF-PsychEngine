@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				320,
+				352
+			],
+			"anim": "idle",
+			"fps": 13,
+			"name": "CorruptStewiePh1 idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				357,
+				364
+			],
+			"anim": "singRIGHT",
+			"fps": 13,
+			"name": "CorruptStewiePh1 right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				380,
+				363
+			],
+			"anim": "singLEFT",
+			"fps": 13,
+			"name": "CorruptStewiePh1 left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				373,
+				362
+			],
+			"anim": "singDOWN",
+			"fps": 13,
+			"name": "CorruptStewiePh1 down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				373,
+				362
+			],
+			"anim": "singUP",
+			"fps": 13,
+			"name": "CorruptStewiePh1 up",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/CorruptStewiePh1Alt",
+	"position": [
+		490,
+		640
+	],
+	"healthicon": "corruptstewieph1",
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		0
+	],
+	"camera_position": [
+		-220,
+		-410
+	],
+	"sing_duration": 9.99999999999999,
+	"scale": 1.1
+}

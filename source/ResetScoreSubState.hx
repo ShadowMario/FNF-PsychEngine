@@ -69,6 +69,11 @@ class ResetScoreSubState extends MusicBeatSubstate
 		noText.x += 200;
 		add(noText);
 		updateOptions();
+		
+		#if mobile 
+		addVirtualPad(LEFT_RIGHT, A_B);
+		addVirtualPadCamera();
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -89,7 +94,12 @@ class ResetScoreSubState extends MusicBeatSubstate
 		}
 		if(controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			#if mobile
+			flixel.addons.transition.FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 		} else if(controls.ACCEPT) {
 			if(onYes) {
 				if(week == -1) {
@@ -99,7 +109,12 @@ class ResetScoreSubState extends MusicBeatSubstate
 				}
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			#if mobile
+			flixel.addons.transition.FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 		}
 		super.update(elapsed);
 	}

@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				348,
+				33
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Joe left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				341,
+				8
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Joe down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				341,
+				55
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Joe up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				341,
+				31
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Joe idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				343,
+				30
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Joe right",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/JoeAirborne",
+	"position": [
+		330,
+		45
+	],
+	"healthicon": "squad2",
+	"flip_x": false,
+	"healthbar_colors": [
+		100,
+		120,
+		175
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 0.9
+}

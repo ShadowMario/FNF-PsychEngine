@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 20,
+			"anim": "idle",
+			"loop": false,
+			"name": "quag-survived idle"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 20,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "quag-survived left"
+		},
+		{
+			"offsets": [
+				36,
+				0
+			],
+			"indices": [],
+			"fps": 20,
+			"anim": "singUP",
+			"loop": false,
+			"name": "quag-survived up"
+		},
+		{
+			"offsets": [
+				63,
+				1
+			],
+			"indices": [],
+			"fps": 20,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "quag-survived right"
+		},
+		{
+			"offsets": [
+				-38,
+				1
+			],
+			"indices": [],
+			"fps": 20,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "quag-survived down"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/QuagmireTwinkle6",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "icon-quagmireTwinkle5",
+	"flip_x": true,
+	"healthbar_colors": [
+		213,
+		0,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}

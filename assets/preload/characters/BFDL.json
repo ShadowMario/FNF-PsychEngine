@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 13,
+			"anim": "idle",
+			"loop": true,
+			"name": "BFDL idle"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singLEFT",
+			"loop": true,
+			"name": "BFDL left"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singDOWN",
+			"loop": true,
+			"name": "BFDL down"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singUP",
+			"loop": true,
+			"name": "BFDL up"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 16,
+			"anim": "singRIGHT",
+			"loop": true,
+			"name": "BFDL right"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/BFDL",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "bfdl",
+	"flip_x": true,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 2.1,
+	"scale": 1
+}

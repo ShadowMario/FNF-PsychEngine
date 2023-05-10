@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				375,
+				220
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "brian idle"
+		},
+		{
+			"offsets": [
+				370,
+				221
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "brian left"
+		},
+		{
+			"offsets": [
+				380,
+				220
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "brian down"
+		},
+		{
+			"offsets": [
+				377,
+				222
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "brian up"
+		},
+		{
+			"offsets": [
+				379,
+				220
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "brian right"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/brian",
+	"position": [
+		0,
+		350
+	],
+	"healthicon": "brian",
+	"flip_x": true,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

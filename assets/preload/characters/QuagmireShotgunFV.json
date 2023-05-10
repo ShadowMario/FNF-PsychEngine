@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				59,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "QuagmireShotgunFV idle"
+		},
+		{
+			"offsets": [
+				59,
+				3
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "QuagmireShotgunFV right"
+		},
+		{
+			"offsets": [
+				178,
+				-60
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "QuagmireShotgunFV left"
+		},
+		{
+			"offsets": [
+				58,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "QuagmireShotgunFV up"
+		},
+		{
+			"offsets": [
+				59,
+				1
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "QuagmireShotgunFV down"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				1320,
+				-209
+			],
+			"anim": "shot",
+			"fps": 19,
+			"name": "QuagmireShotgunFV shot",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/QuagmireShotgunFV",
+	"position": [
+		120,
+		-20
+	],
+	"healthicon": "quagmireshotgunFV",
+	"flip_x": true,
+	"healthbar_colors": [
+		213,
+		0,
+		0
+	],
+	"camera_position": [
+		50,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1.2
+}
