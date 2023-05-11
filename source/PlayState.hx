@@ -1251,9 +1251,6 @@ class PlayState extends MusicBeatState
 		}
 
 		if (ClientPrefs.hudType == 'Dave & Bambi') {
-		if (ClientPrefs.hpBarAnimDnB) {
-		healthBarBG = new AttachedSprite('DnBHPBarAnimated');
-		} else {
 		healthBarBG = new AttachedSprite('DnBHealthBar');
 		healthBarBG.y = FlxG.height * 0.89;
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
@@ -1270,7 +1267,6 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		healthBarBG.sprTracker = healthBar;
 		insert(members.indexOf(healthBarBG), healthBar);
-		}
 		}
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);

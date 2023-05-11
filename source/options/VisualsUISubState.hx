@@ -79,13 +79,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		var option:Option = new Option('Animated DnB Health Bar',
-			"If checked, the Dave & Bambi health bar will be animated.",
-			'hpBarAnimDnB',
-			'bool',
-			true);
-		addOption(option);
-
 		var option:Option = new Option('Camera Zooms',
 			"If unchecked, the camera won't zoom in on a beat hit.",
 			'camZooms',
