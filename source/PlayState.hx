@@ -1206,7 +1206,7 @@ class PlayState extends MusicBeatState
 			timeBarBG.sprTracker = timeBar;
 			timeBar.createGradientBar([FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2])],
 			[FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2])]);
-			add(healthBar);
+			add(timeBar);
 		}
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
