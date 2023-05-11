@@ -61,7 +61,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'hudType',
 			'string',
 			'VS Impostor',
-			['VS Impostor', 'Kade Engine', 'Dave & Bambi', 'Psych Engine']);
+			['VS Impostor', 'Kade Engine', 'Dave & Bambi', 'Doki Doki+', 'Psych Engine']);
 		addOption(option);
 
 		var option:Option = new Option('HP Gain Type:',
@@ -69,7 +69,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'healthGainType',
 			'string',
 			'VS Impostor',
-			['VS Impostor', 'Kade (1.2)', 'Kade (1.4.2 to 1.6)', 'Kade (1.6+)', 'Psych Engine']);
+			['VS Impostor', 'Kade (1.2)', 'Kade (1.4.2 to 1.6)', 'Kade (1.6+)', 'Doki Doki+', 'Psych Engine']);
 		addOption(option);
 
 		var option:Option = new Option('Icon Bounce:',

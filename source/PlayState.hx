@@ -1060,6 +1060,15 @@ class PlayState extends MusicBeatState
 		timeTxt.visible = showTime;
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
 		}
+		if (ClientPrefs.hudType == 'Doki Doki+') {
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
+		timeTxt.setFormat(Paths.font("Aller_rg.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.scrollFactor.set();
+		timeTxt.alpha = 0;
+		timeTxt.borderSize = 2;
+		timeTxt.visible = showTime;
+		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
+		}
 		if (ClientPrefs.hudType == 'VS Impostor') {
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 585, 20, 400, "", 32);
 		timeTxt.setFormat(Paths.font("vcr.ttf"), 14, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1069,6 +1078,7 @@ class PlayState extends MusicBeatState
 		timeTxt.visible = showTime;
 		if (ClientPrefs.downScroll) timeTxt.y = FlxG.height - 45;
 		}
+
 
 		if(ClientPrefs.timeBarType == 'Song Name')
 		{
@@ -1174,6 +1184,29 @@ class PlayState extends MusicBeatState
 			timeBar.createFilledBar(FlxColor.GRAY, FlxColor.fromRGB(57, 255, 20));
 			insert(members.indexOf(timeBarBG), timeBar);
 		}
+		if (ClientPrefs.hudType == 'Doki Doki+') {
+		timeBarBG = new AttachedSprite('dokiTimeBar');
+			timeBarBG.screenCenter(X);
+			timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
+			timeBarBG.antialiasing = true;
+			timeBarBG.scrollFactor.set();
+			timeBarBG.visible = showTime;
+			timeBarBG.xAdd = -4;
+			timeBarBG.yAdd = -4;
+			add(timeBarBG);
+
+			timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+				'songPercent', 0, 1);
+			timeBar.scrollFactor.set();
+			timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
+			timeBar.alpha = 0;
+			timeBar.visible = showTime;
+			add(timeTxt);
+			timeBarBG.sprTracker = timeBar;
+			timeBar.createGradientBar([FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2])],
+			[FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2])]);
+			insert(members.indexOf(timeBarBG), timeBar);
+		}
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
@@ -1248,6 +1281,26 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		healthBarBG.sprTracker = healthBar;
 		insert(members.indexOf(healthBarBG), healthBar);
+		}
+		if (ClientPrefs.hudType == 'Doki Doki+') 
+		{
+		healthBarBG = new AttachedSprite('dokiHealthBar');
+		healthBarBG.y = FlxG.height * 0.89;
+		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
+		healthBarBG.screenCenter(X);
+		healthBarBG.scrollFactor.set();
+		healthBarBG.xAdd = -4;
+		healthBarBG.yAdd = -4;
+		add(healthBarBG);
+
+		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+			'health', 0, 3);
+		healthBar.scrollFactor.set();
+		// healthBar
+		healthBar.visible = !ClientPrefs.hideHud;
+		healthBar.alpha = ClientPrefs.healthBarAlpha;
+		healthBarBG.sprTracker = healthBar;
+		insert(members.indexOf(healthBarBG), healthBar);
 		} else {
 		healthBarBG = new AttachedSprite('healthBar');
 		healthBarBG.y = FlxG.height * 0.89;
@@ -1298,6 +1351,11 @@ class PlayState extends MusicBeatState
 		add(EngineWatermark);
 		EngineWatermark.text = SONG.song;
 		}
+		if (ClientPrefs.hudType == 'Doki Doki+') {
+		// Add Engine watermark
+		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
+		add(EngineWatermark);
+		}
 		
 		if (ClientPrefs.hudType == 'Kade Engine')
 		{ 		
@@ -1321,6 +1379,15 @@ class PlayState extends MusicBeatState
 		{
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		scoreTxt.borderSize = 1.25;
+		scoreTxt.visible = !ClientPrefs.hideHud;
+		add(scoreTxt);
+		}
+		if (ClientPrefs.hudType == 'Doki Doki+') 
+		{
+		scoreTxt = new FlxText(0, healthBarBG.y + 48, FlxG.width, "", 20);
+		scoreTxt.setFormat(Paths.font("Aller_rg.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
@@ -3228,6 +3295,15 @@ class PlayState extends MusicBeatState
 			else if (!cpuControlled)
 			scoreTxt.text += '0% | N/A';
 		}
+		if (ClientPrefs.hudType == 'Doki Doki+') {
+		scoreTxt.text = 'Score: ' + songScore + ' | Breaks: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Accuracy: ';
+		if(cpuControlled) 
+			scoreTxt.text = 'Bot Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Botplay Mode';
+		if(ratingName != '?' && !cpuControlled)
+			scoreTxt.text += Highscore.floorDecimal(ratingPercent * 100, 2) + '% | ' + ratingFC + ratingCool;
+			else if (!cpuControlled)
+			scoreTxt.text += '0% | N/A';
+		}
 		if (ClientPrefs.hudType == 'Dave & Bambi') {
 		scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '% | ' + ratingFC;
 		if(cpuControlled) 
@@ -4425,7 +4501,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.healthGainType == 'Kade (1.4.2 to 1.6)') {
 		if (noteDiff < ClientPrefs.sickWindow)
 		{
-			health += 0.1 * 0.5 * healthGain;
+			health += 0.1 * healthGain;
 		}
 		if (noteDiff > ClientPrefs.sickWindow)
 		{
@@ -4438,6 +4514,24 @@ class PlayState extends MusicBeatState
 		if (noteDiff > ClientPrefs.badWindow)
 		{
 			health -= 0.2 * healthLoss;
+		}
+		}
+		if (ClientPrefs.healthGainType == 'Doki Doki+') {
+		if (noteDiff < ClientPrefs.sickWindow)
+		{
+			health += 0.1 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.sickWindow)
+		{
+			health += 0.04 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.goodWindow)
+		{
+			health -= 0.06 * healthLoss;
+		}
+		if (noteDiff > ClientPrefs.badWindow)
+		{
+			health -= 0.1 * healthLoss;
 		}
 		}
 		if (ClientPrefs.healthGainType == 'Kade (1.6+)') {
@@ -5673,7 +5767,7 @@ class PlayState extends MusicBeatState
 		}
 
 			// Rating FC
-			if (ClientPrefs.hudType == 'Kade Engine') {
+			if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Doki Doki+') {
 			ratingFC = "";
 			if (sicks > 0) ratingFC = "(MFC)";
 			if (goods > 0) ratingFC = "(GFC)";
