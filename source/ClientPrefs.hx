@@ -26,6 +26,7 @@ class ClientPrefs {
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
 	public static var communityGameMode:Bool = false;
+	public static var hpBarAnimDnB:Bool = false;
 	public static var hudType:String = 'Kade Engine';
 	public static var iconBounceType:String = 'Golden Apple';
 	public static var timeBarType:String = 'Time Left';
@@ -55,7 +56,6 @@ class ClientPrefs {
 		'instakill' => false,
 		'practice' => false,
 		'botplay' => false,
-		'opponentplay' => false
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
@@ -119,6 +119,7 @@ class ClientPrefs {
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.communityGameMode = communityGameMode;
+		FlxG.save.data.hpBarAnimDnB = hpBarAnimDnB;
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
@@ -214,7 +215,10 @@ class ClientPrefs {
 			ghostTapping = FlxG.save.data.ghostTapping;
 		}
 		if(FlxG.save.data.communityGameMode != null) {
-			ghostTapping = FlxG.save.data.communityGameMode;
+			communityGameMode = FlxG.save.data.communityGameMode;
+		}
+		if(FlxG.save.data.hpBarAnimDnB != null) {
+			hpBarAnimDnB = FlxG.save.data.hpBarAnimDnB;
 		}
 		if(FlxG.save.data.timeBarType != null) {
 			timeBarType = FlxG.save.data.timeBarType;
