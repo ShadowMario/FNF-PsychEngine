@@ -27,6 +27,7 @@ class ClientPrefs {
 	public static var ghostTapping:Bool = true;
 	public static var communityGameMode:Bool = false;
 	public static var hudType:String = 'Kade Engine';
+	public static var healthGainType:String = 'Psych Engine';
 	public static var iconBounceType:String = 'Golden Apple';
 	public static var timeBarType:String = 'Time Left';
 	public static var scoreZoom:Bool = true;
@@ -113,6 +114,7 @@ class ClientPrefs {
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.iconBounceType = iconBounceType;
 		FlxG.save.data.hudType = hudType;
+		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
@@ -220,6 +222,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.hudType != null) {
 			hudType = FlxG.save.data.hudType;
+		}
+		if(FlxG.save.data.healthGainType != null) {
+			healthGainType = FlxG.save.data.healthGainType;
 		}
 		if(FlxG.save.data.iconBounceType != null) {
 			iconBounceType = FlxG.save.data.iconBounceType;

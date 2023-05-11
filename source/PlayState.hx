@@ -4403,6 +4403,80 @@ class PlayState extends MusicBeatState
 		note.rating = daRating.name;
 		score = daRating.score;
 
+		if (ClientPrefs.healthGainType == 'VS Impostor') {
+		if (noteDiff < ClientPrefs.sickWindow)
+		{
+			health += note.hitHealth * healthGain;
+		}
+		if (noteDiff > ClientPrefs.sickWindow)
+		{
+			health += note.hitHealth * 0.5 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.goodWindow)
+		{
+			health += note.hitHealth * 0.25 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.badWindow)
+		{
+			health += note.hitHealth * 0.1 * healthGain;
+		}
+		}
+
+		if (ClientPrefs.healthGainType == 'Kade (1.4.2 to 1.6)') {
+		if (noteDiff < ClientPrefs.sickWindow)
+		{
+			health += 0.1 * 0.5 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.sickWindow)
+		{
+			health += 0.04 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.goodWindow)
+		{
+			health -= 0.06 * healthLoss;
+		}
+		if (noteDiff > ClientPrefs.badWindow)
+		{
+			health -= 0.2 * healthLoss;
+		}
+		}
+		if (ClientPrefs.healthGainType == 'Kade (1.6+)') {
+		if (noteDiff < ClientPrefs.sickWindow)
+		{
+			health += 0.04;
+		}
+		if (noteDiff > ClientPrefs.sickWindow)
+		{
+			health += 0;
+		}
+		if (noteDiff > ClientPrefs.goodWindow)
+		{
+			health -= 0.03 * healthLoss;
+		}
+		if (noteDiff > ClientPrefs.badWindow)
+		{
+			health -= 0.06 * healthLoss;
+		}
+		}
+		if (ClientPrefs.healthGainType == 'Kade (1.2)') {
+		if (noteDiff < ClientPrefs.sickWindow)
+		{
+			health += 0.023 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.sickWindow)
+		{
+			health += 0.004 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.goodWindow)
+		{
+			health -= 0;
+		}
+		if (noteDiff > ClientPrefs.badWindow)
+		{
+			health -= 0;
+		}
+		}
+
 		if(daRating.noteSplash && !note.noteSplashDisabled)
 		{
 			spawnNoteSplashOnNote(note);
@@ -4963,8 +5037,9 @@ class PlayState extends MusicBeatState
 				notesHitArray.unshift(Date.now());
 				popUpScore(note);
 			}
+			if (ClientPrefs.healthGainType == 'Psych Engine') {
 			health += note.hitHealth * healthGain;
-
+			}
 			if(!note.noAnimation) {
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
 
@@ -5598,7 +5673,7 @@ class PlayState extends MusicBeatState
 		}
 
 			// Rating FC
-			if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave & Bambi') {
+			if (ClientPrefs.hudType == 'Kade Engine') {
 			ratingFC = "";
 			if (sicks > 0) ratingFC = "(MFC)";
 			if (goods > 0) ratingFC = "(GFC)";
