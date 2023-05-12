@@ -161,8 +161,10 @@ class PlayState extends MusicBeatState
 
 	public var dadGhostTween:FlxTween;
 	public var bfGhostTween:FlxTween;
+	public var gfGhostTween:FlxTween;
 	public var dadGhost:FlxSprite;
 	public var bfGhost:FlxSprite;
+	public var gfGhost:FlxSprite;
 	public var dad:Character = null;
 	public var gf:Character = null;
 	public var boyfriend:Boyfriend = null;
@@ -862,8 +864,10 @@ class PlayState extends MusicBeatState
 
 		dadGhost = new FlxSprite();
 		bfGhost = new FlxSprite();
+		gfGhost = new FlxSprite();
 		add(gfGroup); //Needed for blammed lights
 		add(bfGhost);
+		add(gfGhost);
 		add(dadGhost);
 
 		// Shitty layering but whatev it works LOL
@@ -1001,6 +1005,10 @@ class PlayState extends MusicBeatState
 		bfGhost.antialiasing = true;
 		bfGhost.scale.copyFrom(boyfriend.scale);
 		bfGhost.updateHitbox();
+		gfGhost.visible = false;
+		gfGhost.antialiasing = true;
+		gfGhost.scale.copyFrom(gf.scale);
+		gfGhost.updateHitbox();
 
 		var camPos:FlxPoint = new FlxPoint(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
 		if(gf != null)
@@ -4506,6 +4514,9 @@ class PlayState extends MusicBeatState
 				case 'dad':
 					ghost = dadGhost;
 					player = dad;
+				case 'gf':
+					ghost = gfGhost;
+					player = gf;
 			}
 	
 									
@@ -4550,6 +4561,17 @@ class PlayState extends MusicBeatState
 						onComplete: function(twn:FlxTween)
 						{
 							dadGhostTween = null;
+						}
+					});
+				case 'gf':
+					if (gfGhostTween != null)
+						gfGhostTween.cancel();
+					ghost.color = FlxColor.fromRGB(gf.healthColorArray[0] + 50, gf.healthColorArray[1] + 50, gf.healthColorArray[2] + 50);
+					gfGhostTween = FlxTween.tween(gfGhost, {alpha: 0}, 0.75, {
+						ease: FlxEase.linear,
+						onComplete: function(twn:FlxTween)
+						{
+							gfGhostTween = null;
 						}
 					});
 			}
@@ -5184,6 +5206,33 @@ class PlayState extends MusicBeatState
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
 			if(note.gfNote) {
 				char = gf;
+					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+						{
+							// potentially have jump anims?
+							var chord = noteRows[note.mustPress?0:1][note.row];
+							var animNote = chord[0];
+							var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
+							if (gf.mostRecentRow != note.row)
+							{
+								gf.playAnim(realAnim, true);
+							}
+		
+							// if (daNote != animNote)
+							// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
+
+		
+							gf.mostRecentRow = note.row;
+							// dad.angle += 15; lmaooooo
+							doGhostAnim('gf', animToPlay);
+											gfGhost.color = FlxColor.fromRGB(gf.healthColorArray[0] + 50, gf.healthColorArray[1] + 50, gf.healthColorArray[2] + 50);
+											gfGhostTween = FlxTween.tween(gfGhost, {alpha: 0}, 0.75, {
+												ease: FlxEase.linear,
+												onComplete: function(twn:FlxTween)
+												{
+													gfGhostTween = null;
+												}
+											});
+							}
 			}
 
 			if(char != null)
@@ -5207,7 +5256,7 @@ class PlayState extends MusicBeatState
 							// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
 		
 							// dad.angle += 15; lmaooooo
-									if (!note.noAnimation)
+									if (!note.noAnimation && !note.gfNote)
 									{
 										if(char.mostRecentRow != note.row)
 											doGhostAnim('char', animToPlay + altAnim);
@@ -5306,6 +5355,37 @@ class PlayState extends MusicBeatState
 					{
 						gf.playAnim(animToPlay + note.animSuffix, true);
 						gf.holdTimer = 0;
+					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+						{
+							// potentially have jump anims?
+							var chord = noteRows[note.mustPress?0:1][note.row];
+							var animNote = chord[0];
+							var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
+							if (gf.mostRecentRow != note.row)
+							{
+								gf.playAnim(realAnim, true);
+							}
+		
+							// if (daNote != animNote)
+							// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
+
+		
+							gf.mostRecentRow = note.row;
+							// dad.angle += 15; lmaooooo
+							doGhostAnim('gf', animToPlay);
+					gfGhost.color = FlxColor.fromRGB(gf.healthColorArray[0] + 50, gf.healthColorArray[1] + 50, gf.healthColorArray[2] + 50);
+					gfGhostTween = FlxTween.tween(gfGhost, {alpha: 0}, 0.75, {
+						ease: FlxEase.linear,
+						onComplete: function(twn:FlxTween)
+						{
+							gfGhostTween = null;
+						}
+					});
+						}
+						else{
+							gf.playAnim(animToPlay + note.animSuffix, true);
+							// dad.angle = 0;
+						}
 					}
 				}
 				else
