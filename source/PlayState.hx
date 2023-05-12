@@ -150,7 +150,6 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
-	public static var speedUpType:String = "scroll speed";
 
 	public var spawnTime:Float = 2000;
 
@@ -185,6 +184,7 @@ class PlayState extends MusicBeatState
 	public var gfSpeed:Int = 1;
 	public var health:Float = 1.5;
 	public var combo:Int = 0;
+	public var missCombo:Int = 1;
 
 	private var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
@@ -288,7 +288,7 @@ class PlayState extends MusicBeatState
 	public static var deathCounter:Int = 0;
 
 	public var defaultCamZoom:Float = 1.05;
-
+	
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
 	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
@@ -1202,11 +1202,10 @@ class PlayState extends MusicBeatState
 			timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 			timeBar.alpha = 0;
 			timeBar.visible = showTime;
-			add(timeTxt);
 			timeBarBG.sprTracker = timeBar;
-			timeBar.createGradientBar([FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2])],
-			[FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2])]);
+			timeBar.createGradientBar([FlxColor.TRANSPARENT], [FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), 				FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2])]);
 			add(timeBar);
+			add(timeTxt);
 		}
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
@@ -1353,6 +1352,11 @@ class PlayState extends MusicBeatState
 		EngineWatermark.text = SONG.song;
 		}
 		if (ClientPrefs.hudType == 'Doki Doki+') {
+		// Add Engine watermark
+		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
+		add(EngineWatermark);
+		}
+		if (ClientPrefs.hudType == 'VS Impostor') { //unfortunately i have to do this because otherwise enginewatermark calls a null object reference
 		// Add Engine watermark
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
 		add(EngineWatermark);
@@ -3479,11 +3483,8 @@ class PlayState extends MusicBeatState
 
 		if (unspawnNotes[0] != null)
 		{
-			var time:Float = spawnTime;
+			var time:Float = spawnTime / songSpeed;
 			if(songSpeed < 1) time /= songSpeed;
-			if(songSpeed > 3) time / 2;
-			if(songSpeed > 6) time / 5;
-			if(songSpeed > 9) time / 10;
 			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
 
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
@@ -4452,6 +4453,11 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
+		if (ClientPrefs.hudType == 'Doki Doki+')
+		{
+			pixelShitPart1 = 'dokistuff/';
+			pixelShitPart2 = '';
+		}
 
 		Paths.image(pixelShitPart1 + "sick" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "good" + pixelShitPart2);
@@ -4607,6 +4613,11 @@ class PlayState extends MusicBeatState
 		{
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
+		}
+		if (ClientPrefs.hudType == 'Doki Doki+')
+		{
+			pixelShitPart1 = 'dokistuff/';
+			pixelShitPart2 = '';
 		}
 		if (!cpuControlled) {
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
@@ -4970,8 +4981,26 @@ class PlayState extends MusicBeatState
 			}
 		});
 		combo = 0;
+		if (ClientPrefs.healthGainType == 'Psych Engine') {
 		health -= daNote.missHealth * healthLoss;
-		
+		}
+		if (ClientPrefs.healthGainType == 'Kade (1.2)') {
+		health -= daNote.missHealth * healthLoss;
+		}
+		if (ClientPrefs.healthGainType == 'Kade (1.4.2 to 1.6)') {
+		health -= 0.075 * healthLoss;
+		}
+		if (ClientPrefs.healthGainType == 'Kade (1.6+)') {
+		health -= 0.1 * healthLoss;
+		}
+		if (ClientPrefs.healthGainType == 'Doki Doki+') {
+		health -= 0.04 * healthLoss;
+		}
+		if (ClientPrefs.healthGainType == 'VS Impostor') {
+		missCombo += 1;
+		health -= daNote.missHealth * missCombo;
+		}
+
 		if(instakillOnMiss)
 		{
 			vocals.volume = 0;
@@ -5140,6 +5169,7 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote)
 			{
 				combo += 1;
+				missCombo = 0;
 				notesHitArray.unshift(Date.now());
 				popUpScore(note);
 			}
@@ -5790,6 +5820,7 @@ class PlayState extends MusicBeatState
 			if (songMisses >= 1000) ratingFC = "(QDSB)";
 			if (songMisses >= 100000) ratingFC = "(STDCB)";
 			else if (songMisses >= 10000000) ratingFC = "(SPDCB)"; //i have no idea how you'd get a million misses but oh well
+			}
 
 			ratingCool = "";
             if (ratingPercent*100 < 60) ratingCool = " D";
@@ -5808,7 +5839,6 @@ class PlayState extends MusicBeatState
 			if (ratingPercent*100 >= 99.970) ratingCool = " AAAA.";
 			if (ratingPercent*100 >= 99.980) ratingCool = " AAAA:";
 			if (ratingPercent*100 >= 99.9935) ratingCool = " AAAAA";
-			}
 		}
 		updateScore(badHit); // score will only update after rating is calculated, if it's a badHit, it shouldn't bounce -Ghost
 		setOnLuas('rating', ratingPercent);

@@ -259,6 +259,9 @@ class Note extends FlxSprite
 			if(skin == null || skin.length < 1) {
 				skin = 'NOTE_assets';
 			}
+			if(ClientPrefs.hudType == 'Doki Doki+') {
+				skin = 'NOTE_assets';
+			}
 		}
 
 		var animName:String = null;
