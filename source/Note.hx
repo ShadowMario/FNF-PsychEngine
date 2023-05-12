@@ -260,7 +260,7 @@ class Note extends FlxSprite
 				skin = 'NOTE_assets';
 			}
 			if(ClientPrefs.hudType == 'Doki Doki+') {
-				skin = 'NOTE_assets';
+				skin = 'NOTE_assets_doki';
 			}
 		}
 
