@@ -26,6 +26,19 @@ class Conductor
 
 	//public static var safeFrames:Int = 10;
 	public static var safeZoneOffset:Float = (ClientPrefs.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
+	public static var ROWS_PER_BEAT = 48; // from Stepmania
+	public static var BEATS_PER_MEASURE = 4; // TODO: time sigs
+	public static var ROWS_PER_MEASURE = ROWS_PER_BEAT * BEATS_PER_MEASURE; // from Stepmania
+	public static var MAX_NOTE_ROW = 1 << 30; // from Stepmania
+
+	public inline static function beatToRow(beat:Float):Int
+		return Math.round(beat * ROWS_PER_BEAT);
+
+	public inline static function rowToBeat(row:Int):Float
+		return row / ROWS_PER_BEAT;
+
+	public inline static function secsToRow(sex:Float):Int
+		return Math.round(getBeat(sex) * ROWS_PER_BEAT);
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 

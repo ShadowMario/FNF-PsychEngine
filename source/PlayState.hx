@@ -82,6 +82,10 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	var noteRows:Array<Array<Array<Note>>> = [[],[]];
+	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
+
+	public static var instance:PlayState;
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
@@ -155,6 +159,10 @@ class PlayState extends MusicBeatState
 
 	public var vocals:FlxSound;
 
+	public var dadGhostTween:FlxTween = null;
+	public var bfGhostTween:FlxTween = null;
+	public var dadGhost:FlxSprite = null;
+	public var bfGhost:FlxSprite = null;
 	public var dad:Character = null;
 	public var gf:Character = null;
 	public var boyfriend:Boyfriend = null;
@@ -291,7 +299,6 @@ class PlayState extends MusicBeatState
 	
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
-	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
 	public var inCutscene:Bool = false;
 	public var skipCountdown:Bool = false;
@@ -314,7 +321,6 @@ class PlayState extends MusicBeatState
 	var boyfriendIdled:Bool = false;
 
 	// Lua shit
-	public static var instance:PlayState;
 	public var luaArray:Array<FunkinLua> = [];
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
@@ -854,6 +860,10 @@ class PlayState extends MusicBeatState
 			introSoundsSuffix = '-pixel';
 		}
 
+		dadGhost = new FlxSprite();
+		bfGhost = new FlxSprite();
+		add(bfGhost);
+		add(dadGhost);
 		add(gfGroup); //Needed for blammed lights
 
 		// Shitty layering but whatev it works LOL
@@ -982,6 +992,17 @@ class PlayState extends MusicBeatState
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
 		startCharacterLua(boyfriend.curCharacter);
+
+		dadGhost.visible = false;
+		dadGhost.antialiasing = true;
+		dadGhost.alpha = 0.6;
+		dadGhost.scale.copyFrom(dad.scale);
+		dadGhost.updateHitbox();
+		bfGhost.visible = false;
+		bfGhost.antialiasing = true;
+		bfGhost.alpha = 0.6;
+		bfGhost.scale.copyFrom(boyfriend.scale);
+		bfGhost.updateHitbox();
 
 		var camPos:FlxPoint = new FlxPoint(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
 		if(gf != null)
@@ -2764,6 +2785,10 @@ class PlayState extends MusicBeatState
 					oldNote = null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+					swagNote.row = Conductor.secsToRow(daStrumTime);
+					if(noteRows[gottaHitNote?0:1][swagNote.row]==null)
+						noteRows[gottaHitNote?0:1][swagNote.row]=[];
+					noteRows[gottaHitNote ? 0 : 1][swagNote.row].push(swagNote);
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
@@ -4470,6 +4495,68 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	function doGhostAnim(char:String, animToPlay:String)
+		{
+			var ghost:FlxSprite = dadGhost;
+			var player:Character = dad;
+	
+			switch(char.toLowerCase().trim()){
+				case 'bf' | 'boyfriend' | '0':
+					ghost = bfGhost;
+					player = boyfriend;
+				case 'dad' | 'opponent' | '1':
+					ghost = dadGhost;
+					player = dad;
+			}
+	
+									
+			ghost.frames = player.frames;
+			ghost.animation.copyFrom(player.animation);
+			ghost.x = player.x;
+			ghost.y = player.y;
+			ghost.animation.play(animToPlay, true);
+			ghost.offset.set(player.animOffsets.get(animToPlay)[0], player.animOffsets.get(animToPlay)[1]);
+			ghost.flipX = player.flipX;
+			ghost.flipY = player.flipY;
+			ghost.blend = HARDLIGHT;
+			ghost.alpha = 0.8;
+			ghost.visible = true;
+
+			if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms) //prevent it from zooming in too much
+			{
+				FlxG.camera.zoom += 0.015;
+				camHUD.zoom += 0.03;
+			}
+	
+			switch (char.toLowerCase().trim())
+			{
+				case 'bf' | 'boyfriend' | '0':
+					if (bfGhostTween != null)
+						bfGhostTween.cancel();
+					ghost.color = FlxColor.fromRGB(boyfriend.healthColorArray[0] + 50, boyfriend.healthColorArray[1] + 50, boyfriend.healthColorArray[2] + 50);
+					bfGhostTween = FlxTween.tween(bfGhost, {alpha: 0}, 0.75, {
+						ease: FlxEase.linear,
+						onComplete: function(twn:FlxTween)
+						{
+							bfGhostTween = null;
+						}
+					});
+	
+				case 'dad' | 'opponent' | '1':
+					if (dadGhostTween != null)
+						dadGhostTween.cancel();
+					ghost.color = FlxColor.fromRGB(dad.healthColorArray[0] + 50, dad.healthColorArray[1] + 50, dad.healthColorArray[2] + 50);
+					dadGhostTween = FlxTween.tween(dadGhost, {alpha: 0}, 0.75, {
+						ease: FlxEase.linear,
+						onComplete: function(twn:FlxTween)
+						{
+							dadGhostTween = null;
+						}
+					});
+			}
+		}
+
+
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
@@ -5103,8 +5190,29 @@ class PlayState extends MusicBeatState
 
 			if(char != null)
 			{
-				char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
+							if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+								{
+									// potentially have jump anims?
+									var chord = noteRows[note.mustPress?0:1][note.row];
+									var animNote = chord[0];
+									var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))] + altAnim;
+									if (char.mostRecentRow != note.row)
+									{
+										char.playAnim(realAnim, true);
+									}
+
+									// if (daNote != animNote)
+									// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
+
+									char.mostRecentRow = note.row;
+									// dad.angle += 15; lmaooooo
+									doGhostAnim('char', animToPlay);
+								}
+								else{
+									char.playAnim(animToPlay, true);
+									// dad.angle = 0;
+								}
 			}
 		}
 
@@ -5189,8 +5297,32 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
+					if (!ClientPrefs.doubleGhost) {
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
+					}
 					boyfriend.holdTimer = 0;
+					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+						{
+							// potentially have jump anims?
+							var chord = noteRows[note.mustPress?0:1][note.row];
+							var animNote = chord[0];
+							var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
+							if (boyfriend.mostRecentRow != note.row)
+							{
+								boyfriend.playAnim(realAnim, true);
+							}
+		
+							// if (daNote != animNote)
+							// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
+		
+							boyfriend.mostRecentRow = note.row;
+							// dad.angle += 15; lmaooooo
+							doGhostAnim('bf', animToPlay);
+						}
+						else{
+							boyfriend.playAnim(animToPlay + note.animSuffix, true);
+							// dad.angle = 0;
+						}
 				}
 
 				if(note.noteType == 'Hey!') {

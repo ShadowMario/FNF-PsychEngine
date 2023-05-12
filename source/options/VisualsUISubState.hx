@@ -47,6 +47,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
+
+		var option:Option = new Option('Double Note Ghosts',
+			"If this is checked, hitting a Double Note will show an afterimage, just like in VS Impostor!",
+			'doubleGhost',
+			'bool',
+			true);
+		addOption(option);
 		
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",
@@ -62,14 +69,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'string',
 			'VS Impostor',
 			['VS Impostor', 'Kade Engine', 'Dave & Bambi', 'Doki Doki+', 'Psych Engine']);
-		addOption(option);
-
-		var option:Option = new Option('HP Gain Type:',
-			"Which engine's health gain do you want?",
-			'healthGainType',
-			'string',
-			'VS Impostor',
-			['VS Impostor', 'Kade (1.2)', 'Kade (1.4.2 to 1.6)', 'Kade (1.6+)', 'Doki Doki+', 'Psych Engine']);
 		addOption(option);
 
 		var option:Option = new Option('Icon Bounce:',
