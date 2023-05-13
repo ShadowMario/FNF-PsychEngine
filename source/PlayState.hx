@@ -1071,7 +1071,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == 'Kade Engine') {
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 16);
-		timeTxt.setFormat(Paths.font("vcr.ttf"), 14, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 1;
@@ -1328,7 +1328,7 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		healthBarBG.sprTracker = healthBar;
 		add(healthBar);
-		} else {
+		} else if (ClientPrefs.hudType != 'Dave & Bambi' && ClientPrefs.hudType != 'Doki Doki+') {
 		healthBarBG = new AttachedSprite('healthBar');
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
@@ -5224,14 +5224,6 @@ class PlayState extends MusicBeatState
 							gf.mostRecentRow = note.row;
 							// dad.angle += 15; lmaooooo
 							doGhostAnim('gf', animToPlay);
-											gfGhost.color = FlxColor.fromRGB(gf.healthColorArray[0] + 50, gf.healthColorArray[1] + 50, gf.healthColorArray[2] + 50);
-											gfGhostTween = FlxTween.tween(gfGhost, {alpha: 0}, 0.75, {
-												ease: FlxEase.linear,
-												onComplete: function(twn:FlxTween)
-												{
-													gfGhostTween = null;
-												}
-											});
 							}
 			}
 
