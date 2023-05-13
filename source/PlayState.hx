@@ -4568,8 +4568,8 @@ class PlayState extends MusicBeatState
 
 			if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms)
 			{
-					FlxG.camera.zoom += 0.015;
-					camHUD.zoom += 0.03;
+					FlxG.camera.zoom += 0.0075;
+					camHUD.zoom += 0.015;
 			}
 	
 			switch (char.toLowerCase().trim())
