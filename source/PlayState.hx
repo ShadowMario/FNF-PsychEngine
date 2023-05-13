@@ -224,6 +224,10 @@ class PlayState extends MusicBeatState
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
 	public var practiceMode:Bool = false;
+	var randomMode:Bool = false;
+	var flip:Bool = false;
+	var stairs:Bool = false;
+	var waves:Bool = false;
 
 
 	public var botplaySine:Float = 0;
@@ -407,6 +411,10 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		randomMode = ClientPrefs.getGameplaySetting('randommode', false);
+		flip = ClientPrefs.getGameplaySetting('flip', false);
+		stairs = ClientPrefs.getGameplaySetting('stairmode', false);
+		waves = ClientPrefs.getGameplaySetting('wavemode', false);
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -2703,6 +2711,7 @@ class PlayState extends MusicBeatState
 	}
 
 	var debugNum:Int = 0;
+	var stair:Int = 0;
 	private var noteTypeMap:Map<String, Bool> = new Map<String, Bool>();
 	private var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
 	private function generateSong(dataPath:String):Void
@@ -2775,8 +2784,33 @@ class PlayState extends MusicBeatState
 			for (songNotes in section.sectionNotes)
 			{
 				var daStrumTime:Float = songNotes[0];
-				var daNoteData:Int = Std.int(songNotes[1] % 4);
-
+				var daNoteData:Int = 0;
+				if (!randomMode && !flip && !stairs	&& !waves)
+				{
+				daNoteData = Std.int(songNotes[1] % 4);
+				}
+				if (randomMode || randomMode && flip || randomMode && flip && stairs || randomMode && flip && stairs && waves) { //gotta specify that random mode must at least be turned on for this to work
+				daNoteData = FlxG.random.int(0, 3);
+				}
+				if (flip && !stairs && !waves) {
+				daNoteData = Std.int(Math.abs((songNotes[1] % 4) - 3));
+				}
+				if (stairs && !waves) {
+				daNoteData = stair % 4;
+				stair++;
+				}
+				if (waves) {
+						switch (stair % 6)
+							{
+								case 0 | 1 | 2 | 3:
+									daNoteData = stair % 6;
+								case 4:
+									daNoteData = 2;
+								case 5:
+									daNoteData = 1;
+							}
+				stair++;
+				}
 				var gottaHitNote:Bool = section.mustHitSection;
 
 				if (songNotes[1] > 3)
