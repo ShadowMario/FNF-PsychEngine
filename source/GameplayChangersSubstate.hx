@@ -95,6 +95,20 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
 		optionsArray.push(option);
 
+		var option:GameplayOption = new GameplayOption('Play as Opponent', 'opponentplay', 'bool', false);
+		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Opponent Health Drain', 'opponentdrain', 'bool', false);
+		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Health Drain Level: ', 'drainlevel', 'float', 1);
+		option.scrollSpeed = 2;
+		option.minValue = -1;
+		option.maxValue = 10;
+		option.changeValue = 0.1;
+		option.displayFormat = '%vX';
+		optionsArray.push(option);
+
 		var option:GameplayOption = new GameplayOption('Random Mode', 'randommode', 'bool', false);
 		optionsArray.push(option);
 

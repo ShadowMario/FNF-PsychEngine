@@ -58,6 +58,9 @@ class ClientPrefs {
 		'practice' => false,
 		'botplay' => false,
 		'randommode' => false,
+		'opponentplay' => false,
+		'opponentdrain' => false,
+		'drainlevel' => 1,
 		'flip' => false,
 		'stairmode' => false,
 		'wavemode' => false
