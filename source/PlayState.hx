@@ -4566,7 +4566,7 @@ class PlayState extends MusicBeatState
 			ghost.alpha = 0.8;
 			ghost.visible = true;
 
-			if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms)
+			if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && camZooming)
 			{
 					FlxG.camera.zoom += 0.0075;
 					camHUD.zoom += 0.015;
