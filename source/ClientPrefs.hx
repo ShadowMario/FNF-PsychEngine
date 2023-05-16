@@ -27,6 +27,7 @@ class ClientPrefs {
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
 	public static var communityGameMode:Bool = false;
+	public static var coolGameplay:Bool = false;
 	public static var hudType:String = 'Kade Engine';
 	public static var healthGainType:String = 'Psych Engine';
 	public static var iconBounceType:String = 'Golden Apple';
@@ -34,6 +35,8 @@ class ClientPrefs {
 	public static var scoreZoom:Bool = true;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
+	public static var laneUnderlayAlpha:Float = 1;
+	public static var laneUnderlay:Bool = true;
 	public static var controllerMode:Bool = false;
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'Tea Time';
@@ -129,10 +132,13 @@ class ClientPrefs {
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.communityGameMode = communityGameMode;
+		FlxG.save.data.coolGameplay = coolGameplay;
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
+		FlxG.save.data.laneUnderlayAlpha = laneUnderlayAlpha;
+		FlxG.save.data.laneUnderlay = laneUnderlay;
 		FlxG.save.data.comboOffset = comboOffset;
 		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
@@ -214,6 +220,9 @@ class ClientPrefs {
 		if(FlxG.save.data.doubleGhost != null) {
 			doubleGhost = FlxG.save.data.doubleGhost;
 		}
+		if(FlxG.save.data.coolGameplay != null) {
+			doubleGhost = FlxG.save.data.coolGameplay;
+		}
 		if(FlxG.save.data.hideHud != null) {
 			hideHud = FlxG.save.data.hideHud;
 		}
@@ -249,6 +258,12 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.healthBarAlpha != null) {
 			healthBarAlpha = FlxG.save.data.healthBarAlpha;
+		}
+		if(FlxG.save.data.laneUnderlay != null) {
+			laneUnderlay = FlxG.save.data.laneUnderlay;
+		}
+		if(FlxG.save.data.laneUnderlayAlpha != null) {
+			laneUnderlayAlpha = FlxG.save.data.laneUnderlayAlpha;
 		}
 		if(FlxG.save.data.comboOffset != null) {
 			comboOffset = FlxG.save.data.comboOffset;

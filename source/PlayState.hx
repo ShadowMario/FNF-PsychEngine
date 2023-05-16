@@ -185,6 +185,8 @@ class PlayState extends MusicBeatState
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
 	public var playerStrums:FlxTypedGroup<StrumNote>;
 	public var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
+	public var laneunderlay:FlxSprite;
+	public var laneunderlayOpponent:FlxSprite;
 
 	public var camZooming:Bool = false;
 	public var camZoomingMult:Float = 1;
@@ -242,6 +244,7 @@ class PlayState extends MusicBeatState
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
+	var hueh231:FlxSprite;
 
 	var notesHitArray:Array<Date> = [];
 
@@ -421,6 +424,7 @@ class PlayState extends MusicBeatState
 		flip = ClientPrefs.getGameplaySetting('flip', false);
 		stairs = ClientPrefs.getGameplaySetting('stairmode', false);
 		waves = ClientPrefs.getGameplaySetting('wavemode', false);
+
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1067,6 +1071,24 @@ class PlayState extends MusicBeatState
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
 
+		laneunderlayOpponent = new FlxSprite(70, 0).makeGraphic(500, FlxG.height * 2, FlxColor.BLACK);
+		laneunderlayOpponent.alpha = ClientPrefs.laneUnderlayAlpha;
+		laneunderlayOpponent.scrollFactor.set();
+		laneunderlayOpponent.screenCenter(Y);
+		laneunderlayOpponent.visible = ClientPrefs.laneUnderlay;
+
+		laneunderlay = new FlxSprite(70 + (FlxG.width / 2), 0).makeGraphic(500, FlxG.height * 2, FlxColor.BLACK);
+		laneunderlay.alpha = ClientPrefs.laneUnderlayAlpha;
+		laneunderlay.scrollFactor.set();
+		laneunderlay.screenCenter(Y);
+		laneunderlay.visible = ClientPrefs.laneUnderlay;
+
+		if (ClientPrefs.laneUnderlay)
+		{
+			add(laneunderlayOpponent);
+			add(laneunderlay);
+		}
+
 		strumLine = new FlxSprite(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, 50).makeGraphic(FlxG.width, 10);
 		if(ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
@@ -1508,6 +1530,8 @@ class PlayState extends MusicBeatState
 		}
 		}
 
+		laneunderlayOpponent.cameras = [camHUD];
+		laneunderlay.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
@@ -2410,6 +2434,27 @@ class PlayState extends MusicBeatState
 
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', [], false);
+
+		if (ClientPrefs.coolGameplay)
+		{
+			hueh231 = new FlxSprite();
+			hueh231.frames = Paths.getSparrowAtlas('dokistuff/coolgameplay');
+			hueh231.animation.addByPrefix('idle', 'Symbol', 24, true);
+			hueh231.animation.play('idle');
+			hueh231.antialiasing = ClientPrefs.globalAntialiasing;
+			hueh231.scrollFactor.set();
+			hueh231.setGraphicSize(Std.int(hueh231.width / FlxG.camera.zoom));
+			hueh231.updateHitbox();
+			hueh231.screenCenter();
+			hueh231.cameras = [camGame];
+			add(hueh231);
+		}
+		if (ClientPrefs.middleScroll)
+		{
+			laneunderlayOpponent.alpha = 0;
+			laneunderlay.screenCenter(X);
+		}
+
 		if(ret != FunkinLua.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 

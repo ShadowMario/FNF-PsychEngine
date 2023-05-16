@@ -118,6 +118,25 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		option.decimals = 1;
 		addOption(option);
+
+		var option:Option = new Option('Lane Underlay',
+			"If checked, a black line will appear behind the notes, making them easier/n to read.",
+			'laneUnderlay',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('Lane Underlay Transparency',
+			'How transparent do you want the lane underlay to be? (0% = transparent, 100% = fully opaque)',
+			'laneUnderlayAlpha',
+			'percent',
+			1);
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.0;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		addOption(option);
 		
 		#if !mobile
 		var option:Option = new Option('FPS Counter',

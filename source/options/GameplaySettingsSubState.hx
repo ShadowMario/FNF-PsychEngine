@@ -86,6 +86,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Cool Gameplay',
+			"Get the COOLEST gameplay ever!!1!111!1!11",
+			'coolGameplay',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Disable Reset Button',
 			"If checked, pressing Reset won't do anything.",
 			'noReset',
