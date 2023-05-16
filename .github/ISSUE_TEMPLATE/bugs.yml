@@ -24,6 +24,7 @@ body:
       options:
         - Lua
         - Source
+        - Lua/Source
     validations:
       required: true
 
