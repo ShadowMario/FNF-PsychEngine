@@ -48,6 +48,21 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Rating FC Colors',
+			'If checked, the ratings & combo will be colored/nbased on your FC rating.',
+			'colorRatingFC',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Marvelous Rating Color:',
+			"What should the Marvelous Rating Color be?",
+			'marvRateColor',
+			'string',
+			'Golden',
+			['Golden', 'Rainbow']);
+		addOption(option);
+
 		var option:Option = new Option('Double Note Ghosts',
 			"If this is checked, hitting a Double Note will show an afterimage, just like in VS Impostor!",
 			'doubleGhost',
@@ -68,7 +83,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'hudType',
 			'string',
 			'VS Impostor',
-			['VS Impostor', 'Kade Engine', 'Dave & Bambi', 'Doki Doki+', 'Psych Engine']);
+			['VS Impostor', 'Kade Engine', 'Tails Gets Trolled V4', 'Dave & Bambi', 'Doki Doki+', 'Psych Engine']);
 		addOption(option);
 
 		var option:Option = new Option('Icon Bounce:',

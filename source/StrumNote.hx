@@ -37,6 +37,7 @@ class StrumNote extends FlxSprite
 		var skin:String = 'NOTE_assets';
 		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 		if(ClientPrefs.hudType == 'Doki Doki+') skin = 'NOTE_assets_doki';
+		if(ClientPrefs.hudType == 'Tails Gets Trolled V4') skin = 'TGTNOTE_assets';
 		texture = skin; //Load texture and anims
 
 		scrollFactor.set();

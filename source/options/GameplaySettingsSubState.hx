@@ -86,6 +86,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Remove Marvelous!! Judgement',
+			"If unchecked, removes the Marvelous judgement.",
+			'noMarvJudge',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Cool Gameplay',
 			"Get the COOLEST gameplay ever!!1!111!1!11",
 			'coolGameplay',
@@ -124,6 +131,17 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.maxValue = 30;
 		addOption(option);
 
+		var option:Option = new Option('Marvelous! Hit Window',
+			'Changes the amount of time you have\nfor hitting a "Marvelous!" in milliseconds.',
+			'marvWindow',
+			'int',
+			25);
+		option.displayFormat = '%vms';
+		option.scrollSpeed = 15;
+		option.minValue = 1;
+		option.maxValue = 25;
+		addOption(option);
+
 		var option:Option = new Option('Sick! Hit Window',
 			'Changes the amount of time you have\nfor hitting a "Sick!" in milliseconds.',
 			'sickWindow',
@@ -131,7 +149,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			45);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 15;
-		option.minValue = 15;
+		option.minValue = 25;
 		option.maxValue = 45;
 		addOption(option);
 
@@ -142,7 +160,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			90);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 30;
-		option.minValue = 15;
+		option.minValue = 25;
 		option.maxValue = 90;
 		addOption(option);
 
@@ -153,7 +171,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			135);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 60;
-		option.minValue = 15;
+		option.minValue = 25;
 		option.maxValue = 135;
 		addOption(option);
 

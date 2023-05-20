@@ -263,6 +263,9 @@ class Note extends FlxSprite
 			if(ClientPrefs.hudType == 'Doki Doki+') {
 				skin = 'NOTE_assets_doki';
 			}
+			if(ClientPrefs.hudType == 'Tails Gets Trolled V4') {
+				skin = 'TGTNOTE_assets';
+			}
 		}
 
 		var animName:String = null;

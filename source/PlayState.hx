@@ -168,6 +168,9 @@ class PlayState extends MusicBeatState
 	public var dad:Character = null;
 	public var gf:Character = null;
 	public var boyfriend:Boyfriend = null;
+	public static var death:FlxSprite;
+	public static var deathanim:Bool = false;
+	public static var dead:Bool = false;
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
@@ -180,6 +183,13 @@ class PlayState extends MusicBeatState
 	public var camFollowPos:FlxObject;
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
+	public var judgeColours:Map<String, FlxColor> = [
+		"sick" => FlxColor.CYAN,
+		"good" => FlxColor.LIME,
+		"bad" => FlxColor.ORANGE,
+		"shit" => FlxColor.RED,
+		"miss" => 0xFF7F2626
+	];
 
 	public var strumLineNotes:FlxTypedGroup<StrumNote>;
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
@@ -206,12 +216,15 @@ class PlayState extends MusicBeatState
 	public var timeBar:FlxBar;
 
 	public var ratingsData:Array<Rating> = [];
+	public var marvs:Int = 0;
 	public var sicks:Int = 0;
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
 	public var nps:Int = 0;
 	public var maxNPS:Int = 0;
+
+	private var allSicks:Bool = true;
 
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -382,8 +395,14 @@ class PlayState extends MusicBeatState
 		];
 
 		//Ratings
-		ratingsData.push(new Rating('sick')); //default rating
+		if (!ClientPrefs.noMarvJudge) ratingsData.push(new Rating('marv')); 
 
+		var rating:Rating = new Rating('sick');
+		rating.ratingMod = 1;
+		rating.score = 350;
+		rating.noteSplash = true;
+		ratingsData.push(rating);
+		
 		var rating:Rating = new Rating('good');
 		rating.ratingMod = 0.7;
 		rating.score = 200;
@@ -894,6 +913,7 @@ class PlayState extends MusicBeatState
 
 		add(dadGroup);
 		add(boyfriendGroup);
+		add(death);
 
 		switch(curStage)
 		{
@@ -1105,6 +1125,15 @@ class PlayState extends MusicBeatState
 		timeTxt.visible = showTime;
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
 		}
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') {
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
+		timeTxt.setFormat(Paths.font("calibri.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.scrollFactor.set();
+		timeTxt.alpha = 0;
+		timeTxt.borderSize = 2;
+		timeTxt.visible = showTime;
+		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
+		}
 		if (ClientPrefs.hudType == 'Kade Engine') {
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 16);
 		timeTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1178,6 +1207,29 @@ class PlayState extends MusicBeatState
 		}
 
 		if (ClientPrefs.hudType == 'Psych Engine') {
+		timeBarBG = new AttachedSprite('timeBar');
+		timeBarBG.x = timeTxt.x;
+		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
+		timeBarBG.scrollFactor.set();
+		timeBarBG.alpha = 0;
+		timeBarBG.visible = showTime;
+		timeBarBG.color = FlxColor.BLACK;
+		timeBarBG.xAdd = -4;
+		timeBarBG.yAdd = -4;
+		add(timeBarBG);
+
+		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+			'songPercent', 0, 1);
+		timeBar.scrollFactor.set();
+		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
+		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
+		timeBar.alpha = 0;
+		timeBar.visible = showTime;
+		add(timeBar);
+		add(timeTxt);
+		timeBarBG.sprTracker = timeBar;
+		}
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') {
 		timeBarBG = new AttachedSprite('timeBar');
 		timeBarBG.x = timeTxt.x;
 		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
@@ -1424,6 +1476,16 @@ class PlayState extends MusicBeatState
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
 		add(EngineWatermark);
 		}
+		if (ClientPrefs.hudType == 'Psych Engine') { //unfortunately i have to do this because otherwise enginewatermark calls a null object reference
+		// Add Engine watermark
+		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
+		add(EngineWatermark);
+		}
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') { //unfortunately i have to do this because otherwise enginewatermark calls a null object reference
+		// Add Engine watermark
+		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
+		add(EngineWatermark);
+		}
 		
 		if (ClientPrefs.hudType == 'Kade Engine')
 		{ 		
@@ -1456,6 +1518,15 @@ class PlayState extends MusicBeatState
 		{
 		scoreTxt = new FlxText(0, healthBarBG.y + 48, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("Aller_rg.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		scoreTxt.borderSize = 1.25;
+		scoreTxt.visible = !ClientPrefs.hideHud;
+		add(scoreTxt);
+		}
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') 
+		{
+		scoreTxt = new FlxText(0, healthBarBG.y + 48, FlxG.width, "", 20);
+		scoreTxt.setFormat(Paths.font("calibri.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
@@ -1498,6 +1569,17 @@ class PlayState extends MusicBeatState
 		{
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("Aller_rg.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.scrollFactor.set();
+		botplayTxt.borderSize = 1.25;
+		botplayTxt.visible = cpuControlled;
+		add(botplayTxt);
+		if (ClientPrefs.downScroll) 
+			botplayTxt.y = timeBarBG.y - 78;
+		}
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4')
+		{
+		botplayTxt = new FlxText(400, timeBarBG.y + (ClientPrefs.downScroll ? -78 : 55), FlxG.width - 800, "[BUTTPLUG]", 32);
+		botplayTxt.setFormat(Paths.font("calibri.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
@@ -3456,6 +3538,13 @@ class PlayState extends MusicBeatState
 		if(ratingName != '?')
 			scoreTxt.text += ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC;
 		}
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') {
+		scoreTxt.text = 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Combo: ' + combo + ' | Rating: ' + ratingName + ' | NPS: ' + nps;
+		if(cpuControlled) 
+			scoreTxt.text = 'Botplay Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Rating: funny botplay mode!!!!!';
+		if(ratingName != '?')
+			scoreTxt.text += ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC;
+		}
 		if (ClientPrefs.hudType == 'VS Impostor') {
 				scoreTxt.text = 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps;
 				
@@ -4598,7 +4687,24 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'dokistuff/';
 			pixelShitPart2 = '';
 		}
-
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4')
+		{
+			pixelShitPart1 = 'tgtstuff/';
+			pixelShitPart2 = '';
+		}
+		if (allSicks)
+		{
+			pixelShitPart1 = 'goldstuff/';
+			pixelShitPart2 = '';
+		}
+		if (allSicks || !allSicks && ClientPrefs.marvRateColor == 'Golden')
+		{
+		Paths.image(pixelShitPart1 + "marv" + pixelShitPart2);
+		}
+		if (!allSicks && ClientPrefs.marvRateColor == 'Rainbow')
+		{
+		Paths.image(pixelShitPart1 + "marv" + pixelShitPart2);
+		}
 		Paths.image(pixelShitPart1 + "sick" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "good" + pixelShitPart2);
 		Paths.image(pixelShitPart1 + "bad" + pixelShitPart2);
@@ -4702,7 +4808,7 @@ class PlayState extends MusicBeatState
 		//
 
 		var rating:FlxSprite = new FlxSprite();
-		var score:Int = 350;
+		var score:Int = 500;
 
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
@@ -4713,7 +4819,22 @@ class PlayState extends MusicBeatState
 		note.rating = daRating.name;
 		score = daRating.score;
 
+		if (goods > 0)
+		{
+			// if it isn't a sick, and you had a sick combo, then it becomes not sick :(
+			if (allSicks)
+				allSicks = false;
+
+		}
+		if (noteDiff < ClientPrefs.marvWindow)
+		{
+		marvs++;
+		}
 		if (ClientPrefs.healthGainType == 'VS Impostor') {
+		if (noteDiff < ClientPrefs.marvWindow)
+		{
+			health += note.hitHealth * 1.5 * healthGain;
+		}
 		if (noteDiff < ClientPrefs.sickWindow)
 		{
 			health += note.hitHealth * healthGain;
@@ -4735,8 +4856,18 @@ class PlayState extends MusicBeatState
 			health += note.hitHealth * 0.1 * healthGain;
 		}
 		}
+		if (ClientPrefs.healthGainType == 'Psych Engine') {
+		if (noteDiff < ClientPrefs.marvWindow)
+		{
+			health += note.hitHealth * 0.5 * healthGain;
+		}
+		}
 
 		if (ClientPrefs.healthGainType == 'Kade (1.4.2 to 1.6)') {
+		if (noteDiff < ClientPrefs.marvWindow)
+		{
+			health += 0.1 * 1.5 * healthGain;
+		}
 		if (noteDiff < ClientPrefs.sickWindow)
 		{
 			health += 0.1 * healthGain;
@@ -4755,9 +4886,13 @@ class PlayState extends MusicBeatState
 		}
 		}
 		if (ClientPrefs.healthGainType == 'Doki Doki+') {
+		if (noteDiff < ClientPrefs.marvWindow)
+		{
+			health += 0.077 * 1.5 * healthGain;
+		}
 		if (noteDiff < ClientPrefs.sickWindow)
 		{
-			health += 0.1 * healthGain;
+			health += 0.077 * healthGain;
 		}
 		if (noteDiff > ClientPrefs.sickWindow)
 		{
@@ -4773,9 +4908,13 @@ class PlayState extends MusicBeatState
 		}
 		}
 		if (ClientPrefs.healthGainType == 'Kade (1.6+)') {
+		if (noteDiff < ClientPrefs.marvWindow)
+		{
+			health += 0.017 * 1.5 * healthGain;
+		}
 		if (noteDiff < ClientPrefs.sickWindow)
 		{
-			health += 0.04;
+			health += 0.017;
 		}
 		if (noteDiff > ClientPrefs.sickWindow)
 		{
@@ -4791,6 +4930,10 @@ class PlayState extends MusicBeatState
 		}
 		}
 		if (ClientPrefs.healthGainType == 'Kade (1.2)') {
+		if (noteDiff < ClientPrefs.marvWindow)
+		{
+			health += 0.023 * 1.5 * healthGain;
+		}
 		if (noteDiff < ClientPrefs.sickWindow)
 		{
 			health += 0.023 * healthGain;
@@ -4839,6 +4982,26 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'dokistuff/';
 			pixelShitPart2 = '';
 		}
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4')
+		{
+			pixelShitPart1 = 'tgtstuff/';
+			pixelShitPart2 = '';
+		}
+		if (allSicks && ClientPrefs.hudType != 'Tails Gets Trolled V4')
+		{
+			pixelShitPart1 = 'goldstuff/';
+			pixelShitPart2 = '';
+		}
+		if (!allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+')
+		{
+			pixelShitPart1 = 'goldstuff/';
+			pixelShitPart2 = '';
+		}
+		if (!allSicks && ClientPrefs.marvRateColor == 'Rainbow' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+')
+		{
+			pixelShitPart1 = '';
+			pixelShitPart2 = '';
+		}
 		if (!cpuControlled) {
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
 		rating.cameras = [camHUD];
@@ -4851,6 +5014,26 @@ class PlayState extends MusicBeatState
 		rating.visible = (!ClientPrefs.hideHud && showRating);
 		rating.x += ClientPrefs.comboOffset[0];
 		rating.y -= ClientPrefs.comboOffset[1];
+if (!allSicks && ClientPrefs.colorRatingFC && sicks > 0 && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		rating.color = judgeColours.get('sick');
+		}
+if (!allSicks && ClientPrefs.colorRatingFC && goods > 0 && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		rating.color = judgeColours.get('good');
+		}
+if (!allSicks && ClientPrefs.colorRatingFC && bads > 0 && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		rating.color = judgeColours.get('bad');
+		}
+if (!allSicks && ClientPrefs.colorRatingFC && shits > 0 && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		rating.color = judgeColours.get('shit');
+		}
+if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0) 
+		{
+		rating.color = FlxColor.WHITE;
+		}
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 		comboSpr.cameras = [camHUD];
@@ -4926,6 +5109,26 @@ class PlayState extends MusicBeatState
 
 			numScore.x += ClientPrefs.comboOffset[2];
 			numScore.y -= ClientPrefs.comboOffset[3];
+if (!allSicks && ClientPrefs.colorRatingFC && sicks > 0 && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		numScore.color = judgeColours.get('sick');
+		}
+if (!allSicks && ClientPrefs.colorRatingFC && goods > 0 && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		numScore.color = judgeColours.get('good');
+		}
+if (!allSicks && ClientPrefs.colorRatingFC && bads > 0 && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		numScore.color = judgeColours.get('bad');
+		}
+if (!allSicks && ClientPrefs.colorRatingFC && shits > 0 && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		numScore.color = judgeColours.get('shit');
+		}
+if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		numScore.color = FlxColor.WHITE;
+		}
 			
 			if (!ClientPrefs.comboStacking)
 				lastScore.push(numScore);
@@ -5502,6 +5705,18 @@ class PlayState extends MusicBeatState
 			if (ClientPrefs.healthGainType == 'Psych Engine') {
 			health += note.hitHealth * healthGain;
 			}
+			if (ClientPrefs.healthGainType == 'Kade (1.2)') {
+			health += note.hitHealth * healthGain;
+			}
+			if (ClientPrefs.healthGainType == 'Kade (1.6+)') {
+			health += note.hitHealth * healthGain;
+			}
+			if (ClientPrefs.healthGainType == 'Doki Doki+') {
+			health += note.hitHealth * healthGain;
+			}
+			if (ClientPrefs.healthGainType == 'VS Impostor') {
+			health += note.hitHealth * healthGain;
+			}
 			if(!note.noAnimation) {
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
        			
@@ -5677,6 +5892,7 @@ class PlayState extends MusicBeatState
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		if (ClientPrefs.hudType == 'VS Impostor') PlayState.SONG.splashSkin = 'impostorNoteSplashes';
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') PlayState.SONG.splashSkin = 'tgtNoteSplashes';
 
 		var hue:Float = 0;
 		var sat:Float = 0;
@@ -6239,9 +6455,11 @@ class PlayState extends MusicBeatState
 
 			// Rating FC
 			ratingFC = "";
+			if (marvs > 0) ratingFC = "MFC";
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
-			if (bads > 0 || shits > 0) ratingFC = "FC";
+			if (bads > 0) ratingFC = "BFC";
+			if (shits > 0) ratingFC = "FC";
 			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
 			if (songMisses >= 10) ratingFC = "Clear";
 			if (songMisses >= 100) ratingFC = "TDSB";
@@ -6249,8 +6467,11 @@ class PlayState extends MusicBeatState
 			if (songMisses >= 100000) ratingFC = "STDCB";
 			else if (songMisses >= 10000000) ratingFC = "SPDCB"; //i have no idea how you'd get a million misses but oh well
 
+
+
 		if (ClientPrefs.hudType == "VS Impostor")
 		{
+			if (marvs > 0) ratingFC = " [MFC]";
 			if (sicks > 0) ratingFC = " [SFC]";
 			if (goods > 0) ratingFC = " [GFC]";
 			if (bads > 0) ratingFC = " [BFC]";
@@ -6263,12 +6484,29 @@ class PlayState extends MusicBeatState
 			else if (songMisses >= 10000000) ratingFC = " [SPDCB]"; //i have no idea how you'd get a million misses but oh well
 		}
 
+		if (ClientPrefs.hudType == "Tails Gets Trolled V4")
+		{
+			if (marvs > 0) ratingFC = "KFC";
+			if (sicks > 0) ratingFC = "AFC";
+			if (goods > 0) ratingFC = "CFC";
+			if (bads > 0) ratingFC = "SDC";
+			if (shits > 0) ratingFC = "FC";
+			if (songMisses > 0 && songMisses < 10) ratingFC = "SDCB";
+			if (songMisses >= 10) ratingFC = "Clear";
+			if (songMisses >= 100) ratingFC = "TDSB";
+			if (songMisses >= 1000) ratingFC = "QDSB";
+			if (songMisses >= 100000) ratingFC = "STDCB";
+			else if (songMisses >= 10000000) ratingFC = "SPDCB"; //i have no idea how you'd get a million misses but oh well
+		}
+
 			// Rating FC
 			if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Doki Doki+') {
 			ratingFC = "";
-			if (sicks > 0) ratingFC = "(MFC)";
+			if (marvs > 0) ratingFC = "(MFC)";
+			if (sicks > 0) ratingFC = "(SFC)";
 			if (goods > 0) ratingFC = "(GFC)";
-			if (bads > 0 || shits > 0) ratingFC = "(FC)";
+			if (bads > 0) ratingFC = "(BFC)";
+			if (shits > 0) ratingFC = "(FC)";
 			if (songMisses > 0 && songMisses < 10) ratingFC = "(SDCB)";
 			if (songMisses >= 10) ratingFC = "(Clear)";
 			if (songMisses >= 100) ratingFC = "(TDSB)";

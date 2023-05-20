@@ -28,11 +28,15 @@ class ClientPrefs {
 	public static var ghostTapping:Bool = true;
 	public static var communityGameMode:Bool = false;
 	public static var coolGameplay:Bool = false;
+	public static var fuckDeath:Bool = false;
 	public static var hudType:String = 'Kade Engine';
 	public static var healthGainType:String = 'Psych Engine';
 	public static var iconBounceType:String = 'Golden Apple';
 	public static var timeBarType:String = 'Time Left';
+	public static var marvRateColor:String = 'Golden';
+	public static var noMarvJudge:Bool = false;
 	public static var scoreZoom:Bool = true;
+	public static var colorRatingFC:Bool = false;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var laneUnderlayAlpha:Float = 1;
@@ -71,6 +75,7 @@ class ClientPrefs {
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
 	public static var ratingOffset:Int = 0;
+	public static var marvWindow:Int = 15;
 	public static var sickWindow:Int = 45;
 	public static var goodWindow:Int = 90;
 	public static var badWindow:Int = 135;
@@ -134,8 +139,12 @@ class ClientPrefs {
 		FlxG.save.data.communityGameMode = communityGameMode;
 		FlxG.save.data.coolGameplay = coolGameplay;
 		FlxG.save.data.timeBarType = timeBarType;
+		FlxG.save.data.marvRateColor = marvRateColor;
+		FlxG.save.data.noMarvJudge = noMarvJudge;
+		FlxG.save.data.colorRatingFC = colorRatingFC;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
+		FlxG.save.data.fuckDeath = fuckDeath;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
 		FlxG.save.data.laneUnderlayAlpha = laneUnderlayAlpha;
 		FlxG.save.data.laneUnderlay = laneUnderlay;
@@ -144,6 +153,7 @@ class ClientPrefs {
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 
 		FlxG.save.data.ratingOffset = ratingOffset;
+		FlxG.save.data.marvWindow = marvWindow;
 		FlxG.save.data.sickWindow = sickWindow;
 		FlxG.save.data.goodWindow = goodWindow;
 		FlxG.save.data.badWindow = badWindow;
@@ -217,6 +227,9 @@ class ClientPrefs {
 		if(FlxG.save.data.showNotes != null) {
 			showNotes = FlxG.save.data.showNotes;
 		}
+		if(FlxG.save.data.fuckDeath != null) {
+			fuckDeath = FlxG.save.data.fuckDeath;
+		}
 		if(FlxG.save.data.doubleGhost != null) {
 			doubleGhost = FlxG.save.data.doubleGhost;
 		}
@@ -271,6 +284,15 @@ class ClientPrefs {
 		
 		if(FlxG.save.data.ratingOffset != null) {
 			ratingOffset = FlxG.save.data.ratingOffset;
+		}
+		if(FlxG.save.data.colorRatingFC != null) {
+			colorRatingFC = FlxG.save.data.colorRatingFC;
+		}
+		if(FlxG.save.data.noMarvJudge != null) {
+			noMarvJudge = FlxG.save.data.noMarvJudge;
+		}
+		if(FlxG.save.data.marvWindow != null) {
+			marvWindow = FlxG.save.data.marvWindow;
 		}
 		if(FlxG.save.data.sickWindow != null) {
 			sickWindow = FlxG.save.data.sickWindow;
