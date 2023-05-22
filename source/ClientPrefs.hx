@@ -36,6 +36,7 @@ class ClientPrefs {
 	public static var marvRateColor:String = 'Golden';
 	public static var noMarvJudge:Bool = false;
 	public static var scoreZoom:Bool = true;
+	public static var goldSickSFC:Bool = true;
 	public static var colorRatingFC:Bool = false;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
@@ -141,6 +142,7 @@ class ClientPrefs {
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.marvRateColor = marvRateColor;
 		FlxG.save.data.noMarvJudge = noMarvJudge;
+		FlxG.save.data.goldSickSFC = goldSickSFC;
 		FlxG.save.data.colorRatingFC = colorRatingFC;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
@@ -205,6 +207,9 @@ class ClientPrefs {
 		if(FlxG.save.data.shaders != null) {
 			shaders = FlxG.save.data.shaders;
 		}
+		if(FlxG.save.data.goldSickSFC != null) {
+			goldSickSFC = FlxG.save.data.goldSickSFC;
+		}
 		if(FlxG.save.data.framerate != null) {
 			framerate = FlxG.save.data.framerate;
 			if(framerate > FlxG.drawFramerate) {
@@ -226,9 +231,6 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.showNotes != null) {
 			showNotes = FlxG.save.data.showNotes;
-		}
-		if(FlxG.save.data.fuckDeath != null) {
-			fuckDeath = FlxG.save.data.fuckDeath;
 		}
 		if(FlxG.save.data.doubleGhost != null) {
 			doubleGhost = FlxG.save.data.doubleGhost;

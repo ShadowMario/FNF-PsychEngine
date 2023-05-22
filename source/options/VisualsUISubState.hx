@@ -48,8 +48,15 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Golden Sick on MFC/SFC',
+			'If checked, your Sick! & Marvelous!! ratings will be golden if your FC rating is better than GFC.',
+			'goldSickSFC',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Rating FC Colors',
-			'If checked, the ratings & combo will be colored/nbased on your FC rating.',
+			'If checked, the ratings & combo will be colored based on your FC rating.',
 			'colorRatingFC',
 			'bool',
 			true);
@@ -135,7 +142,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Lane Underlay',
-			"If checked, a black line will appear behind the notes, making them easier/n to read.",
+			"If checked, a black line will appear behind the notes, making them easier to read.",
 			'laneUnderlay',
 			'bool',
 			false);
