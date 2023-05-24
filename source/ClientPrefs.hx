@@ -27,6 +27,7 @@ class ClientPrefs {
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
 	public static var communityGameMode:Bool = false;
+	public static var lessBotLag:Bool = false;
 	public static var coolGameplay:Bool = false;
 	public static var fuckDeath:Bool = false;
 	public static var hudType:String = 'Kade Engine';
@@ -138,6 +139,7 @@ class ClientPrefs {
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.communityGameMode = communityGameMode;
+		FlxG.save.data.lessBotLag = lessBotLag;
 		FlxG.save.data.coolGameplay = coolGameplay;
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.marvRateColor = marvRateColor;
@@ -246,6 +248,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.arrowHSV != null) {
 			arrowHSV = FlxG.save.data.arrowHSV;
+		}
+		if(FlxG.save.data.lessBotLag != null) {
+			lessBotLag = FlxG.save.data.lessBotLag;
 		}
 		if(FlxG.save.data.ghostTapping != null) {
 			ghostTapping = FlxG.save.data.ghostTapping;

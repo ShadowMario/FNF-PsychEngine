@@ -45,6 +45,7 @@ class Song
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
+	public var gfVersion2:String = 'gf-bent';
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{

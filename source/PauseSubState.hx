@@ -183,6 +183,10 @@ class PauseSubState extends MusicBeatSubstate
 					{
 						curTime += 45000 * elapsed * (controls.UI_LEFT ? -1 : 1);
 					}
+					if(holdTime > 0.5 && FlxG.sound.music.length >= 600000)
+					{
+						curTime += 150000 * elapsed * (controls.UI_LEFT ? -1 : 1);
+					}
 
 					if(curTime >= FlxG.sound.music.length) curTime -= FlxG.sound.music.length;
 					else if(curTime < 0) curTime += FlxG.sound.music.length;

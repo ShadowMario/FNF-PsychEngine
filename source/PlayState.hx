@@ -215,6 +215,7 @@ class PlayState extends MusicBeatState
 
 	public var gfSpeed:Int = 1;
 	public var health:Float = 1.5;
+	private var displayedHealth:Float = 1.5;
 	public var combo:Int = 0;
 	public var missCombo:Int = 1;
 
@@ -1404,7 +1405,7 @@ class PlayState extends MusicBeatState
 		add(healthBarBG);
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'health', 0, 3);
+			'displayedHealth', 0, 3);
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -1424,7 +1425,7 @@ class PlayState extends MusicBeatState
 		add(healthBarBG);
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'health', 0, 3);
+			'displayedHealth', 0, 3);
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -1443,7 +1444,7 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'health', 0, 3);
+			'displayedHealth', 0, 3);
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -3360,6 +3361,13 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 	override public function update(elapsed:Float)
 	{
+		if (ClientPrefs.framerate > 60)
+		{
+		displayedHealth = FlxMath.lerp(displayedHealth, health, .1);
+		} else if (ClientPrefs.framerate == 60) 
+		{
+		displayedHealth = FlxMath.lerp(displayedHealth, health, .4);
+		}
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -4841,8 +4849,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-	var msJudges = [];
-
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
@@ -5004,7 +5010,7 @@ class PlayState extends MusicBeatState
 
 		if(!practiceMode) {
 			songScore += score;
-			if(!note.ratingDisabled)
+			if(!note.ratingDisabled || cpuControlled && !ClientPrefs.lessBotLag)
 			{
 				songHits++;
 				totalPlayed++;
@@ -5124,6 +5130,15 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 
 		if(combo >= 1000) {
 			seperatedScore.push(Math.floor(combo / 1000) % 10);
+		}
+		if(combo >= 10000) {
+			seperatedScore.push(Math.floor(combo / 10000) % 10);
+		}
+		if(combo >= 100000) {
+			seperatedScore.push(Math.floor(combo / 100000) % 10);
+		}
+		if(combo >= 1000000) {
+			seperatedScore.push(Math.floor(combo / 1000000) % 10);
 		}
 		seperatedScore.push(Math.floor(combo / 100) % 10);
 		seperatedScore.push(Math.floor(combo / 10) % 10);
@@ -5772,7 +5787,30 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				return;
 			}
 
-			if (!note.isSustainNote)
+			if (!note.isSustainNote && !cpuControlled)
+			{
+				combo += 1;
+				missCombo = 0;
+				notesHitArray.unshift(Date.now());
+				popUpScore(note);
+			}
+			if (!note.isSustainNote && cpuControlled && ClientPrefs.lessBotLag)
+			{
+				if (!ClientPrefs.noMarvJudge)
+				{
+				songScore += 500;
+				}
+				else if (ClientPrefs.noMarvJudge)
+				{
+				songScore += 350;
+				}
+				combo += 1;
+				notesHitArray.unshift(Date.now());
+				if(!note.noteSplashDisabled && !note.isSustainNote) {
+					spawnNoteSplashOnNote(note);
+				}
+			}
+			if (!note.isSustainNote && cpuControlled && !ClientPrefs.lessBotLag)
 			{
 				combo += 1;
 				missCombo = 0;
