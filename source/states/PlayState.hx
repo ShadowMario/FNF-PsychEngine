@@ -2524,11 +2524,23 @@ class PlayState extends MusicBeatState
 			pixelShitPart2 = '-pixel';
 		}
 
+		var ratingGroup:FlxSpriteGroup = new FlxSpriteGroup();
+		var ratingX:Float = coolText.x - 40;
+		var ratingY:Float = 60;
+
+		if (ratingGroup.countDead() > 0) {
+			rating = ratingGroup.getFirstDead();
+			rating.reset(ratingY, ratingY);
+		} else {
+			rating = new FlxSprite();
+			ratingGroup.add(rating);
+		}
+
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
 		rating.cameras = [camHUD];
 		rating.screenCenter();
-		rating.x = coolText.x - 40;
-		rating.y -= 60;
+		rating.x = ratingX;
+		rating.y -= ratingY;
 		rating.acceleration.y = 550 * playbackRate * playbackRate;
 		rating.velocity.y -= FlxG.random.int(140, 175) * playbackRate;
 		rating.velocity.x -= FlxG.random.int(0, 10) * playbackRate;
@@ -2602,11 +2614,23 @@ class PlayState extends MusicBeatState
 		}
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
+			var numScoreGroup:FlxSpriteGroup = new FlxSpriteGroup();
+			var numScore:FlxSprite;
+			var numScoreX:Float = coolText.x + (43 * daLoop) - 90;
+			var numScoreY:Float = 80;
+		
+			if (numScoreGroup.countDead() > 0) {
+				numScore = numScoreGroup.getFirstDead();
+				numScore.reset(numScoreX, numScoreY);
+			} else {
+				numScore = new FlxSprite();
+				numScoreGroup.add(numScore);
+			}
+			numScore.loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
 			numScore.cameras = [camHUD];
 			numScore.screenCenter();
-			numScore.x = coolText.x + (43 * daLoop) - 90 + ClientPrefs.data.comboOffset[2];
-			numScore.y += 80 - ClientPrefs.data.comboOffset[3];
+			numScore.x = numScoreX + ClientPrefs.data.comboOffset[2];
+			numScore.y += numScoreY - ClientPrefs.data.comboOffset[3];
 			
 			if (!ClientPrefs.data.comboStacking)
 				lastScore.push(numScore);
@@ -2634,7 +2658,8 @@ class PlayState extends MusicBeatState
 			FlxTween.tween(numScore, {alpha: 0}, 0.2 / playbackRate, {
 				onComplete: function(tween:FlxTween)
 				{
-					numScore.destroy();
+					numScore.kill();
+					numScore.alpha = 1;
 				},
 				startDelay: Conductor.crochet * 0.002 / playbackRate
 			});
@@ -2652,6 +2677,11 @@ class PlayState extends MusicBeatState
 		// add(coolText);
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2 / playbackRate, {
+			onComplete: function(tween:FlxTween)
+			{
+				rating.kill();
+				rating.alpha = 1;
+			},
 			startDelay: Conductor.crochet * 0.001 / playbackRate
 		});
 
@@ -2660,8 +2690,6 @@ class PlayState extends MusicBeatState
 			{
 				coolText.destroy();
 				comboSpr.destroy();
-
-				rating.destroy();
 			},
 			startDelay: Conductor.crochet * 0.002 / playbackRate
 		});
