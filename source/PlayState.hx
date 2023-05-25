@@ -2966,7 +2966,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (generatedMusic && !endingSong && !isCameraOnForcedPos)
+		if (generatedMusic && !endingSong && !isCameraOnForcedPos && ClientPrefs.alwaysUpdateCamera)
 		{
 			moveCameraSection(); //yay unfucked camera
 		}
@@ -5064,6 +5064,12 @@ class PlayState extends MusicBeatState
 
 	override function sectionHit()
 	{
+
+		if (generatedMusic && !endingSong && !isCameraOnForcedPos && !ClientPrefs.alwaysUpdateCamera)
+		{
+			moveCameraSection(); //normal camera, but optional now :D
+		}
+
 		super.sectionHit();
 
 		if (SONG.notes[curSection] != null)
@@ -5272,7 +5278,7 @@ class PlayState extends MusicBeatState
 							}
 						}
 					case 'toastie':
-						if(/*ClientPrefs.framerate <= 60 &&*/ !ClientPrefs.shaders && ClientPrefs.lowQuality && !ClientPrefs.globalAntialiasing) {
+						if(/*ClientPrefs.framerate <= 60 &&*/ !ClientPrefs.shaders && ClientPrefs.lowQuality && !ClientPrefs.globalAntialiasing && !ClientPrefs.alwaysUpdateCamera) {
 							unlock = true;
 						}
 					case 'debugger':
