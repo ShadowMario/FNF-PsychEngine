@@ -478,7 +478,6 @@ class PlayState extends MusicBeatState
 
 		persistentUpdate = true;
 		persistentDraw = true;
-
 		if (SONG == null)
 			SONG = Song.loadFromJson('tutorial');
 
@@ -3562,7 +3561,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.hudType == 'Psych Engine') {
 		scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Rating: ' + ratingName;
 		if(cpuControlled) 
-			scoreTxt.text = 'Botplay Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Rating: funny botplay mode!!!!!';
+			scoreTxt.text = 'Botplay Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | funny botplay mode!!!!!';
 		if(ratingName != '?')
 			scoreTxt.text += ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC;
 		}
@@ -4882,6 +4881,10 @@ class PlayState extends MusicBeatState
 			if (allSicks)
 				allSicks = false;
 
+		}
+		if (noteDiff > ClientPrefs.badWindow && ClientPrefs.shitGivesMiss)
+		{	
+			noteMiss(note);
 		}
 		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
 		{

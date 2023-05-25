@@ -27,9 +27,9 @@ class ClientPrefs {
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
 	public static var communityGameMode:Bool = false;
+	public static var shitGivesMiss:Bool = false;
 	public static var lessBotLag:Bool = false;
 	public static var coolGameplay:Bool = false;
-	public static var fuckDeath:Bool = false;
 	public static var hudType:String = 'Kade Engine';
 	public static var healthGainType:String = 'Psych Engine';
 	public static var iconBounceType:String = 'Golden Apple';
@@ -148,7 +148,7 @@ class ClientPrefs {
 		FlxG.save.data.colorRatingFC = colorRatingFC;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
-		FlxG.save.data.fuckDeath = fuckDeath;
+		FlxG.save.data.shitGivesMiss = shitGivesMiss;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
 		FlxG.save.data.laneUnderlayAlpha = laneUnderlayAlpha;
 		FlxG.save.data.laneUnderlay = laneUnderlay;
@@ -230,6 +230,9 @@ class ClientPrefs {
 		}*/
 		if(FlxG.save.data.camZooms != null) {
 			camZooms = FlxG.save.data.camZooms;
+		}
+		if(FlxG.save.data.shitGivesMiss != null) {
+			shitGivesMiss = FlxG.save.data.shitGivesMiss;
 		}
 		if(FlxG.save.data.showNotes != null) {
 			showNotes = FlxG.save.data.showNotes;
