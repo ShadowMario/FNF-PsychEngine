@@ -70,6 +70,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Always Update Camera',
+			'If checked, camera will always update,\nwhich makes the camera more precise.',
+			'alwaysUpdateCamera',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Disable Reset Button',
 			"If checked, pressing Reset won't do anything.",
 			'noReset',
