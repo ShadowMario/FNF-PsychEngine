@@ -1042,9 +1042,10 @@ class ChartingState extends MusicBeatState
 		{
 			if (curSelectedNote != null) {
 				for(i in 0...Std.int(spamLength)) {
-					addNote(curSelectedNote[0] + (15000/_song.header.bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2], false);
+					addNote(curSelectedNote[0] + (15000/_song.bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2]);
 				}
-				updateGrid(false);
+				FlxG.log.add('added the spam');
+				updateGrid();
 				updateNoteUI();
 			}
 		});
@@ -2580,6 +2581,7 @@ class ChartingState extends MusicBeatState
 		}
 		Conductor.songPosition = FlxG.sound.music.time;
 		updateWaveform();
+		autosaveSong();
 	}
 
 	function updateSectionUI():Void
