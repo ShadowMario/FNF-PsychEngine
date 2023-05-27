@@ -108,6 +108,7 @@ class ChartingState extends MusicBeatState
 	private static var lastSong:String = '';
 
 	var bpmTxt:FlxText;
+	var songSlider:FlxUISlider;
 
 	var camPos:FlxObject;
 	var strumLine:FlxSprite;
@@ -389,6 +390,46 @@ class ChartingState extends MusicBeatState
 		add(curRenderedNoteType);
 		add(nextRenderedSustains);
 		add(nextRenderedNotes);
+
+		songSlider = new FlxUISlider(FlxG.sound.music, 'time', 1000, 15, 0, FlxG.sound.music.length, 250, 15, 5);
+		songSlider.valueLabel.visible = false;
+		songSlider.maxLabel.visible = false;
+		songSlider.minLabel.visible = false;
+		add(songSlider);
+		songSlider.scrollFactor.set();
+		songSlider.callback = function(fuck:Float)
+		{
+			vocals.time = FlxG.sound.music.time;
+			var shit = Std.int(FlxG.sound.music.time / (Conductor.crochet * 4)); //TODO uhh make this work properly with bpm changes or somethin
+
+			if (Conductor.bpmChangeMap.length > 0)
+			{
+				var foundSection:Bool = false;
+				var sec:Int = 1;
+				var lastSecStartTime:Float = 0;
+				while(!foundSection)
+				{	
+					var secStartTime = sectionStartTime(sec);
+					if (FlxG.sound.music.time >= lastSecStartTime && FlxG.sound.music.time <= secStartTime)
+					{
+						shit = sec;
+						foundSection = true;
+					}
+					else if (secStartTime >= FlxG.sound.music.length)
+					{
+						shit = 0;
+						foundSection = true;
+					}
+					sec++;
+					lastSecStartTime = secStartTime;
+				}
+			}
+
+
+
+
+			changeSection(shit);
+		};
 
 		if(lastSong != currentSongName) {
 			changeSection();
@@ -926,6 +967,10 @@ class ChartingState extends MusicBeatState
 	var strumTimeInputText:FlxUIInputText; //I wanted to use a stepper but we can't scale these as far as i know :(
 	var noteTypeDropDown:FlxUIDropDownMenuCustom;
 	var currentType:Int = 0;
+	var stepperSpamCloseness:FlxUINumericStepper;
+	var stepperSpamLength:FlxUINumericStepper;
+	var spamLength:Float = 5;
+	var spamCloseness:Float = 2;
 
 	function addNoteUI():Void
 	{
@@ -993,9 +1038,35 @@ class ChartingState extends MusicBeatState
 		});
 		blockPressWhileScrolling.push(noteTypeDropDown);
 
+		var spamButton:FlxButton = new FlxButton(noteTypeDropDown.x, noteTypeDropDown.y + 40, "Add Notes", function()
+		{
+			if (curSelectedNote != null) {
+				for(i in 0...Std.int(spamLength)) {
+					addNote(curSelectedNote[0] + (15000/_song.header.bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2], false);
+				}
+				updateGrid(false);
+				updateNoteUI();
+			}
+		});
+		
+		stepperSpamCloseness = new FlxUINumericStepper(spamButton.x + 90, spamButton.y + 5, 2, 2, 1, 1024);
+		stepperSpamCloseness.value = spamCloseness;
+		stepperSpamCloseness.name = 'note_spamthing';
+		blockPressWhileTypingOnStepper.push(stepperSpamCloseness);
+
+		stepperSpamLength = new FlxUINumericStepper(stepperSpamCloseness.x + 90, stepperSpamCloseness.y, 5, 5, 1, 16384);
+		stepperSpamLength.value = spamLength;
+		stepperSpamLength.name = 'note_spamamount';
+		blockPressWhileTypingOnStepper.push(stepperSpamLength);
+
 		tab_group_note.add(new FlxText(10, 10, 0, 'Sustain length:'));
+		tab_group_note.add(new FlxText(stepperSpamCloseness.x, stepperSpamCloseness.y - 15, 0, 'Note Density:'));
+		tab_group_note.add(new FlxText(stepperSpamLength.x, stepperSpamLength.y - 15, 0, 'Note Amount:'));
 		tab_group_note.add(new FlxText(10, 50, 0, 'Strum time (in miliseconds):'));
 		tab_group_note.add(new FlxText(10, 90, 0, 'Note type:'));
+		tab_group_note.add(spamButton);
+		tab_group_note.add(stepperSpamCloseness);
+		tab_group_note.add(stepperSpamLength);
 		tab_group_note.add(stepperSusLength);
 		tab_group_note.add(strumTimeInputText);
 		tab_group_note.add(noteTypeDropDown);
@@ -1370,6 +1441,15 @@ class ChartingState extends MusicBeatState
 		}
 		generateSong();
 		FlxG.sound.music.pause();
+		FlxG.sound.music.onComplete = function()
+		{
+			vocals.pause();
+			vocals.time = 0;
+			FlxG.sound.music.pause();
+			FlxG.sound.music.time = 0;
+			songSlider.maxValue = FlxG.sound.music.length;
+			changeSection();
+		};
 		Conductor.songPosition = sectionStartTime();
 		FlxG.sound.music.time = Conductor.songPosition;
 	}
@@ -1460,6 +1540,14 @@ class ChartingState extends MusicBeatState
 					curSelectedNote[2] = nums.value;
 					updateGrid();
 				}
+			}
+			else if (wname == 'note_spamthing')
+			{
+				spamCloseness = nums.value;
+			}
+			else if (wname == 'note_spamamount')
+			{
+				spamLength = nums.value;
 			}
 			else if (wname == 'section_bpm')
 			{
