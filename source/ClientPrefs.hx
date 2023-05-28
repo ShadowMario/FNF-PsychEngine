@@ -13,6 +13,8 @@ class ClientPrefs {
 	public static var showFPS:Bool = true;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
+	public static var ghostTapAnim:Bool = true;
+	public static var spaceVPose:Bool = true;
 	public static var noteSplashes:Bool = true;
 	public static var lowQuality:Bool = false;
 	public static var shaders:Bool = true;
@@ -106,7 +108,8 @@ class ClientPrefs {
 		'volume_down'	=> [NUMPADMINUS, MINUS],
 		
 		'debug_1'		=> [SEVEN, NONE],
-		'debug_2'		=> [EIGHT, NONE]
+		'debug_2'		=> [EIGHT, NONE],
+		'qt_taunt'		=> [SPACE, NONE]
 	];
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 
@@ -137,6 +140,8 @@ class ClientPrefs {
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
+		FlxG.save.data.spaceVPose = spaceVPose;
+		FlxG.save.data.ghostTapAnim = ghostTapAnim;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.communityGameMode = communityGameMode;
 		FlxG.save.data.lessBotLag = lessBotLag;
@@ -260,6 +265,12 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.communityGameMode != null) {
 			communityGameMode = FlxG.save.data.communityGameMode;
+		}
+		if(FlxG.save.data.spaceVPose != null) {
+			spaceVPose = FlxG.save.data.spaceVPose;
+		}
+		if(FlxG.save.data.ghostTapAnim != null) {
+			ghostTapAnim = FlxG.save.data.ghostTapAnim;
 		}
 		if(FlxG.save.data.timeBarType != null) {
 			timeBarType = FlxG.save.data.timeBarType;

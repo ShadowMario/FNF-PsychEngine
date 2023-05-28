@@ -121,6 +121,20 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Space to V-Pose',
+			"If checked, pressing the Space key will make BF go HEY!!",
+			'spaceVPose',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Ghost Tapping Plays Anim',
+			"If checked, Ghost Tapping will play BF's animations.",
+			'ghostTapAnim',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Hitsound Volume',
 			'Funny notes does \"Tick!\" when you hit them."',
 			'hitsoundVolume',

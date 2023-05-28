@@ -89,6 +89,8 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
+	private var tauntKey:Array<FlxKey>;
+
 	public static var ratingStuff:Array<Dynamic> = [
 		['you suck ass lol', 0.2], //From 0% to 19%
 		['you aint doin good', 0.4], //From 20% to 39%
@@ -392,6 +394,7 @@ class PlayState extends MusicBeatState
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
 		PauseSubState.songName = null; //Reset to default
 		playbackRate = ClientPrefs.getGameplaySetting('songspeed', 1);
+		tauntKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('qt_taunt'));
 
 		keysArray = [
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),
@@ -5344,6 +5347,16 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				else{
 					callOnLuas('onGhostTap', [key]);
+				if (!opponentChart && ClientPrefs.ghostTapAnim)
+				{
+					boyfriend.playAnim(singAnimations[Std.int(Math.abs(key))], true);
+					boyfriend.holdTimer = 0;
+				}
+				if (opponentChart && ClientPrefs.ghostTapAnim)
+				{
+					dad.playAnim(singAnimations[Std.int(Math.abs(key))], true);
+					dad.holdTimer = 0;
+				}
 					if (canMiss) {
 						noteMissPress(key);
 					}
@@ -5450,6 +5463,14 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					goodNoteHit(daNote);
 				}
 			});
+
+			if(FlxG.keys.anyJustPressed(tauntKey) && !char.animation.curAnim.name.endsWith('miss') && char.specialAnim == false){
+				char.playAnim('hey', true);
+				char.specialAnim = true;
+				char.heyTimer = 0.59;
+				FlxG.sound.play(Paths.sound('hey'));
+				trace("HEY!!");
+				}
 
 			if (parsedHoldArray.contains(true) && !endingSong && !opponentChart) {
 				#if ACHIEVEMENTS_ALLOWED
