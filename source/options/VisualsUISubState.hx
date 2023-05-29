@@ -123,6 +123,24 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Show Song Percentage',
+			"If checked, you can see text displaying how much\nof the song you've completed.",
+			'songPercentage',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('% Decimals: ',
+			"The amount of decimals you want for your Song Percentage. (0 means no decimals)",
+			'percentDecimals',
+			'int',
+			2);
+		addOption(option);
+
+		option.minValue = 0;
+		option.maxValue = 15;
+		option.displayFormat = '%v Decimals';
+
 		var option:Option = new Option('Show Notes',
 			"If unchecked, the notes will be invisible. You can still play them though!",
 			'showNotes',

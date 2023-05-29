@@ -20,6 +20,7 @@ class ClientPrefs {
 	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
+	public static var songPercentage:Bool = true;
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
 	public static var showNotes:Bool = true;
@@ -33,6 +34,7 @@ class ClientPrefs {
 	public static var lessBotLag:Bool = false;
 	public static var coolGameplay:Bool = false;
 	public static var hudType:String = 'Kade Engine';
+	public static var percentDecimals:Int = 2;
 	public static var healthGainType:String = 'Psych Engine';
 	public static var splashType:String = 'Psych Engine';
 	public static var iconBounceType:String = 'Golden Apple';
@@ -137,6 +139,7 @@ class ClientPrefs {
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.doubleGhost = doubleGhost;
+		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
 		FlxG.save.data.hudType = hudType;
 		FlxG.save.data.healthGainType = healthGainType;
@@ -148,6 +151,7 @@ class ClientPrefs {
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.communityGameMode = communityGameMode;
 		FlxG.save.data.lessBotLag = lessBotLag;
+		FlxG.save.data.songPercentage = songPercentage;
 		FlxG.save.data.coolGameplay = coolGameplay;
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.marvRateColor = marvRateColor;
@@ -214,6 +218,12 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.splashType != null) {
 			splashType = FlxG.save.data.splashType;
+		}
+		if(FlxG.save.data.percentDecimals != null) {
+			percentDecimals = FlxG.save.data.percentDecimals;
+		}
+		if(FlxG.save.data.songPercentage != null) {
+			songPercentage = FlxG.save.data.songPercentage;
 		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;

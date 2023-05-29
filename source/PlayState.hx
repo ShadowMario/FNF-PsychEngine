@@ -224,7 +224,7 @@ class PlayState extends MusicBeatState
 	private var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
-	var timeSongPercent:Float = 0;
+	var songPercentThing:Float = 0;
 
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
@@ -329,6 +329,7 @@ class PlayState extends MusicBeatState
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
+	var timePercentTxt:FlxText;
 
 	var scoreTxtTween:FlxTween;
 
@@ -1136,8 +1137,7 @@ class PlayState extends MusicBeatState
 		strumLine.scrollFactor.set();
 
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
-		
-		
+
 		if (ClientPrefs.hudType == 'Psych Engine') {
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
 		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1344,6 +1344,15 @@ class PlayState extends MusicBeatState
 			add(timeBar);
 			add(timeTxt);
 		}
+		timePercentTxt = new FlxText(timeBarBG.x + 400, 19, 400, "", 32);
+		timePercentTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timePercentTxt.scrollFactor.set();
+		timePercentTxt.alpha = 0;
+		timePercentTxt.borderSize = 2;
+		timePercentTxt.visible = ClientPrefs.songPercentage;
+		if(ClientPrefs.downScroll) timePercentTxt.y = FlxG.height - 44;
+		if (!showTime) timePercentTxt.screenCenter(X);
+		add(timePercentTxt);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
@@ -1651,6 +1660,7 @@ class PlayState extends MusicBeatState
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
+		timePercentTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
@@ -2853,6 +2863,7 @@ class PlayState extends MusicBeatState
 		FlxTween.tween(timeBar, {alpha: 1, "scale.x": 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeBarBG, {alpha: 1, "scale.x": 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(timePercentTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 
 
 
@@ -3779,6 +3790,7 @@ class PlayState extends MusicBeatState
 					var curTime:Float = Conductor.songPosition - ClientPrefs.noteOffset;
 					if(curTime < 0) curTime = 0;
 					songPercent = (curTime / songLength);
+					songPercentThing = FlxMath.roundDecimal(curTime / songLength * 100, ClientPrefs.percentDecimals);
 
 					var songCalc:Float = (songLength - curTime);
 					if(ClientPrefs.timeBarType == 'Time Elapsed') songCalc = curTime;
@@ -3788,6 +3800,13 @@ class PlayState extends MusicBeatState
 
 					if(ClientPrefs.timeBarType != 'Song Name')
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+					
+					if (ClientPrefs.hudType != 'Kade Engine')
+					{
+					timePercentTxt.text = songPercentThing  + '% Completed';
+					}
+					else
+					timePercentTxt.text = songPercentThing  + '%';
 				}
 			}
 
