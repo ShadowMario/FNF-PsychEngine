@@ -1352,6 +1352,7 @@ class PlayState extends MusicBeatState
 		timePercentTxt.visible = ClientPrefs.songPercentage;
 		if(ClientPrefs.downScroll) timePercentTxt.y = FlxG.height - 44;
 		if (!showTime) timePercentTxt.screenCenter(X);
+		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.x = timeBarBG.x + 550;
 		add(timePercentTxt);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
@@ -3071,7 +3072,6 @@ class PlayState extends MusicBeatState
 				if(!noteTypeMap.exists(swagNote.noteType)) {
 					noteTypeMap.set(swagNote.noteType, true);
 				}
-
 				var jackNote:Note;
 
 				if (jackingtime > 0)
