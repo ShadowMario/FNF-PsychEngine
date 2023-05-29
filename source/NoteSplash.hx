@@ -29,12 +29,24 @@ class NoteSplash extends FlxSprite
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
 		alpha = 0.6;
 
-		if(texture == null) {
+		if(texture == null && ClientPrefs.splashType == 'Psych Engine') {
 			texture = 'noteSplashes';
 			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		}
-		if(texture == null && ClientPrefs.hudType == 'VS Impostor') {
+		if(ClientPrefs.splashType == 'VS Impostor') {
 			texture = 'impostorNoteSplashes';
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+		}
+		if(ClientPrefs.splashType == 'Base Game') {
+			texture = 'baseNoteSplashes';
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+		}
+		if(ClientPrefs.splashType == 'Doki Doki+') {
+			texture = 'dokiNoteSplashes';
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+		}
+		if(ClientPrefs.splashType == 'TGT V4') {
+			texture = 'tgtNoteSplashes';
 			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		}
 		if(textureLoaded != texture) {
@@ -46,17 +58,76 @@ class NoteSplash extends FlxSprite
 		offset.set(10, 10);
 
 		var animNum:Int = FlxG.random.int(1, 2);
+		if (ClientPrefs.splashType != 'Doki Doki+' && ClientPrefs.splashType != 'Base Game')
+		{
+		var animNum:Int = FlxG.random.int(1, 2);
 		animation.play('note' + note + '-' + animNum, true);
 		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
+		}
+		if (ClientPrefs.splashType == 'Doki Doki+')
+		{
+		var animNum:Int = 1;
+		animation.play('note' + note, true);
+		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
+		}
+		if (ClientPrefs.splashType == 'Base Game')
+		{
+		var animNum:Int = FlxG.random.int(0, 1);
+		animation.play('note' + note + '-' + animNum, true);
+		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
+		}
 	}
 
 	function loadAnims(skin:String) {
 		frames = Paths.getSparrowAtlas(skin);
+		if (ClientPrefs.splashType == 'Psych Engine')
+		{
 		for (i in 1...3) {
 			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
 			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);
 			animation.addByPrefix("note0-" + i, "note splash purple " + i, 24, false);
 			animation.addByPrefix("note3-" + i, "note splash red " + i, 24, false);
+		}
+		}
+		if (ClientPrefs.splashType == 'TGT V4')
+		{
+		for (i in 1...3) {
+			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
+			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);
+			animation.addByPrefix("note0-" + i, "note splash purple " + i, 24, false);
+			animation.addByPrefix("note3-" + i, "note splash red " + i, 24, false);
+		}
+		}
+		if (ClientPrefs.splashType == 'VS Impostor')
+		{
+		for (i in 1...3) {
+			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
+			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);
+			animation.addByPrefix("note0-" + i, "note splash purple " + i, 24, false);
+			animation.addByPrefix("note3-" + i, "note splash red " + i, 24, false);
+		}
+		}
+		if (ClientPrefs.splashType == 'Doki Doki+')
+		{
+		for (i in 1...3) {
+		animation.addByPrefix('note1', 'note splash blue', 24, false);
+		animation.addByPrefix('note2', 'note splash green', 24, false);
+		animation.addByPrefix('note0', 'note splash purple', 24, false);
+		animation.addByPrefix('note3', 'note splash red', 24, false);
+		}
+		}
+		if (ClientPrefs.splashType == 'Base Game')
+		{
+		for (i in 1...3) {
+		animation.addByPrefix('note1-0', 'note impact 1  blue', 24, false);
+		animation.addByPrefix('note2-0', 'note impact 1 green', 24, false);
+		animation.addByPrefix('note0-0', 'note impact 1 purple', 24, false);
+		animation.addByPrefix('note3-0', 'note impact 1 red', 24, false);
+		animation.addByPrefix('note1-1', 'note impact 2 blue', 24, false);
+		animation.addByPrefix('note2-1', 'note impact 2 green', 24, false);
+		animation.addByPrefix('note0-1', 'note impact 2 purple', 24, false);
+		animation.addByPrefix('note3-1', 'note impact 2 red', 24, false);
+		}
 		}
 	}
 

@@ -101,6 +101,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			['Golden Apple', 'Dave and Bambi', 'Old Psych', 'New Psych', 'VS Steve']);
 		addOption(option);
 
+		var option:Option = new Option('Note Splash Type:',
+			"Which note splash would you like?",
+			'splashType',
+			'string',
+			'Psych Engine',
+			['Psych Engine', 'VS Impostor', 'Base Game', 'Doki Doki+', 'TGT V4']);
+		addOption(option);
+
 		var option:Option = new Option('Flashing Lights',
 			"Uncheck this if you're sensitive to flashing lights!",
 			'flashing',

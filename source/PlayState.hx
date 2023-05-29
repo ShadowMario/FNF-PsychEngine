@@ -6080,8 +6080,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
-		if (ClientPrefs.hudType == 'VS Impostor') PlayState.SONG.splashSkin = 'impostorNoteSplashes';
-		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') PlayState.SONG.splashSkin = 'tgtNoteSplashes';
+		//if (ClientPrefs.splashType == 'VS Impostor') PlayState.SONG.splashSkin = 'impostorNoteSplashes';
+		//if (ClientPrefs.splashType == 'Tails Gets Trolled V4') PlayState.SONG.splashSkin = 'tgtNoteSplashes';
 
 		var hue:Float = 0;
 		var sat:Float = 0;

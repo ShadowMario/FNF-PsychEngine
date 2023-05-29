@@ -34,6 +34,7 @@ class ClientPrefs {
 	public static var coolGameplay:Bool = false;
 	public static var hudType:String = 'Kade Engine';
 	public static var healthGainType:String = 'Psych Engine';
+	public static var splashType:String = 'Psych Engine';
 	public static var iconBounceType:String = 'Golden Apple';
 	public static var timeBarType:String = 'Time Left';
 	public static var marvRateColor:String = 'Golden';
@@ -153,6 +154,7 @@ class ClientPrefs {
 		FlxG.save.data.noMarvJudge = noMarvJudge;
 		FlxG.save.data.goldSickSFC = goldSickSFC;
 		FlxG.save.data.colorRatingFC = colorRatingFC;
+		FlxG.save.data.splashType = splashType;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.shitGivesMiss = shitGivesMiss;
@@ -209,6 +211,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.noteSplashes != null) {
 			noteSplashes = FlxG.save.data.noteSplashes;
+		}
+		if(FlxG.save.data.splashType != null) {
+			splashType = FlxG.save.data.splashType;
 		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
