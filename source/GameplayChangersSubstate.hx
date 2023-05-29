@@ -120,6 +120,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	
 		var option:GameplayOption = new GameplayOption('Flip Mode', 'flip', 'bool', false);
 		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('One Key', 'onekey', 'bool', false);
+		optionsArray.push(option);
 	}
 
 	public function getOptionByName(name:String)

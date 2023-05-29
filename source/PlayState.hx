@@ -260,6 +260,7 @@ class PlayState extends MusicBeatState
 	var flip:Bool = false;
 	var stairs:Bool = false;
 	var waves:Bool = false;
+	var oneK:Bool = false;
 
 
 	public var botplaySine:Float = 0;
@@ -462,6 +463,7 @@ class PlayState extends MusicBeatState
 		flip = ClientPrefs.getGameplaySetting('flip', false);
 		stairs = ClientPrefs.getGameplaySetting('stairmode', false);
 		waves = ClientPrefs.getGameplaySetting('wavemode', false);
+		oneK = ClientPrefs.getGameplaySetting('onekey', false);
 
 
 		// var gameCam:FlxCamera = FlxG.camera;
@@ -1404,6 +1406,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.scrollFactor.set();
 		healthBarBG.xAdd = -4;
 		healthBarBG.yAdd = -4;
+		healthBarBG.visible = !ClientPrefs.hideHud;
 		add(healthBarBG);
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
@@ -1419,6 +1422,7 @@ class PlayState extends MusicBeatState
 		{
 		healthBarBG = new AttachedSprite('dokiHealthBar');
 		healthBarBG.y = FlxG.height * 0.89;
+		healthBarBG.visible = !ClientPrefs.hideHud;
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -2946,6 +2950,10 @@ class PlayState extends MusicBeatState
 				if (!randomMode && !flip && !stairs	&& !waves)
 				{
 				daNoteData = Std.int(songNotes[1] % 4);
+				}
+				if (oneK)
+				{
+				daNoteData = 2;
 				}
 				if (randomMode || randomMode && flip || randomMode && flip && stairs || randomMode && flip && stairs && waves) { //gotta specify that random mode must at least be turned on for this to work
 				daNoteData = FlxG.random.int(0, 3);
