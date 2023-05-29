@@ -261,6 +261,7 @@ class PlayState extends MusicBeatState
 	var stairs:Bool = false;
 	var waves:Bool = false;
 	var oneK:Bool = false;
+	public var jackingtime:Float = 0;
 
 
 	public var botplaySine:Float = 0;
@@ -464,6 +465,7 @@ class PlayState extends MusicBeatState
 		stairs = ClientPrefs.getGameplaySetting('stairmode', false);
 		waves = ClientPrefs.getGameplaySetting('wavemode', false);
 		oneK = ClientPrefs.getGameplaySetting('onekey', false);
+		jackingtime = ClientPrefs.getGameplaySetting('jacks', 0);
 
 
 		// var gameCam:FlxCamera = FlxG.camera;
@@ -3057,6 +3059,46 @@ class PlayState extends MusicBeatState
 
 				if(!noteTypeMap.exists(swagNote.noteType)) {
 					noteTypeMap.set(swagNote.noteType, true);
+				}
+
+				var jackNote:Note;
+
+				if (jackingtime > 0)
+				{
+					for (i in 0...Std.int(jackingtime))
+					{
+						jackNote = new Note(swagNote.strumTime + 70 * (i + 1), swagNote.noteData, oldNote);
+						jackNote.scrollFactor.set();
+
+				jackNote.mustPress = swagNote.mustPress;
+				jackNote.sustainLength = swagNote.sustainLength;
+				jackNote.gfNote = swagNote.gfNote;
+				jackNote.noteType = swagNote.noteType;
+					jackNote.row = Conductor.secsToRow(daStrumTime);
+					if(noteRows[gottaHitNote?0:1][jackNote.row]==null)
+						noteRows[gottaHitNote?0:1][jackNote.row]=[];
+					noteRows[gottaHitNote ? 0 : 1][jackNote.row].push(jackNote);
+
+						unspawnNotes.push(jackNote);
+
+						jackNote.mustPress = swagNote.mustPress;
+
+						if (jackNote.mustPress)
+						{
+							jackNote.x += FlxG.width / 2; // general offset
+						}
+						else if(ClientPrefs.middleScroll)
+						{
+							jackNote.x += 310;
+							if(daNoteData > 1) //Up and Right
+							{
+								jackNote.x += FlxG.width / 2 + 25;
+							}
+						}
+						if(!noteTypeMap.exists(jackNote.noteType)) {
+							noteTypeMap.set(jackNote.noteType, true);
+						}
+					}
 				}
 			}
 			daBeats += 1;

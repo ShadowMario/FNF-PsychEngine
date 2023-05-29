@@ -75,7 +75,8 @@ class ClientPrefs {
 		'flip' => false,
 		'stairmode' => false,
 		'wavemode' => false,
-		'onekey' => false
+		'onekey' => false,
+		'jacks' => 0
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
