@@ -358,6 +358,7 @@ class ChartingState extends MusicBeatState
 		\nALT + Left Bracket / Right Bracket - Reset Song Playback Rate
 		\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
+		\nHold Alt and click on a note to change it to the selected note type
 		\nZ/X - Zoom in/out
 		\nC - Draw your charts! Easier charting for your Bambi fansongs lmao
 		\n
@@ -370,8 +371,8 @@ class ChartingState extends MusicBeatState
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
 			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
-			tipText.y += i * 12;
-			tipText.setFormat(Paths.font("vcr.ttf"), 14, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
+			tipText.y += i * 9;
+			tipText.setFormat(Paths.font("vcr.ttf"), 12, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 			//tipText.borderSize = 2;
 			tipText.scrollFactor.set();
 			add(tipText);
@@ -1062,12 +1063,41 @@ class ChartingState extends MusicBeatState
 		stepperSpamLength.name = 'note_spamamount';
 		blockPressWhileTypingOnStepper.push(stepperSpamLength);
 
+		var leftSectionNotetype:FlxButton = new FlxButton(spamButton.x, spamButton.y + 40, "Left Section to Notetype", function()
+		{
+			for (i in 0..._song.notes[curSec].sectionNotes.length)
+			{
+				var note:Array<Dynamic> = _song.notes[curSec].sectionNotes[i];
+				if (note[1] < 4)
+				{
+				note[3] = noteTypeIntMap.get(currentType);
+				}
+				_song.notes[curSec].sectionNotes[i] = note;
+			}
+			updateGrid();
+		});
+		var rightSectionNotetype:FlxButton = new FlxButton(spamButton.x + 90, spamButton.y + 40, "Right Section to Notetype", function()
+		{
+			for (i in 0..._song.notes[curSec].sectionNotes.length)
+			{
+				var note:Array<Dynamic> = _song.notes[curSec].sectionNotes[i];
+				if (note[1] > 3)
+				{
+				note[3] = noteTypeIntMap.get(currentType);
+				}
+				_song.notes[curSec].sectionNotes[i] = note;
+			}
+			updateGrid();
+		});
+
 		tab_group_note.add(new FlxText(10, 10, 0, 'Sustain length:'));
 		tab_group_note.add(new FlxText(stepperSpamCloseness.x, stepperSpamCloseness.y - 15, 0, 'Note Density:'));
 		tab_group_note.add(new FlxText(stepperSpamLength.x, stepperSpamLength.y - 15, 0, 'Note Amount:'));
 		tab_group_note.add(new FlxText(10, 50, 0, 'Strum time (in miliseconds):'));
 		tab_group_note.add(new FlxText(10, 90, 0, 'Note type:'));
 		tab_group_note.add(spamButton);
+		tab_group_note.add(leftSectionNotetype);
+		tab_group_note.add(rightSectionNotetype);
 		tab_group_note.add(stepperSpamCloseness);
 		tab_group_note.add(stepperSpamLength);
 		tab_group_note.add(stepperSusLength);
