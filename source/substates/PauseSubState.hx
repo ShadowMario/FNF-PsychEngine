@@ -5,7 +5,6 @@ import backend.Highscore;
 import backend.Song;
 
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.system.FlxSound;
 
 import flixel.util.FlxStringUtil;
 

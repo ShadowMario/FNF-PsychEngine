@@ -9,7 +9,6 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
-import flixel.system.FlxSound;
 import haxe.Json;
 
 import openfl.Assets;

@@ -62,6 +62,7 @@ class SaveVariables {
 	public var goodWindow:Int = 90;
 	public var badWindow:Int = 135;
 	public var safeFrames:Float = 10;
+	public var discordRPC:Bool = true;
 
 	public function new()
 	{
@@ -199,6 +200,10 @@ class ClientPrefs {
 			FlxG.sound.volume = FlxG.save.data.volume;
 		if (FlxG.save.data.mute != null)
 			FlxG.sound.muted = FlxG.save.data.mute;
+
+		#if desktop
+		DiscordClient.check();
+		#end
 
 		// controls on a separate save file
 		var save:FlxSave = new FlxSave();

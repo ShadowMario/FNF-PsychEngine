@@ -16,7 +16,6 @@ import openfl.utils.Assets;
 import openfl.display.BitmapData;
 import flixel.FlxBasic;
 import flixel.FlxObject;
-import flixel.system.FlxSound;
 import flixel.addons.transition.FlxTransitionableState;
 import Type.ValueType;
 
@@ -2112,6 +2111,8 @@ class FunkinLua {
 			DiscordClient.changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
 			#end
 		});
+		
+		DiscordClient.addLuaCallbacks(lua);
 
 
 		// LUA TEXTS
@@ -2286,6 +2287,7 @@ class FunkinLua {
 		});
 		psychlua.DeprecatedFunctions.implement(this);
 		psychlua.ExtraFunctions.implement(this);
+		#if desktop DiscordClient.addLuaCallbacks(lua); #end
 		#if hscript HScript.implement(this); #end
 
 		call('onCreate', []);
@@ -2367,8 +2369,8 @@ class FunkinLua {
 		if(target != null) {
 			PlayState.instance.modchartTweens.set(tag, FlxTween.tween(target, tweenValue, duration, {ease: LuaUtils.getTweenEaseByString(ease),
 				onComplete: function(twn:FlxTween) {
-					PlayState.instance.callOnLuas('onTweenCompleted', [tag, vars]);
 					PlayState.instance.modchartTweens.remove(tag);
+					PlayState.instance.callOnLuas('onTweenCompleted', [tag, vars]);
 				}
 			}));
 		} else {

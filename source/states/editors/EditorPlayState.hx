@@ -7,7 +7,6 @@ import backend.Song;
 import backend.Rating;
 
 import flixel.math.FlxRect;
-import flixel.system.FlxSound;
 import flixel.util.FlxSort;
 import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;

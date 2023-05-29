@@ -16,7 +16,6 @@ import flixel.addons.ui.FlxUISlider;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.group.FlxGroup;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
 import flixel.ui.FlxButton;
 
 import flixel.util.FlxSort;
@@ -47,7 +46,7 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
-@:access(flixel.system.FlxSound._sound)
+@:access(flixel.sound.FlxSound._sound)
 @:access(openfl.media.Sound.__buffer)
 
 class ChartingState extends MusicBeatState

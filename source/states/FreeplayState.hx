@@ -5,7 +5,6 @@ import backend.Highscore;
 import backend.Song;
 
 import lime.utils.Assets;
-import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
 
 import objects.HealthIcon;
