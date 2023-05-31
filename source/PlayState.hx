@@ -2897,29 +2897,6 @@ class PlayState extends MusicBeatState
 
 			FlxG.sound.music.time = Conductor.songPosition;
 		}});
-		var staticLinesNum = FlxG.random.int(3, 5);
-		for (i in 0...staticLinesNum)
-		{
-			var startPos = FlxG.random.float(0, FlxG.height);
-			var endPos = FlxG.random.float(0, FlxG.height);
-
-			var line:FlxSprite = new FlxSprite().loadGraphic(Paths.image("staticline"));
-			line.y = startPos;
-			line.updateHitbox();
-			line.cameras = [camHUD];
-			line.alpha = 0.3;
-	
-			line.screenCenter(X);
-			add(line);
-			FlxTween.tween(line, {y: endPos}, time, {
-				ease: FlxEase.circInOut,
-				onComplete: function(twn:FlxTween)
-				{
-					line.destroy();
-					resyncInst();
-				}
-			});
-		}
 	}
 
 	var debugNum:Int = 0;
