@@ -124,7 +124,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		var option:GameplayOption = new GameplayOption('One Key', 'onekey', 'bool', false);
 		optionsArray.push(option);
 
-		var option:GameplayOption = new GameplayOption('Jack Amount: ', 'jacks', 'float', 1);
+		var option:GameplayOption = new GameplayOption('Jack Amount: ', 'jacks', 'float', 0);
 		option.scrollSpeed = 6;
 		option.minValue = 0;
 		option.maxValue = 100;
