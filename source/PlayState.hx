@@ -278,6 +278,7 @@ class PlayState extends MusicBeatState
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
 	var hueh231:FlxSprite;
+	var SPUNCHBOB:FlxSprite;
 
 	var notesHitArray:Array<Date> = [];
 
@@ -5896,9 +5897,23 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			{
 				hitsound.play(true);
 				hitsound.pitch = playbackRate;
-				if (hitsound.pitch == 1)
+				if (hitSoundString == 'vine boom')
 				{
-				hitsound.pitch = playbackRate; //set the speed of the hitsound to the playbackrate again if it fucks up the speed
+					SPUNCHBOB = new FlxSprite().loadGraphic(Paths.image('sadsponge'));
+					SPUNCHBOB.antialiasing = ClientPrefs.globalAntialiasing;
+					SPUNCHBOB.scrollFactor.set();
+					SPUNCHBOB.setGraphicSize(Std.int(SPUNCHBOB.width / FlxG.camera.zoom));
+					SPUNCHBOB.updateHitbox();
+					SPUNCHBOB.screenCenter();
+					SPUNCHBOB.alpha = 1;
+					SPUNCHBOB.cameras = [camGame];
+					add(SPUNCHBOB);
+					FlxTween.tween(SPUNCHBOB, {alpha: 0}, 1 / (SONG.bpm/100) / playbackRate, {
+						onComplete: function(tween:FlxTween)
+						{
+							SPUNCHBOB.destroy();
+						}
+					});
 				}
 			}
 
