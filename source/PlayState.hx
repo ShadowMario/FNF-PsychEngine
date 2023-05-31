@@ -131,6 +131,8 @@ class PlayState extends MusicBeatState
 	public var modchartSaves:Map<String, FlxSave> = new Map();
 	#end
 
+	public var hitSoundString:String = ClientPrefs.hitsoundType;
+
 	public var BF_X:Float = 770;
 	public var BF_Y:Float = 100;
 	public var DAD_X:Float = 100;
@@ -1802,7 +1804,11 @@ class PlayState extends MusicBeatState
 		RecalculateRating();
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
+		if (hitSoundString != "none")
+			hitsound = FlxG.sound.load(Paths.sound("hitsounds/" + Std.string(hitSoundString).toLowerCase()));
 		if(ClientPrefs.hitsoundVolume > 0) precacheList.set('hitsound', 'sound');
+		hitsound.volume = ClientPrefs.hitsoundVolume;
+		hitsound.pitch = playbackRate;
 		precacheList.set('missnote1', 'sound');
 		precacheList.set('missnote2', 'sound');
 		precacheList.set('missnote3', 'sound');
@@ -5874,6 +5880,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		}
 	}
 
+	var hitsound:FlxSound;
+
 	function goodNoteHit(note:Note):Void
 	{
 		if (opponentChart) {
@@ -5886,7 +5894,12 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 			if (ClientPrefs.hitsoundVolume > 0 && !note.hitsoundDisabled)
 			{
-				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
+				hitsound.play(true);
+				hitsound.pitch = playbackRate;
+				if (hitsound.pitch == 1)
+				{
+				hitsound.pitch = playbackRate; //set the speed of the hitsound to the playbackrate again if it fucks up the speed
+				}
 			}
 
 			if(note.hitCausesMiss) {

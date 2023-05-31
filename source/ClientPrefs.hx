@@ -36,6 +36,7 @@ class ClientPrefs {
 	public static var hudType:String = 'Kade Engine';
 	public static var percentDecimals:Int = 2;
 	public static var healthGainType:String = 'Psych Engine';
+	public static var hitsoundType:String = 'osu!mania';
 	public static var splashType:String = 'Psych Engine';
 	public static var iconBounceType:String = 'Golden Apple';
 	public static var timeBarType:String = 'Time Left';
@@ -142,6 +143,7 @@ class ClientPrefs {
 		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
+		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.hudType = hudType;
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.noteOffset = noteOffset;
@@ -225,6 +227,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.songPercentage != null) {
 			songPercentage = FlxG.save.data.songPercentage;
+		}
+		if(FlxG.save.data.hitsoundType != null) {
+			hitsoundType = FlxG.save.data.hitsoundType;
 		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
