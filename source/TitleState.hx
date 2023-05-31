@@ -636,7 +636,7 @@ class TitleState extends MusicBeatState
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
+					createCoolText(['Psych Engine: No Botplay Lag by'], 15);
 					#else
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
@@ -646,6 +646,7 @@ class TitleState extends MusicBeatState
 					addMoreText('Shadow Mario', 15);
 					addMoreText('RiverOaken', 15);
 					addMoreText('shubs', 15);
+					addMoreText('Jordan Santiago', 15);
 					#else
 					addMoreText('present');
 					#end
@@ -665,7 +666,7 @@ class TitleState extends MusicBeatState
 				case 8:
 					addMoreText('newgrounds', -40);
 					ngSpr.visible = true;
-				// credTextShit.text += '\nNewgrounds';
+				// credTextShit.text += '\nNewgrounds & GitHub';
 				case 9:
 					deleteCoolText();
 					ngSpr.visible = false;

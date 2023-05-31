@@ -138,7 +138,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		option.minValue = 0;
-		option.maxValue = 15;
+		option.maxValue = 50;
 		option.displayFormat = '%v Decimals';
 
 		var option:Option = new Option('Show Notes',
