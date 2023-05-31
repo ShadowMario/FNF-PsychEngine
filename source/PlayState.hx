@@ -225,6 +225,7 @@ class PlayState extends MusicBeatState
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
 	var songPercentThing:Float = 0;
+	var playbackRateDecimal:Float = 0;
 
 	private var timeBarBG:AttachedSprite;
 	public var timeBar:FlxBar;
@@ -261,6 +262,7 @@ class PlayState extends MusicBeatState
 	var stairs:Bool = false;
 	var waves:Bool = false;
 	var oneK:Bool = false;
+	var randomSpeedThing:Bool = false;
 	public var jackingtime:Float = 0;
 
 
@@ -466,6 +468,7 @@ class PlayState extends MusicBeatState
 		stairs = ClientPrefs.getGameplaySetting('stairmode', false);
 		waves = ClientPrefs.getGameplaySetting('wavemode', false);
 		oneK = ClientPrefs.getGameplaySetting('onekey', false);
+		randomSpeedThing = ClientPrefs.getGameplaySetting('randomspeed', false);
 		jackingtime = ClientPrefs.getGameplaySetting('jacks', 0);
 
 
@@ -2885,6 +2888,39 @@ class PlayState extends MusicBeatState
 		setOnLuas('songLength', songLength);
 		callOnLuas('onSongStart', []);
 	}
+	public function lerpSongSpeed(num:Float, time:Float):Void
+	{
+		FlxTween.num(playbackRate, num, time, {onUpdate: function(tween:FlxTween){
+			var ting = FlxMath.lerp(playbackRate, num, tween.percent);
+			if (ting != 0) //divide by 0 is a verry bad
+				playbackRate = ting; //why cant i just tween a variable
+
+			FlxG.sound.music.time = Conductor.songPosition;
+		}});
+		var staticLinesNum = FlxG.random.int(3, 5);
+		for (i in 0...staticLinesNum)
+		{
+			var startPos = FlxG.random.float(0, FlxG.height);
+			var endPos = FlxG.random.float(0, FlxG.height);
+
+			var line:FlxSprite = new FlxSprite().loadGraphic(Paths.image("staticline"));
+			line.y = startPos;
+			line.updateHitbox();
+			line.cameras = [camHUD];
+			line.alpha = 0.3;
+	
+			line.screenCenter(X);
+			add(line);
+			FlxTween.tween(line, {y: endPos}, time, {
+				ease: FlxEase.circInOut,
+				onComplete: function(twn:FlxTween)
+				{
+					line.destroy();
+					resyncInst();
+				}
+			});
+		}
+	}
 
 	var debugNum:Int = 0;
 	var stair:Int = 0;
@@ -3416,6 +3452,20 @@ class PlayState extends MusicBeatState
 		}
 		vocals.play();
 	}
+	function resyncInst():Void //(sync music to song position)
+	{
+		if (!endingSong)
+		{
+			trace("synced Inst");
+			FlxG.sound.music.pause();
+			FlxG.sound.music.pitch = playbackRate;
+			FlxG.sound.music.time = Conductor.songPosition;
+			FlxG.sound.music.play();
+
+			resyncVocals(); //sync vocals at same time
+		}
+
+	}
 
 	public var paused:Bool = false;
 	public var canReset:Bool = true;
@@ -3791,6 +3841,7 @@ class PlayState extends MusicBeatState
 					if(curTime < 0) curTime = 0;
 					songPercent = (curTime / songLength);
 					songPercentThing = FlxMath.roundDecimal(curTime / songLength * 100, ClientPrefs.percentDecimals);
+					playbackRateDecimal = FlxMath.roundDecimal(playbackRate, 2);
 
 					var songCalc:Float = (songLength - curTime);
 					if(ClientPrefs.timeBarType == 'Time Elapsed') songCalc = curTime;
@@ -3800,6 +3851,9 @@ class PlayState extends MusicBeatState
 
 					if(ClientPrefs.timeBarType != 'Song Name')
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+					
+					if(randomSpeedThing)
+						timeTxt.text += ' (' + playbackRateDecimal + 'x)';
 					
 					if (ClientPrefs.hudType != 'Kade Engine')
 					{
@@ -3817,6 +3871,11 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay * playbackRate), 0, 1));
 			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125 * camZoomingDecay * playbackRate), 0, 1));
+		}
+		if (curBeat % 32 == 0 && randomSpeedThing)
+		{
+			var randomShit = FlxMath.roundDecimal(FlxG.random.float(0.4, 3), 2);
+			lerpSongSpeed(randomShit, 1 / playbackRate);
 		}
 
 		FlxG.watch.addQuick("secShit", curSection);
