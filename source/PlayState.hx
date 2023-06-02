@@ -3859,7 +3859,7 @@ class PlayState extends MusicBeatState
 		if (curBeat % 32 == 0 && randomSpeedThing)
 		{
 			var randomShit = FlxMath.roundDecimal(FlxG.random.float(0.4, 3), 2);
-			lerpSongSpeed(randomShit, 1 / playbackRate);
+			lerpSongSpeed(randomShit, 1);
 		}
 
 		FlxG.watch.addQuick("secShit", curSection);
