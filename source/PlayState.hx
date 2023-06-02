@@ -5944,7 +5944,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				hitsound.play(true);
 				hitsound.pitch = playbackRate;
 				}
-				if (hitsoundString == 'Randomized')
+				if (hitSoundString == 'Randomized')
 				{
 				hitsound.pitch = playbackRate;
 				hitsound2.pitch = playbackRate;
