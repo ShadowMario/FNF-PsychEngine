@@ -5944,6 +5944,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				hitsound.play(true);
 				hitsound.pitch = playbackRate;
 				}
+				if (hitsoundString == 'Randomized')
+				{
 				hitsound.pitch = playbackRate;
 				hitsound2.pitch = playbackRate;
 				hitsound3.pitch = playbackRate;
@@ -5952,6 +5954,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				hitsound6.pitch = playbackRate;
 				hitsound7.pitch = playbackRate;
 				hitsound8.pitch = playbackRate;
+				}
 				if (hitSoundString == 'vine boom')
 				{
 					SPUNCHBOB = new FlxSprite().loadGraphic(Paths.image('sadsponge'));
