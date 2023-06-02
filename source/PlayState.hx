@@ -1807,7 +1807,45 @@ class PlayState extends MusicBeatState
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
 		if (hitSoundString != "none")
 			hitsound = FlxG.sound.load(Paths.sound("hitsounds/" + Std.string(hitSoundString).toLowerCase()));
+		if (hitSoundString == 'Randomized')
+			{
+			hitsound = FlxG.sound.load(Paths.sound("hitsounds/" + 'osu!mania'));
+			hitsound2 = FlxG.sound.load(Paths.sound("hitsounds/" + 'dave and bambi'));
+			hitsound3 = FlxG.sound.load(Paths.sound("hitsounds/" + 'indie cross'));
+			hitsound4 = FlxG.sound.load(Paths.sound("hitsounds/" + 'snap'));
+			hitsound5 = FlxG.sound.load(Paths.sound("hitsounds/" + 'clap'));
+			hitsound6 = FlxG.sound.load(Paths.sound("hitsounds/" + 'generic click'));
+			hitsound7 = FlxG.sound.load(Paths.sound("hitsounds/" + 'keyboard click'));
+			hitsound8 = FlxG.sound.load(Paths.sound("hitsounds/" + 'vine boom'));
+			}
 		if(ClientPrefs.hitsoundVolume > 0) precacheList.set('hitsound', 'sound');
+		if(ClientPrefs.hitsoundVolume > 0 && hitSoundString == 'Randomized') 
+			{
+			precacheList.set('hitsound', 'sound');
+			precacheList.set('hitsound2', 'sound');
+			precacheList.set('hitsound3', 'sound');
+			precacheList.set('hitsound4', 'sound');
+			precacheList.set('hitsound5', 'sound');
+			precacheList.set('hitsound6', 'sound');
+			precacheList.set('hitsound7', 'sound');
+			precacheList.set('hitsound8', 'sound');
+			hitsound.volume = ClientPrefs.hitsoundVolume;
+			hitsound.pitch = playbackRate;
+			hitsound2.volume = ClientPrefs.hitsoundVolume;
+			hitsound2.pitch = playbackRate;
+			hitsound3.volume = ClientPrefs.hitsoundVolume;
+			hitsound3.pitch = playbackRate;
+			hitsound4.volume = ClientPrefs.hitsoundVolume;
+			hitsound4.pitch = playbackRate;
+			hitsound5.volume = ClientPrefs.hitsoundVolume;
+			hitsound5.pitch = playbackRate;
+			hitsound6.volume = ClientPrefs.hitsoundVolume;
+			hitsound6.pitch = playbackRate;
+			hitsound7.volume = ClientPrefs.hitsoundVolume;
+			hitsound7.pitch = playbackRate;
+			hitsound8.volume = ClientPrefs.hitsoundVolume;
+			hitsound8.pitch = playbackRate;
+			}
 		hitsound.volume = ClientPrefs.hitsoundVolume;
 		hitsound.pitch = playbackRate;
 		precacheList.set('missnote1', 'sound');
@@ -3734,10 +3772,9 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.iconBounceType == 'Golden Apple') {
 		iconP1.centerOffsets();
 		iconP2.centerOffsets();
-		}
-	
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
+		}
 
 		var iconOffset:Int = 26;
 
@@ -5882,6 +5919,13 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	}
 
 	var hitsound:FlxSound;
+	var hitsound2:FlxSound;
+	var hitsound3:FlxSound;
+	var hitsound4:FlxSound;
+	var hitsound5:FlxSound;
+	var hitsound6:FlxSound;
+	var hitsound7:FlxSound;
+	var hitsound8:FlxSound;
 
 	function goodNoteHit(note:Note):Void
 	{
@@ -5895,8 +5939,18 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 			if (ClientPrefs.hitsoundVolume > 0 && !note.hitsoundDisabled)
 			{
+				if (hitSoundString != 'Randomized')
+				{
 				hitsound.play(true);
+				}
 				hitsound.pitch = playbackRate;
+				hitsound2.pitch = playbackRate;
+				hitsound3.pitch = playbackRate;
+				hitsound4.pitch = playbackRate;
+				hitsound5.pitch = playbackRate;
+				hitsound6.pitch = playbackRate;
+				hitsound7.pitch = playbackRate;
+				hitsound8.pitch = playbackRate;
 				if (hitSoundString == 'vine boom')
 				{
 					SPUNCHBOB = new FlxSprite().loadGraphic(Paths.image('sadsponge'));
@@ -5914,6 +5968,53 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 							SPUNCHBOB.destroy();
 						}
 					});
+				}
+				if (ClientPrefs.hitsoundType == 'Randomized') {
+					var randomHitSoundType:Int = FlxG.random.int(1, 8);
+						switch (randomHitSoundType)
+							{
+								case 1:
+									hitsound.play(true);
+									hitsound.pitch = playbackRate;
+								case 2:
+									hitsound2.play(true);
+									hitsound2.pitch = playbackRate;
+								case 3:
+									hitsound3.play(true);
+									hitsound3.pitch = playbackRate;
+								case 4:
+									hitsound4.play(true);
+									hitsound4.pitch = playbackRate;
+								case 5:
+									hitsound5.play(true);
+									hitsound5.pitch = playbackRate;
+								case 6:
+									hitsound6.play(true);
+									hitsound6.pitch = playbackRate;
+								case 7:
+									hitsound7.play(true);
+									hitsound7.pitch = playbackRate;
+								case 8:
+									hitsound8.play(true);
+									hitsound8.pitch = playbackRate;
+									{
+										SPUNCHBOB = new FlxSprite().loadGraphic(Paths.image('sadsponge'));
+										SPUNCHBOB.antialiasing = ClientPrefs.globalAntialiasing;
+										SPUNCHBOB.scrollFactor.set();
+										SPUNCHBOB.setGraphicSize(Std.int(SPUNCHBOB.width / FlxG.camera.zoom));
+										SPUNCHBOB.updateHitbox();
+										SPUNCHBOB.screenCenter();
+										SPUNCHBOB.alpha = 1;
+										SPUNCHBOB.cameras = [camGame];
+										add(SPUNCHBOB);
+										FlxTween.tween(SPUNCHBOB, {alpha: 0}, 1 / (SONG.bpm/100) / playbackRate, {
+											onComplete: function(tween:FlxTween)
+											{
+												SPUNCHBOB.destroy();
+											}
+										});
+									}
+							}
 				}
 			}
 
@@ -6470,7 +6571,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
-		}
+		} 
 		if (ClientPrefs.iconBounceType == 'VS Steve') {
 		if (curBeat % gfSpeed == 0) 
 			{
