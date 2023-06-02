@@ -3772,9 +3772,9 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.iconBounceType == 'Golden Apple') {
 		iconP1.centerOffsets();
 		iconP2.centerOffsets();
+		}
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
-		}
 
 		var iconOffset:Int = 26;
 
