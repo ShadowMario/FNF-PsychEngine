@@ -1358,7 +1358,7 @@ class PlayState extends MusicBeatState
 		timePercentTxt.visible = ClientPrefs.songPercentage;
 		if(ClientPrefs.downScroll) timePercentTxt.y = FlxG.height - 44;
 		if (!showTime) timePercentTxt.screenCenter(X);
-		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.x = timeBarBG.x + 550;
+		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.x = timeBarBG.x + 600;
 		add(timePercentTxt);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
@@ -3861,22 +3861,59 @@ class PlayState extends MusicBeatState
 					var curTime:Float = Conductor.songPosition - ClientPrefs.noteOffset;
 					if(curTime < 0) curTime = 0;
 					songPercent = (curTime / songLength);
+					var songDurationSeconds:Float = FlxMath.roundDecimal(songLength / 1000, 0);
 					songPercentThing = FlxMath.roundDecimal(curTime / songLength * 100, ClientPrefs.percentDecimals);
 					playbackRateDecimal = FlxMath.roundDecimal(playbackRate, 2);
 
 					var songCalc:Float = (songLength - curTime);
-					if(ClientPrefs.timeBarType == 'Time Elapsed') songCalc = curTime;
+					if(ClientPrefs.timeBarType == 'Time Elapsed' || ClientPrefs.timeBarType == 'Modern Time' || ClientPrefs.timeBarType == 'Song Name + Time') songCalc = curTime;
 
-					var secondsTotal:Int = Math.floor(songCalc / 1000);
+					var secondsTotal:Int = 0;
+
+					secondsTotal = Math.floor(songCalc / 1000);
 					if(secondsTotal < 0) secondsTotal = 0;
 
-					if(ClientPrefs.timeBarType != 'Song Name')
+
+					var hoursRemaining:Int = Math.floor(secondsTotal / 3600);
+					var minutesRemaining:Int = Math.floor(secondsTotal / 60) % 60;
+					var minutesRemainingShit:String = '' + minutesRemaining;
+					var secondsRemaining:String = '' + secondsTotal % 60;
+
+					if(secondsRemaining.length < 2) secondsRemaining = '0' + secondsRemaining; //let's see if the old time format works actually
+					//if (minutesRemaining == 60) minutesRemaining = 0; //reset the minutes to 0 every time it counts another hour
+					if (minutesRemainingShit.length < 2) minutesRemainingShit = '0' + minutesRemaining; 
+					//also, i wont add a day thing because there's no way someone can mod a song that's over 24 hours long into this engine
+
+					var hoursShown:Int = Math.floor(songDurationSeconds / 3600);
+					var minutesShown:Int = Math.floor(songDurationSeconds / 60) % 60;
+					var minutesShownShit:String = '' + minutesShown;
+					var secondsShown:String = '' + songDurationSeconds % 60;
+					if(secondsShown.length < 2) secondsShown = '0' + secondsShown; //let's see if the old time format works actually
+					if (minutesShownShit.length < 2) minutesShownShit = '0' + minutesShown;
+
+
+					if(ClientPrefs.timeBarType != 'Song Name' && songLength <= 3600000)
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+
+					if(ClientPrefs.timeBarType != 'Song Name' && songLength >= 3600000)
+					timeTxt.text = hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining;
+
+					if(ClientPrefs.timeBarType == 'Modern Time' && songLength <= 3600000)
+						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false) + ' / ' + FlxStringUtil.formatTime(songLength / 1000, false);
+
+					if(ClientPrefs.timeBarType == 'Modern Time' && songLength >= 3600000)
+						timeTxt.text = hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining + ' / ' + hoursShown + ':' + minutesShownShit + ':' + secondsShown;
+
+					if(ClientPrefs.timeBarType == 'Song Name + Time' && songLength <= 3600000)
+						timeTxt.text = SONG.song + ' (' + FlxStringUtil.formatTime(secondsTotal, false) + ' / ' + FlxStringUtil.formatTime(songLength / 1000, false) + ')';
+
+					if(ClientPrefs.timeBarType == 'Song Name + Time' && songLength >= 3600000)
+						timeTxt.text = SONG.song + ' (' + hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining + ' / ' + hoursShown + ':' + minutesShownShit + ':' + secondsShown + ')';
 					
 					if(randomSpeedThing)
 						timeTxt.text += ' (' + playbackRateDecimal + 'x)';
 					
-					if (ClientPrefs.hudType != 'Kade Engine')
+					if (ClientPrefs.hudType != 'Kade Engine' && ClientPrefs.hudType != 'Dave & Bambi')
 					{
 					timePercentTxt.text = songPercentThing  + '% Completed';
 					}
@@ -4674,7 +4711,7 @@ class PlayState extends MusicBeatState
 
 	public var transitioning = false;
 	public function endSong():Void
-	{
+	{		
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
