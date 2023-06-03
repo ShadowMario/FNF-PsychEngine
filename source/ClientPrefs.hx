@@ -21,6 +21,7 @@ class ClientPrefs {
 	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
 	public static var songPercentage:Bool = true;
+	public static var randomBotplayText:Bool = true;
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
 	public static var showNotes:Bool = true;
@@ -141,6 +142,7 @@ class ClientPrefs {
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.doubleGhost = doubleGhost;
+		FlxG.save.data.randomBotplayText = randomBotplayText;
 		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
 		FlxG.save.data.hitsoundType = hitsoundType;
@@ -218,6 +220,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.noteSplashes != null) {
 			noteSplashes = FlxG.save.data.noteSplashes;
+		}
+		if(FlxG.save.data.randomBotplayText != null) {
+			randomBotplayText = FlxG.save.data.randomBotplayText;
 		}
 		if(FlxG.save.data.splashType != null) {
 			splashType = FlxG.save.data.splashType;

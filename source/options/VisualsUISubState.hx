@@ -195,6 +195,13 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
 		#end
+
+		var option:Option = new Option('Random Botplay Text',
+			"Uncheck this if you don't want to be insulted when\nyou use Botplay.",
+			'randomBotplayText',
+			'bool',
+			true);
+		addOption(option);
 		
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",

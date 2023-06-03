@@ -140,6 +140,8 @@ class PlayState extends MusicBeatState
 	public var GF_X:Float = 400;
 	public var GF_Y:Float = 130;
 
+	var randomBotplayText:String;
+
 	public var songSpeedTween:FlxTween;
 	public var songSpeed(default, set):Float = 1;
 	public var songSpeedType:String = "multiplicative";
@@ -151,6 +153,7 @@ class PlayState extends MusicBeatState
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
+	var botplayUsed:Bool = false;
 	public static var curStage:String = '';
 	public static var isPixelStage:Bool = false;
 	public static var SONG:SwagSong = null;
@@ -390,8 +393,15 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
+	var getTheBotplayText:Int = 0;
+
+	var theListBotplay:Array<String> = [];
+
 	override public function create()
 	{
+		theListBotplay = CoolUtil.coolTextFile(Paths.txt('botplayText'));
+
+		randomBotplayText = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
 
@@ -3724,6 +3734,46 @@ class PlayState extends MusicBeatState
 		if(botplayTxt.visible) {
 			botplaySine += 180 * elapsed;
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180 * playbackRate);
+		}
+
+		if(!cpuControlled && ClientPrefs.randomBotplayText)
+			{
+				botplayTxt.text = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
+			}
+		if(cpuControlled && ClientPrefs.randomBotplayText) {
+			if(botplayTxt.text == "this text is gonna kick you out of botplay in 10 seconds" && !botplayUsed)
+				{
+					botplayUsed = true;
+					new FlxTimer().start(10, function(tmr:FlxTimer)
+						{
+							cpuControlled = false;
+							botplayUsed = false;
+						});
+				}
+			if(botplayTxt.text == "you're about to die in 30 seconds" && !botplayUsed)
+				{
+					botplayUsed = true;
+					new FlxTimer().start(30, function(tmr:FlxTimer)
+						{
+							health = 0;
+						});
+				}
+			if(botplayTxt.text == "3 minutes until Boyfriend steals your liver." && !botplayUsed)
+				{
+				var title:String = 'Incoming Alert from Boyfriend';
+				var message:String = '3 minutes until Boyfriend steals your liver!';
+				FlxG.sound.music.pause();
+				vocals.pause();
+
+				lime.app.Application.current.window.alert(message, title);
+				FlxG.sound.music.resume();
+				vocals.resume();
+					botplayUsed = true;
+					new FlxTimer().start(180, function(tmr:FlxTimer)
+						{
+							Sys.exit(0);
+						});
+				}
 		}
 
 		if (controls.PAUSE && startedCountdown && canPause)
