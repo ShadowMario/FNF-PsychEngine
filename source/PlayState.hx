@@ -3736,7 +3736,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180 * playbackRate);
 		}
 
-		if(!cpuControlled && ClientPrefs.randomBotplayText)
+		if(cpuControlled && ClientPrefs.randomBotplayText)
 			{
 				botplayTxt.text = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 			}
