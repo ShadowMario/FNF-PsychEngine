@@ -33,6 +33,7 @@ class ClientPrefs {
 	public static var communityGameMode:Bool = false;
 	public static var shitGivesMiss:Bool = false;
 	public static var lessBotLag:Bool = false;
+	public static var moreSpecificSpeed:Bool = true;
 	public static var coolGameplay:Bool = false;
 	public static var hudType:String = 'Kade Engine';
 	public static var percentDecimals:Int = 2;
@@ -151,6 +152,7 @@ class ClientPrefs {
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
+		FlxG.save.data.moreSpecificSpeed = moreSpecificSpeed;
 		FlxG.save.data.spaceVPose = spaceVPose;
 		FlxG.save.data.ghostTapAnim = ghostTapAnim;
 		FlxG.save.data.ghostTapping = ghostTapping;
@@ -241,6 +243,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.shaders != null) {
 			shaders = FlxG.save.data.shaders;
+		}
+		if(FlxG.save.data.moreSpecificSpeed != null) {
+			moreSpecificSpeed = FlxG.save.data.moreSpecificSpeed;
 		}
 		if(FlxG.save.data.goldSickSFC != null) {
 			goldSickSFC = FlxG.save.data.goldSickSFC;

@@ -1885,6 +1885,11 @@ class PlayState extends MusicBeatState
 
 		super.create();
 
+		if(cpuControlled && ClientPrefs.randomBotplayText)
+			{
+				botplayTxt.text = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
+			}
+
 		cacheCountdown();
 		cachePopUpScore();
 		for (key => type in precacheList)
@@ -3735,11 +3740,6 @@ class PlayState extends MusicBeatState
 			botplaySine += 180 * elapsed;
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180 * playbackRate);
 		}
-
-		if(cpuControlled && ClientPrefs.randomBotplayText)
-			{
-				botplayTxt.text = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
-			}
 		if(cpuControlled && ClientPrefs.randomBotplayText) {
 			if(botplayTxt.text == "this text is gonna kick you out of botplay in 10 seconds" && !botplayUsed)
 				{

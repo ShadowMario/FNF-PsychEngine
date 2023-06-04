@@ -221,6 +221,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		addOption(option);
 
+		var option:Option = new Option('More Specific Speed',
+			"If checked, Playback Rate's modifier will change in multiples of 0.01 instead of 0.05.",
+			'moreSpecificSpeed',
+			'bool',
+			true);
+		addOption(option);
+
 		super();
 	}
 

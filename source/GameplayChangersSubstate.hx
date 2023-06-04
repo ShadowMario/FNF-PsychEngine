@@ -64,7 +64,13 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.scrollSpeed = 1;
 		option.minValue = 0.01;
 		option.maxValue = 10;
+		if (ClientPrefs.moreSpecificSpeed)
+		{
+		option.changeValue = 0.01;
+		} else
+		{
 		option.changeValue = 0.05;
+		}
 		option.displayFormat = '%vX';
 		option.decimals = 2;
 		optionsArray.push(option);
