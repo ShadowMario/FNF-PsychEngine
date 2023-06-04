@@ -2924,8 +2924,8 @@ class PlayState extends MusicBeatState
 		songLength = FlxG.sound.music.length;
 		timeBar.scale.x = 0.01;
 		timeBarBG.scale.x = 0.01;
-		FlxTween.tween(timeBar, {alpha: 1, "scale.x": 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(timeBarBG, {alpha: 1, "scale.x": 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(timeBar, {alpha: 1, "scale.x": 1}, 1, {ease: FlxEase.expoOut});
+		FlxTween.tween(timeBarBG, {alpha: 1, "scale.x": 1}, 1, {ease: FlxEase.expoOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timePercentTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 
@@ -3756,8 +3756,12 @@ class PlayState extends MusicBeatState
 					botplayUsed = true;
 					new FlxTimer().start(10, function(tmr:FlxTimer)
 						{
+							var vidSpr:FlxSprite;
 							var videoDone:Bool = true;
-							video.playMP4(Paths.video('scary'), false, vidSpr, false, true, false);
+							var video:MP4Handler = new MP4Handler(); // it plays but it doesn't show???
+							vidSpr = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
+							add(vidSpr);
+							video.playVideo(Paths.video('scary'), false, false);
 							video.finishCallback = function()
 							{
 								videoDone = true;
