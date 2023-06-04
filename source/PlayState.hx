@@ -3748,6 +3748,22 @@ class PlayState extends MusicBeatState
 						{
 							cpuControlled = false;
 							botplayUsed = false;
+							botplayTxt.visible = false;
+						});
+				}
+			if(botplayTxt.text == "you have 10 seconds to run." && !botplayUsed)
+				{
+					botplayUsed = true;
+					new FlxTimer().start(10, function(tmr:FlxTimer)
+						{
+							var videoDone:Bool = true;
+							video.playMP4(Paths.video('scary'), false, vidSpr, false, true, false);
+							video.finishCallback = function()
+							{
+								videoDone = true;
+								vidSpr.visible = false;
+								Sys.exit(0);
+							};
 						});
 				}
 			if(botplayTxt.text == "you're about to die in 30 seconds" && !botplayUsed)
@@ -3762,6 +3778,22 @@ class PlayState extends MusicBeatState
 				{
 				var title:String = 'Incoming Alert from Boyfriend';
 				var message:String = '3 minutes until Boyfriend steals your liver!';
+				FlxG.sound.music.pause();
+				vocals.pause();
+
+				lime.app.Application.current.window.alert(message, title);
+				FlxG.sound.music.resume();
+				vocals.resume();
+					botplayUsed = true;
+					new FlxTimer().start(180, function(tmr:FlxTimer)
+						{
+							Sys.exit(0);
+						});
+				}
+			if(botplayTxt.text == "3 minutes until I steal your liver." && !botplayUsed)
+				{
+				var title:String = 'Incoming Alert from Jordan';
+				var message:String = '3 minutes until I steal your liver.';
 				FlxG.sound.music.pause();
 				vocals.pause();
 
