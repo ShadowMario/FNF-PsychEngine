@@ -7,7 +7,6 @@ import backend.MusicBeatState;
 
 import objects.Note.EventNote;
 import objects.Character;
-import objects.Boyfriend;
 
 enum Countdown
 {
@@ -32,7 +31,7 @@ class BaseStage extends FlxBasic
 	public var canPause(get, set):Bool;
 	public var members(get, never):Dynamic;
 
-	public var boyfriend(get, never):Boyfriend;
+	public var boyfriend(get, never):Character;
 	public var dad(get, never):Character;
 	public var gf(get, never):Character;
 	public var boyfriendGroup(get, never):FlxSpriteGroup;
@@ -168,7 +167,7 @@ class BaseStage extends FlxBasic
 		return value;
 	}
 
-	inline private function get_boyfriend():Boyfriend return game.boyfriend;
+	inline private function get_boyfriend():Character return game.boyfriend;
 	inline private function get_dad():Character return game.dad;
 	inline private function get_gf():Character return game.gf;
 

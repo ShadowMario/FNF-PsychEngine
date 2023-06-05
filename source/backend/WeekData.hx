@@ -87,43 +87,11 @@ class WeekData {
 		weeksList = [];
 		weeksLoaded.clear();
 		#if MODS_ALLOWED
-		var disabledMods:Array<String> = [];
-		var modsListPath:String = 'modsList.txt';
 		var directories:Array<String> = [Paths.mods(), Paths.getPreloadPath()];
 		var originalLength:Int = directories.length;
-		if(FileSystem.exists(modsListPath))
-		{
-			var stuff:Array<String> = CoolUtil.coolTextFile(modsListPath);
-			for (i in 0...stuff.length)
-			{
-				var splitName:Array<String> = stuff[i].trim().split('|');
-				if(splitName[1] == '0') // Disable mod
-				{
-					disabledMods.push(splitName[0]);
-				}
-				else // Sort mod loading order based on modsList.txt file
-				{
-					var path = haxe.io.Path.join([Paths.mods(), splitName[0]]);
-					//trace('trying to push: ' + splitName[0]);
-					if (sys.FileSystem.isDirectory(path) && !Paths.ignoreModFolders.contains(splitName[0]) && !disabledMods.contains(splitName[0]) && !directories.contains(path + '/'))
-					{
-						directories.push(path + '/');
-						//trace('pushed Directory: ' + splitName[0]);
-					}
-				}
-			}
-		}
 
-		var modsDirectories:Array<String> = Paths.getModDirectories();
-		for (folder in modsDirectories)
-		{
-			var pathThing:String = haxe.io.Path.join([Paths.mods(), folder]) + '/';
-			if (!disabledMods.contains(folder) && !directories.contains(pathThing))
-			{
-				directories.push(pathThing);
-				//trace('pushed Directory: ' + folder);
-			}
-		}
+		for (mod in Mods.parseList().enabled)
+			directories.push(Paths.mods(mod + '/'));
 		#else
 		var directories:Array<String> = [Paths.getPreloadPath()];
 		var originalLength:Int = directories.length;
@@ -234,31 +202,9 @@ class WeekData {
 	}
 
 	public static function setDirectoryFromWeek(?data:WeekData = null) {
-		Paths.currentModDirectory = '';
+		Mods.currentModDirectory = '';
 		if(data != null && data.folder != null && data.folder.length > 0) {
-			Paths.currentModDirectory = data.folder;
+			Mods.currentModDirectory = data.folder;
 		}
-	}
-
-	public static function loadTheFirstEnabledMod()
-	{
-		Paths.currentModDirectory = '';
-		
-		#if MODS_ALLOWED
-		if (FileSystem.exists("modsList.txt"))
-		{
-			var list:Array<String> = CoolUtil.listFromString(File.getContent("modsList.txt"));
-			var foundTheTop = false;
-			for (i in list)
-			{
-				var dat = i.split("|");
-				if (dat[1] == "1" && !foundTheTop)
-				{
-					foundTheTop = true;
-					Paths.currentModDirectory = dat[0];
-				}
-			}
-		}
-		#end
 	}
 }

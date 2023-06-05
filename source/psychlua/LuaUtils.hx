@@ -269,33 +269,12 @@ class LuaUtils
 		#end
 	}
 
-	public static function getColorByString(?color:String = '') {
-		switch(color.toLowerCase().trim())
-		{
-			case 'blue': return FlxColor.BLUE;
-			case 'brown': return FlxColor.BROWN;
-			case 'cyan': return FlxColor.CYAN;
-			case 'gray' | 'grey': return FlxColor.GRAY;
-			case 'green': return FlxColor.GREEN;
-			case 'lime': return FlxColor.LIME;
-			case 'magenta': return FlxColor.MAGENTA;
-			case 'orange': return FlxColor.ORANGE;
-			case 'pink': return FlxColor.PINK;
-			case 'purple': return FlxColor.PURPLE;
-			case 'red': return FlxColor.RED;
-			case 'transparent': return FlxColor.TRANSPARENT;
-			case 'white': return FlxColor.WHITE;
-			case 'yellow': return FlxColor.YELLOW;
-		}
-		return FlxColor.BLACK;
-	}
-
 	//buncho string stuffs
 	public static function getTweenTypeByString(?type:String = '') {
 		switch(type.toLowerCase().trim())
 		{
 			case 'backward': return FlxTweenType.BACKWARD;
-			case 'looping': return FlxTweenType.LOOPING;
+			case 'looping'|'loop': return FlxTweenType.LOOPING;
 			case 'persist': return FlxTweenType.PERSIST;
 			case 'pingpong': return FlxTweenType.PINGPONG;
 		}

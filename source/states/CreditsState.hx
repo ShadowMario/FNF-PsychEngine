@@ -39,37 +39,13 @@ class CreditsState extends MusicBeatState
 		add(grpOptions);
 
 		#if MODS_ALLOWED
-		var path:String = 'modsList.txt';
-		if(FileSystem.exists(path))
-		{
-			var leMods:Array<String> = CoolUtil.coolTextFile(path);
-			for (i in 0...leMods.length)
-			{
-				if(leMods.length > 1 && leMods[0].length > 0) {
-					var modSplit:Array<String> = leMods[i].split('|');
-					if(!Paths.ignoreModFolders.contains(modSplit[0].toLowerCase()) && !modsAdded.contains(modSplit[0]))
-					{
-						if(modSplit[1] == '1')
-							pushModCreditsToList(modSplit[0]);
-						else
-							modsAdded.push(modSplit[0]);
-					}
-				}
-			}
-		}
-
-		var arrayOfFolders:Array<String> = Paths.getModDirectories();
-		arrayOfFolders.push('');
-		for (folder in arrayOfFolders)
-		{
-			pushModCreditsToList(folder);
-		}
+		for (mod in Mods.parseList().enabled) pushModCreditsToList(mod);
 		#end
 
 		var defaultList:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
-			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],
+			['Riveren',				'riveren',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/riverennn',		'B42F71'],
 			[''],
 			['Former Engine Members'],
 			['shubs',				'shubs',			'Ex-Programmer of Psych Engine',								'https://twitter.com/yoshubs',			'5E99DF'],
@@ -109,7 +85,7 @@ class CreditsState extends MusicBeatState
 			if(isSelectable) {
 				if(creditsStuff[i][5] != null)
 				{
-					Paths.currentModDirectory = creditsStuff[i][5];
+					Mods.currentModDirectory = creditsStuff[i][5];
 				}
 
 				var str:String = 'credits/missing_icon';
@@ -121,7 +97,7 @@ class CreditsState extends MusicBeatState
 				// using a FlxGroup is too much fuss!
 				iconArray.push(icon);
 				add(icon);
-				Paths.currentModDirectory = '';
+				Mods.currentModDirectory = '';
 
 				if(curSelected == -1) curSelected = i;
 			}
@@ -277,11 +253,8 @@ class CreditsState extends MusicBeatState
 	}
 
 	#if MODS_ALLOWED
-	private var modsAdded:Array<String> = [];
 	function pushModCreditsToList(folder:String)
 	{
-		if(modsAdded.contains(folder)) return;
-
 		var creditsFile:String = null;
 		if(folder != null && folder.trim().length > 0) creditsFile = Paths.mods(folder + '/data/credits.txt');
 		else creditsFile = Paths.mods('data/credits.txt');
@@ -297,7 +270,6 @@ class CreditsState extends MusicBeatState
 			}
 			creditsStuff.push(['']);
 		}
-		modsAdded.push(folder);
 	}
 	#end
 

@@ -9,12 +9,6 @@ import llua.Lua;
 import llua.State;
 #end
 
-/*
-			DiscordClient.initialize();
-			Application.current.window.onClose.add(function() {
-				DiscordClient.shutdown();
-			});*/
-
 class DiscordClient
 {
 	public static var isInitialized:Bool = false;
@@ -42,41 +36,37 @@ class DiscordClient
 		});
 		trace("Discord Client started.");
 
-		while (true)
+		var localID:String = clientID;
+		while (localID == clientID)
 		{
 			DiscordRpc.process();
 			sleep(2);
-			//trace("Discord Client Update");
+			//trace('Discord Client Update $localID');
 		}
 
-		DiscordRpc.shutdown();
+		//DiscordRpc.shutdown();
 	}
 
 	public static function check()
 	{
 		if(!ClientPrefs.data.discordRPC)
 		{
-			if(DiscordClient.isInitialized) DiscordClient.shutdown();
-			DiscordClient.isInitialized = false;
+			if(isInitialized) shutdown();
+			isInitialized = false;
 		}
-		else DiscordClient.start();
+		else start();
 	}
 	
 	public static function start()
 	{
-		if (!DiscordClient.isInitialized && ClientPrefs.data.discordRPC) {
-			DiscordClient.initialize();
+		if (!isInitialized && ClientPrefs.data.discordRPC) {
+			initialize();
 			Application.current.window.onClose.add(function() {
-				DiscordClient.shutdown();
+				shutdown();
 			});
 		}
 	}
 
-	public static function resetID()
-	{
-		if(clientID != _defaultID) clientID = _defaultID;
-	}
-	
 	public static function shutdown()
 	{
 		DiscordRpc.shutdown();
@@ -89,13 +79,15 @@ class DiscordClient
 
 	private static function set_clientID(newID:String)
 	{
+		var change:Bool = (clientID != newID);
 		clientID = newID;
-		if(isInitialized)
+
+		if(change && isInitialized)
 		{
-			trace('test!');
-			DiscordClient.shutdown();
+			shutdown();
 			isInitialized = false;
 			start();
+			DiscordRpc.process();
 		}
 		return newID;
 	}
@@ -112,6 +104,7 @@ class DiscordClient
 
 	public static function initialize()
 	{
+		
 		var DiscordDaemon = sys.thread.Thread.create(() ->
 		{
 			new DiscordClient();
@@ -138,11 +131,31 @@ class DiscordClient
 
 		//trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
 	}
+	
+	public static function resetClientID()
+		clientID = _defaultID;
+
+	#if MODS_ALLOWED
+	public static function loadModRPC()
+	{
+		var pack:Dynamic = Mods.getPack();
+		if(pack != null && pack.discordRPC != null && pack.discordRPC != clientID)
+		{
+			clientID = pack.discordRPC;
+			//trace('Changing clientID! $clientID, $_defaultID');
+		}
+	}
+	#end
 
 	#if LUA_ALLOWED
 	public static function addLuaCallbacks(lua:State) {
-		Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
+		Lua_helper.add_callback(lua, "changeDiscordPresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
 			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
+		});
+
+		Lua_helper.add_callback(lua, "changeDiscordClientID", function(?newID:String = null) {
+			if(newID == null) newID = _defaultID;
+			clientID = newID;
 		});
 	}
 	#end
