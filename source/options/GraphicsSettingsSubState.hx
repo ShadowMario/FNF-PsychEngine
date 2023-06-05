@@ -60,6 +60,18 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			true); //Default value
 		addOption(option);
 
+		var option:Option = new Option('Note Spawn Time', //Name
+			'Changes how early/close a note needs to be before it appears on screen.', //Description
+			'noteSpawnTime', //Save data variable name
+			'float', //Variable type
+			1); //Default value
+		option.scrollSpeed = 2;
+		option.minValue = 0.01;
+		option.maxValue = 10;
+		option.changeValue = 0.1;
+		option.displayFormat = '%vX';
+		addOption(option);
+
 		#if !html5 //Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		var option:Option = new Option('Framerate',
 			"Pretty self explanatory, isn't it?",

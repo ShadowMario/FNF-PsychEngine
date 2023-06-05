@@ -162,7 +162,7 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 
-	public var spawnTime:Float = 2000;
+	public var spawnTime:Float = 2000 * ClientPrefs.noteSpawnTime;
 
 	public var vocals:FlxSound;
 
@@ -1163,6 +1163,15 @@ class PlayState extends MusicBeatState
 		timeTxt.visible = showTime;
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
 		}
+		if (ClientPrefs.hudType == 'Leather Engine') {
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
+		timeTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.scrollFactor.set();
+		timeTxt.alpha = 0;
+		timeTxt.borderSize = 2;
+		timeTxt.visible = showTime;
+		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
+		}
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') {
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
 		timeTxt.setFormat(Paths.font("calibri.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1173,13 +1182,13 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
 		}
 		if (ClientPrefs.hudType == 'Kade Engine') {
-		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 16);
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 18);
 		timeTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 1;
 		timeTxt.visible = showTime;
-		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height * 0.9 + 45; 
+		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44; 
 		}
 		if (ClientPrefs.hudType == 'Dave & Bambi') {
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
@@ -1266,6 +1275,28 @@ class PlayState extends MusicBeatState
 		add(timeBar);
 		add(timeTxt);
 		timeBarBG.sprTracker = timeBar;
+		}
+		if (ClientPrefs.hudType == 'Leather Engine') {
+		timeBarBG = new AttachedSprite('healthBar');
+		timeBarBG.x = timeTxt.x;
+		timeBarBG.y = timeTxt.y + (timeTxt.height / 8);
+		timeBarBG.scrollFactor.set();
+		timeBarBG.alpha = 0;
+		timeBarBG.visible = showTime;
+		timeBarBG.color = FlxColor.BLACK;
+		timeBarBG.xAdd = -4;
+		timeBarBG.yAdd = -4;
+		timeBarBG.screenCenter(X);
+		add(timeBarBG);
+
+				timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+					'songPercent', 0, 1);
+				timeBar.scrollFactor.set();
+				timeBar.createFilledBar(FlxColor.BLACK, FlxColor.CYAN);
+				timeBar.numDivisions = 400;
+				timeBar.visible = showTime;
+				add(timeBar);
+				add(timeTxt);
 		}
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') {
 		timeBarBG = new AttachedSprite('timeBar');
@@ -1521,6 +1552,11 @@ class PlayState extends MusicBeatState
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
 		add(EngineWatermark);
 		}
+		if (ClientPrefs.hudType == 'Leather Engine') {
+		// Add Engine watermark BECAUSE THE ENGINE THING IS dumb
+		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
+		add(EngineWatermark);
+		}
 		if (ClientPrefs.hudType == 'VS Impostor') { //unfortunately i have to do this because otherwise enginewatermark calls a null object reference
 		// Add Engine watermark
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
@@ -1538,6 +1574,15 @@ class PlayState extends MusicBeatState
 		}
 		
 		if (ClientPrefs.hudType == 'Kade Engine')
+		{ 		
+		scoreTxt = new FlxText(0, healthBarBG.y + 50, FlxG.width, "", 20);
+		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		scoreTxt.borderSize = 1;
+		scoreTxt.visible = !ClientPrefs.hideHud;
+		add(scoreTxt);
+		}
+		if (ClientPrefs.hudType == 'Leather Engine')
 		{ 		
 		scoreTxt = new FlxText(0, healthBarBG.y + 50, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -1603,6 +1648,14 @@ class PlayState extends MusicBeatState
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
+		}
+		if (ClientPrefs.hudType == 'Leather Engine')
+		{
+		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "", 32); //yeah leather engine has no botplay text soooo
+		add(botplayTxt);
+		if (ClientPrefs.downScroll) 
+			botplayTxt.y = timeBarBG.y - 78;
+		botplayTxt.visible = false;
 		}
 		if (ClientPrefs.hudType == 'Kade Engine')
 		{
@@ -1885,7 +1938,7 @@ class PlayState extends MusicBeatState
 
 		super.create();
 
-		if(cpuControlled && ClientPrefs.randomBotplayText)
+		if(cpuControlled && ClientPrefs.randomBotplayText && ClientPrefs.hudType != 'Leather Engine')
 			{
 				botplayTxt.text = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 			}
@@ -2956,6 +3009,7 @@ class PlayState extends MusicBeatState
 				playbackRate = ting; //why cant i just tween a variable
 
 			FlxG.sound.music.time = Conductor.songPosition;
+			resyncVocals();
 		}});
 	}
 
@@ -3082,10 +3136,13 @@ class PlayState extends MusicBeatState
 					oldNote = null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+				if (ClientPrefs.doubleGhost)
+					{
 					swagNote.row = Conductor.secsToRow(daStrumTime);
 					if(noteRows[gottaHitNote?0:1][swagNote.row]==null)
 						noteRows[gottaHitNote?0:1][swagNote.row]=[];
 					noteRows[gottaHitNote ? 0 : 1][swagNote.row].push(swagNote);
+					}
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
@@ -3158,10 +3215,13 @@ class PlayState extends MusicBeatState
 				jackNote.sustainLength = swagNote.sustainLength;
 				jackNote.gfNote = swagNote.gfNote;
 				jackNote.noteType = swagNote.noteType;
+				if (ClientPrefs.doubleGhost)
+					{
 					jackNote.row = Conductor.secsToRow(daStrumTime);
 					if(noteRows[gottaHitNote?0:1][jackNote.row]==null)
 						noteRows[gottaHitNote?0:1][jackNote.row]=[];
 					noteRows[gottaHitNote ? 0 : 1][jackNote.row].push(jackNote);
+					}
 
 						unspawnNotes.push(jackNote);
 
@@ -3716,6 +3776,11 @@ class PlayState extends MusicBeatState
 		if(ratingName != '?')
 			scoreTxt.text += ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC;
 		}
+		if (ClientPrefs.hudType == 'Leather Engine') {
+		scoreTxt.text = '< Score: ' + songScore + ' ~ Misses: ' + songMisses + ' ~ Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '% ~ ' + ratingName + ' (' + ratingFC + ') >';
+		if(cpuControlled) 
+			scoreTxt.text = 'Bot Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Botplay Mode';
+		}
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') {
 		scoreTxt.text = 'Score: ' + songScore + ' | Combo Breaks: ' + songMisses + ' | Combo: ' + combo + ' | Rating: ' + ratingName + ' | NPS: ' + nps;
 		if(cpuControlled) 
@@ -3741,7 +3806,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180 * playbackRate);
 		}
 		if(cpuControlled && ClientPrefs.randomBotplayText) {
-			if(botplayTxt.text == "this text is gonna kick you out of botplay in 10 seconds" && !botplayUsed)
+			if(botplayTxt.text == "this text is gonna kick you out of botplay in 10 seconds" && !botplayUsed || botplayTxt.text == "Your Botplay Free Trial will end in 10 seconds." && !botplayUsed)
 				{
 					botplayUsed = true;
 					new FlxTimer().start(10, function(tmr:FlxTimer)
@@ -4036,7 +4101,7 @@ class PlayState extends MusicBeatState
 
 		if (unspawnNotes[0] != null)
 		{
-			var time:Float = spawnTime / songSpeed;
+			var time:Float = spawnTime;
 			if(songSpeed < 1) time /= songSpeed;
 			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
 
@@ -5191,7 +5256,28 @@ class PlayState extends MusicBeatState
 			health += note.hitHealth * 0.1 * healthGain;
 		}
 		}
-
+		if (ClientPrefs.healthGainType == 'Leather Engine') {
+		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge) //you hit a marvelous!!
+		{
+			health += 0.012 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
+		{
+			health += 0.012 * healthGain; //you hit a sick!
+		}
+		if (noteDiff > ClientPrefs.sickWindow) //you hit a good rating
+		{
+			health += -0.008 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.goodWindow) //you hit a bad rating
+		{
+			health += -0.018 * healthGain;
+		}
+		if (noteDiff > ClientPrefs.badWindow) //you hit a shit rating
+		{
+			health += -0.23;
+		}
+		}
 		if (ClientPrefs.healthGainType == 'Kade (1.4.2 to 1.6)') {
 		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
 		{
@@ -5803,6 +5889,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		if (ClientPrefs.healthGainType == 'Kade (1.2)') {
 		health -= daNote.missHealth * healthLoss;
 		}
+		if (ClientPrefs.healthGainType == 'Leather Engine') {
+		health -= 0.07 * healthLoss;
+		}
 		if (ClientPrefs.healthGainType == 'Kade (1.4.2 to 1.6)') {
 		health -= 0.075 * healthLoss;
 		}
@@ -5922,7 +6011,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
 			if(note.gfNote) {
 				char = gf;
-					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+					if (ClientPrefs.doubleGhost)
+					{
+					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
 						{
 							// potentially have jump anims?
 							var chord = noteRows[note.mustPress?0:1][note.row];
@@ -5941,6 +6032,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 							// dad.angle += 15; lmaooooo
 							doGhostAnim('gf', animToPlay);
 							}
+							}
 			}
 			if(opponentChart) {
 				boyfriend.playAnim(animToPlay, true);
@@ -5952,7 +6044,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					char.playAnim(animToPlay, true);
 					}
 				char.holdTimer = 0;
-					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+					if (ClientPrefs.doubleGhost)
+					{
+					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
 						{
 							// potentially have jump anims?
 							var chord = noteRows[note.mustPress?0:1][note.row];
@@ -5982,6 +6076,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 									}
 									char.mostRecentRow = note.row;
 						}
+						}
 						else{
 							char.playAnim(animToPlay + note.animSuffix, true);
 							// dad.angle = 0;
@@ -5993,7 +6088,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					}
 					boyfriend.holdTimer = 0;
-					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+					if (ClientPrefs.doubleGhost)
+					{
+					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
 						{
 							// potentially have jump anims?
 							var chord = noteRows[note.mustPress?0:1][note.row];
@@ -6015,6 +6112,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 							boyfriend.playAnim(animToPlay + note.animSuffix, true);
 							// dad.angle = 0;
 						}
+					}
 				}
 		}
 
@@ -6205,6 +6303,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			if (ClientPrefs.healthGainType == 'Psych Engine') {
 			health += note.hitHealth * healthGain;
 			}
+			if (ClientPrefs.healthGainType == 'Leather Engine') {
+			health += note.hitHealth * healthGain;
+			}
 			if (ClientPrefs.healthGainType == 'Kade (1.2)') {
 			health += note.hitHealth * healthGain;
 			}
@@ -6267,7 +6368,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					}
 					boyfriend.holdTimer = 0;
-					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+					if (ClientPrefs.doubleGhost)
+					{
+					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
 						{
 							// potentially have jump anims?
 							var chord = noteRows[note.mustPress?0:1][note.row];
@@ -6289,6 +6392,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 							boyfriend.playAnim(animToPlay + note.animSuffix, true);
 							// dad.angle = 0;
 						}
+					}
 				}
 				if (opponentChart)
 				{
@@ -6296,7 +6400,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					dad.playAnim(animToPlay, true);
 					}
 				dad.holdTimer = 0;
-					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+				if (ClientPrefs.doubleGhost)
+					{
+					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
 						{
 							// potentially have jump anims?
 							var chord = noteRows[note.mustPress?0:1][note.row];
@@ -6330,6 +6436,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 							dad.playAnim(animToPlay + note.animSuffix, true);
 							// dad.angle = 0;
 						}
+					}
 				}
 
 				if(note.noteType == 'Hey!') {

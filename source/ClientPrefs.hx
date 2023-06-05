@@ -32,6 +32,7 @@ class ClientPrefs {
 	public static var ghostTapping:Bool = true;
 	public static var communityGameMode:Bool = false;
 	public static var shitGivesMiss:Bool = false;
+	public static var noteSpawnTime:Float = 1;
 	public static var lessBotLag:Bool = false;
 	public static var moreSpecificSpeed:Bool = true;
 	public static var coolGameplay:Bool = false;
@@ -146,6 +147,7 @@ class ClientPrefs {
 		FlxG.save.data.randomBotplayText = randomBotplayText;
 		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
+		FlxG.save.data.noteSpawnTime = noteSpawnTime;
 		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.hudType = hudType;
 		FlxG.save.data.healthGainType = healthGainType;
@@ -234,6 +236,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.songPercentage != null) {
 			songPercentage = FlxG.save.data.songPercentage;
+		}
+		if(FlxG.save.data.noteSpawnTime != null) {
+			noteSpawnTime = FlxG.save.data.noteSpawnTime;
 		}
 		if(FlxG.save.data.hitsoundType != null) {
 			hitsoundType = FlxG.save.data.hitsoundType;

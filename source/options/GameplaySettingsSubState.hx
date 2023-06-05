@@ -68,7 +68,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'healthGainType',
 			'string',
 			'VS Impostor',
-			['VS Impostor', 'Kade (1.2)', 'Kade (1.4.2 to 1.6)', 'Kade (1.6+)', 'Doki Doki+', 'Psych Engine']);
+			['VS Impostor', 'Kade (1.2)', 'Kade (1.4.2 to 1.6)', 'Kade (1.6+)', 'Doki Doki+', 'Psych Engine', 'Leather Engine']);
 		addOption(option);
 
 		var option:Option = new Option('Ghost Tapping',
