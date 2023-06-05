@@ -361,6 +361,8 @@ class ChartingState extends MusicBeatState
 		\nHold Alt and click on a note to change it to the selected note type
 		\nZ/X - Zoom in/out
 		\nC - Draw your charts! Easier charting for your Bambi fansongs lmao
+		\nShift + O - Created sections will be for the Opponent
+		\nShift + P - Created sections will be for the Player
 		\n
 		\nEsc - Test your chart inside Chart Editor
 		\nEnter - Play your chart
@@ -370,8 +372,8 @@ class ChartingState extends MusicBeatState
 
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
-			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
-			tipText.y += i * 9;
+			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 18);
+			tipText.y += i * 8;
 			tipText.setFormat(Paths.font("vcr.ttf"), 12, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 			//tipText.borderSize = 2;
 			tipText.scrollFactor.set();
@@ -536,12 +538,12 @@ class ChartingState extends MusicBeatState
 		clear_notes.color = FlxColor.RED;
 		clear_notes.label.color = FlxColor.WHITE;
 
-		var stepperBPM:FlxUINumericStepper = new FlxUINumericStepper(10, 70, 1, 1, 1, 400, 3);
+		var stepperBPM:FlxUINumericStepper = new FlxUINumericStepper(10, 70, 1, 1, 1, 999999, 3);
 		stepperBPM.value = Conductor.bpm;
 		stepperBPM.name = 'song_bpm';
 		blockPressWhileTypingOnStepper.push(stepperBPM);
 
-		var stepperSpeed:FlxUINumericStepper = new FlxUINumericStepper(10, stepperBPM.y + 35, 0.1, 1, 0.1, 10, 1);
+		var stepperSpeed:FlxUINumericStepper = new FlxUINumericStepper(10, stepperBPM.y + 35, 0.1, 1, 0.1, 100, 1);
 		stepperSpeed.value = _song.speed;
 		stepperSpeed.name = 'song_speed';
 		blockPressWhileTypingOnStepper.push(stepperSpeed);
@@ -733,7 +735,7 @@ class ChartingState extends MusicBeatState
 		check_changeBPM.checked = _song.notes[curSec].changeBPM;
 		check_changeBPM.name = 'check_changeBPM';
 
-		stepperSectionBPM = new FlxUINumericStepper(10, check_changeBPM.y + 20, 1, Conductor.bpm, 0, 999, 1);
+		stepperSectionBPM = new FlxUINumericStepper(10, check_changeBPM.y + 20, 1, Conductor.bpm, 0, 999999, 1);
 		if(check_changeBPM.checked) {
 			stepperSectionBPM.value = _song.notes[curSec].bpm;
 		} else {
@@ -1045,7 +1047,7 @@ class ChartingState extends MusicBeatState
 		{
 			if (curSelectedNote != null) {
 				for(i in 0...Std.int(spamLength)) {
-					addNote(curSelectedNote[0] + (15000/_song.bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2]);
+					addNote(curSelectedNote[0] + (15000/_song.notes[curSec].bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2]);
 				}
 				FlxG.log.add('added the spam');
 				updateGrid();
@@ -1686,7 +1688,7 @@ class ChartingState extends MusicBeatState
 			{
 				if (_song.notes[curSec + 1] == null)
 				{
-					addSection();
+					addSection(getSectionBeats());
 				}
 
 				changeSection(curSec + 1, false);
@@ -1853,6 +1855,7 @@ class ChartingState extends MusicBeatState
 				curZoom++;
 				updateZoom();
 			}
+
 			if (FlxG.keys.pressed.C && !FlxG.keys.pressed.CONTROL)
 				if (!FlxG.mouse.overlaps(curRenderedNotes)) //lmao cant place notes when your cursor already overlaps one
 					if (FlxG.mouse.x > gridBG.x
@@ -2884,7 +2887,7 @@ class ChartingState extends MusicBeatState
 	private function addSection(sectionBeats:Float = 4):Void
 	{
 		var sec:SwagSection = {
-			sectionBeats: sectionBeats,
+			sectionBeats: getSectionBeats(),
 			bpm: _song.bpm,
 			changeBPM: false,
 			mustHitSection: true,
