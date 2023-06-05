@@ -33,6 +33,17 @@ same goes for *Lua Scripts*, comment out or delete the line with `LUA_ALLOWED`, 
 * Keoiki - Note Splash Animations
 * Smokey - Sprite Atlas Support
 * Nebula the Zorua - LUA JIT Fork and some Lua reworks
+
+## Corruption B Sides Credits:
+* Gripou - Director/Artist/Icon Artist/Sprite Editor
+* Manuelishere - Artist/Icon Artist
+* GabeReal - Sprite Editor
+* ImGood - Musician
+* NotLulu - Charter
+* AlexVK - Sprite Editor (ig)
+* Santana_ - Artist
+* xra224 - Musician
+* Gregly (Me!) - Coder & Charter(?)
 _____________________________________
 
 # Features
