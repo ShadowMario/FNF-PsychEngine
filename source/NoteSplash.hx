@@ -45,6 +45,9 @@ class NoteSplash extends FlxSprite
 		if(ClientPrefs.splashType == 'TGT V4') {
 			texture = 'tgtNoteSplashes';
 		}
+		if(ClientPrefs.splashType == 'Indie Cross') {
+			texture = 'icNoteSplashes';
+		}
 		if(textureLoaded != texture) {
 			loadAnims(texture);
 		}
@@ -77,6 +80,15 @@ class NoteSplash extends FlxSprite
 	function loadAnims(skin:String) {
 		frames = Paths.getSparrowAtlas(skin);
 		if (ClientPrefs.splashType == 'Psych Engine')
+		{
+		for (i in 1...3) {
+			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
+			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);
+			animation.addByPrefix("note0-" + i, "note splash purple " + i, 24, false);
+			animation.addByPrefix("note3-" + i, "note splash red " + i, 24, false);
+		}
+		}
+		if (ClientPrefs.splashType == 'Indie Cross')
 		{
 		for (i in 1...3) {
 			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
