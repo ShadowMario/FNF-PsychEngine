@@ -4363,6 +4363,10 @@ class PlayState extends MusicBeatState
 	function doDeathCheck(?skipHealthCheck:Bool = false) {
 		if (((skipHealthCheck && instakillOnMiss) || health <= 0) && !practiceMode && !isDead)
 		{
+		if (ClientPrefs.instaRestart)
+		{
+		restartSong(true);
+		}
 			var ret:Dynamic = callOnLuas('onGameOver', [], false);
 			if(ret != FunkinLua.Function_Stop) {
 				boyfriend.stunned = true;
@@ -6019,11 +6023,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 	function opponentNoteHit(note:Note):Void
 	{
-
-		if(ClientPrefs.oppNoteSplashes && !note.isSustainNote)
-		{
-			spawnNoteSplashOnNote(true, note);
-		}
 		if (!opponentChart) {
 			if (Paths.formatToSongPath(SONG.song) != 'tutorial')
 				camZooming = true;
@@ -6152,6 +6151,11 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 						}
 					}
 				}
+		}
+
+		if(ClientPrefs.oppNoteSplashes && !note.isSustainNote)
+		{
+			spawnNoteSplashOnNote(true, note);
 		}
 
 		if (SONG.needsVoices)

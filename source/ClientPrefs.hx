@@ -17,6 +17,7 @@ class ClientPrefs {
 	public static var spaceVPose:Bool = true;
 	public static var noteSplashes:Bool = true;
 	public static var oppNoteSplashes:Bool = true;
+	public static var instaRestart:Bool = false;
 	public static var lowQuality:Bool = false;
 	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
@@ -149,6 +150,7 @@ class ClientPrefs {
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.randomBotplayText = randomBotplayText;
+		FlxG.save.data.instaRestart = instaRestart;
 		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
@@ -248,6 +250,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.noteSpawnTime != null) {
 			noteSpawnTime = FlxG.save.data.noteSpawnTime;
+		}
+		if(FlxG.save.data.instaRestart != null) {
+			instaRestart = FlxG.save.data.instaRestart;
 		}
 		if(FlxG.save.data.hitsoundType != null) {
 			hitsoundType = FlxG.save.data.hitsoundType;

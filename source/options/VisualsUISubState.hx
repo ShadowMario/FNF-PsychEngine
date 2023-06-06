@@ -120,7 +120,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'splashType',
 			'string',
 			'Psych Engine',
-			['Psych Engine', 'VS Impostor', 'Base Game', 'Doki Doki+', 'TGT V4']);
+			['Psych Engine', 'VS Impostor', 'Base Game', 'Doki Doki+', 'TGT V4', 'Indie Cross']);
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',

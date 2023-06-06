@@ -113,6 +113,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Instant Respawn',
+			"Instantly respawn when you die.",
+			'instaRestart',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('More Max Health',
 			"If checked, increases your max health to 150% instead of 100%.",
 			'moreMaxHP',
