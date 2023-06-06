@@ -221,8 +221,10 @@ class PlayState extends MusicBeatState
 	private var curSong:String = "";
 
 	public var gfSpeed:Int = 1;
-	public var health:Float = 1.5;
-	private var displayedHealth:Float = 1.5;
+	public var health:Float;
+	private var displayedHealth:Float;
+	public var maxHealth:Float = 2;
+
 	public var combo:Int = 0;
 	public var missCombo:Int = 1;
 
@@ -407,6 +409,15 @@ class PlayState extends MusicBeatState
 
 		// for lua
 		instance = this;
+
+
+	if (ClientPrefs.moreMaxHP)
+	{
+	maxHealth = 3;
+	} else
+	{ 
+	maxHealth = 2;
+	}
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
@@ -952,7 +963,6 @@ class PlayState extends MusicBeatState
 
 		add(dadGroup);
 		add(boyfriendGroup);
-		add(death);
 
 		switch(curStage)
 		{
@@ -1033,6 +1043,8 @@ class PlayState extends MusicBeatState
 			SONG.gfVersion = gfVersion; //Fix for the Chart Editor
 
 		}
+		health = maxHealth / 2;	
+		displayedHealth = maxHealth / 2;	
 
 		if (!stageData.hide_girlfriend)
 		{
@@ -1458,7 +1470,13 @@ class PlayState extends MusicBeatState
 
 		if (ClientPrefs.hudType == 'Dave & Bambi') 
 		{
+		if (ClientPrefs.longHPBar)
+		{
+		healthBarBG = new AttachedSprite('longDnBHealthBar');
+		} else
+		{
 		healthBarBG = new AttachedSprite('DnBHealthBar');
+		}
 		healthBarBG.y = FlxG.height * 0.89;
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 		healthBarBG.screenCenter(X);
@@ -1469,7 +1487,7 @@ class PlayState extends MusicBeatState
 		add(healthBarBG);
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'displayedHealth', 0, 3);
+			'displayedHealth', 0, maxHealth);
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -1479,7 +1497,13 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == 'Doki Doki+') 
 		{
+		if (ClientPrefs.longHPBar)
+		{
+		healthBarBG = new AttachedSprite('longDokiHealthBar');
+		} else
+		{
 		healthBarBG = new AttachedSprite('dokiHealthBar');
+		}
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.visible = !ClientPrefs.hideHud;
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
@@ -1490,7 +1514,7 @@ class PlayState extends MusicBeatState
 		add(healthBarBG);
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'displayedHealth', 0, 3);
+			'displayedHealth', 0, maxHealth);
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -1498,7 +1522,13 @@ class PlayState extends MusicBeatState
 		healthBarBG.sprTracker = healthBar;
 		add(healthBar);
 		} else if (ClientPrefs.hudType != 'Dave & Bambi' && ClientPrefs.hudType != 'Doki Doki+') {
+		if (ClientPrefs.longHPBar)
+		{
+		healthBarBG = new AttachedSprite('longHealthBar');
+		} else
+		{
 		healthBarBG = new AttachedSprite('healthBar');
+		}
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -1509,7 +1539,7 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'displayedHealth', 0, 3);
+			'displayedHealth', 0, maxHealth);
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -3582,6 +3612,9 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
+
+				healthBar.setRange(0, maxHealth);
+
 		callOnLuas('onUpdate', [elapsed]);
 		switch (curStage)
 		{
@@ -3931,8 +3964,8 @@ class PlayState extends MusicBeatState
 
 		iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
-		if (health > 3)
-			health = 3;
+		if (health > maxHealth)
+			health = maxHealth;
 
 		if (iconP1.animation.frames == 3) {
 			if (healthBar.percent < 20)
@@ -5822,7 +5855,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 			});
 
-			if(FlxG.keys.anyJustPressed(tauntKey) && !char.animation.curAnim.name.endsWith('miss') && !char.animation.curAnim.name.startsWith('sing') && char.specialAnim == false){
+			if(FlxG.keys.anyJustPressed(tauntKey) && !char.animation.curAnim.name.endsWith('miss') && char.specialAnim == false){
 				char.playAnim('hey', true);
 				char.specialAnim = true;
 				char.heyTimer = 0.59;
@@ -5986,6 +6019,11 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 	function opponentNoteHit(note:Note):Void
 	{
+
+		if(ClientPrefs.oppNoteSplashes && !note.isSustainNote)
+		{
+			spawnNoteSplashOnNote(true, note);
+		}
 		if (!opponentChart) {
 			if (Paths.formatToSongPath(SONG.song) != 'tutorial')
 				camZooming = true;
@@ -6122,11 +6160,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		var time:Float = 0.15 / playbackRate;
 		if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 			time += 0.15;
-		}
-
-		if(ClientPrefs.oppNoteSplashes && !note.isSustainNote)
-		{
-			spawnNoteSplashOnNote(true, note);
 		}
 		StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time);
 		note.hitByOpponent = true;

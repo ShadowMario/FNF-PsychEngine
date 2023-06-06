@@ -21,6 +21,8 @@ class ClientPrefs {
 	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
+	public static var longHPBar:Bool = false;
+	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
 	public static var randomBotplayText:Bool = true;
 	public static var violence:Bool = true;
@@ -156,6 +158,8 @@ class ClientPrefs {
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
+		FlxG.save.data.longHPBar = longHPBar;
+		FlxG.save.data.moreMaxHP = moreMaxHP;
 		FlxG.save.data.moreSpecificSpeed = moreSpecificSpeed;
 		FlxG.save.data.spaceVPose = spaceVPose;
 		FlxG.save.data.ghostTapAnim = ghostTapAnim;
@@ -250,6 +254,12 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
+		}
+		if(FlxG.save.data.longHPBar != null) {
+			longHPBar = FlxG.save.data.longHPBar;
+		}
+		if(FlxG.save.data.moreMaxHP != null) {
+			moreMaxHP = FlxG.save.data.moreMaxHP;
 		}
 		if(FlxG.save.data.shaders != null) {
 			shaders = FlxG.save.data.shaders;

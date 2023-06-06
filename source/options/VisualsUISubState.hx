@@ -108,6 +108,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			['Golden Apple', 'Dave and Bambi', 'Old Psych', 'New Psych', 'VS Steve']);
 		addOption(option);
 
+		var option:Option = new Option('long ass health bar',
+			"If this is checked, the Health Bar will become LOOOOOONG",
+			'longHPBar',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Note Splash Type:',
 			"Which note splash would you like?",
 			'splashType',
