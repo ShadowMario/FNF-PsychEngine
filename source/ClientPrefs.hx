@@ -9,6 +9,7 @@ import Controls;
 class ClientPrefs {
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
+	public static var mobileMidScroll:Bool = false;
 	public static var opponentStrums:Bool = true;
 	public static var showFPS:Bool = true;
 	public static var flashing:Bool = true;
@@ -26,6 +27,8 @@ class ClientPrefs {
 	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
 	public static var randomBotplayText:Bool = true;
+	public static var opponentLightStrum:Bool = true;
+	public static var botLightStrum:Bool = true;
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
 	public static var showNotes:Bool = true;
@@ -37,6 +40,7 @@ class ClientPrefs {
 	public static var communityGameMode:Bool = false;
 	public static var shitGivesMiss:Bool = false;
 	public static var noteSpawnTime:Float = 1;
+	public static var oppNoteAlpha:Float = 0.65;
 	public static var lessBotLag:Bool = false;
 	public static var moreSpecificSpeed:Bool = true;
 	public static var coolGameplay:Bool = false;
@@ -135,6 +139,7 @@ class ClientPrefs {
 	public static function saveSettings() {
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.middleScroll = middleScroll;
+		FlxG.save.data.mobileMidScroll = mobileMidScroll;
 		FlxG.save.data.opponentStrums = opponentStrums;
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.flashing = flashing;
@@ -154,9 +159,12 @@ class ClientPrefs {
 		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
+		FlxG.save.data.botLightStrum = botLightStrum;
+		FlxG.save.data.opponentLightStrum = opponentLightStrum;
 		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.hudType = hudType;
 		FlxG.save.data.healthGainType = healthGainType;
+		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
@@ -215,6 +223,9 @@ class ClientPrefs {
 		if(FlxG.save.data.middleScroll != null) {
 			middleScroll = FlxG.save.data.middleScroll;
 		}
+		if(FlxG.save.data.mobileMidScroll != null) {
+			mobileMidScroll = FlxG.save.data.mobileMidScroll;
+		}
 		if(FlxG.save.data.opponentStrums != null) {
 			opponentStrums = FlxG.save.data.opponentStrums;
 		}
@@ -229,6 +240,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
+		}
+		if(FlxG.save.data.oppNoteAlpha != null) {
+			oppNoteAlpha = FlxG.save.data.oppNoteAlpha;
 		}
 		if(FlxG.save.data.noteSplashes != null) {
 			noteSplashes = FlxG.save.data.noteSplashes;
@@ -274,6 +288,12 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.goldSickSFC != null) {
 			goldSickSFC = FlxG.save.data.goldSickSFC;
+		}
+		if(FlxG.save.data.botLightStrum != null) {
+			botLightStrum = FlxG.save.data.botLightStrum;
+		}
+		if(FlxG.save.data.opponentLightStrum != null) {
+			opponentLightStrum = FlxG.save.data.opponentLightStrum;
 		}
 		if(FlxG.save.data.framerate != null) {
 			framerate = FlxG.save.data.framerate;
