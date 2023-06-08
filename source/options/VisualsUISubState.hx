@@ -49,7 +49,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 
-		var option:Option = new Option('Opponent Note Transparency: ',
+		var option:Option = new Option('Opponent Note Alpha:',
 			"How visible do you want the opponent's notes to be when Middlescroll is enabled? \n(0% = invisible, 100% = fully visible)",
 			'oppNoteAlpha',
 			'percent',
@@ -181,6 +181,13 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.minValue = 0;
 		option.maxValue = 50;
 		option.displayFormat = '%v Decimals';
+
+		var option:Option = new Option('Rating Counter',
+			"If checked, you can see how many Sicks, Goods, Bads, etc you've hit on the left.",
+			'ratingCounter',
+			'bool',
+			false);
+		addOption(option);
 
 		var option:Option = new Option('Show Notes',
 			"If unchecked, the notes will be invisible. You can still play them though!",

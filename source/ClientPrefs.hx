@@ -42,6 +42,7 @@ class ClientPrefs {
 	public static var noteSpawnTime:Float = 1;
 	public static var oppNoteAlpha:Float = 0.65;
 	public static var lessBotLag:Bool = false;
+	public static var ratingCounter:Bool = false;
 	public static var moreSpecificSpeed:Bool = true;
 	public static var coolGameplay:Bool = false;
 	public static var hudType:String = 'Kade Engine';
@@ -163,6 +164,7 @@ class ClientPrefs {
 		FlxG.save.data.opponentLightStrum = opponentLightStrum;
 		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.hudType = hudType;
+		FlxG.save.data.ratingCounter = ratingCounter;
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
 		FlxG.save.data.noteOffset = noteOffset;
@@ -273,6 +275,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
+		}
+		if(FlxG.save.data.ratingCounter != null) {
+			ratingCounter = FlxG.save.data.ratingCounter;
 		}
 		if(FlxG.save.data.longHPBar != null) {
 			longHPBar = FlxG.save.data.longHPBar;
