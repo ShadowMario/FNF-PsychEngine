@@ -3333,6 +3333,7 @@ class PlayState extends MusicBeatState
 						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
+						if (ClientPrefs.mobileMidScroll && !sustainNote.mustPress) sustainNote.noteType = 'Behind Note';
 
 						if (sustainNote.mustPress)
 						{
@@ -3357,6 +3358,10 @@ class PlayState extends MusicBeatState
 				{
 					swagNote.x += FlxG.width / 2; // general offset
 					totalNotes += 1;
+				}
+				if (!swagNote.mustPress)
+				{
+					swagNote.noteType = 'Behind Note';
 				}
 				else if(ClientPrefs.middleScroll)
 				{
