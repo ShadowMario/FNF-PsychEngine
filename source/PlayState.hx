@@ -2989,6 +2989,10 @@ class PlayState extends MusicBeatState
 				}
 
 				notes.forEachAlive(function(note:Note) {
+					if(ClientPrefs.opponentStrums || !ClientPrefs.opponentStrums && ClientPrefs.mobileMidScroll || ClientPrefs.middleScroll || !note.mustPress)
+					{
+							note.alpha *= 0.35;
+					}
 					if(ClientPrefs.opponentStrums || !ClientPrefs.opponentStrums && ClientPrefs.mobileMidScroll || note.mustPress)
 					{
 						note.copyAlpha = false;
@@ -3359,7 +3363,7 @@ class PlayState extends MusicBeatState
 					swagNote.x += FlxG.width / 2; // general offset
 					totalNotes += 1;
 				}
-				if (!swagNote.mustPress)
+				if (!swagNote.mustPress && ClientPrefs.mobileMidScroll)
 				{
 					swagNote.noteType = 'Behind Note';
 				}
@@ -3577,8 +3581,9 @@ class PlayState extends MusicBeatState
 
 			if (player == 1)
 			{
-				if (!opponentChart || opponentChart && ClientPrefs.middleScroll || opponentChart && ClientPrefs.mobileMidScroll) playerStrums.add(babyArrow);
-				else opponentStrums.add(babyArrow);
+				if (!opponentChart || opponentChart && ClientPrefs.middleScroll || opponentChart && ClientPrefs.mobileMidScroll || !opponentChart && ClientPrefs.mobileMidScroll) playerStrums.add(babyArrow);
+			else if (ClientPrefs.mobileMidScroll) insert(members.indexOf(playerStrums), babyArrow);
+			else opponentStrums.add(babyArrow);
 			}
 			else
 			{
@@ -3593,8 +3598,8 @@ class PlayState extends MusicBeatState
 				{
 					babyArrow.x += FlxG.width / 2;
 				}
-				if (!opponentChart || opponentChart && ClientPrefs.middleScroll) opponentStrums.add(babyArrow);
-				if (!opponentChart || opponentChart && ClientPrefs.mobileMidScroll) opponentStrums.add(babyArrow);
+				if (!opponentChart || opponentChart && ClientPrefs.mobileMidScroll || opponentChart && ClientPrefs.mobileMidScroll || !opponentChart && ClientPrefs.mobileMidScroll) opponentStrums.add(babyArrow);
+			else if (ClientPrefs.mobileMidScroll) insert(members.indexOf(opponentStrums), babyArrow);
 				else playerStrums.add(babyArrow);
 			}
 
@@ -4322,6 +4327,11 @@ class PlayState extends MusicBeatState
 
 				var index:Int = unspawnNotes.indexOf(dunceNote);
 				unspawnNotes.splice(index, 1);
+				if (dunceNote.noteData < 4 && ClientPrefs.mobileMidScroll)
+				{
+				index = unspawnNotes.indexOf(dunceNote) - 3;
+				unspawnNotes.splice(index, 1);
+				}
 			}
 		}
 
