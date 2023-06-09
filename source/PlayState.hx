@@ -3303,9 +3303,10 @@ class PlayState extends MusicBeatState
 				{
 					gottaHitNote = !section.mustHitSection;
 				}
+
 				if (!gottaHitNote && ClientPrefs.mobileMidScroll)
 				{
-					songNotes[3] = 'Behind Note'; //hopefully this fixes an issue where the chart breaks 1 minute in
+					songNotes[3] = 'Behind Note';
 				}
 
 				var oldNote:Note;
@@ -3589,6 +3590,7 @@ class PlayState extends MusicBeatState
 			if (player == 1)
 			{
 				if (!opponentChart || opponentChart && ClientPrefs.middleScroll || opponentChart && ClientPrefs.mobileMidScroll || !opponentChart && ClientPrefs.mobileMidScroll) playerStrums.add(babyArrow);
+			else if (ClientPrefs.mobileMidScroll) insert(members.indexOf(playerStrums), babyArrow);
 			else opponentStrums.add(babyArrow);
 			}
 			else
@@ -4336,7 +4338,7 @@ class PlayState extends MusicBeatState
 				if (dunceNote.noteData < 4 && ClientPrefs.mobileMidScroll)
 				{
 				index = unspawnNotes.indexOf(dunceNote) - 3;
-				unspawnNotes.splice(index, 1);
+				unspawnNotes.splice(index, 0);
 				}
 			}
 		}
