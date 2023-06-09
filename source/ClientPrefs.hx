@@ -329,7 +329,7 @@ class ClientPrefs {
 			doubleGhost = FlxG.save.data.doubleGhost;
 		}
 		if(FlxG.save.data.coolGameplay != null) {
-			doubleGhost = FlxG.save.data.coolGameplay;
+			coolGameplay = FlxG.save.data.coolGameplay;
 		}
 		if(FlxG.save.data.hideHud != null) {
 			hideHud = FlxG.save.data.hideHud;

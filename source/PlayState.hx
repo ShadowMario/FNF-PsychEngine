@@ -1659,9 +1659,9 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == "Mic'd Up")
 		{ 
-		scoreTxt = new FlxText(healthBarBG.x - (healthBarBG.width / 2), healthBarBG.y + 26, 0, "", 20);
+		scoreTxt = new FlxText(healthBarBG.x - (healthBarBG.width / 2), healthBarBG.y - 26, 0, "", 20);
 		if (ClientPrefs.downScroll)
-			scoreTxt.y = healthBarBG.y - 18;
+			scoreTxt.y = healthBarBG.y + 18;
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
 		scoreTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 		scoreTxt.scrollFactor.set();
@@ -1686,18 +1686,18 @@ class PlayState extends MusicBeatState
 		add(accuracyTxt);
 		accuracyTxt.visible = !ClientPrefs.hideHud;
 
-		comboTxt = new FlxText(scoreTxt.x, scoreTxt.y + 26, 0, "", 20);
+		comboTxt = new FlxText(scoreTxt.x, scoreTxt.y + 26, 0, "", 21);
 		if (ClientPrefs.downScroll)
 			comboTxt.y = scoreTxt.y - 26;
-		comboTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+		comboTxt.setFormat(Paths.font("vcr.ttf"), 21, FlxColor.WHITE, RIGHT);
 		comboTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 		comboTxt.scrollFactor.set();
 		add(comboTxt);
 		comboTxt.visible = !ClientPrefs.hideHud;
 
-		npsTxt = new FlxText(accuracyTxt.x, accuracyTxt.y - 26, 0, "", 20);
+		npsTxt = new FlxText(accuracyTxt.x, accuracyTxt.y - 46, 0, "", 20);
 		if (ClientPrefs.downScroll)
-			npsTxt.y = accuracyTxt.y + 26;
+			npsTxt.y = accuracyTxt.y + 46;
 		npsTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
 		npsTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 		npsTxt.scrollFactor.set();
@@ -6255,7 +6255,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 							// dad.angle += 15; lmaooooo
 							doGhostAnim('gf', animToPlay);
 							}
-							}
+						}
 			}
 			if(opponentChart) {
 				boyfriend.playAnim(animToPlay, true);
@@ -6263,10 +6263,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			}
 			else if(char != null && !opponentChart)
 			{
-					if (!ClientPrefs.doubleGhost) {
 					char.playAnim(animToPlay, true);
-					}
-				char.holdTimer = 0;
+					char.holdTimer = 0;
 					if (ClientPrefs.doubleGhost)
 					{
 					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
@@ -6307,9 +6305,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			}
 				if (opponentChart)
 				{
-					if (!ClientPrefs.doubleGhost) {
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
-					}
 					boyfriend.holdTimer = 0;
 					if (ClientPrefs.doubleGhost)
 					{
@@ -7363,7 +7359,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		}
 
 			// Rating FC
-			if (ClientPrefs.hudType == 'Kade Engine' || ClientPrefs.hudType == 'Doki Doki+' || ClientPrefs.hudType == "Mic'd Up") {
+			if (ClientPrefs.hudType == 'Kade Engine' || ClientPrefs.hudType == 'Doki Doki+') {
 			ratingFC = "?";
 			if (marvs > 0) ratingFC = "(MFC)";
 			if (sicks > 0) ratingFC = "(SFC)";
