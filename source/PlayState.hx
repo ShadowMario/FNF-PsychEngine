@@ -339,6 +339,10 @@ class PlayState extends MusicBeatState
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
+	var comboTxt:FlxText;
+	var missTxt:FlxText;
+	var accuracyTxt:FlxText;
+	var npsTxt:FlxText;
 	var timeTxt:FlxText;
 	var timePercentTxt:FlxText;
 
@@ -1231,6 +1235,15 @@ class PlayState extends MusicBeatState
 		timeTxt.visible = showTime;
 		if (ClientPrefs.downScroll) timeTxt.y = FlxG.height - 45;
 		}
+		if (ClientPrefs.hudType == "Mic'd Up") {
+			timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 16);
+			if (ClientPrefs.downScroll)
+				timeTxt.y = FlxG.height - 44;
+			timeTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			timeTxt.scrollFactor.set();
+			timeTxt.screenCenter(X);
+			timeTxt.visible = showTime;
+		}
 
 
 		if(ClientPrefs.timeBarType == 'Song Name')
@@ -1359,6 +1372,31 @@ class PlayState extends MusicBeatState
 		add(timeBar);
 		add(timeTxt);
 		timeBarBG.sprTracker = timeBar;
+		}
+
+		if (ClientPrefs.hudType == "Mic'd Up") {
+		timeBarBG = new AttachedSprite('healthBar');
+		timeBarBG.x = timeTxt.x;
+		timeBarBG.y = timeTxt.y + (timeTxt.height / 8);
+		timeBarBG.scrollFactor.set();
+		timeBarBG.alpha = 0;
+		timeBarBG.visible = showTime;
+		timeBarBG.color = FlxColor.BLACK;
+		timeBarBG.xAdd = -4;
+		timeBarBG.yAdd = -4;
+		timeBarBG.screenCenter(X);
+		add(timeBarBG);
+
+		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+			'songPercent', 0, 1);
+		timeBar.scrollFactor.set();
+		timeBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
+		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
+		timeBar.alpha = 0;
+		timeBar.visible = showTime;
+		add(timeBar);
+		timeBarBG.sprTracker = timeBar;
+			add(timeTxt);
 		}
 
 		if (ClientPrefs.hudType == 'Dave & Bambi') {
@@ -1604,6 +1642,11 @@ class PlayState extends MusicBeatState
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
 		add(EngineWatermark);
 		}
+		if (ClientPrefs.hudType == "Mic'd Up") { //unfortunately i have to do this because otherwise enginewatermark calls a null object reference
+		// Add Engine watermark
+		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
+		add(EngineWatermark);
+		}
 		
 		if (ClientPrefs.hudType == 'Kade Engine')
 		{ 		
@@ -1613,6 +1656,53 @@ class PlayState extends MusicBeatState
 		scoreTxt.borderSize = 1;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
+		}
+		if (ClientPrefs.hudType == "Mic'd Up")
+		{ 
+		scoreTxt = new FlxText(healthBarBG.x - (healthBarBG.width / 2), healthBarBG.y + 26, 0, "", 20);
+		if (ClientPrefs.downScroll)
+			scoreTxt.y = healthBarBG.y - 18;
+		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+		scoreTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		scoreTxt.scrollFactor.set();
+		add(scoreTxt);
+		scoreTxt.visible = !ClientPrefs.hideHud;
+
+		missTxt = new FlxText(scoreTxt.x, scoreTxt.y - 26, 0, "", 20);
+		if (ClientPrefs.downScroll)
+			missTxt.y = scoreTxt.y + 26;
+		missTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+		missTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		missTxt.scrollFactor.set();
+		add(missTxt);
+		missTxt.visible = !ClientPrefs.hideHud;
+
+		accuracyTxt = new FlxText(missTxt.x, missTxt.y - 26, 0, "", 20);
+		if (ClientPrefs.downScroll)
+			accuracyTxt.y = missTxt.y + 26;
+		accuracyTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+		accuracyTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		accuracyTxt.scrollFactor.set();
+		add(accuracyTxt);
+		accuracyTxt.visible = !ClientPrefs.hideHud;
+
+		comboTxt = new FlxText(scoreTxt.x, scoreTxt.y + 26, 0, "", 20);
+		if (ClientPrefs.downScroll)
+			comboTxt.y = scoreTxt.y - 26;
+		comboTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+		comboTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		comboTxt.scrollFactor.set();
+		add(comboTxt);
+		comboTxt.visible = !ClientPrefs.hideHud;
+
+		npsTxt = new FlxText(accuracyTxt.x, accuracyTxt.y - 26, 0, "", 20);
+		if (ClientPrefs.downScroll)
+			npsTxt.y = accuracyTxt.y + 26;
+		npsTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+		npsTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		npsTxt.scrollFactor.set();
+		add(npsTxt);
+		npsTxt.visible = !ClientPrefs.hideHud;
 		}
 		if (ClientPrefs.hudType == 'Leather Engine')
 		{ 		
@@ -1699,6 +1789,17 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
 		}
+		if (ClientPrefs.hudType == "Mic'd Up")
+		{
+		botplayTxt = new FlxText((healthBarBG.width / 2), healthBar.y, 0, "AutoPlayCPU", 20);
+		botplayTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.scrollFactor.set();
+		botplayTxt.borderSize = 3;
+		botplayTxt.visible = cpuControlled;
+		add(botplayTxt);
+		if (ClientPrefs.downScroll) 
+			botplayTxt.y = timeBarBG.y - 78;
+		}
 		if (ClientPrefs.hudType == 'Leather Engine')
 		{
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "", 32); //yeah leather engine has no botplay text soooo
@@ -1777,6 +1878,13 @@ class PlayState extends MusicBeatState
 		EngineWatermark.cameras = [camHUD];
 		judgementCounter.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		if(ClientPrefs.hudType == "Mic'd Up")
+		{
+		missTxt.cameras = [camHUD];
+		accuracyTxt.cameras = [camHUD];
+		npsTxt.cameras = [camHUD];
+		comboTxt.cameras = [camHUD];
+		}
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
@@ -3831,6 +3939,24 @@ class PlayState extends MusicBeatState
 			else if (!cpuControlled)
 			scoreTxt.text += '0% | N/A';
 		}
+		if (ClientPrefs.hudType == "Mic'd Up") {
+		if (!cpuControlled)
+		{
+		comboTxt.text = "Combo: " + combo;
+		scoreTxt.text = "Score: " + songScore;
+		missTxt.text = "Misses: " + songMisses;
+		accuracyTxt.text = "Accuracy: " + Highscore.floorDecimal(ratingPercent * 100, 2) + "% | " + ratingFC + " | " + ratingCool;
+		npsTxt.text = "\nNPS: " + nps;
+		}
+		
+		if(cpuControlled) 
+		{
+		scoreTxt.text = "Bot Score: " + songScore;
+		missTxt.text = "Bot Combo: " + combo;
+		accuracyTxt.text = "Bot NPS: " + nps;
+		npsTxt.text = "Botplay Mode";
+		}
+		}
 		if (ClientPrefs.hudType == 'Doki Doki+') {
 		scoreTxt.text = 'Score: ' + songScore + ' | Breaks: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Accuracy: ';
 		if(cpuControlled) 
@@ -3877,7 +4003,7 @@ class PlayState extends MusicBeatState
 			scoreTxt.text = 'Bot Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + '';
 		}
 
-		if(botplayTxt.visible) {
+		if(botplayTxt.visible && ClientPrefs.hudType != "Mic'd Up" && ClientPrefs.hudType != 'Kade Engine') {
 			botplaySine += 180 * elapsed;
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180 * playbackRate);
 		}
@@ -7121,7 +7247,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	public function updateRatingCounter() {
 		if (!ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal(totalNotesPlayed/totalNotes, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
+		judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal(totalNotesPlayed/totalNotes*100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
 		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal(totalNotesPlayed / totalNotes, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
 		}
 		if (ClientPrefs.noMarvJudge)
@@ -7221,8 +7347,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		}
 
 			// Rating FC
-			if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Doki Doki+') {
-			ratingFC = "";
+			if (ClientPrefs.hudType == 'Kade Engine' || ClientPrefs.hudType == 'Doki Doki+' || ClientPrefs.hudType == "Mic'd Up") {
+			ratingFC = "?";
 			if (marvs > 0) ratingFC = "(MFC)";
 			if (sicks > 0) ratingFC = "(SFC)";
 			if (goods > 0) ratingFC = "(GFC)";
