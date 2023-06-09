@@ -1767,13 +1767,15 @@ class PlayState extends MusicBeatState
 		judgementCounter.visible = ClientPrefs.ratingCounter;
 		if (!ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal(totalNotesPlayed/totalNotes, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal(totalNotesPlayed / totalNotes, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
 		}
 		if (ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal(totalNotesPlayed / totalNotes, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Percent of Notes Hit' + FlxMath.roundDecimal(totalNotesPlayed / totalNotes, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Percent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Percent of Notes Hit' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Percent of Notes Hit' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
 		}
 		add(judgementCounter);
 
@@ -2853,15 +2855,21 @@ class PlayState extends MusicBeatState
 
 			generateStaticArrows(0);
 			generateStaticArrows(1);
-			for (i in 0...playerStrums.length) {
-				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
-				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
-			}
 			for (i in 0...opponentStrums.length) {
 				setOnLuas('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
 				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
 				//if(ClientPrefs.middleScroll) opponentStrums.members[i].visible = false;
 			}
+			for (i in 0...playerStrums.length) {
+				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
+				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
+			}
+			/*for (i in 0...opponentStrums.length) {
+				setOnLuas('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
+				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
+				//if(ClientPrefs.middleScroll) opponentStrums.members[i].visible = false;
+			}
+			*/
 
 			startedCountdown = true;
 			Conductor.songPosition = -Conductor.crochet * 5;
@@ -3295,6 +3303,10 @@ class PlayState extends MusicBeatState
 				{
 					gottaHitNote = !section.mustHitSection;
 				}
+				if (!gottaHitNote && ClientPrefs.mobileMidScroll)
+				{
+					songNotes[3] = 'Behind Note'; //hopefully this fixes an issue where the chart breaks 1 minute in
+				}
 
 				var oldNote:Note;
 				if (unspawnNotes.length > 0)
@@ -3337,7 +3349,6 @@ class PlayState extends MusicBeatState
 						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
-						if (ClientPrefs.mobileMidScroll && !sustainNote.mustPress) sustainNote.noteType = 'Behind Note';
 
 						if (sustainNote.mustPress)
 						{
@@ -3362,10 +3373,6 @@ class PlayState extends MusicBeatState
 				{
 					swagNote.x += FlxG.width / 2; // general offset
 					totalNotes += 1;
-				}
-				if (!swagNote.mustPress && ClientPrefs.mobileMidScroll)
-				{
-					swagNote.noteType = 'Behind Note';
 				}
 				else if(ClientPrefs.middleScroll)
 				{
@@ -3582,7 +3589,6 @@ class PlayState extends MusicBeatState
 			if (player == 1)
 			{
 				if (!opponentChart || opponentChart && ClientPrefs.middleScroll || opponentChart && ClientPrefs.mobileMidScroll || !opponentChart && ClientPrefs.mobileMidScroll) playerStrums.add(babyArrow);
-			else if (ClientPrefs.mobileMidScroll) insert(members.indexOf(playerStrums), babyArrow);
 			else opponentStrums.add(babyArrow);
 			}
 			else
@@ -3599,7 +3605,7 @@ class PlayState extends MusicBeatState
 					babyArrow.x += FlxG.width / 2;
 				}
 				if (!opponentChart || opponentChart && ClientPrefs.mobileMidScroll || opponentChart && ClientPrefs.mobileMidScroll || !opponentChart && ClientPrefs.mobileMidScroll) opponentStrums.add(babyArrow);
-			else if (ClientPrefs.mobileMidScroll) insert(members.indexOf(opponentStrums), babyArrow);
+			else if (ClientPrefs.mobileMidScroll) insert(members.indexOf(playerStrums), babyArrow);
 				else playerStrums.add(babyArrow);
 			}
 
@@ -4327,11 +4333,6 @@ class PlayState extends MusicBeatState
 
 				var index:Int = unspawnNotes.indexOf(dunceNote);
 				unspawnNotes.splice(index, 1);
-				if (dunceNote.noteData < 4 && ClientPrefs.mobileMidScroll)
-				{
-				index = unspawnNotes.indexOf(dunceNote) - 3;
-				unspawnNotes.splice(index, 1);
-				}
 			}
 		}
 
@@ -6515,6 +6516,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				{
 				songScore += 350;
 				}
+				updateRatingCounter();
 				combo += 1;
 				totalNotesPlayed += 1;
 				notesHitArray.unshift(Date.now());
