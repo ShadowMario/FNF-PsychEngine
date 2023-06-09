@@ -1283,15 +1283,10 @@ class FunkinLua {
 		});
 
 		//Identical functions
-		Lua_helper.add_callback(lua, "FlxColor", function(?color:String = '') return FlxColor.fromString(color));
-		Lua_helper.add_callback(lua, "getColorFromName", function(?color:String = '') return FlxColor.fromString(color));
-		Lua_helper.add_callback(lua, "getColorFromString", function(?color:String = '') return FlxColor.fromString(color));
-		//
-
-		Lua_helper.add_callback(lua, "getColorFromHex", function(myColor:String) {
-			myColor = myColor.trim();
-			return Std.parseInt(myColor.startsWith('0x') ? myColor : '0xFF$myColor');
-		});
+		Lua_helper.add_callback(lua, "FlxColor", function(color:String) return FlxColor.fromString(color));
+		Lua_helper.add_callback(lua, "getColorFromName", function(color:String) return FlxColor.fromString(color));
+		Lua_helper.add_callback(lua, "getColorFromString", function(color:String) return FlxColor.fromString(color));
+		Lua_helper.add_callback(lua, "getColorFromHex", function(color:String) return FlxColor.fromString(color));
 
 		// precaching
 		Lua_helper.add_callback(lua, "addCharacterToList", function(name:String, type:String) {
@@ -1525,7 +1520,6 @@ class FunkinLua {
 			{
 				leSprite.loadGraphic(Paths.image(image));
 			}
-			leSprite.antialiasing = ClientPrefs.data.antialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
@@ -1535,7 +1529,6 @@ class FunkinLua {
 			var leSprite:ModchartSprite = new ModchartSprite(x, y);
 
 			LuaUtils.loadFrames(leSprite, image, spriteType);
-			leSprite.antialiasing = ClientPrefs.data.antialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 		});
 
@@ -1802,8 +1795,7 @@ class FunkinLua {
 			if(right == null) right = FlxColor.fromString('0x' + rightColor);
 			if(right == null) right = FlxColor.WHITE; //fail safe
 
-			PlayState.instance.healthBar.createFilledBar(left, right);
-			PlayState.instance.healthBar.updateBar();
+			PlayState.instance.healthBar.setColors(left, right);
 		});
 		Lua_helper.add_callback(lua, "setTimeBarColors", function(leftColor:String, rightColor:String) {
 			var left:Null<FlxColor> = FlxColor.fromString(leftColor);
@@ -1814,19 +1806,10 @@ class FunkinLua {
 			if(right == null) right = FlxColor.fromString('0x' + rightColor);
 			if(right == null) right = FlxColor.WHITE; //fail safe
 
-			PlayState.instance.timeBar.createFilledBar(right, left);
-			PlayState.instance.timeBar.updateBar();
+			PlayState.instance.healthBar.setColors(left, right);
 		});
 
 		Lua_helper.add_callback(lua, "setObjectCamera", function(obj:String, camera:String = '') {
-			/*if(PlayState.instance.modchartSprites.exists(obj)) {
-				PlayState.instance.modchartSprites.get(obj).cameras = [LuaUtils.cameraFromString(camera)];
-				return true;
-			}
-			else if(PlayState.instance.modchartTexts.exists(obj)) {
-				PlayState.instance.modchartTexts.get(obj).cameras = [LuaUtils.cameraFromString(camera)];
-				return true;
-			}*/
 			var real = PlayState.instance.getLuaObject(obj);
 			if(real!=null){
 				real.cameras = [LuaUtils.cameraFromString(camera)];
