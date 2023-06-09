@@ -1794,6 +1794,7 @@ class PlayState extends MusicBeatState
 		botplayTxt = new FlxText((healthBarBG.width / 2), healthBar.y, 0, "AutoPlayCPU", 20);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
+		botplayTxt.screenCenter(X);
 		botplayTxt.borderSize = 3;
 		botplayTxt.visible = cpuControlled;
 		add(botplayTxt);
