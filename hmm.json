@@ -1,14 +1,11 @@
 {
   "dependencies": [
     {
-      "name": "lime",
-      "type": "haxelib",
-      "version": null
-    },
-    {
-      "name": "openfl",
-      "type": "haxelib",
-      "version": null
+      "name": "discord_rpc",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/Aidan63/linc_discord-rpc"
     },
     {
       "name": "flixel",
@@ -31,41 +28,9 @@
       "version": null
     },
     {
-      "name": "hxcpp",
-      "type": "haxelib",
-      "version": null
-    },
-    {
-      "name": "tjson",
-      "type": "haxelib",
-      "version": null
-    },
-    {
-      "name": "hxjsonast",
-      "type": "haxelib",
-      "version": null
-    },
-    {
-      "name": "hxCodec",
-      "type": "haxelib",
-      "version": null
-    },
-    {
       "name": "hscript",
       "type": "haxelib",
       "version": null
-    },
-    {
-      "name": "hxcpp-debug-server",
-      "type": "haxelib",
-      "version": null
-    },
-    {
-      "name": "discord_rpc",
-      "type": "git",
-      "dir": null,
-      "ref": "master",
-      "url": "https://github.com/Aidan63/linc_discord-rpc"
     },
     {
       "name": "hscript-ex",
@@ -75,11 +40,46 @@
       "url": "https://github.com/ianharrigan/hscript-ex"
     },
     {
-      "name": "linc_luajit",
+      "name": "hxCodec",
       "type": "git",
       "dir": null,
-      "ref": "master",
-      "url": "https://github.com/nebulazorua/linc_luajit"
+      "ref": "main",
+      "url": "https://github.com/polybiusproxy/hxCodec.git"
+    },
+    {
+      "name": "hxcpp",
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "hxcpp-debug-server",
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "hxjsonast",
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "hxlua",
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "lime",
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "openfl",
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "tjson",
+      "type": "haxelib",
+      "version": null
     }
   ]
 }
