@@ -49,9 +49,9 @@ class DeprecatedFunctions
 		Lua_helper.add_callback(lua, "luaSpriteMakeGraphic", function(tag:String, width:Int, height:Int, color:String) {
 			funk.luaTrace("luaSpriteMakeGraphic is deprecated! Use makeGraphic instead", false, true);
 			if(PlayState.instance.modchartSprites.exists(tag)) {
-				var colorNum:Int = Std.parseInt(color);
-				if(!color.startsWith('0x')) colorNum = Std.parseInt('0xff' + color);
-
+				var colorNum:Null<FlxColor> = FlxColor.fromString(color);
+				if(colorNum == null) colorNum = FlxColor.fromString('0x' + color);
+				if(colorNum == null) colorNum = FlxColor.WHITE; //fail safe
 				PlayState.instance.modchartSprites.get(tag).makeGraphic(width, height, colorNum);
 			}
 		});
