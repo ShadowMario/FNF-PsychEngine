@@ -22,6 +22,7 @@ import haxe.Json;
 
 import objects.Character;
 import objects.HealthIcon;
+import objects.HealthBar;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -60,7 +61,7 @@ class CharacterEditorState extends MusicBeatState
 	var characterList:Array<String> = [];
 
 	var cameraFollowPointer:FlxSprite;
-	var healthBarBG:FlxSprite;
+	var healthBar:HealthBar;
 
 	override function create()
 	{
@@ -98,10 +99,10 @@ class CharacterEditorState extends MusicBeatState
 
 		loadChar(!daAnim.startsWith('bf'), false);
 
-		healthBarBG = new FlxSprite(30, FlxG.height - 75).loadGraphic(Paths.image('healthBar'));
-		healthBarBG.scrollFactor.set();
-		add(healthBarBG);
-		healthBarBG.cameras = [camHUD];
+		healthBar = new HealthBar(30, FlxG.height - 75);
+		healthBar.scrollFactor.set();
+		add(healthBar);
+		healthBar.cameras = [camHUD];
 
 		leHealthIcon = new HealthIcon(char.healthIcon, false);
 		leHealthIcon.y = FlxG.height - 150;
@@ -789,17 +790,17 @@ class CharacterEditorState extends MusicBeatState
 			else if(sender == healthColorStepperR)
 			{
 				char.healthColorArray[0] = Math.round(healthColorStepperR.value);
-				healthBarBG.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
+				healthBar.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
 			}
 			else if(sender == healthColorStepperG)
 			{
 				char.healthColorArray[1] = Math.round(healthColorStepperG.value);
-				healthBarBG.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
+				healthBar.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
 			}
 			else if(sender == healthColorStepperB)
 			{
 				char.healthColorArray[2] = Math.round(healthColorStepperB.value);
-				healthBarBG.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
+				healthBar.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
 			}
 		}
 	}
@@ -1053,7 +1054,7 @@ class CharacterEditorState extends MusicBeatState
 		healthColorStepperR.value = char.healthColorArray[0];
 		healthColorStepperG.value = char.healthColorArray[1];
 		healthColorStepperB.value = char.healthColorArray[2];
-		healthBarBG.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
+		healthBar.leftBar.color = healthBar.rightBar.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
 	}
 
 	function updatePresence() {
@@ -1275,9 +1276,7 @@ class CharacterEditorState extends MusicBeatState
 
 	function ClipboardAdd(prefix:String = ''):String {
 		if(prefix.toLowerCase().endsWith('v')) //probably copy paste attempt
-		{
 			prefix = prefix.substring(0, prefix.length-1);
-		}
 
 		var text:String = prefix + Clipboard.text.replace('\n', '');
 		return text;

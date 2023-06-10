@@ -8,7 +8,7 @@ class HealthBar extends FlxSpriteGroup
 	public var leftBar:FlxSprite;
 	public var rightBar:FlxSprite;
 	public var bg:FlxSprite;
-	public var valueFunction:Void->Float;
+	public var valueFunction:Void->Float = function() return 0;
 	public var percent(default, set):Float = 0;
 	public var bounds:Dynamic = {min: 0, max: 1};
 	public var leftToRight(default, set):Bool = true;
@@ -19,11 +19,11 @@ class HealthBar extends FlxSpriteGroup
 	public var barHeight(default, set):Int = 1;
 	public var barOffset:FlxPoint = new FlxPoint(3, 3);
 
-	public function new(x:Float, y:Float, image:String = 'healthBar', valueFunction:Void->Float, boundX:Float, boundY:Float)
+	public function new(x:Float, y:Float, image:String = 'healthBar', valueFunction:Void->Float = null, boundX:Float = 0, boundY:Float = 1)
 	{
 		super(x, y);
 		
-		this.valueFunction = valueFunction;
+		if(valueFunction != null) this.valueFunction = valueFunction;
 		setBounds(boundX, boundY);
 		
 		bg = new FlxSprite().loadGraphic(Paths.image(image));
