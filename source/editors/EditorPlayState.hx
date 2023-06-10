@@ -197,10 +197,6 @@ class EditorPlayState extends MusicBeatState
 		// NEW SHIT
 		noteData = songData.notes;
 
-		var playerCounter:Int = 0;
-
-		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
-
 		for (section in noteData)
 		{
 			for (songNotes in section.sectionNotes)
@@ -223,55 +219,31 @@ class EditorPlayState extends MusicBeatState
 						else
 							oldNote = null;
 
+						var susLength:Float = Math.round(songNotes[2] / Conductor.stepCrochet);
+
 						var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 						swagNote.mustPress = gottaHitNote;
-						swagNote.sustainLength = songNotes[2];
+						swagNote.sustainLength = susLength * Conductor.stepCrochet;
+						swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						swagNote.noteType = songNotes[3];
 						if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 						swagNote.scrollFactor.set();
 
-						var susLength:Float = swagNote.sustainLength;
-
-						susLength = susLength / Conductor.stepCrochet;
 						unspawnNotes.push(swagNote);
 
-						var floorSus:Int = Math.floor(susLength);
-						if(floorSus > 0) {
-							for (susNote in 0...floorSus+1)
+						if(susLength > 0) {
+							for (susNote in 0...Math.floor(Math.max(susLength, 2)))
 							{
 								oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
 								var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(PlayState.SONG.speed, 2)), daNoteData, oldNote, true);
 								sustainNote.mustPress = gottaHitNote;
+								sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 								sustainNote.noteType = swagNote.noteType;
 								sustainNote.scrollFactor.set();
+								swagNote.tail.push(sustainNote);
+								sustainNote.parent = swagNote;
 								unspawnNotes.push(sustainNote);
-
-								if (sustainNote.mustPress)
-								{
-									sustainNote.x += FlxG.width / 2; // general offset
-								}
-								else if(ClientPrefs.middleScroll)
-								{
-									sustainNote.x += 310;
-									if(daNoteData > 1)
-									{ //Up and Right
-										sustainNote.x += FlxG.width / 2 + 25;
-									}
-								}
-							}
-						}
-
-						if (swagNote.mustPress)
-						{
-							swagNote.x += FlxG.width / 2; // general offset
-						}
-						else if(ClientPrefs.middleScroll)
-						{
-							swagNote.x += 310;
-							if(daNoteData > 1) //Up and Right
-							{
-								swagNote.x += FlxG.width / 2 + 25;
 							}
 						}
 						
@@ -281,7 +253,6 @@ class EditorPlayState extends MusicBeatState
 					}
 				}
 			}
-			daBeats += 1;
 		}
 
 		unspawnNotes.sort(sortByShit);
