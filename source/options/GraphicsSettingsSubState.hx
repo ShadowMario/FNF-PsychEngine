@@ -48,7 +48,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			'If checked, allows the GPU to be used for caching the images, decreases the RAM usage.\n(RESTART THE GAME TO APPLY THIS OPTION)', // Description
 			'cacheOnGPU', // Save data variable name
 			'bool', // Variable type
-			true); // Default value
+			false); // Default value
 		addOption(option);
 
 		var option:Option = new Option('Anti-Aliasing',
