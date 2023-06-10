@@ -1806,7 +1806,7 @@ class FunkinLua {
 			if(right == null) right = FlxColor.fromString('0x' + rightColor);
 			if(right == null) right = FlxColor.WHITE; //fail safe
 
-			PlayState.instance.healthBar.setColors(left, right);
+			PlayState.instance.timeBar.setColors(left, right);
 		});
 
 		Lua_helper.add_callback(lua, "setObjectCamera", function(obj:String, camera:String = '') {
