@@ -285,6 +285,7 @@ class PlayState extends MusicBeatState
 	public var cameraSpeed:Float = 1;
 	var hueh231:FlxSprite;
 	var SPUNCHBOB:FlxSprite;
+	var missRating:FlxSprite;
 
 	var notesHitArray:Array<Date> = [];
 
@@ -4467,6 +4468,10 @@ class PlayState extends MusicBeatState
 						{
 							if (daNote.mustPress && !cpuControlled &&!daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
 								noteMiss(daNote);
+								if (ClientPrefs.missSoundShit)
+								{
+								FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
+								}
 							}
 
 							daNote.active = false;
@@ -6136,6 +6141,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		missCombo += 1;
 		health -= daNote.missHealth * missCombo;
 		}
+
 
 		if(instakillOnMiss)
 		{

@@ -57,6 +57,7 @@ class ClientPrefs {
 	public static var scoreZoom:Bool = true;
 	public static var goldSickSFC:Bool = true;
 	public static var colorRatingFC:Bool = false;
+	public static var missSoundShit:Bool = false;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var laneUnderlayAlpha:Float = 1;
@@ -185,6 +186,7 @@ class ClientPrefs {
 		FlxG.save.data.noMarvJudge = noMarvJudge;
 		FlxG.save.data.goldSickSFC = goldSickSFC;
 		FlxG.save.data.colorRatingFC = colorRatingFC;
+		FlxG.save.data.missSoundShit = missSoundShit;
 		FlxG.save.data.splashType = splashType;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
@@ -296,6 +298,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.botLightStrum != null) {
 			botLightStrum = FlxG.save.data.botLightStrum;
+		}
+		if(FlxG.save.data.missSoundShit != null) {
+			missSoundShit = FlxG.save.data.missSoundShit;
 		}
 		if(FlxG.save.data.opponentLightStrum != null) {
 			opponentLightStrum = FlxG.save.data.opponentLightStrum;
