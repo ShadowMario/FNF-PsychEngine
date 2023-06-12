@@ -674,7 +674,6 @@ class ModMetadata
 		//Try loading json
 		var pack:Dynamic = Mods.getPack(folder);
 		if(pack != null) {
-			//using reflects cuz for some odd reason my haxe hates the stuff.var shit
 			if(pack.name != null && pack.name.length > 0)
 			{
 				if(pack.name != 'Name')
@@ -691,9 +690,10 @@ class ModMetadata
 					this.description = "No description provided.";
 			}
 
-			if(pack.colors != null && pack.colors.length > 2)
-				this.color = FlxColor.fromRGB(pack.colors[0], pack.colors[1], pack.colors[2]);
-
+			if(pack.color != null)
+				this.color = FlxColor.fromRGB(pack.color[0] != null ? pack.color[0] : 170,
+											pack.color[1] != null ? pack.color[1] : 0,
+											pack.color[2] != null ? pack.color[2] : 255);
 			this.restart = pack.restart;
 		}
 	}
