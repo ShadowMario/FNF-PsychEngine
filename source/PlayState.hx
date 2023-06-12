@@ -3772,16 +3772,6 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 	override public function update(elapsed:Float)
 	{
-		if (ClientPrefs.smoothHealthType == 'Indie Cross')
-		{
-		if (ClientPrefs.framerate > 60)
-		{
-		displayedHealth = FlxMath.lerp(displayedHealth, health, .1);
-		} else if (ClientPrefs.framerate == 60) 
-		{
-		displayedHealth = FlxMath.lerp(displayedHealth, health, .4);
-		}
-		}
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -3951,11 +3941,21 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		if (ClientPrefs.smoothHealthType == 'Golden Apple 1.5')
+		if (ClientPrefs.smoothHealth && ClientPrefs.smoothHealthType == 'Indie Cross')
+		{
+		if (ClientPrefs.framerate > 60)
+		{
+		displayedHealth = FlxMath.lerp(displayedHealth, health, .1);
+		} else if (ClientPrefs.framerate == 60) 
+		{
+		displayedHealth = FlxMath.lerp(displayedHealth, health, .4);
+		}
+		}
+		if (ClientPrefs.smoothHealth && ClientPrefs.smoothHealthType == 'Golden Apple 1.5')
 		{
 		displayedHealth = FlxMath.lerp(displayedHealth, health, CoolUtil.boundTo(elapsed * 20, 0, 1));
 		}
-		if (!ClientPrefs.smoothHealth)
+		if (!ClientPrefs.smoothHealth) //so basically don't make the health smooth if you have that off
 		{
 		displayedHealth = health;
 		}
@@ -4162,9 +4162,19 @@ class PlayState extends MusicBeatState
 		iconP2.updateHitbox();
 
 		var iconOffset:Int = 26;
-
+		
+		if (ClientPrefs.smoothHealth && ClientPrefs.smoothHealthType != 'Golden Apple 1.5' || !ClientPrefs.smoothHealth) //checks if you're using smooth health. if you are, but are not using the indie cross one then you know what that means
+		{
 		iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		}
+		if (ClientPrefs.smoothHealth && ClientPrefs.smoothHealthType == 'Golden Apple 1.5') //really makes it feel like the gapple 1.5 build's health tween
+		{
+		var percent:Float = 1 - (opponentChart ? displayedHealth / maxHealth * -1 : displayedHealth / maxHealth); //checks if you're playing as the opponent. if so, uses the negative percent, otherwise uses the normal one
+		iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * percent) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
+		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * percent) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		}
+
 		if (health > maxHealth)
 			health = maxHealth;
 
