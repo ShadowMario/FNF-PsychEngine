@@ -3772,12 +3772,15 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 	override public function update(elapsed:Float)
 	{
+		if (ClientPrefs.smoothHealthType == 'Indie Cross')
+		{
 		if (ClientPrefs.framerate > 60)
 		{
 		displayedHealth = FlxMath.lerp(displayedHealth, health, .1);
 		} else if (ClientPrefs.framerate == 60) 
 		{
 		displayedHealth = FlxMath.lerp(displayedHealth, health, .4);
+		}
 		}
 		/*if (FlxG.keys.justPressed.NINE)
 		{
@@ -3947,6 +3950,15 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+
+		if (ClientPrefs.smoothHealthType == 'Golden Apple 1.5')
+		{
+		displayedHealth = FlxMath.lerp(displayedHealth, health, CoolUtil.boundTo(elapsed * 20, 0, 1));
+		}
+		if (!ClientPrefs.smoothHealth)
+		{
+		displayedHealth = health;
+		}
 
 		setOnLuas('curDecStep', curDecStep);
 		setOnLuas('curDecBeat', curDecBeat);

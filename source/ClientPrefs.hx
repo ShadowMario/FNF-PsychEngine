@@ -46,6 +46,8 @@ class ClientPrefs {
 	public static var moreSpecificSpeed:Bool = true;
 	public static var coolGameplay:Bool = false;
 	public static var hudType:String = 'Kade Engine';
+	public static var smoothHealth:Bool = true;
+	public static var smoothHealthType:String = 'Golden Apple 1.5';
 	public static var percentDecimals:Int = 2;
 	public static var healthGainType:String = 'Psych Engine';
 	public static var hitsoundType:String = 'osu!mania';
@@ -173,6 +175,8 @@ class ClientPrefs {
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.longHPBar = longHPBar;
 		FlxG.save.data.moreMaxHP = moreMaxHP;
+		FlxG.save.data.smoothHealthType = smoothHealthType;
+		FlxG.save.data.smoothHealth = smoothHealth;
 		FlxG.save.data.moreSpecificSpeed = moreSpecificSpeed;
 		FlxG.save.data.spaceVPose = spaceVPose;
 		FlxG.save.data.ghostTapAnim = ghostTapAnim;
@@ -350,6 +354,12 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.ghostTapping != null) {
 			ghostTapping = FlxG.save.data.ghostTapping;
+		}
+		if(FlxG.save.data.smoothHealthType != null) {
+			smoothHealthType = FlxG.save.data.smoothHealthType;
+		}
+		if(FlxG.save.data.smoothHealth != null) {
+			smoothHealth = FlxG.save.data.smoothHealth;
 		}
 		if(FlxG.save.data.communityGameMode != null) {
 			communityGameMode = FlxG.save.data.communityGameMode;
