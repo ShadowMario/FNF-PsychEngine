@@ -48,7 +48,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-
 		var option:Option = new Option('Opponent Note Alpha:',
 			"How visible do you want the opponent's notes to be when Middlescroll is enabled? \n(0% = invisible, 100% = fully visible)",
 			'oppNoteAlpha',
@@ -88,6 +87,21 @@ class VisualsUISubState extends BaseOptionsMenu
 			'string',
 			'Golden',
 			['Golden', 'Rainbow']);
+		addOption(option);
+
+		var option:Option = new Option('Smooth Health',
+			"If checked, the health will adjust smoothly.",
+			'smoothHealth',
+			'bool',
+			true);
+		addOption(option);
+		
+		var option:Option = new Option('Smooth Health Type:',
+			"What should the Time Bar display?",
+			'smoothHealthType',
+			'string',
+			'Golden Apple 1.5',
+			['Golden Apple 1.5', 'Indie Cross']);
 		addOption(option);
 
 		var option:Option = new Option('Double Note Ghosts',
