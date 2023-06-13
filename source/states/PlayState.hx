@@ -1347,6 +1347,10 @@ class PlayState extends MusicBeatState
 
 				var newCharacter:String = event.value2;
 				addCharacterToList(newCharacter, charType);
+			
+			case 'Play Sound':
+				precacheList.set(event.value1, 'sound');
+				Paths.sound(event.value1);
 		}
 
 		stagesFunc(function(stage:BaseStage) stage.eventPushed(event));
@@ -2168,6 +2172,10 @@ class PlayState extends MusicBeatState
 				} else {
 					LuaUtils.setVarInArray(this, value1, value2);
 				}
+			
+			case 'Play Sound':
+				if(flValue2 == null) flValue2 = 1;
+				FlxG.sound.play(Paths.sound(value1), flValue2);
 		}
 		
 		stagesFunc(function(stage:BaseStage) stage.eventCalled(eventName, value1, value2, flValue1, flValue2, strumTime));
