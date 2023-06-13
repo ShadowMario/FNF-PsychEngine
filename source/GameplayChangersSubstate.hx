@@ -140,6 +140,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var option:GameplayOption = new GameplayOption('Random Playback Rate', 'randomspeed', 'bool', false);
 		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Troll Mode', 'thetrollingever', 'bool', false);
+		optionsArray.push(option);
 	}
 
 	public function getOptionByName(name:String)

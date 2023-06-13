@@ -271,6 +271,7 @@ class PlayState extends MusicBeatState
 	var waves:Bool = false;
 	var oneK:Bool = false;
 	var randomSpeedThing:Bool = false;
+	var trollingMode:Bool = false;
 	public var jackingtime:Float = 0;
 
 
@@ -402,6 +403,9 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
+	//cam panning
+	var moveCamTo:HaxeVector<Float> = new HaxeVector(2);
+
 	var getTheBotplayText:Int = 0;
 
 	var theListBotplay:Array<String> = [];
@@ -413,6 +417,7 @@ class PlayState extends MusicBeatState
 		randomBotplayText = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
+
 
 		// for lua
 		instance = this;
@@ -500,6 +505,7 @@ class PlayState extends MusicBeatState
 		waves = ClientPrefs.getGameplaySetting('wavemode', false);
 		oneK = ClientPrefs.getGameplaySetting('onekey', false);
 		randomSpeedThing = ClientPrefs.getGameplaySetting('randomspeed', false);
+		trollingMode = ClientPrefs.getGameplaySetting('thetrollingever', false);
 		jackingtime = ClientPrefs.getGameplaySetting('jacks', 0);
 
 
@@ -1473,11 +1479,11 @@ class PlayState extends MusicBeatState
 		grpNoteSplashes.add(splash);
 		splash.alpha = 0.0;
 
-		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
+		opponentStrums = new FlxTypedGroup<StrumNote>();
 
 		// startCountdown();
-
+		
 		generateSong(SONG.song);
 
 		// After all characters being loaded, it makes then invisible 0.01s later so that the player won't freeze when you change characters
@@ -3131,7 +3137,7 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.pitch = playbackRate;
-		FlxG.sound.music.onComplete = finishSong.bind();
+		if (!trollingMode) FlxG.sound.music.onComplete = finishSong.bind();
 		vocals.play();
 
 		if(startOnTime > 0)
@@ -3388,8 +3394,11 @@ class PlayState extends MusicBeatState
 				{
 					swagNote.x += FlxG.width / 2;
 				}
+				if (!trollingMode)
+				{
 				if(!noteTypeMap.exists(swagNote.noteType)) {
 					noteTypeMap.set(swagNote.noteType, true);
+				}
 				}
 				var jackNote:Note;
 
@@ -3453,6 +3462,7 @@ class PlayState extends MusicBeatState
 					value2: newEventNote[3]
 				};
 				eventNotes.push(subEvent);
+				if(!trollingMode)
 				eventPushed(subEvent);
 			}
 		}
@@ -4173,6 +4183,18 @@ class PlayState extends MusicBeatState
 		var percent:Float = 1 - (opponentChart ? displayedHealth / maxHealth * -1 : displayedHealth / maxHealth); //checks if you're playing as the opponent. if so, uses the negative percent, otherwise uses the normal one
 		iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * percent) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * percent) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		}
+
+		if (generatedMusic) {
+			if (startedCountdown && canPause && !endingSong) {
+				// Song ends abruptly on slow rate even with second condition being deleted,
+				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
+				// so no reason to delete it at all
+				if (FlxG.sound.music.length - Conductor.songPosition <= 20 * playbackRate) {
+					endSong();
+					Conductor.songPosition = 0;
+				}
+			}
 		}
 
 		if (health > maxHealth)
@@ -5120,6 +5142,44 @@ class PlayState extends MusicBeatState
 	public var transitioning = false;
 	public function endSong():Void
 	{		
+		if (trollingMode)
+		{			
+				FlxG.sound.music.stop();
+				vocals.stop();
+
+				FlxG.sound.music.volume = 1;
+				vocals.volume = 1;
+
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
+			var difficulty:String = CoolUtil.getDifficultyFilePath();
+				if (difficulty != 'Normal')
+				{
+				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
+				} else
+				{
+				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
+				}
+
+				playbackRate += 0.05;
+
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateSong(SONG.song);
+
+				vocals.play();
+				FlxG.sound.music.play();
+		}
+
+		if (!trollingMode)
+		{
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
@@ -5268,6 +5328,7 @@ class PlayState extends MusicBeatState
 				changedDifficulty = false;
 			}
 			transitioning = true;
+		}
 		}
 	}
 
