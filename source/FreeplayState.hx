@@ -16,6 +16,8 @@ import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import lime.utils.Assets;
 import flixel.system.FlxSound;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import openfl.utils.Assets as OpenFlAssets;
 import WeekData;
 #if MODS_ALLOWED
@@ -242,6 +244,12 @@ class FreeplayState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
+		for (i in 0...iconArray.length)
+		{
+				iconArray[i].scale.set(FlxMath.lerp(iconArray[i].scale.x, 1, elapsed * 9),
+				FlxMath.lerp(iconArray[i].scale.y, 1, elapsed * 9));
+		}
+
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 24, 0, 1)));
 		lerpRating = FlxMath.lerp(lerpRating, intendedRating, CoolUtil.boundTo(elapsed * 12, 0, 1));
 
@@ -328,8 +336,7 @@ class FreeplayState extends MusicBeatState
 		}
 		else if(space)
 		{
-			if(instPlaying != curSelected)
-			{
+				function playSong() {
 				#if PRELOAD_ALL
 				destroyFreeplayVocals();
 				FlxG.sound.music.volume = 0;
@@ -348,12 +355,51 @@ class FreeplayState extends MusicBeatState
 				vocals.looped = true;
 				vocals.volume = 0.7;
 				instPlaying = curSelected;
+				Conductor.changeBPM(PlayState.SONG.bpm);
 				#end
 			}
+			function songJsonPopup() { //you pressed space, but the song's ogg files don't exist
+				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+				trace(poop + '\'s .ogg does not exist!');
+				FlxG.sound.play(Paths.sound('invalidJSON'));
+				FlxG.camera.shake(0.05, 0.05);
+				var funnyText = new FlxText(12, FlxG.height - 24, 0, "Invalid Song!");
+				funnyText.scrollFactor.set();
+				funnyText.screenCenter();
+				funnyText.x = 5;
+				funnyText.y = FlxG.height/2 - 64;
+				funnyText.setFormat("vcr.ttf", 64, FlxColor.RED, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				add(funnyText);
+				FlxTween.tween(funnyText, {alpha: 0}, 0.9, {
+					onComplete: _ -> {
+						remove(funnyText, true);
+						funnyText.destroy();
+					}
+				});
+			}
+			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+			#if desktop
+			if(instPlaying != curSelected)
+			{
+				if(sys.FileSystem.exists(Paths.inst(poop + '/'  + poop)) || sys.FileSystem.exists(Paths.json(poop + '/' + poop)) || sys.FileSystem.exists(Paths.modsJson(poop + '/' + poop)))
+					playSong();
+				else
+					songJsonPopup();
+			}
+			#else
+			if(instPlaying != curSelected)
+			{
+				if(OpenFlAssets.exists(Paths.inst(poop + '/' + poop)) || OpenFlAssets.exists(Paths.json(poop + '/' + poop)))
+					playSong();
+				else
+					songJsonPopup();
+			}
+			#end
 		}
 
 		else if (accepted)
 		{
+			
 			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
@@ -368,6 +414,7 @@ class FreeplayState extends MusicBeatState
 			}*/
 			trace(poop);
 
+			if(sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) || sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {//fix an issue where any song in the mods folder would return an error even if both the json and song files existed
 			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
@@ -386,6 +433,16 @@ class FreeplayState extends MusicBeatState
 			FlxG.sound.music.volume = 0;
 					
 			destroyFreeplayVocals();
+
+					} else {
+					if(sys.FileSystem.exists(Paths.inst(poop + '/'  + poop)) && !sys.FileSystem.exists(Paths.json(poop + '/' + poop))) { //the json doesn't exist, but the song files do, or you put a typo in the name
+							CoolUtil.coolError("The JSON's name does not match with  " + poop + "!\nTry making them match.", "Psych Engine Anti-Crash Tool");
+					} else if(sys.FileSystem.exists(Paths.json(poop + '/' + poop)) && !sys.FileSystem.exists(Paths.inst(poop + '/'  + poop)))  {//the json exists, but the song files don't
+							CoolUtil.coolError("Your song seems to not have an Inst.ogg, check the folder name in 'songs'!", "Psych Engine Anti-Crash Tool");
+				} else if(!sys.FileSystem.exists(Paths.json(poop + '/' + poop)) && !sys.FileSystem.exists(Paths.inst(poop + '/'  + poop))) { //neither the json nor the song files actually exist
+					CoolUtil.coolError("It appears that " + poop + " doesn't actually have a JSON, nor does it actually have voices/instrumental files!\nMaybe try fixing its name in weeks/" + WeekData.getWeekFileName() + "?", "Psych Engine Anti-Crash Tool");
+				}
+			}
 		}
 		else if(controls.RESET)
 		{
@@ -531,6 +588,14 @@ class FreeplayState extends MusicBeatState
 		scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
 		diffText.x = Std.int(scoreBG.x + (scoreBG.width / 2));
 		diffText.x -= diffText.width / 2;
+	}
+	override function beatHit() {
+		super.beatHit();
+
+		for (i in 0...iconArray.length)
+		{
+			iconArray[i].scale.add(0.2, 0.2);
+		}
 	}
 }
 

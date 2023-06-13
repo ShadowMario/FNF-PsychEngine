@@ -260,7 +260,6 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case "Options":
-					close();
 					LoadingState.loadAndSwitchState(new options.OptionsState());
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
