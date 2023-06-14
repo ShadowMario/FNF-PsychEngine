@@ -42,6 +42,9 @@ class ClientPrefs {
 	public static var noteSpawnTime:Float = 1;
 	public static var oppNoteAlpha:Float = 0.65;
 	public static var lessBotLag:Bool = false;
+	public static var ratesAndCombo:Bool = false;
+	public static var showMS:Bool = false;
+	public static var comboPopup:Bool = false;
 	public static var ratingCounter:Bool = false;
 	public static var moreSpecificSpeed:Bool = true;
 	public static var coolGameplay:Bool = false;
@@ -172,6 +175,9 @@ class ClientPrefs {
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
 		FlxG.save.data.noteOffset = noteOffset;
+		FlxG.save.data.ratesAndCombo = ratesAndCombo;
+		FlxG.save.data.showMS = showMS;
+		FlxG.save.data.comboPopup = comboPopup;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.longHPBar = longHPBar;
@@ -303,6 +309,15 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.botLightStrum != null) {
 			botLightStrum = FlxG.save.data.botLightStrum;
+		}
+		if(FlxG.save.data.comboPopup != null) {
+			comboPopup = FlxG.save.data.comboPopup;
+		}
+		if(FlxG.save.data.showMS != null) {
+			showMS = FlxG.save.data.showMS;
+		}
+		if(FlxG.save.data.ratesAndCombo != null) {
+			ratesAndCombo = FlxG.save.data.ratesAndCombo;
 		}
 		if(FlxG.save.data.missSoundShit != null) {
 			missSoundShit = FlxG.save.data.missSoundShit;

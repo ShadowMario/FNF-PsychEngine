@@ -337,6 +337,10 @@ class PlayState extends MusicBeatState
 	var tankmanRun:FlxTypedGroup<TankmenBG>;
 	var foregroundSprites:FlxTypedGroup<BGSprite>;
 
+	//ms timing popup shit
+	public var msTxt:FlxText;
+	public var msTimer:FlxTimer = null;
+
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
@@ -1514,6 +1518,26 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 		moveCameraSection();
+
+		//omg its that ms text from earlier
+		msTxt = new FlxText(0, 0, 0, "");
+		msTxt.cameras = [camHUD];
+		msTxt.scrollFactor.set();
+		msTxt.setFormat("vcr.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') msTxt.setFormat("calibri.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Dave & Bambi') msTxt.setFormat("comic.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Doki Doki+') msTxt.setFormat("Aller_rg.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		msTxt.x = 408 + 250;
+		msTxt.y = 290 - 25;
+		if (PlayState.isPixelStage) {
+			msTxt.x = 408 + 260;
+			msTxt.y = 290 + 20;
+		}
+		msTxt.x += ClientPrefs.comboOffset[0];
+		msTxt.y -= ClientPrefs.comboOffset[1];
+		msTxt.active = false;
+		msTxt.visible = false;
+		insert(members.indexOf(strumLineNotes), msTxt);
 
 		if (ClientPrefs.hudType == 'Dave & Bambi') 
 		{
@@ -5384,7 +5408,7 @@ class PlayState extends MusicBeatState
 	public var totalNotesHit:Float = 0.0;
 	public var totalNotes:Int = 0;
 
-	public var showCombo:Bool = false;
+	public var showCombo:Bool = true;
 	public var showComboNum:Bool = true;
 	public var showRating:Bool = true;
 
@@ -5510,6 +5534,7 @@ class PlayState extends MusicBeatState
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
+		var msTiming:Float = note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset;
 		//trace(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
 
 		// boyfriend.playAnim('hey');
@@ -5736,7 +5761,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = '';
 			pixelShitPart2 = '';
 		}
-		if (!cpuControlled) {
+		if (ClientPrefs.ratesAndCombo) {
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
 		rating.cameras = [camHUD];
 		rating.screenCenter();
@@ -5772,6 +5797,38 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 		{
 		rating.color = FlxColor.WHITE;
 		}
+		insert(members.indexOf(strumLineNotes), rating);
+
+		if (ClientPrefs.showMS && !ClientPrefs.hideHud) {
+			FlxTween.cancelTweensOf(msTxt);
+			FlxTween.cancelTweensOf(msTxt.scale);
+			var time = (Conductor.stepCrochet * 0.001); //ms popup shit
+			msTxt.cameras = [camHUD];
+			msTxt.visible = true;
+			msTxt.alpha = 1;
+			msTxt.text = FlxMath.roundDecimal(-msTiming, 3) + " MS";
+			msTxt.x += ClientPrefs.comboOffset[0];
+			msTxt.y -= ClientPrefs.comboOffset[1];
+			FlxTween.tween(msTxt, 
+				{y: msTxt.y + 8}, 
+				0.1,
+				{onComplete: function(_){
+
+						FlxTween.tween(msTxt, {alpha: 0}, time, {
+							// ease: FlxEase.circOut,
+							onComplete: function(_){msTxt.visible = false;},
+							startDelay: time * 5
+						});
+					}
+				});
+			if (noteDiff <= ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge) msTxt.color = FlxColor.YELLOW;
+			if (noteDiff <= ClientPrefs.sickWindow && ClientPrefs.noMarvJudge) msTxt.color = FlxColor.CYAN;
+			if (noteDiff <= ClientPrefs.sickWindow && noteDiff >= ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge) msTxt.color = FlxColor.CYAN;
+			if (noteDiff >= ClientPrefs.goodWindow) msTxt.color = FlxColor.LIME;
+			if (noteDiff >= ClientPrefs.goodWindow) msTxt.color = FlxColor.ORANGE;
+			if (noteDiff >= ClientPrefs.badWindow) msTxt.color = FlxColor.RED;
+			if (!msTxt.visible) msTxt.color = FlxColor.WHITE;
+		}
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 		comboSpr.cameras = [camHUD];
@@ -5783,9 +5840,17 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 		comboSpr.x += ClientPrefs.comboOffset[0];
 		comboSpr.y -= ClientPrefs.comboOffset[1];
 		comboSpr.y += 60;
+		comboSpr.color = rating.color;
 		comboSpr.velocity.x += FlxG.random.int(1, 10) * playbackRate;
-
-		insert(members.indexOf(strumLineNotes), rating);
+		if (ClientPrefs.comboPopup && !cpuControlled)
+		{
+			insert(members.indexOf(strumLineNotes), comboSpr);
+		}
+		if (!ClientPrefs.comboStacking)
+		{
+			if (lastCombo != null) lastCombo.kill();
+			lastCombo = comboSpr;
+		}
 		
 		if (!ClientPrefs.comboStacking)
 		{
@@ -5829,7 +5894,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 
 		var daLoop:Int = 0;
 		var xThing:Float = 0;
-		if (showCombo)
+		if (ClientPrefs.comboPopup && !cpuControlled)
 		{
 			insert(members.indexOf(strumLineNotes), comboSpr);
 		}

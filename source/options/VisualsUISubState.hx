@@ -89,14 +89,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			['Golden', 'Rainbow']);
 		addOption(option);
 
-		var option:Option = new Option('Smooth Health',
+		var option:Option = new Option('Health Tweening',
 			"If checked, the health will adjust smoothly.",
 			'smoothHealth',
 			'bool',
 			true);
 		addOption(option);
 		
-		var option:Option = new Option('Smooth Health Type:',
+		var option:Option = new Option('Health Tween Type:',
 			"What should the Time Bar display?",
 			'smoothHealthType',
 			'string',
@@ -135,19 +135,19 @@ class VisualsUISubState extends BaseOptionsMenu
 			['Golden Apple', 'Dave and Bambi', 'Old Psych', 'New Psych', 'VS Steve']);
 		addOption(option);
 
-		var option:Option = new Option('long ass health bar',
-			"If this is checked, the Health Bar will become LOOOOOONG",
-			'longHPBar',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('Note Splash Type:',
 			"Which note splash would you like?",
 			'splashType',
 			'string',
 			'Psych Engine',
 			['Psych Engine', 'VS Impostor', 'Base Game', 'Doki Doki+', 'TGT V4', 'Indie Cross']);
+		addOption(option);
+
+		var option:Option = new Option('long ass health bar',
+			"If this is checked, the Health Bar will become LOOOOOONG",
+			'longHPBar',
+			'bool',
+			false);
 		addOption(option);
 
 		var option:Option = new Option('Light Opponent Strums',
@@ -162,6 +162,34 @@ class VisualsUISubState extends BaseOptionsMenu
 			'botLightStrum',
 			'bool',
 			true);
+		addOption(option);
+
+		var option:Option = new Option('Double Note Ghosts',
+			"If this is checked, hitting a Double Note will show an afterimage, just like in VS Impostor!",
+			'doubleGhost',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Show Ratings & Combo',
+			"If checked, shows the ratings & combo. Kinda defeats the purpose of this engine though...",
+			'ratesAndCombo',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('Show Unused Combo Popup',
+			"If checked, shows the unused 'Combo' popup, ONLY when Botplay is inactive.",
+			'comboPopup',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('Show MS Popup',
+			"If checked, hitting a note will also show how late/early you hit it.",
+			'showMS',
+			'bool',
+			false);
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',

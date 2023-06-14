@@ -198,11 +198,11 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'Changes the amount of time you have\nfor hitting a "Marvelous!" in milliseconds.',
 			'marvWindow',
 			'int',
-			25);
+			22);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 15;
 		option.minValue = 1;
-		option.maxValue = 25;
+		option.maxValue = ClientPrefs.sickWindow - 1;
 		addOption(option);
 
 		var option:Option = new Option('Sick! Hit Window',
@@ -212,8 +212,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			45);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 15;
-		option.minValue = 25;
-		option.maxValue = 45;
+		option.minValue = ClientPrefs.marvWindow + 1;
+		option.maxValue = ClientPrefs.goodWindow - 1;
 		addOption(option);
 
 		var option:Option = new Option('Good Hit Window',
@@ -223,8 +223,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			90);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 30;
-		option.minValue = 25;
-		option.maxValue = 90;
+		option.minValue = ClientPrefs.sickWindow + 1;
+		option.maxValue = ClientPrefs.badWindow - 1;
 		addOption(option);
 
 		var option:Option = new Option('Bad Hit Window',
@@ -234,7 +234,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			135);
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 60;
-		option.minValue = 25;
+		option.minValue = ClientPrefs.goodWindow + 1;
 		option.maxValue = 135;
 		addOption(option);
 
