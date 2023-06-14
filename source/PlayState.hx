@@ -5805,6 +5805,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 			var time = (Conductor.stepCrochet * 0.001); //ms popup shit
 			msTxt.cameras = [camHUD];
 			msTxt.visible = true;
+			msTxt.screenCenter();
+			msTxt.x = coolText.x;
 			msTxt.alpha = 1;
 			msTxt.text = FlxMath.roundDecimal(-msTiming, 3) + " MS";
 			msTxt.x += ClientPrefs.comboOffset[0];
