@@ -5806,7 +5806,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 			msTxt.cameras = [camHUD];
 			msTxt.visible = true;
 			msTxt.screenCenter();
-			msTxt.x = (!cpuControlled ? coolText.x + 320 : coolText.x + 80);
+			msTxt.x = (!cpuControlled ? coolText.x + 280 : coolText.x + 80);
 			msTxt.alpha = 1;
 			msTxt.text = FlxMath.roundDecimal(-msTiming, 2) + " MS";
 			msTxt.x += ClientPrefs.comboOffset[0];
