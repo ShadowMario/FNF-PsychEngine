@@ -3340,6 +3340,11 @@ class PlayState extends MusicBeatState
 					songNotes[3] = 'Behind Note';
 				}
 
+				if (gottaHitNote)
+				{
+					totalNotes += 1;
+				}
+
 				var oldNote:Note;
 				if (unspawnNotes.length > 0)
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
@@ -3361,13 +3366,9 @@ class PlayState extends MusicBeatState
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 
 				swagNote.scrollFactor.set();
-
-				var susLength:Float = swagNote.sustainLength;
-
-				susLength = susLength / Conductor.stepCrochet;
 				unspawnNotes.push(swagNote);
 
-				var floorSus:Int = Math.floor(susLength);
+				var floorSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
 				if(floorSus > 0) {
 					for (susNote in 0...floorSus+1)
 					{
@@ -3381,42 +3382,7 @@ class PlayState extends MusicBeatState
 						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
-
-						if (sustainNote.mustPress)
-						{
-							sustainNote.x += FlxG.width / 2; // general offset
-						}
-						else if(ClientPrefs.middleScroll)
-						{
-							sustainNote.x += 310;
-							if(daNoteData > 1) //Up and Right
-							{
-								sustainNote.x += FlxG.width / 2 + 25;
-							}
-						}
-						else if(ClientPrefs.mobileMidScroll)
-						{
-							sustainNote.x += FlxG.width / 2;
-						}
 					}
-				}
-
-				if (swagNote.mustPress)
-				{
-					swagNote.x += FlxG.width / 2; // general offset
-					totalNotes += 1;
-				}
-				else if(ClientPrefs.middleScroll)
-				{
-					swagNote.x += 310;
-					if(daNoteData > 1) //Up and Right
-					{
-						swagNote.x += FlxG.width / 2 + 25;
-					}
-				}
-				else if(ClientPrefs.mobileMidScroll)
-				{
-					swagNote.x += FlxG.width / 2;
 				}
 				if (!trollingMode)
 				{
@@ -3448,26 +3414,11 @@ class PlayState extends MusicBeatState
 						unspawnNotes.push(jackNote);
 
 						jackNote.mustPress = swagNote.mustPress;
-
-						if (jackNote.mustPress)
+						if (!trollingMode)
 						{
-							jackNote.x += FlxG.width / 2; // general offset
-							totalNotes += 1;
-						}
-						else if(ClientPrefs.middleScroll)
-						{
-							jackNote.x += 310;
-							if(daNoteData > 1) //Up and Right
-							{
-								jackNote.x += FlxG.width / 2 + 25;
-							}
-						}
-						else if(ClientPrefs.mobileMidScroll)
-						{
-							jackNote.x += FlxG.width / 2;
-						}
 						if(!noteTypeMap.exists(jackNote.noteType)) {
 							noteTypeMap.set(jackNote.noteType, true);
+						}
 						}
 					}
 				}
@@ -3487,7 +3438,9 @@ class PlayState extends MusicBeatState
 				};
 				eventNotes.push(subEvent);
 				if(!trollingMode)
+				{
 				eventPushed(subEvent);
+				}
 			}
 		}
 
@@ -5159,7 +5112,7 @@ class PlayState extends MusicBeatState
 			finishTimer = new FlxTimer().start(ClientPrefs.noteOffset / 1000, function(tmr:FlxTimer) {
 				finishCallback();
 			});
-		}	
+		}
 	}
 
 
@@ -5168,9 +5121,6 @@ class PlayState extends MusicBeatState
 	{		
 		if (trollingMode)
 		{			
-				FlxG.sound.music.stop();
-				vocals.stop();
-
 				FlxG.sound.music.volume = 1;
 				vocals.volume = 1;
 
@@ -5178,7 +5128,6 @@ class PlayState extends MusicBeatState
 		timeBar.visible = true;
 		timeTxt.visible = true;
 		canPause = true;
-		endingSong = false;
 		camZooming = true;
 		inCutscene = false;
 		updateTime = true;
@@ -5195,13 +5144,13 @@ class PlayState extends MusicBeatState
 				playbackRate += 0.05;
 
 				Conductor.songPosition = 0;
+				generatedMusic = false;
 				KillNotes();
 				generateSong(SONG.song);
 
 				vocals.play();
 				FlxG.sound.music.play();
 		}
-
 		if (!trollingMode)
 		{
 		//Should kill you if you tried to cheat
@@ -5806,20 +5755,23 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 			msTxt.cameras = [camHUD];
 			msTxt.visible = true;
 			msTxt.screenCenter();
-			msTxt.x = (!cpuControlled ? coolText.x + 280 : coolText.x + 80);
+			msTxt.x = (ClientPrefs.comboPopup ? coolText.x + 280 : coolText.x + 80);
 			msTxt.alpha = 1;
-			msTxt.text = FlxMath.roundDecimal(-msTiming, 2) + " MS";
+			msTxt.text = FlxMath.roundDecimal(-msTiming, 3) + " MS";
 			msTxt.x += ClientPrefs.comboOffset[0];
 			msTxt.y -= ClientPrefs.comboOffset[1];
+			if (combo >= 1000000) msTxt.x += 30;
+			if (combo >= 100000) msTxt.x += 30;
+			if (combo >= 10000) msTxt.x += 30;
 			FlxTween.tween(msTxt, 
 				{y: msTxt.y + 8}, 
-				0.1,
+				0.1 / playbackRate,
 				{onComplete: function(_){
 
 						FlxTween.tween(msTxt, {alpha: 0}, time, {
 							// ease: FlxEase.circOut,
 							onComplete: function(_){msTxt.visible = false;},
-							startDelay: time * 5
+							startDelay: time * 5 / playbackRate
 						});
 					}
 				});
@@ -5878,20 +5830,24 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 
 		var seperatedScore:Array<Int> = [];
 
-		if(combo >= 1000) {
-			seperatedScore.push(Math.floor(combo / 1000) % 10);
-		}
-		if(combo >= 10000) {
-			seperatedScore.push(Math.floor(combo / 10000) % 10);
+		if(combo >= 1000000) {
+			seperatedScore.push(Math.floor(combo / 1000000) % 10);
 		}
 		if(combo >= 100000) {
 			seperatedScore.push(Math.floor(combo / 100000) % 10);
 		}
-		if(combo >= 1000000) {
-			seperatedScore.push(Math.floor(combo / 1000000) % 10);
+		if(combo >= 10000) {
+			seperatedScore.push(Math.floor(combo / 10000) % 10);
 		}
+		if(combo >= 1000) {
+			seperatedScore.push(Math.floor(combo / 1000) % 10);
+		}
+		if(combo >= 100) {
 		seperatedScore.push(Math.floor(combo / 100) % 10);
+		}
+		if(combo >= 10) {
 		seperatedScore.push(Math.floor(combo / 10) % 10);
+		}
 		seperatedScore.push(combo % 10);
 
 		var daLoop:Int = 0;
