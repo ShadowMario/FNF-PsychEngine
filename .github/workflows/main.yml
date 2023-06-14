@@ -63,6 +63,10 @@ jobs:
           haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
           haxelib run hmm install
+          haxelib remove flixel
+          haxelib install flixel 4.11.0
+          haxelib remove flixel-addons
+          haxelib install flixel-addons 2.11.0
         shell: cmd
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
