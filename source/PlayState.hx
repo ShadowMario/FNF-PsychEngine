@@ -5534,7 +5534,6 @@ class PlayState extends MusicBeatState
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
-		var msTiming:Float = note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset;
 		//trace(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
 
 		// boyfriend.playAnim('hey');
@@ -5802,13 +5801,14 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 		if (ClientPrefs.showMS && !ClientPrefs.hideHud) {
 			FlxTween.cancelTweensOf(msTxt);
 			FlxTween.cancelTweensOf(msTxt.scale);
+			var msTiming:Float = note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset;
 			var time = (Conductor.stepCrochet * 0.001); //ms popup shit
 			msTxt.cameras = [camHUD];
 			msTxt.visible = true;
 			msTxt.screenCenter();
-			msTxt.x = coolText.x + 60;
+			msTxt.x = (!cpuControlled ? coolText.x + 320 : coolText.x + 80);
 			msTxt.alpha = 1;
-			msTxt.text = FlxMath.roundDecimal(-msTiming, 3) + " MS";
+			msTxt.text = FlxMath.roundDecimal(-msTiming, 2) + " MS";
 			msTxt.x += ClientPrefs.comboOffset[0];
 			msTxt.y -= ClientPrefs.comboOffset[1];
 			FlxTween.tween(msTxt, 
