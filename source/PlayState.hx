@@ -180,6 +180,7 @@ class PlayState extends MusicBeatState
 	public static var dead:Bool = false;
 
 	public var notes:FlxTypedGroup<Note>;
+	public var allNotes:Array<Note> = [];
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
 
@@ -3367,6 +3368,7 @@ class PlayState extends MusicBeatState
 
 				swagNote.scrollFactor.set();
 				unspawnNotes.push(swagNote);
+				allNotes.push(swagNote);
 
 				var floorSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
 				if(floorSus > 0) {
@@ -3382,6 +3384,7 @@ class PlayState extends MusicBeatState
 						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
+						allNotes.push(sustainNote);
 					}
 				}
 				if (!trollingMode)
@@ -3412,6 +3415,7 @@ class PlayState extends MusicBeatState
 					}
 
 						unspawnNotes.push(jackNote);
+						allNotes.push(jackNote);
 
 						jackNote.mustPress = swagNote.mustPress;
 						if (!trollingMode)
@@ -4164,12 +4168,20 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic) {
 			if (startedCountdown && canPause && !endingSong) {
+				var endingTimeLimit:Int = (playbackRate > 2 ? 100 : 20);
+				if (playbackRate > 8) endingTimeLimit = 200;
+				if (playbackRate > 12) endingTimeLimit = 300;
+				if (playbackRate > 20) endingTimeLimit = 500;
+				if (playbackRate > 40) endingTimeLimit = 800;
+				if (playbackRate > 50) endingTimeLimit = 1000;
+				if (playbackRate > 60) endingTimeLimit = 100;
+
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
 				// so no reason to delete it at all
-				if (FlxG.sound.music.length - Conductor.songPosition <= 20 * playbackRate) {
+				if (FlxG.sound.music.length - Conductor.songPosition <= (playbackRate > 60 ? 1000 * playbackRate / 50 : endingTimeLimit)) {
+					Conductor.songPosition = FlxG.sound.music.length;
 					endSong();
-					Conductor.songPosition = 0;
 				}
 			}
 		}
@@ -4838,7 +4850,6 @@ class PlayState extends MusicBeatState
 					bgGhouls.dance(true);
 					bgGhouls.visible = true;
 				}
-
 			case 'Play Animation':
 				//trace('Anim to play: ' + value1);
 				var char:Character = dad;
@@ -5120,7 +5131,9 @@ class PlayState extends MusicBeatState
 	public function endSong():Void
 	{		
 		if (trollingMode)
-		{			
+		{		
+				FlxG.sound.music.stop();
+				vocals.stop();	
 				FlxG.sound.music.volume = 1;
 				vocals.volume = 1;
 
@@ -5141,12 +5154,27 @@ class PlayState extends MusicBeatState
 				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
 				}
 
+				/*if (playbackRate >= 8192) playbackRate += 204.8;
+				if (playbackRate >= 4096) playbackRate += 102.4;
+				if (playbackRate >= 2048) playbackRate += 51.2;
+				if (playbackRate >= 1024) playbackRate += 25.6;
+				if (playbackRate >= 512) playbackRate += 12.8;
+				if (playbackRate >= 256) playbackRate += 6.4;
+				*/
+				if (playbackRate >= 128) playbackRate += 3.2;
+				if (playbackRate >= 64) playbackRate += 1.6;
+				if (playbackRate >= 32) playbackRate += 0.8;
+				if (playbackRate >= 16) playbackRate += 0.4;
+				if (playbackRate >= 8) playbackRate += 0.2;
+				if (playbackRate >= 4) playbackRate += 0.1;
+				if (playbackRate >= 2) playbackRate += 0.05;
 				playbackRate += 0.05;
 
 				Conductor.songPosition = 0;
 				generatedMusic = false;
 				KillNotes();
 				generateSong(SONG.song);
+					
 
 				vocals.play();
 				FlxG.sound.music.play();

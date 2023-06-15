@@ -61,9 +61,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		#if !html5
 		var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
-		option.scrollSpeed = 1;
+		option.scrollSpeed = 3;
 		option.minValue = 0.01;
-		option.maxValue = 10;
+		option.maxValue = 30;
 		if (ClientPrefs.moreSpecificSpeed)
 		{
 		option.changeValue = 0.01;
@@ -356,10 +356,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 					if(leOption.name == 'Scroll Speed')
 					{
 						leOption.displayFormat = "%vX";
-						leOption.maxValue = 3;
-						if(leOption.getValue() > 3)
+						leOption.maxValue = 60;
+						if(leOption.getValue() > 60)
 						{
-							leOption.setValue(3);
+							leOption.setValue(60);
 						}
 						updateTextFrom(leOption);
 					}
