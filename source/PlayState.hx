@@ -3455,6 +3455,235 @@ class PlayState extends MusicBeatState
 		generatedMusic = true;
 	}
 
+	private function generateTrollSongShit(dataPath:String):Void
+	{
+		// FlxG.log.add(ChartParser.parse());
+		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
+
+		switch(songSpeedType)
+		{
+			case "multiplicative":
+				songSpeed = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1);
+			case "constant":
+				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
+		}
+
+		var songData = SONG;
+		Conductor.changeBPM(songData.bpm);
+
+		curSong = songData.song;
+
+		if (SONG.needsVoices)
+			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+		else
+			vocals = new FlxSound();
+
+		vocals.pitch = playbackRate;
+		FlxG.sound.list.add(vocals);
+		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
+
+		notes = new FlxTypedGroup<Note>();
+		add(notes);
+		notes.visible = ClientPrefs.showNotes; //that was easier than expected
+
+		var noteData:Array<SwagSection>;
+
+		// NEW SHIT
+		noteData = songData.notes;
+
+		var playerCounter:Int = 0;
+
+		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
+
+		var songName:String = Paths.formatToSongPath(SONG.song);
+		var file:String = Paths.json(songName + '/events');
+		#if MODS_ALLOWED
+		if (FileSystem.exists(Paths.modsJson(songName + '/events')) || FileSystem.exists(file)) {
+		#else
+		if (OpenFlAssets.exists(file)) {
+		#end
+			var eventsData:Array<Dynamic> = Song.loadFromJson('events', songName).events;
+			for (event in eventsData) //Event Notes
+			{
+				for (i in 0...event[1].length)
+				{
+					var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
+					var subEvent:EventNote = {
+						strumTime: newEventNote[0] + ClientPrefs.noteOffset,
+						event: newEventNote[1],
+						value1: newEventNote[2],
+						value2: newEventNote[3]
+					};
+					eventNotes.push(subEvent);
+					eventPushed(subEvent);
+				}
+			}
+		}
+
+		for (section in noteData)
+		{
+			for (songNotes in section.sectionNotes)
+			{
+				var daStrumTime:Float = songNotes[0];
+				var daNoteData:Int = 0;
+				if (!randomMode && !flip && !stairs	&& !waves)
+				{
+				daNoteData = Std.int(songNotes[1] % 4);
+				}
+				if (oneK)
+				{
+				daNoteData = 2;
+				}
+				if (randomMode || randomMode && flip || randomMode && flip && stairs || randomMode && flip && stairs && waves) { //gotta specify that random mode must at least be turned on for this to work
+				daNoteData = FlxG.random.int(0, 3);
+				}
+				if (flip && !stairs && !waves) {
+				daNoteData = Std.int(Math.abs((songNotes[1] % 4) - 3));
+				}
+				if (stairs && !waves) {
+				daNoteData = stair % 4;
+				stair++;
+				}
+				if (waves) {
+						switch (stair % 6)
+							{
+								case 0 | 1 | 2 | 3:
+									daNoteData = stair % 6;
+								case 4:
+									daNoteData = 2;
+								case 5:
+									daNoteData = 1;
+							}
+				stair++;
+				}
+				var gottaHitNote:Bool = section.mustHitSection;
+
+				if (songNotes[1] > 3 && !opponentChart)
+				{
+					gottaHitNote = !section.mustHitSection;
+				}
+				else if (songNotes[1] <= 3 && opponentChart)
+				{
+					gottaHitNote = !section.mustHitSection;
+				}
+
+				if (!gottaHitNote && ClientPrefs.mobileMidScroll)
+				{
+					songNotes[3] = 'Behind Note';
+				}
+
+				if (gottaHitNote)
+				{
+					totalNotes += 1;
+				}
+
+				var oldNote:Note;
+				if (unspawnNotes.length > 0)
+					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
+				else
+					oldNote = null;
+
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+				if (ClientPrefs.doubleGhost)
+					{
+					swagNote.row = Conductor.secsToRow(daStrumTime);
+					if(noteRows[gottaHitNote?0:1][swagNote.row]==null)
+						noteRows[gottaHitNote?0:1][swagNote.row]=[];
+					noteRows[gottaHitNote ? 0 : 1][swagNote.row].push(swagNote);
+					}
+				swagNote.mustPress = gottaHitNote;
+				swagNote.sustainLength = songNotes[2];
+				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
+				swagNote.noteType = songNotes[3];
+				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
+
+				swagNote.scrollFactor.set();
+				unspawnNotes.push(swagNote);
+				allNotes.push(swagNote);
+
+				var floorSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
+				if(floorSus > 0) {
+					for (susNote in 0...floorSus+1)
+					{
+						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
+
+						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
+						sustainNote.mustPress = gottaHitNote;
+						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
+						sustainNote.noteType = swagNote.noteType;
+						sustainNote.scrollFactor.set();
+						swagNote.tail.push(sustainNote);
+						sustainNote.parent = swagNote;
+						unspawnNotes.push(sustainNote);
+						allNotes.push(sustainNote);
+					}
+				}
+				if (!trollingMode)
+				{
+				if(!noteTypeMap.exists(swagNote.noteType)) {
+					noteTypeMap.set(swagNote.noteType, true);
+				}
+				}
+				var jackNote:Note;
+
+				if (jackingtime > 0)
+				{
+					for (i in 0...Std.int(jackingtime))
+					{
+						jackNote = new Note(swagNote.strumTime + 70 * (i + 1), swagNote.noteData, oldNote);
+						jackNote.scrollFactor.set();
+
+				jackNote.mustPress = swagNote.mustPress;
+				jackNote.sustainLength = swagNote.sustainLength;
+				jackNote.gfNote = swagNote.gfNote;
+				jackNote.noteType = swagNote.noteType;
+				if (ClientPrefs.doubleGhost)
+					{
+					jackNote.row = Conductor.secsToRow(daStrumTime);
+					if(noteRows[gottaHitNote?0:1][jackNote.row]==null)
+						noteRows[gottaHitNote?0:1][jackNote.row]=[];
+					noteRows[gottaHitNote ? 0 : 1][jackNote.row].push(jackNote);
+					}
+
+						unspawnNotes.push(jackNote);
+						allNotes.push(jackNote);
+
+						jackNote.mustPress = swagNote.mustPress;
+						if (!trollingMode)
+						{
+						if(!noteTypeMap.exists(jackNote.noteType)) {
+							noteTypeMap.set(jackNote.noteType, true);
+						}
+						}
+					}
+				}
+			}
+			daBeats += 1;
+		}
+		for (event in songData.events) //Event Notes
+		{
+			for (i in 0...event[1].length)
+			{
+				var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
+				var subEvent:EventNote = {
+					strumTime: newEventNote[0] + ClientPrefs.noteOffset,
+					event: newEventNote[1],
+					value1: newEventNote[2],
+					value2: newEventNote[3]
+				};
+				eventNotes.push(subEvent);
+				if(!trollingMode)
+				{
+				eventPushed(subEvent);
+				}
+			}
+		}
+
+		// trace(unspawnNotes.length);
+		// playerCounter += 1;
+
+		unspawnNotes.sort(sortByTime);
+	}
 	function eventPushed(event:EventNote) {
 		switch(event.event) {
 			case 'Change Character':
@@ -4174,12 +4403,15 @@ class PlayState extends MusicBeatState
 				if (playbackRate > 20) endingTimeLimit = 500;
 				if (playbackRate > 40) endingTimeLimit = 800;
 				if (playbackRate > 50) endingTimeLimit = 1000;
-				if (playbackRate > 60) endingTimeLimit = 100;
+				if (playbackRate > 60) endingTimeLimit = 2000;
+				if (playbackRate > 80) endingTimeLimit = 4000;
+				if (playbackRate > 125) endingTimeLimit = 5000;
+				if (playbackRate > 140) endingTimeLimit = 6000;
 
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
 				// so no reason to delete it at all
-				if (FlxG.sound.music.length - Conductor.songPosition <= (playbackRate > 60 ? 1000 * playbackRate / 50 : endingTimeLimit)) {
+				if (FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit) {
 					Conductor.songPosition = FlxG.sound.music.length;
 					endSong();
 				}
@@ -5145,7 +5377,8 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		updateTime = true;
 		startingSong = false;
-			var difficulty:String = CoolUtil.getDifficultyFilePath();
+				/*
+				var difficulty:String = CoolUtil.getDifficultyFilePath();
 				if (difficulty != 'Normal')
 				{
 				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
@@ -5153,15 +5386,17 @@ class PlayState extends MusicBeatState
 				{
 				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
 				}
+				*/ //no need to change the song if you're already playing it!
 
-				/*if (playbackRate >= 8192) playbackRate += 204.8;
+				/*
+				if (playbackRate >= 8192) playbackRate += 204.8;
 				if (playbackRate >= 4096) playbackRate += 102.4;
 				if (playbackRate >= 2048) playbackRate += 51.2;
 				if (playbackRate >= 1024) playbackRate += 25.6;
 				if (playbackRate >= 512) playbackRate += 12.8;
 				if (playbackRate >= 256) playbackRate += 6.4;
-				*/
 				if (playbackRate >= 128) playbackRate += 3.2;
+				*/
 				if (playbackRate >= 64) playbackRate += 1.6;
 				if (playbackRate >= 32) playbackRate += 0.8;
 				if (playbackRate >= 16) playbackRate += 0.4;
@@ -5171,10 +5406,8 @@ class PlayState extends MusicBeatState
 				playbackRate += 0.05;
 
 				Conductor.songPosition = 0;
-				generatedMusic = false;
 				KillNotes();
-				generateSong(SONG.song);
-					
+				generateTrollSongShit(SONG.song);
 
 				vocals.play();
 				FlxG.sound.music.play();
