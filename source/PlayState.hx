@@ -4601,8 +4601,15 @@ class PlayState extends MusicBeatState
 
 		if (unspawnNotes[0] != null)
 		{
-			var time:Float = spawnTime * ClientPrefs.noteSpawnTime;
-			if (ClientPrefs.dynamicSpawnTime) time = spawnTime * songSpeed;
+			var time:Float = 0;
+			if (!ClientPrefs.dynamicSpawnTime) 
+			{
+			time = spawnTime * ClientPrefs.noteSpawnTime;
+			}
+			if (ClientPrefs.dynamicSpawnTime) 
+			{
+			time = spawnTime / songSpeed;
+			}
 			if(songSpeed < 1) time /= songSpeed;
 			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
 
