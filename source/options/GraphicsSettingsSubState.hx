@@ -60,6 +60,13 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			true); //Default value
 		addOption(option);
 
+		var option:Option = new Option('Automatic Note Spawn Time', //Name
+			"If checked, the Notes' spawn time will instead depend on the scroll speed. \nUseful if you don't want notes just spawning out of thin air. \nNOTE: Disable this if you use Lua Extra Keys!!", //Description
+			'dynamicSpawnTime', //Save data variable name
+			'bool', //Variable type
+			true); //Default value
+		addOption(option);
+
 		var option:Option = new Option('Note Spawn Time', //Name
 			'Changes how early/close a note needs to be before it appears on screen.', //Description
 			'noteSpawnTime', //Save data variable name

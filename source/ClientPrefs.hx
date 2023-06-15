@@ -40,6 +40,7 @@ class ClientPrefs {
 	public static var communityGameMode:Bool = false;
 	public static var shitGivesMiss:Bool = false;
 	public static var noteSpawnTime:Float = 1;
+	public static var dynamicSpawnTime:Bool = false;
 	public static var oppNoteAlpha:Float = 0.65;
 	public static var lessBotLag:Bool = false;
 	public static var ratesAndCombo:Bool = false;
@@ -167,6 +168,7 @@ class ClientPrefs {
 		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
+		FlxG.save.data.dynamicSpawnTime = dynamicSpawnTime;
 		FlxG.save.data.botLightStrum = botLightStrum;
 		FlxG.save.data.opponentLightStrum = opponentLightStrum;
 		FlxG.save.data.hitsoundType = hitsoundType;
@@ -255,6 +257,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
+		}
+		if(FlxG.save.data.dynamicSpawnTime != null) {
+			dynamicSpawnTime = FlxG.save.data.dynamicSpawnTime;
 		}
 		if(FlxG.save.data.oppNoteAlpha != null) {
 			oppNoteAlpha = FlxG.save.data.oppNoteAlpha;

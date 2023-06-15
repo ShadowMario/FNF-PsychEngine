@@ -164,13 +164,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		var option:Option = new Option('Double Note Ghosts',
-			"If this is checked, hitting a Double Note will show an afterimage, just like in VS Impostor!",
-			'doubleGhost',
-			'bool',
-			true);
-		addOption(option);
-
 		var option:Option = new Option('Show Ratings & Combo',
 			"If checked, shows the ratings & combo. Kinda defeats the purpose of this engine though...",
 			'ratesAndCombo',

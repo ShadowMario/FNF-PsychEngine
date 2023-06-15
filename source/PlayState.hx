@@ -162,7 +162,7 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 
-	public var spawnTime:Float = 2000 * ClientPrefs.noteSpawnTime;
+	public var spawnTime:Float = 1750; //just enough for the notes to barely inch off the screen
 
 	public var vocals:FlxSound;
 
@@ -180,7 +180,6 @@ class PlayState extends MusicBeatState
 	public static var dead:Bool = false;
 
 	public var notes:FlxTypedGroup<Note>;
-	public var allNotes:Array<Note> = [];
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
 
@@ -422,6 +421,10 @@ class PlayState extends MusicBeatState
 		randomBotplayText = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
+		
+		#if cpp
+		cpp.vm.Gc.enable(false); //prevent lag spikes where it matters most
+		#end
 
 
 		// for lua
@@ -3162,7 +3165,14 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.pitch = playbackRate;
-		if (!trollingMode) FlxG.sound.music.onComplete = finishSong.bind();
+		if (!trollingMode) 
+		{
+		FlxG.sound.music.onComplete = finishSong.bind();
+		}
+		if (trollingMode) 
+		{
+		FlxG.sound.music.onComplete = loopSong.bind();
+		}
 		vocals.play();
 
 		if(startOnTime > 0)
@@ -3368,7 +3378,6 @@ class PlayState extends MusicBeatState
 
 				swagNote.scrollFactor.set();
 				unspawnNotes.push(swagNote);
-				allNotes.push(swagNote);
 
 				var floorSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
 				if(floorSus > 0) {
@@ -3384,12 +3393,11 @@ class PlayState extends MusicBeatState
 						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
-						allNotes.push(sustainNote);
 					}
 				}
 				if (!trollingMode)
 				{
-				if(!noteTypeMap.exists(swagNote.noteType)) {
+				if(!noteTypeMap.exists(swagNote.noteType) && !trollingMode) {
 					noteTypeMap.set(swagNote.noteType, true);
 				}
 				}
@@ -3415,12 +3423,11 @@ class PlayState extends MusicBeatState
 					}
 
 						unspawnNotes.push(jackNote);
-						allNotes.push(jackNote);
 
 						jackNote.mustPress = swagNote.mustPress;
 						if (!trollingMode)
 						{
-						if(!noteTypeMap.exists(jackNote.noteType)) {
+						if(!noteTypeMap.exists(jackNote.noteType) && !trollingMode) {
 							noteTypeMap.set(jackNote.noteType, true);
 						}
 						}
@@ -3458,6 +3465,7 @@ class PlayState extends MusicBeatState
 	private function generateTrollSongShit(dataPath:String):Void
 	{
 		// FlxG.log.add(ChartParser.parse());
+		/*
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
 
 		switch(songSpeedType)
@@ -3481,6 +3489,11 @@ class PlayState extends MusicBeatState
 		vocals.pitch = playbackRate;
 		FlxG.sound.list.add(vocals);
 		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
+		*/ //don't load the audio again, that just takes up more memory
+		var songData = SONG;
+		Conductor.changeBPM(songData.bpm);
+
+		curSong = songData.song;
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -3599,7 +3612,6 @@ class PlayState extends MusicBeatState
 
 				swagNote.scrollFactor.set();
 				unspawnNotes.push(swagNote);
-				allNotes.push(swagNote);
 
 				var floorSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
 				if(floorSus > 0) {
@@ -3615,15 +3627,13 @@ class PlayState extends MusicBeatState
 						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
-						allNotes.push(sustainNote);
 					}
 				}
-				if (!trollingMode)
-				{
+				if (!trollingMode) {
 				if(!noteTypeMap.exists(swagNote.noteType)) {
 					noteTypeMap.set(swagNote.noteType, true);
 				}
-				}
+				} //uhh
 				var jackNote:Note;
 
 				if (jackingtime > 0)
@@ -3646,7 +3656,6 @@ class PlayState extends MusicBeatState
 					}
 
 						unspawnNotes.push(jackNote);
-						allNotes.push(jackNote);
 
 						jackNote.mustPress = swagNote.mustPress;
 						if (!trollingMode)
@@ -4407,13 +4416,17 @@ class PlayState extends MusicBeatState
 				if (playbackRate > 80) endingTimeLimit = 4000;
 				if (playbackRate > 125) endingTimeLimit = 5000;
 				if (playbackRate > 140) endingTimeLimit = 6000;
+				if (playbackRate > 250) endingTimeLimit = 10000;
+				if (playbackRate > 500) endingTimeLimit = 5000;
+				if (playbackRate > 750) endingTimeLimit = 2500;
+				if (playbackRate > 1000) endingTimeLimit = 1000;
 
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
 				// so no reason to delete it at all
-				if (FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit) {
+				if (FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && trollingMode) { //stop crashes when playing normally
 					Conductor.songPosition = FlxG.sound.music.length;
-					endSong();
+					loopSong();
 				}
 			}
 		}
@@ -4588,7 +4601,8 @@ class PlayState extends MusicBeatState
 
 		if (unspawnNotes[0] != null)
 		{
-			var time:Float = spawnTime;
+			var time:Float = spawnTime * ClientPrefs.noteSpawnTime;
+			if (ClientPrefs.dynamicSpawnTime) time = spawnTime * songSpeed;
 			if(songSpeed < 1) time /= songSpeed;
 			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
 
@@ -5358,12 +5372,8 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-
-	public var transitioning = false;
-	public function endSong():Void
-	{		
-		if (trollingMode)
-		{		
+	public function loopSong(?ignoreNoteOffset:Bool = false):Void
+	{	
 				FlxG.sound.music.stop();
 				vocals.stop();	
 				FlxG.sound.music.volume = 1;
@@ -5373,6 +5383,7 @@ class PlayState extends MusicBeatState
 		timeBar.visible = true;
 		timeTxt.visible = true;
 		canPause = true;
+		endingSong = false;
 		camZooming = true;
 		inCutscene = false;
 		updateTime = true;
@@ -5387,7 +5398,7 @@ class PlayState extends MusicBeatState
 				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
 				}
 				*/ //no need to change the song if you're already playing it!
-
+			
 				/*
 				if (playbackRate >= 8192) playbackRate += 204.8;
 				if (playbackRate >= 4096) playbackRate += 102.4;
@@ -5395,25 +5406,29 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 1024) playbackRate += 25.6;
 				if (playbackRate >= 512) playbackRate += 12.8;
 				if (playbackRate >= 256) playbackRate += 6.4;
-				if (playbackRate >= 128) playbackRate += 3.2;
 				*/
-				if (playbackRate >= 64) playbackRate += 1.6;
-				if (playbackRate >= 32) playbackRate += 0.8;
-				if (playbackRate >= 16) playbackRate += 0.4;
-				if (playbackRate >= 8) playbackRate += 0.2;
-				if (playbackRate >= 4) playbackRate += 0.1;
-				if (playbackRate >= 2) playbackRate += 0.05;
-				playbackRate += 0.05;
-
+				if (playbackRate >= 128) playbackRate += 6.4;
+				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
+				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
+				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
+				if (playbackRate >= 8 && playbackRate <= 16) playbackRate += 0.4;
+				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
+				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
+				if (playbackRate <= 2) playbackRate += 0.05;
+				//optimized the speed increase code
 				Conductor.songPosition = 0;
 				KillNotes();
 				generateTrollSongShit(SONG.song);
 
 				vocals.play();
 				FlxG.sound.music.play();
-		}
-		if (!trollingMode)
-		{
+				callOnLuas('onLoopSong', []);
+	}
+
+
+	public var transitioning = false;
+	public function endSong():Void
+	{		
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
@@ -5562,7 +5577,6 @@ class PlayState extends MusicBeatState
 				changedDifficulty = false;
 			}
 			transitioning = true;
-		}
 		}
 	}
 
@@ -7319,6 +7333,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	}
 
 	override function destroy() {
+		#if cpp
+		cpp.vm.Gc.enable(true);
+		#end
 		for (lua in luaArray) {
 			lua.call('onDestroy', []);
 			lua.stop();
