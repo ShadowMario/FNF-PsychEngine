@@ -27,7 +27,7 @@ class OutdatedState extends MusicBeatState
 
 		warnText = new FlxText(0, 0, FlxG.width,
 			"Your version of JS Engine is outdated!\nYou are on "
-			+ MainMenuState.psychEngineVersion
+			+ MainMenuState.psychEngineJSVersion
 			+ "\nwhile the most recent version is "
 			+ TitleState.updateVersion
 			+ "."
