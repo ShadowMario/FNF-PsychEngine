@@ -6060,7 +6060,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 			if (noteDiff <= ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge) msTxt.color = FlxColor.YELLOW;
 			if (noteDiff <= ClientPrefs.sickWindow && ClientPrefs.noMarvJudge) msTxt.color = FlxColor.CYAN;
 			if (noteDiff <= ClientPrefs.sickWindow && noteDiff >= ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge) msTxt.color = FlxColor.CYAN;
-			if (noteDiff >= ClientPrefs.goodWindow) msTxt.color = FlxColor.LIME;
+			if (noteDiff >= ClientPrefs.sickWindow) msTxt.color = FlxColor.LIME;
 			if (noteDiff >= ClientPrefs.goodWindow) msTxt.color = FlxColor.ORANGE;
 			if (noteDiff >= ClientPrefs.badWindow) msTxt.color = FlxColor.RED;
 			if (!msTxt.visible) msTxt.color = FlxColor.WHITE;
