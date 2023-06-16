@@ -1642,7 +1642,7 @@ class PlayState extends MusicBeatState
 		EngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		EngineWatermark.scrollFactor.set();
 		add(EngineWatermark);
-		EngineWatermark.text = SONG.song + " " + CoolUtil.difficultyString() + " | PE 0.6.3";
+		EngineWatermark.text = SONG.song + " " + CoolUtil.difficultyString() + " | JSE " + MainMenuState.psychEngineJSVersion;
 		}
 		if (ClientPrefs.hudType == 'Dave & Bambi') {
 		// Add Engine watermark

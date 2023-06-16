@@ -134,16 +134,23 @@ class TitleState extends MusicBeatState
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.checkForUpdates && !closedState) {
 			trace('checking for update');
-			var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
+			var http = new haxe.Http("https://raw.githubusercontent.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/main/version.downloadMe");
+			var returnedData:Array<String> = [];
 
 			http.onData = function (data:String)
 			{
-				updateVersion = data.split('\n')[0].trim();
+					returnedData[0] = data.substring(0, data.indexOf(';'));
+					returnedData[1] = data.substring(data.indexOf('-'), data.length);
+				updateVersion = returnedData[0];
 				var curVersion:String = MainMenuState.psychEngineVersion.trim();
 				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
 				if(updateVersion != curVersion) {
 					trace('versions arent matching!');
+					OutdatedState.currChanges = returnedData[1];
 					mustUpdate = true;
+				}
+				if(updateVersion == curVersion) {
+					trace('the versions match!');
 				}
 			}
 
@@ -433,7 +440,6 @@ class TitleState extends MusicBeatState
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
-
 		#if mobile
 		for (touch in FlxG.touches.list)
 		{

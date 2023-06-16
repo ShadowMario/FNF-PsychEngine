@@ -15,6 +15,8 @@ class OutdatedState extends MusicBeatState
 {
 	public static var leftState:Bool = false;
 
+	public static var currChanges:String = "dk";
+
 	var warnText:FlxText;
 	override function create()
 	{
@@ -24,13 +26,23 @@ class OutdatedState extends MusicBeatState
 		add(bg);
 
 		warnText = new FlxText(0, 0, FlxG.width,
-			"Sup bro, looks like you're running an   \n
+			"Your version of JS Engine is outdated!\nYou are on "
+			+ MainMenuState.psychEngineVersion
+			+ "\nwhile the most recent version is "
+			+ TitleState.updateVersion
+			+ "."
+			+ "\n\nHere's what's new:\n\n"
+			+ currChanges
+			+ "\n& more changes and bugfixes in the full changelog"
+			+ "\n\nPress Space to view the full changelog and update\nor ESCAPE to ignore this",
+			32);
+			/*"Sup bro, looks like you're running an   \n
 			outdated version of Psych Engine (" + MainMenuState.psychEngineVersion + "),\n
 			please update to " + TitleState.updateVersion + "!\n
 			Press ESCAPE to proceed anyway.\n
 			\n
 			Thank you for using the Engine!",
-			32);
+			32);*/
 		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
@@ -41,7 +53,7 @@ class OutdatedState extends MusicBeatState
 		if(!leftState) {
 			if (controls.ACCEPT) {
 				leftState = true;
-				CoolUtil.browserLoad("https://github.com/ShadowMario/FNF-PsychEngine/releases");
+				CoolUtil.browserLoad("https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/latest");
 			}
 			else if(controls.BACK) {
 				leftState = true;
