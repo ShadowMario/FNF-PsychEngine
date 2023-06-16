@@ -1,0 +1,9 @@
+1.0.0;
+- The engine is now called "JS Engine"
+- Troll Mode: loops the song when it ends infinitely
+- The RATINGS and COMBO popups are now back, as an option!
+- The first ever version of JS Engine to actually list the changelog
+- Added MS popups, which can now be toggled
+- Freeplay crash prevention is here!
+- And also the Gapple 1.5 health tween!
+- You can now reset all the options one by one
