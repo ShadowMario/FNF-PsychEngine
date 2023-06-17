@@ -14,6 +14,7 @@ class ClientPrefs {
 	public static var showFPS:Bool = true;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
+	public static var healthDisplay:Bool = true;
 	public static var ghostTapAnim:Bool = true;
 	public static var spaceVPose:Bool = true;
 	public static var noteSplashes:Bool = true;
@@ -163,6 +164,7 @@ class ClientPrefs {
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.showNotes = showNotes;
+		FlxG.save.data.healthDisplay = healthDisplay;
 		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.randomBotplayText = randomBotplayText;
 		FlxG.save.data.instaRestart = instaRestart;
@@ -288,6 +290,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.instaRestart != null) {
 			instaRestart = FlxG.save.data.instaRestart;
+		}
+		if(FlxG.save.data.healthDisplay != null) {
+			healthDisplay = FlxG.save.data.healthDisplay;
 		}
 		if(FlxG.save.data.hitsoundType != null) {
 			hitsoundType = FlxG.save.data.hitsoundType;

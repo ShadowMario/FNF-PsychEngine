@@ -171,6 +171,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Display Health Remaining',
+			"If checked, shows how much health you have remaining.",
+			'healthDisplay',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Show Unused Combo Popup',
 			"If checked, shows the unused 'Combo' popup, ONLY when Botplay is inactive.",
 			'comboPopup',

@@ -279,6 +279,8 @@ class PlayState extends MusicBeatState
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
 
+	public var healthShitText:FlxText;
+
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
 	public var camHUD:FlxCamera;
@@ -1461,7 +1463,9 @@ class PlayState extends MusicBeatState
 			add(timeTxt);
 		}
 		timePercentTxt = new FlxText(timeBarBG.x + 400, 19, 400, "", 32);
-		timePercentTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Doki Doki+') timePercentTxt.setFormat(Paths.font("Aller_rg.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') timePercentTxt.setFormat(Paths.font("calibri.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timePercentTxt.scrollFactor.set();
 		timePercentTxt.alpha = 0;
 		timePercentTxt.borderSize = 2;
@@ -1470,6 +1474,19 @@ class PlayState extends MusicBeatState
 		if (!showTime) timePercentTxt.screenCenter(X);
 		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.x = timeBarBG.x + 600;
 		add(timePercentTxt);
+
+		healthShitText = new FlxText(timeTxt.x, timeBarBG.y + 160, 400, "", 20);
+		healthShitText.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Doki Doki+') healthShitText.setFormat(Paths.font("Aller_rg.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') healthShitText.setFormat(Paths.font("calibri.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Dave & Bambi') healthShitText.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		healthShitText.scrollFactor.set();
+		healthShitText.alpha = 1;
+		healthShitText.borderSize = 2;
+		healthShitText.visible = ClientPrefs.healthDisplay;
+		healthShitText.cameras = [camHUD];
+		if(ClientPrefs.downScroll) healthShitText.y = timeBarBG.y - 160;
+		add(healthShitText);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
@@ -4013,6 +4030,7 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 
+		healthShitText.text = 'HP Remaining: ' + FlxMath.roundDecimal(health * 50, 2) + '%';
 				healthBar.setRange(0, maxHealth);
 
 		callOnLuas('onUpdate', [elapsed]);
