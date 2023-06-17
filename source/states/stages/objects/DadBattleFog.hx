@@ -6,7 +6,7 @@ class DadBattleFog extends FlxSpriteGroup
 	{
 		super();
 		
-		alpha = 0.7;
+		alpha = 0;
 		blend = ADD;
 
 		var offsetX = 200;
