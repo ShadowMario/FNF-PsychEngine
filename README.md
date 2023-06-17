@@ -1,7 +1,7 @@
+**WARNING: SET HXCODEC TO 2.5.1 TO FIX CRASHES WITH EXTRA KEYS WITH LUA SCRIPTS**
+
 # Friday Night Funkin' - Psych Engine
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
-
-As of a recent update to the source code, the engine now supports songs longer than 25 minutes! A Splitathon 2 chart is included with the engine to show it off! Credit to the developers of Codename Engine for managing to get past this limit.
 
 ## Installation:
 You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
