@@ -1,16 +1,15 @@
 package objects;
 
-import shaders.ColorSwap;
+import shaders.RGBPalette;
 
 class StrumNote extends FlxSprite
 {
-	private var colorSwap:ColorSwap;
+	private var rgbShader:RGBPalette;
 	public var resetAnim:Float = 0;
 	private var noteData:Int = 0;
 	public var direction:Float = 90;//plan on doing scroll directions soon -bb
 	public var downScroll:Bool = false;//plan on doing scroll directions soon -bb
 	public var sustainReduce:Bool = true;
-	
 	private var player:Int;
 	
 	public var texture(default, set):String = null;
@@ -23,8 +22,20 @@ class StrumNote extends FlxSprite
 	}
 
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
-		colorSwap = new ColorSwap();
-		shader = colorSwap.shader;
+		rgbShader = new RGBPalette();
+		shader = rgbShader.shader;
+		
+		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[leData];
+		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[leData];
+		
+		if(leData <= arr.length)
+		{
+			rgbShader.r = arr[0];
+			rgbShader.g = arr[1];
+			rgbShader.b = arr[2];
+		}
+		rgbShader.enabled = false;
+
 		noteData = leData;
 		this.player = player;
 		this.noteData = leData;
@@ -130,34 +141,17 @@ class StrumNote extends FlxSprite
 				resetAnim = 0;
 			}
 		}
-		//if(animation.curAnim != null){ //my bad i was upset
-		if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
-			centerOrigin();
-		//}
-		}
-
 		super.update(elapsed);
 	}
 
 	public function playAnim(anim:String, ?force:Bool = false) {
 		animation.play(anim, force);
-		centerOffsets();
-		centerOrigin();
-		if(animation.curAnim == null || animation.curAnim.name == 'static') {
-			colorSwap.hue = 0;
-			colorSwap.saturation = 0;
-			colorSwap.brightness = 0;
-		} else {
-			if (noteData > -1 && noteData < ClientPrefs.data.arrowHSV.length)
-			{
-				colorSwap.hue = ClientPrefs.data.arrowHSV[noteData][0] / 360;
-				colorSwap.saturation = ClientPrefs.data.arrowHSV[noteData][1] / 100;
-				colorSwap.brightness = ClientPrefs.data.arrowHSV[noteData][2] / 100;
-			}
-
-			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
-				centerOrigin();
-			}
+		rgbShader.enabled = false;
+		if(animation.curAnim != null)
+		{
+			centerOffsets();
+			centerOrigin();
+			rgbShader.enabled = (animation.curAnim.name != 'static');
 		}
 	}
 }
