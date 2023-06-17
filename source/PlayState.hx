@@ -261,6 +261,7 @@ class PlayState extends MusicBeatState
 	public var healthLoss:Float = 1;
 	public var hpDrainLevel:Float = 1;
 	public var instakillOnMiss:Bool = false;
+	public var sickOnly:Bool = false;
 	public var cpuControlled:Bool = false;
 	public var practiceMode:Bool = false;
 	public var opponentDrain:Bool = false;
@@ -503,6 +504,7 @@ class PlayState extends MusicBeatState
 		healthLoss = ClientPrefs.getGameplaySetting('healthloss', 1);
 		hpDrainLevel = ClientPrefs.getGameplaySetting('drainlevel', 1);
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
+		sickOnly = ClientPrefs.getGameplaySetting('onlySicks', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
@@ -3350,7 +3352,6 @@ class PlayState extends MusicBeatState
 				{
 					songNotes[3] = 'Behind Note';
 				}
-
 				if (gottaHitNote)
 				{
 					totalNotes += 1;
@@ -3425,6 +3426,12 @@ class PlayState extends MusicBeatState
 						unspawnNotes.push(jackNote);
 
 						jackNote.mustPress = swagNote.mustPress;
+
+						if (jackNote.mustPress)
+						{
+							jackNote.x += FlxG.width / 2; // general offset
+							totalNotes += 1;
+						}
 						if (!trollingMode)
 						{
 						if(!noteTypeMap.exists(jackNote.noteType) && !trollingMode) {
@@ -4009,6 +4016,15 @@ class PlayState extends MusicBeatState
 				healthBar.setRange(0, maxHealth);
 
 		callOnLuas('onUpdate', [elapsed]);
+
+		if (goods > 0 || bads > 0 || shits > 0 || songMisses > 0 && sickOnly)
+		{
+			// if it isn't a sick, and sick only mode is on YOU DIE
+			if (sickOnly)
+			{
+				health = -2;
+			}
+		}
 		switch (curStage)
 		{
 			case 'tank':

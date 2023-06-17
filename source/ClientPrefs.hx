@@ -89,6 +89,7 @@ class ClientPrefs {
 		'healthgain' => 1.0,
 		'healthloss' => 1.0,
 		'instakill' => false,
+		'onlySicks' => false,
 		'practice' => false,
 		'botplay' => false,
 		'randommode' => false,
