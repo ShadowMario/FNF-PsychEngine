@@ -113,6 +113,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Disable Chart Editor',
+			"If checked, disables the Chart Editor. Try opening it with this option enabled and see what happens!",
+			'antiCheatEnable',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Even LESS Botplay Lag',
 			"Reduce Botplay lag even further.",
 			'lessBotLag',

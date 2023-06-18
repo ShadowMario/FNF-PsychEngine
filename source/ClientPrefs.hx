@@ -27,6 +27,7 @@ class ClientPrefs {
 	public static var longHPBar:Bool = false;
 	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
+	public static var antiCheatEnable:Bool = false;
 	public static var randomBotplayText:Bool = true;
 	public static var opponentLightStrum:Bool = true;
 	public static var botLightStrum:Bool = true;
@@ -166,6 +167,7 @@ class ClientPrefs {
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.healthDisplay = healthDisplay;
 		FlxG.save.data.doubleGhost = doubleGhost;
+		FlxG.save.data.antiCheatEnable = antiCheatEnable;
 		FlxG.save.data.randomBotplayText = randomBotplayText;
 		FlxG.save.data.instaRestart = instaRestart;
 		FlxG.save.data.percentDecimals = percentDecimals;
@@ -284,6 +286,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.songPercentage != null) {
 			songPercentage = FlxG.save.data.songPercentage;
+		}
+		if(FlxG.save.data.antiCheatEnable != null) {
+			antiCheatEnable = FlxG.save.data.antiCheatEnable;
 		}
 		if(FlxG.save.data.noteSpawnTime != null) {
 			noteSpawnTime = FlxG.save.data.noteSpawnTime;

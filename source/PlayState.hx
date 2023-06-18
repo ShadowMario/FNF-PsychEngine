@@ -288,8 +288,8 @@ class PlayState extends MusicBeatState
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
 	var hueh231:FlxSprite;
+	var secretsong:FlxSprite;
 	var SPUNCHBOB:FlxSprite;
-	var missRating:FlxSprite;
 
 	var notesHitArray:Array<Date> = [];
 
@@ -2898,6 +2898,17 @@ class PlayState extends MusicBeatState
 			hueh231.cameras = [camGame];
 			add(hueh231);
 		}
+		if (SONG.song.toLowerCase() == 'anti-cheat-song')
+		{
+			secretsong = new FlxSprite().loadGraphic(Paths.image('secretSong'));
+			secretsong.antialiasing = ClientPrefs.globalAntialiasing;
+			secretsong.scrollFactor.set();
+			secretsong.setGraphicSize(Std.int(secretsong.width / FlxG.camera.zoom));
+			secretsong.updateHitbox();
+			secretsong.screenCenter();
+			secretsong.cameras = [camGame];
+			add(secretsong);
+		}
 		if (ClientPrefs.middleScroll || ClientPrefs.mobileMidScroll)
 		{
 			laneunderlayOpponent.alpha = 0;
@@ -3184,7 +3195,11 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.pitch = playbackRate;
-		if (!trollingMode) 
+		if (SONG.song.toLowerCase() == 'anti-cheat-song') 
+		{
+		FlxG.sound.music.onComplete = infiniteLoop.bind();
+		}
+		if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song') 
 		{
 		FlxG.sound.music.onComplete = finishSong.bind();
 		}
@@ -3312,8 +3327,10 @@ class PlayState extends MusicBeatState
 						value1: newEventNote[2],
 						value2: newEventNote[3]
 					};
+					if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song') {
 					eventNotes.push(subEvent);
 					eventPushed(subEvent);
+					}
 				}
 			}
 		}
@@ -3413,7 +3430,7 @@ class PlayState extends MusicBeatState
 						unspawnNotes.push(sustainNote);
 					}
 				}
-				if (!trollingMode)
+				if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
 				{
 				if(!noteTypeMap.exists(swagNote.noteType) && !trollingMode) {
 					noteTypeMap.set(swagNote.noteType, true);
@@ -3449,9 +3466,9 @@ class PlayState extends MusicBeatState
 							jackNote.x += FlxG.width / 2; // general offset
 							totalNotes += 1;
 						}
-						if (!trollingMode)
+						if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
 						{
-						if(!noteTypeMap.exists(jackNote.noteType) && !trollingMode) {
+						if(!noteTypeMap.exists(jackNote.noteType)) {
 							noteTypeMap.set(jackNote.noteType, true);
 						}
 						}
@@ -3472,7 +3489,7 @@ class PlayState extends MusicBeatState
 					value2: newEventNote[3]
 				};
 				eventNotes.push(subEvent);
-				if(!trollingMode)
+				if(!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
 				{
 				eventPushed(subEvent);
 				}
@@ -3551,8 +3568,11 @@ class PlayState extends MusicBeatState
 						value1: newEventNote[2],
 						value2: newEventNote[3]
 					};
+					if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
+					{
 					eventNotes.push(subEvent);
 					eventPushed(subEvent);
+					}
 				}
 			}
 		}
@@ -3653,7 +3673,7 @@ class PlayState extends MusicBeatState
 						unspawnNotes.push(sustainNote);
 					}
 				}
-				if (!trollingMode) {
+				if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song') {
 				if(!noteTypeMap.exists(swagNote.noteType)) {
 					noteTypeMap.set(swagNote.noteType, true);
 				}
@@ -3682,7 +3702,7 @@ class PlayState extends MusicBeatState
 						unspawnNotes.push(jackNote);
 
 						jackNote.mustPress = swagNote.mustPress;
-						if (!trollingMode)
+						if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
 						{
 						if(!noteTypeMap.exists(jackNote.noteType)) {
 							noteTypeMap.set(jackNote.noteType, true);
@@ -3705,7 +3725,7 @@ class PlayState extends MusicBeatState
 					value2: newEventNote[3]
 				};
 				eventNotes.push(subEvent);
-				if(!trollingMode)
+				if(!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
 				{
 				eventPushed(subEvent);
 				}
@@ -3791,7 +3811,7 @@ class PlayState extends MusicBeatState
 				insert(members.indexOf(phillyGlowGradient) + 1, phillyGlowParticles);
 		}
 
-		if(!eventPushedMap.exists(event.event)) {
+		if(!eventPushedMap.exists(event.event) && SONG.song.toLowerCase() != 'anti-cheat-song') {
 			eventPushedMap.set(event.event, true);
 		}
 	}
@@ -4384,7 +4404,15 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene)
 		{
+			if (!ClientPrefs.antiCheatEnable)
+			{
 			openChartEditor();
+			}
+			if (ClientPrefs.antiCheatEnable)
+			{
+			PlayState.SONG = Song.loadFromJson('Anti-cheat-song', 'Anti-cheat-song');
+			LoadingState.loadAndSwitchState(new PlayState());
+			} 
 		}
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
@@ -5457,6 +5485,31 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
 				//optimized the speed increase code
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateTrollSongShit(SONG.song);
+
+				vocals.play();
+				FlxG.sound.music.play();
+				callOnLuas('onLoopSong', []);
+	}
+
+	public function infiniteLoop(?ignoreNoteOffset:Bool = false):Void
+	{	
+				FlxG.sound.music.stop();
+				vocals.stop();	
+				FlxG.sound.music.volume = 1;
+				vocals.volume = 1;
+
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
 				Conductor.songPosition = 0;
 				KillNotes();
 				generateTrollSongShit(SONG.song);
