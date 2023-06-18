@@ -141,8 +141,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Space to V-Pose',
-			"If checked, pressing the Space key will make BF go HEY!!",
+		var option:Option = new Option('Enable Taunt Key',
+			"If checked, pressing the Taunt key will make BF go HEY!!",
 			'spaceVPose',
 			'bool',
 			true);
