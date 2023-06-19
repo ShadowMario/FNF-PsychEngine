@@ -6,7 +6,7 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
 
-class ClientPrefs {
+class ClientPrefs { //default settings if it can't find a save file containing your current settings
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
 	public static var mobileMidScroll:Bool = false;
@@ -17,6 +17,8 @@ class ClientPrefs {
 	public static var healthDisplay:Bool = true;
 	public static var ghostTapAnim:Bool = true;
 	public static var spaceVPose:Bool = true;
+	public static var cameraPanning:Bool = true;
+	public static var panIntensity:Float = 1;
 	public static var noteSplashes:Bool = true;
 	public static var oppNoteSplashes:Bool = true;
 	public static var instaRestart:Bool = false;
@@ -148,7 +150,7 @@ class ClientPrefs {
 		//trace(defaultKeys);
 	}
 
-	public static function saveSettings() {
+	public static function saveSettings() { //changes settings when you exit so that it doesn't reset every time you close the game
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.middleScroll = middleScroll;
 		FlxG.save.data.mobileMidScroll = mobileMidScroll;
@@ -172,6 +174,8 @@ class ClientPrefs {
 		FlxG.save.data.instaRestart = instaRestart;
 		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
+		FlxG.save.data.cameraPanning = cameraPanning;
+		FlxG.save.data.panIntensity = panIntensity;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
 		FlxG.save.data.dynamicSpawnTime = dynamicSpawnTime;
 		FlxG.save.data.botLightStrum = botLightStrum;
@@ -238,7 +242,7 @@ class ClientPrefs {
 		FlxG.log.add("Settings saved!");
 	}
 
-	public static function loadPrefs() {
+	public static function loadPrefs() { //loads settings if it finds a save file containing the settings
 		if(FlxG.save.data.downScroll != null) {
 			downScroll = FlxG.save.data.downScroll;
 		}
@@ -259,6 +263,12 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
+		}
+		if(FlxG.save.data.cameraPanning != null) {
+			cameraPanning = FlxG.save.data.cameraPanning;
+		}
+		if(FlxG.save.data.panIntensity != null) {
+			panIntensity = FlxG.save.data.panIntensity;
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;

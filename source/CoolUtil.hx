@@ -59,6 +59,10 @@ class CoolUtil
 		return Math.max(min, Math.min(max, value));
 	}
 
+	inline public static function clamp(value:Float, min:Float, max:Float):Float {
+		return Math.max(min, Math.min(max, value));
+	}
+
 	public static function coolTextFile(path:String):Array<String>
 	{
 		var daList:Array<String> = [];

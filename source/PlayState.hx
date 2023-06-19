@@ -2554,6 +2554,28 @@ class PlayState extends MusicBeatState
 		});
 	}
 
+	function camPanRoutine(anim:String = 'singUP', who:String = 'bf'):Void {
+		var fps:Float = FlxG.updateFramerate;
+		final bfCanPan:Bool = SONG.notes[curSection].mustHitSection;
+		final dadCanPan:Bool = !SONG.notes[curSection].mustHitSection;
+		var clear:Bool = false;
+		switch (who) {
+			case 'bf': clear = bfCanPan;
+			case 'oppt': clear = dadCanPan;
+		}
+		//FlxG.elapsed is stinky poo poo for this, it just makes it look jank as fuck
+		if (clear) {
+			if (fps == 0) fps = 1;
+			switch (anim.split('-')[0])
+			{
+				case 'singUP': moveCamTo[1] = -40*ClientPrefs.panIntensity*240/fps;
+				case 'singDOWN': moveCamTo[1] = 40*ClientPrefs.panIntensity*240/fps;
+				case 'singLEFT': moveCamTo[0] = -40*ClientPrefs.panIntensity*240/fps;
+				case 'singRIGHT': moveCamTo[0] = 40*ClientPrefs.panIntensity*240/fps;
+			}
+		}
+	}
+
 	function tankIntro()
 	{
 		var cutsceneHandler:CutsceneHandler = new CutsceneHandler();
@@ -4195,7 +4217,7 @@ class PlayState extends MusicBeatState
 
 		if(!inCutscene) {
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed * playbackRate, 0, 1);
-			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
+			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x + moveCamTo[0]/102, camFollow.x + moveCamTo[0]/102, lerpVal), FlxMath.lerp(camFollowPos.y + moveCamTo[1]/102, camFollow.y + moveCamTo[1]/102, lerpVal));
 			if(!startingSong && !endingSong && boyfriend.animation.curAnim != null && boyfriend.animation.curAnim.name.startsWith('idle')) {
 				boyfriendIdleTime += elapsed;
 				if(boyfriendIdleTime >= 0.15) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
@@ -4204,6 +4226,9 @@ class PlayState extends MusicBeatState
 			} else {
 				boyfriendIdleTime = 0;
 			}
+			var panLerpVal:Float = CoolUtil.clamp(elapsed * 4.4 * cameraSpeed, 0, 1);
+			moveCamTo[0] = FlxMath.lerp(moveCamTo[0], 0, panLerpVal);
+			moveCamTo[1] = FlxMath.lerp(moveCamTo[1], 0, panLerpVal);
 		}
 
 		{
@@ -6754,6 +6779,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			{
 					char.playAnim(animToPlay, true);
 					char.holdTimer = 0;
+					if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'oppt');
 					if (ClientPrefs.doubleGhost)
 					{
 					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
@@ -6796,6 +6822,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				{
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
+					if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'bf');
 					if (ClientPrefs.doubleGhost)
 					{
 					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
@@ -7087,6 +7114,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					if (!ClientPrefs.doubleGhost) {
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					}
+					if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'bf');
 					boyfriend.holdTimer = 0;
 					if (ClientPrefs.doubleGhost)
 					{
@@ -7120,6 +7148,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					dad.playAnim(animToPlay, true);
 					}
 				dad.holdTimer = 0;
+				if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'oppt');
 				if (ClientPrefs.doubleGhost)
 					{
 					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
