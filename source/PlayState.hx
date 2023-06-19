@@ -6444,11 +6444,13 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				if (!opponentChart && ClientPrefs.ghostTapAnim)
 				{
 					boyfriend.playAnim(singAnimations[Std.int(Math.abs(key))], true);
+					if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'bf');
 					boyfriend.holdTimer = 0;
 				}
 				if (opponentChart && ClientPrefs.ghostTapAnim)
 				{
 					dad.playAnim(singAnimations[Std.int(Math.abs(key))], true);
+					if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'oppt'); //thanks denpa engine
 					dad.holdTimer = 0;
 				}
 					if (canMiss) {
