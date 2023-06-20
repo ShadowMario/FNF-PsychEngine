@@ -391,6 +391,9 @@ class PlayState extends MusicBeatState
 	private var keysArray:Array<Dynamic>;
 	private var controlArray:Array<String>;
 
+	private var ss:Bool = false;
+	public var accuracy:Float = 0.00;
+
 	var precacheList:Map<String, String> = new Map<String, String>();
 	
 	// stores the last judgement object
@@ -1979,6 +1982,8 @@ class PlayState extends MusicBeatState
 
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
+		// WINDOW TITLE POG
+		MusicBeatState.windowNameSuffix = " - " + SONG.song + " " + (isStoryMode ? "(Story Mode)" : "(Freeplay)");
 		
 		#if LUA_ALLOWED
 		for (notetype in noteTypeMap.keys())

@@ -58,6 +58,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var smoothHealth:Bool = true;
 	public static var smoothHealthType:String = 'Golden Apple 1.5';
 	public static var rateNameStuff:String = 'Quotes';
+	public static var accuracyMod:String = 'Accurate';
 	public static var percentDecimals:Int = 2;
 	public static var healthGainType:String = 'Psych Engine';
 	public static var hitsoundType:String = 'osu!mania';
@@ -170,6 +171,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.rateNameStuff = rateNameStuff;
 		FlxG.save.data.showNotes = showNotes;
+		FlxG.save.data.accuracyMod = accuracyMod;
 		FlxG.save.data.healthDisplay = healthDisplay;
 		FlxG.save.data.wrongCameras = wrongCameras;
 		FlxG.save.data.doubleGhost = doubleGhost;
@@ -279,6 +281,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
+		}
+		if(FlxG.save.data.accuracyMod != null) {
+			accuracyMod = FlxG.save.data.accuracyMod;
 		}
 		if(FlxG.save.data.wrongCameras != null) {
 			wrongCameras = FlxG.save.data.wrongCameras;

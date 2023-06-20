@@ -9,6 +9,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.FlxSprite;
+import lime.app.Application;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
@@ -31,6 +32,9 @@ class MusicBeatState extends FlxUIState
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
+
+	public static var windowNameSuffix:String = "";
+	public static var windowNamePrefix:String = "Friday Night Funkin': JS Engine";
 
 	override function create() {
 		camBeat = FlxG.camera;
@@ -68,6 +72,7 @@ class MusicBeatState extends FlxUIState
 		if(FlxG.save.data != null) FlxG.save.data.fullscreen = FlxG.fullscreen;
 
 		super.update(elapsed);
+		Application.current.window.title = windowNamePrefix + windowNameSuffix;
 	}
 
 	private function updateSection():Void
