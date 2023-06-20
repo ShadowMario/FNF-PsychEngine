@@ -89,20 +89,10 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
-	private var tauntKey:Array<FlxKey>;
+	public static var ratingStuff:Array<Dynamic> = [];
 
-	public static var ratingStuff:Array<Dynamic> = [
-		['you suck ass lol', 0.2], //From 0% to 19%
-		['you aint doin good', 0.4], //From 20% to 39%
-		['Bad', 0.5], //From 40% to 49%
-		['Bruh', 0.6], //From 50% to 59%
-		['Meh', 0.69], //From 60% to 68%
-		['funny number', 0.7], //69%
-		['nice', 0.8], //From 70% to 79%
-		['awesome', 0.9], //From 80% to 89%
-		['thats amazing', 1], //From 90% to 99%
-		['PERFECT!!!!!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
-	];
+
+	private var tauntKey:Array<FlxKey>;
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
@@ -1040,6 +1030,7 @@ class PlayState extends MusicBeatState
 			if(ClientPrefs.communityGameMode)
 			{
 				SONG.gfVersion = 'gf-bent';
+				FlxG.log.add('using the suspicious gf skin, horny ass mf.');
 			}
 		var gfVersion:String = SONG.gfVersion;
 		
@@ -1100,6 +1091,38 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
+
+	if (ClientPrefs.rateNameStuff == 'Quotes')
+	{
+	ratingStuff = [
+		['you suck ass lol', 0.2], //From 0% to 19%
+		['you aint doin good', 0.4], //From 20% to 39%
+		['Bad', 0.5], //From 40% to 49%
+		['Bruh', 0.6], //From 50% to 59%
+		['Meh', 0.69], //From 60% to 68%
+		['funny number', 0.7], //69%
+		['nice', 0.8], //From 70% to 79%
+		['awesome', 0.9], //From 80% to 89%
+		['thats amazing', 1], //From 90% to 99%
+		['PERFECT!!!!!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+	];
+	}
+	if (ClientPrefs.rateNameStuff == 'Letters')
+	{
+	ratingStuff = [
+		['HOW?', 0.2], //From 0% to 19%
+		['F', 0.4], //From 20% to 39%
+		['E', 0.5], //From 40% to 49%
+		['D', 0.6], //From 50% to 59%
+		['C', 0.69], //From 60% to 68%
+		['FUNNY', 0.7], //69%
+		['B', 0.8], //From 70% to 79%
+		['A', 0.9], //From 80% to 89%
+		['S', 0.97], //From 90% to 98%
+		['S+', 1], //98% to 99%
+		['X', 1] //The value on this one isn't used actually, since Perfect is always "1"
+	];
+	}
 
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
@@ -1466,6 +1489,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.hudType == 'Doki Doki+') timePercentTxt.setFormat(Paths.font("Aller_rg.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') timePercentTxt.setFormat(Paths.font("calibri.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType != 'Dave & Bambi' && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') timePercentTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timePercentTxt.scrollFactor.set();
 		timePercentTxt.alpha = 0;
 		timePercentTxt.borderSize = 2;
@@ -1544,7 +1568,7 @@ class PlayState extends MusicBeatState
 
 		//omg its that ms text from earlier
 		msTxt = new FlxText(0, 0, 0, "");
-		msTxt.cameras = [camHUD];
+		msTxt.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
 		msTxt.scrollFactor.set();
 		msTxt.setFormat("vcr.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') msTxt.setFormat("calibri.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -6105,7 +6129,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.ratesAndCombo) {
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
-		rating.cameras = [camHUD];
+		rating.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
 		rating.y -= 60;
@@ -6146,7 +6170,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 			FlxTween.cancelTweensOf(msTxt.scale);
 			var msTiming:Float = note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset;
 			var time = (Conductor.stepCrochet * 0.001); //ms popup shit
-			msTxt.cameras = [camHUD];
+			msTxt.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
 			msTxt.visible = true;
 			msTxt.screenCenter();
 			msTxt.x = (ClientPrefs.comboPopup ? coolText.x + 280 : coolText.x + 80);
@@ -6179,7 +6203,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 		}
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
-		comboSpr.cameras = [camHUD];
+		comboSpr.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
@@ -6266,7 +6290,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 		for (i in seperatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
-			numScore.cameras = [camHUD];
+			numScore.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
@@ -6444,13 +6468,13 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				if (!opponentChart && ClientPrefs.ghostTapAnim)
 				{
 					boyfriend.playAnim(singAnimations[Std.int(Math.abs(key))], true);
-					if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'bf');
+					if (ClientPrefs.cameraPanning) camPanRoutine(singAnimations[Std.int(Math.abs(key))], 'bf');
 					boyfriend.holdTimer = 0;
 				}
 				if (opponentChart && ClientPrefs.ghostTapAnim)
 				{
 					dad.playAnim(singAnimations[Std.int(Math.abs(key))], true);
-					if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'oppt'); //thanks denpa engine
+					if (ClientPrefs.cameraPanning) camPanRoutine(singAnimations[Std.int(Math.abs(key))], 'oppt'); //thanks denpa engine
 					dad.holdTimer = 0;
 				}
 					if (canMiss) {

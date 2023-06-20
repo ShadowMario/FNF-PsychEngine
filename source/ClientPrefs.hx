@@ -42,6 +42,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
 	public static var communityGameMode:Bool = false;
+	public static var wrongCameras:Bool = false;
 	public static var shitGivesMiss:Bool = false;
 	public static var noteSpawnTime:Float = 1;
 	public static var dynamicSpawnTime:Bool = false;
@@ -56,6 +57,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var hudType:String = 'Kade Engine';
 	public static var smoothHealth:Bool = true;
 	public static var smoothHealthType:String = 'Golden Apple 1.5';
+	public static var rateNameStuff:String = 'Quotes';
 	public static var percentDecimals:Int = 2;
 	public static var healthGainType:String = 'Psych Engine';
 	public static var hitsoundType:String = 'osu!mania';
@@ -166,8 +168,10 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
+		FlxG.save.data.rateNameStuff = rateNameStuff;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.healthDisplay = healthDisplay;
+		FlxG.save.data.wrongCameras = wrongCameras;
 		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.antiCheatEnable = antiCheatEnable;
 		FlxG.save.data.randomBotplayText = randomBotplayText;
@@ -264,6 +268,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
 		}
+		if(FlxG.save.data.rateNameStuff != null) {
+			rateNameStuff = FlxG.save.data.rateNameStuff;
+		}
 		if(FlxG.save.data.cameraPanning != null) {
 			cameraPanning = FlxG.save.data.cameraPanning;
 		}
@@ -272,6 +279,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
+		}
+		if(FlxG.save.data.wrongCameras != null) {
+			wrongCameras = FlxG.save.data.wrongCameras;
 		}
 		if(FlxG.save.data.dynamicSpawnTime != null) {
 			dynamicSpawnTime = FlxG.save.data.dynamicSpawnTime;

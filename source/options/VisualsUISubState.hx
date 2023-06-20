@@ -74,6 +74,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+
 		var option:Option = new Option('Camera Pan Intensity:', //Name
 			'Changes how much the camera pans when Camera Note Movement is turned on.', //Description
 			'panIntensity', //Save data variable name
@@ -84,6 +85,14 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.maxValue = 10;
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
+		addOption(option);
+
+		var option:Option = new Option('Rating Name Display:',
+			"What should the rating names display?",
+			'rateNameStuff',
+			'string',
+			'Quotes',
+			['Quotes', 'Letters']);
 		addOption(option);
 
 		var option:Option = new Option('Golden Sick on MFC/SFC',
@@ -207,6 +216,13 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Show MS Popup',
 			"If checked, hitting a note will also show how late/early you hit it.",
 			'showMS',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('Use Wrong Popup Camera',
+			'If checked, the popups will use the game world camera instead of the HUD.',
+			'wrongCameras',
 			'bool',
 			false);
 		addOption(option);
