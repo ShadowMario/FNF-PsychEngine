@@ -1,6 +1,5 @@
 package flixel.animation;
 
-
 import flixel.graphics.frames.FlxFrame;
 import flixel.util.FlxDestroyUtil.IFlxDestroyable;
 
@@ -41,6 +40,13 @@ class FlxAnimationController implements IFlxDestroyable
 	 * The total number of frames in this image.
 	 * WARNING: assumes each row in the sprite sheet is full!
 	 */
+	public var numFrames(get, never):Int;
+
+	/**
+	* The total number of frames in this image.
+	* WARNING: assumes each row in the sprite sheet is full!
+	*/
+	@:deprecated("frames is deprecated, use numFrames")
 	public var frames(get, never):Int;
 
 	/**
@@ -89,12 +95,14 @@ class FlxAnimationController implements IFlxDestroyable
 
 	public static var globalSpeed:Float = 1;
 	public var followGlobalSpeed:Bool = true;
+
 	public function update(elapsed:Float):Void
 	{
 		if (_curAnim != null)
 		{
 			var e:Float = elapsed;
-			if(followGlobalSpeed) e *= globalSpeed;
+			if (followGlobalSpeed)
+				e *= globalSpeed;
 
 			_curAnim.update(e);
 		}
@@ -148,6 +156,12 @@ class FlxAnimationController implements IFlxDestroyable
 		_animations = null;
 		callback = null;
 		_sprite = null;
+	}
+
+	@:allow(flixel.animation.FlxAnimation)
+	function getFrameDuration(index:Int)
+	{
+		return _sprite.frames.frames[index].duration;
 	}
 
 	function clearPrerotated():Void
@@ -849,10 +863,13 @@ class FlxAnimationController implements IFlxDestroyable
 		return Value;
 	}
 
-	inline function get_frames():Int
+	inline function get_numFrames():Int
 	{
 		return _sprite.numFrames;
 	}
+
+	inline function get_frames():Int
+		return numFrames;
 
 	/**
 	 * Helper function used for finding index of `FlxFrame` in `_framesData`'s frames array
