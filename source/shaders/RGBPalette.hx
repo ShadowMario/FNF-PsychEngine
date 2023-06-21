@@ -50,7 +50,8 @@ class RGBPalette {
 	}
 }
 
-class RGBPaletteShader extends FlxShader {	@:glFragmentHeader('
+class RGBPaletteShader extends FlxShader {
+	@:glFragmentHeader('
 		#pragma header
 		
 		uniform vec3 r;
