@@ -340,6 +340,7 @@ class ChartingState extends MusicBeatState
 			{name: "Note", label: 'Note'},
 			{name: "Events", label: 'Events'},
 			{name: "Charting", label: 'Charting'},
+			{name: "Note Stacking", label: 'Note Stacking'},
 		];
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
@@ -384,6 +385,7 @@ class ChartingState extends MusicBeatState
 		addNoteUI();
 		addEventsUI();
 		addChartingUI();
+		addNoteStackingUI();
 		updateHeads();
 		updateWaveform();
 		//UI_box.selected_tab = 4;
@@ -1045,7 +1047,7 @@ class ChartingState extends MusicBeatState
 		{
 			if (curSelectedNote != null) {
 				for(i in 0...Std.int(spamLength)) {
-					addNote(curSelectedNote[0] + (15000/_song.notes[curSec].bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2]);
+					addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2]);
 				}
 				FlxG.log.add('added the spam');
 				updateGrid();
@@ -1105,6 +1107,34 @@ class ChartingState extends MusicBeatState
 		tab_group_note.add(noteTypeDropDown);
 
 		UI_box.addGroup(tab_group_note);
+	}
+
+	var check_stackActive:FlxUICheckBox;
+	var stepperStackNum:FlxUINumericStepper;
+	var stepperStackOffset:FlxUINumericStepper;
+
+	function addNoteStackingUI():Void
+	{
+		var tab_group_stacking = new FlxUI(null, UI_box);
+		tab_group_stacking.name = 'Note Stacking';
+
+		check_stackActive = new FlxUICheckBox(10, 10, null, null, "Enable notestacking", 100);
+		check_stackActive.name = 'check_stackActive';
+
+		stepperStackNum = new FlxUINumericStepper(10, 30, 4, 4, 0, 999999);
+		stepperStackNum.name = 'stack_count';
+
+		stepperStackOffset = new FlxUINumericStepper(10, 50, 1, 1, 0, 8192);
+		stepperStackOffset.name = 'stack_offset';
+
+		tab_group_stacking.add(check_stackActive);
+		tab_group_stacking.add(stepperStackNum);
+		tab_group_stacking.add(stepperStackOffset);
+		
+		tab_group_stacking.add(new FlxText(100, 30, 0, "Count"));
+		tab_group_stacking.add(new FlxText(100, 50, 0, "Multiplier"));
+
+		UI_box.addGroup(tab_group_stacking);
 	}
 
 	var eventDropDown:FlxUIDropDownMenuCustom;
@@ -1751,6 +1781,14 @@ class ChartingState extends MusicBeatState
 				{
 					FlxG.log.add('added note');
 					addNote();
+					var addCount:Int = 0;
+					if (check_stackActive.checked) {
+						addCount = (Math.floor(stepperStackNum.value)) * Math.floor(stepperStackOffset.value);
+					}
+					// var funnySnap:Float = ((GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]) + Conductor.stepCrochet / stepperStackOffset.value);
+					for(i in 0...Std.int(addCount)) {
+						addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/stepperStackOffset.value, curSelectedNote[1], curSelectedNote[2]);
+					}
 				}
 			}
 		}
