@@ -102,6 +102,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Vanilla FNF Health Colors',
+			'If checked, the health bar will globally use Red & Green as the health bar colors.',
+			'ogHP',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Rating FC Colors',
 			'If checked, the ratings & combo will be colored based on your FC rating.',
 			'colorRatingFC',

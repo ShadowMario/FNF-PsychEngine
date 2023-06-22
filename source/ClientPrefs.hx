@@ -41,6 +41,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
+	public static var ogHP:Bool = false;
 	public static var communityGameMode:Bool = false;
 	public static var wrongCameras:Bool = false;
 	public static var shitGivesMiss:Bool = false;
@@ -170,6 +171,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.rateNameStuff = rateNameStuff;
+		FlxG.save.data.ogHP = ogHP;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.accuracyMod = accuracyMod;
 		FlxG.save.data.healthDisplay = healthDisplay;
@@ -269,6 +271,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
+		}
+		if(FlxG.save.data.ogHP != null) {
+			ogHP = FlxG.save.data.ogHP;
 		}
 		if(FlxG.save.data.rateNameStuff != null) {
 			rateNameStuff = FlxG.save.data.rateNameStuff;
