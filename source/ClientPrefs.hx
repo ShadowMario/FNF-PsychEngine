@@ -30,6 +30,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
 	public static var antiCheatEnable:Bool = false;
+	public static var autoPause:Bool = true;
 	public static var randomBotplayText:Bool = true;
 	public static var opponentLightStrum:Bool = true;
 	public static var botLightStrum:Bool = true;
@@ -176,6 +177,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.accuracyMod = accuracyMod;
 		FlxG.save.data.healthDisplay = healthDisplay;
 		FlxG.save.data.wrongCameras = wrongCameras;
+		FlxG.save.data.autoPause = autoPause;
 		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.antiCheatEnable = antiCheatEnable;
 		FlxG.save.data.randomBotplayText = randomBotplayText;
@@ -286,6 +288,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
+		}
+		if(FlxG.save.data.autoPause != null) {
+			autoPause = FlxG.save.data.autoPause;
 		}
 		if(FlxG.save.data.accuracyMod != null) {
 			accuracyMod = FlxG.save.data.accuracyMod;

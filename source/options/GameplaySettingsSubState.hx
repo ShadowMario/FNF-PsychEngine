@@ -85,6 +85,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Auto-Pause if Focus Lost',
+			"If unchecked, the game won't pause when your game loses focus.",
+			'autoPause',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('CommunityGame Mode',
 			"What do you think this does?",
 			'communityGameMode',
