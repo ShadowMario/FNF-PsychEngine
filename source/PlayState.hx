@@ -418,9 +418,9 @@ class PlayState extends MusicBeatState
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
 		
-		#if cpp
+		/*#if cpp
 		cpp.vm.Gc.enable(false); //prevent lag spikes where it matters most
-		#end
+		#end*/
 
 
 		// for lua
@@ -2325,10 +2325,15 @@ class PlayState extends MusicBeatState
 	}
 
 	public function reloadHealthBarColors() {
+		if (ClientPrefs.ogHP) {
+		if (opponentChart) healthBar.createFilledBar(0xFF66FF33, 0xFFFF0000);
+		else healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		} else {
 		if (!opponentChart) healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
 		else healthBar.createFilledBar(FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]),
 			FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+		}
 
 		healthBar.updateBar();
 	}
@@ -5501,7 +5506,6 @@ class PlayState extends MusicBeatState
 				vocals.stop();	
 				FlxG.sound.music.volume = 1;
 				vocals.volume = 1;
-
 		timeBarBG.visible = true;
 		timeBar.visible = true;
 		timeTxt.visible = true;
@@ -5554,7 +5558,6 @@ class PlayState extends MusicBeatState
 				vocals.stop();	
 				FlxG.sound.music.volume = 1;
 				vocals.volume = 1;
-
 		timeBarBG.visible = true;
 		timeBar.visible = true;
 		timeTxt.visible = true;
@@ -7140,7 +7143,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 						}
 					}
 				}
-				if (!opponentChart)
+				if (!opponentChart && !note.gfNote)
 				{
 					if (!ClientPrefs.doubleGhost) {
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
@@ -7173,7 +7176,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 						}
 					}
 				}
-				if (opponentChart)
+				if (opponentChart && !note.gfNote)
 				{
 					if (!ClientPrefs.doubleGhost) {
 					dad.playAnim(animToPlay, true);
