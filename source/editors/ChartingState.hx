@@ -340,7 +340,7 @@ class ChartingState extends MusicBeatState
 			{name: "Note", label: 'Note'},
 			{name: "Events", label: 'Events'},
 			{name: "Charting", label: 'Charting'},
-			{name: "Note Stacking", label: 'Note Stacking'},
+			{name: "Note Spamming", label: 'Note Spamming'},
 		];
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
@@ -1116,9 +1116,9 @@ class ChartingState extends MusicBeatState
 	function addNoteStackingUI():Void
 	{
 		var tab_group_stacking = new FlxUI(null, UI_box);
-		tab_group_stacking.name = 'Note Stacking';
+		tab_group_stacking.name = 'Note Spamming';
 
-		check_stackActive = new FlxUICheckBox(10, 10, null, null, "Enable notestacking", 100);
+		check_stackActive = new FlxUICheckBox(10, 10, null, null, "Enable EZ Spam Mode", 100);
 		check_stackActive.name = 'check_stackActive';
 
 		stepperStackNum = new FlxUINumericStepper(10, 30, 4, 4, 0, 999999);
@@ -1131,8 +1131,8 @@ class ChartingState extends MusicBeatState
 		tab_group_stacking.add(stepperStackNum);
 		tab_group_stacking.add(stepperStackOffset);
 		
-		tab_group_stacking.add(new FlxText(100, 30, 0, "Count"));
-		tab_group_stacking.add(new FlxText(100, 50, 0, "Multiplier"));
+		tab_group_stacking.add(new FlxText(100, 30, 0, "Spam Count"));
+		tab_group_stacking.add(new FlxText(100, 50, 0, "Spam Multiplier"));
 
 		UI_box.addGroup(tab_group_stacking);
 	}
