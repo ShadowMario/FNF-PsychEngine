@@ -54,6 +54,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var showMS:Bool = false;
 	public static var comboPopup:Bool = false;
 	public static var ratingCounter:Bool = false;
+	public static var memLeaks:Bool = false;
+	public static var doubleGhostZoom:Bool = true;
 	public static var moreSpecificSpeed:Bool = true;
 	public static var coolGameplay:Bool = false;
 	public static var hudType:String = 'Kade Engine';
@@ -187,6 +189,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.cameraPanning = cameraPanning;
 		FlxG.save.data.panIntensity = panIntensity;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
+		FlxG.save.data.doubleGhostZoom = doubleGhostZoom;
+		FlxG.save.data.memLeaks = memLeaks;
 		FlxG.save.data.dynamicSpawnTime = dynamicSpawnTime;
 		FlxG.save.data.botLightStrum = botLightStrum;
 		FlxG.save.data.opponentLightStrum = opponentLightStrum;
@@ -300,6 +304,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.dynamicSpawnTime != null) {
 			dynamicSpawnTime = FlxG.save.data.dynamicSpawnTime;
+		}
+		if(FlxG.save.data.doubleGhostZoom != null) {
+			doubleGhostZoom = FlxG.save.data.doubleGhostZoom;
+		}
+		if(FlxG.save.data.memLeaks != null) {
+			memLeaks = FlxG.save.data.memLeaks;
 		}
 		if(FlxG.save.data.oppNoteAlpha != null) {
 			oppNoteAlpha = FlxG.save.data.oppNoteAlpha;

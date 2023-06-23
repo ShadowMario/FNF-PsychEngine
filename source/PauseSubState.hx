@@ -187,12 +187,12 @@ class PauseSubState extends MusicBeatSubstate
 					{
 						curTime += 150000 * elapsed * (controls.UI_LEFT ? -1 : 1);
 					}
-					if(holdTime > 0.5 && FlxG.sound.music.length >= 3600000)
+					if(holdTime > 0.5 && FlxG.sound.music.length >= 3600000 || PlayState.SONG.song.toLowerCase() == 'desert bus' && holdTime > 0.5)
 					{
 						curTime += 450000 * elapsed * (controls.UI_LEFT ? -1 : 1);
 					}
 
-					if(curTime >= FlxG.sound.music.length) curTime -= FlxG.sound.music.length;
+					if(curTime >= FlxG.sound.music.length || PlayState.SONG.song.toLowerCase() == 'desert bus' && curTime >= 28820000) curTime -= FlxG.sound.music.length;
 					else if(curTime < 0) curTime += FlxG.sound.music.length;
 					updateSkipTimeText();
 				}

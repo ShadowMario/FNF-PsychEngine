@@ -145,6 +145,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+
+		var option:Option = new Option('Double Note Ghost Camera Zoom',
+			'If unchecked, Double Note Ghosts will not zoom when they activate during gameplay.',
+			'doubleGhostZoom',
+			'bool',
+			true);
+		addOption(option);
 		
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",

@@ -416,11 +416,17 @@ class PlayState extends MusicBeatState
 
 		randomBotplayText = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 		//trace('Playback Rate: ' + playbackRate);
-		Paths.clearStoredMemory();
-		
-		/*#if cpp
-		cpp.vm.Gc.enable(false); //prevent lag spikes where it matters most
-		#end*/
+		//Paths.clearStoredMemory();
+			if (!ClientPrefs.memLeaks)
+			{
+			#if cpp
+			cpp.vm.Gc.enable(true);
+			#end
+
+			#if sys
+			openfl.system.System.gc();
+			#end
+			}
 
 
 		// for lua
@@ -2125,6 +2131,7 @@ class PlayState extends MusicBeatState
 			hitsound6 = FlxG.sound.load(Paths.sound("hitsounds/" + 'generic click'));
 			hitsound7 = FlxG.sound.load(Paths.sound("hitsounds/" + 'keyboard click'));
 			hitsound8 = FlxG.sound.load(Paths.sound("hitsounds/" + 'vine boom'));
+			hitsound9 = FlxG.sound.load(Paths.sound("hitsounds/" + 'adofai'));
 			}
 		if(ClientPrefs.hitsoundVolume > 0) precacheList.set('hitsound', 'sound');
 		if(ClientPrefs.hitsoundVolume > 0 && hitSoundString == 'Randomized') 
@@ -2137,6 +2144,7 @@ class PlayState extends MusicBeatState
 			precacheList.set('hitsound6', 'sound');
 			precacheList.set('hitsound7', 'sound');
 			precacheList.set('hitsound8', 'sound');
+			precacheList.set('hitsound9', 'sound');
 			hitsound.volume = ClientPrefs.hitsoundVolume;
 			hitsound.pitch = playbackRate;
 			hitsound2.volume = ClientPrefs.hitsoundVolume;
@@ -2153,6 +2161,8 @@ class PlayState extends MusicBeatState
 			hitsound7.pitch = playbackRate;
 			hitsound8.volume = ClientPrefs.hitsoundVolume;
 			hitsound8.pitch = playbackRate;
+			hitsound9.volume = ClientPrefs.hitsoundVolume;
+			hitsound9.pitch = playbackRate;
 			}
 		hitsound.volume = ClientPrefs.hitsoundVolume;
 		hitsound.pitch = playbackRate;
@@ -2203,7 +2213,7 @@ class PlayState extends MusicBeatState
 					Paths.music(key);
 			}
 		}
-		Paths.clearUnusedMemory();
+		//Paths.clearUnusedMemory();
 		
 		CustomFadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
@@ -3255,7 +3265,7 @@ class PlayState extends MusicBeatState
 		{
 		FlxG.sound.music.onComplete = infiniteLoop.bind();
 		}
-		if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song') 
+		if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song' && SONG.song.toLowerCase() != 'desert bus') 
 		{
 		FlxG.sound.music.onComplete = finishSong.bind();
 		}
@@ -4079,20 +4089,6 @@ class PlayState extends MusicBeatState
 		}
 		vocals.play();
 	}
-	function resyncInst():Void //(sync music to song position)
-	{
-		if (!endingSong)
-		{
-			trace("synced Inst");
-			FlxG.sound.music.pause();
-			FlxG.sound.music.pitch = playbackRate;
-			FlxG.sound.music.time = Conductor.songPosition;
-			FlxG.sound.music.play();
-
-			resyncVocals(); //sync vocals at same time
-		}
-
-	}
 
 	public var paused:Bool = false;
 	public var canReset:Bool = true;
@@ -4551,6 +4547,14 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
+
+				if (Conductor.songPosition >= 8000 && SONG.song.toLowerCase() == 'desert bus') { //stop crashes when playing normally
+					FlxG.sound.music.volume = 0;
+				}
+
+				if (28820000 - Conductor.songPosition <= 20 && SONG.song.toLowerCase() == 'desert bus') { //stop crashes when playing normally
+					endSong();
+				}
 
 		if (health > maxHealth)
 			health = maxHealth;
@@ -5499,6 +5503,14 @@ class PlayState extends MusicBeatState
 			});
 		}
 	}
+	public function no(?ignoreNoteOffset:Bool = false):Void
+	{
+		var loopedSong:Int = 1;
+		FlxG.sound.music.volume = 0;
+		vocals.volume = 0;
+		Conductor.songPosition = 8000 * loopedSong;
+		loopedSong++;
+	}
 
 	public function loopSong(?ignoreNoteOffset:Bool = false):Void
 	{	
@@ -5861,7 +5873,7 @@ class PlayState extends MusicBeatState
 			ghost.alpha = 0.8;
 			ghost.visible = true;
 
-			if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && camZooming)
+			if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && camZooming && ClientPrefs.doubleGhostZoom)
 			{
 					FlxG.camera.zoom += 0.0075;
 					camHUD.zoom += 0.015;
@@ -6924,6 +6936,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	var hitsound6:FlxSound;
 	var hitsound7:FlxSound;
 	var hitsound8:FlxSound;
+	var hitsound9:FlxSound;
 
 	function goodNoteHit(note:Note):Void
 	{
@@ -6952,6 +6965,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				hitsound6.pitch = playbackRate;
 				hitsound7.pitch = playbackRate;
 				hitsound8.pitch = playbackRate;
+				hitsound9.pitch = playbackRate;
 				}
 				if (hitSoundString == 'vine boom')
 				{
@@ -6972,7 +6986,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					});
 				}
 				if (ClientPrefs.hitsoundType == 'Randomized') {
-					var randomHitSoundType:Int = FlxG.random.int(1, 8);
+					var randomHitSoundType:Int = FlxG.random.int(1, 9);
 						switch (randomHitSoundType)
 							{
 								case 1:
@@ -7016,6 +7030,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 											}
 										});
 									}
+								case 9:
+									hitsound9.play(true);
+									hitsound9.pitch = playbackRate;
 							}
 				}
 			}

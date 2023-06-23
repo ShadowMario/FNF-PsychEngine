@@ -79,6 +79,13 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.displayFormat = '%vX';
 		addOption(option);
 
+		var option:Option = new Option('Memory Leaks', //Name
+			"If checked, cache will no longer be cleared when entering a song. Improves performance a bit for higher-end computers, but I don't recommend turning it on if you're on a mid-end or even a low-end computer!", //Description
+			'memLeaks', //Save data variable name
+			'bool', //Variable type
+			false); //Default value
+		addOption(option);
+
 		#if !html5 //Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		var option:Option = new Option('Framerate',
 			"Pretty self explanatory, isn't it?",
