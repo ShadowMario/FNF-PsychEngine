@@ -3508,7 +3508,7 @@ class PlayState extends MusicBeatState
 				{
 					for (i in 0...Std.int(jackingtime))
 					{
-						jackNote = new Note(swagNote.strumTime + 70 * (i + 1), swagNote.noteData, oldNote);
+						jackNote = new Note(swagNote.strumTime + (15000/SONG.bpm) * (i + 1), swagNote.noteData, oldNote);
 						jackNote.scrollFactor.set();
 
 				jackNote.mustPress = swagNote.mustPress;
