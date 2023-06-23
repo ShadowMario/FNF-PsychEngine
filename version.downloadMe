@@ -1,4 +1,6 @@
-1.0.0.1;
-- HOTFIX UPDATE!!
-- Fixed an issue where Extra Keys with Lua scripts would crash the game
-- Fixed an issue where videoSprites don't show
+1.1.0;
+- Sick Only Mode: If it's not a Sick/Marvelous, DIE!!
+- Memory Leaks: Stops cache clearing during gameplay.
+- Camera Note Panning IS HERE
+- Rating Name Display?!
+- OG HP Colors?!!?!
