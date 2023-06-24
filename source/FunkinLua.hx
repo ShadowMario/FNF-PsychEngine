@@ -17,7 +17,7 @@ import flixel.tweens.FlxEase;
 import flixel.text.FlxText;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.util.FlxTimer;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
@@ -2872,6 +2872,7 @@ class FunkinLua {
 			return true;
 		}
 
+		#if MODS_ALLOWED
 		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
 		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
 			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
@@ -2908,6 +2909,7 @@ class FunkinLua {
 				}
 			}
 		}
+		#end
 		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
 		#else
 		luaTrace('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);
