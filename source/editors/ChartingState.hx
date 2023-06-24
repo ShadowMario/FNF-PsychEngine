@@ -149,6 +149,7 @@ class ChartingState extends MusicBeatState
 	var tempBpm:Float = 0;
 	var playbackSpeed:Float = 1;
 
+
 	var vocals:FlxSound = null;
 
 	var leftIcon:HealthIcon;
@@ -157,6 +158,8 @@ class ChartingState extends MusicBeatState
 	var value1InputText:FlxUIInputText;
 	var value2InputText:FlxUIInputText;
 	var currentSongName:String;
+
+	var hitsound:FlxSound = null;
 
 	var zoomTxt:FlxText;
 
@@ -239,6 +242,8 @@ class ChartingState extends MusicBeatState
 			addSection();
 			PlayState.SONG = _song;
 		}
+		hitsound = FlxG.sound.load(Paths.sound("hitsounds/" + 'osu!mania'));
+		hitsound.volume = 1;
 
 		// Paths.clearMemory();
 
@@ -1047,7 +1052,7 @@ class ChartingState extends MusicBeatState
 		{
 			if (curSelectedNote != null) {
 				for(i in 0...Std.int(spamLength)) {
-					addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/spamCloseness, curSelectedNote[1], curSelectedNote[2]);
+					addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/spamCloseness, curSelectedNote[1], currentType);
 				}
 				FlxG.log.add('added the spam');
 				updateGrid();
@@ -1121,7 +1126,7 @@ class ChartingState extends MusicBeatState
 		check_stackActive = new FlxUICheckBox(10, 10, null, null, "Enable EZ Spam Mode", 100);
 		check_stackActive.name = 'check_stackActive';
 
-		stepperStackNum = new FlxUINumericStepper(10, 30, 4, 4, 0, 999999);
+		stepperStackNum = new FlxUINumericStepper(10, 30, 1, 1, 0, 999999);
 		stepperStackNum.name = 'stack_count';
 
 		stepperStackOffset = new FlxUINumericStepper(10, 50, 1, 1, 0, 8192);
@@ -1326,6 +1331,7 @@ class ChartingState extends MusicBeatState
 	#end
 	var instVolume:FlxUINumericStepper;
 	var voicesVolume:FlxUINumericStepper;
+	var hitsoundVolume:FlxUINumericStepper;
 	function addChartingUI() {
 		var tab_group_chart = new FlxUI(null, UI_box);
 		tab_group_chart.name = 'Charting';
@@ -1458,6 +1464,11 @@ class ChartingState extends MusicBeatState
 		voicesVolume.name = 'voices_volume';
 		blockPressWhileTypingOnStepper.push(voicesVolume);
 		
+		hitsoundVolume = new FlxUINumericStepper(voicesVolume.x + 100, voicesVolume.y, 0.1, 1, 0, 1, 1);
+		hitsoundVolume.value = hitsound.volume;
+		hitsoundVolume.name = 'hitsound_volume';
+		blockPressWhileTypingOnStepper.push(hitsoundVolume);
+		
 		#if !html5
 		sliderRate = new FlxUISlider(this, 'playbackSpeed', 120, 120, 0.25, 4, 150, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderRate.nameLabel.text = 'Playback Rate';
@@ -1468,6 +1479,7 @@ class ChartingState extends MusicBeatState
 		tab_group_chart.add(new FlxText(metronomeOffsetStepper.x, metronomeOffsetStepper.y - 15, 0, 'Offset (ms):'));
 		tab_group_chart.add(new FlxText(instVolume.x, instVolume.y - 15, 0, 'Inst Volume'));
 		tab_group_chart.add(new FlxText(voicesVolume.x, voicesVolume.y - 15, 0, 'Voices Volume'));
+		tab_group_chart.add(new FlxText(hitsoundVolume.x, hitsoundVolume.y - 15, 0, 'Hitsound Volume'));
 		tab_group_chart.add(metronome);
 		tab_group_chart.add(disableAutoScrolling);
 		tab_group_chart.add(metronomeStepper);
@@ -1478,6 +1490,7 @@ class ChartingState extends MusicBeatState
 		#end
 		tab_group_chart.add(instVolume);
 		tab_group_chart.add(voicesVolume);
+		tab_group_chart.add(hitsoundVolume);
 		tab_group_chart.add(check_mute_inst);
 		tab_group_chart.add(check_mute_vocals);
 		tab_group_chart.add(check_vortex);
@@ -1624,6 +1637,10 @@ class ChartingState extends MusicBeatState
 			else if (wname == 'voices_volume')
 			{
 				vocals.volume = nums.value;
+			}
+			else if (wname == 'hitsound_volume')
+			{
+				hitsound.volume = nums.value;
 			}
 		}
 		else if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
@@ -1787,7 +1804,7 @@ class ChartingState extends MusicBeatState
 					}
 					// var funnySnap:Float = ((GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]) + Conductor.stepCrochet / stepperStackOffset.value);
 					for(i in 0...Std.int(addCount)) {
-						addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/stepperStackOffset.value, curSelectedNote[1], curSelectedNote[2]);
+						addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/stepperStackOffset.value, curSelectedNote[1], currentType);
 					}
 				}
 			}
@@ -1893,6 +1910,7 @@ class ChartingState extends MusicBeatState
 			}
 
 			if (FlxG.keys.pressed.C && !FlxG.keys.pressed.CONTROL)
+			{
 				if (!FlxG.mouse.overlaps(curRenderedNotes)) //lmao cant place notes when your cursor already overlaps one
 					if (FlxG.mouse.x > gridBG.x
 						&& FlxG.mouse.x < gridBG.x + gridBG.width
@@ -1900,6 +1918,7 @@ class ChartingState extends MusicBeatState
 						&& FlxG.mouse.y < gridBG.y + gridBG.height)
 							if (!FlxG.keys.pressed.CONTROL) //stop crashing
 								addNote(); //allows you to draw notes by holding left click
+			}
 
 			if (FlxG.keys.justPressed.TAB)
 			{
@@ -2209,13 +2228,14 @@ class ChartingState extends MusicBeatState
 						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true);
 						strumLineNotes.members[noteDataToCheck].resetAnim = ((note.sustainLength / 1000) + 0.15) / playbackSpeed;
 					if(!playedSound[data]) {
-						if((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress)){
-							var soundToPlay = 'hitsound';
+						if((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress)) {
 							if(_song.player1 == 'gf') { //Easter egg
-								soundToPlay = 'GF_' + Std.string(data + 1);
+								hitsound = FlxG.sound.load(Paths.sound("hitsounds/" + 'GF_' + Std.string(data + 1)));
 							}
 
-							FlxG.sound.play(Paths.sound(soundToPlay)).pan = note.noteData < 4? -0.3 : 0.3; //would be coolio
+							hitsound.play(true);
+							hitsound.volume = hitsoundVolume.value;
+							hitsound.pan = note.noteData < 4? -0.3 : 0.3; //would be coolio
 							playedSound[data] = true;
 						}
 
