@@ -4686,7 +4686,7 @@ class PlayState extends MusicBeatState
 					if(ClientPrefs.timeBarType == 'Song Name + Time' && songLength >= 3600000)
 						timeTxt.text = SONG.song + ' (' + hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining + ' / ' + hoursShown + ':' + minutesShownShit + ':' + secondsShown + ')';
 					
-					if(randomSpeedThing)
+					if(ClientPrefs.timebarShowSpeed)
 						timeTxt.text += ' (' + playbackRateDecimal + 'x)';
 					
 					if (ClientPrefs.hudType != 'Kade Engine' && ClientPrefs.hudType != 'Dave & Bambi')
@@ -5537,16 +5537,19 @@ class PlayState extends MusicBeatState
 				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
 				}
 				*/ //no need to change the song if you're already playing it!
-			
-				/*
-				if (playbackRate >= 8192) playbackRate += 204.8;
-				if (playbackRate >= 4096) playbackRate += 102.4;
-				if (playbackRate >= 2048) playbackRate += 51.2;
-				if (playbackRate >= 1024) playbackRate += 25.6;
-				if (playbackRate >= 512) playbackRate += 12.8;
-				if (playbackRate >= 256) playbackRate += 6.4;
-				*/
-				if (playbackRate >= 128) playbackRate += 6.4;
+				
+				if (!ClientPrefs.trollMaxSpeed)
+				{
+				if (playbackRate >= 65536) playbackRate += 3276.8;
+				if (playbackRate >= 32768 && playbackRate <= 65536) playbackRate += 1638.4;
+				if (playbackRate >= 16384 && playbackRate <= 32768) playbackRate += 819.2;
+				if (playbackRate >= 8192 && playbackRate <= 16384) playbackRate += 409.6;
+				if (playbackRate >= 4096 && playbackRate <= 8192) playbackRate += 204.8;
+				if (playbackRate >= 2048 && playbackRate <= 4096) playbackRate += 102.4;
+				if (playbackRate >= 1024 && playbackRate <= 2048) playbackRate += 51.2;
+				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
+				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
+				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
 				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
 				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
 				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
@@ -5554,7 +5557,19 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
-				//optimized the speed increase code
+				} else {
+				if (playbackRate > 1024) playbackRate == 1024;
+				if (playbackRate >= 512 && playbackRate <= 1023.99) playbackRate += 25.6;
+				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
+				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
+				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
+				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
+				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
+				if (playbackRate >= 8 && playbackRate <= 16) playbackRate += 0.4;
+				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
+				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
+				if (playbackRate <= 2) playbackRate += 0.05;
+				}
 				Conductor.songPosition = 0;
 				KillNotes();
 				generateTrollSongShit(SONG.song);
@@ -7125,9 +7140,13 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				{
 					if(gf != null)
 					{
+					if (!ClientPrefs.doubleGhost) {
 						gf.playAnim(animToPlay + note.animSuffix, true);
+					}
 						gf.holdTimer = 0;
-					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1 && ClientPrefs.doubleGhost)
+					if (ClientPrefs.doubleGhost)
+					{
+					if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
 						{
 							// potentially have jump anims?
 							var chord = noteRows[note.mustPress?0:1][note.row];
@@ -7158,6 +7177,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 							gf.playAnim(animToPlay + note.animSuffix, true);
 							// dad.angle = 0;
 						}
+					}
 					}
 				}
 				if (!opponentChart && !note.gfNote)

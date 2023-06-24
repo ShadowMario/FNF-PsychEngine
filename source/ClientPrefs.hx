@@ -46,6 +46,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var communityGameMode:Bool = false;
 	public static var wrongCameras:Bool = false;
 	public static var shitGivesMiss:Bool = false;
+	public static var trollMaxSpeed:Bool = false;
+	public static var timebarShowSpeed:Bool = false;
 	public static var noteSpawnTime:Float = 1;
 	public static var dynamicSpawnTime:Bool = false;
 	public static var oppNoteAlpha:Float = 0.65;
@@ -207,6 +209,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.longHPBar = longHPBar;
 		FlxG.save.data.moreMaxHP = moreMaxHP;
+		FlxG.save.data.timebarShowSpeed = timebarShowSpeed;
+		FlxG.save.data.trollMaxSpeed = trollMaxSpeed;
 		FlxG.save.data.smoothHealthType = smoothHealthType;
 		FlxG.save.data.smoothHealth = smoothHealth;
 		FlxG.save.data.moreSpecificSpeed = moreSpecificSpeed;
@@ -337,6 +341,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.noteSpawnTime != null) {
 			noteSpawnTime = FlxG.save.data.noteSpawnTime;
+		}
+		if(FlxG.save.data.timebarShowSpeed != null) {
+			timebarShowSpeed = FlxG.save.data.timebarShowSpeed;
+		}
+		if(FlxG.save.data.trollMaxSpeed != null) {
+			trollMaxSpeed = FlxG.save.data.trollMaxSpeed;
 		}
 		if(FlxG.save.data.instaRestart != null) {
 			instaRestart = FlxG.save.data.instaRestart;

@@ -67,13 +67,19 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Show Playback Speed on Time Bar',
+			'If checked, the timebar will also show the current Playback Speed you are playing at.',
+			'timebarShowSpeed',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Camera Note Movement',
 			"If checked, note hits will move the camera depending on which note you hit.",
 			'cameraPanning',
 			'bool',
 			true);
 		addOption(option);
-
 
 		var option:Option = new Option('Camera Pan Intensity:', //Name
 			'Changes how much the camera pans when Camera Note Movement is turned on.', //Description

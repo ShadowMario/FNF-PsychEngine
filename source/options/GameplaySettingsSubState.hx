@@ -270,6 +270,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Troll Mode Speed Limit',
+			"If unchecked, Troll Mode's max speed won't be limited to 1024x.",
+			'trollMaxSpeed',
+			'bool',
+			false);
+		addOption(option);
+
 		super();
 	}
 
