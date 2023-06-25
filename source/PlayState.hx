@@ -151,6 +151,7 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
+	public var tries:Int = 0;
 
 	public var spawnTime:Float = 1750; //just enough for the notes to barely inch off the screen
 
@@ -268,6 +269,7 @@ class PlayState extends MusicBeatState
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
+	public var pauseWarnText:FlxText;
 
 	public var healthShitText:FlxText;
 
@@ -333,6 +335,7 @@ class PlayState extends MusicBeatState
 	//ms timing popup shit
 	public var msTxt:FlxText;
 	public var msTimer:FlxTimer = null;
+	public var restartTimer:FlxTimer = null;
 
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
@@ -1039,7 +1042,7 @@ class PlayState extends MusicBeatState
 			if(ClientPrefs.communityGameMode)
 			{
 				SONG.gfVersion = 'gf-bent';
-				FlxG.log.add('using the suspicious gf skin, horny ass mf.');
+				trace('using the suspicious gf skin, horny ass mf.');
 			}
 		var gfVersion:String = SONG.gfVersion;
 		
@@ -1866,6 +1869,14 @@ class PlayState extends MusicBeatState
 		}
 		add(judgementCounter);
 
+		pauseWarnText = new FlxText(400,  FlxG.height / 2 - 20, 0, "Pausing is disabled! Turn it back on in Settings -> Gameplay -> 'Force Disable Pausing'", 16);
+		pauseWarnText.cameras = [camHUD];
+		pauseWarnText.scrollFactor.set();
+		pauseWarnText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		pauseWarnText.borderSize = 1.25;
+		pauseWarnText.x += 20;
+		pauseWarnText.y -= 25;
+		pauseWarnText.alpha = 0;
 
 		if (ClientPrefs.hudType == 'Psych Engine')
 		{
@@ -4451,9 +4462,57 @@ class PlayState extends MusicBeatState
 
 		if (controls.PAUSE && startedCountdown && canPause)
 		{
+			if (!ClientPrefs.noPausing) {
 			var ret:Dynamic = callOnLuas('onPause', [], false);
 			if(ret != FunkinLua.Function_Stop) {
 				openPauseMenu();
+			}
+			}
+			else if (ClientPrefs.noPausing) {
+			FlxTween.cancelTweensOf(pauseWarnText);
+			trace("Player has attempted to pause the song, but 'Force Disable Pausing' is enabled! (Tries: " + tries + ")");
+		pauseWarnText.visible = true;
+		pauseWarnText.alpha = 1;
+		FlxG.sound.play(Paths.sound('tried'), 1);
+		tries++;
+		insert(members.indexOf(strumLineNotes), pauseWarnText);
+		FlxTween.tween(pauseWarnText, {alpha: 0}, 1 / playbackRate, {
+			startDelay: 2 / playbackRate,
+			onComplete: _ -> {
+				tries = 0;
+				pauseWarnText.visible = false;
+			}
+		});
+				switch (tries)
+				{
+					case 1, 2, 3, 4, 5, 6, 7, 8, 9:
+						pauseWarnText.text = "Pausing is disabled! Turn it back on in Settings -> Gameplay -> 'Force Disable Pausing'";
+					case 10, 11, 12, 13, 14, 15, 16, 17, 18, 19:
+						pauseWarnText.text = "OK we get it, the sound's funny, now stop pausing.";
+					case 20, 21, 22, 23, 24, 25, 26, 27, 28, 29:
+						pauseWarnText.text = "dude. stop.";
+					case 30, 31, 32, 33, 34:
+						pauseWarnText.text = "OK, if you continue, I'm softlocking the game.";
+					case 35, 36, 37, 38, 39:
+						pauseWarnText.text = "STOP.";
+					case 40:
+						pauseWarnText.text = "fuck off.";
+						FlxG.sound.play(Paths.sound('pipe'), 1);
+						FlxG.sound.music.volume = 0;
+						vocals.volume = 0;
+						Conductor.songPosition = -100000;
+					restartTimer = new FlxTimer().start(10, function(_) {
+						PauseSubState.restartSong(true);
+					});
+					case 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59:
+						pauseWarnText.text = "stop trying to pause dumbass this is getting you nowhere";
+					case 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99:
+						pauseWarnText.text = "I CAN PERMANENTLY PAUSE FOR YOU, IF THAT'S WHAT YOU WANT.";
+					case 100:
+						pauseWarnText.text = "ok fuck you.";
+						FlxG.sound.play(Paths.sound('loudvine'), 1);
+						if (restartTimer != null) restartTimer.cancel();
+				}
 			}
 		}
 

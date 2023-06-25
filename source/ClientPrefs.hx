@@ -57,6 +57,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var comboPopup:Bool = false;
 	public static var ratingCounter:Bool = false;
 	public static var memLeaks:Bool = false;
+	public static var noPausing:Bool = false;
 	public static var doubleGhostZoom:Bool = true;
 	public static var moreSpecificSpeed:Bool = true;
 	public static var coolGameplay:Bool = false;
@@ -201,6 +202,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.ratingCounter = ratingCounter;
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
+		FlxG.save.data.noPausing = noPausing;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.ratesAndCombo = ratesAndCombo;
 		FlxG.save.data.showMS = showMS;
@@ -317,6 +319,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.oppNoteAlpha != null) {
 			oppNoteAlpha = FlxG.save.data.oppNoteAlpha;
+		}
+		if(FlxG.save.data.noPausing != null) {
+			noPausing = FlxG.save.data.noPausing;
 		}
 		if(FlxG.save.data.noteSplashes != null) {
 			noteSplashes = FlxG.save.data.noteSplashes;
