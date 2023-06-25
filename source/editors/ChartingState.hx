@@ -1117,6 +1117,7 @@ class ChartingState extends MusicBeatState
 	var check_stackActive:FlxUICheckBox;
 	var stepperStackNum:FlxUINumericStepper;
 	var stepperStackOffset:FlxUINumericStepper;
+	var stepperStackSideOffset:FlxUINumericStepper;
 
 	function addNoteStackingUI():Void
 	{
@@ -1132,12 +1133,17 @@ class ChartingState extends MusicBeatState
 		stepperStackOffset = new FlxUINumericStepper(10, 50, 1, 1, 0, 8192);
 		stepperStackOffset.name = 'stack_offset';
 
+		stepperStackSideOffset = new FlxUINumericStepper(10, 70, 1, 0, -9999, 9999);
+		stepperStackSideOffset.name = 'stack_sideways';
+
 		tab_group_stacking.add(check_stackActive);
 		tab_group_stacking.add(stepperStackNum);
 		tab_group_stacking.add(stepperStackOffset);
+		tab_group_stacking.add(stepperStackSideOffset);
 		
 		tab_group_stacking.add(new FlxText(100, 30, 0, "Spam Count"));
 		tab_group_stacking.add(new FlxText(100, 50, 0, "Spam Multiplier"));
+		tab_group_stacking.add(new FlxText(100, 70, 0, "Spam Scroll Amount"));
 
 		UI_box.addGroup(tab_group_stacking);
 	}
@@ -1804,7 +1810,7 @@ class ChartingState extends MusicBeatState
 					}
 					// var funnySnap:Float = ((GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]) + Conductor.stepCrochet / stepperStackOffset.value);
 					for(i in 0...Std.int(addCount)) {
-						addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/stepperStackOffset.value, curSelectedNote[1], currentType);
+						addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/stepperStackOffset.value, curSelectedNote[1] + Math.floor(stepperStackSideOffset.value), currentType);
 					}
 				}
 			}

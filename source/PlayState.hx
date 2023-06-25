@@ -4537,6 +4537,10 @@ class PlayState extends MusicBeatState
 				if (playbackRate > 500) endingTimeLimit = 5000;
 				if (playbackRate > 750) endingTimeLimit = 2500;
 				if (playbackRate > 1000) endingTimeLimit = 1000;
+				if (playbackRate > 2000) endingTimeLimit = 500;
+				if (playbackRate > 3000) endingTimeLimit = 250;
+				if (playbackRate > 4000) endingTimeLimit = 100;
+				if (playbackRate > 5000) endingTimeLimit = 20;
 
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
@@ -5538,7 +5542,7 @@ class PlayState extends MusicBeatState
 				}
 				*/ //no need to change the song if you're already playing it!
 				
-				if (!ClientPrefs.trollMaxSpeed)
+				if (ClientPrefs.trollMaxSpeed == 'Disabled')
 				{
 				if (playbackRate >= 65536) playbackRate += 3276.8;
 				if (playbackRate >= 32768 && playbackRate <= 65536) playbackRate += 1638.4;
@@ -5557,9 +5561,53 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
-				} else {
-				if (playbackRate > 1024) playbackRate == 1024;
-				if (playbackRate >= 512 && playbackRate <= 1023.99) playbackRate += 25.6;
+				} else if (ClientPrefs.trollMaxSpeed == 'Highest') {
+				if (playbackRate >= 10000) playbackRate = 10000;
+				if (playbackRate >= 8192 && playbackRate <= 10000) playbackRate += 409.6;
+				if (playbackRate >= 4096 && playbackRate <= 8192) playbackRate += 204.8;
+				if (playbackRate >= 2048 && playbackRate <= 4096) playbackRate += 102.4;
+				if (playbackRate >= 1024 && playbackRate <= 2048) playbackRate += 51.2;
+				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
+				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
+				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
+				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
+				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
+				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
+				if (playbackRate >= 8 && playbackRate <= 16) playbackRate += 0.4;
+				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
+				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
+				if (playbackRate <= 2) playbackRate += 0.05;
+				} else if (ClientPrefs.trollMaxSpeed == 'High') {
+				if (playbackRate >= 5120) playbackRate = 5120;
+				if (playbackRate >= 4096 && playbackRate <= 5120) playbackRate += 204.8;
+				if (playbackRate >= 2048 && playbackRate <= 4096) playbackRate += 102.4;
+				if (playbackRate >= 1024 && playbackRate <= 2048) playbackRate += 51.2;
+				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
+				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
+				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
+				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
+				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
+				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
+				if (playbackRate >= 8 && playbackRate <= 16) playbackRate += 0.4;
+				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
+				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
+				if (playbackRate <= 2) playbackRate += 0.05;
+				} else if (ClientPrefs.trollMaxSpeed == 'Medium') {
+				if (playbackRate >= 2048) playbackRate = 2048;
+				if (playbackRate >= 1024 && playbackRate <= 2048) playbackRate += 51.2;
+				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
+				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
+				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
+				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
+				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
+				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
+				if (playbackRate >= 8 && playbackRate <= 16) playbackRate += 0.4;
+				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
+				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
+				if (playbackRate <= 2) playbackRate += 0.05;
+				} else if (ClientPrefs.trollMaxSpeed == 'Low') {
+				if (playbackRate >= 1024) playbackRate = 1024;
+				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
 				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
 				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
 				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;

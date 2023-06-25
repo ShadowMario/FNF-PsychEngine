@@ -46,7 +46,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var communityGameMode:Bool = false;
 	public static var wrongCameras:Bool = false;
 	public static var shitGivesMiss:Bool = false;
-	public static var trollMaxSpeed:Bool = false;
+	public static var trollMaxSpeed:String = 'Medium';
 	public static var timebarShowSpeed:Bool = false;
 	public static var noteSpawnTime:Float = 1;
 	public static var dynamicSpawnTime:Bool = false;
