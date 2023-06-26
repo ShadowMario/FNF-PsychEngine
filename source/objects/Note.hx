@@ -3,6 +3,7 @@ package objects;
 import states.editors.ChartingState;
 
 import shaders.RGBPalette;
+import shaders.RGBPalette.RGBShaderReference;
 
 typedef EventNote = {
 	strumTime:Float,
@@ -42,7 +43,8 @@ class Note extends FlxSprite
 	public var eventVal1:String = '';
 	public var eventVal2:String = '';
 
-	public var rgbShader:RGBPalette;
+	public var rgbShader:RGBShaderReference;
+	public static var globalRgbShaders:Array<RGBPalette> = [];
 	public var inEditor:Bool = false;
 
 	public var animSuffix:String = '';
@@ -179,9 +181,20 @@ class Note extends FlxSprite
 
 		if(noteData > -1) {
 			texture = '';
-			rgbShader = new RGBPalette();
-			shader = rgbShader.shader;
-			defaultRGB();
+			if(globalRgbShaders[noteData] == null)
+			{
+				var newRGB:RGBPalette = new RGBPalette();
+				globalRgbShaders[noteData] = newRGB;
+
+				var arr:Array<FlxColor> = (!PlayState.isPixelStage) ? ClientPrefs.data.arrowRGB[noteData] : ClientPrefs.data.arrowRGBPixel[noteData];
+				if (noteData > -1 && noteData <= arr.length)
+				{
+					newRGB.r = arr[0];
+					newRGB.g = arr[1];
+					newRGB.b = arr[2];
+				}
+			}
+			rgbShader = new RGBShaderReference(this, globalRgbShaders[noteData]);
 
 			x += swagWidth * (noteData);
 			if(!isSustainNote && noteData < 4) { //Doing this 'if' check to fix the warnings on Senpai songs
