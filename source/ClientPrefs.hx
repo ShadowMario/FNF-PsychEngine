@@ -39,6 +39,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var showNotes:Bool = true;
 	public static var doubleGhost:Bool = true;
 	public static var hideHud:Bool = false;
+	public static var hideScore:Bool = false;
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
@@ -192,6 +193,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.cameraPanning = cameraPanning;
 		FlxG.save.data.panIntensity = panIntensity;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
+		FlxG.save.data.hideScore = hideScore;
 		FlxG.save.data.doubleGhostZoom = doubleGhostZoom;
 		FlxG.save.data.memLeaks = memLeaks;
 		FlxG.save.data.dynamicSpawnTime = dynamicSpawnTime;
@@ -434,6 +436,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.hideHud != null) {
 			hideHud = FlxG.save.data.hideHud;
+		}
+		if(FlxG.save.data.hideScore != null) {
+			hideScore = FlxG.save.data.hideScore;
 		}
 		if(FlxG.save.data.noteOffset != null) {
 			noteOffset = FlxG.save.data.noteOffset;

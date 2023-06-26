@@ -1812,6 +1812,8 @@ class ChartingState extends MusicBeatState
 					for(i in 0...Std.int(addCount)) {
 						addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/stepperStackOffset.value, curSelectedNote[1] + Math.floor(stepperStackSideOffset.value), currentType);
 					}
+				updateGrid();
+				updateNoteUI();
 				}
 			}
 		}
@@ -1924,6 +1926,8 @@ class ChartingState extends MusicBeatState
 						&& FlxG.mouse.y < gridBG.y + gridBG.height)
 							if (!FlxG.keys.pressed.CONTROL) //stop crashing
 								addNote(); //allows you to draw notes by holding left click
+				updateGrid();
+				updateNoteUI();
 			}
 
 			if (FlxG.keys.justPressed.TAB)
@@ -3064,7 +3068,7 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 	}
 
-	private function addNote(strum:Null<Float> = null, data:Null<Int> = null, type:Null<Int> = null):Void
+	private function addNote(strum:Null<Float> = null, data:Null<Int> = null, type:Null<Int> = null, ?gridUpdate:Bool = true):Void
 	{
 		//curUndoIndex++;
 		//var newsong = _song.notes;
@@ -3102,9 +3106,11 @@ class ChartingState extends MusicBeatState
 
 		//trace(noteData + ', ' + noteStrum + ', ' + curSec);
 		strumTimeInputText.text = '' + curSelectedNote[0];
-
-		updateGrid();
-		updateNoteUI();
+		//wow its not laggy who wouldve guessed
+		/*if (gridUpdate) {
+			updateGrid();
+			updateNoteUI();
+		}*/
 	}
 
 	// will figure this out l8r
