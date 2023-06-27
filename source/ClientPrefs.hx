@@ -61,6 +61,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noPausing:Bool = false;
 	public static var doubleGhostZoom:Bool = true;
 	public static var moreSpecificSpeed:Bool = true;
+	public static var opponentRateCount:Bool = true;
 	public static var coolGameplay:Bool = false;
 	public static var hudType:String = 'Kade Engine';
 	public static var smoothHealth:Bool = true;
@@ -75,6 +76,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var timeBarType:String = 'Time Left';
 	public static var marvRateColor:String = 'Golden';
 	public static var noMarvJudge:Bool = false;
+	public static var zeroHealthLimit:Bool = false;
 	public static var scoreZoom:Bool = true;
 	public static var goldSickSFC:Bool = true;
 	public static var colorRatingFC:Bool = false;
@@ -199,6 +201,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.dynamicSpawnTime = dynamicSpawnTime;
 		FlxG.save.data.botLightStrum = botLightStrum;
 		FlxG.save.data.opponentLightStrum = opponentLightStrum;
+		FlxG.save.data.opponentRateCount = opponentRateCount;
+		FlxG.save.data.zeroHealthLimit = zeroHealthLimit;
 		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.hudType = hudType;
 		FlxG.save.data.ratingCounter = ratingCounter;
@@ -319,6 +323,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.memLeaks != null) {
 			memLeaks = FlxG.save.data.memLeaks;
 		}
+		if(FlxG.save.data.zeroHealthLimit != null) {
+			zeroHealthLimit = FlxG.save.data.zeroHealthLimit;
+		}
 		if(FlxG.save.data.oppNoteAlpha != null) {
 			oppNoteAlpha = FlxG.save.data.oppNoteAlpha;
 		}
@@ -351,6 +358,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.timebarShowSpeed != null) {
 			timebarShowSpeed = FlxG.save.data.timebarShowSpeed;
+		}
+		if(FlxG.save.data.opponentRateCount != null) {
+			opponentRateCount = FlxG.save.data.opponentRateCount;
 		}
 		if(FlxG.save.data.trollMaxSpeed != null) {
 			trollMaxSpeed = FlxG.save.data.trollMaxSpeed;

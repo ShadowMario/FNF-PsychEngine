@@ -368,6 +368,7 @@ class ChartingState extends MusicBeatState
 		\nZ/X - Zoom in/out
 		\nC - Draw your charts! Easier charting for your Bambi fansongs lmao
 		\n
+		\n(Hold) Control + Left/Right - Shift the currently selected note
 		\nEsc - Test your chart inside Chart Editor
 		\nEnter - Play your chart
 		\nShift + Enter - Play your chart at the current section
@@ -376,8 +377,8 @@ class ChartingState extends MusicBeatState
 
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
-			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
-			tipText.y += i * 9;
+			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 17);
+			tipText.y += i * 8;
 			tipText.setFormat(Paths.font("vcr.ttf"), 12, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 			//tipText.borderSize = 2;
 			tipText.scrollFactor.set();
@@ -1129,12 +1130,15 @@ class ChartingState extends MusicBeatState
 
 		stepperStackNum = new FlxUINumericStepper(10, 30, 1, 1, 0, 999999);
 		stepperStackNum.name = 'stack_count';
+		blockPressWhileTypingOnStepper.push(stepperStackNum);
 
 		stepperStackOffset = new FlxUINumericStepper(10, 50, 1, 1, 0, 8192);
 		stepperStackOffset.name = 'stack_offset';
+		blockPressWhileTypingOnStepper.push(stepperStackOffset);
 
 		stepperStackSideOffset = new FlxUINumericStepper(10, 70, 1, 0, -9999, 9999);
 		stepperStackSideOffset.name = 'stack_sideways';
+		blockPressWhileTypingOnStepper.push(stepperStackSideOffset);
 
 		tab_group_stacking.add(check_stackActive);
 		tab_group_stacking.add(stepperStackNum);
@@ -1971,6 +1975,27 @@ class ChartingState extends MusicBeatState
 					resetSection(true);
 				else
 					resetSection();
+			}
+			if (FlxG.keys.pressed.CONTROL)
+			{
+				if (FlxG.keys.pressed.RIGHT)
+					if (curSelectedNote != null && curSelectedNote[1] > -1 && curSelectedNote[2] != null) {
+						if (curSelectedNote[1] < 6 + 1) {
+							curSelectedNote[1] += 1;
+						} else if (curSelectedNote[1] == 6 + 1) {
+							curSelectedNote[1] = 0;
+						}
+						updateGrid();
+					}
+				if (FlxG.keys.pressed.LEFT)
+					if (curSelectedNote != null && curSelectedNote[1] > -1 && curSelectedNote[2] != null) {
+						if (curSelectedNote[1] > 0) {
+							curSelectedNote[1] -= 1;
+						} else if (curSelectedNote[1] == 0) {
+							curSelectedNote[1] = 7;
+						}
+						updateGrid();
+					}
 			}
 
 			if (FlxG.mouse.wheel != 0)

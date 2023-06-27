@@ -179,7 +179,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'hudType',
 			'string',
 			'VS Impostor',
-			['VS Impostor', 'Kade Engine', 'Tails Gets Trolled V4', 'Dave & Bambi', 'Doki Doki+', 'Psych Engine', 'Leather Engine', "Mic'd Up"]);
+			['VS Impostor', 'Kade Engine', 'Tails Gets Trolled V4', 'Dave & Bambi', 'Doki Doki+', 'Psych Engine', 'Leather Engine', 'Box Funkin', "Mic'd Up"]);
 		addOption(option);
 
 		var option:Option = new Option('Icon Bounce:',
@@ -238,6 +238,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'comboPopup',
 			'bool',
 			false);
+		addOption(option);
+
+		var option:Option = new Option('Opponent Note Hit Count',
+			"If checked, the rating counter will also show how many notes the opponent has hit.",
+			'opponentRateCount',
+			'bool',
+			true);
 		addOption(option);
 
 		var option:Option = new Option('Show MS Popup',

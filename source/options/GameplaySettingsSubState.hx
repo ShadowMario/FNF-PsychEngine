@@ -148,6 +148,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('0% Limit on Practice',
+			"If checked, the health will stay at 0% if you lose all health in Practice mode.",
+			'zeroHealthLimit',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Shit Gives Miss',
 			"If checked, hitting a Shit rating will count as a miss.",
 			'shitGivesMiss',

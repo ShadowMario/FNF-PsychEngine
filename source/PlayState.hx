@@ -237,6 +237,10 @@ class PlayState extends MusicBeatState
 	public var shits:Int = 0;
 	public var nps:Int = 0;
 	public var maxNPS:Int = 0;
+	public var oppNPS:Int = 0;
+	public var maxOppNPS:Int = 0;
+	public var enemyHits:Int = 0;
+	public var opponentNoteTotal:Int = 0;
 	
 	private var allSicks:Bool = true;
 
@@ -284,6 +288,7 @@ class PlayState extends MusicBeatState
 	var SPUNCHBOB:FlxSprite;
 
 	var notesHitArray:Array<Date> = [];
+	var oppNotesHitArray:Array<Date> = [];
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
@@ -1377,6 +1382,7 @@ class PlayState extends MusicBeatState
 				timeBar.scrollFactor.set();
 				timeBar.createFilledBar(FlxColor.BLACK, FlxColor.CYAN);
 				timeBar.numDivisions = 400;
+				timeBar.alpha = 0;
 				timeBar.visible = showTime;
 				add(timeBar);
 				add(timeTxt);
@@ -1402,6 +1408,38 @@ class PlayState extends MusicBeatState
 		timeBar.visible = showTime;
 		add(timeBar);
 		add(timeTxt);
+		timeBarBG.sprTracker = timeBar;
+		}
+		if (ClientPrefs.hudType == 'Box Funkin') {
+				timeBarBG = new AttachedSprite('WITimeBar');
+				timeBarBG.y = 695;
+				if (ClientPrefs.downScroll) timeBarBG.y = 3;
+				timeBarBG.scrollFactor.set();
+				timeBarBG.updateHitbox();
+				timeBarBG.screenCenter(X);
+				timeBarBG.alpha = 0;
+				add(timeBarBG);
+				timeBarBG.xAdd = -12;
+				timeBarBG.yAdd = -4;
+		timeBarBG.screenCenter(X);
+				timeBarBG.color = FlxColor.BLACK;
+
+				timeTxt = new FlxText(0, (ClientPrefs.downScroll ? timeBarBG.y + 32 : timeBarBG.y - 32), 400, "", 20);
+				timeTxt.setFormat(Paths.font("MilkyNice.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				timeTxt.alpha = 0;
+				timeTxt.borderSize = 3;
+				timeTxt.screenCenter(X);
+				timeTxt.antialiasing = ClientPrefs.globalAntialiasing;
+				updateTime = true;
+				timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 5, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 24), Std.int(timeBarBG.height - 8), this, 'songPercent', 0, 1);
+				timeBar.scrollFactor.set();
+				timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
+				timeBar.numDivisions = 800; // How much lag this causes?? Should i tone it down to idk, 400 or 200?
+				timeBar.alpha = 0;
+				timeBarBG.xAdd = -12;
+				timeBar.screenCenter(X);
+				add(timeBar);
+				add(timeTxt);
 		timeBarBG.sprTracker = timeBar;
 		}
 
@@ -1738,6 +1776,11 @@ class PlayState extends MusicBeatState
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
 		add(EngineWatermark);
 		}
+		if (ClientPrefs.hudType == 'Box Funkin') { //unfortunately i have to do this because otherwise enginewatermark calls a null object reference
+		// Add Engine watermark
+		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
+		add(EngineWatermark);
+		}
 		
 		if (ClientPrefs.hudType == 'Kade Engine')
 		{ 		
@@ -1790,6 +1833,53 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.downScroll)
 			npsTxt.y = accuracyTxt.y + 46;
 		npsTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, RIGHT);
+		npsTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		npsTxt.scrollFactor.set();
+		add(npsTxt);
+		npsTxt.visible = !ClientPrefs.hideHud;
+		}
+		if (ClientPrefs.hudType == 'Box Funkin')
+		{ 
+		scoreTxt = new FlxText(25, healthBarBG.y - 26, 0, "", 21);
+		if (ClientPrefs.downScroll)
+			scoreTxt.y = healthBarBG.y + 26;
+		scoreTxt.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, RIGHT);
+		scoreTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		scoreTxt.scrollFactor.set();
+		add(scoreTxt);
+		scoreTxt.visible = !ClientPrefs.hideHud;
+
+		missTxt = new FlxText(scoreTxt.x, scoreTxt.y - 26, 0, "", 21);
+		if (ClientPrefs.downScroll)
+			missTxt.y = scoreTxt.y + 26;
+		missTxt.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, RIGHT);
+		missTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		missTxt.scrollFactor.set();
+		add(missTxt);
+		missTxt.visible = !ClientPrefs.hideHud;
+
+		accuracyTxt = new FlxText(missTxt.x, missTxt.y - 26, 0, "", 21);
+		if (ClientPrefs.downScroll)
+			accuracyTxt.y = missTxt.y + 26;
+		accuracyTxt.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, RIGHT);
+		accuracyTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		accuracyTxt.scrollFactor.set();
+		add(accuracyTxt);
+		accuracyTxt.visible = !ClientPrefs.hideHud;
+
+		comboTxt = new FlxText(scoreTxt.x, scoreTxt.y + 26, 0, "", 21);
+		if (ClientPrefs.downScroll)
+			comboTxt.y = scoreTxt.y - 26;
+		comboTxt.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, RIGHT);
+		comboTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
+		comboTxt.scrollFactor.set();
+		add(comboTxt);
+		comboTxt.visible = !ClientPrefs.hideHud;
+
+		npsTxt = new FlxText(accuracyTxt.x, accuracyTxt.y - 46, 0, "", 21);
+		if (ClientPrefs.downScroll)
+			npsTxt.y = accuracyTxt.y + 46;
+		npsTxt.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, RIGHT);
 		npsTxt.setBorderStyle(OUTLINE, 0xFF000000, 3, 1);
 		npsTxt.scrollFactor.set();
 		add(npsTxt);
@@ -1854,8 +1944,9 @@ class PlayState extends MusicBeatState
 		scoreTxt.destroy();
 		}
 
-		judgementCounter = new FlxText(0, FlxG.height / 2 - 20, 0, "", 20);
+		judgementCounter = new FlxText(0, FlxG.height / 2 - (ClientPrefs.hudType != 'Box Funkin' ? 40 : 250), 0, "", 20);
 		judgementCounter.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Box Funkin') judgementCounter.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgementCounter.borderSize = 2;
 		judgementCounter.scrollFactor.set();
 		judgementCounter.visible = ClientPrefs.ratingCounter;
@@ -1872,6 +1963,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
 		}
 		judgementCounter.text += '\nNPS: ' + nps + ' (Max NPS: ' + maxNPS + ')';
+		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Notes Hit: ' + enemyHits + ' / ' + opponentNoteTotal + '\nOpponent NPS: ' + oppNPS + ' (Max Opponent NPS: ' + maxOppNPS + ')\nPercent of Opponent Notes Hit: ' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%';
 		add(judgementCounter);
 
 		pauseWarnText = new FlxText(400,  FlxG.height / 2 - 20, 0, "Pausing is disabled! Turn it back on in Settings -> Gameplay -> 'Force Disable Pausing'", 16);
@@ -1884,6 +1976,17 @@ class PlayState extends MusicBeatState
 		pauseWarnText.alpha = 0;
 
 		if (ClientPrefs.hudType == 'Psych Engine')
+		{
+		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.scrollFactor.set();
+		botplayTxt.borderSize = 1.25;
+		botplayTxt.visible = cpuControlled;
+		add(botplayTxt);
+		if (ClientPrefs.downScroll) 
+			botplayTxt.y = timeBarBG.y - 78;
+		}
+		if (ClientPrefs.hudType == 'Box Funkin')
 		{
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1984,7 +2087,7 @@ class PlayState extends MusicBeatState
 		EngineWatermark.cameras = [camHUD];
 		judgementCounter.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
-		if(ClientPrefs.hudType == "Mic'd Up")
+		if(ClientPrefs.hudType == "Mic'd Up" || ClientPrefs.hudType == 'Box Funkin')
 		{
 		missTxt.cameras = [camHUD];
 		accuracyTxt.cameras = [camHUD];
@@ -3234,7 +3337,7 @@ class PlayState extends MusicBeatState
 		+ ' | Botplay Mode ';
 		}
 		}
-		if (ClientPrefs.hudType == "Mic'd Up")
+		if (ClientPrefs.hudType == "Mic'd Up" || ClientPrefs.hudType == 'Box Funkin')
 		{
 		comboTxt.text = "Combo: " + combo;
 		scoreTxt.text = 'Score: ' + songScore;
@@ -3514,10 +3617,6 @@ class PlayState extends MusicBeatState
 		// NEW SHIT
 		noteData = songData.notes;
 
-		var playerCounter:Int = 0;
-
-		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
-
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		var file:String = Paths.json(songName + '/events');
 		#if MODS_ALLOWED
@@ -3600,6 +3699,10 @@ class PlayState extends MusicBeatState
 				{
 					totalNotes += 1;
 				}
+				if (!gottaHitNote)
+				{
+					opponentNoteTotal += 1;
+				}
 
 				var oldNote:Note;
 				if (unspawnNotes.length > 0)
@@ -3676,6 +3779,10 @@ class PlayState extends MusicBeatState
 							jackNote.x += FlxG.width / 2; // general offset
 							totalNotes += 1;
 						}
+						if (!jackNote.mustPress)
+						{
+							opponentNoteTotal += 1;
+						}
 						if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
 						{
 						if(!noteTypeMap.exists(jackNote.noteType)) {
@@ -3685,7 +3792,6 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
-			daBeats += 1;
 		}
 		for (event in songData.events) //Event Notes
 		{
@@ -3715,8 +3821,8 @@ class PlayState extends MusicBeatState
 
 	private function generateTrollSongShit(dataPath:String):Void
 	{
-		// FlxG.log.add(ChartParser.parse());
 		/*
+		// FlxG.log.add(ChartParser.parse());
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
 
 		switch(songSpeedType)
@@ -3741,6 +3847,7 @@ class PlayState extends MusicBeatState
 		FlxG.sound.list.add(vocals);
 		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
 		*/ //don't load the audio again, that just takes up more memory
+
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
 
@@ -3912,6 +4019,15 @@ class PlayState extends MusicBeatState
 						unspawnNotes.push(jackNote);
 
 						jackNote.mustPress = swagNote.mustPress;
+						if (jackNote.mustPress)
+						{
+							jackNote.x += FlxG.width / 2; // general offset
+							totalNotes += 1;
+						}
+						if (!jackNote.mustPress)
+						{
+							opponentNoteTotal += 1;
+						}
 						if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
 						{
 						if(!noteTypeMap.exists(jackNote.noteType)) {
@@ -3921,7 +4037,6 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
-			daBeats += 1;
 		}
 		for (event in songData.events) //Event Notes
 		{
@@ -4259,12 +4374,13 @@ class PlayState extends MusicBeatState
 				health = -2;
 			}
 		}
-		if (nps > (1 / 2))
+		if (health <= 0 && practiceMode && ClientPrefs.zeroHealthLimit) health = 0; //set health to 0 if on practice mode and you get to 0%
+		if (nps > (1 / 2) || oppNPS > (1 / 2))
 		{
 		updateRatingCounter();
 		updateScore();
 		}
-		if (nps == 1)
+		if (nps == 1 || oppNPS == 1)
 		{
 		new FlxTimer().start(0.01, function(_) {
 						updateScore();
@@ -4431,6 +4547,21 @@ class PlayState extends MusicBeatState
 			nps = notesHitArray.length;
 			if (nps > maxNPS)
 				maxNPS = nps;
+		}
+		{
+			var balls = oppNotesHitArray.length-1;
+			while (balls >= 0)
+			{
+				var cock:Date = oppNotesHitArray[balls];
+				if (cock != null && (cock.getTime() + 1000 / playbackRate) < Date.now().getTime())
+					oppNotesHitArray.remove(cock);
+				else
+					balls = 0;
+				balls--;
+			}
+			oppNPS = oppNotesHitArray.length;
+			if (oppNPS > maxOppNPS)
+				maxOppNPS = oppNPS;
 		}
 
 		super.update(elapsed);
@@ -4752,11 +4883,7 @@ class PlayState extends MusicBeatState
 				if (playbackRate > 250) endingTimeLimit = 10000;
 				if (playbackRate > 500) endingTimeLimit = 5000;
 				if (playbackRate > 750) endingTimeLimit = 2500;
-				if (playbackRate > 1000) endingTimeLimit = 1000;
-				if (playbackRate > 2000) endingTimeLimit = 500;
-				if (playbackRate > 3000) endingTimeLimit = 250;
-				if (playbackRate > 4000) endingTimeLimit = 100;
-				if (playbackRate > 5000) endingTimeLimit = 20;
+				if (playbackRate > 1000) endingTimeLimit = 20;
 
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
@@ -4767,10 +4894,6 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
-
-				if (Conductor.songPosition >= 8000 && SONG.song.toLowerCase() == 'desert bus') { //stop crashes when playing normally
-					FlxG.sound.music.volume = 0;
-				}
 
 				if (28820000 - Conductor.songPosition <= 20 && SONG.song.toLowerCase() == 'desert bus') { //stop crashes when playing normally
 					endSong();
@@ -7202,6 +7325,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		if (!note.isSustainNote)
 		{
+		oppNotesHitArray.unshift(Date.now());
+		updateRatingCounter();
+		enemyHits += 1;
 			note.kill();
 			notes.remove(note, true);
 			note.destroy();
@@ -8129,6 +8255,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
 		}
 		judgementCounter.text += '\nNPS: ' + nps + ' (Max NPS: ' + maxNPS + ')';
+		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Notes Hit: ' + enemyHits + ' / ' + opponentNoteTotal + '\nOpponent NPS: ' + oppNPS + ' (Max Opponent NPS: ' + maxOppNPS + ')\nPercent of Opponent Notes Hit: ' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%';
 	}
 
 
