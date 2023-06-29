@@ -1251,6 +1251,15 @@ class PlayState extends MusicBeatState
 		timeTxt.visible = showTime;
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
 		}
+		if (ClientPrefs.hudType == 'JS Engine') {
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 20);
+		timeTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.scrollFactor.set();
+		timeTxt.alpha = 0;
+		timeTxt.borderSize = 3;
+		timeTxt.visible = showTime;
+		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44;
+		}
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') {
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
 		timeTxt.setFormat(Paths.font("calibri.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1537,7 +1546,32 @@ class PlayState extends MusicBeatState
 			add(timeBar);
 			add(timeTxt);
 		}
-		timePercentTxt = new FlxText(timeBarBG.x + 400, 19, 400, "", 32);
+		if (ClientPrefs.hudType == 'JS Engine') {
+		timeBarBG = new AttachedSprite('healthBar');
+			timeBarBG.screenCenter(X);
+		timeBarBG.x = timeTxt.x;
+		timeBarBG.y = timeTxt.y + (timeTxt.height / 8);
+		timeBarBG.scrollFactor.set();
+		timeBarBG.alpha = 0;
+		timeBarBG.visible = showTime;
+		timeBarBG.color = FlxColor.BLACK;
+		timeBarBG.xAdd = -4;
+		timeBarBG.yAdd = -4;
+		timeBarBG.screenCenter(X);
+		add(timeBarBG);
+
+			timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+				'songPercent', 0, 1);
+			timeBar.scrollFactor.set();
+			timeBar.numDivisions = 1000; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
+			timeBar.alpha = 0;
+			timeBar.visible = showTime;
+			timeBarBG.sprTracker = timeBar;
+			timeBar.createGradientBar([FlxColor.TRANSPARENT], [FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]), FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2])]);
+			add(timeBar);
+			add(timeTxt);
+		}
+		timePercentTxt = new FlxText(800, 19, 400, "", 32);
 		if (ClientPrefs.hudType == 'Doki Doki+') timePercentTxt.setFormat(Paths.font("Aller_rg.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') timePercentTxt.setFormat(Paths.font("calibri.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1556,12 +1590,13 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.hudType == 'Doki Doki+') healthShitText.setFormat(Paths.font("Aller_rg.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') healthShitText.setFormat(Paths.font("calibri.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Dave & Bambi') healthShitText.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Box Funkin') healthShitText.setFormat(Paths.font("MilkyNice.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		healthShitText.scrollFactor.set();
 		healthShitText.alpha = 1;
 		healthShitText.borderSize = 2;
 		healthShitText.visible = ClientPrefs.healthDisplay;
 		healthShitText.cameras = [camHUD];
-		if(ClientPrefs.downScroll) healthShitText.y = timeBarBG.y - 160;
+		if(ClientPrefs.downScroll || ClientPrefs.hudType == 'Box Funkin') healthShitText.y = timeBarBG.y - 160;
 		add(healthShitText);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
@@ -1738,6 +1773,15 @@ class PlayState extends MusicBeatState
 		add(EngineWatermark);
 		EngineWatermark.text = SONG.song + " " + CoolUtil.difficultyString() + " | JSE " + MainMenuState.psychEngineJSVersion;
 		}
+		if (ClientPrefs.hudType == 'JS Engine') {
+		// Add Engine watermark
+		EngineWatermark = new FlxText(4,FlxG.height * 0.1 - 70,0,"", 18);
+		EngineWatermark.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		EngineWatermark.scrollFactor.set();
+		if (ClientPrefs.downScroll) EngineWatermark.y = (FlxG.height * 0.9 + 50);
+		add(EngineWatermark);
+		EngineWatermark.text = "You are now playing " + SONG.song + " on " + CoolUtil.difficultyString() + "! (JSE v" + MainMenuState.psychEngineJSVersion + ")";
+		}
 		if (ClientPrefs.hudType == 'Dave & Bambi') {
 		// Add Engine watermark
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
@@ -1788,6 +1832,15 @@ class PlayState extends MusicBeatState
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1;
+		scoreTxt.visible = !ClientPrefs.hideHud;
+		add(scoreTxt);
+		}
+		if (ClientPrefs.hudType == 'JS Engine')
+		{ 		
+		scoreTxt = new FlxText(0, healthBarBG.y + 50, FlxG.width, "", 20);
+            	scoreTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+		scoreTxt.borderSize = 2;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 		}
@@ -1944,7 +1997,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.destroy();
 		}
 
-		judgementCounter = new FlxText(0, FlxG.height / 2 - (ClientPrefs.hudType != 'Box Funkin' ? 40 : 250), 0, "", 20);
+		judgementCounter = new FlxText(0, FlxG.height / 2 - (ClientPrefs.hudType != 'Box Funkin' || ClientPrefs.hudType != "Mic'd Up" ? 40 : 250), 0, "", 20);
 		judgementCounter.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Box Funkin') judgementCounter.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgementCounter.borderSize = 2;
@@ -1981,6 +2034,17 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
+		botplayTxt.visible = cpuControlled;
+		add(botplayTxt);
+		if (ClientPrefs.downScroll) 
+			botplayTxt.y = timeBarBG.y - 78;
+		}
+		if (ClientPrefs.hudType == 'JS Engine')
+		{
+		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "Botplay Mode", 30);
+		botplayTxt.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.scrollFactor.set();
+		botplayTxt.borderSize = 1.5;
 		botplayTxt.visible = cpuControlled;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
@@ -3296,7 +3360,7 @@ class PlayState extends MusicBeatState
 				daNote.ignoreNote = true;
 
 				daNote.kill();
-				unspawnNotes.remove(daNote);
+				//unspawnNotes.remove(daNote);
 				daNote.destroy();
 			}
 			--i;
@@ -3398,6 +3462,22 @@ class PlayState extends MusicBeatState
 		+ ' | Bot Combo: ' + combo
 		+ ' | Bot NPS: ' + nps
 		+ ' | funny botplay mode!!!!!';
+		}
+		}
+		if (ClientPrefs.hudType == "JS Engine")
+		{
+		scoreTxt.text = 'Score: ' + songScore
+		+ ' | Misses: ' + songMisses
+		+ ' | Combo: ' + combo
+		+ ' | NPS: ' + nps
+		+ ' | Rating: ' + ratingName
+		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
+		if (cpuControlled)
+		{
+		scoreTxt.text = "Bot Score: " + songScore
+		+ ' | Bot Combo: ' + combo
+		+ ' | Bot NPS: ' + nps
+		+ ' | Botplay Mode';
 		}
 		}
 		if (ClientPrefs.hudType == "Leather Engine")
@@ -3516,9 +3596,25 @@ class PlayState extends MusicBeatState
 		{
 		FlxG.sound.music.onComplete = finishSong.bind();
 		}
-		if (trollingMode) 
+		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Highest') 
 		{
-		FlxG.sound.music.onComplete = loopSong.bind();
+		FlxG.sound.music.onComplete = loopSongHighest.bind();
+		}
+		if (trollingMode && ClientPrefs.trollMaxSpeed == 'High') 
+		{
+		FlxG.sound.music.onComplete = loopSongHigh.bind();
+		}
+		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Medium') 
+		{
+		FlxG.sound.music.onComplete = loopSongMedium.bind();
+		}
+		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Low') 
+		{
+		FlxG.sound.music.onComplete = loopSongLow.bind();
+		}
+		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Disabled') 
+		{
+		FlxG.sound.music.onComplete = loopSongNoLimit.bind();
 		}
 		vocals.play();
 
@@ -3821,8 +3917,8 @@ class PlayState extends MusicBeatState
 
 	private function generateTrollSongShit(dataPath:String):Void
 	{
-		/*
 		// FlxG.log.add(ChartParser.parse());
+		/*
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
 
 		switch(songSpeedType)
@@ -3847,7 +3943,6 @@ class PlayState extends MusicBeatState
 		FlxG.sound.list.add(vocals);
 		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
 		*/ //don't load the audio again, that just takes up more memory
-
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
 
@@ -3885,11 +3980,8 @@ class PlayState extends MusicBeatState
 						value1: newEventNote[2],
 						value2: newEventNote[3]
 					};
-					if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
-					{
 					eventNotes.push(subEvent);
 					eventPushed(subEvent);
-					}
 				}
 			}
 		}
@@ -3990,7 +4082,7 @@ class PlayState extends MusicBeatState
 						unspawnNotes.push(sustainNote);
 					}
 				}
-				if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song') {
+				if (!trollingMode) {
 				if(!noteTypeMap.exists(swagNote.noteType)) {
 					noteTypeMap.set(swagNote.noteType, true);
 				}
@@ -4019,16 +4111,7 @@ class PlayState extends MusicBeatState
 						unspawnNotes.push(jackNote);
 
 						jackNote.mustPress = swagNote.mustPress;
-						if (jackNote.mustPress)
-						{
-							jackNote.x += FlxG.width / 2; // general offset
-							totalNotes += 1;
-						}
-						if (!jackNote.mustPress)
-						{
-							opponentNoteTotal += 1;
-						}
-						if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
+						if (!trollingMode)
 						{
 						if(!noteTypeMap.exists(jackNote.noteType)) {
 							noteTypeMap.set(jackNote.noteType, true);
@@ -4037,6 +4120,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
+			daBeats += 1;
 		}
 		for (event in songData.events) //Event Notes
 		{
@@ -4050,7 +4134,7 @@ class PlayState extends MusicBeatState
 					value2: newEventNote[3]
 				};
 				eventNotes.push(subEvent);
-				if(!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song')
+				if(!trollingMode)
 				{
 				eventPushed(subEvent);
 				}
@@ -4890,7 +4974,11 @@ class PlayState extends MusicBeatState
 				// so no reason to delete it at all
 				if (FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && trollingMode) { //stop crashes when playing normally
 					Conductor.songPosition = FlxG.sound.music.length;
-					loopSong();
+					if (ClientPrefs.trollMaxSpeed == 'Highest') loopSongHighest();
+					if (ClientPrefs.trollMaxSpeed == 'High') loopSongHigh();
+					if (ClientPrefs.trollMaxSpeed == 'Medium') loopSongMedium();
+					if (ClientPrefs.trollMaxSpeed == 'Low') loopSongLow();
+					if (ClientPrefs.trollMaxSpeed == 'Disabled') loopSongNoLimit();
 				}
 			}
 		}
@@ -5108,7 +5196,7 @@ class PlayState extends MusicBeatState
 					boyfriend.dance();
 					//boyfriend.animation.curAnim.finish();
 				}
-          				if(cpuControlled && opponentChart && dad.holdTimer > Conductor.stepCrochet * 0.001 / playbackRate * dad.singDuration && dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) {
+          				if(cpuControlled && opponentChart && dad.holdTimer > Conductor.stepCrochet * 0.001 / FlxG.sound.music.pitch * dad.singDuration && dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) {
 					dad.dance();
 				}
 
@@ -5854,13 +5942,10 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition = 8000 * loopedSong;
 		loopedSong++;
 	}
-
-	public function loopSong(?ignoreNoteOffset:Bool = false):Void
+	public function loopSongNoLimit(?ignoreNoteOffset:Bool = false):Void
 	{	
 				FlxG.sound.music.stop();
-				vocals.stop();	
-				FlxG.sound.music.volume = 1;
-				vocals.volume = 1;
+				vocals.stop();
 		timeBarBG.visible = true;
 		timeBar.visible = true;
 		timeTxt.visible = true;
@@ -5870,19 +5955,6 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		updateTime = true;
 		startingSong = false;
-				/*
-				var difficulty:String = CoolUtil.getDifficultyFilePath();
-				if (difficulty != 'Normal')
-				{
-				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase() + difficulty, SONG.song.toLowerCase());
-				} else
-				{
-				PlayState.SONG = Song.loadFromJson(SONG.song.toLowerCase(), SONG.song.toLowerCase());
-				}
-				*/ //no need to change the song if you're already playing it!
-				
-				if (ClientPrefs.trollMaxSpeed == 'Disabled')
-				{
 				if (playbackRate >= 65536) playbackRate += 3276.8;
 				if (playbackRate >= 32768 && playbackRate <= 65536) playbackRate += 1638.4;
 				if (playbackRate >= 16384 && playbackRate <= 32768) playbackRate += 819.2;
@@ -5900,9 +5972,27 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
-				} else if (ClientPrefs.trollMaxSpeed == 'Highest') {
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateTrollSongShit(SONG.song);
+				vocals.play();
+				FlxG.sound.music.play();
+	}
+	public function loopSongHighest(?ignoreNoteOffset:Bool = false):Void
+	{	
+				FlxG.sound.music.stop();
+				vocals.stop();
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
 				if (playbackRate >= 10000) playbackRate = 10000;
-				if (playbackRate >= 8192 && playbackRate <= 10000) playbackRate += 409.6;
+				if (playbackRate >= 8192 && playbackRate <= 9999.99) playbackRate += 409.6;
 				if (playbackRate >= 4096 && playbackRate <= 8192) playbackRate += 204.8;
 				if (playbackRate >= 2048 && playbackRate <= 4096) playbackRate += 102.4;
 				if (playbackRate >= 1024 && playbackRate <= 2048) playbackRate += 51.2;
@@ -5916,9 +6006,27 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
-				} else if (ClientPrefs.trollMaxSpeed == 'High') {
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateTrollSongShit(SONG.song);
+				vocals.play();
+				FlxG.sound.music.play();
+	}
+	public function loopSongHigh(?ignoreNoteOffset:Bool = false):Void
+	{	
+				FlxG.sound.music.stop();
+				vocals.stop();
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
 				if (playbackRate >= 5120) playbackRate = 5120;
-				if (playbackRate >= 4096 && playbackRate <= 5120) playbackRate += 204.8;
+				if (playbackRate >= 4096 && playbackRate <= 5119.99) playbackRate += 204.8;
 				if (playbackRate >= 2048 && playbackRate <= 4096) playbackRate += 102.4;
 				if (playbackRate >= 1024 && playbackRate <= 2048) playbackRate += 51.2;
 				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
@@ -5931,9 +6039,27 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
-				} else if (ClientPrefs.trollMaxSpeed == 'Medium') {
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateTrollSongShit(SONG.song);
+				vocals.play();
+				FlxG.sound.music.play();
+	}
+	public function loopSongMedium(?ignoreNoteOffset:Bool = false):Void
+	{	
+				FlxG.sound.music.stop();
+				vocals.stop();
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
 				if (playbackRate >= 2048) playbackRate = 2048;
-				if (playbackRate >= 1024 && playbackRate <= 2048) playbackRate += 51.2;
+				if (playbackRate >= 1024 && playbackRate <= 2047.99) playbackRate += 51.2;
 				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
 				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
 				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
@@ -5944,7 +6070,25 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
-				} else if (ClientPrefs.trollMaxSpeed == 'Low') {
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateTrollSongShit(SONG.song);
+				vocals.play();
+				FlxG.sound.music.play();
+	}
+	public function loopSongLow(?ignoreNoteOffset:Bool = false):Void
+	{	
+				FlxG.sound.music.stop();
+				vocals.stop();
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
 				if (playbackRate >= 1024) playbackRate = 1024;
 				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
 				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
@@ -5956,14 +6100,11 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
-				}
 				Conductor.songPosition = 0;
 				KillNotes();
 				generateTrollSongShit(SONG.song);
-
 				vocals.play();
 				FlxG.sound.music.play();
-				callOnLuas('onLoopSong', []);
 	}
 
 	public function infiniteLoop(?ignoreNoteOffset:Bool = false):Void
