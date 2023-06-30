@@ -1,6 +1,7 @@
-1.1.0;
-- Sick Only Mode: If it's not a Sick/Marvelous, DIE!!
-- Memory Leaks: Stops cache clearing during gameplay.
-- Camera Note Panning IS HERE
-- Rating Name Display?!
-- OG HP Colors?!!?!
+1.2.0;
+- KADE ENGINE Complex Accuracy!!
+- 2 New HUD Types
+- Simplified Rating Counter
+- Optimized Chart Editor
+- Opponent Hit count Option!
+- Fixed RPC
