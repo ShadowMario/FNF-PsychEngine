@@ -28,11 +28,7 @@ import flixel.sound.FlxSound;
 import flixel.system.FlxSound;
 #end
 import flixel.FlxG;
-#if (flixel >= "5.0.0")
 import flixel.FlxSprite;
-#else
-import flixel.old.FlxSprite;
-#end
 import flixel.FlxCamera;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
