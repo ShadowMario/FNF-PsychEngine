@@ -2,7 +2,7 @@ package options;
 
 class Option
 {
-	private var child:Alphabet;
+	public var child:Alphabet;
 	public var text(get, set):String;
 	public var onChange:Void->Void = null; //Pressed enter (on Bool type options) or pressed/held left/right (on other types)
 
@@ -10,9 +10,7 @@ class Option
 	// Bool will use checkboxes
 	// Everything else will use a text
 
-	public var showBoyfriend:Bool = false;
 	public var scrollSpeed:Float = 50; //Only works on int/float, defines how fast it scrolls per second while holding left/right
-
 	private var variable:String = null; //Variable from ClientPrefs.hx
 	public var defaultValue:Dynamic = null;
 
@@ -27,13 +25,13 @@ class Option
 	public var description:String = '';
 	public var name:String = 'Unknown';
 
-	public function new(name:String, description:String = '', variable:String, type:String = 'bool', defaultValue:Dynamic = 'null variable value', ?options:Array<String> = null)
+	public function new(name:String, description:String = '', variable:String, type:String = 'bool', ?options:Array<String> = null)
 	{
 		this.name = name;
 		this.description = description;
 		this.variable = variable;
 		this.type = type;
-		this.defaultValue = defaultValue;
+		this.defaultValue = Reflect.getProperty(ClientPrefs.defaultData, variable);
 		this.options = options;
 
 		if(defaultValue == 'null variable value')
@@ -91,11 +89,6 @@ class Option
 	public function setValue(value:Dynamic)
 	{
 		Reflect.setProperty(ClientPrefs.data, variable, value);
-	}
-
-	public function setChild(child:Alphabet)
-	{
-		this.child = child;
 	}
 
 	private function get_text()

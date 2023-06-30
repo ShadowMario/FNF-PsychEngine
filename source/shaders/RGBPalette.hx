@@ -61,12 +61,12 @@ class RGBShaderReference
 	public var enabled(default, set):Bool;
 
 	public var parent:RGBPalette;
-	private var _note:Note;
+	private var _owner:FlxSprite;
 	private var _original:RGBPalette;
-	public function new(owner:Note, ref:RGBPalette)
+	public function new(owner:FlxSprite, ref:RGBPalette)
 	{
 		parent = ref;
-		_note = owner;
+		_owner = owner;
 		_original = ref;
 		owner.shader = ref.shader;
 
@@ -120,7 +120,7 @@ class RGBShaderReference
 			parent.b = _original.b;
 			parent.mult = _original.mult;
 			parent.enabled = _original.enabled;
-			_note.shader = parent.shader;
+			_owner.shader = parent.shader;
 			trace('created new shader');
 		}
 	}
