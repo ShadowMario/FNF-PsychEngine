@@ -30,6 +30,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
 	public static var antiCheatEnable:Bool = false;
+	public static var ratingIntensity:String = 'Normal';
+	public static var complexAccuracy:Bool = false;
 	public static var autoPause:Bool = true;
 	public static var randomBotplayText:Bool = true;
 	public static var opponentLightStrum:Bool = true;
@@ -213,6 +215,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.ratesAndCombo = ratesAndCombo;
 		FlxG.save.data.showMS = showMS;
 		FlxG.save.data.comboPopup = comboPopup;
+		FlxG.save.data.complexAccuracy = complexAccuracy;
+		FlxG.save.data.ratingIntensity = ratingIntensity;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.longHPBar = longHPBar;
@@ -301,6 +305,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.panIntensity != null) {
 			panIntensity = FlxG.save.data.panIntensity;
+		}
+		if(FlxG.save.data.ratingIntensity != null) {
+			ratingIntensity = FlxG.save.data.ratingIntensity;
+		}
+		if(FlxG.save.data.complexAccuracy != null) {
+			complexAccuracy = FlxG.save.data.complexAccuracy;
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;

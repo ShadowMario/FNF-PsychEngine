@@ -70,6 +70,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Complex Accuracy',
+			"If checked, the accuracy will be MS-based instead of rating-based.",
+			'complexAccuracy',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('HP Gain Type:',
 			"Which engine's health gain do you want?",
 			'healthGainType',
@@ -160,6 +167,14 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'shitGivesMiss',
 			'bool',
 			false);
+		addOption(option);
+
+		var option:Option = new Option('SGM Intensity:',
+			"How intense would you want the threshold for missing from a rating to be?",
+			'ratingIntensity',
+			'string',
+			'Normal',
+			['Normal', 'Harsh', 'Very Harsh']);
 		addOption(option);
 
 		var option:Option = new Option('Enable Taunt Key',

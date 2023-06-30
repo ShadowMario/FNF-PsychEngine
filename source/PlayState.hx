@@ -218,6 +218,7 @@ class PlayState extends MusicBeatState
 
 	public var totalNotesPlayed:Int = 0;
 	public var combo:Int = 0;
+	public var maxCombo:Int = 0;
 	public var missCombo:Int = 0;
 
 	private var healthBarBG:AttachedSprite;
@@ -1594,7 +1595,7 @@ class PlayState extends MusicBeatState
 		healthShitText.scrollFactor.set();
 		healthShitText.alpha = 1;
 		healthShitText.borderSize = 2;
-		healthShitText.visible = ClientPrefs.healthDisplay;
+		healthShitText.visible = ClientPrefs.healthDisplay && !ClientPrefs.hideHud;
 		healthShitText.cameras = [camHUD];
 		if(ClientPrefs.downScroll || ClientPrefs.hudType == 'Box Funkin') healthShitText.y = timeBarBG.y - 160;
 		add(healthShitText);
@@ -2005,18 +2006,18 @@ class PlayState extends MusicBeatState
 		judgementCounter.visible = ClientPrefs.ratingCounter;
 		if (!ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
 		}
 		if (ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
 		}
 		judgementCounter.text += '\nNPS: ' + nps + ' (Max NPS: ' + maxNPS + ')';
-		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Notes Hit: ' + enemyHits + ' / ' + opponentNoteTotal + '\nOpponent NPS: ' + oppNPS + ' (Max Opponent NPS: ' + maxOppNPS + ')\nPercent of Opponent Notes Hit: ' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%';
+		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Hits: ' + enemyHits + ' / ' + opponentNoteTotal + ' (' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%)\nOpponent NPS: ' + oppNPS + ' (Max: ' + maxOppNPS + ')';
 		add(judgementCounter);
 
 		pauseWarnText = new FlxText(400,  FlxG.height / 2 - 20, 0, "Pausing is disabled! Turn it back on in Settings -> Gameplay -> 'Force Disable Pausing'", 16);
@@ -3528,6 +3529,7 @@ class PlayState extends MusicBeatState
 		+ ' | Botplay Mode';
 		}
 		}
+		if (ClientPrefs.healthDisplay) scoreTxt.text += ' | Health: ' + FlxMath.roundDecimal(health * 50, 2) + '%';
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -4444,8 +4446,6 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
-
-		healthShitText.text = 'HP Remaining: ' + FlxMath.roundDecimal(health * 50, 2) + '%';
 				healthBar.setRange(0, maxHealth);
 
 		callOnLuas('onUpdate', [elapsed]);
@@ -4647,6 +4647,9 @@ class PlayState extends MusicBeatState
 			if (oppNPS > maxOppNPS)
 				maxOppNPS = oppNPS;
 		}
+
+		if (combo > maxCombo)
+			maxCombo = combo;
 
 		super.update(elapsed);
 
@@ -5790,6 +5793,10 @@ class PlayState extends MusicBeatState
 								botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 								scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 							}
+							if (ClientPrefs.hudType == 'JS Engine') {
+								botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+								scoreTxt.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+							}
 						}
 						setOnLuas('dadName', dad.curCharacter);
 
@@ -6482,8 +6489,8 @@ class PlayState extends MusicBeatState
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
 
-		totalNotesHit += daRating.ratingMod;
-		note.ratingMod = daRating.ratingMod;
+		totalNotesHit += (ClientPrefs.complexAccuracy ? -(noteDiff/180 - 1) : daRating.ratingMod);
+		if (!ClientPrefs.complexAccuracy) note.ratingMod = daRating.ratingMod;
 		if(!note.ratingDisabled) daRating.increase();
 		note.rating = daRating.name;
 		score = daRating.score;
@@ -6495,7 +6502,15 @@ class PlayState extends MusicBeatState
 				allSicks = false;
 
 		}
-		if (noteDiff > ClientPrefs.badWindow && ClientPrefs.shitGivesMiss)
+		if (noteDiff > ClientPrefs.badWindow && ClientPrefs.shitGivesMiss && ClientPrefs.ratingIntensity == 'Normal')
+		{	
+			noteMiss(note);
+		}
+		if (noteDiff > ClientPrefs.goodWindow && ClientPrefs.shitGivesMiss && ClientPrefs.ratingIntensity == 'Harsh')
+		{	
+			noteMiss(note);
+		}
+		if (noteDiff > ClientPrefs.sickWindow && ClientPrefs.shitGivesMiss && ClientPrefs.ratingIntensity == 'Very Harsh')
 		{	
 			noteMiss(note);
 		}
@@ -8385,18 +8400,18 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	public function updateRatingCounter() {
 		if (!ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
 		}
 		if (ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit: ' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + '\nPercent of Notes Hit' + FlxMath.roundDecimal((totalNotesPlayed / totalNotes) * 100, 2) + '%\nTotal Notes Hit: ' + totalNotesPlayed + ' / ' + totalNotes + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo: ' + combo + ' (Max: ' + maxCombo + ')\nHits/Total: ' + totalNotesPlayed + ' / ' + totalNotes + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
 		}
 		judgementCounter.text += '\nNPS: ' + nps + ' (Max NPS: ' + maxNPS + ')';
-		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Notes Hit: ' + enemyHits + ' / ' + opponentNoteTotal + '\nOpponent NPS: ' + oppNPS + ' (Max Opponent NPS: ' + maxOppNPS + ')\nPercent of Opponent Notes Hit: ' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%';
+		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Hits: ' + enemyHits + ' / ' + opponentNoteTotal + ' (' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%)\nOpponent NPS: ' + oppNPS + ' (Max: ' + maxOppNPS + ')';
 	}
 
 
