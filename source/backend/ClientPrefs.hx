@@ -3,7 +3,6 @@ package backend;
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
 import flixel.input.gamepad.FlxGamepadInputID;
-import Controls;
 
 import states.TitleState;
 
@@ -15,7 +14,8 @@ class SaveVariables {
 	public var showFPS:Bool = true;
 	public var flashing:Bool = true;
 	public var antialiasing:Bool = true;
-	public var noteSplashes:Bool = true;
+	public var noteSkin:String = 'Default';
+	public var splashSkin:String = 'Psych';
 	public var lowQuality:Bool = false;
 	public var shaders:Bool = true;
 	public var framerate:Int = 60;
@@ -83,6 +83,7 @@ class SaveVariables {
 
 class ClientPrefs {
 	public static var data:SaveVariables = null;
+	public static var defaultData:SaveVariables = null;
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
@@ -180,11 +181,11 @@ class ClientPrefs {
 
 	public static function loadPrefs() {
 		if(data == null) data = new SaveVariables();
+		if(defaultData == null) defaultData = new SaveVariables();
 
 		for (key in Reflect.fields(data)) {
 			if (key != 'gameplaySettings' && Reflect.hasField(FlxG.save.data, key)) {
 				//trace('loaded variable: $key');
-				if(key == 'arrowRGB' || key == 'arrowRGBPixel') continue;
 				Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));
 			}
 		}

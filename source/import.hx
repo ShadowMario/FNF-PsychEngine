@@ -5,9 +5,11 @@ import backend.Discord;
 #end
 
 //Psych
-#if !macro import Paths; #end
 #if MODS_ALLOWED import backend.Mods; #end
 
+import backend.Paths;
+import backend.Controls;
+import backend.CoolUtil;
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.CustomFadeTransition;

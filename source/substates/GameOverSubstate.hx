@@ -100,9 +100,6 @@ class GameOverSubstate extends MusicBeatSubstate
 		
 		if (boyfriend.animation.curAnim != null)
 		{
-			if (boyfriend.animation.curAnim.name.endsWith('miss') && boyfriend.animation.curAnim.finished)
-				boyfriend.playAnim('idle', true, false, 10);
-
 			if (boyfriend.animation.curAnim.name == 'firstDeath' && boyfriend.animation.curAnim.finished && startedDeath)
 				boyfriend.playAnim('deathLoop');
 
