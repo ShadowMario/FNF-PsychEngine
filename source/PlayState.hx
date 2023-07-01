@@ -153,7 +153,7 @@ class PlayState extends MusicBeatState
 	public static var storyDifficulty:Int = 1;
 	public var tries:Int = 0;
 
-	public var spawnTime:Float = 1750; //just enough for the notes to barely inch off the screen
+	public var spawnTime:Float = 1800; //just enough for the notes to barely inch off the screen
 
 	public var vocals:FlxSound;
 
@@ -400,9 +400,6 @@ class PlayState extends MusicBeatState
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
 	private var controlArray:Array<String>;
-
-	private var ss:Bool = false;
-	public var accuracy:Float = 0.00;
 
 	var precacheList:Map<String, String> = new Map<String, String>();
 	
@@ -2519,15 +2516,10 @@ class PlayState extends MusicBeatState
 	}
 
 	public function reloadHealthBarColors() {
-		if (ClientPrefs.ogHP) {
-		if (opponentChart) healthBar.createFilledBar(0xFF66FF33, 0xFFFF0000);
-		else healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
-		} else {
 		if (!opponentChart) healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
 		else healthBar.createFilledBar(FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]),
 			FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
-		}
 
 		healthBar.updateBar();
 	}
@@ -2803,6 +2795,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
+
 
 	function tankIntro()
 	{
@@ -6489,8 +6482,8 @@ class PlayState extends MusicBeatState
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
 
-		totalNotesHit += (ClientPrefs.complexAccuracy ? -(noteDiff/180 - 1) : daRating.ratingMod);
-		if (!ClientPrefs.complexAccuracy) note.ratingMod = daRating.ratingMod;
+		totalNotesHit += daRating.ratingMod;
+		note.ratingMod = daRating.ratingMod;
 		if(!note.ratingDisabled) daRating.increase();
 		note.rating = daRating.name;
 		score = daRating.score;
@@ -7053,7 +7046,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				if (opponentChart && ClientPrefs.ghostTapAnim)
 				{
 					dad.playAnim(singAnimations[Std.int(Math.abs(key))], true);
-					if (ClientPrefs.cameraPanning) camPanRoutine(singAnimations[Std.int(Math.abs(key))], 'oppt'); //thanks denpa engine
+					if (ClientPrefs.cameraPanning) camPanRoutine(singAnimations[Std.int(Math.abs(key))], 'dad');
 					dad.holdTimer = 0;
 				}
 					if (canMiss) {

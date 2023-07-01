@@ -610,18 +610,11 @@ class TitleState extends MusicBeatState
 		}
 	}
 
-	var zoomies:Float = 1.025;
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
 	public static var closedState:Bool = false;
 	override function beatHit()
 	{
 		super.beatHit();
-
-		FlxG.camera.zoom = zoomies;
-
-		FlxTween.tween(FlxG.camera, {zoom: 1}, Conductor.crochet / 1300, {
-			ease: FlxEase.quadOut
-		});
 
 		if(logoBl != null)
 			logoBl.animation.play('bump', true);

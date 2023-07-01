@@ -70,13 +70,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		var option:Option = new Option('Complex Accuracy',
-			"If checked, the accuracy will be MS-based instead of rating-based.",
-			'complexAccuracy',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('HP Gain Type:',
 			"Which engine's health gain do you want?",
 			'healthGainType',

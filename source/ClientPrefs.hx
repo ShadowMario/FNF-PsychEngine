@@ -31,7 +31,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var songPercentage:Bool = true;
 	public static var antiCheatEnable:Bool = false;
 	public static var ratingIntensity:String = 'Normal';
-	public static var complexAccuracy:Bool = false;
 	public static var autoPause:Bool = true;
 	public static var randomBotplayText:Bool = true;
 	public static var opponentLightStrum:Bool = true;
@@ -45,7 +44,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
-	public static var ogHP:Bool = false;
 	public static var communityGameMode:Bool = false;
 	public static var wrongCameras:Bool = false;
 	public static var shitGivesMiss:Bool = false;
@@ -182,7 +180,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.rateNameStuff = rateNameStuff;
-		FlxG.save.data.ogHP = ogHP;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.accuracyMod = accuracyMod;
 		FlxG.save.data.healthDisplay = healthDisplay;
@@ -215,7 +212,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.ratesAndCombo = ratesAndCombo;
 		FlxG.save.data.showMS = showMS;
 		FlxG.save.data.comboPopup = comboPopup;
-		FlxG.save.data.complexAccuracy = complexAccuracy;
 		FlxG.save.data.ratingIntensity = ratingIntensity;
 		FlxG.save.data.hideHud = hideHud;
 		FlxG.save.data.arrowHSV = arrowHSV;
@@ -294,9 +290,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
 		}
-		if(FlxG.save.data.ogHP != null) {
-			ogHP = FlxG.save.data.ogHP;
-		}
 		if(FlxG.save.data.rateNameStuff != null) {
 			rateNameStuff = FlxG.save.data.rateNameStuff;
 		}
@@ -308,9 +301,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.ratingIntensity != null) {
 			ratingIntensity = FlxG.save.data.ratingIntensity;
-		}
-		if(FlxG.save.data.complexAccuracy != null) {
-			complexAccuracy = FlxG.save.data.complexAccuracy;
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
