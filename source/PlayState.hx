@@ -1314,7 +1314,7 @@ class PlayState extends MusicBeatState
 		}
 
 
-		if(ClientPrefs.timeBarType == 'Song Name')
+		if(ClientPrefs.timeBarType == 'Song Name' && !ClientPrefs.timebarShowSpeed)
 		{
 			timeTxt.text = SONG.song;
 		}
@@ -4443,6 +4443,8 @@ class PlayState extends MusicBeatState
 
 		callOnLuas('onUpdate', [elapsed]);
 
+		playbackRateDecimal = FlxMath.roundDecimal(playbackRate, 2);
+
 		if (goods > 0 || bads > 0 || shits > 0 || songMisses > 0 && sickOnly)
 		{
 			// if it isn't a sick, and sick only mode is on YOU DIE
@@ -5112,16 +5114,15 @@ class PlayState extends MusicBeatState
 
 					if(ClientPrefs.timeBarType == 'Song Name + Time' && songLength >= 3600000)
 						timeTxt.text = SONG.song + ' (' + hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining + ' / ' + hoursShown + ':' + minutesShownShit + ':' + secondsShown + ')';
-					
-					if(ClientPrefs.timebarShowSpeed)
-						timeTxt.text += ' (' + playbackRateDecimal + 'x)';
-					
+
 					if (ClientPrefs.hudType != 'Kade Engine' && ClientPrefs.hudType != 'Dave & Bambi')
 					{
 					timePercentTxt.text = songPercentThing  + '% Completed';
 					}
 					else
 					timePercentTxt.text = songPercentThing  + '%';
+					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType != 'Song Name') timeTxt.text += ' (' + playbackRateDecimal + 'x)';
+					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType == 'Song Name') timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x)';
 				}
 			}
 
