@@ -112,13 +112,13 @@ class NotesSubState extends MusicBeatSubstate
 		colorWheelSelector.alpha = 0.6;
 		add(colorWheelSelector);
 
-		alphabetR = makeColorAlphabet(900, 90);
+		alphabetR = makeColorAlphabet(900, 60);
 		add(alphabetR);
-		alphabetG = makeColorAlphabet(1000, 90);
+		alphabetG = makeColorAlphabet(1000, 60);
 		add(alphabetG);
-		alphabetB = makeColorAlphabet(1100, 90);
+		alphabetB = makeColorAlphabet(1100, 60);
 		add(alphabetB);
-		alphabetHex = makeColorAlphabet(1000, 35);
+		alphabetHex = makeColorAlphabet(1000, 5);
 		add(alphabetHex);
 
 		spawnNotes();
