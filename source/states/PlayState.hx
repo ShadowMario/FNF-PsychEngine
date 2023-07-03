@@ -48,9 +48,7 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED 
-#if (hxCodec >= "3.0.0")
-import hxcodec.flixel.FlxVideo as VideoHandler;
-import lime.app.Event;
+#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as VideoHandler;
 #elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
 #elseif (hxCodec == "2.6.0") import VideoHandler as VideoHandler;
 #else import vlc.VideoHandler; #end
@@ -834,6 +832,7 @@ class PlayState extends MusicBeatState
 			video.play(filepath);
 			video.onEndReached.add(function()
 			{
+				video.dispose();
 				startAndEnd();
 				return;
 			}, true);
