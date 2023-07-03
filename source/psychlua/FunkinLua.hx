@@ -83,7 +83,7 @@ class FunkinLua {
 				#if windows
 				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
 				#else
-				luaTrace('$script\n$resultStr', true, false, FlxColor.RED);
+				luaTrace('$scriptName\n$resultStr', true, false, FlxColor.RED);
 				#end
 				lua = null;
 				return;
