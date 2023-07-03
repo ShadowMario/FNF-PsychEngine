@@ -38,11 +38,11 @@ class NoteSplash extends FlxSprite
 	var maxAnims:Int = 2;
 	public function setupNoteSplash(x:Float, y:Float, direction:Int = 0, ?note:Note = null) {
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
-		alpha = 0.6;
 		aliveTime = 0;
 
 		var texture:String = null;
-		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+		if(note != null && note.noteSplashData.texture != null) texture = note.noteSplashData.texture;
+		else if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		else texture = getSplashSkin();
 		
 		var config:NoteSplashConfig = precacheConfig(texture);
@@ -50,10 +50,19 @@ class NoteSplash extends FlxSprite
 			config = loadAnims(texture, config);
 
 		shader = null;
-		if(note != null && !note.noteSplashGlobalShader)
+		if(note != null && !note.noteSplashData.useGlobalShader)
+		{
 			rgbShader = note.rgbShader.parent;
+			if(note.noteSplashData.r != -1) rgbShader.r = note.noteSplashData.r;
+			if(note.noteSplashData.g != -1) rgbShader.g = note.noteSplashData.g;
+			if(note.noteSplashData.b != -1) rgbShader.b = note.noteSplashData.b;
+			alpha = note.noteSplashData.a;
+		}
 		else
+		{
 			rgbShader = Note.globalRgbShaders[direction];
+			alpha = 0.6;
+		}
 
 		if(rgbShader != null) shader = rgbShader.shader;
 
