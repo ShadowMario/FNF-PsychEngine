@@ -2225,6 +2225,9 @@ class FunkinLua {
 
 		Lua.close(lua);
 		lua = null;
+		#if hscript
+		hscript = null;
+		#end
 		#end
 	}
 

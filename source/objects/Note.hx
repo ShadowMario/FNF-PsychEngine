@@ -153,8 +153,9 @@ class Note extends FlxSprite
 					noteSplashData.r = 0xFFFF0000;
 					noteSplashData.g = 0xFF101010;
 					noteSplashData.texture = 'noteSplashes/noteSplashes-electric';
-					lowPriority = true;
 
+					// gameplay data
+					lowPriority = true;
 					missHealth = isSustainNote ? 0.25 : 0.1;
 					hitCausesMiss = true;
 				case 'Alt Animation':

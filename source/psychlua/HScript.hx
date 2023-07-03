@@ -114,11 +114,11 @@ class HScript
 	public function execute(codeToRun:String, ?funcToRun:String = null, ?funcArgs:Array<Dynamic>):Dynamic
 	{
 		@:privateAccess
-		HScript.parser.line = 1;
-		HScript.parser.allowTypes = true;
-		var expr:Expr = HScript.parser.parseString(codeToRun);
+		parser.line = 1;
+		parser.allowTypes = true;
+		var expr:Expr = parser.parseString(codeToRun);
 		try {
-			var value:Dynamic = interp.execute(HScript.parser.parseString(codeToRun));
+			var value:Dynamic = interp.execute(parser.parseString(codeToRun));
 			return (funcToRun != null) ? executeFunction(funcToRun, funcArgs) : value;
 		}
 		catch(e:Exception)
