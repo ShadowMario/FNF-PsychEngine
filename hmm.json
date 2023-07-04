@@ -13,12 +13,12 @@
     {
       "name": "flixel",
       "type": "haxelib",
-      "version": null
+      "version": "4.11.0"
     },
     {
       "name": "flixel-addons",
       "type": "haxelib",
-      "version": null
+      "version": "2.12.1"
     },
     {
       "name": "flixel-tools",
@@ -48,7 +48,7 @@
     {
       "name": "hxCodec",
       "type": "haxelib",
-      "version": "2.5.1"
+      "version": "2.6.1"
     },
     {
       "name": "hscript",
