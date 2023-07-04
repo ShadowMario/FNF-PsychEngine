@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
+import flixel.math.FlxRect;
 import flixel.util.FlxColor;
 import flash.display.BitmapData;
 import editors.ChartingState;
@@ -159,6 +160,14 @@ class Note extends FlxSprite
 		noteSplashSat = colorSwap.saturation;
 		noteSplashBrt = colorSwap.brightness;
 		return value;
+	}
+
+	override function set_clipRect(rect:FlxRect):FlxRect
+	{
+		clipRect = rect;
+		if(frames != null)
+			frame = frames.frames[animation.frameIndex];
+		return rect;
 	}
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false)
