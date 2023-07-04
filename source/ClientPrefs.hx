@@ -73,6 +73,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var hitsoundType:String = 'osu!mania';
 	public static var splashType:String = 'Psych Engine';
 	public static var iconBounceType:String = 'Golden Apple';
+	public static var ratingType:String = 'Base FNF';
 	public static var timeBarType:String = 'Time Left';
 	public static var marvRateColor:String = 'Golden';
 	public static var noMarvJudge:Bool = false;
@@ -80,11 +81,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var scoreZoom:Bool = true;
 	public static var goldSickSFC:Bool = true;
 	public static var colorRatingFC:Bool = false;
+	public static var colorRatingHit:Bool = true;
 	public static var missSoundShit:Bool = false;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var laneUnderlayAlpha:Float = 1;
-	public static var laneUnderlay:Bool = true;
+	public static var laneUnderlay:Bool = false;
 	public static var controllerMode:Bool = false;
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'Tea Time';
@@ -119,6 +121,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		'onekey' => false,
 		'jacks' => 0,
 		'randomspeed' => false,
+		'bothSides' => false,
 		'thetrollingever' => false
 	];
 
@@ -205,11 +208,13 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.hitsoundType = hitsoundType;
 		FlxG.save.data.hudType = hudType;
 		FlxG.save.data.ratingCounter = ratingCounter;
+		FlxG.save.data.colorRatingHit = colorRatingHit;
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
 		FlxG.save.data.noPausing = noPausing;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.ratesAndCombo = ratesAndCombo;
+		FlxG.save.data.ratingType = ratingType;
 		FlxG.save.data.showMS = showMS;
 		FlxG.save.data.comboPopup = comboPopup;
 		FlxG.save.data.ratingIntensity = ratingIntensity;
@@ -305,6 +310,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
 		}
+		if(FlxG.save.data.ratingType != null) {
+			ratingType = FlxG.save.data.ratingType;
+		}
 		if(FlxG.save.data.autoPause != null) {
 			autoPause = FlxG.save.data.autoPause;
 		}
@@ -337,6 +345,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.oppNoteSplashes != null) {
 			oppNoteSplashes = FlxG.save.data.oppNoteSplashes;
+		}
+		if(FlxG.save.data.colorRatingHit != null) {
+			colorRatingHit = FlxG.save.data.colorRatingHit;
 		}
 		if(FlxG.save.data.randomBotplayText != null) {
 			randomBotplayText = FlxG.save.data.randomBotplayText;

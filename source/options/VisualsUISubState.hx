@@ -115,11 +115,18 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Rating Accuracy Color',
+			'If checked, the ratings & combo will be colored based on the actual rating.',
+			'colorRatingHit',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Rating FC Colors',
 			'If checked, the ratings & combo will be colored based on your FC rating.',
 			'colorRatingFC',
 			'bool',
-			true);
+			false);
 		addOption(option);
 
 		var option:Option = new Option('Marvelous Rating Color:',
@@ -173,6 +180,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			'string',
 			'VS Impostor',
 			['VS Impostor', 'Kade Engine', 'Tails Gets Trolled V4', 'Dave & Bambi', 'Doki Doki+', 'Psych Engine', 'Leather Engine', 'Box Funkin', "Mic'd Up", 'JS Engine']);
+		addOption(option);
+
+		var option:Option = new Option('Rating Style:',
+			"Which style for the rating popups would you like?",
+			'ratingType',
+			'string',
+			'Base FNF',
+			['Base FNF', 'Kade Engine', 'Tails Gets Trolled V4', 'Doki Doki+']);
 		addOption(option);
 
 		var option:Option = new Option('Icon Bounce:',

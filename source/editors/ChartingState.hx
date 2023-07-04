@@ -37,6 +37,7 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.ui.FlxSpriteButton;
 import flixel.util.FlxColor;
+import flixel.util.FlxStringUtil;
 import flixel.util.FlxSort;
 import lime.media.AudioBuffer;
 import lime.utils.Assets;
@@ -2234,7 +2235,7 @@ class ChartingState extends MusicBeatState
 		vocals.pitch = playbackSpeed;
 
 		bpmTxt.text =
-		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
+		FlxStringUtil.formatTime(Conductor.songPosition / 1000, true) + ' / ' + FlxStringUtil.formatTime(FlxG.sound.music.length / 1000, true) +
 		"\nSection: " + curSec +
 		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) +
 		"\n\nStep: " + curStep +

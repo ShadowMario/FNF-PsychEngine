@@ -262,6 +262,7 @@ class PlayState extends MusicBeatState
 	public var practiceMode:Bool = false;
 	public var opponentDrain:Bool = false;
 	public static var opponentChart:Bool = false;
+	public static var bothsides:Bool = false;
 	var randomMode:Bool = false;
 	var flip:Bool = false;
 	var stairs:Bool = false;
@@ -516,6 +517,8 @@ class PlayState extends MusicBeatState
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
+		bothsides = ClientPrefs.getGameplaySetting('bothSides', false);
+		trollingMode = ClientPrefs.getGameplaySetting('thetrollingever', false);
 		opponentDrain = ClientPrefs.getGameplaySetting('opponentdrain', false);
 		randomMode = ClientPrefs.getGameplaySetting('randommode', false);
 		flip = ClientPrefs.getGameplaySetting('flip', false);
@@ -2313,6 +2316,7 @@ class PlayState extends MusicBeatState
 			hitsound7 = FlxG.sound.load(Paths.sound("hitsounds/" + 'keyboard click'));
 			hitsound8 = FlxG.sound.load(Paths.sound("hitsounds/" + 'vine boom'));
 			hitsound9 = FlxG.sound.load(Paths.sound("hitsounds/" + 'adofai'));
+			hitsound10 = FlxG.sound.load(Paths.sound("hitsounds/" + 'discord ping'));
 			}
 		if(ClientPrefs.hitsoundVolume > 0) precacheList.set('hitsound', 'sound');
 		if(ClientPrefs.hitsoundVolume > 0 && hitSoundString == 'Randomized') 
@@ -2344,6 +2348,8 @@ class PlayState extends MusicBeatState
 			hitsound8.pitch = playbackRate;
 			hitsound9.volume = ClientPrefs.hitsoundVolume;
 			hitsound9.pitch = playbackRate;
+			hitsound10.volume = ClientPrefs.hitsoundVolume;
+			hitsound10.pitch = playbackRate;
 			}
 		hitsound.volume = ClientPrefs.hitsoundVolume;
 		hitsound.pitch = playbackRate;
@@ -3773,13 +3779,17 @@ class PlayState extends MusicBeatState
 				}
 				var gottaHitNote:Bool = section.mustHitSection;
 
-				if (songNotes[1] > 3 && !opponentChart)
+				if (songNotes[1] > 3 && !opponentChart && !bothsides)
 				{
 					gottaHitNote = !section.mustHitSection;
 				}
-				else if (songNotes[1] <= 3 && opponentChart)
+				if (songNotes[1] <= 3 && opponentChart && !bothsides)
 				{
 					gottaHitNote = !section.mustHitSection;
+				}
+				else if (bothsides)
+				{
+					gottaHitNote = true;
 				}
 
 				if (!gottaHitNote && ClientPrefs.mobileMidScroll)
@@ -3957,29 +3967,6 @@ class PlayState extends MusicBeatState
 		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
 
 		var songName:String = Paths.formatToSongPath(SONG.song);
-		var file:String = Paths.json(songName + '/events');
-		#if MODS_ALLOWED
-		if (FileSystem.exists(Paths.modsJson(songName + '/events')) || FileSystem.exists(file)) {
-		#else
-		if (OpenFlAssets.exists(file)) {
-		#end
-			var eventsData:Array<Dynamic> = Song.loadFromJson('events', songName).events;
-			for (event in eventsData) //Event Notes
-			{
-				for (i in 0...event[1].length)
-				{
-					var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
-					var subEvent:EventNote = {
-						strumTime: newEventNote[0] + ClientPrefs.noteOffset,
-						event: newEventNote[1],
-						value1: newEventNote[2],
-						value2: newEventNote[3]
-					};
-					eventNotes.push(subEvent);
-					eventPushed(subEvent);
-				}
-			}
-		}
 
 		for (section in noteData)
 		{
@@ -3995,10 +3982,10 @@ class PlayState extends MusicBeatState
 				{
 				daNoteData = 2;
 				}
-				if (randomMode || randomMode && flip || randomMode && flip && stairs || randomMode && flip && stairs && waves) { //gotta specify that random mode must at least be turned on for this to work
+				if (randomMode) { //gotta specify that random mode must at least be turned on for this to work
 				daNoteData = FlxG.random.int(0, 3);
 				}
-				if (flip && !stairs && !waves) {
+				if (flip) {
 				daNoteData = Std.int(Math.abs((songNotes[1] % 4) - 3));
 				}
 				if (stairs && !waves) {
@@ -4028,14 +4015,13 @@ class PlayState extends MusicBeatState
 					gottaHitNote = !section.mustHitSection;
 				}
 
-				if (!gottaHitNote && ClientPrefs.mobileMidScroll)
-				{
-					songNotes[3] = 'Behind Note';
-				}
-
 				if (gottaHitNote)
 				{
 					totalNotes += 1;
+				}
+				if (!gottaHitNote)
+				{
+					opponentNoteTotal += 1;
 				}
 
 				var oldNote:Note;
@@ -4055,8 +4041,6 @@ class PlayState extends MusicBeatState
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
-				swagNote.noteType = songNotes[3];
-				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 
 				swagNote.scrollFactor.set();
 				unspawnNotes.push(swagNote);
@@ -4094,7 +4078,6 @@ class PlayState extends MusicBeatState
 				jackNote.mustPress = swagNote.mustPress;
 				jackNote.sustainLength = swagNote.sustainLength;
 				jackNote.gfNote = swagNote.gfNote;
-				jackNote.noteType = swagNote.noteType;
 				if (ClientPrefs.doubleGhost)
 					{
 					jackNote.row = Conductor.secsToRow(daStrumTime);
@@ -4116,24 +4099,6 @@ class PlayState extends MusicBeatState
 				}
 			}
 			daBeats += 1;
-		}
-		for (event in songData.events) //Event Notes
-		{
-			for (i in 0...event[1].length)
-			{
-				var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
-				var subEvent:EventNote = {
-					strumTime: newEventNote[0] + ClientPrefs.noteOffset,
-					event: newEventNote[1],
-					value1: newEventNote[2],
-					value2: newEventNote[3]
-				};
-				eventNotes.push(subEvent);
-				if(!trollingMode)
-				{
-				eventPushed(subEvent);
-				}
-			}
 		}
 
 		// trace(unspawnNotes.length);
@@ -6352,14 +6317,19 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
-		if (ClientPrefs.hudType == 'Doki Doki+')
+		if (ClientPrefs.ratingType == 'Doki Doki+')
 		{
 			pixelShitPart1 = 'dokistuff/';
 			pixelShitPart2 = '';
 		}
-		if (ClientPrefs.hudType == 'Tails Gets Trolled V4')
+		if (ClientPrefs.ratingType == 'Tails Gets Trolled V4')
 		{
 			pixelShitPart1 = 'tgtstuff/';
+			pixelShitPart2 = '';
+		}
+		if (ClientPrefs.ratingType == 'Kade Engine')
+		{
+			pixelShitPart1 = 'kadethings/';
 			pixelShitPart2 = '';
 		}
 		if (allSicks)
@@ -6675,19 +6645,19 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
-		if (ClientPrefs.hudType == 'Doki Doki+')
+		if (ClientPrefs.ratingType == 'Doki Doki+')
 		{
 			pixelShitPart1 = 'dokistuff/';
 			pixelShitPart2 = '';
 		}
-		if (ClientPrefs.hudType == 'Tails Gets Trolled V4')
+		if (ClientPrefs.ratingType == 'Tails Gets Trolled V4')
 		{
 			pixelShitPart1 = 'tgtstuff/';
 			pixelShitPart2 = '';
 		}
-		if (allSicks && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.goldSickSFC)
+		if (ClientPrefs.ratingType == 'Kade Engine')
 		{
-			pixelShitPart1 = 'goldstuff/';
+			pixelShitPart1 = 'kadethings/';
 			pixelShitPart2 = '';
 		}
 		if (!allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
@@ -6732,9 +6702,25 @@ if (!allSicks && ClientPrefs.colorRatingFC && shits > 0 && noteDiff > ClientPref
 		{
 		rating.color = judgeColours.get('shit');
 		}
-if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0) 
+if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.noMarvJudge) 
 		{
-		rating.color = FlxColor.WHITE;
+		rating.color = judgeColours.get('marv');
+		}
+if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.marvWindow && noteDiff < ClientPrefs.sickWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.marvRateColor != 'Golden' && !ClientPrefs.noMarvJudge) 
+		{
+		rating.color = judgeColours.get('sick');
+		}
+if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.sickWindow && noteDiff < ClientPrefs.goodWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		rating.color = judgeColours.get('good');
+		}
+if (!allSicks && ClientPrefs.colorRatingHit && bads > 0 && noteDiff > ClientPrefs.goodWindow && noteDiff < ClientPrefs.badWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		rating.color = judgeColours.get('bad');
+		}
+if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.badWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
+		{
+		rating.color = judgeColours.get('shit');
 		}
 		insert(members.indexOf(strumLineNotes), rating);
 
@@ -6870,30 +6856,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0)
 
 			numScore.x += ClientPrefs.comboOffset[2];
 			numScore.y -= ClientPrefs.comboOffset[3];
-if (!allSicks && !ClientPrefs.goldSickSFC && ClientPrefs.colorRatingFC && marvs > 0 && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge && ClientPrefs.marvRateColor != 'Golden') 
-		{
-		numScore.color = judgeColours.get('marv');
-		}
-if (!allSicks && !ClientPrefs.goldSickSFC && ClientPrefs.colorRatingFC && sicks > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff > ClientPrefs.marvWindow || !allSicks && !ClientPrefs.goldSickSFC && ClientPrefs.colorRatingFC && sicks > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff < ClientPrefs.sickWindow && noteDiff > ClientPrefs.sickWindow) 
-		{
-		numScore.color = judgeColours.get('sick');
-		}
-if (!allSicks && ClientPrefs.colorRatingFC && goods > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff > ClientPrefs.marvWindow || !allSicks && !ClientPrefs.goldSickSFC && ClientPrefs.colorRatingFC && sicks > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff < ClientPrefs.sickWindow && noteDiff > ClientPrefs.sickWindow) 
-		{
-		numScore.color = judgeColours.get('good');
-		}
-if (!allSicks && ClientPrefs.colorRatingFC && bads > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff > ClientPrefs.marvWindow || !allSicks && !ClientPrefs.goldSickSFC && ClientPrefs.colorRatingFC && sicks > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff < ClientPrefs.sickWindow && noteDiff > ClientPrefs.sickWindow) 
-		{
-		numScore.color = judgeColours.get('bad');
-		}
-if (!allSicks && ClientPrefs.colorRatingFC && shits > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff > ClientPrefs.marvWindow || !allSicks && !ClientPrefs.goldSickSFC && ClientPrefs.colorRatingFC && sicks > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff < ClientPrefs.sickWindow && noteDiff > ClientPrefs.sickWindow) 
-		{
-		numScore.color = judgeColours.get('shit');
-		}
-if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff > ClientPrefs.marvWindow || !allSicks && !ClientPrefs.goldSickSFC && ClientPrefs.colorRatingFC && sicks > 0 && ClientPrefs.hudType != 'Doki Doki+' && noteDiff < ClientPrefs.sickWindow && noteDiff > ClientPrefs.sickWindow) 
-		{
-		numScore.color = FlxColor.WHITE;
-		}
+if (ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && noteDiff >= ClientPrefs.marvWindow) numScore.color = rating.color;
 if (!allSicks && ClientPrefs.colorRatingFC && marvs > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
 		{
 		numScore.color = tgtJudgeColours.get('marv');
@@ -7493,6 +7456,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	var hitsound7:FlxSound;
 	var hitsound8:FlxSound;
 	var hitsound9:FlxSound;
+	var hitsound10:FlxSound;
 
 	function goodNoteHit(note:Note):Void
 	{
@@ -7522,6 +7486,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				hitsound7.pitch = playbackRate;
 				hitsound8.pitch = playbackRate;
 				hitsound9.pitch = playbackRate;
+				hitsound10.pitch = playbackRate;
 				}
 				if (hitSoundString == 'vine boom')
 				{
@@ -7542,7 +7507,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					});
 				}
 				if (ClientPrefs.hitsoundType == 'Randomized') {
-					var randomHitSoundType:Int = FlxG.random.int(1, 9);
+					var randomHitSoundType:Int = FlxG.random.int(1, 10);
 						switch (randomHitSoundType)
 							{
 								case 1:
@@ -7589,6 +7554,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 								case 9:
 									hitsound9.play(true);
 									hitsound9.pitch = playbackRate;
+								case 10:
+									hitsound10.play(true);
+									hitsound10.pitch = playbackRate;
 							}
 				}
 			}
