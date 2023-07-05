@@ -213,12 +213,16 @@ class NoteSplash extends FlxSprite
 			_matrix.ty = Math.floor(_matrix.ty);
 		}
 
-		var time:Float = Conductor.songPosition;
+		var time:Float = MusicBeatState.timePassedOnState;
 		//trace(time);
 		if(_lastCalled != time) curPixelShader = 0;
 		_lastCalled = time;
 
-		if(curPixelShader >= pixelShaders.length) pixelShaders.push(new PixelSplashShaderRef());
+		if(curPixelShader >= pixelShaders.length)
+		{
+			pixelShaders.push(new PixelSplashShaderRef());
+			trace('test: $curPixelShader');
+		}
 		var pixelSplashShader:PixelSplashShaderRef = pixelShaders[curPixelShader];
 		curPixelShader++;
 

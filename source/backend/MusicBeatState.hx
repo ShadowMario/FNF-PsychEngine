@@ -34,12 +34,15 @@ class MusicBeatState extends FlxUIState
 			openSubState(new CustomFadeTransition(0.7, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
+		timePassedOnState = 0;
 	}
 
+	public static var timePassedOnState:Float = 0;
 	override function update(elapsed:Float)
 	{
 		//everyStep();
 		var oldStep:Int = curStep;
+		timePassedOnState += elapsed;
 
 		updateCurStep();
 		updateBeat();
