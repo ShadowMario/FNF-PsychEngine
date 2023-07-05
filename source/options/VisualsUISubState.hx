@@ -27,12 +27,15 @@ class VisualsUISubState extends BaseOptionsMenu
 		}
 		notes.visible = false;
 
+		var noteSkinsList:Array<String> = getNoteSkins();
+		var splashSkinsList:Array<String> = getSplashSkins();
+
 		// options
 		var option:Option = new Option('Note Skins:',
 			"Select your prefered Note skin.",
 			'noteSkin',
 			'string',
-			['Default', 'Future', 'Chip']);
+			noteSkinsList);
 		addOption(option);
 		option.onChange = onChangeNoteSkin;
 		noteOptionID = optionsArray.length - 1;
@@ -41,7 +44,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			"Select your prefered Note Splash variation or turn it off.",
 			'splashSkin',
 			'string',
-			['Psych', 'Diamond', 'Electric', 'Sparkles', 'Vanilla', '(DISABLED)']);
+			splashSkinsList);
 		addOption(option);
 
 		var option:Option = new Option('Hide HUD',
@@ -134,6 +137,20 @@ class VisualsUISubState extends BaseOptionsMenu
 		super.changeSelection(change);
 		
 		notes.visible = (curSelected == noteOptionID);
+	}
+
+	function getNoteSkins()
+	{
+		var path:String = Paths.getPath('images/noteSkins/list.txt', TEXT);
+		var skinsList:Array<String> = CoolUtil.coolTextFile(path);
+		return skinsList;
+	}
+
+	function getSplashSkins()
+	{
+		var path:String = Paths.getPath('images/noteSplashes/list.txt', TEXT);
+		var skinsList:Array<String> = CoolUtil.coolTextFile(path);
+		return skinsList;
 	}
 
 	var changedMusic:Bool = false;
