@@ -171,12 +171,21 @@ class NoteSplash extends FlxSprite
 	// Pixel Splashes //
 	////////////////////
 
-	private static var pixelSplashShader(default, never):PixelSplashShaderRef = new PixelSplashShaderRef();
+	private static var pixelShaders(default, null):Array<PixelSplashShaderRef> = [];
+	private static var curPixelShader(default, null):Int = 0;
+	private static var _lastCalled:Float = 0;
+	public static var disablePixelShader:Bool = false;
+
+	public static function clearShaders()
+	{
+		pixelShaders = [];
+		curPixelShader = 0;
+	}
 
 	@:noCompletion
 	override function drawComplex(camera:FlxCamera):Void
 	{
-		if(!PlayState.isPixelStage)
+		if(!PlayState.isPixelStage || disablePixelShader)
 		{
 			super.drawComplex(camera);
 			return;
@@ -204,6 +213,15 @@ class NoteSplash extends FlxSprite
 			_matrix.ty = Math.floor(_matrix.ty);
 		}
 
+		var time:Float = Conductor.songPosition;
+		//trace(time);
+		if(_lastCalled != time) curPixelShader = 0;
+		_lastCalled = time;
+
+		if(curPixelShader >= pixelShaders.length) pixelShaders.push(new PixelSplashShaderRef());
+		var pixelSplashShader:PixelSplashShaderRef = pixelShaders[curPixelShader];
+		curPixelShader++;
+
 		if(rgbShader != null)
 		{
 			for (i in 0...3)
@@ -230,7 +248,6 @@ class PixelSplashShaderRef {
 		shader.mult.value = [1];
 		shader.enabled.value = [true];
 		shader.uBlocksize.value = [PlayState.daPixelZoom, PlayState.daPixelZoom];
-		trace('Pixel zoom: ${PlayState.daPixelZoom}');
 	}
 }
 
