@@ -90,6 +90,11 @@ class NoteSplash extends FlxSprite
 			minFps = config.minFps;
 			maxFps = config.maxFps;
 		}
+		else
+		{
+			offset.x += -58;
+			offset.y += -55;
+		}
 
 		if(animation.curAnim != null)
 			animation.curAnim.frameRate = FlxG.random.int(minFps, maxFps);
@@ -106,6 +111,8 @@ class NoteSplash extends FlxSprite
 	function loadAnims(skin:String, ?config:NoteSplashConfig = null, ?animName:String = null):NoteSplashConfig {
 		maxAnims = 0;
 		frames = Paths.getSparrowAtlas(skin);
+		if(frames == null) //if you really this, you really fucked something up
+			frames = Paths.getSparrowAtlas(defaultNoteSplash);
 
 		if(animName == null)
 			animName = config != null ? config.anim : 'note splash';
@@ -221,7 +228,7 @@ class NoteSplash extends FlxSprite
 		if(curPixelShader >= pixelShaders.length)
 		{
 			pixelShaders.push(new PixelSplashShaderRef());
-			trace('test: $curPixelShader');
+			//trace('test: $curPixelShader');
 		}
 		var pixelSplashShader:PixelSplashShaderRef = pixelShaders[curPixelShader];
 		curPixelShader++;
