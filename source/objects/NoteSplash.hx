@@ -1,6 +1,8 @@
 package objects;
 
 import shaders.RGBPalette;
+import flixel.system.FlxAssets.FlxShader;
+import flixel.graphics.frames.FlxFrame;
 
 typedef NoteSplashConfig = {
 	anim:String,
@@ -63,6 +65,10 @@ class NoteSplash extends FlxSprite
 			rgbShader = Note.globalRgbShaders[direction];
 			alpha = 0.6;
 		}
+
+		if(note != null)
+			antialiasing = note.noteSplashData.antialiasing;
+		if(PlayState.isPixelStage) antialiasing = false;
 
 		if(rgbShader != null) shader = rgbShader.shader;
 
@@ -159,5 +165,119 @@ class NoteSplash extends FlxSprite
 			(animation.curAnim == null && aliveTime >= buggedKillTime)) kill();
 
 		super.update(elapsed);
+	}
+
+	////////////////////
+	// Pixel Splashes //
+	////////////////////
+
+	private static var pixelSplashShader(default, never):PixelSplashShaderRef = new PixelSplashShaderRef();
+
+	@:noCompletion
+	override function drawComplex(camera:FlxCamera):Void
+	{
+		if(!PlayState.isPixelStage)
+		{
+			super.drawComplex(camera);
+			return;
+		}
+
+		_frame.prepareMatrix(_matrix, FlxFrameAngle.ANGLE_0, checkFlipX(), checkFlipY());
+		_matrix.translate(-origin.x, -origin.y);
+		_matrix.scale(scale.x, scale.y);
+
+		if (bakedRotationAngle <= 0)
+		{
+			updateTrig();
+
+			if (angle != 0)
+				_matrix.rotateWithTrig(_cosAngle, _sinAngle);
+		}
+
+		getScreenPosition(_point, camera).subtractPoint(offset);
+		_point.add(origin.x, origin.y);
+		_matrix.translate(_point.x, _point.y);
+
+		if (isPixelPerfectRender(camera))
+		{
+			_matrix.tx = Math.floor(_matrix.tx);
+			_matrix.ty = Math.floor(_matrix.ty);
+		}
+
+		if(rgbShader != null)
+		{
+			for (i in 0...3)
+			{
+				pixelSplashShader.shader.r.value[i] = rgbShader.shader.r.value[i];
+				pixelSplashShader.shader.g.value[i] = rgbShader.shader.g.value[i];
+				pixelSplashShader.shader.b.value[i] = rgbShader.shader.b.value[i];
+			}
+			pixelSplashShader.shader.mult.value[0] = rgbShader.shader.mult.value[0];
+			pixelSplashShader.shader.enabled.value[0] = rgbShader.shader.enabled.value[0];
+		}
+		camera.drawPixels(_frame, framePixels, _matrix, colorTransform, blend, antialiasing, pixelSplashShader.shader);
+	}
+}
+
+class PixelSplashShaderRef {
+	public var shader:PixelSplashShader = new PixelSplashShader();
+
+	public function new()
+	{
+		shader.r.value = [0, 0, 0];
+		shader.g.value = [0, 0, 0];
+		shader.b.value = [0, 0, 0];
+		shader.mult.value = [1];
+		shader.enabled.value = [true];
+		shader.uBlocksize.value = [PlayState.daPixelZoom, PlayState.daPixelZoom];
+		trace('Pixel zoom: ${PlayState.daPixelZoom}');
+	}
+}
+
+class PixelSplashShader extends FlxShader
+{
+	@:glFragmentHeader('
+		#pragma header
+		
+		uniform vec3 r;
+		uniform vec3 g;
+		uniform vec3 b;
+		uniform float mult;
+		uniform bool enabled;
+		uniform vec2 uBlocksize;
+
+		vec4 flixel_texture2DCustom(sampler2D bitmap, vec2 coord) {
+			vec2 blocks = openfl_TextureSize / uBlocksize;
+			vec4 color = flixel_texture2D(bitmap, floor(coord * blocks) / blocks);
+			if (!hasTransform) {
+				return color;
+			}
+
+			if(!enabled || color.a == 0.0 || mult == 0.0) {
+				return color * openfl_Alphav;
+			}
+
+			vec4 newColor = color;
+			newColor.rgb = min(color.r * r + color.g * g + color.b * b, vec3(1.0));
+			newColor.a = color.a;
+			
+			color = mix(color, newColor, mult);
+			
+			if(color.a > 0.0) {
+				return vec4(color.rgb, color.a);
+			}
+			return vec4(0.0, 0.0, 0.0, 0.0);
+		}')
+
+	@:glFragmentSource('
+		#pragma header
+
+		void main() {
+			gl_FragColor = flixel_texture2DCustom(bitmap, openfl_TextureCoordv);
+		}')
+
+	public function new()
+	{
+		super();
 	}
 }

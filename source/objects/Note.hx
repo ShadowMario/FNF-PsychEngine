@@ -17,6 +17,7 @@ typedef NoteSplashData = {
 	disabled:Bool,
 	texture:String,
 	useGlobalShader:Bool, //breaks r/g/b/a but makes it copy default colors for your custom note
+	antialiasing:Bool,
 	r:FlxColor,
 	g:FlxColor,
 	b:FlxColor,
@@ -69,7 +70,7 @@ class Note extends FlxSprite
 	public static var colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
 	public static var defaultNoteSkin:String = 'noteSkins/NOTE_assets';
 
-	public var noteSplashData:NoteSplashData = {disabled: false, texture: null, useGlobalShader: false, r: -1, g: -1, b: -1, a: 0.6};
+	public var noteSplashData:NoteSplashData = {disabled: false, texture: null, antialiasing: PlayState.isPixelStage, useGlobalShader: false, r: -1, g: -1, b: -1, a: 0.6};
 	public var offsetX:Float = 0;
 	public var offsetY:Float = 0;
 	public var offsetAngle:Float = 0;
