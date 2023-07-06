@@ -1,5 +1,6 @@
 package options;
 
+import sys.FileSystem;
 import objects.Note;
 import objects.StrumNote;
 import objects.Alphabet;
@@ -142,10 +143,19 @@ class VisualsUISubState extends BaseOptionsMenu
 	function getNoteSkins()
 	{
 		var path:String = Paths.getPath('images/noteSkins/list.txt', TEXT);
-		var skinsList:Array<String> = CoolUtil.coolTextFile(path);
+		var skinsList:Array<String> = [];
+
+		for(skin in CoolUtil.coolTextFile(path)) {
+			skinsList.push(skin);
+		}
 
 		#if MODS_ALLOWED
-		// nothing YET
+		var modsPath:String = Paths.mods('images/noteSkins/list.txt');
+		if(FileSystem.exists(modsPath)) {
+			for(modSkin in CoolUtil.coolTextFile(modsPath)) {
+				skinsList.push(modSkin);
+			}
+		}
 		#end
 
 		return skinsList;
@@ -154,10 +164,19 @@ class VisualsUISubState extends BaseOptionsMenu
 	function getSplashSkins()
 	{
 		var path:String = Paths.getPath('images/noteSplashes/list.txt', TEXT);
-		var skinsList:Array<String> = CoolUtil.coolTextFile(path);
+		var skinsList:Array<String> = [];
+
+		for(skin in CoolUtil.coolTextFile(path)) {
+			skinsList.push(skin);
+		}
 
 		#if MODS_ALLOWED
-		// nothing YET
+		var modsPath:String = Paths.mods('images/noteSplashes/list.txt');
+		if(FileSystem.exists(modsPath)) {
+			for(modSkin in CoolUtil.coolTextFile(modsPath)) {
+				skinsList.push(modSkin);
+			}
+		}
 		#end
 
 		skinsList.push('(DISABLED)'); // make sure this is always last
