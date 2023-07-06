@@ -1,9 +1,18 @@
 package objects;
 
+import flixel.graphics.frames.FlxFramesCollection;
+import flixel.animation.FlxAnimationController;
 import animateatlas.AtlasFrameMaker;
-
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.addons.effects.FlxTrail;
+import flixel.animation.FlxBaseAnimation;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
-
+import backend.Section.SwagSection;
+import backend.Song;
+import states.stages.objects.TankmenBG;
 #if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
@@ -11,10 +20,9 @@ import sys.FileSystem;
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
 import haxe.Json;
+import haxe.format.JsonParser;
 
-import backend.Song;
-import backend.Section;
-import states.stages.objects.TankmenBG;
+using StringTools;
 
 typedef CharacterFile = {
 	var animations:Array<AnimArray>;
@@ -38,12 +46,22 @@ typedef AnimArray = {
 	var loop:Bool;
 	var indices:Array<Int>;
 	var offsets:Array<Int>;
+	var image:String;
 }
 
 class Character extends FlxSprite
 {
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
+
+	// For swapping out huge sheets
+	public var framesList:Map<String, FlxFramesCollection>; // Image, Frames
+	public var imageNames:Map<String, String>; // Anim Name, Image
+	public var animStates:Map<String, FlxAnimationController>; // Image, Anim Controller
+	public var curFrames:String; // Current image name
+	public static var tempAnimState:FlxAnimationController; // Just so that the real one won't be cleared (It crashes if it's null)
+
+	public var useAtlas:Bool;
 
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = DEFAULT_CHARACTER;
@@ -54,9 +72,9 @@ class Character extends FlxSprite
 	public var specialAnim:Bool = false;
 	public var animationNotes:Array<Dynamic> = [];
 	public var stunned:Bool = false;
-	public var singDuration:Float = 4; //Multiplier of how long a character holds the sing pose
+	public var singDuration:Float = 4; // Multiplier of how long a character holds the sing pose
 	public var idleSuffix:String = '';
-	public var danceIdle:Bool = false; //Character use "danceLeft" and "danceRight" instead of "idle"
+	public var danceIdle:Bool = false; // Character uses "danceLeft" and "danceRight" instead of "idle"
 	public var skipDance:Bool = false;
 
 	public var healthIcon:String = 'face';
@@ -75,11 +93,25 @@ class Character extends FlxSprite
 	public var healthColorArray:Array<Int> = [255, 0, 0];
 
 	public static var DEFAULT_CHARACTER:String = 'bf'; //In case a character is missing, it will use BF on its place
-	public function new(x:Float, y:Float, ?character:String = 'bf', ?isPlayer:Bool = false)
+	public function new(x:Float, y:Float, ?character:String = 'none', ?isPlayer:Bool = false)
 	{
 		super(x, y);
 
+		#if (haxe >= "4.0.0")
+		animOffsets = new Map();
+		framesList = new Map();
+		imageNames = new Map();
+		animStates = new Map();
+		#else
 		animOffsets = new Map<String, Array<Dynamic>>();
+		framesList = new Map<String, FlxFramesCollection>();
+		imageNames = new Map<String, String>();
+		animStates = new Map<String, FlxAnimationController>();
+		#end
+		if (tempAnimState != null) {
+			tempAnimState.destroy();
+		}
+		tempAnimState = new FlxAnimationController(this);
 		curCharacter = character;
 		this.isPlayer = isPlayer;
 		var library:String = null;
@@ -112,23 +144,50 @@ class Character extends FlxSprite
 				#end
 
 				var json:CharacterFile = cast Json.parse(rawJson);
-				var useAtlas:Bool = false;
-
+				useAtlas = false;
+				
 				#if MODS_ALLOWED
 				var modAnimToFind:String = Paths.modFolders('images/' + json.image + '/Animation.json');
 				var animToFind:String = Paths.getPath('images/' + json.image + '/Animation.json', TEXT);
+				
 				if (FileSystem.exists(modAnimToFind) || FileSystem.exists(animToFind) || Assets.exists(animToFind))
 				#else
 				if (Assets.exists(Paths.getPath('images/' + json.image + '/Animation.json', TEXT)))
 				#end
 					useAtlas = true;
 
-				if(!useAtlas)
+				if (!useAtlas) {
 					frames = Paths.getAtlas(json.image);
-				else
+					curFrames = json.image;
+					framesList.set(json.image, frames);
+					animStates.set(json.image, animation);
+					for (anim in json.animations) {
+						if (anim.image != null && anim.image.length > 0 && !framesList.exists(anim.image)) {
+							framesList.set(anim.image, Paths.getAtlas(anim.image));
+							animStates.set(anim.image, new FlxAnimationController(this));
+						}
+						else if (anim.image == null)
+							anim.image = '';
+						imageNames.set(anim.anim, anim.image);
+					}
+				}
+				else {
 					frames = AtlasFrameMaker.construct(json.image);
-
+					curFrames = json.image;
+					framesList.set(json.image, frames);
+					animStates.set(json.image, animation);
+					for (anim in json.animations) {
+						if (anim.image != null && anim.image.length > 0 && !framesList.exists(anim.image)) {
+							framesList.set(anim.image, AtlasFrameMaker.construct(anim.image));
+							animStates.set(anim.image, new FlxAnimationController(this));
+						}
+						else if (anim.image == null)
+							anim.image = '';
+						imageNames.set(anim.anim, anim.image);
+					}
+				}
 				imageFile = json.image;
+
 				if(json.scale != 1) {
 					jsonScale = json.scale;
 					setGraphicSize(Std.int(width * jsonScale));
@@ -157,9 +216,22 @@ class Character extends FlxSprite
 						var animAnim:String = '' + anim.anim;
 						var animName:String = '' + anim.name;
 						var animFps:Int = anim.fps;
-						var animLoop:Bool = !!anim.loop; //Bruh
+						var animLoop:Bool = !!anim.loop; // Bruh
 						var animIndices:Array<Int> = anim.indices;
-						if(animIndices != null && animIndices.length > 0) {
+						var animImage:String = anim.image;
+
+						if (animImage == null || animImage.length == 0) {
+							animImage = imageFile;
+						}
+						if (animImage != curFrames) {
+							//trace(animImage + ', ' + curFrames);
+							animation = tempAnimState;
+							frames = framesList.get(animImage);
+							animation = animStates.get(animImage);
+							curFrames = animImage;
+						}
+
+						if (animIndices != null && animIndices.length > 0) {
 							animation.addByIndices(animAnim, animName, animIndices, "", animFps, animLoop);
 						} else {
 							animation.addByPrefix(animAnim, animName, animFps, animLoop);
@@ -172,6 +244,10 @@ class Character extends FlxSprite
 				} else {
 					quickAnimAdd('idle', 'BF idle dance');
 				}
+				animation = tempAnimState;
+				frames = framesList.get(json.image);
+				animation = animStates.get(json.image);
+				curFrames = json.image;
 				//trace('Loaded file to character ' + curCharacter);
 		}
 		originalFlipX = flipX;
@@ -216,60 +292,50 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if(!debugMode && animation.curAnim != null)
-		{
-			if(heyTimer > 0)
-			{
+		if (!debugMode && animation.curAnim != null) {
+			if (animation.curAnim.finished && imageNames.exists(animation.curAnim.name + '-loop')) {
+				var special = specialAnim;
+				playAnim(animation.curAnim.name + '-loop');
+				specialAnim = special;
+			}
+
+			if (heyTimer > 0) {
 				heyTimer -= elapsed * PlayState.instance.playbackRate;
-				if(heyTimer <= 0)
-				{
-					if(specialAnim && animation.curAnim.name == 'hey' || animation.curAnim.name == 'cheer')
-					{
+				if (heyTimer <= 0) {
+					if (specialAnim && animation.curAnim.name == 'hey' || animation.curAnim.name == 'cheer') {
 						specialAnim = false;
 						dance();
 					}
 					heyTimer = 0;
 				}
 			}
-			else if(specialAnim && animation.curAnim.finished)
-			{
+			else if (specialAnim && animation.curAnim.finished) {
 				specialAnim = false;
 				dance();
 			}
-			else if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished)
-			{
-				dance();
-				animation.finish();
-			}
-
-			switch(curCharacter)
-			{
+			
+			switch(curCharacter) {
 				case 'pico-speaker':
-					if(animationNotes.length > 0 && Conductor.songPosition > animationNotes[0][0])
-					{
+					if (animationNotes.length > 0 && Conductor.songPosition > animationNotes[0][0]) {
 						var noteData:Int = 1;
-						if(animationNotes[0][1] > 2) noteData = 3;
+						if (animationNotes[0][1] > 2) noteData = 3;
 
 						noteData += FlxG.random.int(0, 1);
 						playAnim('shoot' + noteData, true);
 						animationNotes.shift();
 					}
-					if(animation.curAnim.finished) playAnim(animation.curAnim.name, false, false, animation.curAnim.frames.length - 3);
+					if (animation.curAnim.finished) playAnim(animation.curAnim.name, false, false, animation.curAnim.frames.length - 3);
 			}
 
 			if (animation.curAnim.name.startsWith('sing'))
 				holdTimer += elapsed;
-			else if(isPlayer)
+			else if (isPlayer)
 				holdTimer = 0;
 
-			if (!isPlayer && holdTimer >= Conductor.stepCrochet * (0.0011 / (FlxG.sound.music != null ? FlxG.sound.music.pitch : 1)) * singDuration)
-			{
+			if (isPlayer && holdTimer >= Conductor.stepCrochet * (0.0011 / (FlxG.sound.music != null ? FlxG.sound.music.pitch : 1)) * singDuration) {
 				dance();
 				holdTimer = 0;
 			}
-
-			if(animation.curAnim.finished && animation.getByName(animation.curAnim.name + '-loop') != null)
-				playAnim(animation.curAnim.name + '-loop');
 		}
 		super.update(elapsed);
 	}
@@ -300,6 +366,17 @@ class Character extends FlxSprite
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
+		var prevFrames = imageNames.get(AnimName);
+		if (prevFrames == null || prevFrames.length == 0) {
+			prevFrames = imageFile;
+		}
+		if (prevFrames != null && prevFrames != curFrames) {
+			animation = tempAnimState;
+			frames = framesList.get(prevFrames);
+			animation = animStates.get(prevFrames);
+			curFrames = prevFrames;
+		}
+
 		specialAnim = false;
 		animation.play(AnimName, Force, Reversed, Frame);
 

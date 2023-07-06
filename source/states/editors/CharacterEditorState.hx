@@ -6,6 +6,7 @@ import flixel.FlxObject;
 import flixel.graphics.FlxGraphic;
 
 import flixel.animation.FlxAnimation;
+import flixel.animation.FlxAnimationController;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
@@ -586,6 +587,7 @@ class CharacterEditorState extends MusicBeatState
 	var animationInputText:FlxUIInputText;
 	var animationNameInputText:FlxUIInputText;
 	var animationIndicesInputText:FlxUIInputText;
+	var animationImageInputText:FlxUIInputText;
 	var animationNameFramerate:FlxUINumericStepper;
 	var animationLoopCheckBox:FlxUICheckBox;
 	function addAnimationsUI() {
@@ -595,6 +597,7 @@ class CharacterEditorState extends MusicBeatState
 		animationInputText = new FlxUIInputText(15, 85, 80, '', 8);
 		animationNameInputText = new FlxUIInputText(animationInputText.x, animationInputText.y + 35, 150, '', 8);
 		animationIndicesInputText = new FlxUIInputText(animationNameInputText.x, animationNameInputText.y + 40, 250, '', 8);
+		animationImageInputText = new FlxUIInputText(animationIndicesInputText.x, animationIndicesInputText.y + 40, 150, '', 8);
 		animationNameFramerate = new FlxUINumericStepper(animationInputText.x + 170, animationInputText.y, 1, 24, 0, 240, 0);
 		animationLoopCheckBox = new FlxUICheckBox(animationNameInputText.x + 170, animationNameInputText.y - 1, null, null, "Should it Loop?", 100);
 
@@ -603,6 +606,7 @@ class CharacterEditorState extends MusicBeatState
 			var anim:AnimArray = char.animationsArray[selectedAnimation];
 			animationInputText.text = anim.anim;
 			animationNameInputText.text = anim.name;
+			animationImageInputText.text = anim.image;
 			animationLoopCheckBox.checked = anim.loop;
 			animationNameFramerate.value = anim.fps;
 
@@ -621,7 +625,7 @@ class CharacterEditorState extends MusicBeatState
 			}
 		});
 
-		var addUpdateButton:FlxButton = new FlxButton(70, animationIndicesInputText.y + 30, "Add/Update", function() {
+		var addUpdateButton:FlxButton = new FlxButton(animationImageInputText.x + 157, animationImageInputText.y - 3, "Add/Update", function() {
 			var indices:Array<Int> = [];
 			var indicesStr:Array<String> = animationIndicesInputText.text.trim().split(',');
 			if(indicesStr.length > 1) {
@@ -655,8 +659,32 @@ class CharacterEditorState extends MusicBeatState
 				fps: Math.round(animationNameFramerate.value),
 				loop: animationLoopCheckBox.checked,
 				indices: indices,
-				offsets: lastOffsets
+				offsets: lastOffsets,
+				image: animationImageInputText.text
 			};
+
+			var animImage = newAnim.image;
+			if (animImage == null || animImage.length == 0) {
+				animImage = char.imageFile;
+			}
+			if (animImage != null && animImage != char.curFrames) {
+				// Set stuff in the character
+				if (!char.useAtlas)
+					char.framesList.set(animImage, Paths.getAtlas(animImage));
+				else
+					char.framesList.set(animImage, AtlasFrameMaker.construct(animImage));
+				char.animStates.set(animImage, new flixel.animation.FlxAnimationController(char));
+				char.imageNames.set(newAnim.anim, newAnim.image); // animImage changes if it's blank, so we use newAnim.image
+
+				// Get it back out
+				char.animation = Character.tempAnimState;
+				char.frames = char.framesList.get(animImage);
+				char.animation = char.animStates.get(animImage);
+				char.curFrames = animImage;
+				curAnim = char.animationsArray.indexOf(newAnim);
+				genBoyOffsets();
+			}
+
 			if(indices != null && indices.length > 0) {
 				char.animation.addByIndices(newAnim.anim, newAnim.name, newAnim.indices, "", newAnim.fps, newAnim.loop);
 			} else {
@@ -691,7 +719,7 @@ class CharacterEditorState extends MusicBeatState
 			trace('Added/Updated animation: ' + animationInputText.text);
 		});
 
-		var removeButton:FlxButton = new FlxButton(180, animationIndicesInputText.y + 30, "Remove", function() {
+		var removeButton:FlxButton = new FlxButton(addUpdateButton.x + 87, addUpdateButton.y, "Remove", function() {
 			for (anim in char.animationsArray) {
 				if(animationInputText.text == anim.anim) {
 					var resetAnim:Bool = false;
@@ -718,14 +746,16 @@ class CharacterEditorState extends MusicBeatState
 
 		tab_group.add(new FlxText(animationDropDown.x, animationDropDown.y - 18, 0, 'Animations:'));
 		tab_group.add(new FlxText(ghostDropDown.x, ghostDropDown.y - 18, 0, 'Animation Ghost:'));
-		tab_group.add(new FlxText(animationInputText.x, animationInputText.y - 18, 0, 'Animation name:'));
+		tab_group.add(new FlxText(animationInputText.x, animationInputText.y - 18, 0, 'Animation Name:'));
 		tab_group.add(new FlxText(animationNameFramerate.x, animationNameFramerate.y - 18, 0, 'Framerate:'));
-		tab_group.add(new FlxText(animationNameInputText.x, animationNameInputText.y - 18, 0, 'Animation on .XML/.TXT file:'));
+		tab_group.add(new FlxText(animationNameInputText.x, animationNameInputText.y - 18, 0, 'Animation in .XML/.TXT file:'));
 		tab_group.add(new FlxText(animationIndicesInputText.x, animationIndicesInputText.y - 18, 0, 'ADVANCED - Animation Indices:'));
+		tab_group.add(new FlxText(animationImageInputText.x, animationImageInputText.y - 18, 0, 'ADVANCED - Separate Image:'));
 
 		tab_group.add(animationInputText);
 		tab_group.add(animationNameInputText);
 		tab_group.add(animationIndicesInputText);
+		tab_group.add(animationImageInputText);
 		tab_group.add(animationNameFramerate);
 		tab_group.add(animationLoopCheckBox);
 		tab_group.add(addUpdateButton);
@@ -811,36 +841,73 @@ class CharacterEditorState extends MusicBeatState
 			lastAnim = char.animation.curAnim.name;
 		}
 		var anims:Array<AnimArray> = char.animationsArray.copy();
-		if(Paths.fileExists('images/' + char.imageFile + '/Animation.json', TEXT)) {
+		if (char.useAtlas) {
 			char.frames = AtlasFrameMaker.construct(char.imageFile);
-		} else if(Paths.fileExists('images/' + char.imageFile + '.txt', TEXT)) {
-			char.frames = Paths.getPackerAtlas(char.imageFile);
-		} else {
-			char.frames = Paths.getSparrowAtlas(char.imageFile);
+			char.curFrames = char.imageFile;
+			char.framesList.set(char.imageFile, char.frames);
+			char.animStates.set(char.imageFile, char.animation);
+			for (anim in anims) {
+				if (anim.image != null && anim.image.length > 0 && !char.framesList.exists(anim.image)) {
+					char.framesList.set(anim.image, AtlasFrameMaker.construct(anim.image));
+					char.animStates.set(anim.image, new FlxAnimationController(char));
+				}
+				else if (anim.image == null)
+					anim.image = '';
+				char.imageNames.set(anim.anim, anim.image);
+			}
 		}
-
-
-
-
-
-
+		else {
+			char.frames = Paths.getAtlas(char.imageFile);
+			char.curFrames = char.imageFile;
+			char.framesList.set(char.imageFile, char.frames);
+			char.animStates.set(char.imageFile, char.animation);
+			for (anim in anims) {
+				if (anim.image != null && anim.image.length > 0 && !char.framesList.exists(anim.image)) {
+					char.framesList.set(anim.image, Paths.getAtlas(anim.image));
+					char.animStates.set(anim.image, new FlxAnimationController(char));
+				}
+				else if (anim.image == null)
+					anim.image = '';
+				char.imageNames.set(anim.anim, anim.image);
+			}
+		}
 
 		if(char.animationsArray != null && char.animationsArray.length > 0) {
 			for (anim in char.animationsArray) {
 				var animAnim:String = '' + anim.anim;
 				var animName:String = '' + anim.name;
 				var animFps:Int = anim.fps;
-				var animLoop:Bool = !!anim.loop; //Bruh
+				var animLoop:Bool = !!anim.loop; // Bruh
 				var animIndices:Array<Int> = anim.indices;
-				if(animIndices != null && animIndices.length > 0) {
+				var animImage:String = anim.image;
+
+				if (animImage == null || animImage.length == 0) {
+					animImage = char.imageFile;
+				}
+				if (animImage != char.curFrames) {
+					char.animation = Character.tempAnimState;
+					char.frames = char.framesList.get(animImage);
+					char.animation = char.animStates.get(animImage);
+					char.curFrames = animImage;
+				}
+				if (animIndices != null && animIndices.length > 0) {
 					char.animation.addByIndices(animAnim, animName, animIndices, "", animFps, animLoop);
-				} else {
+				}
+				else {
 					char.animation.addByPrefix(animAnim, animName, animFps, animLoop);
+				}
+
+				if(anim.offsets != null && anim.offsets.length > 1) {
+					char.addOffset(anim.anim, anim.offsets[0], anim.offsets[1]);
 				}
 			}
 		} else {
 			char.quickAnimAdd('idle', 'BF idle dance');
 		}
+		char.animation = Character.tempAnimState;
+		char.frames = char.framesList.get(char.imageFile);
+		char.animation = char.animStates.get(char.imageFile);
+		char.curFrames = char.imageFile;
 
 		if(lastAnim != '') {
 			char.playAnim(lastAnim, true);
@@ -1078,7 +1145,7 @@ class CharacterEditorState extends MusicBeatState
 			textAnim.text = '';
 		}
 
-		var inputTexts:Array<FlxUIInputText> = [animationInputText, imageInputText, healthIconInputText, animationNameInputText, animationIndicesInputText];
+		var inputTexts:Array<FlxUIInputText> = [animationInputText, imageInputText, healthIconInputText, animationNameInputText, animationIndicesInputText, animationImageInputText];
 		for (i in 0...inputTexts.length) {
 			if(inputTexts[i].hasFocus) {
 				ClientPrefs.toggleVolumeKeys(false);
