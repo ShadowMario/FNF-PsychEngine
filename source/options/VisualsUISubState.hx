@@ -143,6 +143,11 @@ class VisualsUISubState extends BaseOptionsMenu
 	{
 		var path:String = Paths.getPath('images/noteSkins/list.txt', TEXT);
 		var skinsList:Array<String> = CoolUtil.coolTextFile(path);
+
+		#if MODS_ALLOWED
+		// nothing YET
+		#end
+
 		return skinsList;
 	}
 
@@ -150,6 +155,12 @@ class VisualsUISubState extends BaseOptionsMenu
 	{
 		var path:String = Paths.getPath('images/noteSplashes/list.txt', TEXT);
 		var skinsList:Array<String> = CoolUtil.coolTextFile(path);
+
+		#if MODS_ALLOWED
+		// nothing YET
+		#end
+
+		skinsList.push('(DISABLED)'); // make sure this is always last
 		return skinsList;
 	}
 
