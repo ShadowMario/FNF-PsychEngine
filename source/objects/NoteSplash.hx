@@ -13,7 +13,7 @@ typedef NoteSplashConfig = {
 
 class NoteSplash extends FlxSprite
 {
-	public var rgbShader:RGBPalette = null;
+	public var rgbShader:PixelSplashShaderRef;
 	private var idleAnim:String;
 	private var _textureLoaded:String = null;
 
@@ -26,7 +26,9 @@ class NoteSplash extends FlxSprite
 		var skin:String = null;
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		else skin = getSplashSkin();
-
+		
+		rgbShader = new PixelSplashShaderRef();
+		shader = rgbShader.shader;
 		precacheConfig(skin);
 		//setupNoteSplash(x, y, 0);
 	}
@@ -51,26 +53,25 @@ class NoteSplash extends FlxSprite
 		if(_textureLoaded != texture)
 			config = loadAnims(texture, config);
 
-		shader = null;
+		var tempShader:RGBPalette = null;
 		if(note != null && !note.noteSplashData.useGlobalShader)
 		{
-			rgbShader = note.rgbShader.parent;
-			if(note.noteSplashData.r != -1) rgbShader.r = note.noteSplashData.r;
-			if(note.noteSplashData.g != -1) rgbShader.g = note.noteSplashData.g;
-			if(note.noteSplashData.b != -1) rgbShader.b = note.noteSplashData.b;
+			if(note.noteSplashData.r != -1) note.rgbShader.parent.r = note.noteSplashData.r;
+			if(note.noteSplashData.g != -1) note.rgbShader.parent.g = note.noteSplashData.g;
+			if(note.noteSplashData.b != -1) note.rgbShader.parent.b = note.noteSplashData.b;
+			tempShader = note.rgbShader.parent;
 			alpha = note.noteSplashData.a;
 		}
 		else
 		{
-			rgbShader = Note.globalRgbShaders[direction];
+			tempShader = Note.globalRgbShaders[direction];
 			alpha = 0.6;
 		}
+		if(tempShader != null) rgbShader.copyValues(tempShader);
 
 		if(note != null)
 			antialiasing = note.noteSplashData.antialiasing;
 		if(PlayState.isPixelStage) antialiasing = false;
-
-		if(rgbShader != null) shader = rgbShader.shader;
 
 		_textureLoaded = texture;
 		offset.set(10, 10);
@@ -173,83 +174,22 @@ class NoteSplash extends FlxSprite
 
 		super.update(elapsed);
 	}
-
-	////////////////////
-	// Pixel Splashes //
-	////////////////////
-
-	private static var pixelShaders(default, null):Array<PixelSplashShaderRef> = [];
-	private static var curPixelShader(default, null):Int = 0;
-	private static var _lastCalled:Float = 0;
-	public static var disablePixelShader:Bool = false;
-
-	public static function clearShaders()
-	{
-		pixelShaders = [];
-		curPixelShader = 0;
-	}
-
-	@:noCompletion
-	override function drawComplex(camera:FlxCamera):Void
-	{
-		if(!PlayState.isPixelStage || disablePixelShader)
-		{
-			super.drawComplex(camera);
-			return;
-		}
-
-		_frame.prepareMatrix(_matrix, FlxFrameAngle.ANGLE_0, checkFlipX(), checkFlipY());
-		_matrix.translate(-origin.x, -origin.y);
-		_matrix.scale(scale.x, scale.y);
-
-		if (bakedRotationAngle <= 0)
-		{
-			updateTrig();
-
-			if (angle != 0)
-				_matrix.rotateWithTrig(_cosAngle, _sinAngle);
-		}
-
-		getScreenPosition(_point, camera).subtractPoint(offset);
-		_point.add(origin.x, origin.y);
-		_matrix.translate(_point.x, _point.y);
-
-		if (isPixelPerfectRender(camera))
-		{
-			_matrix.tx = Math.floor(_matrix.tx);
-			_matrix.ty = Math.floor(_matrix.ty);
-		}
-
-		var time:Float = MusicBeatState.timePassedOnState;
-		//trace(time);
-		if(_lastCalled != time) curPixelShader = 0;
-		_lastCalled = time;
-
-		if(curPixelShader >= pixelShaders.length)
-		{
-			pixelShaders.push(new PixelSplashShaderRef());
-			//trace('test: $curPixelShader');
-		}
-		var pixelSplashShader:PixelSplashShaderRef = pixelShaders[curPixelShader];
-		curPixelShader++;
-
-		if(rgbShader != null)
-		{
-			for (i in 0...3)
-			{
-				pixelSplashShader.shader.r.value[i] = rgbShader.shader.r.value[i];
-				pixelSplashShader.shader.g.value[i] = rgbShader.shader.g.value[i];
-				pixelSplashShader.shader.b.value[i] = rgbShader.shader.b.value[i];
-			}
-			pixelSplashShader.shader.mult.value[0] = rgbShader.shader.mult.value[0];
-			pixelSplashShader.shader.enabled.value[0] = rgbShader.shader.enabled.value[0];
-		}
-		camera.drawPixels(_frame, framePixels, _matrix, colorTransform, blend, antialiasing, pixelSplashShader.shader);
-	}
 }
 
 class PixelSplashShaderRef {
 	public var shader:PixelSplashShader = new PixelSplashShader();
+
+	public function copyValues(tempShader:RGBPalette)
+	{
+		for (i in 0...3)
+		{
+			shader.r.value[i] = tempShader.shader.r.value[i];
+			shader.g.value[i] = tempShader.shader.g.value[i];
+			shader.b.value[i] = tempShader.shader.b.value[i];
+		}
+		shader.mult.value[0] = tempShader.shader.mult.value[0];
+		shader.enabled.value[0] = tempShader.shader.enabled.value[0];
+	}
 
 	public function new()
 	{
@@ -258,7 +198,11 @@ class PixelSplashShaderRef {
 		shader.b.value = [0, 0, 0];
 		shader.mult.value = [1];
 		shader.enabled.value = [true];
-		shader.uBlocksize.value = [PlayState.daPixelZoom, PlayState.daPixelZoom];
+
+		var pixel:Float = 1;
+		if(PlayState.isPixelStage) pixel = PlayState.daPixelZoom;
+		shader.uBlocksize.value = [pixel, pixel];
+		//trace('Created shader ' + Conductor.songPosition);
 	}
 }
 
