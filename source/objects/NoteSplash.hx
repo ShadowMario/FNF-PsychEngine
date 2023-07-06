@@ -202,7 +202,7 @@ class PixelSplashShaderRef {
 		var pixel:Float = 1;
 		if(PlayState.isPixelStage) pixel = PlayState.daPixelZoom;
 		shader.uBlocksize.value = [pixel, pixel];
-		trace('Created shader ' + Conductor.songPosition);
+		//trace('Created shader ' + Conductor.songPosition);
 	}
 }
 
