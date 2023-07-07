@@ -56,9 +56,9 @@ class NoteSplash extends FlxSprite
 		var tempShader:RGBPalette = null;
 		if(note != null && !note.noteSplashData.useGlobalShader)
 		{
-			if(note.noteSplashData.r != -1) note.rgbShader.parent.r = note.noteSplashData.r;
-			if(note.noteSplashData.g != -1) note.rgbShader.parent.g = note.noteSplashData.g;
-			if(note.noteSplashData.b != -1) note.rgbShader.parent.b = note.noteSplashData.b;
+			if(note.noteSplashData.r != -1) note.rgbShader.r = note.noteSplashData.r;
+			if(note.noteSplashData.g != -1) note.rgbShader.g = note.noteSplashData.g;
+			if(note.noteSplashData.b != -1) note.rgbShader.b = note.noteSplashData.b;
 			tempShader = note.rgbShader.parent;
 			alpha = note.noteSplashData.a;
 		}
@@ -67,7 +67,7 @@ class NoteSplash extends FlxSprite
 			tempShader = Note.globalRgbShaders[direction];
 			alpha = 0.6;
 		}
-		if(tempShader != null) rgbShader.copyValues(tempShader);
+		rgbShader.copyValues(tempShader);
 
 		if(note != null)
 			antialiasing = note.noteSplashData.antialiasing;
@@ -181,14 +181,21 @@ class PixelSplashShaderRef {
 
 	public function copyValues(tempShader:RGBPalette)
 	{
-		for (i in 0...3)
+		var enabled:Bool = false;
+		if(tempShader != null)
+			enabled = true;
+
+		if(enabled)
 		{
-			shader.r.value[i] = tempShader.shader.r.value[i];
-			shader.g.value[i] = tempShader.shader.g.value[i];
-			shader.b.value[i] = tempShader.shader.b.value[i];
+			for (i in 0...3)
+			{
+				shader.r.value[i] = tempShader.shader.r.value[i];
+				shader.g.value[i] = tempShader.shader.g.value[i];
+				shader.b.value[i] = tempShader.shader.b.value[i];
+			}
+			shader.mult.value[0] = tempShader.shader.mult.value[0];
 		}
-		shader.mult.value[0] = tempShader.shader.mult.value[0];
-		shader.enabled.value[0] = tempShader.shader.enabled.value[0];
+		else shader.mult.value[0] = 0.0;
 	}
 
 	public function new()
@@ -197,7 +204,6 @@ class PixelSplashShaderRef {
 		shader.g.value = [0, 0, 0];
 		shader.b.value = [0, 0, 0];
 		shader.mult.value = [1];
-		shader.enabled.value = [true];
 
 		var pixel:Float = 1;
 		if(PlayState.isPixelStage) pixel = PlayState.daPixelZoom;
@@ -215,7 +221,6 @@ class PixelSplashShader extends FlxShader
 		uniform vec3 g;
 		uniform vec3 b;
 		uniform float mult;
-		uniform bool enabled;
 		uniform vec2 uBlocksize;
 
 		vec4 flixel_texture2DCustom(sampler2D bitmap, vec2 coord) {
@@ -225,7 +230,7 @@ class PixelSplashShader extends FlxShader
 				return color;
 			}
 
-			if(!enabled || color.a == 0.0 || mult == 0.0) {
+			if(color.a == 0.0 || mult == 0.0) {
 				return color * openfl_Alphav;
 			}
 

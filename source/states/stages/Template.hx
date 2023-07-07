@@ -78,7 +78,7 @@ class Template extends BaseStage
 	{
 		switch(eventName)
 		{
-			case "myEvent":
+			case "My Event":
 		}
 	}
 	override function eventPushed(event:objects.Note.EventNote)
@@ -86,7 +86,10 @@ class Template extends BaseStage
 		// used for preloading assets used on events
 		switch(event.event)
 		{
-			case "myEvent":
+			case "My Event":
+				//precacheImage('myImage') //preloads images/myImage.png
+				//precacheSound('mySound') //preloads sounds/mySound.ogg
+				//precacheMusic('myMusic') //preloads music/myMusic.ogg
 		}
 	}
 }

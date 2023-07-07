@@ -1,6 +1,6 @@
 package backend;
 
-import haxe.Json;
+import tjson.TJSON as Json;
 import lime.utils.Assets;
 
 #if sys

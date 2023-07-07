@@ -6,9 +6,11 @@ import flixel.addons.display.shapes.FlxShapeCircle;
 import flixel.math.FlxPoint;
 import lime.system.Clipboard;
 import flixel.util.FlxGradient;
-import shaders.RGBPalette;
 import objects.StrumNote;
 import objects.Note;
+
+import shaders.RGBPalette;
+import shaders.RGBPalette.RGBShaderReference;
 
 class NotesSubState extends MusicBeatSubstate
 {
@@ -291,7 +293,26 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		else if(controls.RESET)
 		{
-			setShaderColor(!onPixel? ClientPrefs.defaultData.arrowRGB[curSelectedNote][curSelectedMode] : ClientPrefs.defaultData.arrowRGBPixel[curSelectedNote][curSelectedMode]);
+			if(FlxG.keys.pressed.SHIFT)
+			{
+				for (i in 0...3)
+				{
+					var strumRGB:RGBShaderReference = myNotes.members[curSelectedNote].rgbShader;
+					var color:FlxColor = !onPixel ? ClientPrefs.defaultData.arrowRGB[curSelectedNote][i] :
+													ClientPrefs.defaultData.arrowRGBPixel[curSelectedNote][i];
+					switch(i)
+					{
+						case 0:
+							getShader().r = strumRGB.r = color;
+						case 1:
+							getShader().g = strumRGB.g = color;
+						case 2:
+							getShader().b = strumRGB.b = color;
+					}
+					dataArray[curSelectedNote][i] = color;
+				}
+			}
+			setShaderColor(!onPixel ? ClientPrefs.defaultData.arrowRGB[curSelectedNote][curSelectedMode] : ClientPrefs.defaultData.arrowRGBPixel[curSelectedNote][curSelectedMode]);
 			FlxG.sound.play(Paths.sound('cancelMenu'), 0.6);
 			updateColors();
 		}
@@ -408,6 +429,8 @@ class NotesSubState extends MusicBeatSubstate
 		bigNote.setPosition(250, 325);
 		bigNote.setGraphicSize(250);
 		bigNote.updateHitbox();
+		bigNote.rgbShader.parent = Note.globalRgbShaders[curSelectedNote];
+		bigNote.shader = Note.globalRgbShaders[curSelectedNote].shader;
 		for (i in 0...Note.colArray.length)
 		{
 			if(!onPixel) bigNote.animation.addByPrefix('note$i', Note.colArray[i] + '0', 24, true);
@@ -415,6 +438,7 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		insert(members.indexOf(myNotes) + 1, bigNote);
 		_storedColor = getShaderColor();
+		PlayState.isPixelStage = false;
 	}
 
 	function updateNotes(?instant:Bool = false)
@@ -453,7 +477,7 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		colorGradientSelector.y = colorGradient.y + colorGradient.height * (1 - color.brightness);
 
-		var strumRGB:RGBPalette = myNotes.members[curSelectedNote].rgbShader;
+		var strumRGB:RGBShaderReference = myNotes.members[curSelectedNote].rgbShader;
 		switch(curSelectedMode)
 		{
 			case 0:
