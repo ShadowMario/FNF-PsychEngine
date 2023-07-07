@@ -1,7 +1,6 @@
-1.2.0;
-- KADE ENGINE Complex Accuracy!!
-- 2 New HUD Types
-- Simplified Rating Counter
-- Optimized Chart Editor
-- Opponent Hit count Option!
-- Fixed RPC
+1.3.0;
+- Everything using DENPA code was removed
+- New Botplay Texts
+- More Options & Choices
+- New FC Ratings!
+- New Hitsound
