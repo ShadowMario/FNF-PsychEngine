@@ -340,7 +340,7 @@ class ChartingState extends MusicBeatState
 
 		text =
 		"W/S or Mouse Wheel - Change Conductor's strum time
-		\n1 - Go to the start of the chart
+		\nH - Go to the start of the chart
 		\nA/D - Go to the previous/next section
 		\nLeft/Right - Change Snap
 		\nUp/Down - Change Conductor's Strum Time with Snapping
@@ -2119,7 +2119,7 @@ class ChartingState extends MusicBeatState
 			if (FlxG.keys.pressed.SHIFT)
 				shiftThing = 4;
 
-			if (FlxG.keys.justPressed.ONE)
+			if (FlxG.keys.justPressed.H)
 				changeSection(0);
 			if (FlxG.keys.justPressed.D)
 				changeSection(curSec + shiftThing);
