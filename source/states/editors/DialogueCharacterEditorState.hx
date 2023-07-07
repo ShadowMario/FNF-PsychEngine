@@ -11,7 +11,7 @@ import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
-import haxe.Json;
+import tjson.TJSON as Json;
 import lime.system.Clipboard;
 #if sys
 import sys.io.File;
@@ -742,7 +742,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 	}
 
 	function saveCharacter() {
-		var data:String = Json.stringify(character.jsonFile, "\t");
+		var data:String = haxe.Json.stringify(character.jsonFile, "\t");
 		if (data.length > 0)
 		{
 			var splittedImage:Array<String> = imageInputText.text.trim().split('_');

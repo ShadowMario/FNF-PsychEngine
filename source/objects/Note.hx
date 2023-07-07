@@ -1,10 +1,11 @@
 package objects;
 
-import states.editors.ChartingState;
 import objects.StrumNote;
 
 import shaders.RGBPalette;
 import shaders.RGBPalette.RGBShaderReference;
+
+using StringTools;
 
 typedef EventNote = {
 	strumTime:Float,
@@ -24,9 +25,14 @@ typedef NoteSplashData = {
 	a:Float
 }
 
+typedef NoteTypeProperty = {
+	property:Array<String>,
+	value:Dynamic
+}
+
 class Note extends FlxSprite
 {
-	public var extraData:Map<String,Dynamic> = [];
+	public var extraData:Map<String, Dynamic> = new Map<String, Dynamic>();
 
 	public var strumTime:Float = 0;
 	public var mustPress:Bool = false;
@@ -70,7 +76,7 @@ class Note extends FlxSprite
 	public static var colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
 	public static var defaultNoteSkin:String = 'noteSkins/NOTE_assets';
 
-	public var noteSplashData:NoteSplashData = {disabled: false, texture: null, antialiasing: PlayState.isPixelStage, useGlobalShader: false, r: -1, g: -1, b: -1, a: 0.6};
+	public var noteSplashData:NoteSplashData = {disabled: false, texture: null, antialiasing: !PlayState.isPixelStage, useGlobalShader: false, r: -1, g: -1, b: -1, a: 0.6};
 	public var offsetX:Float = 0;
 	public var offsetY:Float = 0;
 	public var offsetAngle:Float = 0;
@@ -167,6 +173,7 @@ class Note extends FlxSprite
 				case 'GF Sing':
 					gfNote = true;
 			}
+			if (value != null && value.length > 1) applyNoteTypeData(value);
 			noteType = value;
 		}
 		return value;
@@ -409,5 +416,125 @@ class Note extends FlxSprite
 			if (alpha > 0.3)
 				alpha = 0.3;
 		}
+	}
+
+	// Custom Note Types txt
+	private static var noteTypesData:Map<String, Array<NoteTypeProperty>> = new Map<String, Array<NoteTypeProperty>>();
+	public static function clearNoteTypesData()
+		noteTypesData.clear();
+
+	public static function loadNoteTypeData(name:String)
+	{
+		if(noteTypesData.exists(name)) return noteTypesData.get(name);
+
+		var str:String = Paths.getTextFromFile('custom_notetypes/$name.txt');
+		if(str == null || !str.contains(':') || !str.contains('=')) noteTypesData.set(name, null);
+
+		var parsed:Array<NoteTypeProperty> = [];
+		var lines:Array<String> = CoolUtil.listFromString(str);
+		for (line in lines)
+		{
+			var sep:Int = line.indexOf(':');
+			if(sep < 0)
+			{
+				sep = line.indexOf('=');
+				if(sep < 0) continue;
+			}
+
+			var arr:Array<String> = line.substr(0, sep).trim().split('.');
+			for (i in 0...arr.length) arr[i] = arr[i].trim();
+
+			var newProp:NoteTypeProperty = {
+				property: arr,
+				value: _interpretValue(line.substr(sep + 1).trim())
+			}
+			//trace('pushing $newProp');
+			parsed.push(newProp);
+		}
+		noteTypesData.set(name, parsed);
+		return parsed;
+	}
+
+	public function applyNoteTypeData(name:String)
+	{
+		var data:Array<NoteTypeProperty> = loadNoteTypeData(name);
+		if(data == null || data.length < 1) return;
+		
+		for (line in data) 
+		{
+			var obj:Dynamic = this;
+			var split:Array<String> = line.property;
+			try
+			{
+				if(split.length <= 1)
+				{
+					_propCheckArray(obj, split[0], true, line.value);
+					continue;
+				}
+
+				switch(split[0]) // special cases
+				{
+					case 'extraData': 
+						extraData.set(split[1], line.value);
+						continue;
+					
+					case 'noteType':
+						continue;
+				}
+
+				for (i in 0...split.length-1)
+				{
+					if(i < split.length-1)
+						obj = _propCheckArray(obj, split[i]);
+				}
+				_propCheckArray(obj, split[split.length-1], true, line.value);
+			} catch(e) trace(e);
+		}
+	}
+
+	private static function _propCheckArray(obj:Dynamic, slice:String, setProp:Bool = false, valueToSet:Dynamic = null)
+	{
+		var propArray:Array<String> = slice.split('[');
+		if(propArray.length > 1)
+		{
+			for (i in 0...propArray.length)
+			{
+				var str:Dynamic = propArray[i];
+				var id:Int = Std.parseInt(str.substr(0, str.length-1).trim());
+				if(i < propArray.length-1) obj = obj[id]; //middles
+				else if (setProp) return obj[id] = valueToSet; //last
+			}
+			return obj;
+		}
+		else if(setProp)
+		{
+			//trace('setProp: $slice');
+			Reflect.setProperty(obj, slice, valueToSet);
+			return valueToSet;
+		}
+		//trace('getting prop: $slice');
+		return Reflect.getProperty(obj, slice);
+	}
+
+	private static function _interpretValue(value:String):Any
+	{
+		if(value.charAt(0) == "'" || value.charAt(0) == '"')
+		{
+			//is a string
+			return value.substring(1, value.length-1);
+		}
+		
+		switch(value)
+		{
+			case "true":
+				return true;
+			case "false":
+				return false;
+			case "null":
+				return null;
+		}
+
+		if(value.contains('.')) return Std.parseFloat(value);
+		return Std.parseInt(value);
 	}
 }

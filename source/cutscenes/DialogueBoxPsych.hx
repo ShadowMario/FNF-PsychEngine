@@ -1,6 +1,6 @@
 package cutscenes;
 
-import haxe.Json;
+import tjson.TJSON as Json;
 import openfl.utils.Assets;
 
 #if sys

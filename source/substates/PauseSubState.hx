@@ -248,14 +248,19 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.paused = true; // For lua
 					PlayState.instance.vocals.volume = 0;
 					MusicBeatState.switchState(new OptionsState());
-					if(ClientPrefs.data.pauseMusic != 'None') FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)));
+					if(ClientPrefs.data.pauseMusic != 'None')
+					{
+						FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)), pauseMusic.volume);
+						FlxTween.tween(FlxG.sound.music, {volume: 1}, 0.8);
+						FlxG.sound.music.time = pauseMusic.time;
+					}
 					OptionsState.onPlayState = true;
 				case "Exit to menu":
 					#if desktop DiscordClient.resetClientID(); #end
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 
-					Mods.loadTheFirstEnabledMod();
+					Mods.loadTopMod();
 					if(PlayState.isStoryMode) {
 						MusicBeatState.switchState(new StoryMenuState());
 					} else {

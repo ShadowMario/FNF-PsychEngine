@@ -42,12 +42,10 @@ class Mall extends BaseStage
 		setDefaultGF('gf-christmas');
 
 		if(isStoryMode && !seenCutscene)
-		{
 			setEndCallback(eggnogEndCutscene);
-		}
 	}
 
-	override function countdownTick(count:BaseStage.Countdown, num:Int) everyoneDance();
+	override function countdownTick(count:Countdown, num:Int) everyoneDance();
 	override function beatHit() everyoneDance();
 
 	override function eventCalled(eventName:String, value1:String, value2:String, flValue1:Null<Float>, flValue2:Null<Float>, strumTime:Float)

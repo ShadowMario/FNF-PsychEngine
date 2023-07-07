@@ -2,7 +2,7 @@ package backend;
 
 import sys.FileSystem;
 import sys.io.File;
-import haxe.Json;
+import tjson.TJSON as Json;
 
 typedef ModsList = {
 	enabled:Array<String>,
@@ -33,10 +33,10 @@ class Mods
 
 	private static var globalMods:Array<String> = [];
 
-	public static function getGlobalMods()
+	inline public static function getGlobalMods()
 		return globalMods;
 
-	public static function pushGlobalMods() // prob a better way to do this but idc
+	inline public static function pushGlobalMods() // prob a better way to do this but idc
 	{
 		globalMods = [];
 		for(mod in parseList().enabled)
@@ -47,7 +47,7 @@ class Mods
 		return globalMods;
 	}
 
-	public static function getModDirectories():Array<String>
+	inline public static function getModDirectories():Array<String>
 	{
 		var list:Array<String> = [];
 		var modsFolder:String = Paths.mods();
@@ -60,6 +60,36 @@ class Mods
 			}
 		}
 		return list;
+	}
+
+	inline public static function getFoldersList(path:String, fileToFind:String, mods:Bool = true)
+	{
+		var foldersToCheck:Array<String> = [];
+		if(FileSystem.exists(path + fileToFind)) foldersToCheck.push(path + fileToFind);
+
+		#if MODS_ALLOWED
+		if(mods)
+		{
+			// Global mods first
+			for(mod in Mods.getGlobalMods())
+			{
+				var folder:String = Paths.mods(mod + '/' + fileToFind);
+				if(FileSystem.exists(folder)) foldersToCheck.insert(0, folder);
+			}
+
+			// Then "PsychEngine/mods/" main folder
+			var folder:String = Paths.mods(fileToFind);
+			if(FileSystem.exists(folder)) foldersToCheck.insert(0, Paths.mods(fileToFind));
+
+			// And lastly, the loaded mod's folder
+			if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
+			{
+				var folder:String = Paths.mods(Mods.currentModDirectory + '/' + fileToFind);
+				if(FileSystem.exists(folder)) foldersToCheck.insert(0, folder);
+			}
+		}
+		#end
+		return foldersToCheck;
 	}
 
 	public static function getPack(?folder:String = null):Dynamic
@@ -79,7 +109,7 @@ class Mods
 	}
 
 	public static var updatedOnState:Bool = false;
-	public static function parseList():ModsList {
+	inline public static function parseList():ModsList {
 		if(!updatedOnState) updateModList();
 		var list:ModsList = {enabled: [], disabled: [], all: []};
 
@@ -146,7 +176,7 @@ class Mods
 		//trace('Saved modsList.txt');
 	}
 
-	public static function loadTheFirstEnabledMod()
+	public static function loadTopMod()
 	{
 		Mods.currentModDirectory = '';
 		
