@@ -126,7 +126,7 @@ class Tank extends BaseStage
 		}
 	}
 
-	override function countdownTick(count:BaseStage.Countdown, num:Int) if(num % 2 == 0) everyoneDance();
+	override function countdownTick(count:Countdown, num:Int) if(num % 2 == 0) everyoneDance();
 	override function beatHit() everyoneDance();
 	function everyoneDance()
 	{

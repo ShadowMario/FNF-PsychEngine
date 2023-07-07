@@ -19,8 +19,7 @@ import sys.FileSystem;
 #end
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
-import haxe.Json;
-import haxe.format.JsonParser;
+import tjson.TJSON as Json;
 
 using StringTools;
 

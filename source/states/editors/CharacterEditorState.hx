@@ -19,7 +19,7 @@ import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import lime.system.Clipboard;
-import haxe.Json;
+import tjson.TJSON as Json;
 
 import objects.Character;
 import objects.HealthIcon;
@@ -1329,7 +1329,7 @@ class CharacterEditorState extends MusicBeatState
 			"healthbar_colors": char.healthColorArray
 		};
 
-		var data:String = Json.stringify(json, "\t");
+		var data:String = haxe.Json.stringify(json, "\t");
 
 		if (data.length > 0)
 		{

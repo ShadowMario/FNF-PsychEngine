@@ -2,7 +2,6 @@ package backend;
 
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.transition.FlxTransitionableState;
-import states.stages.BaseStage;
 import flixel.FlxState;
 
 class MusicBeatState extends FlxUIState

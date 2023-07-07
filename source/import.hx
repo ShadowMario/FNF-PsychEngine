@@ -15,6 +15,7 @@ import backend.MusicBeatSubstate;
 import backend.CustomFadeTransition;
 import backend.ClientPrefs;
 import backend.Conductor;
+import backend.BaseStage;
 import backend.Difficulty;
 
 import objects.Alphabet;
