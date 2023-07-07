@@ -227,6 +227,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Full FC Rating Name',
+			'If checked, the FC ratings will use their full name instead of their abbreviated form (so an SFC will become a Sick Full Combo).',
+			'longFCName',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Show Ratings & Combo',
 			"If checked, shows the ratings & combo. Kinda defeats the purpose of this engine though...",
 			'ratesAndCombo',

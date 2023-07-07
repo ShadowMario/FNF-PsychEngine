@@ -3493,7 +3493,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = "< Bot Score: " + songScore
 		+ ' ~ Bot Combo: ' + combo
 		+ ' ~ Bot NPS: ' + nps
-		+ ' ~ Botplay Mode';
+		+ ' ~ Botplay Mode >';
 		}
 		}
 		if (ClientPrefs.hudType == "Tails Gets Trolled V4")
@@ -3530,7 +3530,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.healthDisplay) scoreTxt.text += ' | Health: ' + FlxMath.roundDecimal(health * 50, 2) + '%';
 
-		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
+		/*if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {
 				scoreTxtTween.cancel();
@@ -3542,7 +3542,7 @@ class PlayState extends MusicBeatState
 					scoreTxtTween = null;
 				}
 			});
-		}
+		} moving this to popupscore so that it doesn't just break scoretxt*/
 		callOnLuas('onUpdateScore', [miss]);
 	}
 
@@ -3612,6 +3612,14 @@ class PlayState extends MusicBeatState
 		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Low') 
 		{
 		FlxG.sound.music.onComplete = loopSongLow.bind();
+		}
+		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Lower') 
+		{
+		FlxG.sound.music.onComplete = loopSongLower.bind();
+		}
+		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Lowest') 
+		{
+		FlxG.sound.music.onComplete = loopSongLowest.bind();
 		}
 		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Disabled') 
 		{
@@ -3919,35 +3927,8 @@ class PlayState extends MusicBeatState
 		unspawnNotes.sort(sortByTime);
 		generatedMusic = true;
 	}
-
 	private function generateTrollSongShit(dataPath:String):Void
 	{
-		// FlxG.log.add(ChartParser.parse());
-		/*
-		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
-
-		switch(songSpeedType)
-		{
-			case "multiplicative":
-				songSpeed = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1);
-			case "constant":
-				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
-		}
-
-		var songData = SONG;
-		Conductor.changeBPM(songData.bpm);
-
-		curSong = songData.song;
-
-		if (SONG.needsVoices)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-		else
-			vocals = new FlxSound();
-
-		vocals.pitch = playbackRate;
-		FlxG.sound.list.add(vocals);
-		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
-		*/ //don't load the audio again, that just takes up more memory
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
 
@@ -3962,10 +3943,6 @@ class PlayState extends MusicBeatState
 		// NEW SHIT
 		noteData = songData.notes;
 
-		var playerCounter:Int = 0;
-
-		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
-
 		var songName:String = Paths.formatToSongPath(SONG.song);
 
 		for (section in noteData)
@@ -3973,37 +3950,7 @@ class PlayState extends MusicBeatState
 			for (songNotes in section.sectionNotes)
 			{
 				var daStrumTime:Float = songNotes[0];
-				var daNoteData:Int = 0;
-				if (!randomMode && !flip && !stairs	&& !waves)
-				{
-				daNoteData = Std.int(songNotes[1] % 4);
-				}
-				if (oneK)
-				{
-				daNoteData = 2;
-				}
-				if (randomMode) { //gotta specify that random mode must at least be turned on for this to work
-				daNoteData = FlxG.random.int(0, 3);
-				}
-				if (flip) {
-				daNoteData = Std.int(Math.abs((songNotes[1] % 4) - 3));
-				}
-				if (stairs && !waves) {
-				daNoteData = stair % 4;
-				stair++;
-				}
-				if (waves) {
-						switch (stair % 6)
-							{
-								case 0 | 1 | 2 | 3:
-									daNoteData = stair % 6;
-								case 4:
-									daNoteData = 2;
-								case 5:
-									daNoteData = 1;
-							}
-				stair++;
-				}
+				var daNoteData:Int = Std.int(songNotes[1] % 4);
 				var gottaHitNote:Bool = section.mustHitSection;
 
 				if (songNotes[1] > 3 && !opponentChart)
@@ -4014,7 +3961,6 @@ class PlayState extends MusicBeatState
 				{
 					gottaHitNote = !section.mustHitSection;
 				}
-
 				if (gottaHitNote)
 				{
 					totalNotes += 1;
@@ -4054,56 +4000,14 @@ class PlayState extends MusicBeatState
 						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
 						sustainNote.mustPress = gottaHitNote;
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
-						sustainNote.noteType = swagNote.noteType;
 						sustainNote.scrollFactor.set();
 						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
 					}
 				}
-				if (!trollingMode) {
-				if(!noteTypeMap.exists(swagNote.noteType)) {
-					noteTypeMap.set(swagNote.noteType, true);
-				}
-				} //uhh
-				var jackNote:Note;
-
-				if (jackingtime > 0)
-				{
-					for (i in 0...Std.int(jackingtime))
-					{
-						jackNote = new Note(swagNote.strumTime + 70 * (i + 1), swagNote.noteData, oldNote);
-						jackNote.scrollFactor.set();
-
-				jackNote.mustPress = swagNote.mustPress;
-				jackNote.sustainLength = swagNote.sustainLength;
-				jackNote.gfNote = swagNote.gfNote;
-				if (ClientPrefs.doubleGhost)
-					{
-					jackNote.row = Conductor.secsToRow(daStrumTime);
-					if(noteRows[gottaHitNote?0:1][jackNote.row]==null)
-						noteRows[gottaHitNote?0:1][jackNote.row]=[];
-					noteRows[gottaHitNote ? 0 : 1][jackNote.row].push(jackNote);
-					}
-
-						unspawnNotes.push(jackNote);
-
-						jackNote.mustPress = swagNote.mustPress;
-						if (!trollingMode)
-						{
-						if(!noteTypeMap.exists(jackNote.noteType)) {
-							noteTypeMap.set(jackNote.noteType, true);
-						}
-						}
-					}
-				}
 			}
-			daBeats += 1;
 		}
-
-		// trace(unspawnNotes.length);
-		// playerCounter += 1;
-
 		unspawnNotes.sort(sortByTime);
 	}
 	function eventPushed(event:EventNote) {
@@ -4724,6 +4628,18 @@ class PlayState extends MusicBeatState
 							botplayTxt.visible = false;
 						});
 				}
+			if(botplayTxt.text == "You use botplay? In 10 seconds I knock your botplay thing and text so you'll never use it >:)" && !botplayUsed)
+				{
+					botplayUsed = true;
+					new FlxTimer().start(10, function(tmr:FlxTimer)
+						{
+							cpuControlled = false;
+							botplayUsed = false;
+							FlxG.sound.play(Paths.sound('pipe'), 10);
+							botplayTxt.visible = false;
+							PauseSubState.botplayLockout = true;
+						});
+				}
 			if(botplayTxt.text == "you have 10 seconds to run." && !botplayUsed)
 				{
 					botplayUsed = true;
@@ -4823,9 +4739,9 @@ class PlayState extends MusicBeatState
 					case 40:
 						pauseWarnText.text = "fuck off.";
 						FlxG.sound.play(Paths.sound('pipe'), 1);
-						FlxG.sound.music.volume = 0;
-						vocals.volume = 0;
-						Conductor.songPosition = -100000;
+						FlxG.sound.music.pause();
+						vocals.pause();
+						//Conductor.songPosition = -10000000000; block
 					restartTimer = new FlxTimer().start(10, function(_) {
 						PauseSubState.restartSong(true);
 					});
@@ -4918,9 +4834,10 @@ class PlayState extends MusicBeatState
 		if (generatedMusic) {
 			if (startedCountdown && canPause && !endingSong) {
 				var endingTimeLimit:Int = (playbackRate > 2 ? 100 : 20);
+				if (ClientPrefs.trollMaxSpeed != 'Lowest') {
 				if (playbackRate > 8) endingTimeLimit = 200;
 				if (playbackRate > 12) endingTimeLimit = 300;
-				if (playbackRate > 20) endingTimeLimit = 500;
+				if (playbackRate > 20) endingTimeLimit = 600;
 				if (playbackRate > 40) endingTimeLimit = 800;
 				if (playbackRate > 50) endingTimeLimit = 1000;
 				if (playbackRate > 60) endingTimeLimit = 2000;
@@ -4931,6 +4848,18 @@ class PlayState extends MusicBeatState
 				if (playbackRate > 500) endingTimeLimit = 5000;
 				if (playbackRate > 750) endingTimeLimit = 2500;
 				if (playbackRate > 1000) endingTimeLimit = 20;
+				} else {
+				if (playbackRate > 8) endingTimeLimit = 200;
+				if (playbackRate > 12) endingTimeLimit = 300;
+				if (playbackRate > 20) endingTimeLimit = 600;
+				if (playbackRate > 40) endingTimeLimit = 800;
+				if (playbackRate > 50) endingTimeLimit = 1000;
+				if (playbackRate > 60) endingTimeLimit = 2000;
+				if (playbackRate > 80) endingTimeLimit = 4000;
+				if (playbackRate > 125) endingTimeLimit = 5000;
+				if (playbackRate > 140) endingTimeLimit = 6000;
+				if (playbackRate > 250) endingTimeLimit = 20;
+				}
 
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
@@ -4941,6 +4870,8 @@ class PlayState extends MusicBeatState
 					if (ClientPrefs.trollMaxSpeed == 'High') loopSongHigh();
 					if (ClientPrefs.trollMaxSpeed == 'Medium') loopSongMedium();
 					if (ClientPrefs.trollMaxSpeed == 'Low') loopSongLow();
+					if (ClientPrefs.trollMaxSpeed == 'Lower') loopSongLower();
+					if (ClientPrefs.trollMaxSpeed == 'Lowest') loopSongLowest();
 					if (ClientPrefs.trollMaxSpeed == 'Disabled') loopSongNoLimit();
 				}
 			}
@@ -5088,6 +5019,8 @@ class PlayState extends MusicBeatState
 					timePercentTxt.text = songPercentThing  + '%';
 					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType != 'Song Name') timeTxt.text += ' (' + playbackRateDecimal + 'x)';
 					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType == 'Song Name') timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x)';
+		if (cpuControlled && ClientPrefs.timeBarType != 'Song Name') timeTxt.text += ' (Bot)';
+					if(ClientPrefs.timebarShowSpeed && cpuControlled && ClientPrefs.timeBarType == 'Song Name') timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x) (Bot)';
 				}
 			}
 
@@ -6072,13 +6005,68 @@ class PlayState extends MusicBeatState
 				vocals.play();
 				FlxG.sound.music.play();
 	}
+	public function loopSongLower(?ignoreNoteOffset:Bool = false):Void
+	{	
+				FlxG.sound.music.stop();
+				vocals.stop();
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
+				if (playbackRate >= 512) playbackRate = 512;
+				if (playbackRate >= 256 && playbackRate <= 511.9) playbackRate += 12.8;
+				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
+				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
+				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
+				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
+				if (playbackRate >= 8 && playbackRate <= 16) playbackRate += 0.4;
+				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
+				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
+				if (playbackRate <= 2) playbackRate += 0.05;
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateTrollSongShit(SONG.song);
+				vocals.play();
+				FlxG.sound.music.play();
+	}
+	public function loopSongLowest(?ignoreNoteOffset:Bool = false):Void
+	{	
+				FlxG.sound.music.stop();
+				vocals.stop();
+		timeBarBG.visible = true;
+		timeBar.visible = true;
+		timeTxt.visible = true;
+		canPause = true;
+		endingSong = false;
+		camZooming = true;
+		inCutscene = false;
+		updateTime = true;
+		startingSong = false;
+				if (playbackRate >= 256) playbackRate = 256;
+				if (playbackRate >= 128 && playbackRate <= 255) playbackRate += 6.4;
+				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
+				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
+				if (playbackRate >= 16 && playbackRate <= 32) playbackRate += 0.8;
+				if (playbackRate >= 8 && playbackRate <= 16) playbackRate += 0.4;
+				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
+				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
+				if (playbackRate <= 2) playbackRate += 0.05;
+				Conductor.songPosition = 0;
+				KillNotes();
+				generateTrollSongShit(SONG.song);
+				vocals.play();
+				FlxG.sound.music.play();
+	}
 
 	public function infiniteLoop(?ignoreNoteOffset:Bool = false):Void
 	{	
 				FlxG.sound.music.stop();
-				vocals.stop();	
-				FlxG.sound.music.volume = 1;
-				vocals.volume = 1;
+				vocals.stop();
 		timeBarBG.visible = true;
 		timeBar.visible = true;
 		timeTxt.visible = true;
@@ -6446,6 +6434,19 @@ class PlayState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.35;
 		//
+		if(ClientPrefs.scoreZoom && !cpuControlled)
+		{
+			if(scoreTxtTween != null) {
+				scoreTxtTween.cancel();
+			}
+			scoreTxt.scale.x = 1.075;
+			scoreTxt.scale.y = 1.075;
+			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					scoreTxtTween = null;
+				}
+			});
+		}
 
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 500;
@@ -6735,6 +6736,7 @@ if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.badWindow 
 			msTxt.x = (ClientPrefs.comboPopup ? coolText.x + 280 : coolText.x + 80);
 			msTxt.alpha = 1;
 			msTxt.text = FlxMath.roundDecimal(-msTiming, 3) + " MS";
+			if (cpuControlled) msTxt.text = "0 MS (Bot)";
 			msTxt.x += ClientPrefs.comboOffset[0];
 			msTxt.y -= ClientPrefs.comboOffset[1];
 			if (combo >= 1000000) msTxt.x += 30;
@@ -8421,6 +8423,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 			// Rating FC
 			ratingFC = "";
+			if (totalPlayed == 0) ratingFC = "No Play";
 			if (marvs > 0) ratingFC = "MFC";
 			if (sicks > 0) ratingFC = "SFC";
 			if (goods > 0) ratingFC = "GFC";
@@ -8434,9 +8437,11 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			else if (songMisses >= 10000000) ratingFC = "SPDCB"; //i have no idea how you'd get a million misses but oh well
 
 
-
+	if (!ClientPrefs.longFCName) 
+	{
 		if (ClientPrefs.hudType == "VS Impostor")
 		{
+			if (totalPlayed == 0) ratingFC = " [No Play]";
 			if (marvs > 0) ratingFC = " [MFC]";
 			if (sicks > 0) ratingFC = " [SFC]";
 			if (goods > 0) ratingFC = " [GFC]";
@@ -8452,6 +8457,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		if (ClientPrefs.hudType == "Tails Gets Trolled V4")
 		{
+			if (totalPlayed == 0) ratingFC = "No Play";
 			if (marvs > 0) ratingFC = "KFC";
 			if (sicks > 0) ratingFC = "AFC";
 			if (goods > 0) ratingFC = "CFC";
@@ -8468,6 +8474,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			// Rating FC
 			if (ClientPrefs.hudType == 'Kade Engine' || ClientPrefs.hudType == 'Doki Doki+') {
 			ratingFC = "?";
+			if (totalPlayed == 0) ratingFC = "No Play";
 			if (marvs > 0) ratingFC = "(MFC)";
 			if (sicks > 0) ratingFC = "(SFC)";
 			if (goods > 0) ratingFC = "(GFC)";
@@ -8479,6 +8486,74 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			if (songMisses >= 1000) ratingFC = "(QDSB)";
 			if (songMisses >= 100000) ratingFC = "(STDCB)";
 			else if (songMisses >= 10000000) ratingFC = "(SPDCB)"; //i have no idea how you'd get a million misses but oh well
+			}
+			}
+		if (ClientPrefs.longFCName) 
+		{
+			if (totalPlayed == 0) ratingFC = "No Play";
+			if (marvs > 0) ratingFC = "Marvelous Full Combo";
+			if (sicks > 0) ratingFC = "Sick Full Combo";
+			if (goods > 0) ratingFC = "Great Full Combo";
+			if (bads > 0) ratingFC = "Bad Full Combo";
+			if (shits > 0) ratingFC = "Shit Full Combo";
+			if (songMisses > 0 && songMisses < 10) ratingFC = "Single Digit Combo Breaks";
+			if (songMisses >= 10) ratingFC = "Double Digit Combo Breaks";
+			if (songMisses >= 100) ratingFC = "Triple Digit Combo Breaks";
+			if (songMisses >= 1000) ratingFC = "Quadruple Digit Combo Breaks";
+			if (songMisses >= 10000) ratingFC = "Quintuple Digit Combo Breaks";
+			if (songMisses >= 100000) ratingFC = "Sixtuple Digit Combo Breaks";
+			else if (songMisses >= 10000000) ratingFC = "Septuple Digit Combo Breaks"; //i have no idea how you'd get a million misses but oh well
+		if (ClientPrefs.hudType == "VS Impostor")
+		{
+			if (totalPlayed == 0) ratingFC = " [No Play]";
+			if (marvs > 0) ratingFC = " [Marvelous Full Combo]";
+			if (sicks > 0) ratingFC = " [Sick Full Combo]";
+			if (goods > 0) ratingFC = " [Great Full Combo]";
+			if (bads > 0) ratingFC = " [Bad Full Combo]";
+			if (shits > 0) ratingFC = " [Shit Full Combo]";
+			if (songMisses > 0 && songMisses < 10) ratingFC = " [Single Digit Combo Breaks]";
+			if (songMisses >= 10) ratingFC = " [Double Digit Combo Breaks]";
+			if (songMisses >= 100) ratingFC = " [Triple Digit Combo Breaks]";
+			if (songMisses >= 1000) ratingFC = " [Quadruple Digit Combo Breaks]";
+			if (songMisses >= 10000) ratingFC = " [Quintuple Digit Combo Breaks]";
+			if (songMisses >= 100000) ratingFC = " [Sixtuple Digit Combo Breaks]";
+			else if (songMisses >= 10000000) ratingFC = " [Septuple Digit Combo Breaks]"; //i have no idea how you'd get a million misses but oh well
+		}
+
+		if (ClientPrefs.hudType == "Tails Gets Trolled V4")
+		{
+			if (totalPlayed == 0) ratingFC = "No Play";
+			if (marvs > 0) ratingFC = "Killer Full Combo";
+			if (sicks > 0) ratingFC = "Awesome Full Combo";
+			if (goods > 0) ratingFC = "Cool Full Combo";
+			if (bads > 0) ratingFC = "Gay Full Combo";
+			if (shits > 0) ratingFC = "Retarded Full Combo";
+			if (songMisses > 0 && songMisses < 10) ratingFC = "Single Digit Combo Breaks";
+			if (songMisses >= 10) ratingFC = "Double Digit Combo Breaks";
+			if (songMisses >= 100) ratingFC = "Triple Digit Combo Breaks";
+			if (songMisses >= 1000) ratingFC = "Quadruple Digit Combo Breaks";
+			if (songMisses >= 10000) ratingFC = "Quintuple Digit Combo Breaks";
+			if (songMisses >= 100000) ratingFC = "Sixtuple Digit Combo Breaks";
+			else if (songMisses >= 10000000) ratingFC = "Septuple Digit Combo Breaks"; //i have no idea how you'd get a million misses but oh well
+		}
+
+			// Rating FC
+			if (ClientPrefs.hudType == 'Kade Engine' || ClientPrefs.hudType == 'Doki Doki+') {
+			ratingFC = "?";
+			if (totalPlayed == 0) ratingFC = "(No Play)";
+			if (marvs > 0) ratingFC = "(Marvelous Full Combo)";
+			if (sicks > 0) ratingFC = "(Sick Full Combo)";
+			if (goods > 0) ratingFC = "(Great Full Combo)";
+			if (bads > 0) ratingFC = "(Bad Full Combo)";
+			if (shits > 0) ratingFC = "(Shit Full Combo)";
+			if (songMisses > 0 && songMisses < 10) ratingFC = "(Single Digit Combo Breaks)";
+			if (songMisses >= 10) ratingFC = "(Double Digit Combo Breaks)";
+			if (songMisses >= 100) ratingFC = "(Triple Digit Combo Breaks)";
+			if (songMisses >= 1000) ratingFC = "(Quadruple Digit Combo Breaks)";
+			if (songMisses >= 10000) ratingFC = "(Quintuple Digit Combo Breaks)";
+			if (songMisses >= 100000) ratingFC = "(Sixtuple Digit Combo Breaks)";
+			else if (songMisses >= 10000000) ratingFC = "(Septuple Digit Combo Breaks)"; //i have no idea how you'd get a million misses but oh well
+			}
 			}
 
 			ratingCool = "";

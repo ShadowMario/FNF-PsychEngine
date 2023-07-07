@@ -41,6 +41,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var doubleGhost:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var hideScore:Bool = false;
+	public static var longFCName:Bool = false;
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
@@ -183,6 +184,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.rateNameStuff = rateNameStuff;
+		FlxG.save.data.longFCName = longFCName;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.accuracyMod = accuracyMod;
 		FlxG.save.data.healthDisplay = healthDisplay;
@@ -330,6 +332,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.memLeaks != null) {
 			memLeaks = FlxG.save.data.memLeaks;
+		}
+		if(FlxG.save.data.longFCName != null) {
+			longFCName = FlxG.save.data.longFCName;
 		}
 		if(FlxG.save.data.zeroHealthLimit != null) {
 			zeroHealthLimit = FlxG.save.data.zeroHealthLimit;

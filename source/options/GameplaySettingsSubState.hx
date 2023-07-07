@@ -297,7 +297,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'trollMaxSpeed',
 			'string',
 			'Medium',
-			['Disabled', 'Low', 'Medium', 'High', 'Highest']);
+			['Disabled', 'Lowest', 'Lower', 'Low', 'Medium', 'High', 'Highest']);
 		addOption(option);
 
 		super();
