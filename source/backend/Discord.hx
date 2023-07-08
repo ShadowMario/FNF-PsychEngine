@@ -4,11 +4,6 @@ import Sys.sleep;
 import discord_rpc.DiscordRpc;
 import lime.app.Application;
 
-#if LUA_ALLOWED
-import llua.Lua;
-import llua.State;
-#end
-
 class DiscordClient
 {
 	public static var isInitialized:Bool = false;

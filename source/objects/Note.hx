@@ -102,6 +102,7 @@ class Note extends FlxSprite
 	public var distance:Float = 2000; //plan on doing scroll directions soon -bb
 
 	public var hitsoundDisabled:Bool = false;
+	public var hitsoundChartEditor:Bool = true;
 	public var hitsound:String = 'hitsound';
 
 	private function set_multSpeed(value:Float):Float {
@@ -167,6 +168,7 @@ class Note extends FlxSprite
 					missHealth = isSustainNote ? 0.25 : 0.1;
 					hitCausesMiss = true;
 					hitsound = 'cancelMenu';
+					hitsoundChartEditor = false;
 				case 'Alt Animation':
 					animSuffix = '-alt';
 				case 'No Animation':

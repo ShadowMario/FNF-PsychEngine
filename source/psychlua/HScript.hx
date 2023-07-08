@@ -6,13 +6,6 @@ import hscript.Interp;
 import hscript.Expr;
 #end
 
-#if LUA_ALLOWED
-import llua.Lua;
-import llua.LuaL;
-import llua.State;
-import llua.Convert;
-#end
-
 import haxe.Exception;
 
 import objects.Character;
