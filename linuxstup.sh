@@ -1,5 +1,5 @@
 #Linux Setup
-sudo apt-get install libvlc-dev libvlccore-dev libvlc-bin vlc-bin haxe g++
+sudo apt-get install libvlc-dev libvlccore-dev libvlc-bin vlc-bin haxe g++ git
 mkdir ~/hxsetup
 cd ~/hxsetup
 wget https://github.com/HaxeFoundation/haxe/releases/download/4.2.5/haxe-4.2.5-linux64.tar.gz
