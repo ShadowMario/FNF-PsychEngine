@@ -59,7 +59,8 @@ class LuaUtils
 			}
 			return target;
 		}
-		if(/*Std.isOfType(instance, Map)*/ instance.set != null) //cheaper way to get a map but less safe
+
+		if(/*Std.isOfType(instance, Map)*/ instance.keyValueIterator != null) //cheaper way to get a map but less safe
 			instance.set(variable,value);
 		else
 		{
@@ -95,6 +96,9 @@ class LuaUtils
 			}
 			return target;
 		}
+
+		if(/*Std.isOfType(instance, Map)*/ instance.keyValueIterator != null) //cheaper way to get a map but less safe
+			return instance.get(variable);
 
 		if(PlayState.instance.variables.exists(variable))
 		{
