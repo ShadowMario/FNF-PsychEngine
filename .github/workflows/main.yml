@@ -32,7 +32,9 @@ jobs:
       - name: Install Haxelib
         run: |
           sudo apt-get install libvlc-dev
-          sudo apt-get install libvlccore-dev
+          sudo apt-get install libvlccore-dev 
+          sudo apt-get install libvlc-bin
+          sudo apt-get install vlc-bin
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
