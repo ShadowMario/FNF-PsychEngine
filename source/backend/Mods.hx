@@ -62,7 +62,7 @@ class Mods
 		return list;
 	}
 
-	inline public static function getFoldersList(path:String, fileToFind:String, mods:Bool = true)
+	inline public static function directoriesWithFile(path:String, fileToFind:String, mods:Bool = true)
 	{
 		var foldersToCheck:Array<String> = [];
 		if(FileSystem.exists(path + fileToFind)) foldersToCheck.push(path + fileToFind);

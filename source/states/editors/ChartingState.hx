@@ -927,7 +927,7 @@ class ChartingState extends MusicBeatState
 			key++;
 		}
 
-		var foldersToCheck:Array<String> = Mods.getFoldersList(Paths.getPreloadPath(), 'custom_notetypes/');
+		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'custom_notetypes/');
 		for (folder in foldersToCheck)
 			for (file in FileSystem.readDirectory(folder))
 			{
