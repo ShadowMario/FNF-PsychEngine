@@ -21,9 +21,5 @@ haxelib install lime 8.0.1
 haxelib run lime setup
 haxelib git linc_luajit https://github.com/superpowers04/linc_luajit.git
 haxelib install openfl 9.2.1
-mkdir ~/haxelib/FNF-PsychEngine
-cd ~/haxelib/FNF-PsychEngine
-git clone https://github.com/ShadowMario/FNF-PsychEngine.git git
-cd ~/haxelib/FNF*/git/
 lime build linux
 #Script For Psych Engine
