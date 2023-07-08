@@ -1292,7 +1292,7 @@ class FunkinLua {
 					LuaUtils.getTargetInstance().add(shit);
 				else
 				{
-					if(PlayState.instance.isDead)
+					if(!PlayState.instance.isDead)
 						PlayState.instance.insert(PlayState.instance.members.indexOf(LuaUtils.getLowestCharacterGroup()), shit);
 					else
 						GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), shit);
