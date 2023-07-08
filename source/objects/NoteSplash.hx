@@ -30,6 +30,7 @@ class NoteSplash extends FlxSprite
 		rgbShader = new PixelSplashShaderRef();
 		shader = rgbShader.shader;
 		precacheConfig(skin);
+		scrollFactor.set();
 		//setupNoteSplash(x, y, 0);
 	}
 

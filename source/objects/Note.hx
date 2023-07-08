@@ -1,9 +1,14 @@
 package objects;
 
-import objects.StrumNote;
+// If you want to make a custom note type, you should search for:
+// "function set_noteType"
 
+import backend.NoteTypesConfig;
 import shaders.RGBPalette;
 import shaders.RGBPalette.RGBShaderReference;
+import objects.StrumNote;
+
+import flixel.math.FlxRect;
 
 using StringTools;
 
@@ -23,11 +28,6 @@ typedef NoteSplashData = {
 	g:FlxColor,
 	b:FlxColor,
 	a:Float
-}
-
-typedef NoteTypeProperty = {
-	property:Array<String>,
-	value:Dynamic
 }
 
 class Note extends FlxSprite
@@ -102,6 +102,7 @@ class Note extends FlxSprite
 	public var distance:Float = 2000; //plan on doing scroll directions soon -bb
 
 	public var hitsoundDisabled:Bool = false;
+	public var hitsound:String = 'hitsound';
 
 	private function set_multSpeed(value:Float):Float {
 		resizeByRatio(value / multSpeed);
@@ -165,6 +166,7 @@ class Note extends FlxSprite
 					lowPriority = true;
 					missHealth = isSustainNote ? 0.25 : 0.1;
 					hitCausesMiss = true;
+					hitsound = 'cancelMenu';
 				case 'Alt Animation':
 					animSuffix = '-alt';
 				case 'No Animation':
@@ -173,15 +175,18 @@ class Note extends FlxSprite
 				case 'GF Sing':
 					gfNote = true;
 			}
-			if (value != null && value.length > 1) applyNoteTypeData(value);
+			if (value != null && value.length > 1) NoteTypesConfig.applyNoteTypeData(this, value);
+			if (hitsound != 'hitsound' && ClientPrefs.data.hitsoundVolume > 0) Paths.sound(hitsound); //precache new sound for being idiot-proof
 			noteType = value;
 		}
 		return value;
 	}
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false, ?createdFrom:Dynamic = null)
 	{
 		super();
+
+		if(createdFrom == null) createdFrom = PlayState.instance;
 
 		if (prevNote == null)
 			prevNote = this;
@@ -240,10 +245,7 @@ class Note extends FlxSprite
 				prevNote.animation.play(colArray[prevNote.noteData % colArray.length] + 'hold');
 
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.05;
-				if(PlayState.instance != null)
-				{
-					prevNote.scale.y *= PlayState.instance.songSpeed;
-				}
+				if(createdFrom != null && createdFrom.songSpeed != null) prevNote.scale.y *= createdFrom.songSpeed;
 
 				if(PlayState.isPixelStage) {
 					prevNote.scale.y *= 1.19;
@@ -390,12 +392,8 @@ class Note extends FlxSprite
 
 		if (mustPress)
 		{
-			// ok river
-			if (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * lateHitMult)
-				&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * earlyHitMult))
-				canBeHit = true;
-			else
-				canBeHit = false;
+			canBeHit = (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * lateHitMult) &&
+						strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * earlyHitMult));
 
 			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
 				tooLate = true;
@@ -418,123 +416,74 @@ class Note extends FlxSprite
 		}
 	}
 
-	// Custom Note Types txt
-	private static var noteTypesData:Map<String, Array<NoteTypeProperty>> = new Map<String, Array<NoteTypeProperty>>();
-	public static function clearNoteTypesData()
-		noteTypesData.clear();
-
-	public static function loadNoteTypeData(name:String)
+	public function followStrumNote(myStrum:StrumNote, fakeCrochet:Float, songSpeed:Float = 1)
 	{
-		if(noteTypesData.exists(name)) return noteTypesData.get(name);
+		var strumX:Float = myStrum.x;
+		var strumY:Float = myStrum.y;
+		var strumAngle:Float = myStrum.angle;
+		var strumAlpha:Float = myStrum.alpha;
+		var strumDirection:Float = myStrum.direction;
 
-		var str:String = Paths.getTextFromFile('custom_notetypes/$name.txt');
-		if(str == null || !str.contains(':') || !str.contains('=')) noteTypesData.set(name, null);
+		distance = (0.45 * (Conductor.songPosition - strumTime) * songSpeed * multSpeed);
+		if (!myStrum.downScroll) distance *= -1;
 
-		var parsed:Array<NoteTypeProperty> = [];
-		var lines:Array<String> = CoolUtil.listFromString(str);
-		for (line in lines)
+		var angleDir = strumDirection * Math.PI / 180;
+		if (copyAngle)
+			angle = strumDirection - 90 + strumAngle + offsetAngle;
+
+		if(copyAlpha)
+			alpha = strumAlpha * multAlpha;
+
+		if(copyX)
+			x = strumX + offsetX + Math.cos(angleDir) * distance;
+
+		if(copyY)
 		{
-			var sep:Int = line.indexOf(':');
-			if(sep < 0)
+			y = strumY + offsetY + Math.sin(angleDir) * distance;
+
+			//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
+			if(myStrum.downScroll && isSustainNote)
 			{
-				sep = line.indexOf('=');
-				if(sep < 0) continue;
+				if (animation.curAnim.name.endsWith('end')) {
+					y += 10.5 * (fakeCrochet / 400) * 1.5 * songSpeed + (46 * (songSpeed - 1));
+					y -= 46 * (1 - (fakeCrochet / 600)) * songSpeed;
+					if(PlayState.isPixelStage) {
+						y += 8 + (6 - originalHeight) * PlayState.daPixelZoom;
+					} else {
+						y -= 19;
+					}
+				}
+				y += (Note.swagWidth / 2) - (60.5 * (songSpeed - 1));
+				y += 27.5 * ((PlayState.SONG.bpm / 100) - 1) * (songSpeed - 1);
 			}
-
-			var arr:Array<String> = line.substr(0, sep).trim().split('.');
-			for (i in 0...arr.length) arr[i] = arr[i].trim();
-
-			var newProp:NoteTypeProperty = {
-				property: arr,
-				value: _interpretValue(line.substr(sep + 1).trim())
-			}
-			//trace('pushing $newProp');
-			parsed.push(newProp);
-		}
-		noteTypesData.set(name, parsed);
-		return parsed;
-	}
-
-	public function applyNoteTypeData(name:String)
-	{
-		var data:Array<NoteTypeProperty> = loadNoteTypeData(name);
-		if(data == null || data.length < 1) return;
-		
-		for (line in data) 
-		{
-			var obj:Dynamic = this;
-			var split:Array<String> = line.property;
-			try
-			{
-				if(split.length <= 1)
-				{
-					_propCheckArray(obj, split[0], true, line.value);
-					continue;
-				}
-
-				switch(split[0]) // special cases
-				{
-					case 'extraData': 
-						extraData.set(split[1], line.value);
-						continue;
-					
-					case 'noteType':
-						continue;
-				}
-
-				for (i in 0...split.length-1)
-				{
-					if(i < split.length-1)
-						obj = _propCheckArray(obj, split[i]);
-				}
-				_propCheckArray(obj, split[split.length-1], true, line.value);
-			} catch(e) trace(e);
 		}
 	}
 
-	private static function _propCheckArray(obj:Dynamic, slice:String, setProp:Bool = false, valueToSet:Dynamic = null)
+	public function clipToStrumNote(myStrum:StrumNote)
 	{
-		var propArray:Array<String> = slice.split('[');
-		if(propArray.length > 1)
+		var center:Float = myStrum.y + offsetY + Note.swagWidth / 2;
+		if(isSustainNote && (mustPress || !ignoreNote) &&
+			(!mustPress || (wasGoodHit || (prevNote.wasGoodHit && !canBeHit))))
 		{
-			for (i in 0...propArray.length)
+			var swagRect:FlxRect = clipRect;
+			if(swagRect == null) swagRect = new FlxRect(0, 0, frameWidth, frameHeight);
+
+			if (myStrum.downScroll)
 			{
-				var str:Dynamic = propArray[i];
-				var id:Int = Std.parseInt(str.substr(0, str.length-1).trim());
-				if(i < propArray.length-1) obj = obj[id]; //middles
-				else if (setProp) return obj[id] = valueToSet; //last
+				if(y - offset.y * scale.y + height >= center)
+				{
+					swagRect.width = frameWidth;
+					swagRect.height = (center - y) / scale.y;
+					swagRect.y = frameHeight - swagRect.height;
+				}
 			}
-			return obj;
+			else if (y + offset.y * scale.y <= center)
+			{
+				swagRect.y = (center - y) / scale.y;
+				swagRect.width = width / scale.x;
+				swagRect.height = (height / scale.y) - swagRect.y;
+			}
+			clipRect = swagRect;
 		}
-		else if(setProp)
-		{
-			//trace('setProp: $slice');
-			Reflect.setProperty(obj, slice, valueToSet);
-			return valueToSet;
-		}
-		//trace('getting prop: $slice');
-		return Reflect.getProperty(obj, slice);
-	}
-
-	private static function _interpretValue(value:String):Any
-	{
-		if(value.charAt(0) == "'" || value.charAt(0) == '"')
-		{
-			//is a string
-			return value.substring(1, value.length-1);
-		}
-		
-		switch(value)
-		{
-			case "true":
-				return true;
-			case "false":
-				return false;
-			case "null":
-				return null;
-		}
-
-		if(value.contains('.')) return Std.parseFloat(value);
-		return Std.parseInt(value);
 	}
 }

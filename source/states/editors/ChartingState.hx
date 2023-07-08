@@ -207,7 +207,7 @@ class ChartingState extends MusicBeatState
 				bpm: 150.0,
 				needsVoices: true,
 				arrowSkin: '',
-				splashSkin: 'noteSplashes',//idk it would crash if i didn't
+				splashSkin: '', //idk it would crash if i didn't
 				player1: 'bf',
 				player2: 'dad',
 				gfVersion: 'gf',
@@ -383,6 +383,7 @@ class ChartingState extends MusicBeatState
 	}
 
 	var check_mute_inst:FlxUICheckBox = null;
+	var check_mute_vocals:FlxUICheckBox = null;
 	var check_vortex:FlxUICheckBox = null;
 	var check_warnings:FlxUICheckBox = null;
 	var playSoundBf:FlxUICheckBox = null;
@@ -950,7 +951,6 @@ class ChartingState extends MusicBeatState
 
 		noteTypeDropDown = new FlxUIDropDownMenu(10, 105, FlxUIDropDownMenu.makeStrIdLabelArray(displayNameList, true), function(character:String)
 		{
-			trace('character: $character');
 			currentType = Std.parseInt(character);
 			if(curSelectedNote != null && curSelectedNote[1] > -1) {
 				curSelectedNote[3] = curNoteTypes[currentType];
@@ -1229,7 +1229,7 @@ class ChartingState extends MusicBeatState
 			ignoreWarnings = FlxG.save.data.ignoreWarnings;
 		};
 
-		var check_mute_vocals = new FlxUICheckBox(check_mute_inst.x + 120, check_mute_inst.y, null, null, "Mute Vocals (in editor)", 100);
+		check_mute_vocals = new FlxUICheckBox(check_mute_inst.x + 120, check_mute_inst.y, null, null, "Mute Vocals (in editor)", 100);
 		check_mute_vocals.checked = false;
 		check_mute_vocals.callback = function()
 		{
@@ -1332,6 +1332,7 @@ class ChartingState extends MusicBeatState
 		vocals = new FlxSound();
 		if (Std.isOfType(file, Sound) || OpenFlAssets.exists(file)) {
 			vocals.loadEmbedded(file);
+			vocals.autoDestroy = false;
 			FlxG.sound.list.add(vocals);
 		}
 		generateSong();
@@ -1340,8 +1341,38 @@ class ChartingState extends MusicBeatState
 		FlxG.sound.music.time = Conductor.songPosition;
 	}
 
+	var playtesting:Bool = false;
+	var playtestingTime:Float = 0;
+	var playtestingOnComplete:Void->Void = null;
+	override function closeSubState()
+	{
+		if(playtesting)
+		{
+			FlxG.sound.music.pause();
+			FlxG.sound.music.time = playtestingTime;
+			FlxG.sound.music.onComplete = playtestingOnComplete;
+			if (instVolume != null) FlxG.sound.music.volume = instVolume.value;
+			if (check_mute_inst != null && check_mute_inst.checked) FlxG.sound.music.volume = 0;
+
+			if(vocals != null)
+			{
+				vocals.pause();
+				vocals.time = playtestingTime;
+				if (voicesVolume != null) vocals.volume = voicesVolume.value;
+				if (check_mute_vocals != null && check_mute_vocals.checked) vocals.volume = 0;
+			}
+
+			#if desktop
+			// Updating Discord Rich Presence
+			DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
+			#end
+		}
+		super.closeSubState();
+	}
+
 	function generateSong() {
 		FlxG.sound.playMusic(Paths.inst(currentSongName), 0.6/*, false*/);
+		FlxG.sound.music.autoDestroy = false;
 		if (instVolume != null) FlxG.sound.music.volume = instVolume.value;
 		if (check_mute_inst != null && check_mute_inst.checked) FlxG.sound.music.volume = 0;
 
@@ -1637,7 +1668,10 @@ class ChartingState extends MusicBeatState
 			if (FlxG.keys.justPressed.ESCAPE)
 			{
 				autosaveSong();
-				//LoadingState.loadAndSwitchState(new states.editors.EditorPlayState(sectionStartTime()));
+				playtesting = true;
+				playtestingTime = Conductor.songPosition;
+				playtestingOnComplete = FlxG.sound.music.onComplete;
+				openSubState(new states.editors.EditorPlayState(playbackSpeed));
 			}
 			if (FlxG.keys.justPressed.ENTER)
 			{
@@ -2036,6 +2070,13 @@ class ChartingState extends MusicBeatState
 		if(daZoom < 1) zoomThing = Math.round(1 / daZoom) + ' / 1';
 		zoomTxt.text = 'Zoom: ' + zoomThing;
 		reloadGridLayer();
+	}
+
+	override function destroy()
+	{
+		Note.globalRgbShaders = [];
+		backend.NoteTypesConfig.clearNoteTypesData();
+		super.destroy();
 	}
 
 	/*

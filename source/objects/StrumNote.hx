@@ -31,9 +31,12 @@ class StrumNote extends FlxSprite
 		
 		if(leData <= arr.length)
 		{
-			rgbShader.r = arr[0];
-			rgbShader.g = arr[1];
-			rgbShader.b = arr[2];
+			@:bypassAccessor
+			{
+				rgbShader.r = arr[0];
+				rgbShader.g = arr[1];
+				rgbShader.b = arr[2];
+			}
 		}
 
 		noteData = leData;
