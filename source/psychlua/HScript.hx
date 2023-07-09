@@ -122,7 +122,7 @@ class HScript
 		}
 		catch(e:Exception)
 		{
-			trace(e);
+			parentLua.luaTrace(parentLua.scriptName + ":" + parentLua.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
 			return null;
 		}
 	}
@@ -136,7 +136,10 @@ class HScript
 			{
 				//trace('$funcToRun exists, executing...');
 				if(funcArgs == null) funcArgs = [];
-				return Reflect.callMethod(null, interp.variables.get(funcToRun), funcArgs);
+				try {
+					return Reflect.callMethod(null, interp.variables.get(funcToRun), funcArgs);
+				}
+				catch(e) parentLua.luaTrace(parentLua.scriptName + ":" + parentLua.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
 			}
 		}
 		return null;

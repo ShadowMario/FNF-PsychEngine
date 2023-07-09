@@ -7,6 +7,7 @@ import substates.GameOverSubstate;
 
 //
 // Functions that use a high amount of Reflections, which are somewhat CPU intensive
+// These functions are held together by duct tape
 //
 
 class ReflectionFunctions
@@ -14,38 +15,72 @@ class ReflectionFunctions
 	public static function implement(funk:FunkinLua)
 	{
 		var lua:State = funk.lua;
-		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {
-			var result:Dynamic = null;
-			var killMe:Array<String> = variable.split('.');
-			if(killMe.length > 1)
-				result = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(killMe), killMe[killMe.length-1]);
-			else
-				result = LuaUtils.getVarInArray(LuaUtils.getTargetInstance(), variable);
-			return result;
+		Lua_helper.add_callback(lua, "getProperty", function(variable:String, ?allowMaps:Bool = false) {
+			var split:Array<String> = variable.split('.');
+			if(split.length > 1)
+				return LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split, true, true, allowMaps), split[split.length-1], allowMaps);
+			return LuaUtils.getVarInArray(LuaUtils.getTargetInstance(), variable, allowMaps);
 		});
-		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic) {
-			var killMe:Array<String> = variable.split('.');
-			if(killMe.length > 1) {
-				LuaUtils.setVarInArray(LuaUtils.getPropertyLoop(killMe), killMe[killMe.length-1], value);
+		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic, allowMaps:Bool = false) {
+			var split:Array<String> = variable.split('.');
+			if(split.length > 1) {
+				LuaUtils.setVarInArray(LuaUtils.getPropertyLoop(split, true, true, allowMaps), split[split.length-1], value, allowMaps);
 				return true;
 			}
-			LuaUtils.setVarInArray(LuaUtils.getTargetInstance(), variable, value);
+			LuaUtils.setVarInArray(LuaUtils.getTargetInstance(), variable, value, allowMaps);
 			return true;
 		});
-		Lua_helper.add_callback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic) {
-			var shitMyPants:Array<String> = obj.split('.');
+		Lua_helper.add_callback(lua, "getPropertyFromClass", function(classVar:String, variable:String, ?allowMaps:Bool = false) {
+			var myClass:Dynamic = Type.resolveClass(classVar);
+			if(myClass == null)
+			{
+				funk.luaTrace('getPropertyFromClass: Class $classVar not found', false, false, FlxColor.RED);
+				return null;
+			}
+
+			var split:Array<String> = variable.split('.');
+			if(split.length > 1) {
+				var obj:Dynamic = LuaUtils.getVarInArray(myClass, split[0], allowMaps);
+				for (i in 1...split.length-1)
+					obj = LuaUtils.getVarInArray(obj, split[i], allowMaps);
+
+				return LuaUtils.getVarInArray(obj, split[split.length-1], allowMaps);
+			}
+			return LuaUtils.getVarInArray(myClass, variable, allowMaps);
+		});
+		Lua_helper.add_callback(lua, "setPropertyFromClass", function(classVar:String, variable:String, value:Dynamic, ?allowMaps:Bool = false) {
+			var myClass:Dynamic = Type.resolveClass(classVar);
+			if(myClass == null)
+			{
+				funk.luaTrace('getPropertyFromClass: Class $classVar not found', false, false, FlxColor.RED);
+				return null;
+			}
+
+			var split:Array<String> = variable.split('.');
+			if(split.length > 1) {
+				var obj:Dynamic = LuaUtils.getVarInArray(myClass, split[0], allowMaps);
+				for (i in 1...split.length-1)
+					obj = LuaUtils.getVarInArray(obj, split[i], allowMaps);
+
+				LuaUtils.setVarInArray(obj, split[split.length-1], value, allowMaps);
+				return value;
+			}
+			LuaUtils.setVarInArray(myClass, variable, value, allowMaps);
+			return value;
+		});
+		Lua_helper.add_callback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, ?allowMaps:Bool = false) {
+			var split:Array<String> = obj.split('.');
 			var realObject:Dynamic = null;
-			if(shitMyPants.length > 1)
-				realObject = LuaUtils.getPropertyLoop(shitMyPants, true, false);
+			if(split.length > 1)
+				realObject = LuaUtils.getPropertyLoop(split, true, false, allowMaps);
 			else
 				realObject = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
 
 			if(Std.isOfType(realObject, FlxTypedGroup))
 			{
-				var result:Dynamic = LuaUtils.getGroupStuff(realObject.members[index], variable);
+				var result:Dynamic = LuaUtils.getGroupStuff(realObject.members[index], variable, allowMaps);
 				return result;
 			}
-
 
 			var leArray:Dynamic = realObject[index];
 			if(leArray != null) {
@@ -53,70 +88,47 @@ class ReflectionFunctions
 				if(Type.typeof(variable) == ValueType.TInt)
 					result = leArray[variable];
 				else
-					result = LuaUtils.getGroupStuff(leArray, variable);
+					result = LuaUtils.getGroupStuff(leArray, variable, allowMaps);
 				return result;
 			}
 			funk.luaTrace("getPropertyFromGroup: Object #" + index + " from group: " + obj + " doesn't exist!", false, false, FlxColor.RED);
 			return null;
 		});
 		Lua_helper.add_callback(lua, "setPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, value:Dynamic) {
-			var shitMyPants:Array<String> = obj.split('.');
+			var split:Array<String> = obj.split('.');
 			var realObject:Dynamic = null;
-			if(shitMyPants.length > 1)
-				realObject = LuaUtils.getPropertyLoop(shitMyPants, true, false);
+			if(split.length > 1)
+				realObject = LuaUtils.getPropertyLoop(split, true, false);
 			else
 				realObject = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
 
 			if(Std.isOfType(realObject, FlxTypedGroup)) {
 				LuaUtils.setGroupStuff(realObject.members[index], variable, value);
-				return;
+				return value;
 			}
 
 			var leArray:Dynamic = realObject[index];
 			if(leArray != null) {
 				if(Type.typeof(variable) == ValueType.TInt) {
 					leArray[variable] = value;
-					return;
+					return value;
 				}
 				LuaUtils.setGroupStuff(leArray, variable, value);
 			}
+			return value;
 		});
 		Lua_helper.add_callback(lua, "removeFromGroup", function(obj:String, index:Int, dontDestroy:Bool = false) {
-			if(Std.isOfType(Reflect.getProperty(LuaUtils.getTargetInstance(), obj), FlxTypedGroup)) {
-				var sex = Reflect.getProperty(LuaUtils.getTargetInstance(), obj).members[index];
+			var groupOrArray:Dynamic = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
+			if(Std.isOfType(groupOrArray, FlxTypedGroup)) {
+				var sex = groupOrArray.members[index];
 				if(!dontDestroy)
 					sex.kill();
-				Reflect.getProperty(LuaUtils.getTargetInstance(), obj).remove(sex, true);
+				groupOrArray.remove(sex, true);
 				if(!dontDestroy)
 					sex.destroy();
 				return;
 			}
-			Reflect.getProperty(LuaUtils.getTargetInstance(), obj).remove(Reflect.getProperty(LuaUtils.getTargetInstance(), obj)[index]);
-		});
-
-		Lua_helper.add_callback(lua, "getPropertyFromClass", function(classVar:String, variable:String) {
-			var killMe:Array<String> = variable.split('.');
-			if(killMe.length > 1) {
-				var coverMeInPiss:Dynamic = LuaUtils.getVarInArray(Type.resolveClass(classVar), killMe[0]);
-				for (i in 1...killMe.length-1) {
-					coverMeInPiss = LuaUtils.getVarInArray(coverMeInPiss, killMe[i]);
-				}
-				return LuaUtils.getVarInArray(coverMeInPiss, killMe[killMe.length-1]);
-			}
-			return LuaUtils.getVarInArray(Type.resolveClass(classVar), variable);
-		});
-		Lua_helper.add_callback(lua, "setPropertyFromClass", function(classVar:String, variable:String, value:Dynamic) {
-			var killMe:Array<String> = variable.split('.');
-			if(killMe.length > 1) {
-				var coverMeInPiss:Dynamic = LuaUtils.getVarInArray(Type.resolveClass(classVar), killMe[0]);
-				for (i in 1...killMe.length-1) {
-					coverMeInPiss = LuaUtils.getVarInArray(coverMeInPiss, killMe[i]);
-				}
-				LuaUtils.setVarInArray(coverMeInPiss, killMe[killMe.length-1], value);
-				return true;
-			}
-			LuaUtils.setVarInArray(Type.resolveClass(classVar), variable, value);
-			return true;
+			groupOrArray.remove(groupOrArray[index]);
 		});
 		
 		Lua_helper.add_callback(lua, "callMethod", function(funcToRun:String, ?args:Array<Dynamic> = null) {
