@@ -16,7 +16,7 @@ class CallbackHandler
 			{
 				//trace('looping thru scripts');
 				for (script in PlayState.instance.luaArray)
-					if(script.lua == l)
+					if(script != null && script.lua == l)
 					{
 						//trace('found script');
 						cbf = script.callbacks.get(fname);

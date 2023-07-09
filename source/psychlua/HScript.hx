@@ -29,8 +29,8 @@ class HScript
 		#if hscript
 		if(parent.hscript == null)
 		{
-			//trace('initializing haxe interp for: $scriptName');
-			parent.hscript = new HScript(parent); //TO DO: Fix issue with 2 scripts not being able to use the same variable names
+			trace('initializing haxe interp for: ${parent.scriptName}');
+			parent.hscript = new HScript(parent);
 		}
 		#end
 	}
@@ -145,11 +145,10 @@ class HScript
 	#if LUA_ALLOWED
 	public static function implement(funk:FunkinLua)
 	{
-		var lua:State = funk.lua;
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null) {
 			var retVal:Dynamic = null;
 			#if hscript
-			HScript.initHaxeModule(funk);
+			initHaxeModule(funk);
 			try {
 				if(varsToBring != null)
 				{
@@ -185,7 +184,7 @@ class HScript
 
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
 			#if hscript
-			HScript.initHaxeModule(funk);
+			initHaxeModule(funk);
 			try {
 				var str:String = '';
 				if(libPackage.length > 0)

@@ -316,13 +316,9 @@ class PlayState extends MusicBeatState
 
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
 		if (isStoryMode)
-		{
 			detailsText = "Story Mode: " + WeekData.getCurrentWeek().weekName;
-		}
 		else
-		{
 			detailsText = "Freeplay";
-		}
 
 		// String for when the game is paused
 		detailsPausedText = "Paused - " + detailsText;
@@ -406,7 +402,7 @@ class PlayState extends MusicBeatState
 
 		// STAGE SCRIPTS
 		#if (MODS_ALLOWED && LUA_ALLOWED)
-		startLuasOnFolder('stages/' + curStage + '.lua');
+		startLuasNamed('stages/' + curStage + '.lua');
 		#end
 
 		if (!stageData.hide_girlfriend)
@@ -554,10 +550,10 @@ class PlayState extends MusicBeatState
 		
 		#if LUA_ALLOWED
 		for (notetype in noteTypes)
-			startLuasOnFolder('custom_notetypes/' + notetype + '.lua');
+			startLuasNamed('custom_notetypes/' + notetype + '.lua');
 
 		for (event in eventsPushed)
-			startLuasOnFolder('custom_events/' + event + '.lua');
+			startLuasNamed('custom_events/' + event + '.lua');
 		#end
 		noteTypes = null;
 		eventsPushed = null;
@@ -3005,7 +3001,7 @@ class PlayState extends MusicBeatState
 	}
 
 	#if LUA_ALLOWED
-	public function startLuasOnFolder(luaFile:String)
+	public function startLuasNamed(luaFile:String)
 	{
 		#if MODS_ALLOWED
 		var luaToLoad:String = Paths.modFolders(luaFile);

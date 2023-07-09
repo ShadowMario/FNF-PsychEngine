@@ -23,7 +23,7 @@ class StrumNote extends FlxSprite
 	}
 
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
-		rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(noteData));
+		rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(leData));
 		rgbShader.enabled = false;
 		
 		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[leData];
