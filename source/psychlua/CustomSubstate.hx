@@ -1,9 +1,56 @@
 package psychlua;
 
+import flixel.FlxObject;
+
 class CustomSubstate extends MusicBeatSubstate
 {
 	public static var name:String = 'unnamed';
 	public static var instance:CustomSubstate;
+
+	public static function implement(funk:FunkinLua)
+	{
+		var lua = funk.lua;
+		var game = PlayState.instance;
+		Lua_helper.add_callback(lua, "openCustomSubstate", function(name:String, ?pauseGame:Bool = false) {
+			if(pauseGame)
+			{
+				game.persistentUpdate = false;
+				game.persistentDraw = true;
+				game.paused = true;
+				if(FlxG.sound.music != null) {
+					FlxG.sound.music.pause();
+					game.vocals.pause();
+				}
+			}
+			game.openSubState(new CustomSubstate(name));
+		});
+
+		Lua_helper.add_callback(lua, "closeCustomSubstate", function() {
+			if(instance != null)
+			{
+				game.closeSubState();
+				instance = null;
+				return true;
+			}
+			return false;
+		});
+		
+		Lua_helper.add_callback(lua, "insertToCustomSubstate", function(tag:String, ?pos:Int = -1) {
+			if(instance != null)
+			{
+				var tagObject:FlxObject = cast (game.variables.get(tag), FlxObject);
+				if(tagObject == null) tagObject = cast (game.modchartSprites.get(tag), FlxObject);
+
+				if(tagObject != null)
+				{
+					if(pos < 0) instance.add(tagObject);
+					else instance.insert(pos, tagObject);
+					return true;
+				}
+			}
+			return false;
+		});
+	}
 
 	override function create()
 	{
