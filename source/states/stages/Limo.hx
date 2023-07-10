@@ -79,7 +79,7 @@ class Limo extends BaseStage
 	override function createPost()
 	{
 		resetFastCar();
-		addBehindBF(fastCar);
+		addBehindGF(fastCar);
 		
 		var limo:BGSprite = new BGSprite('limo/limoDrive', -120, 550, 1, 1, ['Limo stage'], true);
 		addBehindDad(limo); //Shitty layering but whatev it works LOL
