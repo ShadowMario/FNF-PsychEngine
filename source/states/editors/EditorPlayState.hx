@@ -101,7 +101,7 @@ class EditorPlayState extends MusicBeatSubstate
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		add(grpNoteSplashes);
 		
-		if(ClientPrefs.data.splashSkin != '(DISABLED)')
+		if(ClientPrefs.data.splashSkin != 'Disabled')
 		{
 			var splash:NoteSplash = new NoteSplash(100, 100);
 			grpNoteSplashes.add(splash);
@@ -836,7 +836,7 @@ class EditorPlayState extends MusicBeatSubstate
 	}
 
 	function spawnNoteSplashOnNote(note:Note) {
-		if(ClientPrefs.data.splashSkin != '(DISABLED)' && note != null) {
+		if(ClientPrefs.data.splashSkin != 'Disabled' && note != null) {
 			var strum:StrumNote = playerStrums.members[note.noteData];
 			if(strum != null)
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note);

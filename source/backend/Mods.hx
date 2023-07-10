@@ -1,7 +1,11 @@
 package backend;
 
+#if sys
 import sys.FileSystem;
 import sys.io.File;
+#else
+import lime.utils.Assets;
+#end
 import tjson.TJSON as Json;
 
 typedef ModsList = {
@@ -61,6 +65,33 @@ class Mods
 		}
 		return list;
 	}
+	
+	inline public static function mergeAllTextsNamed(path:String, defaultDirectory:String = null, allowDuplicates:Bool = false)
+	{
+		if(defaultDirectory == null) defaultDirectory = Paths.getPreloadPath();
+		defaultDirectory = defaultDirectory.trim();
+		if(!defaultDirectory.endsWith('/')) defaultDirectory += '/';
+		if(!defaultDirectory.startsWith('assets/')) defaultDirectory = 'assets/$defaultDirectory';
+
+		var mergedList:Array<String> = [];
+		var paths:Array<String> = directoriesWithFile(defaultDirectory, path);
+
+		var defaultPath:String = defaultDirectory + path;
+		if(paths.contains(defaultPath))
+		{
+			paths.remove(defaultPath);
+			paths.insert(0, defaultPath);
+		}
+
+		for (file in paths)
+		{
+			var list:Array<String> = CoolUtil.coolTextFile(file);
+			for (value in list)
+				if((allowDuplicates || !mergedList.contains(value)) && value.length > 0)
+					mergedList.push(value);
+		}
+		return mergedList;
+	}
 
 	inline public static function directoriesWithFile(path:String, fileToFind:String, mods:Bool = true)
 	{
@@ -99,7 +130,11 @@ class Mods
 		var path = Paths.mods(folder + '/pack.json');
 		if(FileSystem.exists(path)) {
 			try {
+				#if sys
 				var rawJson:String = File.getContent(path);
+				#else
+				var rawJson:String = Assets.getText(path);
+				#end
 				if(rawJson != null && rawJson.length > 0) return Json.parse(rawJson);
 			} catch(e:Dynamic) {
 				trace(e);

@@ -276,11 +276,17 @@ class Paths
 		return 'assets/fonts/$key';
 	}
 
-	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String = null)
+	public static function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String = null)
 	{
 		#if MODS_ALLOWED
-		if(!ignoreMods && (FileSystem.exists(mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))) {
-			return true;
+		if(!ignoreMods)
+		{
+			for(mod in Mods.getGlobalMods())
+				if (FileSystem.exists(mods('$mod/$key')))
+					return true;
+
+			if (FileSystem.exists(mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
+				return true;
 		}
 		#end
 
@@ -470,7 +476,6 @@ class Paths
 			var fileToCheck:String = mods(mod + '/' + key);
 			if(FileSystem.exists(fileToCheck))
 				return fileToCheck;
-
 		}
 		return 'mods/' + key;
 	}

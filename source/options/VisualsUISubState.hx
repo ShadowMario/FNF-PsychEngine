@@ -6,7 +6,7 @@ import objects.Alphabet;
 
 class VisualsUISubState extends BaseOptionsMenu
 {
-	var noteOptionID:Int;
+	var noteOptionID:Int = -1;
 	var notes:FlxTypedGroup<StrumNote>;
 	public function new()
 	{
@@ -28,21 +28,39 @@ class VisualsUISubState extends BaseOptionsMenu
 		notes.visible = false;
 
 		// options
-		var option:Option = new Option('Note Skins:',
-			"Select your prefered Note skin.",
-			'noteSkin',
-			'string',
-			['Default', 'Future', 'Chip']);
-		addOption(option);
-		option.onChange = onChangeNoteSkin;
-		noteOptionID = optionsArray.length - 1;
 
-		var option:Option = new Option('Note Splashes:',
-			"Select your prefered Note Splash variation or turn it off.",
-			'splashSkin',
-			'string',
-			['Psych', 'Diamond', 'Electric', 'Sparkles', 'Vanilla', '(DISABLED)']);
-		addOption(option);
+		var noteSkins:Array<String> = Mods.mergeAllTextsNamed('images/noteSkins/list.txt', 'shared');
+		if(noteSkins.length > 0)
+		{
+			if(!noteSkins.contains(ClientPrefs.data.noteSkin))
+				ClientPrefs.data.noteSkin = ClientPrefs.defaultData.noteSkin; //Reset to default if saved noteskin couldnt be found
+
+			noteSkins.insert(0, ClientPrefs.defaultData.noteSkin); //Default skin always comes first
+			var option:Option = new Option('Note Skins:',
+				"Select your prefered Note skin.",
+				'noteSkin',
+				'string',
+				noteSkins);
+			addOption(option);
+			option.onChange = onChangeNoteSkin;
+			noteOptionID = optionsArray.length - 1;
+		}
+		
+		var noteSplashes:Array<String> = Mods.mergeAllTextsNamed('images/noteSplashes/list.txt', 'shared');
+		if(noteSplashes.length > 0)
+		{
+			if(!noteSplashes.contains(ClientPrefs.data.splashSkin))
+				ClientPrefs.data.splashSkin = ClientPrefs.defaultData.splashSkin; //Reset to default if saved splashskin couldnt be found
+
+			noteSplashes.insert(0, ClientPrefs.defaultData.splashSkin); //Default skin always comes first
+			noteSplashes.push('Disabled'); //Disable option always should be the last
+			var option:Option = new Option('Note Splashes:',
+				"Select your prefered Note Splash variation or turn it off.",
+				'splashSkin',
+				'string',
+				noteSplashes);
+			addOption(option);
+		}
 
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
@@ -133,7 +151,8 @@ class VisualsUISubState extends BaseOptionsMenu
 	{
 		super.changeSelection(change);
 		
-		notes.visible = (curSelected == noteOptionID);
+		if(noteOptionID != -1)
+			notes.visible = (curSelected == noteOptionID);
 	}
 
 	var changedMusic:Bool = false;

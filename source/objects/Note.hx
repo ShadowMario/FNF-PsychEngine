@@ -418,6 +418,12 @@ class Note extends FlxSprite
 		}
 	}
 
+	override public function destroy()
+	{
+		super.destroy();
+		_lastValidChecked = '';
+	}
+
 	public function followStrumNote(myStrum:StrumNote, fakeCrochet:Float, songSpeed:Float = 1)
 	{
 		var strumX:Float = myStrum.x;
