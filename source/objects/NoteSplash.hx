@@ -17,7 +17,7 @@ class NoteSplash extends FlxSprite
 	private var idleAnim:String;
 	private var _textureLoaded:String = null;
 
-	private static var defaultNoteSplash:String = 'noteSplashes/noteSplashes';
+	public static var defaultNoteSplash(default, never):String = 'noteSplashes/noteSplashes';
 	public static var configs:Map<String, NoteSplashConfig> = new Map<String, NoteSplashConfig>();
 
 	public function new(x:Float = 0, y:Float = 0) {
@@ -137,7 +137,7 @@ class NoteSplash extends FlxSprite
 	{
 		if(configs.exists(skin)) return configs.get(skin);
 
-		var path:String = Paths.getPath('images/$skin.txt', TEXT);
+		var path:String = Paths.getPath('images/$skin.txt', TEXT, true);
 		var configFile:Array<String> = CoolUtil.coolTextFile(path);
 		if(configFile.length < 1) return null;
 		
@@ -155,7 +155,6 @@ class NoteSplash extends FlxSprite
 			maxFps: Std.parseInt(framerates[1]),
 			offsets: offs
 		};
-		//trace(config);
 		configs.set(skin, config);
 		return config;
 	}

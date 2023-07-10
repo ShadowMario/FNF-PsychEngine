@@ -1435,41 +1435,36 @@ class ChartingState extends MusicBeatState
 		{
 			var nums:FlxUINumericStepper = cast sender;
 			var wname = nums.name;
-			FlxG.log.add(wname);
-			if (wname == 'section_beats')
+			//FlxG.log.add(wname);
+			switch(wname)
 			{
-				_song.notes[curSec].sectionBeats = nums.value;
-				reloadGridLayer();
-			}
-			else if (wname == 'song_speed')
-			{
-				_song.speed = nums.value;
-			}
-			else if (wname == 'song_bpm')
-			{
-				tempBpm = nums.value;
-				Conductor.mapBPMChanges(_song);
-				Conductor.changeBPM(nums.value);
-			}
-			else if (wname == 'note_susLength')
-			{
-				if(curSelectedNote != null && curSelectedNote[2] != null) {
-					curSelectedNote[2] = nums.value;
+				case 'section_beats':
+					_song.notes[curSec].sectionBeats = nums.value;
+					reloadGridLayer();
+
+				case 'song_speed':
+					_song.speed = nums.value;
+
+				case 'song_bpm':
+					tempBpm = nums.value;
+					Conductor.mapBPMChanges(_song);
+					Conductor.changeBPM(nums.value);
+
+				case 'note_susLength':
+					if(curSelectedNote != null && curSelectedNote[2] != null) {
+						curSelectedNote[2] = nums.value;
+						updateGrid();
+					}
+
+				case 'section_bpm':
+					_song.notes[curSec].bpm = nums.value;
 					updateGrid();
-				}
-			}
-			else if (wname == 'section_bpm')
-			{
-				_song.notes[curSec].bpm = nums.value;
-				updateGrid();
-			}
-			else if (wname == 'inst_volume')
-			{
-				FlxG.sound.music.volume = nums.value;
-			}
-			else if (wname == 'voices_volume')
-			{
-				vocals.volume = nums.value;
+
+				case 'inst_volume':
+					FlxG.sound.music.volume = nums.value;
+
+				case 'voices_volume':
+					vocals.volume = nums.value;
 			}
 		}
 		else if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
@@ -1643,8 +1638,7 @@ class ChartingState extends MusicBeatState
 		if(!blockInput) {
 			for (stepper in blockPressWhileTypingOnStepper) {
 				@:privateAccess
-				var leText:Dynamic = stepper.text_field;
-				var leText:FlxUIInputText = leText;
+				var leText:FlxUIInputText = cast (stepper.text_field, FlxUIInputText);
 				if(leText.hasFocus) {
 					ClientPrefs.toggleVolumeKeys(false);
 					blockInput = true;
