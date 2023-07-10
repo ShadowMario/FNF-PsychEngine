@@ -366,6 +366,7 @@ class ChartingState extends MusicBeatState
 		\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
 		\nHold Alt and click on a note to change it to the selected note type
+		\nHold CTRL and use the Mouse Wheel to decrease/increase the note's sustain length
 		\nZ/X - Zoom in/out
 		\nC - Draw your charts! Easier charting for your Bambi fansongs lmao
 		\n
@@ -378,8 +379,8 @@ class ChartingState extends MusicBeatState
 
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
-			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 17);
-			tipText.y += i * 8;
+			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 18);
+			tipText.y += i * 9;
 			tipText.setFormat(Paths.font("vcr.ttf"), 12, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 			//tipText.borderSize = 2;
 			tipText.scrollFactor.set();
@@ -1812,7 +1813,7 @@ class ChartingState extends MusicBeatState
 					addNote();
 					var addCount:Int = 0;
 					if (check_stackActive.checked) {
-						addCount = (Math.floor(stepperStackNum.value)) * Math.floor(stepperStackOffset.value);
+						addCount = (Math.floor(stepperStackNum.value)) * Math.floor(stepperStackOffset.value) - 1;
 					}
 					// var funnySnap:Float = ((GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]) + Conductor.stepCrochet / stepperStackOffset.value);
 					for(i in 0...Std.int(addCount)) {
@@ -1892,6 +1893,12 @@ class ChartingState extends MusicBeatState
 				}
 				if (FlxG.keys.justPressed.Q)
 				{
+					changeNoteSustain(-Conductor.stepCrochet);
+				}
+				if (FlxG.keys.pressed.CONTROL && FlxG.mouse.wheel < 0) {
+					changeNoteSustain(Conductor.stepCrochet);
+				}
+				if (FlxG.keys.pressed.CONTROL && FlxG.mouse.wheel > 0) {
 					changeNoteSustain(-Conductor.stepCrochet);
 				}
 			}
@@ -2000,7 +2007,7 @@ class ChartingState extends MusicBeatState
 					}
 			}
 
-			if (FlxG.mouse.wheel != 0)
+			if (FlxG.mouse.wheel != 0 == !FlxG.keys.pressed.CONTROL)
 			{
 				FlxG.sound.music.pause();
 				if (!mouseQuant)
