@@ -44,6 +44,9 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	var missingTextBG:FlxSprite;
+	var missingText:FlxText;
+
 	override function create()
 	{
 		//Paths.clearStoredMemory();
@@ -131,6 +134,17 @@ class FreeplayState extends MusicBeatState
 		add(diffText);
 
 		add(scoreText);
+
+		missingTextBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		missingTextBG.alpha = 0.6;
+		missingTextBG.visible = false;
+		add(missingTextBG);
+		
+		missingText = new FlxText(50, 0, FlxG.width - 100, '', 24);
+		missingText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		missingText.scrollFactor.set();
+		missingText.visible = false;
+		add(missingText);
 
 		if(curSelected >= songs.length) curSelected = 0;
 		bg.color = songs[curSelected].color;
@@ -352,16 +366,19 @@ class FreeplayState extends MusicBeatState
 			{
 				trace('ERROR! $e');
 
+				var errorStr:String = e.toString();
+				if(errorStr.startsWith('[file_contents,assets/data/')) errorStr = 'Missing file: ' + errorStr.substring(27, errorStr.length-1); //Missing chart
+				missingText.text = 'ERROR WHILE LOADING CHART:\n$errorStr';
+				missingText.screenCenter();
+				missingText.visible = true;
+				missingTextBG.visible = true;
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+
 				updateTexts(elapsed);
 				super.update(elapsed);
 				return;
 			}
-			
-			if (FlxG.keys.pressed.SHIFT){
-				LoadingState.loadAndSwitchState(new ChartingState());
-			}else{
-				LoadingState.loadAndSwitchState(new PlayState());
-			}
+			LoadingState.loadAndSwitchState(new PlayState());
 
 			FlxG.sound.music.volume = 0;
 					
@@ -410,6 +427,8 @@ class FreeplayState extends MusicBeatState
 			diffText.text = lastDifficultyName.toUpperCase();
 
 		positionHighscore();
+		missingText.visible = false;
+		missingTextBG.visible = false;
 	}
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
