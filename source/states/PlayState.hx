@@ -2507,7 +2507,7 @@ class PlayState extends MusicBeatState
 			{
 				//more accurate hit time for the ratings?
 				var lastTime:Float = Conductor.songPosition;
-				Conductor.songPosition = FlxG.sound.music.time;
+				if(Conductor.songPosition >= 0) Conductor.songPosition = FlxG.sound.music.time;
 
 				var canMiss:Bool = !ClientPrefs.data.ghostTapping;
 
@@ -2928,11 +2928,15 @@ class PlayState extends MusicBeatState
 	var lastStepHit:Int = -1;
 	override function stepHit()
 	{
-		if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)
-			|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)))
+		if(FlxG.sound.music.time >= -ClientPrefs.data.noteOffset)
 		{
-			resyncVocals();
+			if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)
+				|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)))
+			{
+				resyncVocals();
+			}
 		}
+
 		super.stepHit();
 
 		if(curStep == lastStepHit) {

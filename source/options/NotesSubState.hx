@@ -4,6 +4,7 @@ import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.display.shapes.FlxShapeCircle;
 import flixel.input.keyboard.FlxKey;
+import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.math.FlxPoint;
 import lime.system.Clipboard;
 import flixel.util.FlxGradient;
@@ -42,10 +43,14 @@ class NotesSubState extends MusicBeatSubstate
 	var modeBG:FlxSprite;
 	var notesBG:FlxSprite;
 
+	// controller support
+	var controllerPointer:FlxSprite;
+	var _lastControllerMode:Bool = false;
+	var tipTxt:FlxText;
+
 	public function new() {
 		super();
 		
-		FlxG.mouse.visible = true;
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFEA71FD;
 		bg.screenCenter();
@@ -134,6 +139,34 @@ class NotesSubState extends MusicBeatSubstate
 		spawnNotes();
 		updateNotes(true);
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
+
+		var tipX = 20;
+		var tipY = 660;
+		var tip:FlxText = new FlxText(tipX, tipY, 0, "Press RELOAD to Reset the selected Note Part.", 16);
+		tip.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tip.borderSize = 2;
+		add(tip);
+
+		tipTxt = new FlxText(tipX, tipY + 24, 0, '', 16);
+		tipTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipTxt.borderSize = 2;
+		add(tipTxt);
+		updateTip();
+
+		controllerPointer = new FlxShapeCircle(0, 0, 20, {thickness: 0}, FlxColor.WHITE);
+		controllerPointer.offset.set(20, 20);
+		controllerPointer.screenCenter();
+		controllerPointer.alpha = 0.6;
+		add(controllerPointer);
+		
+		FlxG.mouse.visible = !controls.controllerMode;
+		controllerPointer.visible = controls.controllerMode;
+		_lastControllerMode = controls.controllerMode;
+	}
+
+	function updateTip()
+	{
+		tipTxt.text = 'Hold ' + (!controls.controllerMode ? 'Shift' : 'Left Shoulder Button') + ' + Press RELOAD to fully reset the selected Note.';
 	}
 
 	var _storedColor:FlxColor;
@@ -149,7 +182,60 @@ class NotesSubState extends MusicBeatSubstate
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			close();
+			return;
 		}
+
+		super.update(elapsed);
+
+		// Early controller checking
+		if(FlxG.gamepads.anyJustPressed(ANY)) controls.controllerMode = true;
+		else if(FlxG.mouse.justPressed || FlxG.mouse.deltaScreenX != 0 || FlxG.mouse.deltaScreenY != 0) controls.controllerMode = false;
+		//
+		
+		var changedToController:Bool = false;
+		if(controls.controllerMode != _lastControllerMode)
+		{
+			//trace('changed controller mode');
+			FlxG.mouse.visible = !controls.controllerMode;
+			controllerPointer.visible = controls.controllerMode;
+
+			// changed to controller mid state
+			if(controls.controllerMode)
+			{
+				controllerPointer.x = FlxG.mouse.x;
+				controllerPointer.y = FlxG.mouse.y;
+				changedToController = true;
+			}
+			// changed to keyboard mid state
+			/*else
+			{
+				FlxG.mouse.x = controllerPointer.x;
+				FlxG.mouse.y = controllerPointer.y;
+			}
+			// apparently theres no easy way to change mouse position that i know, oh well
+			*/
+			_lastControllerMode = controls.controllerMode;
+			updateTip();
+		}
+
+		// controller things
+		var analogX:Float = 0;
+		var analogY:Float = 0;
+		var analogMoved:Bool = false;
+		if(controls.controllerMode && (changedToController || FlxG.gamepads.anyInput()))
+		{
+			for (gamepad in FlxG.gamepads.getActiveGamepads())
+			{
+				analogX = gamepad.getXAxis(LEFT_ANALOG_STICK);
+				analogY = gamepad.getYAxis(LEFT_ANALOG_STICK);
+				analogMoved = (analogX != 0 || analogY != 0);
+				if(analogMoved) break;
+			}
+			controllerPointer.x = Math.max(0, Math.min(FlxG.width, controllerPointer.x + analogX * 1000 * elapsed));
+			controllerPointer.y = Math.max(0, Math.min(FlxG.height, controllerPointer.y + analogY * 1000 * elapsed));
+		}
+		var controllerPressed:Bool = (controls.controllerMode && controls.ACCEPT);
+		//
 
 		if(FlxG.keys.justPressed.CONTROL)
 		{
@@ -209,9 +295,13 @@ class NotesSubState extends MusicBeatSubstate
 		else
 		{
 			var add:Int = 0;
-			if(controls.UI_LEFT_P) add = -1;
-			else if(controls.UI_RIGHT_P) add = 1;
-			if(controls.UI_UP_P || controls.UI_DOWN_P)
+			if(analogX == 0 && !changedToController)
+			{
+				if(controls.UI_LEFT_P) add = -1;
+				else if(controls.UI_RIGHT_P) add = 1;
+			}
+
+			if(analogY == 0 && !changedToController && (controls.UI_UP_P || controls.UI_DOWN_P))
 			{
 				onModeColumn = !onModeColumn;
 				modeBG.visible = onModeColumn;
@@ -227,29 +317,29 @@ class NotesSubState extends MusicBeatSubstate
 		}
 
 		// Copy/Paste buttons
-		if(FlxG.mouse.justMoved)
+		var generalMoved:Bool = (FlxG.mouse.justMoved || analogMoved);
+		var generalPressed:Bool = (FlxG.mouse.justPressed || controllerPressed);
+		if(generalMoved)
 		{
 			copyButton.alpha = 0.6;
 			pasteButton.alpha = 0.6;
 		}
-		if(FlxG.mouse.overlaps(copyButton))
+
+		if(pointerOverlaps(copyButton))
 		{
-			if(FlxG.mouse.justMoved)
-				copyButton.alpha = 1;
-			
-			if(FlxG.mouse.justPressed)
+			copyButton.alpha = 1;
+			if(generalPressed)
 			{
-				if(FlxG.mouse.justPressed) Clipboard.text = getShaderColor().toHexString(false, false);
+				Clipboard.text = getShaderColor().toHexString(false, false);
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
+				trace('copied: ' + Clipboard.text);
 			}
 			hexTypeNum = -1;
 		}
-		else if (FlxG.mouse.overlaps(pasteButton))
+		else if (pointerOverlaps(pasteButton))
 		{
-			if(FlxG.mouse.justMoved)
-				pasteButton.alpha = 1;
-
-			if(FlxG.mouse.justPressed)
+			pasteButton.alpha = 1;
+			if(generalPressed)
 			{
 				var formattedText = Clipboard.text.trim().toUpperCase().replace('#', '').replace('0x', '');
 				var newColor:Null<FlxColor> = FlxColor.fromString('#' + formattedText);
@@ -268,13 +358,13 @@ class NotesSubState extends MusicBeatSubstate
 		}
 
 		// Click
-		if(FlxG.mouse.justPressed)
+		if(generalPressed)
 		{
 			hexTypeNum = -1;
-			if (FlxG.mouse.overlaps(modeNotes))
+			if (pointerOverlaps(modeNotes))
 			{
 				modeNotes.forEachAlive(function(note:FlxSprite) {
-					if (curSelectedMode != note.ID && FlxG.mouse.overlaps(note))
+					if (curSelectedMode != note.ID && pointerOverlaps(note))
 					{
 						modeBG.visible = notesBG.visible = false;
 						curSelectedMode = note.ID;
@@ -284,10 +374,10 @@ class NotesSubState extends MusicBeatSubstate
 					}
 				});
 			}
-			else if (FlxG.mouse.overlaps(myNotes))
+			else if (pointerOverlaps(myNotes))
 			{
 				myNotes.forEachAlive(function(note:StrumNote) {
-					if (curSelectedNote != note.ID && FlxG.mouse.overlaps(note))
+					if (curSelectedNote != note.ID && pointerOverlaps(note))
 					{
 						modeBG.visible = notesBG.visible = false;
 						curSelectedNote = note.ID;
@@ -299,35 +389,35 @@ class NotesSubState extends MusicBeatSubstate
 					}
 				});
 			}
-			else if (FlxG.mouse.overlaps(colorWheel)) {
+			else if (pointerOverlaps(colorWheel)) {
 				_storedColor = getShaderColor();
 				holdingOnObj = colorWheel;
 			}
-			else if (FlxG.mouse.overlaps(colorGradient)) {
+			else if (pointerOverlaps(colorGradient)) {
 				_storedColor = getShaderColor();
 				holdingOnObj = colorGradient;
 			}
-			else if (FlxG.mouse.overlaps(colorPalette)) {
+			else if (pointerOverlaps(colorPalette)) {
 				setShaderColor(colorPalette.pixels.getPixel32(
-					Std.int((FlxG.mouse.x - colorPalette.x) / colorPalette.scale.x), 
-					Std.int((FlxG.mouse.y - colorPalette.y) / colorPalette.scale.y)));
+					Std.int((pointerX() - colorPalette.x) / colorPalette.scale.x), 
+					Std.int((pointerY() - colorPalette.y) / colorPalette.scale.y)));
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 				updateColors();
 			}
-			else if (FlxG.mouse.overlaps(skinNote))
+			else if (pointerOverlaps(skinNote))
 			{
 				onPixel = !onPixel;
 				spawnNotes();
 				updateNotes(true);
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 			}
-			else if(FlxG.mouse.y >= hexTypeLine.y && FlxG.mouse.y < hexTypeLine.y + hexTypeLine.height &&
-					Math.abs(FlxG.mouse.x - 1000) <= 84)
+			else if(pointerY() >= hexTypeLine.y && pointerY() < hexTypeLine.y + hexTypeLine.height &&
+					Math.abs(pointerX() - 1000) <= 84)
 			{
 				hexTypeNum = 0;
 				for (letter in alphabetHex.letters)
 				{
-					if(letter.x - letter.offset.x + letter.width <= FlxG.mouse.x) hexTypeNum++;
+					if(letter.x - letter.offset.x + letter.width <= pointerX()) hexTypeNum++;
 					else break;
 				}
 				if(hexTypeNum > 5) hexTypeNum = 5;
@@ -339,18 +429,18 @@ class NotesSubState extends MusicBeatSubstate
 		// holding
 		if(holdingOnObj != null)
 		{
-			if (FlxG.mouse.justReleased)
+			if (FlxG.mouse.justReleased || (controls.controllerMode && controls.justReleased('accept')))
 			{
 				holdingOnObj = null;
 				_storedColor = getShaderColor();
 				updateColors();
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
 			}
-			else if (FlxG.mouse.justPressed || FlxG.mouse.justMoved)
+			else if (generalMoved || generalPressed)
 			{
 				if (holdingOnObj == colorGradient)
 				{
-					var newBrightness = 1 - FlxMath.bound((FlxG.mouse.y - colorGradient.y) / colorGradient.height, 0, 1);
+					var newBrightness = 1 - FlxMath.bound((pointerY() - colorGradient.y) / colorGradient.height, 0, 1);
 					_storedColor.alpha = 1;
 					if(_storedColor.brightness == 0) //prevent bug
 						setShaderColor(FlxColor.fromRGBFloat(newBrightness, newBrightness, newBrightness));
@@ -361,7 +451,7 @@ class NotesSubState extends MusicBeatSubstate
 				else if (holdingOnObj == colorWheel)
 				{
 					var center:FlxPoint = new FlxPoint(colorWheel.x + colorWheel.width/2, colorWheel.y + colorWheel.height/2);
-					var mouse:FlxPoint = FlxG.mouse.getScreenPosition();
+					var mouse:FlxPoint = pointerFlxPoint();
 					var hue:Float = FlxMath.wrap(FlxMath.wrap(Std.int(mouse.degreesTo(center)), 0, 360) - 90, 0, 360);
 					var sat:Float = FlxMath.bound(mouse.dist(center) / colorWheel.width*2, 0, 1);
 					//trace('$hue, $sat');
@@ -373,7 +463,7 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		else if(controls.RESET && hexTypeNum < 0)
 		{
-			if(FlxG.keys.pressed.SHIFT)
+			if(FlxG.keys.pressed.SHIFT || FlxG.gamepads.anyJustPressed(LEFT_SHOULDER))
 			{
 				for (i in 0...3)
 				{
@@ -396,7 +486,28 @@ class NotesSubState extends MusicBeatSubstate
 			FlxG.sound.play(Paths.sound('cancelMenu'), 0.6);
 			updateColors();
 		}
-		super.update(elapsed);
+	}
+
+	function pointerOverlaps(obj:Dynamic)
+	{
+		if (!controls.controllerMode) return FlxG.mouse.overlaps(obj);
+		return FlxG.overlap(controllerPointer, obj);
+	}
+
+	function pointerX():Float
+	{
+		if (!controls.controllerMode) return FlxG.mouse.x;
+		return controllerPointer.x;
+	}
+	function pointerY():Float
+	{
+		if (!controls.controllerMode) return FlxG.mouse.y;
+		return controllerPointer.y;
+	}
+	function pointerFlxPoint():FlxPoint
+	{
+		if (!controls.controllerMode) return FlxG.mouse.getScreenPosition();
+		return controllerPointer.getScreenPosition();
 	}
 
 	function centerHexTypeLine()

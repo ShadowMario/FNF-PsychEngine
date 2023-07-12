@@ -222,10 +222,13 @@ class EditorPlayState extends MusicBeatSubstate
 	var lastStepHit:Int = -1;
 	override function stepHit()
 	{
-		if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)
-			|| (PlayState.SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)))
+		if (FlxG.sound.music.time >= -ClientPrefs.data.noteOffset)
 		{
-			resyncVocals();
+			if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)
+				|| (PlayState.SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)))
+			{
+				resyncVocals();
+			}
 		}
 		super.stepHit();
 
@@ -645,7 +648,7 @@ class EditorPlayState extends MusicBeatSubstate
 		{
 			//more accurate hit time for the ratings?
 			var lastTime:Float = Conductor.songPosition;
-			Conductor.songPosition = FlxG.sound.music.time;
+			if(Conductor.songPosition >= 0) Conductor.songPosition = FlxG.sound.music.time;
 
 			// heavily based on my own code LOL if it aint broke dont fix it
 			var pressNotes:Array<Note> = [];

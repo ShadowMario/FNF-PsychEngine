@@ -90,9 +90,6 @@ class TitleState extends MusicBeatState
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
-		// DEBUG BULLSHIT
-
-		swagShader = new ColorSwap();
 		super.create();
 
 		FlxG.save.bind('funkin', CoolUtil.getSavePath());
@@ -226,7 +223,7 @@ class TitleState extends MusicBeatState
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
 
-		swagShader = new ColorSwap();
+		if(ClientPrefs.data.shaders) swagShader = new ColorSwap();
 		gfDance = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
 
 		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
@@ -234,6 +231,7 @@ class TitleState extends MusicBeatState
 
 		switch(easterEgg.toUpperCase())
 		{
+			// IGNORE THESE, GO DOWN A BIT
 			#if TITLE_SCREEN_EASTER_EGG
 			case 'SHADOW':
 				gfDance.frames = Paths.getSparrowAtlas('ShadowBump');
@@ -263,9 +261,12 @@ class TitleState extends MusicBeatState
 		}
 
 		add(gfDance);
-		gfDance.shader = swagShader.shader;
 		add(logoBl);
-		logoBl.shader = swagShader.shader;
+		if(swagShader != null)
+		{
+			gfDance.shader = swagShader.shader;
+			logoBl.shader = swagShader.shader;
+		}
 
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
