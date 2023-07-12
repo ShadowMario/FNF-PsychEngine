@@ -14,6 +14,7 @@ class CustomSubstate extends MusicBeatSubstate
 		Lua_helper.add_callback(lua, "openCustomSubstate", function(name:String, ?pauseGame:Bool = false) {
 			if(pauseGame)
 			{
+				FlxG.camera.followLerp = 0;
 				game.persistentUpdate = false;
 				game.persistentDraw = true;
 				game.paused = true;
