@@ -67,7 +67,7 @@ class Note extends FlxSprite
 
 	public var animSuffix:String = '';
 	public var gfNote:Bool = false;
-	public var earlyHitMult:Float = 0.5;
+	public var earlyHitMult:Float = 1;
 	public var lateHitMult:Float = 1;
 	public var lowPriority:Bool = false;
 
@@ -257,12 +257,15 @@ class Note extends FlxSprite
 				// prevNote.setGraphicSize();
 			}
 
-			if(PlayState.isPixelStage) {
+			if(PlayState.isPixelStage)
+			{
 				scale.y *= PlayState.daPixelZoom;
 				updateHitbox();
 			}
-		} else if(!isSustainNote) {
-			earlyHitMult = 1;
+			earlyHitMult = 0;
+		}
+		else if(!isSustainNote)
+		{
 			centerOffsets();
 			centerOrigin();
 		}
@@ -290,6 +293,7 @@ class Note extends FlxSprite
 	var _lastNoteOffX:Float = 0;
 	static var _lastValidChecked:String; //optimization
 	public var originalHeight:Float = 6;
+	public var correctionOffset:Float = 0; //dont mess with this
 	public function reloadNote(texture:String = '', postfix:String = '') {
 		if(texture == null) texture = '';
 		if(postfix == null) postfix = '';
@@ -320,16 +324,12 @@ class Note extends FlxSprite
 
 		if(PlayState.isPixelStage) {
 			if(isSustainNote) {
-				loadGraphic(Paths.image('pixelUI/' + skinPixel + 'ENDS' + skinPostfix));
-				width /= 4;
-				height /= 2;
-				originalHeight = height;
-				loadGraphic(Paths.image('pixelUI/' + skinPixel + 'ENDS' + skinPostfix), true, Math.floor(width), Math.floor(height));
+				var graphic = Paths.image('pixelUI/' + skinPixel + 'ENDS' + skinPostfix);
+				loadGraphic(graphic, true, Math.floor(graphic.width / 4), Math.floor(graphic.height / 2));
+				originalHeight = graphic.height / 2;
 			} else {
-				loadGraphic(Paths.image('pixelUI/' + skinPixel + skinPostfix));
-				width /= 4;
-				height /= 5;
-				loadGraphic(Paths.image('pixelUI/' + skinPixel + skinPostfix), true, Math.floor(width), Math.floor(height));
+				var graphic = Paths.image('pixelUI/' + skinPixel + skinPostfix);
+				loadGraphic(graphic, true, Math.floor(graphic.width / 4), Math.floor(graphic.height / 5));
 			}
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 			loadPixelNoteAnims();
@@ -447,22 +447,14 @@ class Note extends FlxSprite
 
 		if(copyY)
 		{
-			y = strumY + offsetY + Math.sin(angleDir) * distance;
-
-			//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
+			y = strumY + offsetY + correctionOffset + Math.sin(angleDir) * distance;
 			if(myStrum.downScroll && isSustainNote)
 			{
-				if (animation.curAnim.name.endsWith('end')) {
-					y += 10.5 * (fakeCrochet / 400) * 1.5 * songSpeed + (46 * (songSpeed - 1));
-					y -= 46 * (1 - (fakeCrochet / 600)) * songSpeed;
-					if(PlayState.isPixelStage) {
-						y += 8 + (6 - originalHeight) * PlayState.daPixelZoom;
-					} else {
-						y -= 19;
-					}
+				if(PlayState.isPixelStage)
+				{
+					y -= PlayState.daPixelZoom * 9.5;
 				}
-				y += (Note.swagWidth / 2) - (60.5 * (songSpeed - 1));
-				y += 27.5 * ((PlayState.SONG.bpm / 100) - 1) * (songSpeed - 1);
+				y -= (frameHeight * scale.y) - (Note.swagWidth / 2);
 			}
 		}
 	}
