@@ -193,8 +193,9 @@ class ControlsSubState extends MusicBeatSubstate
 			attach.y += FlxG.height * 2;
 			grpBinds.add(attach);
 
+			playstationCheck(attach);
 			attach.scaleX = Math.min(1, 230 / attach.width);
-			attach.text = key;
+			//attach.text = key;
 
 			// spawn black bars at the right of the key name
 			var black:AttachedSprite = new AttachedSprite();
@@ -204,6 +205,27 @@ class ControlsSubState extends MusicBeatSubstate
 			black.yAdd = -6;
 			black.xAdd = textX;
 			grpBlacks.add(black);
+		}
+	}
+
+	function playstationCheck(alpha:Alphabet)
+	{
+		if(onKeyboardMode) return;
+
+		var gamepad:FlxGamepad = FlxG.gamepads.firstActive;
+		var model:FlxGamepadModel = gamepad != null ? gamepad.detectedModel : UNKNOWN;
+		var letter = alpha.letters[0];
+		if(model == PS4)
+		{
+			switch(alpha.text)
+			{
+				case '[', ']': //Square and Triangle respectively
+					letter.image = 'alphabet_playstation';
+					letter.updateHitbox();
+					
+					letter.offset.x += 4;
+					letter.offset.y -= 5;
+			}
 		}
 	}
 
@@ -218,8 +240,10 @@ class ControlsSubState extends MusicBeatSubstate
 		attach.ID = bind.ID;
 		attach.x = bind.x;
 		attach.y = bind.y;
+		
+		playstationCheck(attach);
 		attach.scaleX = Math.min(1, 230 / attach.width);
-		attach.text = text;
+		//attach.text = text;
 
 		bind.kill();
 		grpBinds.remove(bind);

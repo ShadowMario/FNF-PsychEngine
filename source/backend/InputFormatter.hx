@@ -189,13 +189,13 @@ class InputFormatter {
 				}
 			case X:
 				switch (model) {
-					case PS4: return "[]";
+					case PS4: return "["; //This gets its image changed through code
 					case XINPUT: return "X";
 					default: return "Action Left";
 				}
 			case Y:
-				switch (model) {
-					case PS4: return "/\\";
+				switch (model) { 
+					case PS4: return "]"; //This gets its image changed through code
 					case XINPUT: return "Y";
 					default: return "Action Up";
 				}
