@@ -86,8 +86,7 @@ class DialogueEditorState extends MusicBeatState
 		add(animText);
 		
 		daText = new TypedAlphabet(DialogueBoxPsych.DEFAULT_TEXT_X, DialogueBoxPsych.DEFAULT_TEXT_Y, DEFAULT_TEXT);
-		daText.scaleX = 0.7;
-		daText.scaleY = 0.7;
+		daText.setScale(0.7);
 		add(daText);
 		changeText();
 		super.create();
@@ -224,7 +223,6 @@ class DialogueEditorState extends MusicBeatState
 		if(textToType == null || textToType.length < 1) textToType = ' ';
 
 		daText.text = textToType;
-		daText.resetDialogue();
 
 		if(skipDialogue) 
 			daText.finishText();

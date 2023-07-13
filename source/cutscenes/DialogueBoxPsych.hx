@@ -30,6 +30,11 @@ typedef DialogueLine = {
 // TO DO: Clean code? Maybe? idk
 class DialogueBoxPsych extends FlxSpriteGroup
 {
+	public static var DEFAULT_TEXT_X = 175;
+	public static var DEFAULT_TEXT_Y = 460;
+	public static var LONG_TEXT_ADD = 24;
+	var scrollSpeed = 4000;
+
 	var dialogue:TypedAlphabet;
 	var dialogueList:DialogueFile = null;
 
@@ -86,8 +91,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		add(box);
 
 		daText = new TypedAlphabet(DEFAULT_TEXT_X, DEFAULT_TEXT_Y, '');
-		daText.scaleX = 0.7;
-		daText.scaleY = 0.7;
+		daText.setScale(0.7);
 		add(daText);
 
 		startNextDialog();
@@ -142,10 +146,6 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		}
 	}
 
-	public static var DEFAULT_TEXT_X = 175;
-	public static var DEFAULT_TEXT_Y = 432;
-	public static var LONG_TEXT_ADD = 24;
-	var scrollSpeed = 4000;
 	var daText:TypedAlphabet = null;
 	var ignoreThisFrame:Bool = true; //First frame is reserved for loading dialogue images
 

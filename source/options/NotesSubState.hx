@@ -85,11 +85,9 @@ class NotesSubState extends MusicBeatSubstate
 		bg.alpha = 0.25;
 		add(bg);
 		
-		var text:Alphabet = new Alphabet(84, 20, '', false);
+		var text:Alphabet = new Alphabet(50, 86, 'CTRL', false);
 		text.alignment = CENTERED;
-		text.scaleX = 0.4;
-		text.scaleY = 0.4;
-		text.text = "CTRL";
+		text.setScale(0.4);
 		add(text);
 
 		copyButton = new FlxSprite(760, 50).loadGraphic(Paths.image('noteColorMenu/copy'));
@@ -124,13 +122,15 @@ class NotesSubState extends MusicBeatSubstate
 		colorWheelSelector.alpha = 0.6;
 		add(colorWheelSelector);
 
-		alphabetR = makeColorAlphabet(900, 60);
+		var txtX = 980;
+		var txtY = 90;
+		alphabetR = makeColorAlphabet(txtX - 100, txtY);
 		add(alphabetR);
-		alphabetG = makeColorAlphabet(1000, 60);
+		alphabetG = makeColorAlphabet(txtX, txtY);
 		add(alphabetG);
-		alphabetB = makeColorAlphabet(1100, 60);
+		alphabetB = makeColorAlphabet(txtX + 100, txtY);
 		add(alphabetB);
-		alphabetHex = makeColorAlphabet(1000, 5);
+		alphabetHex = makeColorAlphabet(txtX, txtY - 55);
 		add(alphabetHex);
 		hexTypeLine = new FlxSprite(0, 20).makeGraphic(5, 62, FlxColor.WHITE);
 		hexTypeLine.visible = false;
@@ -551,7 +551,6 @@ class NotesSubState extends MusicBeatSubstate
 		bigNote.rgbShader.parent = Note.globalRgbShaders[curSelectedNote];
 		bigNote.shader = Note.globalRgbShaders[curSelectedNote].shader;
 		updateNotes();
-		updateColors();
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 
@@ -560,8 +559,7 @@ class NotesSubState extends MusicBeatSubstate
 	{
 		var text:Alphabet = new Alphabet(x, y, '', true);
 		text.alignment = CENTERED;
-		text.scaleX = 0.6;
-		text.scaleY = 0.6;
+		text.setScale(0.6);
 		add(text);
 		return text;
 	}
