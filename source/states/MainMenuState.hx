@@ -11,8 +11,8 @@ import flixel.input.keyboard.FlxKey;
 import lime.app.Application;
 
 import objects.AchievementPopup;
-
 import states.editors.MasterEditorMenu;
+import options.OptionsState;
 
 class MainMenuState extends MusicBeatState
 {
@@ -35,14 +35,13 @@ class MainMenuState extends MusicBeatState
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
-	var debugKeys:Array<FlxKey>;
 
 	override function create()
 	{
 		#if MODS_ALLOWED
 		Mods.pushGlobalMods();
 		#end
-		Mods.loadTheFirstEnabledMod();
+		Mods.loadTopMod();
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -230,7 +229,13 @@ class MainMenuState extends MusicBeatState
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
-										LoadingState.loadAndSwitchState(new options.OptionsState());
+										LoadingState.loadAndSwitchState(new OptionsState());
+										OptionsState.onPlayState = false;
+										if (PlayState.SONG != null)
+										{
+											PlayState.SONG.arrowSkin = null;
+											PlayState.SONG.splashSkin = null;
+										}
 								}
 							});
 						}

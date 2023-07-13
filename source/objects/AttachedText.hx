@@ -10,8 +10,7 @@ class AttachedText extends Alphabet
 	public function new(text:String = "", ?offsetX:Float = 0, ?offsetY:Float = 0, ?bold = false, ?scale:Float = 1) {
 		super(0, 0, text, bold);
 
-		this.scaleX = scale;
-		this.scaleY = scale;
+		this.setScale(scale);
 		this.isMenuItem = false;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;

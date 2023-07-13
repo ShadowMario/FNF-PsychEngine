@@ -1,6 +1,8 @@
 package objects;
 
 import shaders.RGBPalette;
+import flixel.system.FlxAssets.FlxShader;
+import flixel.graphics.frames.FlxFrame;
 
 typedef NoteSplashConfig = {
 	anim:String,
@@ -11,11 +13,11 @@ typedef NoteSplashConfig = {
 
 class NoteSplash extends FlxSprite
 {
-	public var rgbShader:RGBPalette = null;
+	public var rgbShader:PixelSplashShaderRef;
 	private var idleAnim:String;
 	private var _textureLoaded:String = null;
 
-	private static var defaultNoteSplash:String = 'noteSplashes/noteSplashes';
+	public static var defaultNoteSplash(default, never):String = 'noteSplashes/noteSplashes';
 	public static var configs:Map<String, NoteSplashConfig> = new Map<String, NoteSplashConfig>();
 
 	public function new(x:Float = 0, y:Float = 0) {
@@ -24,8 +26,11 @@ class NoteSplash extends FlxSprite
 		var skin:String = null;
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		else skin = getSplashSkin();
-
+		
+		rgbShader = new PixelSplashShaderRef();
+		shader = rgbShader.shader;
 		precacheConfig(skin);
+		scrollFactor.set();
 		//setupNoteSplash(x, y, 0);
 	}
 
@@ -38,24 +43,36 @@ class NoteSplash extends FlxSprite
 	var maxAnims:Int = 2;
 	public function setupNoteSplash(x:Float, y:Float, direction:Int = 0, ?note:Note = null) {
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
-		alpha = 0.6;
 		aliveTime = 0;
 
 		var texture:String = null;
-		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+		if(note != null && note.noteSplashData.texture != null) texture = note.noteSplashData.texture;
+		else if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		else texture = getSplashSkin();
 		
 		var config:NoteSplashConfig = precacheConfig(texture);
 		if(_textureLoaded != texture)
 			config = loadAnims(texture, config);
 
-		shader = null;
-		if(note != null && !note.noteSplashGlobalShader)
-			rgbShader = note.rgbShader.parent;
+		var tempShader:RGBPalette = null;
+		if(note != null && !note.noteSplashData.useGlobalShader)
+		{
+			if(note.noteSplashData.r != -1) note.rgbShader.r = note.noteSplashData.r;
+			if(note.noteSplashData.g != -1) note.rgbShader.g = note.noteSplashData.g;
+			if(note.noteSplashData.b != -1) note.rgbShader.b = note.noteSplashData.b;
+			tempShader = note.rgbShader.parent;
+			alpha = note.noteSplashData.a;
+		}
 		else
-			rgbShader = Note.globalRgbShaders[direction];
+		{
+			tempShader = Note.globalRgbShaders[direction];
+			alpha = 0.6;
+		}
+		rgbShader.copyValues(tempShader);
 
-		if(rgbShader != null) shader = rgbShader.shader;
+		if(note != null)
+			antialiasing = note.noteSplashData.antialiasing;
+		if(PlayState.isPixelStage) antialiasing = false;
 
 		_textureLoaded = texture;
 		offset.set(10, 10);
@@ -75,6 +92,11 @@ class NoteSplash extends FlxSprite
 			minFps = config.minFps;
 			maxFps = config.maxFps;
 		}
+		else
+		{
+			offset.x += -58;
+			offset.y += -55;
+		}
 
 		if(animation.curAnim != null)
 			animation.curAnim.frameRate = FlxG.random.int(minFps, maxFps);
@@ -91,6 +113,8 @@ class NoteSplash extends FlxSprite
 	function loadAnims(skin:String, ?config:NoteSplashConfig = null, ?animName:String = null):NoteSplashConfig {
 		maxAnims = 0;
 		frames = Paths.getSparrowAtlas(skin);
+		if(frames == null) //if you really this, you really fucked something up
+			frames = Paths.getSparrowAtlas(defaultNoteSplash);
 
 		if(animName == null)
 			animName = config != null ? config.anim : 'note splash';
@@ -113,7 +137,7 @@ class NoteSplash extends FlxSprite
 	{
 		if(configs.exists(skin)) return configs.get(skin);
 
-		var path:String = Paths.getPath('images/$skin.txt', TEXT);
+		var path:String = Paths.getPath('images/$skin.txt', TEXT, true);
 		var configFile:Array<String> = CoolUtil.coolTextFile(path);
 		if(configFile.length < 1) return null;
 		
@@ -131,7 +155,6 @@ class NoteSplash extends FlxSprite
 			maxFps: Std.parseInt(framerates[1]),
 			offsets: offs
 		};
-		//trace(config);
 		configs.set(skin, config);
 		return config;
 	}
@@ -150,5 +173,88 @@ class NoteSplash extends FlxSprite
 			(animation.curAnim == null && aliveTime >= buggedKillTime)) kill();
 
 		super.update(elapsed);
+	}
+}
+
+class PixelSplashShaderRef {
+	public var shader:PixelSplashShader = new PixelSplashShader();
+
+	public function copyValues(tempShader:RGBPalette)
+	{
+		var enabled:Bool = false;
+		if(tempShader != null)
+			enabled = true;
+
+		if(enabled)
+		{
+			for (i in 0...3)
+			{
+				shader.r.value[i] = tempShader.shader.r.value[i];
+				shader.g.value[i] = tempShader.shader.g.value[i];
+				shader.b.value[i] = tempShader.shader.b.value[i];
+			}
+			shader.mult.value[0] = tempShader.shader.mult.value[0];
+		}
+		else shader.mult.value[0] = 0.0;
+	}
+
+	public function new()
+	{
+		shader.r.value = [0, 0, 0];
+		shader.g.value = [0, 0, 0];
+		shader.b.value = [0, 0, 0];
+		shader.mult.value = [1];
+
+		var pixel:Float = 1;
+		if(PlayState.isPixelStage) pixel = PlayState.daPixelZoom;
+		shader.uBlocksize.value = [pixel, pixel];
+		//trace('Created shader ' + Conductor.songPosition);
+	}
+}
+
+class PixelSplashShader extends FlxShader
+{
+	@:glFragmentHeader('
+		#pragma header
+		
+		uniform vec3 r;
+		uniform vec3 g;
+		uniform vec3 b;
+		uniform float mult;
+		uniform vec2 uBlocksize;
+
+		vec4 flixel_texture2DCustom(sampler2D bitmap, vec2 coord) {
+			vec2 blocks = openfl_TextureSize / uBlocksize;
+			vec4 color = flixel_texture2D(bitmap, floor(coord * blocks) / blocks);
+			if (!hasTransform) {
+				return color;
+			}
+
+			if(color.a == 0.0 || mult == 0.0) {
+				return color * openfl_Alphav;
+			}
+
+			vec4 newColor = color;
+			newColor.rgb = min(color.r * r + color.g * g + color.b * b, vec3(1.0));
+			newColor.a = color.a;
+			
+			color = mix(color, newColor, mult);
+			
+			if(color.a > 0.0) {
+				return vec4(color.rgb, color.a);
+			}
+			return vec4(0.0, 0.0, 0.0, 0.0);
+		}')
+
+	@:glFragmentSource('
+		#pragma header
+
+		void main() {
+			gl_FragColor = flixel_texture2DCustom(bitmap, openfl_TextureCoordv);
+		}')
+
+	public function new()
+	{
+		super();
 	}
 }

@@ -87,7 +87,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			PlayState.seenCutscene = false;
 			PlayState.chartingMode = false;
 
-			Mods.loadTheFirstEnabledMod();
+			Mods.loadTopMod();
 			if (PlayState.isStoryMode)
 				MusicBeatState.switchState(new StoryMenuState());
 			else
@@ -96,7 +96,6 @@ class GameOverSubstate extends MusicBeatSubstate
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			PlayState.instance.callOnLuas('onGameOverConfirm', [false]);
 		}
-
 		
 		if (boyfriend.animation.curAnim != null)
 		{
@@ -169,5 +168,11 @@ class GameOverSubstate extends MusicBeatSubstate
 			});
 			PlayState.instance.callOnLuas('onGameOverConfirm', [true]);
 		}
+	}
+
+	override function destroy()
+	{
+		instance = null;
+		super.destroy();
 	}
 }

@@ -9,7 +9,6 @@ class RGBPalette {
 	public var g(default, set):FlxColor;
 	public var b(default, set):FlxColor;
 	public var mult(default, set):Float;
-	public var enabled(default, set):Bool;
 
 	private function set_r(color:FlxColor) {
 		r = color;
@@ -35,19 +34,12 @@ class RGBPalette {
 		return value;
 	}
 
-	private function set_enabled(value:Bool) {
-		enabled = value;
-		shader.enabled.value = [value];
-		return value;
-	}
-
 	public function new()
 	{
 		r = 0xFFFF0000;
 		g = 0xFF00FF00;
 		b = 0xFF0000FF;
 		mult = 1.0;
-		enabled = true;
 	}
 }
 
@@ -58,7 +50,7 @@ class RGBShaderReference
 	public var g(default, set):FlxColor;
 	public var b(default, set):FlxColor;
 	public var mult(default, set):Float;
-	public var enabled(default, set):Bool;
+	public var enabled(default, set):Bool = true;
 
 	public var parent:RGBPalette;
 	private var _owner:FlxSprite;
@@ -76,7 +68,6 @@ class RGBShaderReference
 			g = parent.g;
 			b = parent.b;
 			mult = parent.mult;
-			enabled = parent.enabled;
 		}
 	}
 	
@@ -102,8 +93,8 @@ class RGBShaderReference
 	}
 	private function set_enabled(value:Bool)
 	{
-		if(allowNew && value != _original.enabled) cloneOriginal();
-		return (enabled = parent.enabled = value);
+		_owner.shader = value ? parent.shader : null;
+		return (enabled = value);
 	}
 
 	public var allowNew = true;
@@ -119,9 +110,8 @@ class RGBShaderReference
 			parent.g = _original.g;
 			parent.b = _original.b;
 			parent.mult = _original.mult;
-			parent.enabled = _original.enabled;
 			_owner.shader = parent.shader;
-			trace('created new shader');
+			//trace('created new shader');
 		}
 	}
 }
@@ -134,7 +124,6 @@ class RGBPaletteShader extends FlxShader {
 		uniform vec3 g;
 		uniform vec3 b;
 		uniform float mult;
-		uniform bool enabled;
 
 		vec4 flixel_texture2DCustom(sampler2D bitmap, vec2 coord) {
 			vec4 color = flixel_texture2D(bitmap, coord);
@@ -142,7 +131,7 @@ class RGBPaletteShader extends FlxShader {
 				return color;
 			}
 
-			if(!enabled || color.a == 0.0 || mult == 0.0) {
+			if(color.a == 0.0 || mult == 0.0) {
 				return color * openfl_Alphav;
 			}
 

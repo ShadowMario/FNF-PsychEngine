@@ -10,7 +10,7 @@ import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
-import haxe.Json;
+import tjson.TJSON as Json;
 #if sys
 import sys.io.File;
 #end
@@ -86,8 +86,7 @@ class DialogueEditorState extends MusicBeatState
 		add(animText);
 		
 		daText = new TypedAlphabet(DialogueBoxPsych.DEFAULT_TEXT_X, DialogueBoxPsych.DEFAULT_TEXT_Y, DEFAULT_TEXT);
-		daText.scaleX = 0.7;
-		daText.scaleY = 0.7;
+		daText.setScale(0.7);
 		add(daText);
 		changeText();
 		super.create();
@@ -224,7 +223,6 @@ class DialogueEditorState extends MusicBeatState
 		if(textToType == null || textToType.length < 1) textToType = ' ';
 
 		daText.text = textToType;
-		daText.resetDialogue();
 
 		if(skipDialogue) 
 			daText.finishText();
@@ -499,7 +497,7 @@ class DialogueEditorState extends MusicBeatState
 	}
 
 	function saveDialogue() {
-		var data:String = Json.stringify(dialogueFile, "\t");
+		var data:String = haxe.Json.stringify(dialogueFile, "\t");
 		if (data.length > 0)
 		{
 			_file = new FileReference();

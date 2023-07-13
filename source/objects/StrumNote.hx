@@ -1,10 +1,11 @@
 package objects;
 
 import shaders.RGBPalette;
+import shaders.RGBPalette.RGBShaderReference;
 
 class StrumNote extends FlxSprite
 {
-	public var rgbShader:RGBPalette;
+	public var rgbShader:RGBShaderReference;
 	public var resetAnim:Float = 0;
 	private var noteData:Int = 0;
 	public var direction:Float = 90;//plan on doing scroll directions soon -bb
@@ -22,19 +23,21 @@ class StrumNote extends FlxSprite
 	}
 
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
-		rgbShader = new RGBPalette();
-		shader = rgbShader.shader;
+		rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(leData));
+		rgbShader.enabled = false;
 		
 		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[leData];
 		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[leData];
 		
 		if(leData <= arr.length)
 		{
-			rgbShader.r = arr[0];
-			rgbShader.g = arr[1];
-			rgbShader.b = arr[2];
+			@:bypassAccessor
+			{
+				rgbShader.r = arr[0];
+				rgbShader.g = arr[1];
+				rgbShader.b = arr[2];
+			}
 		}
-		rgbShader.enabled = false;
 
 		noteData = leData;
 		this.player = player;
@@ -150,12 +153,11 @@ class StrumNote extends FlxSprite
 
 	public function playAnim(anim:String, ?force:Bool = false) {
 		animation.play(anim, force);
-		rgbShader.enabled = false;
 		if(animation.curAnim != null)
 		{
 			centerOffsets();
 			centerOrigin();
-			rgbShader.enabled = (animation.curAnim.name != 'static');
 		}
+		rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static');
 	}
 }

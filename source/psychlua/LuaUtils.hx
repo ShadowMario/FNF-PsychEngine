@@ -1,19 +1,13 @@
 package psychlua;
 
 import backend.WeekData;
+import objects.Character;
 
 import openfl.display.BlendMode;
 import animateatlas.AtlasFrameMaker;
 import Type.ValueType;
 
 import substates.GameOverSubstate;
-
-#if LUA_ALLOWED
-import llua.Lua;
-import llua.LuaL;
-import llua.State;
-import llua.Convert;
-#end
 
 typedef LuaTweenOptions = {
 	type:FlxTweenType,
@@ -40,7 +34,7 @@ class LuaUtils
 		};
 	}
 
-	public static function setVarInArray(instance:Dynamic, variable:String, value:Dynamic):Any
+	public static function setVarInArray(instance:Dynamic, variable:String, value:Dynamic, allowMaps:Bool = false):Any
 	{
 		var splitProps:Array<String> = variable.split('[');
 		if(splitProps.length > 1)
@@ -52,8 +46,7 @@ class LuaUtils
 				if(retVal != null)
 					target = retVal;
 			}
-			else
-				target = Reflect.getProperty(instance, splitProps[0]);
+			else target = Reflect.getProperty(instance, splitProps[0]);
 
 			for (i in 1...splitProps.length)
 			{
@@ -65,20 +58,23 @@ class LuaUtils
 			}
 			return target;
 		}
-		/*if(Std.isOfType(instance, Map))
-			instance.set(variable,value);
-		else*/
-			
+
+		if(allowMaps && isMap(instance))
+		{
+			//trace(instance);
+			instance.set(variable, value);
+			return value;
+		}
+
 		if(PlayState.instance.variables.exists(variable))
 		{
 			PlayState.instance.variables.set(variable, value);
-			return true;
+			return value;
 		}
-
 		Reflect.setProperty(instance, variable, value);
-		return true;
+		return value;
 	}
-	public static function getVarInArray(instance:Dynamic, variable:String):Any
+	public static function getVarInArray(instance:Dynamic, variable:String, allowMaps:Bool = false):Any
 	{
 		var splitProps:Array<String> = variable.split('[');
 		if(splitProps.length > 1)
@@ -100,6 +96,12 @@ class LuaUtils
 			}
 			return target;
 		}
+		
+		if(allowMaps && isMap(instance))
+		{
+			//trace(instance);
+			return instance.get(variable);
+		}
 
 		if(PlayState.instance.variables.exists(variable))
 		{
@@ -107,57 +109,63 @@ class LuaUtils
 			if(retVal != null)
 				return retVal;
 		}
-
 		return Reflect.getProperty(instance, variable);
 	}
-
-	public static function setGroupStuff(leArray:Dynamic, variable:String, value:Dynamic) {
-		var killMe:Array<String> = variable.split('.');
-		if(killMe.length > 1) {
-			var coverMeInPiss:Dynamic = Reflect.getProperty(leArray, killMe[0]);
-			for (i in 1...killMe.length-1) {
-				coverMeInPiss = Reflect.getProperty(coverMeInPiss, killMe[i]);
-			}
-			Reflect.setProperty(coverMeInPiss, killMe[killMe.length-1], value);
-			return;
-		}
-		Reflect.setProperty(leArray, variable, value);
-	}
-	public static function getGroupStuff(leArray:Dynamic, variable:String) {
-		var killMe:Array<String> = variable.split('.');
-		if(killMe.length > 1) {
-			var coverMeInPiss:Dynamic = Reflect.getProperty(leArray, killMe[0]);
-			for (i in 1...killMe.length-1) {
-				coverMeInPiss = Reflect.getProperty(coverMeInPiss, killMe[i]);
-			}
-			switch(Type.typeof(coverMeInPiss)){
-				case ValueType.TClass(haxe.ds.StringMap) | ValueType.TClass(haxe.ds.ObjectMap) | ValueType.TClass(haxe.ds.IntMap) | ValueType.TClass(haxe.ds.EnumValueMap):
-					return coverMeInPiss.get(killMe[killMe.length-1]);
-				default:
-					return Reflect.getProperty(coverMeInPiss, killMe[killMe.length-1]);
-			};
-		}
-		switch(Type.typeof(leArray)){
-			case ValueType.TClass(haxe.ds.StringMap) | ValueType.TClass(haxe.ds.ObjectMap) | ValueType.TClass(haxe.ds.IntMap) | ValueType.TClass(haxe.ds.EnumValueMap):
-				return leArray.get(variable);
-			default:
-				return Reflect.getProperty(leArray, variable);
-		};
-	}
-
-	public static function getPropertyLoop(killMe:Array<String>, ?checkForTextsToo:Bool = true, ?getProperty:Bool=true):Dynamic
+	
+	public static function isMap(variable:Dynamic)
 	{
-		var obj:Dynamic = getObjectDirectly(killMe[0], checkForTextsToo);
-		var end = killMe.length;
-		if(getProperty) end = killMe.length-1;
+		/*switch(Type.typeof(variable)){
+			case ValueType.TClass(haxe.ds.StringMap) | ValueType.TClass(haxe.ds.ObjectMap) | ValueType.TClass(haxe.ds.IntMap) | ValueType.TClass(haxe.ds.EnumValueMap):
+				return true;
+			default:
+				return false;
+		}*/
 
-		for (i in 1...end) {
-			obj = getVarInArray(obj, killMe[i]);
+		//trace(variable);
+		if(variable.exists != null && variable.keyValueIterator != null) return true;
+		return false;
+	}
+
+	public static function setGroupStuff(leArray:Dynamic, variable:String, value:Dynamic, ?allowMaps:Bool = false) {
+		var split:Array<String> = variable.split('.');
+		if(split.length > 1) {
+			var obj:Dynamic = Reflect.getProperty(leArray, split[0]);
+			for (i in 1...split.length-1)
+				obj = Reflect.getProperty(obj, split[i]);
+
+			leArray = obj;
+			variable = split[split.length-1];
 		}
+		if(allowMaps && isMap(leArray)) leArray.set(variable, value);
+		else Reflect.setProperty(leArray, variable, value);
+		return value;
+	}
+	public static function getGroupStuff(leArray:Dynamic, variable:String, ?allowMaps:Bool = false) {
+		var split:Array<String> = variable.split('.');
+		if(split.length > 1) {
+			var obj:Dynamic = Reflect.getProperty(leArray, split[0]);
+			for (i in 1...split.length-1)
+				obj = Reflect.getProperty(obj, split[i]);
+
+			leArray = obj;
+			variable = split[split.length-1];
+		}
+
+		if(allowMaps && isMap(leArray)) return leArray.get(variable);
+		return Reflect.getProperty(leArray, variable);
+	}
+
+	public static function getPropertyLoop(split:Array<String>, ?checkForTextsToo:Bool = true, ?getProperty:Bool=true, ?allowMaps:Bool = false):Dynamic
+	{
+		var obj:Dynamic = getObjectDirectly(split[0], checkForTextsToo);
+		var end = split.length;
+		if(getProperty) end = split.length-1;
+
+		for (i in 1...end) obj = getVarInArray(obj, split[i], allowMaps);
 		return obj;
 	}
 
-	public static function getObjectDirectly(objectName:String, ?checkForTextsToo:Bool = true):Dynamic
+	public static function getObjectDirectly(objectName:String, ?checkForTextsToo:Bool = true, ?allowMaps:Bool = false):Dynamic
 	{
 		switch(objectName)
 		{
@@ -166,7 +174,7 @@ class LuaUtils
 			
 			default:
 				var obj:Dynamic = PlayState.instance.getLuaObject(objectName, checkForTextsToo);
-				if(obj == null) obj = getVarInArray(getTargetInstance(), objectName);
+				if(obj == null) obj = getVarInArray(getTargetInstance(), objectName, allowMaps);
 				return obj;
 		}
 	}
@@ -188,6 +196,27 @@ class LuaUtils
 	public static inline function getTargetInstance()
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
+	}
+
+	public static inline function getLowestCharacterGroup():FlxSpriteGroup
+	{
+		var group:FlxSpriteGroup = PlayState.instance.gfGroup;
+		var pos:Int = PlayState.instance.members.indexOf(group);
+
+		var newPos:Int = PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup);
+		if(newPos < pos)
+		{
+			group = PlayState.instance.boyfriendGroup;
+			pos = newPos;
+		}
+		
+		newPos = PlayState.instance.members.indexOf(PlayState.instance.dadGroup);
+		if(newPos < pos)
+		{
+			group = PlayState.instance.dadGroup;
+			pos = newPos;
+		}
+		return group;
 	}
 	
 	public static function addAnimByIndices(obj:String, name:String, prefix:String, indices:Any = null, framerate:Int = 24, loop:Bool = false)

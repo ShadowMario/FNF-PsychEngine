@@ -2,7 +2,6 @@ package backend;
 
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.transition.FlxTransitionableState;
-import states.stages.BaseStage;
 import flixel.FlxState;
 
 class MusicBeatState extends FlxUIState
@@ -34,12 +33,15 @@ class MusicBeatState extends FlxUIState
 			openSubState(new CustomFadeTransition(0.7, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
+		timePassedOnState = 0;
 	}
 
+	public static var timePassedOnState:Float = 0;
 	override function update(elapsed:Float)
 	{
 		//everyStep();
 		var oldStep:Int = curStep;
+		timePassedOnState += elapsed;
 
 		updateCurStep();
 		updateBeat();

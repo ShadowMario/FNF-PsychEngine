@@ -98,11 +98,9 @@ class ControlsSubState extends MusicBeatSubstate
 		controllerSpr.animation.add('gamepad', [1], 1, false);
 		add(controllerSpr);
 
-		var text:Alphabet = new Alphabet(91, 20, '', false);
+		var text:Alphabet = new Alphabet(60, 90, 'CTRL', false);
 		text.alignment = CENTERED;
-		text.scaleX = 0.4;
-		text.scaleY = 0.4;
-		text.text = "CTRL";
+		text.setScale(0.4);
 		add(text);
 
 		createTexts();

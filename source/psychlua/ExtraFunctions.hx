@@ -1,12 +1,5 @@
 package psychlua;
 
-#if LUA_ALLOWED
-import llua.Lua;
-import llua.LuaL;
-import llua.State;
-import llua.Convert;
-#end
-
 #if sys
 import sys.FileSystem;
 import sys.io.File;
