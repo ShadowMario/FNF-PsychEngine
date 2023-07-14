@@ -129,7 +129,7 @@ class PlayState extends MusicBeatState
 	public static var isPixelStage(get, never):Bool;
 
 	@:noCompletion
-	function get_isPixelStage():Bool
+	static function get_isPixelStage():Bool
 		return stageUI == "pixel";
 
 	public static var SONG:SwagSong = null;
