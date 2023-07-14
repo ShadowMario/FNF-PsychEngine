@@ -858,8 +858,7 @@ class PlayState extends MusicBeatState
 	function cacheCountdown()
 	{
 		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-		var introImagesArray:Array<String> = ["ready", "set" ,"go"];
-		introImagesArray = switch(stageUI) {
+		var introImagesArray:Array<String> = switch(stageUI) {
 			case "pixel": ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
 			case "normal": ["ready", "set" ,"go"];
 			default: ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
@@ -927,8 +926,7 @@ class PlayState extends MusicBeatState
 					dad.dance();
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				var introImagesArray:Array<String> = ["ready", "set" ,"go"];
-				introImagesArray = switch(stageUI) {
+				var introImagesArray:Array<String> = switch(stageUI) {
 					case "pixel": ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
 					case "normal": ["ready", "set" ,"go"];
 					default: ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
