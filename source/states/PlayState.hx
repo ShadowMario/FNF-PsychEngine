@@ -860,9 +860,9 @@ class PlayState extends MusicBeatState
 		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 		var introImagesArray:Array<String> = ["ready", "set" ,"go"];
 		introImagesArray = switch(stageUI) {
-			case "pixel": ['${stageUI}/ready-pixel', '${stageUI}/set-pixel', '${stageUI}/date-pixel'];
+			case "pixel": ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
 			case "normal": ["ready", "set" ,"go"];
-			default: ['${stageUI}/ready', '${stageUI}/set', '${stageUI}/go'];
+			default: ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
 		}
 		introAssets.set(stageUI, introImagesArray);
 		var introAlts:Array<String> = introAssets.get(stageUI);
@@ -929,9 +929,9 @@ class PlayState extends MusicBeatState
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 				var introImagesArray:Array<String> = ["ready", "set" ,"go"];
 				introImagesArray = switch(stageUI) {
-					case "pixel": ['${stageUI}/ready-pixel', '${stageUI}/set-pixel', '${stageUI}/date-pixel'];
+					case "pixel": ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
 					case "normal": ["ready", "set" ,"go"];
-					default: ['${stageUI}/ready', '${stageUI}/set', '${stageUI}/go'];
+					default: ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
 				}
 				introAssets.set(stageUI, introImagesArray);
 
