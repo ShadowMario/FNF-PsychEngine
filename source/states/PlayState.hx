@@ -858,14 +858,13 @@ class PlayState extends MusicBeatState
 	function cacheCountdown()
 	{
 		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-
-		var introUIPrefix:String = "";
-		var introUISuffix:String = "";
-		if (stageUI != "normal") {
-			introUIPrefix = '${stageUI}UI/';
-			if (PlayState.isPixelStage) introUISuffix = "-pixel";
+		var introImagesArray:Array<String> = ["ready", "set" ,"go"];
+		introImagesArray = switch(stageUI) {
+			case "pixel": ['${stageUI}/ready-pixel', '${stageUI}/set-pixel', '${stageUI}/date-pixel'];
+			case "normal": ["ready", "set" ,"go"];
+			default: ['${stageUI}/ready', '${stageUI}/set', '${stageUI}/go']
 		}
-		introAssets.set(stageUI, ['${introUIPrefix}ready${introUISuffix}', '${introUIPrefix}set${introUISuffix}', '${introUIPrefix}go${introUISuffix}']);
+		introAssets.set(stageUI, introImagesArray);
 		var introAlts:Array<String> = introAssets.get(stageUI);
 		for (asset in introAlts) Paths.image(asset);
 		
@@ -928,13 +927,13 @@ class PlayState extends MusicBeatState
 					dad.dance();
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				var introUIPrefix:String = "";
-				var introUISuffix:String = "";
-				if (stageUI != "normal") {
-					introUIPrefix = '${stageUI}UI/';
-					if (PlayState.isPixelStage) introUISuffix = "-pixel";
+				var introImagesArray:Array<String> = ["ready", "set" ,"go"];
+				introImagesArray = switch(stageUI) {
+					case "pixel": ['${stageUI}/ready-pixel', '${stageUI}/set-pixel', '${stageUI}/date-pixel'];
+					case "normal": ["ready", "set" ,"go"];
+					default: ['${stageUI}/ready', '${stageUI}/set', '${stageUI}/go']
 				}
-				introAssets.set(stageUI, ['${introUIPrefix}ready${introUISuffix}', '${introUIPrefix}set${introUISuffix}', '${introUIPrefix}go${introUISuffix}']);
+				introAssets.set(stageUI, introImagesArray);
 
 				var introAlts:Array<String> = introAssets.get(stageUI);
 				var antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage);
