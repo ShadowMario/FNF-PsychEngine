@@ -862,7 +862,7 @@ class PlayState extends MusicBeatState
 		introImagesArray = switch(stageUI) {
 			case "pixel": ['${stageUI}/ready-pixel', '${stageUI}/set-pixel', '${stageUI}/date-pixel'];
 			case "normal": ["ready", "set" ,"go"];
-			default: ['${stageUI}/ready', '${stageUI}/set', '${stageUI}/go']
+			default: ['${stageUI}/ready', '${stageUI}/set', '${stageUI}/go'];
 		}
 		introAssets.set(stageUI, introImagesArray);
 		var introAlts:Array<String> = introAssets.get(stageUI);
@@ -931,7 +931,7 @@ class PlayState extends MusicBeatState
 				introImagesArray = switch(stageUI) {
 					case "pixel": ['${stageUI}/ready-pixel', '${stageUI}/set-pixel', '${stageUI}/date-pixel'];
 					case "normal": ["ready", "set" ,"go"];
-					default: ['${stageUI}/ready', '${stageUI}/set', '${stageUI}/go']
+					default: ['${stageUI}/ready', '${stageUI}/set', '${stageUI}/go'];
 				}
 				introAssets.set(stageUI, introImagesArray);
 
