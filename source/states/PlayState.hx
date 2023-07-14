@@ -858,14 +858,11 @@ class PlayState extends MusicBeatState
 	function cacheCountdown()
 	{
 		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-		introAssets.set('default', ['ready', 'set', 'go']);
+		introAssets.set(stage, ['ready', 'set', 'go']);
 		introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
 
-		var introAlts:Array<String> = introAssets.get('default');
-		if (isPixelStage) introAlts = introAssets.get('pixel');
-		
-		for (asset in introAlts)
-			Paths.image(asset);
+		var introAlts:Array<String> = introAssets.get(stageUI);
+		for (asset in introAlts) Paths.image(asset);
 		
 		Paths.sound('intro3' + introSoundsSuffix);
 		Paths.sound('intro2' + introSoundsSuffix);
@@ -926,17 +923,13 @@ class PlayState extends MusicBeatState
 					dad.dance();
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				introAssets.set('default', ['ready', 'set', 'go']);
+				introAssets.set(stageUI, ['ready', 'set', 'go']);
 				introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
 
-				var introAlts:Array<String> = introAssets.get('default');
-				var antialias:Bool = ClientPrefs.data.antialiasing;
-				if(isPixelStage) {
-					introAlts = introAssets.get('pixel');
-					antialias = false;
-				}
-
+				var introAlts:Array<String> = introAssets.get(stageUI);
+				var antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage);
 				var tick:Countdown = THREE;
+
 				switch (swagCounter)
 				{
 					case 0:
