@@ -338,6 +338,7 @@ class PlayState extends MusicBeatState
 
 		defaultCamZoom = stageData.defaultZoom;
 
+		stageUI = "normal";
 		if (stageData.stageUI != null)
 			stageUI = stageData.stageUI;
 		else {
