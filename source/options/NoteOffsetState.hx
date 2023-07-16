@@ -12,6 +12,7 @@ import states.stages.StageWeek1 as BackgroundStage;
 class NoteOffsetState extends MusicBeatState
 {
 	var stageDirectory:String = 'week1';
+	private var prevStageDir:String = '';
 	var boyfriend:Character;
 	var gf:Character;
 
@@ -58,6 +59,7 @@ class NoteOffsetState extends MusicBeatState
 		FlxG.sound.pause();
 
 		// Stage
+		prevStageDir = Paths.currentLevel;
 		Paths.setCurrentLevel(stageDirectory);
 		new BackgroundStage();
 
@@ -411,6 +413,8 @@ class NoteOffsetState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)));
 				else
 					FlxG.sound.music.volume = 0;
+
+				Paths.setCurrentLevel(prevStageDir);
 			}
 			else FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			FlxG.mouse.visible = false;
