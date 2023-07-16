@@ -17,9 +17,13 @@ class AdditionalClasses {
 			"lime",
 			#if LUA_ALLOWED "llua", #end
 			"openfl",
-			"flash",
 
 			"haxe",
+			#if flash "flash", #end
+			#if cpp "cpp", #end
+			#if hl "hl", #end
+			#if neko "neko", #end
+			#if sys "sys", #end
 			"DateTools",
 			"EReg",
 			"Lambda",
