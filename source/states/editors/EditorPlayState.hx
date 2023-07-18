@@ -163,7 +163,7 @@ class EditorPlayState extends MusicBeatSubstate
 			Conductor.songPosition = startPos - timerToStart;
 			if(timerToStart < 0) startSong();
 		}
-		else Conductor.songPosition += elapsed * 1000;
+		else Conductor.songPosition += elapsed * 1000 * playbackRate;
 
 		if (unspawnNotes[0] != null)
 		{
