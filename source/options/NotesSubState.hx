@@ -573,7 +573,7 @@ class NotesSubState extends MusicBeatSubstate
 	public function spawnNotes()
 	{
 		dataArray = !onPixel ? ClientPrefs.data.arrowRGB : ClientPrefs.data.arrowRGBPixel;
-		PlayState.isPixelStage = onPixel;
+		if (onPixel) PlayState.stageUI = "pixel";
 
 		// clear groups
 		modeNotes.forEachAlive(function(note:FlxSprite) {
@@ -647,7 +647,7 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		insert(members.indexOf(myNotes) + 1, bigNote);
 		_storedColor = getShaderColor();
-		PlayState.isPixelStage = false;
+		PlayState.stageUI = "normal";
 	}
 
 	function updateNotes(?instant:Bool = false)
