@@ -106,15 +106,6 @@ class CoolUtil
 		return dumbArray;
 	}
 
-	//uhhhh does this even work at all? i'm starting to doubt
-	inline public static function precacheSound(sound:String, ?library:String = null):Void {
-		Paths.sound(sound, library);
-	}
-
-	inline public static function precacheMusic(sound:String, ?library:String = null):Void {
-		Paths.music(sound, library);
-	}
-
 	inline public static function browserLoad(site:String) {
 		#if linux
 		Sys.command('/usr/bin/xdg-open', [site]);
