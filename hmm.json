@@ -13,7 +13,7 @@
     {
       "name": "flixel",
       "type": "haxelib",
-      "version": null
+      "version": "5.2.2"
     },
     {
       "name": "flixel-addons",
@@ -33,7 +33,7 @@
     {
       "name": "hxcpp",
       "type": "haxelib",
-      "version": "4.2.2"
+      "version": "4.2.1"
     },
     {
       "name": "tjson",
