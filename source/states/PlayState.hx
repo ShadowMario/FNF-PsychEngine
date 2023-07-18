@@ -631,7 +631,7 @@ class PlayState extends MusicBeatState
 			for (note in unspawnNotes) note.resizeByRatio(ratio);
 		}
 		songSpeed = value;
-		noteKillOffset = 350 / songSpeed;
+		noteKillOffset = Math.max(Conductor.stepCrochet, 350 / songSpeed);
 		return value;
 	}
 
@@ -1657,7 +1657,7 @@ class PlayState extends MusicBeatState
 							if(daNote.isSustainNote && strum.sustainReduce) daNote.clipToStrumNote(strum);
 
 							// Kill extremely late notes and cause misses
-							if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
+							if (Conductor.songPosition - daNote.strumTime > noteKillOffset)
 							{
 								if (daNote.mustPress && !cpuControlled &&!daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit))
 									noteMiss(daNote);

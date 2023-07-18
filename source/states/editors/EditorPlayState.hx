@@ -200,7 +200,7 @@ class EditorPlayState extends MusicBeatSubstate
 				if(daNote.isSustainNote && strum.sustainReduce) daNote.clipToStrumNote(strum);
 
 				// Kill extremely late notes and cause misses
-				if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
+				if (Conductor.songPosition - daNote.strumTime > noteKillOffset)
 				{
 					if (daNote.mustPress && !daNote.ignoreNote && (daNote.tooLate || !daNote.wasGoodHit))
 						noteMiss(daNote);
@@ -299,6 +299,7 @@ class EditorPlayState extends MusicBeatSubstate
 			case "constant":
 				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed');
 		}
+		noteKillOffset = Math.max(Conductor.stepCrochet, 350 / songSpeed);
 
 		var songData = PlayState.SONG;
 		Conductor.changeBPM(songData.bpm);
