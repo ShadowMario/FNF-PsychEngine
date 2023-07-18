@@ -188,6 +188,7 @@ class Note extends FlxSprite
 	{
 		super();
 
+		antialiasing = ClientPrefs.data.antialiasing;
 		if(createdFrom == null) createdFrom = PlayState.instance;
 
 		if (prevNote == null)
