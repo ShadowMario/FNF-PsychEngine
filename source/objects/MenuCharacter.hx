@@ -26,6 +26,7 @@ class MenuCharacter extends FlxSprite
 	{
 		super(x);
 
+		antialiasing = ClientPrefs.data.antialiasing;
 		changeCharacter(character);
 	}
 

@@ -70,9 +70,8 @@ class NoteSplash extends FlxSprite
 		}
 		rgbShader.copyValues(tempShader);
 
-		if(note != null)
-			antialiasing = note.noteSplashData.antialiasing;
-		if(PlayState.isPixelStage) antialiasing = false;
+		if(note != null) antialiasing = note.noteSplashData.antialiasing;
+		if(PlayState.isPixelStage || !ClientPrefs.data.antialiasing) antialiasing = false;
 
 		_textureLoaded = texture;
 		offset.set(10, 10);

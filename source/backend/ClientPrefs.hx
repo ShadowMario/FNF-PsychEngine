@@ -214,8 +214,6 @@ class ClientPrefs {
 		if (FlxG.save.data.mute != null)
 			FlxG.sound.muted = FlxG.save.data.mute;
 
-		FlxSprite.defaultAntialiasing = data.antialiasing;
-
 		#if desktop
 		DiscordClient.check();
 		#end

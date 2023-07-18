@@ -155,15 +155,24 @@ class Tank extends BaseStage
 
 		tankman = new FlxSprite(-20, 320);
 		tankman.frames = Paths.getSparrowAtlas('cutscenes/' + songName);
+		tankman.antialiasing = ClientPrefs.data.antialiasing;
 		addBehindDad(tankman);
 
 		tankman2 = new FlxSprite(16, 312);
+		tankman2.antialiasing = ClientPrefs.data.antialiasing;
 		tankman2.alpha = 0.000001;
 
 		gfDance = new FlxSprite(gf.x - 107, gf.y + 140);
+		gfDance.antialiasing = ClientPrefs.data.antialiasing;
+
 		gfCutscene = new FlxSprite(gf.x - 104, gf.y + 122);
+		gfCutscene.antialiasing = ClientPrefs.data.antialiasing;
+
 		picoCutscene = new FlxSprite(gf.x - 849, gf.y - 264);
+		picoCutscene.antialiasing = ClientPrefs.data.antialiasing;
+
 		boyfriendCutscene = new FlxSprite(boyfriend.x + 5, boyfriend.y + 20);
+		boyfriendCutscene.antialiasing = ClientPrefs.data.antialiasing;
 
 		cutsceneHandler.push(tankman);
 		cutsceneHandler.push(tankman2);
