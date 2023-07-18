@@ -68,13 +68,6 @@
       "url": "https://github.com/Aidan63/linc_discord-rpc"
     },
     {
-      "name": "hscript-ex",
-      "type": "git",
-      "dir": null,
-      "ref": "master",
-      "url": "https://github.com/ianharrigan/hscript-ex"
-    },
-    {
       "name": "linc_luajit",
       "type": "git",
       "dir": null,
