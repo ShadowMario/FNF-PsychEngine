@@ -25,7 +25,7 @@ class NoteSplash extends FlxSprite
 
 		var skin:String = null;
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
-		else skin = getSplashSkin();
+		else skin = defaultNoteSplash + getSplashSkinPostfix();
 		
 		rgbShader = new PixelSplashShaderRef();
 		shader = rgbShader.shader;
@@ -48,7 +48,7 @@ class NoteSplash extends FlxSprite
 		var texture:String = null;
 		if(note != null && note.noteSplashData.texture != null) texture = note.noteSplashData.texture;
 		else if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
-		else texture = getSplashSkin();
+		else texture = defaultNoteSplash + getSplashSkinPostfix();
 		
 		var config:NoteSplashConfig = precacheConfig(texture);
 		if(_textureLoaded != texture)
@@ -101,11 +101,11 @@ class NoteSplash extends FlxSprite
 			animation.curAnim.frameRate = FlxG.random.int(minFps, maxFps);
 	}
 
-	public static function getSplashSkin()
+	public static function getSplashSkinPostfix()
 	{
-		var skin:String = defaultNoteSplash;
+		var skin:String = '';
 		if(ClientPrefs.data.splashSkin != ClientPrefs.defaultData.splashSkin)
-			skin += '-' + ClientPrefs.data.splashSkin.trim().toLowerCase().replace(' ', '_');
+			skin = '-' + ClientPrefs.data.splashSkin.trim().toLowerCase().replace(' ', '_');
 		return skin;
 	}
 

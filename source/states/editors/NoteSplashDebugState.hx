@@ -257,7 +257,7 @@ class NoteSplashDebugState extends MusicBeatState
 	var copiedArray:Array<Float> = null;
 	function loadFrames()
 	{
-		texturePath = ClientPrefs.data.splashSkin != 'Disabled' ? NoteSplash.getSplashSkin() : NoteSplash.defaultNoteSplash;
+		texturePath = NoteSplash.defaultNoteSplash + NoteSplash.getSplashSkinPostfix();
 		splashes.forEachAlive(function(spr:FlxSprite) {
 			spr.frames = Paths.getSparrowAtlas(texturePath);
 		});

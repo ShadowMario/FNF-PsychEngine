@@ -23,6 +23,8 @@ import sys.io.File;
 import cutscenes.DialogueBoxPsych;
 
 import objects.StrumNote;
+import objects.Note;
+import objects.NoteSplash;
 import objects.Character;
 
 import states.MainMenuState;
@@ -193,6 +195,12 @@ class FunkinLua {
 		set('shadersEnabled', ClientPrefs.data.shaders);
 		set('scriptName', scriptName);
 		set('currentModDirectory', Mods.currentModDirectory);
+
+		// Noteskin/Splash
+		set('noteSkin', ClientPrefs.data.noteSkin);
+		set('noteSkinPostfix', Note.getNoteSkinPostfix());
+		set('splashSkin', ClientPrefs.data.splashSkin);
+		set('splashSkinPostfix', NoteSplash.getSplashSkinPostfix());
 
 		#if windows
 		set('buildTarget', 'windows');
