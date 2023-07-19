@@ -27,7 +27,11 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+#if (flixel < "5.3.0")
 import flixel.system.FlxSound;
+#else
+import flixel.sound.FlxSound;
+#end
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -72,9 +76,13 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
-#else import vlc.MP4Handler; #end
+#if (hxCodec >= "2.6.1") 
+import hxcodec.VideoHandler as MP4Handler;
+#elseif (hxCodec == "2.6.0") 
+import VideoHandler as MP4Handler;
+#else 
+import vlc.MP4Handler; 
+#end
 #end
 
 using StringTools;
@@ -1379,6 +1387,7 @@ class PlayState extends MusicBeatState
 			return true;
 		}
 
+		#if MODS_ALLOWED
 		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
 		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
 			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
@@ -1415,6 +1424,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
+		#end
 		FlxG.log.warn('Missing shader $name .frag AND .vert files!');
 		return false;
 	}
@@ -1441,8 +1451,10 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.pitch = value;
 		}
 		playbackRate = value;
+		#if (flixel < "5.3.0")
 		FlxAnimationController.globalSpeed = value;
 		trace('Anim speed: ' + FlxAnimationController.globalSpeed);
+		#end
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000 * value;
 		setOnLuas('playbackRate', playbackRate);
 		return value;
@@ -3561,6 +3573,25 @@ class PlayState extends MusicBeatState
 					camHUD.zoom += hudZoom;
 				}
 
+			case 'Set Cam Zoom':
+				var val1:Float = Std.parseFloat(value1);
+				var val2:Float = Std.parseFloat(value2);
+
+				if (value2 == '') {
+					defaultCamZoom = val1;
+				}
+				else {
+					defaultCamZoom = val1;
+					FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, val2, {ease: FlxEase.sineInOut});
+				}
+				
+			case 'Flash':
+				var val:String = "0xFF" + value1;
+				var color:FlxColor = Std.parseInt(val);
+				var time:Float = Std.parseFloat(value2);
+				if(!ClientPrefs.flashing) color.alphaFloat = 0.5;
+				FlxG.camera.flash(color, time, null, true);
+
 			case 'Trigger BG Ghouls':
 				if(curStage == 'schoolEvil' && !ClientPrefs.lowQuality) {
 					bgGhouls.dance(true);
@@ -4927,7 +4958,9 @@ class PlayState extends MusicBeatState
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
+		#if (flixel < "5.3.0")
 		FlxAnimationController.globalSpeed = 1;
+		#end
 		FlxG.sound.music.pitch = 1;
 		super.destroy();
 	}
