@@ -118,7 +118,7 @@ class MusicBeatState extends FlxUIState
 		curStep = lastChange.stepTime + Math.floor(shit);
 	}
 
-	#if (flixel > "5.0.0")
+	#if (flixel > "5.3.0")
 	override function startOutro(onOutroComplete:Void->Void)
 	{
 		// Custom made Trans in
