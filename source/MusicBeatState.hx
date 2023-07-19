@@ -119,7 +119,7 @@ class MusicBeatState extends FlxUIState
 	}
 
 	#if (flixel > "5.0.0")
-	public static function startOutro(onOutroComplete:Void->Void)
+	override function startOutro(onOutroComplete:Void->Void)
 	{
 		// Custom made Trans in
 		var curState:Dynamic = FlxG.state;
@@ -134,7 +134,7 @@ class MusicBeatState extends FlxUIState
 		onOutroComplete();
 	}
 	#else
-	public static function switchTo(nextState:FlxState)
+	override function switchTo(nextState:FlxState)
 	{
 		// Custom made Trans in
 		var curState:Dynamic = FlxG.state;
