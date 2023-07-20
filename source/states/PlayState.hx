@@ -739,13 +739,17 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
-		#if MODS_ALLOWED
-		if(modchartSprites.exists(tag)) return modchartSprites.get(tag);
-		if(text && modchartTexts.exists(tag)) return modchartTexts.get(tag);
-		if(variables.exists(tag)) return variables.get(tag);
+	public function getLuaObject(tag:String):Dynamic {
+		var obj:Dynamic = null;
+		#if LUA_ALLOWED
+		var modchartMaps = [modchartSprites, modchartTexts, modchartSounds, modchartTweens, modchartTimers, modchartSaves, variables];
+		for (modchartObjects in modchartMaps) {
+			if(modchartObjects.exists(tag) && modchartObjects.get(tag) != null)
+				obj = modchartObjects.get(tag);
+			break;
+		}
 		#end
-		return null;
+		return obj;
 	}
 
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
