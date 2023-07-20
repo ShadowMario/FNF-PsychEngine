@@ -742,7 +742,7 @@ class PlayState extends MusicBeatState
 	public function getLuaObject(tag:String):Dynamic {
 		var obj:Dynamic = null;
 		#if LUA_ALLOWED
-		var modchartMaps = [modchartSprites, modchartTexts, modchartSounds, modchartTweens, modchartTimers, modchartSaves, variables];
+		var modchartMaps = [modchartSprites, modchartTexts, variables];
 		for (modchartObjects in modchartMaps) {
 			if(modchartObjects.exists(tag) && modchartObjects.get(tag) != null)
 				obj = modchartObjects.get(tag);
