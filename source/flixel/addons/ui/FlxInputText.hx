@@ -24,7 +24,6 @@ import flixel.util.FlxDestroyUtil;
  * License: Creative Commons Attribution 3.0 United States
  * @link http://creativecommons.org/licenses/by/3.0/us/
  * 
- * Modified by PlankDev to support cut/copy/paste
  */
 class FlxInputText extends FlxText
 {
