@@ -563,7 +563,7 @@ class ChartingState extends MusicBeatState
 		{
 			saveEvents();
 		});
-		var autosaveButton:FlxButton = new FlxButton(reloadSongJson.x, reloadSongJson.y + 30, "Save to Autosave", function()
+		var autosaveButton:FlxButton = new FlxButton(saveEvents.x, reloadSongJson.y + 60, "Save to Autosave", function()
 		{
 			autosaveSong();
 		});
