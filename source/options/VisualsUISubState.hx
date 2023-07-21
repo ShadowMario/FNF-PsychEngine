@@ -52,7 +52,6 @@ class VisualsUISubState extends BaseOptionsMenu
 				ClientPrefs.data.splashSkin = ClientPrefs.defaultData.splashSkin; //Reset to default if saved splashskin couldnt be found
 
 			noteSplashes.insert(0, ClientPrefs.defaultData.splashSkin); //Default skin always comes first
-			noteSplashes.push('Disabled'); //Disable option always should be the last
 			var option:Option = new Option('Note Splashes:',
 				"Select your prefered Note Splash variation or turn it off.",
 				'splashSkin',
@@ -60,6 +59,17 @@ class VisualsUISubState extends BaseOptionsMenu
 				noteSplashes);
 			addOption(option);
 		}
+
+		var option:Option = new Option('Note Splash Opacity',
+			'How much transparent should the Note Splashes be.',
+			'splashAlpha',
+			'percent');
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.0;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		addOption(option);
 
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
@@ -92,7 +102,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool');
 		addOption(option);
 
-		var option:Option = new Option('Health Bar Transparency',
+		var option:Option = new Option('Health Bar Opacity',
 			'How much transparent should the health bar and icons be.',
 			'healthBarAlpha',
 			'percent');

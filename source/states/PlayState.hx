@@ -476,12 +476,9 @@ class PlayState extends MusicBeatState
 			timeTxt.y += 3;
 		}
 
-		if(ClientPrefs.data.splashSkin != 'Disabled')
-		{
-			var splash:NoteSplash = new NoteSplash(100, 100);
-			grpNoteSplashes.add(splash);
-			splash.alpha = 0.000001; //cant make it invisible or it won't allow precaching
-		}
+		var splash:NoteSplash = new NoteSplash(100, 100);
+		grpNoteSplashes.add(splash);
+		splash.alpha = 0.000001; //cant make it invisible or it won't allow precaching
 
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
@@ -2882,7 +2879,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public function spawnNoteSplashOnNote(note:Note) {
-		if(ClientPrefs.data.splashSkin != 'Disabled' && note != null) {
+		if(note != null) {
 			var strum:StrumNote = playerStrums.members[note.noteData];
 			if(strum != null)
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note);
@@ -2896,7 +2893,8 @@ class PlayState extends MusicBeatState
 	}
 
 	override function destroy() {
-		for (lua in luaArray) {
+		for (i in 0...luaArray.length) {
+			var lua:FunkinLua = luaArray[0];
 			lua.call('onDestroy', []);
 			lua.stop();
 		}
@@ -3036,9 +3034,16 @@ class PlayState extends MusicBeatState
 		if(excludeValues == null) excludeValues = [];
 		excludeValues.push(FunkinLua.Function_Continue);
 
-		for (script in luaArray) {
+		var len:Int = luaArray.length;
+		var i:Int = 0;
+		while(i < len)
+		{
+			var script:FunkinLua = luaArray[i];
 			if(exclusions.contains(script.scriptName))
+			{
+				i++;
 				continue;
+			}
 
 			var myValue:Dynamic = script.call(funcToCall, args);
 			if(myValue == FunkinLua.Function_StopLua && !ignoreStops)
@@ -3046,6 +3051,9 @@ class PlayState extends MusicBeatState
 			
 			if(myValue != null && !excludeValues.contains(myValue))
 				returnVal = myValue;
+
+			if(!script.closed) i++;
+			else len--;
 		}
 		#end
 		return returnVal;
