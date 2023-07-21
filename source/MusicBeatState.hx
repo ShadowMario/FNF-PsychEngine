@@ -55,10 +55,12 @@ class MusicBeatState extends FlxUIState
 		updateCurStep();
 		updateBeat();
 
-		if (oldStep != curStep)
+		if (oldStep != curStep && curStep > 0)
 		{
 			if(curStep > 0)
 				stepHit();
+			if (curStep % 4 == 0)
+				beatHit(); //troll mode no longer breaks beats
 
 			if(PlayState.SONG != null)
 			{
@@ -123,6 +125,7 @@ class MusicBeatState extends FlxUIState
 		var shit = ((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / lastChange.stepCrochet;
 		curDecStep = lastChange.stepTime + shit;
 		curStep = lastChange.stepTime + Math.floor(shit);
+		updateBeat();
 	}
 
 	public static function switchState(nextState:FlxState) {
@@ -158,17 +161,19 @@ class MusicBeatState extends FlxUIState
 		return leState;
 	}
 
+	//runs whenever the game hits a step
 	public function stepHit():Void
 	{
-		if (curStep % 4 == 0)
-			beatHit();
+		//trace('Step: ' + curStep);
 	}
 
+	//runs whenever the game hits a beat
 	public function beatHit():Void
 	{
 		//trace('Beat: ' + curBeat);
 	}
 
+	//runs whenever the game hits a section
 	public function sectionHit():Void
 	{
 		//trace('Section: ' + curSection + ', Beat: ' + curBeat + ', Step: ' + curStep);
@@ -180,4 +185,9 @@ class MusicBeatState extends FlxUIState
 		if(PlayState.SONG != null && PlayState.SONG.notes[curSection] != null) val = PlayState.SONG.notes[curSection].sectionBeats;
 		return val == null ? 4 : val;
 	}
+	/*public function stepHit():Void
+	{
+		if (curStep % 4 == 0)
+			beatHit();
+	}*/
 }
