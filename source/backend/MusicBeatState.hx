@@ -117,26 +117,40 @@ class MusicBeatState extends FlxUIState
 		curStep = lastChange.stepTime + Math.floor(shit);
 	}
 
-	public static function switchState(nextState:FlxState) {
+	#if (flixel > "5.3.0")
+	override function startOutro(onOutroComplete:Void->Void)
+	{
 		// Custom made Trans in
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
-		if(!FlxTransitionableState.skipNextTransIn) {
+		if (!FlxTransitionableState.skipNextTransIn)
+		{
 			leState.openSubState(new CustomFadeTransition(0.6, false));
-			if(nextState == FlxG.state) {
-				CustomFadeTransition.finishCallback = function() {
-					FlxG.resetState();
-				};
-				//trace('resetted');
-			} else {
-				CustomFadeTransition.finishCallback = function() {
-					FlxG.switchState(nextState);
-				};
-				//trace('changed state');
-			}
+			CustomFadeTransition.finishCallback = onOutroComplete;
 			return;
 		}
 		FlxTransitionableState.skipNextTransIn = false;
+		super.startOutro(onOutroComplete);
+	}
+	#else
+	override function switchTo(nextState:FlxState)
+	{
+		// Custom made Trans in
+		var curState:Dynamic = FlxG.state;
+		var leState:MusicBeatState = curState;
+		if (!FlxTransitionableState.skipNextTransIn)
+		{
+			leState.openSubState(new CustomFadeTransition(0.6, false));
+			var finished:Bool = false;
+			CustomFadeTransition.finishCallback = function() {finished = true;};
+			return finished;
+		}
+		FlxTransitionableState.skipNextTransIn = false;
+		return super.switchTo(nextState);
+	}
+	#end
+
+	public static function switchState(nextState:FlxState) {
 		FlxG.switchState(nextState);
 	}
 
