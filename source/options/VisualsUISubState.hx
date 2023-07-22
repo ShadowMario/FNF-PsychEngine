@@ -74,6 +74,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+
+		var option:Option = new Option('Golden Sick on MFC/SFC',
+			'If checked, your Sick! & Marvelous!! ratings will be golden if your FC rating is better than GFC.',
+			'goldSickSFC',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Show Playback Speed on Time Bar',
 			'If checked, the timebar will also show the current Playback Speed you are playing at.',
 			'timebarShowSpeed',
