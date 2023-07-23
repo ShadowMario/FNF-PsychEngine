@@ -148,7 +148,6 @@ class MusicBeatState extends FlxUIState
 
 		FlxTransitionableState.skipNextTransIn = false;
 		FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
-		trace(nextState == FlxG.state);
 		if(nextState == FlxG.state)
 			CustomFadeTransition.finishCallback = function() FlxG.resetState();
 		else
