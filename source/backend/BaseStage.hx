@@ -47,7 +47,7 @@ class BaseStage extends FlxBasic
 
 	public function new()
 	{
-		this.game = cast FlxG.state;
+		this.game = MusicBeatState.getState();
 		if(this.game == null)
 		{
 			FlxG.log.warn('Invalid state for the stage added!');
