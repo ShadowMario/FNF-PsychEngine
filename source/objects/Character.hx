@@ -50,14 +50,14 @@ typedef AnimArray = {
 
 class Character extends FlxSprite
 {
-	public var animOffsets:Map<String, Array<Dynamic>>;
+	public var animOffsets:Map<String, Array<Dynamic>> = [];
 	public var debugMode:Bool = false;
 
 	// For swapping out huge sheets
-	public var framesList:Map<String, FlxFramesCollection>; // Image, Frames
-	public var imageNames:Map<String, String>; // Anim Name, Image
-	public var animStates:Map<String, FlxAnimationController>; // Image, Anim Controller
-	public var curFrames:String; // Current image name
+	public var framesList:Map<String, FlxFramesCollection> = []; // Image, Frames
+	public var imageNames:Map<String, String> = []; // Anim Name, Image
+	public var animStates:Map<String, FlxAnimationController> = []; // Image, Anim Controller
+	public var curImage:String; // Current image name
 	public static var tempAnimState:FlxAnimationController; // Just so that the real one won't be cleared (It crashes if it's null)
 
 	public var useAtlas:Bool;
@@ -96,17 +96,6 @@ class Character extends FlxSprite
 	{
 		super(x, y);
 
-		#if (haxe >= "4.0.0")
-		animOffsets = new Map();
-		framesList = new Map();
-		imageNames = new Map();
-		animStates = new Map();
-		#else
-		animOffsets = new Map<String, Array<Dynamic>>();
-		framesList = new Map<String, FlxFramesCollection>();
-		imageNames = new Map<String, String>();
-		animStates = new Map<String, FlxAnimationController>();
-		#end
 		if (tempAnimState != null) {
 			tempAnimState.destroy();
 		}
@@ -157,7 +146,7 @@ class Character extends FlxSprite
 
 				if (!useAtlas) {
 					frames = Paths.getAtlas(json.image);
-					curFrames = json.image;
+					curImage = json.image;
 					framesList.set(json.image, frames);
 					animStates.set(json.image, animation);
 					for (anim in json.animations) {
@@ -172,7 +161,7 @@ class Character extends FlxSprite
 				}
 				else {
 					frames = AtlasFrameMaker.construct(json.image);
-					curFrames = json.image;
+					curImage = json.image;
 					framesList.set(json.image, frames);
 					animStates.set(json.image, animation);
 					for (anim in json.animations) {
@@ -222,12 +211,12 @@ class Character extends FlxSprite
 						if (animImage == null || animImage.length == 0) {
 							animImage = imageFile;
 						}
-						if (animImage != curFrames) {
-							//trace(animImage + ', ' + curFrames);
+						if (animImage != curImage) {
+							//trace(animImage + ', ' + curImage);
 							animation = tempAnimState;
 							frames = framesList.get(animImage);
 							animation = animStates.get(animImage);
-							curFrames = animImage;
+							curImage = animImage;
 						}
 
 						if (animIndices != null && animIndices.length > 0) {
@@ -246,7 +235,7 @@ class Character extends FlxSprite
 				animation = tempAnimState;
 				frames = framesList.get(json.image);
 				animation = animStates.get(json.image);
-				curFrames = json.image;
+				curImage = json.image;
 				//trace('Loaded file to character ' + curCharacter);
 		}
 		originalFlipX = flipX;
@@ -369,11 +358,11 @@ class Character extends FlxSprite
 		if (prevFrames == null || prevFrames.length == 0) {
 			prevFrames = imageFile;
 		}
-		if (prevFrames != null && prevFrames != curFrames) {
+		if (prevFrames != null && prevFrames != curImage) {
 			animation = tempAnimState;
 			frames = framesList.get(prevFrames);
 			animation = animStates.get(prevFrames);
-			curFrames = prevFrames;
+			curImage = prevFrames;
 		}
 
 		specialAnim = false;

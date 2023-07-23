@@ -667,7 +667,7 @@ class CharacterEditorState extends MusicBeatState
 			if (animImage == null || animImage.length == 0) {
 				animImage = char.imageFile;
 			}
-			if (animImage != null && animImage != char.curFrames) {
+			if (animImage != null && animImage != char.curImage) {
 				// Set stuff in the character
 				if (!char.useAtlas)
 					char.framesList.set(animImage, Paths.getAtlas(animImage));
@@ -680,7 +680,7 @@ class CharacterEditorState extends MusicBeatState
 				char.animation = Character.tempAnimState;
 				char.frames = char.framesList.get(animImage);
 				char.animation = char.animStates.get(animImage);
-				char.curFrames = animImage;
+				char.curImage = animImage;
 				curAnim = char.animationsArray.indexOf(newAnim);
 				genBoyOffsets();
 			}
@@ -843,7 +843,7 @@ class CharacterEditorState extends MusicBeatState
 		var anims:Array<AnimArray> = char.animationsArray.copy();
 		if (char.useAtlas) {
 			char.frames = AtlasFrameMaker.construct(char.imageFile);
-			char.curFrames = char.imageFile;
+			char.curImage = char.imageFile;
 			char.framesList.set(char.imageFile, char.frames);
 			char.animStates.set(char.imageFile, char.animation);
 			for (anim in anims) {
@@ -858,7 +858,7 @@ class CharacterEditorState extends MusicBeatState
 		}
 		else {
 			char.frames = Paths.getAtlas(char.imageFile);
-			char.curFrames = char.imageFile;
+			char.curImage = char.imageFile;
 			char.framesList.set(char.imageFile, char.frames);
 			char.animStates.set(char.imageFile, char.animation);
 			for (anim in anims) {
@@ -884,11 +884,11 @@ class CharacterEditorState extends MusicBeatState
 				if (animImage == null || animImage.length == 0) {
 					animImage = char.imageFile;
 				}
-				if (animImage != char.curFrames) {
+				if (animImage != char.curImage) {
 					char.animation = Character.tempAnimState;
 					char.frames = char.framesList.get(animImage);
 					char.animation = char.animStates.get(animImage);
-					char.curFrames = animImage;
+					char.curImage = animImage;
 				}
 				if (animIndices != null && animIndices.length > 0) {
 					char.animation.addByIndices(animAnim, animName, animIndices, "", animFps, animLoop);
@@ -907,7 +907,7 @@ class CharacterEditorState extends MusicBeatState
 		char.animation = Character.tempAnimState;
 		char.frames = char.framesList.get(char.imageFile);
 		char.animation = char.animStates.get(char.imageFile);
-		char.curFrames = char.imageFile;
+		char.curImage = char.imageFile;
 
 		if(lastAnim != '') {
 			char.playAnim(lastAnim, true);
