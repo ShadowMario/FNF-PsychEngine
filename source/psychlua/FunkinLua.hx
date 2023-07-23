@@ -130,6 +130,7 @@ class FunkinLua {
 		set('screenHeight', FlxG.height);
 
 		// PlayState cringe ass nae nae bullcrap
+		set('curSection', 0);
 		set('curBeat', 0);
 		set('curStep', 0);
 		set('curDecBeat', 0);
