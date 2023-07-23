@@ -926,6 +926,7 @@ class ChartingState extends MusicBeatState
 			key++;
 		}
 
+		#if sys
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'custom_notetypes/');
 		for (folder in foldersToCheck)
 			for (file in FileSystem.readDirectory(folder))
@@ -941,6 +942,7 @@ class ChartingState extends MusicBeatState
 					}
 				}
 			}
+		#end
 
 
 		var displayNameList:Array<String> = curNoteTypes.copy();
