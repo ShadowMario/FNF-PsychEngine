@@ -9,6 +9,7 @@ class CustomSubstate extends MusicBeatSubstate
 
 	public static function implement(funk:FunkinLua)
 	{
+		#if LUA_ALLOWED
 		var lua = funk.lua;
 		var game = PlayState.instance;
 		Lua_helper.add_callback(lua, "openCustomSubstate", function(name:String, ?pauseGame:Bool = false) {
@@ -51,6 +52,7 @@ class CustomSubstate extends MusicBeatSubstate
 			}
 			return false;
 		});
+		#end
 	}
 
 	override function create()

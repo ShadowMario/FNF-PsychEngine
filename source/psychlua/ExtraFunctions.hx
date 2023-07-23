@@ -191,9 +191,11 @@ class ExtraFunctions
 		Lua_helper.add_callback(lua, "saveFile", function(path:String, content:String, ?absolute:Bool = false)
 		{
 			try {
+				#if MODS_ALLOWED
 				if(!absolute)
 					File.saveContent(Paths.mods(path), content);
 				else
+				#end
 					File.saveContent(path, content);
 
 				return true;
