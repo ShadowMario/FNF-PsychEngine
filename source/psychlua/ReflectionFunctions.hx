@@ -94,16 +94,16 @@ class ReflectionFunctions
 			FunkinLua.luaTrace("getPropertyFromGroup: Object #" + index + " from group: " + obj + " doesn't exist!", false, false, FlxColor.RED);
 			return null;
 		});
-		Lua_helper.add_callback(lua, "setPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, value:Dynamic) {
+		Lua_helper.add_callback(lua, "setPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, value:Dynamic, ?allowMaps:Bool = false) {
 			var split:Array<String> = obj.split('.');
 			var realObject:Dynamic = null;
 			if(split.length > 1)
-				realObject = LuaUtils.getPropertyLoop(split, true, false);
+				realObject = LuaUtils.getPropertyLoop(split, true, false, allowMaps);
 			else
 				realObject = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
 
 			if(Std.isOfType(realObject, FlxTypedGroup)) {
-				LuaUtils.setGroupStuff(realObject.members[index], variable, value);
+				LuaUtils.setGroupStuff(realObject.members[index], variable, value, allowMaps);
 				return value;
 			}
 
@@ -113,7 +113,7 @@ class ReflectionFunctions
 					leArray[variable] = value;
 					return value;
 				}
-				LuaUtils.setGroupStuff(leArray, variable, value);
+				LuaUtils.setGroupStuff(leArray, variable, value, allowMaps);
 			}
 			return value;
 		});
