@@ -182,7 +182,30 @@ function eventEarlyTrigger(name)
 end
 
 
--- Tween/Timer hooks
+-- Custom Substates
+function onCustomSubstateCreate(name)
+	-- name is defined on "openCustomSubstate(name)"
+end
+
+function onCustomSubstateCreatePost(name)
+	-- name is defined on "openCustomSubstate(name)"
+end
+
+function onCustomSubstateUpdate(name, elapsed)
+	-- name is defined on "openCustomSubstate(name)"
+end
+
+function onCustomSubstateUpdatePost(name, elapsed)
+	-- name is defined on "openCustomSubstate(name)"
+end
+
+function onCustomSubstateDestroy(name)
+	-- name is defined on "openCustomSubstate(name)"
+	-- called when you use "closeCustomSubstate()"
+end
+
+
+-- Tween/Timer/Sound hooks
 function onTweenCompleted(tag)
 	-- A tween you called has been completed, value "tag" is it's tag
 end
@@ -191,4 +214,8 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	-- A loop from a timer you called has been completed, value "tag" is it's tag
 	-- loops = how many loops it will have done when it ends completely
 	-- loopsLeft = how many are remaining
+end
+
+function onSoundCompleted(tag)
+	-- Only called if you use playSound() with a tag
 end
