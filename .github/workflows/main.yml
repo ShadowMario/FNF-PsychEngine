@@ -2,101 +2,165 @@
 
 name: Build
 
+# Controls when the action will run. 
 
-# Controls when the action will run.
 on:
+
   # Triggers the workflow on push or pull request events but only for the master branch
+
   push:
-    branches: [ main, experimental ]
+
+    branches: [ main ]
+
   pull_request:
-    branches: [ main, experimental ]
+
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
+
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
 jobs:
+
   # This workflow contains a single job called "build"
-  buildLinux:
-    # The type of runner that the job will run on
+
+  buildAndroid:
+
+    name: buildAndroid
+
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
 
-      - uses: krdlab/setup-haxe@master
+      - name: Checkout
+
+        uses: actions/checkout@main
+
+      - name: Setup Android NDK
+
+        uses: nttld/setup-ndk@main
+
+        id: setup-ndk
+
         with:
-          haxe-version: 4.2.5
-      # Runs a set of commands using the runners shell
+
+          ndk-version: r15c
+
+      - name: Setup Java JDK
+
+        uses: actions/setup-java@main
+
+        with:
+
+          distribution: 'zulu'
+
+          java-version: 11
+
+      - name: Setup Android SDK
+
+        uses: android-actions/setup-android@main
+
+      - name: Setup Haxe
+
+        uses: krdlab/setup-haxe@v1.2.0
+
+        with:
+
+          haxe-version: 4.2.0
+
       - name: Install Haxelib
+
         run: |
-          sudo apt-get install libvlc-dev
-          sudo apt-get install libvlccore-dev
+
           haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null --quiet
-          haxelib install hmm --quiet
-          haxelib run hmm install
+
+          haxelib install hxcpp 4.2.1 > /dev/null
+
+          haxelib install lime 7.9.0
+
+          haxelib install openfl 9.1.0
+
+          haxelib --never install flixel 4.11.0
+
+          haxelib run lime setup flixel
+
+          haxelib install flixel-tools
+
+          haxelib install flixel-ui
+
+          haxelib install flixel-addons 2.11.0
+
+          haxelib install tjson
+
+          haxelib install hxjsonast
+
+          haxelib install hscript
+
+          haxelib git hxCodec https://github.com/SPLCoding/hxCodec-but-it-works-xd.git
+
+          haxelib git linc_luajit https://github.com/Sirox228/linc_luajit
+
+          haxelib git extension-androidtools https://github.com/MaysLastPlay77/extension-androidtools
+
+          
+
+          haxelib git flxgif https://github.com/MAJigsaw77/flxgif
+
+          
+
+          haxelib git hxdiscord_rpc https://github.com/MAJigsaw77/hxdiscord_rpc.git
+
+          
+
+          haxelib install hxcpp-debug-server
+
+          haxelib list
+
       - name: Create Version Tag
+
         run: echo "${{github.run_id}}" > VERSION
-      - name: Compile
-        run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: linuxBuild
-          path: 'export/release/linux/bin'
-  buildWindows:
-    runs-on: windows-latest
 
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2.3.0
+      - name: Setup Lime
 
-      - uses: krdlab/setup-haxe@master
-        with:
-          haxe-version: 4.2.5
-      # Runs a set of commands using the runners shell
-      - name: Install Haxelib
         run: |
-          haxelib setup C:/haxelib
-          haxelib install hxcpp > /dev/null --quiet
-          haxelib install hmm --quiet
-          haxelib run hmm install
-        shell: cmd
-      - name: Create Version Tag
-        run: echo "${{github.run_id}}" > VERSION
-      - name: Compile
-        run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id}}"
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: windowsBuild
-          path: export/release/windows/bin
-  buildMac:
-    runs-on: macos-latest
 
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+          haxelib run lime setup -alias -y
 
-      - uses: krdlab/setup-haxe@master
-        with:
-          haxe-version: 4.2.5
-      # Runs a set of commands using the runners shell
-      - name: Install Haxelib
-        run: |
-          haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null --quiet
-          haxelib install hmm --quiet
-          haxelib run hmm install
-      - name: Create Version Tag
-        run: echo "${{github.run_id}}" > VERSION
+          haxelib run lime config ANDROID_SDK $ANDROID_HOME
+
+          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
+
+          haxelib run lime config JAVA_HOME $JAVA_HOME
+
+          haxelib run lime config ANDROID_SETUP true
+
+          haxelib set lime 7.9.0
+
+          haxelib set openfl 9.1.0
+
+          haxelib set flixel 4.11.0
+
+          haxelib set flixel-addons 2.11.0
+
+          haxelib set hxcpp 4.2.1
+
+        env:
+
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+
       - name: Compile
-        run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id}}"
+
+        run: haxelib run lime build android -D NO_PRECOMPILED_HEADERS --app-version="4.0.0-${{ github.run_id}}"
+
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+
+        uses: actions/upload-artifact@main
+
         with:
-          name: macBuild
-          path: export/release/macos/bin
+
+          name: buildAndroid
+
+          path: export/release/android/bin/app/build/outputs/apk/debug
+
