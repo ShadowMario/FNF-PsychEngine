@@ -2905,6 +2905,7 @@ class PlayState extends MusicBeatState
 			lua.stop();
 		}
 		luaArray = [];
+		FunkinLua.customFunctions.clear();
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);

@@ -58,6 +58,8 @@ class FunkinLua {
 	#end
 	
 	public var callbacks:Map<String, Dynamic> = new Map<String, Dynamic>();
+	public static var customFunctions:Map<String, Dynamic> = new Map<String, Dynamic>();
+
 	public function new(scriptName:String) {
 		#if LUA_ALLOWED
 		lua = LuaL.newstate();
@@ -217,6 +219,12 @@ class FunkinLua {
 		#else
 		set('buildTarget', 'unknown');
 		#end
+
+		for (name => func in customFunctions)
+		{
+			if(func != null)
+				Lua_helper.add_callback(lua, name, func);
+		}
 
 		//
 		Lua_helper.add_callback(lua, "getRunningScripts", function(){

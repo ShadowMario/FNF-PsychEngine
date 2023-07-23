@@ -85,8 +85,15 @@ class HScript
 
 		// For adding your own callbacks
 
-		// not very tested
-		interp.variables.set('createGlobalCallback', function(name:String, func:Dynamic) Lua_helper.add_callback(parentLua.lua, name, func));
+		// not very tested but should work
+		interp.variables.set('createGlobalCallback', function(name:String, func:Dynamic)
+		{
+			for (script in PlayState.instance.luaArray)
+				if(script != null && script.lua != null && !script.closed)
+					Lua_helper.add_callback(script.lua, name, func);
+
+			FunkinLua.customFunctions.set(name, func);
+		});
 
 		// tested
 		interp.variables.set('createCallback', function(name:String, func:Dynamic, ?funk:FunkinLua = null)
