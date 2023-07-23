@@ -1,0 +1,3 @@
+splash sparkles
+22 26
+-48 -48
