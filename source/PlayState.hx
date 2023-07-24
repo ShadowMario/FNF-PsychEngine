@@ -396,6 +396,8 @@ class PlayState extends MusicBeatState
 
 	// Lua shit
 	public var luaArray:Array<FunkinLua> = [];
+	public var achievementArray:Array<FunkinLua> = [];
+	public var achievementWeeks:Array<String> = [];
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
 
@@ -433,11 +435,7 @@ class PlayState extends MusicBeatState
 			if (!ClientPrefs.memLeaks)
 			{
 			#if cpp
-			cpp.vm.Gc.enable(true);
-			#end
-
-			#if sys
-			openfl.system.System.gc();
+			cpp.vm.Gc.enable(false); //SOMEHOW PUTTING TRUE CAUSES MORE LAG??
 			#end
 			}
 
@@ -1042,6 +1040,32 @@ class PlayState extends MusicBeatState
 						filesPushed.push(file);
 					}
 				}
+			}
+		}
+		#end
+
+
+		//CUSTOM ACHIVEMENTS
+		#if (MODS_ALLOWED && LUA_ALLOWED && ACHIEVEMENTS_ALLOWED)
+		var luaFiles:Array<String> = Achievements.getModAchievements().copy();
+		if(luaFiles.length > 0){
+			for(luaFile in luaFiles)
+			{
+				var lua = new FunkinLua(luaFile);
+				luaArray.push(lua);
+				achievementArray.push(lua);
+			}
+		}
+
+		var achievementMetas = Achievements.getModAchievementMetas().copy();
+		for (i in achievementMetas) {
+			if(i.lua_code != null) {
+				var lua = new FunkinLua(null, i.lua_code);
+				luaArray.push(lua);
+				achievementArray.push(lua);
+			}
+			if(i.week_nomiss != null) {
+				achievementWeeks.push(i.week_nomiss);
 			}
 		}
 		#end
@@ -3611,7 +3635,6 @@ class PlayState extends MusicBeatState
 		{
 		FlxG.sound.music.onComplete = finishSong.bind();
 		}
-		/*
 		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Highest') 
 		{
 		FlxG.sound.music.onComplete = loopSongHighest.bind();
@@ -3640,7 +3663,6 @@ class PlayState extends MusicBeatState
 		{
 		FlxG.sound.music.onComplete = loopSongNoLimit.bind();
 		}
-		*/
 		vocals.play();
 
 		if(startOnTime > 0)
@@ -3659,7 +3681,8 @@ class PlayState extends MusicBeatState
 
 
 		// Song duration in a float, useful for the time left feature
-		FlxTween.tween(this, {songLength: FlxG.sound.music.length}, 1, {ease: FlxEase.expoOut});
+		if (ClientPrefs.lengthIntro) FlxTween.tween(this, {songLength: FlxG.sound.music.length}, 1, {ease: FlxEase.expoOut});
+		if (!ClientPrefs.lengthIntro) songLength = FlxG.sound.music.length; //so that the timer won't just appear as 0
 		timeBar.scale.x = 0.01;
 		timeBarBG.scale.x = 0.01;
 		FlxTween.tween(timeBar, {alpha: 1, "scale.x": 1}, 1, {ease: FlxEase.expoOut});
@@ -4338,7 +4361,6 @@ class PlayState extends MusicBeatState
 				health = -2;
 			}
 		}
-		if (health <= 0 && practiceMode && ClientPrefs.zeroHealthLimit) health = 0; //set health to 0 if on practice mode and you get to 0%
 		if (nps > (1 / 2) || oppNPS > (1 / 2))
 		{
 		updateRatingCounter();
@@ -4757,7 +4779,7 @@ class PlayState extends MusicBeatState
 						FlxG.sound.play(Paths.sound('pipe'), 1);
 						vocals.stop();
 						FlxG.sound.music.stop();
-						//Conductor.songPosition = -10000000000; block
+						Conductor.songPosition = -10000000000;
 					restartTimer = new FlxTimer().start(10, function(_) {
 						PauseSubState.restartSong(true);
 					});
@@ -5103,7 +5125,7 @@ class PlayState extends MusicBeatState
 					boyfriend.dance();
 					//boyfriend.animation.curAnim.finish();
 				}
-          				if(cpuControlled && opponentChart && dad.holdTimer > Conductor.stepCrochet * 0.001 / FlxG.sound.music.pitch * dad.singDuration && dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) {
+          				if(cpuControlled && opponentChart && dad.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * dad.singDuration && dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) {
 					dad.dance();
 				}
 
@@ -5221,6 +5243,7 @@ class PlayState extends MusicBeatState
 								{
 								FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 								}
+		if (health <= 0 && practiceMode && ClientPrefs.zeroHealthLimit) health = 0; //set health to 0 if on practice mode and you get to 0%
 							}
 
 							daNote.active = false;
@@ -5560,6 +5583,16 @@ class PlayState extends MusicBeatState
 
 				camBopIntensity = _intensity;
 				camBopInterval = _interval;
+			case 'Fake Song Length':
+				var fakelength:Float = Std.parseFloat(value1);
+				fakelength *= (Math.isNaN(fakelength) ? 1 : 1000); //don't multiply if value1 is null, but do if value1 is not null
+				var doTween:Bool = value2 == "true" ? true : false;
+				if (Math.isNaN(fakelength))
+					fakelength = FlxG.sound.music.length;
+				if (doTween = true) FlxTween.tween(this, {songLength: fakelength}, 1, {ease: FlxEase.expoOut});
+				if (doTween = true && (Math.isNaN(fakelength))) FlxTween.tween(this, {songLength: FlxG.sound.music.length}, 1, {ease: FlxEase.expoOut});
+				songLength = fakelength;
+				
 			case 'Add Camera Zoom':
 				if(ClientPrefs.camZooms && FlxG.camera.zoom < 1.35) {
 					var camZoom:Float = Std.parseFloat(value1);
@@ -5898,6 +5931,7 @@ class PlayState extends MusicBeatState
 				generateTrollSongShit(SONG.song);
 				vocals.play();
 				FlxG.sound.music.play();
+				FlxTween.cancelTweensOf(songLength);
 				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
 	}
 	public function loopSongHighest(?ignoreNoteOffset:Bool = false):Void
@@ -5935,6 +5969,7 @@ class PlayState extends MusicBeatState
 				generateTrollSongShit(SONG.song);
 				vocals.play();
 				FlxG.sound.music.play();
+				FlxTween.cancelTweensOf(songLength);
 				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
 	}
 	public function loopSongHigh(?ignoreNoteOffset:Bool = false):Void
@@ -5971,6 +6006,7 @@ class PlayState extends MusicBeatState
 				generateTrollSongShit(SONG.song);
 				vocals.play();
 				FlxG.sound.music.play();
+				FlxTween.cancelTweensOf(songLength);
 				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
 	}
 	public function loopSongMedium(?ignoreNoteOffset:Bool = false):Void
@@ -6005,6 +6041,7 @@ class PlayState extends MusicBeatState
 				generateTrollSongShit(SONG.song);
 				vocals.play();
 				FlxG.sound.music.play();
+				FlxTween.cancelTweensOf(songLength);
 				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
 	}
 	public function loopSongLow(?ignoreNoteOffset:Bool = false):Void
@@ -6038,6 +6075,7 @@ class PlayState extends MusicBeatState
 				generateTrollSongShit(SONG.song);
 				vocals.play();
 				FlxG.sound.music.play();
+				FlxTween.cancelTweensOf(songLength);
 				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
 	}
 	public function loopSongLower(?ignoreNoteOffset:Bool = false):Void
@@ -6070,6 +6108,7 @@ class PlayState extends MusicBeatState
 				generateTrollSongShit(SONG.song);
 				vocals.play();
 				FlxG.sound.music.play();
+				FlxTween.cancelTweensOf(songLength);
 				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
 	}
 	public function loopSongLowest(?ignoreNoteOffset:Bool = false):Void
@@ -6101,6 +6140,7 @@ class PlayState extends MusicBeatState
 				generateTrollSongShit(SONG.song);
 				vocals.play();
 				FlxG.sound.music.play();
+				FlxTween.cancelTweensOf(songLength);
 				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
 	}
 
@@ -6168,8 +6208,9 @@ class PlayState extends MusicBeatState
 			var achieve:String = checkForAchievement(['week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss',
 				'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad',
 				'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
+			var customAchieves:String = checkForAchievement(achievementWeeks);
 
-			if(achieve != null) {
+			if(achieve != null || customAchieves != null) {
 				startAchievement(achieve);
 				return;
 			}
@@ -7184,7 +7225,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				boyfriend.dance();
 				//boyfriend.animation.curAnim.finish();
 			}
-			if (dad.holdTimer > Conductor.stepCrochet * 0.001 * dad.singDuration 
+			if (dad.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * dad.singDuration 
 			&& dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss'))
 				dad.dance();
 		}
@@ -7284,6 +7325,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		if (!boyfriend.stunned)
 		{
+		if (health <= 0 && practiceMode && ClientPrefs.zeroHealthLimit) health = 0; //set health to 0 if on practice mode and you get to 0%
 			health -= 0.05 * healthLoss;
 			if(instakillOnMiss)
 			{
@@ -8682,7 +8724,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice', false) || ClientPrefs.getGameplaySetting('botplay', false));
 		for (i in 0...achievesToCheck.length) {
 			var achievementName:String = achievesToCheck[i];
-			if(!Achievements.isAchievementUnlocked(achievementName) && !cpuControlled) {
+			if(!Achievements.isAchievementUnlocked(achievementName) && !cpuControlled && Achievements.exists(achievementName)) {
 				var unlock:Bool = false;
 				
 				if (achievementName.contains(WeekData.getWeekFileName()) && achievementName.endsWith('nomiss')) // any FC achievements, name should be "weekFileName_nomiss", e.g: "weekd_nomiss";

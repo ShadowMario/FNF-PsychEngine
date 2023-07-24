@@ -74,6 +74,12 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('songLength Intro Animation',
+			'If checked, the song length will also have an intro animation.',
+			'lengthIntro',
+			'bool',
+			true);
+		addOption(option);
 
 		var option:Option = new Option('Golden Sick on MFC/SFC',
 			'If checked, your Sick! & Marvelous!! ratings will be golden if your FC rating is better than GFC.',
