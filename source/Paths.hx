@@ -189,7 +189,7 @@ class Paths
 	{
 		return getPath('$key.lua', TEXT, library);
 	}
-
+	//Video loading (part of it)
 	static public function video(key:String)
 	{
 		#if MODS_ALLOWED
@@ -200,24 +200,24 @@ class Paths
 		#end
 		return 'assets/videos/$key.$VIDEO_EXT';
 	}
-
+	//Sound loading.
 	static public function sound(key:String, ?library:String):Sound
 	{
 		var sound:Sound = returnSound('sounds', key, library);
 		return sound;
 	}
-
+	//Random sound loading.
 	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
 	{
 		return sound(key + FlxG.random.int(min, max), library);
 	}
-
+	//Music loading. Loads anything in assets/data/music, OR mods/data/music (if mods are allowed)
 	inline static public function music(key:String, ?library:String):Sound
 	{
 		var file:Sound = returnSound('music', key, library);
 		return file;
 	}
-
+	//Loads the Voices. Crucial for generateSong
 	inline static public function voices(song:String):Any
 	{
 		#if html5
@@ -228,7 +228,7 @@ class Paths
 		return voices;
 		#end
 	}
-
+	//Loads the instrumental. Crucial for generateSong
 	inline static public function inst(song:String):Any
 	{
 		#if html5
@@ -240,6 +240,35 @@ class Paths
 		#end
 	}
 
+//Difficulty-specific Inst and Voices loading. Doesn't work so i've scrapped it for now but this was taken directly from Leather Engine
+	/*
+	static public function voices(song:String, ?difficulty:String)
+	{
+		if(difficulty != null)
+		{
+			if(Assets.exists('songs:assets/songs/${song.toLowerCase()}/Voices-$difficulty.$SOUND_EXT'))
+			{
+				return 'songs:assets/songs/${song.toLowerCase()}/Voices-$difficulty.$SOUND_EXT';
+			}
+		}
+
+		return 'songs:assets/songs/${song.toLowerCase()}/Voices.$SOUND_EXT';
+	}
+
+	static public function inst(song:String, ?difficulty:String)
+	{
+		if(difficulty != null)
+		{
+			if(Assets.exists('songs:assets/songs/${song.toLowerCase()}/Inst-$difficulty.$SOUND_EXT'))
+			{
+				return 'songs:assets/songs/${song.toLowerCase()}/Inst-$difficulty.$SOUND_EXT';
+			}
+		}
+		
+		return 'songs:assets/songs/${song.toLowerCase()}/Inst.$SOUND_EXT';
+	}
+	*/
+	//Loads images.
 	inline static public function image(key:String, ?library:String):FlxGraphic
 	{
 		// streamlined the assets process more
@@ -403,34 +432,35 @@ class Paths
 	}
 
 	#if MODS_ALLOWED
+	//Loads mods.
 	inline static public function mods(key:String = '') {
 		return 'mods/' + key;
 	}
-
+	//Loads fonts in mods/fonts.
 	inline static public function modsFont(key:String) {
 		return modFolders('fonts/' + key);
 	}
-
+	//Loads jsons in mods/data.
 	inline static public function modsJson(key:String) {
 		return modFolders('data/' + key + '.json');
 	}
-
+	//Loads videos in mods/videos.
 	inline static public function modsVideo(key:String) {
 		return modFolders('videos/' + key + '.' + VIDEO_EXT);
 	}
-
+	//Loads sounds in mods/sounds.
 	inline static public function modsSounds(path:String, key:String) {
 		return modFolders(path + '/' + key + '.' + SOUND_EXT);
 	}
-
+	//Loads images in mods/images.
 	inline static public function modsImages(key:String) {
 		return modFolders('images/' + key + '.png');
 	}
-
+	//Loads xml files in mods/images.
 	inline static public function modsXml(key:String) {
 		return modFolders('images/' + key + '.xml');
 	}
-
+	//Loads txt files in mods/images.
 	inline static public function modsTxt(key:String) {
 		return modFolders('images/' + key + '.txt');
 	}

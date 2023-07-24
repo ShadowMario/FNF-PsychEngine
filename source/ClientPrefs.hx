@@ -30,6 +30,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
 	public static var antiCheatEnable:Bool = false;
+	public static var bfIconStyle:String = 'Default';
+	public static var noteStyleThing:String = 'Default';
 	public static var ratingIntensity:String = 'Normal';
 	public static var autoPause:Bool = true;
 	public static var randomBotplayText:Bool = true;
@@ -62,6 +64,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noPausing:Bool = false;
 	public static var doubleGhostZoom:Bool = true;
 	public static var moreSpecificSpeed:Bool = true;
+	public static var lengthIntro:Bool = true;
 	public static var opponentRateCount:Bool = true;
 	public static var coolGameplay:Bool = false;
 	public static var hudType:String = 'Kade Engine';
@@ -191,6 +194,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.wrongCameras = wrongCameras;
 		FlxG.save.data.autoPause = autoPause;
 		FlxG.save.data.doubleGhost = doubleGhost;
+		FlxG.save.data.bfIconStyle = bfIconStyle;
+		FlxG.save.data.noteStyleThing = noteStyleThing;
 		FlxG.save.data.antiCheatEnable = antiCheatEnable;
 		FlxG.save.data.randomBotplayText = randomBotplayText;
 		FlxG.save.data.instaRestart = instaRestart;
@@ -221,6 +226,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.comboPopup = comboPopup;
 		FlxG.save.data.ratingIntensity = ratingIntensity;
 		FlxG.save.data.hideHud = hideHud;
+		FlxG.save.data.lengthIntro = lengthIntro;
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.longHPBar = longHPBar;
 		FlxG.save.data.moreMaxHP = moreMaxHP;
@@ -318,8 +324,17 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.autoPause != null) {
 			autoPause = FlxG.save.data.autoPause;
 		}
+		if(FlxG.save.data.bfIconStyle != null) {
+			bfIconStyle = FlxG.save.data.bfIconStyle;
+		}
+		if(FlxG.save.data.noteStyleThing != null) {
+			noteStyleThing = FlxG.save.data.noteStyleThing;
+		}
 		if(FlxG.save.data.accuracyMod != null) {
 			accuracyMod = FlxG.save.data.accuracyMod;
+		}
+		if(FlxG.save.data.lengthIntro != null) {
+			lengthIntro = FlxG.save.data.lengthIntro;
 		}
 		if(FlxG.save.data.wrongCameras != null) {
 			wrongCameras = FlxG.save.data.wrongCameras;
@@ -344,6 +359,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.noPausing != null) {
 			noPausing = FlxG.save.data.noPausing;
+		}
+		if(FlxG.save.data.marvRateColor != null) {
+			marvRateColor = FlxG.save.data.marvRateColor;
 		}
 		if(FlxG.save.data.noteSplashes != null) {
 			noteSplashes = FlxG.save.data.noteSplashes;

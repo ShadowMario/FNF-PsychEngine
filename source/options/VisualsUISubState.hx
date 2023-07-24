@@ -74,12 +74,35 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('songLength Intro Animation',
+			'If checked, the song length will also have an intro animation.',
+			'lengthIntro',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Golden Sick on MFC/SFC',
+			'If checked, your Sick! & Marvelous!! ratings will be golden if your FC rating is better than GFC.',
+			'goldSickSFC',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Show Playback Speed on Time Bar',
 			'If checked, the timebar will also show the current Playback Speed you are playing at.',
 			'timebarShowSpeed',
 			'bool',
 			false);
 		addOption(option);
+		
+		/* ignore this i was just making a joke about fnf's naughtiness option
+		var option:Option = new Option('Family Friendly Mode',
+			'If checked, makes everything family-friendly. Always remember to watch your Ps and Qs!',
+			'family',
+			'bool',
+			false);
+		addOption(option);
+		*/
 
 		var option:Option = new Option('Camera Note Movement',
 			"If checked, note hits will move the camera depending on which note you hit.",
@@ -180,6 +203,22 @@ class VisualsUISubState extends BaseOptionsMenu
 			'string',
 			'VS Impostor',
 			['VS Impostor', 'Kade Engine', 'Tails Gets Trolled V4', 'Dave & Bambi', 'Doki Doki+', 'Psych Engine', 'Leather Engine', 'Box Funkin', "Mic'd Up", 'JS Engine']);
+		addOption(option);
+
+		var option:Option = new Option('Note Style:',
+			"How would you like your notes to look like? \n(ANY NOTESTYLE OTHER THAN DEFAULT WILL OVERWRITE CHART SETTINGS AS WELL)",
+			'noteStyleThing',
+			'string',
+			'Default',
+			['Default', 'VS Nonsense V2', 'VS AGOTI', 'Doki Doki+', 'TGT V4', 'DNB 3D']);
+		addOption(option);
+
+		var option:Option = new Option('BF Icon Style:',
+			"How would you like your BF Icon to look like?",
+			'bfIconStyle',
+			'string',
+			'Default',
+			['Default', 'VS Nonsense V2', 'Leather Engine', 'Doki Doki+']);
 		addOption(option);
 
 		var option:Option = new Option('Rating Style:',

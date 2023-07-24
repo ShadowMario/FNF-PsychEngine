@@ -264,10 +264,19 @@ class Note extends FlxSprite
 			if(skin == null || skin.length < 1) {
 				skin = 'NOTE_assets';
 			}
-			if(ClientPrefs.hudType == 'Doki Doki+') {
+			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
+				skin = 'Nonsense_NOTE_assets';
+			}
+			if(ClientPrefs.noteStyleThing == 'DNB 3D') {
+				skin = 'NOTE_assets_3D';
+			}
+			if(ClientPrefs.noteStyleThing == 'VS AGOTI') {
+				skin = 'AGOTINOTE_assets';
+			}
+			if(ClientPrefs.noteStyleThing == 'Doki Doki+') {
 				skin = 'NOTE_assets_doki';
 			}
-			if(ClientPrefs.hudType == 'Tails Gets Trolled V4') {
+			if(ClientPrefs.noteStyleThing == 'TGT V4') {
 				skin = 'TGTNOTE_assets';
 			}
 		}
