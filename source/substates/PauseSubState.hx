@@ -374,6 +374,8 @@ class PauseSubState extends MusicBeatSubstate
 				}
 			}
 		}
+		missingText.visible = false;
+		missingTextBG.visible = false;
 	}
 
 	function regenMenu():Void {
