@@ -54,6 +54,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var timebarShowSpeed:Bool = false;
 	public static var noteSpawnTime:Float = 1;
 	public static var dynamicSpawnTime:Bool = false;
+	public static var evenLessBotLag:Bool = false;
 	public static var oppNoteAlpha:Float = 0.65;
 	public static var lessBotLag:Bool = false;
 	public static var ratesAndCombo:Bool = false;
@@ -182,6 +183,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.oppNoteSplashes = oppNoteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.shaders = shaders;
+		FlxG.save.data.evenLessBotLag = evenLessBotLag;
 		FlxG.save.data.framerate = framerate;
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
@@ -341,6 +343,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.dynamicSpawnTime != null) {
 			dynamicSpawnTime = FlxG.save.data.dynamicSpawnTime;
+		}
+		if(FlxG.save.data.evenLessBotLag != null) {
+			evenLessBotLag = FlxG.save.data.evenLessBotLag;
 		}
 		if(FlxG.save.data.doubleGhostZoom != null) {
 			doubleGhostZoom = FlxG.save.data.doubleGhostZoom;

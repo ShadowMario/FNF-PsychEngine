@@ -138,6 +138,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Optimize Note Hits',
+			'If checked, note hits are optimized further.',
+			'evenLessBotLag',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Rating Accuracy Color',
 			'If checked, the ratings & combo will be colored based on the actual rating.',
 			'colorRatingHit',
