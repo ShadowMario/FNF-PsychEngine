@@ -19,7 +19,7 @@ class HScript extends SScript
 		#end
 	}
 
-	override public function new(?parent:FunkinLua)
+	override public function new(parent:FunkinLua)
 	{
 		super("", false);
 		parentLua = parent;
