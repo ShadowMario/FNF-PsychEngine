@@ -21,7 +21,7 @@ jobs:
        - name: Compile
          run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && haxelib run lime build android -armv7 -D mobileC -D NO_PRECOMPILED_HEADERS -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych
        - name: Delete Useless
-         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && rm -rf export/release/android/bin && rm -rf export/rekease/android/obj/*.so*
+         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && rm -rfv export/release/android/bin && rm -rfv export/rekease/android/obj/*.so*
        - name: Publish Artifact
          uses: actions/upload-artifact@main
          with:
