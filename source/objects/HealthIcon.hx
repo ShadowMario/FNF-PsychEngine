@@ -14,7 +14,6 @@ class HealthIcon extends FlxSprite
 		this.isPlayer = isPlayer;
 		changeIcon(char, allowGPU);
 		scrollFactor.set();
-		antialiasing = ClientPrefs.data.antialiasing;
 	}
 
 	override function update(elapsed:Float)
@@ -42,9 +41,10 @@ class HealthIcon extends FlxSprite
 			animation.play(char);
 			this.char = char;
 
-			if(char.endsWith('-pixel')) {
+			if(char.endsWith('-pixel'))
 				antialiasing = false;
-			}
+			else
+				antialiasing = ClientPrefs.data.antialiasing;
 		}
 	}
 
