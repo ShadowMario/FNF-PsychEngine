@@ -2047,11 +2047,18 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'Set Property':
-				var killMe:Array<String> = value1.split('.');
-				if(killMe.length > 1) {
-					LuaUtils.setVarInArray(LuaUtils.getPropertyLoop(killMe), killMe[killMe.length-1], value2);
-				} else {
-					LuaUtils.setVarInArray(this, value1, value2);
+				try
+				{
+					var split:Array<String> = value1.split('.');
+					if(split.length > 1) {
+						LuaUtils.setVarInArray(LuaUtils.getPropertyLoop(split), split[split.length-1], value2);
+					} else {
+						LuaUtils.setVarInArray(this, value1, value2);
+					}
+				}
+				catch(e:Dynamic)
+				{
+					addTextToDebug('ERROR ("Set Property" Event) - ' + e.toString(), FlxColor.RED);
 				}
 			
 			case 'Play Sound':

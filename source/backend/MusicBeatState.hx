@@ -125,19 +125,15 @@ class MusicBeatState extends FlxUIState
 			return;
 		}
 
-		if(FlxTransitionableState.skipNextTransIn)
-		{
-			FlxG.switchState(nextState);
-		}
+		if(FlxTransitionableState.skipNextTransIn) FlxG.switchState(nextState);
 		else startTransition(nextState);
+		FlxTransitionableState.skipNextTransIn = false;
 	}
 
 	public static function resetState() {
-		if(FlxTransitionableState.skipNextTransIn)
-		{
-			FlxG.resetState();
-		}
+		if(FlxTransitionableState.skipNextTransIn) FlxG.resetState();
 		else startTransition();
+		FlxTransitionableState.skipNextTransIn = false;
 	}
 
 	// Custom made Trans in
@@ -146,7 +142,6 @@ class MusicBeatState extends FlxUIState
 		if(nextState == null)
 			nextState = FlxG.state;
 
-		FlxTransitionableState.skipNextTransIn = false;
 		FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
 		if(nextState == FlxG.state)
 			CustomFadeTransition.finishCallback = function() FlxG.resetState();
