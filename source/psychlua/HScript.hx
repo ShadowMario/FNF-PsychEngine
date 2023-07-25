@@ -23,9 +23,6 @@ class HScript extends SScript
 	{
 		super("", false);
 		parentLua = parent;
-		#if (SScript >= "3.0.2")
-		customOrigin = parent.scriptName;
-		#end
 		preset();
 	}
 
