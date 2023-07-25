@@ -1,0 +1,30 @@
+name: Self Hosted
+
+on:
+  # I not want build every push and pull requests. (for now) - mcagabe19
+  # push:
+    # branches: [ main ]
+  # pull_request:
+    # branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  Android:
+    permissions: write-all
+    name: Android
+    runs-on: Termux
+    steps:
+       - name: Switch Haxelibs
+         run: haxelib setup $TERMUX_HOME/haxelib
+       - name: Fetch Upstream
+         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && git pull
+       - name: Compile
+         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && haxelib run lime build android -armv7 -D mobileC -D NO_PRECOMPILED_HEADERS -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych
+       - name: Delete Useless
+         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && rm -rf export/release/android/bin && rm -rf export/rekease/android/obj/*.so*
+       - name: Publish Artifact
+         uses: actions/upload-artifact@main
+         with:
+           name: buildAndroid-release
+           path: '/sdcard/Download/builds/psych/*.apk'
+           if-no-files-found: error
