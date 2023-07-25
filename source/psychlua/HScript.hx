@@ -21,8 +21,9 @@ class HScript extends SScript
 
 	override public function new(?parent:FunkinLua)
 	{
-		super("", true);
+		super("", false);
 		parentLua = parent;
+		preset();
 	}
 
 	override function preset()
