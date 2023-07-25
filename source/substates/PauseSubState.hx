@@ -27,6 +27,9 @@ class PauseSubState extends MusicBeatSubstate
 	var skipTimeTracker:Alphabet;
 	var curTime:Float = Math.max(0, Conductor.songPosition);
 
+	var missingTextBG:FlxSprite;
+	var missingText:FlxText;
+
 	public static var songName:String = '';
 
 	public function new(x:Float, y:Float)
@@ -124,6 +127,17 @@ class PauseSubState extends MusicBeatSubstate
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
 
+		missingTextBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		missingTextBG.alpha = 0.6;
+		missingTextBG.visible = false;
+		add(missingTextBG);
+		
+		missingText = new FlxText(50, 0, FlxG.width - 100, '', 24);
+		missingText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		missingText.scrollFactor.set();
+		missingText.visible = false;
+		add(missingText);
+
 		regenMenu();
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
@@ -187,17 +201,34 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			if (menuItems == difficultyChoices)
 			{
-				if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
-					var name:String = PlayState.SONG.song;
-					var poop = Highscore.formatSong(name, curSelected);
-					PlayState.SONG = Song.loadFromJson(poop, name);
-					PlayState.storyDifficulty = curSelected;
-					MusicBeatState.resetState();
-					FlxG.sound.music.volume = 0;
-					PlayState.changedDifficulty = true;
-					PlayState.chartingMode = false;
+				try{
+					if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
+
+						var name:String = PlayState.SONG.song;
+						var poop = Highscore.formatSong(name, curSelected);
+						PlayState.SONG = Song.loadFromJson(poop, name);
+						PlayState.storyDifficulty = curSelected;
+						MusicBeatState.resetState();
+						FlxG.sound.music.volume = 0;
+						PlayState.changedDifficulty = true;
+						PlayState.chartingMode = false;
+						return;
+					}					
+				}catch(e:Dynamic){
+					trace('ERROR! $e');
+
+					var errorStr:String = e.toString();
+					if(errorStr.startsWith('[file_contents,assets/data/')) errorStr = 'Missing file: ' + errorStr.substring(27, errorStr.length-1); //Missing chart
+					missingText.text = 'ERROR WHILE LOADING CHART:\n$errorStr';
+					missingText.screenCenter(Y);
+					missingText.visible = true;
+					missingTextBG.visible = true;
+					FlxG.sound.play(Paths.sound('cancelMenu'));
+
+					super.update(elapsed);
 					return;
 				}
+
 
 				menuItems = menuItemsOG;
 				regenMenu();
@@ -343,6 +374,8 @@ class PauseSubState extends MusicBeatSubstate
 				}
 			}
 		}
+		missingText.visible = false;
+		missingTextBG.visible = false;
 	}
 
 	function regenMenu():Void {
