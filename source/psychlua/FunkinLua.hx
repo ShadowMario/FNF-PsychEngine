@@ -53,7 +53,7 @@ class FunkinLua {
 	public var scriptName:String = '';
 	public var closed:Bool = false;
 
-	#if hscript
+	#if (SScript >= "3.0.0")
 	public var hscript:HScript = null;
 	#end
 	
@@ -1415,7 +1415,7 @@ class FunkinLua {
 		});
 
 		#if desktop DiscordClient.addLuaCallbacks(lua); #end
-		#if hscript HScript.implement(this); #end
+		#if (SScript >= "3.0.0") HScript.implement(this); #end
 		ReflectionFunctions.implement(this);
 		TextFunctions.implement(this);
 		ExtraFunctions.implement(this);
@@ -1496,8 +1496,8 @@ class FunkinLua {
 		}
 		Lua.close(lua);
 		lua = null;
-		#if hscript
-		if(hscript != null) hscript.interp = null;
+		#if (SScript >= "3.0.0")
+		hscript.active = false;
 		hscript = null;
 		#end
 		#end
