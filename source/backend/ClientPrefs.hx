@@ -20,14 +20,11 @@ class SaveVariables {
 	public var splashAlpha:Float = 0.6;
 	public var lowQuality:Bool = false;
 	public var shaders:Bool = true;
-	public var cacheOnGPU:Bool = false; //From Stilic
+	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
 	public var framerate:Int = 60;
-	public var cursing:Bool = true;
-	public var violence:Bool = true;
 	public var camZooms:Bool = true;
 	public var hideHud:Bool = false;
 	public var noteOffset:Int = 0;
-	public var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public var arrowRGB:Array<Array<FlxColor>> = [
 		[0xFFC24B99, 0xFFFFFFFF, 0xFF3C1F56],
 		[0xFF00FFFF, 0xFFFFFFFF, 0xFF1542B7],
@@ -197,7 +194,7 @@ class ClientPrefs {
 			Main.fpsVar.visible = data.showFPS;
 		}
 
-		#if !html5
+		#if (!html5 && !switch)
 		FlxG.autoPause = ClientPrefs.data.autoPause;
 		#end
 
