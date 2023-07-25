@@ -6533,7 +6533,7 @@ class PlayState extends MusicBeatState
 		}
 
 		var rating:FlxSprite = new FlxSprite();
-		var score:Int = 500;
+		var score:Int = 500 * polyphony;
 
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
@@ -6566,45 +6566,45 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.healthGainType == 'VS Impostor') {
 		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
 		{
-			health += note.hitHealth * healthGain;
+			health += note.hitHealth * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
 		{
-			health += note.hitHealth * healthGain;
+			health += note.hitHealth * healthGain * polyphony;
 		}
 		if (note.isSustainNote)
 		{
-			health += note.hitHealth * healthGain;
+			health += note.hitHealth * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.sickWindow)
 		{
-			health += note.hitHealth * 0.5 * healthGain;
+			health += note.hitHealth * 0.5 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.goodWindow)
 		{
-			health += note.hitHealth * 0.25 * healthGain;
+			health += note.hitHealth * 0.25 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.badWindow)
 		{
-			health += note.hitHealth * 0.1 * healthGain;
+			health += note.hitHealth * 0.1 * healthGain * polyphony;
 		}
 		}
 		if (ClientPrefs.healthGainType == 'Leather Engine') {
 		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge) //you hit a marvelous!!
 		{
-			health += 0.012 * healthGain;
+			health += 0.012 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
 		{
-			health += 0.012 * healthGain; //you hit a sick!
+			health += 0.012 * healthGain * polyphony; //you hit a sick!
 		}
 		if (noteDiff > ClientPrefs.sickWindow) //you hit a good rating
 		{
-			health += -0.008 * healthGain;
+			health += -0.008 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.goodWindow) //you hit a bad rating
 		{
-			health += -0.018 * healthGain;
+			health += -0.018 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.badWindow) //you hit a shit rating
 		{
@@ -6614,15 +6614,15 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.healthGainType == 'Kade (1.4.2 to 1.6)') {
 		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
 		{
-			health += 0.1 * healthGain;
+			health += 0.1 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
 		{
-			health += 0.1 * healthGain;
+			health += 0.1 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.sickWindow)
 		{
-			health += 0.04 * healthGain;
+			health += 0.04 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.goodWindow)
 		{
@@ -6636,15 +6636,15 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.healthGainType == 'Doki Doki+') {
 		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
 		{
-			health += 0.077 * healthGain;
+			health += 0.077 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
 		{
-			health += 0.077 * healthGain;
+			health += 0.077 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.sickWindow)
 		{
-			health += 0.04 * healthGain;
+			health += 0.04 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.goodWindow)
 		{
@@ -6658,11 +6658,11 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.healthGainType == 'Kade (1.6+)') {
 		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
 		{
-			health += 0.017 * healthGain;
+			health += 0.017 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
 		{
-			health += 0.017 * healthGain;
+			health += 0.017 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.sickWindow)
 		{
@@ -6680,15 +6680,15 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.healthGainType == 'Kade (1.2)') {
 		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
 		{
-			health += 0.023 * healthGain;
+			health += 0.023 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
 		{
-			health += 0.023 * healthGain;
+			health += 0.023 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.sickWindow)
 		{
-			health += 0.004 * healthGain;
+			health += 0.004 * healthGain * polyphony;
 		}
 		if (noteDiff > ClientPrefs.goodWindow)
 		{
@@ -6706,7 +6706,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(!practiceMode) {
-			songScore += score;
+			songScore += score * polyphony;
 			if(!note.ratingDisabled || cpuControlled && !ClientPrefs.lessBotLag)
 			{
 				songHits++;
@@ -6893,6 +6893,19 @@ if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.badWindow 
 
 		var seperatedScore:Array<Int> = [];
 
+		//don't even know how it'll reach 10 billion anyway if the combo can't pass 2,147,483,647
+		if(combo >= 10000000000) {
+			seperatedScore.push(Math.floor(combo / 10000000000) % 10);
+		}
+		if(combo >= 1000000000) {
+			seperatedScore.push(Math.floor(combo / 1000000000) % 10);
+		}
+		if(combo >= 100000000) {
+			seperatedScore.push(Math.floor(combo / 100000000) % 10);
+		}
+		if(combo >= 10000000) {
+			seperatedScore.push(Math.floor(combo / 10000000) % 10);
+		}
 		if(combo >= 1000000) {
 			seperatedScore.push(Math.floor(combo / 1000000) % 10);
 		}
@@ -6911,7 +6924,47 @@ if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.badWindow 
 		if(combo >= 10) {
 		seperatedScore.push(Math.floor(combo / 10) % 10);
 		}
+		if (combo >= 0) {
 		seperatedScore.push(combo % 10);
+		}
+		//negative combo count if you somehow manage to achieve that, don't even know how it'll reach negative 10 billion anyway if the combo can't pass 2,147,483,647 or -2,147,483,647
+		if (combo <= 0)
+		{
+		if(combo <= -10000000000) {
+			seperatedScore.push(Math.floor(combo / 10000000000) % 10);
+		}
+		if(combo <= -1000000000) {
+			seperatedScore.push(Math.floor(combo / 1000000000) % 10);
+		}
+		if(combo <= -100000000) {
+			seperatedScore.push(Math.floor(combo / 100000000) % 10);
+		}
+		if(combo <= -10000000) {
+			seperatedScore.push(Math.floor(combo / 10000000) % 10);
+		}
+		if(combo <= -1000000) {
+			seperatedScore.push(Math.floor(combo / 1000000) % 10);
+		}
+		if(combo <= -100000) {
+			seperatedScore.push(Math.floor(combo / 100000) % 10);
+		}
+		if(combo <= -10000) {
+			seperatedScore.push(Math.floor(combo / 10000) % 10);
+		}
+		if(combo <= -1000) {
+			seperatedScore.push(Math.floor(combo / 1000) % 10);
+		}
+		if(combo <= -100) {
+		seperatedScore.push(Math.floor(combo / 100) % 10);
+		}
+		if(combo <= -10) {
+		seperatedScore.push(Math.floor(combo / 10) % 10);
+		}
+		if (combo <= 0) {
+		seperatedScore.push(combo % 10);
+		}
+		}
+
 
 		var daLoop:Int = 0;
 		var xThing:Float = 0;
@@ -7303,7 +7356,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		//trace(daNote.missHealth);
 		songMisses++;
 		vocals.volume = 0;
-		if(!practiceMode) songScore -= 10;
+		if(!practiceMode) songScore -= 10 * polyphony;
 
 		totalPlayed++;
 		RecalculateRating(true);
@@ -7520,17 +7573,14 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		}
 		note.hitByOpponent = true;
 
-		if (opponentDrain && health > 0.1) health -= note.hitHealth * hpDrainLevel;
+		if (opponentDrain && health > 0.1) health -= note.hitHealth * hpDrainLevel * polyphony;
 
 		callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
 		callOnLuas((opponentChart ? 'goodNoteHitFix' : 'opponentNoteHitFix'), [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
 
 		if (!note.isSustainNote)
 		{
-		oppNPS += 1 * polyphony;
-		new FlxTimer().start(1, function(_) {
-			oppNPS -= 1 * polyphony;
-		});
+		oppNotesHitArray.unshift(Date.now());
 		updateRatingCounter();
 		enemyHits += 1 * polyphony;
 			note.kill();
@@ -8077,7 +8127,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				notesHitArray.unshift(Date.now());
 			}
 			if (ClientPrefs.healthGainType == 'Psych Engine') {
-			health += note.hitHealth * healthGain;
+			health += note.hitHealth * healthGain * polyphony;
 			}
 			if(!note.noAnimation) {
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
