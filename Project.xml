@@ -110,8 +110,9 @@
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="discord_rpc" if="desktop"/>
 	<haxelib name="tjson" />
-	<haxelib name="hscript" />
-	<define name="hscriptPos" />
+	<haxelib name="SScript" />
+	<haxedef name="openflPos" />
+	<haxedef name="hscriptPos" />
 
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
