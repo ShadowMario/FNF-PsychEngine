@@ -15,7 +15,7 @@ jobs:
     runs-on: Termux
     steps:
        - name: Switch Haxelibs
-         run: haxelib setup $TERMUX_HOME/haxelib
+         run: haxelib setup $TERMUX_HOME/haxelib && haxelib set openfl 9.2.0
        - name: Fetch Upstream
          run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && git pull
        - name: Compile
