@@ -1,6 +1,6 @@
 package backend;
 #if mobile
-import source.mobile.flixel.FlxVirtualPadButtonID;
+import mobile.flixel.FlxVirtualPadButtonID;
 import mobile.flixel.FlxButton;
 import mobile.flixel.FlxHitbox;
 import mobile.flixel.FlxVirtualPad;
@@ -466,4 +466,19 @@ class Controls extends FlxActionSet
 		gamepadBinds = ClientPrefs.gamepadBinds;
 		keyboardBinds = ClientPrefs.keyBinds;
 	}
+}
+enum Control
+{
+	UI_UP;
+	UI_LEFT;
+	UI_RIGHT;
+	UI_DOWN;
+	NOTE_UP;
+	NOTE_LEFT;
+	NOTE_RIGHT;
+	NOTE_DOWN;
+	RESET;
+	ACCEPT;
+	BACK;
+	PAUSE;
 }
