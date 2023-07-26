@@ -41,7 +41,7 @@ class OptimizationSubState extends BaseOptionsMenu
 			'If checked, gameplay will only show the HUD.', //Description
 			'charsAndBG', //Save data variable name
 			'bool', //Variable type
-			false); //Default value
+			true); //Default value
 		addOption(option);
 
 		super();

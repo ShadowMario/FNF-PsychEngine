@@ -22,7 +22,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noteSplashes:Bool = true;
 	public static var oppNoteSplashes:Bool = true;
 	public static var instaRestart:Bool = false;
-	public static var charsAndBG:Bool = false;
+	public static var charsAndBG:Bool = true;
 	public static var lowQuality:Bool = false;
 	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
