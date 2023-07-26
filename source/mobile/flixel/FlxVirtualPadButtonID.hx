@@ -10,23 +10,23 @@ abstract FlxVirtualPadButtonID(Int) from Int to Int
 {
     public static var fromStringMap(default, null):Map<String, FlxVirtualPadButtonID> = FlxMacroUtil.buildMap("mobile.flixel.FlxVirtualPadButtonID");
 	public static var toStringMap(default, null):Map<FlxVirtualPadButtonID, String> = FlxMacroUtil.buildMap("mobile.flixel.FlxVirtualPadButtonID", true);
-    var LEFT = 6;
-    var UP = 4 ;
-    var RIGHT = 7;
-    var DOWN = 5;
-    var LEFT2 = 16;
-    var UP2 = 14;
-    var RIGHT2 = 17;
-    var DOWN2 = 15;
     var A = 1;
     var B = 2;
     var C = 3;
+    var UP = 4 ;
+    var DOWN = 5;
+    var LEFT = 6;
+    var RIGHT = 7;
     var D = 8;
     var E = 9;
     var V = 10;
     var X = 11;
     var Y = 12;
     var Z = 13;
+    var LEFT2 = 16;
+    var UP2 = 14;
+    var RIGHT2 = 17;
+    var DOWN2 = 15;
 
     var NONE = -1;
 
