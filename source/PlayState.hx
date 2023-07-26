@@ -5130,7 +5130,6 @@ class PlayState extends MusicBeatState
 				var dunceNote:Note = unspawnNotes.shift();
 				notes.insert(0, dunceNote);
 				dunceNote.spawned=true;
-				callOnLuas('onSpawnNote', [notes.members.indexOf(dunceNote), dunceNote.noteData, dunceNote.noteType, dunceNote.isSustainNote]);
 			}
 		}
 
@@ -6927,36 +6926,56 @@ if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.badWindow 
 		rating.updateHitbox();
 
 		var seperatedScore:Array<Int> = [];
-
-		//don't even know how it'll reach 10 billion anyway if the combo can't pass 2,147,483,647
-		if(combo >= 10000000000) {
+		//unfortunately i cant do more because then compiling will throw a "constant too big" erorr
+		if(combo >= 100000000000000000) { //100q to 1Q
+			seperatedScore.push(Math.floor(combo / 100000000000000000) % 10);
+		}
+		if(combo >= 10000000000000000) { //10q to 100q
+			seperatedScore.push(Math.floor(combo / 10000000000000000) % 10);
+		}
+		if(combo >= 1000000000000000) { //1q to 10q
+			seperatedScore.push(Math.floor(combo / 1000000000000000) % 10);
+		}
+		if(combo >= 100000000000000) { //100T to 1q
+			seperatedScore.push(Math.floor(combo / 100000000000000) % 10);
+		}
+		if(combo >= 10000000000000) { //10T to 100T
+			seperatedScore.push(Math.floor(combo / 10000000000000) % 10);
+		}
+		if(combo >= 1000000000000) { //1T to 10T
+			seperatedScore.push(Math.floor(combo / 1000000000000) % 10);
+		}
+		if(combo >= 100000000000) { //100B to 1T
+			seperatedScore.push(Math.floor(combo / 100000000000) % 10);
+		}
+		if(combo >= 10000000000) { //10B to 100B
 			seperatedScore.push(Math.floor(combo / 10000000000) % 10);
 		}
-		if(combo >= 1000000000) {
+		if(combo >= 1000000000) { //1B to 10B
 			seperatedScore.push(Math.floor(combo / 1000000000) % 10);
 		}
-		if(combo >= 100000000) {
+		if(combo >= 100000000) { //100M to 1B
 			seperatedScore.push(Math.floor(combo / 100000000) % 10);
 		}
-		if(combo >= 10000000) {
+		if(combo >= 10000000) { //10M to 100M
 			seperatedScore.push(Math.floor(combo / 10000000) % 10);
 		}
-		if(combo >= 1000000) {
+		if(combo >= 1000000) { //1M to 10M
 			seperatedScore.push(Math.floor(combo / 1000000) % 10);
 		}
-		if(combo >= 100000) {
+		if(combo >= 100000) { //100K to 1M
 			seperatedScore.push(Math.floor(combo / 100000) % 10);
 		}
-		if(combo >= 10000) {
+		if(combo >= 10000) { //10K to 100K
 			seperatedScore.push(Math.floor(combo / 10000) % 10);
 		}
-		if(combo >= 1000) {
+		if(combo >= 1000) {//Combo 1000 to 9999
 			seperatedScore.push(Math.floor(combo / 1000) % 10);
 		}
-		if(combo >= 100) {
+		if(combo >= 100) { //Combo 100 to 999
 		seperatedScore.push(Math.floor(combo / 100) % 10);
 		}
-		if(combo >= 10) {
+		if(combo >= 10) { //Combo 10 to 99
 		seperatedScore.push(Math.floor(combo / 10) % 10);
 		}
 		if (combo >= 0) {
