@@ -27,6 +27,37 @@ class Controls extends FlxActionSet
 
 	//Dumb but easily usable code, or Smart but complicated? Your choice.
 	//Also idk how to use macros they're weird as fuck lol
+	#if mobile
+//taken from old Controls.hx
+	var _ui_up = new FlxActionDigital(Action.UI_UP);
+	var _ui_left = new FlxActionDigital(Action.UI_LEFT);
+	var _ui_right = new FlxActionDigital(Action.UI_RIGHT);
+	var _ui_down = new FlxActionDigital(Action.UI_DOWN);
+	var _ui_upP = new FlxActionDigital(Action.UI_UP_P);
+	var _ui_leftP = new FlxActionDigital(Action.UI_LEFT_P);
+	var _ui_rightP = new FlxActionDigital(Action.UI_RIGHT_P);
+	var _ui_downP = new FlxActionDigital(Action.UI_DOWN_P);
+	var _ui_upR = new FlxActionDigital(Action.UI_UP_R);
+	var _ui_leftR = new FlxActionDigital(Action.UI_LEFT_R);
+	var _ui_rightR = new FlxActionDigital(Action.UI_RIGHT_R);
+	var _ui_downR = new FlxActionDigital(Action.UI_DOWN_R);
+	var _note_up = new FlxActionDigital(Action.NOTE_UP);
+	var _note_left = new FlxActionDigital(Action.NOTE_LEFT);
+	var _note_right = new FlxActionDigital(Action.NOTE_RIGHT);
+	var _note_down = new FlxActionDigital(Action.NOTE_DOWN);
+	var _note_upP = new FlxActionDigital(Action.NOTE_UP_P);
+	var _note_leftP = new FlxActionDigital(Action.NOTE_LEFT_P);
+	var _note_rightP = new FlxActionDigital(Action.NOTE_RIGHT_P);
+	var _note_downP = new FlxActionDigital(Action.NOTE_DOWN_P);
+	var _note_upR = new FlxActionDigital(Action.NOTE_UP_R);
+	var _note_leftR = new FlxActionDigital(Action.NOTE_LEFT_R);
+	var _note_rightR = new FlxActionDigital(Action.NOTE_RIGHT_R);
+	var _note_downR = new FlxActionDigital(Action.NOTE_DOWN_R);
+	var _accept = new FlxActionDigital(Action.ACCEPT);
+	var _back = new FlxActionDigital(Action.BACK);
+	var _pause = new FlxActionDigital(Action.PAUSE);
+	var _reset = new FlxActionDigital(Action.RESET);
+	#end
 
 	// Pressed buttons (directions)
 	public var UI_UP_P(get, never):Bool;
@@ -399,6 +430,7 @@ class Controls extends FlxActionSet
 	public static var instance:Controls;
 	public function new()
 	{
+		#if mobile
 		add(_ui_up);
 		add(_ui_left);
 		add(_ui_right);
@@ -427,12 +459,12 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
+		gamepadBinds = ClientPrefs.gamepadBinds;
 
 		for (action in digitalActions)
 			byName[action.name] = action;
-
+		#end
 		mobileBinds = ClientPrefs.mobileBinds;
 		keyboardBinds = ClientPrefs.keyBinds;
-		gamepadBinds = ClientPrefs.gamepadBinds;
 	}
 }
