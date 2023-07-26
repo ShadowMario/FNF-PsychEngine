@@ -15,7 +15,7 @@ import openfl.utils.Assets;
  * It's easy to customize the layout.
  *
  * @original author Ka Wing Chin
- * @modification's author: Saw (M.A. Jigsaw)
+ * @modification's author: Saw (M.A. Jigsaw) & Karim Akra (UTFan)
  */
 class FlxVirtualPad extends FlxSpriteGroup
 {
@@ -174,10 +174,10 @@ class FlxVirtualPad extends FlxSpriteGroup
 		#end
 		return button;
 	}
-	/*
-	* Checks if the virtualpad button is pressed, if yes returns true.
-	*/
-	public function isButtonPressed(buttonID:FlxVirtualPadButtonID):Bool
+		/*
+		* Checks if the virtualpad button is pressed, if yes returns true.
+		*/
+	public static function isButtonPressed(buttonID:FlxVirtualPadButtonID):Bool
 		{
 			switch (buttonID)
 			{
@@ -220,56 +220,58 @@ class FlxVirtualPad extends FlxSpriteGroup
 			}
 		}
 
-	/*
-	* Checks if the virtualpad button is pressed, if yes returns true.
-	*/
-		public function isButtonJustPressed(buttonID:FlxVirtualPadButtonID):Bool
+		/*
+		* Checks if the virtualpad button justPressed, if yes returns true.
+		*/
+		public static function isButtonJustPressed(buttonID:FlxVirtualPadButtonID):Bool
 			{
 				switch (buttonID)
 				{
-					case FlxVirtualPadButtonID.LEFT:
-						return buttonLeft.isJustPressed;
-					case FlxVirtualPadButtonID.UP:
-						return buttonUp.isJustPressed;
-					case FlxVirtualPadButtonID.RIGHT:
-						return buttonRight.isJustPressed;
-					case FlxVirtualPadButtonID.DOWN:
-						return buttonDown.isJustPressed;
-					case FlxVirtualPadButtonID.LEFT2:
-						return buttonLeft2.isJustPressed;
-					case FlxVirtualPadButtonID.UP2:
-						return buttonUp2.isJustPressed;
-					case FlxVirtualPadButtonID.RIGHT2:
-						return buttonRight2.isJustPressed;
-					case FlxVirtualPadButtonID.DOWN2:
-						return buttonDown2.isJustPressed;
-					case FlxVirtualPadButtonID.A:
-						return buttonA.isJustPressed;
-					case FlxVirtualPadButtonID.B:
-						return buttonB.isJustPressed;
-					case FlxVirtualPadButtonID.C:
-						return buttonC.isJustPressed;
-					case FlxVirtualPadButtonID.D:
-						return buttonD.isJustPressed;
-					case FlxVirtualPadButtonID.E:
-						return buttonE.isJustPressed;
-					case FlxVirtualPadButtonID.V:
-						return buttonV.isJustPressed;
-					case FlxVirtualPadButtonID.X:
-						return buttonX.isJustPressed;
-					case FlxVirtualPadButtonID.Y:
-						return buttonY.isJustPressed;
-					case FlxVirtualPadButtonID.Z:
-						return buttonZ.isJustPressed;
-					default:
-						return false;
+				case FlxVirtualPadButtonID.LEFT:
+					return buttonLeft.isJustPressed;
+				case FlxVirtualPadButtonID.UP:
+					return buttonUp.isJustPressed;
+				case FlxVirtualPadButtonID.RIGHT:
+					return buttonRight.isJustPressed;
+				case FlxVirtualPadButtonID.DOWN:
+					return buttonDown.isJustPressed;
+				case FlxVirtualPadButtonID.LEFT2:
+					return buttonLeft2.isJustPressed;
+				case FlxVirtualPadButtonID.UP2:
+					return buttonUp2.isJustPressed;
+				case FlxVirtualPadButtonID.RIGHT2:
+					return buttonRight2.isJustPressed;
+				case FlxVirtualPadButtonID.DOWN2:
+					return buttonDown2.isJustPressed;
+				case FlxVirtualPadButtonID.A:
+					return buttonA.isJustPressed;
+				case FlxVirtualPadButtonID.B:
+					return buttonB.isJustPressed;
+				case FlxVirtualPadButtonID.C:
+					return buttonC.isJustPressed;
+				case FlxVirtualPadButtonID.D:
+					return buttonD.isJustPressed;
+				case FlxVirtualPadButtonID.E:
+					return buttonE.isJustPressed;
+				case FlxVirtualPadButtonID.V:
+					return buttonV.isJustPressed;
+				case FlxVirtualPadButtonID.X:
+					return buttonX.isJustPressed;
+				case FlxVirtualPadButtonID.Y:
+					return buttonY.isJustPressed;
+				case FlxVirtualPadButtonID.Z:
+					return buttonZ.isJustPressed;
+				case FlxVirtualPadButtonID.NONE:
+					return false;
+				default:
+					return false;
 				}
 			}
 
-			/*
-			* Checks if the virtualpad button is pressed, if yes returns true.
-			*/
-	public function isButtonJustReleased(buttonID:FlxVirtualPadButtonID):Bool
+		/*
+		* Checks if the virtualpad button is justReleased, if yes returns true.
+		*/
+	public static function isButtonJustReleased(buttonID:FlxVirtualPadButtonID):Bool
 		{
 			switch (buttonID)
 			{

@@ -9,14 +9,14 @@ import flixel.input.actions.FlxAction;
 import flixel.input.actions.FlxActionInput;
 import flixel.input.actions.FlxActionInputDigital;
 import flixel.input.actions.FlxActionManager;
-import flixel.input.actions.FlxActionSet;
 #end
+import flixel.input.actions.FlxActionSet;
 import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.gamepad.mappings.FlxGamepadMapping;
 import flixel.input.keyboard.FlxKey;
 
-class Controls
+class Controls extends FlxActionSet
 {
 	//Keeping same use cases on stuff for it to be easier to understand/use
 	//I'd have removed it but this makes it a lot less annoying to use in my opinion
@@ -93,7 +93,7 @@ class Controls
 	private function get_PAUSE() return justPressed('pause');
 	private function get_RESET() return justPressed('reset');
 
-	//Gamepad & Keyboard stuff
+	//Gamepad, Keyboard & mobile stuff
 	public var keyboardBinds:Map<String, Array<FlxKey>>;
 	public var gamepadBinds:Map<String, Array<FlxGamepadInputID>>;
 	#if mobile public var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>>; #end
@@ -232,6 +232,54 @@ class Controls
 		trackedinputsUI.push(input);
 		action.add(input);
 	}
+	
+
+	function forEachBound(control:Control, func:FlxActionDigital->FlxInputState->Void)
+		{
+			switch (control)
+			{
+				case UI_UP:
+					func(_ui_up, PRESSED);
+					func(_ui_upP, JUST_PRESSED);
+					func(_ui_upR, JUST_RELEASED);
+				case UI_LEFT:
+					func(_ui_left, PRESSED);
+					func(_ui_leftP, JUST_PRESSED);
+					func(_ui_leftR, JUST_RELEASED);
+				case UI_RIGHT:
+					func(_ui_right, PRESSED);
+					func(_ui_rightP, JUST_PRESSED);
+					func(_ui_rightR, JUST_RELEASED);
+				case UI_DOWN:
+					func(_ui_down, PRESSED);
+					func(_ui_downP, JUST_PRESSED);
+					func(_ui_downR, JUST_RELEASED);
+				case NOTE_UP:
+					func(_note_up, PRESSED);
+					func(_note_upP, JUST_PRESSED);
+					func(_note_upR, JUST_RELEASED);
+				case NOTE_LEFT:
+					func(_note_left, PRESSED);
+					func(_note_leftP, JUST_PRESSED);
+					func(_note_leftR, JUST_RELEASED);
+				case NOTE_RIGHT:
+					func(_note_right, PRESSED);
+					func(_note_rightP, JUST_PRESSED);
+					func(_note_rightR, JUST_RELEASED);
+				case NOTE_DOWN:
+					func(_note_down, PRESSED);
+					func(_note_downP, JUST_PRESSED);
+					func(_note_downR, JUST_RELEASED);
+				case ACCEPT:
+					func(_accept, JUST_PRESSED);
+				case BACK:
+					func(_back, JUST_PRESSED);
+				case PAUSE:
+					func(_pause, JUST_PRESSED);
+				case RESET:
+					func(_reset, JUST_PRESSED);
+			}
+		}
 
 	public function setHitBox(Hitbox:FlxHitbox) 
 	{
@@ -351,6 +399,38 @@ class Controls
 	public static var instance:Controls;
 	public function new()
 	{
+		add(_ui_up);
+		add(_ui_left);
+		add(_ui_right);
+		add(_ui_down);
+		add(_ui_upP);
+		add(_ui_leftP);
+		add(_ui_rightP);
+		add(_ui_downP);
+		add(_ui_upR);
+		add(_ui_leftR);
+		add(_ui_rightR);
+		add(_ui_downR);
+		add(_note_up);
+		add(_note_left);
+		add(_note_right);
+		add(_note_down);
+		add(_note_upP);
+		add(_note_leftP);
+		add(_note_rightP);
+		add(_note_downP);
+		add(_note_upR);
+		add(_note_leftR);
+		add(_note_rightR);
+		add(_note_downR);
+		add(_accept);
+		add(_back);
+		add(_pause);
+		add(_reset);
+
+		for (action in digitalActions)
+			byName[action.name] = action;
+
 		mobileBinds = ClientPrefs.mobileBinds;
 		keyboardBinds = ClientPrefs.keyBinds;
 		gamepadBinds = ClientPrefs.gamepadBinds;

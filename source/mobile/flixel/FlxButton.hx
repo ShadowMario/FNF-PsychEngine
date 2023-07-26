@@ -38,17 +38,17 @@ class FlxButton extends FlxTypedButton<FlxText>
 	/**
      * Whether the button is currently pressed (held down).
      */
-	 public var isPressed:Bool = false;
+	 public static inline var isPressed:Bool = false;
 
 	 /**
      * Whether the button was just pressed (touched).
      */
-	 public var isJustPressed:Bool = false;
+	 public static inline var isJustPressed:Bool = false;
 
 	 /**
      * Whether the button was just released (unTouched).
      */
-	 public var isJustReleased:Bool = false;
+	 public static inline var isJustReleased:Bool = false;
 
 	/**
 	 * Shortcut to setting label.text
