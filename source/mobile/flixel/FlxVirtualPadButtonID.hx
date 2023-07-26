@@ -1,4 +1,4 @@
-package source.mobile.flixel;
+package mobile.flixel;
 import flixel.system.macros.FlxMacroUtil;
 /**
 * A enum based off flixel.inputs.gamepad.FlxGamepadInputID
