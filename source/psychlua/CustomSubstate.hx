@@ -11,57 +11,65 @@ class CustomSubstate extends MusicBeatSubstate
 	{
 		#if LUA_ALLOWED
 		var lua = funk.lua;
-		var game = PlayState.instance;
-		Lua_helper.add_callback(lua, "openCustomSubstate", function(name:String, ?pauseGame:Bool = false) {
-			if(pauseGame)
-			{
-				FlxG.camera.followLerp = 0;
-				game.persistentUpdate = false;
-				game.persistentDraw = true;
-				game.paused = true;
-				if(FlxG.sound.music != null) {
-					FlxG.sound.music.pause();
-					game.vocals.pause();
-				}
+		Lua_helper.add_callback(lua, "openCustomSubstate", openCustomSubstate);
+		Lua_helper.add_callback(lua, "closeCustomSubstate", closeCustomSubstate);
+		Lua_helper.add_callback(lua, "insertToCustomSubstate", insertToCustomSubstate);
+		#end
+	}
+	
+	public static function openCustomSubstate(name:String, ?pauseGame:Bool = false)
+	{
+		if(pauseGame)
+		{
+			FlxG.camera.followLerp = 0;
+			PlayState.instance.persistentUpdate = false;
+			PlayState.instance.persistentDraw = true;
+			PlayState.instance.paused = true;
+			if(FlxG.sound.music != null) {
+				FlxG.sound.music.pause();
+				PlayState.instance.vocals.pause();
 			}
-			game.openSubState(new CustomSubstate(name));
-		});
+		}
+		PlayState.instance.openSubState(new CustomSubstate(name));
+		PlayState.instance.setOnHScript('customSubstate', instance);
+		PlayState.instance.setOnHScript('customSubstateName', name);
+	}
 
-		Lua_helper.add_callback(lua, "closeCustomSubstate", function() {
-			if(instance != null)
+	public static function closeCustomSubstate()
+	{
+		if(instance != null)
+		{
+			PlayState.instance.closeSubState();
+			instance = null;
+			return true;
+		}
+		return false;
+	}
+
+	public static function insertToCustomSubstate(tag:String, ?pos:Int = -1)
+	{
+		if(instance != null)
+		{
+			var tagObject:FlxObject = cast (PlayState.instance.variables.get(tag), FlxObject);
+			if(tagObject == null) tagObject = cast (PlayState.instance.modchartSprites.get(tag), FlxObject);
+
+			if(tagObject != null)
 			{
-				game.closeSubState();
-				instance = null;
+				if(pos < 0) instance.add(tagObject);
+				else instance.insert(pos, tagObject);
 				return true;
 			}
-			return false;
-		});
-		
-		Lua_helper.add_callback(lua, "insertToCustomSubstate", function(tag:String, ?pos:Int = -1) {
-			if(instance != null)
-			{
-				var tagObject:FlxObject = cast (game.variables.get(tag), FlxObject);
-				if(tagObject == null) tagObject = cast (game.modchartSprites.get(tag), FlxObject);
-
-				if(tagObject != null)
-				{
-					if(pos < 0) instance.add(tagObject);
-					else instance.insert(pos, tagObject);
-					return true;
-				}
-			}
-			return false;
-		});
-		#end
+		}
+		return false;
 	}
 
 	override function create()
 	{
 		instance = this;
 
-		PlayState.instance.callOnLuas('onCustomSubstateCreate', [name]);
+		PlayState.instance.callOnScripts('onCustomSubstateCreate', [name]);
 		super.create();
-		PlayState.instance.callOnLuas('onCustomSubstateCreatePost', [name]);
+		PlayState.instance.callOnScripts('onCustomSubstateCreatePost', [name]);
 	}
 	
 	public function new(name:String)
@@ -73,14 +81,18 @@ class CustomSubstate extends MusicBeatSubstate
 	
 	override function update(elapsed:Float)
 	{
-		PlayState.instance.callOnLuas('onCustomSubstateUpdate', [name, elapsed]);
+		PlayState.instance.callOnScripts('onCustomSubstateUpdate', [name, elapsed]);
 		super.update(elapsed);
-		PlayState.instance.callOnLuas('onCustomSubstateUpdatePost', [name, elapsed]);
+		PlayState.instance.callOnScripts('onCustomSubstateUpdatePost', [name, elapsed]);
 	}
 
 	override function destroy()
 	{
-		PlayState.instance.callOnLuas('onCustomSubstateDestroy', [name]);
+		PlayState.instance.callOnScripts('onCustomSubstateDestroy', [name]);
+		name = 'unnamed';
+
+		PlayState.instance.setOnHScript('customSubstate', null);
+		PlayState.instance.setOnHScript('customSubstateName', name);
 		super.destroy();
 	}
 }

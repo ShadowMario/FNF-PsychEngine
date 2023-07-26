@@ -269,17 +269,16 @@ class ShaderFunctions
 	public static function getShader(obj:String):FlxRuntimeShader
 	{
 		var split:Array<String> = obj.split('.');
-		var target:FlxSprite = LuaUtils.getObjectDirectly(split[0]);
-		if(split.length > 1) {
-			target = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split), split[split.length-1]);
-		}
+		var target:FlxSprite = null;
+		if(split.length > 1) target = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split), split[split.length-1]);
+		else target = LuaUtils.getObjectDirectly(split[0]);
 
-		if(target != null) {
-			var shader:Dynamic = target.shader;
-			var shader:FlxRuntimeShader = shader;
-			return shader;
+		if(target == null)
+		{
+			FunkinLua.luaTrace('Error on getting shader: Object $obj not found', false, false, FlxColor.RED);
+			return null;
 		}
-		return null;
+		return cast (target.shader, FlxRuntimeShader);
 	}
 	#end
 }
