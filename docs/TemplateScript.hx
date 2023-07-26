@@ -12,7 +12,7 @@ function onCreatePost()
 
 function onDestroy()
 {
-	// triggered when the lua file is ended (Song fade out finished)
+	// triggered when the haxe file is ended (Song fade out finished)
 }
 
 
