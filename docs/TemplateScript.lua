@@ -172,8 +172,9 @@ function eventEarlyTrigger(name)
 	--[[
 	Here's a port of the Kill Henchmen early trigger but on Lua instead of Haxe:
 
-	if name == 'Kill Henchmen'
+	if name == 'Kill Henchmen' then
 		return 280;
+	end
 
 	This makes the "Kill Henchmen" event be triggered 280 miliseconds earlier so that the kill sound is perfectly timed with the song
 	]]--
