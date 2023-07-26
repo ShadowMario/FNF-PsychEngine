@@ -11,7 +11,7 @@ import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.gamepad.mappings.FlxGamepadMapping;
 import flixel.input.keyboard.FlxKey;
 
-class Controls extends FlxActionSet
+class Controls
 {
 	//Keeping same use cases on stuff for it to be easier to understand/use
 	//I'd have removed it but this makes it a lot less annoying to use in my opinion
@@ -396,7 +396,6 @@ class Controls extends FlxActionSet
 	public static var instance:Controls;
 	public function new()
 	{
-		super();
 		#if mobile
 		mobileBinds = ClientPrefs.mobileBinds;
 		#end
