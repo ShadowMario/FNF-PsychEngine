@@ -99,7 +99,7 @@ class PlayState extends MusicBeatState
 	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
 	
 	#if (MODS_ALLOWED && SScript)
-	public var hscriptInterps:Array<HScript> = [];
+	public var hscriptArray:Array<HScript> = [];
 	#end
 
 	#if LUA_ALLOWED
@@ -783,7 +783,7 @@ class PlayState extends MusicBeatState
 		
 		if(doPush)
 		{
-			for (script in hscriptInterps) if(script.interpName == scriptFile) return;
+			for (script in hscriptArray) if(script.interpName == scriptFile) return;
 			initHScript(scriptFile);
 		}
 		#end
@@ -2973,11 +2973,11 @@ class PlayState extends MusicBeatState
 		#end
 
 		#if (MODS_ALLOWED && SScript)
-		for (script in hscriptInterps)
+		for (script in hscriptArray)
 			if(script != null)
 				script.active = false;
 
-		hscriptInterps = [];
+		hscriptArray = [];
 		#end
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
@@ -3115,7 +3115,7 @@ class PlayState extends MusicBeatState
 		
 		if(FileSystem.exists(scriptToLoad))
 		{
-			for (script in hscriptInterps)
+			for (script in hscriptArray)
 				if(script.interpName == scriptFile) return false;
 	
 			initHScript(scriptToLoad);
@@ -3130,7 +3130,7 @@ class PlayState extends MusicBeatState
 		{
 			var newScript:HScript = new HScript(file);
 			newScript.doString(File.getContent(file));
-			hscriptInterps.push(newScript);
+			hscriptArray.push(newScript);
 			if(newScript.exists('onCreate')) newScript.call('onCreate', []);
 			trace('initialized sscript interp successfully: $file');
 		}
@@ -3194,12 +3194,12 @@ class PlayState extends MusicBeatState
 		if(exclusions == null) exclusions = [];
 		if(excludeValues == null) excludeValues = [psychlua.FunkinLua.Function_Continue];
 		
-		var len:Int = luaArray.length;
+		var len:Int = hscriptArray.length;
 		var i:Int = 0;
 		while(i < len)
 		{
-			var script:HScript = hscriptInterps[i];
-			if(!script.exists(funcToCall) || exclusions.contains(script.interpName))
+			var script:HScript = hscriptArray[i];
+			if(script == null || !script.exists(funcToCall) || exclusions.contains(script.interpName))
 			{
 				i++;
 				continue;
@@ -3261,7 +3261,7 @@ class PlayState extends MusicBeatState
 	public function setOnHScript(variable:String, arg:Dynamic, exclusions:Array<String> = null) {
 		#if (MODS_ALLOWED && SScript)
 		if(exclusions == null) exclusions = [];
-		for (script in hscriptInterps) {
+		for (script in hscriptArray) {
 			if(exclusions.contains(script.interpName))
 				continue;
 

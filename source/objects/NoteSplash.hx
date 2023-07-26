@@ -16,6 +16,7 @@ class NoteSplash extends FlxSprite
 	public var rgbShader:PixelSplashShaderRef;
 	private var idleAnim:String;
 	private var _textureLoaded:String = null;
+	private var _configLoaded:String = null;
 
 	public static var defaultNoteSplash(default, never):String = 'noteSplashes/noteSplashes';
 	public static var configs:Map<String, NoteSplashConfig> = new Map<String, NoteSplashConfig>();
@@ -30,6 +31,7 @@ class NoteSplash extends FlxSprite
 		rgbShader = new PixelSplashShaderRef();
 		shader = rgbShader.shader;
 		precacheConfig(skin);
+		_configLoaded = skin;
 		scrollFactor.set();
 		//setupNoteSplash(x, y, 0);
 	}
@@ -50,9 +52,11 @@ class NoteSplash extends FlxSprite
 		else if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		else texture = defaultNoteSplash + getSplashSkinPostfix();
 		
-		var config:NoteSplashConfig = precacheConfig(texture);
+		var config:NoteSplashConfig = null;
 		if(_textureLoaded != texture)
-			config = loadAnims(texture, config);
+			config = loadAnims(texture);
+		else
+			config = precacheConfig(_configLoaded);
 
 		var tempShader:RGBPalette = null;
 		if(note != null && !note.noteSplashData.useGlobalShader)
@@ -109,16 +113,26 @@ class NoteSplash extends FlxSprite
 		return skin;
 	}
 
-	function loadAnims(skin:String, ?config:NoteSplashConfig = null, ?animName:String = null):NoteSplashConfig {
+	function loadAnims(skin:String, ?animName:String = null):NoteSplashConfig {
 		maxAnims = 0;
 		frames = Paths.getSparrowAtlas(skin);
-		if(frames == null) //if you really this, you really fucked something up
-			frames = Paths.getSparrowAtlas(defaultNoteSplash);
+		var config:NoteSplashConfig = null;
+		if(frames == null)
+		{
+			skin = defaultNoteSplash + getSplashSkinPostfix();
+			frames = Paths.getSparrowAtlas(skin);
+			if(frames == null) //if you really need this, you really fucked something up
+			{
+				skin = defaultNoteSplash;
+				frames = Paths.getSparrowAtlas(skin);
+			}
+		}
+		config = precacheConfig(skin);
+		_configLoaded = skin;
 
 		if(animName == null)
 			animName = config != null ? config.anim : 'note splash';
 
-		var config:NoteSplashConfig = precacheConfig(skin);
 		while(true) {
 			var animID:Int = maxAnims + 1;
 			for (i in 0...Note.colArray.length) {
