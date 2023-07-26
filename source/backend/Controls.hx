@@ -171,7 +171,7 @@ class Controls
 	public var trackedinputsUI:Array<FlxActionInput> = [];
 	public var trackedinputsNOTES:Array<FlxActionInput> = [];
 
-	private function dpadPressed(keys:Array<FlxVirtualPadInputID>):Bool
+	private function dpadPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 		{
 			if(keys != null)
 			{
@@ -187,7 +187,7 @@ class Controls
 			return false;
 		}
 
-		private function dpadJustPressed(keys:Array<FlxVirtualPadInputID>):Bool
+		private function dpadJustPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 			{
 				if(keys != null)
 				{
@@ -203,7 +203,7 @@ class Controls
 				return false;
 			}
 
-			private function dpadJustReleased(keys:Array<FlxVirtualPadInputID>):Bool
+			private function dpadJustReleased(keys:Array<FlxVirtualPadButtonID>):Bool
 				{
 					if(keys != null)
 					{
