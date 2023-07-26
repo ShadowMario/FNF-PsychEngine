@@ -323,7 +323,7 @@ class Controls extends FlxActionSet
 		inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addbuttonNOTES(action, Hitbox.buttonRight, state));
 	}
 
-	public function setVirtualPadUI(VirtualPad:FlxVirtualPad, DPad:FlxDPadMode, Action:FlxActionMode)
+	public static function setVirtualPadUI(VirtualPad:FlxVirtualPad, DPad:FlxDPadMode, Action:FlxActionMode)
 	{
 		switch (DPad)
 		{
@@ -367,7 +367,7 @@ class Controls extends FlxActionSet
 		}
 	}
 
-	public function setVirtualPadNOTES(VirtualPad:FlxVirtualPad, DPad:FlxDPadMode, Action:FlxActionMode) 
+	public static function setVirtualPadNOTES(VirtualPad:FlxVirtualPad, DPad:FlxDPadMode, Action:FlxActionMode) 
 	{
 		switch (DPad)
 		{
@@ -431,9 +431,9 @@ class Controls extends FlxActionSet
 
 	// IGNORE THESE/ karim: no.
 	public static var instance:Controls;
-	public function new()
+	public function new(name)
 	{
-		super(); //do nothing other than making flixel happy
+		super(name); //do nothing other than making flixel happy
 		#if mobile
 		add(_ui_up);
 		add(_ui_left);
