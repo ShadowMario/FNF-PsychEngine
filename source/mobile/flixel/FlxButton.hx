@@ -36,21 +36,6 @@ class FlxButton extends FlxTypedButton<FlxText>
 	public static inline var PRESSED:Int = 2;
 
 	/**
-     * Whether the button is currently pressed (held down).
-     */
-	 public static inline var isPressed:Bool = false;
-
-	 /**
-     * Whether the button was just pressed (touched).
-     */
-	 public static inline var isJustPressed:Bool = false;
-
-	 /**
-     * Whether the button was just released (unTouched).
-     */
-	 public static inline var isJustReleased:Bool = false;
-
-	/**
 	 * Shortcut to setting label.text
 	 */
 	public var text(get, set):String;
@@ -122,6 +107,21 @@ class FlxButton extends FlxTypedButton<FlxText>
 #end
 class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 {
+	/**
+     * Whether the button is currently pressed (held down).
+     */
+	 public var isPressed:Bool = false;
+
+	 /**
+     * Whether the button was just pressed (touched).
+     */
+	 public var isJustPressed:Bool = false;
+
+	 /**
+     * Whether the button was just released (unTouched).
+     */
+	 public var isJustReleased:Bool = false;
+
 	/**
 	 * The label that appears on the button. Can be any `FlxSprite`.
 	 */

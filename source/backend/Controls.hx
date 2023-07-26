@@ -127,7 +127,10 @@ class Controls extends FlxActionSet
 	//Gamepad, Keyboard & mobile stuff
 	public var keyboardBinds:Map<String, Array<FlxKey>>;
 	public var gamepadBinds:Map<String, Array<FlxGamepadInputID>>;
-	#if mobile public var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>>; #end
+	#if mobile
+	public var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>>;
+	var byName:Map<String, FlxActionDigital> = [];
+	#end
 	public function justPressed(key:String)
 	{
 		var result:Bool = (FlxG.keys.anyJustPressed(keyboardBinds[key]) == true);
@@ -430,6 +433,7 @@ class Controls extends FlxActionSet
 	public static var instance:Controls;
 	public function new()
 	{
+		super(); //do nothing other than making flixel happy
 		#if mobile
 		add(_ui_up);
 		add(_ui_left);
