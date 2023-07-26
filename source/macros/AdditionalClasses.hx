@@ -36,6 +36,7 @@ class AdditionalClasses {
 			"flixel.system.macros",
 
 			"haxe.macro",
+			#if (js || hxcpp) "haxe.atomic.AtomicObject", #end
 
 			"lime._internal.backend.air",
 			"lime._internal.backend.html5",
