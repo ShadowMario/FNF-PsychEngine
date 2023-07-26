@@ -3,6 +3,7 @@ import flixel.system.macros.FlxMacroUtil;
 /**
 * A enum based off flixel.inputs.gamepad.FlxGamepadInputID
 * Used for handling mobile virtualpad buttons in Controls.hx
+* @author Karim Akra
 */
 @:enum 
 abstract FlxVirtualPadButtonID(Int) from Int to Int
