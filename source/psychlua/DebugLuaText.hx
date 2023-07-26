@@ -4,7 +4,7 @@ class DebugLuaText extends FlxText
 {
 	public var disableTime:Float = 6;
 	public function new() {
-		super(10, 10, 0, '', 16);
+		super(10, 10, FlxG.width - 20, '', 16);
 
 		setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scrollFactor.set();

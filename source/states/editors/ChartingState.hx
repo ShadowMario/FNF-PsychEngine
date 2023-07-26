@@ -932,7 +932,9 @@ class ChartingState extends MusicBeatState
 			for (file in FileSystem.readDirectory(folder))
 			{
 				var fileName:String = file.toLowerCase();
-				if((#if LUA_ALLOWED fileName.endsWith('.lua') || #end fileName.endsWith('.txt')) && fileName != 'readme.txt')
+				if((#if LUA_ALLOWED fileName.endsWith('.lua') || #end
+					#if (MODS_ALLOWED && SScript) fileName.endsWith('.hx') || #end
+					fileName.endsWith('.txt')) && fileName != 'readme.txt')
 				{
 					var fileToCheck:String = file.substr(0, file.length - 4);
 					if(!curNoteTypes.contains(fileToCheck))
