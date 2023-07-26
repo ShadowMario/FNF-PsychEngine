@@ -22,6 +22,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noteSplashes:Bool = true;
 	public static var oppNoteSplashes:Bool = true;
 	public static var instaRestart:Bool = false;
+	public static var charsAndBG:Bool = false;
 	public static var lowQuality:Bool = false;
 	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
@@ -195,6 +196,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.healthDisplay = healthDisplay;
 		FlxG.save.data.wrongCameras = wrongCameras;
 		FlxG.save.data.autoPause = autoPause;
+		FlxG.save.data.charsAndBG = charsAndBG;
 		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.bfIconStyle = bfIconStyle;
 		FlxG.save.data.noteStyleThing = noteStyleThing;
@@ -322,6 +324,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.ratingType != null) {
 			ratingType = FlxG.save.data.ratingType;
+		}
+		if(FlxG.save.data.charsAndBG != null) {
+			charsAndBG = FlxG.save.data.charsAndBG;
 		}
 		if(FlxG.save.data.autoPause != null) {
 			autoPause = FlxG.save.data.autoPause;

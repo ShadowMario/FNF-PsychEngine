@@ -14,6 +14,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.FlxCamera;
 import flixel.util.FlxStringUtil;
+import options.OptionsState;
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -261,7 +262,14 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case "Options":
-					LoadingState.loadAndSwitchState(new options.OptionsState());
+					MusicBeatState.switchState(new OptionsState());
+					OptionsState.onPlayState = true;
+					if(ClientPrefs.pauseMusic != 'None')
+					{
+						FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)), pauseMusic.volume);
+						FlxTween.tween(FlxG.sound.music, {volume: 1}, 0.8);
+						FlxG.sound.music.time = pauseMusic.time;
+					}
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;

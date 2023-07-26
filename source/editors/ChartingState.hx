@@ -867,7 +867,7 @@ class ChartingState extends MusicBeatState
 					}
 				}
 			}
-			updateGrid();
+			updateGrid(false);
 		});
 
 		var clearSectionButton:FlxButton = new FlxButton(pasteButton.x + 100, pasteButton.y, "Clear", function()
@@ -891,7 +891,7 @@ class ChartingState extends MusicBeatState
 					--i;
 				}
 			}
-			updateGrid();
+			updateGrid(false);
 			updateNoteUI();
 		});
 		clearSectionButton.color = FlxColor.RED;
@@ -910,7 +910,7 @@ class ChartingState extends MusicBeatState
 				note[1] = (note[1] + 4) % 8;
 				_song.notes[curSec].sectionNotes[i] = note;
 			}
-			updateGrid();
+			updateGrid(false);
 		});
 
 		var stepperCopy:FlxUINumericStepper = null;
@@ -947,7 +947,7 @@ class ChartingState extends MusicBeatState
 					_song.events.push([strumTime, copiedEventArray]);
 				}
 			}
-			updateGrid();
+			updateGrid(false);
 		});
 		copyLastButton.setGraphicSize(80, 30);
 		copyLastButton.updateHitbox();
@@ -976,7 +976,7 @@ class ChartingState extends MusicBeatState
 
 			}
 
-			updateGrid();
+			updateGrid(false);
 		});
 		var mirrorButton:FlxButton = new FlxButton(duetButton.x + 100, duetButton.y, "Mirror Notes", function()
 		{
@@ -997,7 +997,7 @@ class ChartingState extends MusicBeatState
 
 			}
 
-			updateGrid();
+			updateGrid(false);
 		});
 		var clearLeftSectionButton:FlxButton = new FlxButton(duetButton.x, duetButton.y + 30, "Clear Left Side", function()
 		{
@@ -1013,7 +1013,7 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
-			updateGrid();
+			updateGrid(false);
 			updateNoteUI();
 		});
 		var clearRightSectionButton:FlxButton = new FlxButton(clearLeftSectionButton.x + 100, clearLeftSectionButton.y, "Clear Right Side", function()
@@ -1030,7 +1030,7 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
-			updateGrid();
+			updateGrid(false);
 			updateNoteUI();
 		});
 		clearLeftSectionButton.color = FlxColor.RED;
@@ -1127,7 +1127,7 @@ class ChartingState extends MusicBeatState
 			currentType = Std.parseInt(character);
 			if(curSelectedNote != null && curSelectedNote[1] > -1) {
 				curSelectedNote[3] = noteTypeIntMap.get(currentType);
-				updateGrid();
+				updateGrid(false);
 			}
 		});
 		blockPressWhileScrolling.push(noteTypeDropDown);
@@ -1143,7 +1143,7 @@ class ChartingState extends MusicBeatState
 				}
 				_song.notes[curSec].sectionNotes[i] = note;
 			}
-			updateGrid();
+			updateGrid(false);
 		});
 		var rightSectionNotetype:FlxButton = new FlxButton(leftSectionNotetype.x + 90, leftSectionNotetype.y, "Right Section to Notetype", function()
 		{
@@ -1156,7 +1156,7 @@ class ChartingState extends MusicBeatState
 				}
 				_song.notes[curSec].sectionNotes[i] = note;
 			}
-			updateGrid();
+			updateGrid(false);
 		});
 
 		tab_group_note.add(new FlxText(10, 10, 0, 'Sustain length:'));
@@ -1651,13 +1651,13 @@ class ChartingState extends MusicBeatState
 				case 'Must hit section':
 					_song.notes[curSec].mustHitSection = check.checked;
 
-					updateGrid();
+					//updateGrid(); No need to update the grid if there's literally nothing to change
 					updateHeads();
 
 				case 'GF section':
 					_song.notes[curSec].gfSection = check.checked;
 
-					updateGrid();
+					//updateGrid(); No need to update the grid if there's literally nothing to change
 					updateHeads();
 
 				case 'Change BPM':
@@ -1848,12 +1848,13 @@ class ChartingState extends MusicBeatState
 						{
 							selectNote(note);
 							curSelectedNote[3] = noteTypeIntMap.get(currentType);
-							updateGrid();
+							updateGrid(false);
 						}
 						else
 						{
 							//trace('tryin to delete note...');
 							deleteNote(note);
+							updateGrid(false);
 						}
 					}
 				});
@@ -1875,7 +1876,7 @@ class ChartingState extends MusicBeatState
 					for(i in 0...Std.int(addCount)) {
 						addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/stepperStackOffset.value, curSelectedNote[1] + Math.floor(stepperStackSideOffset.value), currentType);
 					}
-				updateGrid();
+				updateGrid(false);
 				updateNoteUI();
 				}
 			}
@@ -1980,10 +1981,12 @@ class ChartingState extends MusicBeatState
 			if(FlxG.keys.justPressed.Z && curZoom > 0 && !FlxG.keys.pressed.CONTROL) {
 				--curZoom;
 				updateZoom();
+				updateGrid();
 			}
 			if(FlxG.keys.justPressed.X && curZoom < zoomList.length-1) {
 				curZoom++;
 				updateZoom();
+				updateGrid();
 			}
 
 			if (FlxG.keys.pressed.C && !FlxG.keys.pressed.CONTROL)
@@ -1995,7 +1998,7 @@ class ChartingState extends MusicBeatState
 						&& FlxG.mouse.y < gridBG.y + gridBG.height)
 							if (!FlxG.keys.pressed.CONTROL) //stop crashing
 								addNote(); //allows you to draw notes by holding left click
-				updateGrid();
+				updateGrid(false);
 				updateNoteUI();
 			}
 
@@ -2182,6 +2185,7 @@ class ChartingState extends MusicBeatState
 					{
 						if(controlArray[i])
 							doANoteThing(conductorTime, i, style);
+							updateGrid(false);
 					}
 				}
 
@@ -2234,7 +2238,7 @@ class ChartingState extends MusicBeatState
 								if(controlArray[i])
 									if(curSelectedNote[1] == i) curSelectedNote[2] += datime - curSelectedNote[2] - Conductor.stepCrochet;
 							}
-							updateGrid();
+							updateGrid(false);
 							updateNoteUI();
 						}
 					}
@@ -2467,7 +2471,7 @@ class ChartingState extends MusicBeatState
 
 		var gridBlackLine:FlxSprite = new FlxSprite(gridBG.x + GRID_SIZE).makeGraphic(2, leHeight, FlxColor.BLACK);
 		gridLayer.add(gridBlackLine);
-		updateGrid();
+		updateGrid(false);
 
 		lastSecBeats = getSectionBeats();
 		if(sectionStartTime(1) > FlxG.sound.music.length) lastSecBeatsNext = 0;
@@ -2725,7 +2729,7 @@ class ChartingState extends MusicBeatState
 
 	function resetSection(songBeginning:Bool = false):Void
 	{
-		updateGrid();
+		updateGrid(songBeginning);
 
 		FlxG.sound.music.pause();
 		// Basically old shit from changeSection???
@@ -2742,8 +2746,6 @@ class ChartingState extends MusicBeatState
 			vocals.time = FlxG.sound.music.time;
 		}
 		updateCurStep();
-
-		updateGrid();
 		updateSectionUI();
 		updateWaveform();
 	}
@@ -2787,6 +2789,7 @@ class ChartingState extends MusicBeatState
 		}
 		Conductor.songPosition = FlxG.sound.music.time;
 		updateWaveform();
+		updateGrid(true);
 	}
 
 	function updateSectionUI():Void
@@ -2875,13 +2878,13 @@ class ChartingState extends MusicBeatState
 		}
 	}
 
-	function updateGrid():Void
+	function updateGrid(?andNext:Bool = true):Void
 	{
 		curRenderedNotes.clear();
 		curRenderedSustains.clear();
 		curRenderedNoteType.clear();
-		nextRenderedNotes.clear();
-		nextRenderedSustains.clear();
+		if (andNext) nextRenderedNotes.clear();
+		if (andNext) nextRenderedSustains.clear();
 
 		if (_song.notes[curSec].changeBPM && _song.notes[curSec].bpm > 0)
 		{
@@ -3136,8 +3139,6 @@ class ChartingState extends MusicBeatState
 				}
 			}
 		}
-
-		updateGrid();
 	}
 
 	public function doANoteThing(cs, d, style){
@@ -3151,6 +3152,7 @@ class ChartingState extends MusicBeatState
 						//trace('tryin to delete note...');
 						if(!delnote) deleteNote(note);
 						delnote = true;
+						updateGrid(false);
 				}
 			});
 		}
