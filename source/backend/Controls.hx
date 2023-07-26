@@ -4,11 +4,6 @@ import mobile.flixel.FlxVirtualPadButtonID;
 import mobile.flixel.FlxButton;
 import mobile.flixel.FlxHitbox;
 import mobile.flixel.FlxVirtualPad;
-import flixel.input.FlxInput;
-import flixel.input.actions.FlxAction;
-import flixel.input.actions.FlxActionInput;
-import flixel.input.actions.FlxActionInputDigital;
-import flixel.input.actions.FlxActionManager;
 #end
 import flixel.input.actions.FlxActionSet;
 import flixel.input.gamepad.FlxGamepadButton;
@@ -27,37 +22,6 @@ class Controls extends FlxActionSet
 
 	//Dumb but easily usable code, or Smart but complicated? Your choice.
 	//Also idk how to use macros they're weird as fuck lol
-	#if mobile
-//taken from old Controls.hx
-	var _ui_up = new FlxActionDigital(Action.UI_UP);
-	var _ui_left = new FlxActionDigital(Action.UI_LEFT);
-	var _ui_right = new FlxActionDigital(Action.UI_RIGHT);
-	var _ui_down = new FlxActionDigital(Action.UI_DOWN);
-	var _ui_upP = new FlxActionDigital(Action.UI_UP_P);
-	var _ui_leftP = new FlxActionDigital(Action.UI_LEFT_P);
-	var _ui_rightP = new FlxActionDigital(Action.UI_RIGHT_P);
-	var _ui_downP = new FlxActionDigital(Action.UI_DOWN_P);
-	var _ui_upR = new FlxActionDigital(Action.UI_UP_R);
-	var _ui_leftR = new FlxActionDigital(Action.UI_LEFT_R);
-	var _ui_rightR = new FlxActionDigital(Action.UI_RIGHT_R);
-	var _ui_downR = new FlxActionDigital(Action.UI_DOWN_R);
-	var _note_up = new FlxActionDigital(Action.NOTE_UP);
-	var _note_left = new FlxActionDigital(Action.NOTE_LEFT);
-	var _note_right = new FlxActionDigital(Action.NOTE_RIGHT);
-	var _note_down = new FlxActionDigital(Action.NOTE_DOWN);
-	var _note_upP = new FlxActionDigital(Action.NOTE_UP_P);
-	var _note_leftP = new FlxActionDigital(Action.NOTE_LEFT_P);
-	var _note_rightP = new FlxActionDigital(Action.NOTE_RIGHT_P);
-	var _note_downP = new FlxActionDigital(Action.NOTE_DOWN_P);
-	var _note_upR = new FlxActionDigital(Action.NOTE_UP_R);
-	var _note_leftR = new FlxActionDigital(Action.NOTE_LEFT_R);
-	var _note_rightR = new FlxActionDigital(Action.NOTE_RIGHT_R);
-	var _note_downR = new FlxActionDigital(Action.NOTE_DOWN_R);
-	var _accept = new FlxActionDigital(Action.ACCEPT);
-	var _back = new FlxActionDigital(Action.BACK);
-	var _pause = new FlxActionDigital(Action.PAUSE);
-	var _reset = new FlxActionDigital(Action.RESET);
-	#end
 
 	// Pressed buttons (directions)
 	public var UI_UP_P(get, never):Bool;
@@ -129,7 +93,6 @@ class Controls extends FlxActionSet
 	public var gamepadBinds:Map<String, Array<FlxGamepadInputID>>;
 	#if mobile
 	public var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>>;
-	var byName:Map<String, FlxActionDigital> = [];
 	#end
 	public function justPressed(key:String)
 	{
@@ -202,9 +165,6 @@ class Controls extends FlxActionSet
 		return false;
 	}
 	#if mobile
-	public var trackedinputsUI:Array<FlxActionInput> = [];
-	public var trackedinputsNOTES:Array<FlxActionInput> = [];
-
 	private function dpadPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 		{
 			if(keys != null)
@@ -252,6 +212,9 @@ class Controls extends FlxActionSet
 					}
 					return false;
 				}
+
+	/*public var trackedinputsUI:Array<FlxActionInput> = [];
+	public var trackedinputsNOTES:Array<FlxActionInput> = [];
 
 	public function addbuttonNOTES(action:FlxActionDigital, button:FlxButton, state:FlxInputState)
 	{
@@ -426,96 +389,18 @@ class Controls extends FlxActionSet
 				}
 			}
 		}
-	}
+	}*/
 	#end
 
 	// IGNORE THESE/ karim: no.
 	public static var instance:Controls;
-	public function new(name)
+	public function new()
 	{
-		super(name); //do nothing other than making flixel happy
+		super();
 		#if mobile
-		add(_ui_up);
-		add(_ui_left);
-		add(_ui_right);
-		add(_ui_down);
-		add(_ui_upP);
-		add(_ui_leftP);
-		add(_ui_rightP);
-		add(_ui_downP);
-		add(_ui_upR);
-		add(_ui_leftR);
-		add(_ui_rightR);
-		add(_ui_downR);
-		add(_note_up);
-		add(_note_left);
-		add(_note_right);
-		add(_note_down);
-		add(_note_upP);
-		add(_note_leftP);
-		add(_note_rightP);
-		add(_note_downP);
-		add(_note_upR);
-		add(_note_leftR);
-		add(_note_rightR);
-		add(_note_downR);
-		add(_accept);
-		add(_back);
-		add(_pause);
-		add(_reset);
 		mobileBinds = ClientPrefs.mobileBinds;
-		for (action in digitalActions)
-			byName[action.name] = action;
 		#end
 		gamepadBinds = ClientPrefs.gamepadBinds;
 		keyboardBinds = ClientPrefs.keyBinds;
 	}
 }
-#if mobile
-enum Control
-{
-	UI_UP;
-	UI_LEFT;
-	UI_RIGHT;
-	UI_DOWN;
-	NOTE_UP;
-	NOTE_LEFT;
-	NOTE_RIGHT;
-	NOTE_DOWN;
-	RESET;
-	ACCEPT;
-	BACK;
-	PAUSE;
-}
-enum abstract Action(String) to String from String
-{
-	var UI_UP = "ui_up";
-	var UI_LEFT = "ui_left";
-	var UI_RIGHT = "ui_right";
-	var UI_DOWN = "ui_down";
-	var UI_UP_P = "ui_up-press";
-	var UI_LEFT_P = "ui_left-press";
-	var UI_RIGHT_P = "ui_right-press";
-	var UI_DOWN_P = "ui_down-press";
-	var UI_UP_R = "ui_up-release";
-	var UI_LEFT_R = "ui_left-release";
-	var UI_RIGHT_R = "ui_right-release";
-	var UI_DOWN_R = "ui_down-release";
-	var NOTE_UP = "note_up";
-	var NOTE_LEFT = "note_left";
-	var NOTE_RIGHT = "note_right";
-	var NOTE_DOWN = "note_down";
-	var NOTE_UP_P = "note_up-press";
-	var NOTE_LEFT_P = "note_left-press";
-	var NOTE_RIGHT_P = "note_right-press";
-	var NOTE_DOWN_P = "note_down-press";
-	var NOTE_UP_R = "note_up-release";
-	var NOTE_LEFT_R = "note_left-release";
-	var NOTE_RIGHT_R = "note_right-release";
-	var NOTE_DOWN_R = "note_down-release";
-	var ACCEPT = "accept";
-	var BACK = "back";
-	var PAUSE = "pause";
-	var RESET = "reset";
-}
-#end
