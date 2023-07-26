@@ -59,19 +59,22 @@ class NoteSplash extends FlxSprite
 			config = precacheConfig(_configLoaded);
 
 		var tempShader:RGBPalette = null;
-		if(note != null && !note.noteSplashData.useGlobalShader)
+		if((note == null || note.noteSplashData.useRGBShader) && (PlayState.SONG == null || !PlayState.SONG.disableNoteRGB))
 		{
-			if(note.noteSplashData.r != -1) note.rgbShader.r = note.noteSplashData.r;
-			if(note.noteSplashData.g != -1) note.rgbShader.g = note.noteSplashData.g;
-			if(note.noteSplashData.b != -1) note.rgbShader.b = note.noteSplashData.b;
-			tempShader = note.rgbShader.parent;
-			alpha = note.noteSplashData.a;
+			// If Note RGB is enabled:
+			if(note != null && !note.noteSplashData.useGlobalShader)
+			{
+				
+				if(note.noteSplashData.r != -1) note.rgbShader.r = note.noteSplashData.r;
+				if(note.noteSplashData.g != -1) note.rgbShader.g = note.noteSplashData.g;
+				if(note.noteSplashData.b != -1) note.rgbShader.b = note.noteSplashData.b;
+				tempShader = note.rgbShader.parent;
+			}
+			else tempShader = Note.globalRgbShaders[direction];
 		}
-		else
-		{
-			tempShader = Note.globalRgbShaders[direction];
-			alpha = 0.6;
-		}
+
+		alpha = ClientPrefs.data.splashAlpha;
+		if(note != null) alpha = note.noteSplashData.a;
 		rgbShader.copyValues(tempShader);
 
 		if(note != null) antialiasing = note.noteSplashData.antialiasing;

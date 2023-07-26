@@ -4282,6 +4282,7 @@
 		"needsVoices": true,
 		"validScore": true,
 		"bpm": 178,
-		"speed": 2.2
+		"speed": 2.2,
+		"gameOverChar": "bf-holding-gf-dead"
 	}
 }
