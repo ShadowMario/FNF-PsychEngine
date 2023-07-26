@@ -311,7 +311,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 			 }
 		 }
 		 isPressed = currentInput != null;
-	 }
+
 		input.update();
 	}
 
