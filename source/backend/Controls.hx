@@ -92,7 +92,7 @@ class Controls
 	//Gamepad & Keyboard stuff
 	public var keyboardBinds:Map<String, Array<FlxKey>>;
 	public var gamepadBinds:Map<String, Array<FlxGamepadInputID>>;
-	#if mobile public var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>> #end
+	#if mobile public var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>>; #end
 	public function justPressed(key:String)
 	{
 		var result:Bool = (FlxG.keys.anyJustPressed(keyboardBinds[key]) == true);
