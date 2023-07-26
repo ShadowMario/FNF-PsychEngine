@@ -78,6 +78,9 @@ class TitleState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+		#if android //no mobile???
+		FlxG.android.preventDefaultKeys = [BACK];
+		#end
 
 		#if LUA_ALLOWED
 		Mods.pushGlobalMods();
@@ -369,7 +372,7 @@ class TitleState extends MusicBeatState
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
 
-		#if mobile
+		#if mobile // wtf already exists?
 		for (touch in FlxG.touches.list)
 		{
 			if (touch.justPressed)

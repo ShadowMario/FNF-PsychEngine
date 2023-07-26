@@ -1,9 +1,10 @@
 package backend;
-
+#if mobile
+import source.mobile.flixel.FlxVirtualPadButtonID;
+#end
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
 import flixel.input.gamepad.FlxGamepadInputID;
-
 import states.TitleState;
 
 // Add a variable here and it will get automatically saved
@@ -126,6 +127,25 @@ class ClientPrefs {
 		'pause'			=> [START],
 		'reset'			=> [BACK]
 	];
+	#if mobile
+	public static var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>> = [
+		'note_up'		=> [UP,UP2],
+		'note_left'		=> [LEFT,LEFT2],
+		'note_down'		=> [DOWN,DOWN2],
+		'note_right'	=> [DOWN,DOWN2],
+		
+		'ui_up'			=> [UP],
+		'ui_left'		=> [LEFT],
+		'ui_down'		=> [DOWN],
+		'ui_right'		=> [RIGHT],
+		
+		'accept'		=> [A],
+		'back'			=> [B],
+		'pause'			=> [NONE],
+		'reset'			=> [NONE]
+	];
+	public static var defaultPads:Map<String, Array<FlxVirtualPadButtonID>> = null;
+	#end
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 	public static var defaultButtons:Map<String, Array<FlxGamepadInputID>> = null;
 
@@ -154,11 +174,16 @@ class ClientPrefs {
 		var gamepadBind:Array<FlxGamepadInputID> = gamepadBinds.get(key);
 		while(keyBind != null && keyBind.contains(NONE)) keyBind.remove(NONE);
 		while(gamepadBind != null && gamepadBind.contains(NONE)) gamepadBind.remove(NONE);
+		#if mobile
+		var mobileBind:Array<FlxVirtualPadButtonID> = mobileBinds.get(key);
+		while(mobileBind != null && mobileBind.contains(NONE)) mobileBind.remove(NONE);
+		#end
 	}
 
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
 		defaultButtons = gamepadBinds.copy();
+		defaultPads = mobileBinds.copy();
 	}
 
 	public static function saveSettings() {
@@ -175,6 +200,7 @@ class ClientPrefs {
 		save.bind('controls_v3', CoolUtil.getSavePath());
 		save.data.keyboard = keyBinds;
 		save.data.gamepad = gamepadBinds;
+		#if mobile save.data.mobile = mobileBinds; #end
 		save.flush();
 		FlxG.log.add("Settings saved!");
 	}
@@ -239,6 +265,12 @@ class ClientPrefs {
 					if(gamepadBinds.exists(control)) gamepadBinds.set(control, keys);
 				}
 			}
+			#if mobile if(save.data.mobile != null) {
+					var loadedControls:Map<String, Array<FlxVirtualPadButtonID>> = save.data.mobile;
+					for (control => keys in loadedControls){
+						if(mobileBinds.exists(control)) mobileBinds.set(control, keys);
+					}
+			} #end
 			reloadVolumeKeys();
 		}
 	}
