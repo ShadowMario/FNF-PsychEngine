@@ -1333,6 +1333,7 @@ class ChartingState extends MusicBeatState
 		check_disableNoteRGB.callback = function()
 		{
 			_song.disableNoteRGB = check_disableNoteRGB.checked;
+			updateGrid();
 			//trace('CHECKED!');
 		};
 
