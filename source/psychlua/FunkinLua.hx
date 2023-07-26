@@ -44,7 +44,8 @@ class FunkinLua {
 	public static var Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
 	public static var Function_Continue:Dynamic = "##PSYCHLUA_FUNCTIONCONTINUE";
 	public static var Function_StopLua:Dynamic = "##PSYCHLUA_FUNCTIONSTOPLUA";
-
+	public static var Function_StopHScript:Dynamic = "##PSYCHLUA_FUNCTIONSTOPHSCRIPT";
+	public static var Function_StopAll:Dynamic = "##PSYCHLUA_FUNCTIONSTOPALL";
 
 	#if LUA_ALLOWED
 	public var lua:State = null;
@@ -71,30 +72,13 @@ class FunkinLua {
 		//LuaL.dostring(lua, CLENSE);
 
 		this.scriptName = scriptName;
-		try{
-			var result:Dynamic = LuaL.dofile(lua, scriptName);
-			var resultStr:String = Lua.tostring(lua, result);
-			if(resultStr != null && result != 0) {
-				trace(resultStr);
-				#if windows
-				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
-				#else
-				luaTrace('$scriptName\n$resultStr', true, false, FlxColor.RED);
-				#end
-				lua = null;
-				return;
-			}
-		} catch(e:Dynamic) {
-			trace(e);
-			return;
-		}
-
 		var game:PlayState = PlayState.instance;
 		game.luaArray.push(this);
-		trace('lua file loaded succesfully:' + scriptName);
 
 		// Lua shit
 		set('Function_StopLua', Function_StopLua);
+		set('Function_StopHScript', Function_StopHScript);
+		set('Function_StopAll', Function_StopAll);
 		set('Function_Stop', Function_Stop);
 		set('Function_Continue', Function_Continue);
 		set('luaDebugMode', false);
@@ -206,21 +190,7 @@ class FunkinLua {
 		set('splashSkinPostfix', NoteSplash.getSplashSkinPostfix());
 		set('splashAlpha', ClientPrefs.data.splashAlpha);
 
-		#if windows
-		set('buildTarget', 'windows');
-		#elseif linux
-		set('buildTarget', 'linux');
-		#elseif mac
-		set('buildTarget', 'mac');
-		#elseif html5
-		set('buildTarget', 'browser');
-		#elseif android
-		set('buildTarget', 'android');
-		#elseif switch
-		set('buildTarget', 'switch');
-		#else
-		set('buildTarget', 'unknown');
-		#end
+		set('buildTarget', getBuildTarget());
 
 		for (name => func in customFunctions)
 		{
@@ -237,16 +207,38 @@ class FunkinLua {
 			return runningScripts;
 		});
 		
+		addLocalCallback("setOnScripts", function(varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null) {
+			if(exclusions == null) exclusions = [];
+			if(ignoreSelf && !exclusions.contains(scriptName)) exclusions.push(scriptName);
+			game.setOnScripts(varName, arg, exclusions);
+		});
+		addLocalCallback("setOnHScript", function(varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null) {
+			if(exclusions == null) exclusions = [];
+			if(ignoreSelf && !exclusions.contains(scriptName)) exclusions.push(scriptName);
+			game.setOnHScript(varName, arg, exclusions);
+		});
 		addLocalCallback("setOnLuas", function(varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null) {
 			if(exclusions == null) exclusions = [];
 			if(ignoreSelf && !exclusions.contains(scriptName)) exclusions.push(scriptName);
 			game.setOnLuas(varName, arg, exclusions);
 		});
 
+		addLocalCallback("callOnScripts", function(funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null) {
+			if(excludeScripts == null) excludeScripts = [];
+			if(ignoreSelf && !excludeScripts.contains(scriptName)) excludeScripts.push(scriptName);
+			game.callOnScripts(funcName, args, ignoreStops, excludeScripts, excludeValues);
+			return true;
+		});
 		addLocalCallback("callOnLuas", function(funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null) {
 			if(excludeScripts == null) excludeScripts = [];
 			if(ignoreSelf && !excludeScripts.contains(scriptName)) excludeScripts.push(scriptName);
 			game.callOnLuas(funcName, args, ignoreStops, excludeScripts, excludeValues);
+			return true;
+		});
+		addLocalCallback("callOnHScript", function(funcName:String, ?args:Array<Dynamic> = null, ?ignoreStops=false, ?ignoreSelf:Bool = true, ?excludeScripts:Array<String> = null, ?excludeValues:Array<Dynamic> = null) {
+			if(excludeScripts == null) excludeScripts = [];
+			if(ignoreSelf && !excludeScripts.contains(scriptName)) excludeScripts.push(scriptName);
+			game.callOnHScript(funcName, args, ignoreStops, excludeScripts, excludeValues);
 			return true;
 		});
 
@@ -1422,6 +1414,25 @@ class FunkinLua {
 		CustomSubstate.implement(this);
 		ShaderFunctions.implement(this);
 		DeprecatedFunctions.implement(this);
+		
+		try{
+			var result:Dynamic = LuaL.dofile(lua, scriptName);
+			var resultStr:String = Lua.tostring(lua, result);
+			if(resultStr != null && result != 0) {
+				trace(resultStr);
+				#if windows
+				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
+				#else
+				luaTrace('$scriptName\n$resultStr', true, false, FlxColor.RED);
+				#end
+				lua = null;
+				return;
+			}
+		} catch(e:Dynamic) {
+			trace(e);
+			return;
+		}
+		trace('lua file loaded succesfully:' + scriptName);
 
 		call('onCreate', []);
 		#end
@@ -1507,6 +1518,25 @@ class FunkinLua {
 	}
 
 	//clone functions
+	public static function getBuildTarget():String
+	{
+		#if windows
+		return 'windows';
+		#elseif linux
+		return 'linux';
+		#elseif mac
+		return 'mac';
+		#elseif html5
+		return 'browser';
+		#elseif android
+		return 'android';
+		#elseif switch
+		return 'switch';
+		#else
+		return 'unknown';
+		#end
+	}
+
 	function oldTweenFunction(tag:String, vars:String, tweenValue:Any, duration:Float, ease:String, funcName:String)
 	{
 		#if LUA_ALLOWED

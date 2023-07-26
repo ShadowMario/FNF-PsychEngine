@@ -2,6 +2,8 @@ package psychlua;
 
 import tea.SScript;
 import objects.Character;
+import psychlua.FunkinLua;
+import psychlua.CustomSubstate;
 
 #if (SScript >= "3.0.0")
 class HScript extends SScript
@@ -14,15 +16,17 @@ class HScript extends SScript
 		if(parent.hscript == null)
 		{
 			trace('initializing haxe interp for: ${parent.scriptName}');
-			parent.hscript = new HScript(parent);
+			parent.hscript = new HScript(parent, parent.scriptName);
 		}
 		#end
 	}
 
-	override public function new(parent:FunkinLua)
+	public var interpName:String = null;
+	override public function new(?parent:FunkinLua = null, interpName:String)
 	{
 		super("", false);
 		parentLua = parent;
+		this.interpName = interpName;
 		preset();
 	}
 
@@ -31,6 +35,7 @@ class HScript extends SScript
 		#if (SScript >= "3.0.0")
 		super.preset();
 
+		// Some very commonly used classes
 		set('FlxG', flixel.FlxG);
 		set('FlxSprite', flixel.FlxSprite);
 		set('FlxCamera', flixel.FlxCamera);
@@ -38,19 +43,21 @@ class HScript extends SScript
 		set('FlxTween', flixel.tweens.FlxTween);
 		set('FlxEase', flixel.tweens.FlxEase);
 		set('PlayState', PlayState);
-		set('game', PlayState.instance);
 		set('Paths', Paths);
 		set('Conductor', Conductor);
 		set('ClientPrefs', ClientPrefs);
 		set('Character', Character);
 		set('Alphabet', Alphabet);
-		set('CustomSubstate', psychlua.CustomSubstate);
+		set('Note', objects.Note);
+		set('CustomSubstate', CustomSubstate);
+		set('Countdown', backend.BaseStage.Countdown);
 		#if (!flash && sys)
 		set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);
 		#end
 		set('ShaderFilter', openfl.filters.ShaderFilter);
 		set('StringTools', StringTools);
 
+		// Functions & Variables
 		set('setVar', function(name:String, value:Dynamic)
 		{
 			PlayState.instance.variables.set(name, value);
@@ -92,7 +99,9 @@ class HScript extends SScript
 		set('createCallback', function(name:String, func:Dynamic, ?funk:FunkinLua = null)
 		{
 			if(funk == null) funk = parentLua;
-			funk.addLocalCallback(name, func);
+			
+			if(parentLua != null) funk.addLocalCallback(name, func);
+			else FunkinLua.luaTrace('createCallback ($name): 3rd argument is null', false, false, FlxColor.RED);
 		});
 
 		set('addHaxeLibrary', function(libName:String, ?libPackage:String = '') {
@@ -104,11 +113,27 @@ class HScript extends SScript
 				set(libName, Type.resolveClass(str + libName));
 			}
 			catch (e:Dynamic) {
-				FunkinLua.lastCalledScript = parentLua;
-				FunkinLua.luaTrace(parentLua.scriptName + ":" + parentLua.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
+				var msg:String = e.toString();
+				if(parentLua != null)
+				{
+					FunkinLua.lastCalledScript = parentLua;
+					msg = parentLua.scriptName + ":" + parentLua.lastCalledFunction + " - " + msg;
+				}
+				else msg = '$interpName - $msg';
+				FunkinLua.luaTrace(msg, parentLua == null, false, FlxColor.RED);
 			}
 		});
 		set('parentLua', parentLua);
+		set('game', PlayState.instance);
+		set('buildTarget', FunkinLua.getBuildTarget());
+		set('customSubstate', CustomSubstate.instance);
+		set('customSubstateName', CustomSubstate.name);
+
+		set('Function_Stop', FunkinLua.Function_Stop);
+		set('Function_Continue', FunkinLua.Function_Continue);
+		set('Function_StopLua', FunkinLua.Function_StopLua); //doesnt do much cuz HScript has a lower priority than Lua
+		set('Function_StopHScript', FunkinLua.Function_StopHScript);
+		set('Function_StopAll', FunkinLua.Function_StopAll);
 		#end
 	}
 
@@ -126,7 +151,10 @@ class HScript extends SScript
 				var e = callValue.exceptions[0];
 				if (e != null)
 				{
-					FunkinLua.luaTrace(parentLua.scriptName + ":" + parentLua.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
+					var msg:String = e.toString();
+					if(parentLua != null) msg = parentLua.scriptName + ":" + parentLua.lastCalledFunction + " - " + msg;
+					else msg = '$interpName - $msg';
+					FunkinLua.luaTrace(msg, parentLua == null, false, FlxColor.RED);
 				}
 				return null;
 			}
@@ -180,7 +208,7 @@ class HScript extends SScript
 			{
 				var e = callValue.exceptions[0];
 				if (e != null)
-					FunkinLua.luaTrace(e.message, true);
+					FunkinLua.luaTrace('ERROR (${funk.scriptName}: ${callValue.calledFunction}) - ' + e.message.substr(0, e.message.indexOf('\n')), false, false, FlxColor.RED);
 				return null;
 			}
 			else

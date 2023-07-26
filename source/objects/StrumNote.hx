@@ -22,9 +22,11 @@ class StrumNote extends FlxSprite
 		return value;
 	}
 
+	public var useRGBShader:Bool = true;
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
 		rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(leData));
 		rgbShader.enabled = false;
+		if(PlayState.SONG != null && PlayState.SONG.disableNoteRGB) useRGBShader = false;
 		
 		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[leData];
 		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[leData];
@@ -159,6 +161,6 @@ class StrumNote extends FlxSprite
 			centerOffsets();
 			centerOrigin();
 		}
-		rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static');
+		if(useRGBShader) rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static');
 	}
 }
