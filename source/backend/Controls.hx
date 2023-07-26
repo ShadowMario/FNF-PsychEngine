@@ -459,12 +459,11 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
-		gamepadBinds = ClientPrefs.gamepadBinds;
-
+		mobileBinds = ClientPrefs.mobileBinds;
 		for (action in digitalActions)
 			byName[action.name] = action;
 		#end
-		mobileBinds = ClientPrefs.mobileBinds;
+		gamepadBinds = ClientPrefs.gamepadBinds;
 		keyboardBinds = ClientPrefs.keyBinds;
 	}
 }
