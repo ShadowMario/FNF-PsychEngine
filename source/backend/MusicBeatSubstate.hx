@@ -1,7 +1,7 @@
 package backend;
 
 import flixel.FlxSubState;
-#if mobile
+#if mobileC
 import mobile.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
@@ -30,7 +30,7 @@ class MusicBeatSubstate extends FlxSubState
 	inline function get_controls():Controls
 		return Controls.instance;
 
-	#if mobile
+	#if mobileC
 	var virtualPad:FlxVirtualPad;
 
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
@@ -62,7 +62,7 @@ class MusicBeatSubstate extends FlxSubState
 	{
 		super.destroy();
 
-		#if mobile
+		#if mobileC
 		if (virtualPad != null)
 		{
 			virtualPad = FlxDestroyUtil.destroy(virtualPad);

@@ -1,5 +1,5 @@
 package backend;
-#if mobile
+#if mobileC
 import mobile.flixel.FlxVirtualPadButtonID;
 #end
 import flixel.util.FlxSave;
@@ -127,7 +127,7 @@ class ClientPrefs {
 		'pause'			=> [START],
 		'reset'			=> [BACK]
 	];
-	#if mobile
+	#if mobileC
 	public static var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>> = [
 		'note_up'		=> [UP,UP2],
 		'note_left'		=> [LEFT,LEFT2],
@@ -174,7 +174,7 @@ class ClientPrefs {
 		var gamepadBind:Array<FlxGamepadInputID> = gamepadBinds.get(key);
 		while(keyBind != null && keyBind.contains(NONE)) keyBind.remove(NONE);
 		while(gamepadBind != null && gamepadBind.contains(NONE)) gamepadBind.remove(NONE);
-		#if mobile
+		#if mobileC
 		var mobileBind:Array<FlxVirtualPadButtonID> = mobileBinds.get(key);
 		while(mobileBind != null && mobileBind.contains(NONE)) mobileBind.remove(NONE);
 		#end
@@ -183,7 +183,9 @@ class ClientPrefs {
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
 		defaultButtons = gamepadBinds.copy();
+                #if mobileC
 		defaultPads = mobileBinds.copy();
+                #end
 	}
 
 	public static function saveSettings() {
@@ -200,7 +202,7 @@ class ClientPrefs {
 		save.bind('controls_v3', CoolUtil.getSavePath());
 		save.data.keyboard = keyBinds;
 		save.data.gamepad = gamepadBinds;
-		#if mobile save.data.mobile = mobileBinds; #end
+		#if mobileC save.data.mobile = mobileBinds; #end
 		save.flush();
 		FlxG.log.add("Settings saved!");
 	}
@@ -265,7 +267,7 @@ class ClientPrefs {
 					if(gamepadBinds.exists(control)) gamepadBinds.set(control, keys);
 				}
 			}
-			#if mobile if(save.data.mobile != null) {
+			#if mobileC if(save.data.mobile != null) {
 					var loadedControls:Map<String, Array<FlxVirtualPadButtonID>> = save.data.mobile;
 					for (control => keys in loadedControls){
 						if(mobileBinds.exists(control)) mobileBinds.set(control, keys);

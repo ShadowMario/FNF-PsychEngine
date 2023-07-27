@@ -3,7 +3,7 @@ package backend;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxState;
-#if mobile
+#if mobileC
 import mobile.MobileControls;
 import mobile.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
@@ -26,7 +26,7 @@ class MusicBeatState extends FlxUIState
 		return Controls.instance;
 	}
 
-	#if mobile
+	#if mobileC
 	var virtualPad:FlxVirtualPad;
 	var mobileControls:MobileControls;
 
@@ -79,7 +79,7 @@ class MusicBeatState extends FlxUIState
 	{
 		super.destroy();
 
-		#if mobile
+		#if mobileC
 		if (virtualPad != null)
 		{
 			virtualPad = FlxDestroyUtil.destroy(virtualPad);

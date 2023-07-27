@@ -1,5 +1,5 @@
 package backend;
-#if mobile
+#if mobileC
 import mobile.flixel.FlxVirtualPadButtonID;
 import mobile.flixel.FlxButton;
 import mobile.flixel.FlxHitbox;
@@ -91,7 +91,7 @@ class Controls
 	//Gamepad, Keyboard & mobile stuff
 	public var keyboardBinds:Map<String, Array<FlxKey>>;
 	public var gamepadBinds:Map<String, Array<FlxGamepadInputID>>;
-	#if mobile
+	#if mobileC
 	public var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>>;
 	#end
 	public function justPressed(key:String)
@@ -99,7 +99,7 @@ class Controls
 		var result:Bool = (FlxG.keys.anyJustPressed(keyboardBinds[key]) == true);
 		if(result) controllerMode = false;
 
-		return result || _myGamepadJustPressed(gamepadBinds[key]) == true #if mobile || dpadJustPressed(mobileBinds[key]) == true #end;
+		return result || _myGamepadJustPressed(gamepadBinds[key]) == true #if mobileC || dpadJustPressed(mobileBinds[key]) == true #end;
 	}
 
 	public function pressed(key:String)
@@ -107,7 +107,7 @@ class Controls
 		var result:Bool = (FlxG.keys.anyPressed(keyboardBinds[key]) == true);
 		if(result) controllerMode = false;
 
-		return result || _myGamepadPressed(gamepadBinds[key]) == true #if mobile || dpadPressed(mobileBinds[key]) == true #end;
+		return result || _myGamepadPressed(gamepadBinds[key]) == true #if mobileC || dpadPressed(mobileBinds[key]) == true #end;
 	}
 
 	public function justReleased(key:String)
@@ -115,7 +115,7 @@ class Controls
 		var result:Bool = (FlxG.keys.anyJustReleased(keyboardBinds[key]) == true);
 		if(result) controllerMode = false;
 
-		return result || _myGamepadJustReleased(gamepadBinds[key]) == true #if mobile || dpadJustReleased(mobileBinds[key]) == true #end;
+		return result || _myGamepadJustReleased(gamepadBinds[key]) == true #if mobileC || dpadJustReleased(mobileBinds[key]) == true #end;
 	}
 
 	public var controllerMode:Bool = false;
@@ -164,7 +164,7 @@ class Controls
 		}
 		return false;
 	}
-	#if mobile
+	#if mobileC
 	private function dpadPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 		{
 			if(keys != null)
@@ -396,7 +396,7 @@ class Controls
 	public static var instance:Controls;
 	public function new()
 	{
-		#if mobile
+		#if mobileC
 		mobileBinds = ClientPrefs.mobileBinds;
 		#end
 		gamepadBinds = ClientPrefs.gamepadBinds;

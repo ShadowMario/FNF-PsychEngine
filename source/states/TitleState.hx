@@ -34,8 +34,7 @@ typedef TitleData =
 	startx:Float,
 	starty:Float,
 	gfx:Float,
-	gfy:Float,
-	backgroundSprite:String,
+	gfy:Float,	backgroundSprite:String,
 	bpm:Int
 }
 
@@ -78,7 +77,7 @@ class TitleState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
-		#if android //no mobile???
+		#if android
 		FlxG.android.preventDefaultKeys = [BACK];
 		#end
 
@@ -372,7 +371,7 @@ class TitleState extends MusicBeatState
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
 
-		#if mobile // wtf already exists?
+		#if (mobileC || mobile)
 		for (touch in FlxG.touches.list)
 		{
 			if (touch.justPressed)
