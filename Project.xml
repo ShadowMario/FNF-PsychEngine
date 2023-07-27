@@ -160,6 +160,8 @@
 		<haxedef name="HXCPP_STACK_TRACE" />
 	
 		<section if="android">
+                <!-- Do whatever you want I'm tired uninstall and install everytime-->
+		<certificate path="key.keystore" password="nullfunni" alias="null" alias-password="nullfunni" unless="debug"/>
 			<config>
 				<!--Gradle
 				<android gradle-version="7.4.2" gradle-plugin="7.3.1" /> -->
