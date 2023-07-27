@@ -142,6 +142,10 @@ class MainMenuState extends MusicBeatState
 		}
 		#end
 
+		#if mobile
+		addVirtualPad(UP_DOWN, A_B_E);
+		#end
+
 		super.create();
 	}
 
@@ -245,13 +249,13 @@ class MainMenuState extends MusicBeatState
 					});
 				}
 			}
-			#if desktop
-			else if (controls.justPressed('debug_1'))
+			//#if desktop
+			else if (controls.justPressed('debug_1') #if mobile || virtualPad.buttonE.justPressed #end)
 			{
 				selectedSomethin = true;
 				MusicBeatState.switchState(new MasterEditorMenu());
 			}
-			#end
+			//#end
 		}
 
 		super.update(elapsed);
