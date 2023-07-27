@@ -745,26 +745,33 @@ class PlayState extends MusicBeatState
 		var luaFile:String = 'characters/' + name + '.lua';
 		#if MODS_ALLOWED
 		var replacePath:String = Paths.modFolders(luaFile);
-		if(FileSystem.exists(replacePath)) {
+		if(FileSystem.exists(replacePath))
+		{
 			luaFile = replacePath;
 			doPush = true;
-		} else {
+		}
+		else
+		{
 			luaFile = Paths.getPreloadPath(luaFile);
-			if(FileSystem.exists(luaFile)) {
+			if(FileSystem.exists(luaFile))
 				doPush = true;
-			}
 		}
 		#else
 		luaFile = Paths.getPreloadPath(luaFile);
-		if(Assets.exists(luaFile)) {
-			doPush = true;
-		}
+		if(Assets.exists(luaFile)) doPush = true;
 		#end
 
 		if(doPush)
 		{
-			for (script in luaArray) if(script.scriptName == luaFile) return;
-			new FunkinLua(luaFile);
+			for (script in luaArray)
+			{
+				if(script.scriptName == luaFile)
+				{
+					doPush = false;
+					break;
+				}
+			}
+			if(doPush) new FunkinLua(luaFile);
 		}
 		#end
 
@@ -772,21 +779,30 @@ class PlayState extends MusicBeatState
 		#if (MODS_ALLOWED && SScript)
 		var doPush:Bool = false;
 		var scriptFile:String = 'characters/' + name + '.hx';
-		var replacePath:String = Paths.modFolders(luaFile);
-		if(FileSystem.exists(replacePath)) {
+		var replacePath:String = Paths.modFolders(scriptFile);
+		if(FileSystem.exists(replacePath))
+		{
 			scriptFile = replacePath;
 			doPush = true;
-		} else {
+		}
+		else
+		{
 			scriptFile = Paths.getPreloadPath(scriptFile);
-			if(FileSystem.exists(scriptFile)) {
+			if(FileSystem.exists(scriptFile))
 				doPush = true;
-			}
 		}
 		
 		if(doPush)
 		{
-			for (script in hscriptArray) if(script.interpName == scriptFile) return;
-			initHScript(scriptFile);
+			for (script in hscriptArray)
+			{
+				if(script.interpName == scriptFile)
+				{
+					doPush = false;
+					break;
+				}
+			}
+			if(doPush) initHScript(scriptFile);
 		}
 		#end
 	}
@@ -2977,7 +2993,10 @@ class PlayState extends MusicBeatState
 		#if (MODS_ALLOWED && SScript)
 		for (script in hscriptArray)
 			if(script != null)
+			{
+				script.call('onDestroy');
 				script.active = false;
+			}
 
 		hscriptArray = [];
 		#end
@@ -3133,7 +3152,7 @@ class PlayState extends MusicBeatState
 			var newScript:HScript = new HScript(file);
 			newScript.doString(File.getContent(file));
 			hscriptArray.push(newScript);
-			if(newScript.exists('onCreate')) newScript.call('onCreate', []);
+			if(newScript.exists('onCreate')) newScript.call('onCreate');
 			trace('initialized sscript interp successfully: $file');
 		}
 		catch(e:Dynamic)
@@ -3232,7 +3251,7 @@ class PlayState extends MusicBeatState
 			}
 			catch(e:Dynamic)
 			{
-				//addTextToDebug('ERROR (${script.interpName}) - ' + e.toString(), FlxColor.RED); //myValue);
+				addTextToDebug('ERROR (${script.interpName}) - ' + e.toString(), FlxColor.RED); //myValue);
 			}
 
 			if(!script.active) i++;
