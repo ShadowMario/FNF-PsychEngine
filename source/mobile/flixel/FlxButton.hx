@@ -303,13 +303,13 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		 {
 			 if (currentInput.justPressed)
 			 {
-				 isJustPressed = true;
-				 print("isJustPressed is " + isJustPressed);
+				isJustPressed = true;
+				FlxG.print("isJustPressed is " + isJustPressed);
 			 }
 			 else if (currentInput.justReleased)
 			 {
-				 isJustReleased = true;
-				 print("isJustReleased is " + isJustReleased);
+				isJustReleased = true;
+				FlxG.print("isJustReleased is " + isJustReleased);
 			 }
 		 }
 		 isPressed = currentInput != null;
