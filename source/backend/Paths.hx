@@ -189,7 +189,7 @@ class Paths
 			return file;
 		}
 		#end
-		return 'assets/videos/$key.$VIDEO_EXT';
+		return SUtil.getPath() + 'assets/videos/$key.$VIDEO_EXT';
 	}
 
 	static public function sound(key:String, ?library:String):Sound
@@ -286,24 +286,24 @@ class Paths
 	{
 		#if sys
 		#if MODS_ALLOWED
-		if (!ignoreMods && FileSystem.exists(SUtil.getPath() + modFolders(key)))
+		if (!ignoreMods && FileSystem.exists(modFolders(key)))
 			return File.getContent(modFolders(key));
 		#end
 
 		if (FileSystem.exists(SUtil.getPath() + getPreloadPath(key)))
-			return File.getContent(getPreloadPath(key));
+			return File.getContent(SUtil.getPath() + getPreloadPath(key));
 
 		if (currentLevel != null)
 		{
 			var levelPath:String = '';
 			if(currentLevel != 'shared') {
-				levelPath = getLibraryPathForce(key, 'week_assets', currentLevel);
-				if (FileSystem.exists(SUtil.getPath() + levelPath))
+				levelPath = SUtil.getPath() + getLibraryPathForce(key, 'week_assets', currentLevel);
+				if (FileSystem.exists(levelPath))
 					return File.getContent(levelPath);
 			}
 
-			levelPath = getLibraryPathForce(key, 'shared');
-			if (FileSystem.exists(SUtil.getPath() + levelPath))
+			levelPath = SUtil.getPath() + getLibraryPathForce(key, 'shared');
+			if (FileSystem.exists(levelPath))
 				return File.getContent(levelPath);
 		}
 		#end
@@ -320,7 +320,7 @@ class Paths
 			return file;
 		}
 		#end
-		return 'assets/fonts/$key';
+		return SUtil.getPath() + 'assets/fonts/$key';
 	}
 
 	public static function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String = null)
@@ -329,7 +329,7 @@ class Paths
 		if(!ignoreMods)
 		{
 			for(mod in Mods.getGlobalMods())
-				if (FileSystem.exists(SUtil.getPath() + mods('$mod/$key')))
+				if (FileSystem.exists(mods('$mod/$key')))
 					return true;
 
 			if (FileSystem.exists(SUtil.getPath() + mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(SUtil.getPath() + mods(key)))
@@ -403,9 +403,9 @@ class Paths
 	public static function returnSound(path:String, key:String, ?library:String) {
 		#if MODS_ALLOWED
 		var file:String = modsSounds(path, key);
-		if(FileSystem.exists(SUtil.getPath() + file)) {
+		if(FileSystem.exists(file)) {
 			if(!currentTrackedSounds.exists(file)) {
-				currentTrackedSounds.set(file, Sound.fromFile(file));
+				currentTrackedSounds.set(file, Sound.fromFile(SUtil.getPath() + file));
 			}
 			localTrackedAssets.push(key);
 			return currentTrackedSounds.get(file);
@@ -432,7 +432,7 @@ class Paths
 
 	#if MODS_ALLOWED
 	inline static public function mods(key:String = '') {
-		return 'mods/' + key;
+		return SUtil.getPath() + 'mods/' + key;
 	}
 
 	inline static public function modsFont(key:String) {
@@ -480,14 +480,14 @@ class Paths
 	static public function modFolders(key:String) {
 		if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) {
 			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);
-			if(FileSystem.exists(SUtil.getPath() + fileToCheck)) {
+			if(FileSystem.exists(fileToCheck)) {
 				return fileToCheck;
 			}
 		}
 
 		for(mod in Mods.getGlobalMods()){
 			var fileToCheck:String = mods(mod + '/' + key);
-			if(FileSystem.exists(SUtil.getPath() + fileToCheck))
+			if(FileSystem.exists(fileToCheck))
 				return fileToCheck;
 		}
 		return 'mods/' + key;
