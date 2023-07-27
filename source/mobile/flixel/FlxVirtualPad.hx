@@ -177,7 +177,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		/*
 		* Checks if the virtualpad button is pressed, if yes returns true.
 		*/
-	public static function isButtonPressed(buttonID:FlxVirtualPadButtonID):Bool
+	public function isButtonPressed(buttonID:FlxVirtualPadButtonID):Bool
 		{
 			switch (buttonID)
 			{
@@ -223,7 +223,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		/*
 		* Checks if the virtualpad button justPressed, if yes returns true.
 		*/
-		public static function isButtonJustPressed(buttonID:FlxVirtualPadButtonID):Bool
+		public function isButtonJustPressed(buttonID:FlxVirtualPadButtonID):Bool
 			{
 				switch (buttonID)
 				{
@@ -271,7 +271,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		/*
 		* Checks if the virtualpad button is justReleased, if yes returns true.
 		*/
-	public static function isButtonJustReleased(buttonID:FlxVirtualPadButtonID):Bool
+	public function isButtonJustReleased(buttonID:FlxVirtualPadButtonID):Bool
 		{
 			switch (buttonID)
 			{
