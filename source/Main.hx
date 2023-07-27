@@ -1,5 +1,6 @@
 package;
 
+import source.backend.SUtil;
 import flixel.graphics.FlxGraphic;
 
 import flixel.FlxGame;
@@ -81,13 +82,13 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
+		SUtil.checkFiles()
 	
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
-		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
@@ -95,7 +96,6 @@ class Main extends Sprite
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
-		#end
 
 		#if html5
 		FlxG.autoPause = false;
@@ -160,8 +160,8 @@ class Main extends Sprite
 
 		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
 
-		if (!FileSystem.exists("./crash/"))
-			FileSystem.createDirectory("./crash/");
+		if (!FileSystem.exists(SUtil.getPath() + "./crash/"))
+			FileSystem.createDirectory(SUtil.getPath() + "./crash/");
 
 		File.saveContent(path, errMsg + "\n");
 

@@ -91,7 +91,7 @@ class SchoolEvil extends BaseStage
 	{
 		var file:String = Paths.txt(songName + '/' + songName + 'Dialogue'); //Checks for vanilla/Senpai dialogue
 		#if MODS_ALLOWED
-		if (!FileSystem.exists(file))
+		if (!FileSystem.exists(SUtil.getPath() + file))
 		#else
 		if (!OpenFlAssets.exists(file))
 		#end

@@ -94,7 +94,7 @@ class AtlasFrameMaker extends FlxFramesCollection
 
 		#if MODS_ALLOWED
 		file = Paths.modsImages(key);
-		if (FileSystem.exists(file))
+		if (FileSystem.exists(SUtil.getPath() + file))
 			bitmap = BitmapData.fromFile(file);
 		else
 		#end

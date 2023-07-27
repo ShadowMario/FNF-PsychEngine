@@ -112,7 +112,7 @@ class Paths
 		if(modsAllowed)
 		{
 			var modded:String = modFolders(file);
-			if(FileSystem.exists(modded)) return modded;
+			if(FileSystem.exists(SUtil.getPath() + modded)) return modded;
 		}
 		#end
 
@@ -185,7 +185,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsVideo(key);
-		if(FileSystem.exists(file)) {
+		if(FileSystem.exists(SUtil.getPath() + file)) {
 			return file;
 		}
 		#end
@@ -244,7 +244,7 @@ class Paths
 			localTrackedAssets.push(file);
 			return currentTrackedAssets.get(file);
 		}
-		else if (FileSystem.exists(file))
+		else if (FileSystem.exists(SUtil.getPath() + file))
 			bitmap = BitmapData.fromFile(file);
 		else
 		#end
@@ -286,11 +286,11 @@ class Paths
 	{
 		#if sys
 		#if MODS_ALLOWED
-		if (!ignoreMods && FileSystem.exists(modFolders(key)))
+		if (!ignoreMods && FileSystem.exists(SUtil.getPath() + modFolders(key)))
 			return File.getContent(modFolders(key));
 		#end
 
-		if (FileSystem.exists(getPreloadPath(key)))
+		if (FileSystem.exists(SUtil.getPath() + getPreloadPath(key)))
 			return File.getContent(getPreloadPath(key));
 
 		if (currentLevel != null)
@@ -298,12 +298,12 @@ class Paths
 			var levelPath:String = '';
 			if(currentLevel != 'shared') {
 				levelPath = getLibraryPathForce(key, 'week_assets', currentLevel);
-				if (FileSystem.exists(levelPath))
+				if (FileSystem.exists(SUtil.getPath() + levelPath))
 					return File.getContent(levelPath);
 			}
 
 			levelPath = getLibraryPathForce(key, 'shared');
-			if (FileSystem.exists(levelPath))
+			if (FileSystem.exists(SUtil.getPath() + levelPath))
 				return File.getContent(levelPath);
 		}
 		#end
@@ -316,7 +316,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsFont(key);
-		if(FileSystem.exists(file)) {
+		if(FileSystem.exists(SUtil.getPath() + file)) {
 			return file;
 		}
 		#end
@@ -329,10 +329,10 @@ class Paths
 		if(!ignoreMods)
 		{
 			for(mod in Mods.getGlobalMods())
-				if (FileSystem.exists(mods('$mod/$key')))
+				if (FileSystem.exists(SUtil.getPath() + mods('$mod/$key')))
 					return true;
 
-			if (FileSystem.exists(mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
+			if (FileSystem.exists(SUtil.getPath() + mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(SUtil.getPath() + mods(key)))
 				return true;
 		}
 		#end
@@ -347,7 +347,7 @@ class Paths
 	static public function getAtlas(key:String, ?library:String = null):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
-		if(FileSystem.exists(modsXml(key)) || OpenFlAssets.exists(getPath('images/$key.xml', library), TEXT))
+		if(FileSystem.exists(SUtil.getPath() + modsXml(key)) || OpenFlAssets.exists(getPath('images/$key.xml', library), TEXT))
 		#else
 		if(OpenFlAssets.exists(getPath('images/$key.xml', library)))
 		#end
@@ -364,7 +364,7 @@ class Paths
 		var xmlExists:Bool = false;
 
 		var xml:String = modsXml(key);
-		if(FileSystem.exists(xml)) {
+		if(FileSystem.exists(SUtil.getPath() + xml)) {
 			xmlExists = true;
 		}
 
@@ -381,7 +381,7 @@ class Paths
 		var txtExists:Bool = false;
 		
 		var txt:String = modsTxt(key);
-		if(FileSystem.exists(txt)) {
+		if(FileSystem.exists(SUtil.getPath() + txt)) {
 			txtExists = true;
 		}
 
@@ -403,7 +403,7 @@ class Paths
 	public static function returnSound(path:String, key:String, ?library:String) {
 		#if MODS_ALLOWED
 		var file:String = modsSounds(path, key);
-		if(FileSystem.exists(file)) {
+		if(FileSystem.exists(SUtil.getPath() + file)) {
 			if(!currentTrackedSounds.exists(file)) {
 				currentTrackedSounds.set(file, Sound.fromFile(file));
 			}
@@ -480,14 +480,14 @@ class Paths
 	static public function modFolders(key:String) {
 		if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) {
 			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);
-			if(FileSystem.exists(fileToCheck)) {
+			if(FileSystem.exists(SUtil.getPath() + fileToCheck)) {
 				return fileToCheck;
 			}
 		}
 
 		for(mod in Mods.getGlobalMods()){
 			var fileToCheck:String = mods(mod + '/' + key);
-			if(FileSystem.exists(fileToCheck))
+			if(FileSystem.exists(SUtil.getPath() + fileToCheck))
 				return fileToCheck;
 		}
 		return 'mods/' + key;

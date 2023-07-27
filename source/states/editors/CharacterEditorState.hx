@@ -1028,10 +1028,10 @@ class CharacterEditorState extends MusicBeatState
 			directories.push(Paths.mods(mod + '/characters/'));
 		for (i in 0...directories.length) {
 			var directory:String = directories[i];
-			if(FileSystem.exists(directory)) {
-				for (file in FileSystem.readDirectory(directory)) {
+			if(FileSystem.exists(SUtil.getPath() + directory)) {
+				for (file in FileSystem.readDirectory(SUtil.getPath() + directory)) {
 					var path = haxe.io.Path.join([directory, file]);
-					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json')) {
+					if (!sys.FileSystem.isDirectory(SUtil.getPath() + path) && file.endsWith('.json')) {
 						var charToCheck:String = file.substr(0, file.length - 5);
 						if(!charsLoaded.exists(charToCheck)) {
 							characterList.push(charToCheck);

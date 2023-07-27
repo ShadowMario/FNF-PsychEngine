@@ -409,7 +409,7 @@ class PlayState extends MusicBeatState
 		#if LUA_ALLOWED
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'scripts/');
 		for (folder in foldersToCheck)
-			for (file in FileSystem.readDirectory(folder))
+			for (file in FileSystem.readDirectory(SUtil.getPath() + folder))
 			{
 				if(file.toLowerCase().endsWith('.lua'))
 					new FunkinLua(folder + file);
@@ -599,7 +599,7 @@ class PlayState extends MusicBeatState
 		#if LUA_ALLOWED
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'data/' + songName + '/');
 		for (folder in foldersToCheck)
-			for (file in FileSystem.readDirectory(folder))
+			for (file in FileSystem.readDirectory(SUtil.getPath() + folder))
 			{
 				if(file.toLowerCase().endsWith('.lua'))
 					new FunkinLua(folder + file);
@@ -745,7 +745,7 @@ class PlayState extends MusicBeatState
 		var luaFile:String = 'characters/' + name + '.lua';
 		#if MODS_ALLOWED
 		var replacePath:String = Paths.modFolders(luaFile);
-		if(FileSystem.exists(replacePath))
+		if(FileSystem.exists(SUtil.getPath() + replacePath))
 		{
 			luaFile = replacePath;
 			doPush = true;
@@ -753,7 +753,7 @@ class PlayState extends MusicBeatState
 		else
 		{
 			luaFile = Paths.getPreloadPath(luaFile);
-			if(FileSystem.exists(luaFile))
+			if(FileSystem.exists(SUtil.getPath() + luaFile))
 				doPush = true;
 		}
 		#else
@@ -780,7 +780,7 @@ class PlayState extends MusicBeatState
 		var doPush:Bool = false;
 		var scriptFile:String = 'characters/' + name + '.hx';
 		var replacePath:String = Paths.modFolders(scriptFile);
-		if(FileSystem.exists(replacePath))
+		if(FileSystem.exists(SUtil.getPath() + replacePath))
 		{
 			scriptFile = replacePath;
 			doPush = true;
@@ -788,7 +788,7 @@ class PlayState extends MusicBeatState
 		else
 		{
 			scriptFile = Paths.getPreloadPath(scriptFile);
-			if(FileSystem.exists(scriptFile))
+			if(FileSystem.exists(SUtil.getPath() + scriptFile))
 				doPush = true;
 		}
 		
@@ -833,7 +833,7 @@ class PlayState extends MusicBeatState
 
 		var filepath:String = Paths.video(name);
 		#if sys
-		if(!FileSystem.exists(filepath))
+		if(!FileSystem.exists(SUtil.getPath() + filepath))
 		#else
 		if(!OpenFlAssets.exists(filepath))
 		#end
@@ -1246,7 +1246,7 @@ class PlayState extends MusicBeatState
 
 		var file:String = Paths.json(songName + '/events');
 		#if MODS_ALLOWED
-		if (FileSystem.exists(Paths.modsJson(songName + '/events')) || FileSystem.exists(file)) {
+		if (FileSystem.exists(SUtil.getPath() + Paths.modsJson(songName + '/events')) || FileSystem.exists(SUtil.getPath() + file)) {
 		#else
 		if (OpenFlAssets.exists(file)) {
 		#end
@@ -3108,10 +3108,10 @@ class PlayState extends MusicBeatState
 	{
 		#if MODS_ALLOWED
 		var luaToLoad:String = Paths.modFolders(luaFile);
-		if(!FileSystem.exists(luaToLoad))
+		if(!FileSystem.exists(SUtil.getPath() + luaToLoad))
 			luaToLoad = Paths.getPreloadPath(luaFile);
 		
-		if(FileSystem.exists(luaToLoad))
+		if(FileSystem.exists(SUtil.getPath() + luaToLoad))
 		#elseif sys
 		var luaToLoad:String = Paths.getPreloadPath(luaFile);
 		if(OpenFlAssets.exists(luaToLoad))
@@ -3131,10 +3131,10 @@ class PlayState extends MusicBeatState
 	public function startHScriptsNamed(scriptFile:String)
 	{
 		var scriptToLoad:String = Paths.modFolders(scriptFile);
-		if(!FileSystem.exists(scriptToLoad))
+		if(!FileSystem.exists(SUtil.getPath() + scriptToLoad))
 			scriptToLoad = Paths.getPreloadPath(scriptFile);
 		
-		if(FileSystem.exists(scriptToLoad))
+		if(FileSystem.exists(SUtil.getPath() + scriptToLoad))
 		{
 			for (script in hscriptArray)
 				if(script.interpName == scriptFile) return false;
@@ -3457,19 +3457,19 @@ class PlayState extends MusicBeatState
 		
 		for (folder in foldersToCheck)
 		{
-			if(FileSystem.exists(folder))
+			if(FileSystem.exists(SUtil.getPath() + folder))
 			{
 				var frag:String = folder + name + '.frag';
 				var vert:String = folder + name + '.vert';
 				var found:Bool = false;
-				if(FileSystem.exists(frag))
+				if(FileSystem.exists(SUtil.getPath() + frag))
 				{
 					frag = File.getContent(frag);
 					found = true;
 				}
 				else frag = null;
 
-				if(FileSystem.exists(vert))
+				if(FileSystem.exists(SUtil.getPath() + vert))
 				{
 					vert = File.getContent(vert);
 					found = true;

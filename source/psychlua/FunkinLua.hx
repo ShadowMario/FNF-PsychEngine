@@ -1243,14 +1243,14 @@ class FunkinLua {
 			var path:String;
 			#if MODS_ALLOWED
 			path = Paths.modsJson(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
-			if(!FileSystem.exists(path))
+			if(!FileSystem.exists(SUtil.getPath() + path))
 			#end
 				path = Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 
 			luaTrace('startDialogue: Trying to load dialogue: ' + path);
 
 			#if MODS_ALLOWED
-			if(FileSystem.exists(path))
+			if(FileSystem.exists(SUtil.getPath() + path))
 			#else
 			if(Assets.exists(path))
 			#end
@@ -1275,7 +1275,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "startVideo", function(videoFile:String) {
 			#if VIDEOS_ALLOWED
-			if(FileSystem.exists(Paths.video(videoFile))) {
+			if(FileSystem.exists(SUtil.getPath() + Paths.video(videoFile))) {
 				game.startVideo(videoFile);
 				return true;
 			} else {
@@ -1592,12 +1592,12 @@ class FunkinLua {
 		var preloadPath:String = Paths.getPreloadPath(luaFile);
 		#if MODS_ALLOWED
 		var path:String = Paths.modFolders(luaFile);
-		if(FileSystem.exists(luaFile))
+		if(FileSystem.exists(SUtil.getPath() + luaFile))
 			return luaFile;
-		else if(FileSystem.exists(path))
+		else if(FileSystem.exists(SUtil.getPath() + path))
 			return path;
 	
-		if(FileSystem.exists(preloadPath))
+		if(FileSystem.exists(SUtil.getPath() + preloadPath))
 		#else
 		if(Assets.exists(preloadPath))
 		#end
@@ -1657,19 +1657,19 @@ class FunkinLua {
 		
 		for (folder in foldersToCheck)
 		{
-			if(FileSystem.exists(folder))
+			if(FileSystem.exists(SUtil.getPath() + folder))
 			{
 				var frag:String = folder + name + '.frag';
 				var vert:String = folder + name + '.vert';
 				var found:Bool = false;
-				if(FileSystem.exists(frag))
+				if(FileSystem.exists(SUtil.getPath() + frag))
 				{
 					frag = File.getContent(frag);
 					found = true;
 				}
 				else frag = null;
 
-				if(FileSystem.exists(vert))
+				if(FileSystem.exists(SUtil.getPath() + vert))
 				{
 					vert = File.getContent(vert);
 					found = true;

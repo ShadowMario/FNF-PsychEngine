@@ -233,12 +233,12 @@ class ModsMenuState extends MusicBeatState
 		removeButton = new FlxButton(startX, 620, "Delete Selected Mod", function()
 		{
 			var path = haxe.io.Path.join([Paths.mods(), modsList[curSelected][0]]);
-			if(FileSystem.exists(path) && FileSystem.isDirectory(path))
+			if(FileSystem.exists(SUtil.getPath() + path) && FileSystem.isDirectory(SUtil.getPath() + path))
 			{
 				trace('Trying to delete directory ' + path);
 				try
 				{
-					FileSystem.deleteFile(path); //FUCK YOU HAXE WHY DONT YOU WORK WAAAAAAAAAAAAH
+					FileSystem.deleteFile(SUtil.getPath() + path); //FUCK YOU HAXE WHY DONT YOU WORK WAAAAAAAAAAAAH
 
 					var icon = mods[curSelected].icon;
 					var alphabet = mods[curSelected].alphabet;
@@ -279,7 +279,7 @@ class ModsMenuState extends MusicBeatState
 		while (i < modsList.length)
 		{
 			var values:Array<Dynamic> = modsList[i];
-			if(!FileSystem.exists(Paths.mods(values[0])))
+			if(!FileSystem.exists(SUtil.getPath() + Paths.mods(values[0])))
 			{
 				modsList.remove(modsList[i]);
 				continue;
@@ -297,7 +297,7 @@ class ModsMenuState extends MusicBeatState
 			//Don't ever cache the icons, it's a waste of loaded memory
 			var loadedIcon:BitmapData = null;
 			var iconToUse:String = Paths.mods(values[0] + '/pack.png');
-			if(FileSystem.exists(iconToUse))
+			if(FileSystem.exists(SUtil.getPath() + iconToUse))
 			{
 				loadedIcon = BitmapData.fromFile(iconToUse);
 			}

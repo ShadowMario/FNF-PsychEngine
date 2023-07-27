@@ -342,7 +342,7 @@ class FreeplayState extends MusicBeatState
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
 			/*#if MODS_ALLOWED
-			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
+			if(!sys.FileSystem.exists(SUtil.getPath() + Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(SUtil.getPath() + Paths.json(songLowercase + '/' + poop))) {
 			#else
 			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
 			#end

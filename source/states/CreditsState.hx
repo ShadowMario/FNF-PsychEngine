@@ -261,7 +261,7 @@ class CreditsState extends MusicBeatState
 		if(folder != null && folder.trim().length > 0) creditsFile = Paths.mods(folder + '/data/credits.txt');
 		else creditsFile = Paths.mods('data/credits.txt');
 
-		if (FileSystem.exists(creditsFile))
+		if (FileSystem.exists(SUtil.getPath() + creditsFile))
 		{
 			var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
 			for(i in firstarray)

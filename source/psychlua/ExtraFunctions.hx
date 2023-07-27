@@ -171,15 +171,15 @@ class ExtraFunctions
 			#if MODS_ALLOWED
 			if(absolute)
 			{
-				return FileSystem.exists(filename);
+				return FileSystem.exists(SUtil.getPath() + filename);
 			}
 
 			var path:String = Paths.modFolders(filename);
-			if(FileSystem.exists(path))
+			if(FileSystem.exists(SUtil.getPath() + path))
 			{
 				return true;
 			}
-			return FileSystem.exists(Paths.getPath('assets/$filename', TEXT));
+			return FileSystem.exists(SUtil.getPath() + Paths.getPath('assets/$filename', TEXT));
 			#else
 			if(absolute)
 			{
@@ -211,9 +211,9 @@ class ExtraFunctions
 				if(!ignoreModFolders)
 				{
 					var lePath:String = Paths.modFolders(path);
-					if(FileSystem.exists(lePath))
+					if(FileSystem.exists(SUtil.getPath() + lePath))
 					{
-						FileSystem.deleteFile(lePath);
+						FileSystem.deleteFile(SUtil.getPath() + lePath);
 						return true;
 					}
 				}
@@ -222,7 +222,7 @@ class ExtraFunctions
 				var lePath:String = Paths.getPath(path, TEXT);
 				if(Assets.exists(lePath))
 				{
-					FileSystem.deleteFile(lePath);
+					FileSystem.deleteFile(SUtil.getPath() + lePath);
 					return true;
 				}
 			} catch (e:Dynamic) {
@@ -236,8 +236,8 @@ class ExtraFunctions
 		Lua_helper.add_callback(lua, "directoryFileList", function(folder:String) {
 			var list:Array<String> = [];
 			#if sys
-			if(FileSystem.exists(folder)) {
-				for (folder in FileSystem.readDirectory(folder)) {
+			if(FileSystem.exists(SUtil.getPath() + folder)) {
+				for (folder in FileSystem.readDirectory(SUtil.getPath() + folder)) {
 					if (!list.contains(folder)) {
 						list.push(folder);
 					}
