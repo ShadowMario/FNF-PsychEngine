@@ -165,7 +165,7 @@ class Controls
 		return false;
 	}
 	#if mobileC
-	private function dpadPressed(keys:Array<FlxVirtualPadButtonID>):Bool
+	public function dpadPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 		{
 			if(keys != null && MusicBeatState.virtualPad != null)
 			{
@@ -181,7 +181,7 @@ class Controls
 			return false;
 		}
 
-		private function dpadJustPressed(keys:Array<FlxVirtualPadButtonID>):Bool
+		public function dpadJustPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 			{
 				if(keys != null && MusicBeatState.virtualPad != null)
 				{
@@ -197,7 +197,7 @@ class Controls
 				return false;
 			}
 
-			private function dpadJustReleased(keys:Array<FlxVirtualPadButtonID>):Bool
+			public function dpadJustReleased(keys:Array<FlxVirtualPadButtonID>):Bool
 				{
 					if(keys != null && MusicBeatState.virtualPad != null)
 					{
