@@ -2,7 +2,6 @@ package;
 
 import source.backend.SUtil;
 import flixel.graphics.FlxGraphic;
-
 import flixel.FlxGame;
 import flixel.FlxState;
 import openfl.Assets;
@@ -37,7 +36,7 @@ class Main extends Sprite
 
 	public function new()
 	{
-                backend.SUtil.uncaughtErrorHandler();
+                SUtil.uncaughtErrorHandler();
 
 		super();
 
