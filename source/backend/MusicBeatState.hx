@@ -9,10 +9,11 @@ import mobile.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
 #end
-public static var instance:MusicBeatState;
 
 class MusicBeatState extends FlxUIState
 {
+	public static var instance:MusicBeatState;
+
 	private var curSection:Int = 0;
 	private var stepsToDo:Int = 0;
 
