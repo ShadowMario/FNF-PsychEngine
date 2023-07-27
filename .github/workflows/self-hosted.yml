@@ -25,9 +25,9 @@ jobs:
           cert_alias_pass: nullfunni
        # - name: Delete Useless
          # run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && rm -rfv export/release/android/bin && rm -rfv export/release/android/obj/*.so*
-       - name: Publish Artifact
-         uses: actions/upload-artifact@main
-         with:
-           name: buildAndroid-release
-           path: '/sdcard/Download/builds/psych/*.apk'
-           if-no-files-found: error
+       # - name: Publish Artifact
+         # uses: actions/upload-artifact@main
+         # with:
+           # name: buildAndroid-release
+           # path: '/sdcard/Download/builds/psych/*.apk'
+           # if-no-files-found: error
