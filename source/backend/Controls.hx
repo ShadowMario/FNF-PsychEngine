@@ -165,13 +165,13 @@ class Controls
 		return false;
 	}
 	#if mobileC
-	public function dpadPressed(keys:Array<FlxVirtualPadButtonID>):Bool
+	private function dpadPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 		{
-			if(keys != null && MusicBeatState.virtualPad != null)
+			if(keys != null && MusicBeatState.instance.virtualPad != null)
 			{
 				for (key in keys)
 				{
-					if (MusicBeatState.virtualPad.isButtonPressed(key) == true)
+					if (MusicBeatState.instance.virtualPad.isButtonPressed(key) == true)
 					{
 						//controllerMode = true;
 						return true;
@@ -181,13 +181,13 @@ class Controls
 			return false;
 		}
 
-		public function dpadJustPressed(keys:Array<FlxVirtualPadButtonID>):Bool
+		private function dpadJustPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 			{
-				if(keys != null && MusicBeatState.virtualPad != null)
+				if(keys != null && MusicBeatState.instance.virtualPad != null)
 				{
 					for (key in keys)
 					{
-						if (MusicBeatState.virtualPad.isButtonJustPressed(key) == true)
+						if (MusicBeatState.instance.virtualPad.isButtonJustPressed(key) == true)
 						{
 							//controllerMode = true;
 							return true;
@@ -197,13 +197,13 @@ class Controls
 				return false;
 			}
 
-			public function dpadJustReleased(keys:Array<FlxVirtualPadButtonID>):Bool
+			private function dpadJustReleased(keys:Array<FlxVirtualPadButtonID>):Bool
 				{
-					if(keys != null && MusicBeatState.virtualPad != null)
+					if(keys != null && MusicBeatState.instance.virtualPad != null)
 					{
 						for (key in keys)
 						{
-							if (MusicBeatState.virtualPad.isButtonJustReleased(key) == true)
+							if (MusicBeatState.instance.virtualPad.isButtonJustReleased(key) == true)
 							{
 								//controllerMode = true;
 								return true;
