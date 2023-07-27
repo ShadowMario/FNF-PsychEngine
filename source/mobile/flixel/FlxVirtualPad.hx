@@ -199,8 +199,10 @@ class FlxVirtualPad extends FlxSpriteGroup
 					return buttonDown2.isPressed;
 				case FlxVirtualPadButtonID.A:
 					return buttonA.isPressed;
+					print("!!Button A is pressed!!");
 				case FlxVirtualPadButtonID.B:
 					return buttonB.isPressed;
+					print("!!Button B is pressed!!");
 				case FlxVirtualPadButtonID.C:
 					return buttonC.isPressed;
 				case FlxVirtualPadButtonID.D:
@@ -245,8 +247,10 @@ class FlxVirtualPad extends FlxSpriteGroup
 					return buttonDown2.isJustPressed;
 				case FlxVirtualPadButtonID.A:
 					return buttonA.isJustPressed;
+					print("!!Button A is justPressed!!");
 				case FlxVirtualPadButtonID.B:
 					return buttonB.isJustPressed;
+					print("!!Button B is justPressed!!");
 				case FlxVirtualPadButtonID.C:
 					return buttonC.isJustPressed;
 				case FlxVirtualPadButtonID.D:
@@ -293,8 +297,10 @@ class FlxVirtualPad extends FlxSpriteGroup
 					return buttonDown2.isJustReleased;
 				case FlxVirtualPadButtonID.A:
 					return buttonA.isJustReleased;
+					print("!!Button A got released!!");
 				case FlxVirtualPadButtonID.B:
 					return buttonB.isJustReleased;
+					print("!!Button B got released!!");
 				case FlxVirtualPadButtonID.C:
 					return buttonC.isJustReleased;
 				case FlxVirtualPadButtonID.D:
