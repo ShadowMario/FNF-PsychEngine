@@ -9,6 +9,7 @@ import mobile.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
 #end
+public static var instance:MusicBeatState;
 
 class MusicBeatState extends FlxUIState
 {
@@ -25,7 +26,7 @@ class MusicBeatState extends FlxUIState
 	{
 		return Controls.instance;
 	}
-
+	instance = this;
 	#if mobileC
 	public var virtualPad:FlxVirtualPad;
 	public var mobileControls:MobileControls;
