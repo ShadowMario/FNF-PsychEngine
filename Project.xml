@@ -58,6 +58,8 @@
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
 
+                	<assets path="mobile" rename="assets/mobile" if="mobile" />
+
 	<assets path="assets/fonts" />
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
