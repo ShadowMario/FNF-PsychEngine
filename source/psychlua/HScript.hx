@@ -1,11 +1,11 @@
 package psychlua;
 
-import tea.SScript;
 import objects.Character;
 import psychlua.FunkinLua;
 import psychlua.CustomSubstate;
 
-#if (SScript >= "3.0.0")
+#if (HSCRIPT_ALLOWED && SScript >= "3.0.0")
+import tea.SScript;
 class HScript extends SScript
 {
 	public var parentLua:FunkinLua;
@@ -197,8 +197,8 @@ class HScript extends SScript
 			FunkinLua.luaTrace("runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 
-			if(retVal != null && !LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) retVal = null;
-			return retVal;
+			if(retVal.returnValue != null && !LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) return null;
+			return retVal.returnValue;
 		});
 		
 		funk.addLocalCallback("runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic> = null) {
