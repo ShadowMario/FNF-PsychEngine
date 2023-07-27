@@ -570,6 +570,10 @@ class PlayState extends MusicBeatState
 		timeBar.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 
+		#if mobileC
+		addMobileControls();
+		#end
+
 		startingSong = true;
 		
 		#if LUA_ALLOWED

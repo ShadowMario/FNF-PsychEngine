@@ -93,4 +93,70 @@ class FlxHitbox extends FlxSpriteGroup
 		#end
 		return hint;
 	}
+
+	/*
+	* Checks if the hitbox is pressed, if yes returns true.
+	*/
+	public function mobileControlsPressed(buttonID:FlxMobileControlsID):Bool
+		{
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.hitboxLEFT:
+					return buttonLeft.isPressed;
+				case FlxMobileControlsID.hitboxUP:
+					return buttonUp.isPressed;
+				case FlxMobileControlsID.hitboxRIGHT:
+					return buttonRight.isPressed;
+				case FlxMobileControlsID.hitboxDOWN:
+					return buttonDown.isPressed;
+				case FlxMobileControlsID.NONE:
+					return false;
+				default:
+					return false;
+			}
+		}
+
+		/*
+		* Checks if the hitbox is justPressed, if yes returns true.
+		*/
+		public function mobileControlsJustPressed(buttonID:FlxMobileControlsID):Bool
+			{
+				switch (buttonID)
+				{
+				case FlxMobileControlsID.hitboxLEFT:
+					return buttonLeft.isJustPressed;
+				case FlxMobileControlsID.hitboxUP:
+					return buttonUp.isJustPressed;
+				case FlxMobileControlsID.hitboxRIGHT:
+					return buttonRight.isJustPressed;
+				case FlxMobileControlsID.hitboxDOWN:
+					return buttonDown.isJustPressed;
+				case FlxMobileControlsID.NONE:
+					return false;
+				default:
+					return false;
+				}
+			}
+
+	/*
+	* Checks if the hitbox is justReleased, if yes returns true.
+	*/
+	public function mobileControlsJustReleased(buttonID:FlxMobileControlsID):Bool
+		{
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.hitboxLEFT:
+					return buttonLeft.isJustReleased;
+				case FlxMobileControlsID.hitboxUP:
+					return buttonUp.isJustReleased;
+				case FlxMobileControlsID.hitboxRIGHT:
+					return buttonRight.isJustReleased;
+				case FlxMobileControlsID.hitboxDOWN:
+					return buttonDown.isJustReleased;
+				case FlxMobileControlsID.NONE:
+					return false;
+				default:
+					return false;
+					}
+				}
 }

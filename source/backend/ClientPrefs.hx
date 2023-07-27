@@ -1,6 +1,6 @@
 package backend;
 #if mobileC
-import mobile.flixel.FlxVirtualPadButtonID;
+import mobile.flixel.FlxMobileControlsID;
 #end
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
@@ -128,11 +128,11 @@ class ClientPrefs {
 		'reset'			=> [BACK]
 	];
 	#if mobileC
-	public static var mobileBinds:Map<String, Array<FlxVirtualPadButtonID>> = [
-		'note_up'		=> [UP,UP2],
-		'note_left'		=> [LEFT,LEFT2],
-		'note_down'		=> [DOWN,DOWN2],
-		'note_right'	=> [DOWN,DOWN2],
+	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
+		'note_up'		=> [UP,UP2, hitboxUP],
+		'note_left'		=> [LEFT,LEFT2, hitboxLEFT],
+		'note_down'		=> [DOWN,DOWN2, hitbocDOWN],
+		'note_right'	=> [DOWN,DOWN2, hitboxRIGHT],
 		
 		'ui_up'			=> [UP],
 		'ui_left'		=> [LEFT],
@@ -144,7 +144,7 @@ class ClientPrefs {
 		'pause'			=> [NONE],
 		'reset'			=> [NONE]
 	];
-	public static var defaultPads:Map<String, Array<FlxVirtualPadButtonID>> = null;
+	public static var defaultPads:Map<String, Array<FlxMobileControlsID>> = null;
 	#end
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 	public static var defaultButtons:Map<String, Array<FlxGamepadInputID>> = null;
@@ -175,7 +175,7 @@ class ClientPrefs {
 		while(keyBind != null && keyBind.contains(NONE)) keyBind.remove(NONE);
 		while(gamepadBind != null && gamepadBind.contains(NONE)) gamepadBind.remove(NONE);
 		#if mobileC
-		var mobileBind:Array<FlxVirtualPadButtonID> = mobileBinds.get(key);
+		var mobileBind:Array<FlxMobileControlsID> = mobileBinds.get(key);
 		while(mobileBind != null && mobileBind.contains(NONE)) mobileBind.remove(NONE);
 		#end
 	}
@@ -268,7 +268,7 @@ class ClientPrefs {
 				}
 			}
 			#if mobileC if(save.data.mobile != null) {
-					var loadedControls:Map<String, Array<FlxVirtualPadButtonID>> = save.data.mobile;
+					var loadedControls:Map<String, Array<FlxMobileControlsID>> = save.data.mobile;
 					for (control => keys in loadedControls){
 						if(mobileBinds.exists(control)) mobileBinds.set(control, keys);
 					}

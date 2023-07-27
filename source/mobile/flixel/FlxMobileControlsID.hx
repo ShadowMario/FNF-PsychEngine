@@ -6,10 +6,10 @@ import flixel.system.macros.FlxMacroUtil;
 * @author Karim Akra
 */
 @:enum 
-abstract FlxVirtualPadButtonID(Int) from Int to Int
+abstract FlxMobileControlsID(Int) from Int to Int
 {
-    public static var fromStringMap(default, null):Map<String, FlxVirtualPadButtonID> = FlxMacroUtil.buildMap("mobile.flixel.FlxVirtualPadButtonID");
-	public static var toStringMap(default, null):Map<FlxVirtualPadButtonID, String> = FlxMacroUtil.buildMap("mobile.flixel.FlxVirtualPadButtonID", true);
+    public static var fromStringMap(default, null):Map<String, FlxMobileControlsID> = FlxMacroUtil.buildMap("mobile.flixel.FlxMobileControlsID");
+	public static var toStringMap(default, null):Map<FlxMobileControlsID, String> = FlxMacroUtil.buildMap("mobile.flixel.FlxMobileControlsID", true);
     var A = 1;
     var B = 2;
     var C = 3;
@@ -27,6 +27,10 @@ abstract FlxVirtualPadButtonID(Int) from Int to Int
     var UP2 = 14;
     var RIGHT2 = 17;
     var DOWN2 = 15;
+    var hitboxUP = 16;
+    var hitboxDOWN = 17;
+    var hitboxLEFT = 18;
+    var hitboxRIGHT = 19;
 
     var NONE = -1;
 

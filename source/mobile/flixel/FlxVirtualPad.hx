@@ -177,46 +177,46 @@ class FlxVirtualPad extends FlxSpriteGroup
 		/*
 		* Checks if the virtualpad button is pressed, if yes returns true.
 		*/
-	public function isButtonPressed(buttonID:FlxVirtualPadButtonID):Bool
+	public function mobileControlsPressed(buttonID:FlxMobileControlsID):Bool
 		{
 			switch (buttonID)
 			{
-				case FlxVirtualPadButtonID.LEFT:
+				case FlxMobileControlsID.LEFT:
 					return buttonLeft.isPressed;
-				case FlxVirtualPadButtonID.UP:
+				case FlxMobileControlsID.UP:
 					return buttonUp.isPressed;
-				case FlxVirtualPadButtonID.RIGHT:
+				case FlxMobileControlsID.RIGHT:
 					return buttonRight.isPressed;
-				case FlxVirtualPadButtonID.DOWN:
+				case FlxMobileControlsID.DOWN:
 					return buttonDown.isPressed;
-				case FlxVirtualPadButtonID.LEFT2:
+				case FlxMobileControlsID.LEFT2:
 					return buttonLeft2.isPressed;
-				case FlxVirtualPadButtonID.UP2:
+				case FlxMobileControlsID.UP2:
 					return buttonUp2.isPressed;
-				case FlxVirtualPadButtonID.RIGHT2:
+				case FlxMobileControlsID.RIGHT2:
 					return buttonRight2.isPressed;
-				case FlxVirtualPadButtonID.DOWN2:
+				case FlxMobileControlsID.DOWN2:
 					return buttonDown2.isPressed;
-				case FlxVirtualPadButtonID.A:
+				case FlxMobileControlsID.A:
 					return buttonA.isPressed;
-					trace("!!Button A is pressed!!");
-				case FlxVirtualPadButtonID.B:
+				case FlxMobileControlsID.B:
 					return buttonB.isPressed;
-					trace("!!Button B is pressed!!");
-				case FlxVirtualPadButtonID.C:
+				case FlxMobileControlsID.C:
 					return buttonC.isPressed;
-				case FlxVirtualPadButtonID.D:
+				case FlxMobileControlsID.D:
 					return buttonD.isPressed;
-				case FlxVirtualPadButtonID.E:
+				case FlxMobileControlsID.E:
 					return buttonE.isPressed;
-				case FlxVirtualPadButtonID.V:
+				case FlxMobileControlsID.V:
 					return buttonV.isPressed;
-				case FlxVirtualPadButtonID.X:
+				case FlxMobileControlsID.X:
 					return buttonX.isPressed;
-				case FlxVirtualPadButtonID.Y:
+				case FlxMobileControlsID.Y:
 					return buttonY.isPressed;
-				case FlxVirtualPadButtonID.Z:
+				case FlxMobileControlsID.Z:
 					return buttonZ.isPressed;
+				case FlxMobileControlsID.NONE:
+					return false;
 				default:
 					return false;
 			}
@@ -225,47 +225,45 @@ class FlxVirtualPad extends FlxSpriteGroup
 		/*
 		* Checks if the virtualpad button justPressed, if yes returns true.
 		*/
-		public function isButtonJustPressed(buttonID:FlxVirtualPadButtonID):Bool
+		public function mobileControlsJustPressed(buttonID:FlxMobileControlsID):Bool
 			{
 				switch (buttonID)
 				{
-				case FlxVirtualPadButtonID.LEFT:
+				case FlxMobileControlsID.LEFT:
 					return buttonLeft.isJustPressed;
-				case FlxVirtualPadButtonID.UP:
+				case FlxMobileControlsID.UP:
 					return buttonUp.isJustPressed;
-				case FlxVirtualPadButtonID.RIGHT:
+				case FlxMobileControlsID.RIGHT:
 					return buttonRight.isJustPressed;
-				case FlxVirtualPadButtonID.DOWN:
+				case FlxMobileControlsID.DOWN:
 					return buttonDown.isJustPressed;
-				case FlxVirtualPadButtonID.LEFT2:
+				case FlxMobileControlsID.LEFT2:
 					return buttonLeft2.isJustPressed;
-				case FlxVirtualPadButtonID.UP2:
+				case FlxMobileControlsID.UP2:
 					return buttonUp2.isJustPressed;
-				case FlxVirtualPadButtonID.RIGHT2:
+				case FlxMobileControlsID.RIGHT2:
 					return buttonRight2.isJustPressed;
-				case FlxVirtualPadButtonID.DOWN2:
+				case FlxMobileControlsID.DOWN2:
 					return buttonDown2.isJustPressed;
-				case FlxVirtualPadButtonID.A:
+				case FlxMobileControlsID.A:
 					return buttonA.isJustPressed;
-					trace("!!Button A is justPressed!!");
-				case FlxVirtualPadButtonID.B:
+				case FlxMobileControlsID.B:
 					return buttonB.isJustPressed;
-					trace("!!Button B is justPressed!!");
-				case FlxVirtualPadButtonID.C:
+				case FlxMobileControlsID.C:
 					return buttonC.isJustPressed;
-				case FlxVirtualPadButtonID.D:
+				case FlxMobileControlsID.D:
 					return buttonD.isJustPressed;
-				case FlxVirtualPadButtonID.E:
+				case FlxMobileControlsID.E:
 					return buttonE.isJustPressed;
-				case FlxVirtualPadButtonID.V:
+				case FlxMobileControlsID.V:
 					return buttonV.isJustPressed;
-				case FlxVirtualPadButtonID.X:
+				case FlxMobileControlsID.X:
 					return buttonX.isJustPressed;
-				case FlxVirtualPadButtonID.Y:
+				case FlxMobileControlsID.Y:
 					return buttonY.isJustPressed;
-				case FlxVirtualPadButtonID.Z:
+				case FlxMobileControlsID.Z:
 					return buttonZ.isJustPressed;
-				case FlxVirtualPadButtonID.NONE:
+				case FlxMobileControlsID.NONE:
 					return false;
 				default:
 					return false;
@@ -275,47 +273,45 @@ class FlxVirtualPad extends FlxSpriteGroup
 		/*
 		* Checks if the virtualpad button is justReleased, if yes returns true.
 		*/
-	public function isButtonJustReleased(buttonID:FlxVirtualPadButtonID):Bool
+	public function mobileControlsJustReleased(buttonID:FlxMobileControlsID):Bool
 		{
 			switch (buttonID)
 			{
-				case FlxVirtualPadButtonID.LEFT:
+				case FlxMobileControlsID.LEFT:
 					return buttonLeft.isJustReleased;
-				case FlxVirtualPadButtonID.UP:
+				case FlxMobileControlsID.UP:
 					return buttonUp.isJustReleased;
-				case FlxVirtualPadButtonID.RIGHT:
+				case FlxMobileControlsID.RIGHT:
 					return buttonRight.isJustReleased;
-				case FlxVirtualPadButtonID.DOWN:
+				case FlxMobileControlsID.DOWN:
 					return buttonDown.isJustReleased;
-				case FlxVirtualPadButtonID.LEFT2:
+				case FlxMobileControlsID.LEFT2:
 					return buttonLeft2.isJustReleased;
-				case FlxVirtualPadButtonID.UP2:
+				case FlxMobileControlsID.UP2:
 					return buttonUp2.isJustReleased;
-				case FlxVirtualPadButtonID.RIGHT2:
+				case FlxMobileControlsID.RIGHT2:
 					return buttonRight2.isJustReleased;
-				case FlxVirtualPadButtonID.DOWN2:
+				case FlxMobileControlsID.DOWN2:
 					return buttonDown2.isJustReleased;
-				case FlxVirtualPadButtonID.A:
+				case FlxMobileControlsID.A:
 					return buttonA.isJustReleased;
-					trace("!!Button A got released!!");
-				case FlxVirtualPadButtonID.B:
+				case FlxMobileControlsID.B:
 					return buttonB.isJustReleased;
-					trace("!!Button B got released!!");
-				case FlxVirtualPadButtonID.C:
+				case FlxMobileControlsID.C:
 					return buttonC.isJustReleased;
-				case FlxVirtualPadButtonID.D:
+				case FlxMobileControlsID.D:
 					return buttonD.isJustReleased;
-				case FlxVirtualPadButtonID.E:
+				case FlxMobileControlsID.E:
 					return buttonE.isJustReleased;
-				case FlxVirtualPadButtonID.V:
+				case FlxMobileControlsID.V:
 					return buttonV.isJustReleased;
-				case FlxVirtualPadButtonID.X:
+				case FlxMobileControlsID.X:
 					return buttonX.isJustReleased;
-				case FlxVirtualPadButtonID.Y:
+				case FlxMobileControlsID.Y:
 					return buttonY.isJustReleased;
-				case FlxVirtualPadButtonID.Z:
+				case FlxMobileControlsID.Z:
 					return buttonZ.isJustReleased;
-				case FlxVirtualPadButtonID.NONE:
+				case FlxMobileControlsID.NONE:
 					return false;
 				default:
 					return false;
