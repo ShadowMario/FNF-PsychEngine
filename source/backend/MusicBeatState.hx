@@ -27,7 +27,9 @@ class MusicBeatState extends FlxUIState
 	{
 		return Controls.instance;
 	}
+
 	instance = this;
+
 	#if mobileC
 	public var virtualPad:FlxVirtualPad;
 	public var mobileControls:MobileControls;
