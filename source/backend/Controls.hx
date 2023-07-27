@@ -4,6 +4,7 @@ import mobile.flixel.FlxVirtualPadButtonID;
 import mobile.flixel.FlxButton;
 import mobile.flixel.FlxHitbox;
 import mobile.flixel.FlxVirtualPad;
+import MusicBeatState; //because this class dosent extends anything ig
 #end
 import flixel.input.actions.FlxActionSet;
 import flixel.input.gamepad.FlxGamepadButton;
@@ -167,11 +168,11 @@ class Controls
 	#if mobileC
 	private function dpadPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 		{
-			if(keys != null)
+			if(keys != null && MusicBeatState.virtualPad != null)
 			{
 				for (key in keys)
 				{
-					if (FlxVirtualPad.isButtonPressed(key) == true)
+					if (MusicBeatState.instance.virtualPad.isButtonPressed(key) == true)
 					{
 						//controllerMode = true;
 						return true;
@@ -183,11 +184,11 @@ class Controls
 
 		private function dpadJustPressed(keys:Array<FlxVirtualPadButtonID>):Bool
 			{
-				if(keys != null)
+				if(keys != null && MusicBeatState.virtualPad != null)
 				{
 					for (key in keys)
 					{
-						if (FlxVirtualPad.isButtonJustPressed(key) == true)
+						if (MusicBeatState.instance.virtualPad.isButtonJustPressed(key) == true)
 						{
 							//controllerMode = true;
 							return true;
@@ -199,11 +200,11 @@ class Controls
 
 			private function dpadJustReleased(keys:Array<FlxVirtualPadButtonID>):Bool
 				{
-					if(keys != null)
+					if(keys != null && MusicBeatState.virtualPad != null)
 					{
 						for (key in keys)
 						{
-							if (FlxVirtualPad.isButtonJustReleased(key) == true)
+							if (MusicBeatState.instance.virtualPad.isButtonJustReleased(key) == true)
 							{
 								//controllerMode = true;
 								return true;
