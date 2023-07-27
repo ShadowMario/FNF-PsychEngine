@@ -197,7 +197,7 @@ class HScript extends SScript
 			FunkinLua.luaTrace("runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 
-			if(retVal.returnValue != null && !LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) retVal.returnValue = null;
+			if(retVal.returnValue != null && !LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) return null;
 			return retVal.returnValue;
 		});
 		
