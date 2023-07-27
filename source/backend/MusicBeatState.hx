@@ -27,8 +27,8 @@ class MusicBeatState extends FlxUIState
 	}
 
 	#if mobileC
-	var virtualPad:FlxVirtualPad;
-	var mobileControls:MobileControls;
+	public static var virtualPad:FlxVirtualPad;
+	public static var mobileControls:MobileControls;
 
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
