@@ -153,6 +153,7 @@ class SUtil
 
 		LimeLogger.println(msg);
 		Lib.application.window.alert(msg, 'Error!');
+		#if desktop DiscordClient.shutdown(); #end
 		LimeSystem.exit(1);
 	}
 
