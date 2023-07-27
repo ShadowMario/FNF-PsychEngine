@@ -911,12 +911,13 @@ class ChartingState extends MusicBeatState
 		for (folder in foldersToCheck)
 			for (file in FileSystem.readDirectory(folder))
 			{
-				var fileName:String = file.toLowerCase();
+				var fileName:String = file.toLowerCase().trim();
+				var wordLen:Int = 4; //length of word ".lua" and ".txt";
 				if((#if LUA_ALLOWED fileName.endsWith('.lua') || #end
-					#if (MODS_ALLOWED && SScript) fileName.endsWith('.hx') || #end
+					#if (MODS_ALLOWED && SScript) (fileName.endsWith('.hx') && (wordLen = 3) == 3) || #end
 					fileName.endsWith('.txt')) && fileName != 'readme.txt')
 				{
-					var fileToCheck:String = file.substr(0, file.length - 4);
+					var fileToCheck:String = file.substr(0, file.length - wordLen);
 					if(!curNoteTypes.contains(fileToCheck))
 					{
 						curNoteTypes.push(fileToCheck);
