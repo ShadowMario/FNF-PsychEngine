@@ -4,7 +4,6 @@ import mobile.flixel.FlxVirtualPadButtonID;
 import mobile.flixel.FlxButton;
 import mobile.flixel.FlxHitbox;
 import mobile.flixel.FlxVirtualPad;
-import MusicBeatState; //because this class dosent extends anything ig
 #end
 import flixel.input.actions.FlxActionSet;
 import flixel.input.gamepad.FlxGamepadButton;
@@ -172,7 +171,7 @@ class Controls
 			{
 				for (key in keys)
 				{
-					if (MusicBeatState.instance.virtualPad.isButtonPressed(key) == true)
+					if (MusicBeatState.virtualPad.isButtonPressed(key) == true)
 					{
 						//controllerMode = true;
 						return true;
@@ -188,7 +187,7 @@ class Controls
 				{
 					for (key in keys)
 					{
-						if (MusicBeatState.instance.virtualPad.isButtonJustPressed(key) == true)
+						if (MusicBeatState.virtualPad.isButtonJustPressed(key) == true)
 						{
 							//controllerMode = true;
 							return true;
@@ -204,7 +203,7 @@ class Controls
 					{
 						for (key in keys)
 						{
-							if (MusicBeatState.instance.virtualPad.isButtonJustReleased(key) == true)
+							if (MusicBeatState.virtualPad.isButtonJustReleased(key) == true)
 							{
 								//controllerMode = true;
 								return true;
