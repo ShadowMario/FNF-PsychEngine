@@ -12,10 +12,10 @@ class MobileControls extends FlxSpriteGroup
 	public static var instance:MobileControls;
 	public var virtualPad:FlxVirtualPad;
 	public var hitbox:FlxHitbox;
-
-	override function create() {
-		super.create();
+	
+	function create() {
 		instance = this;
+		super.create();
 	}
 
 	public function new()
