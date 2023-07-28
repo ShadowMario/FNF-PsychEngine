@@ -4,7 +4,8 @@ import mobile.flixel.FlxMobileControlsID;
 import mobile.flixel.FlxButton;
 import mobile.flixel.FlxHitbox;
 import mobile.flixel.FlxVirtualPad;
-import backend.MusicBeatSubState;
+import backend.MusicBeatSubstate;
+import mobile.MobileControls;
 #end
 import flixel.input.actions.FlxActionSet;
 import flixel.input.gamepad.FlxGamepadButton;
@@ -181,11 +182,11 @@ class Controls
 				}
 			}
 			// configure the virtualpad input in classes that extends MusicBeatSubState
-			if(keys != null && MusicBeatSubState.instance.virtualPad != null)
+			if(keys != null && MusicBeatSubstate.instance.virtualPad != null)
 				{
 					for (key in keys)
 					{
-						if (MusicBeatSubState.instance.virtualPad.mobileControlsPressed(key) == true)
+						if (MusicBeatSubstate.instance.virtualPad.mobileControlsPressed(key) == true)
 						{
 							controllerMode = true;
 							return true;
@@ -194,7 +195,7 @@ class Controls
 				}
 				if(keys != null && MusicBeatState.mobileControls != null){
 					for (key in keys){
-					switch (MobileControls.getMode())
+					switch (MobileControls.instance.getMode())
 				{
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 					return vpadPressed(key);
@@ -222,11 +223,11 @@ class Controls
 					}
 				}
 
-				if(keys != null && MusicBeatSubState.instance.virtualPad != null)
+				if(keys != null && MusicBeatSubstate.instance.virtualPad != null)
 					{
 						for (key in keys)
 						{
-							if (MusicBeatSubState.instance.virtualPad.mobileControlsJustPressed(key) == true)
+							if (MusicBeatSubstate.instance.virtualPad.mobileControlsJustPressed(key) == true)
 							{
 								controllerMode = true;
 								return true;
@@ -235,7 +236,7 @@ class Controls
 					}
 					if(keys != null && MusicBeatState.instance.mobileControls != null){
 						for (key in keys){
-						switch (MobileControls.getMode())
+						switch (MobileControls.instance.getMode())
 					{
 						case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 						return vpadJustPressed(key);
@@ -262,11 +263,11 @@ class Controls
 							}
 						}
 					}
-					if(keys != null && MusicBeatSubState.instance.virtualPad != null)
+					if(keys != null && MusicBeatSubstate.instance.virtualPad != null)
 						{
 							for (key in keys)
 							{
-								if (MusicBeatSubState.instance.virtualPad.mobileControlsJustReleased(key) == true)
+								if (MusicBeatSubstate.instance.virtualPad.mobileControlsJustReleased(key) == true)
 								{
 									controllerMode = true;
 									return true;
@@ -275,7 +276,7 @@ class Controls
 						}
 						if(keys != null && MusicBeatState.mobileControls != null){
 							for (key in keys){
-							switch (MobileControls.getMode())
+							switch (MobileControls.instance.getMode())
 						{
 							case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 							return vpadJustReleased(key);
