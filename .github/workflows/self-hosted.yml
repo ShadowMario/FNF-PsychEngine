@@ -15,7 +15,7 @@ jobs:
     runs-on: Termux
     steps:
        - name: Switch Haxelibs
-         run: taskset -a -c 3-7 haxelib setup $TERMUX_HOME/haxelib && taskset -a -c 3-7 haxelib set openfl 9.2.1
+         run: taskset -a -c 3-7 haxelib setup $TERMUX_HOME/haxelibpsych && taskset -a -c 3-7 haxelib set openfl 9.2.1
        - name: Fetch Upstream
          run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && taskset -a -c 3-7 git pull
        - name: Toaster (Build Started)
