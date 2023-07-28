@@ -121,7 +121,7 @@ class Mods
 			if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
 			{
 				var folder:String = Paths.mods(Mods.currentModDirectory + '/' + fileToFind);
-				if(FileSystem.exists(SUtil.getPath() + folder)) foldersToCheck.push(folder);
+				if(FileSystem.exists(folder)) foldersToCheck.push(folder);
 			}
 		}
 		#end
