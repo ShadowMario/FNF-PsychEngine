@@ -38,7 +38,7 @@ class OptimizationSubState extends BaseOptionsMenu
 
 		//I'd suggest using "Chars & BG" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Chars & BG', //Name
-			'If checked, gameplay will only show the HUD.', //Description
+			'If unchecked, gameplay will only show the HUD.', //Description
 			'charsAndBG', //Save data variable name
 			'bool', //Variable type
 			true); //Default value
