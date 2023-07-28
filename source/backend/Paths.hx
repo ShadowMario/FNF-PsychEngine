@@ -112,7 +112,7 @@ class Paths
 		if(modsAllowed)
 		{
 			var modded:String = modFolders(file);
-			if(FileSystem.exists(SUtil.getPath() + modded)) return modded;
+			if(FileSystem.exists(SUtil.getPath() + modded)) return SUtil() + modded;
 		}
 		#end
 
@@ -429,7 +429,6 @@ class Paths
 		localTrackedAssets.push(gottenPath);
 		return currentTrackedSounds.get(gottenPath);
 	}
-
 	#if MODS_ALLOWED
 	inline static public function mods(key:String = '') {
 		return SUtil.getPath() + 'mods/' + key;
@@ -490,7 +489,7 @@ class Paths
 			if(FileSystem.exists(fileToCheck))
 				return fileToCheck;
 		}
-		return 'mods/' + key;
+		return SUtil.getPath() + 'mods/' + key;
 	}
 	#end
 }
