@@ -19,10 +19,19 @@ jobs:
        - name: Fetch Upstream
          run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && git pull
        - name: Compile
-         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && taskset -a -c 4-7 haxelib run lime build android -armv7 -D NO_PRECOMPILED_HEADERS -D mobileC -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych && termux-toast "Build Successful"
+         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && taskset -a -c 4-7 haxelib run lime build android -armv7 -D NO_PRECOMPILED_HEADERS -D mobileC -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych
          env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
+       - name: Toaster (Fail)
+         if: failure()
+         run: termux-toast "Build Failed"
+       - name: Toaster (Success)
+         if: success()
+         run: termux-toast "Build Success"
+       - name: Toaster (Cancel)
+         if: cancelled()
+         run: termux-toast "Build Cancelled"
        # - name: Delete Useless
          # run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && rm -rfv export/release/android/bin && rm -rfv export/release/android/obj/*.so*
        # - name: Publish Artifact
