@@ -137,15 +137,20 @@ class HScript extends SScript
 		#end
 	}
 
-	public function executeCode(codeToRun:String, ?funcToRun:String = null, ?funcArgs:Array<Dynamic>):SCall
+	public function executeCode(codeToRun:String, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):SCall
 	{
 		doString(codeToRun);
 
 		if (funcToRun != null)
 		{
+			if(!exists(funcToRun))
+			{
+				FunkinLua.luaTrace(parentLua.scriptName + ' - No HScript function named: $funcToRun', false, false, FlxColor.RED);
+				return null;
+			}
 			var callValue = call(funcToRun, funcArgs);
 			if (callValue.succeeded)
-				return callValue.returnValue;
+				return callValue;
 			else
 			{
 				var e = callValue.exceptions[0];
@@ -186,8 +191,11 @@ class HScript extends SScript
 				}
 			}
 			retVal = funk.hscript.executeCode(codeToRun, funcToRun, funcArgs);
-			if (funcToRun != null && funcArgs != null && retVal != null && !retVal.succeeded)
+			if (retVal != null)
 			{
+				if(retVal.succeeded)
+					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
+
 				var e = retVal.exceptions[0];
 				if (e != null)
 					FunkinLua.luaTrace(funk.scriptName + ":" + funk.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
@@ -196,9 +204,7 @@ class HScript extends SScript
 			#else
 			FunkinLua.luaTrace("runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
-
-			if(retVal.returnValue != null && !LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) return null;
-			return retVal.returnValue;
+			return null;
 		});
 		
 		funk.addLocalCallback("runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic> = null) {
