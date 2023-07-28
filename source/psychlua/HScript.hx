@@ -38,13 +38,14 @@ class HScript extends SScript
 		if (file == null)
 			file = '';
 	
-		super(file, false);
+		super(file, false, false);
 		parentLua = parent;
 		if (parent != null)
 			origin = parent.scriptName;
 		if (scriptFile != null && scriptFile.length > 0)
 			origin = scriptFile;
 		preset();
+		execute();
 	}
 
 	override function preset()
@@ -194,7 +195,7 @@ class HScript extends SScript
 	public static function implement(funk:FunkinLua)
 	{
 		#if LUA_ALLOWED
-		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null) {
+		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			var retVal:SCall = null;
 			#if (SScript >= "3.0.0")
 			initHaxeModuleCode(funk, codeToRun);
@@ -217,6 +218,8 @@ class HScript extends SScript
 					FunkinLua.luaTrace(funk.hscript.origin + ":" + funk.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
 				return null;
 			}
+			else if (funk.hscript.returnValue != null)
+				return funk.hscript.returnValue;
 			#else
 			FunkinLua.luaTrace("runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
