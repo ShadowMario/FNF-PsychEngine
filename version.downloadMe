@@ -1,6 +1,6 @@
-1.4.0;
-- BF Icon Styles
-- Note Styles (some are weird though)
-- New Event
-- New Changes
-- New Hitsound
+1.5.0;
+- Converted some Ints to Floats
+- Added Compact Numbers
+- Added some events
+- A new tab in the Options menu
+- Optimizations & performance improvements
