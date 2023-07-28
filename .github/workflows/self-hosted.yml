@@ -19,7 +19,7 @@ jobs:
        - name: Fetch Upstream
          run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && git pull
        - name: Compile
-         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && taskset -a -c 4-7 haxelib run lime build android -armv7 -D NO_PRECOMPILED_HEADERS -D mobileC -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych
+         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && taskset -a -c 4-7 haxelib run lime build android -armv7 -D NO_PRECOMPILED_HEADERS -D mobileC -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych && termux-toast "Build Successful"
          env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
