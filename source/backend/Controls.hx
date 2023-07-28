@@ -263,6 +263,7 @@ class Controls
 					return false;
 				}
 			}
+				}
 				private function mobileCJustPressed(key:String) {
 				if(key != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
@@ -275,6 +276,7 @@ class Controls
 					return false;
 				}
 			}
+				}
 				private function mobileCJustReleased(key:String) {
 				if(key != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
@@ -287,6 +289,7 @@ class Controls
 					return false;
 				}
 			}
+				}
 				private function vpadPressed(keys:Array<FlxMobileControlsID>):Bool
 					{
 						if(keys != null && MusicBeatState.instance.mobileControls != null)
@@ -381,7 +384,6 @@ class Controls
 								}
 								return false;
 							}
-				                 }
 	#end
 
 	// IGNORE THESE/ karim: no.
