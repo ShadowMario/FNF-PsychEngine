@@ -125,11 +125,11 @@ class WeekData {
 		for (i in 0...directories.length) {
 			var directory:String = directories[i] + 'weeks/';
 			if(FileSystem.exists(SUtil.getPath() + directory)) {
-				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(directory + 'weekList.txt');
+				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + directory + 'weekList.txt');
 				for (daWeek in listOfWeeks)
 				{
-					var path:String = directory + daWeek + '.json';
-					if(sys.FileSystem.exists(SUtil.getPath() + path))
+					var path:String = SUtil.getPath() + directory + daWeek + '.json';
+					if(sys.FileSystem.exists(path))
 					{
 						addWeek(daWeek, path, directories[i], i, originalLength);
 					}
@@ -137,8 +137,8 @@ class WeekData {
 
 				for (file in FileSystem.readDirectory(SUtil.getPath() + directory))
 				{
-					var path = haxe.io.Path.join([directory, file]);
-					if (!sys.FileSystem.isDirectory(SUtil.getPath() + path) && file.endsWith('.json'))
+					var path = haxe.io.Path.join(SUtil.getPath() + [directory, file]);
+					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json'))
 					{
 						addWeek(file.substr(0, file.length - 5), path, directories[i], i, originalLength);
 					}
@@ -175,7 +175,7 @@ class WeekData {
 		var rawJson:String = null;
 		#if MODS_ALLOWED
 		if(FileSystem.exists(SUtil.getPath() + path)) {
-			rawJson = File.getContent(path);
+			rawJson = File.getContent(SUtil.getPath() + path);
 		}
 		#else
 		if(OpenFlAssets.exists(path)) {
