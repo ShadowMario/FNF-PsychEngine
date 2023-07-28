@@ -8,7 +8,7 @@
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
 
 	<!-- NOTE TO SELF: DISABLE THIS IF ISSUES ARE FOUND -->
-	<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB"/> <!-- stable luas PUT AFTER FIRST LINE WITH APP NAME AND ETC -->
+	<!--<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB"/>--> <!-- stable luas PUT AFTER FIRST LINE WITH APP NAME AND ETC -->
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -70,7 +70,7 @@
 	</section>
 
 	<!-- DONT ENABLE THIS -->
-	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
+	<define name="CHECK_FOR_UPDATES" if="officialBuild"/>
 
 	<!-- Week Assets -->
 	<library name="videos"        preload="true" />
@@ -146,7 +146,7 @@
 	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
 	
-	<!-- Show debug traces for hxCodec -->
+	<!-- Show debug traces for hxCodec (for old versions) -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
 	
 	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
@@ -163,11 +163,11 @@
 		<haxedef name="HXCPP_STACK_TRACE" />
 	
 		<section if="android">
-                <!-- Do whatever you want I'm tired uninstall and install everytime-->
+                <!-- Do whatever you want I'm tired uninstall and install everytime -->
 		<certificate path="key.keystore" password="nullfunni" alias="null" alias-password="nullfunni" unless="debug"/>
 			<config>
-				<!--Gradle
-				<android gradle-version="7.4.2" gradle-plugin="7.3.1" /> -->
+				<!--Gradle-->
+				<!-- <android gradle-version="7.4.2" gradle-plugin="7.3.1" /> -->
 	
 				<!--Target SDK-->
 				<android target-sdk-version="29" if="${lime &lt; 8.1.0}" />
