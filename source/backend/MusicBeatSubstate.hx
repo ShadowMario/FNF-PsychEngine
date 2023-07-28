@@ -10,10 +10,13 @@ import flixel.util.FlxDestroyUtil;
 class MusicBeatSubstate extends FlxSubState
 {
 	public static var instance:MusicBeatSubstate;
+	override function create() {
+		super.create
+		instance = this;
+	}
 	public function new()
 	{
 		super();
-		instance = this;
 	}
 	private var curSection:Int = 0;
 	private var stepsToDo:Int = 0;
