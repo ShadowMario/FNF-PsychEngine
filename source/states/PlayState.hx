@@ -2127,7 +2127,7 @@ class PlayState extends MusicBeatState
 				}
 				catch(e:Dynamic)
 				{
-					addTextToDebug('ERROR ("Set Property" Event) - ' + e.toString(), FlxColor.RED);
+					addTextToDebug('ERROR ("Set Property" Event) - ' + e.message.substr(0, e.message.indexOf('\n')), FlxColor.RED);
 				}
 			
 			case 'Play Sound':
@@ -3146,17 +3146,41 @@ class PlayState extends MusicBeatState
 
 	public function initHScript(file:String)
 	{
+		var newScript:HScript = null;
 		try
 		{
-			var newScript:HScript = new HScript(file);
+			newScript = new HScript(file);
 			newScript.doString(File.getContent(file));
+			@:privateAccess
+			if(newScript.parsingExceptions != null && newScript.parsingExceptions.length > 0)
+			{
+				@:privateAccess
+				for (e in newScript.parsingExceptions)
+					if(e != null)
+						addTextToDebug('ERROR ON LOADING ($file): ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
+				return;
+			}
+
 			hscriptArray.push(newScript);
-			if(newScript.exists('onCreate')) newScript.call('onCreate');
-			trace('initialized sscript interp successfully: $file');
+			if(newScript.exists('onCreate'))
+			{
+				var callValue = newScript.call('onCreate');
+				if(!callValue.succeeded)
+				{
+					for (e in callValue.exceptions)
+						if (e != null)
+							addTextToDebug('ERROR ($file: onCreate) - ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
+					hscriptArray.remove(newScript);
+					trace('failed to initialize sscript interp!!! ($file)');
+				}
+				else trace('initialized sscript interp successfully: $file');
+			}
+			
 		}
 		catch(e:Dynamic)
 		{
-			addTextToDebug('ERROR ($file) - ' + e.toString(), FlxColor.RED);
+			addTextToDebug('ERROR ($file) - ' + e.message.substr(0, e.message.indexOf('\n')), FlxColor.RED);
+			if(newScript != null) hscriptArray.remove(newScript);
 		}
 	}
 	#end
@@ -3231,9 +3255,9 @@ class PlayState extends MusicBeatState
 				var callValue = script.call(funcToCall, args);
 				if (!callValue.succeeded)
 				{
-					var e = callValue.exceptions[0];
-					if (e != null)
-						FunkinLua.luaTrace('ERROR (${script.interpName}: ${callValue.calledFunction}) - ' + e.message.substr(0, e.message.indexOf('\n')), true, false, FlxColor.RED);
+					for (e in callValue.exceptions)
+						if (e != null)
+							addTextToDebug('ERROR (${script.interpName}: ${callValue.calledFunction}) - ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
 					i++;
 					continue;
 				}
@@ -3250,7 +3274,7 @@ class PlayState extends MusicBeatState
 			}
 			catch(e:Dynamic)
 			{
-				addTextToDebug('ERROR (${script.interpName}) - ' + e.toString(), FlxColor.RED); //myValue);
+				addTextToDebug('ERROR (${script.interpName}) - ' + e.message.substr(0, e.message.indexOf('\n')), FlxColor.RED); //myValue);
 			}
 
 			if(!script.active) i++;

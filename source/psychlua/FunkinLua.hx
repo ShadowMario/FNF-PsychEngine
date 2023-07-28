@@ -36,7 +36,9 @@ import substates.GameOverSubstate;
 
 import psychlua.LuaUtils;
 import psychlua.LuaUtils.LuaTweenOptions;
+#if (SScript >= "3.0.0")
 import psychlua.HScript;
+#end
 import psychlua.DebugLuaText;
 import psychlua.ModchartSprite;
 
@@ -969,8 +971,10 @@ class FunkinLua {
 			if(obj != null && obj.animation != null)
 			{
 				obj.animation.addByPrefix(name, prefix, framerate, loop);
-				if(obj.animation.curAnim == null) {
-					obj.animation.play(name, true);
+				if(obj.animation.curAnim == null)
+				{
+					if(obj.playAnim != null) obj.playAnim(name, true);
+					else obj.animation.play(name, true);
 				}
 				return true;
 			}
@@ -1391,14 +1395,7 @@ class FunkinLua {
 			}
 		});
 
-		Lua_helper.add_callback(lua, "debugPrint", function(text1:Dynamic = '', text2:Dynamic = '', text3:Dynamic = '', text4:Dynamic = '', text5:Dynamic = '') {
-			if (text1 == null) text1 = '';
-			if (text2 == null) text2 = '';
-			if (text3 == null) text3 = '';
-			if (text4 == null) text4 = '';
-			if (text5 == null) text5 = '';
-			luaTrace('' + text1 + text2 + text3 + text4 + text5, true, false);
-		});
+		Lua_helper.add_callback(lua, "debugPrint", function(text:Dynamic = '', color:String = 'WHITE') PlayState.instance.addTextToDebug(text, CoolUtil.colorFromString(color)));
 		
 		addLocalCallback("close", function() {
 			closed = true;
