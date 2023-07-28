@@ -195,7 +195,7 @@ class Controls
 				}
 				if(keys != null && MusicBeatState.mobileControls != null){
 					for (key in keys){
-					switch (MobileControls.instance.getMode())
+					switch (MobileControls.getMode())
 				{
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 					return vpadPressed(key);
@@ -236,7 +236,7 @@ class Controls
 					}
 					if(keys != null && MusicBeatState.instance.mobileControls != null){
 						for (key in keys){
-						switch (MobileControls.instance.getMode())
+						switch (MobileControls.getMode())
 					{
 						case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 						return vpadJustPressed(key);
@@ -276,7 +276,7 @@ class Controls
 						}
 						if(keys != null && MusicBeatState.mobileControls != null){
 							for (key in keys){
-							switch (MobileControls.instance.getMode())
+							switch (MobileControls.getMode())
 						{
 							case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 							return vpadJustReleased(key);
