@@ -19,23 +19,23 @@ import openfl.utils.Assets;
  */
 class FlxVirtualPad extends FlxSpriteGroup
 {
-	public static var buttonLeft:FlxButton = new FlxButton(0, 0);
-	public static var buttonUp:FlxButton = new FlxButton(0, 0);
-	public static var buttonRight:FlxButton = new FlxButton(0, 0);
-	public static var buttonDown:FlxButton = new FlxButton(0, 0);
-	public static var buttonLeft2:FlxButton = new FlxButton(0, 0);
-	public static var buttonUp2:FlxButton = new FlxButton(0, 0);
-	public static var buttonRight2:FlxButton = new FlxButton(0, 0);
-	public static var buttonDown2:FlxButton = new FlxButton(0, 0);
-	public static var buttonA:FlxButton = new FlxButton(0, 0);
-	public static var buttonB:FlxButton = new FlxButton(0, 0);
-	public static var buttonC:FlxButton = new FlxButton(0, 0);
-	public static var buttonD:FlxButton = new FlxButton(0, 0);
-	public static var buttonE:FlxButton = new FlxButton(0, 0);
-	public static var buttonV:FlxButton = new FlxButton(0, 0);
-	public static var buttonX:FlxButton = new FlxButton(0, 0);
-	public static var buttonY:FlxButton = new FlxButton(0, 0);
-	public static var buttonZ:FlxButton = new FlxButton(0, 0);
+	public var buttonLeft:FlxButton = new FlxButton(0, 0);
+	public var buttonUp:FlxButton = new FlxButton(0, 0);
+	public var buttonRight:FlxButton = new FlxButton(0, 0);
+	public var buttonDown:FlxButton = new FlxButton(0, 0);
+	public var buttonLeft2:FlxButton = new FlxButton(0, 0);
+	public var buttonUp2:FlxButton = new FlxButton(0, 0);
+	public var buttonRight2:FlxButton = new FlxButton(0, 0);
+	public var buttonDown2:FlxButton = new FlxButton(0, 0);
+	public var buttonA:FlxButton = new FlxButton(0, 0);
+	public var buttonB:FlxButton = new FlxButton(0, 0);
+	public var buttonC:FlxButton = new FlxButton(0, 0);
+	public var buttonD:FlxButton = new FlxButton(0, 0);
+	public var buttonE:FlxButton = new FlxButton(0, 0);
+	public var buttonV:FlxButton = new FlxButton(0, 0);
+	public var buttonX:FlxButton = new FlxButton(0, 0);
+	public var buttonY:FlxButton = new FlxButton(0, 0);
+	public var buttonZ:FlxButton = new FlxButton(0, 0);
 
 	/**
 	 * Create a gamepad.
