@@ -137,7 +137,7 @@ class WeekData {
 
 				for (file in FileSystem.readDirectory(SUtil.getPath() + directory))
 				{
-					var path = haxe.io.Path.join(SUtil.getPath() + [directory, file]);
+					var path = SUtil.getPath() + haxe.io.Path.join([directory, file]);
 					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json'))
 					{
 						addWeek(file.substr(0, file.length - 5), path, directories[i], i, originalLength);
