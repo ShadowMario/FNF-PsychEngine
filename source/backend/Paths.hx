@@ -185,7 +185,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsVideo(key);
-		if(FileSystem.exists(SUtil.getPath() + file)) {
+		if(FileSystem.exists(file)) {
 			return file;
 		}
 		#end
@@ -232,7 +232,7 @@ class Paths
 	}
 
 	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
-	static public function image(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxGraphic
+	static public function image(key:String, ?library:String = null, ?allowGPU:Bool = false):FlxGraphic
 	{
 		var bitmap:BitmapData = null;
 		var file:String = null;
@@ -332,7 +332,7 @@ class Paths
 				if (FileSystem.exists(mods('$mod/$key')))
 					return true;
 
-			if (FileSystem.exists(SUtil.getPath() + mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(SUtil.getPath() + mods(key)))
+			if (FileSystem.exists(mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
 				return true;
 		}
 		#end
@@ -487,7 +487,7 @@ class Paths
 		for(mod in Mods.getGlobalMods()){
 			var fileToCheck:String = mods(mod + '/' + key);
 			if(FileSystem.exists(fileToCheck))
-				return fileToCheck;
+				return SUtil.getPath() + fileToCheck;
 		}
 		return SUtil.getPath() + 'mods/' + key;
 	}
