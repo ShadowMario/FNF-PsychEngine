@@ -9,14 +9,12 @@ import flixel.util.FlxDestroyUtil;
 
 class MobileControls extends FlxSpriteGroup
 {
-	public static var instance:MobileControls;
 	public var virtualPad:FlxVirtualPad;
 	public var hitbox:FlxHitbox;
 
 	public function new()
 	{
 		super();
-		instance = this;
 		switch (MobileControls.getMode())
 		{
 			case 0: // RIGHT_FULL
