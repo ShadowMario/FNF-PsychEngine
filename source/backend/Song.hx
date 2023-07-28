@@ -104,13 +104,13 @@ class Song
 		#if MODS_ALLOWED
 		var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
 		if(FileSystem.exists(SUtil.getPath() + moddyFile)) {
-			rawJson = File.getContent(moddyFile).trim();
+			rawJson = File.getContent(SUtil.getPath() + moddyFile).trim();
 		}
 		#end
 
 		if(rawJson == null) {
 			#if sys
-			rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
+			rawJson = File.getContent(SUtil.getPath() + Paths.json(formattedFolder + '/' + formattedSong)).trim();
 			#else
 			rawJson = Assets.getText(Paths.json(formattedFolder + '/' + formattedSong)).trim();
 			#end
