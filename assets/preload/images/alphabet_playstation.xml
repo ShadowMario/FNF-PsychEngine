@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="alphabet_playstation.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="[ normal instance 10000" x="1" y="1" width="58" height="62"/>
+	<SubTexture name="[ normal instance 10001" x="1" y="1" width="58" height="62"/>
+	<SubTexture name="[ normal instance 10002" x="1" y="64" width="57" height="62" frameX="0" frameY="0" frameWidth="58" frameHeight="62"/>
+	<SubTexture name="[ normal instance 10003" x="1" y="64" width="57" height="62" frameX="0" frameY="0" frameWidth="58" frameHeight="62"/>
+	<SubTexture name="] normal instance 10000" x="60" y="1" width="57" height="62" frameX="0" frameY="0" frameWidth="57" frameHeight="63"/>
+	<SubTexture name="] normal instance 10001" x="60" y="1" width="57" height="62" frameX="0" frameY="0" frameWidth="57" frameHeight="63"/>
+	<SubTexture name="] normal instance 10002" x="59" y="64" width="56" height="63" frameX="-1" frameY="0" frameWidth="57" frameHeight="63"/>
+	<SubTexture name="] normal instance 10003" x="59" y="64" width="56" height="63" frameX="-1" frameY="0" frameWidth="57" frameHeight="63"/>
+</TextureAtlas>
