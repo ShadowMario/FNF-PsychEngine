@@ -97,6 +97,7 @@ class MobileControls extends FlxSpriteGroup
 
 	public static function getMode():Int
 	{
+		instance = this;
 		if (FlxG.save.data.mobileControlsMode == null)
 		{
 			FlxG.save.data.mobileControlsMode = 0;
