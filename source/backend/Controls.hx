@@ -381,6 +381,7 @@ class Controls
 								}
 								return false;
 							}
+				                 }
 	#end
 
 	// IGNORE THESE/ karim: no.
