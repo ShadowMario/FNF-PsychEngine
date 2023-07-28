@@ -11,7 +11,7 @@ class MusicBeatSubstate extends FlxSubState
 {
 	public static var instance:MusicBeatSubstate;
 	override function create() {
-		super.create
+		super.create;
 		instance = this;
 	}
 	public function new()
