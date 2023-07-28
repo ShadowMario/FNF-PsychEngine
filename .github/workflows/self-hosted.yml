@@ -18,6 +18,8 @@ jobs:
          run: haxelib setup $TERMUX_HOME/haxelib && haxelib set openfl 9.2.1
        - name: Fetch Upstream
          run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && git pull
+       - name: Toaster (Build Started)
+         run: termux-toast "A Build has been started"
        - name: Compile
          run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && taskset -a -c 4-7 haxelib run lime build android -armv7 -D NO_PRECOMPILED_HEADERS -D mobileC -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych
          env:
