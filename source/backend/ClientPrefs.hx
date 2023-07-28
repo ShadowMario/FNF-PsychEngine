@@ -131,7 +131,7 @@ class ClientPrefs {
 	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
 		'note_up'		=> [UP,UP2, hitboxUP],
 		'note_left'		=> [LEFT,LEFT2, hitboxLEFT],
-		'note_down'		=> [DOWN,DOWN2, hitbocDOWN],
+		'note_down'		=> [DOWN,DOWN2, hitboxDOWN],
 		'note_right'	=> [DOWN,DOWN2, hitboxRIGHT],
 		
 		'ui_up'			=> [UP],
