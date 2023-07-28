@@ -15,11 +15,11 @@ jobs:
     runs-on: Termux
     steps:
        - name: Switch Haxelibs
-         run: haxelib setup $TERMUX_HOME/haxelib && haxelib set openfl 9.2.1
+         run: taskset -a -c 3-7 haxelib setup $TERMUX_HOME/haxelib && taskset -a -c 3-7 haxelib set openfl 9.2.1
        - name: Fetch Upstream
-         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && git pull
+         run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && taskset -a -c 3-7 git pull
        - name: Toaster (Build Started)
-         run: termux-toast "A Build has been started"
+         run: taskset -a -c 3-7 termux-toast "A Build has been started"
        - name: Compile
          run: cd ~/GitHub/repos/FNF-PsychEngine-Mobile && taskset -a -c 4-7 haxelib run lime build android -armv7 -D NO_PRECOMPILED_HEADERS -D mobileC -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych
          env:
@@ -27,10 +27,10 @@ jobs:
           cert_alias_pass: nullfunni
        - name: Toaster (Fail)
          if: failure()
-         run: termux-toast "Build Failed"
+         run: taskset -a -c 3-7 termux-toast "Build Failed"
        - name: Toaster (Success)
          if: success()
-         run: termux-toast "Build Success"
+         run: taskset -a -c 3-7 termux-toast "Build Success"
        - name: Toaster (Cancel)
          if: cancelled()
          run: termux-toast "Build Cancelled"
