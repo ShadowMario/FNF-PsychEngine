@@ -36,7 +36,7 @@ class MusicBeatSubstate extends FlxSubState
 	}
 
 	#if mobileC
-	var virtualPad:FlxVirtualPad;
+	public var virtualPad:FlxVirtualPad;
 
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
