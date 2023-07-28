@@ -44,6 +44,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var doubleGhost:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var hideScore:Bool = false;
+	public static var compactNumbers:Bool = false;
 	public static var longFCName:Bool = false;
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -207,6 +208,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.iconBounceType = iconBounceType;
 		FlxG.save.data.cameraPanning = cameraPanning;
 		FlxG.save.data.panIntensity = panIntensity;
+		FlxG.save.data.compactNumbers = compactNumbers;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
 		FlxG.save.data.hideScore = hideScore;
 		FlxG.save.data.doubleGhostZoom = doubleGhostZoom;
@@ -330,6 +332,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.autoPause != null) {
 			autoPause = FlxG.save.data.autoPause;
+		}
+		if(FlxG.save.data.compactNumbers != null) {
+			compactNumbers = FlxG.save.data.compactNumbers;
 		}
 		if(FlxG.save.data.bfIconStyle != null) {
 			bfIconStyle = FlxG.save.data.bfIconStyle;
