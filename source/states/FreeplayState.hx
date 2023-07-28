@@ -48,9 +48,7 @@ class FreeplayState extends MusicBeatState
 	var missingText:FlxText;
 
 	override function create()
-	{	#if mobileC
-		addVirtualPad(LEFT_FULL, A_B_C_X_Y);
-		#end
+	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 		
@@ -177,6 +175,11 @@ class FreeplayState extends MusicBeatState
 		add(text);
 		
 		updateTexts();
+
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
+		#end
+
 		super.create();
 	}
 
