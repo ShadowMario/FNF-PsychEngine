@@ -183,11 +183,11 @@ class Controls
 				}
 			}
 			// configure the virtualpad input in classes that extends MusicBeatSubState
-			if(keys != null && MusicBeatSubstate.instance.virtualPad != null && isInSubstate)
+			if(keys != null && MusicBeatSubstate.virtualPad != null && isInSubstate)
 				{
 					for (key in keys)
 					{
-						if (MusicBeatSubstate.instance.virtualPad.mobileControlsPressed(key) == true)
+						if (MusicBeatSubstate.virtualPad.mobileControlsPressed(key) == true)
 						{
 							controllerMode = true;
 							return true;
@@ -211,11 +211,11 @@ class Controls
 					}
 				}
 
-				if(keys != null && MusicBeatSubstate.instance.virtualPad != null)
+				if(keys != null && MusicBeatSubstate.virtualPad != null && isInSubstate)
 					{
 						for (key in keys)
 						{
-							if (MusicBeatSubstate.instance.virtualPad.mobileControlsJustPressed(key) == true && isInSubstate)
+							if (MusicBeatSubstate.virtualPad.mobileControlsJustPressed(key) == true)
 							{
 								controllerMode = true;
 								return true;
@@ -238,11 +238,11 @@ class Controls
 							}
 						}
 					}
-					if(keys != null && MusicBeatSubstate.instance.virtualPad != null && isInSubstate)
+					if(keys != null && MusicBeatSubstate.virtualPad != null && isInSubstate)
 						{
 							for (key in keys)
 							{
-								if (MusicBeatSubstate.instance.virtualPad.mobileControlsJustReleased(key) == true)
+								if (MusicBeatSubstate.virtualPad.mobileControlsJustReleased(key) == true)
 								{
 									controllerMode = true;
 									return true;
