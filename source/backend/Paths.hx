@@ -357,7 +357,7 @@ class Paths
 		return getPackerAtlas(key, library);
 	}
 
-	inline static public function getSparrowAtlas(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxAtlasFrames
+	inline static public function getSparrowAtlas(key:String, ?library:String = null, ?allowGPU:Bool = false):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = image(key, allowGPU);
@@ -374,7 +374,7 @@ class Paths
 		#end
 	}
 
-	inline static public function getPackerAtlas(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxAtlasFrames
+	inline static public function getPackerAtlas(key:String, ?library:String = null, ?allowGPU:Bool = false):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = image(key, allowGPU);
