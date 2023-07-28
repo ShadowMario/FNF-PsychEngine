@@ -193,7 +193,7 @@ class Controls
 						}
 					}
 				}
-				if(keys != null && MusicBeatState.mobileControls != null){
+				if(keys != null && MusicBeatState.instance.mobileControls != null){
 					for (key in keys){
 					switch (MobileControls.getMode())
 				{
@@ -274,7 +274,7 @@ class Controls
 								}
 							}
 						}
-						if(keys != null && MusicBeatState.mobileControls != null){
+						if(keys != null && MusicBeatState.instance.mobileControls != null){
 							for (key in keys){
 							switch (MobileControls.getMode())
 						{
@@ -296,7 +296,7 @@ class Controls
 						{
 							for (key in keys)
 							{
-								if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsPressed(key) == true) //dont ask why from MobileControls.hx
+								if (MobileControls.instance.virtualPad.mobileControlsPressed(key) == true) //dont ask why from MobileControls.hx
 								{
 									controllerMode = true;
 									return true;
@@ -312,7 +312,7 @@ class Controls
 						{
 								for (key in keys)
 								{
-									if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustPressed(key) == true)
+									if (MobileControls.instance.virtualPad.mobileControlsJustPressed(key) == true)
 									{
 										controllerMode = true;
 										return true;
@@ -328,7 +328,7 @@ class Controls
 						{
 							for (key in keys)
 							{
-								if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustReleased(key) == true)
+								if (MobileControls.instance.virtualPad.mobileControlsJustReleased(key) == true)
 								{
 									controllerMode = true;
 									return true;
@@ -344,7 +344,7 @@ class Controls
 							{
 								for (key in keys)
 								{
-									if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsPressed(key) == true)
+									if (MobileControls.instance.hitbox.mobileControlsPressed(key) == true)
 									{
 										controllerMode = true;
 										return true;
@@ -360,7 +360,7 @@ class Controls
 							{
 								for (key in keys)
 								{
-									if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsJustPressed(key) == true)
+									if (MobileControls.instance.hitbox.mobileControlsJustPressed(key) == true)
 									{
 										controllerMode = true;
 										return true;
@@ -375,7 +375,7 @@ class Controls
 								{
 									for (key in keys)
 									{
-										if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsJustReleased(key) == true)
+										if (MobileControls.instance.hitbox.mobileControlsJustReleased(key) == true)
 										{
 											controllerMode = true;
 											return true;
