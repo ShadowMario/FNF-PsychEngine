@@ -167,6 +167,7 @@ class Controls
 		return false;
 	}
 	#if mobileC
+	public static var isInSubstate:Bool = false; //just make this true when adding virtualPad into a substate and false while exiting/destroying the VirtualPad
 	private function virtualPadPressed(keys:Array<FlxMobileControlsID>):Bool
 		{
 			// configure the virtualpad input in classes that extends MusicBeatState
@@ -182,7 +183,7 @@ class Controls
 				}
 			}
 			// configure the virtualpad input in classes that extends MusicBeatSubState
-			if(keys != null && MusicBeatSubstate.instance.virtualPad != null)
+			if(keys != null && MusicBeatSubstate.instance.virtualPad != null && isInSubstate)
 				{
 					for (key in keys)
 					{
@@ -214,7 +215,7 @@ class Controls
 					{
 						for (key in keys)
 						{
-							if (MusicBeatSubstate.instance.virtualPad.mobileControlsJustPressed(key) == true)
+							if (MusicBeatSubstate.instance.virtualPad.mobileControlsJustPressed(key) == true && isInSubstate)
 							{
 								controllerMode = true;
 								return true;
@@ -237,7 +238,7 @@ class Controls
 							}
 						}
 					}
-					if(keys != null && MusicBeatSubstate.instance.virtualPad != null)
+					if(keys != null && MusicBeatSubstate.instance.virtualPad != null && isInSubstate)
 						{
 							for (key in keys)
 							{
