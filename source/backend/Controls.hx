@@ -296,7 +296,7 @@ class Controls
 						{
 							for (key in keys)
 							{
-								if (MobileControls.instance.virtualPad.mobileControlsPressed(key) == true) //dont ask why from MobileControls.hx
+								if (MobileControls.virtualPad.mobileControlsPressed(key) == true) //dont ask why from MobileControls.hx
 								{
 									controllerMode = true;
 									return true;
@@ -312,7 +312,7 @@ class Controls
 						{
 								for (key in keys)
 								{
-									if (MobileControls.instance.virtualPad.mobileControlsJustPressed(key) == true)
+									if (MobileControls.virtualPad.mobileControlsJustPressed(key) == true)
 									{
 										controllerMode = true;
 										return true;
@@ -328,7 +328,7 @@ class Controls
 						{
 							for (key in keys)
 							{
-								if (MobileControls.instance.virtualPad.mobileControlsJustReleased(key) == true)
+								if (MobileControls.virtualPad.mobileControlsJustReleased(key) == true)
 								{
 									controllerMode = true;
 									return true;
@@ -344,7 +344,7 @@ class Controls
 							{
 								for (key in keys)
 								{
-									if (MobileControls.instance.hitbox.mobileControlsPressed(key) == true)
+									if (MobileControls.hitbox.mobileControlsPressed(key) == true)
 									{
 										controllerMode = true;
 										return true;
@@ -360,7 +360,7 @@ class Controls
 							{
 								for (key in keys)
 								{
-									if (MobileControls.instance.hitbox.mobileControlsJustPressed(key) == true)
+									if (MobileControls.hitbox.mobileControlsJustPressed(key) == true)
 									{
 										controllerMode = true;
 										return true;
