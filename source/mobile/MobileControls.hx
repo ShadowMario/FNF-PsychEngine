@@ -10,8 +10,8 @@ import flixel.util.FlxDestroyUtil;
 class MobileControls extends FlxSpriteGroup
 {
 	public static var instance:MobileControls;
-	public var virtualPad:FlxVirtualPad;
-	public var hitbox:FlxHitbox;
+	public static var virtualPad:FlxVirtualPad;
+	public static var hitbox:FlxHitbox;
 
 	public function new()
 	{
