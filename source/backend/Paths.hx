@@ -112,7 +112,7 @@ class Paths
 		if(modsAllowed)
 		{
 			var modded:String = modFolders(file);
-			if(FileSystem.exists(SUtil.getPath() + modded)) return SUtil.getPath() + modded;
+			if(FileSystem.exists(modded)) return modded;
 		}
 		#end
 
