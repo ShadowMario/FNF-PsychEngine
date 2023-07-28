@@ -10,10 +10,6 @@ import flixel.util.FlxDestroyUtil;
 class MusicBeatSubstate extends FlxSubState
 {
 	public static var instance:MusicBeatSubstate;
-	override function create() {
-		super.create;
-		instance = this;
-	}
 	public function new()
 	{
 		super();
@@ -33,6 +29,11 @@ class MusicBeatSubstate extends FlxSubState
 
 	inline function get_controls():Controls
 		return Controls.instance;
+
+	override function create() {
+		instance = this;
+		super.create();
+	}
 
 	#if mobileC
 	var virtualPad:FlxVirtualPad;
