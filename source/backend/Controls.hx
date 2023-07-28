@@ -375,7 +375,7 @@ class Controls
 								{
 									for (key in keys)
 									{
-										if (MobileControls.instance.hitbox.mobileControlsJustReleased(key) == true)
+										if (MobileControls.hitbox.mobileControlsJustReleased(key) == true)
 										{
 											controllerMode = true;
 											return true;
