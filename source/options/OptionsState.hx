@@ -41,9 +41,9 @@ class OptionsState extends MusicBeatState
 				#end
 				openSubState(new options.GameplaySettingsSubState());
 			case 'Adjust Delay and Combo':
-				#if mobileC
+				/*#if mobileC
 				removeVirtualPad();
-				#end
+				#end*/
 				MusicBeatState.switchState(new options.NoteOffsetState());
 		}
 	}
