@@ -64,6 +64,9 @@ jobs:
 
       - name: Compile
         run: haxelib run lime build android -D officialBuild -D NO_PRECOMPILED_HEADERS -D mobileC -release
+        env:
+          cert_pass: nullfunni
+          cert_alias_pass: nullfunni
 
       - name: Clear Previous Cache
         uses: actions/github-script@main
