@@ -42,7 +42,7 @@ class MobileControlsSubState extends FlxSubState
                 var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuBG"));
 
                 bg.updateHitbox();
-		bg.antialiasing = ClientPrefs.antialiasing;
+		bg.antialiasing = ClientPrefs.data.antialiasing;
 		add(bg);
 
 		resetButton = new FlxButton(FlxG.width - 200, 50, 'Reset', function()
