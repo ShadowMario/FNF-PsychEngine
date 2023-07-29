@@ -47,6 +47,7 @@ jobs:
           haxelib install hxcpp 4.2.1 --quiet
           haxelib install lime 8.0.1 --quiet
           haxelib git linc_luajit https://github.com/mcagabe19/linc_luajit
+          haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 3.0.2 --quiet
           haxelib install tjson 1.4.0 --quiet
 
