@@ -462,8 +462,8 @@ class FreeplayState extends MusicBeatState
 			curSelected = songs.length - 1;
 		if (curSelected >= songs.length)
 			curSelected = 0;
-			
-		var newColor:Int = songs[curSelected].color;
+
+		var newColor:Int = (songs.length > 0) ? songs[curSelected].color : 0xFFFFFFFF;
 		if(newColor != intendedColor) {
 			if(colorTween != null) {
 				colorTween.cancel();
