@@ -32,7 +32,7 @@ class SUtil
 	public static function getPath():String
 	{
 		#if android
-		return Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
+		return Environment.getExternalStorageDirectory() + '/Android/media/' + Application.current.meta.get('packageName') + '/';
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#end
