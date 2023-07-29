@@ -43,9 +43,6 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
-		#if mobileC
-		addVirtualPad(LEFT_FULL, A_B_X_Y);
-		#end
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
@@ -177,6 +174,10 @@ class StoryMenuState extends MusicBeatState
 
 		changeWeek();
 		changeDifficulty();
+
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B_X_Y);
+		#end
 
 		super.create();
 	}
