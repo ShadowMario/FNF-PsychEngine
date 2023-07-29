@@ -30,7 +30,7 @@ class SUtil
 	public static function getPath():String
 	{
 		#if android
-		return Context.getExternalFilesDir(null) + '/';
+		return Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#end
@@ -153,9 +153,8 @@ class SUtil
 
 		LimeLogger.println(msg);
 		Lib.application.window.alert(msg, 'Error!');
-		//#if desktop DiscordClient.shutdown(); #end
+		DiscordClient.shutdown();
 		#if sys Sys.exit(1); #else LimeSystem.exit(1); #end
-		//LimeSystem.exit(1);
 	}
 
 	/**
