@@ -314,12 +314,12 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if(FlxG.keys.justPressed.CONTROL #if mobileC || virtualPad.buttonC.justPressed #end)
+		if(FlxG.keys.justPressed.CONTROL #if mobileC || MusicBeatState.instance.virtualPad.buttonC.justPressed #end)
 		{
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
 		}
-		else if(FlxG.keys.justPressed.SPACE #if mobileC || MusicBeatState.virtualPad.buttonX.justPressed #end)
+		else if(FlxG.keys.justPressed.SPACE #if mobileC || MusicBeatState.instance.virtualPad.buttonX.justPressed #end)
 		{
 			if(instPlaying != curSelected)
 			{
@@ -374,11 +374,7 @@ class FreeplayState extends MusicBeatState
 			}
 			catch(e:Dynamic)
 			{
-				#if mobile
-				Lib.application.window.alert(e, 'Error!');
-				#else
 				trace('ERROR! $e');
-				#end
 
 				var errorStr:String = e.toString();
 				if(errorStr.startsWith('[file_contents,assets/data/')) errorStr = 'Missing file: ' + errorStr.substring(27, errorStr.length-1); //Missing chart
@@ -407,7 +403,7 @@ class FreeplayState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		}
-		else if(controls.RESET #if mobileC || MusicBeatState.virtualPad.buttonY.justPressed #end)
+		else if(controls.RESET #if mobileC || MusicBeatState.instance.virtualPad.buttonY.justPressed #end)
 		{
 		    #if mobileC
 			removeVirtualPad();
