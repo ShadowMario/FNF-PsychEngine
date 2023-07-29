@@ -38,8 +38,15 @@ jobs:
       - name: Installing Libraries
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp 4.2.1 > /dev/null --quiet
-          
+          haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools
+          haxelib install flixel-addons 3.0.2 --quiet
+          haxelib install flixel-tools 1.5.1 --quiet
+          haxelib install flixel-ui 2.5.1 --quiet
+          haxelib install hxcpp 4.2.1 --quiet
+          haxelib install lime 8.0.1 --quiet
+          haxelib git linc_luajit https://github.com/mcagabe19/linc_luajit
+          haxelib install SScript 3.0.2 --quiet
+          haxelib install tjspn 1.4.0 --quiet
 
       - name: Configure Android
         run: |
