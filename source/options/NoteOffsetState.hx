@@ -389,7 +389,7 @@ class NoteOffsetState extends MusicBeatState
 				updateNoteDelay();
 			}
 
-			if(controls.RESET)
+			if(controls.RESET #if mobileC || virtualPad.buttonC.justPressed #end)
 			{
 				holdTime = 0;
 				barPercent = 0;
