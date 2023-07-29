@@ -153,8 +153,8 @@ class NoteSplash extends FlxSprite
 	{
 		if(configs.exists(skin)) return configs.get(skin);
 
-		var path:String = SUtil.getPath() + Paths.getPath('images/$skin.txt', TEXT, true);
-		var configFile:Array<String> = CoolUtil.coolTextFile(path);
+		var path:String = Paths.getPath('images/$skin.txt', TEXT, true);
+		var configFile:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + path);
 		if(configFile.length < 1) return null;
 		
 		var framerates:Array<String> = configFile[1].split(' ');
