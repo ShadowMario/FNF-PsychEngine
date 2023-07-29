@@ -1,5 +1,6 @@
 package psychlua;
 
+import flixel.FlxBasic;
 import objects.Character;
 import psychlua.FunkinLua;
 import psychlua.CustomSubstate;
@@ -42,6 +43,7 @@ class HScript extends SScript
 		set('FlxTimer', flixel.util.FlxTimer);
 		set('FlxTween', flixel.tweens.FlxTween);
 		set('FlxEase', flixel.tweens.FlxEase);
+		set('FlxColor', CustomFlxColor);
 		set('PlayState', PlayState);
 		set('Paths', Paths);
 		set('Conductor', Conductor);
@@ -79,7 +81,7 @@ class HScript extends SScript
 		});
 		set('debugPrint', function(text:String, ?color:FlxColor = null) {
 			if(color == null) color = FlxColor.WHITE;
-			FunkinLua.luaTrace(text, true, false, color);
+			PlayState.instance.addTextToDebug(text, color);
 		});
 
 		// For adding your own callbacks
@@ -113,11 +115,11 @@ class HScript extends SScript
 				set(libName, Type.resolveClass(str + libName));
 			}
 			catch (e:Dynamic) {
-				var msg:String = e.toString();
+				var msg:String = e.message.substr(0, e.message.indexOf('\n'));
 				if(parentLua != null)
 				{
 					FunkinLua.lastCalledScript = parentLua;
-					msg = parentLua.scriptName + ":" + parentLua.lastCalledFunction + " - " + msg;
+					msg = interpName + ":" + parentLua.lastCalledFunction + " - " + msg;
 				}
 				else msg = '$interpName - $msg';
 				FunkinLua.luaTrace(msg, parentLua == null, false, FlxColor.RED);
@@ -134,6 +136,10 @@ class HScript extends SScript
 		set('Function_StopLua', FunkinLua.Function_StopLua); //doesnt do much cuz HScript has a lower priority than Lua
 		set('Function_StopHScript', FunkinLua.Function_StopHScript);
 		set('Function_StopAll', FunkinLua.Function_StopAll);
+		
+		set('add', function(obj:FlxBasic) PlayState.instance.add(obj));
+		set('insert', function(pos:Int, obj:FlxBasic) PlayState.instance.insert(pos, obj));
+		set('remove', function(obj:FlxBasic, splice:Bool = false) PlayState.instance.remove(obj, splice));
 		#end
 	}
 
@@ -141,11 +147,18 @@ class HScript extends SScript
 	{
 		doString(codeToRun);
 
-		if (funcToRun != null)
+		if(parsingExceptions != null && parsingExceptions.length > 0)
+		{
+			for (e in parsingExceptions)
+				if(e != null)
+					FunkinLua.luaTrace('ERROR ON LOADING ($interpName): ${e.message.substr(0, e.message.indexOf('\n'))}', parentLua == null, false, FlxColor.RED);
+			return null;
+		}
+		else if (funcToRun != null)
 		{
 			if(!exists(funcToRun))
 			{
-				FunkinLua.luaTrace(parentLua.scriptName + ' - No HScript function named: $funcToRun', false, false, FlxColor.RED);
+				FunkinLua.luaTrace('$interpName - No HScript function named: $funcToRun', parentLua == null, false, FlxColor.RED);
 				return null;
 			}
 			var callValue = call(funcToRun, funcArgs);
@@ -157,7 +170,7 @@ class HScript extends SScript
 				if (e != null)
 				{
 					var msg:String = e.toString();
-					if(parentLua != null) msg = parentLua.scriptName + ":" + parentLua.lastCalledFunction + " - " + msg;
+					if(parentLua != null) msg = interpName + ":" + parentLua.lastCalledFunction + " - " + msg;
 					else msg = '$interpName - $msg';
 					FunkinLua.luaTrace(msg, parentLua == null, false, FlxColor.RED);
 				}
@@ -244,6 +257,48 @@ class HScript extends SScript
 			#end
 		});
 		#end
+	}
+}
+
+class CustomFlxColor
+{
+	public static var TRANSPARENT(default, null):Int = FlxColor.TRANSPARENT;
+	public static var BLACK(default, null):Int = FlxColor.BLACK;
+	public static var WHITE(default, null):Int = FlxColor.WHITE;
+	public static var GRAY(default, null):Int = FlxColor.GRAY;
+
+	public static var GREEN(default, null):Int = FlxColor.GREEN;
+	public static var LIME(default, null):Int = FlxColor.LIME;
+	public static var YELLOW(default, null):Int = FlxColor.YELLOW;
+	public static var ORANGE(default, null):Int = FlxColor.ORANGE;
+	public static var RED(default, null):Int = FlxColor.RED;
+	public static var PURPLE(default, null):Int = FlxColor.PURPLE;
+	public static var BLUE(default, null):Int = FlxColor.BLUE;
+	public static var BROWN(default, null):Int = FlxColor.BROWN;
+	public static var PINK(default, null):Int = FlxColor.PINK;
+	public static var MAGENTA(default, null):Int = FlxColor.MAGENTA;
+	public static var CYAN(default, null):Int = FlxColor.CYAN;
+
+	public static function fromRGB(Red:Int, Green:Int, Blue:Int, Alpha:Int = 255):Int
+	{
+		return cast FlxColor.fromRGB(Red, Green, Blue, Alpha);
+	}
+	public static function fromRGBFloat(Red:Float, Green:Float, Blue:Float, Alpha:Float = 1):Int
+	{	
+		return cast FlxColor.fromRGBFloat(Red, Green, Blue, Alpha);
+	}
+
+	public static function fromHSB(Hue:Float, Sat:Float, Brt:Float, Alpha:Float = 1):Int
+	{	
+		return cast FlxColor.fromHSB(Hue, Sat, Brt, Alpha);
+	}
+	public static function fromHSL(Hue:Float, Sat:Float, Light:Float, Alpha:Float = 1):Int
+	{	
+		return cast FlxColor.fromHSL(Hue, Sat, Light, Alpha);
+	}
+	public static function fromString(str:String):Int
+	{
+		return cast FlxColor.fromString(str);
 	}
 }
 #end
