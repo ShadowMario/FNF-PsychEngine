@@ -14,16 +14,34 @@ class OptionsState extends MusicBeatState
 	function openSelectedSubstate(label:String) {
 		switch(label) {
 			case 'Note Colors':
+				#if mobileC
+				removeVirtualPad();
+				#end
 				openSubState(new options.NotesSubState());
 			case 'Controls':
+				#if mobileC
+				removeVirtualPad();
+				#end
 				openSubState(new options.ControlsSubState());
 			case 'Graphics':
+				#if mobileC
+				removeVirtualPad();
+				#end
 				openSubState(new options.GraphicsSettingsSubState());
 			case 'Visuals and UI':
+				#if mobileC
+				removeVirtualPad();
+				#end
 				openSubState(new options.VisualsUISubState());
 			case 'Gameplay':
+				#if mobileC
+				removeVirtualPad();
+				#end
 				openSubState(new options.GameplaySettingsSubState());
 			case 'Adjust Delay and Combo':
+				#if mobileC
+				removeVirtualPad();
+				#end
 				MusicBeatState.switchState(new options.NoteOffsetState());
 		}
 	}
@@ -44,6 +62,15 @@ class OptionsState extends MusicBeatState
 		bg.screenCenter();
 		add(bg);
 
+		#if mobileC
+		tipText = new FlxText(150, FlxG.height - 24, 0, 'Press C to Go In Android Controls Menu', 16);
+		tipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.borderSize = 1.25;
+		tipText.scrollFactor.set();
+		tipText.antialiasing = ClientPrefs.data.antialiasing;
+		add(tipText);
+		#end	
+
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
@@ -63,6 +90,10 @@ class OptionsState extends MusicBeatState
 		changeSelection();
 		ClientPrefs.saveSettings();
 
+		#if mobileC
+		addVirtualPad(UP_DOWN, A_B_C);
+		#end
+
 		super.create();
 	}
 
@@ -80,6 +111,14 @@ class OptionsState extends MusicBeatState
 		if (controls.UI_DOWN_P) {
 			changeSelection(1);
 		}
+
+		#if mobileC
+		if (MusicBeatState.virtualPad.buttonX.justPressed) {
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxTransitionableState.skipNextTransOut = true;
+			MusicBeatState.switchState(new mobile.MobileControlsSubState());
+		}
+		#end
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
