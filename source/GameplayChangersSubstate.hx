@@ -36,10 +36,11 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
+	public static var inThePauseMenu:Bool = false;
 
 	function getOptions()
 	{
-		var skip:Bool = PauseSubState.inThePauseMenu;
+		var skip:Bool = inThePauseMenu;
 
 		var goption:GameplayOption = new GameplayOption('Scroll Type', 'scrolltype', 'string', 'multiplicative', ["multiplicative", "constant"]);
 		optionsArray.push(goption);
@@ -218,7 +219,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	}
 
 	override function destroy() {
-		if (PauseSubState.inThePauseMenu)  {
+		if (inThePauseMenu)  {
 			PlayState.instance.changeTheSettingsBitch();
 		}
 		super.destroy();
