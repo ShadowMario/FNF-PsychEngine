@@ -30,9 +30,9 @@ jobs:
         uses: actions/cache/restore@main
         with:
           path: |
-            .haxelib/
-            export/release/android/haxe/
-            export/release/android/obj/
+            ~/haxelib
+            export/release/android/haxe
+            export/release/android/obj
           key: cache-android-build
 
       - name: Installing Libraries
@@ -95,9 +95,9 @@ jobs:
         uses: actions/cache/save@main
         with:
           path: |
-            .haxelib/
-            export/release/android/haxe/
-            export/release/android/obj/
+            ~/haxelib
+            export/release/android/haxe
+            export/release/android/obj
           key: cache-android-build
 
       - name: Upload Artifact
