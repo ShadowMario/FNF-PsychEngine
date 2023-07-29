@@ -22,6 +22,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 	// Week -1 = Freeplay
 	public function new(song:String, difficulty:Int, character:String, week:Int = -1)
 	{
+		controls.isInSubstate = true;
 		this.song = song;
 		this.difficulty = difficulty;
 		this.week = week;
@@ -70,6 +71,11 @@ class ResetScoreSubState extends MusicBeatSubstate
 		noText.x += 200;
 		add(noText);
 		updateOptions();
+
+		#if mobileC
+		addVirtualPad(LEFT_RIGHT, A_B);
+		addVirtualPadCamera();
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -89,8 +95,14 @@ class ResetScoreSubState extends MusicBeatSubstate
 			updateOptions();
 		}
 		if(controls.BACK) {
+			controls.isInSubstate = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			#if mobileC
+			FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 		} else if(controls.ACCEPT) {
 			if(onYes) {
 				if(week == -1) {
@@ -100,7 +112,13 @@ class ResetScoreSubState extends MusicBeatSubstate
 				}
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			controls.isInSubstate = false;
+			#if mobileC
+			FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 		}
 		super.update(elapsed);
 	}
