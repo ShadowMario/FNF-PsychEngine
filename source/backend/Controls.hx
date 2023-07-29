@@ -171,7 +171,7 @@ class Controls
 	private function virtualPadPressed(keys:Array<FlxMobileControlsID>):Bool
 		{
 			// configure the virtualpad input in classes that extends MusicBeatState
-			if(keys != null && MusicBeatState.instance.virtualPad != null)
+			if(keys != null && MusicBeatState.instance.virtualPad != null && !isInSubstate)
 			{
 				for (key in keys)
 				{
@@ -199,7 +199,7 @@ class Controls
 
 		private function virtualPadJustPressed(keys:Array<FlxMobileControlsID>):Bool
 			{
-				if(keys != null && MusicBeatState.instance.virtualPad != null)
+				if(keys != null && MusicBeatState.instance.virtualPad != null && !isInSubstate)
 				{
 					for (key in keys)
 					{
@@ -227,7 +227,7 @@ class Controls
 
 			private function virtualPadJustReleased(keys:Array<FlxMobileControlsID>):Bool
 				{
-					if(keys != null && MusicBeatState.instance.virtualPad != null)
+					if(keys != null && MusicBeatState.instance.virtualPad != null && !isInSubstate)
 					{
 						for (key in keys)
 						{
