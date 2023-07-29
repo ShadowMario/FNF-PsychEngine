@@ -88,7 +88,7 @@ class WeekData {
 		weeksList = [];
 		weeksLoaded.clear();
 		#if MODS_ALLOWED
-		var directories:Array<String> = [Paths.mods(), Paths.getPreloadPath()];
+		var directories:Array<String> = [Paths.mods(), SUtil.getPath() + Paths.getPreloadPath()];
 		var originalLength:Int = directories.length;
 
 		for (mod in Mods.parseList().enabled)
@@ -175,8 +175,8 @@ class WeekData {
 	private static function getWeekFile(path:String):WeekFile {
 		var rawJson:String = null;
 		#if MODS_ALLOWED
-		if(FileSystem.exists(SUtil.getPath() + path)) {
-			rawJson = File.getContent(SUtil.getPath() + path);
+		if(FileSystem.exists(path)) {
+			rawJson = File.getContent(path);
 		}
 		#else
 		if(OpenFlAssets.exists(path)) {
