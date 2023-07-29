@@ -50,6 +50,8 @@ class NotesSubState extends MusicBeatSubstate
 
 	public function new() {
 		super();
+
+		controls.isInSubstate = true;
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFEA71FD;
@@ -163,6 +165,10 @@ class NotesSubState extends MusicBeatSubstate
 		FlxG.mouse.visible = !controls.controllerMode;
 		controllerPointer.visible = controls.controllerMode;
 		_lastControllerMode = controls.controllerMode;
+
+		#if mobileC
+                addVirtualPad(NONE, B);
+                #end
 	}
 
 	function updateTip()
@@ -182,6 +188,12 @@ class NotesSubState extends MusicBeatSubstate
 		if (controls.BACK) {
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
+			#if mobileC
+			controls.isInSubstate = false;
+			FlxTransitionableState.skipNextTransOut = true;
+			ClientPrefs.saveSettings();
+			FlxG.resetState();
+			#else
 			close();
 			return;
 		}
