@@ -183,7 +183,7 @@ class Controls
 				}
 			}
 			// configure the virtualpad input in classes that extends MusicBeatSubState
-			if(keys != null && MusicBeatSubstate.virtualPad != null && /*isInSubstate*/)
+			if(keys != null && MusicBeatSubstate.virtualPad != null /*&& isInSubstate*/)
 				{
 					for (key in keys)
 					{
@@ -211,7 +211,7 @@ class Controls
 					}
 				}
 
-				if(keys != null && MusicBeatSubstate.virtualPad != null && /*isInSubstate*/)
+				if(keys != null && MusicBeatSubstate.virtualPad != null /*&& isInSubstate*/)
 					{
 						for (key in keys)
 						{
@@ -238,7 +238,7 @@ class Controls
 							}
 						}
 					}
-					if(keys != null && MusicBeatSubstate.virtualPad != null && /*isInSubstate*/)
+					if(keys != null && MusicBeatSubstate.virtualPad != null /*&& isInSubstate*/)
 						{
 							for (key in keys)
 							{
