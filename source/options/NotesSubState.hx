@@ -195,6 +195,7 @@ class NotesSubState extends MusicBeatSubstate
 			FlxG.resetState();
 			#else
 			close();
+			#end
 			return;
 		}
 
