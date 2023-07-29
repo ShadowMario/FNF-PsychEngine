@@ -555,7 +555,7 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(camOther, false);
-		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
+		grpNoteSplashes = new FlxTypedGroup<NoteSplash>((4)*3);
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		CustomFadeTransition.nextCamera = camOther;
@@ -2766,6 +2766,38 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	public function changeTheSettingsBitch() {
+		healthGain = ClientPrefs.getGameplaySetting('healthgain', 1);
+		healthLoss = ClientPrefs.getGameplaySetting('healthloss', 1);
+		hpDrainLevel = ClientPrefs.getGameplaySetting('drainlevel', 1);
+		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
+		sickOnly = ClientPrefs.getGameplaySetting('onlySicks', false);
+		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
+		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		opponentChart = ClientPrefs.getGameplaySetting('opponentplay', false);
+		bothsides = ClientPrefs.getGameplaySetting('bothSides', false);
+		trollingMode = ClientPrefs.getGameplaySetting('thetrollingever', false);
+		opponentDrain = ClientPrefs.getGameplaySetting('opponentdrain', false);
+		randomMode = ClientPrefs.getGameplaySetting('randommode', false);
+		flip = ClientPrefs.getGameplaySetting('flip', false);
+		stairs = ClientPrefs.getGameplaySetting('stairmode', false);
+		waves = ClientPrefs.getGameplaySetting('wavemode', false);
+		oneK = ClientPrefs.getGameplaySetting('onekey', false);
+		randomSpeedThing = ClientPrefs.getGameplaySetting('randomspeed', false);
+		trollingMode = ClientPrefs.getGameplaySetting('thetrollingever', false);
+		jackingtime = ClientPrefs.getGameplaySetting('jacks', 0);
+		playbackRate = ClientPrefs.getGameplaySetting('songspeed', 1);
+		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
+
+		switch(songSpeedType)
+		{
+			case "multiplicative":
+				songSpeed = SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1);
+			case "constant":
+				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
+		}
+	}
+
 	function schoolIntro(?dialogueBox:DialogueBox):Void
 	{
 		inCutscene = true;
@@ -4432,6 +4464,9 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 	override public function update(elapsed:Float)
 	{
+		if (combo >= 1.79e+308) combo = 1.79e+308; //Combo exceeded the maximum value that a Float can go up to, lock it at 1.79e+308 to avoid a reset to 0
+		if (totalNotesPlayed >= 1.79e+308) totalNotesPlayed = 1.79e+308; //Note hit count exceeded the maximum value that a Float can go up to, lock it at 1.79e+308 to avoid a reset to 0
+		if (enemyHits >= 1.79e+308) enemyHits = 1.79e+308; //Opponent's note hit count exceeded the maximum value that a Float can go up to, lock it at 1.79e+308 to avoid a reset to 0
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -5188,7 +5223,6 @@ class PlayState extends MusicBeatState
 			{
 			time = spawnTime / songSpeed;
 			}
-			if(songSpeed < 1) time /= songSpeed;
 			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
 
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
@@ -5211,7 +5245,7 @@ class PlayState extends MusicBeatState
 					boyfriend.dance();
 					//boyfriend.animation.curAnim.finish();
 				}
-          				if(dad.animation.curAnim != null && dad.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * dad.singDuration && dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) {
+          				if(opponentChart && dad.animation.curAnim != null && dad.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * dad.singDuration && dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) {
 					dad.dance();
 				}
 				}
@@ -5446,7 +5480,9 @@ class PlayState extends MusicBeatState
 				for (timer in modchartTimers) {
 					timer.active = true;
 				}
-				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y));
+				if (ClientPrefs.charsAndBG) openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y));
+
+				if (!ClientPrefs.charsAndBG) openSubState(new GameOverSubstate(0, 0, 0, 0));
 
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
@@ -7258,13 +7294,13 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				else{
 					callOnLuas('onGhostTap', [key]);
-				if (!opponentChart && ClientPrefs.ghostTapAnim)
+				if (!opponentChart && ClientPrefs.ghostTapAnim && ClientPrefs.charsAndBG)
 				{
 					boyfriend.playAnim(singAnimations[Std.int(Math.abs(key))], true);
 					if (ClientPrefs.cameraPanning) camPanRoutine(singAnimations[Std.int(Math.abs(key))], 'bf');
 					boyfriend.holdTimer = 0;
 				}
-				if (opponentChart && ClientPrefs.ghostTapAnim)
+				if (opponentChart && ClientPrefs.ghostTapAnim && ClientPrefs.charsAndBG)
 				{
 					dad.playAnim(singAnimations[Std.int(Math.abs(key))], true);
 					if (ClientPrefs.cameraPanning) camPanRoutine(singAnimations[Std.int(Math.abs(key))], 'dad');
@@ -7378,7 +7414,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 			});
 
-			if(FlxG.keys.anyJustPressed(tauntKey) && !char.animation.curAnim.name.endsWith('miss') && char.specialAnim == false && ClientPrefs.spaceVPose){
+			if(ClientPrefs.charsAndBG && FlxG.keys.anyJustPressed(tauntKey) && !char.animation.curAnim.name.endsWith('miss') && char.specialAnim == false && ClientPrefs.spaceVPose){
 				char.playAnim('hey', true);
 				char.specialAnim = true;
 				char.heyTimer = 0.59;
@@ -7394,12 +7430,12 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				#end
 			}
-			else if (boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+			else if (ClientPrefs.charsAndBG && boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{
 				boyfriend.dance();
 				//boyfriend.animation.curAnim.finish();
 			}
-			if (dad.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * dad.singDuration 
+			if (ClientPrefs.charsAndBG && opponentChart && cpuControlled && dad.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * dad.singDuration 
 			&& dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss'))
 				dad.dance();
 		}
@@ -7484,7 +7520,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		}
 		if (opponentChart) char = dad;
 
-		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
+		if(char != null && !daNote.noMissAnimation && char.hasMissAnimations && ClientPrefs.charsAndBG)
 		{
 			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
 			char.playAnim(animToPlay, true);

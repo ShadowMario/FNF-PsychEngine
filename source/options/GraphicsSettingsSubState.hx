@@ -60,6 +60,13 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			true); //Default value
 		addOption(option);
 
+		var option:Option = new Option('GPU Caching', //Name
+			"If checked, allows the GPU to be used for caching textures, decreasing RAM usage.\nDon't turn this on if you have a shitty Graphics Card.", //Description
+			'cacheOnGPU',
+			'bool',
+			false); //Don't turn this on by default
+		addOption(option);
+
 		var option:Option = new Option('Automatic Note Spawn Time', //Name
 			"If checked, the Notes' spawn time will instead depend on the scroll speed. \nUseful if you don't want notes just spawning out of thin air. \nNOTE: Disable this if you use Lua Extra Keys!!", //Description
 			'dynamicSpawnTime', //Save data variable name

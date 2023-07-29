@@ -39,6 +39,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 	function getOptions()
 	{
+		var skip:Bool = PauseSubState.inThePauseMenu;
+
 		var goption:GameplayOption = new GameplayOption('Scroll Type', 'scrolltype', 'string', 'multiplicative', ["multiplicative", "constant"]);
 		optionsArray.push(goption);
 
@@ -159,7 +161,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		return null;
 	}
 
-	public function new()
+	public function new(?pause:MusicBeatSubstate = null)
 	{
 		super();
 		
@@ -212,6 +214,14 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		changeSelection();
 		reloadCheckboxes();
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+	}
+
+	override function destroy() {
+		if (PauseSubState.inThePauseMenu)  {
+			PlayState.instance.changeTheSettingsBitch();
+		}
+		super.destroy();
 	}
 
 	var nextAccept:Int = 5;

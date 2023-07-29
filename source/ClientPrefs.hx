@@ -20,6 +20,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var cameraPanning:Bool = true;
 	public static var panIntensity:Float = 1;
 	public static var noteSplashes:Bool = true;
+	public static var cacheOnGPU:Bool = false;
 	public static var oppNoteSplashes:Bool = true;
 	public static var instaRestart:Bool = false;
 	public static var charsAndBG:Bool = true;
@@ -210,6 +211,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.panIntensity = panIntensity;
 		FlxG.save.data.compactNumbers = compactNumbers;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
+		FlxG.save.data.cacheOnGPU = cacheOnGPU;
 		FlxG.save.data.hideScore = hideScore;
 		FlxG.save.data.doubleGhostZoom = doubleGhostZoom;
 		FlxG.save.data.memLeaks = memLeaks;
@@ -335,6 +337,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.compactNumbers != null) {
 			compactNumbers = FlxG.save.data.compactNumbers;
+		}
+		if(FlxG.save.data.cacheOnGPU != null) {
+			cacheOnGPU = FlxG.save.data.cacheOnGPU;
 		}
 		if(FlxG.save.data.bfIconStyle != null) {
 			bfIconStyle = FlxG.save.data.bfIconStyle;
