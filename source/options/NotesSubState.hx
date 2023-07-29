@@ -10,7 +10,7 @@ import lime.system.Clipboard;
 import flixel.util.FlxGradient;
 import objects.StrumNote;
 import objects.Note;
-
+import flixel.addons.transition.FlxTransitionableState;
 import shaders.RGBPalette;
 import shaders.RGBPalette.RGBShaderReference;
 
