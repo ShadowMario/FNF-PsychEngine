@@ -35,6 +35,9 @@ class PauseSubState extends MusicBeatSubstate
 	public function new(x:Float, y:Float)
 	{
 		super();
+
+		controls.isInSubstate = true;
+
 		if(Difficulty.list.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
 		if(PlayState.chartingMode)
@@ -140,6 +143,11 @@ class PauseSubState extends MusicBeatSubstate
 
 		regenMenu();
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
+		#if mobileC
+		addVirtualPad(LEFT_RIGHT, A_B);
+		addPadCamera();
+		#end
 	}
 
 	var holdTime:Float = 0;
@@ -237,6 +245,7 @@ class PauseSubState extends MusicBeatSubstate
 			switch (daSelected)
 			{
 				case "Resume":
+					controls.isInSubstate = false;
 					close();
 				case 'Change Difficulty':
 					menuItems = difficultyChoices;
@@ -247,14 +256,17 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
 				case "Restart Song":
+					controls.isInSubstate = false;
 					restartSong();
 				case "Leave Charting Mode":
+					controls.isInSubstate = false;
 					restartSong();
 					PlayState.chartingMode = false;
 				case 'Skip Time':
 					if(curTime < Conductor.songPosition)
 					{
 						PlayState.startOnTime = curTime;
+						controls.isInSubstate = false;
 						restartSong(true);
 					}
 					else
@@ -264,9 +276,11 @@ class PauseSubState extends MusicBeatSubstate
 							PlayState.instance.clearNotesBefore(curTime);
 							PlayState.instance.setSongTime(curTime);
 						}
+						controls.isInSubstate = false;
 						close();
 					}
 				case 'End Song':
+					controls.isInSubstate = false;
 					close();
 					PlayState.instance.notes.clear();
 					PlayState.instance.unspawnNotes = [];
@@ -278,6 +292,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case 'Options':
+					controls.isInSubstate = false;
 					PlayState.instance.paused = true; // For lua
 					PlayState.instance.vocals.volume = 0;
 					MusicBeatState.switchState(new OptionsState());
@@ -289,6 +304,7 @@ class PauseSubState extends MusicBeatSubstate
 					}
 					OptionsState.onPlayState = true;
 				case "Exit to menu":
+					controls.isInSubstate = true;
 					#if desktop DiscordClient.resetClientID(); #end
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
