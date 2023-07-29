@@ -42,7 +42,7 @@ class MobileControlsSubState extends FlxSubState
                 var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuBG"));
 
                 bg.updateHitbox();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = ClientPrefs.antialiasing;
 		add(bg);
 
 		resetButton = new FlxButton(FlxG.width - 200, 50, 'Reset', function()
@@ -136,7 +136,7 @@ class MobileControlsSubState extends FlxSubState
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.mobile.justPressed.BACK || FlxG.mobile.justReleased.BACK)
+		if (FlxG.android.justPressed.BACK || FlxG.android.justReleased.BACK)
 		{
 			MobileControls.setMode(curSelected);
 
