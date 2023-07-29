@@ -45,10 +45,14 @@ class CallbackHandler
 		}
 		catch(e:Dynamic)
 		{
-			if(Lua_helper.sendErrorsToLua) {LuaL.error(l, 'CALLBACK ERROR! ${if(e.message != null) e.message else e}');return 0;}
+			if(StfuAboutLua.sendErrorsToLua) {LuaL.error(l, 'CALLBACK ERROR! ${if(e.message != null) e.message else e}');return 0;}
 			trace(e);
 			throw(e);
 		}
 		return 0;
 	}
+}
+
+class StfuAboutLua extends llua.Lua.Lua_helper {
+	public static var sendErrorsToLua:Bool = true;
 }
