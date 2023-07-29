@@ -115,7 +115,7 @@ class OptionsState extends MusicBeatState
 		}
 
 		#if mobileC
-		if (MusicBeatState.instance.virtualPad.buttonC.justPressed) {
+		if (virtualPad.buttonC.justPressed) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new mobile.MobileControlsSubState());
