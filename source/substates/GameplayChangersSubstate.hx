@@ -2,6 +2,7 @@ package substates;
 
 import objects.AttachedText;
 import objects.CheckboxThingie;
+import flixel.addons.transition.FlxTransitionableState;
 
 class GameplayChangersSubstate extends MusicBeatSubstate
 {
