@@ -3,7 +3,7 @@ package states;
 import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
-
+import openfl.Lib;
 import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 
@@ -314,12 +314,12 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if(FlxG.keys.justPressed.CONTROL /*#if mobileC || MusicBeatState.virtualPad.buttonC.justPressed #end*/)
+		if(FlxG.keys.justPressed.CONTROL #if mobileC || virtualPad.buttonC.justPressed #end)
 		{
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
 		}
-		else if(FlxG.keys.justPressed.SPACE /*#if mobileC || MusicBeatState.virtualPad.buttonX.justPressed #end*/)
+		else if(FlxG.keys.justPressed.SPACE #if mobileC || MusicBeatState.virtualPad.buttonX.justPressed #end)
 		{
 			if(instPlaying != curSelected)
 			{
@@ -374,7 +374,11 @@ class FreeplayState extends MusicBeatState
 			}
 			catch(e:Dynamic)
 			{
+				#if mobile
+				Lib.application.window.alert(e, 'Error!');
+				#else
 				trace('ERROR! $e');
+				#end
 
 				var errorStr:String = e.toString();
 				if(errorStr.startsWith('[file_contents,assets/data/')) errorStr = 'Missing file: ' + errorStr.substring(27, errorStr.length-1); //Missing chart
@@ -389,7 +393,7 @@ class FreeplayState extends MusicBeatState
 				return;
 			}
 			
-			if (FlxG.keys.pressed.SHIFT /*#if mobileC || MusicBeatState.virtualPad.buttonZ.pressed #end*/){
+			if (FlxG.keys.pressed.SHIFT #if mobileC || MusicBeatState.virtualPad.buttonZ.pressed #end){
 				LoadingState.loadAndSwitchState(new ChartingState());
 			}else{
 				LoadingState.loadAndSwitchState(new PlayState());
@@ -403,7 +407,7 @@ class FreeplayState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		}
-		else if(controls.RESET /*#if mobileC || MusicBeatState.virtualPad.buttonY.justPressed #end*/)
+		else if(controls.RESET #if mobileC || MusicBeatState.virtualPad.buttonY.justPressed #end)
 		{
 		    #if mobileC
 			removeVirtualPad();
