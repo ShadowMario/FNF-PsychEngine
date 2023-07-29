@@ -92,8 +92,8 @@ class WeekData
 		weeksLoaded.clear();
 		#if MODS_ALLOWED
 		var disabledMods:Array<String> = [];
-		var modsListPath:String = SUtil.getStorageDirectory() + 'modsList.txt';
-		var directories:Array<String> = [Paths.mods(), SUtil.getStorageDirectory() + Paths.getPreloadPath()];
+		var modsListPath:String = SUtil.getPath() + 'modsList.txt';
+		var directories:Array<String> = [Paths.mods(), SUtil.getPath() + Paths.getPreloadPath()];
 		var originalLength:Int = directories.length;
 		if (FileSystem.exists(modsListPath))
 		{
@@ -110,7 +110,7 @@ class WeekData
 					var path = haxe.io.Path.join([Paths.mods(), splitName[0]]);
 					// trace('trying to push: ' + splitName[0]);
 					if (sys.FileSystem.isDirectory(path)
-						&& !Paths.ignoreModFolders.contains(splitName[0])
+						&& !Mods.ignoreModFolders.contains(splitName[0])
 						&& !disabledMods.contains(splitName[0])
 						&& !directories.contains(path + '/'))
 					{
@@ -121,7 +121,7 @@ class WeekData
 			}
 		}
 
-		var modsDirectories:Array<String> = Paths.getModDirectories();
+		var modsDirectories:Array<String> = Mods.getModDirectories();
 		for (folder in modsDirectories)
 		{
 			var pathThing:String = haxe.io.Path.join([Paths.mods(), folder]) + '/';
@@ -136,7 +136,7 @@ class WeekData
 		var originalLength:Int = directories.length;
 		#end
 
-		var sexList:Array<String> = CoolUtil.coolTextFile(SUtil.getStorageDirectory() + Paths.getPreloadPath('weeks/weekList.txt'));
+		var sexList:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + Paths.getPreloadPath('weeks/weekList.txt'));
 		for (i in 0...sexList.length)
 		{
 			for (j in 0...directories.length)
@@ -262,7 +262,7 @@ class WeekData
 		#if MODS_ALLOWED
 		if (FileSystem.exists("modsList.txt"))
 		{
-			var list:Array<String> = CoolUtil.listFromString(File.getContent(SUtil.getStorageDirectory() + "modsList.txt"));
+			var list:Array<String> = CoolUtil.listFromString(File.getContent(SUtil.getPath() + "modsList.txt"));
 			var foundTheTop = false;
 			for (i in list)
 			{
