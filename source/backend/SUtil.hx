@@ -7,6 +7,7 @@ import android.os.Environment;
 #end
 import haxe.io.Path;
 import haxe.CallStack;
+import lime.app.Application;
 import lime.system.System as LimeSystem;
 import lime.utils.Assets as LimeAssets;
 import lime.utils.Log as LimeLogger;
