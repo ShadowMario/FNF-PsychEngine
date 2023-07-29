@@ -410,7 +410,7 @@ class PlayState extends MusicBeatState
 		#if LUA_ALLOWED
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'scripts/');
 		for (folder in foldersToCheck)
-			for (file in FileSystem.readDirectory(SUtil.getPath() + folder))
+			for (file in FileSystem.readDirectory(folder))
 			{
 				if(file.toLowerCase().endsWith('.lua'))
 					new FunkinLua(folder + file);
@@ -604,7 +604,7 @@ class PlayState extends MusicBeatState
 		#if LUA_ALLOWED
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'data/' + songName + '/');
 		for (folder in foldersToCheck)
-			for (file in FileSystem.readDirectory(SUtil.getPath() + folder))
+			for (file in FileSystem.readDirectory(folder))
 			{
 				if(file.toLowerCase().endsWith('.lua'))
 					new FunkinLua(folder + file);
@@ -750,15 +750,15 @@ class PlayState extends MusicBeatState
 		var luaFile:String = 'characters/' + name + '.lua';
 		#if MODS_ALLOWED
 		var replacePath:String = Paths.modFolders(luaFile);
-		if(FileSystem.exists(SUtil.getPath() + replacePath))
+		if(FileSystem.exists(replacePath))
 		{
 			luaFile = replacePath;
 			doPush = true;
 		}
 		else
 		{
-			luaFile = Paths.getPreloadPath(luaFile);
-			if(FileSystem.exists(SUtil.getPath() + luaFile))
+			luaFile = SUtil.getPath() + Paths.getPreloadPath(luaFile);
+			if(FileSystem.exists(luaFile))
 				doPush = true;
 		}
 		#else
@@ -785,15 +785,15 @@ class PlayState extends MusicBeatState
 		var doPush:Bool = false;
 		var scriptFile:String = 'characters/' + name + '.hx';
 		var replacePath:String = Paths.modFolders(scriptFile);
-		if(FileSystem.exists(SUtil.getPath() + replacePath))
+		if(FileSystem.exists(replacePath))
 		{
 			scriptFile = replacePath;
 			doPush = true;
 		}
 		else
 		{
-			scriptFile = Paths.getPreloadPath(scriptFile);
-			if(FileSystem.exists(SUtil.getPath() + scriptFile))
+			scriptFile = SUtil.getPath() + Paths.getPreloadPath(scriptFile);
+			if(FileSystem.exists(scriptFile))
 				doPush = true;
 		}
 		
@@ -838,7 +838,7 @@ class PlayState extends MusicBeatState
 
 		var filepath:String = Paths.video(name);
 		#if sys
-		if(!FileSystem.exists(SUtil.getPath() + filepath))
+		if(!FileSystem.exists(filepath))
 		#else
 		if(!OpenFlAssets.exists(filepath))
 		#end
@@ -1617,7 +1617,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
 
-		if (controls.PAUSE && startedCountdown && canPause)
+		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnScripts('onPause', null, true);
 			if(ret != FunkinLua.Function_Stop) {
@@ -3486,19 +3486,19 @@ class PlayState extends MusicBeatState
 		
 		for (folder in foldersToCheck)
 		{
-			if(FileSystem.exists(SUtil.getPath() + folder))
+			if(FileSystem.exists(folder))
 			{
 				var frag:String = folder + name + '.frag';
 				var vert:String = folder + name + '.vert';
 				var found:Bool = false;
-				if(FileSystem.exists(SUtil.getPath() + frag))
+				if(FileSystem.exists(frag))
 				{
 					frag = File.getContent(frag);
 					found = true;
 				}
 				else frag = null;
 
-				if(FileSystem.exists(SUtil.getPath() + vert))
+				if(FileSystem.exists(vert))
 				{
 					vert = File.getContent(vert);
 					found = true;
