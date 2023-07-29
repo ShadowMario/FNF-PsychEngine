@@ -162,8 +162,13 @@ class FreeplayState extends MusicBeatState
 		add(textBG);
 
 		#if PRELOAD_ALL
+		#if mobileC
+		var leText:String = "Press X to listen to the Song / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+		var size:Int = 16;
+		#else
 		var leText:String = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
 		var size:Int = 16;
+		#end
 		#else
 		var leText:String = "Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
 		var size:Int = 18;
@@ -174,11 +179,11 @@ class FreeplayState extends MusicBeatState
 		add(text);
 		
 		updateTexts();
-
+		
 		#if mobileC
-		addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
-		#end
-
+                addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
+                #end
+                
 		super.create();
 	}
 
@@ -244,7 +249,7 @@ class FreeplayState extends MusicBeatState
 		positionHighscore();
 
 		var shiftMult:Int = 1;
-		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
+		if(FlxG.keys.pressed.SHIFT  /*#if mobileC || MusicBeatState.virtualPad.buttonZ.pressed #end*/) shiftMult = 3;
 
 		if(songs.length > 1)
 		{
@@ -309,12 +314,12 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if(FlxG.keys.justPressed.CONTROL #if mobileC || virtualPad.buttonC.justPressed #end)
+		if(FlxG.keys.justPressed.CONTROL /*#if mobileC || MusicBeatState.virtualPad.buttonC.justPressed #end*/)
 		{
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
 		}
-		else if(FlxG.keys.justPressed.SPACE #if mobileC || virtualPad.buttonX.justPressed #end)
+		else if(FlxG.keys.justPressed.SPACE /*#if mobileC || MusicBeatState.virtualPad.buttonX.justPressed #end*/)
 		{
 			if(instPlaying != curSelected)
 			{
@@ -346,7 +351,7 @@ class FreeplayState extends MusicBeatState
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
 			/*#if MODS_ALLOWED
-			if(!sys.FileSystem.exists(SUtil.getPath() + Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(SUtil.getPath() + Paths.json(songLowercase + '/' + poop))) {
+			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
 			#else
 			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
 			#end
@@ -383,7 +388,13 @@ class FreeplayState extends MusicBeatState
 				super.update(elapsed);
 				return;
 			}
-			LoadingState.loadAndSwitchState(new PlayState());
+			
+			if (FlxG.keys.pressed.SHIFT /*#if mobileC || MusicBeatState.virtualPad.buttonZ.pressed #end*/){
+				LoadingState.loadAndSwitchState(new ChartingState());
+			}else{
+				LoadingState.loadAndSwitchState(new PlayState());
+			}
+			//LoadingState.loadAndSwitchState(new PlayState());
 
 			FlxG.sound.music.volume = 0;
 					
@@ -392,8 +403,11 @@ class FreeplayState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		}
-		else if(controls.RESET #if mobileC || virtualPad.buttonY.justPressed #end)
+		else if(controls.RESET /*#if mobileC || MusicBeatState.virtualPad.buttonY.justPressed #end*/)
 		{
+		    #if mobileC
+			removeVirtualPad();
+			#end
 			persistentUpdate = false;
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
