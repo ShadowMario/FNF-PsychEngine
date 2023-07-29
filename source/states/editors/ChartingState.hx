@@ -206,7 +206,7 @@ class ChartingState extends MusicBeatState
 				needsVoices: true,
 				player1: 'bf',
 				player2: 'dad',
-				player3: 'gf'
+				player3: 'gf',
 				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage'
