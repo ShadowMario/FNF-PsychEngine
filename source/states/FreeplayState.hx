@@ -485,7 +485,8 @@ class FreeplayState extends MusicBeatState
 			iconArray[i].alpha = 0.6;
 		}
 
-		iconArray[curSelected].alpha = 1;
+		if (iconArray.length > 0)
+			iconArray[curSelected].alpha = 1;
 
 		for (item in grpSongs.members)
 		{
