@@ -2,6 +2,7 @@ package options;
 
 import states.MainMenuState;
 import backend.StageData;
+import flixel.addons.transition.FlxTransitionableState;
 
 class OptionsState extends MusicBeatState
 {
@@ -113,7 +114,7 @@ class OptionsState extends MusicBeatState
 		}
 
 		#if mobileC
-		if (MusicBeatState.virtualPad.buttonX.justPressed) {
+		if (MusicBeatState.instance.virtualPad.buttonC.justPressed) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new mobile.MobileControlsSubState());
