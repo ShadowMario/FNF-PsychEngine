@@ -181,8 +181,8 @@ class FreeplayState extends MusicBeatState
 		updateTexts();
 		
 		#if mobileC
-                addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
-                #end
+		addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
+		#end
                 
 		super.create();
 	}
@@ -516,7 +516,8 @@ class FreeplayState extends MusicBeatState
 
 	inline private function _updateSongLastDifficulty()
 	{
-		songs[curSelected].lastDifficulty = Difficulty.getString(curDifficulty);
+		if (songs.length > 0)
+			songs[curSelected].lastDifficulty = Difficulty.getString(curDifficulty);
 	}
 
 	private function positionHighscore() {
