@@ -7,7 +7,7 @@ import sys.io.File;
 import lime.utils.Assets;
 #end
 //import tjson.TJSON as Json;
-import haxe.Json
+import haxe.Json;
 import backend.SUtil;
 
 typedef ModsList = {
