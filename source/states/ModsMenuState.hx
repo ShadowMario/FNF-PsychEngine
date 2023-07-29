@@ -9,6 +9,7 @@ import openfl.display.BitmapData;
 import flash.geom.Rectangle;
 import lime.utils.Assets;
 import tjson.TJSON as Json;
+import backend.InputFormatter;
 
 #if sys
 import sys.io.File;
@@ -64,7 +65,7 @@ class ModsMenuState extends MusicBeatState
 		add(bg);
 		bg.screenCenter();
 
-		final backKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('back'));
+		final backKey = ClientPrefs.keyBinds.get('back').copy();
 
 		for (key in backKey)
 			noModsTxt = new FlxText(0, 0, FlxG.width, 'NO MODS HAVE BEEN INSTALLED\nPRESS ${InputFormatter.getKeyName(key).toUpperCase()} TO EXIT', 48);
