@@ -1,7 +1,7 @@
 {
 	"directory": "week5",
 	"defaultZoom": 1.05,
-	"isPixelStage": false,
+	"stageUI": "",
 
 	"boyfriend": [1090, 100],
 	"girlfriend": [400, 130],

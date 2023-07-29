@@ -4,7 +4,6 @@ import haxe.Timer;
 import openfl.events.Event;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
-import flixel.math.FlxMath;
 #if gl_stats
 import openfl.display._internal.stats.Context3DStats;
 import openfl.display._internal.stats.DrawCallContext;
@@ -78,7 +77,7 @@ class FPS extends TextField
 
 		var currentCount = times.length;
 		currentFPS = Math.round((currentCount + cacheCount) / 2);
-		if (currentFPS > ClientPrefs.framerate) currentFPS = ClientPrefs.framerate;
+		if (currentFPS > ClientPrefs.data.framerate) currentFPS = ClientPrefs.data.framerate;
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
@@ -91,7 +90,7 @@ class FPS extends TextField
 			#end
 
 			textColor = 0xFFFFFFFF;
-			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
+			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.data.framerate / 2)
 			{
 				textColor = 0xFFFF0000;
 			}
