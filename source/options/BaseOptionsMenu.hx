@@ -123,10 +123,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 		if (controls.BACK) {
 			#if mobileC
-			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.resetState();
-			ClientPrefs.saveSettings();
 			controls.isInSubstate = false;
+			FlxTransitionableState.skipNextTransOut = true;
+			ClientPrefs.saveSettings();
+			FlxG.resetState();
 			#else
 			close();
 			#end
