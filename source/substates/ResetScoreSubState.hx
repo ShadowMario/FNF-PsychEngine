@@ -2,7 +2,7 @@ package substates;
 
 import backend.WeekData;
 import backend.Highscore;
-
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxSubState;
 import objects.HealthIcon;
 
@@ -74,7 +74,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 
 		#if mobileC
 		addVirtualPad(LEFT_RIGHT, A_B);
-		addVirtualPadCamera();
+		addPadCamera();
 		#end
 	}
 
