@@ -389,7 +389,7 @@ class FreeplayState extends MusicBeatState
 				return;
 			}
 			
-			if (FlxG.keys.pressed.SHIFT #if mobileC || MusicBeatState.virtualPad.buttonZ.pressed #end){
+			if (FlxG.keys.pressed.SHIFT #if mobileC || MusicBeatState.instance.virtualPad.buttonZ.pressed #end){
 				LoadingState.loadAndSwitchState(new ChartingState());
 			}else{
 				LoadingState.loadAndSwitchState(new PlayState());
