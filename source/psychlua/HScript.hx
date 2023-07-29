@@ -34,7 +34,7 @@ class HScript extends SScript
 	}
 
 	public var origin:String;
-	override public function new(?parent:FunkinLua = null, ?file:String)
+	override public function new(?parent:FunkinLua, ?file:String)
 	{
 		if (file == null)
 			file = '';
