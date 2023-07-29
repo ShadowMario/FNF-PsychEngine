@@ -3,7 +3,6 @@ package psychlua;
 import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
-
 import openfl.Lib;
 import openfl.utils.Assets;
 import openfl.display.BitmapData;
@@ -1438,7 +1437,7 @@ class FunkinLua {
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
 				trace(resultStr);
-				#if windows
+				#if (destkop || mobile)
 				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
 				#else
 				luaTrace('$scriptName\n$resultStr', true, false, FlxColor.RED);
