@@ -5,14 +5,11 @@ import flash.errors.Error;
 import flash.events.KeyboardEvent;
 import flash.geom.Rectangle;
 import flixel.addons.ui.FlxUI.NamedString;
-import flixel.FlxG;
-import flixel.FlxSprite;
+
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
+
 import flixel.util.FlxDestroyUtil;
-import flixel.util.FlxTimer;
 
 /**
  * FlxInputText v1.11, ported to Haxe
@@ -27,7 +24,6 @@ import flixel.util.FlxTimer;
  * License: Creative Commons Attribution 3.0 United States
  * @link http://creativecommons.org/licenses/by/3.0/us/
  * 
- * Modified by PlankDev to support cut/copy/paste
  */
 class FlxInputText extends FlxText
 {
