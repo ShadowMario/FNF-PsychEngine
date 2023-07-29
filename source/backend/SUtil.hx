@@ -3,6 +3,7 @@ package backend;
 #if android
 import android.content.Context;
 import android.widget.Toast;
+import android.os.Environment;
 #end
 import haxe.io.Path;
 import haxe.CallStack;
@@ -153,7 +154,7 @@ class SUtil
 
 		LimeLogger.println(msg);
 		Lib.application.window.alert(msg, 'Error!');
-		DiscordClient.shutdown();
+		#if desktop DiscordClient.shutdown(); #end
 		#if sys Sys.exit(1); #else LimeSystem.exit(1); #end
 	}
 
