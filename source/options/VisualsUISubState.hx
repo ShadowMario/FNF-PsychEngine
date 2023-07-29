@@ -28,7 +28,7 @@ class VisualsUISubState extends BaseOptionsMenu
 
 		// options
 
-		var noteSkins:Array<String> = Mods.mergeAllTextsNamed(SUtil.getPath() + 'images/noteSkins/list.txt', 'shared');
+		var noteSkins:Array<String> = Mods.mergeAllTextsNamed('images/noteSkins/list.txt', 'shared');
 		if(noteSkins.length > 0)
 		{
 			if(!noteSkins.contains(ClientPrefs.data.noteSkin))
