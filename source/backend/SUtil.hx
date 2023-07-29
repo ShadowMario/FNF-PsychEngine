@@ -44,13 +44,13 @@ class SUtil
 	public static function checkFiles():Void
 	{
 		#if mobile
-		if (!FileSystem.exists(SUtil.getStorageDirectory()))
+		if (!FileSystem.exists(SUtil.getPath()))
 		{
                         try {
-			FileSystem.createDirectory(SUtil.getStorageDirectory());
+			FileSystem.createDirectory(SUtil.getPath());
                         }
                         catch (e){
-                        Lib.application.window.alert('Please create folder to\n' + SUtil.getStorageDirectory() + '\nPress Ok to close the app',
+                        Lib.application.window.alert('Please create folder to\n' + SUtil.getPath() + '\nPress Ok to close the app',
 				'Error!');
 			LimeSystem.exit(1);
                         }
