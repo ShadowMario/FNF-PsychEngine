@@ -308,6 +308,7 @@ class Paths
 		#end
 		var path:String = getPath(key, TEXT);
 		if(OpenFlAssets.exists(path, TEXT)) return Assets.getText(path);
+		return null;
 	}
 
 	inline static public function font(key:String)
