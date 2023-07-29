@@ -45,13 +45,13 @@ class MusicBeatSubstate extends FlxSubState
 			remove(virtualPad);
 	}
 
-	public function addPadCamera()
+	public function addPadCamera(DefaultDrawTarget:Bool = true):Void
 	{
 		if (virtualPad != null)
 		{
-			var camControls = new flixel.FlxCamera();
-			FlxG.cameras.add(camControls);
+			var camControls:FlxCamera = new FlxCamera();
 			camControls.bgColor.alpha = 0;
+			FlxG.cameras.add(camControls, DefaultDrawTarget);
 			virtualPad.cameras = [camControls];
 		}
 	}
