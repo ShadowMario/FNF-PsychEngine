@@ -136,12 +136,12 @@ class WeekData {
 					}
 				}
 
-				for (file in FileSystem.readDirectory(SUtil.getPath() + directory))
+				for (file in FileSystem.readDirectory(directory))
 				{
 					var path = haxe.io.Path.join([directory, file]);
-					if (!sys.FileSystem.isDirectory(SUtil.getPath() + path) && file.endsWith('.json'))
+					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json'))
 					{
-						addWeek(file.substr(0, file.length - 5), SUtil.getPath() + path, directories[i], i, originalLength);
+						addWeek(file.substr(0, file.length - 5), path, directories[i], i, originalLength);
 					}
 				}
 			}
