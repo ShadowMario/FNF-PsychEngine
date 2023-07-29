@@ -44,6 +44,13 @@ class OptimizationSubState extends BaseOptionsMenu
 			true); //Default value
 		addOption(option);
 
+		var option:Option = new Option('Optimized Chart Loading', //Name
+			'If checked, hopefully tries to get charts to load faster.', //Description
+			'fasterChartLoad', //Save data variable name
+			'bool', //Variable type
+			false); //Default value
+		addOption(option);
+
 		super();
 	}
 }

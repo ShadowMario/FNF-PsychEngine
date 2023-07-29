@@ -25,6 +25,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var instaRestart:Bool = false;
 	public static var charsAndBG:Bool = true;
 	public static var lowQuality:Bool = false;
+	public static var fasterChartLoad:Bool = false;
 	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
@@ -192,6 +193,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.rateNameStuff = rateNameStuff;
+		FlxG.save.data.fasterChartLoad = fasterChartLoad;
 		FlxG.save.data.longFCName = longFCName;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.accuracyMod = accuracyMod;
@@ -331,6 +333,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.charsAndBG != null) {
 			charsAndBG = FlxG.save.data.charsAndBG;
+		}
+		if(FlxG.save.data.fasterChartLoad != null) {
+			fasterChartLoad = FlxG.save.data.fasterChartLoad;
 		}
 		if(FlxG.save.data.autoPause != null) {
 			autoPause = FlxG.save.data.autoPause;
