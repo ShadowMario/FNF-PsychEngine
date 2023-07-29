@@ -22,7 +22,8 @@ import flash.media.Sound;
 import sys.io.File;
 import sys.FileSystem;
 #end
-import tjson.TJSON as Json;
+//import tjson.TJSON as Json;
+import haxe.Json;
 
 
 #if MODS_ALLOWED

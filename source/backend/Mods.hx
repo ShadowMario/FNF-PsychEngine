@@ -6,7 +6,8 @@ import sys.io.File;
 #else
 import lime.utils.Assets;
 #end
-import tjson.TJSON as Json;
+//import tjson.TJSON as Json;
+import haxe.Json;
 
 typedef ModsList = {
 	enabled:Array<String>,

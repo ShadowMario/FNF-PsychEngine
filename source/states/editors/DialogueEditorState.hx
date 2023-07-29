@@ -10,7 +10,8 @@ import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
-import tjson.TJSON as Json;
+//import tjson.TJSON as Json;
+import haxe.Json;
 #if sys
 import sys.io.File;
 #end

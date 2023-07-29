@@ -1,7 +1,8 @@
 package states.editors;
 
 import flash.geom.Rectangle;
-import tjson.TJSON as Json;
+//import tjson.TJSON as Json;
+import haxe.Json;
 import haxe.format.JsonParser;
 import haxe.io.Bytes;
 

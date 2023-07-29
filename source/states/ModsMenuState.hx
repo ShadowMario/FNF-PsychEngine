@@ -8,7 +8,8 @@ import flixel.FlxBasic;
 import openfl.display.BitmapData;
 import flash.geom.Rectangle;
 import lime.utils.Assets;
-import tjson.TJSON as Json;
+//import tjson.TJSON as Json;
+import haxe.Json;
 
 #if sys
 import sys.io.File;

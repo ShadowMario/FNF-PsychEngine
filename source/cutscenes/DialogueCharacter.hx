@@ -1,6 +1,7 @@
 package cutscenes;
 
-import tjson.TJSON as Json;
+//import tjson.TJSON as Json;
+import haxe.Json;
 
 #if sys
 import sys.FileSystem;

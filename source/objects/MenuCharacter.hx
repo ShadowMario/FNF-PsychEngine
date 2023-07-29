@@ -5,7 +5,8 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 import openfl.utils.Assets;
-import tjson.TJSON as Json;
+//import tjson.TJSON as Json;
+import haxe.Json;
 
 typedef MenuCharacterFile = {
 	var image:String;
@@ -52,7 +53,7 @@ class MenuCharacter extends FlxSprite
 
 				#if MODS_ALLOWED
 				var path:String = Paths.modFolders(characterPath);
-				if (!FileSystem.exists(SUtil.getPath() + path)) {
+				if (!FileSystem.exists(path)) {
 					path = Paths.getPreloadPath(characterPath);
 				}
 
@@ -92,3 +93,4 @@ class MenuCharacter extends FlxSprite
 		}
 	}
 }
+
