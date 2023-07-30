@@ -1,6 +1,7 @@
 package backend;
 #if mobileC
 import mobile.flixel.FlxMobileControlsID;
+import mobile.MobileControls;
 #end
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
@@ -128,22 +129,63 @@ class ClientPrefs {
 		'reset'			=> [BACK]
 	];
 	#if mobileC
-	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
-		'note_up'		=> [UP,UP2, hitboxUP],
-		'note_left'		=> [LEFT,LEFT2, hitboxLEFT],
-		'note_down'		=> [DOWN,DOWN2, hitboxDOWN],
-		'note_right'	=> [DOWN,DOWN2, hitboxRIGHT],
-		
-		'ui_up'			=> [UP],
-		'ui_left'		=> [LEFT],
-		'ui_down'		=> [DOWN],
-		'ui_right'		=> [RIGHT],
-		
-		'accept'		=> [A],
-		'back'			=> [B],
-		'pause'			=> [NONE],
-		'reset'			=> [NONE]
-	];
+	switch (MobileControls.getMode())
+				{
+					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
+					public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
+						'note_up'		=> [UP,UP2],
+						'note_left'		=> [LEFT,LEFT2],
+						'note_down'		=> [DOWN,DOWN2],
+						'note_right'	=> [DOWN,DOWN2],
+						
+						'ui_up'			=> [UP],
+						'ui_left'		=> [LEFT],
+						'ui_down'		=> [DOWN],
+						'ui_right'		=> [RIGHT],
+						
+						'accept'		=> [A],
+						'back'			=> [B],
+						'pause'			=> [NONE],
+						'reset'			=> [NONE]
+					];
+					case 4: // HITBOX
+					public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
+						'note_up'		=> [hitboxUP],
+						'note_left'		=> [hitboxLEFT],
+						'note_down'		=> [hitboxDOWN],
+						'note_right'	=> [hitboxRIGHT],
+						
+						'ui_up'			=> [UP],
+						'ui_left'		=> [LEFT],
+						'ui_down'		=> [DOWN],
+						'ui_right'		=> [RIGHT],
+						
+						'accept'		=> [A],
+						'back'			=> [B],
+						'pause'			=> [NONE],
+						'reset'			=> [NONE]
+					];
+					
+					case 5: // KEYBOARD, idk what to put
+					public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
+						'note_up'		=> [UP,UP2, hitboxUP],
+						'note_left'		=> [LEFT,LEFT2, hitboxLEFT],
+						'note_down'		=> [DOWN,DOWN2, hitboxDOWN],
+						'note_right'	=> [DOWN,DOWN2, hitboxRIGHT],
+						
+						'ui_up'			=> [UP],
+						'ui_left'		=> [LEFT],
+						'ui_down'		=> [DOWN],
+						'ui_right'		=> [RIGHT],
+						
+						'accept'		=> [A],
+						'back'			=> [B],
+						'pause'			=> [NONE],
+						'reset'			=> [NONE]
+					];
+					
+				}
+	
 	public static var defaultPads:Map<String, Array<FlxMobileControlsID>> = null;
 	#end
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
