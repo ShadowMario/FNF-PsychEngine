@@ -252,8 +252,8 @@ class Controls
 					return false;
 				}
 				//these functions are used for playstate controls, just ignore them
-				private function mobileCPressed(key:String):Bool {
-				if(key != null && MusicBeatState.instance.mobileControls != null){
+				private function mobileCPressed(keys:Array<FlxMobileControlsID>):Bool {
+				if(keys != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
 				{
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
@@ -279,8 +279,8 @@ class Controls
 			}
 			return false;
 				}
-				private function mobileCJustPressed(key:String):Bool {
-				if(key != null && MusicBeatState.instance.mobileControls != null){
+				private function mobileCJustPressed(keys:Array<FlxMobileControlsID>):Bool {
+				if(keys != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
 				{
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
@@ -306,8 +306,8 @@ class Controls
 			}
 			return false;
 				}
-				private function mobileCJustReleased(key:String):Bool {
-				if(key != null && MusicBeatState.instance.mobileControls != null){
+				private function mobileCJustReleased(keys:Array<FlxMobileControlsID>):Bool {
+				if(keys != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
 				{
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
