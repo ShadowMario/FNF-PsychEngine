@@ -2734,12 +2734,13 @@ class PlayState extends MusicBeatState
 			pressArray.push(controls.justPressed(key));
 			releaseArray.push(controls.justReleased(key));
 		}
-
+		#if !mobileC
 		// TO DO: Find a better way to handle controller inputs, this should work for now
 		if(controls.controllerMode && pressArray.contains(true))
 			for (i in 0...pressArray.length)
 				if(pressArray[i] && strumsBlocked[i] != true)
 					keyPressed(i);
+		#end
 
 		if (startedCountdown && !boyfriend.stunned && generatedMusic)
 		{
@@ -2770,12 +2771,13 @@ class PlayState extends MusicBeatState
 				//boyfriend.animation.curAnim.finish();
 			}
 		}
-
+		#if !mobileC
 		// TO DO: Find a better way to handle controller inputs, this should work for now
 		if((controls.controllerMode || strumsBlocked.contains(true)) && releaseArray.contains(true))
 			for (i in 0...releaseArray.length)
 				if(releaseArray[i] || strumsBlocked[i] == true)
 					keyReleased(i);
+		#end
 	}
 
 	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
