@@ -544,10 +544,14 @@ class NoteOffsetState extends MusicBeatState
 		else
 			str = 'Note/Beat Delay';
 
+		#if mobileC
+		str2 = '(Press A to Switch)';
+		#else
 		if(!controls.controllerMode)
 			str2 = '(Press Accept to Switch)';
 		else
 			str2 = '(Press Start to Switch)';
+		#end
 
 		changeModeText.text = '< ${str.toUpperCase()} ${str2.toUpperCase()} >';
 	}
