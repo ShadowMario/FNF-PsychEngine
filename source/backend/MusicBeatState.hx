@@ -45,13 +45,13 @@ class MusicBeatState extends FlxUIState
 			remove(virtualPad);
 	}
 
-	public function addMobileControls(DefaultDrawTarget:Bool = true):Void
+	public function addMobileControls():Void
 	{
 		mobileControls = new MobileControls();
 
 		var camControls = new flixel.FlxCamera();
 		camControls.bgColor.alpha = 0;
-		FlxG.cameras.add(camControls, DefaultDrawTarget);
+		FlxG.cameras.add(camControls, false);
 
 		mobileControls.cameras = [camControls];
 		mobileControls.visible = false;
@@ -65,13 +65,13 @@ class MusicBeatState extends FlxUIState
 			remove(mobileControls);
 	}
 
-	public function addPadCamera(DefaultDrawTarget:Bool = true):Void
+	public function addPadCamera(false):Void
 	{
 		if (virtualPad != null)
 		{
 			var camControls:FlxCamera = new FlxCamera();
 			camControls.bgColor.alpha = 0;
-			FlxG.cameras.add(camControls, DefaultDrawTarget);
+			FlxG.cameras.add(camControls, false);
 			virtualPad.cameras = [camControls];
 		}
 	}
