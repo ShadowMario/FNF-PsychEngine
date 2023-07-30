@@ -112,7 +112,7 @@ class NoteSplash extends FlxSprite
 	{
 		var skin:String = '';
 		if(ClientPrefs.data.splashSkin != ClientPrefs.defaultData.splashSkin)
-			skin = SUtil.getPath() + '-' + ClientPrefs.data.splashSkin.trim().toLowerCase().replace(' ', '_');
+			skin = '-' + ClientPrefs.data.splashSkin.trim().toLowerCase().replace(' ', '_');
 		return skin;
 	}
 
@@ -122,13 +122,12 @@ class NoteSplash extends FlxSprite
 		var config:NoteSplashConfig = null;
 		if(frames == null)
 		{
-			skin = SUtil.getPath() + defaultNoteSplash + getSplashSkinPostfix();
-			var framesPath:String = SUtil.getPath() + Paths.getSparrowAtlas(skin);
-			frames = framesPath;
+			skin = defaultNoteSplash + getSplashSkinPostfix();
+			frames = Paths.getSparrowAtlas(skin);
 			if(frames == null) //if you really need this, you really fucked something up
 			{
-				skin = SUtil.getPath() + defaultNoteSplash;
-				frames = framesPath;
+				skin = defaultNoteSplash;
+				frames = Paths.getSparrowAtlas(skin);
 			}
 		}
 		config = precacheConfig(skin);
@@ -155,8 +154,7 @@ class NoteSplash extends FlxSprite
 		if(configs.exists(skin)) return configs.get(skin);
 
 		var path:String = Paths.getPath('images/$skin.txt', TEXT, true);
-		var output:String = SUtil.getPath() + CoolUtil.coolTextFile(path);
-		var configFile:Array<String> = output;
+		var configFile:Array<String> = CoolUtil.coolTextFile(path);
 		if(configFile.length < 1) return null;
 		
 		var framerates:Array<String> = configFile[1].split(' ');
