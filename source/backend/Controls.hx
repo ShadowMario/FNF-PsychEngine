@@ -101,7 +101,7 @@ class Controls
 		var result:Bool = (FlxG.keys.anyJustPressed(keyboardBinds[key]) == true);
 		if(result) controllerMode = false;
 
-		return result || _myGamepadJustPressed(gamepadBinds[key]) == true #if mobileC || vpadJustPressed(mobileBinds[key]) == true || virtualPadJustPressed(mobileBinds[key]) == true || virtualPadJustPressed(mobileBinds[key]) == true #end;
+		return result || _myGamepadJustPressed(gamepadBinds[key]) == true #if mobileC || mobileCJustPressed(mobileBinds[key]) == true || virtualPadJustPressed(mobileBinds[key]) == true #end;
 	}
 
 	public function pressed(key:String)
@@ -109,7 +109,7 @@ class Controls
 		var result:Bool = (FlxG.keys.anyPressed(keyboardBinds[key]) == true);
 		if(result) controllerMode = false;
 
-		return result || _myGamepadPressed(gamepadBinds[key]) == true #if mobileC || vpadPressed(mobileBinds[key]) == true || virtualPadPressed(mobileBinds[key]) == true || hitboxPressed(mobileBinds[key]) == true #end;
+		return result || _myGamepadPressed(gamepadBinds[key]) == true #if mobileC || mobileCPressed(mobileBinds[key]) == true || virtualPadPressed(mobileBinds[key]) == true  #end;
 	}
 
 	public function justReleased(key:String)
@@ -117,7 +117,7 @@ class Controls
 		var result:Bool = (FlxG.keys.anyJustReleased(keyboardBinds[key]) == true);
 		if(result) controllerMode = false;
 
-		return result || _myGamepadJustReleased(gamepadBinds[key]) == true #if mobileC || vpadJustReleased(mobileBinds[key]) == true || virtualPadJustReleased(mobileBinds[key]) == true || hitboxJustReleased(mobileBinds[key]) == true #end;
+		return result || _myGamepadJustReleased(gamepadBinds[key]) == true #if mobileC || mobileCJustReleased(mobileBinds[key]) == true || virtualPadJustReleased(mobileBinds[key]) == true #end;
 	}
 
 	public var controllerMode:Bool = false;
@@ -252,98 +252,20 @@ class Controls
 					return false;
 				}
 				//these functions are used for playstate controls, just ignore them
-				/*private function mobileCPressed(key:String):Bool {
+				private function mobileCPressed(key:String):Bool {
 				if(key != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
 				{
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
-					return vpadPressed(mobileBinds[key]);
-					case 4: // HITBOX
-					return hitboxPressed(mobileBinds[key]);
-					case 5: // KEYBOARD
-					return false;
-				}
-			}
-				}
-				private function mobileCJustPressed(key:String):Bool {
-				if(key != null && MusicBeatState.instance.mobileControls != null){
-					switch (MobileControls.getMode())
-				{
-					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
-					return vpadJustPressed(mobileBinds[key]);
-					case 4: // HITBOX
-					return hitboxJustPressed(mobileBinds[key]);
-					case 5: // KEYBOARD
-					return false;
-				}
-			}
-				}
-				private function mobileCJustReleased(key:String):Bool {
-				if(key != null && MusicBeatState.instance.mobileControls != null){
-					switch (MobileControls.getMode())
-				{
-					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
-					return vpadJustReleased(mobileBinds[key]);
-					case 4: // HITBOX
-					return hitboxJustReleased(mobileBinds[key]);
-					case 5: // KEYBOARD
-					return false;
-				}
-			}
-		}*/
-				private function vpadPressed(keys:Array<FlxMobileControlsID>):Bool
-					{
-						if(keys != null && MobileControls.instance.virtualPad != null)
-						{
-							for (key in keys)
-							{
-								if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsPressed(key) == true) //dont ask why from MobileControls.hx
+					for (key in keys) {
+						if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsPressed(key) == true)
 								{
 									controllerMode = true;
 									return true;
 								}
 							}
-						}
-						return false;
-					}
-
-				private function vpadJustPressed(keys:Array<FlxMobileControlsID>):Bool
-					{
-						if(keys != null && MobileControls.instance.virtualPad != null)
-						{
-								for (key in keys)
-								{
-									if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustPressed(key) == true)
-									{
-										controllerMode = true;
-										return true;
-									}
-								}
-							}
-						return false;
-					}
-
-				private function vpadJustReleased(keys:Array<FlxMobileControlsID>):Bool
-					{
-						if(keys != null && MobileControls.instance.virtualPad != null)
-						{
-							for (key in keys)
-							{
-								if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustReleased(key) == true)
-								{
-									controllerMode = true;
-									return true;
-								}
-							}
-						}
-						return false;
-					}
-
-					private function hitboxPressed(keys:Array<FlxMobileControlsID>):Bool
-						{
-							if(keys != null && MobileControls.instance.hitbox != null)
-							{
-								for (key in keys)
+					case 4: // HITBOX
+					for (key in keys)
 								{
 									if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsPressed(key) == true)
 									{
@@ -351,30 +273,54 @@ class Controls
 										return true;
 									}
 								}
-							}
-							return false;
-						}
-
-					private function hitboxJustPressed(keys:Array<FlxMobileControlsID>):Bool
-						{
-							if(keys != null && MobileControls.instance.hitbox != null)
-							{
-								for (key in keys)
-								{
-									if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsJustPressed(key) == true)
+					case 5: // KEYBOARD
+					return false;
+				}
+			}
+			return false;
+				}
+				private function mobileCJustPressed(key:String):Bool {
+				if(key != null && MusicBeatState.instance.mobileControls != null){
+					switch (MobileControls.getMode())
+				{
+					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
+													{
+									if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustPressed(key) == true)
 									{
 										controllerMode = true;
 										return true;
 									}
 								}
-							}
-							return false;
-						}
-						private function hitboxJustReleased(keys:Array<FlxMobileControlsID>):Bool
+					case 4: // HITBOX
+					for (key in keys)
+			{
+					if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsJustPressed(key) == true)
+	      {
+										controllerMode = true;
+										return true;
+					}
+				}
+					case 5: // KEYBOARD
+					return false;
+				}
+			}
+			return false;
+				}
+				private function mobileCJustReleased(key:String):Bool {
+				if(key != null && MusicBeatState.instance.mobileControls != null){
+					switch (MobileControls.getMode())
+				{
+					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
+					for (key in keys)
 							{
-								if(keys != null && MobileControls.instance.hitbox != null)
+								if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustReleased(key) == true)
 								{
-									for (key in keys)
+									controllerMode = true;
+									return true;
+								}
+							}
+					case 4: // HITBOX
+					for (key in keys)
 									{
 										if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsJustReleased(key) == true)
 										{
@@ -382,9 +328,12 @@ class Controls
 											return true;
 										}
 									}
-								}
-								return false;
-							}
+					case 5: // KEYBOARD
+					return false;
+				}
+			}
+			return false;
+		}
 	#end
 
 	// IGNORE THESE/ karim: no.
