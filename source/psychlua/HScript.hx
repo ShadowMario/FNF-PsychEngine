@@ -126,6 +126,7 @@ class HScript extends SScript
 			}
 		});
 		set('parentLua', parentLua);
+		set('this', this);
 		set('game', PlayState.instance);
 		set('buildTarget', FunkinLua.getBuildTarget());
 		set('customSubstate', CustomSubstate.instance);

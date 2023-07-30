@@ -768,7 +768,7 @@ class EditorPlayState extends MusicBeatSubstate
 		var strum:StrumNote = opponentStrums.members[Std.int(Math.abs(note.noteData))];
 		if(strum != null) {
 			strum.playAnim('confirm', true);
-			strum.resetAnim = Conductor.stepCrochet * 1.5 / 1000;
+			strum.resetAnim = Conductor.stepCrochet * 1.25 / 1000 / playbackRate;
 		}
 		note.hitByOpponent = true;
 
