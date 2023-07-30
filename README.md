@@ -11,7 +11,7 @@ Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), 
 * RiverOaken - Artist
 * Yoshubs - Assistant Programmer
 
-### Special Thanks
+### Psych Special Thanks
 * bbpanzu - Ex-Programmer
 * Yoshubs - New Input System
 * SqirraRNG - Crash Handler and Base code for Chart Editor's Waveform
