@@ -4,7 +4,6 @@ package backend;
 import android.content.Context;
 import android.widget.Toast;
 import android.os.Environment;
-import android.Permissions;
 #end
 import haxe.io.Path;
 import haxe.CallStack;
@@ -44,29 +43,6 @@ class SUtil
 	 */
 	public static function checkFiles():Void
 	{
-		#if android
-		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
-		{
-			if (VERSION.SDK_INT >= VERSION_CODES.M)
-			{
-				Permissions.requestPermissions([Permissions.WRITE_EXTERNAL_STORAGE, Permissions.READ_EXTERNAL_STORAGE]);
-
-				/**
-				 * Basically for now i can't force the app to stop while its requesting a android permission, so this makes the app to stop while its requesting the specific permission
-				 */
-				Lib.application.window.alert('This app requires storage permission to function properly.' + "\nIf you haven't accepted the storage permission then the app will face crashs and issues."
-					+ '\nPress Ok to Procced',
-					'Permissions?');
-			}
-			else
-			{
-				Lib.application.window.alert('YOU MOTHER FUCKER GO ACCEPT THE PERMISSION OR I WILL END YOUR ENTIRE BLOODLINE' + '\nPRESS OK AND ADD THE PERMISSION MANUALLY FROM SETTINGS', 'FUCK YOURSELF'); //should teach them to accept the permission 
-				LimeSystem.exit(1);
-			}
-		}
-		#end
-
 		#if mobile
 		if (!FileSystem.exists(SUtil.getPath()))
 		{
