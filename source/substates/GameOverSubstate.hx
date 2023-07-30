@@ -73,6 +73,12 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollow.setPosition(boyfriend.getGraphicMidpoint().x, boyfriend.getGraphicMidpoint().y);
 		FlxG.camera.focusOn(new FlxPoint(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2)));
 		add(camFollow);
+		#if mobileC
+		addVirtualPad(NONE, A_B);
+		addPadCamera();
+		controls.isInSubstate = true;
+		#end
+		
 	}
 
 	public var startedDeath:Bool = false;
@@ -90,6 +96,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (controls.BACK)
 		{
+			#if mobileC controls.isInSubstate = false;
 			#if desktop DiscordClient.resetClientID(); #end
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
@@ -176,6 +183,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				});
 			});
 			PlayState.instance.callOnScripts('onGameOverConfirm', [true]);
+			#if mobileC controls.isInSubstate = false; #end
 		}
 	}
 
