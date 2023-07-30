@@ -3181,6 +3181,8 @@ class PlayState extends MusicBeatState
 					for (e in callValue.exceptions)
 						if (e != null)
 							addTextToDebug('ERROR ($file: onCreate) - ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
+
+					newScript.active = false;
 					hscriptArray.remove(newScript);
 					trace('failed to initialize sscript interp!!! ($file)');
 				}
@@ -3191,7 +3193,11 @@ class PlayState extends MusicBeatState
 		catch(e:Dynamic)
 		{
 			addTextToDebug('ERROR ($file) - ' + e.message.substr(0, e.message.indexOf('\n')), FlxColor.RED);
-			if(newScript != null) hscriptArray.remove(newScript);
+			if(newScript != null)
+			{
+				newScript.active = false;
+				hscriptArray.remove(newScript);
+			}
 		}
 	}
 	#end
