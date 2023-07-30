@@ -285,6 +285,7 @@ class Controls
 				{
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 													{
+        for (key in keys) {
 									if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustPressed(key) == true)
 									{
 										controllerMode = true;
