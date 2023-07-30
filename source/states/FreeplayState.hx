@@ -249,7 +249,7 @@ class FreeplayState extends MusicBeatState
 		positionHighscore();
 
 		var shiftMult:Int = 1;
-		if(FlxG.keys.pressed.SHIFT  /*#if mobileC || MusicBeatState.virtualPad.buttonZ.pressed #end*/) shiftMult = 3;
+		if(FlxG.keys.pressed.SHIFT #if mobileC || MusicBeatState.virtualPad.buttonZ.pressed #end) shiftMult = 3;
 
 		if(songs.length > 1)
 		{
