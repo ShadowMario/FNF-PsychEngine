@@ -129,8 +129,22 @@ class ClientPrefs {
 		'reset'			=> [BACK]
 	];
 	#if mobileC
-	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = null;
-	getMobileCConfig();
+	mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
+		'note_up'		=> [UP,UP2,hitboxUP],
+		'note_left'		=> [LEFT,LEFT2,hitboxLEFT],
+		'note_down'		=> [DOWN,DOWN2,hitboxDOWN],
+		'note_right'	=> [DOWN,DOWN2,hitboxRIGHT],
+
+		'ui_up'			=> [UP],
+		'ui_left'		=> [LEFT],
+		'ui_down'		=> [DOWN],
+		'ui_right'		=> [RIGHT],
+
+		'accept'		=> [A],
+		'back'			=> [B],
+		'pause'			=> [NONE],
+		'reset'			=> [NONE]
+	];
 	public static var defaultPads:Map<String, Array<FlxMobileControlsID>> = null;
 	#end
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
@@ -289,63 +303,4 @@ class ClientPrefs {
 			FlxG.sound.volumeUpKeys = [];
 		}
 	}
-
-	#if mobileC
-	public function getMobileCConfig() {
-		switch (MobileControls.getMode())
-		{
-			case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
-			mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
-				'note_up'		=> [UP,UP2],
-				'note_left'		=> [LEFT,LEFT2],
-				'note_down'		=> [DOWN,DOWN2],
-				'note_right'	        => [DOWN,DOWN2],
-	
-				'ui_up'			=> [UP],
-				'ui_left'		=> [LEFT],
-				'ui_down'		=> [DOWN],
-				'ui_right'		=> [RIGHT],
-
-				'accept'		=> [A],
-				'back'			=> [B],
-				'pause'			=> [NONE],
-				'reset'			=> [NONE]
-			];
-			case 4: // HITBOX
-			mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
-				'note_up'		=> [hitboxUP],
-				'note_left'		=> [hitboxLEFT],
-				'note_down'		=> [hitboxDOWN],
-				'note_right'    	=> [hitboxRIGHT],
-
-				'ui_up'			=> [UP],
-				'ui_left'		=> [LEFT],
-				'ui_down'		=> [DOWN],
-				'ui_right'		=> [RIGHT],
-
-				'accept'		=> [A],
-				'back'			=> [B],
-				'pause'			=> [NONE],
-				'reset'			=> [NONE]
-			];
-			/*case 5: // KEYBOARD
-			mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
-				'note_up'		=> [UP,UP2],
-				'note_left'		=> [LEFT,LEFT2],
-				'note_down'		=> [DOWN,DOWN2],
-				'note_right'	        => [DOWN,DOWN2],
-
-				'ui_up'			=> [UP],
-				'ui_left'		=> [LEFT],
-				'ui_down'		=> [DOWN],
-				'ui_right'		=> [RIGHT],
-
-				'accept'		=> [A],
-				'back'			=> [B],
-				'pause'			=> [NONE],
-				'reset'			=> [NONE]
-			];*/
-		}
-	}
-	#end
 }
