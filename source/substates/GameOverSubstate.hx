@@ -75,7 +75,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		add(camFollow);
 		#if mobileC
 		addVirtualPad(NONE, A_B);
-		addPadCamera();
+		addPadCamera(false);
 		controls.isInSubstate = true;
 		#end
 		
