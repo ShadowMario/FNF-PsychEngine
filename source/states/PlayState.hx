@@ -316,7 +316,7 @@ class PlayState extends MusicBeatState
 			SONG = Song.loadFromJson('tutorial');
 
 		Conductor.mapBPMChanges(SONG);
-		Conductor.changeBPM(SONG.bpm);
+		Conductor.bpm = SONG.bpm;
 
 		#if desktop
 		storyDifficultyText = Difficulty.getString();
@@ -664,8 +664,11 @@ class PlayState extends MusicBeatState
 		if(generatedMusic)
 		{
 			var ratio:Float = value / songSpeed; //funny word huh
-			for (note in notes) note.resizeByRatio(ratio);
-			for (note in unspawnNotes) note.resizeByRatio(ratio);
+			if(ratio != 1)
+			{
+				for (note in notes.members) note.resizeByRatio(ratio);
+				for (note in unspawnNotes) note.resizeByRatio(ratio);
+			}
 		}
 		songSpeed = value;
 		noteKillOffset = Math.max(Conductor.stepCrochet, 350 / songSpeed * playbackRate);
@@ -678,6 +681,13 @@ class PlayState extends MusicBeatState
 		{
 			if(vocals != null) vocals.pitch = value;
 			FlxG.sound.music.pitch = value;
+
+			var ratio:Float = playbackRate / value; //funny word huh
+			if(ratio != 1)
+			{
+				for (note in notes.members) note.resizeByRatio(ratio);
+				for (note in unspawnNotes) note.resizeByRatio(ratio);
+			}
 		}
 		playbackRate = value;
 		FlxAnimationController.globalSpeed = value;
@@ -1228,7 +1238,7 @@ class PlayState extends MusicBeatState
 		}
 
 		var songData = SONG;
-		Conductor.changeBPM(songData.bpm);
+		Conductor.bpm = songData.bpm;
 
 		curSong = songData.song;
 
@@ -1314,7 +1324,7 @@ class PlayState extends MusicBeatState
 						{
 							if(oldNote.isSustainNote)
 							{
-								oldNote.scale.y *= Note.SUSTAIN_SIZE / oldNote.frameHeight ;
+								oldNote.scale.y *= Note.SUSTAIN_SIZE / oldNote.frameHeight;
 								oldNote.scale.y /= playbackRate;
 								oldNote.updateHitbox();
 							}
@@ -1699,7 +1709,8 @@ class PlayState extends MusicBeatState
 			{
 				var dunceNote:Note = unspawnNotes[0];
 				notes.insert(0, dunceNote);
-				dunceNote.spawned=true;
+				dunceNote.spawned = true;
+
 				callOnLuas('onSpawnNote', [notes.members.indexOf(dunceNote), dunceNote.noteData, dunceNote.noteType, dunceNote.isSustainNote, dunceNote.strumTime]);
 				callOnHScript('onSpawnNote', [dunceNote]);
 
@@ -2863,7 +2874,7 @@ class PlayState extends MusicBeatState
 		if (SONG.needsVoices)
 			vocals.volume = 1;
 
-		strumPlayAnim(true, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.5 / 1000);
+		strumPlayAnim(true, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
 		note.hitByOpponent = true;
 
 		var result:Dynamic = callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
@@ -2951,7 +2962,7 @@ class PlayState extends MusicBeatState
 				var spr = playerStrums.members[note.noteData];
 				if(spr != null) spr.playAnim('confirm', true);
 			}
-			else strumPlayAnim(false, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.5 / 1000);
+			else strumPlayAnim(false, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
 			vocals.volume = 1;
 
 			var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
@@ -3093,7 +3104,7 @@ class PlayState extends MusicBeatState
 
 			if (SONG.notes[curSection].changeBPM)
 			{
-				Conductor.changeBPM(SONG.notes[curSection].bpm);
+				Conductor.bpm = SONG.notes[curSection].bpm;
 				setOnScripts('curBpm', Conductor.bpm);
 				setOnScripts('crochet', Conductor.crochet);
 				setOnScripts('stepCrochet', Conductor.stepCrochet);
@@ -3176,6 +3187,8 @@ class PlayState extends MusicBeatState
 					for (e in callValue.exceptions)
 						if (e != null)
 							addTextToDebug('ERROR ($file: onCreate) - ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
+
+					newScript.active = false;
 					hscriptArray.remove(newScript);
 					trace('failed to initialize sscript interp!!! ($file)');
 				}
@@ -3186,7 +3199,11 @@ class PlayState extends MusicBeatState
 		catch(e:Dynamic)
 		{
 			addTextToDebug('ERROR ($file) - ' + e.message.substr(0, e.message.indexOf('\n')), FlxColor.RED);
-			if(newScript != null) hscriptArray.remove(newScript);
+			if(newScript != null)
+			{
+				newScript.active = false;
+				hscriptArray.remove(newScript);
+			}
 		}
 	}
 	#end

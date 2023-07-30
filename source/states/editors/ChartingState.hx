@@ -271,7 +271,7 @@ class ChartingState extends MusicBeatState
 		currentSongName = Paths.formatToSongPath(_song.song);
 		loadSong();
 		reloadGridLayer();
-		Conductor.changeBPM(_song.bpm);
+		Conductor.bpm = _song.bpm;
 		Conductor.mapBPMChanges(_song);
 		if(curSec >= _song.notes.length) curSec = _song.notes.length - 1;
 
@@ -1514,7 +1514,7 @@ class ChartingState extends MusicBeatState
 				case 'song_bpm':
 					_song.bpm = nums.value;
 					Conductor.mapBPMChanges(_song);
-					Conductor.changeBPM(nums.value);
+					Conductor.bpm = nums.value;
 					stepperSusLength.stepSize = Math.ceil(Conductor.stepCrochet / 2);
 					updateGrid();
 
@@ -2690,7 +2690,7 @@ class ChartingState extends MusicBeatState
 
 		if (_song.notes[curSec].changeBPM && _song.notes[curSec].bpm > 0)
 		{
-			Conductor.changeBPM(_song.notes[curSec].bpm);
+			Conductor.bpm = _song.notes[curSec].bpm;
 			//trace('BPM of this section:');
 		}
 		else
@@ -2700,7 +2700,7 @@ class ChartingState extends MusicBeatState
 			for (i in 0...curSec)
 				if (_song.notes[i].changeBPM)
 					daBPM = _song.notes[i].bpm;
-			Conductor.changeBPM(daBPM);
+			Conductor.bpm = daBPM;
 		}
 
 		// CURRENT SECTION
