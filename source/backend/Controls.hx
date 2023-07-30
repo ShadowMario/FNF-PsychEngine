@@ -293,7 +293,7 @@ class Controls
 		}*/
 				private function vpadPressed(keys:Array<FlxMobileControlsID>):Bool
 					{
-						if(keys != null && MusicBeatState.instance.mobileControls != null)
+						if(keys != null && MusicBeatState.instance.mobileControls.virtualPad != null)
 						{
 							for (key in keys)
 							{
@@ -309,7 +309,7 @@ class Controls
 
 				private function vpadJustPressed(keys:Array<FlxMobileControlsID>):Bool
 					{
-						if(keys != null && MusicBeatState.instance.mobileControls != null)
+						if(keys != null && MusicBeatState.instance.mobileControls.virtualPad != null)
 						{
 								for (key in keys)
 								{
@@ -325,7 +325,7 @@ class Controls
 
 				private function vpadJustReleased(keys:Array<FlxMobileControlsID>):Bool
 					{
-						if(keys != null && MusicBeatState.instance.mobileControls != null)
+						if(keys != null && MusicBeatState.instance.mobileControls.virtualPad != null)
 						{
 							for (key in keys)
 							{
@@ -341,7 +341,7 @@ class Controls
 
 					private function hitboxPressed(keys:Array<FlxMobileControlsID>):Bool
 						{
-							if(keys != null && MusicBeatState.instance.mobileControls != null)
+							if(keys != null && MusicBeatState.instance.mobileControls.hitbox != null)
 							{
 								for (key in keys)
 								{
@@ -357,7 +357,7 @@ class Controls
 
 					private function hitboxJustPressed(keys:Array<FlxMobileControlsID>):Bool
 						{
-							if(keys != null && MusicBeatState.instance.mobileControls != null)
+							if(keys != null && MusicBeatState.instance.mobileControls.hitbox != null)
 							{
 								for (key in keys)
 								{
@@ -372,7 +372,7 @@ class Controls
 						}
 						private function hitboxJustReleased(keys:Array<FlxMobileControlsID>):Bool
 							{
-								if(keys != null && MusicBeatState.instance.mobileControls != null)
+								if(keys != null && MusicBeatState.instance.mobileControls.hitbox != null)
 								{
 									for (key in keys)
 									{
