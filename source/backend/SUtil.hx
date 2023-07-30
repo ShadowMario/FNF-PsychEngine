@@ -61,7 +61,7 @@ class SUtil
 			}
 			else
 			{
-				Lib.application.window.alert('YOU MOTHER FUCKER GO ACCEPT THE PERMISSION OR I WILL END YOUR ENTIRE BLOODLINE' + '\nPRESS OK AND ADD THE PERMISSION MANUALLY FROM SETTINGS', 'FUCK YOURSELF'); //should teach them to accept the permission 
+				Lib.application.window.alert('Please grant the game storage permissions in app settings' + '\nPress Ok to close the app', 'Permissions?');
 				LimeSystem.exit(1);
 			}
 		}
