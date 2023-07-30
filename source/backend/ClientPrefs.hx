@@ -129,7 +129,7 @@ class ClientPrefs {
 		'reset'			=> [BACK]
 	];
 	#if mobileC
-	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>>;
+	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = null;
 	getMobileCConfig();
 	public static var defaultPads:Map<String, Array<FlxMobileControlsID>> = null;
 	#end
