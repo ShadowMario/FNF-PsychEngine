@@ -284,29 +284,29 @@ class Controls
 					switch (MobileControls.getMode())
 				{
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
-													{
-        for (key in keys) {
-									if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustPressed(key) == true)
-									{
-										controllerMode = true;
-										return true;
-									}
+					for (key in keys)
+							{
+								if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustPressed(key) == true)
+								{
+									controllerMode = true;
+									return true;
 								}
+							}
 					case 4: // HITBOX
 					for (key in keys)
-			{
-					if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsJustPressed(key) == true)
-	      {
-										controllerMode = true;
-										return true;
-					}
-				}
+									{
+										if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsJustPressed(key) == true)
+										{
+											controllerMode = true;
+											return true;
+										}
+									}
 					case 5: // KEYBOARD
 					return false;
 				}
 			}
 			return false;
-				}
+		}
 				private function mobileCJustReleased(keys:Array<FlxMobileControlsID>):Bool {
 				if(keys != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
