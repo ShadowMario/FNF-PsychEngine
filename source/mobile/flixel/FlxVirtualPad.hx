@@ -278,39 +278,39 @@ class FlxVirtualPad extends FlxSpriteGroup
 			switch (buttonID)
 			{
 				case FlxMobileControlsID.LEFT:
-					return buttonLeft.isJustReleased;
+					return buttonLeft.justReleased;
 				case FlxMobileControlsID.UP:
-					return buttonUp.isJustReleased;
+					return buttonUp.justReleased;
 				case FlxMobileControlsID.RIGHT:
-					return buttonRight.isJustReleased;
+					return buttonRight.justReleased;
 				case FlxMobileControlsID.DOWN:
-					return buttonDown.isJustReleased;
+					return buttonDown.justReleased;
 				case FlxMobileControlsID.LEFT2:
-					return buttonLeft2.isJustReleased;
+					return buttonLeft2.justReleased;
 				case FlxMobileControlsID.UP2:
-					return buttonUp2.isJustReleased;
+					return buttonUp2.justReleased;
 				case FlxMobileControlsID.RIGHT2:
-					return buttonRight2.isJustReleased;
+					return buttonRight2.justReleased;
 				case FlxMobileControlsID.DOWN2:
-					return buttonDown2.isJustReleased;
+					return buttonDown2.justReleased;
 				case FlxMobileControlsID.A:
-					return buttonA.isJustReleased;
+					return buttonA.justReleased;
 				case FlxMobileControlsID.B:
-					return buttonB.isJustReleased;
+					return buttonB.justReleased;
 				case FlxMobileControlsID.C:
-					return buttonC.isJustReleased;
+					return buttonC.justReleased;
 				case FlxMobileControlsID.D:
-					return buttonD.isJustReleased;
+					return buttonD.justReleased;
 				case FlxMobileControlsID.E:
-					return buttonE.isJustReleased;
+					return buttonE.justReleased;
 				case FlxMobileControlsID.V:
-					return buttonV.isJustReleased;
+					return buttonV.justReleased;
 				case FlxMobileControlsID.X:
-					return buttonX.isJustReleased;
+					return buttonX.justReleased;
 				case FlxMobileControlsID.Y:
-					return buttonY.isJustReleased;
+					return buttonY.justReleased;
 				case FlxMobileControlsID.Z:
-					return buttonZ.isJustReleased;
+					return buttonZ.justReleased;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
