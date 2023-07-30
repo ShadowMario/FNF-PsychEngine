@@ -96,7 +96,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (controls.BACK)
 		{
-			#if mobileC controls.isInSubstate = false;
+			#if mobileC controls.isInSubstate = false; #end
 			#if desktop DiscordClient.resetClientID(); #end
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
