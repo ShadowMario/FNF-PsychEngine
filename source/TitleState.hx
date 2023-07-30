@@ -260,11 +260,21 @@ class TitleState extends MusicBeatState
 			// music.play();
 
 			if(FlxG.sound.music == null) {
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic), 0);
 			}
 		}
 
-		Conductor.changeBPM(titleJSON.bpm);
+		switch(ClientPrefs.daMenuMusic)
+		{
+		case 'Mashup' | 'VS Impostor' | 'VS Nonsense V2' | 'Base Game': 
+			Conductor.changeBPM(titleJSON.bpm);
+		case 'Dave & Bambi':
+			Conductor.changeBPM(148);
+		case 'Dave & Bambi (Old)':
+			Conductor.changeBPM(150);
+		case 'DDTO+':
+			Conductor.changeBPM(120);
+		}
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite();
@@ -633,7 +643,7 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					//FlxG.sound.music.stop();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+					FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					#if PSYCH_WATERMARKS
@@ -743,7 +753,7 @@ class TitleState extends MusicBeatState
 						skippedIntro = true;
 						playJingle = false;
 
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+						FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						return;
 				}
@@ -765,7 +775,7 @@ class TitleState extends MusicBeatState
 					remove(credGroup);
 					FlxG.camera.flash(FlxColor.WHITE, 3);
 					sound.onComplete = function() {
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+						FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						transitioning = false;
 					};

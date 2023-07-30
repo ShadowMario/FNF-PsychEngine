@@ -138,13 +138,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		var option:Option = new Option('Optimize Note Hits',
-			'If checked, note hits are optimized further.',
-			'evenLessBotLag',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('Rating Accuracy Color',
 			'If checked, the ratings & combo will be colored based on the actual rating.',
 			'colorRatingHit',
@@ -259,30 +252,9 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Light Opponent Strums',
-			"If this is unchecked, the Opponent strums won't light up when the Opponent hits a note.",
-			'opponentLightStrum',
-			'bool',
-			true);
-		addOption(option);
-
-		var option:Option = new Option('Light Botplay Strums',
-			"If this is unchecked, the Player strums won't light when Botplay is active.",
-			'botLightStrum',
-			'bool',
-			true);
-		addOption(option);
-
 		var option:Option = new Option('Full FC Rating Name',
 			'If checked, the FC ratings will use their full name instead of their abbreviated form (so an SFC will become a Sick Full Combo).',
 			'longFCName',
-			'bool',
-			false);
-		addOption(option);
-
-		var option:Option = new Option('Show Ratings & Combo',
-			"If checked, shows the ratings & combo. Kinda defeats the purpose of this engine though...",
-			'ratesAndCombo',
 			'bool',
 			false);
 		addOption(option);
@@ -292,13 +264,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'healthDisplay',
 			'bool',
 			true);
-		addOption(option);
-
-		var option:Option = new Option('Show Unused Combo Popup',
-			"If checked, shows the unused 'Combo' popup, ONLY when Botplay is inactive.",
-			'comboPopup',
-			'bool',
-			false);
 		addOption(option);
 
 		var option:Option = new Option('Opponent Note Hit Count',
@@ -431,6 +396,15 @@ class VisualsUISubState extends BaseOptionsMenu
 			['None', 'Breakfast', 'Tea Time']);
 		addOption(option);
 		option.onChange = onChangePauseMusic;
+				
+		var option:Option = new Option('Menu Song:',
+			"What song do you prefer when you're in menus?",
+			'daMenuMusic',
+			'string',
+			'Mashup',
+			['Mashup', 'Base Game', 'DDTO+', 'Dave & Bambi', 'Dave & Bambi (Old)', 'VS Impostor', 'VS Nonsense V2']);
+		addOption(option);
+		option.onChange = onChangeMenuMusic;
 		
 		#if CHECK_FOR_UPDATES
 		var option:Option = new Option('Check for Updates',
@@ -462,9 +436,17 @@ class VisualsUISubState extends BaseOptionsMenu
 		changedMusic = true;
 	}
 
+	var menuMusicChanged:Bool = false;
+	function onChangeMenuMusic()
+	{
+			if (ClientPrefs.daMenuMusic != 'Mashup') FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
+			if (ClientPrefs.daMenuMusic == 'Mashup') FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		menuMusicChanged = true;
+	}
+
 	override function destroy()
 	{
-		if(changedMusic) FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		if(changedMusic) FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 		super.destroy();
 	}
 

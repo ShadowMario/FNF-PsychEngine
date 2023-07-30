@@ -45,12 +45,15 @@ class FreeplayState extends MusicBeatState
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
+	var lerpSelected:Float = 0;
 
 	private var iconArray:Array<HealthIcon> = [];
 
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+	var missingTextBG:FlxSprite;
+	var missingText:FlxText;
 
 	override function create()
 	{
@@ -151,6 +154,17 @@ class FreeplayState extends MusicBeatState
 		add(diffText);
 
 		add(scoreText);
+
+		missingTextBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		missingTextBG.alpha = 0.6;
+		missingTextBG.visible = false;
+		add(missingTextBG);
+		
+		missingText = new FlxText(50, 0, FlxG.width - 100, '', 24);
+		missingText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		missingText.scrollFactor.set();
+		missingText.visible = false;
+		add(missingText);
 
 		if(curSelected >= songs.length) curSelected = 0;
 		bg.color = songs[curSelected].color;
@@ -436,11 +450,11 @@ class FreeplayState extends MusicBeatState
 
 					} else {
 					if(sys.FileSystem.exists(Paths.inst(poop + '/'  + poop)) && !sys.FileSystem.exists(Paths.json(poop + '/' + poop))) { //the json doesn't exist, but the song files do, or you put a typo in the name
-							CoolUtil.coolError("The JSON's name does not match with  " + poop + "!\nTry making them match.", "Psych Engine Anti-Crash Tool");
+							CoolUtil.coolError("The JSON's name does not match with  " + poop + "!\nTry making them match.", "JS Engine Anti-Crash Tool");
 					} else if(sys.FileSystem.exists(Paths.json(poop + '/' + poop)) && !sys.FileSystem.exists(Paths.inst(poop + '/'  + poop)))  {//the json exists, but the song files don't
-							CoolUtil.coolError("Your song seems to not have an Inst.ogg, check the folder name in 'songs'!", "Psych Engine Anti-Crash Tool");
+							CoolUtil.coolError("Your song seems to not have an Inst.ogg, check the folder name in 'songs'!", "JS Engine Anti-Crash Tool");
 				} else if(!sys.FileSystem.exists(Paths.json(poop + '/' + poop)) && !sys.FileSystem.exists(Paths.inst(poop + '/'  + poop))) { //neither the json nor the song files actually exist
-					CoolUtil.coolError("It appears that " + poop + " doesn't actually have a JSON, nor does it actually have voices/instrumental files!\nMaybe try fixing its name in weeks/" + WeekData.getWeekFileName() + "?", "Psych Engine Anti-Crash Tool");
+					CoolUtil.coolError("It appears that " + poop + " doesn't actually have a JSON, nor does it actually have voices/instrumental files!\nMaybe try fixing its name in weeks/" + WeekData.getWeekFileName() + "?", "JS Engine Anti-Crash Tool");
 				}
 			}
 		}
@@ -595,6 +609,32 @@ class FreeplayState extends MusicBeatState
 		for (i in 0...iconArray.length)
 		{
 			iconArray[i].scale.add(0.2, 0.2);
+		}
+	}
+	var _drawDistance:Int = 4;
+	var _lastVisibles:Array<Int> = [];
+	public function updateTexts(elapsed:Float = 0.0)
+	{
+		lerpSelected = FlxMath.lerp(lerpSelected, curSelected, FlxMath.bound(elapsed * 9.6, 0, 1));
+		for (i in _lastVisibles)
+		{
+			grpSongs.members[i].visible = grpSongs.members[i].active = false;
+			iconArray[i].visible = iconArray[i].active = false;
+		}
+		_lastVisibles = [];
+
+		var min:Int = Math.round(Math.max(0, Math.min(songs.length, lerpSelected - _drawDistance)));
+		var max:Int = Math.round(Math.max(0, Math.min(songs.length, lerpSelected + _drawDistance)));
+		for (i in min...max)
+		{
+			var item:Alphabet = grpSongs.members[i];
+			item.visible = item.active = true;
+			item.x = ((item.targetY - lerpSelected) * item.distancePerItem.x) + item.startPosition.x;
+			item.y = ((item.targetY - lerpSelected) * 1.3 * item.distancePerItem.y) + item.startPosition.y;
+
+			var icon:HealthIcon = iconArray[i];
+			icon.visible = icon.active = true;
+			_lastVisibles.push(i);
 		}
 	}
 }

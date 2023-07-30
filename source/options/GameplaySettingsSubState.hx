@@ -127,13 +127,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Even LESS Botplay Lag',
-			"Reduce Botplay lag even further.",
-			'lessBotLag',
-			'bool',
-			true);
-		addOption(option);
-
 		var option:Option = new Option('Instant Respawn',
 			"Instantly respawn when you die.",
 			'instaRestart',

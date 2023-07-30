@@ -229,6 +229,7 @@ class Paths
 		#else
 		var songKey:String = '${formatToSongPath(song)}/Voices';
 		var voices = returnSound('songs', songKey);
+		if (!ClientPrefs.progAudioLoad) voices = returnSoundFull('songs', songKey);
 		return voices;
 		#end
 	}
@@ -240,6 +241,7 @@ class Paths
 		#else
 		var songKey:String = '${formatToSongPath(song)}/Inst';
 		var inst = returnSound('songs', songKey);
+		if (!ClientPrefs.progAudioLoad) inst = returnSoundFull('songs', songKey);
 		return inst;
 		#end
 	}
@@ -416,6 +418,7 @@ class Paths
 	// completely rewritten asset loading? fuck!
 	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
 	public static var currentTrackedSounds:Map<String, Sound> = [];
+	//Returns sounds which is useful for all the sfx
 	public static function returnSound(path:String, key:String, ?library:String, stream:Bool = false) {
 		var sound:Sound = null;
 		var file:String = null;
@@ -469,6 +472,36 @@ class Paths
 
 		trace('oh no its returning null NOOOO ($file)');
 		return null;
+	}
+	//Ditto, but returns the full sound instead
+	public static function returnSoundFull(path:String, key:String, ?library:String) {
+		#if MODS_ALLOWED
+		var file:String = modsSounds(path, key);
+		if(FileSystem.exists(file)) {
+			if(!currentTrackedSounds.exists(file)) {
+				currentTrackedSounds.set(file, Sound.fromFile(file));
+			}
+			localTrackedAssets.push(key);
+			return currentTrackedSounds.get(file);
+		}
+		#end
+		// I hate this so god damn much
+		var gottenPath:String = getPath('$path/$key.$SOUND_EXT', SOUND, library);
+		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
+		// trace(gottenPath);
+		if(!currentTrackedSounds.exists(gottenPath))
+		#if MODS_ALLOWED
+			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
+		#else
+		{
+			var folder:String = '';
+			if(path == 'songs') folder = 'songs:';
+
+			currentTrackedSounds.set(gottenPath, OpenFlAssets.getSound(folder + getPath('$path/$key.$SOUND_EXT', SOUND, library)));
+		}
+		#end
+		localTrackedAssets.push(gottenPath);
+		return currentTrackedSounds.get(gottenPath);
 	}
 
 	#if MODS_ALLOWED

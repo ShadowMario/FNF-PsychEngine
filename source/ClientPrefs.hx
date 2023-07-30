@@ -21,6 +21,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var panIntensity:Float = 1;
 	public static var noteSplashes:Bool = true;
 	public static var cacheOnGPU:Bool = false;
+	public static var progAudioLoad:Bool = false;
 	public static var oppNoteSplashes:Bool = true;
 	public static var instaRestart:Bool = false;
 	public static var charsAndBG:Bool = true;
@@ -35,6 +36,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var antiCheatEnable:Bool = false;
 	public static var bfIconStyle:String = 'Default';
 	public static var noteStyleThing:String = 'Default';
+	public static var daMenuMusic:String = 'Mashup';
 	public static var ratingIntensity:String = 'Normal';
 	public static var autoPause:Bool = true;
 	public static var randomBotplayText:Bool = true;
@@ -191,7 +193,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.framerate = framerate;
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
+		FlxG.save.data.progAudioLoad = progAudioLoad;
 		FlxG.save.data.camZooms = camZooms;
+		FlxG.save.data.daMenuMusic = daMenuMusic;
 		FlxG.save.data.rateNameStuff = rateNameStuff;
 		FlxG.save.data.fasterChartLoad = fasterChartLoad;
 		FlxG.save.data.longFCName = longFCName;
@@ -313,6 +317,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
 		}
+		if(FlxG.save.data.progAudioLoad != null) {
+			progAudioLoad = FlxG.save.data.progAudioLoad;
+		}
 		if(FlxG.save.data.rateNameStuff != null) {
 			rateNameStuff = FlxG.save.data.rateNameStuff;
 		}
@@ -348,6 +355,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.bfIconStyle != null) {
 			bfIconStyle = FlxG.save.data.bfIconStyle;
+		}
+		if(FlxG.save.data.daMenuMusic != null) {
+			daMenuMusic = FlxG.save.data.daMenuMusic;
 		}
 		if(FlxG.save.data.noteStyleThing != null) {
 			noteStyleThing = FlxG.save.data.noteStyleThing;

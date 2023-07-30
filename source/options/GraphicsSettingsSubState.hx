@@ -67,6 +67,13 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			false); //Don't turn this on by default
 		addOption(option);
 
+		var option:Option = new Option('Progressive Audio Loading', //Name
+			"If checked, audio will load as it's played instead of loading the entire audio.", //Description
+			'progAudioLoad',
+			'bool',
+			false); //Don't turn this on by default
+		addOption(option);
+
 		var option:Option = new Option('Automatic Note Spawn Time', //Name
 			"If checked, the Notes' spawn time will instead depend on the scroll speed. \nUseful if you don't want notes just spawning out of thin air. \nNOTE: Disable this if you use Lua Extra Keys!!", //Description
 			'dynamicSpawnTime', //Save data variable name
