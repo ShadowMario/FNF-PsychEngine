@@ -571,7 +571,7 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 
 		#if mobileC
-		addMobileControls(false);
+		addMobileControls();
 		mobileControls.visible = true;
 		#end
 

@@ -172,7 +172,7 @@ class NoteOffsetState extends MusicBeatState
 
 		#if mobileC
 		addVirtualPad(LEFT_FULL, A_B_C);
-		addPadCamera(false);
+		addPadCamera();
 		#end
 
 		super.create();
