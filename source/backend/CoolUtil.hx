@@ -28,7 +28,7 @@ class CoolUtil
 		#if (sys && MODS_ALLOWED)
 		var formatted:Array<String> = path.split(':'); //prevent "shared:", "preload:" and other library names on file path
 		path = formatted[formatted.length-1];
-		if(FileSystem.exists(SUtil.getPath() + path)) daList = File.getContent(path);
+		if(FileSystem.exists(SUtil.getPath() + path)) daList = File.getContent(SUtil.getPath() + path);
 		#else
 		if(Assets.exists(path)) daList = Assets.getText(path);
 		#end
