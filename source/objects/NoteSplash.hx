@@ -123,11 +123,12 @@ class NoteSplash extends FlxSprite
 		if(frames == null)
 		{
 			skin = SUtil.getPath() + defaultNoteSplash + getSplashSkinPostfix();
-			frames = SUtil.getPath() + Paths.getSparrowAtlas(skin);
+			var framesPath:String = SUtil.getPath() + Paths.getSparrowAtlas(skin);
+			frames = framesPath;
 			if(frames == null) //if you really need this, you really fucked something up
 			{
 				skin = SUtil.getPath() + defaultNoteSplash;
-				frames = SUtil.getPath() + Paths.getSparrowAtlas(skin);
+				frames = framesPath;
 			}
 		}
 		config = precacheConfig(skin);
@@ -154,7 +155,8 @@ class NoteSplash extends FlxSprite
 		if(configs.exists(skin)) return configs.get(skin);
 
 		var path:String = Paths.getPath('images/$skin.txt', TEXT, true);
-		var configFile:Array<String> = SUtil.getPath() + CoolUtil.coolTextFile(path);
+		var ouput:String = SUtil.getPath() + CoolUtil.coolTextFile(path);
+		var configFile:Array<String> = output;
 		if(configFile.length < 1) return null;
 		
 		var framerates:Array<String> = configFile[1].split(' ');
