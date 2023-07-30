@@ -1,6 +1,7 @@
 package backend;
 #if mobileC
 import mobile.flixel.FlxMobileControlsID;
+import mobile.MobileControls;
 #end
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
@@ -92,7 +93,7 @@ class ClientPrefs {
 		'note_up'		=> [W, UP],
 		'note_left'		=> [A, LEFT],
 		'note_down'		=> [S, DOWN],
-		'note_right'	=> [D, RIGHT],
+		'note_right'	        => [D, RIGHT],
 		
 		'ui_up'			=> [W, UP],
 		'ui_left'		=> [A, LEFT],
@@ -115,7 +116,7 @@ class ClientPrefs {
 		'note_up'		=> [DPAD_UP, Y],
 		'note_left'		=> [DPAD_LEFT, X],
 		'note_down'		=> [DPAD_DOWN, A],
-		'note_right'	=> [DPAD_RIGHT, B],
+		'note_right'	        => [DPAD_RIGHT, B],
 		
 		'ui_up'			=> [DPAD_UP, LEFT_STICK_DIGITAL_UP],
 		'ui_left'		=> [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT],
@@ -128,22 +129,8 @@ class ClientPrefs {
 		'reset'			=> [BACK]
 	];
 	#if mobileC
-	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
-		'note_up'		=> [UP,UP2, hitboxUP],
-		'note_left'		=> [LEFT,LEFT2, hitboxLEFT],
-		'note_down'		=> [DOWN,DOWN2, hitboxDOWN],
-		'note_right'	=> [DOWN,DOWN2, hitboxRIGHT],
-		
-		'ui_up'			=> [UP],
-		'ui_left'		=> [LEFT],
-		'ui_down'		=> [DOWN],
-		'ui_right'		=> [RIGHT],
-		
-		'accept'		=> [A],
-		'back'			=> [B],
-		'pause'			=> [NONE],
-		'reset'			=> [NONE]
-	];
+	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = null;
+	getMobileCConfig();
 	public static var defaultPads:Map<String, Array<FlxMobileControlsID>> = null;
 	#end
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
@@ -302,4 +289,63 @@ class ClientPrefs {
 			FlxG.sound.volumeUpKeys = [];
 		}
 	}
+
+	#if mobileC
+	public function getMobileCConfig() {
+		switch (MobileControls.getMode())
+		{
+			case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
+			mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
+				'note_up'		=> [UP,UP2],
+				'note_left'		=> [LEFT,LEFT2],
+				'note_down'		=> [DOWN,DOWN2],
+				'note_right'	        => [DOWN,DOWN2],
+	
+				'ui_up'			=> [UP],
+				'ui_left'		=> [LEFT],
+				'ui_down'		=> [DOWN],
+				'ui_right'		=> [RIGHT],
+
+				'accept'		=> [A],
+				'back'			=> [B],
+				'pause'			=> [NONE],
+				'reset'			=> [NONE]
+			];
+			case 4: // HITBOX
+			mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
+				'note_up'		=> [hitboxUP],
+				'note_left'		=> [hitboxLEFT],
+				'note_down'		=> [hitboxDOWN],
+				'note_right'    	=> [hitboxRIGHT],
+
+				'ui_up'			=> [UP],
+				'ui_left'		=> [LEFT],
+				'ui_down'		=> [DOWN],
+				'ui_right'		=> [RIGHT],
+
+				'accept'		=> [A],
+				'back'			=> [B],
+				'pause'			=> [NONE],
+				'reset'			=> [NONE]
+			];
+			/*case 5: // KEYBOARD
+			mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
+				'note_up'		=> [UP,UP2],
+				'note_left'		=> [LEFT,LEFT2],
+				'note_down'		=> [DOWN,DOWN2],
+				'note_right'	        => [DOWN,DOWN2],
+
+				'ui_up'			=> [UP],
+				'ui_left'		=> [LEFT],
+				'ui_down'		=> [DOWN],
+				'ui_right'		=> [RIGHT],
+
+				'accept'		=> [A],
+				'back'			=> [B],
+				'pause'			=> [NONE],
+				'reset'			=> [NONE]
+			];*/
+		}
+	}
+	#end
 }

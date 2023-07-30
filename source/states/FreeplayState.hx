@@ -249,7 +249,7 @@ class FreeplayState extends MusicBeatState
 		positionHighscore();
 
 		var shiftMult:Int = 1;
-		if(FlxG.keys.pressed.SHIFT #if mobileC || MusicBeatState.virtualPad.buttonZ.pressed #end) shiftMult = 3;
+		if(FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonZ.pressed #end) shiftMult = 3;
 
 		if(songs.length > 1)
 		{
@@ -314,12 +314,12 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if(FlxG.keys.justPressed.CONTROL #if mobileC || MusicBeatState.instance.virtualPad.buttonC.justPressed #end)
+		if(FlxG.keys.justPressed.CONTROL #if mobileC || virtualPad.buttonC.justPressed #end)
 		{
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
 		}
-		else if(FlxG.keys.justPressed.SPACE #if mobileC || MusicBeatState.instance.virtualPad.buttonX.justPressed #end)
+		else if(FlxG.keys.justPressed.SPACE #if mobileC || virtualPad.buttonX.justPressed #end)
 		{
 			if(instPlaying != curSelected)
 			{
@@ -389,7 +389,7 @@ class FreeplayState extends MusicBeatState
 				return;
 			}
 			
-			if (FlxG.keys.pressed.SHIFT #if mobileC || MusicBeatState.instance.virtualPad.buttonZ.pressed #end){
+			if (FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonZ.pressed #end){
 				LoadingState.loadAndSwitchState(new ChartingState());
 			}else{
 				LoadingState.loadAndSwitchState(new PlayState());
@@ -403,7 +403,7 @@ class FreeplayState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		}
-		else if(controls.RESET #if mobileC || MusicBeatState.instance.virtualPad.buttonY.justPressed #end)
+		else if(controls.RESET #if mobileC || virtualPad.buttonY.justPressed #end)
 		{
 		    #if mobileC
 			removeVirtualPad();
