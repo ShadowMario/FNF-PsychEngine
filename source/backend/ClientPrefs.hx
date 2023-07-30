@@ -129,7 +129,7 @@ class ClientPrefs {
 		'reset'			=> [BACK]
 	];
 	#if mobileC
-	mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
+	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
 		'note_up'		=> [UP,UP2,hitboxUP],
 		'note_left'		=> [LEFT,LEFT2,hitboxLEFT],
 		'note_down'		=> [DOWN,DOWN2,hitboxDOWN],
