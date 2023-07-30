@@ -182,39 +182,39 @@ class FlxVirtualPad extends FlxSpriteGroup
 			switch (buttonID)
 			{
 				case FlxMobileControlsID.LEFT:
-					return buttonLeft.isPressed;
+					return buttonLeft.pressed;
 				case FlxMobileControlsID.UP:
-					return buttonUp.isPressed;
+					return buttonUp.pressed;
 				case FlxMobileControlsID.RIGHT:
-					return buttonRight.isPressed;
+					return buttonRight.pressed;
 				case FlxMobileControlsID.DOWN:
-					return buttonDown.isPressed;
+					return buttonDown.pressed;
 				case FlxMobileControlsID.LEFT2:
-					return buttonLeft2.isPressed;
+					return buttonLeft2.pressed;
 				case FlxMobileControlsID.UP2:
-					return buttonUp2.isPressed;
+					return buttonUp2.pressed;
 				case FlxMobileControlsID.RIGHT2:
-					return buttonRight2.isPressed;
+					return buttonRight2.pressed;
 				case FlxMobileControlsID.DOWN2:
-					return buttonDown2.isPressed;
+					return buttonDown2.pressed;
 				case FlxMobileControlsID.A:
-					return buttonA.isPressed;
+					return buttonA.pressed;
 				case FlxMobileControlsID.B:
-					return buttonB.isPressed;
+					return buttonB.pressed;
 				case FlxMobileControlsID.C:
-					return buttonC.isPressed;
+					return buttonC.pressed;
 				case FlxMobileControlsID.D:
-					return buttonD.isPressed;
+					return buttonD.pressed;
 				case FlxMobileControlsID.E:
-					return buttonE.isPressed;
+					return buttonE.pressed;
 				case FlxMobileControlsID.V:
-					return buttonV.isPressed;
+					return buttonV.pressed;
 				case FlxMobileControlsID.X:
-					return buttonX.isPressed;
+					return buttonX.pressed;
 				case FlxMobileControlsID.Y:
-					return buttonY.isPressed;
+					return buttonY.pressed;
 				case FlxMobileControlsID.Z:
-					return buttonZ.isPressed;
+					return buttonZ.pressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -230,39 +230,39 @@ class FlxVirtualPad extends FlxSpriteGroup
 				switch (buttonID)
 				{
 				case FlxMobileControlsID.LEFT:
-					return buttonLeft.isJustPressed;
+					return buttonLeft.justPressed;
 				case FlxMobileControlsID.UP:
-					return buttonUp.isJustPressed;
+					return buttonUp.justPressed;
 				case FlxMobileControlsID.RIGHT:
-					return buttonRight.isJustPressed;
+					return buttonRight.justPressed;
 				case FlxMobileControlsID.DOWN:
-					return buttonDown.isJustPressed;
+					return buttonDown.justPressed;
 				case FlxMobileControlsID.LEFT2:
-					return buttonLeft2.isJustPressed;
+					return buttonLeft2.justPressed;
 				case FlxMobileControlsID.UP2:
-					return buttonUp2.isJustPressed;
+					return buttonUp2.justPressed;
 				case FlxMobileControlsID.RIGHT2:
-					return buttonRight2.isJustPressed;
+					return buttonRight2.justPressed;
 				case FlxMobileControlsID.DOWN2:
-					return buttonDown2.isJustPressed;
+					return buttonDown2.justPressed;
 				case FlxMobileControlsID.A:
-					return buttonA.isJustPressed;
+					return buttonA.justPressed;
 				case FlxMobileControlsID.B:
-					return buttonB.isJustPressed;
+					return buttonB.justPressed;
 				case FlxMobileControlsID.C:
-					return buttonC.isJustPressed;
+					return buttonC.justPressed;
 				case FlxMobileControlsID.D:
-					return buttonD.isJustPressed;
+					return buttonD.justPressed;
 				case FlxMobileControlsID.E:
-					return buttonE.isJustPressed;
+					return buttonE.justPressed;
 				case FlxMobileControlsID.V:
-					return buttonV.isJustPressed;
+					return buttonV.justPressed;
 				case FlxMobileControlsID.X:
-					return buttonX.isJustPressed;
+					return buttonX.justPressed;
 				case FlxMobileControlsID.Y:
-					return buttonY.isJustPressed;
+					return buttonY.justPressed;
 				case FlxMobileControlsID.Z:
-					return buttonZ.isJustPressed;
+					return buttonZ.justPressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:

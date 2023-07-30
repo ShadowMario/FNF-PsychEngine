@@ -102,13 +102,13 @@ class FlxHitbox extends FlxSpriteGroup
 			switch (buttonID)
 			{
 				case FlxMobileControlsID.hitboxLEFT:
-					return buttonLeft.isPressed;
+					return buttonLeft.pressed;
 				case FlxMobileControlsID.hitboxUP:
-					return buttonUp.isPressed;
+					return buttonUp.pressed;
 				case FlxMobileControlsID.hitboxRIGHT:
-					return buttonRight.isPressed;
+					return buttonRight.pressed;
 				case FlxMobileControlsID.hitboxDOWN:
-					return buttonDown.isPressed;
+					return buttonDown.pressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -124,13 +124,13 @@ class FlxHitbox extends FlxSpriteGroup
 				switch (buttonID)
 				{
 				case FlxMobileControlsID.hitboxLEFT:
-					return buttonLeft.isJustPressed;
+					return buttonLeft.justPressed;
 				case FlxMobileControlsID.hitboxUP:
-					return buttonUp.isJustPressed;
+					return buttonUp.justPressed;
 				case FlxMobileControlsID.hitboxRIGHT:
-					return buttonRight.isJustPressed;
+					return buttonRight.justPressed;
 				case FlxMobileControlsID.hitboxDOWN:
-					return buttonDown.isJustPressed;
+					return buttonDown.justPressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:

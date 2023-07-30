@@ -108,21 +108,6 @@ class FlxButton extends FlxTypedButton<FlxText>
 class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 {
 	/**
-     * Whether the button is currently pressed (held down).
-     */
-	 public var isPressed:Bool = false;
-
-	 /**
-     * Whether the button was just pressed (touched).
-     */
-	 public var isJustPressed:Bool = false;
-
-	 /**
-     * Whether the button was just released (unTouched).
-     */
-	 public var isJustReleased:Bool = false;
-
-	/**
 	 * The label that appears on the button. Can be any `FlxSprite`.
 	 */
 	public var label(default, set):T;
@@ -296,23 +281,7 @@ class FlxTypedButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 				lastStatus = status;
 			}
 		}
-		 // Update the isJustPressed and isJustReleased properties
-		 isJustPressed = false;
-		 isJustReleased = false;
-		 if (currentInput != null)
-		 {
-			 if (currentInput.justPressed)
-			 {
-				isJustPressed = true;
-				trace("isJustPressed is " + isJustPressed);
-			 }
-			 else if (currentInput.justReleased)
-			 {
-				isJustReleased = true;
-				trace("isJustReleased is " + isJustReleased);
-			 }
-		 }
-		 isPressed = currentInput != null;
+
 		input.update();
 	}
 
