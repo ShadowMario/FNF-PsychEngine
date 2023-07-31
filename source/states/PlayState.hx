@@ -2604,7 +2604,6 @@ class PlayState extends MusicBeatState
 				var canMiss:Bool = !ClientPrefs.data.ghostTapping;
 
 				// heavily based on my own code LOL if it aint broke dont fix it
-				var notesStopped:Bool = false;
 				var sortedNotesList:Array<Note> = [];
 				for (daNote in notes)
 				{
@@ -2619,25 +2618,30 @@ class PlayState extends MusicBeatState
 
 				if (sortedNotesList.length > 0) {
 					var epicNote:Note = sortedNotesList[0];
-
-					// This bit here handles stacked notes/jacks
-					for (bad in 1...sortedNotesList.length)
-					{
-						var doubleNote:Note = sortedNotesList[bad];
-						if (Math.abs(doubleNote.strumTime - epicNote.strumTime) < 1) {
-							doubleNote.kill();
-							notes.remove(doubleNote, true);
-							doubleNote.destroy();
-							break;
-						} else {
-							notesStopped = true;
-							break;
+					if (sortedNotesList.length > 1) {
+						for (bad in 1...sortedNotesList.length)
+						{
+							var doubleNote:Note = sortedNotesList[bad];
+							// no point in jack derection if it isn't a jack
+							if (doubleNote.noteData != epicNote.noteData)
+								break;
+	
+							if (Math.abs(doubleNote.strumTime - epicNote.strumTime) < 1) {
+								notes.remove(doubleNote, true);
+								doubleNote.destroy();
+								break;
+							} else {
+								// replace the note if its ahead of time
+								if (doubleNote.strumTime < epicNote.strumTime) {
+									epicNote = doubleNote;
+									break;
+								}
+							}
 						}
 					}
 
 					// eee jack detection before was not super good
-					if (!notesStopped)
-						goodNoteHit(epicNote);
+					goodNoteHit(epicNote);
 				}
 				else {
 					callOnScripts('onGhostTap', [key]);
