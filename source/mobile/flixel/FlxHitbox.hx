@@ -109,7 +109,7 @@ class FlxHitbox extends FlxSpriteGroup
 					trace("up was pressed on the hitbox!");
 				case FlxMobileControlsID.hitboxRIGHT:
 					return buttonRight.pressed;
-					trace("up was pressed on the hitbox!");
+					trace("right was pressed on the hitbox!");
 				case FlxMobileControlsID.hitboxDOWN:
 					return buttonDown.pressed;
 					trace("down was pressed on the hitbox!");
