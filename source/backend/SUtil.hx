@@ -46,13 +46,11 @@ class SUtil
 	{
 		#if android
 		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && !Permissions.getGrandtedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
+			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
 		{
-				Permissions.requestPermissions([Permissions.WRITE_EXTERNAL_STORAGE, Permissions.READ_EXTERNAL_STORAGE, Permissions.MANAGE_EXTERNAL_STORAGE]);
-
-				/**
-				 * Basically for now i can't force the app to stop while its requesting a android permission, so this makes the app to stop while its requesting the specific permission
-				 */
+				Permissions.requestPermissions(Permissions.WRITE_EXTERNAL_STORAGE);
+				Permissions.requestPermissions(Permissions.READ_EXTERNAL_STORAGE);
+				Permissions.requestPermissions(Permissions.MANAGE_EXTERNAL_STORAGE);
 				Lib.application.window.alert('This game need external storage access to function properly' + "\nTo give it access you must accept the storage permission\nIf you accepted you're good to go!\nIf not you'll face issues inGame..."
 					+ '\nPress Ok to see what happens',
 					'Permissions?');
