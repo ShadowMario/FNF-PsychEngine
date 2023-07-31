@@ -260,7 +260,7 @@ class Controls
 					for (key in keys) {
 						if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsPressed(key) == true)
 								{
-									//controllerMode = true;
+									controllerMode = false;
 									return true;
 								}
 							}
@@ -269,7 +269,7 @@ class Controls
 								{
 									if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsPressed(key) == true)
 									{
-										//controllerMode = true;
+										controllerMode = false;
 										return true;
 									}
 								}
@@ -288,7 +288,7 @@ class Controls
 							{
 								if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustPressed(key) == true)
 								{
-									//controllerMode = true;
+									controllerMode = false;
 									return true;
 								}
 							}
@@ -297,7 +297,7 @@ class Controls
 									{
 										if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsJustPressed(key) == true)
 										{
-											//controllerMode = true;
+											controllerMode = false;
 											return true;
 										}
 									}
@@ -316,7 +316,7 @@ class Controls
 							{
 								if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustReleased(key) == true)
 								{
-									//controllerMode = true;
+									controllerMode = false;
 									return true;
 								}
 							}
@@ -325,7 +325,7 @@ class Controls
 									{
 										if (MusicBeatState.instance.mobileControls.hitbox.mobileControlsJustReleased(key) == true)
 										{
-											//controllerMode = true;
+											controllerMode = false;
 											return true;
 										}
 									}
