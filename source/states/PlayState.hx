@@ -422,14 +422,12 @@ class PlayState extends MusicBeatState
 		#end
 
 		// STAGE SCRIPTS
-		#if MODS_ALLOWED
 		#if LUA_ALLOWED
 		startLuasNamed('stages/' + curStage + '.lua');
 		#end
 
-		#if SScript
+		#if HSCRIPT_ALLOWED
 		startHScriptsNamed('stages/' + curStage + '.hx');
-		#end
 		#end
 
 		if (!stageData.hide_girlfriend)
@@ -3004,10 +3002,7 @@ class PlayState extends MusicBeatState
 			if(script != null)
 			{
 				script.call('onDestroy');
-				script.active = false;
-				#if (SScript >= "3.0.3")
 				script.destroy();
-				#end
 			}
 
 		while (hscriptArray.length > 0)
@@ -3159,10 +3154,20 @@ class PlayState extends MusicBeatState
 
 	public function initHScript(file:String)
 	{
-		var newScript:HScript = null;
 		try
 		{
-			newScript = new HScript(null, file);
+			var newScript:HScript = new HScript(null, file);
+			@:privateAccess
+			if(newScript.parsingExceptions != null && newScript.parsingExceptions.length > 0)
+			{
+				@:privateAccess
+				for (e in newScript.parsingExceptions)
+					if(e != null)
+						addTextToDebug('ERROR ON LOADING ($file): ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
+				newScript.destroy();
+				return;
+			}
+
 			hscriptArray.push(newScript);
 			if(newScript.exists('onCreate'))
 			{
@@ -3173,7 +3178,7 @@ class PlayState extends MusicBeatState
 						if (e != null)
 							addTextToDebug('ERROR ($file: onCreate) - ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
 
-					newScript.active = false;
+					newScript.destroy();
 					hscriptArray.remove(newScript);
 					trace('failed to initialize sscript interp!!! ($file)');
 				}
@@ -3184,9 +3189,10 @@ class PlayState extends MusicBeatState
 		catch(e)
 		{
 			addTextToDebug('ERROR ($file) - ' + e.message.substr(0, e.message.indexOf('\n')), FlxColor.RED);
+			var newScript:HScript = cast (SScript.global.get(file), HScript);
 			if(newScript != null)
 			{
-				newScript.active = false;
+				newScript.destroy();
 				hscriptArray.remove(newScript);
 			}
 		}

@@ -157,6 +157,9 @@ class HScript extends SScript
 		set('Function_StopAll', FunkinLua.Function_StopAll);
 		
 		set('add', function(obj:FlxBasic) PlayState.instance.add(obj));
+		set('addBehindGF', function(obj:FlxBasic) PlayState.instance.addBehindGF(obj));
+		set('addBehindDad', function(obj:FlxBasic) PlayState.instance.addBehindDad(obj));
+		set('addBehindBF', function(obj:FlxBasic) PlayState.instance.addBehindBF(obj));
 		set('insert', function(pos:Int, obj:FlxBasic) PlayState.instance.insert(pos, obj));
 		set('remove', function(obj:FlxBasic, splice:Bool = false) PlayState.instance.remove(obj, splice));
 		#end
@@ -164,31 +167,28 @@ class HScript extends SScript
 
 	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):SCall
 	{
-		if (funcToRun != null)
+		if (funcToRun == null) return null;
+
+		if(!exists(funcToRun))
 		{
-			if(!exists(funcToRun))
-			{
-				FunkinLua.luaTrace(origin + ' - No HScript function named: $funcToRun', false, false, FlxColor.RED);
-				return null;
-			}
-			var callValue = call(funcToRun, funcArgs);
-			if (callValue.succeeded)
-				return callValue;
-			else
-			{
-				var e = callValue.exceptions[0];
-				if (e != null)
-				{
-					var msg:String = e.toString();
-					if(parentLua != null) msg = origin + ":" + parentLua.lastCalledFunction + " - " + msg;
-					else msg = '$origin - $msg';
-					FunkinLua.luaTrace(msg, parentLua == null, false, FlxColor.RED);
-				}
-				return null;
-			}
+			FunkinLua.luaTrace(origin + ' - No HScript function named: $funcToRun', false, false, FlxColor.RED);
+			return null;
 		}
 
-		return null;
+		var callValue = call(funcToRun, funcArgs);
+		if (!callValue.succeeded)
+		{
+			var e = callValue.exceptions[0];
+			if (e != null)
+			{
+				var msg:String = e.toString();
+				if(parentLua != null) msg = origin + ":" + parentLua.lastCalledFunction + " - " + msg;
+				else msg = '$origin - $msg';
+				FunkinLua.luaTrace(msg, parentLua == null, false, FlxColor.RED);
+			}
+			return null;
+		}
+		return callValue;
 	}
 
 	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):SCall
@@ -289,6 +289,11 @@ class HScript extends SScript
 		parentLua = null;
 
 		super.destroy();
+	}
+	#else
+	public function destroy()
+	{
+		active = false;
 	}
 	#end
 }
