@@ -33,7 +33,7 @@ class SUtil
 	public static function getPath():String
 	{
 		#if android
-		return Environment.getDataDirectory() + "/" + Application.current.meta.get('packageName') + '/';
+		return  Context.getExternalFilesDir(null) + '/';
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#end
