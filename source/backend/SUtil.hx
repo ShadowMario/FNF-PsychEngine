@@ -48,7 +48,7 @@ class SUtil
 		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
 			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && !Permissions.getGrandtedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
 		{
-				Permissions.requestPermissions([Permissions.WRITE_EXTERNAL_STORAGE, Permissions.READ_EXTERNAL_STORAGE, MANAGE_EXTERNAL_STORAGE]);
+				Permissions.requestPermissions([Permissions.WRITE_EXTERNAL_STORAGE, Permissions.READ_EXTERNAL_STORAGE, Permissions.MANAGE_EXTERNAL_STORAGE]);
 
 				/**
 				 * Basically for now i can't force the app to stop while its requesting a android permission, so this makes the app to stop while its requesting the specific permission
@@ -67,7 +67,7 @@ class SUtil
 						copyContentFromExternalStorage(Environment.getDownloadCacheDirectory() + "assets", SUtil.getPath());
 	
 					if (FileSystem.exists(Environment.getDownloadCacheDirectory() + "mods"))
-						copyContentFromExternalStorage(Environment.getDownloadCacheDirectory() + "mods", SUtil.getPath())
+						copyContentFromExternalStorage(Environment.getDownloadCacheDirectory() + "mods", SUtil.getPath());
 	
 				}
 			} else {
