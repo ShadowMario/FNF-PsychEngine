@@ -1214,7 +1214,7 @@ class PlayState extends MusicBeatState
 		bfGhost.antialiasing = true;
 		bfGhost.scale.copyFrom(boyfriend.scale);
 		bfGhost.updateHitbox();
-		if (!stageData.hide_girlfriend || ClientPrefs.charsAndBG) { //stops crashes if the stage data specifies to hide gf
+		if (!stageData.hide_girlfriend || ClientPrefs.charsAndBG && !stageData.hide_girlfriend) { //stops crashes if the stage data specifies to hide gf
 		gfGhost.visible = false;
 		gfGhost.antialiasing = true;
 		gfGhost.scale.copyFrom(gf.scale);
@@ -6527,7 +6527,7 @@ class PlayState extends MusicBeatState
 				if (storyPlaylist.length <= 0)
 				{
 					WeekData.loadTheFirstEnabledMod();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
@@ -6597,7 +6597,7 @@ class PlayState extends MusicBeatState
 					CustomFadeTransition.nextCamera = null;
 				}
 				MusicBeatState.switchState(new FreeplayState());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 				changedDifficulty = false;
 			}
 			transitioning = true;

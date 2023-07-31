@@ -32,6 +32,7 @@ class PauseSubState extends MusicBeatSubstate
 	var curTime:Float = Math.max(0, Conductor.songPosition);
 	//var botplayText:FlxText;
 	public static var botplayLockout:Bool = false;
+	public static var inPause:Bool = false;
 
 	public static var songName:String = '';
 
@@ -266,7 +267,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplaySine = 0;
 				case "Options":
 					MusicBeatState.switchState(new OptionsState());
-					OptionsState.onPlayState = true;
+					inPause = true;
 					if(ClientPrefs.pauseMusic != 'None')
 					{
 						FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)), pauseMusic.volume);

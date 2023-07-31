@@ -1967,7 +1967,7 @@ class ChartingState extends MusicBeatState
 				
 				PlayState.chartingMode = false;
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 				FlxG.mouse.visible = false;
 				return;
 			}
