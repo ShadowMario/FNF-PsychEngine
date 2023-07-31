@@ -4,6 +4,7 @@ package backend;
 import android.content.Context;
 import android.widget.Toast;
 import android.os.Environment;
+import android.Permissions;
 #end
 import haxe.io.Path;
 import haxe.CallStack;
@@ -32,7 +33,7 @@ class SUtil
 	public static function getPath():String
 	{
 		#if android
-		return Environment.getExternalStorageDirectory() + '/Android/media/' + Application.current.meta.get('packageName') + '/';
+		return Environment.getDataDirectory() + Application.current.meta.get('packageName') + '/';
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#end
@@ -43,18 +44,39 @@ class SUtil
 	 */
 	public static function checkFiles():Void
 	{
-		#if mobile
-		if (!FileSystem.exists(SUtil.getPath()))
+		#if android
+		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
+			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && !Permissions.getGrandtedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
 		{
-                        try {
-			FileSystem.createDirectory(SUtil.getPath());
-                        }
-                        catch (e){
-                        Lib.application.window.alert('Please create folder to\n' + SUtil.getPath() + '\nPress Ok to close the app',
-				'Error!');
-			LimeSystem.exit(1);
-                        }
+				Permissions.requestPermissions([Permissions.WRITE_EXTERNAL_STORAGE, Permissions.READ_EXTERNAL_STORAGE, MANAGE_EXTERNAL_STORAGE]);
+
+				/**
+				 * Basically for now i can't force the app to stop while its requesting a android permission, so this makes the app to stop while its requesting the specific permission
+				 */
+				Lib.application.window.alert('This game need external storage access to function properly' + "\nTo give it access you must accept the storage permission\nIf you accepted you're good to go!\nIf not you'll face issues inGame..."
+					+ '\nPress Ok to see what happens',
+					'Permissions?');
 		}
+
+		if (!FileSystem.exists(SUtil.getPath()))
+			{
+				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
+					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && Permissions.getGrandtedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
+				{
+					if (FileSystem.exists(Environment.getDownloadCacheDirectory() + "assets"))
+						copyContentFromExternalStorage(Environment.getDownloadCacheDirectory() + "assets", SUtil.getPath());
+	
+					if (FileSystem.exists(Environment.getDownloadCacheDirectory() + "mods"))
+						copyContentFromExternalStorage(Environment.getDownloadCacheDirectory() + "mods", SUtil.getPath())
+	
+				}
+			} else {
+			Lib.application.window.alert("Whoops, your game have failed in copying the needed files!\n Please make sure you have the needed folders:\nmods and assets in your download folder." + SUtil.getPath(),
+			'Missing files!');
+			LimeSystem.exit(1);
+			}
+		#end
+		#if mobile
 		if (!FileSystem.exists(SUtil.getPath() +  'assets') && !FileSystem.exists(SUtil.getPath() +  'mods'))
 		{
 			Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + SUtil.getPath(),
@@ -199,7 +221,7 @@ class SUtil
 		}
 	}
 
-	public static function copyContent(copyPath:String, savePath:String):Void
+	public static function copyContentFromInternalStorage(copyPath:String, savePath:String):Void
 	{
 		try
 		{
@@ -220,5 +242,27 @@ class SUtil
 			#end
 		}
 	}
+
+	public static function copyContentFromExternalStorage(copyPath:String, savePath:String):Void
+		{
+			try
+			{
+				if (!FileSystem.exists(savePath) && FileSystem.exists(copyPath))
+				{
+					if (!FileSystem.exists(Path.directory(savePath)))
+						SUtil.mkDirs(Path.directory(savePath));
+	
+					File.saveBytes(savePath, File.getBytes(copyPath));
+				}
+			}
+			catch (e:Dynamic)
+			{
+				#if (android && debug)
+				Toast.makeText('Error!\nClouldn\'t copy the $copyPath because:\n' + e, Toast.LENGTH_LONG);
+				#else
+				LimeLogger.println('Error!\nClouldn\'t copy the $copyPath because:\n' + e);
+				#end
+			}
+		}
 	#end
 }
