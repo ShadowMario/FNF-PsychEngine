@@ -155,6 +155,11 @@ class CreditsState extends MusicBeatState
 					changeSelection(shiftMult);
 					holdTime = 0;
 				}
+				if(FlxG.mouse.wheel != 0)
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+					changeSelection(-shiftMult * FlxG.mouse.wheel);
+				}
 
 				if(controls.UI_DOWN || controls.UI_UP)
 				{

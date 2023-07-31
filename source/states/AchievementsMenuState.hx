@@ -69,6 +69,10 @@ class AchievementsMenuState extends MusicBeatState
 		if (controls.UI_DOWN_P) {
 			changeSelection(1);
 		}
+		if(FlxG.mouse.wheel != 0){
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+			changeSelection(-FlxG.mouse.wheel);
+		}
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
