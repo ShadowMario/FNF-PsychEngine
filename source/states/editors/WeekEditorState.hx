@@ -44,9 +44,12 @@ class WeekEditorState extends MusicBeatState
 	public function new(weekFile:WeekFile = null)
 	{
 		super();
-		this.weekFile = WeekData.createWeekFile();
-		if(weekFile != null) this.weekFile = weekFile;
-		else weekFileName = 'week1';
+		if (weekFile != null)
+			this.weekFile = weekFile;
+		else {
+			this.weekFile = WeekData.createWeekFile();
+			weekFileName = 'week1';
+		}
 	}
 
 	override function create() {

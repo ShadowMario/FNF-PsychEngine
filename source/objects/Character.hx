@@ -306,27 +306,19 @@ class Character extends FlxSprite
 
 		var daOffset = animOffsets.get(AnimName);
 		if (animOffsets.exists(AnimName))
-		{
 			offset.set(daOffset[0], daOffset[1]);
-		}
 		else
 			offset.set(0, 0);
 
 		if (curCharacter.startsWith('gf'))
 		{
 			if (AnimName == 'singLEFT')
-			{
 				danced = true;
-			}
 			else if (AnimName == 'singRIGHT')
-			{
 				danced = false;
-			}
 
 			if (AnimName == 'singUP' || AnimName == 'singDOWN')
-			{
 				danced = !danced;
-			}
 		}
 	}
 	
@@ -358,15 +350,8 @@ class Character extends FlxSprite
 			danceEveryNumBeats = (danceIdle ? 1 : 2);
 		}
 		else if(lastDanceIdle != danceIdle)
-		{
-			var calc:Float = danceEveryNumBeats;
-			if(danceIdle)
-				calc /= 2;
-			else
-				calc *= 2;
+			danceEveryNumBeats = Math.round(Math.max(danceIdle ? danceEveryNumBeats * .5 : danceEveryNumBeats * 2, 1));
 
-			danceEveryNumBeats = Math.round(Math.max(calc, 1));
-		}
 		settingCharacterUp = false;
 	}
 

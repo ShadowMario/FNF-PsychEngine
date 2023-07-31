@@ -167,14 +167,10 @@ class Philly extends BaseStage
 							FlxG.camera.flash(colorButLower, 0.5, null, true);
 						}
 
-						var charColor:FlxColor = color;
-						if(!ClientPrefs.data.flashing) charColor.saturation *= 0.5;
-						else charColor.saturation *= 0.75;
+						color.saturation = ClientPrefs.data.flashing ? color.saturation * .75 : color.saturation * .5;
 
 						for (who in chars)
-						{
-							who.color = charColor;
-						}
+							who.color = color;
 						phillyGlowParticles.forEachAlive(function(particle:PhillyGlowParticle)
 						{
 							particle.color = color;

@@ -1836,12 +1836,7 @@ class ChartingState extends MusicBeatState
 			}
 
 			if (!FlxG.keys.pressed.ALT && FlxG.keys.justPressed.R)
-			{
-				if (FlxG.keys.pressed.SHIFT)
-					resetSection(true);
-				else
-					resetSection();
-			}
+				resetSection(FlxG.keys.pressed.SHIFT);
 
 			if (FlxG.mouse.wheel != 0)
 			{
@@ -1850,7 +1845,7 @@ class ChartingState extends MusicBeatState
 					FlxG.sound.music.time -= (FlxG.mouse.wheel * Conductor.stepCrochet*0.8);
 				else
 					{
-						var time:Float = FlxG.sound.music.time;
+						// var time:Float = FlxG.sound.music.time;
 						var beat:Float = curDecBeat;
 						var snap:Float = quantization / 4;
 						var increase:Float = 1 / snap;
@@ -1901,18 +1896,11 @@ class ChartingState extends MusicBeatState
 				{
 					FlxG.sound.music.pause();
 					updateCurStep();
-					var time:Float = FlxG.sound.music.time;
+					// var time:Float = FlxG.sound.music.time;
 					var beat:Float = curDecBeat;
 					var snap:Float = quantization / 4;
 					var increase:Float = 1 / snap;
-					if (FlxG.keys.pressed.UP)
-					{
-						var fuck:Float = CoolUtil.quantize(beat, snap) - increase; //(Math.floor((beat+snap) / snap) * snap);
-						FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
-					}else{
-						var fuck:Float = CoolUtil.quantize(beat, snap) + increase; //(Math.floor((beat+snap) / snap) * snap);
-						FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
-					}
+					FlxG.sound.music.time = Conductor.beatToSeconds(FlxG.keys.pressed.UP ? CoolUtil.quantize(beat, snap) - increase : CoolUtil.quantize(beat, snap) + increase);
 				}
 			}
 

@@ -52,11 +52,7 @@ class NoteSplash extends FlxSprite
 		else if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		else texture = defaultNoteSplash + getSplashSkinPostfix();
 		
-		var config:NoteSplashConfig = null;
-		if(_textureLoaded != texture)
-			config = loadAnims(texture);
-		else
-			config = precacheConfig(_configLoaded);
+		var config:NoteSplashConfig = _textureLoaded != texture ? loadAnims(texture) : precacheConfig(_configLoaded);
 
 		var tempShader:RGBPalette = null;
 		if((note == null || note.noteSplashData.useRGBShader) && (PlayState.SONG == null || !PlayState.SONG.disableNoteRGB))
@@ -64,7 +60,6 @@ class NoteSplash extends FlxSprite
 			// If Note RGB is enabled:
 			if(note != null && !note.noteSplashData.useGlobalShader)
 			{
-				
 				if(note.noteSplashData.r != -1) note.rgbShader.r = note.noteSplashData.r;
 				if(note.noteSplashData.g != -1) note.rgbShader.g = note.noteSplashData.g;
 				if(note.noteSplashData.b != -1) note.rgbShader.b = note.noteSplashData.b;

@@ -333,12 +333,7 @@ class NoteOffsetState extends MusicBeatState
 			{
 				if(FlxG.mouse.justMoved || analogMoved)
 				{
-					var mousePos:FlxPoint = null;
-					if(!controls.controllerMode)
-						mousePos = FlxG.mouse.getScreenPosition(camHUD);
-					else
-						mousePos = controllerPointer.getScreenPosition(camHUD);
-
+					var mousePos:FlxPoint = controls.controllerMode ? controllerPointer.getScreenPosition(camHUD) : FlxG.mouse.getScreenPosition(camHUD);
 					var addNum:Int = holdingObjectType ? 2 : 0;
 					ClientPrefs.data.comboOffset[addNum + 0] = Math.round((mousePos.x - startMousePos.x) + startComboOffset.x);
 					ClientPrefs.data.comboOffset[addNum + 1] = -Math.round((mousePos.y - startMousePos.y) - startComboOffset.y);
@@ -532,17 +527,8 @@ class NoteOffsetState extends MusicBeatState
 			controllerPointer.visible = controls.controllerMode;
 		}
 
-		var str:String;
-		var str2:String;
-		if(onComboMenu)
-			str = 'Combo Offset';
-		else
-			str = 'Note/Beat Delay';
-
-		if(!controls.controllerMode)
-			str2 = '(Press Accept to Switch)';
-		else
-			str2 = '(Press Start to Switch)';
+		var str:String = onComboMenu ? 'Combo Offset' : 'Note/Beat Delay';
+		var str2:String = controls.controllerMode ? '(Press Start to Switch)' : '(Press Accept to Switch)';
 
 		changeModeText.text = '< ${str.toUpperCase()} ${str2.toUpperCase()} >';
 	}

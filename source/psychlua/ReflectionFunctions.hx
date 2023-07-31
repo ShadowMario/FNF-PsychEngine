@@ -70,11 +70,7 @@ class ReflectionFunctions
 		});
 		Lua_helper.add_callback(lua, "getPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, ?allowMaps:Bool = false) {
 			var split:Array<String> = obj.split('.');
-			var realObject:Dynamic = null;
-			if(split.length > 1)
-				realObject = LuaUtils.getPropertyLoop(split, true, false, allowMaps);
-			else
-				realObject = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
+			var realObject:Dynamic = split.length > 1 ? LuaUtils.getPropertyLoop(split, true, false, allowMaps) : Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
 
 			if(Std.isOfType(realObject, FlxTypedGroup))
 			{
@@ -83,24 +79,16 @@ class ReflectionFunctions
 			}
 
 			var leArray:Dynamic = realObject[index];
-			if(leArray != null) {
-				var result:Dynamic = null;
-				if(Type.typeof(variable) == ValueType.TInt)
-					result = leArray[variable];
-				else
-					result = LuaUtils.getGroupStuff(leArray, variable, allowMaps);
-				return result;
-			}
+			if(leArray != null)
+				return Type.typeof(variable) == ValueType.TInt ? leArray[variable] : LuaUtils.getGroupStuff(leArray, variable, allowMaps);
+
 			FunkinLua.luaTrace("getPropertyFromGroup: Object #" + index + " from group: " + obj + " doesn't exist!", false, false, FlxColor.RED);
 			return null;
 		});
 		Lua_helper.add_callback(lua, "setPropertyFromGroup", function(obj:String, index:Int, variable:Dynamic, value:Dynamic, ?allowMaps:Bool = false) {
 			var split:Array<String> = obj.split('.');
-			var realObject:Dynamic = null;
-			if(split.length > 1)
-				realObject = LuaUtils.getPropertyLoop(split, true, false, allowMaps);
-			else
-				realObject = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
+
+			var realObject:Dynamic = split.length > 1 ? LuaUtils.getPropertyLoop(split, true, false, allowMaps) : Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
 
 			if(Std.isOfType(realObject, FlxTypedGroup)) {
 				LuaUtils.setGroupStuff(realObject.members[index], variable, value, allowMaps);
