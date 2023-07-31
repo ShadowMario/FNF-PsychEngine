@@ -59,7 +59,7 @@ class SUtil
 		if (!FileSystem.exists(SUtil.getPath() + "assets") && !FileSystem.exists(SUtil.getPath() + "mods") || !FileSystem.exists(SUtil.getPath() + "assets") || !FileSystem.exists(SUtil.getPath() + "mods"))
 			{
 				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && Permissions.getGrandtedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
+					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
 				{
 					if (FileSystem.exists(Environment.getDownloadCacheDirectory() + "assets"))
 						copyContentFromExternalStorage(Environment.getDownloadCacheDirectory() + "assets", SUtil.getPath());
