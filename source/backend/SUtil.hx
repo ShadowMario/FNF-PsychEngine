@@ -58,6 +58,7 @@ class SUtil
 
 		if (!FileSystem.exists(SUtil.getPath() + "assets") && !FileSystem.exists(SUtil.getPath() + "mods") || !FileSystem.exists(SUtil.getPath() + "assets") || !FileSystem.exists(SUtil.getPath() + "mods"))
 			{
+				try {
 				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
 					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
 				{
@@ -68,11 +69,14 @@ class SUtil
 						copyDirectoryFromExternalStorage(Environment.getDownloadCacheDirectory() + "mods", SUtil.getPath());
 	
 				}
-			} else {
+			} 
+			catch(e:Dynamic) {
 			Lib.application.window.alert("Whoops, your game have failed in copying the needed files!\n Please make sure you have the needed folders:\nmods and assets in your download folder." + SUtil.getPath(),
 			'Missing files!');
-			LimeSystem.exit(1);
+			Toast.makeText('Error!\nCouldn\'t copy the files because:\n' + e, Toast.LENGTH_LONG);
+			//LimeSystem.exit(1);
 			}
+		}
 		#end
 		#if mobile
 		if (!FileSystem.exists(SUtil.getPath() +  'assets') && !FileSystem.exists(SUtil.getPath() +  'mods'))
