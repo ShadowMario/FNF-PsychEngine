@@ -2260,7 +2260,7 @@ class PlayState extends MusicBeatState
 		else
 		{
 			var noMissWeek:String = WeekData.getWeekFileName() + '_nomiss';
-			var achieve:String = checkForAchievement([noMissWeek, 'r_ubad', 'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
+			var achieve:String = checkForAchievement([noMissWeek, 'ur_bad', 'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
 			if(achieve != null) {
 				startAchievement(achieve);
 				return false;
