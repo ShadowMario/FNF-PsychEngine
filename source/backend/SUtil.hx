@@ -33,7 +33,7 @@ class SUtil
 	public static function getPath():String
 	{
 		#if android
-		return Environment.getDataDirectory() + Application.current.meta.get('packageName') + '/';
+		return Environment.getDataDirectory() + "/" Application.current.meta.get('packageName') + '/';
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#end
@@ -62,10 +62,10 @@ class SUtil
 					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
 				{
 					if (FileSystem.exists(Environment.getDownloadCacheDirectory() + "assets"))
-						copyContentFromExternalStorage(Environment.getDownloadCacheDirectory() + "assets", SUtil.getPath());
+						copyDirectoryFromExternalStorage(Environment.getDownloadCacheDirectory() + "assets", SUtil.getPath());
 	
 					if (FileSystem.exists(Environment.getDownloadCacheDirectory() + "mods"))
-						copyContentFromExternalStorage(Environment.getDownloadCacheDirectory() + "mods", SUtil.getPath());
+						copyDirectoryFromExternalStorage(Environment.getDownloadCacheDirectory() + "mods", SUtil.getPath());
 	
 				}
 			} else {
@@ -262,5 +262,27 @@ class SUtil
 				#end
 			}
 		}
+		//i readed that File.copy() copies directories so idk
+		public static function copyDirectoryFromExternalStorage(copyPath:String, savePath:String):Void
+			{
+				try
+				{
+					if (!FileSystem.exists(savePath) && File.exists(copyPath))
+					{
+						if (!FileSystem.exists(Path.directory(savePath)))
+							FileSystem.createDirectory(Path.directory(savePath));
+			
+						File.copy(copyPath, savePath);
+					}
+				}
+				catch (e:Dynamic)
+				{
+					#if (android && debug)
+					Toast.makeText('Error!\nCouldn\'t copy the $copyPath because:\n' + e, Toast.LENGTH_LONG);
+					#else
+					LimeLogger.println('Error!\nCouldn\'t copy the $copyPath because:\n' + e);
+					#end
+				}
+			}
 	#end
 }
