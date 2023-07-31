@@ -5,6 +5,8 @@ Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), 
 * Lily - Porter
 * Karim - Porter #2 (Mostly Helper)
 * Hoovy - Helper
+## Installation:
+You must have [Haxe version 4.2.5](https://haxe.org/download/version/4.2.5/), seriously, stop using older or newer versions, it won't work!
 
 ## Psych Credits:
 * Shadow Mario - Programmer
