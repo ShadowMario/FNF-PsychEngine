@@ -183,20 +183,28 @@ class FlxVirtualPad extends FlxSpriteGroup
 			{
 				case FlxMobileControlsID.LEFT:
 					return buttonLeft.pressed;
+					trace("left was pressed on the virtual pad!");
 				case FlxMobileControlsID.UP:
 					return buttonUp.pressed;
+					trace("up was pressed on the virtual pad!");
 				case FlxMobileControlsID.RIGHT:
 					return buttonRight.pressed;
+					trace("right was pressed on the virtual pad!");
 				case FlxMobileControlsID.DOWN:
 					return buttonDown.pressed;
+					trace("down was pressed on the virtual pad!");
 				case FlxMobileControlsID.LEFT2:
 					return buttonLeft2.pressed;
+					trace("left was pressed on the virtual pad!");
 				case FlxMobileControlsID.UP2:
 					return buttonUp2.pressed;
+					trace("up was pressed on the virtual pad!");
 				case FlxMobileControlsID.RIGHT2:
 					return buttonRight2.pressed;
+					trace("right was pressed on the virtual pad!");
 				case FlxMobileControlsID.DOWN2:
 					return buttonDown2.pressed;
+					trace("down was pressed on the virtual pad!");
 				case FlxMobileControlsID.A:
 					return buttonA.pressed;
 				case FlxMobileControlsID.B:
@@ -231,12 +239,16 @@ class FlxVirtualPad extends FlxSpriteGroup
 				{
 				case FlxMobileControlsID.LEFT:
 					return buttonLeft.justPressed;
+					trace("left was jsutpressed on the virtual pad!");
 				case FlxMobileControlsID.UP:
 					return buttonUp.justPressed;
+					trace("up was jsutpressed on the virtual pad!");
 				case FlxMobileControlsID.RIGHT:
 					return buttonRight.justPressed;
+					trace("right was jsutpressed on the virtual pad!");
 				case FlxMobileControlsID.DOWN:
 					return buttonDown.justPressed;
+					trace("down was jsutpressed on the virtual pad!");
 				case FlxMobileControlsID.LEFT2:
 					return buttonLeft2.justPressed;
 				case FlxMobileControlsID.UP2:
@@ -279,12 +291,16 @@ class FlxVirtualPad extends FlxSpriteGroup
 			{
 				case FlxMobileControlsID.LEFT:
 					return buttonLeft.justReleased;
+					trace("left was jsutreleased on the virtual pad!");
 				case FlxMobileControlsID.UP:
 					return buttonUp.justReleased;
+					trace("up was jsutreleased on the virtual pad!");
 				case FlxMobileControlsID.RIGHT:
 					return buttonRight.justReleased;
+					trace("right was jsutreleased on the virtual pad!");
 				case FlxMobileControlsID.DOWN:
 					return buttonDown.justReleased;
+					trace("down was jsutreleased on the virtual pad!");
 				case FlxMobileControlsID.LEFT2:
 					return buttonLeft2.justReleased;
 				case FlxMobileControlsID.UP2:
