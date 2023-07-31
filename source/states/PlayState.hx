@@ -2584,7 +2584,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public var strumsBlocked:Array<Bool> = [];
-	private inline function onKeyPress(event:KeyboardEvent):Void
+	private function onKeyPress(event:KeyboardEvent):Void
 	{
 		var eventKey:FlxKey = event.keyCode;
 		var key:Int = getKeyFromEvent(keysArray, eventKey);
@@ -2622,7 +2622,7 @@ class PlayState extends MusicBeatState
 						for (bad in 1...sortedNotesList.length)
 						{
 							var doubleNote:Note = sortedNotesList[bad];
-							// no point in jack derection if it isn't a jack
+							// no point in jack detection if it isn't a jack
 							if (doubleNote.noteData != epicNote.noteData)
 								break;
 	
@@ -2678,7 +2678,7 @@ class PlayState extends MusicBeatState
 		return FlxSort.byValues(FlxSort.ASCENDING, a.strumTime, b.strumTime);
 	}
 
-	private inline function onKeyRelease(event:KeyboardEvent):Void
+	private function onKeyRelease(event:KeyboardEvent):Void
 	{
 		var eventKey:FlxKey = event.keyCode;
 		var key:Int = getKeyFromEvent(keysArray, eventKey);
