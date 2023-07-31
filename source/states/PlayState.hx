@@ -2630,12 +2630,11 @@ class PlayState extends MusicBeatState
 								notes.remove(doubleNote, true);
 								doubleNote.destroy();
 								break;
-							} else {
+							} else if (doubleNote.strumTime < epicNote.strumTime)
+							{
 								// replace the note if its ahead of time
-								if (doubleNote.strumTime < epicNote.strumTime) {
-									epicNote = doubleNote;
-									break;
-								}
+								epicNote = doubleNote; 
+								break;
 							}
 						}
 					}
