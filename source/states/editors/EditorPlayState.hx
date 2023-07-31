@@ -656,41 +656,46 @@ class EditorPlayState extends MusicBeatSubstate
 			var lastTime:Float = Conductor.songPosition;
 			if(Conductor.songPosition >= 0) Conductor.songPosition = FlxG.sound.music.time;
 
-			// heavily based on my own code LOL if it aint broke dont fix it
-			var pressNotes:Array<Note> = [];
-			var notesStopped:Bool = false;
+			var canMiss:Bool = !ClientPrefs.data.ghostTapping;
 
+			// heavily based on my own code LOL if it aint broke dont fix it
 			var sortedNotesList:Array<Note> = [];
-			notes.forEachAlive(function(daNote:Note)
+			for (daNote in notes)
 			{
-				if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate &&
-					!daNote.wasGoodHit && !daNote.isSustainNote && !daNote.blockHit)
+				if (daNote.exists && daNote.canBeHit && daNote.mustPress &&
+					!daNote.tooLate && !daNote.wasGoodHit && !daNote.isSustainNote && !daNote.blockHit)
 				{
-					if(daNote.noteData == key)
-						sortedNotesList.push(daNote);
+					if(daNote.noteData == key) sortedNotesList.push(daNote);
+					canMiss = true;
 				}
-			});
+			}
+			sortedNotesList.sort(PlayState.sortHitNotes);
 
 			if (sortedNotesList.length > 0) {
-				sortedNotesList.sort(PlayState.sortHitNotes);
-				for (epicNote in sortedNotesList)
-				{
-					for (doubleNote in pressNotes) {
+				var epicNote:Note = sortedNotesList[0];
+				if (sortedNotesList.length > 1) {
+					for (bad in 1...sortedNotesList.length)
+					{
+						var doubleNote:Note = sortedNotesList[bad];
+						// no point in jack detection if it isn't a jack
+						if (doubleNote.noteData != epicNote.noteData)
+							break;
+
 						if (Math.abs(doubleNote.strumTime - epicNote.strumTime) < 1) {
-							doubleNote.kill();
 							notes.remove(doubleNote, true);
 							doubleNote.destroy();
-						} else
-							notesStopped = true;
+							break;
+						} else if (doubleNote.strumTime < epicNote.strumTime)
+						{
+							// replace the note if its ahead of time
+							epicNote = doubleNote; 
+							break;
+						}
 					}
-
-					// eee jack detection before was not super good
-					if (!notesStopped) {
-						goodNoteHit(epicNote);
-						pressNotes.push(epicNote);
-					}
-
 				}
+
+				// eee jack detection before was not super good
+				goodNoteHit(epicNote);
 			}
 			//more accurate hit time for the ratings? part 2 (Now that the calculations are done, go back to the time it was before for not causing a note stutter)
 			Conductor.songPosition = lastTime;
