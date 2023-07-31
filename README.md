@@ -8,6 +8,8 @@ open up a Command Prompt/PowerShell or Terminal, type `haxelib install hmm`
 
 after it finishes, simply type `haxelib run hmm install` in order to install all the needed libraries for *Psych Engine!*
 
+If the compiler gives an error saying that hxCodec cannot be found read this issue to fix it: ShadowMario/FNF-PsychEngine#12770
+
 ## Customization:
 
 if you wish to disable things like *Lua Scripts* or *Video Cutscenes*, you can read over to `Project.xml`
