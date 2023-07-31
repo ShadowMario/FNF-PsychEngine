@@ -33,7 +33,7 @@ class SUtil
 	public static function getPath():String
 	{
 		#if android
-		return Environment.getDataDirectory() + "/" Application.current.meta.get('packageName') + '/';
+		return Environment.getDataDirectory() + "/" + Application.current.meta.get('packageName') + '/';
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#end
@@ -267,7 +267,7 @@ class SUtil
 			{
 				try
 				{
-					if (!FileSystem.exists(savePath) && File.exists(copyPath))
+					if (!FileSystem.exists(savePath) && FileSystem.exists(copyPath))
 					{
 						if (!FileSystem.exists(Path.directory(savePath)))
 							FileSystem.createDirectory(Path.directory(savePath));
