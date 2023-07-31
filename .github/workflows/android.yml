@@ -45,11 +45,12 @@ jobs:
           haxelib install flixel-ui 2.5.0 --quiet
           haxelib install flixel 5.2.2 --quiet
           haxelib install hxCodec 2.5.1 --quiet
+          # haxelib install hscript --quiet
           haxelib install hxcpp 4.2.1 --quiet
           haxelib install lime 8.0.1 --quiet
           haxelib git linc_luajit https://github.com/mcagabe19/linc_luajit
           haxelib install openfl 9.2.1 --quiet
-          haxelib install SScript 3.0.2 --quiet
+          haxelib install SScript 4.0.1 --quiet
           haxelib install tjson 1.4.0 --quiet
 
       - name: Configure Android
