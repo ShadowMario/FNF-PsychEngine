@@ -61,7 +61,7 @@ class MusicBeatState extends FlxUIState
 		switch (MobileControls.getMode())
 				{
 					case 0 | 1 | 2: // RIGHT_FULL, LEFT_FULL and CUSTOM
-					ClientPrefs.mobileBinds = = [
+					ClientPrefs.mobileBinds = [
 						'note_up'		=> [UP],
 						'note_left'		=> [LEFT],
 						'note_down'		=> [DOWN],
@@ -95,7 +95,7 @@ class MusicBeatState extends FlxUIState
 						'reset'			=> [NONE]
 					];
 					case 4: // HITBOX
-					ClientPrefs.mobileBinds = = [
+					ClientPrefs.mobileBinds = [
 						'note_up'		=> [hitboxUP],
 						'note_left'		=> [hitboxLEFT],
 						'note_down'		=> [hitboxDOWN],
