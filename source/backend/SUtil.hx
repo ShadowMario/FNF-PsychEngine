@@ -33,16 +33,16 @@ class SUtil
 	 */
 	public static function getPath():String
 	{
-		var daPath:String;
 		#if android
 		if (VERSION.SDK_INT <= 30) //if is android 11 and above, the storage directory will be android/data/com.shadowmario.psychengine
-			daPath = Context.getExternalFilesDir(null) + '/';
+			return Context.getExternalFilesDir(null) + '/';
 		else if (VERSION.SDK_INT >= 29) //if is android 10 and lower, the storage directory will be /.PsychEngine/
-			daPath = Environment.getExternalStorageDirectory() + '/' + '.' + Lib.application.meta.get('file') + '/';
+			return Environment.getExternalStorageDirectory() + '/' + '.' + Lib.application.meta.get('file') + '/';
+		else
+			return Context.getExternalFilesDir(null) + '/'; // I FUCKING HATE HAXE
 		#elseif ios
-		daPath = LimeSystem.applicationStorageDirectory;
+		return LimeSystem.applicationStorageDirectory;
 		#end
-		return daPath;
 	}
 
 	/**
