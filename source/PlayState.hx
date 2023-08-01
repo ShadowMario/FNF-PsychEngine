@@ -379,6 +379,7 @@ class PlayState extends MusicBeatState
 	
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
+	public static var sectionsLoaded:Int = 0;
 
 	public var inCutscene:Bool = false;
 	public var skipCountdown:Bool = false;
@@ -3974,11 +3975,7 @@ class PlayState extends MusicBeatState
 					opponentNoteTotal += 1;
 				}
 
-				var oldNote:Note;
-				if (unspawnNotes.length > 0)
-					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-				else
-					oldNote = null;
+				var oldNote:Note = unspawnNotes.length > 0 ? unspawnNotes[Std.int(unspawnNotes.length - 1)] : null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				if (ClientPrefs.doubleGhost)
@@ -4090,7 +4087,6 @@ class PlayState extends MusicBeatState
 	}
 	private function generateSongOptim(dataPath:String):Void
 	{
-		// FlxG.log.add(ChartParser.parse());
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
 
 		switch(songSpeedType)
@@ -4100,11 +4096,9 @@ class PlayState extends MusicBeatState
 			case "constant":
 				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
 		}
+		Conductor.changeBPM(SONG.bpm);
 
-		var songData = SONG;
-		Conductor.changeBPM(songData.bpm);
-
-		curSong = songData.song;
+		curSong = SONG.song;
 
 		if (SONG.needsVoices)
 			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
@@ -4122,7 +4116,7 @@ class PlayState extends MusicBeatState
 		var noteData:Array<SwagSection>;
 
 		// NEW SHIT
-		noteData = songData.notes;
+		noteData = SONG.notes;
 
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		var file:String = Paths.json(songName + '/events');
@@ -4169,24 +4163,8 @@ class PlayState extends MusicBeatState
 				{
 					gottaHitNote = !section.mustHitSection;
 				}
-				else if (bothsides)
-				{
-					gottaHitNote = true;
-				}
-				if (gottaHitNote)
-				{
-					totalNotes += 1;
-				}
-				if (!gottaHitNote)
-				{
-					opponentNoteTotal += 1;
-				}
 
-				var oldNote:Note;
-				if (unspawnNotes.length > 0)
-					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-				else
-					oldNote = null;
+				var oldNote:Note = unspawnNotes.length > 0 ? unspawnNotes[Std.int(unspawnNotes.length - 1)] : null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				if (ClientPrefs.doubleGhost)
@@ -4198,7 +4176,6 @@ class PlayState extends MusicBeatState
 					}
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
-				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 
 				swagNote.scrollFactor.set();
 				unspawnNotes.push(swagNote);
@@ -4219,8 +4196,10 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
+		sectionsLoaded += 1;
+		trace('loaded section ' + sectionsLoaded);
 		}
-		for (event in songData.events) //Event Notes
+		for (event in SONG.events) //Event Notes
 		{
 			for (i in 0...event[1].length)
 			{
@@ -4235,10 +4214,6 @@ class PlayState extends MusicBeatState
 				eventPushed(subEvent);
 			}
 		}
-
-		// trace(unspawnNotes.length);
-		// playerCounter += 1;
-
 		unspawnNotes.sort(sortByTime);
 		generatedMusic = true;
 	}
@@ -4285,11 +4260,7 @@ class PlayState extends MusicBeatState
 					opponentNoteTotal += 1;
 				}
 
-				var oldNote:Note;
-				if (unspawnNotes.length > 0)
-					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-				else
-					oldNote = null;
+				var oldNote:Note = unspawnNotes.length > 0 ? unspawnNotes[Std.int(unspawnNotes.length - 1)] : null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				if (ClientPrefs.doubleGhost)
@@ -8964,15 +8935,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	}
 
 	function StrumPlayAnim(isDad:Bool, id:Int, time:Float) {
-		var spr:StrumNote = null;
-		if (isDad && opponentChart) {
-			spr = opponentStrums.members[id];
-		}
-		else if(isDad) {
-			spr = strumLineNotes.members[id];
-		} else {
-			spr = playerStrums.members[id];
-		}
+		var spr:StrumNote = isDad ? opponentStrums.members[id] : playerStrums.members[id];
 
 		if(spr != null) {
 			spr.playAnim('confirm', true);

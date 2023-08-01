@@ -245,7 +245,7 @@ class ChartingState extends MusicBeatState
 				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage',
-				validScore: false
+				validScore: false,
 			};
 			addSection();
 			PlayState.SONG = _song;
@@ -1038,6 +1038,18 @@ class ChartingState extends MusicBeatState
 		clearRightSectionButton.color = FlxColor.RED;
 		clearRightSectionButton.label.color = FlxColor.WHITE;
 
+		var stepperSectionJump:FlxUINumericStepper = new FlxUINumericStepper(clearSectionButton.x, clearSectionButton.y + 30, 1, 0, 0, 9999, 0);
+		blockPressWhileTypingOnStepper.push(stepperSectionJump);
+
+		var jumpSection:FlxButton = new FlxButton(clearSectionButton.x, stepperSectionJump.y + 20, "Jump Section", function()
+		{
+			var value:Int = Std.int(stepperSectionJump.value);
+			changeSection(value);
+		});
+
+
+		tab_group_section.add(stepperSectionJump);
+		tab_group_section.add(jumpSection);
 		tab_group_section.add(new FlxText(stepperBeats.x, stepperBeats.y - 15, 0, 'Beats per Section:'));
 		tab_group_section.add(stepperBeats);
 		tab_group_section.add(stepperSectionBPM);
