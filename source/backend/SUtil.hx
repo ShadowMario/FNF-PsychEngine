@@ -62,6 +62,8 @@ class SUtil
 				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
 					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
 				{
+					if (!FileSystem.exists(SUtil.getPath()))
+						FileSystem.createDirectory(SUtil.getPath();)
 					if (FileSystem.exists(Environment.getDownloadCacheDirectory() + "assets"))
 						copyDirectoryFromExternalStorage(Environment.getDownloadCacheDirectory() + "assets", SUtil.getPath());
 	
@@ -71,7 +73,7 @@ class SUtil
 				}
 			} 
 			catch(e:Dynamic) {
-			Lib.application.window.alert("Whoops, your game have failed in copying the needed files!\n Please make sure you have the needed folders:\nmods and assets in your download folder." + SUtil.getPath(),
+			Lib.application.window.alert("Whoops, your game have failed in copying the needed files!\n Please make sure you have the needed folders:\nmods and assets in your downloads folder.\n if the problem presists, try moving the files manualy into " + SUtil.getPath + " directory!",
 			'Missing files!');
 			Toast.makeText('Error!\nCouldn\'t copy the files because:\n' + e, Toast.LENGTH_LONG);
 			//LimeSystem.exit(1);
