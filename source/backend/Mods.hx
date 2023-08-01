@@ -60,7 +60,7 @@ class Mods
 		if(FileSystem.exists(modsFolder)) {
 			for (folder in FileSystem.readDirectory(modsFolder))
 			{
-				var path = haxe.io.Path.join([modsFolder, folder]);
+				var path = modsFolder + folder;
 				if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder.toLowerCase()) && !list.contains(folder))
 					list.push(folder);
 			}
@@ -101,7 +101,6 @@ class Mods
 		var foldersToCheck:Array<String> = [];
 		#if sys
 		if(FileSystem.exists(SUtil.getPath() + path + fileToFind))
-		#end
 			foldersToCheck.push(SUtil.getPath() + path + fileToFind);
 
 		#if MODS_ALLOWED
@@ -140,7 +139,7 @@ class Mods
 				#if sys
 				var rawJson:String = File.getContent(path);
 				#else
-				var rawJson:String = Assets.getText(path);
+				var rawJson:String = Assets.getText(path); //this prop dosent work because its using SUtil.getPath() from Paths.mods
 				#end
 				if(rawJson != null && rawJson.length > 0) return Json.parse(rawJson);
 			} catch(e:Dynamic) {
@@ -158,7 +157,7 @@ class Mods
 
 		#if MODS_ALLOWED
 		try {
-			for (mod in CoolUtil.coolTextFile(SUtil.getPath() + 'modsList.txt'))
+			for (mod in CoolUtil.coolTextFile('modsList.txt'))
 			{
 				//trace('Mod: $mod');
 				if(mod.trim().length < 1) continue;
@@ -184,7 +183,7 @@ class Mods
 		var list:Array<Array<Dynamic>> = [];
 		var added:Array<String> = [];
 		try {
-			for (mod in CoolUtil.coolTextFile(SUtil.getPath() + 'modsList.txt'))
+			for (mod in CoolUtil.coolTextFile('modsList.txt'))
 			{
 				var dat:Array<String> = mod.split("|");
 				var folder:String = dat[0];
