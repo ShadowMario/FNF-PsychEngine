@@ -98,12 +98,62 @@ class ShaderFunctions
                                 return true;
                         }
                         #else
-                        FunkinLua.luaTrace('removeCamshader: Platform unsupported for Runtime Shaders!', false, false, FlxColor.RED);
+                        FunkinLua.luaTrace('removeCamShader: Platform unsupported for Runtime Shaders!', false, false, FlxColor.RED);
                         #end
                         return false;
                 });
 
                 funk.addLocalCallback("clearCamShaders", function(cam:String) LuaUtils.cameraFromString(cam).setFilters([]));
+
+		funk.addLocalCallback("addShaderToGame", function(shader:String) {
+			if (!ClientPrefs.data.shaders) return false;
+
+			#if (!flash && MODS_ALLOWED && sys)
+			if (!funk.runtimeShaders.exists(shader) && !funk.initLuaShader(shader)) {
+			    FunkinLua.luaTrace('addShaderToGame: Shader $shader is missing!', false, false, FlxColor.RED);
+			    return false;
+			}
+
+                        var arr:Array<String> = funk.runtimeShaders.get(shader);
+                        @:privateAccess {
+                                if (FlxG.game._filters == null)
+                                    FlxG.game._filters = [];
+
+                                var filter = new ShaderFilter(new FlxRuntimeShader(arr[0], arr[1]));
+                                storedFilters.set(shader, filter);
+                                FlxG.game._filters.push(filter);
+                        }
+                        return true;
+			#else
+                        FunkinLua.luaTrace("addShaderToGame: Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
+			#end
+			return false;
+		});
+
+                funk.addLocalCallback("removeGameShader", function(shader:String) {
+                        #if (!flash && MODS_ALLOWED && sys)
+                        @:privateAccess {
+                                if (!storedFilters.exists(shader)) {
+                                        FunkinLua.luaTrace('removeGameShader: $shader does not exist!', false, false, FlxColor.YELLOW);
+                                        return false;
+                                }
+                                
+                                if (FlxG.game._filters == null) {
+                                        FunkinLua.luaTrace('removeGameShader: $cam does not have any shaders!', false, false, FlxColor.YELLOW);
+                                        return false;
+                                }
+
+                                FlxG.game._filters.remove(storedFilters.get(shader));
+                                storedFilters.remove(shader);
+                                return true;
+                        }
+                        #else
+                        FunkinLua.luaTrace('removeGameShader: Platform unsupported for Runtime Shaders!', false, false, FlxColor.RED);
+                        #end
+                        return false;
+                });
+
+                funk.addLocalCallback("clearGameShaders", function(cam:String) FlxG.game.setFilters([]));
 		
 		Lua_helper.add_callback(lua, "removeSpriteShader", function(obj:String) {
 			var split:Array<String> = obj.split('.');
