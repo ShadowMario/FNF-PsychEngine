@@ -63,7 +63,7 @@ class SUtil
 					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE) && !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_EXTERNAL_STORAGE))
 				{
 					if (!FileSystem.exists(SUtil.getPath()))
-						FileSystem.createDirectory(SUtil.getPath();)
+						FileSystem.createDirectory(SUtil.getPath());
 					if (FileSystem.exists(Environment.getDownloadCacheDirectory() + "assets"))
 						copyDirectoryFromExternalStorage(Environment.getDownloadCacheDirectory() + "assets", SUtil.getPath());
 	
