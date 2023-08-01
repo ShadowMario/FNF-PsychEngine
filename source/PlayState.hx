@@ -73,9 +73,9 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
-#else import vlc.MP4Handler; #end
+#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler;
+#elseif (hxCodec == "2.6.0") import VideoHandler;
+#elseif (hxCodec < "2.6.0") import vlc.MP4Handler as VideoHandler; #end
 #end
 
 
@@ -2707,7 +2707,7 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
-		var video:MP4Handler = new MP4Handler();
+		var video:VideoHandler = new VideoHandler();
 		video.playVideo(filepath);
 		video.finishCallback = function()
 		{
@@ -4929,7 +4929,7 @@ class PlayState extends MusicBeatState
 						{
 							var vidSpr:FlxSprite;
 							var videoDone:Bool = true;
-							var video:MP4Handler = new MP4Handler(); // it plays but it doesn't show???
+							var video:VideoHandler = new VideoHandler(); // it plays but it doesn't show???
 							vidSpr = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
 							add(vidSpr);
 							video.playVideo(Paths.video('scary'), false, false);
