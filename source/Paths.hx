@@ -1,18 +1,21 @@
 package;
 
 import animateatlas.AtlasFrameMaker;
-import flixel.math.FlxPoint;
+
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
-import openfl.geom.Rectangle;
-import flixel.math.FlxRect;
-import haxe.xml.Access;
-import openfl.system.System;
-import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.graphics.FlxGraphic;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
+import flixel.FlxG;
+import openfl.display.BitmapData;
+import openfl.display3D.textures.RectangleTexture;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
+import openfl.system.System;
+import openfl.geom.Rectangle;
 import lime.utils.Assets;
-import flixel.FlxSprite;
+import flash.media.Sound;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -77,7 +80,6 @@ class Paths
 				@:privateAccess
 				if (obj != null) {
 					obj.persist = false; // the garbage collector will do the job for us later!
-					obj.destroyOnNoUse = true;
 					// openfl.Assets.cache.removeBitmapData(key);
 					// FlxG.bitmap._cache.remove(key);
 					obj.destroy();
@@ -277,7 +279,8 @@ class Paths
 	}
 	*/
 	//Loads images.
-	public static function image(key:String, ?library:String)
+	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
+	static public function image(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxGraphic
 	{
 		var bitmap:BitmapData = null;
 		var file:String = null;
@@ -307,7 +310,7 @@ class Paths
 		if (bitmap != null)
 		{
 			localTrackedAssets.push(file);
-			if (ClientPrefs.cacheOnGPU)
+			if (allowGPU && ClientPrefs.cacheOnGPU)
 			{
 				var texture:RectangleTexture = FlxG.stage.context3D.createRectangleTexture(bitmap.width, bitmap.height, BGRA, true);
 				texture.uploadFromBitmapData(bitmap);
@@ -380,34 +383,51 @@ class Paths
 		return false;
 	}
 
-	inline static public function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
+	// less optimized but automatic handling
+	static public function getAtlas(key:String, ?library:String = null):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
-		var imageLoaded:FlxGraphic = image(key);
+		if(FileSystem.exists(modsXml(key)) || OpenFlAssets.exists(getPath('images/$key.xml', TEXT, library), TEXT))
+		#else
+		if(OpenFlAssets.exists(getPath('images/$key.xml', library)))
+		#end
+		{
+			return getSparrowAtlas(key, library);
+		}
+		return getPackerAtlas(key, library);
+	}
+
+	inline static public function getSparrowAtlas(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxAtlasFrames
+	{
+		#if MODS_ALLOWED
+		var imageLoaded:FlxGraphic = image(key, allowGPU);
 		var xmlExists:Bool = false;
-		if(FileSystem.exists(modsXml(key))) {
+
+		var xml:String = modsXml(key);
+		if(FileSystem.exists(xml)) {
 			xmlExists = true;
 		}
 
-		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library)), (xmlExists ? File.getContent(modsXml(key)) : file('images/$key.xml', library)));
+		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library, allowGPU)), (xmlExists ? File.getContent(xml) : getPath('images/$key.xml', TEXT, library)));
 		#else
-		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
+		return FlxAtlasFrames.fromSparrow(image(key, library, allowGPU), getPath('images/$key.xml', library));
 		#end
 	}
 
-
-	inline static public function getPackerAtlas(key:String, ?library:String)
+	inline static public function getPackerAtlas(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
-		var imageLoaded:FlxGraphic = image(key);
+		var imageLoaded:FlxGraphic = image(key, allowGPU);
 		var txtExists:Bool = false;
-		if(FileSystem.exists(modsTxt(key))) {
+		
+		var txt:String = modsTxt(key);
+		if(FileSystem.exists(txt)) {
 			txtExists = true;
 		}
 
-		return FlxAtlasFrames.fromSpriteSheetPacker((imageLoaded != null ? imageLoaded : image(key, library)), (txtExists ? File.getContent(modsTxt(key)) : file('images/$key.txt', library)));
+		return FlxAtlasFrames.fromSpriteSheetPacker((imageLoaded != null ? imageLoaded : image(key, library, allowGPU)), (txtExists ? File.getContent(modsTxt(key)) : getPath('images/$key.txt', TEXT, library)));
 		#else
-		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
+		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library, allowGPU), getPath('images/$key.txt', library));
 		#end
 	}
 
@@ -419,7 +439,6 @@ class Paths
 		return hideChars.split(path).join("").toLowerCase();
 	}
 	// completely rewritten asset loading? fuck!
-	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
 	public static var currentTrackedSounds:Map<String, Sound> = [];
 	//Returns sounds which is useful for all the sfx
 	public static function returnSound(path:String, key:String, ?library:String, stream:Bool = false) {
