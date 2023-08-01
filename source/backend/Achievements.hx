@@ -1,42 +1,12 @@
 package backend;
 
 import objects.AchievementPopup;
+import haxe.Exception;
 
 class Achievements {
 	public static var variables:Map<String, Float> = [
 		"henchmenKills" => 0
 	];
-	public static function getVar(name:String):Null<Float>
-	{
-		if(!variables.exists(name))
-		{
-			throw 'Invalid Achievement variable name: $name';
-			return null;
-		}
-		return variables.get(name);
-	}
-	public static function setVar(name:String, value:Float):Null<Float>
-	{
-		if(!variables.exists(name))
-		{
-			throw 'Invalid Achievement variable name: $name';
-			return null;
-		}
-		variables.set(name, value);
-		return value;
-	}
-	public static function addToVar(name:String, add:Float = 1):Null<Float>
-	{
-		if(!variables.exists(name))
-		{
-			throw 'Invalid Achievement variable name: $name';
-			return null;
-		}
-		var val = variables.get(name) + add;
-		variables.set(name, val);
-		return val;
-	}
-
 	public static var achievementsStuff:Array<Dynamic> = [
 		//Name -- Description -- Achievement save tag -- is hidden while locked -- variable name -- max variable number -- max number of decimals you want it to display
 		["Freaky on a Friday Night",	"Play on a Friday... Night.",						'friday_night_play',	true],
@@ -56,6 +26,7 @@ class Achievements {
 		["Toaster Gamer",				"Have you tried to run the game on a toaster?",		'toastie'],
 		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",	'debugger',				true]
 	];
+
 	public static var achievementsUnlocked:Array<String> = [];
 	private static var _firstLoad:Bool = true;
 
@@ -84,12 +55,47 @@ class Achievements {
 		FlxG.save.data.achievementsUnlocked = achievementsUnlocked;
 		FlxG.save.data.achievementsVariables = variables;
 	}
+	
+	public static function getVar(name:String):Null<Float>
+	{
+		if(!variables.exists(name))
+		{
+			FlxG.log.error('Invalid Achievement variable name: $name');
+			throw new Exception('Invalid Achievement variable name: $name');
+			return null;
+		}
+		return variables.get(name);
+	}
+	public static function setVar(name:String, value:Float):Null<Float>
+	{
+		if(!variables.exists(name))
+		{
+			FlxG.log.error('Invalid Achievement variable name: $name');
+			throw new Exception('Invalid Achievement variable name: $name');
+			return null;
+		}
+		variables.set(name, value);
+		return value;
+	}
+	public static function addToVar(name:String, add:Float = 1):Null<Float>
+	{
+		if(!variables.exists(name))
+		{
+			FlxG.log.error('Invalid Achievement variable name: $name');
+			throw new Exception('Invalid Achievement variable name: $name');
+			return null;
+		}
+		var val = variables.get(name) + add;
+		variables.set(name, val);
+		return val;
+	}
 
 	static var _lastUnlock:Int = -999;
 	public static function unlockAchievement(name:String, autoStartPopup:Bool = true):String {
 		if(Achievements.getAchievementIndex(name) < 0)
 		{
-			throw 'Achievement "$name" does not exists!';
+			FlxG.log.error('Achievement "$name" does not exists!');
+			throw new Exception('Achievement "$name" does not exists!');
 			return null;
 		}
 
