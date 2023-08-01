@@ -60,7 +60,7 @@ class Mods
 		if(FileSystem.exists(modsFolder)) {
 			for (folder in FileSystem.readDirectory(modsFolder))
 			{
-				var path = modsFolder + folder;
+				var path = modsFolder + folder + '/';
 				if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder.toLowerCase()) && !list.contains(folder))
 					list.push(folder);
 			}
