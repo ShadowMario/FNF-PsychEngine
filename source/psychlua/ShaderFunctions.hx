@@ -153,7 +153,7 @@ class ShaderFunctions
                         return false;
                 });
 
-                funk.addLocalCallback("clearGameShaders", function(cam:String) FlxG.game.setFilters([]));
+                funk.addLocalCallback("clearGameShaders", function() FlxG.game.setFilters([]));
 		
 		Lua_helper.add_callback(lua, "removeSpriteShader", function(obj:String) {
 			var split:Array<String> = obj.split('.');
