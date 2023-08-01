@@ -103,16 +103,12 @@ class FlxHitbox extends FlxSpriteGroup
 			{
 				case FlxMobileControlsID.hitboxLEFT:
 					return buttonLeft.pressed;
-					trace("left was pressed on the hitbox!");
 				case FlxMobileControlsID.hitboxUP:
 					return buttonUp.pressed;
-					trace("up was pressed on the hitbox!");
 				case FlxMobileControlsID.hitboxRIGHT:
 					return buttonRight.pressed;
-					trace("right was pressed on the hitbox!");
 				case FlxMobileControlsID.hitboxDOWN:
 					return buttonDown.pressed;
-					trace("down was pressed on the hitbox!");
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -132,12 +128,9 @@ class FlxHitbox extends FlxSpriteGroup
 					trace("left was justpressed on the hitbox!");
 				case FlxMobileControlsID.hitboxUP:
 					return buttonUp.justPressed;
-					trace("up was justpressed on the hitbox!");
 				case FlxMobileControlsID.hitboxRIGHT:
 					return buttonRight.justPressed;
-					trace("right was justpressed on the hitbox!");
 				case FlxMobileControlsID.hitboxDOWN:
-					trace("down was justpressed on the hitbox!");
 					return buttonDown.justPressed;
 				case FlxMobileControlsID.NONE:
 					return false;
@@ -155,16 +148,12 @@ class FlxHitbox extends FlxSpriteGroup
 			{
 				case FlxMobileControlsID.hitboxLEFT:
 					return buttonLeft.justReleased;
-					trace("left was justreleased on the hitbox!");
 				case FlxMobileControlsID.hitboxUP:
 					return buttonUp.justReleased;
-					trace("up was justreleased on the hitbox!");
 				case FlxMobileControlsID.hitboxRIGHT:
 					return buttonRight.justReleased;
-					trace("right was justreleased on the hitbox!");
 				case FlxMobileControlsID.hitboxDOWN:
 					return buttonDown.justReleased;
-					trace("down was justreleased on the hitbox!");
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
