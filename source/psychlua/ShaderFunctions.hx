@@ -139,7 +139,7 @@ class ShaderFunctions
                                 }
                                 
                                 if (FlxG.game._filters == null) {
-                                        FunkinLua.luaTrace('removeGameShader: $cam does not have any shaders!', false, false, FlxColor.YELLOW);
+                                        FunkinLua.luaTrace('removeGameShader: Global game does not have any shaders!', false, false, FlxColor.YELLOW);
                                         return false;
                                 }
 
