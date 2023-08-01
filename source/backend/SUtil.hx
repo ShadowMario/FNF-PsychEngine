@@ -33,7 +33,10 @@ class SUtil
 	public static function getPath():String
 	{
 		#if android
-		return  Context.getExternalFilesDir(null) + '/';
+		if (VERSION.SDK_INT <= 30) //if is android 11 and above, the storage directory will be android/data/com.shadowmario.psychengine
+			return  Context.getExternalFilesDir(null) + '/';
+		else if (VERSION.SDK_INT >= 29) //if is android 10 and lower, the storage directory will be /.PsychEngine/
+			return Environment.getExternalStorageDirectory() + '/' + '.' + Lib.application.meta.get('file') + '/;'
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#end
