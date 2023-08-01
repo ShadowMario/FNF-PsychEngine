@@ -5,6 +5,7 @@ import android.content.Context;
 import android.widget.Toast;
 import android.os.Environment;
 import android.Permissions;
+import android.os.Build;
 #end
 import haxe.io.Path;
 import haxe.CallStack;
@@ -34,9 +35,11 @@ class SUtil
 	{
 		#if android
 		if (VERSION.SDK_INT <= 30) //if is android 11 and above, the storage directory will be android/data/com.shadowmario.psychengine
-			return  Context.getExternalFilesDir(null) + '/';
+			var daPath:String = Context.getExternalFilesDir(null) + '/';
 		else if (VERSION.SDK_INT >= 29) //if is android 10 and lower, the storage directory will be /.PsychEngine/
-			return Environment.getExternalStorageDirectory() + '/' + '.' + Lib.application.meta.get('file') + '/';
+			var daPath:String = Environment.getExternalStorageDirectory() + '/' + '.' + Lib.application.meta.get('file') + '/';
+
+		return daPath;
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#end
