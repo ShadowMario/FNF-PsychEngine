@@ -41,6 +41,7 @@ import haxe.Json;
 import haxe.Int64;
 import lime.utils.Assets;
 import openfl.Lib;
+import openfl.filters.BitmapFilter;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.BitmapFilter;
@@ -61,6 +62,7 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
+import Shaders;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -73,9 +75,9 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler;
-#elseif (hxCodec == "2.6.0") import VideoHandler;
-#elseif (hxCodec < "2.6.0") import vlc.MP4Handler as VideoHandler; #end
+#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
+#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
+#else import vlc.MP4Handler; #end
 #end
 
 
@@ -94,6 +96,11 @@ class PlayState extends MusicBeatState
 
 
 	private var tauntKey:Array<FlxKey>;
+
+	public var shader_chromatic_abberation:ChromaticAberrationEffect;
+	public var camGameShaders:Array<ShaderEffect> = [];
+	public var camHUDShaders:Array<ShaderEffect> = [];
+	public var camOtherShaders:Array<ShaderEffect> = [];
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
@@ -144,6 +151,7 @@ class PlayState extends MusicBeatState
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
+	public var shaderUpdates:Array<Float->Void> = [];
 	var botplayUsed:Bool = false;
 	public static var curStage:String = '';
 	public static var isPixelStage:Bool = false;
@@ -2673,6 +2681,112 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
+	public function addShaderToCamera(cam:String,effect:Dynamic){//STOLE FROM ANDROMEDA	// actually i got it from old psych engine
+	  
+	  
+	  
+		switch(cam.toLowerCase()) {
+			case 'camhud' | 'hud':
+					camHUDShaders.push(effect);
+					var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+					for(i in camHUDShaders){
+					  newCamEffects.push(new ShaderFilter(i.shader));
+					}
+					camHUD.setFilters(newCamEffects);
+			case 'camother' | 'other':
+					camOtherShaders.push(effect);
+					var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+					for(i in camOtherShaders){
+					  newCamEffects.push(new ShaderFilter(i.shader));
+					}
+					camOther.setFilters(newCamEffects);
+			case 'camgame' | 'game':
+					camGameShaders.push(effect);
+					var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+					for(i in camGameShaders){
+					  newCamEffects.push(new ShaderFilter(i.shader));
+					}
+					camGame.setFilters(newCamEffects);
+			default:
+				if(modchartSprites.exists(cam)) {
+					Reflect.setProperty(modchartSprites.get(cam),"shader",effect.shader);
+				} else if(modchartTexts.exists(cam)) {
+					Reflect.setProperty(modchartTexts.get(cam),"shader",effect.shader);
+				} else {
+					var OBJ = Reflect.getProperty(PlayState.instance,cam);
+					Reflect.setProperty(OBJ,"shader", effect.shader);
+				}
+			
+			
+				
+				
+		}
+	  
+	  
+	  
+	  
+  }
+
+  public function removeShaderFromCamera(cam:String,effect:ShaderEffect){
+	  
+	  
+		switch(cam.toLowerCase()) {
+			case 'camhud' | 'hud': 
+    camHUDShaders.remove(effect);
+    var newCamEffects:Array<BitmapFilter>=[];
+    for(i in camHUDShaders){
+      newCamEffects.push(new ShaderFilter(i.shader));
+    }
+    camHUD.setFilters(newCamEffects);
+			case 'camother' | 'other': 
+					camOtherShaders.remove(effect);
+					var newCamEffects:Array<BitmapFilter>=[];
+					for(i in camOtherShaders){
+					  newCamEffects.push(new ShaderFilter(i.shader));
+					}
+					camOther.setFilters(newCamEffects);
+			default: 
+				if(modchartSprites.exists(cam)) {
+					Reflect.setProperty(modchartSprites.get(cam),"shader",null);
+				} else if(modchartTexts.exists(cam)) {
+					Reflect.setProperty(modchartTexts.get(cam),"shader",null);
+				} else {
+					var OBJ = Reflect.getProperty(PlayState.instance,cam);
+					Reflect.setProperty(OBJ,"shader", null);
+				}
+				
+		}
+		
+	  
+  }
+	
+	
+	
+  public function clearShaderFromCamera(cam:String){
+	  
+	  
+		switch(cam.toLowerCase()) {
+			case 'camhud' | 'hud': 
+				camHUDShaders = [];
+				var newCamEffects:Array<BitmapFilter>=[];
+				camHUD.setFilters(newCamEffects);
+			case 'camother' | 'other': 
+				camOtherShaders = [];
+				var newCamEffects:Array<BitmapFilter>=[];
+				camOther.setFilters(newCamEffects);
+			case 'camgame' | 'game': 
+				camGameShaders = [];
+				var newCamEffects:Array<BitmapFilter>=[];
+				camGame.setFilters(newCamEffects);
+			default: 
+				camGameShaders = [];
+				var newCamEffects:Array<BitmapFilter>=[];
+				camGame.setFilters(newCamEffects);
+		}
+		
+	  
+  }
+
 	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
 		if(modchartSprites.exists(tag)) return modchartSprites.get(tag);
 		if(text && modchartTexts.exists(tag)) return modchartTexts.get(tag);
@@ -2707,7 +2821,7 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
-		var video:VideoHandler = new VideoHandler();
+		var video:MP4Handler = new MP4Handler();
 		video.playVideo(filepath);
 		video.finishCallback = function()
 		{
@@ -4929,7 +5043,7 @@ class PlayState extends MusicBeatState
 						{
 							var vidSpr:FlxSprite;
 							var videoDone:Bool = true;
-							var video:VideoHandler = new VideoHandler(); // it plays but it doesn't show???
+							var video:MP4Handler = new MP4Handler(); // it plays but it doesn't show???
 							vidSpr = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
 							add(vidSpr);
 							video.playVideo(Paths.video('scary'), false, false);
@@ -5528,6 +5642,9 @@ class PlayState extends MusicBeatState
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
+		for (i in shaderUpdates){
+			i(elapsed);
+		}
 	}
 
 	function openPauseMenu()

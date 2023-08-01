@@ -389,7 +389,7 @@ class Paths
 		#if MODS_ALLOWED
 		if(FileSystem.exists(modsXml(key)) || OpenFlAssets.exists(getPath('images/$key.xml', TEXT, library), TEXT))
 		#else
-		if(OpenFlAssets.exists(getPath('images/$key.xml', library)))
+		if(OpenFlAssets.exists(getPath('images/$key.xml', TEXT, library)))
 		#end
 		{
 			return getSparrowAtlas(key, library);
@@ -410,7 +410,7 @@ class Paths
 
 		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library, allowGPU)), (xmlExists ? File.getContent(xml) : getPath('images/$key.xml', TEXT, library)));
 		#else
-		return FlxAtlasFrames.fromSparrow(image(key, library, allowGPU), getPath('images/$key.xml', library));
+		return FlxAtlasFrames.fromSparrow(image(key, library, allowGPU), getPath('images/$key.xml', TEXT, library));
 		#end
 	}
 
@@ -427,7 +427,7 @@ class Paths
 
 		return FlxAtlasFrames.fromSpriteSheetPacker((imageLoaded != null ? imageLoaded : image(key, library, allowGPU)), (txtExists ? File.getContent(modsTxt(key)) : getPath('images/$key.txt', TEXT, library)));
 		#else
-		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library, allowGPU), getPath('images/$key.txt', library));
+		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library, allowGPU), getPath('images/$key.txt', TEXT, library));
 		#end
 	}
 
