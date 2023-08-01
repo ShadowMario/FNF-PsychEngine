@@ -35,11 +35,9 @@ class SUtil
 	{
 		#if android
 		if (VERSION.SDK_INT <= 30) //if is android 11 and above, the storage directory will be android/data/com.shadowmario.psychengine
-			var daPath:String = Context.getExternalFilesDir(null) + '/';
+			return Context.getExternalFilesDir(null) + '/';
 		else if (VERSION.SDK_INT >= 29) //if is android 10 and lower, the storage directory will be /.PsychEngine/
-			var daPath:String = Environment.getExternalStorageDirectory() + '/' + '.' + Lib.application.meta.get('file') + '/';
-
-		return daPath;
+			return Environment.getExternalStorageDirectory() + '/' + '.' + Lib.application.meta.get('file') + '/';
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#end
