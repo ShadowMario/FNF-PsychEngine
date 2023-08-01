@@ -57,6 +57,63 @@ class MusicBeatState extends FlxUIState
 		mobileControls.visible = false;
 		mobileControls.alpha = 0.6;
 		add(mobileControls);
+		// configure the current mobile control binds, without this there gonna be conflict and input issues.
+		switch (MobileControls.getMode())
+				{
+					case 0 | 1 | 2: // RIGHT_FULL, LEFT_FULL and CUSTOM
+					ClientPrefs.mobileBinds = = [
+						'note_up'		=> [UP],
+						'note_left'		=> [LEFT],
+						'note_down'		=> [DOWN],
+						'note_right'	=> [RIGHT],
+				
+						'ui_up'			=> [UP], //idk if i remove these the controls in menus gonna get fucked
+						'ui_left'		=> [LEFT],
+						'ui_down'		=> [DOWN],
+						'ui_right'		=> [RIGHT],
+				
+						'accept'		=> [A],
+						'back'			=> [B],
+						'pause'			=> [NONE],
+						'reset'			=> [NONE]
+					];
+					case 3: // BOTH
+					ClientPrefs.mobileBinds = [
+						'note_up'		=> [UP, UP2],
+						'note_left'		=> [LEFT, LEFT2],
+						'note_down'		=> [DOWN, DOWN2],
+						'note_right'	=> [RIGHT, RIGHT2],
+				
+						'ui_up'			=> [UP],
+						'ui_left'		=> [LEFT],
+						'ui_down'		=> [DOWN],
+						'ui_right'		=> [RIGHT],
+				
+						'accept'		=> [A],
+						'back'			=> [B],
+						'pause'			=> [NONE],
+						'reset'			=> [NONE]
+					];
+					case 4: // HITBOX
+					ClientPrefs.mobileBinds = = [
+						'note_up'		=> [hitboxUP],
+						'note_left'		=> [hitboxLEFT],
+						'note_down'		=> [hitboxDOWN],
+						'note_right'	=> [hitboxRIGHT],
+				
+						'ui_up'			=> [UP],
+						'ui_left'		=> [LEFT],
+						'ui_down'		=> [DOWN],
+						'ui_right'		=> [RIGHT],
+				
+						'accept'		=> [A],
+						'back'			=> [B],
+						'pause'			=> [NONE],
+						'reset'			=> [NONE]
+					];
+					case 5: // KEYBOARD
+					//sex, idk maybe nothin'?
+				}
 	}
 
 	public function removeMobileControls()
