@@ -584,12 +584,12 @@ class PlayState extends MusicBeatState
 			startLuasNamed('custom_notetypes/' + notetype + '.lua');
 
 		for (event in eventsPushed)
-			startLuasNamed('custom_events/' + event + '.lua');
+			startLuasNamed'custom_events/' + event + '.lua');
 		#end
 
 		#if HSCRIPT_ALLOWED
 		for (notetype in noteTypes)
-			startHScriptsNamed('custom_notetypes/' + notetype + '.hx');
+			startHScriptsNamed( 'custom_notetypes/' + notetype + '.hx');
 
 		for (event in eventsPushed)
 			startHScriptsNamed('custom_events/' + event + '.hx');
@@ -760,7 +760,7 @@ class PlayState extends MusicBeatState
 		// Lua
 		#if LUA_ALLOWED
 		var doPush:Bool = false;
-		var luaFile:String = 'characters/' + name + '.lua';
+		var luaFile:String = SUtil.getPath() + 'characters/' + name + '.lua';
 		#if MODS_ALLOWED
 		var replacePath:String = Paths.modFolders(luaFile);
 		if(FileSystem.exists(replacePath))
@@ -3130,7 +3130,7 @@ class PlayState extends MusicBeatState
 		
 		if(FileSystem.exists(SUtil.getPath() + luaToLoad))
 		#elseif sys
-		var luaToLoad:String = Paths.getPreloadPath(luaFile);
+		var luaToLoad:String =  Paths.getPreloadPath(luaFile);
 		if(OpenFlAssets.exists(luaToLoad))
 		#end
 		{

@@ -10,7 +10,8 @@ import sys.FileSystem;
 #end
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
-import tjson.TJSON as Json;
+import haxe.Json;
+import haxe.format.JsonParser;
 
 import backend.Song;
 import backend.Section;
@@ -92,11 +93,11 @@ class Character extends FlxSprite
 
 				#if MODS_ALLOWED
 				var path:String = Paths.modFolders(characterPath);
-				if (!FileSystem.exists(SUtil.getPath() + path)) {
+				if (!FileSystem.exists(path)) {
 					path = Paths.getPreloadPath(characterPath);
 				}
 
-				if (!FileSystem.exists(SUtil.getPath() + path))
+				if (!FileSystem.exists(path))
 				#else
 				var path:String = Paths.getPreloadPath(characterPath);
 				if (!Assets.exists(path))
@@ -106,7 +107,7 @@ class Character extends FlxSprite
 				}
 
 				#if MODS_ALLOWED
-				var rawJson = File.getContent(SUtil.getPath() + path);
+				var rawJson = File.getContent(path);
 				#else
 				var rawJson = Assets.getText(path);
 				#end

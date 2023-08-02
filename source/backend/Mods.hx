@@ -100,6 +100,7 @@ class Mods
 	{
 		var foldersToCheck:Array<String> = [];
 		#if sys
+		trace("1-the file path is: "+ SUtil.getPath() + path + fileToFind);
 		if(FileSystem.exists(SUtil.getPath() + path + fileToFind))
 			foldersToCheck.push(SUtil.getPath() + path + fileToFind);
 		#end
@@ -110,17 +111,20 @@ class Mods
 			for(mod in Mods.getGlobalMods())
 			{
 				var folder:String = Paths.mods(mod + '/' + fileToFind);
+				trace("2-the file path is: "+ folder);
 				if(FileSystem.exists(folder)) foldersToCheck.push(folder);
 			}
 
 			// Then "PsychEngine/mods/" main folder
 			var folder:String = Paths.mods(fileToFind);
+			trace("3-the file path is: "+ folder);
 			if(FileSystem.exists(folder)) foldersToCheck.push(Paths.mods(fileToFind));
 
 			// And lastly, the loaded mod's folder
 			if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
 			{
 				var folder:String = Paths.mods(Mods.currentModDirectory + '/' + fileToFind);
+				trace("4-the file path is: "+ folder);
 				if(FileSystem.exists(folder)) foldersToCheck.push(folder);
 			}
 		}
