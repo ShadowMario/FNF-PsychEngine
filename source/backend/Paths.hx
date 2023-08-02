@@ -432,7 +432,7 @@ class Paths
 	#if MODS_ALLOWED
 	inline static public function mods(key:String = '') {
 		return SUtil.getPath() + 'mods/' + key;
-		trace("current used directory by Paths.mods is: " + SUtil.getPath() + 'mods/' + key);
+		//trace("current used directory by Paths.mods is: " + SUtil.getPath() + 'mods/' + key);
 	}
 
 	static public function modFolders(key:String) {
