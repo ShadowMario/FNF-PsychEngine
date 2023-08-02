@@ -110,5 +110,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          draft: true
+          prerelease: true
+          automatic_release_tag: "0.7.1h-beta"
+          title: "0.7.1h Mobile Beta"
           files: export/release/android/bin/app/build/outputs/apk/release/*.apk 
