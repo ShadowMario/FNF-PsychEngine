@@ -1260,7 +1260,7 @@ class PlayState extends MusicBeatState
 
 		var file:String = Paths.json(songName + '/events');
 		#if MODS_ALLOWED
-		if (FileSystem.exists(SUtil.getPath() + Paths.modsJson(songName + '/events')) || FileSystem.exists(SUtil.getPath() + file)) {
+		if (FileSystem.exists(Paths.modsJson(songName + '/events')) || FileSystem.exists(SUtil.getPath() + file)) {
 		#else
 		if (OpenFlAssets.exists(file)) {
 		#end
@@ -3125,12 +3125,12 @@ class PlayState extends MusicBeatState
 	{
 		#if MODS_ALLOWED
 		var luaToLoad:String = Paths.modFolders(luaFile);
-		if(!FileSystem.exists(SUtil.getPath() + luaToLoad))
-			luaToLoad = Paths.getPreloadPath(luaFile);
+		if(!FileSystem.exists(luaToLoad))
+			luaToLoad = SUtil.getPath() + Paths.getPreloadPath(luaFile);
 		
-		if(FileSystem.exists(SUtil.getPath() + luaToLoad))
+		if(FileSystem.exists(luaToLoad))
 		#elseif sys
-		var luaToLoad:String =  Paths.getPreloadPath(luaFile);
+		var luaToLoad:String = Paths.getPreloadPath(luaFile);
 		if(OpenFlAssets.exists(luaToLoad))
 		#end
 		{
@@ -3148,10 +3148,10 @@ class PlayState extends MusicBeatState
 	public function startHScriptsNamed(scriptFile:String)
 	{
 		var scriptToLoad:String = Paths.modFolders(scriptFile);
-		if(!FileSystem.exists(SUtil.getPath() + scriptToLoad))
-			scriptToLoad = Paths.getPreloadPath(scriptFile);
+		if(!FileSystem.exists(scriptToLoad))
+			scriptToLoad = SUtil.getPath() + Paths.getPreloadPath(scriptFile);
 		
-		if(FileSystem.exists(SUtil.getPath() + scriptToLoad))
+		if(FileSystem.exists(scriptToLoad))
 		{
 			if (SScript.global.exists(scriptToLoad)) return false;
 	
