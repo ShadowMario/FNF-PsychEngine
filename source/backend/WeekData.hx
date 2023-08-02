@@ -6,7 +6,6 @@ import sys.FileSystem;
 #end
 import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
-//import tjson.TJSON as Json;
 import haxe.Json;
 import haxe.format.JsonParser;
 
@@ -77,12 +76,19 @@ class WeekData
 
 	public function new(weekFile:WeekFile, fileName:String)
 	{
-		final template = createWeekFile();
-		for (i in Reflect.fields(template))
-		{
-			if (Reflect.hasField(template, i))
-				Reflect.setProperty(this, i, Reflect.field(weekFile, i));
-		}
+		songs = weekFile.songs;
+		weekCharacters = weekFile.weekCharacters;
+		weekBackground = weekFile.weekBackground;
+		weekBefore = weekFile.weekBefore;
+		storyName= weekFile.storyName;
+		weekName= weekFile.weekName;
+		freeplayColor= weekFile.freeplayColor;
+		startUnlocked= weekFile.startUnlocked;
+		hiddenUntilUnlocked= weekFile.hiddenUntilUnlocked;
+		hideStoryMode= weekFile.hideStoryMode;
+		hideFreeplay= weekFile.hideFreeplay;
+		difficulties= weekFile.difficulties;
+
 		this.fileName = fileName;
 	}
 
