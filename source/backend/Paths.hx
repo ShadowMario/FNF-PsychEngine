@@ -432,6 +432,23 @@ class Paths
 	#if MODS_ALLOWED
 	inline static public function mods(key:String = '') {
 		return SUtil.getPath() + 'mods/' + key;
+		trace("current used directory by Paths.mods is: "SUtil.getPath() + 'mods/' + key);
+	}
+
+	static public function modFolders(key:String) {
+		if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) {
+			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);
+			if(FileSystem.exists(fileToCheck)) {
+				return fileToCheck;
+			}
+		}
+
+		for(mod in Mods.getGlobalMods()){
+			var fileToCheck:String = mods(mod + '/' + key);
+			if(FileSystem.exists(fileToCheck))
+				return fileToCheck;
+		}
+		return SUtil.getPath() + 'mods/' + key;
 	}
 
 	inline static public function modsFont(key:String) {
@@ -475,21 +492,5 @@ class Paths
 	inline static public function modsAchievements(key:String) {
 		return modFolders('achievements/' + key + '.json');
 	}*/
-
-	static public function modFolders(key:String) {
-		if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) {
-			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);
-			if(FileSystem.exists(fileToCheck)) {
-				return fileToCheck;
-			}
-		}
-
-		for(mod in Mods.getGlobalMods()){
-			var fileToCheck:String = mods(mod + '/' + key);
-			if(FileSystem.exists(fileToCheck))
-				return fileToCheck;
-		}
-		return SUtil.getPath() + 'mods/' + key;
-	}
     #end
 }
