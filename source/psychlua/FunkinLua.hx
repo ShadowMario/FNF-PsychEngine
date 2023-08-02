@@ -1267,14 +1267,14 @@ class FunkinLua {
 			var path:String;
 			#if MODS_ALLOWED
 			path = Paths.modsJson(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
-			if(!FileSystem.exists(SUtil.getPath() + path))
+			if(!FileSystem.exists(path))
 			#end
-				path = Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
+				path = SUtil.getPath() + Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 
 			luaTrace('startDialogue: Trying to load dialogue: ' + path);
 
 			#if MODS_ALLOWED
-			if(FileSystem.exists(SUtil.getPath() + path))
+			if(FileSystem.exists(path))
 			#else
 			if(Assets.exists(path))
 			#end
@@ -1299,7 +1299,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "startVideo", function(videoFile:String) {
 			#if VIDEOS_ALLOWED
-			if(FileSystem.exists(SUtil.getPath() + Paths.video(videoFile))) {
+			if(FileSystem.exists(Paths.video(videoFile))) {
 				game.startVideo(videoFile);
 				return true;
 			} else {
@@ -1608,15 +1608,15 @@ class FunkinLua {
 	function findScript(scriptFile:String, ext:String = '.lua')
 	{
 		if(!scriptFile.endsWith(ext)) scriptFile += ext;
-		var preloadPath:String = Paths.getPreloadPath(scriptFile);
+		var preloadPath:String = SUtil.getPath() + Paths.getPreloadPath(scriptFile);
 		#if MODS_ALLOWED
 		var path:String = Paths.modFolders(scriptFile);
-		if(FileSystem.exists(SUtil.getPath() + scriptFile))
+		if(FileSystem.exists(scriptFile))
 			return scriptFile;
-		else if(FileSystem.exists(SUtil.getPath() + path))
+		else if(FileSystem.exists(path))
 			return path;
 	
-		if(FileSystem.exists(SUtil.getPath() + preloadPath))
+		if(FileSystem.exists(preloadPath))
 		#else
 		if(Assets.exists(preloadPath))
 		#end
@@ -1684,14 +1684,14 @@ class FunkinLua {
 				var found:Bool = false;
 				if(FileSystem.exists(SUtil.getPath() + frag))
 				{
-					frag = File.getContent(frag);
+					frag = File.getContent(SUtil.getPath() + frag);
 					found = true;
 				}
 				else frag = null;
 
 				if(FileSystem.exists(SUtil.getPath() + vert))
 				{
-					vert = File.getContent(vert);
+					vert = File.getContent(SUtil.getPath() + vert);
 					found = true;
 				}
 				else vert = null;
