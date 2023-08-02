@@ -145,7 +145,7 @@ class Mods
 				#else
 				var rawJson:String = Assets.getText(path); //this prop dosent work because its using SUtil.getPath() from Paths.mods
 				#end
-				if(rawJson != null && rawJson.length > 0) return Json.parse(rawJson);
+				if(rawJson != null && rawJson.length > 0) return cast Json.parse(rawJson);
 			} catch(e:Dynamic) {
 				trace(e);
 			}
