@@ -15,6 +15,7 @@ import flixel.util.FlxColor;
 import flixel.FlxCamera;
 import flixel.util.FlxStringUtil;
 import options.OptionsState;
+import GameplayChangersSubstate;
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -257,6 +258,7 @@ class PauseSubState extends MusicBeatSubstate
 					close();
 					PlayState.instance.finishSong(true);
 				case "Change Gameplay Settings":
+					persistentUpdate = false;
 					openSubState(new GameplayChangersSubstate());
 					GameplayChangersSubstate.inThePauseMenu = true;
 				case 'Toggle Botplay':

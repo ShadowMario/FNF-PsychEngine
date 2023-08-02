@@ -10,7 +10,9 @@ import haxe.io.Bytes;
 import Conductor.BPMChangeEvent;
 import Section.SwagSection;
 import Song.SwagSong;
+import flixel.util.FlxTimer;
 import flixel.FlxG;
+import openfl.Lib;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -166,6 +168,7 @@ class ChartingState extends MusicBeatState
 	var value1InputText:FlxUIInputText;
 	var value2InputText:FlxUIInputText;
 	var currentSongName:String;
+	var autosaveIndicator:FlxSprite;
 
 	var hitsound:FlxSound = null;
 
@@ -426,6 +429,13 @@ class ChartingState extends MusicBeatState
 			add(tipText);
 		}
 		add(UI_box);
+
+		autosaveIndicator = new FlxSprite(-30, FlxG.height - 90).loadGraphic(Paths.image('autosaveIndicator'));
+		autosaveIndicator.setGraphicSize(200, 70);
+		autosaveIndicator.alpha = 0;
+		autosaveIndicator.scrollFactor.set();
+		autosaveIndicator.antialiasing = ClientPrefs.globalAntialiasing;
+		add(autosaveIndicator);
 
 		addSongUI();
 		addSectionUI();
@@ -3295,6 +3305,12 @@ class ChartingState extends MusicBeatState
 	{
 		FlxG.save.data.autosave = Json.stringify({
 			"song": _song
+		});
+		trace('Chart saved!');
+		FlxTween.tween(autosaveIndicator, {alpha: 1}, 1, {ease: FlxEase.backInOut, type: ONESHOT});
+		
+		new FlxTimer().start(3, function(tmr:FlxTimer) {
+			FlxTween.tween(autosaveIndicator, {alpha: 0}, 1, {ease: FlxEase.backInOut, type: ONESHOT});
 		});
 		FlxG.save.flush();
 	}

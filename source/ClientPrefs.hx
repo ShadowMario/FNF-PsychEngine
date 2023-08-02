@@ -33,6 +33,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var longHPBar:Bool = false;
 	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
+	public static var autosaveInterval:Float = 5.0;
+	public static var autosaveCharts:Bool = true;
 	public static var antiCheatEnable:Bool = false;
 	public static var bfIconStyle:String = 'Default';
 	public static var noteStyleThing:String = 'Default';
@@ -196,6 +198,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.progAudioLoad = progAudioLoad;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.daMenuMusic = daMenuMusic;
+		FlxG.save.data.autosaveInterval = autosaveInterval;
+		FlxG.save.data.autosaveCharts = autosaveCharts;
 		FlxG.save.data.rateNameStuff = rateNameStuff;
 		FlxG.save.data.fasterChartLoad = fasterChartLoad;
 		FlxG.save.data.longFCName = longFCName;
@@ -355,6 +359,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.bfIconStyle != null) {
 			bfIconStyle = FlxG.save.data.bfIconStyle;
+		}
+		if(FlxG.save.data.autosaveInterval != null) {
+			autosaveInterval = FlxG.save.data.autosaveInterval;
+		}
+		if(FlxG.save.data.autosaveCharts != null) {
+			autosaveCharts = FlxG.save.data.autosaveCharts;
 		}
 		if(FlxG.save.data.daMenuMusic != null) {
 			daMenuMusic = FlxG.save.data.daMenuMusic;
