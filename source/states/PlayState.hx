@@ -414,12 +414,12 @@ class PlayState extends MusicBeatState
 		#if LUA_ALLOWED
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'scripts/');
 		for (folder in foldersToCheck)
-			for (file in FileSystem.readDirectory(SUtil.getPath() + folder))
+			for (file in FileSystem.readDirectory(folder))
 			{
 				if(file.toLowerCase().endsWith('.lua'))
-					new FunkinLua(SUtil.getPath() + folder + file);
+					new FunkinLua(folder + file);
 				if(file.toLowerCase().endsWith('.hx'))
-					initHScript(SUtil.getPath() + folder + file);
+					initHScript(folder + file);
 			}
 		#end
 
@@ -607,12 +607,12 @@ class PlayState extends MusicBeatState
 		#if LUA_ALLOWED
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'data/' + songName + '/');
 		for (folder in foldersToCheck)
-			for (file in FileSystem.readDirectory(SUtil.getPath() + folder))
+			for (file in FileSystem.readDirectory(folder))
 			{
 				if(file.toLowerCase().endsWith('.lua'))
-					new FunkinLua(SUtil.getPath() + folder + file);
+					new FunkinLua(folder + file);
 				if(file.toLowerCase().endsWith('.hx'))
-					initHScript(SUtil.getPath() + folder + file);
+					initHScript(folder + file);
 			}
 		#end
 
