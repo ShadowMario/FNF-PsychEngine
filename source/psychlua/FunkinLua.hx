@@ -1611,7 +1611,7 @@ class FunkinLua {
 		var preloadPath:String = SUtil.getPath() + Paths.getPreloadPath(scriptFile);
 		#if MODS_ALLOWED
 		var path:String = Paths.modFolders(scriptFile);
-		if(FileSystem.exists(scriptFile))
+		if(FileSystem.exists(SUtil.getPath() + scriptFile))
 			return scriptFile;
 		else if(FileSystem.exists(path))
 			return path;
@@ -1677,21 +1677,21 @@ class FunkinLua {
 		
 		for (folder in foldersToCheck)
 		{
-			if(FileSystem.exists(SUtil.getPath() + folder))
+			if(FileSystem.exists(folder))
 			{
 				var frag:String = folder + name + '.frag';
 				var vert:String = folder + name + '.vert';
 				var found:Bool = false;
-				if(FileSystem.exists(SUtil.getPath() + frag))
+				if(FileSystem.exists(frag))
 				{
-					frag = File.getContent(SUtil.getPath() + frag);
+					frag = File.getContent(frag);
 					found = true;
 				}
 				else frag = null;
 
-				if(FileSystem.exists(SUtil.getPath() + vert))
+				if(FileSystem.exists(vert))
 				{
-					vert = File.getContent(SUtil.getPath() + vert);
+					vert = File.getContent(vert);
 					found = true;
 				}
 				else vert = null;
