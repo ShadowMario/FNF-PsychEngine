@@ -12,7 +12,7 @@ jobs:
         id: setup-ndk
         uses: nttld/setup-ndk@main
         with:
-          ndk-version: r11c
+          ndk-version: r15c
 
       - name: Setup Java JDK
         uses: actions/setup-java@main
@@ -47,7 +47,7 @@ jobs:
           haxelib install hxCodec 2.5.1 --quiet
           # haxelib install hscript --quiet
           haxelib install hxcpp 4.2.1 --quiet
-          haxelib install lime 8.0.1 --quiet
+          haxelib install lime 7.9.0 --quiet
           haxelib git linc_luajit https://github.com/mcagabe19/linc_luajit
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.0.1 --quiet
