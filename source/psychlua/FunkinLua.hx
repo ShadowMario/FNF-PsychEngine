@@ -419,11 +419,10 @@ class FunkinLua {
 			return false;
 		});
 
-		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
-			if(name == null || name.length < 1)
-				name = PlayState.SONG.song;
-			if (difficultyNum == -1)
-				difficultyNum = PlayState.storyDifficulty;
+		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1, ?difficultyArray:Array<String> = null) {
+			if (difficultyArray != null) CoolUtil.difficulties = difficultyArray;
+			if (name == null || name.length < 1) name = PlayState.SONG.song;
+			if (difficultyNum == -1) difficultyNum = PlayState.storyDifficulty;
 
 			var poop = Highscore.formatSong(name, difficultyNum);
 			PlayState.SONG = Song.loadFromJson(poop, name);
@@ -433,8 +432,7 @@ class FunkinLua {
 
 			FlxG.sound.music.pause();
 			FlxG.sound.music.volume = 0;
-			if(game.vocals != null)
-			{
+			if (game.vocals != null) {
 				game.vocals.pause();
 				game.vocals.volume = 0;
 			}
