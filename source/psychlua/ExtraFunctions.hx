@@ -196,7 +196,7 @@ class ExtraFunctions
 					File.saveContent(Paths.mods(path), content);
 				else
 				#end
-					File.saveContent(path, content);
+					File.saveContent(SUtil.getPath() + path, content);
 
 				return true;
 			} catch (e:Dynamic) {
@@ -211,9 +211,9 @@ class ExtraFunctions
 				if(!ignoreModFolders)
 				{
 					var lePath:String = Paths.modFolders(path);
-					if(FileSystem.exists(SUtil.getPath() + lePath))
+					if(FileSystem.exists(lePath))
 					{
-						FileSystem.deleteFile(SUtil.getPath() + lePath);
+						FileSystem.deleteFile(lePath);
 						return true;
 					}
 				}
