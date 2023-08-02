@@ -1,0 +1,114 @@
+name: Android
+on: workflow_dispatch
+jobs:
+  Build:
+    runs-on: ubuntu-20.04
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Setup Android NDK
+        id: setup-ndk
+        uses: nttld/setup-ndk@main
+        with:
+          ndk-version: r15c
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@main
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.2.5
+
+      - name: Restore Previous Cache
+        id: cache-debug-build-android-restore
+        uses: actions/cache/restore@main
+        with:
+          path: |
+            ~/haxelib
+            ~/.gradle
+            export/release/android/haxe
+            export/release/android/obj
+          key: cache-android-build
+
+      - name: Installing Libraries
+        run: |
+          haxelib setup ~/haxelib
+          haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools
+          haxelib install flixel-addons 3.0.2 --quiet
+          haxelib install flixel-tools 1.5.1 --quiet
+          haxelib install flixel-ui 2.5.0 --quiet
+          haxelib install flixel 5.2.2 --quiet
+          haxelib install hxCodec 2.5.1 --quiet
+          # haxelib install hscript --quiet
+          haxelib install hxcpp 4.2.1 --quiet
+          haxelib install lime 7.9.0 --quiet
+          haxelib git linc_luajit https://github.com/mcagabe19/linc_luajit
+          haxelib install openfl 9.2.1 --quiet
+          haxelib install SScript 4.0.1 --quiet
+          haxelib install tjson 1.4.0 --quiet
+
+      - name: Configure Android
+        run: |
+          haxelib run lime setup -alias -y
+          haxelib run lime config ANDROID_SDK $ANDROID_HOME
+          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
+          haxelib run lime config JAVA_HOME $JAVA_HOME
+          haxelib run lime config ANDROID_SETUP true
+        env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+
+      - name: Compile
+        run: haxelib run lime build android -D officialBuild -D NO_PRECOMPILED_HEADERS -D mobileC -release
+        env:
+          cert_pass: nullfunni
+          cert_alias_pass: nullfunni
+
+      - name: Clear Previous Cache
+        uses: actions/github-script@main
+        with:
+          script: |
+            try {
+            	const caches = await github.rest.actions.getActionsCacheList({
+            		owner: context.repo.owner,
+            		repo: context.repo.repo,
+            	})
+            	if (typeof caches.data.actions_caches != null && caches.data.actions_caches.length > 0) {
+            		for (const cache of caches.data.actions_caches) {
+            			if (cache.key == "cache-android-build") {
+            				console.log('Clearing ' + cache.key + '...')
+            				await github.rest.actions.deleteActionsCacheById({
+            					owner: context.repo.owner,
+            					repo: context.repo.repo,
+            					cache_id: cache.id,
+            				})
+            				console.log("Previous Cache Cleared!")
+            			}
+            		}
+            	}
+            } catch (error) {
+            	console.log(error.message);
+            }
+
+      - name: Save Current Cache
+        id: cache-release-build-android-save
+        uses: actions/cache/save@main
+        with:
+          path: |
+            ~/haxelib
+            ~/.gradle
+            export/release/android/haxe
+            export/release/android/obj
+          key: cache-android-build
+
+      - name: Publish Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          draft: true
+          files: export/release/android/bin/app/build/outputs/apk/release/*.apk 
