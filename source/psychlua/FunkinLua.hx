@@ -1705,12 +1705,12 @@ class FunkinLua {
 				if(found)
 				{
 					runtimeShaders.set(name, [frag, vert]);
-					//trace('Found shader $name!');
+					trace('Found shader $name at ' + frag + '!');
 					return true;
 				}
 			}
 		}
-		luaTrace('Missing shader $name .frag AND .vert files!', false, false, FlxColor.RED);
+		#if mobile trace(#else luaTrace(#end'Missing shader $name .frag AND .vert files!'#if !mobile, false, false, FlxColor.RED#end);
 		#else
 		luaTrace('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);
 		#end
