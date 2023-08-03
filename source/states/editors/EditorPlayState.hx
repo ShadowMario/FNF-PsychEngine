@@ -3,11 +3,10 @@ package states.editors;
 import backend.Song;
 import backend.Section;
 import backend.Rating;
-
 import objects.Note;
 import objects.NoteSplash;
 import objects.StrumNote;
-
+import backend.MusicBeatState;
 import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.animation.FlxAnimationController;
@@ -149,8 +148,8 @@ class EditorPlayState extends MusicBeatSubstate
 		#end
 
 		#if mobileC 
-		addMobileControls(false);
-		mobileControls.visible = true;
+		MusicBeatState.addMobileControls(false);
+		MusicBeatState.instance.mobileControls.visible = true;
 		#end
 
 		RecalculateRating();
@@ -161,7 +160,7 @@ class EditorPlayState extends MusicBeatSubstate
 		if(controls.BACK || FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end)
 		{
 			#if mobileC
-			mobileControls.visible = false;
+			MusicBeatState.instance.mobileControls.visible = false;
 			#end
 			endSong();
 			super.update(elapsed);
