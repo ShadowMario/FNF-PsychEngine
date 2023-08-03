@@ -64,6 +64,7 @@ class NoteSplashDebugState extends MusicBeatState
 		add(animName);
 
 		nameInputText = new FlxInputText(txtx, txty + 20, 360, '', 16);
+		nameInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		nameInputText.callback = function(text:String, action:String)
 		{
 			switch(action)
@@ -123,7 +124,10 @@ class NoteSplashDebugState extends MusicBeatState
 
 		loadFrames();
 		changeSelection();
-		super.create();
+		super.create()
+		#if mobile
+		addVirtualPad(NONE, B);
+		#end
 		FlxG.mouse.visible = true;
 	}
 
