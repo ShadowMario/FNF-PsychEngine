@@ -188,6 +188,25 @@ class SUtil
 		}
 	}
 
+	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot to add something in your code lol'):Void
+	{
+		try
+		{
+			if (!FileSystem.exists(SUtil.getPath() + 'saves'))
+				FileSystem.createDirectory(SUtil.getPath() + 'saves');
+
+			File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
+		}
+		catch (e:Dynamic)
+		{
+			#if (android && debug)
+			Toast.makeText("Error!\nClouldn't save the file because:\n" + e, Toast.LENGTH_LONG);
+			#else
+			LimeLogger.println("Error!\nClouldn't save the file because:\n" + e);
+			#end
+		}
+	}
+
 	public static function copyContent(copyPath:String, savePath:String):Void
 	{
 		try
