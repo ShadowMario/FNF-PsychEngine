@@ -1684,7 +1684,9 @@ class FunkinLua {
 			if(FileSystem.exists(folder))
 			{
 				var frag:String = folder + name + '.frag';
+				trace("the frag path is: " + frag);
 				var vert:String = folder + name + '.vert';
+				trace("the vert path is: " + vert);
 				var found:Bool = false;
 				if(FileSystem.exists(frag))
 				{
