@@ -124,7 +124,7 @@ class NoteSplashDebugState extends MusicBeatState
 
 		loadFrames();
 		changeSelection();
-		super.create()
+		super.create();
 		#if mobile
 		addVirtualPad(NONE, B);
 		#end
