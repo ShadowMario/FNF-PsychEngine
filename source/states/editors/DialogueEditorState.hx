@@ -91,6 +91,9 @@ class DialogueEditorState extends MusicBeatState
 		daText.setScale(0.7);
 		add(daText);
 		changeText();
+		#if mobile
+		addVirtualPad(LEFT_FULL, A_B_X_Y);
+		#end
 		super.create();
 	}
 
@@ -333,17 +336,17 @@ class DialogueEditorState extends MusicBeatState
 
 		if(!blockInput) {
 			ClientPrefs.toggleVolumeKeys(true);
-			if(FlxG.keys.justPressed.SPACE) {
+			if(FlxG.keys.justPressed.SPACE #if mobile || virtualPad.buttonY.justPressed #end) {
 				reloadText(false);
 			}
-			if(FlxG.keys.justPressed.ESCAPE) {
+			if(FlxG.keys.justPressed.ESCAPE #if mobile || virtualPad.buttonB.justPressed #end) {
 				MusicBeatState.switchState(new states.editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
 				transitioning = true;
 			}
 			var negaMult:Array<Int> = [1, -1];
-			var controlAnim:Array<Bool> = [FlxG.keys.justPressed.W, FlxG.keys.justPressed.S];
-			var controlText:Array<Bool> = [FlxG.keys.justPressed.D, FlxG.keys.justPressed.A];
+			var controlAnim:Array<Bool> = [FlxG.keys.justPressed.W #if mobile || virtualPad.buttonUp.justPressed #end, FlxG.keys.justPressed.S #if mobile || virtualPad.buttonDown.justPressed #end];
+			var controlText:Array<Bool> = [FlxG.keys.justPressed.D #if mobile || virtualPad.buttonLeft.justPressed #end, FlxG.keys.justPressed.A #if mobile || virtualPad.buttonRight.justPressed #end];
 			for (i in 0...controlAnim.length) {
 				if(controlAnim[i] && character.jsonFile.animations.length > 0) {
 					curAnim -= negaMult[i];
@@ -362,7 +365,7 @@ class DialogueEditorState extends MusicBeatState
 				}
 			}
 
-			if(FlxG.keys.justPressed.O) {
+			if(FlxG.keys.justPressed.O #if mobile || virtualPad.buttonA.justPressed #end) {
 				dialogueFile.dialogue.remove(dialogueFile.dialogue[curSelected]);
 				if(dialogueFile.dialogue.length < 1) //You deleted everything, dumbo!
 				{
@@ -371,7 +374,7 @@ class DialogueEditorState extends MusicBeatState
 					];
 				}
 				changeText();
-			} else if(FlxG.keys.justPressed.P) {
+			} else if(FlxG.keys.justPressed.P #if mobile || virtualPad.buttonX.justPressed #end) {
 				dialogueFile.dialogue.insert(curSelected + 1, copyDefaultLine());
 				changeText(1);
 			}
@@ -502,11 +505,15 @@ class DialogueEditorState extends MusicBeatState
 		var data:String = haxe.Json.stringify(dialogueFile, "\t");
 		if (data.length > 0)
 		{
+			#if mobile
+			SUtil.saveContent("dialogue", ".json", data);
+			#else
 			_file = new FileReference();
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data, "dialogue.json");
+			#end
 		}
 	}
 
