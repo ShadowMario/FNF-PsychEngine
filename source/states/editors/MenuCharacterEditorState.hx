@@ -68,7 +68,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		updateCharTypeBox();
 		
 		#if mobile
-		addVirtualPad(FULL, A_B_C);
+		addVirtualPad(LEFT_FULL, A_B_C);
 		#end
 
 		super.create();
