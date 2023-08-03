@@ -1127,7 +1127,7 @@ class CharacterEditorState extends MusicBeatState
 				FlxG.camera.zoom += elapsed * FlxG.camera.zoom;
 				if(FlxG.camera.zoom > 3) FlxG.camera.zoom = 3;
 			}
-			if (FlxG.keys.pressed.Q #if mobileC virtualPad.buttonY.pressed #end && FlxG.camera.zoom > 0.1) {
+			if (FlxG.keys.pressed.Q #if mobileC || virtualPad.buttonY.pressed #end && FlxG.camera.zoom > 0.1) {
 				FlxG.camera.zoom -= elapsed * FlxG.camera.zoom;
 				if(FlxG.camera.zoom < 0.1) FlxG.camera.zoom = 0.1;
 			}
