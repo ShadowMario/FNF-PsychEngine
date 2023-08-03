@@ -111,6 +111,10 @@ class WeekEditorState extends MusicBeatState
 
 		FlxG.mouse.visible = true;
 
+		#if mobile
+		addVirtualPad(UP_DOWN, B);
+		#end
+
 		super.create();
 	}
 
