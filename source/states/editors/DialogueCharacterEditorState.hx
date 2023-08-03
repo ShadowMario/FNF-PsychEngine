@@ -30,12 +30,12 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 	#if mobileC
 	private static var TIP_TEXT_MAIN:String =
-	\nX - Reset Camera
+	'\nX - Reset Camera
 	\nY - Toggle Speech Bubble
 	\nA - Reset text';
 
 	private static var TIP_TEXT_OFFSET:String =
-	\nX - Reset Camera
+	'\nX - Reset Camera
 	\nY - Toggle Ghosts
 	\nArrow Keys - Move Idle/Finished animation offset (Blue/Red)
 	\nHold Z to move offsets 10x faster';
