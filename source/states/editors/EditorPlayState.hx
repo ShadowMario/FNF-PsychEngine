@@ -148,7 +148,7 @@ class EditorPlayState extends MusicBeatSubstate
 		#end
 
 		#if mobileC 
-		MusicBeatState.addMobileControls(false);
+		MusicBeatState.instance.addMobileControls(false);
 		MusicBeatState.instance.mobileControls.visible = true;
 		#end
 
