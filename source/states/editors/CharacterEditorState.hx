@@ -1,10 +1,8 @@
 package states.editors;
 
 import animateatlas.AtlasFrameMaker;
-
 import flixel.FlxObject;
 import flixel.graphics.FlxGraphic;
-
 import flixel.animation.FlxAnimation;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import flixel.addons.ui.FlxUI;
@@ -131,6 +129,15 @@ class CharacterEditorState extends MusicBeatState
 		camFollow.screenCenter();
 		add(camFollow);
 
+		#if mobileC
+		var tipTextArray:Array<String> = "X/Y - Camera Zoom In/Out
+		\nZ - Reset Camera Zoom
+		\nV/D - Previous/Next Animation
+		\nC - Exit
+		\nArrow Keys - Move Character Offset
+		\nA - Reset Current Offset
+		\nHold B to Move 10x faster\n".split('\n');
+		#else
 		var tipTextArray:Array<String> = "E/Q - Camera Zoom In/Out
 		\nR - Reset Camera Zoom
 		\nJKLI - Move Camera
@@ -139,6 +146,7 @@ class CharacterEditorState extends MusicBeatState
 		\nArrow Keys - Move Character Offset
 		\nT - Reset Current Offset
 		\nHold Shift to Move 10x faster\n".split('\n');
+		#end
 
 		for (i in 0...tipTextArray.length-1)
 		{
@@ -189,6 +197,11 @@ class CharacterEditorState extends MusicBeatState
 
 		FlxG.mouse.visible = true;
 		reloadCharacterOptions();
+		
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B_C_D_V_X_Y_Z);
+		addPadCamera(false);
+		#end
 
 		super.create();
 	}
@@ -1089,7 +1102,7 @@ class CharacterEditorState extends MusicBeatState
 		ClientPrefs.toggleVolumeKeys(true);
 
 		if(!charDropDown.dropPanel.visible) {
-			if (FlxG.keys.justPressed.ESCAPE) {
+			if (FlxG.keys.justPressed.ESCAPE #if mobileC || virtualPad.buttonC.justPressed #end) {
 				if(goToPlayState) {
 					MusicBeatState.switchState(new PlayState());
 				} else {
@@ -1100,15 +1113,15 @@ class CharacterEditorState extends MusicBeatState
 				return;
 			}
 
-			if (FlxG.keys.justPressed.R) {
+			if (FlxG.keys.justPressed.R #if mobileC || virtualPad.buttonZ.justPressed #end) {
 				FlxG.camera.zoom = 1;
 			}
 
-			if (FlxG.keys.pressed.E && FlxG.camera.zoom < 3) {
+			if (FlxG.keys.pressed.E #if mobileC || virtualPad.buttonX.pressed #end && FlxG.camera.zoom < 3) {
 				FlxG.camera.zoom += elapsed * FlxG.camera.zoom;
 				if(FlxG.camera.zoom > 3) FlxG.camera.zoom = 3;
 			}
-			if (FlxG.keys.pressed.Q && FlxG.camera.zoom > 0.1) {
+			if (FlxG.keys.pressed.Q #if mobileC virtualPad.buttonY.pressed #end && FlxG.camera.zoom > 0.1) {
 				FlxG.camera.zoom -= elapsed * FlxG.camera.zoom;
 				if(FlxG.camera.zoom < 0.1) FlxG.camera.zoom = 0.1;
 			}
@@ -1131,12 +1144,12 @@ class CharacterEditorState extends MusicBeatState
 			}
 
 			if(char.animationsArray.length > 0) {
-				if (FlxG.keys.justPressed.W)
+				if (FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonV.justPressed #end)
 				{
 					curAnim -= 1;
 				}
 
-				if (FlxG.keys.justPressed.S)
+				if (FlxG.keys.justPressed.S #if mobileC || virtualPad.buttonD.justPressed #end)
 				{
 					curAnim += 1;
 				}
@@ -1147,12 +1160,12 @@ class CharacterEditorState extends MusicBeatState
 				if (curAnim >= char.animationsArray.length)
 					curAnim = 0;
 
-				if (FlxG.keys.justPressed.S || FlxG.keys.justPressed.W || FlxG.keys.justPressed.SPACE)
+				if (FlxG.keys.justPressed.S #if mobileC || virtualPad.buttonD.justPressed #end || FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonV.justPressed #end || FlxG.keys.justPressed.SPACE)
 				{
 					char.playAnim(char.animationsArray[curAnim].anim, true);
 					genBoyOffsets();
 				}
-				if (FlxG.keys.justPressed.T)
+				if (FlxG.keys.justPressed.T #if mobileC || virtualPad.buttonA.justPressed #end)
 				{
 					char.animationsArray[curAnim].offsets = [0, 0];
 
@@ -1161,13 +1174,16 @@ class CharacterEditorState extends MusicBeatState
 					genBoyOffsets();
 				}
 
-				var controlArray:Array<Bool> = [FlxG.keys.justPressed.LEFT, FlxG.keys.justPressed.RIGHT, FlxG.keys.justPressed.UP, FlxG.keys.justPressed.DOWN];
-
-
+				var controlArray:Array<Bool> = [
+					 FlxG.keys.justPressed.LEFT  #if mobileC || virtualPad.buttonLeft.justPressed #end,
+					FlxG.keys.justPressed.RIGHT #if mobileC || virtualPad.buttonRight.justPressed #end,
+					   FlxG.keys.justPressed.UP    #if mobileC || virtualPad.buttonUp.justPressed #end,
+					 FlxG.keys.justPressed.DOWN  #if mobileC || virtualPad.buttonDown.justPressed #end
+				];
 
 				for (i in 0...controlArray.length) {
 					if(controlArray[i]) {
-						var holdShift = FlxG.keys.pressed.SHIFT;
+						var holdShift = FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonB.pressed #end;
 						var multiplier = 1;
 						if (holdShift)
 							multiplier = 10;
@@ -1266,11 +1282,15 @@ class CharacterEditorState extends MusicBeatState
 
 		if (data.length > 0)
 		{
+		    #if mobile
+			SUtil.saveContent(daAnim, ".json", data);
+			#else
 			_file = new FileReference();
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data, daAnim + ".json");
+			#end
 		}
 	}
 
