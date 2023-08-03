@@ -142,13 +142,27 @@ class EditorPlayState extends MusicBeatSubstate
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence('Playtesting on Chart Editor', PlayState.SONG.song, null, true, songLength);
 		#end
+
+		#if (mobileC && !android)
+		addVirtualPad(NONE, B);
+		addVirtualPadCamera(false);
+		#end
+
+		#if mobileC 
+		addMobileControls(false);
+		mobileControls.visible = true;
+		#end
+
 		RecalculateRating();
 	}
 
 	override function update(elapsed:Float)
 	{
-		if(controls.BACK || FlxG.keys.justPressed.ESCAPE)
+		if(controls.BACK || FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end)
 		{
+			#if mobileC
+			mobileControls.visible = false;
+			#end
 			endSong();
 			super.update(elapsed);
 			return;
