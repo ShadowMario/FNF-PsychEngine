@@ -99,6 +99,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('CommunityGame Botplay Mode',
+			"If enabled, Botplay inputs will have varying delays, like if a human was playing. \n(Disables the 'Even LESS Botplay Lag' option, even if it's on)",
+			'communityGameBot',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Remove Marvelous!! Judgement',
 			"If unchecked, removes the Marvelous judgement.",
 			'noMarvJudge',

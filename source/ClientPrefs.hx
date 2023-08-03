@@ -21,6 +21,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var panIntensity:Float = 1;
 	public static var noteSplashes:Bool = true;
 	public static var cacheOnGPU:Bool = false;
+	public static var communityGameBot:Bool = false;
 	public static var progAudioLoad:Bool = false;
 	public static var oppNoteSplashes:Bool = true;
 	public static var instaRestart:Bool = false;
@@ -225,6 +226,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.hideScore = hideScore;
 		FlxG.save.data.doubleGhostZoom = doubleGhostZoom;
 		FlxG.save.data.memLeaks = memLeaks;
+		FlxG.save.data.communityGameBot = communityGameBot;
 		FlxG.save.data.dynamicSpawnTime = dynamicSpawnTime;
 		FlxG.save.data.botLightStrum = botLightStrum;
 		FlxG.save.data.opponentLightStrum = opponentLightStrum;
@@ -326,6 +328,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.rateNameStuff != null) {
 			rateNameStuff = FlxG.save.data.rateNameStuff;
+		}
+		if(FlxG.save.data.communityGameBot != null) {
+			communityGameBot = FlxG.save.data.communityGameBot;
 		}
 		if(FlxG.save.data.cameraPanning != null) {
 			cameraPanning = FlxG.save.data.cameraPanning;
