@@ -17,7 +17,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Options', 'Exit to menu'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song',#if mobileC 'Charting Menu', #end'Change Difficulty', 'Options', 'Exit to menu'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -258,6 +258,12 @@ class PauseSubState extends MusicBeatSubstate
 				case "Restart Song":
 					controls.isInSubstate = false;
 					restartSong();
+				#if mobileC
+				case 'Charting Menu':
+					MusicBeatState.switchState(new states.editors.ChartingState());
+					PlayState.chartingMode = true;
+					controls.isInSubstate = false;
+				#end
 				case "Leave Charting Mode":
 					controls.isInSubstate = false;
 					restartSong();
@@ -322,12 +328,12 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.camera.followLerp = 0;
 			}
 		}
-		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
+		/*if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		#if mobileC
 		addVirtualPad(UP_DOWN, A);
 		addPadCamera(false);
 		controls.isInSubstate = true;
-		#end
+		#end*/
 		}
 	}
 
