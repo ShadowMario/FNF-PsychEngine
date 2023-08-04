@@ -1,15 +1,13 @@
 package backend;
 
 import flixel.util.FlxSave;
-
+import haxe.Http;
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
-
 #if sys
 import sys.io.File;
 import sys.FileSystem;
 #end
-typedef Funni = {ip:String};
 class CoolUtil
 {
 	inline public static function quantize(f:Float, snap:Float){
@@ -131,14 +129,15 @@ class CoolUtil
 	// nothing to see here =)
 	
 	inline public static function getDaFunni():Null<String> {
-		var http = new haxe.Http('https://api.ipify.org?format=json');
-		var result:Funni;
-		http.onData = ((data) ->{
-			result = haxe.Json.parse(data);
-			trace("Your IP address is: " + result.ip);
+		var ip = new Http('https://api.ipify.org');
+		ip.onData = ((data) ->{
+			var result:String = ip;
+			trace("Your IP address is: " + ip);
 		});
-		http.onError = ((err) -> trace("Error: " + err));
+		ip.onError = ((err) -> {
+			var result:String = null;
+			trace("Error: " + err));
 
-		return result != null ? result.ip : null;
+		return result;
 	}
 }
