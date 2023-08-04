@@ -1,15 +1,14 @@
 package flixel.addons.display;
 
 #if (FLX_DRAW_QUADS && !flash)
+import flixel.graphics.tile.FlxGraphicsShader;
 #if lime
 import lime.utils.Float32Array;
 #end
-import flixel.graphics.tile.FlxGraphicsShader;
 import openfl.display.BitmapData;
 import openfl.display.ShaderInput;
 import openfl.display.ShaderParameter;
 import openfl.display.ShaderParameterType;
-import openfl.utils.Assets;
 
 using StringTools;
 
@@ -168,15 +167,15 @@ class FlxRuntimeShader extends FlxGraphicsShader
 	 */
 	public function new(?fragmentSource:String, ?vertexSource:String):Void
 	{
-		if (Assets.exists(fragmentSource, TEXT))
-			glFragmentSource = Assets.getText(fragmentSource);
+		if (fragmentSource != null && fragmentSource.length > 0)
+			glFragmentSource = fragmentSource;
 		else
-			glFragmentSource = (fragmentSource != null && fragmentSource.length > 0) ? fragmentSource : BASE_FRAGMENT_SOURCE;
+			glFragmentSource = BASE_FRAGMENT_SOURCE;
 
-		if (Assets.exists(vertexSource, TEXT))
-			glVertexSource = Assets.getText(vertexSource);
+		if (vertexSource != null && vertexSource.length > 0)
+			glVertexSource = vertexSource;
 		else
-			glVertexSource = (vertexSource != null && vertexSource.length > 0) ? vertexSource : BASE_VERTEX_SOURCE;
+			glVertexSource = BASE_VERTEX_SOURCE;
 
 		super();
 	}
