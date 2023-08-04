@@ -68,7 +68,7 @@ class ShaderFunctions
                         var arr:Array<String> = funk.runtimeShaders.get(shader);
 			// Both FlxGame and FlxCamera has a _filters array and a setFilters function
 			// We should maybe make an interface for that?
-                        var camera = getTarget(cam);
+                        var camera = getCam(cam);
                         @:privateAccess {
                                 if (camera._filters == null)
                                     camera._filters = [];
@@ -86,7 +86,7 @@ class ShaderFunctions
 
                 funk.addLocalCallback("removeCamShader", function(cam:String, shader:String) {
                         #if (!flash && MODS_ALLOWED && sys)
-                        var camera = getTarget(cam);
+                        var camera = getCam(cam);
                         @:privateAccess {
                                 if (!storedFilters.exists(shader)) {
                                         FunkinLua.luaTrace('removeCamShader: $shader does not exist!', false, false, FlxColor.YELLOW);
@@ -108,7 +108,7 @@ class ShaderFunctions
                         return false;
                 });
 
-                funk.addLocalCallback("clearCamShaders", function(cam:String) getTarget(cam).setFilters([]));
+                funk.addLocalCallback("clearCamShaders", function(cam:String) getCam(cam).setFilters([]));
 		
 		Lua_helper.add_callback(lua, "removeSpriteShader", function(obj:String) {
 			var split:Array<String> = obj.split('.');
@@ -331,6 +331,9 @@ class ShaderFunctions
 	#if (!flash && sys)
 	public static function getShader(obj:String):FlxRuntimeShader
 	{
+		if (storedFilters.exists(obj))
+		    return cast (storedFilters[obj].shader, FlxRuntimeShader);
+		
 		var split:Array<String> = obj.split('.');
 		var target:FlxSprite = null;
 		if(split.length > 1) target = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split), split[split.length-1]);
@@ -344,7 +347,7 @@ class ShaderFunctions
 		return cast (target.shader, FlxRuntimeShader);
 	}
 
-	public static function getTarget(obj:String):Dynamic {
+	public static function getCam(obj:String):Dynamic {
                	if (obj.toLowerCase().trim() == "global")
 		    return FlxG.game;
 	        return LuaUtils.cameraFromString(obj);
