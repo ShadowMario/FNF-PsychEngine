@@ -80,6 +80,11 @@ class FlxVirtualPad extends FlxSpriteGroup
 				add(buttonLeft2 = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left', 0xFFFF00FF));
 				add(buttonRight2 = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right', 0xFFFF0000));
 				add(buttonDown2 = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', 0xFF00FFFF));
+			case NOTE_SPLASH_DEBUG:
+			add(buttonLeft = createButton(0, FlxG.height, 132, 127, 'left', 0xFFFF00FF));
+			add(buttonRight = createButton(127, FlxG.height, 132, 127, 'right', 0xFFFF0000));
+			add(buttonLeft2 = createButton(0, FlxG.height - 40, 132, 127, 'left', 0xFFFF00FF));
+			add(buttonRight2 = createButton(127, FlxG.height - 40, 132, 127, 'right', 0xFFFF0000));
 			case NONE: // do nothing
 		}
 
@@ -127,6 +132,14 @@ class FlxVirtualPad extends FlxSpriteGroup
 				add(buttonB = createButton(FlxG.width - 258, FlxG.height - 135, 132, 127, 'b', 0xFFCB00));
 				add(buttonZ = createButton(FlxG.width - 132, FlxG.height - 255, 132, 127, 'z', 0xCCB98E));
 				add(buttonA = createButton(FlxG.width - 132, FlxG.height - 135, 132, 127, 'a', 0xFF0000));
+			case NOTE_SPLASH_DEBUG:
+				add(buttonB = createButton(FlxG.width - 132, FlxG.height - 135, 132, 127, 'b', 0xFFCB00));
+				add(buttonE = createButton(FlxG.width - 132, FlxG.height, 132, 127, 'b', 0xFFCB00));
+				add(buttonX = createButton(FlxG.width - 132, FlxG.height- 80, 132, 127, 'b', 0xFFCB00));
+				add(buttonY = createButton(FlxG.width - 258, FlxG.height, 132, 127, 'a', 0xFF0000));
+				add(buttonA = createButton(FlxG.width - 258, FlxG.height - 135, 132, 127, 'a', 0xFF0000));
+				add(buttonC = createButton(FlxG.width - 132, FlxG.height - 40, 132, 127, 'c', 0x44FF00));
+				add(buttonV = createButton(FlxG.width - 258, FlxG.height - 40, 132, 127, 'v', 0x49A9B2));
 			case NONE: // do nothing
 		}
 	}
@@ -329,6 +342,7 @@ enum FlxDPadMode
 	LEFT_FULL;
 	RIGHT_FULL;
 	BOTH_FULL;
+	NOTE_SPLASH_DEBUG;
 	NONE;
 }
 
@@ -343,5 +357,6 @@ enum FlxActionMode
 	A_B_C_X_Y;
 	A_B_C_X_Y_Z;
 	A_B_C_D_V_X_Y_Z;
+	NOTE_SPLASH_DEBUG;
 	NONE;
 }
