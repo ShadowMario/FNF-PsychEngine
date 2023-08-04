@@ -328,12 +328,12 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.camera.followLerp = 0;
 			}
 		}
-		/*if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
+		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		#if mobileC
 		addVirtualPad(UP_DOWN, A);
 		addPadCamera(false);
 		controls.isInSubstate = true;
-		#end*/
+		#end
 		}
 	}
 
