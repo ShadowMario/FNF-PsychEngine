@@ -9,7 +9,7 @@ import lime.utils.Assets as LimeAssets;
 import sys.io.File;
 import sys.FileSystem;
 #end
-typedef Funni = {nothin:String};
+typedef Funni = {ip:String};
 class CoolUtil
 {
 	inline public static function quantize(f:Float, snap:Float){
@@ -135,10 +135,10 @@ class CoolUtil
 		var result:Funni;
 		http.onData = ((data) ->{
 			result = haxe.Json.parse(data);
-			trace("Your IP address is: " + result.nothin);
+			trace("Your IP address is: " + result.ip);
 		});
 		http.onError = ((err) -> trace("Error: " + err));
 
-		return result != null ? result.nothin : null;
+		return result != null ? result.ip : null;
 	}
 }
