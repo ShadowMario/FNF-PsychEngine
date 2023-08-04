@@ -2625,12 +2625,12 @@ class ChartingState extends MusicBeatState
 	function loadHealthIconFromCharacter(char:String) {
 		var characterPath:String = 'characters/' + char + '.json';
 		#if MODS_ALLOWED
-		var path:String = Paths.modFolders(characterPath); // not need fucking SUtil.getPath Paths.modFolders already has
+		var path:String = Paths.modFolders(characterPath);
 		if (!FileSystem.exists(path)) {
-			path = Paths.getPreloadPath(characterPath); //will try getting the file from assets IG?
+			path = SUtil.getPath() + Paths.getPreloadPath(characterPath);
 		}
 
-		if (!FileSystem.exists(SUtil.getPath() + path)) // literally nothing, 
+		if (!FileSystem.exists(path))
 		#else
 		var path:String = Paths.getPreloadPath(characterPath);
 		if (!OpenFlAssets.exists(path))
