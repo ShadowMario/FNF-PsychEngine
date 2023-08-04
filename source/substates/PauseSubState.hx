@@ -333,8 +333,8 @@ class PauseSubState extends MusicBeatSubstate
 		addVirtualPad(UP_DOWN, A);
 		addPadCamera(false);
 		controls.isInSubstate = true;
-		#end*/
-		}
+		#end*
+		}*/
 	}
 
 	function deleteSkipTimeText()
