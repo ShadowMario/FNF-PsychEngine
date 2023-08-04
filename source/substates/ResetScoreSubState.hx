@@ -69,7 +69,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		noText = new Alphabet(0, text.y + 150, 'No', true);
 		noText.screenCenter(X);
 		noText.x += 200;
-		add(noText)
+		add(noText);
 
 		#if mobileC
 		addVirtualPad(LEFT_RIGHT, A_B);
