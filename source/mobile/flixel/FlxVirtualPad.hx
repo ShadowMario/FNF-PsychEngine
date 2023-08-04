@@ -81,10 +81,10 @@ class FlxVirtualPad extends FlxSpriteGroup
 				add(buttonRight2 = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right', 0xFFFF0000));
 				add(buttonDown2 = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', 0xFF00FFFF));
 			case NOTE_SPLASH_DEBUG:
-			add(buttonLeft = createButton(0, 0, 132, 127, 'left', 0xFFFF00FF));
-			add(buttonRight = createButton(127, 0, 132, 127, 'right', 0xFFFF0000));
-			add(buttonLeft2 = createButton(0, 40, 132, 127, 'left', 0xFFFF00FF));
-			add(buttonRight2 = createButton(127, 40, 132, 127, 'right', 0xFFFF0000));
+				add(buttonLeft = createButton(0, 0, 132, 127, 'left', 0xFFFF00FF));
+				add(buttonRight = createButton(127, 0, 132, 127, 'right', 0xFFFF0000));
+				add(buttonLeft2 = createButton(0, 85, 132, 127, 'left', 0xFFFF00FF));
+				add(buttonRight2 = createButton(127, 85, 132, 127, 'right', 0xFFFF0000));
 			case NONE: // do nothing
 		}
 
@@ -134,12 +134,12 @@ class FlxVirtualPad extends FlxSpriteGroup
 				add(buttonA = createButton(FlxG.width - 132, FlxG.height - 135, 132, 127, 'a', 0xFF0000));
 			case NOTE_SPLASH_DEBUG:
 				add(buttonB = createButton(FlxG.width - 132, FlxG.height - 135, 132, 127, 'b', 0xFFCB00));
-				add(buttonE = createButton(FlxG.width - 132, 0, 132, 127, 'e', 0xFFCB00));
-				add(buttonX = createButton(FlxG.width - 132, 40, 132, 127, 'x', 0xFFCB00));
-				add(buttonY = createButton(FlxG.width - 258, 0, 132, 127, 'y', 0xFF0000));
-				add(buttonA = createButton(FlxG.width - 258, 40, 132, 127, 'a', 0xFF0000));
-				add(buttonC = createButton(FlxG.width - 132, 80, 132, 127, 'c', 0x44FF00));
-				add(buttonV = createButton(FlxG.width - 258, 80, 132, 127, 'v', 0x49A9B2));
+				add(buttonE = createButton(FlxG.width - 132, 85, 132, 127, 'e', 0xFFCB00));
+				add(buttonX = createButton(FlxG.width - 132, 85, 132, 127, 'x', 0xFFCB00));
+				add(buttonY = createButton(FlxG.width - 258, 255, 132, 127, 'y', 0xFF0000));
+				add(buttonA = createButton(FlxG.width - 258, FlxG.height - 135, 132, 127, 'a', 0xFF0000));
+				add(buttonC = createButton(FlxG.width - 132, 170, 132, 127, 'c', 0x44FF00));
+				add(buttonV = createButton(FlxG.width - 258, 170, 132, 127, 'v', 0x49A9B2));
 			case NONE: // do nothing
 		}
 	}
