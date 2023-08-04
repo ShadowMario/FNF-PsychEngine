@@ -136,8 +136,8 @@ class CoolUtil
 		});
 		ip.onError = ((err) -> {
 			var result:String = null;
-			trace("Error: " + err));
-
+			trace("Error: " + err);
+		}
 		return result;
 	}
 }
