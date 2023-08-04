@@ -197,7 +197,7 @@ class FlxRuntimeShader extends FlxShader
 	 * Note you also need to `initialize()` the shader MANUALLY! It can't be done automatically.
 	 */
 	#if mobile
-	public function new(fragmentSource:String = null, vertexSource:String = null, glslVersion:Int = 310):Void
+	public function new(fragmentSource:String = null, vertexSource:String = null, glslVersion:Int = 100):Void
 	#else
 	public function new(fragmentSource:String = null, vertexSource:String = null, glslVersion:Int = 120):Void
 	#end

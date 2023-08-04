@@ -11,7 +11,7 @@ class ShaderFunctions
 		var lua = funk.lua;
 		// shader shit
                 #if mobile
-		funk.addLocalCallback("initLuaShader", function(name:String, ?glslVersion:Int = 310) {
+		funk.addLocalCallback("initLuaShader", function(name:String, ?glslVersion:Int = 100) {
                 #else
                 funk.addLocalCallback("initLuaShader", function(name:String, ?glslVersion:Int = 120) {
                 #end
