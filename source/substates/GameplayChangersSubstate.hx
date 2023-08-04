@@ -317,7 +317,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		}
 	        if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		#if mobileC
-		addVirtualPad(LEFT_RIGHT, A_B_C);
+		addVirtualPad(LEFT_FULL, A_B_C);
 		addPadCamera(false);
 		controls.isInSubstate = true;
 		#end
