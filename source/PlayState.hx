@@ -4175,6 +4175,8 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
+		sectionsLoaded += 1;
+		trace('loaded section ' + sectionsLoaded);
 		}
 		for (event in songData.events) //Event Notes
 		{

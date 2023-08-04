@@ -1057,6 +1057,35 @@ class ChartingState extends MusicBeatState
 			changeSection(value);
 		});
 
+		var CopyNextSectionCount:FlxUINumericStepper = new FlxUINumericStepper(jumpSection.x, jumpSection.y + 60, 1, 1, -999, 999, 0);
+		blockPressWhileTypingOnStepper.push(CopyNextSectionCount);
+
+		var copyNextButton:FlxButton = new FlxButton(CopyNextSectionCount.x, CopyNextSectionCount.y + 20, "Copy to the next..", function()
+		{
+			var value:Int = Std.int(CopyNextSectionCount.value);
+			if(value == 0) {
+			return;
+			} 
+			if(Math.isNaN(_song.notes[curSection].sectionNotes.length)) {
+			return; //prevent a crash if the section doesn't have any notes
+			trace ("HEY! your section doesn't have any notes! please place at least 1 note then try using this.");
+			}
+
+			for(i in 0...value) {
+			for (note in _song.notes[curSec].sectionNotes)
+			{
+				var strum = note[0] + Conductor.stepCrochet * (getSectionBeats(curSec) * 4);
+
+
+				var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3]];
+				_song.notes[curSec+1].sectionNotes.push(copiedNote);
+			}
+				changeSection(curSec+1);
+			}
+			updateGrid(false);
+		});
+		copyNextButton.color = FlxColor.CYAN;
+		copyNextButton.label.color = FlxColor.WHITE;
 
 		tab_group_section.add(stepperSectionJump);
 		tab_group_section.add(jumpSection);
@@ -1071,6 +1100,8 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(pasteButton);
 		tab_group_section.add(clearRightSectionButton);
 		tab_group_section.add(clearLeftSectionButton);
+		tab_group_section.add(copyNextButton);
+		tab_group_section.add(CopyNextSectionCount);
 		tab_group_section.add(clearSectionButton);
 		tab_group_section.add(check_notesSec);
 		tab_group_section.add(check_eventsSec);
@@ -2772,7 +2803,7 @@ class ChartingState extends MusicBeatState
 		updateWaveform();
 	}
 
-	function changeSection(sec:Int = 0, ?updateMusic:Bool = true):Void
+	function changeSection(sec:Int = 0, ?updateMusic:Bool = true, ?updateTheGridBITCH:Bool = true):Void
 	{
 		if (_song.notes[sec] != null)
 		{
@@ -2801,7 +2832,7 @@ class ChartingState extends MusicBeatState
 			}
 			else
 			{
-				updateGrid();
+				if (updateTheGridBITCH) updateGrid();
 			}
 			updateSectionUI();
 		}
