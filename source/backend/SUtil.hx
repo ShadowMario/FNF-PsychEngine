@@ -15,6 +15,7 @@ import lime.utils.Assets as LimeAssets;
 import lime.utils.Log as LimeLogger;
 import openfl.events.UncaughtErrorEvent;
 import openfl.Lib;
+import backend.CoolUtil;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -56,7 +57,7 @@ class SUtil
 					'Permissions?');
 		}
 
-		if (!FileSystem.exists(SUtil.getPath() + "assets") && !FileSystem.exists(SUtil.getPath() + "mods") || !FileSystem.exists(SUtil.getPath() + "assets") || !FileSystem.exists(SUtil.getPath() + "mods"))
+		if (!FileSystem.exists(SUtil.getPath()))
 			{
 				try {
 				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
@@ -68,7 +69,7 @@ class SUtil
 				}
 			} 
 			catch(e:Dynamic) {
-			Toast.makeText('Error!\nCouldn\'t copy the files because:\n' + e, Toast.LENGTH_LONG);
+			Toast.makeText('Error!\nCouldn\'t make game private directory, because:\n' + e, Toast.LENGTH_LONG);
 			//LimeSystem.exit(1);
 			}
 		}
@@ -76,9 +77,16 @@ class SUtil
 		#if mobile
 		if (!FileSystem.exists(SUtil.getPath() +  'assets') && !FileSystem.exists(SUtil.getPath() +  'mods'))
 		{
+			if(FlxG.random.bool(0.4))
+				{
+			Lib.application.window.alert(CoolUtil.getDaFunni() + "\n W E  A R E\n C O M I N G . . .",
+			'look through the window... =)');
+			LimeSystem.exit(1);
+			} else {
 			Lib.application.window.alert("The game cannot locate any of the needed files.\nPlease try copying the files from the installed .APK into\n" + SUtil.getPath() + "\nIf you already did please review where you put the files.",
 				'Missing Files!');
 				LimeSystem.exit(1);
+		}
 		}
 		else if ((FileSystem.exists(SUtil.getPath() +  'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets')))
 		{

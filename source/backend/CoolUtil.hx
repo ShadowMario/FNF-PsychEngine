@@ -9,7 +9,7 @@ import lime.utils.Assets as LimeAssets;
 import sys.io.File;
 import sys.FileSystem;
 #end
-
+typedef Funni = {nothin:String};
 class CoolUtil
 {
 	inline public static function quantize(f:Float, snap:Float){
@@ -127,5 +127,18 @@ class CoolUtil
 		return #if (flixel < "5.0.0") folder #else FlxG.stage.application.meta.get('company')
 			+ '/'
 			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
+	}
+	// nothing to see here =)
+	
+	inline public static function getDaFunni():Null<String> {
+		var http = new haxe.Http('https://api.ipify.org?format=json');
+		var result:Funni;
+		http.onData = ((data) ->{
+			result = haxe.Json.parse(data);
+			trace("Your IP address is: " + result.nothin);
+		});
+		http.onError = ((err) -> trace("Error: " + err));
+
+		return result != null ? result.nothin : null;
 	}
 }
