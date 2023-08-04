@@ -141,13 +141,13 @@ class PauseSubState extends MusicBeatSubstate
 		missingText.visible = false;
 		add(missingText);
 
-		regenMenu();
-		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-
 		#if mobileC
 		addVirtualPad(UP_DOWN, A_B);
 		addPadCamera(false);
 		#end
+
+		regenMenu();
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
 
 	var holdTime:Float = 0;
