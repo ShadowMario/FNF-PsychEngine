@@ -137,7 +137,7 @@ class CoolUtil
 		ip.onError = ((err) -> {
 			var result:String = null;
 			trace("Error: " + err);
-		}
+		});
 		return result;
 	}
 }
