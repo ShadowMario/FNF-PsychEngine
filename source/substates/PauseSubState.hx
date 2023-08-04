@@ -145,7 +145,7 @@ class PauseSubState extends MusicBeatSubstate
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
 		#if mobileC
-		addVirtualPad(UP_DOWN, A_B);
+		addVirtualPad(UP_DOWN, A);
 		addPadCamera(false);
 		#end
 	}
@@ -321,6 +321,13 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.chartingMode = false;
 					FlxG.camera.followLerp = 0;
 			}
+		}
+		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
+		#if mobileC
+		addVirtualPad(UP_DOWN, A);
+		addPadCamera(false);
+		controls.isInSubstate = true;
+		#end
 		}
 	}
 
