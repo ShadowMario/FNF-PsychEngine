@@ -1658,7 +1658,7 @@ class FunkinLua {
 	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
 	#end
         #if mobile
-	public function initLuaShader(name:String, ?glslVersion:Int = 310)
+	public function initLuaShader(name:String, ?glslVersion:Int = 320)
         #else
         public function initLuaShader(name:String, ?glslVersion:Int = 120)
         #end
