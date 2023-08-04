@@ -1663,24 +1663,51 @@ class ChartingState extends MusicBeatState
 		FlxG.watch.addQuick('daBeat', curBeat);
 		FlxG.watch.addQuick('daStep', curStep);
 
-
-		if (FlxG.mouse.x > gridBG.x
-			&& FlxG.mouse.x < gridBG.x + gridBG.width
-			&& FlxG.mouse.y > gridBG.y
-			&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * getSectionBeats() * 4) * zoomList[curZoom])
+		#if mobileC
+		for (touch in FlxG.touches.list)
 		{
-			dummyArrow.visible = true;
-			dummyArrow.x = Math.floor(FlxG.mouse.x / GRID_SIZE) * GRID_SIZE;
-			if (FlxG.keys.pressed.SHIFT)
-				dummyArrow.y = FlxG.mouse.y;
-			else
+			if (touch.justReleased)
 			{
-				var gridmult = GRID_SIZE / (quantization / 16);
-				dummyArrow.y = Math.floor(FlxG.mouse.y / gridmult) * gridmult;
+				if (touch.overlaps(curRenderedNotes))
+				{
+					curRenderedNotes.forEachAlive(function(note:Note)
+					{
+						if (touch.overlaps(note))
+						{
+							deleteNote(note);
+						}
+					});
+				}
+				else
+				{
+					if (touch.x > gridBG.x
+						&& touch.x < gridBG.x + gridBG.width
+						&& touch.y > gridBG.y
+						&& touch.y < gridBG.y + (GRID_SIZE * getSectionBeats() * 4) * zoomList[curZoom])
+					{
+						FlxG.log.add('added note');
+						addNote();
+					}
+				}
 			}
-		} else {
-			dummyArrow.visible = false;
+
+			if (touch.x > gridBG.x
+				&& touch.x < gridBG.x + gridBG.width
+				&& touch.y > gridBG.y
+				&& touch.y < gridBG.y + (GRID_SIZE * getSectionBeats() * 4) * zoomList[curZoom])
+			{
+				dummyArrow.visible = true;
+				dummyArrow.x = Math.floor(touch.x / GRID_SIZE) * GRID_SIZE;
+				if (FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonY.pressed #end)
+					dummyArrow.y = touch.y;
+				else
+					dummyArrow.y = Math.floor(touch.y / GRID_SIZE) * GRID_SIZE;
+			}else{
+				dummyArrow.visible = false;
+			}
 		}
+
+		#else
 
 		if (FlxG.mouse.justPressed)
 		{
@@ -1720,6 +1747,22 @@ class ChartingState extends MusicBeatState
 				}
 			}
 		}
+
+		if (FlxG.mouse.x > gridBG.x
+			&& FlxG.mouse.x < gridBG.x + gridBG.width
+			&& FlxG.mouse.y > gridBG.y
+			&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps) * zoomList[curZoom])
+		{
+			dummyArrow.visible = true;
+			dummyArrow.x = Math.floor(FlxG.mouse.x / GRID_SIZE) * GRID_SIZE;
+			if (FlxG.keys.pressed.SHIFT)
+				dummyArrow.y = FlxG.mouse.y;
+			else
+				dummyArrow.y = Math.floor(FlxG.mouse.y / GRID_SIZE) * GRID_SIZE;
+		}else{
+			dummyArrow.visible = false;
+		}
+		#end
 
 		var blockInput:Bool = false;
 		for (inputText in blockPressWhileTypingOn) {
@@ -1856,6 +1899,7 @@ class ChartingState extends MusicBeatState
 					resetSection();
 			}
 
+			#if !mobileC
 			if (FlxG.mouse.wheel != 0)
 			{
 				FlxG.sound.music.pause();
@@ -1881,6 +1925,7 @@ class ChartingState extends MusicBeatState
 					vocals.time = FlxG.sound.music.time;
 				}
 			}
+			#end
 
 			//ARROW VORTEX SHIT NO DEADASS
 
@@ -1918,7 +1963,7 @@ class ChartingState extends MusicBeatState
 					var beat:Float = curDecBeat;
 					var snap:Float = quantization / 4;
 					var increase:Float = 1 / snap;
-					if (FlxG.keys.pressed.UP #if mobileC || virtualPad.buttonUp.pressed #end)
+					if (FlxG.keys.pressed.UP /*#if mobileC || virtualPad.buttonUp.pressed #end*/)
 					{
 						var fuck:Float = CoolUtil.quantize(beat, snap) - increase; //(Math.floor((beat+snap) / snap) * snap);
 						FlxG.sound.music.time = Conductor.beatToSeconds(fuck);
@@ -1984,7 +2029,7 @@ class ChartingState extends MusicBeatState
 					var beat:Float = curDecBeat;
 					var snap:Float = quantization / 4;
 					var increase:Float = 1 / snap;
-					if (FlxG.keys.pressed.UP #if mobileC || virtualPad.buttonUp.pressed #end)
+					if (FlxG.keys.pressed.UP /*#if mobileC || virtualPad.buttonUp.pressed #end*/)
 					{
 						var fuck:Float = CoolUtil.quantize(beat, snap) - increase;
 						feces = Conductor.beatToSeconds(fuck);
@@ -2993,7 +3038,11 @@ class ChartingState extends MusicBeatState
 		//var newsong = _song.notes;
 		//	undos.push(newsong);
 		var noteStrum = getStrumTime(dummyArrow.y * (getSectionBeats() / 4), false) + sectionStartTime();
-		var noteData = Math.floor((FlxG.mouse.x - GRID_SIZE) / GRID_SIZE);
+		#if mobileC
+		for (touch in FlxG.touches.list){noteData = Math.floor((touch.x - GRID_SIZE) / GRID_SIZE);}
+		#else
+		noteData = Math.floor((FlxG.mouse.x - GRID_SIZE) / GRID_SIZE);
+		#end
 		var noteSus = 0;
 		var daAlt = false;
 		var daType = currentType;
