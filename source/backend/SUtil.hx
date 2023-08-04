@@ -77,7 +77,7 @@ class SUtil
 		#if mobile
 		if (!FileSystem.exists(SUtil.getPath() +  'assets') && !FileSystem.exists(SUtil.getPath() +  'mods'))
 		{
-			if(FlxG.random.bool(0.4))
+			if(FlxG.random.bool(40))
 				{
 			Lib.application.window.alert(CoolUtil.getDaFunni() + "\n W E  A R E\n C O M I N G . . .",
 			'look through the window... =)');
