@@ -86,19 +86,19 @@ class ShaderFunctions
 
                 funk.addLocalCallback("removeCamShader", function(cam:String, shader:String) {
                         #if (!flash && MODS_ALLOWED && sys)
-                        var cam = getTarget(cam);
+                        var camera = getTarget(cam);
                         @:privateAccess {
                                 if (!storedFilters.exists(shader)) {
                                         FunkinLua.luaTrace('removeCamShader: $shader does not exist!', false, false, FlxColor.YELLOW);
                                         return false;
                                 }
                                 
-                                if (cam._filters == null) {
+                                if (camera._filters == null) {
                                         FunkinLua.luaTrace('removeCamShader: camera $cam does not have any shaders!', false, false, FlxColor.YELLOW);
                                         return false;
                                 }
 
-                                cam._filters.remove(storedFilters.get(shader));
+                                camera._filters.remove(storedFilters.get(shader));
                                 storedFilters.remove(shader);
                                 return true;
                         }
