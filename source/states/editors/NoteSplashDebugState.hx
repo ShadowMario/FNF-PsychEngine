@@ -242,7 +242,7 @@ class NoteSplashDebugState extends MusicBeatState
 		if (FlxG.keys.justPressed.SPACE #if mobileC || virtualPad.buttonY.justPressed #end)
 			changeAnim();
 		else if (FlxG.keys.justPressed.S #if mobileC || virtualPad.buttonLeft.justPressed #end) changeAnim(-1);
-		else if (FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonLeft2.justPressed #end) changeAnim(1);
+		else if (FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonRight.justPressed #end) changeAnim(1);
 
 		// Force frame
 		var updatedFrame:Bool = false;
