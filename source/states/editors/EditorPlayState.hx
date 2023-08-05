@@ -127,7 +127,13 @@ class EditorPlayState extends MusicBeatSubstate
 		dataTxt.borderSize = 1.25;
 		add(dataTxt);
 
+		#if android
+		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK to Go Back to Chart Editor', 16);
+		#elseif (mobileC && !android)
+		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press B to Go Back to Chart Editor', 16);
+		#elseif (!mobileC && !android)
 		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press ESC to Go Back to Chart Editor', 16);
+		#end
 		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2;
 		tipText.scrollFactor.set();
