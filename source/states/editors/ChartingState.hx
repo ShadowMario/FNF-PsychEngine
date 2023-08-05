@@ -324,6 +324,7 @@ class ChartingState extends MusicBeatState
 		UI_box.y = 25;
 		UI_box.scrollFactor.set();
 
+		#if mobileC
 		text =
 		"W/S or Mouse Wheel - Change Conductor's strum time
 		\nA/D - Go to the previous/next section
@@ -339,6 +340,17 @@ class ChartingState extends MusicBeatState
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
 		\nSpace - Stop/Resume song";
+		#else
+		text =
+		"nUp/Down - Change Conductor's strum time
+		\nLeft/Right - Go to the previous/next section
+		\nHold Y to move 4x faster
+		\nZ/D - Zoom in/out
+		\n
+		\nC - Test your chart inside Chart Editor
+		\nA - Play your chart
+		\nX - Stop/Resume song";
+		#end
 
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
@@ -377,7 +389,7 @@ class ChartingState extends MusicBeatState
 		add(zoomTxt);
 		
 		#if mobileC
-		addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
+		addVirtualPad(LEFT_FULL, A_B_C_D_V_X_Y_Z);
 		#end
 
 		updateGrid();
@@ -1798,7 +1810,7 @@ class ChartingState extends MusicBeatState
 
 		if (!blockInput)
 		{
-			if (FlxG.keys.justPressed.ESCAPE #if mobileC || virtualPad.buttonB.justPressed #end)
+			if (FlxG.keys.justPressed.ESCAPE #if mobileC || virtualPad.buttonC.justPressed #end)
 			{
 				FlxG.sound.music.pause();
 				if(vocals != null) vocals.pause();
@@ -1834,7 +1846,7 @@ class ChartingState extends MusicBeatState
 			}
 
 
-			if (FlxG.keys.justPressed.BACKSPACE #if android || FlxG.android.justReleased.BACK #end) {
+			if (FlxG.keys.justPressed.BACKSPACE #if mobileC || virtualPad.buttonB.justPressed #end #if android || FlxG.android.justReleased.BACK #end) {
 				// Protect against lost data when quickly leaving the chart editor.
 				autosaveSong();
 				PlayState.chartingMode = false;
@@ -1844,7 +1856,7 @@ class ChartingState extends MusicBeatState
 				return;
 			}
 
-			if(FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL) {
+			if(#if mobileC || virtualPad.buttonV.justPressed #else FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL #end) {
 				undo();
 			}
 
@@ -1852,7 +1864,7 @@ class ChartingState extends MusicBeatState
 				--curZoom;
 				updateZoom();
 			}
-			if(FlxG.keys.justPressed.X #if mobileC || virtualPad.buttonC.justPressed #end && curZoom < zoomList.length-1) {
+			if(FlxG.keys.justPressed.X #if mobileC || virtualPad.buttonD.justPressed #end && curZoom < zoomList.length-1) {
 				curZoom++;
 				updateZoom();
 			}
