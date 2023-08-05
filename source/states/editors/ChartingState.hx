@@ -1856,7 +1856,7 @@ class ChartingState extends MusicBeatState
 				return;
 			}
 
-			if(#if mobileC || virtualPad.buttonV.justPressed #else FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL #end) {
+			if(#if mobileC virtualPad.buttonV.justPressed #else FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL #end) {
 				undo();
 			}
 
