@@ -20,13 +20,11 @@ class OptionsState extends MusicBeatState
 				removeVirtualPad();
 				#end
 				openSubState(new options.NotesSubState());
-			#if !mobile
 			case 'Controls':
 				#if mobileC
 				removeVirtualPad();
 				#end
 				openSubState(new options.ControlsSubState());
-			#end
 			case 'Graphics':
 				#if mobileC
 				removeVirtualPad();
