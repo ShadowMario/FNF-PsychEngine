@@ -1956,7 +1956,7 @@ class ChartingState extends MusicBeatState
 			}
 
 			if(!vortex){
-				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN #if mobileC || virtualPad.buttonUp.justPressed || virtualPad.buttonDown.justPressed #end)
+				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN /*#if mobileC || virtualPad.buttonUp.justPressed || virtualPad.buttonDown.justPressed #end*/)
 				{
 					FlxG.sound.music.pause();
 					updateCurStep();
@@ -2017,7 +2017,7 @@ class ChartingState extends MusicBeatState
 				}
 
 				var feces:Float;
-				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN #if mobileC || virtualPad.buttonUp.justPressed || virtualPad.buttonDown.justPressed #end)
+				if (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.DOWN /*#if mobileC || virtualPad.buttonUp.justPressed || virtualPad.buttonDown.justPressed #end*/)
 				{
 					FlxG.sound.music.pause();
 
