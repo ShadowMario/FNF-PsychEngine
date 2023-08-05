@@ -159,8 +159,8 @@ class NoteSplashDebugState extends MusicBeatState
 
 		if(!notTyping) return;
 		
-		if (FlxG.keys.justPressed.A #if mobileC || virtualPad.buttonLeft2.justPressed #end) changeSelection(-1);
-		else if (FlxG.keys.justPressed.D #if mobileC || virtualPad.buttonRight2.justPressed #end) changeSelection(1);
+		if (FlxG.keys.justPressed.A #if mobileC || virtualPad.buttonUp.justPressed #end) changeSelection(-1);
+		else if (FlxG.keys.justPressed.D #if mobileC || virtualPad.buttonDown.justPressed #end) changeSelection(1);
 
 		if(maxAnims < 1) return;
 
@@ -168,13 +168,13 @@ class NoteSplashDebugState extends MusicBeatState
 		{
 			var movex = 0;
 			var movey = 0;
-			if(FlxG.keys.justPressed.LEFT) movex = -1;
-			else if(FlxG.keys.justPressed.RIGHT) movex = 1;
+			if(FlxG.keys.justPressed.LEFT #if mobile || virtualPad.buttonLeft2.justPressed #end) movex = -1;
+			else if(FlxG.keys.justPressed.RIGHT #if mobile || virtualPad.buttonRight2.justPressed #end) movex = 1;
 
-			if(FlxG.keys.justPressed.UP) movey = 1;
-			else if(FlxG.keys.justPressed.DOWN) movey = -1;
+			if(FlxG.keys.justPressed.UP #if mobile || virtualPad.buttonUp2.justPressed #end) movey = 1;
+			else if(FlxG.keys.justPressed.DOWN #if mobile || virtualPad.buttonDown2.justPressed #end) movey = -1;
 			
-			if(FlxG.keys.pressed.SHIFT)
+			if(FlxG.keys.pressed.SHIFT #if mobile || virtualPad.buttonZ.pressed #end)
 			{
 				movex *= 10;
 				movey *= 10;
@@ -389,7 +389,7 @@ class NoteSplashDebugState extends MusicBeatState
 			if(curAnim > maxAnims) curAnim = 1;
 			else if(curAnim < 1) curAnim = maxAnims;
 			#if mobile 
-			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press bottom left/right to change)';
+			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press top up/down to change)';
 			curFrameText.text = 'Force Frame Disabled\n(Press X/E to change)';
 			#else
 			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press W/S to change)';
