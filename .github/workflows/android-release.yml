@@ -112,5 +112,5 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
           automatic_release_tag: "0.7.1h-beta2"
-          title: "0.7.1h Mobile Beta 2"
+          title: "0.7.1h Android Beta 2"
           files: export/release/android/bin/app/build/outputs/apk/release/*.apk 
