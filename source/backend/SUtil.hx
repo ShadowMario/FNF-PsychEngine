@@ -81,7 +81,6 @@ class SUtil
 				'Missing Files!');
 				LimeSystem.exit(1);
 		}
-		}
 		else if ((FileSystem.exists(SUtil.getPath() +  'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets')))
 		{
 			Lib.application.window.alert("The game reads that there are no files in the assets folder you got in\n" + SUtil.getPath()+"assets\nPlease copy them from the installed .APK file.",
