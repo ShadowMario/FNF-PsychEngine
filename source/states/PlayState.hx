@@ -813,8 +813,8 @@ class PlayState extends MusicBeatState
 		
 		if(doPush)
 		{
-			if(SScript.global.exists(scriptFile))
-				doPush = false;
+			//if(SScript.global.exists(scriptFile))
+				//doPush = false;
 
 			if(doPush) initHScript(scriptFile);
 		}
@@ -3154,7 +3154,7 @@ class PlayState extends MusicBeatState
 		
 		if(FileSystem.exists(scriptToLoad))
 		{
-			if (SScript.global.exists(scriptToLoad)) return false;
+			//if (SScript.global.exists(scriptToLoad)) return false;
 	
 			initHScript(scriptToLoad);
 			return true;
@@ -3199,7 +3199,7 @@ class PlayState extends MusicBeatState
 		catch(e)
 		{
 			addTextToDebug('ERROR ($file) - ' + e.message.substr(0, e.message.indexOf('\n')), FlxColor.RED);
-			var newScript:HScript = cast (SScript.global.get(file), HScript);
+			var newScript:HScript = cast (File.getContent(file), HScript);
 			if(newScript != null)
 			{
 				newScript.destroy();
