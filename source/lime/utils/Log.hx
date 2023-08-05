@@ -69,7 +69,7 @@ class Log
 				#end
 
 				println(message);
-				Application.current.window.alert(message + '\n\nlime/utils/Log Detected!! Contiuning...', 'Error!');
+				Application.current.window.alert(message + '\n\nlime/utils/Log Detected!! Press OK to ignore this', 'Error!');
 				//System.exit(1);
 			}
 			else
