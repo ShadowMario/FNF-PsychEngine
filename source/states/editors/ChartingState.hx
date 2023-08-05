@@ -326,6 +326,16 @@ class ChartingState extends MusicBeatState
 
 		#if mobileC
 		text =
+		"nUp/Down - Change Conductor's strum time
+		\nLeft/Right - Go to the previous/next section
+		\nHold Y to move 4x faster
+		\nZ/D - Zoom in/out
+		\n
+		\nC - Test your chart inside Chart Editor
+		\nA - Play your chart
+		\nX - Stop/Resume song";
+		#else
+		text =
 		"W/S or Mouse Wheel - Change Conductor's strum time
 		\nA/D - Go to the previous/next section
 		\nLeft/Right - Change Snap
@@ -340,16 +350,6 @@ class ChartingState extends MusicBeatState
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
 		\nSpace - Stop/Resume song";
-		#else
-		text =
-		"nUp/Down - Change Conductor's strum time
-		\nLeft/Right - Go to the previous/next section
-		\nHold Y to move 4x faster
-		\nZ/D - Zoom in/out
-		\n
-		\nC - Test your chart inside Chart Editor
-		\nA - Play your chart
-		\nX - Stop/Resume song";
 		#end
 
 		var tipTextArray:Array<String> = text.split('\n');
