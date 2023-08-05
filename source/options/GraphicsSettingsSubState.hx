@@ -46,7 +46,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 
 		#if mobile
 		var option:Option = new Option('GPU Caching', //Name
-			"If checked, allows the GPU to be used for caching textures, decreasing RAM usage.\nDon't turn this on if you have a low end devive", //Description
+			"If checked, allows the GPU to be used for caching textures, decreasing RAM usage.\nDon't turn this on if you have a low end phone", //Description
 			'cacheOnGPU',
 			'bool');
 		addOption(option);
