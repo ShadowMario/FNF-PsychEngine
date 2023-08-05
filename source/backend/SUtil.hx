@@ -68,23 +68,53 @@ class SUtil
 	
 				}
 			} 
-			catch(e:Dynamic) {
-			Toast.makeText('Error!\nCouldn\'t make game private directory, because:\n' + e, Toast.LENGTH_LONG);
-			//LimeSystem.exit(1);
-			}
+			catch (e){
+                        Lib.application.window.alert('Please create folder to\n' + SUtil.getPath() + '\nPress Ok to close the app', 'Error!');
+			LimeSystem.exit(1);
+                        }
 		}
 		#end
 		#if mobile
-		if (!FileSystem.exists(SUtil.getPath() +  'assets') && !FileSystem.exists(SUtil.getPath() +  'mods'))
+		if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 		{
-			Lib.application.window.alert("The game cannot locate any of the needed files.\nPlease try copying the files from the installed .APK into\n" + SUtil.getPath() + "\nIf you already did please review where you put the files.",
-				'Missing Files!');
-				LimeSystem.exit(1);
+			Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + SUtil.getPath(),
+				'Error!');
+			LimeSystem.exit(1);
 		}
-		else if ((FileSystem.exists(SUtil.getPath() +  'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets')))
+		else if ((FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
+			&& (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods')))
 		{
-			Lib.application.window.alert("The game reads that there are no files in the assets folder you got in\n" + SUtil.getPath()+"assets\nPlease copy them from the installed .APK file.",
-				'Could Not read the directory.');
+			Lib.application.window.alert("Why did you create two files called assets and mods instead of copying the folders from the .APK?, expect a crash.",
+				'Error!');
+			LimeSystem.exit(1);
+		}
+		else
+		{
+			if (!FileSystem.exists(SUtil.getPath() + 'assets'))
+			{
+				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease copy the assets/assets folder from the .APK to\n" + SUtil.getPath(),
+					'Error!');
+				LimeSystem.exit(1);
+			}
+			else if (FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
+			{
+				Lib.application.window.alert("Why did you create a file called assets instead of copying the assets directory from the .APK?, expect a crash.",
+					'Error!');
+				LimeSystem.exit(1);
+			}
+
+			if (!FileSystem.exists(SUtil.getPath() + 'mods'))
+			{
+				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease copy the assets/mods folder from the .APK to\n" + SUtil.getPath(),
+					'Error!');
+				LimeSystem.exit(1);
+			}
+			else if (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods'))
+			{
+				Lib.application.window.alert("Why did you create a file called mods instead of copying the mods directory from the .APK?, expect a crash.",
+					'Error!');
+				LimeSystem.exit(1);
+			}
 		}
 		#end
 	}
@@ -197,7 +227,7 @@ class SUtil
 				FileSystem.createDirectory(SUtil.getPath() + 'saves');
 
 			File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
-			Lib.application.window.alert(fileName + " has been saved", "the file with the name " + fileName + "\nhas been saved in " + SUtil.getPath() + 'saves/' + fileName);
+			Lib.application.window.alert(fileName + "file has been saved", "Success!");
 		}
 		catch (e:Dynamic)
 		{
@@ -232,3 +262,4 @@ class SUtil
 	}
 	#end
 }
+p
