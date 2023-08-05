@@ -1666,7 +1666,7 @@ class FunkinLua {
 	#if (MODS_ALLOWED && !flash && sys)
 	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
 	#end
-        #if mobileC
+        #if mobile
 	public function initLuaShader(name:String, ?glslVersion:Int = 100)
         #else
         public function initLuaShader(name:String, ?glslVersion:Int = 120)
@@ -1719,7 +1719,7 @@ class FunkinLua {
 				}
 			}
 		}
-		#if mobileC trace(#else luaTrace(#end'Missing shader $name .frag AND .vert files!'#if !mobile, false, false, FlxColor.RED#end);
+		#if mobile trace(#else luaTrace(#end'Missing shader $name .frag AND .vert files!'#if !mobile, false, false, FlxColor.RED#end);
 		#else
 		luaTrace('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);
 		#end
