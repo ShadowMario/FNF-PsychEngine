@@ -3208,7 +3208,7 @@ class ChartingState extends MusicBeatState
 
 		if ((data != null) && (data.length > 0))
 		{
-			#if mobile
+			#if mobileC
 			SUtil.saveContent(Paths.formatToSongPath(_song.song), ".json", data.trim());
 			#else
 			_file = new FileReference();
@@ -3239,7 +3239,7 @@ class ChartingState extends MusicBeatState
 
 		if ((data != null) && (data.length > 0))
 		{
-			#if mobile
+			#if mobileC
 			SUtil.saveContent("events", ".json", data.trim());
 			#else
 			_file = new FileReference();

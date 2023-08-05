@@ -109,7 +109,7 @@ class NoteSplashDebugState extends MusicBeatState
 		curAnimText.scrollFactor.set();
 		add(curAnimText);
 
-		#if mobile
+		#if mobileC
 		var text:FlxText = new FlxText(0, 520, FlxG.width,
 			"Press Y to Reset animation\n
 			Press A twice to save to the loaded Note Splash PNG's folder\n
@@ -134,7 +134,7 @@ class NoteSplashDebugState extends MusicBeatState
 		loadFrames();
 		changeSelection();
 		super.create();
-		#if mobile
+		#if mobileC
 		addVirtualPad(NOTE_SPLASH_DEBUG, NOTE_SPLASH_DEBUG);
 		#end
 		FlxG.mouse.visible = true;
@@ -168,13 +168,13 @@ class NoteSplashDebugState extends MusicBeatState
 		{
 			var movex = 0;
 			var movey = 0;
-			if(FlxG.keys.justPressed.LEFT #if mobile || virtualPad.buttonLeft2.justPressed #end) movex = -1;
-			else if(FlxG.keys.justPressed.RIGHT #if mobile || virtualPad.buttonRight2.justPressed #end) movex = 1;
+			if(FlxG.keys.justPressed.LEFT #if mobileC || virtualPad.buttonLeft2.justPressed #end) movex = -1;
+			else if(FlxG.keys.justPressed.RIGHT #if mobileC || virtualPad.buttonRight2.justPressed #end) movex = 1;
 
-			if(FlxG.keys.justPressed.UP #if mobile || virtualPad.buttonUp2.justPressed #end) movey = 1;
-			else if(FlxG.keys.justPressed.DOWN #if mobile || virtualPad.buttonDown2.justPressed #end) movey = -1;
+			if(FlxG.keys.justPressed.UP #if mobileC || virtualPad.buttonUp2.justPressed #end) movey = 1;
+			else if(FlxG.keys.justPressed.DOWN #if mobileC || virtualPad.buttonDown2.justPressed #end) movey = -1;
 			
-			if(FlxG.keys.pressed.SHIFT #if mobile || virtualPad.buttonZ.pressed #end)
+			if(FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonZ.pressed #end)
 			{
 				movex *= 10;
 				movey *= 10;
@@ -309,13 +309,13 @@ class NoteSplashDebugState extends MusicBeatState
 		for (offGroup in config.offsets)
 			strToSave += '\n' + offGroup[0] + ' ' + offGroup[1];
 
-		#if mobile
+		#if mobileC
 		var pathSplit:Array<String> = (Paths.getPath('images/$texturePath.png', IMAGE, true).split('.png')[0] + '.txt').split(':');
 		#else
 		var pathSplit:Array<String> = (Paths.getPath('images/$texturePath.png', IMAGE, true).split('.png')[0]).split(':');
 		#end
 		var path:String = pathSplit[pathSplit.length-1].trim();
-		#if mobile
+		#if mobileC
 		SUtil.saveContent(path, ".txt", strToSave);
 		savedText.text = 'Saved to: ' + SUtil.getPath() + 'saves';
 		#else
@@ -388,7 +388,7 @@ class NoteSplashDebugState extends MusicBeatState
 			curAnim += change;
 			if(curAnim > maxAnims) curAnim = 1;
 			else if(curAnim < 1) curAnim = maxAnims;
-			#if mobile 
+			#if mobileC 
 			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press top up/down to change)';
 			curFrameText.text = 'Force Frame Disabled\n(Press X/E to change)';
 			#else
