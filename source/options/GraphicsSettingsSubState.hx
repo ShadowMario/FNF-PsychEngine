@@ -9,7 +9,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 	#if mobile
 	var platform:String = " phones.";
 	#else
-	var platform:String =  "PCs.";
+	var platform:String = " PCs.";
 	#end
 	public function new()
 	{
