@@ -77,12 +77,6 @@ class SUtil
 		#if mobile
 		if (!FileSystem.exists(SUtil.getPath() +  'assets') && !FileSystem.exists(SUtil.getPath() +  'mods'))
 		{
-			if(FlxG.random.bool(40))
-				{
-			Lib.application.window.alert(CoolUtil.getDaFunni() + "\n W E  A R E\n C O M I N G . . .",
-			'look through the window... =)');
-			LimeSystem.exit(1);
-			} else {
 			Lib.application.window.alert("The game cannot locate any of the needed files.\nPlease try copying the files from the installed .APK into\n" + SUtil.getPath() + "\nIf you already did please review where you put the files.",
 				'Missing Files!');
 				LimeSystem.exit(1);

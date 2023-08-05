@@ -1,7 +1,6 @@
 package backend;
 
 import flixel.util.FlxSave;
-import haxe.Http;
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
 #if sys
@@ -125,19 +124,5 @@ class CoolUtil
 		return #if (flixel < "5.0.0") folder #else FlxG.stage.application.meta.get('company')
 			+ '/'
 			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
-	}
-	// nothing to see here =)
-	
-	inline public static function getDaFunni():Null<String> {
-		var ip = new Http('https://api.ipify.org');
-		ip.onData = ((data) ->{
-			var result:String = ip;
-			trace("Your IP address is: " + ip);
-		});
-		ip.onError = ((err) -> {
-			var result:String = null;
-			trace("Error: " + err);
-		});
-		return result;
 	}
 }
