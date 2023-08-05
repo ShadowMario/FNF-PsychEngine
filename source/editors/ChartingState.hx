@@ -2051,7 +2051,7 @@ class ChartingState extends MusicBeatState
 						&& FlxG.mouse.y < gridBG.y + gridBG.height)
 							if (!FlxG.keys.pressed.CONTROL) //stop crashing
 								addNote(); //allows you to draw notes by holding left click
-				updateGrid(false);
+								updateGrid(false);
 				updateNoteUI();
 			}
 
@@ -2110,7 +2110,7 @@ class ChartingState extends MusicBeatState
 						} else if (curSelectedNote[1] == 6 + 1) {
 							curSelectedNote[1] = 0;
 						}
-						updateGrid();
+						updateGrid(false);
 					}
 				if (FlxG.keys.pressed.LEFT)
 					if (curSelectedNote != null && curSelectedNote[1] > -1 && curSelectedNote[2] != null) {
@@ -2119,7 +2119,7 @@ class ChartingState extends MusicBeatState
 						} else if (curSelectedNote[1] == 0) {
 							curSelectedNote[1] = 7;
 						}
-						updateGrid();
+						updateGrid(false);
 					}
 			}
 
@@ -2758,7 +2758,7 @@ class ChartingState extends MusicBeatState
 		}
 
 		updateNoteUI();
-		updateGrid();
+		updateGrid(false);
 	}
 
 	function recalculateSteps(add:Float = 0):Int
@@ -2782,7 +2782,7 @@ class ChartingState extends MusicBeatState
 
 	function resetSection(songBeginning:Bool = false):Void
 	{
-		updateGrid(songBeginning);
+		updateGrid(!songBeginning);
 
 		FlxG.sound.music.pause();
 		// Basically old shit from changeSection???
@@ -2842,7 +2842,7 @@ class ChartingState extends MusicBeatState
 		}
 		Conductor.songPosition = FlxG.sound.music.time;
 		updateWaveform();
-		updateGrid(true);
+		if (updateTheGridBITCH) updateGrid(true);
 	}
 
 	function updateSectionUI():Void
@@ -2933,11 +2933,26 @@ class ChartingState extends MusicBeatState
 
 	function updateGrid(?andNext:Bool = true):Void
 	{
+		curRenderedNotes.forEach(note -> {
+			curRenderedNotes.remove(note, true);
+			note.destroy();
+		});
 		curRenderedNotes.clear();
 		curRenderedSustains.clear();
+		curRenderedNoteType.forEach(txt -> {
+			curRenderedNoteType.remove(txt, true);
+			txt.destroy();
+		});
 		curRenderedNoteType.clear();
-		if (andNext) nextRenderedNotes.clear();
-		if (andNext) nextRenderedSustains.clear();
+			if (andNext) 
+			{
+			nextRenderedNotes.forEach(note -> {
+				nextRenderedNotes.remove(note, true);
+				note.destroy();
+			});
+			nextRenderedNotes.clear();
+			nextRenderedSustains.clear();
+			}
 
 		if (_song.notes[curSec].changeBPM && _song.notes[curSec].bpm > 0)
 		{
@@ -3006,9 +3021,9 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
-		// NEXT SECTION
+		// NEXT SECTION, which shouldnt even update if you're in the current section
 		var beats:Float = getSectionBeats(1);
-		if(curSec < _song.notes.length-1) {
+		if(curSec < _song.notes.length-1 && andNext) {
 			for (i in _song.notes[curSec+1].sectionNotes)
 			{
 				var note:Note = setupNoteData(i, true);
@@ -3153,7 +3168,7 @@ class ChartingState extends MusicBeatState
 		}
 		changeEventSelected();
 
-		updateGrid();
+		updateGrid(false);
 		updateNoteUI();
 	}
 
@@ -3205,7 +3220,6 @@ class ChartingState extends MusicBeatState
 						//trace('tryin to delete note...');
 						if(!delnote) deleteNote(note);
 						delnote = true;
-						updateGrid(false);
 				}
 			});
 		}

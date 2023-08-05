@@ -1178,6 +1178,42 @@ class PlayState extends MusicBeatState
 		['PERFECT!!!!!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
 	];
 	}
+	if (ClientPrefs.rateNameStuff == 'Psych Quotes')
+	{
+	ratingStuff = [
+		['How are you this bad?', 0.1], //From 0% to 9%
+		['You Suck!', 0.2], //From 10% to 19%
+		['Horribly Shit', 0.3], //From 20% to 29%
+		['Shit', 0.4], //From 30% to 39%
+		['Bad', 0.5], //From 40% to 49%
+		['Bruh', 0.6], //From 50% to 59%
+		['Meh', 0.69], //From 60% to 68%
+		['Nice', 0.7], //69%
+		['Good', 0.8], //From 70% to 79%
+		['Great', 0.9], //From 80% to 89%
+		['Sick!', 1], //From 90% to 99%
+		['Perfect!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
+	];
+	}
+	if (ClientPrefs.rateNameStuff == 'Shaggyverse Quotes')
+	{
+	ratingStuff = [
+		['G - Ruh Rouh!', 0.2], //From 0% to 19%
+		['F - OOF', 0.4], //From 20% to 39%
+		["E - Like, You're Bad", 0.5], //From 40% to 49%
+		['D - Like, how are you still alive?', 0.6], //From 50% to 59%
+		['C - ZOINKS!', 0.69], //From 60% to 68%
+		["Nice - WOW, that's a funny number man!", 0.7], //69%
+		["B - That's like, really cool...", 0.75], //From 70% to 74%
+		["B+ - Hey, man, you're starting to improve!", 0.8], //From 75% to 79%
+		['A - This is a challenge!', 0.85], //From 80% to 84%
+		['AA - Hey Scoob, This kid is good!', 0.9], //From 85% to 90%
+		['S - Like, Thats Good', 0.95], //From 90% to 94%
+		['SS - Like, Thats Great!', 0.99], //From 95% to 98%
+		['SSS - Like, Thats Sick!', 1], //99%
+		['SSSS - Like, WOW', 1] //The value on this one isn't used actually, since Perfect is always "1"
+	];
+	}
 	if (ClientPrefs.rateNameStuff == 'Letters')
 	{
 	ratingStuff = [
@@ -6894,7 +6930,7 @@ class PlayState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.35;
 		//
-		if(ClientPrefs.scoreZoom && !cpuControlled)
+		if(ClientPrefs.scoreZoom && ClientPrefs.hideScore && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {
 				scoreTxtTween.cancel();
@@ -8487,7 +8523,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			strum = playerStrums.members[note.noteData];
 			}
 			if(strum != null) {
-				spawnNoteSplash(strum.x, strum.y, note.noteData, note);
+				spawnNoteSplash(strum.x, strum.y, note.noteData);
 			}
 		}
 	}

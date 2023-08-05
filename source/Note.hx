@@ -188,8 +188,26 @@ class Note extends FlxSprite
 
 		if(noteData > -1) {
 			texture = '';
+			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
+				texture = 'Nonsense_NOTE_assets';
+			}
+			if(ClientPrefs.noteStyleThing == 'DNB 3D') {
+				texture = 'NOTE_assets_3D';
+			}
+			if(ClientPrefs.noteStyleThing == 'VS AGOTI') {
+				texture = 'AGOTINOTE_assets';
+			}
+			if(ClientPrefs.noteStyleThing == 'Doki Doki+') {
+				texture = 'NOTE_assets_doki';
+			}
+			if(ClientPrefs.noteStyleThing == 'TGT V4') {
+				texture = 'TGTNOTE_assets';
+			}
 			colorSwap = new ColorSwap();
 			shader = colorSwap.shader;
+				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
+				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
+				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
 
 			x += swagWidth * (noteData);
 			if(!isSustainNote && noteData > -1 && noteData < 4) { //Doing this 'if' check to fix the warnings on Senpai songs
@@ -263,21 +281,6 @@ class Note extends FlxSprite
 			skin = PlayState.SONG.arrowSkin;
 			if(skin == null || skin.length < 1) {
 				skin = 'NOTE_assets';
-			}
-			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
-				skin = 'Nonsense_NOTE_assets';
-			}
-			if(ClientPrefs.noteStyleThing == 'DNB 3D') {
-				skin = 'NOTE_assets_3D';
-			}
-			if(ClientPrefs.noteStyleThing == 'VS AGOTI') {
-				skin = 'AGOTINOTE_assets';
-			}
-			if(ClientPrefs.noteStyleThing == 'Doki Doki+') {
-				skin = 'NOTE_assets_doki';
-			}
-			if(ClientPrefs.noteStyleThing == 'TGT V4') {
-				skin = 'TGTNOTE_assets';
 			}
 		}
 
