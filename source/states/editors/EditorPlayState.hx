@@ -156,8 +156,8 @@ class EditorPlayState extends MusicBeatSubstate
 		#end
 
 		#if mobileC 
-		MusicBeatState.instance.addMobileControls(false);
-		MusicBeatState.instance.mobileControls.visible = true;
+		addMobileControls(false);
+		mobileControls.visible = true;
 		#end
 
 		RecalculateRating();
@@ -168,7 +168,7 @@ class EditorPlayState extends MusicBeatSubstate
 		if(controls.BACK || FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end)
 		{
 			#if mobileC
-			MusicBeatState.instance.mobileControls.visible = false;
+			mobileControls.visible = false;
 		        controls.isInSubstate = false;
 			#end
 			endSong();
