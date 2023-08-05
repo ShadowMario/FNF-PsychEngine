@@ -146,7 +146,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 		#if (mobileC && !android)
 		addVirtualPad(NONE, B);
-		addVirtualPadCamera(false);
+		addPadCamera(false);
 		#end
 
 		#if mobileC 
