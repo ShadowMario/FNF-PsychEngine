@@ -253,6 +253,7 @@ class Controls
 				}
 				//these functions are used for playstate controls, just ignore them
 				private function mobileCPressed(keys:Array<FlxMobileControlsID>):Bool {
+					if (!isInSubstate){
 				if(keys != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
 				{
@@ -278,8 +279,37 @@ class Controls
 				}
 			}
 			return false;
+		}
+		if (isInSubstate){
+			if(keys != null && MusicBeatSubstate.mobileControls != null){
+				switch (MobileControls.getMode())
+			{
+				case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
+				for (key in keys) {
+					if (MusicBeatSubstate.mobileControls.virtualPad.mobileControlsPressed(key) == true)
+							{
+								controllerMode = true;
+								return true;
+							}
+						}
+				case 4: // HITBOX
+				for (key in keys)
+							{
+								if (MusicBeatSubstate.mobileControls.hitbox.mobileControlsPressed(key) == true)
+								{
+									controllerMode = true;
+									return true;
+								}
+							}
+				case 5: // KEYBOARD
+				return false;
+			}
+		}
+		return false;
+	}
 				}
 				private function mobileCJustPressed(keys:Array<FlxMobileControlsID>):Bool {
+				if (!isInSubstate){
 				if(keys != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
 				{
@@ -306,8 +336,38 @@ class Controls
 				}
 			}
 			return false;
+			}
+			if (isInSubstate){
+				if(keys != null && MusicBeatSubstate.mobileControls != null){
+					switch (MobileControls.getMode())
+				{
+					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
+					for (key in keys)
+							{
+								if (MusicBeatSubstate.mobileControls.virtualPad.mobileControlsJustPressed(key) == true)
+								{
+									controllerMode = true;
+									return true;
+								}
+							}
+					case 4: // HITBOX
+					for (key in keys)
+									{
+										if (MusicBeatSubstate.mobileControls.hitbox.mobileControlsJustPressed(key) == true)
+										{
+											controllerMode = true;
+											return true;
+										}
+									}
+					case 5: // KEYBOARD
+					return false;
+				}
+			}
+			return false;
+			}
 		}
 				private function mobileCJustReleased(keys:Array<FlxMobileControlsID>):Bool {
+				if (!isInSubstate) {
 				if(keys != null && MusicBeatState.instance.mobileControls != null){
 					switch (MobileControls.getMode())
 				{
@@ -334,6 +394,35 @@ class Controls
 				}
 			}
 			return false;
+			}
+			if (isInSubstate) {
+				if(keys != null && MusicBeatSubstate.mobileControls != null){
+					switch (MobileControls.getMode())
+				{
+					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
+					for (key in keys)
+							{
+								if (MusicBeatSubstate.mobileControls.virtualPad.mobileControlsJustReleased(key) == true)
+								{
+									controllerMode = true;
+									return true;
+								}
+							}
+					case 4: // HITBOX
+					for (key in keys)
+									{
+										if (MusicBeatSubstate.mobileControls.hitbox.mobileControlsJustReleased(key) == true)
+										{
+											controllerMode = true;
+											return true;
+										}
+									}
+					case 5: // KEYBOARD
+					return false;
+				}
+			}
+			return false;
+			}
 		}
 	#end
 

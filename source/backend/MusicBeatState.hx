@@ -6,7 +6,6 @@ import flixel.FlxState;
 #if mobileC
 import mobile.MobileControls;
 import mobile.flixel.FlxVirtualPad;
-import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
 #end
 
