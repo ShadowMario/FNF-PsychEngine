@@ -63,6 +63,8 @@ class ControlsSubState extends MusicBeatSubstate
 	public function new()
 	{
 		super();
+		
+		controls.isInSubstate = true;
 
 		options.push([true]);
 		options.push([true]);
@@ -106,7 +108,7 @@ class ControlsSubState extends MusicBeatSubstate
 		add(text);
 
 		#if mobileC
-		addVirtualPad(LEFT_FULL, A_B);
+		addVirtualPad(LEFT_FULL, A_B_C);
 		#end
 
 		createTexts();
@@ -278,6 +280,7 @@ class ControlsSubState extends MusicBeatSubstate
 			if(controls.BACK || FlxG.gamepads.anyJustPressed(B))
 			{
 				#if mobileC
+				controls.isInSubstate = false;
 				FlxTransitionableState.skipNextTransOut = true;
 				FlxG.resetState();
 				#else
@@ -305,8 +308,12 @@ class ControlsSubState extends MusicBeatSubstate
 					bindingText = new Alphabet(FlxG.width / 2, 160, "Rebinding " + options[curOptions[curSelected]][3], false);
 					bindingText.alignment = CENTERED;
 					add(bindingText);
-					
+
+					#if mobileC
+					bindingText2 = new Alphabet(FlxG.width / 2, 340, "Hold B to Cancel\nHold C to Delete", true);
+					#else
 					bindingText2 = new Alphabet(FlxG.width / 2, 340, "Hold ESC to Cancel\nHold Backspace to Delete", true);
+					#end
 					bindingText2.alignment = CENTERED;
 					add(bindingText2);
 
@@ -314,6 +321,9 @@ class ControlsSubState extends MusicBeatSubstate
 					holdingEsc = 0;
 					ClientPrefs.toggleVolumeKeys(false);
 					FlxG.sound.play(Paths.sound('scrollMenu'));
+					/*#if mobileC
+					addVirtualPad(NONE, A_B);
+					#end*/
 				}
 				else
 				{
@@ -341,7 +351,7 @@ class ControlsSubState extends MusicBeatSubstate
 					closeBinding();
 				}
 			}
-			else if (FlxG.keys.pressed.BACKSPACE || FlxG.gamepads.anyPressed(BACK))
+			else if (#if mobileC virtualPad.buttonC.justPressed || #end FlxG.keys.pressed.BACKSPACE || FlxG.gamepads.anyPressed(BACK))
 			{
 				holdingEsc += elapsed;
 				if(holdingEsc > 0.5)
@@ -463,6 +473,10 @@ class ControlsSubState extends MusicBeatSubstate
 		bindingText2.destroy();
 		remove(bindingText2);
 		ClientPrefs.reloadVolumeKeys();
+		
+		/*#if mobileC
+		removeVirtualPad();
+		#end*/
 	}
 
 	function updateText(?move:Int = 0)
