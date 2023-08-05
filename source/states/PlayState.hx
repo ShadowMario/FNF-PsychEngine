@@ -3423,7 +3423,7 @@ class PlayState extends MusicBeatState
 	}
 
 
-        #if mobileC
+        #if mobile
 	public function initLuaShader(name:String, ?glslVersion:Int = 100)
         #else
         public function initLuaShader(name:String, ?glslVersion:Int = 120)

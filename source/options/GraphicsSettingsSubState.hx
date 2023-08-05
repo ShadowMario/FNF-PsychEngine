@@ -6,7 +6,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 {
 	var antialiasingOption:Int;
 	var boyfriend:Character = null;
-	#if mobileC
+	#if mobile
 	var platform:String = " phones.";
 	#else
 	var platform:String =  "PCs.";
