@@ -62,7 +62,9 @@ class FlxHitbox extends FlxSpriteGroup
 		hint.setGraphicSize(Std.int(FlxG.width / 4), FlxG.height);
 		hint.updateHitbox();
 		hint.solid = false;
+		hint.multiTouch = true;
 		hint.immovable = true;
+		hint.moves = false;
 		hint.scrollFactor.set();
 		hint.color = Color;
 		hint.alpha = 0.00001;
