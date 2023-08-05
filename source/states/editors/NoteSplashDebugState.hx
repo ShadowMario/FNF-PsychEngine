@@ -307,9 +307,12 @@ class NoteSplashDebugState extends MusicBeatState
 
 		var pathSplit:Array<String> = (Paths.getPath('images/$texturePath.png', IMAGE, true).split('.png')[0] + '.txt').split(':');
 		var path:String = pathSplit[pathSplit.length-1].trim();
+		#if desktop
 		savedText.text = 'Saved to: $path';
 		sys.io.File.saveContent(path, strToSave);
-
+		#else
+		SUtil.saveContent(path, "", strToSave);
+		#end
 		//trace(strToSave);
 		#else
 		savedText.text = 'Can\'t save on this platform, too bad.';
