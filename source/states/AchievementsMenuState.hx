@@ -1,6 +1,5 @@
 package states;
 
-import backend.Achievements;
 import objects.AttachedAchievement;
 
 class AchievementsMenuState extends MusicBeatState
@@ -28,9 +27,8 @@ class AchievementsMenuState extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-		Achievements.loadAchievements();
 		for (i in 0...Achievements.achievementsStuff.length) {
-			if(!Achievements.achievementsStuff[i][3] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
+			if(!Achievements.achievementsStuff[i][3] || Achievements.isAchievementUnlocked(Achievements.achievementsStuff[i][2])) {
 				options.push(Achievements.achievementsStuff[i]);
 				achievementIndex.push(i);
 			}

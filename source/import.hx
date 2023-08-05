@@ -10,6 +10,10 @@ import llua.*;
 import llua.Lua;
 #end
 
+#if ACHIEVEMENTS_ALLOWED
+import backend.Achievements;
+#end
+
 import backend.Paths;
 import backend.Controls;
 import backend.CoolUtil;

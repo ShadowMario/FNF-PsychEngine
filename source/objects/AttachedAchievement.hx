@@ -1,7 +1,5 @@
 package objects;
 
-import backend.Achievements;
-
 class AttachedAchievement extends FlxSprite {
 	public var sprTracker:FlxSprite;
 	private var tag:String;
