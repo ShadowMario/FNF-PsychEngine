@@ -278,7 +278,6 @@ class Controls
 					return false;
 				}
 			}
-			return false;
 		}
 		if (isInSubstate){
 			if(keys != null && MusicBeatSubstate.mobileControls != null){
@@ -305,9 +304,9 @@ class Controls
 				return false;
 			}
 		}
-		return false;
 	}
-				}
+		return false;
+		}
 				private function mobileCJustPressed(keys:Array<FlxMobileControlsID>):Bool {
 				if (!isInSubstate){
 				if(keys != null && MusicBeatState.instance.mobileControls != null){
@@ -335,7 +334,6 @@ class Controls
 					return false;
 				}
 			}
-			return false;
 			}
 			if (isInSubstate){
 				if(keys != null && MusicBeatSubstate.mobileControls != null){
@@ -361,10 +359,10 @@ class Controls
 									}
 					case 5: // KEYBOARD
 					return false;
+					}
 				}
 			}
-			return false;
-			}
+		return false;
 		}
 				private function mobileCJustReleased(keys:Array<FlxMobileControlsID>):Bool {
 				if (!isInSubstate) {
@@ -393,7 +391,6 @@ class Controls
 					return false;
 				}
 			}
-			return false;
 			}
 			if (isInSubstate) {
 				if(keys != null && MusicBeatSubstate.mobileControls != null){
@@ -419,10 +416,10 @@ class Controls
 									}
 					case 5: // KEYBOARD
 					return false;
+					}
 				}
 			}
-			return false;
-			}
+		return false;
 		}
 	#end
 
