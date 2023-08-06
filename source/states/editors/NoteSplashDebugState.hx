@@ -26,7 +26,9 @@ class NoteSplashDebugState extends MusicBeatState
 	var curAnimText:FlxText;
 	var savedText:FlxText;
 	var selecArr:Array<Float> = null;
+	#if mobileC
 	var idk:Bool = true; // im lazy to remove and add alot so idk
+	#end
 
 	override function create()
 	{
@@ -190,7 +192,7 @@ class NoteSplashDebugState extends MusicBeatState
 		}
 
 		// Copy & Paste
-		#if desktop if(FlxG.keys.pressed.CONTROL) #elseif mobile if(idk) #end
+		#if desktop if(FlxG.keys.pressed.CONTROL) #elseif mobileC if(idk) #end
 		{
 			if(FlxG.keys.justPressed.C #if mobileC || virtualPad.buttonC.justPressed #end)
 			{
