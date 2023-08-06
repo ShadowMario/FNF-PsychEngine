@@ -93,6 +93,7 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.saveSettings();
 
 		#if mobileC
+		FlxTransitionableState.skipNextTransOut = false;
 		addVirtualPad(UP_DOWN, A_B_C);
 		#end
 
