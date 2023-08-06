@@ -93,7 +93,6 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.saveSettings();
 
 		#if mobileC
-		FlxTransitionableState.skipNextTransOut = false;
 		addVirtualPad(UP_DOWN, A_B_C);
 		#end
 
@@ -124,6 +123,8 @@ class OptionsState extends MusicBeatState
 		#end
 
 		if (controls.BACK) {
+			FlxTransitionableState.skipNextTransOut = false;
+			FlxTransitionableState.skipNextTransIn = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			if(onPlayState)
 			{
