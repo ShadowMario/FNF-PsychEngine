@@ -133,10 +133,9 @@ class CharacterEditorState extends MusicBeatState
 		var tipTextArray:Array<String> = "X/Y - Camera Zoom In/Out
 		\nZ - Reset Camera Zoom
 		\nV/D - Previous/Next Animation
-		\nC - Exit
 		\nArrow Keys - Move Character Offset
 		\nA - Reset Current Offset
-		\nHold B to Move 10x faster\n".split('\n');
+		\nHold C to Move 10x faster\n".split('\n');
 		#else
 		var tipTextArray:Array<String> = "E/Q - Camera Zoom In/Out
 		\nR - Reset Camera Zoom
@@ -1048,10 +1047,10 @@ class CharacterEditorState extends MusicBeatState
 			directories.push(Paths.mods(mod + '/characters/'));
 		for (i in 0...directories.length) {
 			var directory:String = directories[i];
-			if(FileSystem.exists(SUtil.getPath() + directory)) {
-				for (file in FileSystem.readDirectory(SUtil.getPath() + directory)) {
+			if(FileSystem.exists(directory)) {
+				for (file in FileSystem.readDirectory(directory)) {
 					var path = haxe.io.Path.join([directory, file]);
-					if (!sys.FileSystem.isDirectory(SUtil.getPath() + path) && file.endsWith('.json')) {
+					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json')) {
 						var charToCheck:String = file.substr(0, file.length - 5);
 						if(!charsLoaded.exists(charToCheck)) {
 							characterList.push(charToCheck);
@@ -1108,7 +1107,7 @@ class CharacterEditorState extends MusicBeatState
 		ClientPrefs.toggleVolumeKeys(true);
 
 		if(!charDropDown.dropPanel.visible) {
-			if (FlxG.keys.justPressed.ESCAPE #if mobileC || virtualPad.buttonC.justPressed #end) {
+			if (FlxG.keys.justPressed.ESCAPE #if mobileC || virtualPad.buttonB.justPressed #end) {
 				if(goToPlayState) {
 					MusicBeatState.switchState(new PlayState());
 				} else {
@@ -1189,7 +1188,7 @@ class CharacterEditorState extends MusicBeatState
 
 				for (i in 0...controlArray.length) {
 					if(controlArray[i]) {
-						var holdShift = FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonB.pressed #end;
+						var holdShift = FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonC.pressed #end;
 						var multiplier = 1;
 						if (holdShift)
 							multiplier = 10;
