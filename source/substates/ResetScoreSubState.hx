@@ -130,8 +130,8 @@ class ResetScoreSubState extends MusicBeatSubstate
 		addVirtualPad(LEFT_RIGHT, A_B);
 		addPadCamera(false);
 		controls.isInSubstate = true;
-		#end
 		}
+		#end
 		super.update(elapsed);
 	}
 

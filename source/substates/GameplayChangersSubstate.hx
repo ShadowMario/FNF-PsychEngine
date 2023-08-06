@@ -322,8 +322,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		addVirtualPad(LEFT_FULL, A_B_C);
 		addPadCamera(false);
 		controls.isInSubstate = true;
-		#end
 		}
+		#end
 		super.update(elapsed);
 	}
 
