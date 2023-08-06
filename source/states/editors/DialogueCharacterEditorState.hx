@@ -37,7 +37,8 @@ class DialogueCharacterEditorState extends MusicBeatState
 	private static var TIP_TEXT_OFFSET:String =
 	'\nX - Reset Camera
 	\nY - Toggle Ghosts
-	\nArrow Keys - Move Idle/Finished animation offset (Blue/Red)
+	\nTop Arrow Keys - Move Looping animation offset (Red)
+	\nBottom Arrow Keys - Move Idle/Finished animation offset (Blue)
 	\nHold Z to move offsets 10x faster';
 	#else
 	private static var TIP_TEXT_MAIN:String =
@@ -162,7 +163,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		updateCharTypeBox();
 		
 		#if mobileC
-		addVirtualPad(LEFT_FULL, DIALOGUE_PORTRAIT_EDITOR);
+		addVirtualPad(DIALOGUE_PORTRAIT_EDITOR, DIALOGUE_PORTRAIT_EDITOR);
 		addPadCamera();
 		#end
 		
@@ -562,7 +563,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			if(UI_mainbox.selected_tab_id == 'Animations' && curSelectedAnim != null && character.dialogueAnimations.exists(curSelectedAnim)) {
 				var moved:Bool = false;
 				var animShit:DialogueAnimArray = character.dialogueAnimations.get(curSelectedAnim);
-				var controlArrayLoop:Array<Bool> = [FlxG.keys.justPressed.A #if mobileC || virtualPad.buttonLeft.justPressed #end, FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonUp.justPressed #end, FlxG.keys.justPressed.D #if mobileC || virtualPad.buttonRight.justPressed #end, FlxG.keys.justPressed.S #if mobileC || virtualPad.buttonDown.justPressed #end];
+				var controlArrayLoop:Array<Bool> = [FlxG.keys.justPressed.A #if mobileC || virtualPad.buttonLeft2.justPressed #end, FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonUp2.justPressed #end, FlxG.keys.justPressed.D #if mobileC || virtualPad.buttonRight2.justPressed #end, FlxG.keys.justPressed.S #if mobileC || virtualPad.buttonDown2.justPressed #end];
 				var controlArrayIdle:Array<Bool> = [FlxG.keys.justPressed.LEFT #if mobileC || virtualPad.buttonLeft.justPressed #end, FlxG.keys.justPressed.UP #if mobileC || virtualPad.buttonUp.justPressed #end, FlxG.keys.justPressed.RIGHT #if mobileC || virtualPad.buttonRight.justPressed #end, FlxG.keys.justPressed.DOWN #if mobileC || virtualPad.buttonDown.justPressed #end];
 				for (i in 0...controlArrayLoop.length) {
 					if(controlArrayLoop[i]) {

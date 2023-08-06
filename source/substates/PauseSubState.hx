@@ -36,7 +36,9 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
+		#if mobileC
 		controls.isInSubstate = true;
+		#end
 
 		if(Difficulty.list.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
@@ -245,7 +247,9 @@ class PauseSubState extends MusicBeatSubstate
 			switch (daSelected)
 			{
 				case "Resume":
+					#if mobileC
 					controls.isInSubstate = false;
+					#end
 					close();
 				case 'Change Difficulty':
 					menuItems = difficultyChoices;
@@ -256,7 +260,9 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
 				case "Restart Song":
+					#if mobileC
 					controls.isInSubstate = false;
+					#end
 					restartSong();
 				#if mobileC
 				case 'Charting Menu':
@@ -265,14 +271,18 @@ class PauseSubState extends MusicBeatSubstate
 					controls.isInSubstate = false;
 				#end
 				case "Leave Charting Mode":
+					#if mobileC
 					controls.isInSubstate = false;
+					#end
 					restartSong();
 					PlayState.chartingMode = false;
 				case 'Skip Time':
 					if(curTime < Conductor.songPosition)
 					{
 						PlayState.startOnTime = curTime;
+						#if mobileC
 						controls.isInSubstate = false;
+						#end
 						restartSong(true);
 					}
 					else
@@ -282,11 +292,15 @@ class PauseSubState extends MusicBeatSubstate
 							PlayState.instance.clearNotesBefore(curTime);
 							PlayState.instance.setSongTime(curTime);
 						}
+						#if mobileC
 						controls.isInSubstate = false;
+						#end
 						close();
 					}
 				case 'End Song':
+					#if mobileC
 					controls.isInSubstate = false;
+					#end
 					close();
 					PlayState.instance.notes.clear();
 					PlayState.instance.unspawnNotes = [];
@@ -298,7 +312,9 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case 'Options':
+					#if mobileC
 					controls.isInSubstate = false;
+					#end
 					PlayState.instance.paused = true; // For lua
 					PlayState.instance.vocals.volume = 0;
 					MusicBeatState.switchState(new OptionsState());
@@ -310,7 +326,9 @@ class PauseSubState extends MusicBeatSubstate
 					}
 					OptionsState.onPlayState = true;
 				case "Exit to menu":
+					#if mobileC
 					controls.isInSubstate = false;
+					#end
 					#if desktop DiscordClient.resetClientID(); #end
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
@@ -328,13 +346,13 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.camera.followLerp = 0;
 			}
 		}
-		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		#if mobileC
+		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		addVirtualPad(UP_DOWN, A);
 		addPadCamera(false);
 		controls.isInSubstate = true;
-		#end
 		}
+		#end
 	}
 
 	function deleteSkipTimeText()

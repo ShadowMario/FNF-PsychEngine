@@ -71,7 +71,9 @@ class EditorPlayState extends MusicBeatSubstate
 	{
 		super();
 
+		#if mobileC
 		controls.isInSubstate = true;
+		#end
 		
 		/* setting up some important data */
 		this.playbackRate = playbackRate;
@@ -169,7 +171,7 @@ class EditorPlayState extends MusicBeatSubstate
 		{
 			#if mobileC
 			MusicBeatSubstate.mobileControls.visible = false;
-		        controls.isInSubstate = false;
+			controls.isInSubstate = false;
 			#end
 			endSong();
 			super.update(elapsed);
