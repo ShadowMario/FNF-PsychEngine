@@ -65,7 +65,7 @@ class OptionsState extends MusicBeatState
 		add(bg);
 
 		#if mobileC
-		tipText = new FlxText(150, FlxG.height - 24, 0, 'Press C to Go In Android Controls Menu', 16);
+		tipText = new FlxText(150, FlxG.height - 24, 0, 'Press C to Go In Mobile Controls Menu', 16);
 		tipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 1.25;
 		tipText.scrollFactor.set();
@@ -93,6 +93,7 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.saveSettings();
 
 		#if mobileC
+		FlxTransitionableState.skipNextTransOut = false;
 		addVirtualPad(UP_DOWN, A_B_C);
 		#end
 
@@ -118,7 +119,7 @@ class OptionsState extends MusicBeatState
 		if (virtualPad.buttonC.justPressed) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
-			MusicBeatState.switchState(new mobile.MobileControlsSubState());
+			openSubState(new mobile.MobileControlsSubState());
 		}
 		#end
 
