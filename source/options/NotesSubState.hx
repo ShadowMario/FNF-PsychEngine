@@ -147,7 +147,11 @@ class NotesSubState extends MusicBeatSubstate
 
 		var tipX = 20;
 		var tipY = 660;
+		#if mobileC
+		var tip:FlxText = new FlxText(tipX, tipY, 0, "Press C to Reset the selected Note Part.", 16);
+		#else
 		var tip:FlxText = new FlxText(tipX, tipY, 0, "Press RELOAD to Reset the selected Note Part.", 16);
+		#end
 		tip.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tip.borderSize = 2;
 		add(tip);
@@ -169,13 +173,17 @@ class NotesSubState extends MusicBeatSubstate
 		_lastControllerMode = controls.controllerMode;
 
 		#if mobileC
-                addVirtualPad(NONE, B);
+                addVirtualPad(NONE, B_C);
                 #end
 	}
 
 	function updateTip()
 	{
+		#if mobileC
+		// do sex
+		#else
 		tipTxt.text = 'Hold ' + (!controls.controllerMode ? 'Shift' : 'Left Shoulder Button') + ' + Press RELOAD to fully reset the selected Note.';
+		#end
 	}
 
 	var _storedColor:FlxColor;
@@ -477,9 +485,9 @@ class NotesSubState extends MusicBeatSubstate
 				}
 			} 
 		}
-		else if(controls.RESET && hexTypeNum < 0)
+		else if(#if mobileC virtulPad.buttonC.justPressed || #end controls.RESET && hexTypeNum < 0)
 		{
-			if(FlxG.keys.pressed.SHIFT || FlxG.gamepads.anyJustPressed(LEFT_SHOULDER))
+			if(/*#if mobileC virtulPad.buttonC.justPressed || #end*/ FlxG.keys.pressed.SHIFT || FlxG.gamepads.anyJustPressed(LEFT_SHOULDER))
 			{
 				for (i in 0...3)
 				{
