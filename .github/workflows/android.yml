@@ -50,6 +50,8 @@ jobs:
           haxelib set hxCodec 2.6.1
           haxelib remove hxCodec 3.0.0
           haxelib remove hxCodec 2.5.1
+      - name: List Haxelibs
+        run: haxelib list
       - name: Configure Android
         run: |
           haxelib run lime setup -alias -y
@@ -154,6 +156,8 @@ jobs:
           haxelib set hxCodec 2.6.1
           haxelib remove hxCodec 3.0.0
           haxelib remove hxCodec 2.5.1
+      - name: List Haxelibs
+        run: haxelib list
       - name: Configure Android
         run: |
           haxelib run lime setup -alias -y
