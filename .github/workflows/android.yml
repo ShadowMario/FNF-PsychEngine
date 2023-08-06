@@ -26,14 +26,12 @@ jobs:
         uses: actions/cache/restore@main
         with:
           path: |
-            ~/haxelib
             ~/.gradle
             export/release/android/haxe
             export/release/android/obj
           key: cache-android-build-gcc
       - name: Installing Libraries
         run: |
-          haxelib remove hxCodec
           haxelib setup ~/haxelib
           haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools
           haxelib install flixel-addons 3.0.2 --quiet
@@ -194,7 +192,6 @@ jobs:
         uses: actions/cache/save@main
         with:
           path: |
-            ~/haxelib
             ~/.gradle
             export/release/android/haxe
             export/release/android/obj
