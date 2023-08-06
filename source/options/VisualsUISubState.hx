@@ -114,7 +114,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('FPS Counter',
-			'If unchecked, the hides FPS Counter.',
+			'If unchecked, hides the FPS Counter.',
 			'showFPS',
 			'bool');
 		addOption(option);
