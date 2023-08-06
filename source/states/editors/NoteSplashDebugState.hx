@@ -111,11 +111,11 @@ class NoteSplashDebugState extends MusicBeatState
 		curAnimText.scrollFactor.set();
 		add(curAnimText);
 
-		#if mobile
+		#if mobileC
 		var text:FlxText = new FlxText(0, 520, FlxG.width,
 			"Press Y to Reset animation\n
 			Press A twice to save to the loaded Note Splash PNG's folder\n
-			Press top left/right to change selected note - Arrow Keys to change offset (Hold shift for 10x)\n
+			Press Top LEFT/RIGHT to change selected note - Arrow Keys to change offset\n
 			C/V - Copy & Paste", 16);
 		#else
 		var text:FlxText = new FlxText(0, 520, FlxG.width,
@@ -136,7 +136,7 @@ class NoteSplashDebugState extends MusicBeatState
 		loadFrames();
 		changeSelection();
 		super.create();
-		#if mobile
+		#if mobileC
 		addVirtualPad(NOTE_SPLASH_DEBUG, NOTE_SPLASH_DEBUG);
 		#end
 		FlxG.mouse.visible = true;
@@ -170,13 +170,13 @@ class NoteSplashDebugState extends MusicBeatState
 		{
 			var movex = 0;
 			var movey = 0;
-			if(FlxG.keys.justPressed.LEFT #if mobile || virtualPad.buttonLeft2.justPressed #end) movex = -1;
-			else if(FlxG.keys.justPressed.RIGHT #if mobile || virtualPad.buttonRight2.justPressed #end) movex = 1;
+			if(FlxG.keys.justPressed.LEFT #if mobileC || virtualPad.buttonLeft2.justPressed #end) movex = -1;
+			else if(FlxG.keys.justPressed.RIGHT #if mobileC || virtualPad.buttonRight2.justPressed #end) movex = 1;
 
-			if(FlxG.keys.justPressed.UP #if mobile || virtualPad.buttonUp2.justPressed #end) movey = 1;
-			else if(FlxG.keys.justPressed.DOWN #if mobile || virtualPad.buttonDown2.justPressed #end) movey = -1;
+			if(FlxG.keys.justPressed.UP #if mobileC || virtualPad.buttonUp2.justPressed #end) movey = 1;
+			else if(FlxG.keys.justPressed.DOWN #if mobileC || virtualPad.buttonDown2.justPressed #end) movey = -1;
 			
-			if(FlxG.keys.pressed.SHIFT #if mobile || virtualPad.buttonZ.pressed #end)
+			if(FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonZ.pressed #end)
 			{
 				movex *= 10;
 				movey *= 10;
@@ -192,7 +192,7 @@ class NoteSplashDebugState extends MusicBeatState
 		}
 
 		// Copy & Paste
-		#if desktop if(FlxG.keys.pressed.CONTROL) #elseif mobileC if(idk) #end
+		if(#if mobileC idk #else FlxG.keys.pressed.CONTROL #end)
 		{
 			if(FlxG.keys.justPressed.C #if mobileC || virtualPad.buttonC.justPressed #end)
 			{
@@ -390,8 +390,8 @@ class NoteSplashDebugState extends MusicBeatState
 			curAnim += change;
 			if(curAnim > maxAnims) curAnim = 1;
 			else if(curAnim < 1) curAnim = maxAnims;
-			#if mobile 
-			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press top up/down to change)';
+			#if mobile C
+			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press Top UP/DOWN to change)';
 			curFrameText.text = 'Force Frame Disabled\n(Press X/E to change)';
 			#else
 			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press W/S to change)';
