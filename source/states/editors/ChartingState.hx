@@ -326,7 +326,7 @@ class ChartingState extends MusicBeatState
 
 		#if mobileC
 		text =
-		"\nUp/Down - Change Conductor's strum time
+		"Up/Down - Change Conductor's strum time
 		\nLeft/Right - Go to the previous/next section
 		\nHold Y to move 4x faster
 		\nZ/D - Zoom in/out

@@ -36,6 +36,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 	public var buttonX:FlxButton = new FlxButton(0, 0);
 	public var buttonY:FlxButton = new FlxButton(0, 0);
 	public var buttonZ:FlxButton = new FlxButton(0, 0);
+	public var buttonP:FlxButton = new FlxButton(0, 0);
 
 	/**
 	 * Create a gamepad.
@@ -161,6 +162,8 @@ class FlxVirtualPad extends FlxSpriteGroup
 				add(buttonA = createButton(FlxG.width - 132, FlxG.height - 135, 132, 127, 'a', 0xFF0000));
 				add(buttonC = createButton(FlxG.width - 132, 125, 132, 127, 'c', 0x44FF00));
 				add(buttonV = createButton(FlxG.width - 258, 125, 132, 127, 'v', 0x49A9B2));
+				case PAUSE:
+				add(buttonP = createButton(0, 0, 132, 127, 'x', 0x99062D));
 			case NONE: // do nothing
 		}
 	}
@@ -189,6 +192,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		buttonX = null;
 		buttonY = null;
 		buttonZ = null;
+		buttonP = null;
 	}
 
 	private function createButton(X:Float, Y:Float, Width:Int, Height:Int, Graphic:String, ?Color:Int = 0xFFFFFF):FlxButton
@@ -383,5 +387,6 @@ enum FlxActionMode
 	DIALOGUE_PORTRAIT_EDITOR;
 	MENU_CHARACTER;
 	NOTE_SPLASH_DEBUG;
+	PAUSE;
 	NONE;
 }
