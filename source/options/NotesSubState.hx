@@ -485,9 +485,9 @@ class NotesSubState extends MusicBeatSubstate
 				}
 			} 
 		}
-		else if(#if mobileC virtulPad.buttonC.justPressed || #end controls.RESET && hexTypeNum < 0)
+		else if(#if mobileC virtualPad.buttonC.justPressed || #end controls.RESET && hexTypeNum < 0)
 		{
-			if(/*#if mobileC virtulPad.buttonC.justPressed || #end*/ FlxG.keys.pressed.SHIFT || FlxG.gamepads.anyJustPressed(LEFT_SHOULDER))
+			if(/*#if mobileC virtualPad.buttonC.justPressed || #end*/ FlxG.keys.pressed.SHIFT || FlxG.gamepads.anyJustPressed(LEFT_SHOULDER))
 			{
 				for (i in 0...3)
 				{
