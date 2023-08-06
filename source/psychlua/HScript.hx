@@ -259,6 +259,8 @@ class HScript extends SScript
 				libName = '';
 
 			var c = Type.resolveClass(str + libName);
+			if (c == null)
+				c = Type.resolveEnum(str + libName);
 
 			#if (SScript >= "3.0.3")
 			if (c != null)
