@@ -146,7 +146,7 @@ class HScript extends SScript
 				if(libPackage.length > 0)
 					str = libPackage + '.';
 
-				var c = Type.resolveClass(str + libName);
+				var c:Dynamic = Type.resolveClass(str + libName);
 				if (c == null)
 					c = Type.resolveEnum(str + libName);
 				set(libName, c);
@@ -277,7 +277,7 @@ class HScript extends SScript
 			else if(libName == null)
 				libName = '';
 
-			var c = Type.resolveClass(str + libName);
+			var c:Dynamic = Type.resolveClass(str + libName);
 			if (c == null)
 				c = Type.resolveEnum(str + libName);
 
