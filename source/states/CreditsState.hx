@@ -45,8 +45,8 @@ class CreditsState extends MusicBeatState
 
 		var defaultList:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
 			['Mobile Porting Team'],
-			['mcagabe19',		                'lily',		                'Porter of Psych Engine Mobile',							'https://www.youtube.com/@mcagabe19',           '7053A5'],
-			['Karim Akra',				'karim',			'Porter/Helper #1 of Psych Engine Mobile',						'https://youtube.com/@Karim0690',		'FFB4F0'],
+			['mcagabe19',		                'lily',		                'Head Porter of Psych Engine Mobile',							'https://www.youtube.com/@mcagabe19',           '7053A5'],
+			['Karim Akra',				'karim',			'Assistant Porter/Helper #1 of Psych Engine Mobile',						'https://youtube.com/@Karim0690',		'FFB4F0'],
 			['MemeHoovy',				'hoovy',			'Helper #2 of Psych Engine Mobile',							'https://twitter.com/meme_hoovy',               'F592C4'],
 			[''],
 			['Psych Engine Team'],
@@ -271,7 +271,7 @@ class CreditsState extends MusicBeatState
 		if(folder != null && folder.trim().length > 0) creditsFile = Paths.mods(folder + '/data/credits.txt');
 		else creditsFile = Paths.mods('data/credits.txt');
 
-		if (FileSystem.exists(SUtil.getPath() + creditsFile))
+		if (FileSystem.exists(creditsFile))
 		{
 			var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
 			for(i in firstarray)
