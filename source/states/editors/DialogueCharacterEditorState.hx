@@ -162,7 +162,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		updateCharTypeBox();
 		
 		#if mobileC
-		addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
+		addVirtualPad(LEFT_FULL, DIALOGUE_PORTRAIT_EDITOR);
 		addPadCamera();
 		#end
 		
