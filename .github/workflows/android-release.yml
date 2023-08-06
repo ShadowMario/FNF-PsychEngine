@@ -216,16 +216,16 @@ jobs:
         uses: actions/download-artifact@v3
         with:
            name: androidBuild-clang
-           path: ~/
+           path: /home/runner
       - name: Rename Clang Build
-        run: mv ~/PsychEngine-release.apk ~/PsychEngine-clang-release.apk
+        run: mv /home/runner/PsychEngine-release.apk /home/runner/PsychEngine-clang-release.apk
       - name: Download Gcc Build
         uses: actions/download-artifact@v3
         with:
            name: androidBuild-gcc
-           path: ~/
+           path: /home/runner
       - name: Rename Gcc Build
-        run: mv ~/PsychEngine-release.apk ~/PsychEngine-gcc-release.apk
+        run: mv /home/runner/PsychEngine-release.apk /home/runner/PsychEngine-gcc-release.apk
       - name: Publish The Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -234,5 +234,5 @@ jobs:
           automatic_release_tag: "0.7.1h-android"
           title: "0.7.1h Android Release"
           files: |
-            ~/PsychEngine-gcc-release.apk
-            ~/PsychEngine-clang-release.apk
+            /home/runner/PsychEngine-gcc-release.apk
+            /home/runner/PsychEngine-clang-release.apk
