@@ -32,7 +32,7 @@ body:
     attributes:
       label: "What is your build target?"
       options:
-        - "Desktop (Linux, Windows or Mac)"
+        - "Desktop (Linux or Windows)"
         - "HTML5/Web"
         - "Android"
         - "iOS"
