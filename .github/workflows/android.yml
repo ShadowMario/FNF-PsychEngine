@@ -26,6 +26,7 @@ jobs:
         uses: actions/cache/restore@main
         with:
           path: |
+            ~/haxelib
             ~/.gradle
             export/release/android/haxe
             export/release/android/obj
@@ -46,6 +47,9 @@ jobs:
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.0.1 --quiet
           # haxelib install tjson 1.4.0 --quiet
+          haxelib set hxCodec 2.6.1
+          haxelib remove hxCodec 3.0.0
+          haxelib remove hxCodec 2.5.1
       - name: Configure Android
         run: |
           haxelib run lime setup -alias -y
@@ -90,6 +94,7 @@ jobs:
         uses: actions/cache/save@main
         with:
           path: |
+            ~/haxelib
             ~/.gradle
             export/release/android/haxe
             export/release/android/obj
@@ -125,6 +130,7 @@ jobs:
         uses: actions/cache/restore@main
         with:
           path: |
+            ~/haxelib
             ~/.gradle
             export/release/android/haxe
             export/release/android/obj
@@ -145,6 +151,9 @@ jobs:
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.0.1 --quiet
           # haxelib install tjson 1.4.0 --quiet
+          haxelib set hxCodec 2.6.1
+          haxelib remove hxCodec 3.0.0
+          haxelib remove hxCodec 2.5.1
       - name: Configure Android
         run: |
           haxelib run lime setup -alias -y
@@ -189,6 +198,7 @@ jobs:
         uses: actions/cache/save@main
         with:
           path: |
+            ~/haxelib
             ~/.gradle
             export/release/android/haxe
             export/release/android/obj
