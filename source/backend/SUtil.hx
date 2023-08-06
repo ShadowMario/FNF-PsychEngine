@@ -227,7 +227,7 @@ class SUtil
 				FileSystem.createDirectory(SUtil.getPath() + 'saves');
 
 			File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
-			Lib.application.window.alert(fileName + "file has been saved", "Success!");
+			Lib.application.window.alert(fileName + " file has been saved", "Success!");
 		}
 		catch (e:Dynamic)
 		{
