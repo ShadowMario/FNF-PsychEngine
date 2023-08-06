@@ -56,9 +56,17 @@ class FlxHitbox extends FlxSpriteGroup
 	{
 		var hintTween:FlxTween = null;
 		var hint:FlxButton = new FlxButton(X, Y);
-		hint.loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/mobile/hitbox.png'),
-			Assets.getText('assets/mobile/hitbox.xml'))
+		var graphicPath:FlxGraphic = Paths.image('mobile/hitbox', 'shared');
+		var textPath:String = Paths.getPath('images/mobile/hitbox.xml', TEXT, "shared", true);
+		#if MODS_ALLOWED
+		hint.loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(graphicPath,
+			textPath)
 			.getByName(Graphic)));
+		#else
+		hint.loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/shared/images/mobile/hitbox.png'),
+			Assets.getText('assets/shared/images/mobile/hitbox.xml'))
+			.getByName(Graphic)));
+		#end
 		hint.setGraphicSize(Std.int(FlxG.width / 4), FlxG.height);
 		hint.updateHitbox();
 		hint.solid = false;

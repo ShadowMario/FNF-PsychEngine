@@ -221,10 +221,10 @@ class FlxVirtualPad extends FlxSpriteGroup
 			FlxPoint.get(Width, Height));
 		#else
 		button.frames = FlxTileFrames.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/mobile/virtualpad.png'),
-			Assets.getText('assets/mobile/virtualpad.xml'))
+			Assets.getText('asset/shared/images/mobile/virtualpad.xml'))
 			.getByName(Graphic),
 			FlxPoint.get(Width, Height));
-			#end
+		#end
 		button.resetSizeFromFrame();
 		button.solid = false;
 		button.immovable = true;
