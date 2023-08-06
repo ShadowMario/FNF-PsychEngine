@@ -190,7 +190,7 @@ class NoteSplashDebugState extends MusicBeatState
 		}
 
 		// Copy & Paste
-		#if desktop if(FlxG.keys.pressed.CONTROL) #elseif moile if(idk) #end
+		#if desktop if(FlxG.keys.pressed.CONTROL) #elseif mobile if(idk) #end
 		{
 			if(FlxG.keys.justPressed.C #if mobileC || virtualPad.buttonC.justPressed #end)
 			{
@@ -199,7 +199,7 @@ class NoteSplashDebugState extends MusicBeatState
 				copiedArray[0] = arr[0];
 				copiedArray[1] = arr[1];
 			}
-			else if((FlxG.keys.justPressed.V #if mobileC || virtualPad.buttonV.justPressed) #end)
+			else if((FlxG.keys.justPressed.V #if mobileC || virtualPad.buttonV.justPressed #end))
 			{
 			if (copiedArray != null){
 				var offs:Array<Float> = selectedArray();

@@ -63,8 +63,10 @@ class ControlsSubState extends MusicBeatSubstate
 	public function new()
 	{
 		super();
-		
+
+		#if mobileC
 		controls.isInSubstate = true;
+		#end
 
 		options.push([true]);
 		options.push([true]);
