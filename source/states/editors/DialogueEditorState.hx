@@ -72,7 +72,11 @@ class DialogueEditorState extends MusicBeatState
 		addEditorBox();
 		FlxG.mouse.visible = true;
 
+		#if mobileC
+		var addLineText:FlxText = new FlxText(10, 10, FlxG.width - 20, 'Press A to remove the current dialogue line, Press X to add another line after the current one.', 8);
+		#else
 		var addLineText:FlxText = new FlxText(10, 10, FlxG.width - 20, 'Press O to remove the current dialogue line, Press P to add another line after the current one.', 8);
+		#end
 		addLineText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		addLineText.scrollFactor.set();
 		add(addLineText);
@@ -349,7 +353,7 @@ class DialogueEditorState extends MusicBeatState
 			}
 			var negaMult:Array<Int> = [1, -1];
 			var controlAnim:Array<Bool> = [FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonUp.justPressed #end, FlxG.keys.justPressed.S #if mobileC || virtualPad.buttonDown.justPressed #end];
-			var controlText:Array<Bool> = [FlxG.keys.justPressed.D #if mobileC || virtualPad.buttonLeft.justPressed #end, FlxG.keys.justPressed.A #if mobileC || virtualPad.buttonRight.justPressed #end];
+			var controlText:Array<Bool> = [FlxG.keys.justPressed.D #if mobileC || virtualPad.buttonRight.justPressed #end, FlxG.keys.justPressed.A #if mobileC || virtualPad.buttonLeft.justPressed #end];
 			for (i in 0...controlAnim.length) {
 				if(controlAnim[i] && character.jsonFile.animations.length > 0) {
 					curAnim -= negaMult[i];
