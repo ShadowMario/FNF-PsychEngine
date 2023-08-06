@@ -208,7 +208,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 	{
 		var button:FlxButton = new FlxButton(X, Y);
 		button.frames = FlxTileFrames.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/mobile/virtualpad.png'),
-			Assets.getText('asset/shared/images/mobile/virtualpad.xml'))
+			Assets.getText('assets/mobile/virtualpad.xml'))
 			.getByName(Graphic),
 			FlxPoint.get(Width, Height));
 		button.resetSizeFromFrame();

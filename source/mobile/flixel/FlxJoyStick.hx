@@ -133,18 +133,10 @@ class FlxJoyStick extends FlxSpriteGroup
 	 */
 	function createBase():Void
 	{
-		var graphicPath:FlxGraphic = Paths.image('mobile/joystick', 'shared');
-		var textPath:String = Paths.getPath('images/mobile/hitbox.xml', TEXT, "shared", true);
-		#if MODS_ALLOWED
-		base = new FlxSprite(0,0).loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(graphicPath,
-			textPath)
-			.getByName('base')));
-		#else
 		base = new FlxSprite(0,
-			0).loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/shared/images/mobile/joystick.png'),
-				Assets.getText('assets/shared/images/mobile/joystick.xml'))
+			0).loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/mobile/joystick.png'),
+				Assets.getText('assets/mobile/joystick.xml'))
 				.getByName('base')));
-		#end
 		base.resetSizeFromFrame();
 		base.x += -base.width * 0.5;
 		base.y += -base.height * 0.5;
