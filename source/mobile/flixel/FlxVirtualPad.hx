@@ -82,9 +82,9 @@ class FlxVirtualPad extends FlxSpriteGroup
 				add(buttonDown2 = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', 0xFF00FFFF));
 			case MENU_CHARACTER:
 				add(buttonUp = createButton(105, 0, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft = createButton(0, FlxG.height - 82, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight = createButton(207, FlxG.height - 82, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown = createButton(105, FlxG.height - 190, 132, 127, 'down', 0xFF00FFFF));
+				add(buttonLeft = createButton(0, 82, 132, 127, 'left', 0xFFFF00FF));
+				add(buttonRight = createButton(207, 82, 132, 127, 'right', 0xFFFF0000));
+				add(buttonDown = createButton(105, 190, 132, 127, 'down', 0xFF00FFFF));
 			case NOTE_SPLASH_DEBUG:
 				add(buttonLeft = createButton(0, 0, 132, 127, 'left', 0xFFFF00FF));
 				add(buttonRight = createButton(127, 0, 132, 127, 'right', 0xFFFF0000));
@@ -92,8 +92,8 @@ class FlxVirtualPad extends FlxSpriteGroup
 				add(buttonDown = createButton(127, 125, 132, 127, 'down', 0xFF00FFFF));
 				add(buttonUp2 = createButton(127, 393, 132, 127, 'up', 0xFF00FF00));
 				add(buttonLeft2 = createButton(0, 393, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight2 = createButton(1150, 393, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown2 = createButton(1025, 393, 132, 127, 'down', 0xFF00FFFF));
+				add(buttonRight2 = createButton(1145, 393, 132, 127, 'right', 0xFFFF0000));
+				add(buttonDown2 = createButton(1015, 393, 132, 127, 'down', 0xFF00FFFF));
 			case NONE: // do nothing
 		}
 
