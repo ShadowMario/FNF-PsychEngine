@@ -408,6 +408,10 @@ class PlayState extends MusicBeatState
 		add(luaDebugGroup);
 		#end
 
+		#if (SScript >= "4.1.0")
+		SScript.defaultClassSupport = null;
+		#end
+
 		// "GLOBAL" SCRIPTS
 		#if LUA_ALLOWED
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'scripts/');
