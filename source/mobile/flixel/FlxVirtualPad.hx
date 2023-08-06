@@ -173,6 +173,9 @@ class FlxVirtualPad extends FlxSpriteGroup
 				add(buttonV = createButton(FlxG.width - 258, 125, 132, 127, 'v', 0x49A9B2));
 			case P:
 				add(buttonP = createButton(FlxG.width - 132, 0, 132, 127, 'x', 0x99062D));
+			case B_C:
+				add(buttonC = createButton(FlxG.width - 258, FlxG.height - 135, 132, 127, 'c', 0x44FF00));
+				add(buttonB = createButton(FlxG.width - 132, FlxG.height - 135, 132, 127, 'b', 0xFFCB00));
 			case NONE: // do nothing
 		}
 	}
@@ -398,5 +401,6 @@ enum FlxActionMode
 	MENU_CHARACTER;
 	NOTE_SPLASH_DEBUG;
 	P;
+	B_C;
 	NONE;
 }
