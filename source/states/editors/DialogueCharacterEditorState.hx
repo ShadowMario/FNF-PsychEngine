@@ -542,7 +542,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			//lots of Ifs lol get trolled
 			var offsetAdd:Int = 1;
 			var speed:Float = 300;
-			if(FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonZ.justPressed #end) {
+			if(FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonZ.pressed #end) {
 				speed = 1200;
 				offsetAdd = 10;
 			}
