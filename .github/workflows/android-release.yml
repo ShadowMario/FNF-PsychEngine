@@ -215,13 +215,13 @@ jobs:
       - name: Download Clang Build
         uses: actions/download-artifact@v3
         with:
-           name: Build-clang
+           name: androidBuild-clang
       - name: Rename Clang Build
         run: mv ~/PsychEngine-release.apk ~/PsychEngine-clang-release.apk
       - name: Download Gcc Build
         uses: actions/download-artifact@v3
         with:
-           name: Build-gcc
+           name: androidBuild-gcc
       - name: Rename Gcc Build
         run: mv ~/PsychEngine-release.apk ~/PsychEngine-gcc-release.apk
       - name: Publish The Release
