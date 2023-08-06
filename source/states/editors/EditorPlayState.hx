@@ -132,7 +132,7 @@ class EditorPlayState extends MusicBeatSubstate
 		#if android
 		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK to Go Back to Chart Editor', 16);
 		#elseif (mobileC && !android)
-		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press B to Go Back to Chart Editor', 16);
+		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press X to Go Back to Chart Editor', 16);
 		#elseif (!mobileC && !android)
 		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press ESC to Go Back to Chart Editor', 16);
 		#end
@@ -153,7 +153,7 @@ class EditorPlayState extends MusicBeatSubstate
 		#end
 
 		#if (mobileC && !android)
-		addVirtualPad(NONE, B);
+		addVirtualPad(NONE, P);
 		addPadCamera(false);
 		#end
 
@@ -167,7 +167,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
-		if(controls.BACK || FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end)
+		if(#if (mobileC && !android) virtualPad.buttonP.justPressed || #end FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end)
 		{
 			#if mobileC
 			MusicBeatSubstate.mobileControls.visible = false;
