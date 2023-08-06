@@ -175,7 +175,7 @@ class ExtraFunctions
 			}
 
 			var path:String = Paths.modFolders(filename);
-			if(FileSystem.exists(SUtil.getPath() + path))
+			if(FileSystem.exists(path))
 			{
 				return true;
 			}
