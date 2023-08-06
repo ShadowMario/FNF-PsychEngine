@@ -80,6 +80,14 @@ class FlxVirtualPad extends FlxSpriteGroup
 				add(buttonLeft2 = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left', 0xFFFF00FF));
 				add(buttonRight2 = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right', 0xFFFF0000));
 				add(buttonDown2 = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', 0xFF00FFFF));
+			case DIALOGUE_PORTRAIT_EDITOR:
+				add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up', 0xFF00FF00));
+				add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left', 0xFFFF00FF));
+				add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right', 0xFFFF0000));
+				add(buttonUp2 = createButton(105, 0, 132, 127, 'up', 0xFF00FF00));
+				add(buttonLeft2 = createButton(0, 82, 132, 127, 'left', 0xFFFF00FF));
+				add(buttonRight2 = createButton(207, 82, 132, 127, 'right', 0xFFFF0000));
+				add(buttonDown2 = createButton(105, 190, 132, 127, 'down', 0xFF00FFFF));
 			case MENU_CHARACTER:
 				add(buttonUp = createButton(105, 0, 132, 127, 'up', 0xFF00FF00));
 				add(buttonLeft = createButton(0, 82, 132, 127, 'left', 0xFFFF00FF));
@@ -364,6 +372,7 @@ enum FlxDPadMode
 	LEFT_FULL;
 	RIGHT_FULL;
 	BOTH_FULL;
+	DIALOGUE_PORTRAIT_EDITOR;
 	MENU_CHARACTER;
 	NOTE_SPLASH_DEBUG;
 	NONE;
