@@ -59,7 +59,7 @@
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
 
-                	<assets path="mobile" rename="assets/shared/images/mobile" if="mobileC" />
+                	<assets path="mobile" rename="assets/mobile" if="mobileC" />
 
 	<assets path="assets/fonts" />
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
