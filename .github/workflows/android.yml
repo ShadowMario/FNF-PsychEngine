@@ -44,7 +44,7 @@ jobs:
           haxelib install flixel-tools 1.5.1 --quiet
           haxelib install flixel-ui 2.5.0 --quiet
           haxelib install flixel 5.2.2 --quiet
-          haxelib install hxCodec 2.5.1 --quiet
+          haxelib install hxCodec 3.0.0 --quiet
           # haxelib install hscript --quiet
           haxelib install hxcpp 4.2.1 --quiet
           haxelib install lime 7.9.0 --quiet
@@ -52,7 +52,9 @@ jobs:
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.0.1 --quiet
           # haxelib install tjson 1.4.0 --quiet
-
+          haxelib set hxCodec 3.0.0
+          haxelib set hxcpp 4.2.1
+          haxelib set lime 7.9.0
       - name: Configure Android
         run: |
           haxelib run lime setup -alias -y
