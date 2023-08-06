@@ -2,9 +2,12 @@
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Mobile Credits:
-* Lily - Porter
-* Karim - Porter #2 (Mostly Helper)
-* Hoovy - Helper
+* Lily - Head Porter
+* Karim - Assistant Porter/Helper #1
+* Hoovy - Helper #2
+
+### Mobile Special Thanks
+* MAJigsaw77 - Author of mobile controls and his FlxRuntimeShader is used here
 
 ## Psych Credits:
 * Shadow Mario - Programmer

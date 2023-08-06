@@ -159,8 +159,8 @@ class NoteSplashDebugState extends MusicBeatState
 
 		if(!notTyping) return;
 		
-		if (FlxG.keys.justPressed.A #if mobileC || virtualPad.buttonLeft2.justPressed #end) changeSelection(-1);
-		else if (FlxG.keys.justPressed.D #if mobileC || virtualPad.buttonRight2.justPressed #end) changeSelection(1);
+		if (FlxG.keys.justPressed.A #if mobileC || virtualPad.buttonUp.justPressed #end) changeSelection(-1);
+		else if (FlxG.keys.justPressed.D #if mobileC || virtualPad.buttonDown.justPressed #end) changeSelection(1);
 
 		if(maxAnims < 1) return;
 
@@ -168,13 +168,13 @@ class NoteSplashDebugState extends MusicBeatState
 		{
 			var movex = 0;
 			var movey = 0;
-			if(FlxG.keys.justPressed.LEFT) movex = -1;
-			else if(FlxG.keys.justPressed.RIGHT) movex = 1;
+			if(FlxG.keys.justPressed.LEFT #if mobile || virtualPad.buttonLeft2.justPressed #end) movex = -1;
+			else if(FlxG.keys.justPressed.RIGHT #if mobile || virtualPad.buttonRight2.justPressed #end) movex = 1;
 
-			if(FlxG.keys.justPressed.UP) movey = 1;
-			else if(FlxG.keys.justPressed.DOWN) movey = -1;
+			if(FlxG.keys.justPressed.UP #if mobile || virtualPad.buttonUp2.justPressed #end) movey = 1;
+			else if(FlxG.keys.justPressed.DOWN #if mobile || virtualPad.buttonDown2.justPressed #end) movey = -1;
 			
-			if(FlxG.keys.pressed.SHIFT)
+			if(FlxG.keys.pressed.SHIFT #if mobile || virtualPad.buttonZ.pressed #end)
 			{
 				movex *= 10;
 				movey *= 10;
@@ -222,7 +222,11 @@ class NoteSplashDebugState extends MusicBeatState
 
 		if(FlxG.keys.justPressed.ENTER #if mobileC || virtualPad.buttonA.justPressed #end)
 		{
-			savedText.text = 'Press ENTER again to save.';
+			#if mobileC
+		        savedText.text = 'Press A again to save.';
+		        #else
+		        savedText.text = 'Press ENTER again to save.';
+		        #end
 			if(pressEnterToSave > 0) //save
 			{
 				saveFile();
@@ -242,7 +246,7 @@ class NoteSplashDebugState extends MusicBeatState
 		if (FlxG.keys.justPressed.SPACE #if mobileC || virtualPad.buttonY.justPressed #end)
 			changeAnim();
 		else if (FlxG.keys.justPressed.S #if mobileC || virtualPad.buttonLeft.justPressed #end) changeAnim(-1);
-		else if (FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonLeft2.justPressed #end) changeAnim(1);
+		else if (FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonRight.justPressed #end) changeAnim(1);
 
 		// Force frame
 		var updatedFrame:Bool = false;
@@ -305,15 +309,20 @@ class NoteSplashDebugState extends MusicBeatState
 		for (offGroup in config.offsets)
 			strToSave += '\n' + offGroup[0] + ' ' + offGroup[1];
 
+		#if mobile
 		var pathSplit:Array<String> = (Paths.getPath('images/$texturePath.png', IMAGE, true).split('.png')[0] + '.txt').split(':');
+		#else
+		var pathSplit:Array<String> = (Paths.getPath('images/$texturePath.png', IMAGE, true).split('.png')[0]).split(':');
+		#end
 		var path:String = pathSplit[pathSplit.length-1].trim();
-		#if desktop
+		#if mobile
+		SUtil.saveContent(path, ".txt", strToSave);
+		savedText.text = 'Saved to: ' + SUtil.getPath() + 'saves';
+		#else
 		savedText.text = 'Saved to: $path';
 		sys.io.File.saveContent(path, strToSave);
-		#else
-		SUtil.saveContent(path, "", strToSave);
-		#end
 		//trace(strToSave);
+		#end
 		#else
 		savedText.text = 'Can\'t save on this platform, too bad.';
 		#end
@@ -380,7 +389,7 @@ class NoteSplashDebugState extends MusicBeatState
 			if(curAnim > maxAnims) curAnim = 1;
 			else if(curAnim < 1) curAnim = maxAnims;
 			#if mobile 
-			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press bottom left/right to change)';
+			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press top up/down to change)';
 			curFrameText.text = 'Force Frame Disabled\n(Press X/E to change)';
 			#else
 			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press W/S to change)';

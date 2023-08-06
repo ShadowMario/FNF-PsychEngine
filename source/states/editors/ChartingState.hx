@@ -324,6 +324,17 @@ class ChartingState extends MusicBeatState
 		UI_box.y = 25;
 		UI_box.scrollFactor.set();
 
+		#if mobileC
+		text =
+		"\nUp/Down - Change Conductor's strum time
+		\nLeft/Right - Go to the previous/next section
+		\nHold Y to move 4x faster
+		\nZ/D - Zoom in/out
+		\n
+		\nC - Test your chart inside Chart Editor
+		\nA - Play your chart
+		\nX - Stop/Resume song";
+		#else
 		text =
 		"W/S or Mouse Wheel - Change Conductor's strum time
 		\nA/D - Go to the previous/next section
@@ -339,6 +350,7 @@ class ChartingState extends MusicBeatState
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
 		\nSpace - Stop/Resume song";
+		#end
 
 		var tipTextArray:Array<String> = text.split('\n');
 		for (i in 0...tipTextArray.length) {
@@ -377,7 +389,7 @@ class ChartingState extends MusicBeatState
 		add(zoomTxt);
 		
 		#if mobileC
-		addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
+		addVirtualPad(LEFT_FULL, A_B_C_D_V_X_Y_Z);
 		#end
 
 		updateGrid();
@@ -440,7 +452,7 @@ class ChartingState extends MusicBeatState
 			var songName:String = Paths.formatToSongPath(_song.song);
 			var file:String = Paths.json(songName + '/events');
 			#if sys
-			if (#if MODS_ALLOWED FileSystem.exists(SUtil.getPath() + Paths.modsJson(songName + '/events')) || #end FileSystem.exists(SUtil.getPath() + file))
+			if (#if MODS_ALLOWED FileSystem.exists(Paths.modsJson(songName + '/events')) || #end FileSystem.exists(file))
 			#else
 			if (OpenFlAssets.exists(file))
 			#end
@@ -504,10 +516,10 @@ class ChartingState extends MusicBeatState
 		#if MODS_ALLOWED
 		for (i in 0...directories.length) {
 			var directory:String = directories[i];
-			if(FileSystem.exists(SUtil.getPath() + directory)) {
-				for (file in FileSystem.readDirectory(SUtil.getPath() + directory)) {
+			if(FileSystem.exists(directory)) {
+				for (file in FileSystem.readDirectory(directory)) {
 					var path = haxe.io.Path.join([directory, file]);
-					if (!FileSystem.isDirectory(SUtil.getPath() + path) && file.endsWith('.json')) {
+					if (!FileSystem.isDirectory(path) && file.endsWith('.json')) {
 						var charToCheck:String = file.substr(0, file.length - 5);
 						if(charToCheck.trim().length > 0 && !charToCheck.endsWith('-dead') && !tempArray.contains(charToCheck)) {
 							tempArray.push(charToCheck);
@@ -563,10 +575,10 @@ class ChartingState extends MusicBeatState
 		#if MODS_ALLOWED
 		for (i in 0...directories.length) {
 			var directory:String = directories[i];
-			if(FileSystem.exists(SUtil.getPath() + directory)) {
-				for (file in FileSystem.readDirectory(SUtil.getPath() + directory)) {
+			if(FileSystem.exists(directory)) {
+				for (file in FileSystem.readDirectory(directory)) {
 					var path = haxe.io.Path.join([directory, file]);
-					if (!FileSystem.isDirectory(SUtil.getPath() + path) && file.endsWith('.json')) {
+					if (!FileSystem.isDirectory(path) && file.endsWith('.json')) {
 						var stageToCheck:String = file.substr(0, file.length - 5);
 						if(stageToCheck.trim().length > 0 && !tempArray.contains(stageToCheck)) {
 							tempArray.push(stageToCheck);
@@ -917,7 +929,7 @@ class ChartingState extends MusicBeatState
 		#if sys
 		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'custom_notetypes/');
 		for (folder in foldersToCheck)
-			for (file in FileSystem.readDirectory(SUtil.getPath() + folder))
+			for (file in FileSystem.readDirectory(folder))
 			{
 				var fileName:String = file.toLowerCase().trim();
 				var wordLen:Int = 4; //length of word ".lua" and ".txt";
@@ -982,10 +994,10 @@ class ChartingState extends MusicBeatState
 
 		for (i in 0...directories.length) {
 			var directory:String =  directories[i];
-			if(FileSystem.exists(SUtil.getPath() + directory)) {
-				for (file in FileSystem.readDirectory(SUtil.getPath() + directory)) {
+			if(FileSystem.exists(directory)) {
+				for (file in FileSystem.readDirectory(directory)) {
 					var path = haxe.io.Path.join([directory, file]);
-					if (!FileSystem.isDirectory(SUtil.getPath() + path) && file != 'readme.txt' && file.endsWith('.txt')) {
+					if (!FileSystem.isDirectory(path) && file != 'readme.txt' && file.endsWith('.txt')) {
 						var fileToCheck:String = file.substr(0, file.length - 4);
 						if(!eventPushedMap.exists(fileToCheck)) {
 							eventPushedMap.set(fileToCheck, true);
@@ -1798,7 +1810,7 @@ class ChartingState extends MusicBeatState
 
 		if (!blockInput)
 		{
-			if (FlxG.keys.justPressed.ESCAPE #if mobileC || virtualPad.buttonB.justPressed #end)
+			if (FlxG.keys.justPressed.ESCAPE #if mobileC || virtualPad.buttonC.justPressed #end)
 			{
 				FlxG.sound.music.pause();
 				if(vocals != null) vocals.pause();
@@ -1834,7 +1846,7 @@ class ChartingState extends MusicBeatState
 			}
 
 
-			if (FlxG.keys.justPressed.BACKSPACE #if android || FlxG.android.justReleased.BACK #end) {
+			if (FlxG.keys.justPressed.BACKSPACE #if mobileC || virtualPad.buttonB.justPressed #end #if android || FlxG.android.justReleased.BACK #end) {
 				// Protect against lost data when quickly leaving the chart editor.
 				autosaveSong();
 				PlayState.chartingMode = false;
@@ -1844,7 +1856,7 @@ class ChartingState extends MusicBeatState
 				return;
 			}
 
-			if(FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL) {
+			if(#if mobileC virtualPad.buttonV.justPressed #else FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL #end) {
 				undo();
 			}
 
@@ -1852,7 +1864,7 @@ class ChartingState extends MusicBeatState
 				--curZoom;
 				updateZoom();
 			}
-			if(FlxG.keys.justPressed.X #if mobileC || virtualPad.buttonC.justPressed #end && curZoom < zoomList.length-1) {
+			if(FlxG.keys.justPressed.X #if mobileC || virtualPad.buttonD.justPressed #end && curZoom < zoomList.length-1) {
 				curZoom++;
 				updateZoom();
 			}
@@ -2220,7 +2232,7 @@ class ChartingState extends MusicBeatState
 		}
 		audioBuffers[0] = null;
 		#if MODS_ALLOWED
-		if(FileSystem.exists(SUtil.getPath() + Paths.modFolders('songs/' + currentSongName + '/Inst.ogg'))) {
+		if(FileSystem.exists(Paths.modFolders('songs/' + currentSongName + '/Inst.ogg'))) {
 			audioBuffers[0] = AudioBuffer.fromFile(Paths.modFolders('songs/' + currentSongName + '/Inst.ogg'));
 			//trace('Custom vocals found');
 		}
@@ -2239,7 +2251,7 @@ class ChartingState extends MusicBeatState
 		}
 		audioBuffers[1] = null;
 		#if MODS_ALLOWED
-		if(FileSystem.exists(SUtil.getPath() + Paths.modFolders('songs/' + currentSongName + '/Voices.ogg'))) {
+		if(FileSystem.exists(Paths.modFolders('songs/' + currentSongName + '/Voices.ogg'))) {
 			audioBuffers[1] = AudioBuffer.fromFile(Paths.modFolders('songs/' + currentSongName + '/Voices.ogg'));
 			//trace('Custom vocals found');
 		} else { #end

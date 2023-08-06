@@ -114,14 +114,14 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('FPS Counter',
-			'If unchecked, hides FPS Counter.',
+			'If unchecked, the hides FPS Counter.',
 			'showFPS',
 			'bool');
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
 		
 		var option:Option = new Option('Pause Screen Song:',
-			"What song do you prefer for the Pause Screen?",
+			"Which song do you prefer for the Pause Screen?",
 			'pauseMusic',
 			'string',
 			['None', 'Breakfast', 'Tea Time']);
@@ -145,7 +145,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		#end
 
 		var option:Option = new Option('Combo Stacking',
-			"If unchecked, Ratings and Combo won't stack, saving on System Memory and making them easier to read",
+			"If unchecked, Ratings and Combo won't stack, saving on System Memory and easier to read",
 			'comboStacking',
 			'bool');
 		addOption(option);
