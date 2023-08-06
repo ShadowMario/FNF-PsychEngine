@@ -22,7 +22,9 @@ class ResetScoreSubState extends MusicBeatSubstate
 	// Week -1 = Freeplay
 	public function new(song:String, difficulty:Int, character:String, week:Int = -1)
 	{
+		#if mobileC
 		controls.isInSubstate = true;
+		#end
 		this.song = song;
 		this.difficulty = difficulty;
 		this.week = week;
@@ -96,7 +98,9 @@ class ResetScoreSubState extends MusicBeatSubstate
 			updateOptions();
 		}
 		if(controls.BACK) {
+			#if mobileC
 			controls.isInSubstate = false;
+			#end
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 			#if mobileC
 			FlxTransitionableState.skipNextTransOut = true;
@@ -113,16 +117,16 @@ class ResetScoreSubState extends MusicBeatSubstate
 				}
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
-			controls.isInSubstate = false;
 			#if mobileC
+			controls.isInSubstate = false;
 			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
 			#else
 			close();
 			#end
 		}
-		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		#if mobileC
+		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		addVirtualPad(LEFT_RIGHT, A_B);
 		addPadCamera(false);
 		controls.isInSubstate = true;

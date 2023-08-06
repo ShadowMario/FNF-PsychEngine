@@ -88,7 +88,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	{
 		super();
 
+		#if mobileC
 		controls.isInSubstate = true;
+		#end
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0.6;
@@ -315,8 +317,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if(nextAccept > 0) {
 			nextAccept -= 1;
 		}
-	        if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		#if mobileC
+		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		addVirtualPad(LEFT_FULL, A_B_C);
 		addPadCamera(false);
 		controls.isInSubstate = true;

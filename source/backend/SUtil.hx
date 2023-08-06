@@ -38,6 +38,8 @@ class SUtil
 		return Context.getExternalFilesDir(null) + '/';
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
+		#else
+		return '';
 		#end
 	}
 
