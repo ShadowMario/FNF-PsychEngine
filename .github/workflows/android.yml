@@ -7,24 +7,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-
       - name: Setup Android NDK
         id: setup-ndk
         uses: nttld/setup-ndk@main
         with:
           ndk-version: r15c
-
       - name: Setup Java JDK
         uses: actions/setup-java@main
         with:
           distribution: 'zulu'
           java-version: '11'
-
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.2.5
-
       - name: Restore Previous Cache
         id: cache-debug-build-android-restore-gcc
         uses: actions/cache/restore@main
@@ -35,7 +31,6 @@ jobs:
             export/release/android/haxe
             export/release/android/obj
           key: cache-android-build-gcc
-
       - name: Installing Libraries
         run: |
           haxelib setup ~/haxelib
@@ -64,13 +59,11 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-
       - name: Compile
         run: haxelib run lime build android -D officialBuild -D NO_PRECOMPILED_HEADERS -D mobileC -release
         env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
-
       - name: Clear Previous Cache
         uses: actions/github-script@main
         with:
@@ -96,7 +89,6 @@ jobs:
             } catch (error) {
             	console.log(error.message);
             }
-
       - name: Save Current Cache
         id: cache-release-build-android-save-gcc
         uses: actions/cache/save@main
@@ -107,7 +99,6 @@ jobs:
             export/release/android/haxe
             export/release/android/obj
           key: cache-android-build-gcc
-
       - name: Upload Artifact
         uses: actions/upload-artifact@main
         with:
@@ -120,24 +111,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-
       - name: Setup Android NDK
         id: setup-ndk
         uses: nttld/setup-ndk@main
         with:
           ndk-version: r21e
-
       - name: Setup Java JDK
         uses: actions/setup-java@main
         with:
           distribution: 'zulu'
           java-version: '11'
-
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.2.5
-
       - name: Restore Previous Cache
         id: cache-debug-build-android-restore-clang
         uses: actions/cache/restore@main
@@ -148,7 +135,6 @@ jobs:
             export/release/android/haxe
             export/release/android/obj
           key: cache-android-build-clang
-
       - name: Installing Libraries
         run: |
           haxelib setup ~/haxelib
@@ -157,7 +143,7 @@ jobs:
           haxelib install flixel-tools 1.5.1 --quiet
           haxelib install flixel-ui 2.5.0 --quiet
           haxelib install flixel 5.2.2 --quiet
-          haxelib install hxCodec 2.5.1 --quiet
+          haxelib install hxCodec 3.0.0 --quiet
           # haxelib install hscript --quiet
           haxelib install hxcpp 4.2.1 --quiet
           haxelib install lime 7.9.0 --quiet
@@ -165,7 +151,9 @@ jobs:
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.0.1 --quiet
           # haxelib install tjson 1.4.0 --quiet
-
+          haxelib set hxCodec 3.0.0
+          haxelib set hxcpp 4.2.1
+          haxelib set lime 7.9.0
       - name: Configure Android
         run: |
           haxelib run lime setup -alias -y
@@ -175,13 +163,11 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-
       - name: Compile
         run: haxelib run lime build android -D officialBuild -D mobileC -release
         env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
-
       - name: Clear Previous Cache
         uses: actions/github-script@main
         with:
@@ -207,7 +193,6 @@ jobs:
             } catch (error) {
             	console.log(error.message);
             }
-
       - name: Save Current Cache
         id: cache-release-build-android-save-clang
         uses: actions/cache/save@main
@@ -218,7 +203,6 @@ jobs:
             export/release/android/haxe
             export/release/android/obj
           key: cache-android-build-clang
-
       - name: Upload Artifact
         uses: actions/upload-artifact@main
         with:
