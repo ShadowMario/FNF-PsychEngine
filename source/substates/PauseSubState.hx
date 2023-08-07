@@ -152,7 +152,7 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			addVirtualPad(UP_DOWN, A);
 		}
-		addVirtualPadCamera(false);
+		addPadCamera(false);
 		#end
 
 		regenMenu();
