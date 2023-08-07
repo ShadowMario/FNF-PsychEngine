@@ -239,8 +239,8 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          automatic_release_tag: "0.7.1h-android"
-          title: "0.7.1h Android Release"
+          automatic_release_tag: "0.7.1h-androidfix"
+          title: "0.7.1h Android Fix"
           files: |
             /home/runner/PsychEngine-gcc-release.apk
             /home/runner/PsychEngine-clang-release.apk
