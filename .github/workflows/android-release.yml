@@ -60,10 +60,12 @@ jobs:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       - name: Compile
         run: haxelib run lime build android -D officialBuild -D NO_PRECOMPILED_HEADERS -D mobileC -release
+        # continue-on-error: true
         env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
       - name: Clear Previous Cache
+        if: ${{ always() }}
         uses: actions/github-script@main
         with:
           script: |
@@ -89,6 +91,7 @@ jobs:
             	console.log(error.message);
             }
       - name: Save Current Cache
+        if: ${{ always() }}
         id: cache-release-build-android-save-gcc
         uses: actions/cache/save@main
         with:
@@ -99,6 +102,7 @@ jobs:
             export/release/android/obj
           key: cache-android-build-gcc
       - name: Upload Artifact
+        if: ${{ success() }}
         uses: actions/upload-artifact@main
         with:
           name: androidBuild-gcc
@@ -163,10 +167,12 @@ jobs:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       - name: Compile
         run: haxelib run lime build android -D officialBuild -D mobileC -release
+        # continue-on-error: true
         env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
       - name: Clear Previous Cache
+        if: ${{ always() }}
         uses: actions/github-script@main
         with:
           script: |
@@ -192,6 +198,7 @@ jobs:
             	console.log(error.message);
             }
       - name: Save Current Cache
+        if: ${{ always() }}
         id: cache-release-build-android-save-clang
         uses: actions/cache/save@main
         with:
@@ -202,6 +209,7 @@ jobs:
             export/release/android/obj
           key: cache-android-build-clang
       - name: Upload Artifact
+        if: success()
         uses: actions/upload-artifact@main
         with:
           name: androidBuild-clang
