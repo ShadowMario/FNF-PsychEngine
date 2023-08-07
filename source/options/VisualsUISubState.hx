@@ -48,6 +48,17 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Max Splashes: ',
+			"How many note splashes should be allowed on screen at the same time?\n(0 means no limit)",
+			'maxSplashLimit',
+			'int',
+			16);
+
+		option.minValue = 0;
+		option.maxValue = 50;
+		option.displayFormat = '%v Splashes';
+		addOption(option);
+
 		var option:Option = new Option('Opponent Note Alpha:',
 			"How visible do you want the opponent's notes to be when Middlescroll is enabled? \n(0% = invisible, 100% = fully visible)",
 			'oppNoteAlpha',
@@ -72,6 +83,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'hideScore',
 			'bool',
 			false);
+		addOption(option);
+
+		var option:Option = new Option('Show Maximum Score',
+			'If checked, the score text will show the highest score you can achieve\nif you were to have 100% accuracy throughout the song.',
+			'showMaxScore',
+			'bool',
+			true);
 		addOption(option);
 
 		var option:Option = new Option('songLength Intro Animation',
@@ -123,12 +141,12 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.displayFormat = '%vX';
 		addOption(option);
 
-		var option:Option = new Option('Rating Name Display:',
+		var option:Option = new Option('Rating Quotes',
 			"What should the rating names display?",
 			'rateNameStuff',
 			'string',
 			'Quotes',
-			['Quotes', 'Letters']);
+			['Quotes', 'Letters', 'Psych Quotes', 'Shaggyverse Quotes']);
 		addOption(option);
 
 		var option:Option = new Option('Golden Sick on MFC/SFC',

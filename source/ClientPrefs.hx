@@ -31,6 +31,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
+	public static var maxSplashLimit:Int = 16;
+	public static var showMaxScore:Bool = true;
 	public static var longHPBar:Bool = false;
 	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
@@ -199,6 +201,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.progAudioLoad = progAudioLoad;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.daMenuMusic = daMenuMusic;
+		FlxG.save.data.maxSplashLimit = maxSplashLimit;
+		FlxG.save.data.showMaxScore = showMaxScore;
 		FlxG.save.data.autosaveInterval = autosaveInterval;
 		FlxG.save.data.autosaveCharts = autosaveCharts;
 		FlxG.save.data.rateNameStuff = rateNameStuff;
@@ -328,6 +332,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.rateNameStuff != null) {
 			rateNameStuff = FlxG.save.data.rateNameStuff;
+		}
+		if(FlxG.save.data.showMaxScore != null) {
+			showMaxScore = FlxG.save.data.showMaxScore;
+		}
+		if(FlxG.save.data.maxSplashLimit != null) {
+			maxSplashLimit = FlxG.save.data.maxSplashLimit;
 		}
 		if(FlxG.save.data.communityGameBot != null) {
 			communityGameBot = FlxG.save.data.communityGameBot;

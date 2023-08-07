@@ -263,6 +263,7 @@ class PlayState extends MusicBeatState
 	public var endingSong:Bool = false;
 	public var startingSong:Bool = false;
 	private var updateTime:Bool = true;
+	private var updateThePercent:Bool = true;
 	public static var changedDifficulty:Bool = false;
 	public static var chartingMode:Bool = false;
 
@@ -364,6 +365,7 @@ class PlayState extends MusicBeatState
 	public var msTimer:FlxTimer = null;
 	public var restartTimer:FlxTimer = null;
 
+	public var maxScore:Int = 0;
 	public var songScore:Float = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
@@ -564,7 +566,7 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(camOther, false);
-		grpNoteSplashes = new FlxTypedGroup<NoteSplash>((4)*3);
+		grpNoteSplashes = new FlxTypedGroup<NoteSplash>((ClientPrefs.maxSplashLimit != 0 ? ClientPrefs.maxSplashLimit : 10000));
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		CustomFadeTransition.nextCamera = camOther;
@@ -1681,8 +1683,9 @@ class PlayState extends MusicBeatState
 		timePercentTxt.alpha = 0;
 		timePercentTxt.borderSize = 2;
 		timePercentTxt.visible = ClientPrefs.songPercentage;
+		updateThePercent = ClientPrefs.songPercentage;
 		if(ClientPrefs.downScroll) timePercentTxt.y = FlxG.height - 44;
-		if (!showTime) timePercentTxt.screenCenter(X);
+		if (ClientPrefs.timeBarType == 'Disabled') timePercentTxt.screenCenter(X);
 		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.x = timeBarBG.x + 600;
 		add(timePercentTxt);
 
@@ -3700,7 +3703,7 @@ class PlayState extends MusicBeatState
 	{
 		if (ClientPrefs.hudType == 'Kade Engine')
 		{
-		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Combo Breaks: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
@@ -3708,7 +3711,7 @@ class PlayState extends MusicBeatState
 		+ ' | ' + ratingFC + ratingCool;
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
-		scoreTxt.text = 'Bot Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = 'Bot Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
 		+ ' | Botplay Mode ';
@@ -3717,13 +3720,13 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.hudType == "Mic'd Up" || ClientPrefs.hudType == 'Box Funkin')
 		{
 		comboTxt.text = "Combo: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo);
-		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore);
+		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '');
 		missTxt.text = "Misses: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses);
 		accuracyTxt.text = "Accuracy: " + Highscore.floorDecimal(ratingPercent * 100, 2) + "% | " + ratingFC + " |" + ratingCool;
 		npsTxt.text = "\nNPS: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS);
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
-		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore);
+		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '');
 		missTxt.text = "Bot Combo: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo);
 		accuracyTxt.text = "Bot NPS: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS);
 		npsTxt.text = "Botplay Mode";
@@ -3731,7 +3734,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == "Doki Doki+")
 		{
-		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Breaks: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
@@ -3739,7 +3742,7 @@ class PlayState extends MusicBeatState
 		+ ' | ' + ratingFC + ratingCool;
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
-		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
 		+ ' | Botplay Mode ';
@@ -3747,7 +3750,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == "Dave & Bambi")
 		{
-		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
@@ -3755,7 +3758,7 @@ class PlayState extends MusicBeatState
 		+ ' | ' + ratingFC;
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
-		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' +  (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
 		+ ' | Botplay Mode ';
@@ -3763,7 +3766,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == "Psych Engine")
 		{
-		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
@@ -3771,7 +3774,7 @@ class PlayState extends MusicBeatState
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
-		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
 		+ ' | funny botplay mode!!!!!';
@@ -3779,7 +3782,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == "JS Engine")
 		{
-		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
@@ -3819,7 +3822,7 @@ class PlayState extends MusicBeatState
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
-		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
 		+ ' | funny botplay mode!!!!';
@@ -3827,7 +3830,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == "VS Impostor")
 		{
-		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Combo Breaks: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
@@ -3835,7 +3838,7 @@ class PlayState extends MusicBeatState
 		+ ratingFC;
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
-		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
 		+ ' | Botplay Mode';
@@ -4238,6 +4241,7 @@ class PlayState extends MusicBeatState
 
 		unspawnNotes.sort(sortByTime);
 		generatedMusic = true;
+		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
 	}
 	private function generateSongOptim(dataPath:String):Void
 	{
@@ -5452,16 +5456,25 @@ class PlayState extends MusicBeatState
 					if(ClientPrefs.timeBarType == 'Song Name + Time' && songLength >= 3600000)
 						timeTxt.text = SONG.song + ' (' + hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining + ' / ' + hoursShown + ':' + minutesShownShit + ':' + secondsShown + ')';
 
+					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType != 'Song Name') timeTxt.text += ' (' + playbackRateDecimal + 'x)';
+					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType == 'Song Name') timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x)';
+		if (cpuControlled && ClientPrefs.timeBarType != 'Song Name' && !ClientPrefs.communityGameBot) timeTxt.text += ' (Bot)';
+					if(ClientPrefs.timebarShowSpeed && cpuControlled && ClientPrefs.timeBarType == 'Song Name') timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x) (Bot)';
+				}
+			}
+
+				if(updateThePercent) {
+					var curTime:Float = Conductor.songPosition - ClientPrefs.noteOffset;
+					if(curTime < 0) curTime = 0;
+					songPercent = (curTime / songLength);
+					songPercentThing = FlxMath.roundDecimal(curTime / songLength * 100, ClientPrefs.percentDecimals);
 					if (ClientPrefs.hudType != 'Kade Engine' && ClientPrefs.hudType != 'Dave & Bambi')
 					{
 					timePercentTxt.text = songPercentThing  + '% Completed';
 					}
 					else
+					{
 					timePercentTxt.text = songPercentThing  + '%';
-					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType != 'Song Name') timeTxt.text += ' (' + playbackRateDecimal + 'x)';
-					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType == 'Song Name') timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x)';
-		if (cpuControlled && ClientPrefs.timeBarType != 'Song Name' && !ClientPrefs.communityGameBot) timeTxt.text += ' (Bot)';
-					if(ClientPrefs.timebarShowSpeed && cpuControlled && ClientPrefs.timeBarType == 'Song Name') timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x) (Bot)';
 				}
 			}
 
@@ -6946,6 +6959,8 @@ class PlayState extends MusicBeatState
 
 		var rating:FlxSprite = new FlxSprite();
 		var score:Float = 500 * polyphony;
+
+		if (noteDiff > ClientPrefs.marvWindow && noteDiff < ClientPrefs.sickWindow && !ClientPrefs.noMarvJudge) maxScore -= 150 * Std.int(polyphony); //if you enable marvelous judges and hit a sick, lower the max score by 150 points. otherwise it won't make sense
 
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
