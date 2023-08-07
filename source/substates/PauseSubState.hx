@@ -144,8 +144,15 @@ class PauseSubState extends MusicBeatSubstate
 		add(missingText);
 
 		#if mobileC
-		addVirtualPad(UP_DOWN, A);
-		addPadCamera(false);
+		if (PlayState.chartingMode)
+		{
+			addVirtualPad(LEFT_FULL, A);
+		}
+		else
+		{
+			addVirtualPad(UP_DOWN, A);
+		}
+		addVirtualPadCamera(false);
 		#end
 
 		regenMenu();
