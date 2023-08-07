@@ -47,6 +47,8 @@ jobs:
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.1.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
+          haxelib set SScript 4.1.0
+          haxelib remove SScript 4.0.1
       - name: List Haxelibs
         run: haxelib list
       - name: Configure Android
@@ -153,6 +155,8 @@ jobs:
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.1.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
+          haxelib set SScript 4.1.0
+          haxelib remove SScript 4.0.1
       - name: List Haxelibs
         run: haxelib list
       - name: Configure Android
