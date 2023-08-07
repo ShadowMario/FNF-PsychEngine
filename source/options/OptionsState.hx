@@ -44,6 +44,8 @@ class OptionsState extends MusicBeatState
 				/*#if mobileC
 				removeVirtualPad();
 				#end*/
+				FlxTransitionableState.skipNextTransIn = false;
+				FlxTransitionableState.skipNextTransOut = false;
 				MusicBeatState.switchState(new options.NoteOffsetState());
 		}
 	}
