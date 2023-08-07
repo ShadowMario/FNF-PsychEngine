@@ -192,7 +192,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader float property $name not found.');
+			FlxG.log.warn('Shader float property "$name" not found.');
 			return;
 		}
 
@@ -210,7 +210,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader float property $name not found.');
+			FlxG.log.warn('Shader float property "$name" not found.');
 			return null;
 		}
 
@@ -229,7 +229,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader float[] property $name not found.');
+			FlxG.log.warn('Shader float[] property "$name" not found.');
 			return;
 		}
 
@@ -247,7 +247,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader float[] property $name not found.');
+			FlxG.log.warn('Shader float[] property "$name" not found.');
 			return null;
 		}
 
@@ -266,7 +266,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader int property $name not found.');
+			FlxG.log.warn('Shader int property "$name" not found.');
 			return;
 		}
 
@@ -284,7 +284,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader int property $name not found.');
+			FlxG.log.warn('Shader int property "$name" not found.');
 			return null;
 		}
 
@@ -303,7 +303,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader int[] property $name not found.');
+			FlxG.log.warn('Shader int[] property "$name" not found.');
 			return;
 		}
 
@@ -321,7 +321,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader int[] property $name not found.');
+			FlxG.log.warn('Shader int[] property "$name" not found.');
 			return null;
 		}
 
@@ -340,7 +340,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader bool property $name not found.');
+			FlxG.log.warn('Shader bool property "$name" not found.');
 			return;
 		}
 
@@ -358,7 +358,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader bool property $name not found.');
+			FlxG.log.warn('Shader bool property "$name" not found.');
 			return null;
 		}
 
@@ -377,7 +377,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader bool[] property $name not found.');
+			FlxG.log.warn('Shader bool[] property "$name" not found.');
 			return;
 		}
 
@@ -395,7 +395,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader bool[] property $name not found.');
+			FlxG.log.warn('Shader bool[] property "$name" not found.');
 			return null;
 		}
 
@@ -414,7 +414,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader sampler2D property $name not found.');
+			FlxG.log.warn('Shader sampler2D property "$name" not found.');
 			return;
 		}
 
@@ -433,7 +433,7 @@ class FlxRuntimeShader extends FlxGraphicsShader
 
 		if (prop == null)
 		{
-			FlxG.log.warn('Shader sampler2D property $name not found.');
+			FlxG.log.warn('Shader sampler2D property "$name" not found.');
 			return null;
 		}
 
