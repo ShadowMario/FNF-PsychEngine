@@ -11,7 +11,7 @@ jobs:
         id: setup-ndk
         uses: nttld/setup-ndk@main
         with:
-          ndk-version: r16b
+          ndk-version: r15c
       - name: Setup Java JDK
         uses: actions/setup-java@main
         with:
@@ -20,7 +20,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.1
+          haxe-version: 4.2.5
       - name: Restore Previous Cache
         id: cache-debug-build-android-restore-gcc
         uses: actions/cache/restore@main
@@ -118,7 +118,7 @@ jobs:
         id: setup-ndk
         uses: nttld/setup-ndk@main
         with:
-          ndk-version: r25c
+          ndk-version: r21e
       - name: Setup Java JDK
         uses: actions/setup-java@main
         with:
@@ -127,7 +127,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.1
+          haxe-version: 4.2.5
       - name: Restore Previous Cache
         id: cache-debug-build-android-restore-clang
         uses: actions/cache/restore@main
@@ -148,7 +148,7 @@ jobs:
           haxelib install flixel 5.2.2 --quiet
           haxelib git hxCodec https://github.com/mcagabe19/hxCodec
           # haxelib install hscript --quiet
-          haxelib install hxcpp 4.3.2 --quiet
+          haxelib install hxcpp 4.2.1 --quiet
           haxelib install lime 7.9.0 --quiet
           haxelib git linc_luajit https://github.com/mcagabe19/linc_luajit
           haxelib install openfl 9.2.1 --quiet
