@@ -11,7 +11,7 @@ jobs:
         id: setup-ndk
         uses: nttld/setup-ndk@main
         with:
-          ndk-version: r15c
+          ndk-version: r16b
       - name: Setup Java JDK
         uses: actions/setup-java@main
         with:
