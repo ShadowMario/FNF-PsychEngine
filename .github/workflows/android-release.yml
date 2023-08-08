@@ -238,9 +238,9 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          automatic_release_tag: "0.7.1h-androidfix"
-          title: "0.7.1h Android Fix"
+          prerelease: true
+          automatic_release_tag: "0.7.1h-beta3"
+          title: "0.7.1h Android Beta 3"
           files: |
             /home/runner/PsychEngine-gcc-release.apk
             /home/runner/PsychEngine-clang-release.apk
