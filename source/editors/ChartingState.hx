@@ -2933,10 +2933,16 @@ class ChartingState extends MusicBeatState
 
 	function updateGrid(?andNext:Bool = true):Void
 	{
-		curRenderedNotes.forEach(note -> {
-			curRenderedNotes.remove(note, true);
-			note.destroy();
-		});
+		//classic fnf styled grid updating
+		while (curRenderedNotes.members.length > 0)
+		{
+			curRenderedNotes.remove(curRenderedNotes.members[0], true);
+		}
+
+		while (curRenderedSustains.members.length > 0)
+		{
+			curRenderedSustains.remove(curRenderedSustains.members[0], true);
+		}
 		curRenderedNotes.clear();
 		curRenderedSustains.clear();
 		curRenderedNoteType.forEach(txt -> {
@@ -2946,9 +2952,9 @@ class ChartingState extends MusicBeatState
 		curRenderedNoteType.clear();
 			if (andNext) 
 			{
-			nextRenderedNotes.forEach(note -> {
-				nextRenderedNotes.remove(note, true);
-				note.destroy();
+			nextRenderedNotes.forEach(TheNoteThatShouldBeKilledBecauseWeDontNeedIt -> {
+				nextRenderedNotes.remove(TheNoteThatShouldBeKilledBecauseWeDontNeedIt, true);
+				TheNoteThatShouldBeKilledBecauseWeDontNeedIt.destroy();
 			});
 			nextRenderedNotes.clear();
 			nextRenderedSustains.clear();

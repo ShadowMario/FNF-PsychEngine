@@ -79,6 +79,13 @@ class OptimizationSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Load Songs',
+			"If unchecked, PlayState songs won't be loaded.\n(Breaks a few of the Visuals & UI things, so be careful!)",
+			'songLoading',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Even LESS Botplay Lag',
 			"Reduce Botplay lag even further.",
 			'lessBotLag',

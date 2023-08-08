@@ -105,7 +105,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
-
 		var option:Option = new Option('Compact UI Numbers',
 			'If checked, Score, combo, misses and NPS will be compact.',
 			'compactNumbers',
@@ -439,6 +438,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+
+		var option:Option = new Option('NPS with Speed in Mind',
+			"If unchecked, the NPS won't have Playback Rate in mind.\n(Pretty dumb option to add, if you ask me!\nThat's why this is in the bottom of the Visuals & UI menu!)",
+			'npsWithSpeed',
+			'bool',
+			true);
+		addOption(option);
+
 
 		super();
 	}

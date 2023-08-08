@@ -51,6 +51,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var camZooms:Bool = true;
 	public static var showNotes:Bool = true;
 	public static var doubleGhost:Bool = true;
+	public static var songLoading:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var hideScore:Bool = false;
 	public static var compactNumbers:Bool = false;
@@ -75,6 +76,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var memLeaks:Bool = false;
 	public static var noPausing:Bool = false;
 	public static var doubleGhostZoom:Bool = true;
+	public static var npsWithSpeed:Bool = true;
 	public static var moreSpecificSpeed:Bool = true;
 	public static var lengthIntro:Bool = true;
 	public static var opponentRateCount:Bool = true;
@@ -192,6 +194,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.oppNoteSplashes = oppNoteSplashes;
+		FlxG.save.data.songLoading = songLoading;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.shaders = shaders;
 		FlxG.save.data.evenLessBotLag = evenLessBotLag;
@@ -254,6 +257,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.longHPBar = longHPBar;
 		FlxG.save.data.moreMaxHP = moreMaxHP;
+		FlxG.save.data.npsWithSpeed = npsWithSpeed;
 		FlxG.save.data.timebarShowSpeed = timebarShowSpeed;
 		FlxG.save.data.trollMaxSpeed = trollMaxSpeed;
 		FlxG.save.data.smoothHealthType = smoothHealthType;
@@ -345,6 +349,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.cameraPanning != null) {
 			cameraPanning = FlxG.save.data.cameraPanning;
 		}
+		if(FlxG.save.data.songLoading != null) {
+			songLoading = FlxG.save.data.songLoading;
+		}
 		if(FlxG.save.data.panIntensity != null) {
 			panIntensity = FlxG.save.data.panIntensity;
 		}
@@ -368,6 +375,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.compactNumbers != null) {
 			compactNumbers = FlxG.save.data.compactNumbers;
+		}
+		if(FlxG.save.data.npsWithSpeed != null) {
+			npsWithSpeed = FlxG.save.data.npsWithSpeed;
 		}
 		if(FlxG.save.data.cacheOnGPU != null) {
 			cacheOnGPU = FlxG.save.data.cacheOnGPU;
