@@ -6631,12 +6631,14 @@ class PlayState extends MusicBeatState
 		{
 		Conductor.songPosition = 0; //so that it doesnt skip the results screen
 		if (ClientPrefs.skipResultsScreen) endedTheSong = true;
+		if (!ClientPrefs.skipResultsScreen) {
 		new FlxTimer().start(0.02, function(tmr:FlxTimer) {
 			endedTheSong = true;
 		});
 		persistentUpdate = false;
 		persistentDraw = true;
 		paused = true;
+		}
 		openSubState(new ResultsScreenSubstate());
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
