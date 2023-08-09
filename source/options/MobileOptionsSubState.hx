@@ -1,6 +1,6 @@
 package options;
 
-class MobileOptions extends BaseOptionsMenu
+class MobileOptionsSubState extends BaseOptionsMenu
 {
 	public function new()
 	{
