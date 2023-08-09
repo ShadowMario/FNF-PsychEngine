@@ -1556,17 +1556,21 @@ class PlayState extends MusicBeatState
 
 	override public function onFocus():Void
 	{
+		callOnScripts('onFocus');
 		if (health > 0 && !paused) resetRPC(Conductor.songPosition > 0.0);
-		super.onFocus();
-	}
 
-	override public function onFocusLost():Void
+		super.onFocus();
+		callOnScripts('onFocusPost');
+
+        override public function onFocusLost():Void
 	{
+		callOnScripts('onFocusLost');
 		#if desktop
 		if (health > 0 && !paused) DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
 
 		super.onFocusLost();
+		callOnScripts('onFocusLostPost');
 	}
 
 	// Updating Discord Rich Presence.
@@ -1685,7 +1689,7 @@ class PlayState extends MusicBeatState
 			var songCalc:Float = (songLength - curTime);
 			if(ClientPrefs.data.timeBarType == 'Time Elapsed') songCalc = curTime;
 
-			var secondsTotal:Int = Math.floor(songCalc / 1000);
+			var secondsTotal:Int = Math.floor((songCalc/playbackRate) / 1000);
 			if(secondsTotal < 0) secondsTotal = 0;
 
 			if(ClientPrefs.data.timeBarType != 'Song Name')

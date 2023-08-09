@@ -3,6 +3,7 @@ package psychlua;
 import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
+import backend.Difficulty; // literally only used for loadSong
 import openfl.Lib;
 import openfl.utils.Assets;
 import openfl.display.BitmapData;
@@ -418,11 +419,10 @@ class FunkinLua {
 			return false;
 		});
 
-		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
-			if(name == null || name.length < 1)
-				name = PlayState.SONG.song;
-			if (difficultyNum == -1)
-				difficultyNum = PlayState.storyDifficulty;
+		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1, ?difficultyArray:Array<String> = null) {
+			if (difficultyArray != null) Difficulty.list = difficultyArray; // 😎
+			if (name == null || name.length < 1) name = PlayState.SONG.song;
+			if (difficultyNum == -1) difficultyNum = PlayState.storyDifficulty;
 
 			var poop = Highscore.formatSong(name, difficultyNum);
 			PlayState.SONG = Song.loadFromJson(poop, name);
