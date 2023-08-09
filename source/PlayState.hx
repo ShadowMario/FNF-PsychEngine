@@ -9,6 +9,7 @@ import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
+import ResultsScreenSubstate;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxObject;
@@ -3907,9 +3908,10 @@ class PlayState extends MusicBeatState
 
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
-
-		if (ClientPrefs.songLoading) FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
-		if (ClientPrefs.songLoading) FlxG.sound.music.pitch = playbackRate;
+		if (ClientPrefs.songLoading)
+		{
+		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+		FlxG.sound.music.pitch = playbackRate;
 		if (SONG.song.toLowerCase() == 'anti-cheat-song') 
 		{
 		FlxG.sound.music.onComplete = infiniteLoop.bind();
@@ -3947,6 +3949,7 @@ class PlayState extends MusicBeatState
 		FlxG.sound.music.onComplete = loopSongNoLimit.bind();
 		}
 		vocals.play();
+		}
 
 		if(startOnTime > 0)
 		{
@@ -3956,8 +3959,11 @@ class PlayState extends MusicBeatState
 
 		if(paused) {
 			//trace('Oopsie doopsie! Paused sound');
+			if (ClientPrefs.songLoading)
+			{
 			FlxG.sound.music.pause();
 			vocals.pause();
+			}
 		}
 		var curTime:Float = Conductor.songPosition - ClientPrefs.noteOffset;
 		songPercent = (curTime / songLength);
@@ -4255,11 +4261,13 @@ class PlayState extends MusicBeatState
 
 		Conductor.changeBPM(SONG.bpm);
 		curSong = SONG.song;
-
-		vocals = ClientPrefs.songLoading ? (SONG.needsVoices ? new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song)) : new FlxSound()) : new FlxSound();
-		if (ClientPrefs.songLoading) vocals.pitch = playbackRate;
-		if (ClientPrefs.songLoading) FlxG.sound.list.add(vocals);
-		if (ClientPrefs.songLoading) FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
+		if (ClientPrefs.songLoading)
+		{
+		vocals = (SONG.needsVoices ? new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song)) : new FlxSound());
+		vocals.pitch = playbackRate;
+		FlxG.sound.list.add(vocals);
+		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
+		}
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -4397,7 +4405,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
-	private function generateTrollSongShit(dataPath:String):Void
+	private function generateTrollSongShit(dataPath:String):Void //basically generateSong but without reloading event notes
 	{
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
@@ -4635,8 +4643,10 @@ class PlayState extends MusicBeatState
 		{
 			if (FlxG.sound.music != null)
 			{
+				if (ClientPrefs.songLoading) {
 				FlxG.sound.music.pause();
 				vocals.pause();
+				}
 			}
 
 			if (startTimer != null && !startTimer.finished)
@@ -5737,7 +5747,7 @@ class PlayState extends MusicBeatState
 			MusicBeatState.switchState(new GitarooPause());
 		}
 		else {*/
-		if(FlxG.sound.music != null) {
+		if(FlxG.sound.music != null && ClientPrefs.songLoading) {
 			FlxG.sound.music.pause();
 			vocals.pause();
 		}
@@ -6614,8 +6624,20 @@ class PlayState extends MusicBeatState
 
 
 	public var transitioning = false;
+	public var endedTheSong = false;
 	public function endSong():Void
-	{		
+	{
+		if (!endedTheSong)	
+		{
+		Conductor.songPosition = 0; //so that it doesnt skip the results screen
+		if (ClientPrefs.skipResultsScreen) endedTheSong = true;
+		new FlxTimer().start(0.02, function(tmr:FlxTimer) {
+			endedTheSong = true;
+		});
+		persistentUpdate = false;
+		persistentDraw = true;
+		paused = true;
+		openSubState(new ResultsScreenSubstate());
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
@@ -6634,7 +6656,9 @@ class PlayState extends MusicBeatState
 				return;
 			}
 		}
-
+		}
+		if (endedTheSong)
+		{
 		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
@@ -6766,6 +6790,7 @@ class PlayState extends MusicBeatState
 			}
 			transitioning = true;
 		}
+	}
 	}
 
 	#if ACHIEVEMENTS_ALLOWED
@@ -8044,8 +8069,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		{
 		oppNotesHitArray.unshift(Date.now());
 		enemyHits += 1 * polyphony;
-			note.kill();
-			notes.remove(note, true);
 			note.destroy();
 		}
 	}
@@ -8224,8 +8247,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				note.wasGoodHit = true;
 				if (!note.isSustainNote)
 				{
-					note.kill();
-					notes.remove(note, true);
 					note.destroy();
 				}
 				return;
@@ -8447,7 +8468,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 			}
 			note.wasGoodHit = true;
-			vocals.volume = 1;
+			if (ClientPrefs.songLoading) vocals.volume = 1;
 
 			var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
 			var leData:Int = Math.round(Math.abs(note.noteData));

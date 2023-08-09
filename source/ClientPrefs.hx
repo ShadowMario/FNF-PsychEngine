@@ -81,6 +81,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var lengthIntro:Bool = true;
 	public static var opponentRateCount:Bool = true;
 	public static var coolGameplay:Bool = false;
+	public static var skipResultsScreen:Bool = false;
 	public static var hudType:String = 'Kade Engine';
 	public static var smoothHealth:Bool = true;
 	public static var smoothHealthType:String = 'Golden Apple 1.5';
@@ -212,6 +213,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.fasterChartLoad = fasterChartLoad;
 		FlxG.save.data.longFCName = longFCName;
 		FlxG.save.data.showNotes = showNotes;
+		FlxG.save.data.skipResultsScreen = skipResultsScreen;
 		FlxG.save.data.accuracyMod = accuracyMod;
 		FlxG.save.data.healthDisplay = healthDisplay;
 		FlxG.save.data.wrongCameras = wrongCameras;
@@ -378,6 +380,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.npsWithSpeed != null) {
 			npsWithSpeed = FlxG.save.data.npsWithSpeed;
+		}
+		if(FlxG.save.data.skipResultsScreen != null) {
+			skipResultsScreen = FlxG.save.data.skipResultsScreen;
 		}
 		if(FlxG.save.data.cacheOnGPU != null) {
 			cacheOnGPU = FlxG.save.data.cacheOnGPU;
