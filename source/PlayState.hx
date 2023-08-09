@@ -6630,7 +6630,17 @@ class PlayState extends MusicBeatState
 		if (!endedTheSong)	
 		{
 		Conductor.songPosition = 0; //so that it doesnt skip the results screen
-		if (ClientPrefs.skipResultsScreen) endedTheSong = true;
+		if (ClientPrefs.skipResultsScreen) {
+		endedTheSong = true;
+		timeBarBG.visible = false;
+		timeBar.visible = false;
+		timeTxt.visible = false;
+		canPause = false;
+		endingSong = true;
+		camZooming = false;
+		inCutscene = false;
+		updateTime = false;
+		}
 		if (!ClientPrefs.skipResultsScreen) {
 		new FlxTimer().start(0.02, function(tmr:FlxTimer) {
 			endedTheSong = true;
@@ -6659,7 +6669,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		}
-		if (endedTheSong)
+		if (endedTheSong || ClientPrefs.skipResultsScreen)
 		{
 		timeBarBG.visible = false;
 		timeBar.visible = false;
@@ -6790,9 +6800,9 @@ class PlayState extends MusicBeatState
 				FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 				changedDifficulty = false;
 			}
+			}
 			transitioning = true;
 		}
-	}
 	}
 
 	#if ACHIEVEMENTS_ALLOWED
