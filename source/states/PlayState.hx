@@ -1561,6 +1561,7 @@ class PlayState extends MusicBeatState
 
 		super.onFocus();
 		callOnScripts('onFocusPost');
+	}
 
         override public function onFocusLost():Void
 	{
