@@ -83,7 +83,11 @@ class MobileControlsSubState extends FlxSubState
 		virtualPad.visible = false;
 		add(virtualPad);
 
-		hitbox = new FlxHitbox();
+		if (!ClientPrefs.data.hitbox1)
+			hitbox = new FlxHitbox(DEFAULT);
+	else 
+			hitbox = new FlxHitbox(EXTRA);
+
 		hitbox.alpha = 0.6;
 		hitbox.visible = false;
 		add(hitbox);

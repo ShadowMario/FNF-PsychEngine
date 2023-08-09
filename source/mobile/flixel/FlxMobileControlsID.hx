@@ -31,6 +31,7 @@ abstract FlxMobileControlsID(Int) from Int to Int
     var hitboxDOWN = 17;
     var hitboxLEFT = 18;
     var hitboxRIGHT = 19;
+    var hitboxSPACE = 20;
 
     var NONE = -1;
 

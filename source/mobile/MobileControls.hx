@@ -50,7 +50,11 @@ class MobileControls extends FlxSpriteGroup
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(virtualPad);
 			case 4:
-				hitbox = new FlxHitbox();
+			if (!ClientPrefs.data.hitbox1)
+					hitbox = new FlxHitbox(DEFAULT);
+			else 
+					hitbox = new FlxHitbox(EXTRA);
+
 				add(hitbox);
 		}
 	}
