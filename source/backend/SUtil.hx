@@ -42,6 +42,8 @@ class SUtil
 	 */
 	public static function getPath(type:StorageType = INTERNAL):String
 	{
+		var daPath:String = '';
+
 		#if android
 		switch (type)
 		{
@@ -56,9 +58,9 @@ class SUtil
 		}
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
-		#else
-		return '';
 		#end
+
+		return daPath;
 	}
 
 	/**
