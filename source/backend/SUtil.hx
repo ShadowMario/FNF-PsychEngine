@@ -25,8 +25,8 @@ using StringTools;
 
 enum StorageType
 {
-	DATA;
 	INTERNAL;
+	EXTERNAL;
 	EXTERNAL_DATA;
 	MEDIA;
 }
@@ -40,18 +40,18 @@ class SUtil
 	/**
 	 * This returns the external storage path that the game will use by the type.
 	 */
-	public static function getPath(type:StorageType = DATA):String
+	public static function getPath(type:StorageType = EXTERNAL_DATA):String
 	{
 		var daPath:String = '';
 
 		#if android
 		switch (type)
 		{
-			case DATA:
+			case INTERNAL:
 				daPath = Context.getFilesDir() + '/';
 			case EXTERNAL_DATA:
 				daPath = Context.getExternalFilesDir(null) + '/';
-			case INTERNAL:
+			case EXTERNAL:
 				daPath = Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
 			case MEDIA:
 				daPath = Environment.getExternalStorageDirectory() + '/Android/media/' + Application.current.meta.get('packageName') + '/';
