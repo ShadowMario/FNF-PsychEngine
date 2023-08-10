@@ -14,6 +14,7 @@ class StrumNote extends FlxSprite
 	public var direction:Float = 90;//plan on doing scroll directions soon -bb
 	public var downScroll:Bool = false;//plan on doing scroll directions soon -bb
 	public var sustainReduce:Bool = true;
+	public var noteShit = new Note(0, 0, null, false, false);
 	
 	private var player:Int;
 	
@@ -36,6 +37,9 @@ class StrumNote extends FlxSprite
 
 		var skin:String = 'NOTE_assets';
 		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
+			
+		if (!PlayState.isPixelStage)
+		{
 			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
 				skin = 'Nonsense_NOTE_assets';
 			}
@@ -51,6 +55,10 @@ class StrumNote extends FlxSprite
 			if(ClientPrefs.noteStyleThing == 'TGT V4') {
 				skin = 'TGTNOTE_assets';
 			}
+			if(ClientPrefs.colorQuants) {
+				skin = 'RED_NOTE_assets';
+			}
+		}
 		texture = skin; //Load texture and anims
 
 		scrollFactor.set();
@@ -170,9 +178,12 @@ class StrumNote extends FlxSprite
 		} else {
 			if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
 			{
+				if (!ClientPrefs.colorQuants)
+				{
 				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
 				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
+				}
 			}
 			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
 				centerOrigin();

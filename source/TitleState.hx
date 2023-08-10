@@ -98,7 +98,6 @@ class TitleState extends MusicBeatState
 		MusicBeatState.windowNamePrefix = Assets.getText(Paths.txt("windowTitleBase", "preload"));
 
 		//trace(path, FileSystem.exists(path));
-
 		/*#if (polymod && !html5)
 		if (sys.FileSystem.exists('mods/')) {
 			var folders:Array<String> = [];

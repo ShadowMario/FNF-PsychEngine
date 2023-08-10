@@ -20,9 +20,12 @@ class NoteSplash extends FlxSprite
 		
 		colorSwap = new ColorSwap();
 		shader = colorSwap.shader;
+			if (!ClientPrefs.colorQuants)
+			{
 				colorSwap.hue = ClientPrefs.arrowHSV[note][0] / 360;
 				colorSwap.saturation = ClientPrefs.arrowHSV[note][1] / 100;
 				colorSwap.brightness = ClientPrefs.arrowHSV[note][2] / 100;
+			}
 
 		setupNoteSplash(x, y, note);
 		antialiasing = ClientPrefs.globalAntialiasing;
@@ -54,9 +57,12 @@ class NoteSplash extends FlxSprite
 		if(textureLoaded != texture) {
 			loadAnims(texture);
 		}
+		if (!ClientPrefs.colorQuants)
+		{
 		colorSwap.hue = hueColor;
 		colorSwap.saturation = satColor;
 		colorSwap.brightness = brtColor;
+		}
 		offset.set(10, 10);
 
 		var animNum:Int = 0;

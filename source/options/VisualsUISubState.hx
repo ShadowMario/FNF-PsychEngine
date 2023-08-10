@@ -129,6 +129,13 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		*/
 
+		var option:Option = new Option('Color Quantization',
+			'If checked, notes are colored based on their quantization.',
+			'colorQuants',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Camera Note Movement',
 			"If checked, note hits will move the camera depending on which note you hit.",
 			'cameraPanning',

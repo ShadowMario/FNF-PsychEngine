@@ -58,10 +58,15 @@ class Note extends FlxSprite
 	public var lateHitMult:Float = 1;
 	public var lowPriority:Bool = false;
 
+	public var noteHue:Float = 0;
+	public var noteSat:Float = 0;
+	public var noteBrt:Float = 0;
+
 	public static var swagWidth:Float = 160 * 0.7;
 	
 	private var colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
 	private var pixelInt:Array<Int> = [0, 1, 2, 3];
+	public static var beats:Array<Int> = [4, 8, 12, 16, 24, 32, 48, 64, 96, 128, 192,256,384,512,768,1024,1536,2048,3072,6144];
 
 	// Lua shit
 	public var noteSplashDisabled:Bool = false;
@@ -120,10 +125,116 @@ class Note extends FlxSprite
 		return value;
 	}
 
+	function quantCheck():Void 
+	{
+		if (ClientPrefs.colorQuants && !isSustainNote)
+			{
+				var time = strumTime;
+			
+				var beat = Math.round((time / (Conductor.stepCrochet * 4)) * 48);
+				for (i in 0...beats.length)
+				{
+					if (beat % (192 / beats[i]) == 0)
+					{
+						beat = beats[i];
+						break;
+					}			
+				}
+				switch (beat)
+				{
+					case 4: //red
+						colorSwap.hue = 0;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = 0;
+					case 8: //blue
+						colorSwap.hue = -0.34;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = 0;
+					case 12: //purple
+						colorSwap.hue = 0.8;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = 0;
+					case 16: //yellow
+						colorSwap.hue = 0.16;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = 0;
+					case 24: //pink
+						colorSwap.hue = 0.91;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = 0;
+					case 32: //orange
+						colorSwap.hue = 0.06;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = 0;
+					case 48: //cyan
+						colorSwap.hue = -0.53;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = 0;
+					case 64: //green
+						colorSwap.hue = -0.7;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = 0;
+					case 96: //salmon lookin ass
+						colorSwap.hue = 0;
+						colorSwap.saturation = -0.33;
+						colorSwap.brightness = 0;
+					case 128: //light purple shit
+						colorSwap.hue = -0.24;
+						colorSwap.saturation = -0.33;
+						colorSwap.brightness = 0;
+					case 192: //turquioe i cant spell
+						colorSwap.hue = 0.44;
+						colorSwap.saturation = 0.31;
+						colorSwap.brightness = 0;
+					case 256: //shit (the color of it)
+						colorSwap.hue = 0.03;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = -0.63;
+					case 384: //dark green ugly shit
+						colorSwap.hue = 0.29;
+						colorSwap.saturation = 1;
+						colorSwap.brightness = -0.89;
+					case 512: //darj blue
+						colorSwap.hue = -0.33;
+						colorSwap.saturation = 0.29;
+						colorSwap.brightness = -0.7;
+					case 768: //gray ok
+						colorSwap.hue = 0.04;
+						colorSwap.saturation = -0.86;
+						colorSwap.brightness = -0.23;
+					case 1024: //turqyuarfhiouhifueaig but dark
+						colorSwap.hue = 0.46;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = -0.46;
+					case 1536: //pure death
+						colorSwap.hue = 0;
+						colorSwap.saturation = 0;
+						colorSwap.brightness = -1;
+					case 2048: //piss and shit color
+						colorSwap.hue = 0.2;
+						colorSwap.saturation = -0.36;
+						colorSwap.brightness = -0.74;
+					case 3072: //boring ass color
+						colorSwap.hue = 0.17;
+						colorSwap.saturation = -0.57;
+						colorSwap.brightness = -0.27;
+					case 6144: //why did i do this? idk tbh, it just funni
+						colorSwap.hue = 0.23;
+						colorSwap.saturation = 0.76;
+						colorSwap.brightness = -0.83;
+					default: // white/gray
+						colorSwap.hue = 0.04;
+						colorSwap.saturation = -0.86;
+						colorSwap.brightness = -0.23;
+				}
+			}
+	}
+
+
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
 
-		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
+		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length && !ClientPrefs.colorQuants)
 		{
 			colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 			colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
@@ -203,11 +314,17 @@ class Note extends FlxSprite
 			if(ClientPrefs.noteStyleThing == 'TGT V4') {
 				texture = 'TGTNOTE_assets';
 			}
+			if(ClientPrefs.colorQuants) {
+				texture = 'RED_NOTE_assets';
+			}
 			colorSwap = new ColorSwap();
 			shader = colorSwap.shader;
+			if (!ClientPrefs.colorQuants)
+			{
 				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
 				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
+			}
 
 			x += swagWidth * (noteData);
 			if(!isSustainNote && noteData > -1 && noteData < 4) { //Doing this 'if' check to fix the warnings on Senpai songs
@@ -232,6 +349,12 @@ class Note extends FlxSprite
 			copyAngle = false;
 
 			animation.play(colArray[noteData % 4] + 'holdend');
+			if (ClientPrefs.colorQuants)
+			{
+			colorSwap.hue = prevNote.colorSwap.hue;
+			colorSwap.saturation = prevNote.colorSwap.saturation;
+			colorSwap.brightness = prevNote.colorSwap.brightness;
+			}
 
 			updateHitbox();
 
@@ -266,6 +389,7 @@ class Note extends FlxSprite
 			earlyHitMult = 1;
 		}
 		x += offsetX;
+		quantCheck();
 	}
 
 	var lastNoteOffsetXForPixelAutoAdjusting:Float = 0;

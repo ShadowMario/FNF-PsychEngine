@@ -9,7 +9,6 @@ import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
-import ResultsScreenSubstate;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxObject;
@@ -325,12 +324,12 @@ class PlayState extends MusicBeatState
 	var blammedLightsBlack:FlxSprite;
 	var phillyWindowEvent:BGSprite;
 	var trainSound:FlxSound;
-        var compactCombo:String;
-	var compactScore:String;
-	var compactMisses:String;
-	var compactNPS:String;
-        var compactMaxCombo:String;
-	var compactTotalPlays:String;
+        public var compactCombo:String;
+	public var compactScore:String;
+	public var compactMisses:String;
+	public var compactNPS:String;
+        public var compactMaxCombo:String;
+	public var compactTotalPlays:String;
 
 	var phillyGlowGradient:PhillyGlow.PhillyGlowGradient;
 	var phillyGlowParticles:FlxTypedGroup<PhillyGlow.PhillyGlowParticle>;
@@ -4780,6 +4779,10 @@ class PlayState extends MusicBeatState
 	var limoSpeed:Float = 0;
 	override public function update(elapsed:Float)
 	{
+		if (health <= 0 && practiceMode && ClientPrefs.zeroHealthLimit) 
+		{
+		health = 0; //set health to 0 if on practice mode and you get to 0%
+		}
 		if (combo >= 1.79e+308) combo = 1.79e+308; //Combo exceeded the maximum value that a Float can go up to, lock it at 1.79e+308 to avoid a reset to 0
 		if (totalNotesPlayed >= 1.79e+308) totalNotesPlayed = 1.79e+308; //Note hit count exceeded the maximum value that a Float can go up to, lock it at 1.79e+308 to avoid a reset to 0
 		if (enemyHits >= 1.79e+308) enemyHits = 1.79e+308; //Opponent's note hit count exceeded the maximum value that a Float can go up to, lock it at 1.79e+308 to avoid a reset to 0
@@ -5683,8 +5686,7 @@ class PlayState extends MusicBeatState
 								{
 								FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 								}
-		if (health <= 0 && practiceMode && ClientPrefs.zeroHealthLimit) health = 0; //set health to 0 if on practice mode and you get to 0%
-							}
+						}
 
 							daNote.active = false;
 							daNote.visible = false;
@@ -6624,32 +6626,8 @@ class PlayState extends MusicBeatState
 
 
 	public var transitioning = false;
-	public var endedTheSong = false;
 	public function endSong():Void
 	{
-		if (!endedTheSong)	
-		{
-		Conductor.songPosition = 0; //so that it doesnt skip the results screen
-		if (ClientPrefs.skipResultsScreen) {
-		endedTheSong = true;
-		timeBarBG.visible = false;
-		timeBar.visible = false;
-		timeTxt.visible = false;
-		canPause = false;
-		endingSong = true;
-		camZooming = false;
-		inCutscene = false;
-		updateTime = false;
-		}
-		if (!ClientPrefs.skipResultsScreen) {
-		new FlxTimer().start(0.02, function(tmr:FlxTimer) {
-			endedTheSong = true;
-		});
-		persistentUpdate = false;
-		persistentDraw = true;
-		paused = true;
-		}
-		openSubState(new ResultsScreenSubstate());
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
@@ -6668,9 +6646,6 @@ class PlayState extends MusicBeatState
 				return;
 			}
 		}
-		}
-		if (endedTheSong || ClientPrefs.skipResultsScreen)
-		{
 		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
@@ -6799,7 +6774,6 @@ class PlayState extends MusicBeatState
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 				changedDifficulty = false;
-			}
 			}
 			transitioning = true;
 		}
@@ -7881,7 +7855,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		if (!boyfriend.stunned)
 		{
-		if (health <= 0 && practiceMode && ClientPrefs.zeroHealthLimit) health = 0; //set health to 0 if on practice mode and you get to 0%
+
 			health -= 0.05 * healthLoss;
 			if(instakillOnMiss)
 			{
@@ -8081,6 +8055,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		{
 		oppNotesHitArray.unshift(Date.now());
 		enemyHits += 1 * polyphony;
+			note.kill();
+			notes.remove(note, true);
 			note.destroy();
 		}
 	}
@@ -8259,6 +8235,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				note.wasGoodHit = true;
 				if (!note.isSustainNote)
 				{
+					note.kill();
+					notes.remove(note, true);
 					note.destroy();
 				}
 				return;

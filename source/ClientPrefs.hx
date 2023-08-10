@@ -18,6 +18,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var ghostTapAnim:Bool = true;
 	public static var spaceVPose:Bool = true;
 	public static var cameraPanning:Bool = true;
+	public static var colorQuants:Bool = false;
 	public static var panIntensity:Float = 1;
 	public static var noteSplashes:Bool = true;
 	public static var cacheOnGPU:Bool = false;
@@ -230,6 +231,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.cameraPanning = cameraPanning;
 		FlxG.save.data.panIntensity = panIntensity;
 		FlxG.save.data.compactNumbers = compactNumbers;
+		FlxG.save.data.colorQuants = colorQuants;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
 		FlxG.save.data.cacheOnGPU = cacheOnGPU;
 		FlxG.save.data.hideScore = hideScore;
@@ -347,6 +349,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.communityGameBot != null) {
 			communityGameBot = FlxG.save.data.communityGameBot;
+		}
+		if(FlxG.save.data.colorQuants != null) {
+			colorQuants = FlxG.save.data.colorQuants;
 		}
 		if(FlxG.save.data.cameraPanning != null) {
 			cameraPanning = FlxG.save.data.cameraPanning;
