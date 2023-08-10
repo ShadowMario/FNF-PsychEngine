@@ -124,6 +124,38 @@ class ExtraFunctions
 			}
 			return false;
 		});
+		#if mobileC
+		Lua_helper.add_callback(lua, "hitboxPressed", function(button:String = "extra") {
+			button = button.toLowerCase();
+			switch(button){
+				case 'extra':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.pressed;
+			}
+			return false;
+		});
+
+		Lua_helper.add_callback(lua, "hitboxJustPressed", function(button:String = "extra") {
+			button = button.toLowerCase();
+			switch(button){
+				case 'extra':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.justPressed;
+			}
+			return false;
+		});
+
+		Lua_helper.add_callback(lua, "hitboxJustReleased", function(button:String = "extra") {
+			button = button.toLowerCase();
+			switch(button){
+				case 'extra':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.justReleased;
+			}
+			return false;
+		});
+		#end
+		
 
 		// Save data management
 		Lua_helper.add_callback(lua, "initSaveData", function(name:String, ?folder:String = 'psychenginemods') {
