@@ -23,6 +23,14 @@ import sys.FileSystem;
 
 using StringTools;
 
+enum StorageType
+{
+	DATA;
+	INTERNAL;
+	EXTERNAL_DATA;
+	MEDIA;
+}
+
 /**
  * ...
  * @author Mihai Alexandru (M.A. Jigsaw)
@@ -32,10 +40,20 @@ class SUtil
 	/**
 	 * This returns the external storage path that the game will use by the type.
 	 */
-	public static function getPath():String
+	public static function getPath(type:StorageType = INTERNAL):String
 	{
 		#if android
-		return Context.getExternalFilesDir(null) + '/';
+		switch (type)
+		{
+			case DATA:
+				daPath = Context.getFilesDir() + '/';
+			case EXTERNAL_DATA:
+				daPath = Context.getExternalFilesDir(null) + '/';
+			case INTERNAL:
+				daPath = Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
+			case MEDIA:
+				daPath = Environment.getExternalStorageDirectory() + '/Android/media/' + Application.current.meta.get('packageName') + '/';
+		}
 		#elseif ios
 		return LimeSystem.applicationStorageDirectory;
 		#else

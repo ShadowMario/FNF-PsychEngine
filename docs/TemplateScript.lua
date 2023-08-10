@@ -12,6 +12,21 @@ function onDestroy()
 	-- triggered when the lua file is ended (Song fade out finished)
 end
 
+function onFocus()
+	-- triggered when the game's window gains focus, some variables weren't updated yet
+end
+
+function onFocusPost()
+	-- end of "onFocus"
+end
+
+function onFocusLost()
+	-- triggered when the game's window looses focus, some variables weren't updated yet
+end
+
+function onFocusLostPost()
+	-- end of "onFocusLost"
+end
 
 -- Gameplay/Song interactions
 function onSectionHit()

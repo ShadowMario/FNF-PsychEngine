@@ -166,11 +166,12 @@
                 <!-- Do whatever you want I'm tired uninstall and install everytime -->
 		<certificate path="key.keystore" password="nullfunni" alias="null" alias-password="nullfunni" unless="debug"/>
 			<config>
+                                <android permission="android.permission.RECORD_AUDIO" if="${lime &lt; 8.1.0}"/>
 				<!--Gradle-->
 				<!-- <android gradle-version="7.4.2" gradle-plugin="7.3.1" /> -->
 	
 				<!--Target SDK-->
-				<android target-sdk-version="29" if="${lime &lt; 8.1.0}" />
+				<!--<android target-sdk-version="29" if="${lime &lt; 8.1.0}" />-->
 			</config>
 		</section>
 	
