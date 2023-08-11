@@ -185,7 +185,7 @@
 	<haxeflag name="--macro" value="include('my.pack')" />
 
         <!--No DCE is performed-->
-	<haxeflag name="-dce no" />
+	<!--<haxeflag name="-dce no" />-->
 
 	<!-- _________________________________ Custom _______________________________ -->
 
