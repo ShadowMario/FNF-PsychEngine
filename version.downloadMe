@@ -1,5 +1,4 @@
-1.6.0;
-- Jump Section and Copy for next sections
-- GPU Caching
-- Classic Psych Engine Shader Support
-- Menu Music options
+1.7.0;
+- Color Quantization
+- New Options
+- Note color fixes

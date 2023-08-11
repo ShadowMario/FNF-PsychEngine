@@ -59,13 +59,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.displayFormat = '%v Splashes';
 		addOption(option);
 
-		var option:Option = new Option('Skip Results Screen',
-			'If checked, the results screen that appears when you finish a song\nwill be skipped.',
-			'skipResultsScreen',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('Opponent Note Alpha:',
 			"How visible do you want the opponent's notes to be when Middlescroll is enabled? \n(0% = invisible, 100% = fully visible)",
 			'oppNoteAlpha',

@@ -33,6 +33,7 @@ class Note extends FlxSprite
 	public var noteWasHit:Bool = false;
 	public var prevNote:Note;
 	public var nextNote:Note;
+	public var theStrumStuff:StrumNote;
 
 	public var spawned:Bool = false;
 
@@ -130,8 +131,26 @@ class Note extends FlxSprite
 		if (ClientPrefs.colorQuants && !isSustainNote)
 			{
 				var time = strumTime;
-			
-				var beat = Math.round((time / (Conductor.stepCrochet * 4)) * 48);
+
+				var time = strumTime;
+
+				for (i in 0...Conductor.bpmChangeMap.length)
+				{
+					var bpmchange = Conductor.bpmChangeMap[i];
+					if (strumTime >= bpmchange.songTime)
+					{
+						time -= bpmchange.songTime;
+					}
+					else
+					{
+						break;
+					}
+				}
+
+				var lastChange = Conductor.getBPMFromSeconds(strumTime);
+				var stepCrochet = lastChange.stepCrochet * 4;
+
+				var beat = Math.round((time / stepCrochet) * 48);
 				for (i in 0...beats.length)
 				{
 					if (beat % (192 / beats[i]) == 0)
@@ -325,6 +344,12 @@ class Note extends FlxSprite
 				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
 				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
 			}
+			if (ClientPrefs.colorQuants && theStrumStuff != null)
+			{
+				theStrumStuff.colorSwap.hue = colorSwap.hue;
+				theStrumStuff.colorSwap.saturation = colorSwap.saturation;
+				theStrumStuff.colorSwap.brightness = colorSwap.brightness;
+			}
 
 			x += swagWidth * (noteData);
 			if(!isSustainNote && noteData > -1 && noteData < 4) { //Doing this 'if' check to fix the warnings on Senpai songs
@@ -354,6 +379,12 @@ class Note extends FlxSprite
 			colorSwap.hue = prevNote.colorSwap.hue;
 			colorSwap.saturation = prevNote.colorSwap.saturation;
 			colorSwap.brightness = prevNote.colorSwap.brightness;
+			}
+			if (ClientPrefs.colorQuants && theStrumStuff != null)
+			{
+				theStrumStuff.colorSwap.hue = prevNote.colorSwap.hue;
+				theStrumStuff.colorSwap.saturation = prevNote.colorSwap.saturation;
+				theStrumStuff.colorSwap.brightness = prevNote.colorSwap.brightness;
 			}
 
 			updateHitbox();

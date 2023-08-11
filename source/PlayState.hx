@@ -454,7 +454,7 @@ class PlayState extends MusicBeatState
 
 		randomBotplayText = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 		//trace('Playback Rate: ' + playbackRate);
-		//Paths.clearStoredMemory();
+		Paths.clearStoredMemory();
 
 			if (!ClientPrefs.memLeaks)
 			{
@@ -2529,7 +2529,7 @@ class PlayState extends MusicBeatState
 					Paths.music(key);
 			}
 		}
-		//Paths.clearUnusedMemory();
+		Paths.clearUnusedMemory();
 		
 		CustomFadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
@@ -8459,92 +8459,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			}
 			note.wasGoodHit = true;
 			if (ClientPrefs.songLoading) vocals.volume = 1;
-
-			var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
-			var leData:Int = Math.round(Math.abs(note.noteData));
-			var leType:String = note.noteType;
-
-			callOnLuas('goodNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
-			callOnLuas((opponentChart ? 'opponentNoteHitFix' : 'goodNoteHitFix'), [notes.members.indexOf(note), leData, leType, isSus]);
-
-			if (!note.isSustainNote)
-			{
-				note.kill();
-				notes.remove(note, true);
-				note.destroy();
-			}
-		}
-	}
-
-	function goodNoteHitOptimized(note:Note):Void
-	{
-		if (!note.wasGoodHit)
-		{
-			if(cpuControlled && (note.ignoreNote || note.hitCausesMiss)) return;
-
-			if(note.hitCausesMiss) {
-				noteMiss(note);
-				if(!note.noteSplashDisabled && !note.isSustainNote) {
-					spawnNoteSplashOnNote(false, note);
-				}
-
-				if(!note.noMissAnimation)
-				{
-					switch(note.noteType) {
-						case 'Hurt Note': //Hurt note
-							if(boyfriend.animation.getByName('hurt') != null) {
-								boyfriend.playAnim('hurt', true);
-								boyfriend.specialAnim = true;
-							}
-					}
-				}
-
-				note.wasGoodHit = true;
-				if (!note.isSustainNote)
-				{
-					note.kill();
-					notes.remove(note, true);
-					note.destroy();
-				}
-				return;
-			}
-			if (!note.isSustainNote && cpuControlled && ClientPrefs.evenLessBotLag)
-			{
-				if (!ClientPrefs.noMarvJudge)
-				{
-				songScore += 500 * Std.int(polyphony);
-				}
-				else if (ClientPrefs.noMarvJudge)
-				{
-				songScore += 350 * Std.int(polyphony);
-				}
-				//updateScore(); the update function handles updating this, so why make it update more
-				//updateRatingCounter(); the update function handles updating this, so why make it update more
-				combo += 1 * polyphony;
-				totalNotesPlayed += 1 * polyphony;
-				notesHitArray.unshift(Date.now());
-			}
-			if (ClientPrefs.healthGainType == 'Psych Engine') {
-			health += note.hitHealth * healthGain * polyphony;
-			}
-			if(cpuControlled) {
-				if (ClientPrefs.botLightStrum)
-				{
-				var time:Float = 0.15 / playbackRate;
-				if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
-					time += 0.15;
-				}
-				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)), time);
-				}
-			} else {
-				var spr = playerStrums.members[note.noteData];
-				if(spr != null)
-				{
-					spr.playAnim('confirm', true);
-				}
-			}
-			note.wasGoodHit = true;
-			vocals.volume = 1;
 
 			var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
 			var leData:Int = Math.round(Math.abs(note.noteData));
