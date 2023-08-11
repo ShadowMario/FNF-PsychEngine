@@ -47,7 +47,6 @@ jobs:
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.1.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
-          ln -s ~/haxelib/hxcpp/4,2,1/include/hxcpp.h /home/runner/work/FNF-PsychEngine-Mobile/FNF-PsychEngine-Mobile/export/release/android/obj/obj/android-64/__pch/haxe/hxcpp.h
       - name: List Haxelibs
         run: haxelib list
       - name: Configure Android
