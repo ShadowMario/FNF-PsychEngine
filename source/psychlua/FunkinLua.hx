@@ -420,7 +420,7 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1, ?difficultyArray:Array<String> = null) {
-			if (difficultyArray != null) Difficulty.list = difficultyArray; // 😎
+			if (difficultyArray != null) Difficulty.list = difficultyArray;
 			if (name == null || name.length < 1) name = PlayState.SONG.song;
 			if (difficultyNum == -1) difficultyNum = PlayState.storyDifficulty;
 
