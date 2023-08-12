@@ -199,7 +199,7 @@ class FunkinLua {
 			if(func != null)
 				Lua_helper.add_callback(lua, name, func);
 		}
-  #if mobile set('virtualPadMode', MusicBeatState.vpadMode); #end
+  #if mobile set('mobileControlsMode', MusicBeatState.mobileCMode); #end
 		//
 		Lua_helper.add_callback(lua, "getRunningScripts", function(){
 			var runningScripts:Array<String> = [];
