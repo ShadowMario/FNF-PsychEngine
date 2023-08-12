@@ -193,13 +193,12 @@ class FunkinLua {
 		set('splashAlpha', ClientPrefs.data.splashAlpha);
 
 		set('buildTarget', getBuildTarget());
-
+    #if mobileC set('mobileControlsMode', MusicBeatState.mobileCMode); #end
 		for (name => func in customFunctions)
 		{
 			if(func != null)
 				Lua_helper.add_callback(lua, name, func);
 		}
-  #if mobile set('mobileControlsMode', MusicBeatState.mobileCMode); #end
 		//
 		Lua_helper.add_callback(lua, "getRunningScripts", function(){
 			var runningScripts:Array<String> = [];
