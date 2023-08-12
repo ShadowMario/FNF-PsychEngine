@@ -30,6 +30,7 @@ class MusicBeatState extends FlxUIState
 	#if mobileC
 	public var virtualPad:FlxVirtualPad;
 	public var mobileControls:MobileControls;
+	public static var monileCMode:String;
 
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
@@ -113,6 +114,14 @@ class MusicBeatState extends FlxUIState
 					case 5: // KEYBOARD
 					//sex, idk maybe nothin'?
 				}
+	}
+	switch (MobileControls.getMode()) {
+	  case 0: mobileCMode = 'left';
+	  case 1: mobileCMode = 'right';
+	  case 2: mobileCMode = 'custom';
+	  case 3: mobileCMode = 'duo';
+	  case 4: mobileCMode = 'hitbox';
+	  case 5: mobileCMode = 'none';
 	}
 
 	public function removeMobileControls()
