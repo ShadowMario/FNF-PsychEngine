@@ -47,6 +47,14 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'bool');
 		addOption(option);
 
+		var option:Option = new Option('Game Over Vibration',
+			"If checked, your device will vibrate at game over.",
+			'gameOverVibration',
+			'bool',
+			false);
+		addOption(option);
+		option.onChange = onChangeVibration;
+
 		var option:Option = new Option('Hitsound Volume',
 			'Funny notes does \"Tick!\" when you hit them."',
 			'hitsoundVolume',
@@ -129,7 +137,18 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		FlxG.autoPause = ClientPrefs.data.autoPause;
 	}
 
+<<<<<<< HEAD
 	function viberate() {
 		Haptic(30, 30);
 	}
 }
+=======
+	function onChangeVibration()
+	{
+		if(ClientPrefs.data.gameOverVibration)
+		{
+			Haptic.vibrate(0, 500);
+		}
+	}
+}
+>>>>>>> b3c864404a0cdf6a605b287e2993223f0143c939
