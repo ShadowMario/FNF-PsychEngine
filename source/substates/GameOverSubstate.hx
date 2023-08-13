@@ -1,5 +1,6 @@
 package substates;
 
+import lime.ui.Haptic;
 import backend.WeekData;
 
 import objects.Character;
@@ -46,6 +47,8 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		instance = this;
 		PlayState.instance.callOnScripts('onGameOverStart', []);
+		if (ClientPrefs.data.gameoverVIBERATE)
+			Haptic.vibrate(35, 35);
 
 		super.create();
 	}

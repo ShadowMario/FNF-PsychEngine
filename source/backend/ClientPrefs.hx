@@ -12,6 +12,7 @@ import states.TitleState;
 class SaveVariables {
 	public var hitbox1:String = "NONE"; // hitbox extra button option
 	public var hitbox2:Bool = true; // hitbox extra button position option
+	public var gameoverVIBERATE:Bool = false;
 	public var downScroll:Bool = false;
 	public var middleScroll:Bool = false;
 	public var opponentStrums:Bool = true;
