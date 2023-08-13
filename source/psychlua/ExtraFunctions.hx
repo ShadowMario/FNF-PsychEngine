@@ -1,6 +1,6 @@
 package psychlua;
 
-import android.Hardware;
+import lime.ui.Haptic;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -173,11 +173,11 @@ class ExtraFunctions
 			}
 			return false;
 		});
+                #end
 
 		Lua_helper.add_callback(lua, "vibrate", function(duration:Int){
-			Hardware.vibrate(duration);
+			Haptic.vibrate(duration);
 		});
-		#end
 		
 
 		// Save data management
