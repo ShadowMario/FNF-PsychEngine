@@ -220,7 +220,7 @@ class PauseSubState extends MusicBeatSubstate
 			{
 				try{
 					if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
-
+						#if mobileC controls.isInSubstate = false; #end
 						var name:String = PlayState.SONG.song;
 						var poop = Highscore.formatSong(name, curSelected);
 						PlayState.SONG = Song.loadFromJson(poop, name);
