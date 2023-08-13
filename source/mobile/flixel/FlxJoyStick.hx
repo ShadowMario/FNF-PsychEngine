@@ -2,37 +2,24 @@ package mobile.flixel;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.touch.FlxTouch;
 import flixel.math.FlxAngle;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.graphics.FlxGraphic;
 import flixel.util.FlxDestroyUtil;
-import flixel.graphics.frames.FlxAtlasFrames;
-import openfl.utils.Assets;
 
 /**
  * A virtual thumbstick - useful for input on mobile devices.
  *
  * @author Ka Wing Chin
- * @modification author Saw (M.A. Jigsaw) to work only with touch and to use custom assets
+ * @author Mihai Alexandru (M.A. Jigsaw) to work only with touch and to use custom assets
  */
 class FlxJoyStick extends FlxSpriteGroup
 {
-	/**
-	 * Shows the current state of the button.
-	 */
-	public var status:Int = NORMAL;
-
-	public var thumb:FlxSprite;
-
-	/**
-	 * The background of the joystick, also known as the base.
-	 */
-	public var base:FlxSprite;
-
 	/**
 	 * This function is called when the button is released.
 	 */
@@ -69,6 +56,18 @@ class FlxJoyStick extends FlxSpriteGroup
 	static inline var PRESSED:Int = 2;
 
 	/**
+	 * Shows the current state of the button.
+	 */
+	public var status:Int = NORMAL;
+
+	/**
+	 * The background of the joystick, also known as the base.
+	 */
+	public var base:FlxSprite;
+
+	public var thumb:FlxSprite;
+
+	/**
 	 * A list of analogs that are currently active.
 	 */
 	static var _analogs:Array<FlxJoyStick> = [];
@@ -102,14 +101,14 @@ class FlxJoyStick extends FlxSpriteGroup
 	var _ease:Float;
 
 	/**
-	 * Create a virtual thumbstick - useful for input on mobile devices.
+	 * Create a virtual thumbstick - useful for input on android devices.
 	 *
 	 * @param   X            The X-coordinate of the point in space.
 	 * @param   Y            The Y-coordinate of the point in space.
 	 * @param   Radius       The radius where the thumb can move. If 0, half the base's width will be used.
 	 * @param   Ease         Used to smoothly back thumb to center. Must be between 0 and (FlxG.updateFrameRate / 60).
 	 */
-	public function new(X:Float = 0, Y:Float = 0, Radius:Float = 0, Ease:Float = 0.25)
+	public function new(X:Float = 0, Y:Float = 0, Radius:Float = 0, Ease:Float = 0.25):Void
 	{
 		super(X, Y);
 
@@ -133,16 +132,14 @@ class FlxJoyStick extends FlxSpriteGroup
 	 */
 	function createBase():Void
 	{
-		base = new FlxSprite(0,
-			0).loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/mobile/joystick.png'),
-				Assets.getText('assets/mobile/joystick.xml'))
-				.getByName('base')));
-		base.resetSizeFromFrame();
+		base = new FlxSprite(0, 0);
+		base.loadGraphic('assets/mobile/joystick/base.png');
 		base.x += -base.width * 0.5;
 		base.y += -base.height * 0.5;
 		base.scrollFactor.set();
 		base.solid = false;
-		base.moves = false;
+		base.immovable = true;
+		base.alpha = 0.6;
 		#if FLX_DEBUG
 		base.ignoreDrawDebug = true;
 		#end
@@ -154,16 +151,14 @@ class FlxJoyStick extends FlxSpriteGroup
 	 */
 	function createThumb():Void
 	{
-		thumb = new FlxSprite(0,
-			0).loadGraphic(FlxGraphic.fromFrame(FlxAtlasFrames.fromSparrow(Assets.getBitmapData('assets/mobile/joystick.png'),
-				Assets.getText('assets/mobile/joystick.xml'))
-				.getByName('thumb')));
-		thumb.resetSizeFromFrame();
+		thumb = new FlxSprite(0, 0);
+		thumb.loadGraphic('assets/mobile/joystick/thumb.png');
 		thumb.x += -thumb.width * 0.5;
 		thumb.y += -thumb.height * 0.5;
 		thumb.scrollFactor.set();
 		thumb.solid = false;
-		thumb.moves = false;
+		thumb.immovable = true;
+		thumb.alpha = 0.6;
 		#if FLX_DEBUG
 		thumb.ignoreDrawDebug = true;
 		#end
@@ -212,9 +207,7 @@ class FlxJoyStick extends FlxSpriteGroup
 
 		// There is no reason to get into the loop if their is already a pointer on the analog
 		if (_currentTouch != null)
-		{
 			_tempTouches.push(_currentTouch);
-		}
 		else
 		{
 			for (touch in FlxG.touches.list)
@@ -333,9 +326,7 @@ class FlxJoyStick extends FlxSpriteGroup
 	 * Returns the angle in degrees.
 	 */
 	public function getAngle():Float
-	{
 		return _direction * FlxAngle.TO_DEG;
-	}
 
 	/**
 	 * Whether the thumb is pressed or not.
@@ -343,9 +334,7 @@ class FlxJoyStick extends FlxSpriteGroup
 	public var pressed(get, never):Bool;
 
 	inline function get_pressed():Bool
-	{
 		return status == PRESSED;
-	}
 
 	/**
 	 * Whether the thumb is just pressed or not.
