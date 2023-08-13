@@ -1,7 +1,5 @@
 package options;
 
-import lime.ui.Haptic;
-
 class GameplaySettingsSubState extends BaseOptionsMenu
 {
 	public function new()
@@ -116,13 +114,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.maxValue = 10;
 		option.changeValue = 0.1;
 		addOption(option);
-		
-		var option:Option = new Option("GameOver Viberation",
-		"If checked, the game will viberate your device on gameover screen.",
-		'gameoverVIBERATE',
-		"bool");
-		addOption(option);
-		option.onChange = viberate;
 
 		super();
 	}
@@ -137,12 +128,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		FlxG.autoPause = ClientPrefs.data.autoPause;
 	}
 
-<<<<<<< HEAD
-	function viberate() {
-		Haptic(30, 30);
-	}
-}
-=======
 	function onChangeVibration()
 	{
 		if(ClientPrefs.data.gameOverVibration)
@@ -151,4 +136,3 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		}
 	}
 }
->>>>>>> b3c864404a0cdf6a605b287e2993223f0143c939
