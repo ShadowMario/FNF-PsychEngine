@@ -125,30 +125,48 @@ class ExtraFunctions
 			return false;
 		});
 		#if mobileC
-		Lua_helper.add_callback(lua, "hitboxPressed", function(button:String = "extra") {
+		Lua_helper.add_callback(lua, "hitboxPressed", function(button:String) {
 			button = button.toLowerCase();
 			switch(button){
-				case 'extra':
+				case 'first':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.pressed;
+			case 'second':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra1.pressed;
+			default:
 				if (mobile.MobileControls.instance.hitbox != null)
 					return mobile.MobileControls.instance.hitbox.buttonExtra.pressed;
 			}
 			return false;
 		});
 
-		Lua_helper.add_callback(lua, "hitboxJustPressed", function(button:String = "extra") {
+		Lua_helper.add_callback(lua, "hitboxJustPressed", function(button:String) {
 			button = button.toLowerCase();
 			switch(button){
-				case 'extra':
+				case 'first':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.justPressed;
+				case 'second':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra1.justPressed;
+				default:
 				if (mobile.MobileControls.instance.hitbox != null)
 					return mobile.MobileControls.instance.hitbox.buttonExtra.justPressed;
 			}
 			return false;
 		});
 
-		Lua_helper.add_callback(lua, "hitboxJustReleased", function(button:String = "extra") {
+		Lua_helper.add_callback(lua, "hitboxJustReleased", function(button:String) {
 			button = button.toLowerCase();
 			switch(button){
-				case 'extra':
+				case 'first':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra.justReleased;
+				case 'second':
+				if (mobile.MobileControls.instance.hitbox != null)
+					return mobile.MobileControls.instance.hitbox.buttonExtra1.justReleased;
+				default:
 				if (mobile.MobileControls.instance.hitbox != null)
 					return mobile.MobileControls.instance.hitbox.buttonExtra.justReleased;
 			}

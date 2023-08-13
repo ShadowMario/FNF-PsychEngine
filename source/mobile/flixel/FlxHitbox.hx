@@ -74,6 +74,7 @@ class FlxHitbox extends FlxSpriteGroup
 		buttonUp = null;
 		buttonRight = null;
 		buttonExtra = null;
+		buttonExtra1 = null;
 	}
 
 	private function createHintGraphic(Width:Int, Height:Int, Color:Int = 0xFFFFFF):BitmapData
@@ -175,8 +176,6 @@ class FlxHitbox extends FlxSpriteGroup
 					return buttonRight.pressed;
 				case FlxMobileControlsID.hitboxDOWN:
 					return buttonDown.pressed;
-				case FlxMobileControlsID.hitboxSPACE:
-					return buttonExtra.pressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -200,8 +199,6 @@ class FlxHitbox extends FlxSpriteGroup
 					return buttonRight.justPressed;
 				case FlxMobileControlsID.hitboxDOWN:
 					return buttonDown.justPressed;
-				case FlxMobileControlsID.hitboxSPACE:
-					return buttonExtra.justPressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -224,8 +221,6 @@ class FlxHitbox extends FlxSpriteGroup
 					return buttonRight.justReleased;
 				case FlxMobileControlsID.hitboxDOWN:
 					return buttonDown.justReleased;
-				case FlxMobileControlsID.hitboxSPACE:
-					return buttonExtra.justReleased;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
