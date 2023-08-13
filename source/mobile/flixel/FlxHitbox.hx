@@ -4,7 +4,6 @@ import openfl.display.Shape;
 import openfl.display.BitmapData;
 import mobile.flixel.FlxButton;
 import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.tweens.FlxTween;
@@ -112,6 +111,7 @@ class FlxHitbox extends FlxSpriteGroup
 		hint.loadGraphic(createHintGraphic(Width, Height, Color));
 		hint.solid = false;
 		hint.immovable = true;
+		hint.multiTouch = true;
 		hint.moves = false;
 		hint.scrollFactor.set();
 		hint.alpha = 0.00001;
