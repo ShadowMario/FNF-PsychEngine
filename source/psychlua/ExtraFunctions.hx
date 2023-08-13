@@ -1,5 +1,6 @@
 package psychlua;
 
+import android.Hardware;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -171,6 +172,10 @@ class ExtraFunctions
 					return mobile.MobileControls.instance.hitbox.buttonExtra.justReleased;
 			}
 			return false;
+		});
+
+		Lua_helper.add_callback(lua, "vibrate", function(duration:Int){
+			Hardware.vibrate(duration);
 		});
 		#end
 		
