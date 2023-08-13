@@ -50,8 +50,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		var option:Option = new Option('Game Over Vibration',
 			"If checked, your device will vibrate at game over.",
 			'gameOverVibration',
-			'bool',
-			false);
+			'bool');
 		addOption(option);
 		option.onChange = onChangeVibration;
 
