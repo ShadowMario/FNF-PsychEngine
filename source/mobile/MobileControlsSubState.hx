@@ -82,11 +82,13 @@ class MobileControlsSubState extends FlxSubState
 		virtualPad = new FlxVirtualPad(NONE, NONE);
 		virtualPad.visible = false;
 		add(virtualPad);
+		var htiboxMap:Map<String, Modes> = new Map<String, Modes>();
+		htiboxMap = new Map<String, Modes>();
+		htiboxMap.set("NONE", DEFAULT);
+		htiboxMap.set("ONE", SINGLE);
+		htiboxMap.set("TOW", DOUBLE);
 
-		if (!ClientPrefs.data.hitbox1)
-			hitbox = new FlxHitbox(DEFAULT);
-	else 
-			hitbox = new FlxHitbox(EXTRA);
+		hitbox = new FlxHitbox(htiboxMap.get(ClientPrefs.data.hitbox1));
 
 		hitbox.alpha = 0.6;
 		hitbox.visible = false;

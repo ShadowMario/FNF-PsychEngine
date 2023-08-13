@@ -8,9 +8,10 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		rpcTitle = 'Mobile Options Menu'; //for Discord Rich Presence, fuck it
 
 		var option:Option = new Option('Extra Hitbox button', //Name
-			'If checked, adds a secondery hitbox button at the bottom of the screen.', //Description
+			'Select how many extra hitboxs you prefere to have.', //Description
 			'hitbox1', //Save data variable name
-			'bool'); //Variable type
+			'string',
+			["NONE", "ONE", "TOW"]); //Variable type
 		addOption(option);
 
         var option:Option = new Option('Hitbox Position', //Name

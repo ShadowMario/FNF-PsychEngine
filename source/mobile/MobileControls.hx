@@ -1,5 +1,6 @@
 package mobile;
 
+import haxe.ds.Map;
 import mobile.flixel.FlxHitbox;
 import mobile.flixel.FlxVirtualPad;
 import flixel.FlxG;
@@ -9,6 +10,7 @@ import flixel.util.FlxDestroyUtil;
 
 class MobileControls extends FlxSpriteGroup
 {
+	public var htiboxMap:Map<String, Modes>;
 	public static var instance:MobileControls;
 	public var virtualPad:FlxVirtualPad;
 	public var hitbox:FlxHitbox;
@@ -50,10 +52,12 @@ class MobileControls extends FlxSpriteGroup
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(virtualPad);
 			case 4:
-			if (!ClientPrefs.data.hitbox1)
-					hitbox = new FlxHitbox(DEFAULT);
-			else 
-					hitbox = new FlxHitbox(EXTRA);
+			htiboxMap = new Map<String, Modes>();
+			htiboxMap.set("NONE", DEFAULT);
+			htiboxMap.set("ONE", SINGLE);
+			htiboxMap.set("TOW", DOUBLE);
+
+			hitbox = new FlxHitbox(htiboxMap.get(ClientPrefs.data.hitbox1));
 
 				add(hitbox);
 		}
