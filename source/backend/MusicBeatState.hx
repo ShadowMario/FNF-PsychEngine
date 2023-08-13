@@ -62,6 +62,9 @@ class MusicBeatState extends FlxUIState
 	  case 0: mobileCMode = 'left';
 	  case 1: mobileCMode = 'right';
 	  case 2: mobileCMode = 'custom';
+	  case 3: mobileCMode = 'duo';
+	  case 4: mobileCMode = 'hitbox';
+	  case 5: mobileCMode = 'none';
          }
 		// configure the current mobile control binds, without this there gonna be conflict and input issues.
 		switch (MobileControls.getMode())
@@ -100,7 +103,6 @@ class MusicBeatState extends FlxUIState
 						'pause'			=> [NONE],
 						'reset'			=> [NONE]
 					];
-					mobileCMode = 'duo';
 					case 4: // HITBOX
 					ClientPrefs.mobileBinds = controls.mobileBinds = [
 						'note_up'		=> [hitboxUP],
@@ -118,10 +120,8 @@ class MusicBeatState extends FlxUIState
 						'pause'			=> [NONE],
 						'reset'			=> [NONE]
 					];
-					mobileCMode = 'hitbox';
 					case 5: // KEYBOARD
 					//sex, idk maybe nothin'?
-					mobileCMode = 'none';
 				}
 	}
 

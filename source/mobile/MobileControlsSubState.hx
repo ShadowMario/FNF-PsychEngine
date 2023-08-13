@@ -86,7 +86,7 @@ class MobileControlsSubState extends FlxSubState
 		htiboxMap = new Map<String, Modes>();
 		htiboxMap.set("NONE", DEFAULT);
 		htiboxMap.set("ONE", SINGLE);
-		htiboxMap.set("TOW", DOUBLE);
+		htiboxMap.set("TWO", DOUBLE);
 
 		hitbox = new FlxHitbox(htiboxMap.get(ClientPrefs.data.hitbox1));
 

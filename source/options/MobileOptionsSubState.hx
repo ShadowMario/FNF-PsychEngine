@@ -11,7 +11,7 @@ class MobileOptionsSubState extends BaseOptionsMenu
 			'Select how many extra hitboxs you prefere to have.', //Description
 			'hitbox1', //Save data variable name
 			'string',
-			["NONE", "ONE", "TOW"]); //Variable type
+			["NONE", "ONE", "TWO"]); //Variable type
 		addOption(option);
 
         var option:Option = new Option('Hitbox Position', //Name
