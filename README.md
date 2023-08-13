@@ -7,7 +7,7 @@ Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), 
 * Hoovy - Helper #2
 
 ### Mobile Special Thanks
-* MAJigsaw77 - Author of mobile controls and his FlxRuntimeShader is used here
+* Mihai Alexandru - Author of mobile controls and his FlxRuntimeShader is used here
 
 ## Psych Credits:
 * Shadow Mario - Programmer
