@@ -92,6 +92,28 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Score Affected by Combo',
+			"Should the score be affected by the combo?",
+			'comboScoreEffect',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('Combo Mult Type:',
+			"What type of combo multiplier do you want?",
+			'comboMultiType',
+			'string',
+			'osu!',
+			['osu!', 'Voiid Chronicles']);
+		addOption(option);
+
+		var option:Option = new Option('Hold Note Hits',
+			"If checked, each piece of a hold note will also count as a note hit.",
+			'holdNoteHits',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('CommunityGame Mode',
 			"What do you think this does?",
 			'communityGameMode',

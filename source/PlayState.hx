@@ -256,7 +256,7 @@ class PlayState extends MusicBeatState
 	public var enemyHits:Float = 0;
 	public var opponentNoteTotal:Int = 0;
 	public var polyphony:Float = 1;
-	
+	public var comboMultiplier:Float = 1;
 	private var allSicks:Bool = true;
 
 	private var generatedMusic:Bool = false;
@@ -454,10 +454,10 @@ class PlayState extends MusicBeatState
 
 		randomBotplayText = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 		//trace('Playback Rate: ' + playbackRate);
-		Paths.clearStoredMemory();
 
 			if (!ClientPrefs.memLeaks)
 			{
+			Paths.clearStoredMemory();
 			#if cpp
 			cpp.vm.Gc.enable(true);
 			#end
@@ -2128,15 +2128,15 @@ class PlayState extends MusicBeatState
 		judgementCounter.visible = ClientPrefs.ratingCounter;
 		if (!ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses + (ClientPrefs.comboScoreEffect ? 'Score Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? 'Score Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? 'Score Multiplier: ' + comboMultiplier + 'x' : '');
 		}
 		if (ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses + (ClientPrefs.comboScoreEffect ? 'Score Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? 'Score Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? 'Score Multiplier: ' + comboMultiplier + 'x' : '');
 		}
 		judgementCounter.text += '\nNPS (Max): ' + FlxStringUtil.formatMoney(nps, false) + ' (' + FlxStringUtil.formatMoney(maxNPS, false) + ')';
 		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Hits: ' + FlxStringUtil.formatMoney(enemyHits, false) + ' / ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' (' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%)\nOpponent NPS (Max): ' + FlxStringUtil.formatMoney(oppNPS, false) + ' (' + FlxStringUtil.formatMoney(maxOppNPS, false) + ')';
@@ -2529,7 +2529,10 @@ class PlayState extends MusicBeatState
 					Paths.music(key);
 			}
 		}
-		Paths.clearUnusedMemory();
+		if (!ClientPrefs.memLeaks)
+			{
+			Paths.clearUnusedMemory();
+			}
 		
 		CustomFadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
@@ -4790,6 +4793,7 @@ class PlayState extends MusicBeatState
 		ratingName = 'you used the community game bot option LMFAOOO';
 		ratingFC = 'skill issue';
 		}
+		if (ClientPrefs.comboMultiType == 'osu!') comboMultiplier = 1 + FlxMath.roundDecimal((combo / 100), 2);
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -6966,6 +6970,7 @@ class PlayState extends MusicBeatState
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
 		//trace(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
+		if (note != null && note.isSustainNote && ClientPrefs.holdNoteHits) noteDiff = 0;
 
 		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
@@ -7166,7 +7171,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(!practiceMode) {
-			songScore += score * polyphony;
+			songScore += score * comboMultiplier * polyphony;
 			if(!note.ratingDisabled || cpuControlled && !ClientPrefs.lessBotLag && !note.ratingDisabled)
 			{
 				songHits++;
@@ -7200,7 +7205,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'kadethings/';
 			pixelShitPart2 = '';
 		}
-		if (!allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
+		if (allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
 		{
 			pixelShitPart1 = 'goldstuff/';
 			pixelShitPart2 = '';
@@ -7795,6 +7800,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			}
 		});
 		combo = 0;
+    		comboMultiplier = 1; // Reset to 1 on a miss
 		if (ClientPrefs.healthGainType == 'Psych Engine') {
 		health -= daNote.missHealth * healthLoss;
 		}
@@ -7868,6 +7874,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				gf.playAnim('sad');
 			}
 			combo = 0;
+		 	comboMultiplier = 1; // Reset to 1 on a miss
 
 			if(!practiceMode) songScore -= 10;
 			if(!endingSong) {
@@ -8241,6 +8248,10 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				return;
 			}
+				if (ClientPrefs.comboMultiType == 'Voiid Chronicles') 
+				{ 
+					if (combo >= 2 && combo % 10 == 9) comboMultiplier += 1 * polyphony;
+				}
 
 			if (!note.isSustainNote && !cpuControlled || !note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot)
 			{
@@ -8249,17 +8260,46 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				missCombo = 0;
 				notesHitArray.unshift(Date.now());
 				popUpScore(note);
-
+			}
+			if (note.isSustainNote && !cpuControlled && ClientPrefs.holdNoteHits)
+			{
+				combo += 1 * polyphony;
+				totalNotesPlayed += 1 * polyphony;
+				missCombo = 0;
+				notesHitArray.unshift(Date.now());
+				popUpScore(note);
+			}
+			if (note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits && !ClientPrefs.lessBotLag)
+			{
+				combo += 1 * polyphony;
+				totalNotesPlayed += 1 * polyphony;
+				missCombo = 0;
+				notesHitArray.unshift(Date.now());
+				popUpScore(note);
+			}
+			if (note.isSustainNote && cpuControlled && ClientPrefs.holdNoteHits && ClientPrefs.lessBotLag)
+			{
+				combo += 1 * polyphony;
+				totalNotesPlayed += 1 * polyphony;
+				if (!ClientPrefs.noMarvJudge)
+				{
+				songScore += 500 * comboMultiplier * polyphony;
+				}
+				else if (ClientPrefs.noMarvJudge)
+				{
+				songScore += 350 * comboMultiplier * polyphony;
+				}
+				missCombo = 0;
 			}
 			if (!note.isSustainNote && cpuControlled && ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot)
 			{
 				if (!ClientPrefs.noMarvJudge)
 				{
-				songScore += 500 * polyphony;
+				songScore += 500 * comboMultiplier * polyphony;
 				}
 				else if (ClientPrefs.noMarvJudge)
 				{
-				songScore += 350 * polyphony;
+				songScore += 350 * comboMultiplier * polyphony;
 				}
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
@@ -8271,6 +8311,16 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 			}
 			if (!note.isSustainNote && cpuControlled && !ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot)
+			{
+				combo += 1 * polyphony;
+				totalNotesPlayed += 1 * polyphony;
+				//updateScore(); the update function handles updating this, so why make it update more
+				//updateRatingCounter(); the update function handles updating this, so why make it update more
+				missCombo = 0;
+				notesHitArray.unshift(Date.now());
+				popUpScore(note);
+			}
+			if (note.isSustainNote && cpuControlled && !ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits)
 			{
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
@@ -8450,7 +8500,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)), time);
 				}
-			} else {
+			} else if (ClientPrefs.playerLightStrum) {
 				var spr = playerStrums.members[note.noteData];
 				if(spr != null)
 				{
@@ -9021,15 +9071,15 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	public function updateRatingCounter() {
 		if (!ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 		}
 		if (ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses;
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses;
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses;
+		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 		}
 		judgementCounter.text += '\nNPS (Max): ' + FlxStringUtil.formatMoney(nps, false) + ' (' + FlxStringUtil.formatMoney(maxNPS, false) + ')';
 		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Hits: ' + FlxStringUtil.formatMoney(enemyHits, false) + ' / ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' (' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%)\nOpponent NPS (Max): ' + FlxStringUtil.formatMoney(oppNPS, false) + ' (' + FlxStringUtil.formatMoney(maxOppNPS, false) + ')';

@@ -23,6 +23,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noteSplashes:Bool = true;
 	public static var cacheOnGPU:Bool = false;
 	public static var communityGameBot:Bool = false;
+	public static var playerLightStrum:Bool = true;
 	public static var progAudioLoad:Bool = false;
 	public static var oppNoteSplashes:Bool = true;
 	public static var instaRestart:Bool = false;
@@ -57,6 +58,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var hideScore:Bool = false;
 	public static var compactNumbers:Bool = false;
 	public static var longFCName:Bool = false;
+	public static var holdNoteHits:Bool = false;
+	public static var comboScoreEffect:Bool = false;
+	public static var comboMultiType:String = 'osu!';
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	public static var ghostTapping:Bool = true;
@@ -216,9 +220,13 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.skipResultsScreen = skipResultsScreen;
 		FlxG.save.data.accuracyMod = accuracyMod;
+		FlxG.save.data.playerLightStrum = playerLightStrum;
 		FlxG.save.data.healthDisplay = healthDisplay;
 		FlxG.save.data.wrongCameras = wrongCameras;
 		FlxG.save.data.autoPause = autoPause;
+		FlxG.save.data.holdNoteHits = holdNoteHits;
+		FlxG.save.data.comboScoreEffect = comboScoreEffect;
+		FlxG.save.data.comboMultiType = comboMultiType;
 		FlxG.save.data.charsAndBG = charsAndBG;
 		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.bfIconStyle = bfIconStyle;
@@ -365,6 +373,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.ratingIntensity != null) {
 			ratingIntensity = FlxG.save.data.ratingIntensity;
 		}
+		if(FlxG.save.data.playerLightStrum != null) {
+			playerLightStrum = FlxG.save.data.playerLightStrum;
+		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
 		}
@@ -400,6 +411,15 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.autosaveCharts != null) {
 			autosaveCharts = FlxG.save.data.autosaveCharts;
+		}
+		if(FlxG.save.data.holdNoteHits != null) {
+			holdNoteHits = FlxG.save.data.holdNoteHits;
+		}
+		if(FlxG.save.data.comboScoreEffect != null) {
+			comboScoreEffect = FlxG.save.data.comboScoreEffect;
+		}
+		if(FlxG.save.data.comboMultiType != null) {
+			comboMultiType = FlxG.save.data.comboMultiType;
 		}
 		if(FlxG.save.data.daMenuMusic != null) {
 			daMenuMusic = FlxG.save.data.daMenuMusic;

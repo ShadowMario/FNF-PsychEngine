@@ -65,6 +65,13 @@ class OptimizationSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Light Player Strums',
+			"If this is unchecked, then uh.. the player strums won't light up.\nit's as simple as that.",
+			'playerLightStrum',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Show Ratings & Combo',
 			"If checked, shows the ratings & combo. Kinda defeats the purpose of this engine though...",
 			'ratesAndCombo',
