@@ -44,7 +44,7 @@ class MobileControlsSubState extends FlxSubState
 		bg.alpha = 0.4;
 		add(bg);
 
-		var exitButton:FlxButton = new FlxButton(FlxG.width - 200, 50, 'Exit', function()
+		var exitButton:FlxButton = new FlxButton(FlxG.width - 100, 50, 'Exit', function()
 		{
 			MobileControls.setMode(curSelected);
 
