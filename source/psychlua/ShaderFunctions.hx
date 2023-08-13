@@ -66,37 +66,6 @@ class ShaderFunctions
 			return false;
 		});
 
-		funk.addLocalCallback("addShaderToCam", function(cam:String, shader:String, ?index:String) {
-			if (!ClientPrefs.data.shaders) return false;
-
-			if (index == null || index.length < 1)
-			    index = shader;
-
-			#if (!flash && MODS_ALLOWED && sys)
-			if (!funk.runtimeShaders.exists(shader) && !funk.initLuaShader(shader)) {
-			    FunkinLua.luaTrace('addShaderToCam: Shader $shader is missing!', false, false, FlxColor.RED);
-			    return false;
-			}
-
-                        var arr:Array<String> = funk.runtimeShaders.get(shader);
-			// Both FlxGame and FlxCamera has a _filters array and a setFilters function
-			// We should maybe make an interface for that?
-                        var camera = getCam(cam);
-                        @:privateAccess {
-                                if (camera._filters == null)
-                                    camera._filters = [];
-
-                                var filter = new ShaderFilter(new FlxRuntimeShader(arr[0], arr[1]));
-                                storedFilters.set(index, filter);
-                                camera._filters.push(filter);
-                        }
-                        return true;
-			#else
-                        FunkinLua.luaTrace("addShaderToCam: Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
-			#end
-			return false;
-		});
-
                 funk.addLocalCallback("removeCamShader", function(cam:String, shader:String) {
                         #if (!flash && MODS_ALLOWED && sys)
                         var camera = getCam(cam);
