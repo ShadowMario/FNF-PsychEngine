@@ -47,7 +47,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		instance = this;
 		PlayState.instance.callOnScripts('onGameOverStart', []);
 
-                if (ClientPrefs.data.gameoverVIBERATE)
+                if (ClientPrefs.data.gameOverVibration)
 			Haptic.vibrate(0, 500);
 
 		super.create();

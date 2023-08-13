@@ -1,5 +1,7 @@
 package options;
 
+import lime.ui.Haptic;
+
 class GameplaySettingsSubState extends BaseOptionsMenu
 {
 	public function new()
