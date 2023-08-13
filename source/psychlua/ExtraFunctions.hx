@@ -175,8 +175,8 @@ class ExtraFunctions
 		});
                 #end
 
-		Lua_helper.add_callback(lua, "vibrate", function(duration:Int){
-			Haptic.vibrate(duration);
+		Lua_helper.add_callback(lua, "vibrate", function(period:Int, duration:Int){
+			Haptic.vibrate(period, duration);
 		});
 		
 
