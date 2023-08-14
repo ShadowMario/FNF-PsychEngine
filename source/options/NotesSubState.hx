@@ -149,6 +149,7 @@ class NotesSubState extends MusicBeatSubstate
 		var tipY = 660;
 		#if mobileC
 		var tip:FlxText = new FlxText(tipX, tipY, 0, "Press C to Reset the selected Note Part.", 16);
+		tipY = 315;
 		#else
 		var tip:FlxText = new FlxText(tipX, tipY, 0, "Press RELOAD to Reset the selected Note Part.", 16);
 		#end
@@ -173,8 +174,12 @@ class NotesSubState extends MusicBeatSubstate
 		_lastControllerMode = controls.controllerMode;
 
 		#if mobileC
-                addVirtualPad(NONE, B_C);
-                #end
+        addVirtualPad(NONE, B_C);
+		MusicBeatSubstate.virtualPad.buttonC.x = 0;
+		MusicBeatSubstate.virtualPad.buttonC.y = FlxG.height - 135;
+		
+
+        #end
 	}
 
 	function updateTip()
