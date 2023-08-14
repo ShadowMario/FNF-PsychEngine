@@ -324,6 +324,7 @@ function changeSelection(change:Int = 0):Void
 				add(virtualPad);
 			case 'Pad-Extras':
 				hitbox.visible = false;
+				virtualPad.visible = false; // idfk it looks better like this
 				virtualPadExtra.destroy();
 				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 				virtualPadExtra.alpha = 0.6;
