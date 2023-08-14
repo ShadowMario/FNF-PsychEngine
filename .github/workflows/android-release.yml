@@ -22,6 +22,7 @@ jobs:
         with:
           haxe-version: 4.2.5
       - name: Restore Previous Cache
+        if: ${{ always() }}
         id: cache-debug-build-android-restore-gcc
         uses: actions/cache/restore@main
         with:
