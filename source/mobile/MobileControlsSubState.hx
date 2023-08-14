@@ -40,6 +40,7 @@ class MobileControlsSubState extends FlxSubState
 	var bindButton:FlxButton;
 	var resetButton:FlxButton;
 	var padMap:Map<String, FlxExtraActions>;
+	var daFunny:FlxText;
 
 	override function create()
 	{
@@ -52,19 +53,22 @@ class MobileControlsSubState extends FlxSubState
 
 		var exitButton:FlxButton = new FlxButton(FlxG.width - 200, 50, 'Exit', function()
 		{
-			if (curSelected == 4)
-				MobileControls.setMode(3);
-			else
+			if (curSelected == 4){
+				daFunny.visible = true;
+				daFunny.alpha = 1;
+				FlxTween.tween(daFunny, {alpha: 0}, 1.5, {ease: FlxEase.circInOut});
+
+			} else {
 				MobileControls.setMode(curSelected);
 
 			if (controlsItems[Math.floor(curSelected)] == 'Pad-Custom')
 				MobileControls.setCustomMode(virtualPad);
-			else if (controlsItems[Math.floor(curSelected)] == 'Pad-Extras')
-				MobileControls.setExtraCustomMode(virtualPadExtra);
+
+				MobileControls.setExtraCustomMode(virtualPadExtra); // allways save on exit
 
 			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
-
+		}
 
 		});
 		exitButton.setGraphicSize(Std.int(exitButton.width) * 3);
@@ -185,6 +189,12 @@ class MobileControlsSubState extends FlxSubState
 		add(extra1Pozition);
 		changeSelection();
 
+		daFunny = new FlxText(0, 75, 0, 'Pad-Extras is not a control mode\nPlease selecte a valid mode such as hitbox, Pad-Left...', 25);
+		daFunny.setFormat('VCR OSD Mono', 25, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		daFunny.screenCenter();
+		daFunny.borderSize = 2.4;
+		add(daFunny);
+		daFunny.visible = false;
 		super.create();
 
 		FlxTween.tween(bg, {alpha: 0.6}, 1, {ease: FlxEase.circInOut});
