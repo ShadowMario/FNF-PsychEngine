@@ -56,6 +56,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var songLoading:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var hideScore:Bool = false;
+	public static var voiidTrollMode:Bool = false;
 	public static var compactNumbers:Bool = false;
 	public static var longFCName:Bool = false;
 	public static var holdNoteHits:Bool = false;
@@ -238,6 +239,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.iconBounceType = iconBounceType;
 		FlxG.save.data.cameraPanning = cameraPanning;
 		FlxG.save.data.panIntensity = panIntensity;
+		FlxG.save.data.voiidTrollMode = voiidTrollMode;
 		FlxG.save.data.compactNumbers = compactNumbers;
 		FlxG.save.data.colorQuants = colorQuants;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
@@ -390,6 +392,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.autoPause != null) {
 			autoPause = FlxG.save.data.autoPause;
+		}
+		if(FlxG.save.data.voiidTrollMode != null) {
+			voiidTrollMode = FlxG.save.data.voiidTrollMode;
 		}
 		if(FlxG.save.data.compactNumbers != null) {
 			compactNumbers = FlxG.save.data.compactNumbers;

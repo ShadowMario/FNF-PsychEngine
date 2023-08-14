@@ -11,6 +11,9 @@ import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
+#if android
+import lime.system.System;
+#end
 
 #if desktop
 import Discord.DiscordClient;

@@ -180,6 +180,7 @@ class PlayState extends MusicBeatState
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
+	public var unspawnNotesCopy:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
 
 	private var strumLine:FlxSprite;
@@ -286,6 +287,8 @@ class PlayState extends MusicBeatState
 	var randomSpeedThing:Bool = false;
 	var trollingMode:Bool = false;
 	public var jackingtime:Float = 0;
+
+	public var shouldKillNotes:Bool = true; //Whether notes should be killed when you hit them. Disables automatically when in Troll Mode because you can't end the song anyway
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -458,8 +461,9 @@ class PlayState extends MusicBeatState
 			if (!ClientPrefs.memLeaks)
 			{
 			Paths.clearStoredMemory();
+
 			#if cpp
-			cpp.vm.Gc.enable(true);
+			cpp.vm.Gc.enable(true); //lagspike prevention
 			#end
 
 			#if sys
@@ -559,6 +563,9 @@ class PlayState extends MusicBeatState
 		randomSpeedThing = ClientPrefs.getGameplaySetting('randomspeed', false);
 		trollingMode = ClientPrefs.getGameplaySetting('thetrollingever', false);
 		jackingtime = ClientPrefs.getGameplaySetting('jacks', 0);
+
+		if (trollingMode)
+			shouldKillNotes = false;
 
 
 		// var gameCam:FlxCamera = FlxG.camera;
@@ -1752,6 +1759,7 @@ class PlayState extends MusicBeatState
 			prevCamFollowPos = null;
 		}
 		add(camFollowPos);
+		if (!ClientPrefs.charsAndBG) FlxG.camera.zoom = 100; //zoom it in very big to avoid high RAM usage!!
 		if (ClientPrefs.charsAndBG)
 		{
 		FlxG.camera.follow(camFollowPos, LOCKON, 1);
@@ -3683,9 +3691,13 @@ class PlayState extends MusicBeatState
 				daNote.visible = false;
 				daNote.ignoreNote = true;
 
+				if (shouldKillNotes) {
 				daNote.kill();
+				}
 				//unspawnNotes.remove(daNote);
+				if (shouldKillNotes) {
 				daNote.destroy();
+				}
 			}
 			--i;
 		}
@@ -3699,9 +3711,13 @@ class PlayState extends MusicBeatState
 				daNote.visible = false;
 				daNote.ignoreNote = true;
 
+				if (shouldKillNotes) {
 				daNote.kill();
+				}
 				notes.remove(daNote, true);
+				if (shouldKillNotes) {
 				daNote.destroy();
+				}
 			}
 			--i;
 		}
@@ -4048,6 +4064,9 @@ class PlayState extends MusicBeatState
 
 		var noteData:Array<SwagSection> = SONG.notes;
 
+		Note.__pool = new flixel.util.FlxPool<Note>(Note);
+		Note.__pool.preAllocate(32);
+
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		var file:String = Paths.json(songName + '/events');
 		#if MODS_ALLOWED
@@ -4249,6 +4268,8 @@ class PlayState extends MusicBeatState
 		// playerCounter += 1;
 
 		unspawnNotes.sort(sortByTime);
+		unspawnNotesCopy = unspawnNotes.copy();
+		trace (unspawnNotesCopy.length);
 		generatedMusic = true;
 		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
 	}
@@ -4277,6 +4298,9 @@ class PlayState extends MusicBeatState
 
 		var noteData:Array<SwagSection> = SONG.notes;
 
+		Note.__pool = new flixel.util.FlxPool<Note>(Note);
+		Note.__pool.preAllocate(32);
+
 		loadEventNotes();
 
 		for (section in noteData) {
@@ -4300,6 +4324,7 @@ class PlayState extends MusicBeatState
 		loadOtherEventNotes();
 
 		unspawnNotes.sort(sortByTime);
+		unspawnNotesCopy = unspawnNotes.copy();
 		generatedMusic = true;
 		trace('song loaded! notes loaded: ' + FlxStringUtil.formatMoney(unspawnNotes.length, false) + ', ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' being sung by the opponent and ' + FlxStringUtil.formatMoney(totalNotes, false) + ' being sung by the player!');
 	}
@@ -4406,85 +4431,6 @@ class PlayState extends MusicBeatState
 				eventPushed(subEvent);
 			}
 		}
-	}
-	private function generateTrollSongShit(dataPath:String):Void //basically generateSong but without reloading event notes
-	{
-		var songData = SONG;
-		Conductor.changeBPM(songData.bpm);
-
-		curSong = songData.song;
-
-		notes = new FlxTypedGroup<Note>();
-		add(notes);
-		notes.visible = ClientPrefs.showNotes; //that was easier than expected
-
-		var noteData:Array<SwagSection>;
-
-		// NEW SHIT
-		noteData = songData.notes;
-
-		var songName:String = Paths.formatToSongPath(SONG.song);
-
-		for (section in noteData)
-		{
-			for (songNotes in section.sectionNotes)
-			{
-				var daStrumTime:Float = songNotes[0];
-				var daNoteData:Int = Std.int(songNotes[1] % 4);
-				var gottaHitNote:Bool = section.mustHitSection;
-
-				if (songNotes[1] > 3 && !opponentChart)
-				{
-					gottaHitNote = !section.mustHitSection;
-				}
-				else if (songNotes[1] <= 3 && opponentChart)
-				{
-					gottaHitNote = !section.mustHitSection;
-				}
-				if (gottaHitNote)
-				{
-					totalNotes += 1;
-				}
-				if (!gottaHitNote)
-				{
-					opponentNoteTotal += 1;
-				}
-
-				var oldNote:Note = unspawnNotes.length > 0 ? unspawnNotes[Std.int(unspawnNotes.length - 1)] : null;
-
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
-				if (ClientPrefs.doubleGhost)
-					{
-					swagNote.row = Conductor.secsToRow(daStrumTime);
-					if(noteRows[gottaHitNote?0:1][swagNote.row]==null)
-						noteRows[gottaHitNote?0:1][swagNote.row]=[];
-					noteRows[gottaHitNote ? 0 : 1][swagNote.row].push(swagNote);
-					}
-				swagNote.mustPress = gottaHitNote;
-				swagNote.sustainLength = songNotes[2];
-				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
-
-				swagNote.scrollFactor.set();
-				unspawnNotes.push(swagNote);
-
-				var floorSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
-				if(floorSus > 0) {
-					for (susNote in 0...floorSus+1)
-					{
-						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
-
-						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + (Conductor.stepCrochet / FlxMath.roundDecimal(songSpeed, 2)), daNoteData, oldNote, true);
-						sustainNote.mustPress = gottaHitNote;
-						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
-						sustainNote.scrollFactor.set();
-						swagNote.tail.push(sustainNote);
-						sustainNote.parent = swagNote;
-						unspawnNotes.push(sustainNote);
-					}
-				}
-			}
-		}
-		unspawnNotes.sort(sortByTime);
 	}
 	function eventPushed(event:EventNote) {
 		switch(event.event) {
@@ -4793,7 +4739,7 @@ class PlayState extends MusicBeatState
 		ratingName = 'you used the community game bot option LMFAOOO';
 		ratingFC = 'skill issue';
 		}
-		if (ClientPrefs.comboMultiType == 'osu!') comboMultiplier = 1 + FlxMath.roundDecimal((combo / 100), 2);
+		if (ClientPrefs.comboScoreEffect && ClientPrefs.comboMultiType == 'osu!') comboMultiplier = 1 + FlxMath.roundDecimal((combo / 100), 2);
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -5316,39 +5262,14 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic) {
 			if (startedCountdown && canPause && !endingSong) {
-				if (ClientPrefs.trollMaxSpeed != 'Lowest') {
 				if (playbackRate > 2) endingTimeLimit = 100;
 				if (playbackRate > 8) endingTimeLimit = 200;
 				if (playbackRate > 12) endingTimeLimit = 300;
 				if (playbackRate > 20) endingTimeLimit = 600;
-				if (playbackRate > 40) endingTimeLimit = 800;
-				if (playbackRate > 50) endingTimeLimit = 1000;
-				if (playbackRate > 60) endingTimeLimit = 2000;
-				if (playbackRate > 80) endingTimeLimit = 4000;
-				if (playbackRate > 125) endingTimeLimit = 5000;
-				if (playbackRate > 140) endingTimeLimit = 6000;
-				if (playbackRate > 250) endingTimeLimit = 10000;
-				if (playbackRate > 500) endingTimeLimit = 5000;
-				if (playbackRate > 750) endingTimeLimit = 2500;
-				if (playbackRate > 1000) endingTimeLimit = 20;
-				} else {
-				if (playbackRate > 8) endingTimeLimit = 200;
-				if (playbackRate > 12) endingTimeLimit = 300;
-				if (playbackRate > 20) endingTimeLimit = 600;
-				if (playbackRate > 40) endingTimeLimit = 800;
-				if (playbackRate > 50) endingTimeLimit = 1000;
-				if (playbackRate > 60) endingTimeLimit = 2000;
-				if (playbackRate > 80) endingTimeLimit = 4000;
-				if (playbackRate > 125) endingTimeLimit = 5000;
-				if (playbackRate > 140) endingTimeLimit = 6000;
-				if (playbackRate > 250) endingTimeLimit = 20;
-				}
-
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
 				// so no reason to delete it at all
 				if (ClientPrefs.songLoading && FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && trollingMode) { //stop crashes when playing normally
-					if (ClientPrefs.songLoading) Conductor.songPosition = FlxG.sound.music.length;
 					if (ClientPrefs.trollMaxSpeed == 'Highest') loopSongHighest();
 					if (ClientPrefs.trollMaxSpeed == 'High') loopSongHigh();
 					if (ClientPrefs.trollMaxSpeed == 'Medium') loopSongMedium();
@@ -5431,7 +5352,6 @@ class PlayState extends MusicBeatState
 			{
 				songTime += FlxG.game.ticks - previousFrameTime;
 				previousFrameTime = FlxG.game.ticks;
-
 				//Interpolation type beat
 				if (Conductor.lastSongPos != Conductor.songPosition && ClientPrefs.songLoading)
 				{
@@ -5694,10 +5614,15 @@ class PlayState extends MusicBeatState
 
 							daNote.active = false;
 							daNote.visible = false;
-
+						if (shouldKillNotes)
+						{
 							daNote.kill();
+						}
 							notes.remove(daNote, true);
+						if (shouldKillNotes)
+						{
 							daNote.destroy();
+						}
 						}
 					});
 				}
@@ -6360,20 +6285,13 @@ class PlayState extends MusicBeatState
 	}
 	public function loopSongNoLimit(?ignoreNoteOffset:Bool = false):Void
 	{	
-				if (ClientPrefs.songLoading) FlxG.sound.music.stop();
-				if (ClientPrefs.songLoading) vocals.stop();
-		timeBarBG.visible = true;
-		timeBar.visible = true;
-		timeTxt.visible = true;
-		canPause = true;
-		endingSong = false;
-		camZooming = true;
-		inCutscene = false;
-		updateTime = true;
-		startingSong = false;
-				if (playbackRate >= 65536) playbackRate += 3276.8;
-				if (playbackRate >= 32768 && playbackRate <= 65536) playbackRate += 1638.4;
-				if (playbackRate >= 16384 && playbackRate <= 32768) playbackRate += 819.2;
+						if (ClientPrefs.songLoading) vocals.stop();
+						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
+				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
+				if (!ClientPrefs.voiidTrollMode) {
+				if (playbackRate >= 65535) playbackRate += 3276.7;
+				if (playbackRate >= 32767 && playbackRate <= 65535) playbackRate += 1638.4;
+				if (playbackRate >= 16384 && playbackRate <= 32767) playbackRate += 819.2;
 				if (playbackRate >= 8192 && playbackRate <= 16384) playbackRate += 409.6;
 				if (playbackRate >= 4096 && playbackRate <= 8192) playbackRate += 204.8;
 				if (playbackRate >= 2048 && playbackRate <= 4096) playbackRate += 102.4;
@@ -6388,32 +6306,38 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
+				}
+					unspawnNotes = unspawnNotesCopy.copy();
+						for (n in unspawnNotes)
+						{
+							n.active = true;
+							n.visible = true;
+							n.wasGoodHit = false;
+							n.noteWasHit = false;
+							n.tooLate = false;
+							n.hitByOpponent = false;
+							n.spawned = false;
+							n.alpha = 1;
+							if (n.mustPress && !n.isSustainNote)
+							{
+							totalNotes += 1;
+							} else if (!n.mustPress && !n.isSustainNote) {
+							opponentNoteTotal += 1;
+							}
+						}
+						if (ClientPrefs.songLoading) vocals.play();
+						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 				Conductor.songPosition = 0;
-				KillNotes();
-				generateTrollSongShit(SONG.song);
-				if (ClientPrefs.songLoading) vocals.play();
-				if (ClientPrefs.songLoading) FlxG.sound.music.play();
-				FlxTween.cancelTweensOf(songLength);
-				if (ClientPrefs.songLoading) FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
 	}
 	public function loopSongHighest(?ignoreNoteOffset:Bool = false):Void
 	{	
-		var loopedSong:Int = 1;
-		loopedSong += 1;
-				FlxG.sound.music.stop();
-				vocals.stop();
-		timeBarBG.visible = true;
-		timeBar.visible = true;
-		timeTxt.visible = true;
-		canPause = true;
-		endingSong = false;
-		camZooming = true;
-		inCutscene = false;
-		updateTime = true;
-		startingSong = false;
+						if (ClientPrefs.songLoading) vocals.stop();
+						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
 				if (playbackRate >= 10000) playbackRate = 10000;
-				if (playbackRate >= 8192 && playbackRate <= 9999.99) playbackRate += 409.6;
-				if (playbackRate >= 4096 && playbackRate <= 8192) playbackRate += 204.8;
+				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
+				if (!ClientPrefs.voiidTrollMode) {
+				if (playbackRate >= 5120 && playbackRate <= 10000) playbackRate += 409.6;
+				if (playbackRate >= 4096 && playbackRate <= 5120) playbackRate += 204.8;
 				if (playbackRate >= 2048 && playbackRate <= 4096) playbackRate += 102.4;
 				if (playbackRate >= 1024 && playbackRate <= 2048) playbackRate += 51.2;
 				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
@@ -6426,30 +6350,36 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
+				}
+					unspawnNotes = unspawnNotesCopy.copy();
+						for (n in unspawnNotes)
+						{
+							n.active = true;
+							n.visible = true;
+							n.wasGoodHit = false;
+							n.noteWasHit = false;
+							n.tooLate = false;
+							n.hitByOpponent = false;
+							n.spawned = false;
+							n.alpha = 1;
+							if (n.mustPress && !n.isSustainNote)
+							{
+							totalNotes += 1;
+							} else if (!n.mustPress && !n.isSustainNote) {
+							opponentNoteTotal += 1;
+							}
+						}
 				Conductor.songPosition = 0;
-				KillNotes();
-				generateTrollSongShit(SONG.song);
-				vocals.play();
-				FlxG.sound.music.play();
-				FlxTween.cancelTweensOf(songLength);
-				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
+						if (ClientPrefs.songLoading) vocals.play();
+						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongHigh(?ignoreNoteOffset:Bool = false):Void
 	{	
-				FlxG.sound.music.stop();
-				vocals.stop();
-		var loopedSong:Int = 1;
-		loopedSong += 1;
-		timeBarBG.visible = true;
-		timeBar.visible = true;
-		timeTxt.visible = true;
-		canPause = true;
-		endingSong = false;
-		camZooming = true;
-		inCutscene = false;
-		updateTime = true;
-		startingSong = false;
+						if (ClientPrefs.songLoading) vocals.stop();
+						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
 				if (playbackRate >= 5120) playbackRate = 5120;
+				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
+				if (!ClientPrefs.voiidTrollMode) {
 				if (playbackRate >= 4096 && playbackRate <= 5119.99) playbackRate += 204.8;
 				if (playbackRate >= 2048 && playbackRate <= 4096) playbackRate += 102.4;
 				if (playbackRate >= 1024 && playbackRate <= 2048) playbackRate += 51.2;
@@ -6463,30 +6393,36 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
+				}
+					unspawnNotes = unspawnNotesCopy.copy();
+						for (n in unspawnNotes)
+						{
+							n.active = true;
+							n.visible = true;
+							n.wasGoodHit = false;
+							n.noteWasHit = false;
+							n.tooLate = false;
+							n.hitByOpponent = false;
+							n.spawned = false;
+							n.alpha = 1;
+							if (n.mustPress && !n.isSustainNote)
+							{
+							totalNotes += 1;
+							} else if (!n.mustPress && !n.isSustainNote) {
+							opponentNoteTotal += 1;
+							}
+						}
 				Conductor.songPosition = 0;
-				KillNotes();
-				generateTrollSongShit(SONG.song);
-				vocals.play();
-				FlxG.sound.music.play();
-				FlxTween.cancelTweensOf(songLength);
-				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
+						if (ClientPrefs.songLoading) vocals.play();
+						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongMedium(?ignoreNoteOffset:Bool = false):Void
 	{	
-				FlxG.sound.music.stop();
-				vocals.stop();
-		var loopedSong:Int = 1;
-		loopedSong += 1;
-		timeBarBG.visible = true;
-		timeBar.visible = true;
-		timeTxt.visible = true;
-		canPause = true;
-		endingSong = false;
-		camZooming = true;
-		inCutscene = false;
-		updateTime = true;
-		startingSong = false;
+						if (ClientPrefs.songLoading) vocals.stop();
+						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
+				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (playbackRate >= 2048) playbackRate = 2048;
+				if (!ClientPrefs.voiidTrollMode) {
 				if (playbackRate >= 1024 && playbackRate <= 2047.99) playbackRate += 51.2;
 				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
 				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
@@ -6498,30 +6434,36 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
+				}
+					unspawnNotes = unspawnNotesCopy.copy();
+						for (n in unspawnNotes)
+						{
+							n.active = true;
+							n.visible = true;
+							n.wasGoodHit = false;
+							n.noteWasHit = false;
+							n.tooLate = false;
+							n.hitByOpponent = false;
+							n.spawned = false;
+							n.alpha = 1;
+							if (n.mustPress && !n.isSustainNote)
+							{
+							totalNotes += 1;
+							} else if (!n.mustPress && !n.isSustainNote) {
+							opponentNoteTotal += 1;
+							}
+						}
 				Conductor.songPosition = 0;
-				KillNotes();
-				generateTrollSongShit(SONG.song);
-				vocals.play();
-				FlxG.sound.music.play();
-				FlxTween.cancelTweensOf(songLength);
-				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
+						if (ClientPrefs.songLoading) vocals.play();
+						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongLow(?ignoreNoteOffset:Bool = false):Void
 	{	
-				FlxG.sound.music.stop();
-				vocals.stop();
-		var loopedSong:Int = 1;
-		loopedSong += 1;
-		timeBarBG.visible = true;
-		timeBar.visible = true;
-		timeTxt.visible = true;
-		canPause = true;
-		endingSong = false;
-		camZooming = true;
-		inCutscene = false;
-		updateTime = true;
-		startingSong = false;
+						if (ClientPrefs.songLoading) vocals.stop();
+						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
+				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (playbackRate >= 1024) playbackRate = 1024;
+				if (!ClientPrefs.voiidTrollMode) {
 				if (playbackRate >= 512 && playbackRate <= 1024) playbackRate += 25.6;
 				if (playbackRate >= 256 && playbackRate <= 512) playbackRate += 12.8;
 				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
@@ -6532,30 +6474,36 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
+				}
+					unspawnNotes = unspawnNotesCopy.copy();
+						for (n in unspawnNotes)
+						{
+							n.active = true;
+							n.visible = true;
+							n.wasGoodHit = false;
+							n.noteWasHit = false;
+							n.tooLate = false;
+							n.hitByOpponent = false;
+							n.spawned = false;
+							n.alpha = 1;
+							if (n.mustPress && !n.isSustainNote)
+							{
+							totalNotes += 1;
+							} else if (!n.mustPress && !n.isSustainNote) {
+							opponentNoteTotal += 1;
+							}
+						}
 				Conductor.songPosition = 0;
-				KillNotes();
-				generateTrollSongShit(SONG.song);
-				vocals.play();
-				FlxG.sound.music.play();
-				FlxTween.cancelTweensOf(songLength);
-				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
+						if (ClientPrefs.songLoading) vocals.play();
+						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongLower(?ignoreNoteOffset:Bool = false):Void
 	{	
-				FlxG.sound.music.stop();
-				vocals.stop();
-		var loopedSong:Int = 1;
-		loopedSong += 1;
-		timeBarBG.visible = true;
-		timeBar.visible = true;
-		timeTxt.visible = true;
-		canPause = true;
-		endingSong = false;
-		camZooming = true;
-		inCutscene = false;
-		updateTime = true;
-		startingSong = false;
+						if (ClientPrefs.songLoading) vocals.stop();
+						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
+				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (playbackRate >= 512) playbackRate = 512;
+				if (!ClientPrefs.voiidTrollMode) {
 				if (playbackRate >= 256 && playbackRate <= 511.9) playbackRate += 12.8;
 				if (playbackRate >= 128 && playbackRate <= 256) playbackRate += 6.4;
 				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
@@ -6565,30 +6513,36 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
+				}
+					unspawnNotes = unspawnNotesCopy.copy();
+						for (n in unspawnNotes)
+						{
+							n.active = true;
+							n.visible = true;
+							n.wasGoodHit = false;
+							n.noteWasHit = false;
+							n.tooLate = false;
+							n.hitByOpponent = false;
+							n.spawned = false;
+							n.alpha = 1;
+							if (n.mustPress && !n.isSustainNote)
+							{
+							totalNotes += 1;
+							} else if (!n.mustPress && !n.isSustainNote) {
+							opponentNoteTotal += 1;
+							}
+						}
 				Conductor.songPosition = 0;
-				KillNotes();
-				generateTrollSongShit(SONG.song);
-				vocals.play();
-				FlxG.sound.music.play();
-				FlxTween.cancelTweensOf(songLength);
-				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
+						if (ClientPrefs.songLoading) vocals.play();
+						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongLowest(?ignoreNoteOffset:Bool = false):Void
 	{	
-				FlxG.sound.music.stop();
-				vocals.stop();
-		var loopedSong:Int = 1;
-		loopedSong += 1;
-		timeBarBG.visible = true;
-		timeBar.visible = true;
-		timeTxt.visible = true;
-		canPause = true;
-		endingSong = false;
-		camZooming = true;
-		inCutscene = false;
-		updateTime = true;
-		startingSong = false;
+						if (ClientPrefs.songLoading) vocals.stop();
+						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
+				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (playbackRate >= 256) playbackRate = 256;
+				if (!ClientPrefs.voiidTrollMode) {
 				if (playbackRate >= 128 && playbackRate <= 255) playbackRate += 6.4;
 				if (playbackRate >= 64 && playbackRate <= 128) playbackRate += 3.2;
 				if (playbackRate >= 32 && playbackRate <= 64) playbackRate += 1.6;
@@ -6597,34 +6551,51 @@ class PlayState extends MusicBeatState
 				if (playbackRate >= 4 && playbackRate <= 8) playbackRate += 0.2;
 				if (playbackRate >= 2 && playbackRate <= 4) playbackRate += 0.1;
 				if (playbackRate <= 2) playbackRate += 0.05;
+				}
+					unspawnNotes = unspawnNotesCopy.copy();
+						for (n in unspawnNotes)
+						{
+							n.active = true;
+							n.visible = true;
+							n.wasGoodHit = false;
+							n.noteWasHit = false;
+							n.tooLate = false;
+							n.hitByOpponent = false;
+							n.spawned = false;
+							n.alpha = 1;
+							if (n.mustPress && !n.isSustainNote)
+							{
+							totalNotes += 1;
+							} else if (!n.mustPress && !n.isSustainNote) {
+							opponentNoteTotal += 1;
+							}
+						}
 				Conductor.songPosition = 0;
-				KillNotes();
-				generateTrollSongShit(SONG.song);
-				vocals.play();
-				FlxG.sound.music.play();
-				FlxTween.cancelTweensOf(songLength);
-				FlxTween.tween(this, {songLength: (songLength + FlxG.sound.music.length)}, 1.2, {ease: FlxEase.expoOut});
+						if (ClientPrefs.songLoading) vocals.play();
+						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 
 	public function infiniteLoop(?ignoreNoteOffset:Bool = false):Void
 	{	
-				FlxG.sound.music.stop();
-				vocals.stop();
-		timeBarBG.visible = true;
-		timeBar.visible = true;
-		timeTxt.visible = true;
-		canPause = true;
-		endingSong = false;
-		camZooming = true;
-		inCutscene = false;
-		updateTime = true;
-		startingSong = false;
+					unspawnNotes = unspawnNotesCopy.copy();
+						for (n in unspawnNotes)
+						{
+							n.active = true; //make the note active again so that it always gets hit by the opponent and the player
+							n.visible = true; //make the note visible so that the player sees it again. repeat for all other loop functions
+							n.wasGoodHit = false;
+							n.noteWasHit = false;
+							n.tooLate = false;
+							n.hitByOpponent = false;
+							n.spawned = false;
+							n.alpha = 1;
+							if (n.mustPress && !n.isSustainNote)
+							{
+							totalNotes += 1;
+							} else if (!n.mustPress && !n.isSustainNote) {
+							opponentNoteTotal += 1;
+							}
+						}
 				Conductor.songPosition = 0;
-				KillNotes();
-				generateTrollSongShit(SONG.song);
-
-				vocals.play();
-				FlxG.sound.music.play();
 				callOnLuas('onLoopSong', []);
 	}
 
@@ -7352,98 +7323,11 @@ if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.badWindow 
 		rating.updateHitbox();
 
 		var seperatedScore:Array<Int> = [];
-		//unfortunately i cant do more because then compiling will throw a "constant too big" erorr
-		if(combo >= 100000000000000000) { //100q to 1Q
-			seperatedScore.push(Math.floor(combo / 100000000000000000) % 10);
+		//much faster combo popup stuff
+		for (i in 0...Std.string(combo).length) {
+			seperatedScore.push(Std.parseInt(Std.string(combo).split("")[i]));
 		}
-		if(combo >= 10000000000000000) { //10q to 100q
-			seperatedScore.push(Math.floor(combo / 10000000000000000) % 10);
-		}
-		if(combo >= 1000000000000000) { //1q to 10q
-			seperatedScore.push(Math.floor(combo / 1000000000000000) % 10);
-		}
-		if(combo >= 100000000000000) { //100T to 1q
-			seperatedScore.push(Math.floor(combo / 100000000000000) % 10);
-		}
-		if(combo >= 10000000000000) { //10T to 100T
-			seperatedScore.push(Math.floor(combo / 10000000000000) % 10);
-		}
-		if(combo >= 1000000000000) { //1T to 10T
-			seperatedScore.push(Math.floor(combo / 1000000000000) % 10);
-		}
-		if(combo >= 100000000000) { //100B to 1T
-			seperatedScore.push(Math.floor(combo / 100000000000) % 10);
-		}
-		if(combo >= 10000000000) { //10B to 100B
-			seperatedScore.push(Math.floor(combo / 10000000000) % 10);
-		}
-		if(combo >= 1000000000) { //1B to 10B
-			seperatedScore.push(Math.floor(combo / 1000000000) % 10);
-		}
-		if(combo >= 100000000) { //100M to 1B
-			seperatedScore.push(Math.floor(combo / 100000000) % 10);
-		}
-		if(combo >= 10000000) { //10M to 100M
-			seperatedScore.push(Math.floor(combo / 10000000) % 10);
-		}
-		if(combo >= 1000000) { //1M to 10M
-			seperatedScore.push(Math.floor(combo / 1000000) % 10);
-		}
-		if(combo >= 100000) { //100K to 1M
-			seperatedScore.push(Math.floor(combo / 100000) % 10);
-		}
-		if(combo >= 10000) { //10K to 100K
-			seperatedScore.push(Math.floor(combo / 10000) % 10);
-		}
-		if(combo >= 1000) {//Combo 1000 to 9999
-			seperatedScore.push(Math.floor(combo / 1000) % 10);
-		}
-		if(combo >= 100) { //Combo 100 to 999
-		seperatedScore.push(Math.floor(combo / 100) % 10);
-		}
-		if(combo >= 10) { //Combo 10 to 99
-		seperatedScore.push(Math.floor(combo / 10) % 10);
-		}
-		if (combo >= 0) {
-		seperatedScore.push(Math.floor(combo) % 10);
-		}
-		//negative combo count if you somehow manage to achieve that, don't even know how it'll reach negative 10 billion anyway if the combo can't pass 2,147,483,647 or -2,147,483,647
-		if (combo <= 0)
-		{
-		if(combo <= -10000000000) {
-			seperatedScore.push(Math.floor(combo / 10000000000) % 10);
-		}
-		if(combo <= -1000000000) {
-			seperatedScore.push(Math.floor(combo / 1000000000) % 10);
-		}
-		if(combo <= -100000000) {
-			seperatedScore.push(Math.floor(combo / 100000000) % 10);
-		}
-		if(combo <= -10000000) {
-			seperatedScore.push(Math.floor(combo / 10000000) % 10);
-		}
-		if(combo <= -1000000) {
-			seperatedScore.push(Math.floor(combo / 1000000) % 10);
-		}
-		if(combo <= -100000) {
-			seperatedScore.push(Math.floor(combo / 100000) % 10);
-		}
-		if(combo <= -10000) {
-			seperatedScore.push(Math.floor(combo / 10000) % 10);
-		}
-		if(combo <= -1000) {
-			seperatedScore.push(Math.floor(combo / 1000) % 10);
-		}
-		if(combo <= -100) {
-		seperatedScore.push(Math.floor(combo / 100) % 10);
-		}
-		if(combo <= -10) {
-		seperatedScore.push(Math.floor(combo / 10) % 10);
-		}
-		if (combo <= 0) {
-		seperatedScore.push(Math.floor(combo) % 10);
-		}
-		}
+
 
 
 		var daLoop:Int = 0;
@@ -7603,9 +7487,15 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					{
 						for (doubleNote in pressNotes) {
 							if (Math.abs(doubleNote.strumTime - epicNote.strumTime) < 1) {
+							if (shouldKillNotes)
+							{
 								doubleNote.kill();
+							}
 								notes.remove(doubleNote, true);
+							if (shouldKillNotes)
+							{
 								doubleNote.destroy();
+							}
 							} else
 								notesStopped = true;
 						}
@@ -7794,9 +7684,15 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		//Dupe note remove
 		notes.forEachAlive(function(note:Note) {
 			if (daNote != note && daNote.mustPress && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 1) {
-				note.kill();
+				if (shouldKillNotes)
+				{
+					note.kill();
+				}
 				notes.remove(note, true);
-				note.destroy();
+				if (shouldKillNotes)
+				{
+					note.destroy();
+				}
 			}
 		});
 		combo = 0;
@@ -8062,9 +7958,15 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		{
 		oppNotesHitArray.unshift(Date.now());
 		enemyHits += 1 * polyphony;
-			note.kill();
+			if (shouldKillNotes)
+			{
+				note.kill();
+			}
 			notes.remove(note, true);
-			note.destroy();
+			if (shouldKillNotes)
+			{
+				note.destroy();
+			}
 		}
 	}
 
@@ -8242,13 +8144,19 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				note.wasGoodHit = true;
 				if (!note.isSustainNote)
 				{
+				if (shouldKillNotes)
+				{
 					note.kill();
+				}
 					notes.remove(note, true);
+				if (shouldKillNotes)
+				{
 					note.destroy();
+				}
 				}
 				return;
 			}
-				if (ClientPrefs.comboMultiType == 'Voiid Chronicles') 
+				if (ClientPrefs.comboScoreEffect && ClientPrefs.comboMultiType == 'Voiid Chronicles') 
 				{ 
 					if (combo >= 2 && combo % 10 == 9) comboMultiplier += 1 * polyphony;
 				}
@@ -8519,9 +8427,15 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 			if (!note.isSustainNote)
 			{
-				note.kill();
+				if (shouldKillNotes)
+				{
+					note.kill();
+				}
 				notes.remove(note, true);
-				note.destroy();
+				if (shouldKillNotes)
+				{
+					note.destroy();
+				}
 			}
 		}
 	}

@@ -30,7 +30,7 @@
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
+	<window if="mobile" orientation="landscape" fullscreen="true" width="1280" height="720" resizable="false"/>
 
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
@@ -44,13 +44,13 @@
 	<classpath name="source" />
 	
 	<!-- PSYCH ENGINE CUSTOMIZATION -->
-	<define name="MODS_ALLOWED" />
-	<define name="LUA_ALLOWED" />
+	<define name="MODS_ALLOWED" if="desktop || android" />
+	<define name="LUA_ALLOWED" if="desktop || android" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="VIDEOS_ALLOWED" unless="32bits"/>
+	<define name="VIDEOS_ALLOWED" if="web || windows || android" unless="32bits"/>
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild"/> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
-	<define name="CRASH_HANDLER" if="desktop release" />
+	<define name="CRASH_HANDLER" if="desktop release || android" />
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
@@ -147,6 +147,9 @@
 
 	<!--In case you want to use nape with flixel-->
 	<!--<haxelib name="nape-haxe4" />-->
+	
+	<!--FOR ANDROID-->
+	<haxelib name="extension-androidtools" if="android"/>
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
@@ -174,10 +177,20 @@
 	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
 
+	<section if="android">
+		<config>
+			<!--Gradle-->
+			<android gradle-version="7.4.2" gradle-plugin="7.3.1" />
+
+			<!--Target SDK-->
+			<android target-sdk-version="29" if="${lime &lt; 8.1.0}" />
+		</config>
+	</section>
+
 	<!--Allow working memory greater than 1 Gig. NOTE: i recommend using Flixel 5.2.2 for this to work!-->
 	<haxedef name="HXCPP_GC_BIG_BLOCKS" if="cpp"/>
 	<!--also fixes like any "Memory Exhausted" issues you might get when compiling-->
-	<!--UPDATE: turns out that HxCPP 5.2.2 isnt required for this to work, nvm
+	<!--UPDATE: turns out that HxCPP 5.2.2 isnt required for this to work, nvm-->
 	
 	<!-- Show debug traces for hxCodec -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
@@ -191,6 +204,13 @@
 	<!--Used for Izzy Engine's crash handler-->
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
+
+	<!-- _________________________________ Android Stuff _______________________________ -->
+	<config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
+	<config:android permission="android.permission.WRITE_EXTERNAL_STORAGE" if="android"/>
+        <config:android gradle-version="7.5.1" />
+        <config:android gradle-plugin="7.3.1" />
+
 
 	<!-- _________________________________ Custom _______________________________ -->
 

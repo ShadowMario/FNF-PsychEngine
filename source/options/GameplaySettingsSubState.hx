@@ -314,6 +314,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Voiid-Styled Troll Mode',
+			"If checked, Troll Mode's speed change will behave like in Voiid Chronicles 1.5/2.0",
+			'voiidTrollMode',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Troll Mode Speed Limit:',
 			"Do you want a speed limit on Troll Mode? If so, how high do you want it? \n(Low = 1024x, Medium = 2048x, High = 5120x and Highest = 10000x)",
 			'trollMaxSpeed',

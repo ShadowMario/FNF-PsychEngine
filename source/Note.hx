@@ -7,6 +7,7 @@ import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flash.display.BitmapData;
 import editors.ChartingState;
+import flixel.util.FlxPool;
 
 using StringTools;
 
@@ -101,6 +102,8 @@ class Note extends FlxSprite
 	public var distance:Float = 2000; //plan on doing scroll directions soon -bb
 
 	public var hitsoundDisabled:Bool = false;
+
+	public static var __pool:FlxPool<Note>;
 
 	private function set_multSpeed(value:Float):Float {
 		resizeByRatio(value / multSpeed);
