@@ -55,7 +55,7 @@ class MobileControlsSubState extends FlxSubState
 
 		var exitButton:FlxButton = new FlxButton(FlxG.width - 200, 50, 'Exit', function()
 		{
-			if (curSelected == 4){
+			if (curSelected == 4 && ClientPrefs.data.extraButtons != 'NONE'){
 				daFunny.visible = true;
 				daFunny.alpha = 1;
 				FlxTween.tween(daFunny, {alpha: 0}, 2.5, {ease: FlxEase.circInOut});
