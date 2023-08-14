@@ -115,7 +115,7 @@ class MobileControlsSubState extends FlxSubState
 		padMap.set("ONE", SINGLE);
 		padMap.set("TWO", DOUBLE);
 
-		virtualPadExtra = new FlxVirtualPadExtra(NONE);
+		virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 		virtualPadExtra.visible = false;
 		add(virtualPadExtra);
 	
@@ -189,8 +189,8 @@ class MobileControlsSubState extends FlxSubState
 		add(extra1Pozition);
 		changeSelection();
 
-		daFunny = new FlxText(0, 75, 0, 'Pad-Extras is not a control mode\nPlease selecte a valid mode such as hitbox, Pad-Left...', 25);
-		daFunny.setFormat('VCR OSD Mono', 25, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		daFunny = new FlxText(0, 75, 0, 'Pad-Extras is not a control mode\nPlease selecte a valid mode such as hitbox, Pad-Left...', 35);
+		daFunny.setFormat('VCR OSD Mono', 35, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		daFunny.screenCenter();
 		daFunny.borderSize = 2.4;
 		add(daFunny);
@@ -335,10 +335,7 @@ function changeSelection(change:Int = 0):Void
 			case 'Pad-Extras':
 				hitbox.visible = false;
 				virtualPad.visible = false; // idfk it looks better like this
-				virtualPadExtra.destroy();
-				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
-				virtualPadExtra.alpha = 0.6;
-				add(virtualPadExtra);
+				virtualPadExtra.visible = true;
 			case 'Hitbox':
 				hitbox.visible = true;
 				virtualPad.visible = false;
