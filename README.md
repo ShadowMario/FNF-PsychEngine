@@ -2,11 +2,13 @@
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
-You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
+You must have [Haxe version 4.2.5](https://haxe.org/download/version/4.2.5/), seriously, stop using older or newer versions, it won't work!
 
 open up a Command Prompt/PowerShell or Terminal, type `haxelib install hmm`
 
 after it finishes, simply type `haxelib run hmm install` in order to install all the needed libraries for *Psych Engine!*
+
+If the compiler gives an error saying that hxCodec cannot be found read this issue to fix it: ShadowMario/FNF-PsychEngine#12770
 
 ## Customization:
 
@@ -51,6 +53,7 @@ _____________________________________
 ### Week 1:
   * New Dad Left sing sprite
   * Unused stage lights are now used
+  * Dad Battle has a spotlight effect for the breakdown
 ### Week 2:
   * Both BF and Skid & Pump does "Hey!" animations
   * Thunders does a quick light flash and zooms the camera in slightly
@@ -73,9 +76,12 @@ _____________________________________
 * You can now chart "Event" notes, which are bookmarks that trigger specific actions that usually were hardcoded on the vanilla version of the game.
 * Your song's BPM can now have decimal values
 * You can manually adjust a Note's strum time if you're really going for milisecond precision
-* You can change a note's type on the Editor, it comes with two example types:
+* You can change a note's type on the Editor, it comes with five example types:
   * Alt Animation: Forces an alt animation to play, useful for songs like Ugh/Stress
   * Hey: Forces a "Hey" animation instead of the base Sing animation, if Boyfriend hits this note, Girlfriend will do a "Hey!" too.
+  * Hurt Notes: If Boyfriend hits this note, he plays a miss animation and loses some health.
+  * GF Sing: Rather than the character hitting the note and singing, Girlfriend sings instead.
+  * No Animation: Character just hits the note, no animation plays.
 
 ## Multiple editors to assist you in making your own Mod
 ![Screenshot_3](https://user-images.githubusercontent.com/44785097/144629914-1fe55999-2f18-4cc1-bc70-afe616d74ae5.png)
@@ -103,3 +109,4 @@ _____________________________________
 * Some stuff based on Week 7's changes has been put in (Background colors on Freeplay, Note splashes)
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
 * You can listen to a song or adjust Scroll Speed/Damage taken/etc. on Freeplay by pressing Space.
+* You can enable "Combo Stacking" in Gameplay Options. This causes the combo sprites to just be one sprite with an animation rather than sprites spawning each note hit.
