@@ -149,7 +149,7 @@ class NotesSubState extends MusicBeatSubstate
 		var tipY = 660;
 		#if mobileC
 		var tip:FlxText = new FlxText(tipX, tipY, 0, "Press C to Reset the selected Note Part.", 16);
-		tipY = 315;
+		tipY = 0;
 		#else
 		var tip:FlxText = new FlxText(tipX, tipY, 0, "Press RELOAD to Reset the selected Note Part.", 16);
 		#end
