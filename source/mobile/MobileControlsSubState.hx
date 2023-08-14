@@ -1,8 +1,10 @@
 package mobile;
 
+import openfl.sensors.Accelerometer;
 import mobile.flixel.FlxButton;
 import mobile.flixel.FlxHitbox;
 import mobile.flixel.FlxVirtualPad;
+import mobile.flixel.FlxVirtualPadExtra;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
@@ -19,13 +21,16 @@ import openfl.utils.Assets;
 
 class MobileControlsSubState extends FlxSubState
 {
-	final controlsItems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Hitbox', 'Keyboard'];
+	final controlsItems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Pad-Extras', 'Hitbox', 'Keyboard'];
 	var virtualPad:FlxVirtualPad;
+	var virtualPadExtra:FlxVirtualPadExtra;
 	var hitbox:FlxHitbox;
 	var upPozition:FlxText;
 	var downPozition:FlxText;
 	var leftPozition:FlxText;
 	var rightPozition:FlxText;
+	var extraPozition:FlxText;
+	var extra1Pozition:FlxText;
 	var inputvari:FlxText;
 	var funitext:FlxText;
 	var leftArrow:FlxSprite;
@@ -34,6 +39,7 @@ class MobileControlsSubState extends FlxSubState
 	var buttonBinded:Bool = false;
 	var bindButton:FlxButton;
 	var resetButton:FlxButton;
+	var padMap:Map<String, FlxExtraActions>;
 
 	override function create()
 	{
@@ -46,13 +52,20 @@ class MobileControlsSubState extends FlxSubState
 
 		var exitButton:FlxButton = new FlxButton(FlxG.width - 200, 50, 'Exit', function()
 		{
-			MobileControls.setMode(curSelected);
+			if (curSelected == 4)
+				MobileControls.setMode(3);
+			else
+				MobileControls.setMode(curSelected);
 
 			if (controlsItems[Math.floor(curSelected)] == 'Pad-Custom')
 				MobileControls.setCustomMode(virtualPad);
+			else if (controlsItems[Math.floor(curSelected)] == 'Pad-Extras')
+				MobileControls.setExtraCustomMode(virtualPadExtra);
 
 			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
+
+
 		});
 		exitButton.setGraphicSize(Std.int(exitButton.width) * 3);
 		exitButton.label.setFormat(Assets.getFont('assets/fonts/vcr.ttf').fontName, 21, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, true);
@@ -63,6 +76,14 @@ class MobileControlsSubState extends FlxSubState
 		{
 			if (resetButton.visible)
 			{
+				if (curSelected == 4)
+					{
+				virtualPadExtra.buttonExtra.x = 0;
+				virtualPadExtra.buttonExtra.y = FlxG.height - 135;
+
+				virtualPadExtra.buttonExtra1.x = FlxG.width - 132;
+				virtualPadExtra.buttonExtra1.y = FlxG.height - 135;
+			} else {
 				virtualPad.buttonUp.x = FlxG.width - 258;
 				virtualPad.buttonUp.y = FlxG.height - 408;
 				virtualPad.buttonDown.x = FlxG.width - 258;
@@ -72,23 +93,35 @@ class MobileControlsSubState extends FlxSubState
 				virtualPad.buttonLeft.x = FlxG.width - 384;
 				virtualPad.buttonLeft.y = FlxG.height - 309;
 			}
-		});
+		}
+	});
 		resetButton.setGraphicSize(Std.int(resetButton.width) * 3);
 		resetButton.label.setFormat(Assets.getFont('assets/fonts/vcr.ttf').fontName, 21, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, true);
 		resetButton.color = FlxColor.RED;
 		resetButton.visible = false;
 		add(resetButton);
 
+		var hitboxMap:Map<String, Modes> = new Map<String, Modes>();
+		hitboxMap = new Map<String, Modes>();
+		hitboxMap.set("NONE", DEFAULT);
+		hitboxMap.set("ONE", SINGLE);
+		hitboxMap.set("TWO", DOUBLE);
+		padMap = new Map<String, FlxExtraActions>();
+		padMap.set("NONE", NONE);
+		padMap.set("ONE", SINGLE);
+		padMap.set("TWO", DOUBLE);
+
+		virtualPadExtra = new FlxVirtualPadExtra(NONE);
+		virtualPadExtra.visible = false;
+		add(virtualPadExtra);
+	
 		virtualPad = new FlxVirtualPad(NONE, NONE);
 		virtualPad.visible = false;
 		add(virtualPad);
-		var htiboxMap:Map<String, Modes> = new Map<String, Modes>();
-		htiboxMap = new Map<String, Modes>();
-		htiboxMap.set("NONE", DEFAULT);
-		htiboxMap.set("ONE", SINGLE);
-		htiboxMap.set("TWO", DOUBLE);
 
-		hitbox = new FlxHitbox(htiboxMap.get(ClientPrefs.data.hitbox1));
+
+
+		hitbox = new FlxHitbox(hitboxMap.get(ClientPrefs.data.extraButtons));
 
 		hitbox.alpha = 0.6;
 		hitbox.visible = false;
@@ -141,6 +174,15 @@ class MobileControlsSubState extends FlxSubState
 		upPozition.borderSize = 2.4;
 		add(upPozition);
 
+		extraPozition = new FlxText(10, FlxG.height - 44, 0, '', 16);
+		extraPozition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		extraPozition.borderSize = 2.4;
+		add(extraPozition);
+
+		extra1Pozition = new FlxText(10, FlxG.height - 64, 0, '', 16);
+		extra1Pozition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		extra1Pozition.borderSize = 2.4;
+		add(extra1Pozition);
 		changeSelection();
 
 		super.create();
@@ -190,6 +232,27 @@ class MobileControlsSubState extends FlxSubState
 						moveButton(touch, virtualPad.buttonLeft);
 				}
 			}
+			if (controlsItems[Math.floor(curSelected)] == 'Pad-Extras')
+				{
+					if (buttonBinded)
+					{
+						if (touch.justReleased)
+						{
+							bindButton = null;
+							buttonBinded = false;
+						}
+						else
+							moveButton(touch, bindButton);
+					}
+					else
+					{
+						if (virtualPadExtra.buttonExtra.justPressed)
+							moveButton(touch, virtualPadExtra.buttonExtra);
+	
+						if (virtualPadExtra.buttonExtra1.justPressed)
+							moveButton(touch, virtualPadExtra.buttonExtra1);
+					}
+				}
 		}
 
 		if (virtualPad != null)
@@ -205,10 +268,18 @@ class MobileControlsSubState extends FlxSubState
 
 			if (virtualPad.buttonRight != null)
 				rightPozition.text = 'Button Right x:' + virtualPad.buttonRight.x + ' Y:' + virtualPad.buttonRight.y;
+
+			if (virtualPadExtra != null)
+				{
+					if (virtualPadExtra.buttonExtra != null)
+						extraPozition.text = 'First Extra X:' + virtualPadExtra.buttonExtra.x + ' Y:' + virtualPadExtra.buttonExtra.y;
+		
+					if (virtualPadExtra.buttonExtra1 != null)
+						extra1Pozition.text = 'Second Extra X:' + virtualPadExtra.buttonExtra1.x + ' Y:' + virtualPadExtra.buttonExtra1.y;
 		}
 	}
-
-	function changeSelection(change:Int = 0):Void
+}
+function changeSelection(change:Int = 0):Void
 	{
 		curSelected += change;
 
@@ -225,42 +296,57 @@ class MobileControlsSubState extends FlxSubState
 		{
 			case 'Pad-Right':
 				hitbox.visible = false;
+				virtualPadExtra.visible = true;
 				virtualPad.destroy();
 				virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
 				virtualPad.alpha = 0.6;
 				add(virtualPad);
 			case 'Pad-Left':
 				hitbox.visible = false;
+				virtualPadExtra.visible = true;
 				virtualPad.destroy();
 				virtualPad = new FlxVirtualPad(LEFT_FULL, NONE);
 				virtualPad.alpha = 0.6;
 				add(virtualPad);
 			case 'Pad-Custom':
 				hitbox.visible = false;
+				virtualPadExtra.visible = true;
 				virtualPad.destroy();
 				virtualPad = MobileControls.getCustomMode(new FlxVirtualPad(RIGHT_FULL, NONE));
 				virtualPad.alpha = 0.6;
 				add(virtualPad);
 			case 'Pad-Duo':
 				hitbox.visible = false;
+				virtualPadExtra.visible = true;
 				virtualPad.destroy();
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				virtualPad.alpha = 0.6;
 				add(virtualPad);
+			case 'Pad-Extras':
+				hitbox.visible = false;
+				virtualPadExtra.destroy();
+				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
+				virtualPadExtra.alpha = 0.6;
+				add(virtualPadExtra);
 			case 'Hitbox':
 				hitbox.visible = true;
 				virtualPad.visible = false;
+				virtualPadExtra.visible = false;
 			case 'Keyboard':
 				hitbox.visible = false;
 				virtualPad.visible = false;
+				virtualPadExtra.visible = false;
 		}
 
 		funitext.visible = daChoice == 'Keyboard';
 		resetButton.visible = daChoice == 'Pad-Custom';
+		resetButton.visible = daChoice == 'Pad-Extras';
 		upPozition.visible = daChoice == 'Pad-Custom';
 		downPozition.visible = daChoice == 'Pad-Custom';
 		leftPozition.visible = daChoice == 'Pad-Custom';
 		rightPozition.visible = daChoice == 'Pad-Custom';
+		extraPozition.visible = daChoice == 'Pad-Extras';
+		extra1Pozition.visible = daChoice == 'Pad-Extras';
 	}
 
 	function moveButton(touch:FlxTouch, button:FlxButton):Void

@@ -1,5 +1,6 @@
 package mobile;
 
+import mobile.flixel.FlxVirtualPadExtra;
 import haxe.ds.Map;
 import mobile.flixel.FlxHitbox;
 import mobile.flixel.FlxVirtualPad;
@@ -13,7 +14,9 @@ class MobileControls extends FlxSpriteGroup
 	public var htiboxMap:Map<String, Modes>;
 	public static var instance:MobileControls;
 	public var virtualPad:FlxVirtualPad;
+	public var virtualPadExtra:FlxVirtualPadExtra;
 	public var hitbox:FlxHitbox;
+	var padMap:Map<String, FlxExtraActions>;
 
 	public function new()
 	{
@@ -37,27 +40,39 @@ class MobileControls extends FlxSpriteGroup
 
 	private function initControler(virtualPadMode:Int = 0):Void
 	{
+		padMap = new Map<String, FlxExtraActions>();
+		padMap.set("NONE", NONE);
+		padMap.set("ONE", SINGLE);
+		padMap.set("TWO", DOUBLE);
 		switch (virtualPadMode)
 		{
 			case 0:
 				virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
 				add(virtualPad);
+				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
+				add(virtualPadExtra);
 			case 1:
 				virtualPad = new FlxVirtualPad(LEFT_FULL, NONE);
 				add(virtualPad);
+				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
+				add(virtualPadExtra);
 			case 2:
 				virtualPad = MobileControls.getCustomMode(new FlxVirtualPad(RIGHT_FULL, NONE));
 				add(virtualPad);
+				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
+				add(virtualPadExtra);
 			case 3:
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(virtualPad);
+				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
+				add(virtualPadExtra);
 			case 4:
 			htiboxMap = new Map<String, Modes>();
 			htiboxMap.set("NONE", DEFAULT);
 			htiboxMap.set("ONE", SINGLE);
 			htiboxMap.set("TWO", DOUBLE);
 
-			hitbox = new FlxHitbox(htiboxMap.get(ClientPrefs.data.hitbox1));
+			hitbox = new FlxHitbox(htiboxMap.get(ClientPrefs.data.extraButtons));
 
 				add(hitbox);
 		}
@@ -151,4 +166,41 @@ class MobileControls extends FlxSpriteGroup
 
 		return virtualPad;
 	}
+	public static function setExtraCustomMode(virtualPad:FlxVirtualPadExtra):Void
+		{
+			if (FlxG.save.data.buttonsExtra == null)
+			{
+				FlxG.save.data.buttonsExtra = new Array();
+				for (buttons in virtualPad)
+					FlxG.save.data.buttonsExtra.push(FlxPoint.get(buttons.x, buttons.y));
+			}
+			else
+			{
+				var tempCount:Int = 0;
+				for (buttons in virtualPad)
+				{
+					FlxG.save.data.buttonsExtra[tempCount] = FlxPoint.get(buttons.x, buttons.y);
+					tempCount++;
+				}
+			}
+	
+			FlxG.save.flush();
+		}
+	
+		public static function getExtraCustomMode(virtualPad:FlxVirtualPadExtra):FlxVirtualPadExtra
+		{
+			var tempCount:Int = 0;
+	
+			if (FlxG.save.data.buttonsExtra == null)
+				return virtualPad;
+	
+			for (buttons in virtualPad)
+			{
+				buttons.x = FlxG.save.data.buttonsExtra[tempCount].x;
+				buttons.y = FlxG.save.data.buttonsExtra[tempCount].y;
+				tempCount++;
+			}
+	
+			return virtualPad;
+		}
 }

@@ -7,9 +7,9 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		title = 'Mobile Options';
 		rpcTitle = 'Mobile Options Menu'; //for Discord Rich Presence, fuck it
 
-		var option:Option = new Option('Extra Hitbox button', //Name
-			'Select how many extra hitboxs you prefere to have.', //Description
-			'hitbox1', //Save data variable name
+		var option:Option = new Option('Extra Controls', //Name
+			'Select how many extra buttons you prefere to have\nThey can be used for mechanics with LUA or HScript.', //Description
+			'extraButtons', //Save data variable name
 			'string',
 			["NONE", "ONE", "TWO"]); //Variable type
 		addOption(option);

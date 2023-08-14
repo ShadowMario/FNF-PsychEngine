@@ -1,5 +1,6 @@
 package psychlua;
 
+import mobile.MobileControls;
 import lime.ui.Haptic;
 #if sys
 import sys.FileSystem;
@@ -126,24 +127,53 @@ class ExtraFunctions
 			return false;
 		});
 		#if mobileC
-		Lua_helper.add_callback(lua, "hitboxPressed", function(button:String) {
+		Lua_helper.add_callback(lua, "extraButtonPressed", function(button:String) {
 			button = button.toLowerCase();
+			switch (mobile.MobileControls.getMode()){
+				case 0 | 1 | 2 | 3:
+			switch(button){
+				case 'first':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.pressed;
+			case 'second':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra1.pressed;
+			default:
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.pressed;
+			}
+				case 4:
 			switch(button){
 				case 'first':
 				if (mobile.MobileControls.instance.hitbox != null)
 					return mobile.MobileControls.instance.hitbox.buttonExtra.pressed;
-			case 'second':
+				case 'second':
 				if (mobile.MobileControls.instance.hitbox != null)
 					return mobile.MobileControls.instance.hitbox.buttonExtra1.pressed;
-			default:
+				default:
 				if (mobile.MobileControls.instance.hitbox != null)
 					return mobile.MobileControls.instance.hitbox.buttonExtra.pressed;
-			}
+				}
+		}
 			return false;
 		});
 
-		Lua_helper.add_callback(lua, "hitboxJustPressed", function(button:String) {
+		Lua_helper.add_callback(lua, "extraButtonJustPressed", function(button:String) {
 			button = button.toLowerCase();
+			switch (mobile.MobileControls.getMode()){
+				case 0 | 1 | 2 | 3:
+			switch(button){
+				case 'first':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.justPressed;
+			case 'second':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra1.justPressed;
+			default:
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.justPressed;
+			}
+				case 4:
 			switch(button){
 				case 'first':
 				if (mobile.MobileControls.instance.hitbox != null)
@@ -154,12 +184,27 @@ class ExtraFunctions
 				default:
 				if (mobile.MobileControls.instance.hitbox != null)
 					return mobile.MobileControls.instance.hitbox.buttonExtra.justPressed;
-			}
+				}
+		}
 			return false;
 		});
 
-		Lua_helper.add_callback(lua, "hitboxJustReleased", function(button:String) {
+		Lua_helper.add_callback(lua, "extraButtonJustReleased", function(button:String) {
 			button = button.toLowerCase();
+			switch (mobile.MobileControls.getMode()){
+				case 0 | 1 | 2 | 3:
+			switch(button){
+				case 'first':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.justReleased;
+			case 'second':
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra1.justReleased;
+			default:
+				if (mobile.MobileControls.instance.virtualPadExtra != null)
+					return mobile.MobileControls.instance.virtualPadExtra.buttonExtra.justReleased;
+			}
+				case 4:
 			switch(button){
 				case 'first':
 				if (mobile.MobileControls.instance.hitbox != null)
@@ -170,7 +215,8 @@ class ExtraFunctions
 				default:
 				if (mobile.MobileControls.instance.hitbox != null)
 					return mobile.MobileControls.instance.hitbox.buttonExtra.justReleased;
-			}
+				}
+		}
 			return false;
 		});
                 #end
