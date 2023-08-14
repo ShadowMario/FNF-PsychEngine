@@ -56,7 +56,7 @@ class MobileControlsSubState extends FlxSubState
 			if (curSelected == 4){
 				daFunny.visible = true;
 				daFunny.alpha = 1;
-				FlxTween.tween(daFunny, {alpha: 0}, 1.5, {ease: FlxEase.circInOut});
+				FlxTween.tween(daFunny, {alpha: 0}, 2.5, {ease: FlxEase.circInOut});
 
 			} else {
 				MobileControls.setMode(curSelected);
