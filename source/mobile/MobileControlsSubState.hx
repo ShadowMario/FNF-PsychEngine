@@ -21,7 +21,7 @@ import openfl.utils.Assets;
 
 class MobileControlsSubState extends FlxSubState
 {
-	public var controlsItems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Pad-Extras', 'Hitbox', 'Keyboard'];
+	public var controlsItems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Hitbox', 'Keyboard', 'Pad-Extras'];
 	var virtualPad:FlxVirtualPad;
 	var virtualPadExtra:FlxVirtualPadExtra;
 	var hitbox:FlxHitbox;
@@ -55,7 +55,7 @@ class MobileControlsSubState extends FlxSubState
 
 		var exitButton:FlxButton = new FlxButton(FlxG.width - 200, 50, 'Exit', function()
 		{
-			if (curSelected == 4 && ClientPrefs.data.extraButtons != 'NONE'){
+			if (curSelected == 6 && ClientPrefs.data.extraButtons != 'NONE'){
 				daFunny.visible = true;
 				daFunny.alpha = 1;
 				FlxTween.tween(daFunny, {alpha: 0}, 2.5, {ease: FlxEase.circInOut});
