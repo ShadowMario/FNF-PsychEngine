@@ -193,7 +193,9 @@ class MobileControls extends FlxSpriteGroup
 	
 			if (FlxG.save.data.buttonsExtra == null)
 				return virtualPad;
-	
+			for (buttons in virtualPad)
+				FlxG.save.data.buttonsExtra.push(FlxPoint.get(buttons.x, buttons.y));
+
 			for (buttons in virtualPad)
 			{
 				buttons.x = FlxG.save.data.buttonsExtra[tempCount].x;

@@ -21,7 +21,7 @@ import openfl.utils.Assets;
 
 class MobileControlsSubState extends FlxSubState
 {
-	final controlsItems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Pad-Extras', 'Hitbox', 'Keyboard'];
+	public var controlsItems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Pad-Extras', 'Hitbox', 'Keyboard'];
 	var virtualPad:FlxVirtualPad;
 	var virtualPadExtra:FlxVirtualPadExtra;
 	var hitbox:FlxHitbox;
@@ -44,6 +44,8 @@ class MobileControlsSubState extends FlxSubState
 
 	override function create()
 	{
+		if (ClientPrefs.data.extraButtons == 'NONE')
+			controlsItems = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Hitbox', 'Keyboard'];
 		curSelected = MobileControls.getMode();
 
                 var bg:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255)));
