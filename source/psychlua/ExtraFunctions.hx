@@ -25,11 +25,11 @@ class ExtraFunctions
 		// Keyboard & Gamepads
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.justPressed, name.toUpperCase());
+			return Reflect.getProperty(FlxG.keys.justPressed, name.toUpperCase()());
 		});
 		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.pressed, name.toUpperCase());
+			return Reflect.getProperty(FlxG.keys.pressed, name.toUpperCase()());
 		});
 		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
 		{
