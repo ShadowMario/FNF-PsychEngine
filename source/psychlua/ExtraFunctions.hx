@@ -1,8 +1,6 @@
 package psychlua;
 
-#if mobileC
 import mobile.MobileControls;
-#end
 import lime.ui.Haptic;
 #if sys
 import sys.FileSystem;
@@ -25,28 +23,28 @@ class ExtraFunctions
 		// Keyboard & Gamepads
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.justPressed, name.toUpperCase()());
+			return Reflect.getProperty(FlxG.keys.justPressed, name);
 		});
 		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.pressed, name.toUpperCase()());
+			return Reflect.getProperty(FlxG.keys.pressed, name);
 		});
 		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.justReleased, name.toUpperCase());
+			return Reflect.getProperty(FlxG.keys.justReleased, name);
 		});
 
 		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String)
 		{
-			return FlxG.gamepads.anyJustPressed(name.toUpperCase());
+			return FlxG.gamepads.anyJustPressed(name);
 		});
 		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String)
 		{
-			return FlxG.gamepads.anyPressed(name.toUpperCase());
+			return FlxG.gamepads.anyPressed(name);
 		});
 		Lua_helper.add_callback(lua, "anyGamepadReleased", function(name:String)
 		{
-			return FlxG.gamepads.anyJustReleased(name.toUpperCase());
+			return FlxG.gamepads.anyJustReleased(name);
 		});
 
 		Lua_helper.add_callback(lua, "gamepadAnalogX", function(id:Int, ?leftStick:Bool = true)
@@ -74,7 +72,7 @@ class ExtraFunctions
 			{
 				return false;
 			}
-			return Reflect.getProperty(controller.justPressed, name.toUpperCase()) == true;
+			return Reflect.getProperty(controller.justPressed, name) == true;
 		});
 		Lua_helper.add_callback(lua, "gamepadPressed", function(id:Int, name:String)
 		{
@@ -83,7 +81,7 @@ class ExtraFunctions
 			{
 				return false;
 			}
-			return Reflect.getProperty(controller.pressed, name.toUpperCase()) == true;
+			return Reflect.getProperty(controller.pressed, name) == true;
 		});
 		Lua_helper.add_callback(lua, "gamepadReleased", function(id:Int, name:String)
 		{
@@ -92,7 +90,7 @@ class ExtraFunctions
 			{
 				return false;
 			}
-			return Reflect.getProperty(controller.justReleased, name.toUpperCase()) == true;
+			return Reflect.getProperty(controller.justReleased, name) == true;
 		});
 
 		Lua_helper.add_callback(lua, "keyJustPressed", function(name:String = '') {
