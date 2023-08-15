@@ -211,7 +211,7 @@ class FunkinLua {
 			}
 			return 'null';
 		}
-    #if mobileC set('mobileControlsMode', getMbileControlsAsString()); #end
+    #if mobileC set('mobileControlsMode', getMobileControlsAsString()); #end
 		for (name => func in customFunctions)
 		{
 			if(func != null)
