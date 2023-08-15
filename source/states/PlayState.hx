@@ -2917,7 +2917,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
-			if (!note.isSustainNote && cpuControlled)
+			if (!note.isSustainNote && !cpuControlled)
 			{
 				songScore += 500 * Std.int(healthGain);
 				if(combo > 9999) combo = 9999;
