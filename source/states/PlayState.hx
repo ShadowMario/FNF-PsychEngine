@@ -2454,7 +2454,8 @@ class PlayState extends MusicBeatState
 			antialias = !isPixelStage;
 		}
 
-		if (!cpuControlled) {
+		// let's not make this disabled by default
+		if ((!ClientPrefs.data.lowQuality) || cpuControlled && ClientPrefs.data.lowQuality) {
 		rating.loadGraphic(Paths.image(uiPrefix + daRating.image + uiSuffix));
 		rating.screenCenter();
 		rating.x = placement - 40;
