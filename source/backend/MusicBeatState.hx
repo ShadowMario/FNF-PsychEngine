@@ -7,6 +7,7 @@ import flixel.FlxState;
 import mobile.MobileControls;
 import mobile.flixel.FlxVirtualPad;
 import flixel.util.FlxDestroyUtil;
+import flixel.FlxCamera;
 #end
 
 class MusicBeatState extends FlxUIState
@@ -30,6 +31,8 @@ class MusicBeatState extends FlxUIState
 	#if mobileC
 	public var virtualPad:FlxVirtualPad;
 	public var mobileControls:MobileControls;
+	public var camControls:FlxCamera;
+	public var vpadCam:FlxCamera;
 
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
@@ -48,7 +51,7 @@ class MusicBeatState extends FlxUIState
 	{
 		mobileControls = new MobileControls();
 
-		var camControls = new flixel.FlxCamera();
+		camControls = new FlxCamera();
 		camControls.bgColor.alpha = 0;
 		FlxG.cameras.add(camControls, DefaultDrawTarget);
 
@@ -125,10 +128,10 @@ class MusicBeatState extends FlxUIState
 	{
 		if (virtualPad != null)
 		{
-			var camControls:FlxCamera = new FlxCamera();
-			camControls.bgColor.alpha = 0;
-			FlxG.cameras.add(camControls, DefaultDrawTarget);
-			virtualPad.cameras = [camControls];
+			vpadCam = new FlxCamera();
+			vpadCam.bgColor.alpha = 0;
+			FlxG.cameras.add(vpadCam, DefaultDrawTarget);
+			virtualPad.cameras = [vpadCam];
 		}
 	}
 	#end
