@@ -578,7 +578,6 @@ class PlayState extends MusicBeatState
 		#if mobileC
 		addMobileControls(false);
 		mobileControls.visible = true;
-		setOnScripts('mobileControlsMode', MusicBeatState.mobileCMode);
 		#end
 
 		startingSong = true;
@@ -1612,7 +1611,6 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 		callOnScripts('onUpdate', [elapsed]);
-
 		FlxG.camera.followLerp = 0;
 		if(!inCutscene && !paused) {
 			FlxG.camera.followLerp = FlxMath.bound(elapsed * 2.4 * cameraSpeed * playbackRate / (FlxG.updateFramerate / 60), 0, 1);

@@ -1,5 +1,6 @@
 package psychlua;
 
+import mobile.MobileControls;
 import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
@@ -193,7 +194,24 @@ class FunkinLua {
 		set('splashAlpha', ClientPrefs.data.splashAlpha);
 
 		set('buildTarget', getBuildTarget());
-    #if mobileC set('mobileControlsMode', MusicBeatState.mobileCMode); #end
+		function getMbileControlsAsString():String {
+			switch (MobileControls.getMode()){
+			case 0:
+				return 'LEFT';
+			case 1:
+				return 'RIGHT';
+			case 2:
+				return 'CUSTOM';
+			case 3:
+				return 'DUO';
+			case 4:
+				return 'HITBOX';
+			case 5:
+				return 'NONE';
+			}
+			return 'null';
+		}
+    #if mobileC set('mobileControlsMode', getMbileControlsAsString()); #end
 		for (name => func in customFunctions)
 		{
 			if(func != null)

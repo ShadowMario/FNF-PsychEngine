@@ -30,7 +30,6 @@ class MusicBeatState extends FlxUIState
 	#if mobileC
 	public var virtualPad:FlxVirtualPad;
 	public var mobileControls:MobileControls;
-	public static var mobileCMode:String;
 
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
@@ -57,15 +56,6 @@ class MusicBeatState extends FlxUIState
 		mobileControls.visible = false;
 		mobileControls.alpha = 0.6;
 		add(mobileControls);
-		switch (MobileControls.getMode())
-        {
-	  case 0: mobileCMode = 'left';
-	  case 1: mobileCMode = 'right';
-	  case 2: mobileCMode = 'custom';
-	  case 3: mobileCMode = 'duo';
-	  case 4: mobileCMode = 'hitbox';
-	  case 5: mobileCMode = 'none';
-         }
 		// configure the current mobile control binds, without this there gonna be conflict and input issues.
 		switch (MobileControls.getMode())
 				{
