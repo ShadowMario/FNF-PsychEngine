@@ -197,17 +197,17 @@ class FunkinLua {
 		function getMbileControlsAsString():String {
 			switch (MobileControls.getMode()){
 			case 0:
-				return 'LEFT';
+				return 'left';
 			case 1:
-				return 'RIGHT';
+				return 'right';
 			case 2:
-				return 'CUSTOM';
+				return 'custom';
 			case 3:
-				return 'DUO';
+				return 'duo';
 			case 4:
-				return 'HITBOX';
+				return 'hitbox';
 			case 5:
-				return 'NONE';
+				return 'none';
 			}
 			return 'null';
 		}
