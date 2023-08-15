@@ -194,7 +194,7 @@ class FunkinLua {
 		set('splashAlpha', ClientPrefs.data.splashAlpha);
 
 		set('buildTarget', getBuildTarget());
-		function getMbileControlsAsString():String {
+		function getMobileControlsAsString():String {
 			switch (MobileControls.getMode()){
 			case 0:
 				return 'left';
