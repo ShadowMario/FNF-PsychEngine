@@ -349,8 +349,10 @@ function changeSelection(change:Int = 0):Void
 		}
 
 		funitext.visible = daChoice == 'Keyboard';
-		resetButton.visible = daChoice == 'Pad-Custom';
-		resetButton.visible = daChoice == 'Pad-Extras';
+		if (daChoice == 'Pad-Custom' || daChoice == 'Pad-Extras')
+		resetButton.visible = true;
+		else resetButton.visible = false;
+
 		upPozition.visible = daChoice == 'Pad-Custom';
 		downPozition.visible = daChoice == 'Pad-Custom';
 		leftPozition.visible = daChoice == 'Pad-Custom';
