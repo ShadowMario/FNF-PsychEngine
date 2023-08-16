@@ -126,7 +126,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          automatic_release_tag: "0.7.1h-release3"
-          title: "0.7.1h Android Release 3"
+          automatic_release_tag: "0.7.1h-release3fix"
+          title: "0.7.1h Android Release 3 Fix"
           files: |
             /home/runner/PsychEngine-gcc-release.apk
