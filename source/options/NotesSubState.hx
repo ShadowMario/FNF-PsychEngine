@@ -177,8 +177,6 @@ class NotesSubState extends MusicBeatSubstate
         addVirtualPad(NONE, B_C);
 		MusicBeatSubstate.virtualPad.buttonC.x = 0;
 		MusicBeatSubstate.virtualPad.buttonC.y = FlxG.height - 135;
-		
-
         #end
 	}
 
@@ -605,11 +603,11 @@ class NotesSubState extends MusicBeatSubstate
 
 		// clear groups
 		modeNotes.forEachAlive(function(note:FlxSprite) {
-			note.kill();
+			//note.kill();
 			note.destroy();
 		});
 		myNotes.forEachAlive(function(note:StrumNote) {
-			note.kill();
+			//note.kill();
 			note.destroy();
 		});
 		modeNotes.clear();

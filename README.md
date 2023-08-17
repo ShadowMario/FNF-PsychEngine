@@ -8,7 +8,7 @@ Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), 
 
 ### Mobile Special Thanks
 * Mihai Alexandru - Author of mobile controls and his FlxRuntimeShader is used here
-* Hiho2950 - Optimizing Notes and Botplay (https://github.com/mcagabe19/FNF-PsychEngine-Mobile/pull/16)
+* Hiho2950 - Optimizing Notes and Botplay (https://github.com/MobilePorting/FNF-PsychEngine-Mobile/pull/16)
 
 ## Psych Credits:
 * Shadow Mario - Programmer
