@@ -23,6 +23,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noteSplashes:Bool = true;
 	public static var cacheOnGPU:Bool = false;
 	public static var communityGameBot:Bool = false;
+	public static var noSyncing:Bool = false;
+	public static var startingSync:Bool = false;
 	public static var playerLightStrum:Bool = true;
 	public static var progAudioLoad:Bool = false;
 	public static var oppNoteSplashes:Bool = true;
@@ -73,6 +75,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noteSpawnTime:Float = 1;
 	public static var dynamicSpawnTime:Bool = false;
 	public static var evenLessBotLag:Bool = false;
+	public static var progChartLoad:Bool = false;
 	public static var oppNoteAlpha:Float = 0.65;
 	public static var lessBotLag:Bool = false;
 	public static var ratesAndCombo:Bool = false;
@@ -234,6 +237,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.noteStyleThing = noteStyleThing;
 		FlxG.save.data.antiCheatEnable = antiCheatEnable;
 		FlxG.save.data.randomBotplayText = randomBotplayText;
+		FlxG.save.data.startingSync = startingSync;
+		FlxG.save.data.noSyncing = noSyncing;
 		FlxG.save.data.instaRestart = instaRestart;
 		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
@@ -300,7 +305,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.comboOffset = comboOffset;
 		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
-
+		FlxG.save.data.progChartLoad = progChartLoad;
 		FlxG.save.data.ratingOffset = ratingOffset;
 		FlxG.save.data.marvWindow = marvWindow;
 		FlxG.save.data.sickWindow = sickWindow;
@@ -366,6 +371,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.cameraPanning != null) {
 			cameraPanning = FlxG.save.data.cameraPanning;
 		}
+		if(FlxG.save.data.startingSync != null) {
+			startingSync = FlxG.save.data.startingSync;
+		}
+		if(FlxG.save.data.noSyncing != null) {
+			noSyncing = FlxG.save.data.noSyncing;
+		}
 		if(FlxG.save.data.songLoading != null) {
 			songLoading = FlxG.save.data.songLoading;
 		}
@@ -386,6 +397,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.charsAndBG != null) {
 			charsAndBG = FlxG.save.data.charsAndBG;
+		}
+		if(FlxG.save.data.progChartLoad != null) {
+			progChartLoad = FlxG.save.data.progChartLoad;
 		}
 		if(FlxG.save.data.fasterChartLoad != null) {
 			fasterChartLoad = FlxG.save.data.fasterChartLoad;

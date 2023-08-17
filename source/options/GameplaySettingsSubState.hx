@@ -128,6 +128,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Beginning Sync',
+			"If checked, the game will resync the vocals for the first 500ms of a song.",
+			'startingSync',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Remove Marvelous!! Judgement',
 			"If unchecked, removes the Marvelous judgement.",
 			'noMarvJudge',

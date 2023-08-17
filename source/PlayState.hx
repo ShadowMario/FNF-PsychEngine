@@ -63,6 +63,8 @@ import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
 import Shaders;
+import flixel.util.FlxPool;
+
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -215,6 +217,8 @@ class PlayState extends MusicBeatState
 	public var laneunderlay:FlxSprite;
 	public var laneunderlayOpponent:FlxSprite;
 
+	var noteBatchSize:Int = 1000;
+
 	public var camZooming:Bool = false;
 	public var camZoomingMult:Float = 1;
 	public var camZoomingDecay:Float = 1;
@@ -288,6 +292,7 @@ class PlayState extends MusicBeatState
 	var trollingMode:Bool = false;
 	public var jackingtime:Float = 0;
 
+	public var songWasLooped:Bool = false; //If the song was looped. Used in Troll Mode
 	public var shouldKillNotes:Bool = true; //Whether notes should be killed when you hit them. Disables automatically when in Troll Mode because you can't end the song anyway
 
 	public var botplaySine:Float = 0;
@@ -3059,6 +3064,8 @@ class PlayState extends MusicBeatState
 	}
 
 	function camPanRoutine(anim:String = 'singUP', who:String = 'bf'):Void {
+		if (SONG.notes[curSection] != null)
+		{
 		var fps:Float = FlxG.updateFramerate;
 		final bfCanPan:Bool = SONG.notes[curSection].mustHitSection;
 		final dadCanPan:Bool = !SONG.notes[curSection].mustHitSection;
@@ -3077,6 +3084,7 @@ class PlayState extends MusicBeatState
 				case 'singLEFT': moveCamTo[0] = -40*ClientPrefs.panIntensity*240/fps;
 				case 'singRIGHT': moveCamTo[0] = 40*ClientPrefs.panIntensity*240/fps;
 			}
+		}
 		}
 	}
 
@@ -3930,14 +3938,11 @@ class PlayState extends MusicBeatState
 		{
 		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.pitch = playbackRate;
-		if (SONG.song.toLowerCase() == 'anti-cheat-song') 
-		{
-		FlxG.sound.music.onComplete = infiniteLoop.bind();
-		}
 		if (!trollingMode && SONG.song.toLowerCase() != 'anti-cheat-song' && SONG.song.toLowerCase() != 'desert bus') 
 		{
 		FlxG.sound.music.onComplete = finishSong.bind();
 		}
+		/*
 		if (trollingMode && ClientPrefs.trollMaxSpeed == 'Highest') 
 		{
 		FlxG.sound.music.onComplete = loopSongHighest.bind();
@@ -3966,6 +3971,7 @@ class PlayState extends MusicBeatState
 		{
 		FlxG.sound.music.onComplete = loopSongNoLimit.bind();
 		}
+		*/
 		vocals.play();
 		}
 
@@ -4024,7 +4030,7 @@ class PlayState extends MusicBeatState
 				playbackRate = ting; //why cant i just tween a variable
 
 			if (ClientPrefs.songLoading) FlxG.sound.music.time = Conductor.songPosition;
-			if (ClientPrefs.songLoading) resyncVocals();
+			if (ClientPrefs.songLoading && !ClientPrefs.noSyncing) resyncVocals();
 		}});
 	}
 
@@ -4063,9 +4069,6 @@ class PlayState extends MusicBeatState
 		notes.visible = ClientPrefs.showNotes; //that was easier than expected
 
 		var noteData:Array<SwagSection> = SONG.notes;
-
-		Note.__pool = new flixel.util.FlxPool<Note>(Note);
-		Note.__pool.preAllocate(32);
 
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		var file:String = Paths.json(songName + '/events');
@@ -4268,8 +4271,7 @@ class PlayState extends MusicBeatState
 		// playerCounter += 1;
 
 		unspawnNotes.sort(sortByTime);
-		unspawnNotesCopy = unspawnNotes.copy();
-		trace (unspawnNotesCopy.length);
+		if (trollingMode) unspawnNotesCopy = unspawnNotes.copy();
 		generatedMusic = true;
 		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
 	}
@@ -4298,9 +4300,6 @@ class PlayState extends MusicBeatState
 
 		var noteData:Array<SwagSection> = SONG.notes;
 
-		Note.__pool = new flixel.util.FlxPool<Note>(Note);
-		Note.__pool.preAllocate(32);
-
 		loadEventNotes();
 
 		for (section in noteData) {
@@ -4324,7 +4323,9 @@ class PlayState extends MusicBeatState
 		loadOtherEventNotes();
 
 		unspawnNotes.sort(sortByTime);
-		unspawnNotesCopy = unspawnNotes.copy();
+		if (trollingMode) unspawnNotesCopy = unspawnNotes.copy();
+		generatedMusic = true;
+		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
 		generatedMusic = true;
 		trace('song loaded! notes loaded: ' + FlxStringUtil.formatMoney(unspawnNotes.length, false) + ', ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' being sung by the opponent and ' + FlxStringUtil.formatMoney(totalNotes, false) + ' being sung by the player!');
 	}
@@ -4628,7 +4629,7 @@ class PlayState extends MusicBeatState
 	{
 		if (paused)
 		{
-			if (FlxG.sound.music != null && !startingSong)
+			if (FlxG.sound.music != null && !startingSong && !ClientPrefs.noSyncing)
 			{
 				resyncVocals();
 			}
@@ -4708,17 +4709,19 @@ class PlayState extends MusicBeatState
 	{
 		if(finishTimer != null) return;
 
-		vocals.pause();
+		if (vocals != null) vocals.pause();
+		if (unspawnNotesCopy.length <= 10000) FlxG.sound.music.pause();
 
 		FlxG.sound.music.play();
 		FlxG.sound.music.pitch = playbackRate;
-		Conductor.songPosition = FlxG.sound.music.time;
-		if (Conductor.songPosition <= vocals.length)
+		if (Conductor.songPosition > 50) Conductor.songPosition = FlxG.sound.music.time; //ONLY resync the conductor position to the music time IF conductor's song position is higher than 50 ms, should fix looping causing the game to get stuck on resyncing the vocals
+		if (Conductor.songPosition <= vocals.length && vocals != null)
 		{
 			vocals.time = Conductor.songPosition;
 			vocals.pitch = playbackRate;
 		}
-		vocals.play();
+		if (vocals != null) vocals.play();
+		trace('Resynced Vocals {Conductor.songPosition: ${Conductor.songPosition}, FlxG.sound.music.time: ${FlxG.sound.music.time} / ${FlxG.sound.music.length}}');
 	}
 
 	public var paused:Bool = false;
@@ -5262,14 +5265,13 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic) {
 			if (startedCountdown && canPause && !endingSong) {
-				if (playbackRate > 2) endingTimeLimit = 100;
-				if (playbackRate > 8) endingTimeLimit = 200;
-				if (playbackRate > 12) endingTimeLimit = 300;
-				if (playbackRate > 20) endingTimeLimit = 600;
+				if (playbackRate <= 256) endingTimeLimit = 20;
+				if (playbackRate >= 256) endingTimeLimit = 10000;
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
 				// so no reason to delete it at all
 				if (ClientPrefs.songLoading && FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && trollingMode) { //stop crashes when playing normally
+					if (!songWasLooped) songWasLooped = true;
 					if (ClientPrefs.trollMaxSpeed == 'Highest') loopSongHighest();
 					if (ClientPrefs.trollMaxSpeed == 'High') loopSongHigh();
 					if (ClientPrefs.trollMaxSpeed == 'Medium') loopSongMedium();
@@ -5277,6 +5279,11 @@ class PlayState extends MusicBeatState
 					if (ClientPrefs.trollMaxSpeed == 'Lower') loopSongLower();
 					if (ClientPrefs.trollMaxSpeed == 'Lowest') loopSongLowest();
 					if (ClientPrefs.trollMaxSpeed == 'Disabled') loopSongNoLimit();
+					FlxG.sound.music.time = 0;
+				}
+				if (ClientPrefs.songLoading && FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && SONG.song.toLowerCase() == 'anti-cheat-song') { //stop crashes when playing normally
+					infiniteLoop();
+					FlxG.sound.music.time = 0;
 				}
 			}
 		}
@@ -5486,12 +5493,12 @@ class PlayState extends MusicBeatState
 				if(!cpuControlled && !softlocked) {
 					keyShit();
 				}
-				if (ClientPrefs.charsAndBG) {
+				else if (ClientPrefs.charsAndBG) {
 				if(boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 / playbackRate) * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss')) {
 					boyfriend.dance();
 					//boyfriend.animation.curAnim.finish();
 				}
-          				if(opponentChart && dad.animation.curAnim != null && dad.holdTimer > Conductor.stepCrochet * (0.0011 / playbackRate) * dad.singDuration && dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) {
+          				if (dad.animation.curAnim != null && dad.holdTimer > Conductor.stepCrochet * (0.0011 / playbackRate) * dad.singDuration && dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) {
 					dad.dance();
 				}
 				}
@@ -6285,8 +6292,6 @@ class PlayState extends MusicBeatState
 	}
 	public function loopSongNoLimit(?ignoreNoteOffset:Bool = false):Void
 	{	
-						if (ClientPrefs.songLoading) vocals.stop();
-						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
 				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (!ClientPrefs.voiidTrollMode) {
 				if (playbackRate >= 65535) playbackRate += 3276.7;
@@ -6325,14 +6330,10 @@ class PlayState extends MusicBeatState
 							opponentNoteTotal += 1;
 							}
 						}
-						if (ClientPrefs.songLoading) vocals.play();
-						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 				Conductor.songPosition = 0;
 	}
 	public function loopSongHighest(?ignoreNoteOffset:Bool = false):Void
 	{	
-						if (ClientPrefs.songLoading) vocals.stop();
-						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
 				if (playbackRate >= 10000) playbackRate = 10000;
 				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (!ClientPrefs.voiidTrollMode) {
@@ -6370,13 +6371,9 @@ class PlayState extends MusicBeatState
 							}
 						}
 				Conductor.songPosition = 0;
-						if (ClientPrefs.songLoading) vocals.play();
-						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongHigh(?ignoreNoteOffset:Bool = false):Void
 	{	
-						if (ClientPrefs.songLoading) vocals.stop();
-						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
 				if (playbackRate >= 5120) playbackRate = 5120;
 				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (!ClientPrefs.voiidTrollMode) {
@@ -6413,13 +6410,9 @@ class PlayState extends MusicBeatState
 							}
 						}
 				Conductor.songPosition = 0;
-						if (ClientPrefs.songLoading) vocals.play();
-						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongMedium(?ignoreNoteOffset:Bool = false):Void
 	{	
-						if (ClientPrefs.songLoading) vocals.stop();
-						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
 				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (playbackRate >= 2048) playbackRate = 2048;
 				if (!ClientPrefs.voiidTrollMode) {
@@ -6454,13 +6447,9 @@ class PlayState extends MusicBeatState
 							}
 						}
 				Conductor.songPosition = 0;
-						if (ClientPrefs.songLoading) vocals.play();
-						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongLow(?ignoreNoteOffset:Bool = false):Void
 	{	
-						if (ClientPrefs.songLoading) vocals.stop();
-						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
 				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (playbackRate >= 1024) playbackRate = 1024;
 				if (!ClientPrefs.voiidTrollMode) {
@@ -6494,13 +6483,9 @@ class PlayState extends MusicBeatState
 							}
 						}
 				Conductor.songPosition = 0;
-						if (ClientPrefs.songLoading) vocals.play();
-						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongLower(?ignoreNoteOffset:Bool = false):Void
 	{	
-						if (ClientPrefs.songLoading) vocals.stop();
-						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
 				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (playbackRate >= 512) playbackRate = 512;
 				if (!ClientPrefs.voiidTrollMode) {
@@ -6533,13 +6518,9 @@ class PlayState extends MusicBeatState
 							}
 						}
 				Conductor.songPosition = 0;
-						if (ClientPrefs.songLoading) vocals.play();
-						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 	public function loopSongLowest(?ignoreNoteOffset:Bool = false):Void
 	{	
-						if (ClientPrefs.songLoading) vocals.stop();
-						if (ClientPrefs.songLoading) FlxG.sound.music.stop();
 				if (ClientPrefs.voiidTrollMode) playbackRate *= 1.05;
 				if (playbackRate >= 256) playbackRate = 256;
 				if (!ClientPrefs.voiidTrollMode) {
@@ -6571,8 +6552,6 @@ class PlayState extends MusicBeatState
 							}
 						}
 				Conductor.songPosition = 0;
-						if (ClientPrefs.songLoading) vocals.play();
-						if (ClientPrefs.songLoading) FlxG.sound.music.play();
 	}
 
 	public function infiniteLoop(?ignoreNoteOffset:Bool = false):Void
@@ -6580,8 +6559,8 @@ class PlayState extends MusicBeatState
 					unspawnNotes = unspawnNotesCopy.copy();
 						for (n in unspawnNotes)
 						{
-							n.active = true; //make the note active again so that it always gets hit by the opponent and the player
-							n.visible = true; //make the note visible so that the player sees it again. repeat for all other loop functions
+							n.active = true;
+							n.visible = true;
 							n.wasGoodHit = false;
 							n.noteWasHit = false;
 							n.tooLate = false;
@@ -7637,7 +7616,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				trace("HEY!!");
 				}
 
-			if (parsedHoldArray.contains(true) && !endingSong && !opponentChart) {
+			if (parsedHoldArray.contains(true) && !endingSong) {
 				#if ACHIEVEMENTS_ALLOWED
 				var achieve:String = checkForAchievement(['oversinging']);
 				if (achieve != null) {
@@ -7645,14 +7624,15 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				#end
 			}
-			else if (ClientPrefs.charsAndBG && boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+			else if (ClientPrefs.charsAndBG && boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 / playbackRate) * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{
 				boyfriend.dance();
 				//boyfriend.animation.curAnim.finish();
 			}
-			if (ClientPrefs.charsAndBG && opponentChart && cpuControlled && dad.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * dad.singDuration 
-			&& dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss'))
+			else if (ClientPrefs.charsAndBG && dad.holdTimer > Conductor.stepCrochet * (0.0011 / playbackRate) * dad.singDuration 
+			&& dad.animation.curAnim.name.startsWith('sing') && !dad.animation.curAnim.name.endsWith('miss')) {
 				dad.dance();
+			}
 		}
 
 		// TO DO: Find a better way to handle controller inputs, this should work for now
@@ -8158,7 +8138,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			}
 				if (ClientPrefs.comboScoreEffect && ClientPrefs.comboMultiType == 'Voiid Chronicles') 
 				{ 
-					if (combo >= 2 && combo % 10 == 9) comboMultiplier += 1 * polyphony;
+					comboMultiplier = Math.fceil((combo+1)/10);
 				}
 
 			if (!note.isSustainNote && !cpuControlled || !note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot)
@@ -8689,10 +8669,15 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	override function stepHit()
 	{
 		super.stepHit();
-		if (ClientPrefs.songLoading && Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)
-			|| (SONG.needsVoices && ClientPrefs.songLoading &&  Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)))
+		var gamerValue = 20 * playbackRate;
+		if (!ClientPrefs.noSyncing && ClientPrefs.songLoading && playbackRate < 256) //much better resync code, doesn't just resync every step!!
+		{
+		if (FlxG.sound.music.time > Conductor.songPosition + gamerValue
+			|| FlxG.sound.music.time < Conductor.songPosition - gamerValue
+			|| FlxG.sound.music.time < 500 && ClientPrefs.startingSync)
 		{
 			resyncVocals();
+		}
 		}
 
 		if(curStep == lastStepHit) {
@@ -8712,11 +8697,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	override function beatHit()
 	{
 		super.beatHit();
-
-		if(lastBeatHit >= curBeat) {
-			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
-			return;
-		}
 
 		if (curBeat % 32 == 0 && randomSpeedThing)
 		{

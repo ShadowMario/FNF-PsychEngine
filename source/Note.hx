@@ -114,7 +114,7 @@ class Note extends FlxSprite
 
 	public function resizeByRatio(ratio:Float) //haha funny twitter shit
 	{
-		if(isSustainNote && !animation.curAnim.name.endsWith('end'))
+		if(isSustainNote && animation.curAnim != null && !animation.curAnim.name.endsWith('end'))
 		{
 			scale.y *= ratio;
 			updateHitbox();
@@ -134,24 +134,18 @@ class Note extends FlxSprite
 		if (ClientPrefs.colorQuants && !isSustainNote)
 			{
 				var time = strumTime;
-
-				var time = strumTime;
+				var theCurBPM = Conductor.bpm;
+				var stepCrochet:Float = (60 / theCurBPM) * 1000;
 
 				for (i in 0...Conductor.bpmChangeMap.length)
 				{
 					var bpmchange = Conductor.bpmChangeMap[i];
 					if (strumTime >= bpmchange.songTime)
 					{
+						theCurBPM = bpmchange.bpm;
 						time -= bpmchange.songTime;
 					}
-					else
-					{
-						break;
-					}
 				}
-
-				var lastChange = Conductor.getBPMFromSeconds(strumTime);
-				var stepCrochet = lastChange.stepCrochet * 4;
 
 				var beat = Math.round((time / stepCrochet) * 48);
 				for (i in 0...beats.length)
@@ -251,7 +245,6 @@ class Note extends FlxSprite
 				}
 			}
 	}
-
 
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;

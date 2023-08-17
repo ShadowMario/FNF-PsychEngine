@@ -36,6 +36,10 @@ class MusicBeatState extends FlxUIState
 	public static var windowNameSuffix:String = "";
 	public static var windowNamePrefix:String = "Friday Night Funkin': JS Engine";
 
+	override public function new() {
+		super();
+	}
+
 	override function create() {
 		camBeat = FlxG.camera;
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
@@ -57,8 +61,7 @@ class MusicBeatState extends FlxUIState
 
 		if (oldStep != curStep && curStep > 0)
 		{
-			if(curStep > 0)
-				stepHit();
+			stepHit();
 			if (curStep % 4 == 0)
 				beatHit(); //troll mode no longer breaks beats
 
