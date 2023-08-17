@@ -2711,7 +2711,7 @@ class ChartingState extends MusicBeatState
 		}
 
 		#if MODS_ALLOWED
-		var rawJson = File.getContent(path);
+		var rawJson = File.getContent(SUtil.getPath() + path);
 		#else
 		var rawJson = OpenFlAssets.getText(path);
 		#end
