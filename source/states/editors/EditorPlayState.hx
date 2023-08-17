@@ -229,7 +229,6 @@ class EditorPlayState extends MusicBeatSubstate
 					daNote.active = false;
 					daNote.visible = false;
 
-					daNote.kill();
 					notes.remove(daNote, true);
 					daNote.destroy();
 				}
@@ -803,7 +802,6 @@ class EditorPlayState extends MusicBeatSubstate
 
 		if (!note.isSustainNote)
 		{
-			note.kill();
 			notes.remove(note, true);
 			note.destroy();
 		}
@@ -824,7 +822,6 @@ class EditorPlayState extends MusicBeatSubstate
 
 				if (!note.isSustainNote)
 				{
-					note.kill();
 					notes.remove(note, true);
 					note.destroy();
 				}
@@ -844,7 +841,6 @@ class EditorPlayState extends MusicBeatSubstate
 
 			if (!note.isSustainNote)
 			{
-				note.kill();
 				notes.remove(note, true);
 				note.destroy();
 			}
@@ -855,7 +851,6 @@ class EditorPlayState extends MusicBeatSubstate
 		//Dupe note remove
 		notes.forEachAlive(function(note:Note) {
 			if (daNote != note && daNote.mustPress && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 1) {
-				note.kill();
 				notes.remove(note, true);
 				note.destroy();
 			}
