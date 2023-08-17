@@ -19,6 +19,12 @@ class MobileOptionsSubState extends BaseOptionsMenu
 			'hitbox2', //Save data variable name
 			'bool'); //Variable type
 		addOption(option);
+
+		var option:Option = new Option('Dynamic Controls Color',
+		'If checked, the mobile controls color will be set to the notes color in your settings.\n(have effect during gameplay only)',
+		'dynamicColors',
+		'bool');
+		addOption(option);
 		super();
 	}
 }

@@ -12,6 +12,7 @@ import states.TitleState;
 class SaveVariables {
 	public var extraButtons:String = "NONE"; // mobile extra button option
 	public var hitbox2:Bool = true; // hitbox extra button position option
+	public var dynamicColors:Bool = true; // yes cause its cool -Karim
 	public var downScroll:Bool = false;
 	public var middleScroll:Bool = false;
 	public var opponentStrums:Bool = true;
