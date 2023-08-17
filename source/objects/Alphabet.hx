@@ -255,7 +255,7 @@ class Alphabet extends FlxSpriteGroup
 	override function destroy(){
 		letters = FlxDestroyUtil.destroyArray(letters);
 		active = false;
-		super.destroy;
+		super.destroy();
 	}
 }
 
