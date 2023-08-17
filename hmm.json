@@ -70,8 +70,10 @@
     },
     {
       "name": "openfl",
-      "type": "haxelib",
-      "version": "9.2.1"
+      "type": "git",
+      "dir": null,
+      "ref": "67fe8ab856d83b924e6e40bdac16b91e80f3ca93",
+      "url": "https://github.com/elitemastereric/openfl"
     },
     {
       "name": "sscript",
