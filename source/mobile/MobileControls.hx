@@ -8,8 +8,6 @@ import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
 import flixel.util.FlxDestroyUtil;
-import shaders.RGBPalette;
-import shaders.RGBPalette.RGBShaderReference;
 
 class MobileControls extends FlxSpriteGroup
 {
@@ -19,8 +17,6 @@ class MobileControls extends FlxSpriteGroup
 	public var virtualPadExtra:FlxVirtualPadExtra;
 	public var hitbox:FlxHitbox;
 	var padMap:Map<String, FlxExtraActions>;
-	public static var globalRgbShaders:Array<RGBPalette> = [];
-	public var rgbShader:RGBShaderReference;
 
 	public function new()
 	{
@@ -55,42 +51,28 @@ class MobileControls extends FlxSpriteGroup
 				add(virtualPad);
 				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 				add(virtualPadExtra);
-				for (i in 0...virtualPad.length)
-					rgbShader = new RGBShaderReference(virtualPad, initDynamicColors(i));
 			case 1:
 				virtualPad = new FlxVirtualPad(LEFT_FULL, NONE);
 				add(virtualPad);
 				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 				add(virtualPadExtra);
-				for (i in 0...virtualPad.length)
-					rgbShader = new RGBShaderReference(virtualPad, initDynamicColors(i));
 			case 2:
 				virtualPad = MobileControls.getCustomMode(new FlxVirtualPad(RIGHT_FULL, NONE));
 				add(virtualPad);
 				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 				add(virtualPadExtra);
-				for (i in 0...virtualPad.length)
-					rgbShader = new RGBShaderReference(virtualPad, initDynamicColors(i));
 			case 3:
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(virtualPad);
 				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 				add(virtualPadExtra);
-				for (i in 0...virtualPad.length)
-					rgbShader = new RGBShaderReference(virtualPad, initDynamicColors(i));
 			case 4:
 			htiboxMap = new Map<String, Modes>();
 			htiboxMap.set("NONE", DEFAULT);
 			htiboxMap.set("ONE", SINGLE);
 			htiboxMap.set("TWO", DOUBLE);
-
 			hitbox = new FlxHitbox(htiboxMap.get(ClientPrefs.data.extraButtons));
-
 				add(hitbox);
-				for (i in 0...hitbox.length){
-					if (i != 4 ||  i != 5) // no colors for extra hitboxes
-					rgbShader = new RGBShaderReference(hitbox, initDynamicColors(i));
-				}
 		}
 	}
 
@@ -221,19 +203,4 @@ class MobileControls extends FlxSpriteGroup
 	
 			return virtualPad;
 		}
-		public static function initDynamicColors(button:Int)			{
-				if(backend.ClientPrefs.data.dynamicColors && globalRgbShaders == null)
-				{
-					var newRGB:RGBPalette = new RGBPalette();
-						globalRgbShaders[button] = newRGB;
-						var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[button];
-						if (button > -1 && button <= arr.length)
-							{
-								newRGB.r = arr[0];
-								newRGB.g = arr[1];
-								newRGB.b = arr[2];
-							}
-				}
-				return globalRgbShaders[button];
-			}
 }

@@ -34,27 +34,42 @@ class FlxHitbox extends FlxSpriteGroup
 
 		final offsetFir:Int = (ClientPrefs.data.hitbox2 ? Std.int(FlxG.height / 4) * 3 : 0);
 		final offsetSec:Int = (ClientPrefs.data.hitbox2 ? 0 : Std.int(FlxG.height / 4));
+		var buttonLeftColor:Array<FlxColor>;
+		var buttonDownColor:Array<FlxColor>;
+		var buttonUpColor:Array<FlxColor>;
+		var buttonRightColor:Array<FlxColor>;
+		if (ClientPrefs.data.dynamicColors){
+			buttonLeftColor = ClientPrefs.data.arrowRGB[0];
+			buttonDownColor = ClientPrefs.data.arrowRGB[1];
+			buttonUpColor = ClientPrefs.data.arrowRGB[2];
+			buttonRightColor = ClientPrefs.data.arrowRGB[3];
+		} else{
+			buttonLeftColor = ClientPrefs.defaultData.arrowRGB[0];
+			buttonDownColor = ClientPrefs.defaultData.arrowRGB[1];
+			buttonUpColor = ClientPrefs.defaultData.arrowRGB[2];
+			buttonRightColor = ClientPrefs.defaultData.arrowRGB[3];
+		}
 
 		switch (mode)
 		{
 			case DEFAULT:
-				add(buttonLeft = createHint(0, 0, Std.int(FlxG.width / 4), FlxG.height, 0xFF00FF));
-				add(buttonDown = createHint(FlxG.width / 4, 0, Std.int(FlxG.width / 4), FlxG.height, 0x00FFFF));
-				add(buttonUp = createHint(FlxG.width / 2, 0, Std.int(FlxG.width / 4), FlxG.height, 0x00FF00));
-				add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), 0, Std.int(FlxG.width / 4), FlxG.height, 0xFF0000));
+				add(buttonLeft = createHint(0, 0, Std.int(FlxG.width / 4), FlxG.height, buttonLeftColor[0]));
+				add(buttonDown = createHint(FlxG.width / 4, 0, Std.int(FlxG.width / 4), FlxG.height, buttonDownColor[0]));
+				add(buttonUp = createHint(FlxG.width / 2, 0, Std.int(FlxG.width / 4), FlxG.height, buttonUpColor[0]));
+				add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), 0, Std.int(FlxG.width / 4), FlxG.height, buttonRightColor[0]));
 			case SINGLE:
-				add(buttonLeft = createHint(0, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, 0xFF00FF));
-				add(buttonDown = createHint(FlxG.width / 4, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, 0x00FFFF));
-				add(buttonUp = createHint(FlxG.width / 2, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, 0x00FF00));
-				add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, 0xFF0000));
-				add(buttonExtra = createHint(0, offsetFir, FlxG.width, Std.int(FlxG.height / 4), 0xFF0000));
+				add(buttonLeft = createHint(0, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, buttonLeftColor[0]));
+				add(buttonDown = createHint(FlxG.width / 4, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, buttonDownColor[0]));
+				add(buttonUp = createHint(FlxG.width / 2, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, buttonUpColor[0]));
+				add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, buttonRightColor[0]));
+				add(buttonExtra = createHint(0, offsetFir, FlxG.width, Std.int(FlxG.height / 4), 0xFF0066FF));
 			case DOUBLE:
-				add(buttonLeft = createHint(0, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, 0xFF00FF));
-				add(buttonDown = createHint(FlxG.width / 4, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, 0x00FFFF));
-				add(buttonUp = createHint(FlxG.width / 2, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, 0x00FF00));
-				add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, 0xFF0000));
-				add(buttonExtra = createHint(Std.int(FlxG.width / 2), offsetFir, Std.int(FlxG.width / 2), Std.int(FlxG.height / 4), 0xFFFF00));
-				add(buttonExtra1 = createHint(0, offsetFir, Std.int(FlxG.width / 2), Std.int(FlxG.height / 4), 0xFF0000));
+				add(buttonLeft = createHint(0, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, buttonLeftColor[0]));
+				add(buttonDown = createHint(FlxG.width / 4, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, buttonDownColor[0]));
+				add(buttonUp = createHint(FlxG.width / 2, offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, buttonUpColor[0]));
+				add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), offsetSec, Std.int(FlxG.width / 4), Std.int(FlxG.height / 4) * 3, buttonRightColor[0]));
+				add(buttonExtra = createHint(Std.int(FlxG.width / 2), offsetFir, Std.int(FlxG.width / 2), Std.int(FlxG.height / 4), 0xFF0066FF));
+				add(buttonExtra1 = createHint(0, offsetFir, Std.int(FlxG.width / 2), Std.int(FlxG.height / 4), 0x00FFF7));
 			
 		}
 
@@ -80,7 +95,6 @@ class FlxHitbox extends FlxSpriteGroup
 	{
 		var shape:Shape = new Shape();
 
-		//if (FlxG.save.data.gradientHitboxes){
 			shape.graphics.beginFill(Color);
 			shape.graphics.lineStyle(3, Color, 1);
 			shape.graphics.drawRect(0, 0, Width, Height);
@@ -90,14 +104,6 @@ class FlxHitbox extends FlxSpriteGroup
 			shape.graphics.beginGradientFill(RADIAL, [Color, FlxColor.TRANSPARENT], [0.6, 0], [0, 255], null, null, null, 0.5);
 			shape.graphics.drawRect(3, 3, Width - 6, Height - 6);
 			shape.graphics.endFill();
-		/*}
-		else
-		{
-			shape.graphics.beginFill(Color);
-			shape.graphics.lineStyle(10, Color, 1);
-			shape.graphics.drawRect(0, 0, Width, Height);
-			shape.graphics.endFill();
-		}*/
 
 		var bitmap:BitmapData = new BitmapData(Width, Height, true, 0);
 		bitmap.draw(shape);

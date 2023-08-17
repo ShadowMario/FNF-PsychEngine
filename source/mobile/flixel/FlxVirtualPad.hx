@@ -48,62 +48,78 @@ class FlxVirtualPad extends FlxSpriteGroup
 	{
 		super();
 
+		var buttonLeftColor:Array<FlxColor>;
+		var buttonDownColor:Array<FlxColor>;
+		var buttonUpColor:Array<FlxColor>;
+		var buttonRightColor:Array<FlxColor>;
+		if (ClientPrefs.data.dynamicColors){
+			buttonLeftColor = ClientPrefs.data.arrowRGB[0];
+			buttonDownColor = ClientPrefs.data.arrowRGB[1];
+			buttonUpColor = ClientPrefs.data.arrowRGB[2];
+			buttonRightColor = ClientPrefs.data.arrowRGB[3];
+		} else{
+			buttonLeftColor = ClientPrefs.defaultData.arrowRGB[0];
+			buttonDownColor = ClientPrefs.defaultData.arrowRGB[1];
+			buttonUpColor = ClientPrefs.defaultData.arrowRGB[2];
+			buttonRightColor = ClientPrefs.defaultData.arrowRGB[3];
+		}
+
 		scrollFactor.set();
 
 		switch (DPad)
 		{
 			case UP_DOWN:
-				add(buttonUp = createButton(0, FlxG.height - 255, 132, 127, 'up', 0xFF00FF00));
-				add(buttonDown = createButton(0, FlxG.height - 135, 132, 127, 'down', 0xFF00FFFF));
+				add(buttonUp = createButton(0, FlxG.height - 255, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonDown = createButton(0, FlxG.height - 135, 132, 127, 'down', buttonDownColor[0]));
 			case LEFT_RIGHT:
-				add(buttonLeft = createButton(0, FlxG.height - 135, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight = createButton(127, FlxG.height - 135, 132, 127, 'right', 0xFFFF0000));
+				add(buttonLeft = createButton(0, FlxG.height - 135, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight = createButton(127, FlxG.height - 135, 132, 127, 'right', buttonRightColor[0]));
 			case UP_LEFT_RIGHT:
-				add(buttonUp = createButton(105, FlxG.height - 243, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft = createButton(0, FlxG.height - 135, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight = createButton(207, FlxG.height - 135, 132, 127, 'right', 0xFFFF0000));
+				add(buttonUp = createButton(105, FlxG.height - 243, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonLeft = createButton(0, FlxG.height - 135, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight = createButton(207, FlxG.height - 135, 132, 127, 'right', buttonRightColor[0]));
 			case LEFT_FULL:
-				add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down', 0xFF00FFFF));
+				add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right', buttonRightColor[0]));
+				add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down', buttonDownColor[0]));
 			case RIGHT_FULL:
-				add(buttonUp = createButton(FlxG.width - 258, FlxG.height - 408, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', 0xFF00FFFF));
+				add(buttonUp = createButton(FlxG.width - 258, FlxG.height - 408, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonLeft = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right', buttonRightColor[0]));
+				add(buttonDown = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', buttonDownColor[0]));
 			case BOTH_FULL:
-				add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down', 0xFF00FFFF));
-				add(buttonUp2 = createButton(FlxG.width - 258, FlxG.height - 408, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft2 = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight2 = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown2 = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', 0xFF00FFFF));
+				add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right', buttonRightColor[0]));
+				add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down', buttonDownColor[0]));
+				add(buttonUp2 = createButton(FlxG.width - 258, FlxG.height - 408, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonLeft2 = createButton(FlxG.width - 384, FlxG.height - 309, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight2 = createButton(FlxG.width - 132, FlxG.height - 309, 132, 127, 'right', buttonRightColor[0]));
+				add(buttonDown2 = createButton(FlxG.width - 258, FlxG.height - 201, 132, 127, 'down', buttonDownColor[0]));
 			case DIALOGUE_PORTRAIT_EDITOR:
-				add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down', 0xFF00FFFF));
-				add(buttonUp2 = createButton(105, 0, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft2 = createButton(0, 82, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight2 = createButton(207, 82, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown2 = createButton(105, 190, 132, 127, 'down', 0xFF00FFFF));
+				add(buttonUp = createButton(105, FlxG.height - 345, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonLeft = createButton(0, FlxG.height - 243, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight = createButton(207, FlxG.height - 243, 132, 127, 'right', buttonRightColor[0]));
+				add(buttonDown = createButton(105, FlxG.height - 135, 132, 127, 'down', buttonDownColor[0]));
+				add(buttonUp2 = createButton(105, 0, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonLeft2 = createButton(0, 82, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight2 = createButton(207, 82, 132, 127, 'right', buttonRightColor[0]));
+				add(buttonDown2 = createButton(105, 190, 132, 127, 'down', buttonDownColor[0]));
 			case MENU_CHARACTER:
-				add(buttonUp = createButton(105, 0, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft = createButton(0, 82, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight = createButton(207, 82, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown = createButton(105, 190, 132, 127, 'down', 0xFF00FFFF));
+				add(buttonUp = createButton(105, 0, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonLeft = createButton(0, 82, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight = createButton(207, 82, 132, 127, 'right', buttonRightColor[0]));
+				add(buttonDown = createButton(105, 190, 132, 127, 'down', buttonDownColor[0]));
 			case NOTE_SPLASH_DEBUG:
-				add(buttonLeft = createButton(0, 0, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight = createButton(127, 0, 132, 127, 'right', 0xFFFF0000));
-				add(buttonUp = createButton(0, 125, 132, 127, 'up', 0xFF00FF00));
-				add(buttonDown = createButton(127, 125, 132, 127, 'down', 0xFF00FFFF));
-				add(buttonUp2 = createButton(127, 393, 132, 127, 'up', 0xFF00FF00));
-				add(buttonLeft2 = createButton(0, 393, 132, 127, 'left', 0xFFFF00FF));
-				add(buttonRight2 = createButton(1145, 393, 132, 127, 'right', 0xFFFF0000));
-				add(buttonDown2 = createButton(1015, 393, 132, 127, 'down', 0xFF00FFFF));
+				add(buttonLeft = createButton(0, 0, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight = createButton(127, 0, 132, 127, 'right', buttonRightColor[0]));
+				add(buttonUp = createButton(0, 125, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonDown = createButton(127, 125, 132, 127, 'down', buttonDownColor[0]));
+				add(buttonUp2 = createButton(127, 393, 132, 127, 'up', buttonUpColor[0]));
+				add(buttonLeft2 = createButton(0, 393, 132, 127, 'left', buttonLeftColor[0]));
+				add(buttonRight2 = createButton(1145, 393, 132, 127, 'right', buttonRightColor[0]));
+				add(buttonDown2 = createButton(1015, 393, 132, 127, 'down', buttonDownColor[0]));
 			case NONE: // do nothing
 		}
 
