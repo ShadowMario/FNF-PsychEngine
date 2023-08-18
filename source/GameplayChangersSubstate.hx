@@ -103,9 +103,11 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var option:GameplayOption = new GameplayOption('Practice Mode', 'practice', 'bool', false);
 		optionsArray.push(option);
+		option.onChange = onChangePractice; //Changing onChange is only needed if you want to make a special interaction after it changes the value
 
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
 		optionsArray.push(option);
+		option.onChange = onChangeBotplay; //Changing onChange is only needed if you want to make a special interaction after it changes the value
 
 		var option:GameplayOption = new GameplayOption('Play as Opponent', 'opponentplay', 'bool', false);
 		optionsArray.push(option);
@@ -433,6 +435,23 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 		holdTime = 0;
+	}
+
+	function onChangePractice()
+	{
+		if(inThePauseMenu)
+		{
+			trace ("you really thought you would get away with it, invalidated your score");
+			PlayState.playerIsCheating = true;
+		}
+	}
+	function onChangeBotplay()
+	{
+		if(inThePauseMenu)
+		{
+			trace ("you really thought you would get away with it, invalidated your score");
+			PlayState.playerIsCheating = true;
+		}
 	}
 	
 	function changeSelection(change:Int = 0)

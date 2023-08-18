@@ -271,6 +271,7 @@ class PlayState extends MusicBeatState
 	private var updateThePercent:Bool = true;
 	public static var changedDifficulty:Bool = false;
 	public static var chartingMode:Bool = false;
+	public static var playerIsCheating:Bool = false; //Whether the player is cheating. Enables if you change BOTPLAY or Practice Mode in the Pause menu
 
 	//Gameplay settings
 	public var healthGain:Float = 1;
@@ -4271,7 +4272,7 @@ class PlayState extends MusicBeatState
 		// playerCounter += 1;
 
 		unspawnNotes.sort(sortByTime);
-		if (trollingMode) unspawnNotesCopy = unspawnNotes.copy();
+		unspawnNotesCopy = unspawnNotes.copy();
 		generatedMusic = true;
 		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
 	}
@@ -4323,7 +4324,7 @@ class PlayState extends MusicBeatState
 		loadOtherEventNotes();
 
 		unspawnNotes.sort(sortByTime);
-		if (trollingMode) unspawnNotesCopy = unspawnNotes.copy();
+		unspawnNotesCopy = unspawnNotes.copy();
 		generatedMusic = true;
 		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
 		generatedMusic = true;
@@ -6630,7 +6631,7 @@ class PlayState extends MusicBeatState
 
 		var ret:Dynamic = callOnLuas('onEndSong', [], false);
 		if(ret != FunkinLua.Function_Stop && !transitioning) {
-			if (SONG.validScore && !cpuControlled)
+			if (SONG.validScore && !cpuControlled && !playerIsCheating)
 			{
 				#if !switch
 				var percent:Float = ratingPercent;
