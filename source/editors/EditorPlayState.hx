@@ -200,7 +200,7 @@ class EditorPlayState extends MusicBeatState
 		vocals.volume = 0;
 
 		var songData = PlayState.SONG;
-		Conductor.bpm = songData.bpm;
+		Conductor.changeBPM(songData.bpm);
 		
 		notes = new FlxTypedGroup<Note>();
 		add(notes);

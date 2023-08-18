@@ -595,7 +595,7 @@ class PlayState extends MusicBeatState
 			SONG = Song.loadFromJson('tutorial');
 
 		Conductor.mapBPMChanges(SONG);
-		Conductor.bpm = SONG.bpm;
+		Conductor.changeBPM(SONG.bpm);
 
 		#if desktop
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
@@ -4052,7 +4052,7 @@ class PlayState extends MusicBeatState
 				songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
 		}
 
-		Conductor.bpm = SONG.bpm;
+		Conductor.changeBPM(SONG.bpm);
 
 		curSong = SONG.song;
 
@@ -4285,7 +4285,7 @@ class PlayState extends MusicBeatState
 			songSpeed = ClientPrefs.getGameplaySetting('scrollspeed', 1);
 		}
 
-		Conductor.bpm = SONG.bpm;
+		Conductor.changeBPM(SONG.bpm);
 		curSong = SONG.song;
 		if (ClientPrefs.songLoading)
 		{
@@ -8874,7 +8874,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 			if (SONG.notes[curSection].changeBPM)
 			{
-				Conductor.bpm = SONG.notes[curSection].bpm;
+				Conductor.changeBPM(SONG.notes[curSection].bpm);
 				setOnLuas('curBpm', Conductor.bpm);
 				setOnLuas('crochet', Conductor.crochet);
 				setOnLuas('stepCrochet', Conductor.stepCrochet);

@@ -136,7 +136,6 @@ class Note extends FlxSprite
 				var time = strumTime;
 				var theCurBPM = Conductor.bpm;
 				var stepCrochet:Float = (60 / theCurBPM) * 1000;
-				/*
 				for (i in 0...Conductor.bpmChangeMap.length)
 				{
 					var bpmchange = Conductor.bpmChangeMap[i];
@@ -144,9 +143,9 @@ class Note extends FlxSprite
 					{
 						theCurBPM = bpmchange.bpm;
 						time -= bpmchange.songTime;
+						stepCrochet = (60 / theCurBPM) * 1000;
 					}
 				}
-				*/
 
 				var beat = Math.round((time / stepCrochet) * 48);
 				for (i in 0...beats.length)

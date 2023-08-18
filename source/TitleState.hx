@@ -266,13 +266,13 @@ class TitleState extends MusicBeatState
 		switch(ClientPrefs.daMenuMusic)
 		{
 		case 'Mashup' | 'VS Impostor' | 'VS Nonsense V2' | 'Base Game': 
-			Conductor.bpm = titleJSON.bpm;
+			Conductor.changeBPM(titleJSON.bpm);
 		case 'Dave & Bambi':
-			Conductor.bpm = 148;
+			Conductor.changeBPM(148);
 		case 'Dave & Bambi (Old)':
-			Conductor.bpm = 150;
+			Conductor.changeBPM(150);
 		case 'DDTO+':
-			Conductor.bpm = 120;
+			Conductor.changeBPM(120);
 		}
 		persistentUpdate = true;
 
