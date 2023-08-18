@@ -23,6 +23,13 @@ import sys.io.File;
 import sys.io.Process;
 #end
 
+#if linux
+@:cppFileCode('
+	#define GAMEMODE_AUTO
+	#include "gamemode_client.h"
+')
+#end
+
 class Main extends Sprite
 {
 	var game = {
