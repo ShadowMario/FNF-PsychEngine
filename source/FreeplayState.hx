@@ -110,7 +110,7 @@ class FreeplayState extends MusicBeatState
 		}*/
 
 		#if PRELOAD_ALL
-		if (!curPlaying) Conductor.changeBPM(TitleState.titleJSON.bpm);
+		if (!curPlaying) Conductor.bpm = TitleState.titleJSON.bpm;
 		#end
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -383,7 +383,7 @@ class FreeplayState extends MusicBeatState
 				vocals.looped = true;
 				vocals.volume = 0.7;
 				instPlaying = curSelected;
-				Conductor.changeBPM(PlayState.SONG.bpm);
+				Conductor.bpm = PlayState.SONG.bpm;
 				for (i in 0...iconArray.length)
 					iconArray[i].canBounce = false;
 				iconArray[instPlaying].canBounce = true;
