@@ -77,10 +77,13 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			grpOptions.add(optionText);
 
 			if(optionsArray[i].type == 'bool') {
-				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
+			  var checkbox:CheckboxThingie;
+			  if (checkbox == null){
+				checkbox = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.ID = i;
 				checkboxGroup.add(checkbox);
+			  }
 			} else {
 				optionText.x -= 80;
 				optionText.startPosition.x -= 80;
