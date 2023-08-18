@@ -103,7 +103,7 @@ class Alphabet extends FlxSpriteGroup
 			var letter:AlphaCharacter = letters[i];
 			if(letter != null)
 			{
-				letter = FlxDestroyUtil.destroy(letter);
+				//letter = FlxDestroyUtil.destroy(letter);
 				letters.remove(letter);
 				remove(letter);
 			}
