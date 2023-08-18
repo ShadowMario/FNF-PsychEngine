@@ -185,7 +185,7 @@ class MainMenuState extends MusicBeatState
 								ease: FlxEase.quadOut,
 								onComplete: function(twn:FlxTween)
 								{
-									spr.kill();
+									spr.destroy();
 								}
 							});
 						}

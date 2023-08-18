@@ -1,5 +1,7 @@
 package objects;
 
+import flixel.util.FlxDestroyUtil;
+
 class CheckboxThingie extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
@@ -9,6 +11,10 @@ class CheckboxThingie extends FlxSprite
 	public var offsetY:Float = 0;
 	public function new(x:Float = 0, y:Float = 0, ?checked = false) {
 		super(x, y);
+
+		// why would we need velocity for this
+		moves = false;
+		immovable = true;
 
 		frames = Paths.getSparrowAtlas('checkboxanim');
 		animation.addByPrefix("unchecked", "checkbox0", 24, false);
@@ -60,5 +66,11 @@ class CheckboxThingie extends FlxSprite
 				animation.play('unchecked', true);
 				offset.set(0, 2);
 		}
+	}
+
+	override function destroy(){
+		active = false;
+		sprTracker = FlxDestroyUtil.destroy(sprTracker);
+		super.destroy();
 	}
 }

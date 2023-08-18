@@ -221,7 +221,7 @@ class FlxAnimationController implements IFlxDestroyable
 					framesToAdd = Frames.copy();
 				}
 
-				framesToAdd.splice(i, 1);
+				framesToAdd.shift();
 			}
 			i--;
 		}

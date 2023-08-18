@@ -877,7 +877,6 @@ class CharacterEditorState extends MusicBeatState
 		while(i >= 0) {
 			var memb:FlxText = dumbTexts.members[i];
 			if(memb != null) {
-				memb.kill();
 				dumbTexts.remove(memb);
 				memb.destroy();
 			}
@@ -912,7 +911,6 @@ class CharacterEditorState extends MusicBeatState
 		while(i >= 0) {
 			var memb:Character = charLayer.members[i];
 			if(memb != null) {
-				memb.kill();
 				charLayer.remove(memb);
 				memb.destroy();
 			}

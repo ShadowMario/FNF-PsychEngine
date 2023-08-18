@@ -101,6 +101,7 @@ class OptionsState extends MusicBeatState
 
 		#if mobileC
 		addVirtualPad(UP_DOWN, A_B_C);
+		controls.isInSubstate = false;
 		#end
 
 		super.create();

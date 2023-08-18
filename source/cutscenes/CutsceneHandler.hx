@@ -48,12 +48,10 @@ class CutsceneHandler extends FlxBasic
 
 			for (spr in objects)
 			{
-				spr.kill();
 				PlayState.instance.remove(spr);
 				spr.destroy();
 			}
 			
-			kill();
 			destroy();
 			PlayState.instance.remove(this);
 		}
@@ -79,5 +77,10 @@ class CutsceneHandler extends FlxBasic
 	function sortByTime(Obj1:Array<Dynamic>, Obj2:Array<Dynamic>):Int
 	{
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1[0], Obj2[0]);
+	}
+
+	override function destroy(){
+		active = false;
+		super.destroy();
 	}
 }

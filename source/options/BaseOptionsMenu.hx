@@ -77,7 +77,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			grpOptions.add(optionText);
 
 			if(optionsArray[i].type == 'bool') {
-				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
+			  var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.ID = i;
 				checkboxGroup.add(checkbox);
@@ -125,10 +125,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 		if (controls.BACK) {
 			#if mobileC
-			controls.isInSubstate = false;
 			FlxTransitionableState.skipNextTransOut = true;
 			ClientPrefs.saveSettings();
 			FlxG.resetState();
+			controls.isInSubstate = false;
 			#else
 			close();
 			#end

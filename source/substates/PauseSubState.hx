@@ -147,10 +147,16 @@ class PauseSubState extends MusicBeatSubstate
 		if (PlayState.chartingMode)
 		{
 			addVirtualPad(LEFT_FULL, A);
+			MusicBeatSubstate.virtualPad.buttonLeft.color = 0xFFC24B99;
+			MusicBeatSubstate.virtualPad.buttonDown.color = 0xFF00FFFF;
+			MusicBeatSubstate.virtualPad.buttonUp.color = 0xFF12FA05;
+			MusicBeatSubstate.virtualPad.buttonRight.color = 0xFFF9393F; 
 		}
 		else
 		{
 			addVirtualPad(UP_DOWN, A);
+			MusicBeatSubstate.virtualPad.buttonDown.color = 0xFF00FFFF;
+			MusicBeatSubstate.virtualPad.buttonUp.color = 0xFF12FA05;
 		}
 		addPadCamera(false);
 		#end
@@ -246,7 +252,7 @@ class PauseSubState extends MusicBeatSubstate
 					return;
 				}
 
-
+				PlayState.allowedToClear = false; //i think this is called when you presse back
 				menuItems = menuItemsOG;
 				regenMenu();
 			}
@@ -259,6 +265,7 @@ class PauseSubState extends MusicBeatSubstate
 					#end
 					close();
 				case 'Change Difficulty':
+					PlayState.allowedToClear = true; // some mods have whole diffrent assets, song... on diffrent difficulties, so yea
 					menuItems = difficultyChoices;
 					deleteSkipTimeText();
 					regenMenu();
@@ -267,6 +274,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
 				case "Restart Song":
+					PlayState.allowedToClear = false;
 					#if mobileC
 					controls.isInSubstate = false;
 					#end
@@ -319,6 +327,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case 'Options':
+					PlayState.allowedToClear = false;
 					#if mobileC
 					controls.isInSubstate = false;
 					#end
@@ -334,6 +343,7 @@ class PauseSubState extends MusicBeatSubstate
 					OptionsState.onPlayState = true;
 				case "Exit to menu":
 					#if mobileC
+					PlayState.allowedToClear = true;
 					controls.isInSubstate = false;
 					#end
 					#if desktop DiscordClient.resetClientID(); #end
@@ -355,8 +365,21 @@ class PauseSubState extends MusicBeatSubstate
 		}
 		#if mobileC
 		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
-		addVirtualPad(UP_DOWN, A);
-		addPadCamera(false);
+			if (PlayState.chartingMode)
+				{
+					addVirtualPad(LEFT_FULL, A);
+					MusicBeatSubstate.virtualPad.buttonLeft.color = 0xFFC24B99;
+					MusicBeatSubstate.virtualPad.buttonDown.color = 0xFF00FFFF;
+					MusicBeatSubstate.virtualPad.buttonUp.color = 0xFF12FA05;
+					MusicBeatSubstate.virtualPad.buttonRight.color = 0xFFF9393F; 
+				}
+				else
+				{
+					addVirtualPad(UP_DOWN, A);
+					MusicBeatSubstate.virtualPad.buttonDown.color = 0xFF00FFFF;
+					MusicBeatSubstate.virtualPad.buttonUp.color = 0xFF12FA05;
+				}
+				addPadCamera(false);
 		controls.isInSubstate = true;
 		}
 		#end
@@ -366,7 +389,6 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		if(skipTimeText != null)
 		{
-			skipTimeText.kill();
 			remove(skipTimeText);
 			skipTimeText.destroy();
 		}
@@ -435,7 +457,6 @@ class PauseSubState extends MusicBeatSubstate
 	function regenMenu():Void {
 		for (i in 0...grpMenuShit.members.length) {
 			var obj = grpMenuShit.members[0];
-			obj.kill();
 			grpMenuShit.remove(obj, true);
 			obj.destroy();
 		}
