@@ -255,7 +255,6 @@ class ControlsSubState extends MusicBeatSubstate
 		attach.scaleX = Math.min(1, 230 / attach.width);
 		//attach.text = text;
 
-		bind.kill();
 		grpBinds.remove(bind);
 		grpBinds.insert(num, attach);
 		bind.destroy();
