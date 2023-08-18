@@ -28,6 +28,9 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 #end
+#if cpp
+import cpp.vm.Gc;
+#end
 
 using StringTools;
 

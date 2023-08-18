@@ -5266,13 +5266,12 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic) {
 			if (startedCountdown && canPause && !endingSong) {
-				if (playbackRate <= 256) endingTimeLimit = 20;
+				if (playbackRate <= 256) endingTimeLimit = 30;
 				if (playbackRate >= 256) endingTimeLimit = 10000;
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
 				// so no reason to delete it at all
 				if (ClientPrefs.songLoading && FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && trollingMode) { //stop crashes when playing normally
-					if (!songWasLooped) songWasLooped = true;
 					if (ClientPrefs.trollMaxSpeed == 'Highest') loopSongHighest();
 					if (ClientPrefs.trollMaxSpeed == 'High') loopSongHigh();
 					if (ClientPrefs.trollMaxSpeed == 'Medium') loopSongMedium();
