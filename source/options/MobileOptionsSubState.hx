@@ -36,8 +36,8 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		option.maxValue = 1;
 		option.changeValue = 0.05;
 		option.decimals = 1;
-		option.onChange = setAlpha;
 		mafaka = option.getValue();
+		option.onChange = setAlpha;
 		addOption(option);
 
 		super();
