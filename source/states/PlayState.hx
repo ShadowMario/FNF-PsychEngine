@@ -265,7 +265,7 @@ class PlayState extends MusicBeatState
 	public var endCallback:Void->Void = null;
 
 	//due to the game clearing memory on gameover and song restart, the game wont store what was loaded midsong so you'll freez and probably die over and over, and because it stresses the CPU. -karim
-	public static var allowedToClear:Bool = true;
+	public static var allowedToClear:Bool = !ClientPrefs.data.lowQuality;
 
 	override public function create()
 	{
