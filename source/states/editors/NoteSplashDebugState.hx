@@ -245,8 +245,7 @@ class NoteSplashDebugState extends MusicBeatState
 		}
 
 		// Reset anim & change anim
-		if (FlxG.keys.justPressed.SPACE #if mobileC || virtualPad.buttonY.justPressed #end)
-			changeAnim();
+		if (FlxG.keys.justPressed.SPACE #if mobileC || virtualPad.buttonY.justPressed #end) changeAnim();
 		else if (FlxG.keys.justPressed.S #if mobileC || virtualPad.buttonLeft.justPressed #end) changeAnim(-1);
 		else if (FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonRight.justPressed #end) changeAnim(1);
 
@@ -322,7 +321,7 @@ class NoteSplashDebugState extends MusicBeatState
 		savedText.text = 'Saved to: ' + SUtil.getPath() + 'saves';
 		#else*/
 		savedText.text = 'Saved to: $path';
-		sys.io.File.saveContent(path, strToSave);
+		sys.io.File.saveContent(SUtil.getPath() + path, strToSave);
 		//trace(strToSave);
 		//#end
 		#else
