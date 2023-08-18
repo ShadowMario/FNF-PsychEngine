@@ -1118,8 +1118,13 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	public var scoreSeparator:String = " | ";
+
 	public function updateScore(miss:Bool = false)
 	{
+		var ret:Dynamic = callOnScripts('onUpdateScore', [miss]);
+		if(ret == FunkinLua.Function_Stop) return;
+
 		var str:String = ratingName;
 		if(totalPlayed != 0)
 		{
@@ -1127,9 +1132,12 @@ class PlayState extends MusicBeatState
 			str += ' ($percent%) - $ratingFC';
 		}
 
-		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Misses: ' + songMisses
-		+ ' | Rating: ' + str;
+		var scoreNew:String = 'Score: ${songScore}';
+		if (!instakillOnMiss)
+			scoreNew += scoreSeparator + 'Misses: ${songMisses}';
+		scoreNew += scoreSeparator + 'Rating: ${str}';
+
+		scoreTxt.text = scoreNew + "\n"; // "\n" here prevents the text being cut off by beat zooms depending on its size
 
 		if(ClientPrefs.data.scoreZoom && !miss && !cpuControlled)
 		{
@@ -1144,7 +1152,6 @@ class PlayState extends MusicBeatState
 				}
 			});
 		}
-		callOnScripts('onUpdateScore', [miss]);
 	}
 
 	public function setSongTime(time:Float)
