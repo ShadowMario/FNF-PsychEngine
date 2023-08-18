@@ -25,6 +25,18 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		'dynamicColors',
 		'bool');
 		addOption(option);
+
+		var option:Option = new Option('Mobile Controls Opacity',
+			'How much transparent should the Note Splashes be.',
+			'controlsAlpha',
+			'percent');
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.0;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		addOption(option);
+
 		super();
 	}
 }

@@ -13,6 +13,7 @@ class SaveVariables {
 	public var extraButtons:String = "NONE"; // mobile extra button option
 	public var hitbox2:Bool = true; // hitbox extra button position option
 	public var dynamicColors:Bool = true; // yes cause its cool -Karim
+	public var controlsAlpha:Float = 0.6;
 	public var downScroll:Bool = false;
 	public var middleScroll:Bool = false;
 	public var opponentStrums:Bool = true;
@@ -196,8 +197,7 @@ class ClientPrefs {
 	public static function saveSettings() {
 		for (key in Reflect.fields(data)) {
 			//trace('saved variable: $key');
-			Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));
-		}
+			Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));	}
 		#if ACHIEVEMENTS_ALLOWED Achievements.save(); #end
 		FlxG.save.flush();
 

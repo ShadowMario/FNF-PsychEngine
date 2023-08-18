@@ -93,21 +93,9 @@ class MobileControls extends FlxSpriteGroup
 		}
 	}
 
-	public static function setOpacity(opacity:Float = 0.6):Void
-	{
-		FlxG.save.data.mobileControlsOpacity = opacity;
-		FlxG.save.flush();
-	}
-
 	public static function getOpacity():Float
 	{
-		if (FlxG.save.data.mobileControlsOpacity == null)
-		{
-			FlxG.save.data.mobileControlsOpacity = 0.6;
-			FlxG.save.flush();
-		}
-
-		return FlxG.save.data.mobileControlsOpacity;
+		return ClientPrefs.data.controlsAlpha;
 	}
 
 	public static function setMode(mode:Int = 0):Void

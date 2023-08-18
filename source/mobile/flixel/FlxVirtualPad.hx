@@ -52,7 +52,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		var buttonDownColor:Array<FlxColor>;
 		var buttonUpColor:Array<FlxColor>;
 		var buttonRightColor:Array<FlxColor>;
-		if (ClientPrefs.data.dynamicColors){
+		if (ClientPrefs.data.dynamicColors && MusicBeatState.instance.mobileControls != null){
 			buttonLeftColor = ClientPrefs.data.arrowRGB[0];
 			buttonDownColor = ClientPrefs.data.arrowRGB[1];
 			buttonUpColor = ClientPrefs.data.arrowRGB[2];
@@ -239,6 +239,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
 		#end
+		button.alpha = MobileControls.getOpacity();
 		return button;
 	}
 		/*
