@@ -600,7 +600,7 @@ class EditorPlayState extends MusicBeatSubstate
 		{
 			while (lastScore.length > 0)
 			{
-				lastScore[0].kill();
+				lastScore[0].destroy();
 				lastScore.remove(lastScore[0]);
 			}
 		}
