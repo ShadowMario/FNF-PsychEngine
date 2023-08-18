@@ -28,9 +28,11 @@ class FlxHitbox extends FlxSpriteGroup
 	/**
 	 * Create the zone.
 	 */
+	 
 	public function new(mode:Modes)
 	{
 		super();
+		#if mobileC
 
 		final offsetFir:Int = (ClientPrefs.data.hitbox2 ? Std.int(FlxG.height / 4) * 3 : 0);
 		final offsetSec:Int = (ClientPrefs.data.hitbox2 ? 0 : Std.int(FlxG.height / 4));
@@ -74,6 +76,7 @@ class FlxHitbox extends FlxSpriteGroup
 		}
 
 		scrollFactor.set();
+		#end
 	}
 
 	/**
