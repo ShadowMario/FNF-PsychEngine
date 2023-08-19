@@ -2,6 +2,7 @@ package options;
 
 class MobileOptionsSubState extends BaseOptionsMenu
 {
+	var mafaka:Float;
 	public function new()
 	{
 		title = 'Mobile Options';
@@ -27,16 +28,22 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Mobile Controls Opacity',
-			'How much transparent should the Note Splashes be.',
+			'How much transparent should the Mobile Controls be.',
 			'controlsAlpha',
 			'percent');
 		option.scrollSpeed = 1.6;
-		option.minValue = 0.0;
+		option.minValue = 0.2;
 		option.maxValue = 1;
-		option.changeValue = 0.1;
+		option.changeValue = 0.05;
 		option.decimals = 1;
+		mafaka = option.getValue();
+		option.onChange = setAlpha;
 		addOption(option);
 
 		super();
+	}
+	public function setAlpha():Void {
+		MusicBeatSubstate.virtualPad.alpha = mafaka;
+		
 	}
 }

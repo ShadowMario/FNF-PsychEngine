@@ -241,7 +241,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
 		#end
-		button.alpha = MobileControls.getOpacity();
+		//button.alpha = MobileControls.getOpacity();
 		return button;
 	}
 		/*
