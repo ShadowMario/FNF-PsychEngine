@@ -107,6 +107,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			['osu!', 'Voiid Chronicles']);
 		addOption(option);
 
+		var option:Option = new Option('Complex Accuracy',
+			"If checked, accuracy is MS-based instead of rating-based.",
+			'complexAccuracy',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Hold Note Hits',
 			"If checked, each piece of a hold note will also count as a note hit.",
 			'holdNoteHits',
@@ -133,6 +140,14 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'startingSync',
 			'bool',
 			false);
+		addOption(option);
+
+		var option:Option = new Option('Resync Style:',
+			"What type of resync do you prefer?",
+			'resyncType',
+			'string',
+			'Leather',
+			['Leather', 'Psych']);
 		addOption(option);
 
 		var option:Option = new Option('Remove Marvelous!! Judgement',

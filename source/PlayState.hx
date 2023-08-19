@@ -163,6 +163,7 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 	public var tries:Int = 0;
+	public var notesLoadedRN:Int = 0;
 
 	public var spawnTime:Float = 1800; //just enough for the notes to barely inch off the screen
 
@@ -216,8 +217,6 @@ class PlayState extends MusicBeatState
 	public var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 	public var laneunderlay:FlxSprite;
 	public var laneunderlayOpponent:FlxSprite;
-
-	var noteBatchSize:Int = 1000;
 
 	public var camZooming:Bool = false;
 	public var camZoomingMult:Float = 1;
@@ -4179,7 +4178,7 @@ class PlayState extends MusicBeatState
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 
 				swagNote.scrollFactor.set();
-				unspawnNotes.push(swagNote);
+           			unspawnNotes.push(swagNote);
 
 				var floorSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
 				if(floorSus > 0) {
@@ -4246,8 +4245,8 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
-		sectionsLoaded += 1;
-		trace('loaded section ' + sectionsLoaded);
+			sectionsLoaded += 1;
+			trace('loaded section ' + sectionsLoaded);
 		}
 		for (event in SONG.events) //Event Notes
 		{
@@ -4270,7 +4269,6 @@ class PlayState extends MusicBeatState
 
 		// trace(unspawnNotes.length);
 		// playerCounter += 1;
-
 		unspawnNotes.sort(sortByTime);
 		unspawnNotesCopy = unspawnNotes.copy();
 		generatedMusic = true;
@@ -4326,6 +4324,8 @@ class PlayState extends MusicBeatState
 		unspawnNotes.sort(sortByTime);
 		unspawnNotesCopy = unspawnNotes.copy();
 		generatedMusic = true;
+		sectionsLoaded = 0;
+		notesLoadedRN = 0;
 		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
 		generatedMusic = true;
 		trace('song loaded! notes loaded: ' + FlxStringUtil.formatMoney(unspawnNotes.length, false) + ', ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' being sung by the opponent and ' + FlxStringUtil.formatMoney(totalNotes, false) + ' being sung by the player!');
@@ -4710,19 +4710,53 @@ class PlayState extends MusicBeatState
 	{
 		if(finishTimer != null) return;
 
-		if (vocals != null) vocals.pause();
-		if (unspawnNotesCopy.length <= 10000) FlxG.sound.music.pause();
+		FlxG.sound.music.pitch = playbackRate;
+		vocals.pitch = playbackRate;
+		if (ClientPrefs.resyncType == 'Leather')
+		{
+			if(!(Conductor.songPosition > 20 && FlxG.sound.music.time < 20))
+			{
+				//trace("SONG POS: " + Conductor.songPosition + " | Musice: " + FlxG.sound.music.time + " / " + FlxG.sound.music.length);
+
+				vocals.pause();
+				FlxG.sound.music.pause();
+		
+				if(FlxG.sound.music.time >= FlxG.sound.music.length)
+					Conductor.songPosition = FlxG.sound.music.length;
+				else
+					Conductor.songPosition = FlxG.sound.music.time;
+
+				vocals.time = Conductor.songPosition;
+				
+				FlxG.sound.music.play();
+				vocals.play();
+			}
+			else
+			{
+				while(Conductor.songPosition > 20 && FlxG.sound.music.time < 20)
+				{
+					trace("SONG POS: " + Conductor.songPosition + " | Music Pos: " + FlxG.sound.music.time + " / " + FlxG.sound.music.length);
+
+					FlxG.sound.music.time = Conductor.songPosition;
+					vocals.time = Conductor.songPosition;
+		
+					FlxG.sound.music.play();
+					vocals.play();
+				}
+			}
+		}
+		if (ClientPrefs.resyncType == 'Psych')
+		{
+		vocals.pause();
 
 		FlxG.sound.music.play();
-		FlxG.sound.music.pitch = playbackRate;
-		if (Conductor.songPosition > 50) Conductor.songPosition = FlxG.sound.music.time; //ONLY resync the conductor position to the music time IF conductor's song position is higher than 50 ms, should fix looping causing the game to get stuck on resyncing the vocals
-		if (Conductor.songPosition <= vocals.length && vocals != null)
+		Conductor.songPosition = FlxG.sound.music.time;
+		if (Conductor.songPosition <= vocals.length)
 		{
 			vocals.time = Conductor.songPosition;
-			vocals.pitch = playbackRate;
 		}
-		if (vocals != null) vocals.play();
-		trace('Resynced Vocals {Conductor.songPosition: ${Conductor.songPosition}, FlxG.sound.music.time: ${FlxG.sound.music.time} / ${FlxG.sound.music.length}}');
+		vocals.play();
+		}
 	}
 
 	public var paused:Bool = false;
@@ -5224,6 +5258,12 @@ class PlayState extends MusicBeatState
 		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.9 * playbackRate)),Std.int(FlxMath.lerp(150, iconP1.height, 0.9 * playbackRate)));
 		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.9 * playbackRate)),Std.int(FlxMath.lerp(150, iconP2.height, 0.9 * playbackRate)));
 		}
+		if (ClientPrefs.iconBounceType == 'Plank Engine') {
+		var funnyBeat = (Conductor.songPosition / 1000) * (Conductor.bpm / 60);
+
+		iconP1.offset.y = Math.abs(Math.sin(funnyBeat * Math.PI))  * 16 - 4;
+		iconP2.offset.y = Math.abs(Math.sin(funnyBeat * Math.PI))  * 16 - 4;
+		}
 		if (ClientPrefs.iconBounceType == 'New Psych') {
 		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
 		iconP1.scale.set(mult, mult);
@@ -5266,8 +5306,7 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic) {
 			if (startedCountdown && canPause && !endingSong) {
-				if (playbackRate <= 256) endingTimeLimit = 30;
-				if (playbackRate >= 256) endingTimeLimit = 10000;
+				if (playbackRate <= 256) endingTimeLimit = 20;
 				// Song ends abruptly on slow rate even with second condition being deleted,
 				// and if it's deleted on songs like cocoa then it would end without finishing instrumental fully,
 				// so no reason to delete it at all
@@ -5280,10 +5319,12 @@ class PlayState extends MusicBeatState
 					if (ClientPrefs.trollMaxSpeed == 'Lowest') loopSongLowest();
 					if (ClientPrefs.trollMaxSpeed == 'Disabled') loopSongNoLimit();
 					FlxG.sound.music.time = 0;
+					Conductor.songPosition = 0;
 				}
 				if (ClientPrefs.songLoading && FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && SONG.song.toLowerCase() == 'anti-cheat-song') { //stop crashes when playing normally
 					infiniteLoop();
 					FlxG.sound.music.time = 0;
+					Conductor.songPosition = 0;
 				}
 			}
 		}
@@ -6921,6 +6962,7 @@ class PlayState extends MusicBeatState
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
 		//trace(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
 		if (note != null && note.isSustainNote && ClientPrefs.holdNoteHits) noteDiff = 0;
+		var wife:Float = EtternaFunctions.wife3(noteDiff, Conductor.timeScale);
 
 		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
@@ -6953,7 +6995,8 @@ class PlayState extends MusicBeatState
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
 
-		totalNotesHit += daRating.ratingMod;
+		if (!ClientPrefs.complexAccuracy) totalNotesHit += daRating.ratingMod;
+		if (ClientPrefs.complexAccuracy) totalNotesHit += wife;
 		note.ratingMod = daRating.ratingMod;
 		if(!note.ratingDisabled) daRating.increase();
 		note.rating = daRating.name;
@@ -7160,6 +7203,11 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'goldstuff/';
 			pixelShitPart2 = '';
 		}
+		if (!allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
+		{
+			pixelShitPart1 = 'goldstuff/';
+			pixelShitPart2 = '';
+		}
 		if (!allSicks && ClientPrefs.marvRateColor == 'Rainbow' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
 		{
 			pixelShitPart1 = '';
@@ -7256,7 +7304,6 @@ if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.badWindow 
 			if (noteDiff >= ClientPrefs.badWindow) msTxt.color = FlxColor.RED;
 			if (!msTxt.visible) msTxt.color = FlxColor.WHITE;
 		}
-
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 		comboSpr.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
 		comboSpr.screenCenter();
@@ -8722,6 +8769,24 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		if (ClientPrefs.iconBounceType == 'Old Psych') {
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+		}
+		if (ClientPrefs.iconBounceType == 'Plank Engine') {
+		iconP1.scale.x = 1.3;
+		iconP1.scale.y = 0.75;
+		iconP2.scale.x = 1.3;
+		iconP2.scale.y = 0.75;
+		FlxTween.cancelTweensOf(iconP1);
+		FlxTween.cancelTweensOf(iconP2);
+		FlxTween.tween(iconP1, {"scale.x": 1, "scale.y": 1}, Conductor.crochet / 1000, {ease: FlxEase.backOut});
+		FlxTween.tween(iconP2, {"scale.x": 1, "scale.y": 1}, Conductor.crochet / 1000, {ease: FlxEase.backOut});
+		if (curBeat % 4 == 0) {
+			iconP1.offset.x = 10;
+			iconP2.offset.x = -10;
+			iconP1.angle = -15;
+			iconP2.angle = 15;
+			FlxTween.tween(iconP1, {"offset.x": 0, angle: 0}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
+			FlxTween.tween(iconP2, {"offset.x": 0, angle: 0}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
+		}
 		}
 		if (ClientPrefs.iconBounceType == 'New Psych') {
 		iconP1.scale.set(1.2, 1.2);

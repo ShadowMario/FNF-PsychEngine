@@ -50,6 +50,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var autoPause:Bool = true;
 	public static var randomBotplayText:Bool = true;
 	public static var opponentLightStrum:Bool = true;
+	public static var complexAccuracy:Bool = false;
+	public static var resyncType:String = 'Psych';
 	public static var botLightStrum:Bool = true;
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
@@ -245,6 +247,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.cameraPanning = cameraPanning;
 		FlxG.save.data.panIntensity = panIntensity;
 		FlxG.save.data.voiidTrollMode = voiidTrollMode;
+		FlxG.save.data.complexAccuracy = complexAccuracy;
+		FlxG.save.data.resyncType = resyncType;
 		FlxG.save.data.compactNumbers = compactNumbers;
 		FlxG.save.data.colorQuants = colorQuants;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
@@ -388,6 +392,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.playerLightStrum != null) {
 			playerLightStrum = FlxG.save.data.playerLightStrum;
+		}
+		if(FlxG.save.data.complexAccuracy != null) {
+			complexAccuracy = FlxG.save.data.complexAccuracy;
+		}
+		if(FlxG.save.data.resyncType != null) {
+			resyncType = FlxG.save.data.resyncType;
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;
