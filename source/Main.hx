@@ -13,6 +13,13 @@ import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
 
+#if linux
+@:cppInclude('./external/gamemode_client.h')
+@:cppFileCode('
+	#define GAMEMODE_AUTO
+')
+#end
+
 class Main extends Sprite
 {
 	var game = {
