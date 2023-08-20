@@ -24,9 +24,9 @@ import sys.io.Process;
 #end
 
 #if linux
+@:cppInclude('./external/gamemode_client.h')
 @:cppFileCode('
 	#define GAMEMODE_AUTO
-	#include "gamemode_client.h"
 ')
 #end
 
