@@ -59,7 +59,7 @@ class CutsceneHandler extends FlxBasic
 		while(timedEvents.length > 0 && timedEvents[0][0] <= cutsceneTime)
 		{
 			timedEvents[0][1]();
-			timedEvents.splice(0, 1);
+			timedEvents.shift();
 		}
 	}
 
