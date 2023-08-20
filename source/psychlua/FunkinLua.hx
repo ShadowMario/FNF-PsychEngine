@@ -14,6 +14,8 @@ import flixel.addons.transition.FlxTransitionableState;
 
 #if (!flash && sys)
 import flixel.addons.display.FlxRuntimeShader;
+#end
+#if !flash
 import shaders.CustomShaders as Shaders;
 #end
 
@@ -1478,7 +1480,7 @@ class FunkinLua {
 		trace('lua file loaded succesfully:' + scriptName);
 
                 //SHADER SHIT
-
+                #if !flash
 		Lua_helper.add_callback(lua, "addChromaticAbberationEffect", function(camera:String,chromeOffset:Float = 0.005) {
 
 			PlayState.instance.addShaderToCamera(camera, new ChromaticAberrationEffect(chromeOffset));
@@ -1549,6 +1551,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "clearEffects", function(camera:String) {
 			PlayState.instance.clearShaderFromCamera(camera);
 		});
+                #end
 
 		call('onCreate', []);
 		#end
