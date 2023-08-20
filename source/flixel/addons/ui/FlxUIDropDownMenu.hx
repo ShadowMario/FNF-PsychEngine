@@ -338,8 +338,13 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				}
 			}
 
-			if (DataList != null)
-			        selectSomething(DataList[0].name, DataList[0].label);
+			try {
+				if (DataList != null)
+					selectSomething(DataList[0].name, DataList[0].label);
+			}
+			catch(e){
+				trace('error! ${e.message}');
+			}
 		}
 
 		dropPanel.resize(header.background.width, getPanelHeight());
