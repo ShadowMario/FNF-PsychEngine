@@ -17,6 +17,6 @@ class DebugLuaText extends FlxText
 		if(disableTime < 0) disableTime = 0;
 		if(disableTime < 1) alpha = disableTime;
 
-		if(alpha == 0 || y >= FlxG.height) destroy();
+		if(alpha == 0 || y >= FlxG.height) kill();
 	}
 }
