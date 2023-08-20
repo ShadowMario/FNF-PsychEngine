@@ -121,8 +121,6 @@ class ReflectionFunctions
 			var groupOrArray:Dynamic = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
 			if(Std.isOfType(groupOrArray, FlxTypedGroup)) {
 				var sex = groupOrArray.members[index];
-				if(!dontDestroy)
-					sex.kill();
 				groupOrArray.remove(sex, true);
 				if(!dontDestroy)
 					sex.destroy();
