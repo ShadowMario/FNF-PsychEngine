@@ -165,11 +165,11 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			#if mobileC
 			controls.isInSubstate = false;
 			FlxTransitionableState.skipNextTransOut = true;
-			ClientPrefs.saveSettings();
 			FlxG.resetState();
 			#else
 			close();
 			#end
+			ClientPrefs.saveSettings();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 
