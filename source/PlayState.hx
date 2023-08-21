@@ -77,9 +77,15 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
-#else import vlc.MP4Handler; #end
+#if (hxCodec >= "3.0.0")
+import hxcodec.flixel.FlxVideo as MP4Handler;
+#elseif (hxCodec == "2.6.1")
+import hxcodec.VideoHandler as MP4Handler;
+#elseif (hxCodec == "2.6.0")
+import VideoHandler as MP4Handler;
+#else
+import vlc.MP4Handler;
+#end
 #end
 
 
@@ -91,7 +97,7 @@ class PlayState extends MusicBeatState
 	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
 	public static var instance:PlayState;
-	public static var STRUM_X = 42;
+	public static var STRUM_X = 48.5;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [];
@@ -2884,12 +2890,21 @@ class PlayState extends MusicBeatState
 		}
 
 		var video:MP4Handler = new MP4Handler();
+		#if (hxCodec < "3.0.0")
 		video.playVideo(filepath);
 		video.finishCallback = function()
 		{
 			startAndEnd();
 			return;
 		}
+		#else
+		video.play(filepath);
+		video.onEndReached.add(function(){
+			video.dispose();
+			startAndEnd();
+			return;
+		});
+		#end
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
@@ -5117,6 +5132,7 @@ class PlayState extends MusicBeatState
 							var video:MP4Handler = new MP4Handler(); // it plays but it doesn't show???
 							vidSpr = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
 							add(vidSpr);
+							#if (hxCodec < "3.0.0")
 							video.playVideo(Paths.video('scary'), false, false);
 							video.finishCallback = function()
 							{
@@ -5124,6 +5140,15 @@ class PlayState extends MusicBeatState
 								vidSpr.visible = false;
 								Sys.exit(0);
 							};
+							#else
+							video.play(Paths.video('scary'));
+							video.onEndReached.add(function(){
+								video.dispose();
+								videoDone = true;
+								vidSpr.visible = false;
+								Sys.exit(0);
+							});
+							#end
 						});
 				}
 			if(botplayTxt.text == "you're about to die in 30 seconds" && !botplayUsed)

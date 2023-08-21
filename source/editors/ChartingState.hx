@@ -58,7 +58,7 @@ import sys.io.File;
 #end
 
 
-@:access(flixel.system.FlxSound._sound)
+@:access(flixel.sound.FlxSound._sound)
 @:access(openfl.media.Sound.__buffer)
 
 class ChartingState extends MusicBeatState

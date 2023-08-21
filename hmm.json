@@ -36,19 +36,11 @@
       "version": "4.2.1"
     },
     {
-      "name": "tjson",
-      "type": "haxelib",
-      "version": null
-    },
-    {
-      "name": "hxjsonast",
-      "type": "haxelib",
-      "version": null
-    },
-    {
       "name": "hxCodec",
-      "type": "haxelib",
-      "version": "2.5.1"
+      "type": "git",
+      "dir": null,
+      "ref": "c8c47e706ad82a423783006ed901b6d93c89a421",
+      "url": "https://github.com/polybiusproxy/hxCodec"
     },
     {
       "name": "hscript",
@@ -66,13 +58,6 @@
       "dir": null,
       "ref": "master",
       "url": "https://github.com/Aidan63/linc_discord-rpc"
-    },
-    {
-      "name": "hscript-ex",
-      "type": "git",
-      "dir": null,
-      "ref": "master",
-      "url": "https://github.com/ianharrigan/hscript-ex"
     },
     {
       "name": "linc_luajit",
