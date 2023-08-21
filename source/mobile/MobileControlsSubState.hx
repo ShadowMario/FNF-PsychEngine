@@ -71,8 +71,7 @@ class MobileControlsSubState extends FlxSubState
 		var exitButton:FlxButton = new FlxButton(FlxG.width - 200, 50, 'Exit', function()
 		{
 			if (curSelected == 6 && ClientPrefs.data.extraButtons != 'NONE'){
-				if (daFunny.alpha == 0){
-				daFunny.visible = true;
+				if (daFunny.alpha == 0 ){
 				daFunny.alpha = 1;
 				FlxTween.tween(daFunny, {alpha: 0}, 2.5, {ease: FlxEase.circInOut});
 			}
@@ -213,7 +212,7 @@ class MobileControlsSubState extends FlxSubState
 		daFunny.screenCenter();
 		daFunny.borderSize = 2.4;
 		add(daFunny);
-		daFunny.visible = false;
+		daFunny.alpha = 0;
 		super.create();
 
 		FlxTween.tween(bg, {alpha: 0.6}, 1, {ease: FlxEase.circInOut});
