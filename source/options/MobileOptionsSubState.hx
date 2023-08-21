@@ -31,19 +31,20 @@ class MobileOptionsSubState extends BaseOptionsMenu
 			'How much transparent should the Mobile Controls be.',
 			'controlsAlpha',
 			'percent');
-		option.scrollSpeed = 1.6;
+		option.scrollSpeed = 1;
 		option.minValue = 0.2;
 		option.maxValue = 1;
 		option.changeValue = 0.05;
 		option.decimals = 1;
-		mafaka = option.getValue();
 		option.onChange = setAlpha;
 		addOption(option);
 
 		super();
 	}
 	public function setAlpha():Void {
+		if (curOption.getValue() != mafaka)
+			mafaka = curOption.getValue();
+
 		MusicBeatSubstate.virtualPad.alpha = mafaka;
-		
 	}
 }

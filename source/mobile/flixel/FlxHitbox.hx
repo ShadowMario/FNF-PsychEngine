@@ -40,17 +40,17 @@ class FlxHitbox extends FlxSpriteGroup
 		var buttonDownColor:Array<FlxColor>;
 		var buttonUpColor:Array<FlxColor>;
 		var buttonRightColor:Array<FlxColor>;
-		if (ClientPrefs.data.dynamicColors && MusicBeatState.instance.mobileControls != null){
+		/*if (ClientPrefs.data.dynamicColors && MusicBeatState.instance.mobileControls != null){
 			buttonLeftColor = ClientPrefs.data.arrowRGB[0];
 			buttonDownColor = ClientPrefs.data.arrowRGB[1];
 			buttonUpColor = ClientPrefs.data.arrowRGB[2];
 			buttonRightColor = ClientPrefs.data.arrowRGB[3];
-		} else{
+		} else{*/
 			buttonLeftColor = ClientPrefs.defaultData.arrowRGB[0];
 			buttonDownColor = ClientPrefs.defaultData.arrowRGB[1];
 			buttonUpColor = ClientPrefs.defaultData.arrowRGB[2];
 			buttonRightColor = ClientPrefs.defaultData.arrowRGB[3];
-		}
+		//}
 
 		switch (mode)
 		{

@@ -590,9 +590,47 @@ class PlayState extends MusicBeatState
 		comboGroup.cameras = [camHUD];
 
 		#if mobileC
+		var buttonLeftColor:Array<FlxColor>;
+		var buttonDownColor:Array<FlxColor>;
+		var buttonUpColor:Array<FlxColor>;
+		var buttonRightColor:Array<FlxColor>;
+		if (ClientPrefs.data.dynamicColors && MusicBeatState.instance.mobileControls != null){
+			buttonLeftColor = ClientPrefs.data.arrowRGB[0];
+			buttonDownColor = ClientPrefs.data.arrowRGB[1];
+			buttonUpColor = ClientPrefs.data.arrowRGB[2];
+			buttonRightColor = ClientPrefs.data.arrowRGB[3];
+		} else{
+			buttonLeftColor = ClientPrefs.defaultData.arrowRGB[0];
+			buttonDownColor = ClientPrefs.defaultData.arrowRGB[1];
+			buttonUpColor = ClientPrefs.defaultData.arrowRGB[2];
+			buttonRightColor = ClientPrefs.defaultData.arrowRGB[3];
+		}
 		addMobileControls(false);
 		mobileControls.visible = true;
+		switch(mobile.MobileControls.getMode())
+		{
+			case 0 | 1 | 2:
+			mobileControls.virtualPad.buttonLeft.color =  buttonLeftColor[0];
+			mobileControls.virtualPad.buttonDown.color =  buttonDownColor[0];
+			mobileControls.virtualPad.buttonUp.color =  buttonUpColor[0];
+			mobileControls.virtualPad.buttonRight.color =  buttonRightColor[0];
+			case 3:
+			mobileControls.virtualPad.buttonLeft.color =  buttonLeftColor[0];
+			mobileControls.virtualPad.buttonDown.color =  buttonDownColor[0];
+			mobileControls.virtualPad.buttonUp.color =  buttonUpColor[0];
+			mobileControls.virtualPad.buttonRight.color =  buttonRightColor[0];
+			mobileControls.virtualPad.buttonLeft2.color =  buttonLeftColor[0];
+			mobileControls.virtualPad.buttonDown2.color =  buttonDownColor[0];
+			mobileControls.virtualPad.buttonUp2.color =  buttonUpColor[0];
+			mobileControls.virtualPad.buttonRight2.color =  buttonRightColor[0];
+			case 4:
+			mobileControls.hitbox.buttonLeft.color =  buttonLeftColor[0];
+			mobileControls.hitbox.buttonDown.color =  buttonDownColor[0];
+			mobileControls.hitbox.buttonUp.color =  buttonUpColor[0];
+			mobileControls.hitbox.buttonRight.color =  buttonRightColor[0];
+		}
 		#end
+		
 
 		startingSong = true;
 		
