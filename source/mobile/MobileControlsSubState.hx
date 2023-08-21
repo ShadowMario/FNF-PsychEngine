@@ -133,10 +133,6 @@ class MobileControlsSubState extends FlxSubState
 		padMap.set("NONE", NONE);
 		padMap.set("ONE", SINGLE);
 		padMap.set("TWO", DOUBLE);
-
-		virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
-		virtualPadExtra.visible = false;
-		add(virtualPadExtra);
 	
 		virtualPad = new FlxVirtualPad(NONE, NONE);
 		virtualPad.visible = false;
@@ -206,6 +202,10 @@ class MobileControlsSubState extends FlxSubState
 		extra1Pozition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		extra1Pozition.borderSize = 2.4;
 		add(extra1Pozition);
+
+		virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
+		virtualPadExtra.visible = false;
+		add(virtualPadExtra);
 		changeSelection();
 
 		daFunny = new FlxText(0, 75, 0, 'Pad-Extras is not a control mode\nPlease selecte a valid mode such as hitbox, Pad-Left...', 35);
