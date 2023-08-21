@@ -252,7 +252,7 @@ class PauseSubState extends MusicBeatSubstate
 					return;
 				}
 
-				PlayState.allowedToClear = false; //i think this is called when you presse back
+				Main.allowedToClear = false; //i think this is called when you presse back
 				menuItems = menuItemsOG;
 				regenMenu();
 			}
@@ -265,7 +265,7 @@ class PauseSubState extends MusicBeatSubstate
 					#end
 					close();
 				case 'Change Difficulty':
-					PlayState.allowedToClear = true; // some mods have whole diffrent assets, song... on diffrent difficulties, so yea
+					Main.allowedToClear = true; // some mods have whole diffrent assets, song... on diffrent difficulties, so yea
 					menuItems = difficultyChoices;
 					deleteSkipTimeText();
 					regenMenu();
@@ -274,7 +274,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
 				case "Restart Song":
-					PlayState.allowedToClear = false;
+					Main.allowedToClear = false;
 					#if mobileC
 					controls.isInSubstate = false;
 					#end
@@ -327,7 +327,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case 'Options':
-					PlayState.allowedToClear = false;
+					Main.allowedToClear = false;
 					#if mobileC
 					controls.isInSubstate = false;
 					#end
@@ -343,7 +343,7 @@ class PauseSubState extends MusicBeatSubstate
 					OptionsState.onPlayState = true;
 				case "Exit to menu":
 					#if mobileC
-					PlayState.allowedToClear = true;
+					Main.allowedToClear = true;
 					controls.isInSubstate = false;
 					#end
 					#if desktop DiscordClient.resetClientID(); #end

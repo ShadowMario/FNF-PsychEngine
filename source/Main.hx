@@ -37,6 +37,8 @@ class Main extends Sprite
 
 	public static var fpsVar:FPS;
 
+	public static var allowedToClear:Bool = true; //this is used for proper memory cleaning and preventing your game from loading everything over and over for no reason
+
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void

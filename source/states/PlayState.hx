@@ -276,12 +276,12 @@ class PlayState extends MusicBeatState
 	public var endCallback:Void->Void = null;
 
 	//due to the game clearing memory on gameover and song restart, the game wont store what was loaded midsong so you'll freez and probably die over and over, and because it stresses the CPU. -karim
-	public static var allowedToClear:Bool = (ClientPrefs.data != null) ? !ClientPrefs.data.lowQuality : true; // default to true
+	//public static var allowedToClear:Bool = (ClientPrefs.data != null) ? !ClientPrefs.data.lowQuality : true; // default to true moved to Main.hx cause its setting back to true because of FlxG.resetState()
 
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
-		if(allowedToClear) Paths.clearStoredMemory();
+		if(Main.allowedToClear) Paths.clearStoredMemory();
 
 		startCallback = startCountdown;
 		endCallback = endSong;
@@ -714,7 +714,7 @@ class PlayState extends MusicBeatState
 		#end
 
 		super.create();
-		if(allowedToClear) Paths.clearUnusedMemory();
+		if(Main.allowedToClear) Paths.clearUnusedMemory();
 		
 		CustomFadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
