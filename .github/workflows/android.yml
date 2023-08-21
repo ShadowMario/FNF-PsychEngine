@@ -48,6 +48,7 @@ jobs:
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.1.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
+          cp art/CustomManifest.xml ~/haxelib/lime/7,9,0/templates/android/template/app/src/main
       - name: List Haxelibs
         run: haxelib list
       - name: Configure Android
