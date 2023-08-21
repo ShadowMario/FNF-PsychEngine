@@ -32,6 +32,7 @@ class MainMenuState extends MusicBeatState
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
+	var resetText:FlxText;
 
 	override function create()
 	{
@@ -105,16 +106,17 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
+		var fnfVerShit:String = 'Friday Night Funkin v${Application.current.meta.get('version')}';
+
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, 'Psych Engine v${psychEngineVersion} | ${fnfVerShit}', 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-		// NG.core.calls.event.logEvent('swag').send();
+		resetText = new FlxText(12, FlxG.height - 24, 0, 'Hold F5 for 5 Seconds to Reset Controls', 12);
+		resetText.scrollFactor.set();
+		resetText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(resetText);
 
 		changeItem();
 
@@ -128,6 +130,7 @@ class MainMenuState extends MusicBeatState
 		super.create();
 	}
 
+	var controlResetTimer:Float = 0.0;
 	var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float)
@@ -141,6 +144,19 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
+			if (FlxG.keys.pressed.F5) {
+				controlResetTimer += 1 * elapsed;
+
+				resetText.text = 'Keep Holding -> ${Math.round(controlResetTimer)}';
+				if (controlResetTimer >= 5.0) {
+					FlxG.sound.play(Paths.sound("cancelMenu"));
+					ClientPrefs.resetKeys(null); // reset controller and keyboard keys
+					resetControlTimer();
+				}
+			}
+			else if (FlxG.keys.justReleased.F5)
+				resetControlTimer();
+
 			if (controls.UI_UP_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -261,5 +277,11 @@ class MainMenuState extends MusicBeatState
 				spr.centerOffsets();
 			}
 		});
+	}
+
+	@:noCompletion
+	function resetControlTimer():Void {
+		resetText.text = "Hold F5 for 5 Seconds to Reset Controls";
+		controlResetTimer = 0.0;
 	}
 }
