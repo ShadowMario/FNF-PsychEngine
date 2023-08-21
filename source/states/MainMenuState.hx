@@ -106,17 +106,17 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0);
 
-		var fnfVerShit:String = 'Friday Night Funkin v${Application.current.meta.get('version')}';
-
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, 'Psych Engine v${psychEngineVersion} | ${fnfVerShit}', 12);
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
-
-		resetText = new FlxText(12, FlxG.height - 24, 0, 'Hold F5 for 5 Seconds to Reset Controls', 12);
+		resetText = new FlxText(12, FlxG.height - 44, 0, 'Hold F5 for 5 Seconds to Reset Controls', 12);
 		resetText.scrollFactor.set();
 		resetText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(resetText);
+
+		var fnfVerShit:String = 'Friday Night Funkin v${Application.current.meta.get('version')}';
+
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, 'Psych Engine v${psychEngineVersion} | ${fnfVerShit}', 12);
+		versionShit.scrollFactor.set();
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionShit);
 
 		changeItem();
 
