@@ -55,7 +55,7 @@ class TankmenBG extends FlxSprite
 		}
 		else if(animation.curAnim.finished)
 		{
-			destroy();
+			kill();
 		}
 
 		if(Conductor.songPosition > strumTime)
