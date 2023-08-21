@@ -60,7 +60,7 @@ jobs:
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       - name: Compile
-        run: haxelib run lime build android -D officialBuild -D NO_PRECOMPILED_HEADERS -D mobileC -release
+        run: haxelib run lime build android -D officialBuild -D NO_PRECOMPILED_HEADERS -release
         # continue-on-error: true
         env:
           cert_pass: nullfunni

@@ -15,13 +15,13 @@ jobs:
     runs-on: Lilian
     steps:
        - name: Switch Haxelibs
-         run: taskset -a -c 3-7 haxelib setup $TERMUX_HOME/haxelibpsych && taskset -a -c 3-7 haxelib set openfl 9.2.1
+         run: taskset -a -c 3-7 haxelib setup $TERMUX_HOME/haxelibpsych # && taskset -a -c 3-7 haxelib set openfl 9.2.1
        - name: Fetch Upstream
          run: cd ~/repos/FNF-PsychEngine-Mobile && taskset -a -c 3-7 git pull
        - name: Toaster (Build Started)
          run: taskset -a -c 3-7 termux-toast "A Build has been started"
        - name: Compile
-         run: cd ~/repos/FNF-PsychEngine-Mobile && taskset -a -c 4-7 lime build android -armv7 -D officialBuild -D NO_PRECOMPILED_HEADERS -D mobileC -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych
+         run: cd ~/repos/FNF-PsychEngine-Mobile && taskset -a -c 4-7 lime build android -armv7 -D NO_PRECOMPILED_HEADERS -release && mv export/release/android/bin/app/build/outputs/apk/release/*.apk /sdcard/Download/builds/psych
          env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
