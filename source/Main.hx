@@ -12,6 +12,9 @@ import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
+#if linux
+import lime.graphics.Image;
+#end
 
 #if linux
 @:cppInclude('./external/gamemode_client.h')
@@ -105,6 +108,11 @@ class Main extends Sprite
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
+
+		#if linux
+		var icon = Image.fromFile("icon.png");
+		Lib.current.stage.window.setIcon(icon);
+		#end
 
 		#if html5
 		FlxG.autoPause = false;
