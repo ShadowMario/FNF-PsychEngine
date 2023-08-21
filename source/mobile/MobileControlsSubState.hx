@@ -99,7 +99,7 @@ class MobileControlsSubState extends FlxSubState
 		{
 			if (resetButton.visible)
 			{
-				if (curSelected == 4)
+				if (curSelected == 6)
 					{
 				virtualPadExtra.buttonExtra.x = 0;
 				virtualPadExtra.buttonExtra.y = FlxG.height - 135;
