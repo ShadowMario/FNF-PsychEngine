@@ -40,7 +40,7 @@ class SUtil
 	/**
 	 * This returns the external storage path that the game will use by the type.
 	 */
-	public static function getPath(type:StorageType = EXTERNAL_DATA):String
+	public static function getPath(type:StorageType = EXTERNAL):String
 	{
 		var daPath:String = '';
 
