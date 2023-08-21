@@ -790,6 +790,7 @@ class PlayState extends MusicBeatState
 		#if HSCRIPT_ALLOWED
 		var doPush:Bool = false;
 		var scriptFile:String = 'characters/' + name + '.hx';
+		#if MODS_ALLOWED
 		var replacePath:String = Paths.modFolders(scriptFile);
 		if(FileSystem.exists(replacePath))
 		{
@@ -802,6 +803,10 @@ class PlayState extends MusicBeatState
 			if(FileSystem.exists(scriptFile))
 				doPush = true;
 		}
+		#else
+		scriptFile = Paths.getPreloadPath(scriptFile);
+		if(Assets.exists(scriptFile)) doPush = true;
+		#end
 		
 		if(doPush)
 		{
@@ -3138,11 +3143,16 @@ class PlayState extends MusicBeatState
 	#if HSCRIPT_ALLOWED
 	public function startHScriptsNamed(scriptFile:String)
 	{
+		#if MODS_ALLOWED
 		var scriptToLoad:String = Paths.modFolders(scriptFile);
 		if(!FileSystem.exists(scriptToLoad))
 			scriptToLoad = Paths.getPreloadPath(scriptFile);
 		
 		if(FileSystem.exists(scriptToLoad))
+		#elseif sys
+		var scriptToLoad:String = Paths.getPreloadPath(scriptFile);
+		if(OpenFlAssets.exists(scriptToLoad))
+		#end
 		{
 			if (SScript.global.exists(scriptToLoad)) return false;
 	
@@ -3516,7 +3526,7 @@ class PlayState extends MusicBeatState
 		}
 		FlxG.log.warn('Missing shader $name .frag AND .vert files!');
 		#else
-		FlxG.log.warn('This platform doesn\'t support Runtime Shaders!', false, false, FlxColor.RED);
+		FlxG.log.warn('This platform doesn\'t support Runtime Shaders!');
 		#end
 		return false;
 	}
