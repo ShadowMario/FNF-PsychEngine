@@ -23,7 +23,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 	public function new(song:String, difficulty:Int, character:String, week:Int = -1)
 	{
 		#if mobileC
-		controls.isInSubstate = true;
+		
 		#end
 		this.song = song;
 		this.difficulty = difficulty;
@@ -99,7 +99,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		}
 		if(controls.BACK) {
 			#if mobileC
-			controls.isInSubstate = false;
+			
 			#end
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 			#if mobileC
@@ -118,7 +118,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 			#if mobileC
-			controls.isInSubstate = false;
+			
 			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
 			#else
@@ -129,7 +129,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		addVirtualPad(LEFT_RIGHT, A_B);
 		addPadCamera(false);
-		controls.isInSubstate = true;
+		
 		}
 		#end
 		super.update(elapsed);

@@ -65,7 +65,7 @@ class ControlsSubState extends MusicBeatSubstate
 		super();
 
 		#if mobileC
-		controls.isInSubstate = true;
+		
 		#end
 
 		options.push([true]);
@@ -281,7 +281,7 @@ class ControlsSubState extends MusicBeatSubstate
 			if(controls.BACK || FlxG.gamepads.anyJustPressed(B))
 			{
 				#if mobileC
-				controls.isInSubstate = false;
+				
 				FlxTransitionableState.skipNextTransOut = true;
 				FlxG.resetState();
 				#else

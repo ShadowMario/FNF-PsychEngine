@@ -34,7 +34,7 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		option.scrollSpeed = 1;
 		option.minValue = 0.2;
 		option.maxValue = 1;
-		option.changeValue = 0.05;
+		option.changeValue = 0.1;
 		option.decimals = 1;
 		option.onChange = setAlpha;
 		addOption(option);

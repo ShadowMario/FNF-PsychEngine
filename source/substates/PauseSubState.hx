@@ -37,7 +37,7 @@ class PauseSubState extends MusicBeatSubstate
 		super();
 
 		#if mobileC
-		controls.isInSubstate = true;
+		
 		#end
 
 		if(Difficulty.list.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
@@ -226,7 +226,7 @@ class PauseSubState extends MusicBeatSubstate
 			{
 				try{
 					if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
-						#if mobileC controls.isInSubstate = false; #end
+						
 						var name:String = PlayState.SONG.song;
 						var poop = Highscore.formatSong(name, curSelected);
 						PlayState.SONG = Song.loadFromJson(poop, name);
@@ -261,7 +261,7 @@ class PauseSubState extends MusicBeatSubstate
 			{
 				case "Resume":
 					#if mobileC
-					controls.isInSubstate = false;
+					
 					#end
 					close();
 				case 'Change Difficulty':
@@ -276,18 +276,18 @@ class PauseSubState extends MusicBeatSubstate
 				case "Restart Song":
 					Main.allowedToClear = false;
 					#if mobileC
-					controls.isInSubstate = false;
+					
 					#end
 					restartSong();
 				#if mobileC
 				case 'Chart Editor':
 					MusicBeatState.switchState(new states.editors.ChartingState());
 					PlayState.chartingMode = true;
-					controls.isInSubstate = false;
+					
 				#end
 				case "Leave Charting Mode":
 					#if mobileC
-					controls.isInSubstate = false;
+					
 					#end
 					restartSong();
 					PlayState.chartingMode = false;
@@ -296,7 +296,7 @@ class PauseSubState extends MusicBeatSubstate
 					{
 						PlayState.startOnTime = curTime;
 						#if mobileC
-						controls.isInSubstate = false;
+						
 						#end
 						restartSong(true);
 					}
@@ -308,13 +308,13 @@ class PauseSubState extends MusicBeatSubstate
 							PlayState.instance.setSongTime(curTime);
 						}
 						#if mobileC
-						controls.isInSubstate = false;
+						
 						#end
 						close();
 					}
 				case 'End Song':
 					#if mobileC
-					controls.isInSubstate = false;
+					
 					#end
 					close();
 					PlayState.instance.notes.clear();
@@ -329,7 +329,7 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Options':
 					Main.allowedToClear = false;
 					#if mobileC
-					controls.isInSubstate = false;
+					
 					#end
 					PlayState.instance.paused = true; // For lua
 					PlayState.instance.vocals.volume = 0;
@@ -344,7 +344,7 @@ class PauseSubState extends MusicBeatSubstate
 				case "Exit to menu":
 					#if mobileC
 					Main.allowedToClear = true;
-					controls.isInSubstate = false;
+					
 					#end
 					#if desktop DiscordClient.resetClientID(); #end
 					PlayState.deathCounter = 0;
@@ -380,7 +380,7 @@ class PauseSubState extends MusicBeatSubstate
 					MusicBeatSubstate.virtualPad.buttonUp.color = 0xFF12FA05;
 				}
 				addPadCamera(false);
-		controls.isInSubstate = true;
+		
 		}
 		#end
 	}

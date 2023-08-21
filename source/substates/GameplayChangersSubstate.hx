@@ -89,7 +89,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		super();
 
 		#if mobileC
-		controls.isInSubstate = true;
+		
 		#end
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -163,7 +163,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		if (controls.BACK) {
 			#if mobileC
-			controls.isInSubstate = false;
+			
 			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();
 			#else
@@ -320,7 +320,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
 		addVirtualPad(LEFT_FULL, A_B_C);
 		addPadCamera(false);
-		controls.isInSubstate = true;
+		
 		}
 		#end
 		super.update(elapsed);

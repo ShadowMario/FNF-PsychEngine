@@ -79,7 +79,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		#if mobileC
 		addVirtualPad(NONE, A_B);
 		addPadCamera(false);
-		controls.isInSubstate = true;
+		
 		#end
 		
 	}
@@ -101,7 +101,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (controls.BACK)
 		{
 			Main.allowedToClear = true;
-			#if mobileC controls.isInSubstate = false; #end
+			
 			#if desktop DiscordClient.resetClientID(); #end
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
@@ -188,7 +188,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				});
 			});
 			PlayState.instance.callOnScripts('onGameOverConfirm', [true]);
-			#if mobileC controls.isInSubstate = false; #end
+			
 		}
 	}
 

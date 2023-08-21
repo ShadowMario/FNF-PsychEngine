@@ -26,7 +26,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		super();
 
 		#if mobileC
-		controls.isInSubstate = true;
+		
 		#end
 
 		if(title == null) title = 'Options';
@@ -128,7 +128,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			FlxTransitionableState.skipNextTransOut = true;
 			ClientPrefs.saveSettings();
 			FlxG.resetState();
-			controls.isInSubstate = false;
+			
 			#else
 			close();
 			#end

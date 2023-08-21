@@ -40,17 +40,17 @@ class FlxHitbox extends FlxSpriteGroup
 		var buttonDownColor:Array<FlxColor>;
 		var buttonUpColor:Array<FlxColor>;
 		var buttonRightColor:Array<FlxColor>;
-		/*if (ClientPrefs.data.dynamicColors && MusicBeatState.instance.mobileControls != null){
+		if (ClientPrefs.data.dynamicColors){
 			buttonLeftColor = ClientPrefs.data.arrowRGB[0];
 			buttonDownColor = ClientPrefs.data.arrowRGB[1];
 			buttonUpColor = ClientPrefs.data.arrowRGB[2];
 			buttonRightColor = ClientPrefs.data.arrowRGB[3];
-		} else{*/
+		} else{
 			buttonLeftColor = ClientPrefs.defaultData.arrowRGB[0];
 			buttonDownColor = ClientPrefs.defaultData.arrowRGB[1];
 			buttonUpColor = ClientPrefs.defaultData.arrowRGB[2];
 			buttonRightColor = ClientPrefs.defaultData.arrowRGB[3];
-		//}
+		}
 
 		switch (mode)
 		{
@@ -129,7 +129,7 @@ class FlxHitbox extends FlxSpriteGroup
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.tween(hint, {alpha: MobileControls.getOpacity()}, MobileControls.getOpacity() / 100, {
+			hintTween = FlxTween.tween(hint, {alpha: ClientPrefs.data.controlsAlpha}, ClientPrefs.data.controlsAlpha / 100, {
 				ease: FlxEase.circInOut,
 				onComplete: function(twn:FlxTween)
 				{
@@ -142,7 +142,7 @@ class FlxHitbox extends FlxSpriteGroup
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.tween(hint, {alpha: 0.00001}, MobileControls.getOpacity() / 10, {
+			hintTween = FlxTween.tween(hint, {alpha: 0.00001}, ClientPrefs.data.controlsAlpha / 10, {
 				ease: FlxEase.circInOut,
 				onComplete: function(twn:FlxTween)
 				{
@@ -155,7 +155,7 @@ class FlxHitbox extends FlxSpriteGroup
 			if (hintTween != null)
 				hintTween.cancel();
 
-			hintTween = FlxTween.tween(hint, {alpha: 0.00001}, MobileControls.getOpacity() / 10, {
+			hintTween = FlxTween.tween(hint, {alpha: 0.00001}, ClientPrefs.data.controlsAlpha / 10, {
 				ease: FlxEase.circInOut,
 				onComplete: function(twn:FlxTween)
 				{

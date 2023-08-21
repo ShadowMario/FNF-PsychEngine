@@ -51,25 +51,25 @@ class MobileControls extends FlxSpriteGroup
 				add(virtualPad);
 				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 				add(virtualPadExtra);
-				virtualPad.alpha = virtualPadExtra.alpha = MobileControls.getOpacity();
+				virtualPadExtra.alpha = ClientPrefs.data.controlsAlpha;
 			case 1:
 				virtualPad = new FlxVirtualPad(LEFT_FULL, NONE);
 				add(virtualPad);
 				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 				add(virtualPadExtra);
-				virtualPad.alpha = virtualPadExtra.alpha = MobileControls.getOpacity();
+				virtualPadExtra.alpha = ClientPrefs.data.controlsAlpha;
 			case 2:
 				virtualPad = MobileControls.getCustomMode(new FlxVirtualPad(RIGHT_FULL, NONE));
 				add(virtualPad);
 				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 				add(virtualPadExtra);
-				virtualPad.alpha = virtualPadExtra.alpha = MobileControls.getOpacity();
+				virtualPadExtra.alpha = ClientPrefs.data.controlsAlpha;
 			case 3:
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(virtualPad);
 				virtualPadExtra = MobileControls.getExtraCustomMode(new FlxVirtualPadExtra(padMap.get(ClientPrefs.data.extraButtons)));
 				add(virtualPadExtra);
-				virtualPad.alpha = virtualPadExtra.alpha = MobileControls.getOpacity();
+				virtualPadExtra.alpha = ClientPrefs.data.controlsAlpha;
 			case 4:
 			htiboxMap = new Map<String, Modes>();
 			htiboxMap.set("NONE", DEFAULT);
@@ -95,11 +95,6 @@ class MobileControls extends FlxSpriteGroup
 			hitbox = FlxDestroyUtil.destroy(hitbox);
 			hitbox = null;
 		}
-	}
-
-	public static function getOpacity():Float
-	{
-		return ClientPrefs.data.controlsAlpha;
 	}
 
 	public static function setMode(mode:Int = 0):Void

@@ -594,7 +594,7 @@ class PlayState extends MusicBeatState
 		var buttonDownColor:Array<FlxColor>;
 		var buttonUpColor:Array<FlxColor>;
 		var buttonRightColor:Array<FlxColor>;
-		if (ClientPrefs.data.dynamicColors && MusicBeatState.instance.mobileControls != null){
+		if (ClientPrefs.data.dynamicColors){
 			buttonLeftColor = ClientPrefs.data.arrowRGB[0];
 			buttonDownColor = ClientPrefs.data.arrowRGB[1];
 			buttonUpColor = ClientPrefs.data.arrowRGB[2];
@@ -607,6 +607,7 @@ class PlayState extends MusicBeatState
 		}
 		addMobileControls(false);
 		mobileControls.visible = true;
+		if (ClientPrefs.data.dynamicColors){
 		switch(mobile.MobileControls.getMode())
 		{
 			case 0 | 1 | 2:
@@ -623,12 +624,8 @@ class PlayState extends MusicBeatState
 			mobileControls.virtualPad.buttonDown2.color =  buttonDownColor[0];
 			mobileControls.virtualPad.buttonUp2.color =  buttonUpColor[0];
 			mobileControls.virtualPad.buttonRight2.color =  buttonRightColor[0];
-			case 4:
-			mobileControls.hitbox.buttonLeft.color =  buttonLeftColor[0];
-			mobileControls.hitbox.buttonDown.color =  buttonDownColor[0];
-			mobileControls.hitbox.buttonUp.color =  buttonUpColor[0];
-			mobileControls.hitbox.buttonRight.color =  buttonRightColor[0];
 		}
+	}
 		#end
 		
 

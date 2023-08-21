@@ -52,7 +52,7 @@ class NotesSubState extends MusicBeatSubstate
 		super();
 
 		#if mobileC
-		controls.isInSubstate = true;
+		
 		#end
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -202,7 +202,7 @@ class NotesSubState extends MusicBeatSubstate
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			#if mobileC
-			controls.isInSubstate = false;
+			
 			FlxTransitionableState.skipNextTransOut = true;
 			ClientPrefs.saveSettings();
 			FlxG.resetState();

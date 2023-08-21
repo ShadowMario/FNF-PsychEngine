@@ -37,7 +37,7 @@ class MusicBeatState extends FlxUIState
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
 		virtualPad = new FlxVirtualPad(DPad, Action);
-		virtualPad.alpha = 0.6;
+		virtualPad.alpha = ClientPrefs.data.controlsAlpha;
 		add(virtualPad);
 	}
 
@@ -57,7 +57,7 @@ class MusicBeatState extends FlxUIState
 
 		mobileControls.cameras = [camControls];
 		mobileControls.visible = false;
-		mobileControls.alpha = 0.6;
+		mobileControls.alpha = ClientPrefs.data.controlsAlpha;
 		add(mobileControls);
 		// configure the current mobile control binds, without this there gonna be conflict and input issues.
 		switch (MobileControls.getMode())
