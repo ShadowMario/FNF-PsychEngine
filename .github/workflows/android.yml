@@ -35,6 +35,7 @@ jobs:
       - name: Installing Libraries
         run: |
           haxelib setup ~/haxelib
+          haxelib remove extension-androidtools
           haxelib git extension-androidtools https://github.com/mcagabe19-stuff/extension-androidtools.git
           haxelib install flixel-addons 3.0.2 --quiet
           haxelib install flixel-tools 1.5.1 --quiet
