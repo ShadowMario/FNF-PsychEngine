@@ -45,7 +45,7 @@ class SUtil
 	 */
 	 public static var storageType:String;
 	 public static var fuck:FlxSave;
-	public static function getPath(type:StorageType = CUSTOM):String
+	public static function getPath(type:StorageType = EXTERNAL):String
 	{
 		var daPath:String = '';
 
@@ -53,14 +53,14 @@ class SUtil
 		switch (type)
 		{
 			case CUSTOM:
-				if (fuck != null && fuck.data.currentDirectory != null){
+				/*if (fuck != null && fuck.data.currentDirectory == null){
 					fuck.data.currentDirectory = FileBrowser.getSelectedDirectoryPath();
 					fuck.flush();
 				}
 				trace(FileBrowser.getSelectedDirectoryPath());
 				if (fuck.data.currentDirectory != null) fuck.data.currentDirectory = FileBrowser.getSelectedDirectoryPath() + '/';
 				storageType='custom';
-				daPath = fuck.data.currentDirectory;
+				daPath = fuck.data.currentDirectory;*/
 			case INTERNAL:
 				daPath = Context.getFilesDir() + '/';
 				storageType='internal';
@@ -90,15 +90,17 @@ class SUtil
 		if (fuck == null){
 			fuck = new FlxSave();
 			fuck.bind('fuckingDir', CoolUtil.getSavePath());
-			fuck.data.selectedADir = false;
-			fuck.data.currentDirectory = '.PsychEngine';
+			if (fuck.data.selectedADir == null)
+				fuck.data.selectedADir = false;
+			if(fuck.data.currentDirectory == null)
+				fuck.data.currentDirectory = '.PsychEngine';
 			fuck.flush();
 		}
 		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-			|| !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE)
-			|| !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_MEDIA)
-			|| !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_DOCUMENTS)
-			|| !Permissions.getGrantedPermissions().contains(Permissions.MEDIA_CONTENT_CONTROL))
+			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE)
+			&& !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_MEDIA)
+			&& !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_DOCUMENTS)
+			&& !Permissions.getGrantedPermissions().contains(Permissions.MEDIA_CONTENT_CONTROL))
 		{
 				Permissions.requestPermissions(Permissions.WRITE_EXTERNAL_STORAGE);
 				Permissions.requestPermissions(Permissions.READ_EXTERNAL_STORAGE);
