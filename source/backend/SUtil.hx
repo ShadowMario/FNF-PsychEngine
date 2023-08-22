@@ -6,6 +6,7 @@ import android.widget.Toast;
 import android.os.Environment;
 import android.Permissions;
 import android.os.Build;
+import android.FileBrowser;
 #end
 import haxe.io.Path;
 import haxe.CallStack;
@@ -25,6 +26,7 @@ using StringTools;
 
 enum StorageType
 {
+	CUSTOM;
 	INTERNAL;
 	EXTERNAL;
 	EXTERNAL_DATA;
@@ -40,6 +42,7 @@ class SUtil
 	/**
 	 * This returns the external storage path that the game will use by the type.
 	 */
+	 public static var storageType:String;
 	public static function getPath(type:StorageType = EXTERNAL):String
 	{
 		var daPath:String = '';
@@ -47,14 +50,27 @@ class SUtil
 		#if android
 		switch (type)
 		{
+			case CUSTOM:
+				/*if (FlxG.save.data.customDirectory == null){
+					FlxG.save.data.customDirectory = FileBrowser.getSelectedDirectoryPath();
+					FlxG.save.flush();
+				}*/
+				//trace(FileBrowser.getSelectedDirectoryPath());
+			//	if (FlxG.save.data.customDirectory != null) FlxG.save.data.customDirectory = FileBrowser.getSelectedDirectoryPath() + '/';
+				storageType='custom';
+				daPath = Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
 			case INTERNAL:
 				daPath = Context.getFilesDir() + '/';
+				storageType='internal';
 			case EXTERNAL_DATA:
 				daPath = Context.getExternalFilesDir(null) + '/';
+				storageType='external_data';
 			case EXTERNAL:
 				daPath = Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
+				storageType='external';
 			case MEDIA:
 				daPath = Environment.getExternalStorageDirectory() + '/Android/media/' + Application.current.meta.get('packageName') + '/';
+				storageType='media';
 		}
 		#elseif ios
 		daPath = LimeSystem.applicationStorageDirectory;
@@ -68,22 +84,42 @@ class SUtil
 	 */
 	public static function checkFiles():Void
 	{
+		if (FlxG.save.data.selectedDir == null){
+			FlxG.save.data.selectedDir = false;
+		}
 		#if android
 		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-			&& !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
+			|| !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE)
+			|| !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_MEDIA)
+			|| !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_DOCUMENTS)
+			|| !Permissions.getGrantedPermissions().contains(Permissions.MEDIA_CONTENT_CONTROL))
 		{
 				Permissions.requestPermissions(Permissions.WRITE_EXTERNAL_STORAGE);
 				Permissions.requestPermissions(Permissions.READ_EXTERNAL_STORAGE);
+				Permissions.requestPermissions(Permissions.MANAGE_MEDIA);
+				Permissions.requestPermissions(Permissions.MANAGE_DOCUMENTS);
+				Permissions.requestPermissions(Permissions.MEDIA_CONTENT_CONTROL);
 				Lib.application.window.alert('This game need external storage access to function properly' + "\nTo give it access you must accept the storage permission\nIf you accepted you're good to go!\nIf not you'll face issues inGame..."
 					+ '\nPress Ok to see what happens',
 					'Permissions?');
 		}
 
-		if (!FileSystem.exists(SUtil.getPath()))
+		if (FlxG.save.data.selectedDir == false){
+			Lib.application.window.alert('The game couldent find a directory, click OK to choose one.',
+				'No Directory?');
+			FileBrowser.openDirectoryPicker();
+			FlxG.save.data.selectedDir = true;
+			//trace(FileBrowser.getSelectedDirectoryPath());
+	}
+
+		/*if (!FileSystem.exists(SUtil.getPath()))
 			{
 				try {
 				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
+					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE)
+					&& Permissions.getGrantedPermissions().contains(Permissions.MANAGE_MEDIA)
+					&& Permissions.getGrantedPermissions().contains(Permissions.MANAGE_DOCUMENTS)
+					&& Permissions.getGrantedPermissions().contains(Permissions.MEDIA_CONTENT_CONTROL))
 				{
 					if (!FileSystem.exists(SUtil.getPath()))
 						FileSystem.createDirectory(SUtil.getPath());
@@ -94,7 +130,7 @@ class SUtil
                         Lib.application.window.alert('Please create folder to\n' + SUtil.getPath() + '\nPress Ok to close the app', 'Error!');
 			LimeSystem.exit(1);
                         }
-		}
+		}*/
 		#end
 		#if mobile
 		if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
