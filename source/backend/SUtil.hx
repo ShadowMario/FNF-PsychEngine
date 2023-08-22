@@ -17,7 +17,7 @@ import lime.utils.Log as LimeLogger;
 import openfl.events.UncaughtErrorEvent;
 import openfl.Lib;
 import backend.CoolUtil;
-import flixel.FlxG;
+import flixel.util.FlxSave;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -44,7 +44,8 @@ class SUtil
 	 * This returns the external storage path that the game will use by the type.
 	 */
 	 public static var storageType:String;
-	public static function getPath(type:StorageType = EXTERNAL):String
+	 public static var fuck:FlxSave;
+	public static function getPath(type:StorageType = CUSTOM):String
 	{
 		var daPath:String = '';
 
@@ -52,14 +53,14 @@ class SUtil
 		switch (type)
 		{
 			case CUSTOM:
-				/*if (FlxG.save.data.customDirectory == null){
-					FlxG.save.data.customDirectory = FileBrowser.getSelectedDirectoryPath();
-					FlxG.save.flush();
-				}*/
-				//trace(FileBrowser.getSelectedDirectoryPath());
-			//	if (FlxG.save.data.customDirectory != null) FlxG.save.data.customDirectory = FileBrowser.getSelectedDirectoryPath() + '/';
+				if (fuck != null && fuck.data.currentDirectory != null){
+					fuck.data.currentDirectory = FileBrowser.getSelectedDirectoryPath();
+					fuck.flush();
+				}
+				trace(FileBrowser.getSelectedDirectoryPath());
+				if (fuck.data.currentDirectory != null) fuck.data.currentDirectory = FileBrowser.getSelectedDirectoryPath() + '/';
 				storageType='custom';
-				daPath = Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
+				daPath = fuck.data.currentDirectory;
 			case INTERNAL:
 				daPath = Context.getFilesDir() + '/';
 				storageType='internal';
@@ -86,6 +87,13 @@ class SUtil
 	public static function checkFiles():Void
 	{
 		#if android
+		if (fuck == null){
+			fuck = new FlxSave();
+			fuck.bind('fuckingDir', CoolUtil.getSavePath());
+			fuck.data.selectedADir = false;
+			fuckk.data.currentDirectory = '.PsychEngine';
+			fuck.flush();
+		}
 		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
 			|| !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE)
 			|| !Permissions.getGrantedPermissions().contains(Permissions.MANAGE_MEDIA)
@@ -101,13 +109,14 @@ class SUtil
 					+ '\nPress Ok to see what happens',
 					'Permissions?');
 		}
-			//if(!ClientPrefs.data.selectedADir){
+		
+			if(!fuck.data.selectedADir){
 			Lib.application.window.alert('The game couldent find a directory, click OK to choose one.',
 				'No Directory?');
 			FileBrowser.openDirectoryPicker();
-			//ClientPrefs.data.selectedADir = true;
-		//	ClientPrefs.saveSettings();
-	//}
+			fuck.data.selectedADir = true;
+			fuck.flush();
+	}
 			//trace(FileBrowser.getSelectedDirectoryPath());
 
 		/*if (!FileSystem.exists(SUtil.getPath()))
@@ -133,7 +142,7 @@ class SUtil
 		#if mobile
 		if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 		{
-			if(FlxG.random.bool(30))
+			if(FlxG.random.bool(10))
 				{
 			Lib.application.window.alert(backend.CoolUtil.grabDaThing() + "\n W E  A R E\n C O M I N G . . .",
 			'look through the window... =)');
