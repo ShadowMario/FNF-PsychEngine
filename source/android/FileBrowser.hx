@@ -28,7 +28,7 @@ class FileBrowser
 	/**
 	 * Open the directory picker(SAF).
 	 */
-	public static function openDirectoryPicker(requestCode:Int = 1):Void
+	public static function openDirectoryPicker(requestCode:Int = 69):Void
 		{
 			JNI.createStaticMethod('org/haxe/extension/Tools', 'openDirectoryPicker', '(I)V')(requestCode);
 		}
