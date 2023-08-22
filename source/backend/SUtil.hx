@@ -264,6 +264,59 @@ class SUtil
 		#if sys Sys.exit(1); #else LimeSystem.exit(1); #end
 	}
 
+	public static function onCriticalError(error:Dynamic):Void
+	{
+		final log:Array<String> = [Std.string(error)];
+
+		for (item in CallStack.exceptionStack(true))
+		{
+			switch (item)
+			{
+				case CFunction:
+					log.push('C Function');
+				case Module(m):
+					log.push('Module [$m]');
+				case FilePos(s, file, line, column):
+					log.push('$file [line $line]');
+				case Method(classname, method):
+					log.push('$classname [method $method]');
+				case LocalFunction(name):
+					log.push('Local Function [$name]');
+			}
+		}
+
+		final msg:String = log.join('\n');
+
+		#if sys
+		try
+		{
+			if (!FileSystem.exists(SUtil.getPath() +  'logs'))
+				FileSystem.createDirectory(SUtil.getPath() + 'logs');
+
+			File.saveContent(SUtil.getPath()
+				+ 'logs/'
+				+ Lib.application.meta.get('file')
+				+ '-'
+				+ Date.now().toString().replace(' ', '-').replace(':', "'")
+				+ '.txt',
+				msg + '\n');
+		}
+		catch (e:Dynamic)
+		{
+			#if (android && debug)
+			Toast.makeText("Error!\nClouldn't save the crash dump because:\n" + e, Toast.LENGTH_LONG);
+			#else
+			LimeLogger.println("Error!\nClouldn't save the crash dump because:\n" + e);
+			#end
+		}
+		#end
+
+		haxe.Log.trace(msg);
+		Lib.application.window.alert(msg, 'Critical Error!');
+		#if desktop DiscordClient.shutdown(); #end
+		#if sys Sys.exit(1); #else LimeSystem.exit(1); #end
+	}
+
 	/**
 	 * This is mostly a fork of https://github.com/openfl/hxp/blob/master/src/hxp/System.hx#L595
 	 */

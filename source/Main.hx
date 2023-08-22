@@ -5,6 +5,7 @@ import flixel.graphics.FlxGraphic;
 import flixel.FlxGame;
 import flixel.FlxState;
 import openfl.Assets;
+import openfl.system.System;
 import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
@@ -55,6 +56,29 @@ class Main extends Sprite
 		super();
 
                 SUtil.uncaughtErrorHandler();
+
+		#if cpp
+		untyped __global__.__hxcpp_set_critical_error_handler(SUtil.onCriticalError);
+		#elseif hl
+		Api.setErrorHandler(SUtil.onCriticalError);
+		#end
+
+		// https://github.com/MAJigsaw77/UTF/blob/main/source/Main.hx
+		FlxG.signals.preStateCreate.add(function(state:FlxState)
+		{
+			// Clear the loaded graphics if they are no longer in flixel cache...
+			for (key in Assets.cache.getBitmapKeys())
+				if (!FlxG.bitmap.checkCache(key))
+					Assets.cache.removeBitmapData(key);
+
+			// Clear all the loaded sounds from the cache...
+			for (key in Assets.cache.getSoundKeys())
+				Assets.cache.removeSound(key);
+
+			// Run the garbage colector...
+			System.gc();
+		});
+		FlxG.signals.postStateSwitch.add(System.gc);
 
 		if (stage != null)
 		{
