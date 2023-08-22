@@ -91,7 +91,7 @@ class SUtil
 			fuck = new FlxSave();
 			fuck.bind('fuckingDir', CoolUtil.getSavePath());
 			fuck.data.selectedADir = false;
-			fuckk.data.currentDirectory = '.PsychEngine';
+			fuck.data.currentDirectory = '.PsychEngine';
 			fuck.flush();
 		}
 		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
