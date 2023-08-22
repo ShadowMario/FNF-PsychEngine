@@ -17,6 +17,7 @@ import lime.utils.Log as LimeLogger;
 import openfl.events.UncaughtErrorEvent;
 import openfl.Lib;
 import backend.CoolUtil;
+import flixel.FlxG;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -84,9 +85,6 @@ class SUtil
 	 */
 	public static function checkFiles():Void
 	{
-		if (FlxG.save.data.selectedDir == null){
-			FlxG.save.data.selectedDir = false;
-		}
 		#if android
 		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
 			|| !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE)
@@ -103,14 +101,14 @@ class SUtil
 					+ '\nPress Ok to see what happens',
 					'Permissions?');
 		}
-
-		if (FlxG.save.data.selectedDir == false){
+			//if(!ClientPrefs.data.selectedADir){
 			Lib.application.window.alert('The game couldent find a directory, click OK to choose one.',
 				'No Directory?');
 			FileBrowser.openDirectoryPicker();
-			FlxG.save.data.selectedDir = true;
+			//ClientPrefs.data.selectedADir = true;
+		//	ClientPrefs.saveSettings();
+	//}
 			//trace(FileBrowser.getSelectedDirectoryPath());
-	}
 
 		/*if (!FileSystem.exists(SUtil.getPath()))
 			{
