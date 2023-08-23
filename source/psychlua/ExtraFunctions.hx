@@ -236,14 +236,12 @@ class ExtraFunctions
 		Lua_helper.add_callback(lua, "changeOrientation", function(orientation:String){
 		    if (orientation != null) {
 			switch (orientation){
-			case portrait:
-			EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_PORTRAIT);
-			//FlxG.resizeGame(720, 1280);
-			case landspace:
-			EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_LANDSCAPE);
-			//FlxG.resizeGame(1280, 720);
-			case auto:
-		        EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_UNSPECIFIED);
+				case 'portrait':
+					return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_PORTRAIT);
+				case 'landspace':
+					return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_LANDSCAPE);
+				case 'auto':
+					return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_UNSPECIFIED);
 			}}
 			return FunkinLua.luaTrace('changeOrientation: No orientation specified.');
 		});
