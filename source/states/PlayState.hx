@@ -281,6 +281,7 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
+		if(isStoryMode) Main.allowedToClear = true;
 		if(Main.allowedToClear) Paths.clearStoredMemory();
 
 		startCallback = startCountdown;
@@ -2500,7 +2501,7 @@ class PlayState extends MusicBeatState
 
 					trace('LOADING NEXT SONG');
 					trace(Paths.formatToSongPath(PlayState.storyPlaylist[0]) + difficulty);
-
+					Main.allowedToClear = true;
 					FlxTransitionableState.skipNextTransIn = true;
 					FlxTransitionableState.skipNextTransOut = true;
 					prevCamFollow = camFollow;

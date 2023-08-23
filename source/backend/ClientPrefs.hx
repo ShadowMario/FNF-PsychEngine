@@ -10,7 +10,6 @@ import states.TitleState;
 
 // Add a variable here and it will get automatically saved
 class SaveVariables {
-	public var selectedADir:Bool = false;
 	public var extraButtons:String = "NONE"; // mobile extra button option
 	public var hitbox2:Bool = true; // hitbox extra button position option
 	public var dynamicColors:Bool = true; // yes cause its cool -Karim
