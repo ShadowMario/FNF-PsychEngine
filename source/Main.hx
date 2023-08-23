@@ -63,8 +63,6 @@ class Main extends Sprite
 		Api.setErrorHandler(SUtil.onCriticalError);
 		#end
 
-		FlxG.signals.gameResized.add(onResizeGame);
-
 		// https://github.com/MAJigsaw77/UTF/blob/main/source/Main.hx
 		FlxG.signals.preStateCreate.add(function(state:FlxState)
 		{
@@ -171,35 +169,6 @@ class Main extends Sprite
 		@:privateAccess {
 		        sprite.__cacheBitmap = null;
 			sprite.__cacheBitmapData = null;
-		}
-	}
-
-	private inline function onResizeGame(width:Int, height:Int):Void
-	{
-		if (FlxG.cameras != null)
-		{
-			for (camera in FlxG.cameras.list)
-			{
-				@:privateAccess
-				if (camera != null && (camera._filters != null && camera._filters.length > 0))
-				{
-					// Shout out to Ne_Eo for bringing this to my attention.
-					if (camera.flashSprite != null)
-					{
-						camera.flashSprite.__cacheBitmap = null;
-						camera.flashSprite.__cacheBitmapData = null;
-					}
-				}
-			}
-		}
-
-		if (FlxG.game != null)
-		{
-			@:privateAccess
-			{
-				FlxG.game.__cacheBitmap = null;
-				FlxG.game.__cacheBitmapData = null;
-			}
 		}
 	}
 }
