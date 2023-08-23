@@ -47,6 +47,7 @@ jobs:
           haxelib git linc_luajit https://github.com/mcagabe19-stuff/linc_luajit.git
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 4.1.0 --quiet
+          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
           # haxelib install tjson 1.4.0 --quiet
           cp /home/runner/work/FNF-PsychEngine-Mobile/FNF-PsychEngine-Mobile/art/CustomManifest.xml /home/runner/haxelib/lime/7,9,0/templates/android/template/app/src/main/AndroidManifest.xml
       - name: List Haxelibs

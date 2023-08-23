@@ -41,7 +41,7 @@
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 		<!--Mobile-specific-->
-		<window if="mobile" orientation="landscape" fullscreen="true" resizable="false" allow-shaders="true" require-shaders="true" allow-high-dpi="true" />
+		<window if="mobile" orientation="landscape" fullscreen="true" resizable="true" allow-shaders="true" require-shaders="true" allow-high-dpi="true" />
 
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
@@ -116,6 +116,7 @@
 	<haxedef name="openflPos" />
 	<haxedef name="hscriptPos" />
 	<haxelib name="extension-androidtools" if="android" />
+        <haxelib name="extension-orientation" if="mobile" />
 
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>

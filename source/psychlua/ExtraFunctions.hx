@@ -3,6 +3,9 @@ package psychlua;
 #if mobileC
 import mobile.MobileControls;
 #end
+#if mobile
+import extension.eightsines.EsOrientation;
+#end
 import lime.ui.Haptic;
 #if sys
 import sys.FileSystem;
@@ -223,10 +226,26 @@ class ExtraFunctions
 		});
                 #end
 
-		Lua_helper.add_callback(lua, "vibrate", function(period:Int, duration:Int){
-			Haptic.vibrate(period, duration);
+		Lua_helper.add_callback(lua, "vibrate", function(duration:Int, ?period:Int){
+		    if (period != null && duration != null) return Haptic.vibrate(period, duration);
+		    if (duration == null) return FunkinLua.luaTrace('vibrate: No duration specified.');
+		    if (period == null) return Haptic.vibrate(0, duration);
 		});
-		
+
+		#if mobile
+		Lua_helper.add_callback(lua, "changeOrientation", function(orientation:String){
+		    if (orientation != null) {
+			switch (orientation){
+			case portrait:
+			return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_PORTRAIT);
+			case landspace:
+			return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_LANDSCAPE);
+			default:
+			return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_UNSPECIFIED);
+			}}
+			return FunkinLua.luaTrace('changeOrientation: No rotation specified.');
+		});
+		#end
 
 		// Save data management
 		Lua_helper.add_callback(lua, "initSaveData", function(name:String, ?folder:String = 'psychenginemods') {
