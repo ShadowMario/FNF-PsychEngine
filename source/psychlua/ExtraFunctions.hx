@@ -227,7 +227,7 @@ class ExtraFunctions
                 #end
 
 		Lua_helper.add_callback(lua, "vibrate", function(duration:Null<Int>, ?period:Null<Int>){
-		    if (period == null) period = 0
+		    if (period == null) period = 0;
 		    if (duration == null) return FunkinLua.luaTrace('vibrate: No duration specified.');
 		    return Haptic.vibrate(period, duration);
 		});
