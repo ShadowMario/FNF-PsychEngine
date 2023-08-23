@@ -235,11 +235,13 @@ class ExtraFunctions
 		    if (orientation != null) {
 			switch (orientation){
 			case portrait:
-			EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_PORTRAIT);
-			FlxG.resizeGame(720, 1280);
+			return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_PORTRAIT);
+			//FlxG.resizeGame(720, 1280);
 			case landspace:
-			EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_LANDSCAPE);
-			FlxG.resizeGame(1280, 720);
+			return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_LANDSCAPE);
+			//FlxG.resizeGame(1280, 720);
+			case auto:
+		        return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_UNSPECIFIED);
 			}}
 			return FunkinLua.luaTrace('changeOrientation: No orientation specified.');
 			//return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_UNSPECIFIED);
