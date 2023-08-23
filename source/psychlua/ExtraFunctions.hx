@@ -227,9 +227,7 @@ class ExtraFunctions
                 #end
 
 		Lua_helper.add_callback(lua, "vibrate", function(duration:Int, ?period:Int){
-		    if (period != null && duration != null) return Haptic.vibrate(period, duration);
-		    if (duration == null) return FunkinLua.luaTrace('vibrate: No duration specified.');
-		    if (period == null) return Haptic.vibrate(0, duration);
+		    return Haptic.vibrate(0, duration);
 		});
 
 		#if mobile
@@ -240,10 +238,9 @@ class ExtraFunctions
 			return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_PORTRAIT);
 			case landspace:
 			return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_LANDSCAPE);
-			default:
-			return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_UNSPECIFIED);
 			}}
 			return FunkinLua.luaTrace('changeOrientation: No rotation specified.');
+			//return EsOrientation.setScreenOrientation(EsOrientation.ORIENTATION_UNSPECIFIED);
 		});
 		#end
 
