@@ -147,16 +147,10 @@ class PauseSubState extends MusicBeatSubstate
 		if (PlayState.chartingMode)
 		{
 			addVirtualPad(LEFT_FULL, A);
-			MusicBeatSubstate.virtualPad.buttonLeft.color = 0xFFC24B99;
-			MusicBeatSubstate.virtualPad.buttonDown.color = 0xFF00FFFF;
-			MusicBeatSubstate.virtualPad.buttonUp.color = 0xFF12FA05;
-			MusicBeatSubstate.virtualPad.buttonRight.color = 0xFFF9393F; 
 		}
 		else
 		{
 			addVirtualPad(UP_DOWN, A);
-			MusicBeatSubstate.virtualPad.buttonDown.color = 0xFF00FFFF;
-			MusicBeatSubstate.virtualPad.buttonUp.color = 0xFF12FA05;
 		}
 		addPadCamera(false);
 		#end
@@ -294,10 +288,8 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Skip Time':
 					if(curTime < Conductor.songPosition)
 					{
+						Main.allowedToClear = false;
 						PlayState.startOnTime = curTime;
-						#if mobileC
-						
-						#end
 						restartSong(true);
 					}
 					else
@@ -307,19 +299,14 @@ class PauseSubState extends MusicBeatSubstate
 							PlayState.instance.clearNotesBefore(curTime);
 							PlayState.instance.setSongTime(curTime);
 						}
-						#if mobileC
-						
-						#end
 						close();
 					}
 				case 'End Song':
-					#if mobileC
-					
-					#end
 					close();
 					PlayState.instance.notes.clear();
 					PlayState.instance.unspawnNotes = [];
 					PlayState.instance.finishSong(true);
+					Main.allowedToClear = true;
 				case 'Toggle Botplay':
 					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
 					PlayState.changedDifficulty = true;
@@ -398,6 +385,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	public static function restartSong(noTrans:Bool = false)
 	{
+		Main.allowedToClear = false;
 		PlayState.instance.paused = true; // For lua
 		FlxG.sound.music.volume = 0;
 		PlayState.instance.vocals.volume = 0;
