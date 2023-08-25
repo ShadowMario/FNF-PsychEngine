@@ -45,7 +45,7 @@ class SUtil
 	 */
 	 public static var storageType:String;
 	 public static var fuck:FlxSave;
-	public static function getPath(#if data_build type:StorageType = EXTERNAL_DATA #else type:StorageType = EXTERNAL #end):String
+	public static function getPath(#if EXTERNAL_DATA type:StorageType = EXTERNAL_DATA #elseif EXTERNAL type:StorageType = EXTERNAL #elseif MEDIA type:StorageType = MEDIA #elseif CUSTOM type:StorageType = CUSTOM #else type:StorageType = EXTERNAL_DATA #end):String
 	{
 		var daPath:String = '';
 
