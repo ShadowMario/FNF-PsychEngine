@@ -2,6 +2,9 @@ name: Android
 on: workflow_dispatch
 jobs:
   Build-gcc:
+    strategy:
+      matrix:
+        build_type: [EXTERNAL_DATA, EXTERNAL]
     runs-on: ubuntu-20.04
     permissions: write-all
     steps:
@@ -62,12 +65,14 @@ jobs:
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       - name: Compile
-        run: haxelib run lime build android -D NO_PRECOMPILED_HEADERS -release
+        run: haxelib run lime build android -D ${{ matrix.build_type }} -D NO_PRECOMPILED_HEADERS -release
         env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
       - name: Clear Previous Cache
-        if: ${{ always() }}
+        if: |
+          ${{ always() }} ||
+          ( ${{ matrix.build_type }} == 'EXTERNAL_DATA' )
         uses: actions/github-script@main
         with:
           script: |
@@ -93,7 +98,9 @@ jobs:
             	console.log(error.message);
             }
       - name: Save Current Cache
-        if: ${{ always() }}
+        if: |
+          ${{ always() }} ||
+          ( ${{ matrix.build_type }} == 'EXTERNAL_DATA' )
         id: cache-release-build-android-save-gcc
         uses: actions/cache/save@main
         with:
@@ -107,6 +114,6 @@ jobs:
         if: ${{ success() }}
         uses: actions/upload-artifact@main
         with:
-          name: androidBuild-gcc
+          name: androidBuild-gcc-${{ matrix.build_type }}
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
