@@ -2634,8 +2634,15 @@ class PlayState extends MusicBeatState
 		if(generatedMusic)
 		{
 			var ratio:Float = value / songSpeed; //funny word huh
-			for (note in notes) note.resizeByRatio(ratio);
-			for (note in unspawnNotes) note.resizeByRatio(ratio);
+			if (ratio != 1)
+			{
+				for (note in notes){
+					note.resizeByRatio(ratio);
+				}
+				for (note in unspawnNotes){
+					note.resizeByRatio(ratio);
+				}				
+			}
 		}
 		songSpeed = value;
 		noteKillOffset = 350 / songSpeed;
