@@ -32,6 +32,10 @@ import sys.io.Process;
 import cpp.vm.Gc;
 #end
 
+#if (target.threaded && sys)
+import sys.thread.ElasticThreadPool;
+#end
+
 using StringTools;
 
 class Main extends Sprite
@@ -79,8 +83,16 @@ class Main extends Sprite
 		setupGame();
 	}
 
+	#if (target.threaded && sys)
+	public static var threadPool:ElasticThreadPool;
+	#end
+
 	private function setupGame():Void
 	{
+		#if cpp 
+		Gc.enable(true);
+		#end
+
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
@@ -115,6 +127,32 @@ class Main extends Sprite
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
 		#end
+
+		#if (target.threaded && sys)
+		threadPool = new ElasticThreadPool(12, 30);
+		#end
+
+		inline function gc(?minor:Bool = false) {
+			#if cpp
+			Gc.run(!minor);
+			if (!minor) Gc.compact();
+			//trace('${Gc.memInfo(0) / 1024 / 1024} MB NEEDED\n${Gc.memInfo(1) / 1024 / 1024} MB RESERVED\n${Gc.memInfo(2) / 1024 / 1024} MB IN USE');
+			#else
+			openfl.system.System.gc();
+			#end
+		}
+
+		//negates need for constant clearStored etc
+		FlxG.signals.preStateSwitch.add(() -> {
+			Paths.clearStoredMemory(true);
+			FlxG.sound.destroy(false);
+
+			gc(true);
+		});
+		FlxG.signals.postStateSwitch.add(() -> {
+			Paths.clearUnusedMemory();
+			gc();
+		});
 
 		#if html5
 		FlxG.autoPause = false;
@@ -161,7 +199,7 @@ class Main extends Sprite
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag\n\n> Crash Handler written by: sqirra-rng";
 
 		if (!FileSystem.exists("./crash/"))
 			FileSystem.createDirectory("./crash/");

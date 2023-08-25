@@ -1067,8 +1067,8 @@ class ChartingState extends MusicBeatState
 			return;
 			} 
 			if(Math.isNaN(_song.notes[curSection].sectionNotes.length)) {
-			return; //prevent a crash if the section doesn't have any notes
 			trace ("HEY! your section doesn't have any notes! please place at least 1 note then try using this.");
+			return; //prevent a crash if the section doesn't have any notes
 			}
 
 			for(i in 0...value) {
@@ -1078,9 +1078,14 @@ class ChartingState extends MusicBeatState
 
 
 				var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3]];
-				_song.notes[curSec+1].sectionNotes.push(copiedNote);
+				if (_song.notes[curSec+1] != null) _song.notes[curSec+1].sectionNotes.push(copiedNote);
 			}
-				changeSection(curSec+1);
+				if (_song.notes[curSec+1] == null)
+				{
+				trace ("UH OH! looks like we've hit a null section! we're gonna have to stop this to prevent it from crashing the engine!");
+				break;
+				}
+				if (_song.notes[curSec+1].sectionNotes != null) changeSection(curSec+1);
 			}
 			updateGrid(false);
 		});
@@ -2782,7 +2787,7 @@ class ChartingState extends MusicBeatState
 
 	function resetSection(songBeginning:Bool = false):Void
 	{
-		updateGrid(!songBeginning);
+		updateGrid((songBeginning ? true : false));
 
 		FlxG.sound.music.pause();
 		// Basically old shit from changeSection???

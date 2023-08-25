@@ -58,6 +58,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var showNotes:Bool = true;
 	public static var doubleGhost:Bool = true;
 	public static var songLoading:Bool = true;
+	public static var resultsScreen:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var hideScore:Bool = false;
 	public static var voiidTrollMode:Bool = false;
@@ -241,6 +242,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.randomBotplayText = randomBotplayText;
 		FlxG.save.data.startingSync = startingSync;
 		FlxG.save.data.noSyncing = noSyncing;
+		FlxG.save.data.resultsScreen = resultsScreen;
 		FlxG.save.data.instaRestart = instaRestart;
 		FlxG.save.data.percentDecimals = percentDecimals;
 		FlxG.save.data.iconBounceType = iconBounceType;
@@ -398,6 +400,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.resyncType != null) {
 			resyncType = FlxG.save.data.resyncType;
+		}
+		if(FlxG.save.data.resultsScreen != null) {
+			resultsScreen = FlxG.save.data.resultsScreen;
 		}
 		if(FlxG.save.data.globalAntialiasing != null) {
 			globalAntialiasing = FlxG.save.data.globalAntialiasing;

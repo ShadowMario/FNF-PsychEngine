@@ -2637,11 +2637,15 @@ class PlayState extends MusicBeatState
 			if (ratio != 1)
 			{
 				for (note in notes){
+				 	if (note == null) 
+						continue;
 					note.resizeByRatio(ratio);
 				}
 				for (note in unspawnNotes){
+				 	if (note == null) 
+						continue;
 					note.resizeByRatio(ratio);
-				}				
+				}	
 			}
 		}
 		songSpeed = value;
@@ -6653,6 +6657,7 @@ class PlayState extends MusicBeatState
 
 
 	public var transitioning = false;
+	public var endedTheSong = false;
 	public function endSong():Void
 	{
 		//Should kill you if you tried to cheat
@@ -6673,6 +6678,33 @@ class PlayState extends MusicBeatState
 				return;
 			}
 		}
+		if (!endedTheSong)	
+		{
+		Conductor.songPosition = 0; //so that it doesnt skip the results screen
+		if (!ClientPrefs.resultsScreen) {
+		endedTheSong = true;
+		timeBarBG.visible = false;
+		timeBar.visible = false;
+		timeTxt.visible = false;
+		canPause = false;
+		endingSong = true;
+		camZooming = false;
+		inCutscene = false;
+		updateTime = false;
+		}
+		if (ClientPrefs.resultsScreen && !isStoryMode) {
+		new FlxTimer().start(0.02, function(tmr:FlxTimer) {
+			endedTheSong = true;
+		});
+		persistentUpdate = false;
+		persistentDraw = true;
+		paused = true;
+		}
+		openSubState(new ResultsScreenSubState([marvs, sicks, goods, bads, shits], Std.int(songScore), songMisses, Highscore.floorDecimal(ratingPercent * 100, 2),
+						ratingName + (' [' + ratingFC + '] ')));
+		}
+		if (endedTheSong || !ClientPrefs.resultsScreen)
+		{
 		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
@@ -6735,7 +6767,11 @@ class PlayState extends MusicBeatState
 					if(FlxTransitionableState.skipNextTransIn) {
 						CustomFadeTransition.nextCamera = null;
 					}
-					MusicBeatState.switchState(new StoryMenuState());
+					if (ClientPrefs.resultsScreen)
+						openSubState(new ResultsScreenSubState([marvs, sicks, goods, bads, shits], Std.int(campaignScore), songMisses,
+							Highscore.floorDecimal(ratingPercent * 100, 2), ratingName + (' [' + ratingFC + '] ')));
+					else
+						MusicBeatState.switchState(new StoryMenuState());
 
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
@@ -6801,6 +6837,7 @@ class PlayState extends MusicBeatState
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 				changedDifficulty = false;
+			}
 			}
 			transitioning = true;
 		}
