@@ -128,7 +128,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
-          automatic_release_tag: "0.7.1h-beta5"
-          title: "0.7.1h Android Beta 5"
+          automatic_release_tag: "0.7.1h-beta6"
+          title: "0.7.1h Android Beta 6"
           files: |
             /home/runner/PsychEngine-gcc-release.apk
