@@ -1450,7 +1450,7 @@ class FunkinLua {
 			trace(e);
 			return;
 		}
-		trace('lua file loaded succesfully:' + scriptName);
+		trace('lua file loaded successfully:' + scriptName);
 
 		call('onCreate', []);
 		#end
@@ -1485,7 +1485,7 @@ class FunkinLua {
 			// Checks if it's not successful, then show a error.
 			if (status != Lua.LUA_OK) {
 				var error:String = getErrorMessage(status);
-				luaTrace("ERROR (" + func + "): " + error, false, false, FlxColor.RED);
+				luaTrace("ERROR (" + func + ") - " + error, false, false, FlxColor.RED);
 				return Function_Continue;
 			}
 
