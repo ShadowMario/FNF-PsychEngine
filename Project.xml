@@ -164,7 +164,7 @@
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
 	<haxeflag name="--macro" value="macros.AdditionalClasses.add()" />
-	<haxeflag name="-dce" value="no" />
+	<haxeflag name="-dce" value="std" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
