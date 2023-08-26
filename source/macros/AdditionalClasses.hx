@@ -18,7 +18,6 @@ class AdditionalClasses {
 			#if LUA_ALLOWED "llua", #end
 			"openfl",
 			#if SScript "tea", #end
-			#if SScript "ex", #end
 
 			"haxe",
 			#if flash "flash", #end
