@@ -13,24 +13,17 @@ class HScript extends SScript
 	
 	public static function initHaxeModule(parent:FunkinLua)
 	{
-		#if (SScript >= "3.0.0")
-		if(parent.hscript == null)
-		{
+		if(parent.hscript == null) {
 			trace('initializing haxe interp for: ${parent.scriptName}');
 			parent.hscript = new HScript(parent);
 		}
-		#end
 	}
 
 	public static function initHaxeModuleCode(parent:FunkinLua, code:String)
 	{
-		#if (SScript >= "3.0.0")
-		if(parent.hscript == null)
-		{
-			trace('initializing haxe interp for: ${parent.scriptName}');
-			parent.hscript = new HScript(parent, code);
-		}
-		#end
+		initHaxeModule(parent);
+		if (parent.hscript != null)
+			parent.hscript.doString(code);
 	}
 
 	public var origin:String;
@@ -51,7 +44,6 @@ class HScript extends SScript
 
 	override function preset()
 	{
-		#if (SScript >= "3.0.0")
 		super.preset();
 
 		// Some very commonly used classes
@@ -165,7 +157,6 @@ class HScript extends SScript
 		set('addBehindBF', function(obj:FlxBasic) PlayState.instance.addBehindBF(obj));
 		set('insert', function(pos:Int, obj:FlxBasic) PlayState.instance.insert(pos, obj));
 		set('remove', function(obj:FlxBasic, splice:Bool = false) PlayState.instance.remove(obj, splice));
-		#end
 	}
 
 	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):SCall
@@ -207,9 +198,7 @@ class HScript extends SScript
 		#if LUA_ALLOWED
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			var retVal:SCall = null;
-			#if (SScript >= "3.0.0")
-			initHaxeModule(funk);
-			funk.hscript.doString(codeToRun);
+			initHaxeModuleCode(funk, codeToRun);
 			if(varsToBring != null)
 			{
 				for (key in Reflect.fields(varsToBring))
@@ -231,14 +220,10 @@ class HScript extends SScript
 			}
 			else if (funk.hscript.returnValue != null)
 				return funk.hscript.returnValue;
-			#else
-			FunkinLua.luaTrace("runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
-			#end
 			return null;
 		});
 		
 		funk.addLocalCallback("runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic> = null) {
-			#if (SScript >= "3.0.0")
 			var callValue = funk.hscript.executeFunction(funcToRun, funcArgs);
 			if (!callValue.succeeded)
 			{
@@ -249,9 +234,6 @@ class HScript extends SScript
 			}
 			else
 				return callValue.returnValue;
-			#else
-			FunkinLua.luaTrace("runHaxeFunction: HScript isn't supported on this platform!", false, false, FlxColor.RED);
-			#end
 		});
 		// This function is unnecessary because import already exists in SScript as a native feature
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
@@ -270,7 +252,6 @@ class HScript extends SScript
 				SScript.globalVariables[libName] = c;
 			#end
 
-			#if (SScript >= "3.0.0")
 			if (funk.hscript != null)
 			{
 				try {
@@ -281,14 +262,10 @@ class HScript extends SScript
 					FunkinLua.luaTrace(funk.hscript.origin + ":" + funk.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
 				}
 			}
-			#else
-			FunkinLua.luaTrace("addHaxeLibrary: HScript isn't supported on this platform!", false, false, FlxColor.RED);
-			#end
 		});
 		#end
 	}
 
-	#if (SScript >= "3.0.3")
 	override public function destroy()
 	{
 		origin = null;
@@ -296,12 +273,6 @@ class HScript extends SScript
 
 		super.destroy();
 	}
-	#else
-	public function destroy()
-	{
-		active = false;
-	}
-	#end
 }
 
 class CustomFlxColor
