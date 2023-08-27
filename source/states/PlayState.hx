@@ -423,7 +423,7 @@ class PlayState extends MusicBeatState
 		add(luaDebugGroup);
 		#end
 
-                #if (SScript >= "4.1.0")
+                #if (SScript >= "4.1.0" && SScript < "5.0.0")
 		SScript.defaultClassSupport = null;
 		#end
 
