@@ -54,11 +54,13 @@ class HScript extends SScript
 	public var origin:String;
 	override public function new(?parent:FunkinLua, ?file:String)
 	{
+		#if (SScript < "5.0.0")
 		var usesClasses = false;
+		#end
 		if (file == null)
 			file = '';
 	
-		#if sys
+		#if (sys && (SScript < "5.0.0"))
 		else if (FileSystem.exists(file)) {
 			var fileWithoutComments = ~/(\/[*](?:[^*]|[\r\n]|([*]+([^*\/]|[\r\n])))*[*]+\/|\/\/.*)/gm.replace(File.getContent(file), '');
 			usesClasses = ~/class\s.*\s*{/.match(fileWithoutComments);
@@ -66,7 +68,9 @@ class HScript extends SScript
 		#end
 
 		super(null, false, false);
+		#if (SScript < "5.0.0")
 		classSupport = usesClasses;
+		#end
 		doFile(file);
 		parentLua = parent;
 		if (parent != null)
