@@ -5,7 +5,8 @@ import objects.StrumNote;
 import objects.NoteSplash;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
-import haxe.StringTools;
+
+using StringTools;
 
 class NoteSplashDebugState extends MusicBeatState
 {
@@ -314,7 +315,7 @@ class NoteSplashDebugState extends MusicBeatState
 		var pathSplit:Array<String> = (Paths.getPath('images/$texturePath.png', IMAGE, true).split('.png')[0]).split(':');
 		var path:String = pathSplit[pathSplit.length-1].trim() + '.txt';
 		var assetsDir:String = '';
-		if (!StringTools.includes(path, 'mods'))
+		if (!StringTools.contains(path, 'mods'))
 			assetsDir = SUtil.getPath();
 	
 		savedText.text = 'Saved to: $path';
