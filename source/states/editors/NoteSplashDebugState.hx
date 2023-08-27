@@ -5,6 +5,7 @@ import objects.StrumNote;
 import objects.NoteSplash;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
+import haxe.StringTools;
 
 class NoteSplashDebugState extends MusicBeatState
 {
@@ -192,7 +193,7 @@ class NoteSplashDebugState extends MusicBeatState
 		}
 
 		// Copy & Paste
-		if(#if mobileC idk #else FlxG.keys.pressed.CONTROL #end)
+		if(FlxG.keys.pressed.CONTROL #if mobileC || idk #end)
 		{
 			if(FlxG.keys.justPressed.C #if mobileC || virtualPad.buttonC.justPressed #end)
 			{
@@ -309,11 +310,15 @@ class NoteSplashDebugState extends MusicBeatState
 		var strToSave = config.anim + '\n' + config.minFps + ' ' + config.maxFps;
 		for (offGroup in config.offsets)
 			strToSave += '\n' + offGroup[0] + ' ' + offGroup[1];
-
+			
 		var pathSplit:Array<String> = (Paths.getPath('images/$texturePath.png', IMAGE, true).split('.png')[0]).split(':');
 		var path:String = pathSplit[pathSplit.length-1].trim() + '.txt';
+		var assetsDir:String = '';
+		if (!StringTools.includes(path, 'mods'))
+			assetsDir = SUtil.getPath();
+	
 		savedText.text = 'Saved to: $path';
-		sys.io.File.saveContent(SUtil.getPath() + path, strToSave);
+		sys.io.File.saveContent(assetsDir + path, strToSave);
 		//trace(strToSave);
 		#else
 		savedText.text = 'Can\'t save on this platform, too bad.';
