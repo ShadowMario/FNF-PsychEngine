@@ -1,22 +1,17 @@
 package tea;
 
 import ex.*;
-
 import haxe.Exception;
 import haxe.Timer;
-
 import hscriptBase.*;
 import hscriptBase.Expr;
-
 #if openflPos
 import openfl.Assets;
 #end
-
 #if sys
 import sys.FileSystem;
 import sys.io.File;
 #end
-
 import tea.backend.*;
 import tea.backend.crypto.Base32;
 
@@ -36,7 +31,7 @@ typedef SCall =
 	The base class for dynamic Haxe scripts.
 
 	A SScript can be a class script or a Haxe Script. 
-	
+
 	Once a SScript instance is created, it can't switch back to a class or Haxe script.
 **/
 @:structInit
@@ -52,7 +47,7 @@ class SScript
 		SScript version abstract, used for version checker.  
 	**/
 	public static var VERSION(default, null):SScriptVer = new SScriptVer(4, 1, 0);
-	
+
 	/**
 		If not null, assigns all scripts to check or ignore type declarations.
 	**/
@@ -70,7 +65,7 @@ class SScript
 
 	#if openflPos
 	/**
-	    `WARNING`: For `openfl` targets, you need to clear this map before switching states otherwise this map
+		`WARNING`: For `openfl` targets, you need to clear this map before switching states otherwise this map
 		will cause memory leaks!
 
 		This map is used for Ex scripts (scripts with classes).
@@ -102,7 +97,7 @@ class SScript
 		SScript.superClassInstances["ExampleClass"] = superClass;
 		tea.doString('class ChildClass extends ExampleClass {}'); // Variable `superClass` is used for this script.
 		```
- 	**/
+	**/
 	#end
 	public static var superClassInstances(default, null):Map<String, Dynamic> = [];
 
@@ -118,14 +113,14 @@ class SScript
 	**/
 	#end
 	public static var globalVariables:Map<String, Dynamic> = [];
-	
+
 	/**
 		Every created SScript will be mapped to this map. 
 	**/
 	public static var global(default, null):Map<String, SScript> = [];
 
 	static var BlankReg(get, never):EReg;
-	
+
 	#if hscriptPos
 	/**
 		This is a custom origin you can set.
@@ -137,7 +132,7 @@ class SScript
 
 	/**
 		Script's own return value.
-		
+
 		This is not to be messed up with function's return value.
 	**/
 	public var returnValue(default, null):Null<Dynamic>;
@@ -303,7 +298,7 @@ class SScript
 						defines[d1] = d2 != null ? d2 : '1';
 				}
 			}
-			else 
+			else
 			{
 				defines["true"] = "1";
 				defines["haxe"] = "1";
@@ -349,12 +344,12 @@ class SScript
 			if (i != null)
 				set(i, k);
 
-		try 
+		try
 		{
 			doFile(scriptPath);
 			if (startExecute)
 				execute();
-			
+
 			if (scriptX != null)
 			{
 				if (scriptX.scriptFile != null && scriptX.scriptFile.length > 0)
@@ -371,10 +366,9 @@ class SScript
 			{
 				if (lastReportedTime == 0)
 					trace('SScript instance created instantly (0s)');
-				else 
+				else
 					trace('SScript instance created in ${lastReportedTime}s');
 			}
-
 		}
 		catch (e)
 		{
@@ -398,18 +392,23 @@ class SScript
 		if (interp == null || !active)
 			return;
 
-		var origin:String = #if hscriptPos {
-			if (customOrigin != null && customOrigin.length > 0)
-				customOrigin;
-			else if (scriptFile != null && scriptFile.length > 0)
-				scriptFile;
-			else 
-				"SScript";
-		} #else null #end;
+		var origin:String =
+			#if hscriptPos
+			{
+				if (customOrigin != null && customOrigin.length > 0)
+					customOrigin;
+				else if (scriptFile != null && scriptFile.length > 0)
+					scriptFile;
+				else
+					"SScript";
+			}
+			#else
+			null
+			#end;
 
 		if (script != null && script.length > 0)
 		{
-			var expr:Expr = parser.parseString(script #if hscriptPos , origin #end);
+			var expr:Expr = parser.parseString(script #if hscriptPos, origin #end);
 			var r = interp.execute(expr);
 			returnValue = r;
 		}
@@ -480,7 +479,7 @@ class SScript
 	{
 		if (_destroyed)
 			return null;
-		
+
 		if (cl == null)
 		{
 			if (traces)
@@ -594,7 +593,7 @@ class SScript
 					i.locals.remove(key);
 			}
 		}
-		else 
+		else
 		{
 			if (interp == null || !active || key == null || !interp.variables.exists(key))
 				return null;
@@ -703,7 +702,7 @@ class SScript
 		{
 			if (!pushedExceptions.contains(e))
 				caller.exceptions.push(new Exception(e));
-			
+
 			pushedExceptions.push(e);
 		}
 		if (func == null)
@@ -728,7 +727,6 @@ class SScript
 
 				pushException('$func is not a function');
 			}
-
 			else if (interp == null || !exists(func))
 			{
 				if (interp == null)
@@ -745,11 +743,11 @@ class SScript
 
 					if (scriptFile != null && scriptFile.length > 1)
 						pushException('Function $func does not exist in $scriptFile.');
-					else 
+					else
 						pushException('Function $func does not exist in SScript instance.');
 				}
 			}
-			else 
+			else
 			{
 				var oldCaller = caller;
 				try
@@ -785,7 +783,7 @@ class SScript
 			for (i in parsingExceptions)
 			{
 				pushException(i.details());
-				
+
 				if (callX != null)
 					callX.exceptions.push(new Exception(i.details()));
 			}
@@ -874,20 +872,20 @@ class SScript
 		setClass(FileSystem);
 		setClass(Sys);
 		#end
-		
+
 		#if openflPos
 		setClass(Assets);
 		#end
 
 		set('this', this);
 		/*set('getDefine', function(def:String):String
-		{
-			if (defines == null)
-				return null;
-			if (!defines.exists(def))
-				return null;
+			{
+				if (defines == null)
+					return null;
+				if (!defines.exists(def))
+					return null;
 
-			return defines[def];
+				return defines[def];
 		});*/
 	}
 
@@ -910,49 +908,49 @@ class SScript
 					scriptX = null;
 				}
 		}
-		
+
 		if (scriptPath != null && scriptPath.length > 0)
 		{
 			#if sys
-				#if openflPos
-				if (Assets.exists(scriptPath))
-				{
-					scriptFile = scriptPath;
-					script = Assets.getText(scriptPath);
-				}
-				if (FileSystem.exists(scriptPath))
-				{
-					scriptFile = scriptPath;
-					script = File.getContent(scriptPath);
-				}
-				#else
-				if (Assets.exists(scriptPath))
-				{
-					scriptFile = scriptPath;
-					script = Assets.getText(scriptPath);
-				}
-				#end
-				else
-				{
-					scriptFile = "";
-					script = scriptPath;
-				}
+			#if openflPos
+			if (Assets.exists(scriptPath))
+			{
+				scriptFile = scriptPath;
+				script = Assets.getText(scriptPath);
+			}
+			if (FileSystem.exists(scriptPath))
+			{
+				scriptFile = scriptPath;
+				script = File.getContent(scriptPath);
+			}
 			#else
-				#if openflPos
-				if (Assets.exists(scriptPath))
-				{
-					scriptFile = scriptPath;
-					script = Assets.getText(scriptPath);
-				}
-				else
-				{
-					script = scriptPath;
-					scriptFile = "";
-				}
-				#else
+			if (Assets.exists(scriptPath))
+			{
+				scriptFile = scriptPath;
+				script = Assets.getText(scriptPath);
+			}
+			#end
+			else
+			{
+				scriptFile = "";
+				script = scriptPath;
+			}
+			#else
+			#if openflPos
+			if (Assets.exists(scriptPath))
+			{
+				scriptFile = scriptPath;
+				script = Assets.getText(scriptPath);
+			}
+			else
+			{
 				script = scriptPath;
 				scriptFile = "";
-				#end
+			}
+			#else
+			script = scriptPath;
+			scriptFile = "";
+			#end
 			#end
 		}
 	}
@@ -969,13 +967,13 @@ class SScript
 		@param origin Optional origin to use for this script, it will appear on traces.
 		@return Returns this instance for chaining. Will return `null` if failed.
 	**/
-	public function doString(string:String #if hscriptPos , ?origin:String #end):SScript
+	public function doString(string:String #if hscriptPos, ?origin:String #end):SScript
 	{
 		if (_destroyed)
 			return null;
 
 		var time = Timer.stamp();
-		try 
+		try
 		{
 			#if hscriptPos
 			var og:String = origin;
@@ -987,7 +985,8 @@ class SScript
 			if (string == null || string.length < 1 || BlankReg.match(string))
 				return this;
 			#if sys
-			else #if openflPos if (Assets.exists(string) || FileSystem.exists(string)) #else if (FileSystem.exists(string)) #end
+			else
+				#if openflPos if (Assets.exists(string) || FileSystem.exists(string)) #else if (FileSystem.exists(string)) #end
 			{
 				#if hscriptPos
 				og = "" + string;
@@ -1009,7 +1008,7 @@ class SScript
 			{
 				global[string] = this;
 
-				scriptX.doString(string #if hscriptPos , og #end);
+				scriptX.doString(string #if hscriptPos, og #end);
 				return this;
 			}
 			if (!active || interp == null)
@@ -1018,13 +1017,13 @@ class SScript
 			if (scriptX == null)
 			{
 				try
-				{	
+				{
 					script = string;
 
 					if (script != null && script.length > 0)
 						global[script] = this;
 
-					var expr:Expr = parser.parseString(script #if hscriptPos , og #end);
+					var expr:Expr = parser.parseString(script #if hscriptPos, og #end);
 					var r = interp.execute(expr);
 					returnValue = r;
 				}
@@ -1056,11 +1055,12 @@ class SScript
 			{
 				if (lastReportedTime == 0)
 					trace('SScript instance created instantly (0s)');
-				else 
+				else
 					trace('SScript instance created in ${lastReportedTime}s');
 			}
 		}
-		catch (e) lastReportedTime = -1;
+		catch (e)
+			lastReportedTime = -1;
 
 		return this;
 	}
@@ -1126,13 +1126,13 @@ class SScript
 			}
 		}
 		#elseif openflPos
-		function readDirectory(path:String):Array<String> 
+		function readDirectory(path:String):Array<String>
 		{
 			if (path.endsWith('/') && path.length > 1)
 				path = path.substring(0, path.length - 1);
 
 			var assetsLibrary:Array<String> = [];
-			for (folder in Assets.list().filter(list -> list.contains(path))) 
+			for (folder in Assets.list().filter(list -> list.contains(path)))
 			{
 				var myFolder:String = folder;
 				myFolder = myFolder.replace('${path}/', '');
@@ -1141,17 +1141,17 @@ class SScript
 					myFolder = myFolder.replace(myFolder.substring(myFolder.indexOf('/'), myFolder.length), '');
 
 				myFolder = '$path/${myFolder}';
-				
+
 				if (!myFolder.startsWith('.') && !assetsLibrary.contains(myFolder))
 					assetsLibrary.push(myFolder);
-		
+
 				assetsLibrary.sort((a, b) -> ({
 					a = a.toUpperCase();
 					b = b.toUpperCase();
 					return a < b ? -1 : a > b ? 1 : 0;
 				}));
 			}
-		
+
 			return assetsLibrary;
 		}
 		for (i in readDirectory(path))
@@ -1184,7 +1184,7 @@ class SScript
 			global.remove(script);
 		if (global.exists(scriptFile))
 			global.remove(scriptFile);
-		
+
 		if (classSupport)
 			for (i => k in interp.variables)
 				if (SScriptX.variables.exists(i))
@@ -1258,7 +1258,7 @@ class SScript
 	{
 		if (_destroyed)
 			return null;
-		
+
 		return if (scriptX != null) scriptX.currentSuperClass else null;
 	}
 
@@ -1266,7 +1266,7 @@ class SScript
 	{
 		if (_destroyed)
 			return null;
-		
+
 		return if (scriptX != null) scriptX.currentClass = value else null;
 	}
 
@@ -1274,19 +1274,19 @@ class SScript
 	{
 		if (_destroyed)
 			return null;
-		
+
 		return if (scriptX != null) scriptX.currentClass else null;
 	}
 
-	function get_exMode():Bool 
+	function get_exMode():Bool
 	{
 		if (_destroyed)
 			return false;
-	
+
 		return scriptX != null;
 	}
 
-	static function get_BlankReg():EReg 
+	static function get_BlankReg():EReg
 	{
 		return ~/^[\n\r\t]$/;
 	}
@@ -1296,42 +1296,42 @@ class SScript
 	{
 		if (_destroyed)
 			return null;
-		
+
 		@:privateAccess parser.origin = value;
 		return customOrigin = value;
 	}
 	#end
 
-	static function set_defaultTypeCheck(value:Null<Bool>):Null<Bool> 
+	static function set_defaultTypeCheck(value:Null<Bool>):Null<Bool>
 	{
 		for (i in global)
 		{
 			i.typeCheck = value == null ? false : value;
-			//i.execute();
+			// i.execute();
 		}
 
 		return defaultTypeCheck = value;
 	}
 
-	static function set_defaultClassSupport(value:Null<Bool>):Null<Bool> 
+	static function set_defaultClassSupport(value:Null<Bool>):Null<Bool>
 	{
 		for (i in global)
 		{
 			i.classSupport = value == null ? false : value;
-			//i.execute();
+			// i.execute();
 		}
 
 		return defaultClassSupport = value;
 	}
 
-	static function set_defaultDebug(value:Null<Bool>):Null<Bool> 
+	static function set_defaultDebug(value:Null<Bool>):Null<Bool>
 	{
 		for (i in global)
 		{
 			i.debugTraces = value == null ? false : value;
-			//i.execute();
+			// i.execute();
 		}
-	
+
 		return defaultDebug = value;
 	}
 }
