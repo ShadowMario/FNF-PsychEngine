@@ -196,6 +196,7 @@ class TitleState extends MusicBeatState
 
 	function startIntro()
 	{
+		trace(lime.system.System.applicationDirectory);
 		if (!initialized)
 		{
 			if(FlxG.sound.music == null) {
