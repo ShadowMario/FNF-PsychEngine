@@ -305,7 +305,7 @@ class PlayState extends MusicBeatState
 	public var botplayTxt:FlxText;
 	public var pauseWarnText:FlxText;
 
-	public var healthShitText:FlxText;
+	public var OptimHitText:FlxText;
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
@@ -1711,20 +1711,6 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.timeBarType == 'Disabled') timePercentTxt.screenCenter(X);
 		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.x = timeBarBG.x + 600;
 		add(timePercentTxt);
-
-		healthShitText = new FlxText(timeTxt.x, timeBarBG.y + 160, 400, "", 20);
-		healthShitText.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if (ClientPrefs.hudType == 'Doki Doki+') healthShitText.setFormat(Paths.font("Aller_rg.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') healthShitText.setFormat(Paths.font("calibri.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if (ClientPrefs.hudType == 'Dave & Bambi') healthShitText.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if (ClientPrefs.hudType == 'Box Funkin') healthShitText.setFormat(Paths.font("MilkyNice.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		healthShitText.scrollFactor.set();
-		healthShitText.alpha = 1;
-		healthShitText.borderSize = 2;
-		healthShitText.visible = ClientPrefs.healthDisplay && !ClientPrefs.hideHud;
-		healthShitText.cameras = [camHUD];
-		if(ClientPrefs.downScroll || ClientPrefs.hudType == 'Box Funkin') healthShitText.y = timeBarBG.y - 160;
-		add(healthShitText);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
@@ -3444,6 +3430,10 @@ class PlayState extends MusicBeatState
 		compactNPS = formatCompactNumberInt(nps);
 		compactTotalPlays = formatCompactNumber(totalNotesPlayed);
     }
+    private function updateTheHitTextThing():Void
+    {
+		OptimHitText.text == 'Note Hits: $totalNotesPlayed\nNPS: $nps / $maxNPS\n\nOpponent Hits: $enemyHits / $opponentNoteTotal\nOpponent NPS: $oppNPS / $maxOppNPS';
+    }
 
     public static function formatCompactNumber(number:Float):String //this entire function is ai generated LMAO
     {
@@ -4973,37 +4963,29 @@ class PlayState extends MusicBeatState
 			moveCamTo[0] = FlxMath.lerp(moveCamTo[0], 0, panLerpVal);
 			moveCamTo[1] = FlxMath.lerp(moveCamTo[1], 0, panLerpVal);
 		}
-
 		{
-			var balls = notesHitArray.length-1;
-			while (balls >= 0)
+			for(i in 0...notesHitArray.length)
 			{
-				var cock:Date = notesHitArray[balls];
-				if (cock != null && (cock.getTime() + (ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000)) < Date.now().getTime())
-					notesHitArray.remove(cock);
-				else
-					balls = 0;
-				balls--;
+				var cock:Date = notesHitArray[i];
+				if (cock != null)
+					if (cock.getTime() + (ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000) < Date.now().getTime())
+						notesHitArray.remove(cock);
 			}
-			nps = notesHitArray.length;
+			nps = Math.floor(notesHitArray.length);
 			if (nps > maxNPS)
 				maxNPS = nps;
-		}
-		{
-			var balls = oppNotesHitArray.length-1;
-			while (balls >= 0)
+			for(i in 0...oppNotesHitArray.length)
 			{
-				var cock:Date = oppNotesHitArray[balls];
-				if (cock != null && (cock.getTime() + 1000 / playbackRate) < Date.now().getTime())
-					oppNotesHitArray.remove(cock);
-				else
-					balls = 0;
-				balls--;
+				var cock:Date = oppNotesHitArray[i];
+				if (cock != null)
+					if (cock.getTime() + (ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000) < Date.now().getTime())
+						oppNotesHitArray.remove(cock);
 			}
-			oppNPS = oppNotesHitArray.length;
+			oppNPS = Math.floor(oppNotesHitArray.length);
 			if (oppNPS > maxOppNPS)
 				maxOppNPS = oppNPS;
 		}
+		
 
 		if (combo > maxCombo)
 			maxCombo = combo;
@@ -5553,6 +5535,7 @@ class PlayState extends MusicBeatState
 			{
 			time = spawnTime / songSpeed;
 			}
+			if (time <= 10) time = 10;
 			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
 
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
@@ -5642,9 +5625,9 @@ class PlayState extends MusicBeatState
 							}
 						}
 
-						if (!daNote.mustPress && daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote)
+						if (!daNote.mustPress && daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote && daNote.strumTime <= Conductor.songPosition)
 						{
-						opponentNoteHit(daNote);
+							opponentNoteHit(daNote);
 						}
 
 						if(!daNote.blockHit && daNote.mustPress && cpuControlled && daNote.canBeHit && !softlocked) { //wait you cant even hit notes when the game is softlocked im a dumbass
@@ -5782,7 +5765,6 @@ class PlayState extends MusicBeatState
 		cancelMusicFadeTween();
 		MusicBeatState.switchState(new ChartingState());
 		chartingMode = true;
-
 		#if desktop
 		DiscordClient.changePresence("Chart Editor", null, null, true);
 		#end
@@ -8052,7 +8034,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		if (!note.isSustainNote)
 		{
-		oppNotesHitArray.unshift(Date.now());
+		oppNotesHitArray.push(Date.now());
 		enemyHits += 1 * polyphony;
 			if (shouldKillNotes)
 			{
@@ -8262,7 +8244,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				notesHitArray.unshift(Date.now());
+				notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && !cpuControlled && ClientPrefs.holdNoteHits)
@@ -8270,7 +8252,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				notesHitArray.unshift(Date.now());
+				notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits && !ClientPrefs.lessBotLag)
@@ -8278,7 +8260,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				notesHitArray.unshift(Date.now());
+				notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && cpuControlled && ClientPrefs.holdNoteHits && ClientPrefs.lessBotLag)
@@ -8309,7 +8291,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
-				notesHitArray.unshift(Date.now());
+				notesHitArray.push(Date.now());
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(false, note);
 				}
@@ -8321,7 +8303,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				notesHitArray.unshift(Date.now());
+				notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && cpuControlled && !ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits)
@@ -8331,7 +8313,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				notesHitArray.unshift(Date.now());
+				notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (ClientPrefs.healthGainType == 'Psych Engine') {
@@ -8829,6 +8811,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		{
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
+
 		if (ClientPrefs.iconBounceType == 'Dave and Bambi') {
 		var funny:Float = Math.max(Math.min(healthBar.value,1.9),0.01);
 

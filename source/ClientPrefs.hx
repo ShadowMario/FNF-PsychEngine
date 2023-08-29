@@ -61,6 +61,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var resultsScreen:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var hideScore:Bool = false;
+	public static var maxPerformance:Bool = false;
 	public static var voiidTrollMode:Bool = false;
 	public static var compactNumbers:Bool = false;
 	public static var longFCName:Bool = false;
@@ -268,6 +269,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.hudType = hudType;
 		FlxG.save.data.ratingCounter = ratingCounter;
 		FlxG.save.data.colorRatingHit = colorRatingHit;
+		FlxG.save.data.maxPerformance = maxPerformance;
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
 		FlxG.save.data.noPausing = noPausing;
@@ -400,6 +402,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.resyncType != null) {
 			resyncType = FlxG.save.data.resyncType;
+		}
+		if(FlxG.save.data.maxPerformance != null) {
+			maxPerformance = FlxG.save.data.maxPerformance;
 		}
 		if(FlxG.save.data.resultsScreen != null) {
 			resultsScreen = FlxG.save.data.resultsScreen;
