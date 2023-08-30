@@ -18,7 +18,6 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib git extension-androidtools https://github.com/mcagabe19-stuff/extension-androidtools.git
           haxelib install flixel-addons 3.0.2 --quiet
           haxelib install flixel-tools 1.5.1 --quiet
           haxelib install flixel-ui 2.5.0 --quiet
@@ -32,6 +31,7 @@ jobs:
           haxelib install SScript 5.0.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
+          haxelib run lime rebuild extension-orientation ios -release
       - name: Compile
         run: haxelib run lime build ios -release
       - name: Publish Artifact
