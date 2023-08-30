@@ -31,11 +31,13 @@ jobs:
           haxelib install SScript 5.0.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
-          haxelib run lime rebuild extension-orientation ios -release
+      - name: Rebuild Libs
+        run: |
+          haxelib run lime rebuild extension-orientation ios -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
       - name: Compile
         run: haxelib run lime build ios -release
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
-          name: iosBuild
+          name: iosBuild-clang
           path: 'export/release/ios/bin'
