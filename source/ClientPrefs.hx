@@ -41,6 +41,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
 	public static var autosaveInterval:Float = 5.0;
+	public static var comboMultLimit:Float = 5;
 	public static var autosaveCharts:Bool = true;
 	public static var antiCheatEnable:Bool = false;
 	public static var bfIconStyle:String = 'Default';
@@ -83,6 +84,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var oppNoteAlpha:Float = 0.65;
 	public static var lessBotLag:Bool = false;
 	public static var ratesAndCombo:Bool = false;
+	public static var showNPS:Bool = false;
 	public static var showMS:Bool = false;
 	public static var comboPopup:Bool = false;
 	public static var ratingCounter:Bool = false;
@@ -241,11 +243,13 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.noteStyleThing = noteStyleThing;
 		FlxG.save.data.antiCheatEnable = antiCheatEnable;
 		FlxG.save.data.randomBotplayText = randomBotplayText;
+		FlxG.save.data.showNPS = showNPS;
 		FlxG.save.data.startingSync = startingSync;
 		FlxG.save.data.noSyncing = noSyncing;
 		FlxG.save.data.resultsScreen = resultsScreen;
 		FlxG.save.data.instaRestart = instaRestart;
 		FlxG.save.data.percentDecimals = percentDecimals;
+		FlxG.save.data.comboMultLimit = comboMultLimit;
 		FlxG.save.data.iconBounceType = iconBounceType;
 		FlxG.save.data.cameraPanning = cameraPanning;
 		FlxG.save.data.panIntensity = panIntensity;
@@ -405,6 +409,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.maxPerformance != null) {
 			maxPerformance = FlxG.save.data.maxPerformance;
+		}
+		if(FlxG.save.data.comboMultLimit != null) {
+			comboMultLimit = FlxG.save.data.comboMultLimit;
+		}
+		if(FlxG.save.data.showNPS != null) {
+			showNPS = FlxG.save.data.showNPS;
 		}
 		if(FlxG.save.data.resultsScreen != null) {
 			resultsScreen = FlxG.save.data.resultsScreen;

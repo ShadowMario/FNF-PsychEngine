@@ -433,25 +433,22 @@ class Paths
 		var sound:Sound = null;
 		var file:String = null;
 
-		#if MODS_ALLOWED
-		file = modsSounds(path, key);
-		if (currentTrackedSounds.exists(file))
-		{
-			localTrackedAssets.push(file);
-			return currentTrackedSounds.get(file);
-		}
-		else if (FileSystem.exists(file))
-		{
-			#if lime_vorbis
-			if (stream)
-				sound = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromFile(file)));
-			else
-			#end
-			sound = Sound.fromFile(file);
-		}
-		else
-		#end
-		{
+        #if MODS_ALLOWED
+        file = modsSounds(path, key);
+        if (currentTrackedSounds.exists(file)) {
+            localTrackedAssets.push(file);
+            return currentTrackedSounds.get(file);
+        } else if (FileSystem.exists(file)) {
+            #if lime_vorbis
+            if (stream)
+                sound = Sound.fromAudioBuffer(AudioBuffer.fromVorbisFile(VorbisFile.fromFile(file)));
+            else
+            #end
+            sound = Sound.fromFile(file);
+        }
+        else
+        #end
+        {
 			// I hate this so god damn much
 			var gottenPath:String = getPath('$path/$key.$SOUND_EXT', SOUND, library);
 			file = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);

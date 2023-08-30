@@ -3430,10 +3430,6 @@ class PlayState extends MusicBeatState
 		compactNPS = formatCompactNumberInt(nps);
 		compactTotalPlays = formatCompactNumber(totalNotesPlayed);
     }
-    private function updateTheHitTextThing():Void
-    {
-		OptimHitText.text == 'Note Hits: $totalNotesPlayed\nNPS: $nps / $maxNPS\n\nOpponent Hits: $enemyHits / $opponentNoteTotal\nOpponent NPS: $oppNPS / $maxOppNPS';
-    }
 
     public static function formatCompactNumber(number:Float):String //this entire function is ai generated LMAO
     {
@@ -3754,14 +3750,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Combo Breaks: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' 
 		+ ' | ' + ratingFC + ratingCool;
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
 		scoreTxt.text = 'Bot Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Botplay Mode ';
 		}
 		}
@@ -3771,12 +3767,12 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '');
 		missTxt.text = "Misses: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses);
 		accuracyTxt.text = "Accuracy: " + Highscore.floorDecimal(ratingPercent * 100, 2) + "% | " + ratingFC + " |" + ratingCool;
-		npsTxt.text = "\nNPS: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS);
+		npsTxt.text = "\n" + (ClientPrefs.showNPS ? ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '');
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
 		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '');
 		missTxt.text = "Bot Combo: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo);
-		accuracyTxt.text = "Bot NPS: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS);
+		accuracyTxt.text = "" + (ClientPrefs.showNPS ? ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '');
 		npsTxt.text = "Botplay Mode";
 		}
 		}
@@ -3785,14 +3781,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Breaks: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' 
 		+ ' | ' + ratingFC + ratingCool;
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
 		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Botplay Mode ';
 		}
 		}
@@ -3801,14 +3797,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' 
 		+ ' | ' + ratingFC;
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
 		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' +  (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Botplay Mode ';
 		}
 		}
@@ -3817,14 +3813,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Rating: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
 		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | funny botplay mode!!!!!';
 		}
 		}
@@ -3833,14 +3829,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Rating: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
 		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Botplay Mode';
 		}
 		}
@@ -3849,14 +3845,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = '< Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
 		+ ' ~ Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' ~ Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' ~ NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' ~ NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' ~ Rating: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) ~ $ratingFC' : '');
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
 		scoreTxt.text = "< Bot Score: " + FlxStringUtil.formatMoney(songScore, false)
 		+ ' ~ Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' ~ Bot NPS: ' + FlxStringUtil.formatMoney(nps, false)
+		+ (ClientPrefs.showNPS ? ' ~ Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' ~ Botplay Mode >';
 		}
 		}
@@ -3865,14 +3861,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
 		+ ' | Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Rating: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
 		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | funny botplay mode!!!!';
 		}
 		}
@@ -3881,14 +3877,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Combo Breaks: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' 
 		+ ratingFC;
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
 		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
-		+ ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS)
+		+ (ClientPrefs.showNPS ? ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Botplay Mode';
 		}
 		}
@@ -4032,6 +4028,7 @@ class PlayState extends MusicBeatState
 		}
 
 		#if desktop
+		if (cpuControlled) detailsText = detailsText + ' (using a bot)';
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
 		#end
@@ -4794,6 +4791,7 @@ class PlayState extends MusicBeatState
 		ratingFC = 'skill issue';
 		}
 		if (ClientPrefs.comboScoreEffect && ClientPrefs.comboMultiType == 'osu!') comboMultiplier = 1 + FlxMath.roundDecimal((combo / 100), 2);
+		if (ClientPrefs.comboScoreEffect && comboMultiplier > ClientPrefs.comboMultLimit) comboMultiplier = ClientPrefs.comboMultLimit;
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -4963,6 +4961,7 @@ class PlayState extends MusicBeatState
 			moveCamTo[0] = FlxMath.lerp(moveCamTo[0], 0, panLerpVal);
 			moveCamTo[1] = FlxMath.lerp(moveCamTo[1], 0, panLerpVal);
 		}
+		if (ClientPrefs.showNPS)
 		{
 			for(i in 0...notesHitArray.length)
 			{
@@ -6717,7 +6716,7 @@ class PlayState extends MusicBeatState
 
 		var ret:Dynamic = callOnLuas('onEndSong', [], false);
 		if(ret != FunkinLua.Function_Stop && !transitioning) {
-			if (SONG.validScore && !cpuControlled && !playerIsCheating)
+			if (SONG.validScore && !cpuControlled && !playerIsCheating && ClientPrefs.comboMultLimit <= 10)
 			{
 				#if !switch
 				var percent:Float = ratingPercent;
@@ -8034,7 +8033,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		if (!note.isSustainNote)
 		{
-		oppNotesHitArray.push(Date.now());
+		if (ClientPrefs.showNPS) oppNotesHitArray.push(Date.now());
 		enemyHits += 1 * polyphony;
 			if (shouldKillNotes)
 			{
@@ -8244,7 +8243,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && !cpuControlled && ClientPrefs.holdNoteHits)
@@ -8252,7 +8251,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits && !ClientPrefs.lessBotLag)
@@ -8260,7 +8259,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && cpuControlled && ClientPrefs.holdNoteHits && ClientPrefs.lessBotLag)
@@ -8287,11 +8285,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				{
 				songScore += 350 * comboMultiplier * polyphony;
 				}
-				//updateScore(); the update function handles updating this, so why make it update more
-				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
-				notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(false, note);
 				}
@@ -8303,7 +8299,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && cpuControlled && !ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits)
@@ -8313,7 +8309,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (ClientPrefs.healthGainType == 'Psych Engine') {
@@ -9092,8 +9088,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' ( ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 		}
-		judgementCounter.text += '\nNPS (Max): ' + FlxStringUtil.formatMoney(nps, false) + ' (' + FlxStringUtil.formatMoney(maxNPS, false) + ')';
-		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Hits: ' + FlxStringUtil.formatMoney(enemyHits, false) + ' / ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' (' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%)\nOpponent NPS (Max): ' + FlxStringUtil.formatMoney(oppNPS, false) + ' (' + FlxStringUtil.formatMoney(maxOppNPS, false) + ')';
+		judgementCounter.text += (ClientPrefs.showNPS ? '\nNPS (Max): ' + FlxStringUtil.formatMoney(nps, false) + ' (' + FlxStringUtil.formatMoney(maxNPS, false) + ')' : '');
+		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Hits: ' + FlxStringUtil.formatMoney(enemyHits, false) + ' / ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' (' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%)' + (ClientPrefs.showNPS ? '\nOpponent NPS (Max): ' + FlxStringUtil.formatMoney(oppNPS, false) + ' (' + FlxStringUtil.formatMoney(maxOppNPS, false) + ')' : '');
 	}
 
 

@@ -48,6 +48,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Show NPS',
+			'If checked, the game will show your current NPS.',
+			'showNPS',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Max Splashes: ',
 			"How many note splashes should be allowed on screen at the same time?\n(0 means no limit)",
 			'maxSplashLimit',
