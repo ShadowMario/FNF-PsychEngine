@@ -26,7 +26,7 @@ jobs:
           # haxelib install hxcpp-debug-server 1.2.4 --quiet
           # haxelib install hscript --quiet
           haxelib git hxcpp https://github.com/mcagabe19-stuff/hxcpp.git
-          haxelib install lime 7.9.0 --quiet
+          haxelib git lime https://github.com/mcagabe19-stuff/lime7.9.0-arm.git
           haxelib git linc_luajit https://github.com/mcagabe19-stuff/linc_luajit.git
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 5.0.0 --quiet
