@@ -43,7 +43,7 @@ jobs:
           # CODE_SIGN_ENTITLEMENTS: ""
           # CODE_SIGNING_ALLOWED: "NO"
       - name: Compile 2
-        run: cd export/release/ios && /Applications/Xcode_12.4.app/Contents/Developer/usr/bin/xcodebuild CODE_SIGN_ENTITLEMENTS="" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -configuration Release PLATFORM_NAME=iphoneos SDKROOT=iphoneos14.4 -arch arm64 -project PsychEngine.xcodeproj -allowProvisioningUpdates -allowProvisioningDeviceRegistration clean build
+        run: cd export/release/ios && /Applications/Xcode_12.4.app/Contents/Developer/usr/bin/xcodebuild CODE_SIGN_ENTITLEMENTS="" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED="NO" -configuration Release PLATFORM_NAME=iphoneos SDKROOT=iphoneos14.4 -arch arm64 -project PsychEngine.xcodeproj -allowProvisioningUpdates -allowProvisioningDeviceRegistration clean build
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
