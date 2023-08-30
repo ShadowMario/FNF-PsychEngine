@@ -7,12 +7,15 @@ import lime.utils.Assets as LimeAssets;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
 import flixel.system.FlxSound;
+import flixel.util.FlxColor;
+import flixel.tweens.FlxTween;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
 #else
 import openfl.utils.Assets;
 #end
+import flixel.text.FlxText;
 
 using StringTools;
 
@@ -134,7 +137,6 @@ class CoolUtil
 		var text:FlxText = new FlxText(8, 0, 1280, title + " - " + message, 24);
 		text.color = FlxColor.RED;
 		text.borderSize = 1.5;
-		text.borderStyle = OUTLINE;
 		text.borderColor = FlxColor.BLACK;
 		text.scrollFactor.set();
 		text.cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];

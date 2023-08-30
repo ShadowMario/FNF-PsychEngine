@@ -12,6 +12,15 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import ClientPrefs;
+import CoolUtil;
+import MusicBeatState;
+import MusicBeatSubstate;
+import Paths;
+import HealthIcon;
+import FreeplayState;
+import StoryModeState;
+import PlayState;
 
 class ResultsScreenSubState extends MusicBeatSubstate {
 	var background:FlxSprite;
