@@ -23,6 +23,7 @@ jobs:
           haxelib install flixel-ui 2.5.0 --quiet
           haxelib install flixel 5.2.2 --quiet
           haxelib git hxCodec https://github.com/mcagabe19-stuff/hxCodec.git
+          haxelib install hxcpp-debug-server 1.2.4 --quiet
           # haxelib install hscript --quiet
           haxelib git hxcpp https://github.com/mcagabe19-stuff/hxcpp.git
           haxelib install lime 7.9.0 --quiet
