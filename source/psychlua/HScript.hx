@@ -64,6 +64,7 @@ class HScript extends SScript
 			var fileWithoutComments = ~/(\/[*](?:[^*]|[\r\n]|([*]+([^*\/]|[\r\n])))*[*]+\/|\/\/.*)/gm.replace(File.getContent(file), '');
 			usesClasses = ~/class\s.*\s*{/.match(fileWithoutComments);
 		}
+		#end
 
 		super(null, false, false);
 		classSupport = usesClasses;
