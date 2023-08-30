@@ -41,5 +41,5 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
-          name: iosBuild-clang
-          path: 'export/release/ios/bin'
+          name: iOS-Source
+          path: 'export/release/ios'
