@@ -243,11 +243,18 @@ class HScript extends SScript
 			funk.hscript.doString(codeToRun);
 			if(varsToBring != null)
 			{
-				for (key in Reflect.fields(varsToBring))
-				{
-					//trace('Key $key: ' + Reflect.field(varsToBring, key));
-					funk.hscript.set(key, Reflect.field(varsToBring, key));
+				if (varsToBring is Array) {
+					for (vars in cast(varsToBring, Array<Dynamic>)) if (vars is String) {
+						funk.hscript.doString('function bmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA() { return $vars; this.unset("bmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA"); }');
+						var obj = funk.hscript.call('bmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA').returnValue;
+						var fields = (obj is Class) ? Type.getClassFields(obj) : Reflect.fields(obj);
+						for (key in fields)
+							funk.hscript.set(key, Reflect.field(obj, key));
+					}
 				}
+				else
+					for (key in Reflect.fields(varsToBring))
+						funk.hscript.set(key, Reflect.field(varsToBring, key));
 			}
 			retVal = funk.hscript.executeCode(funcToRun, funcArgs);
 			if (retVal != null)
