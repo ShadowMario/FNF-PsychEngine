@@ -30,12 +30,12 @@ jobs:
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 5.0.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
-          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git -arm64e
+          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
       - name: Rebuild Libs
         run: |
-          haxelib run lime rebuild extension-orientation ios -arm64e -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
+          haxelib run lime rebuild extension-orientation ios -arm64 -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
       - name: Compile
-        run: haxelib run lime build ios -release
+        run: haxelib run lime build ios -release -arm64
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
