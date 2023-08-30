@@ -2,6 +2,9 @@ name: Android + Release
 on: workflow_dispatch
 jobs:
   Build-gcc:
+    strategy:
+      matrix:
+        build_type: [EXTERNAL_DATA, EXTERNAL]
     runs-on: ubuntu-20.04
     permissions: write-all
     steps:
@@ -47,8 +50,8 @@ jobs:
           haxelib git linc_luajit https://github.com/mcagabe19-stuff/linc_luajit.git
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 5.0.0 --quiet
-          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
           # haxelib install tjson 1.4.0 --quiet
+          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
           cp /home/runner/work/FNF-PsychEngine-Mobile/FNF-PsychEngine-Mobile/art/CustomManifest.xml /home/runner/haxelib/lime/7,9,0/templates/android/template/app/src/main/AndroidManifest.xml
       - name: List Haxelibs
         run: haxelib list
@@ -62,13 +65,14 @@ jobs:
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
       - name: Compile
-        run: haxelib run lime build android -D NO_PRECOMPILED_HEADERS -release
-        # continue-on-error: true
+        run: haxelib run lime build android -D ${{ matrix.build_type }} -D NO_PRECOMPILED_HEADERS -release
         env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
       - name: Clear Previous Cache
-        if: ${{ always() }}
+        if: |
+          ${{ always() }} ||
+          ( ${{ matrix.build_type }} == 'EXTERNAL_DATA' )
         uses: actions/github-script@main
         with:
           script: |
@@ -94,7 +98,9 @@ jobs:
             	console.log(error.message);
             }
       - name: Save Current Cache
-        if: ${{ always() }}
+        if: |
+          ${{ always() }} ||
+          ( ${{ matrix.build_type }} == 'EXTERNAL_DATA' )
         id: cache-release-build-android-save-gcc
         uses: actions/cache/save@main
         with:
@@ -108,7 +114,7 @@ jobs:
         if: ${{ success() }}
         uses: actions/upload-artifact@main
         with:
-          name: androidBuild-gcc
+          name: androidBuild-gcc-${{ matrix.build_type }}
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
   Releaser:
@@ -119,7 +125,7 @@ jobs:
       - name: Download Gcc Build
         uses: actions/download-artifact@v3
         with:
-           name: androidBuild-gcc
+           name: androidBuild-gcc-EXTERNAL
            path: /home/runner
       - name: Rename Gcc Build
         run: mv /home/runner/PsychEngine-release.apk /home/runner/PsychEngine-gcc-release.apk
