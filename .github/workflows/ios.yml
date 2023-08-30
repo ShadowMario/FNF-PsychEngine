@@ -34,11 +34,16 @@ jobs:
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
       - name: Rebuild Libs
         run: |
-          haxelib run lime rebuild mac -64 -release # && ln -s /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos-64.a /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos.a
+          # haxelib run lime rebuild mac -64 -release # && ln -s /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos-64.a /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos.a
           haxelib run lime rebuild extension-orientation ios -arm64 -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos-64.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
       - name: Compile
         continue-on-error: true
         run: haxelib run lime build ios -release -arm64
+        env:
+          CODE_SIGN_ENTITLEMENTS: ""
+          CODE_SIGNING_ALLOWED: "NO"
+      - name: Compile 2
+        run: cd export/release/bin && /Applications/Xcode_12.4.app/Contents/Developer/usr/bin/xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -configuration Release PLATFORM_NAME=iphoneos SDKROOT=iphoneos14.4 -arch arm64 -project PsychEngine.xcodeproj -allowProvisioningUpdates -allowProvisioningDeviceRegistration build
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
