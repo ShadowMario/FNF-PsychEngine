@@ -174,7 +174,7 @@
 				<!--<android gradle-version="7.4.2" gradle-plugin="7.3.1" />-->
 	
 				<!--Target SDK-->
-				<android target-sdk-version="29" if="EXTERNAL_DATA || MEDIA || CUSTOM" />
+				<android target-sdk-version="29" unless="EXTERNAL" />
 			</config>
 		</section>
 	
