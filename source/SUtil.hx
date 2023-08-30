@@ -15,8 +15,8 @@ import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
 import flash.system.System;
-import backend.CoolUtil;
-import states.MainMenuState;
+import CoolUtil;
+import MainMenuState;
 
 /**
  * ...
@@ -119,7 +119,7 @@ class SUtil
 		Sys.println(errorMessage);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
-		SUtil.applicationAlert("Error! SB Engine v" + MainMenuState.sbEngineVersion, errorMessage);
+		SUtil.applicationAlert("Error! JS Engine v" + MainMenuState.psychEngineJSVersion, errorMessage);
 		System.exit(0);
 	}
 
