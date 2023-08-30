@@ -5,7 +5,7 @@ import objects.Character;
 import psychlua.FunkinLua;
 import psychlua.CustomSubstate;
 
-#if sys
+#if (sys && (SScript < "5.0.0"))
 import sys.FileSystem;
 import sys.io.File;
 #end
@@ -56,22 +56,21 @@ class HScript extends SScript
 	{
 		#if (SScript < "5.0.0")
 		var usesClasses = false;
-		#end
 		if (file == null)
 			file = '';
 	
-		#if (sys && (SScript < "5.0.0"))
+		#if sys
 		else if (FileSystem.exists(file)) {
 			var fileWithoutComments = ~/(\/[*](?:[^*]|[\r\n]|([*]+([^*\/]|[\r\n])))*[*]+\/|\/\/.*)/gm.replace(File.getContent(file), '');
 			usesClasses = ~/class\s.*\s*{/.match(fileWithoutComments);
 		}
-		#end
 
 		super(null, false, false);
-		#if (SScript < "5.0.0")
 		classSupport = usesClasses;
-		#end
 		doFile(file);
+		#else
+		super(file, false, false);
+		#end
 		parentLua = parent;
 		if (parent != null)
 			origin = parent.scriptName;
