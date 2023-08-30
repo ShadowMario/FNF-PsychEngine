@@ -122,7 +122,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - name: Download Gcc Build
+      - name: Download Gcc Build (External)
         uses: actions/download-artifact@v3
         with:
            name: androidBuild-gcc-EXTERNAL
@@ -133,8 +133,8 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: true
-          automatic_release_tag: "0.7.1h-beta6"
-          title: "0.7.1h Android Beta 6"
+          prerelease: false
+          automatic_release_tag: "0.7.1h-release4"
+          title: "0.7.1h Android Release 4"
           files: |
             /home/runner/PsychEngine-gcc-release.apk
