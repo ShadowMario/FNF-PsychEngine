@@ -34,6 +34,7 @@ jobs:
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
       - name: Rebuild Libs
         run: |
+          haxelib run lime rebuild mac -64 -release # && ln -s /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos-64.a /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos.a
           haxelib run lime rebuild extension-orientation ios -arm64 -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos-64.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
       - name: Compile
         continue-on-error: true
