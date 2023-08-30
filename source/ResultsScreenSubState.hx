@@ -12,15 +12,6 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import ClientPrefs;
-import CoolUtil;
-import MusicBeatState;
-import MusicBeatSubstate;
-import Paths;
-import HealthIcon;
-import FreeplayState;
-import StoryModeState;
-import PlayState;
 
 class ResultsScreenSubState extends MusicBeatSubstate {
 	var background:FlxSprite;
@@ -118,15 +109,9 @@ class ResultsScreenSubState extends MusicBeatSubstate {
 		FlxTween.tween(judgementCounterTxt, {alpha: 1, y: judgementCounterTxt.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.6});
 		FlxTween.tween(iconPlayer1, {alpha: 1, y: FlxG.height - iconPlayer1.height - 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.8});
 		FlxTween.tween(iconPlayer2, {alpha: 1, y: FlxG.height - iconPlayer2.height - 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.8});
-		#if android
-		FlxTween.tween(virtualPad, {alpha: 1, y: 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.10});
-		#end
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
-		#if android
-		addVirtualPad(NONE, A);
-		#end
 	}
 
 	override function update(elapsed:Float) {

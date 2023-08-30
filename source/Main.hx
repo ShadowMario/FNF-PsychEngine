@@ -63,8 +63,6 @@ class Main extends Sprite
 	{
 		super();
 
-		SUtil.gameCrashCheck();
-
 		if (stage != null)
 		{
 			init();
@@ -106,8 +104,6 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
-
-		SUtil.doTheCheck();
 	
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
@@ -190,7 +186,7 @@ class Main extends Sprite
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = SUtil.getPath() + "crash/" + "JS Engine_" + dateNow + ".log";
+		path = "./crash/" + "PsychEngine_" + dateNow + ".txt";
 
 		for (stackItem in callStack)
 		{
@@ -205,8 +201,8 @@ class Main extends Sprite
 
 		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag\n\n> Crash Handler written by: sqirra-rng";
 
-		if (!FileSystem.exists(SUtil.getPath() + "crash/"))
-			FileSystem.createDirectory(SUtil.getPath() + "crash/");
+		if (!FileSystem.exists("./crash/"))
+			FileSystem.createDirectory("./crash/");
 
 		File.saveContent(path, errMsg + "\n");
 
