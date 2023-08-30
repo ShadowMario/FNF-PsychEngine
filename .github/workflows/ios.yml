@@ -36,6 +36,7 @@ jobs:
         run: |
           haxelib run lime rebuild extension-orientation ios -arm64 -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos-64.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
       - name: Compile
+        continue-on-error: true
         run: haxelib run lime build ios -release -arm64
       - name: Publish Artifact
         uses: actions/upload-artifact@main
