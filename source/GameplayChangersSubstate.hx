@@ -369,7 +369,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 					clearHold();
 				}
 			}
-			if(controls.RESET && FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonC.justPressed #end))
+			if(controls.RESET && FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonC.justPressed #end)
 			{
 				for (i in 0...optionsArray.length)
 				{
