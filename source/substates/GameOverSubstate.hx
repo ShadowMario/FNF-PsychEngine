@@ -102,7 +102,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			Main.allowedToClear = true;
 			
-			#if desktop DiscordClient.resetClientID(); #end
+			#if (desktop && !hl) DiscordClient.resetClientID(); #end
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
 			PlayState.seenCutscene = false;

@@ -13,7 +13,7 @@ class AchievementsMenuState extends MusicBeatState
 	private var descText:FlxText;
 
 	override function create() {
-		#if desktop
+		#if (desktop && !hl)
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
 

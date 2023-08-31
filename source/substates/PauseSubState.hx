@@ -331,7 +331,7 @@ class PauseSubState extends MusicBeatSubstate
 					Main.allowedToClear = true;
 					
 					#end
-					#if desktop DiscordClient.resetClientID(); #end
+					#if (desktop && !hl) DiscordClient.resetClientID(); #end
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 

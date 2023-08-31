@@ -1,6 +1,6 @@
 package backend;
 
-import Sys.sleep;
+#if (desktop && !hl)
 import discord_rpc.DiscordRpc;
 import lime.app.Application;
 
@@ -35,7 +35,7 @@ class DiscordClient
 		while (localID == clientID)
 		{
 			DiscordRpc.process();
-			sleep(2);
+			Sys.sleep(2);
 			//trace('Discord Client Update $localID');
 		}
 
@@ -155,3 +155,4 @@ class DiscordClient
 	}
 	#end
 }
+#end

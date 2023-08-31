@@ -13,6 +13,9 @@ import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
+#if hl
+import hl.Api;
+#end
 #if linux
 import lime.graphics.Image;
 #end
@@ -55,7 +58,7 @@ class Main extends Sprite
 	{
 		super();
 
-                SUtil.uncaughtErrorHandler();
+		SUtil.uncaughtErrorHandler();
 
 		#if cpp
 		untyped __global__.__hxcpp_set_critical_error_handler(SUtil.onCriticalError);
@@ -146,7 +149,7 @@ class Main extends Sprite
 		FlxG.mouse.visible = false;
 		#end
 
-		#if desktop
+		#if (desktop && !hl)
 		DiscordClient.start();
 		#end
 

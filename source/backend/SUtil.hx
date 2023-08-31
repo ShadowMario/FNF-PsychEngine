@@ -258,7 +258,7 @@ class SUtil
 
 		LimeLogger.println(msg);
 		Lib.application.window.alert(msg, 'Error!');
-		#if desktop DiscordClient.shutdown(); #end
+		#if (desktop && !hl) DiscordClient.shutdown(); #end
 		#if sys Sys.exit(1); #else LimeSystem.exit(1); #end
 	}
 
@@ -311,7 +311,7 @@ class SUtil
 
 		haxe.Log.trace(msg);
 		Lib.application.window.alert(msg, 'Critical Error!');
-		#if desktop DiscordClient.shutdown(); #end
+		#if (desktop && !hl) DiscordClient.shutdown(); #end
 		#if sys Sys.exit(1); #else LimeSystem.exit(1); #end
 	}
 
