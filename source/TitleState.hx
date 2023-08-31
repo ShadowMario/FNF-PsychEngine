@@ -88,6 +88,11 @@ class TitleState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK];
+		#end
+
 		MusicBeatState.windowNameSuffix = "";
 
 		#if LUA_ALLOWED
@@ -451,11 +456,10 @@ class TitleState extends MusicBeatState
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
-		#if mobile
-		for (touch in FlxG.touches.list)
-		{
-			if (touch.justPressed)
-			{
+		
+		#if android
+		for (touch in FlxG.touches.list) {
+			if (touch.justPressed) {
 				pressedEnter = true;
 			}
 		}

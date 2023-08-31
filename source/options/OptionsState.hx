@@ -86,8 +86,21 @@ class OptionsState extends MusicBeatState
 		selectorRight = new Alphabet(0, 0, '<', true);
 		add(selectorRight);
 
+		#if android
+		customizeAndroidControlsTipText = new FlxText(10, FlxG.height - 24, 0, 'Press C to customize your android controls!', 16);
+		customizeAndroidControlsTipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		customizeAndroidControlsTipText.borderSize = 1.25;
+		customizeAndroidControlsTipText.scrollFactor.set();
+		add(androidControlsStyleTipText);
+		#end
+
 		changeSelection();
 		ClientPrefs.saveSettings();
+
+		#if android
+		addVirtualPad(UP_DOWN, A_B_C);
+		virtualPad.y = -42;
+		#end
 
 		super.create();
 	}
@@ -121,6 +134,15 @@ class OptionsState extends MusicBeatState
 		if (controls.ACCEPT) {
 			openSelectedSubstate(options[curSelected]);
 		}
+
+		#if android
+		if (virtualPad.buttonC.justPressed) {
+			#if android
+			removeVirtualPad();
+			#end
+			openSubState(new android.AndroidControlsSubState());
+		}
+		#end
 	}
 	
 	function changeSelection(change:Int = 0) {

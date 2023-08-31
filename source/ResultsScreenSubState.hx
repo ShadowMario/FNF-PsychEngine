@@ -117,7 +117,17 @@ class ResultsScreenSubState extends MusicBeatSubstate {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		if (controls.ACCEPT) {
+		#if android
+		var touchedScreen:Bool = false;
+
+		for (touch in FlxG.touches.list) {
+			if (touch.justPressed) {
+				touchedScreen = true;
+			}
+		}
+		#end
+
+		if (controls.ACCEPT #if android || touchedScreen #end) {
 			if (PlayState.isStoryMode)
 				MusicBeatState.switchState(new StoryMenuState());
 			else
