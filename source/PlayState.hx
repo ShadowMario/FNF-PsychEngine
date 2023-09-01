@@ -5121,7 +5121,11 @@ class PlayState extends MusicBeatState
 						{
 							var vidSpr:FlxSprite;
 							var videoDone:Bool = true;
-							var video:MP4Handler = new MP4Handler(); // it plays but it doesn't show???
+							#if (hxCodec <= "2.6.0") var video:MP4Handler = new MP4Handler(); // it plays but it doesn't show???
+							#elseif (hxCodec == "2.6.0") var video:VideoHandler = new VideoHandler(); // it plays but it doesn't show???
+							#elseif (hxCodec == "2.6.1") var video:VideoHandler = new VideoHandler(); // it plays but it doesn't show???
+							#elseif (hxCodec >= "3.0.0") var video:FlxVideo = new FlxVideo(); // it plays but it doesn't show???
+							#end
 							vidSpr = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
 							add(vidSpr);
 							#if (hxCodec < "3.0.0")
