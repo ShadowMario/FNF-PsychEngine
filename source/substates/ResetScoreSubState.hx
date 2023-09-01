@@ -147,7 +147,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 	}
 
 	override function destroy(){
-		bg = FlxDestoryUtil.destroy(bg);
+		bg = FlxDestroyUtil.destroy(bg);
 		alphabetArray = FlxDestroyUtil.destroyArray(alphabetArray);
 		icon = FlxDestroyUtil.destroy(icon);
                 yesText = FlxDestroyUtil.destroy(yesText);
