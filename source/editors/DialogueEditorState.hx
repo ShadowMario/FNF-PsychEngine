@@ -413,6 +413,7 @@ class DialogueEditorState extends MusicBeatState
 					animText.text = 'Animation: ' + animToPlay + ' (' + (curAnim + 1) +' / ' + character.jsonFile.animations.length + ') - Press W or S to scroll';
 					#else
 					animText.text = 'Animation: ' + animToPlay + ' (' + (curAnim + 1) +' / ' + character.jsonFile.animations.length + ') - Press Up or Down to scroll';
+					#end
 				}
 				if(controlText[i]) {
 					changeText(negaMult[i]);
@@ -484,6 +485,7 @@ class DialogueEditorState extends MusicBeatState
 		selectedText.text = 'Line: (' + (curSelected + 1) + ' / ' + dialogueFile.dialogue.length + ') - Press A or D to scroll';
 		#else
 		selectedText.text = 'Line: (' + (curSelected + 1) + ' / ' + dialogueFile.dialogue.length + ') - Press Left or Right Button to scroll';
+		#end
 	}
 
 	function characterAnimSpeed() {
