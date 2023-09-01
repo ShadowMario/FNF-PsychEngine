@@ -1,5 +1,7 @@
 package objects;
 
+import flixel.util.FlxDestroyUtil;
+
 class AttachedSprite extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
@@ -43,5 +45,10 @@ class AttachedSprite extends FlxSprite
 			if(copyVisible) 
 				visible = sprTracker.visible;
 		}
+	}
+
+	override function destroy(){
+		sprTracker = FlxDestroyUtil.destroy(sprTracker);
+		super.destroy();
 	}
 }
