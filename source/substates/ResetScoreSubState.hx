@@ -5,6 +5,7 @@ import backend.Highscore;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxSubState;
 import objects.HealthIcon;
+import flixel.util.FlxDestroyUtil;
 
 class ResetScoreSubState extends MusicBeatSubstate
 {
@@ -143,5 +144,15 @@ class ResetScoreSubState extends MusicBeatSubstate
 		noText.alpha = alphas[1 - confirmInt];
 		noText.scale.set(scales[1 - confirmInt], scales[1 - confirmInt]);
 		if(week == -1) icon.animation.curAnim.curFrame = confirmInt;
+	}
+
+	override function destroy(){
+		bg = FlxDestoryUtil.destroy(bg);
+		alphabetArray = FlxDestroyUtil.destroyArray(alphabetArray);
+		icon = FlxDestroyUtil.destroy(icon);
+                yesText = FlxDestroyUtil.destroy(yesText);
+		noText = FlxDestroyUtil.destroy(noText);
+
+		super.destroy();
 	}
 }
