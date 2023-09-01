@@ -1,5 +1,7 @@
 package objects;
 
+import flixel.util.FlxDestroyUtil;
+
 class AttachedText extends Alphabet
 {
 	public var offsetX:Float = 0;
@@ -28,5 +30,11 @@ class AttachedText extends Alphabet
 		}
 
 		super.update(elapsed);
+	}
+
+	override function destroy()
+	{
+		sprTracker = FlxDestroyUtil.destroy(sprTracker);
+		super.destroy();
 	}
 }
