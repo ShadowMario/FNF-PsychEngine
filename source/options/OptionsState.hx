@@ -56,6 +56,7 @@ class OptionsState extends MusicBeatState
 
 	var selectorLeft:Alphabet;
 	var selectorRight:Alphabet;
+	var customizeAndroidControlsTipText:FlxText;
 
 	override function create() {
 		#if desktop

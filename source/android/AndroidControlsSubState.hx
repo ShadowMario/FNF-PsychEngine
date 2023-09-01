@@ -35,7 +35,6 @@ class AndroidControlsSubState extends FlxSubState {
 	var bindButton:FlxButton;
 	var resetButton:FlxButton;
 	var background:FlxSprite;
-	var velocityBG:FlxBackdrop;
 
 	override function create() {
 		background = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromHSB(FlxG.random.int(0, 359), FlxG.random.float(0, 0.8), FlxG.random.float(0.3, 1)));

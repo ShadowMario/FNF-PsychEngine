@@ -10,7 +10,6 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.group.FlxSpriteGroup;
 import openfl.utils.Assets;
-import backend.ClientPrefs;
 
 /**
  * A zone with 4 buttons (A hitbox).
@@ -64,8 +63,6 @@ class FlxHitbox extends FlxSpriteGroup {
 		hint.color = Color;
 		hint.alpha = 0.00001;
 		hint.onDown.callback = hint.onOver.callback = function() {
-			if (hint.alpha != ClientPrefs.hitboxAlpha)
-				hint.alpha = ClientPrefs.hitboxAlpha;
 		}
 		hint.onUp.callback = hint.onOut.callback = function() {
 			if (hint.alpha != 0.00001)

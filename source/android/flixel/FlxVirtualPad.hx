@@ -9,7 +9,6 @@ import flixel.util.FlxDestroyUtil;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.FlxGraphic;
 import openfl.utils.Assets;
-import backend.ClientPrefs;
 
 /**
  * A gamepad.
@@ -168,7 +167,6 @@ class FlxVirtualPad extends FlxSpriteGroup {
 		button.immovable = true;
 		button.scrollFactor.set();
 		button.color = Color;
-		button.alpha = ClientPrefs.virtualPadAlpha;
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
 		#end
