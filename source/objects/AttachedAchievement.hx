@@ -1,5 +1,7 @@
 package objects;
 
+import flixel.util.FlxDestroyUtil;
+
 class AttachedAchievement extends FlxSprite {
 	public var sprTracker:FlxSprite;
 	private var tag:String;
@@ -30,5 +32,10 @@ class AttachedAchievement extends FlxSprite {
 			setPosition(sprTracker.x - 130, sprTracker.y + 25);
 
 		super.update(elapsed);
+	}
+
+	override function destroy(){
+		sprTracker = FlxDestroyUtil.destroy(sprTracker);
+		super.destroy();
 	}
 }
