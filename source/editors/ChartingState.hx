@@ -3322,7 +3322,7 @@ class ChartingState extends MusicBeatState
 		//var newsong = _song.notes;
 		//	undos.push(newsong);
 		var noteStrum = getStrumTime(dummyArrow.y * (getSectionBeats() / 4), false) + sectionStartTime();
-		var noteData;
+		var noteData = 0; //initialize this so github doesnt complain about this not being initialized yet
 		#if android
 		for (touch in FlxG.touches.list) {
 			noteData = Math.floor((touch.x - GRID_SIZE) / GRID_SIZE);
