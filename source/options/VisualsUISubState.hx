@@ -241,7 +241,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'hudType',
 			'string',
 			'VS Impostor',
-			['VS Impostor', 'Kade Engine', 'Tails Gets Trolled V4', 'Dave & Bambi', 'Doki Doki+', 'Psych Engine', 'Leather Engine', 'Box Funkin', "Mic'd Up", 'JS Engine']);
+			['VS Impostor', 'Kade Engine', 'Tails Gets Trolled V4', 'Dave and Bambi', 'Doki Doki+', 'Psych Engine', 'Leather Engine', 'Box Funkin', "Mic'd Up", 'JS Engine']);
 		addOption(option);
 
 		var option:Option = new Option('Note Style:',

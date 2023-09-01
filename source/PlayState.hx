@@ -1404,7 +1404,7 @@ class PlayState extends MusicBeatState
 		timeTxt.visible = showTime;
 		if(ClientPrefs.downScroll) timeTxt.y = FlxG.height - 44; 
 		}
-		if (ClientPrefs.hudType == 'Dave & Bambi') {
+		if (ClientPrefs.hudType == 'Dave and Bambi') {
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
 		timeTxt.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
@@ -1628,7 +1628,7 @@ class PlayState extends MusicBeatState
 			add(timeTxt);
 		}
 
-		if (ClientPrefs.hudType == 'Dave & Bambi') {
+		if (ClientPrefs.hudType == 'Dave and Bambi') {
 			timeBarBG = new AttachedSprite('DnBTimeBar');
 			timeBarBG.screenCenter(X);
 			timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
@@ -1700,8 +1700,8 @@ class PlayState extends MusicBeatState
 		timePercentTxt = new FlxText(800, 19, 400, "", 32);
 		if (ClientPrefs.hudType == 'Doki Doki+') timePercentTxt.setFormat(Paths.font("Aller_rg.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') timePercentTxt.setFormat(Paths.font("calibri.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if (ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if (ClientPrefs.hudType != 'Dave & Bambi' && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') timePercentTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Dave and Bambi') timePercentTxt.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType != 'Dave and Bambi' && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') timePercentTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timePercentTxt.scrollFactor.set();
 		timePercentTxt.alpha = 0;
 		timePercentTxt.borderSize = 2;
@@ -1709,7 +1709,7 @@ class PlayState extends MusicBeatState
 		updateThePercent = ClientPrefs.songPercentage;
 		if(ClientPrefs.downScroll) timePercentTxt.y = FlxG.height - 44;
 		if (ClientPrefs.timeBarType == 'Disabled') timePercentTxt.screenCenter(X);
-		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave & Bambi') timePercentTxt.x = timeBarBG.x + 600;
+		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave and Bambi') timePercentTxt.x = timeBarBG.x + 600;
 		add(timePercentTxt);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
@@ -1775,7 +1775,7 @@ class PlayState extends MusicBeatState
 		msTxt.scrollFactor.set();
 		msTxt.setFormat("vcr.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Tails Gets Trolled V4') msTxt.setFormat("calibri.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		if (ClientPrefs.hudType == 'Dave & Bambi') msTxt.setFormat("comic.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.hudType == 'Dave and Bambi') msTxt.setFormat("comic.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Doki Doki+') msTxt.setFormat("Aller_rg.ttf", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		msTxt.x = 408 + 250;
 		msTxt.y = 290 - 25;
@@ -1788,7 +1788,7 @@ class PlayState extends MusicBeatState
 		msTxt.active = false;
 		msTxt.visible = false;
 		insert(members.indexOf(strumLineNotes), msTxt);
-		if (ClientPrefs.hudType == 'Dave & Bambi') 
+		if (ClientPrefs.hudType == 'Dave and Bambi') 
 		{
 		if (ClientPrefs.longHPBar)
 		{
@@ -1841,7 +1841,7 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		healthBarBG.sprTracker = healthBar;
 		add(healthBar);
-		} else if (ClientPrefs.hudType != 'Dave & Bambi' && ClientPrefs.hudType != 'Doki Doki+') {
+		} else if (ClientPrefs.hudType != 'Dave and Bambi' && ClientPrefs.hudType != 'Doki Doki+') {
 		if (ClientPrefs.longHPBar)
 		{
 		healthBarBG = new AttachedSprite('longHealthBar');
@@ -1902,7 +1902,7 @@ class PlayState extends MusicBeatState
 		add(EngineWatermark);
 		EngineWatermark.text = "You are now playing " + SONG.song + " on " + CoolUtil.difficultyString() + "! (JSE v" + MainMenuState.psychEngineJSVersion + ")";
 		}
-		if (ClientPrefs.hudType == 'Dave & Bambi') {
+		if (ClientPrefs.hudType == 'Dave and Bambi') {
 		// Add Engine watermark
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
 		EngineWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -2067,7 +2067,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 		}
-		if (ClientPrefs.hudType == 'Dave & Bambi') 
+		if (ClientPrefs.hudType == 'Dave and Bambi') 
 		{
 		scoreTxt = new FlxText(0, healthBarBG.y + 40, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -2242,7 +2242,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
 		}
-		if (ClientPrefs.hudType == 'Dave & Bambi')
+		if (ClientPrefs.hudType == 'Dave and Bambi')
 		{
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -3792,7 +3792,7 @@ class PlayState extends MusicBeatState
 		+ ' | Botplay Mode ';
 		}
 		}
-		if (ClientPrefs.hudType == "Dave & Bambi")
+		if (ClientPrefs.hudType == "Dave and Bambi")
 		{
 		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
@@ -5049,7 +5049,7 @@ class PlayState extends MusicBeatState
 			else if (!cpuControlled)
 			scoreTxt.text += '0% | N/A';
 		}
-		if (ClientPrefs.hudType == 'Dave & Bambi') {
+		if (ClientPrefs.hudType == 'Dave and Bambi') {
 		scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Combo: ' + combo + ' | NPS: ' + nps + ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '% | ' + ratingFC;
 		if(cpuControlled) 
 			scoreTxt.text = 'Bot Score: ' + songScore + ' | Combo: ' + combo + ' | Bot NPS: ' + nps + ' | Botplay Mode';
@@ -5492,7 +5492,7 @@ class PlayState extends MusicBeatState
 					if(curTime < 0) curTime = 0;
 					songPercent = (curTime / songLength);
 					songPercentThing = FlxMath.roundDecimal(curTime / songLength * 100, ClientPrefs.percentDecimals);
-					if (ClientPrefs.hudType != 'Kade Engine' && ClientPrefs.hudType != 'Dave & Bambi')
+					if (ClientPrefs.hudType != 'Kade Engine' && ClientPrefs.hudType != 'Dave and Bambi')
 					{
 					timePercentTxt.text = songPercentThing  + '% Completed';
 					}
