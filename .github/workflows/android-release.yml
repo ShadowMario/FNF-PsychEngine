@@ -122,10 +122,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - name: Download Gcc Build (External)
+      - name: Download Gcc Build (External Data)
         uses: actions/download-artifact@v3
         with:
-           name: androidBuild-gcc-EXTERNAL
+           name: androidBuild-gcc-EXTERNAL_DATA
            path: /home/runner
       - name: Rename Gcc Build
         run: mv /home/runner/PsychEngine-release.apk /home/runner/PsychEngine-gcc-release.apk
