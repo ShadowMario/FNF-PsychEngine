@@ -2,6 +2,7 @@ package objects;
 
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+import flixel.util.FlxDestroyUtil;
 
 class Bar extends FlxSpriteGroup
 {
@@ -147,6 +148,9 @@ class Bar extends FlxSpriteGroup
 	override function destroy(){
 		active = false;
 		barOffset.put();
+		bg = FlxDestroyUtil.destroy(bg);
+		leftBar = FlxDestroyUtil.destroy(leftBar);
+		rightBar = FlxDestroyUtil.destroy(rightBar);
 		super.destroy();
 	}
 }
