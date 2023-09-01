@@ -3322,6 +3322,7 @@ class ChartingState extends MusicBeatState
 		//var newsong = _song.notes;
 		//	undos.push(newsong);
 		var noteStrum = getStrumTime(dummyArrow.y * (getSectionBeats() / 4), false) + sectionStartTime();
+		var noteData;
 		#if android
 		for (touch in FlxG.touches.list) {
 			noteData = Math.floor((touch.x - GRID_SIZE) / GRID_SIZE);
@@ -3460,15 +3461,11 @@ class ChartingState extends MusicBeatState
 
 		if ((data != null) && (data.length > 0))
 		{
-			#if android
-			SUtil.saveContent(Paths.formatToSongPath(_song.song) + postfix, ".json", data.trim());
-			#else
 			_file = new FileReference();
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + ".json");
-			#end
+			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + ".json"); //normally id have an android thing but we cant do that yet, we'll have to wait for stefan to handle that first
 		}
 	}
 

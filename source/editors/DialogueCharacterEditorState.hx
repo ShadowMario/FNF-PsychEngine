@@ -404,6 +404,10 @@ class DialogueCharacterEditorState extends MusicBeatState
 		tab_group.add(scaleStepper);
 		tab_group.add(noAntialiasingCheckbox);
 
+		var reloadImageButton:FlxButton = new FlxButton(10, scaleStepper.y + 60, "Reload Image", function() {
+			reloadCharacter();
+		});
+
 		#if !android
 		var loadButton:FlxButton = new FlxButton(reloadImageButton.x + 100, reloadImageButton.y, "Load Character", function() {
 			loadCharacter();
@@ -412,7 +416,10 @@ class DialogueCharacterEditorState extends MusicBeatState
 			saveCharacter();
 		});
 		#else
-		var saveButton:FlxButton = new FlxButton(reloadImageButton.x + 100, reloadImageButton.y, "Save Character", function() {
+		var loadButton:FlxButton = new FlxButton(reloadImageButton.x + 100, reloadImageButton.y, "Load Character", function() {
+			loadCharacter();
+		});
+		var saveButton:FlxButton = new FlxButton(loadButton.x, reloadImageButton.y - 25, "Save Character", function() {
 			saveCharacter();
 		});
 		#end
@@ -576,10 +583,10 @@ class DialogueCharacterEditorState extends MusicBeatState
 			}
 
 			if (UI_mainbox.selected_tab_id == 'Animations'
-				&& currentlySelectedAnimation != null
-				&& character.dialogueAnimations.exists(currentlySelectedAnimation)) {
+				&& curSelectedAnim != null
+				&& character.dialogueAnimations.exists(curSelectedAnim)) {
 				var moved:Bool = false;
-				var animationValue:DialogueAnimArray = character.dialogueAnimations.get(currentlySelectedAnimation);
+				var animShit:DialogueAnimArray = character.dialogueAnimations.get(curSelectedAnim);
 				var controlArrayLoop:Array<Bool> = [
 					#if !android FlxG.keys.justPressed.A #else virtualPad.buttonLeft.justPressed #end,
 					#if !android FlxG.keys.justPressed.W #else virtualPad.buttonUp.justPressed #end,
@@ -598,9 +605,9 @@ class DialogueCharacterEditorState extends MusicBeatState
 					for (i in 0...controlArrayLoop.length) {
 						if (controlArrayLoop[i]) {
 							if (i % 2 == 1) {
-								animationValue.loop_offsets[1] += offsetAdd * negaMult[i];
+								animShit.loop_offsets[1] += offsetAdd * negaMult[i];
 							} else {
-								animationValue.loop_offsets[0] += offsetAdd * negaMult[i];
+								animShit.loop_offsets[0] += offsetAdd * negaMult[i];
 							}
 							moved = true;
 						}
@@ -609,9 +616,9 @@ class DialogueCharacterEditorState extends MusicBeatState
 					for (i in 0...controlArrayIdle.length) {
 						if (controlArrayIdle[i]) {
 							if (i % 2 == 1) {
-								animationValue.idle_offsets[1] += offsetAdd * negaMult[i];
+								animShit.idle_offsets[1] += offsetAdd * negaMult[i];
 							} else {
-								animationValue.idle_offsets[0] += offsetAdd * negaMult[i];
+								animShit.idle_offsets[0] += offsetAdd * negaMult[i];
 							}
 							moved = true;
 						}
@@ -621,9 +628,9 @@ class DialogueCharacterEditorState extends MusicBeatState
 				for (i in 0...controlArrayLoop.length) {
 					if (controlArrayLoop[i]) {
 						if (i % 2 == 1) {
-							animationValue.idle_offsets[1] += offsetAdd * negaMult[i];
+							animShit.idle_offsets[1] += offsetAdd * negaMult[i];
 						} else {
-							animationValue.idle_offsets[0] += offsetAdd * negaMult[i];
+							animShit.idle_offsets[0] += offsetAdd * negaMult[i];
 						}
 						moved = true;
 					}
@@ -717,7 +724,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			if(UI_mainbox.selected_tab_id == 'Character')
 			{
 				var negaMult:Array<Int> = [1, -1];
-				var controlAnimation:Array<Bool> = [
+				var controlAnim:Array<Bool> = [
 					#if !android FlxG.keys.justPressed.W #else virtualPad.buttonUp.justPressed #end,
 					#if !android FlxG.keys.justPressed.S #else virtualPad.buttonDown.justPressed #end
 				];
