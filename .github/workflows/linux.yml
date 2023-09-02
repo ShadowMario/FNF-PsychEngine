@@ -7,6 +7,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
       - name: Restore Previous Cache
+        if: ${{ always() }}
         id: cache-build-restore
         uses: actions/cache/restore@main
         with:
@@ -32,6 +33,7 @@ jobs:
       - name: Compile
         run: haxelib run lime build Project.xml linux -64 -release
       - name: Clear Previous Cache
+        if: ${{ always() }}
         uses: actions/github-script@main
         with:
           script: |
@@ -57,6 +59,7 @@ jobs:
             	console.log(error.message)
             }
       - name: Save Current Cache
+        if: ${{ always() }}
         id: cache-build-save
         uses: actions/cache/save@main
         with:
