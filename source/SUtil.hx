@@ -35,7 +35,7 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file') + '/';
+			return aDir = Tools.getExternalStorageDirectory() + '/.PsychEngine/'; // i wanna do this to have the ability to use same mods from other ports without making storage full
 		#else
 		return '';
 		#end
