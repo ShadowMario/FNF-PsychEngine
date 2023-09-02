@@ -35,7 +35,7 @@ jobs:
             export/release/android/haxe
             export/release/android/obj
           key: cache-android-build-gcc
-      - name: Installing Libraries
+      - name: Install Libraries
         run: |
           haxelib setup ~/haxelib
           haxelib git extension-androidtools https://github.com/mcagabe19-stuff/extension-androidtools.git
@@ -53,8 +53,8 @@ jobs:
           # haxelib install tjson 1.4.0 --quiet
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
           cp /home/runner/work/FNF-PsychEngine-Mobile/FNF-PsychEngine-Mobile/art/CustomManifest.xml /home/runner/haxelib/lime/7,9,0/templates/android/template/app/src/main/AndroidManifest.xml
-      - name: List Haxelibs
-        run: haxelib list
+      - name: Info
+        run: haxe --version && haxelib list
       - name: Configure Android
         run: |
           haxelib run lime setup -alias -y
