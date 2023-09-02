@@ -44,8 +44,10 @@
     },
     {
       "name": "hxCodec",
-      "type": "haxelib",
-      "version": "2.6.1"
+      "type": "git",
+      "dir": null,
+      "ref": "c8c47e706ad82a423783006ed901b6d93c89a421",
+      "url": "https://github.com/polybiusproxy/hxCodec"
     },
     {
       "name": "SScript",
