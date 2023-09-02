@@ -179,16 +179,6 @@
 	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
 
-	<section if="android">
-		<config>
-			<!--Gradle-->
-			<android gradle-version="7.4.2" gradle-plugin="7.3.1" />
-
-			<!--Target SDK-->
-			<android target-sdk-version="29" if="${lime &lt; 8.1.0}" />
-		</config>
-	</section>
-
 	<!--Allow working memory greater than 1 Gig. NOTE: i recommend using Flixel 5.2.2 for this to work!-->
 	<haxedef name="HXCPP_GC_BIG_BLOCKS" if="cpp"/>
 	<!--also fixes like any "Memory Exhausted" issues you might get when compiling-->
@@ -210,6 +200,10 @@
 	<!-- _________________________________ Android Stuff _______________________________ -->
 	<config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
 	<config:android permission="android.permission.WRITE_EXTERNAL_STORAGE" if="android"/>
+	<config:android permission="android.permission.INTERNET" if="android"/>
+	<config:android permission="android.permission.ACCESS_NETWORK_STATE" if="android"/>
+	<config:android permission="android.permission.ACCESS_WIFI_STATE" if="android"/>
+	<config:android permission="android.permission.RECORD_AUDIO" if="android"/>
         <config:android gradle-version="7.5.1" />
         <config:android gradle-plugin="7.3.1" />
 
