@@ -76,6 +76,7 @@ class Main extends Sprite {
 			game.zoom = Math.min(ratioX, ratioY);
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
+			game.skipSplash = true; // if the default flixel splash screen should be skipped
 		}
 
 		SUtil.doTheCheck();
@@ -127,7 +128,7 @@ class Main extends Sprite {
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = SUtil.getPath() + "crash/" + "JSEngine Engine_" + dateNow + ".log";
+		path = SUtil.getPath() + "crash/" + "JSEngine_" + dateNow + ".log";
 
 		for (stackItem in callStack) {
 			switch (stackItem) {

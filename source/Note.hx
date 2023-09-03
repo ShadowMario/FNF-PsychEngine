@@ -313,7 +313,7 @@ class Note extends FlxSprite
 
 		this.noteData = noteData;
 
-		if(noteData > -1 && this.visible) {
+		if(noteData > -1) {
 			texture = '';
 			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
 				texture = 'Nonsense_NOTE_assets';
