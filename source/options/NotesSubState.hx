@@ -50,10 +50,6 @@ class NotesSubState extends MusicBeatSubstate
 
 	public function new() {
 		super();
-
-		#if mobileC
-		
-		#end
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFEA71FD;
@@ -206,7 +202,6 @@ class NotesSubState extends MusicBeatSubstate
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			#if mobileC
-			
 			FlxTransitionableState.skipNextTransOut = true;
 			ClientPrefs.saveSettings();
 			FlxG.resetState();
@@ -224,6 +219,7 @@ class NotesSubState extends MusicBeatSubstate
 		//
 		
 		var changedToController:Bool = false;
+		#if !mobileC
 		if(controls.controllerMode != _lastControllerMode)
 		{
 			//trace('changed controller mode');
@@ -248,6 +244,7 @@ class NotesSubState extends MusicBeatSubstate
 			_lastControllerMode = controls.controllerMode;
 			updateTip();
 		}
+		#end
 
 		// controller things
 		var analogX:Float = 0;
@@ -522,24 +519,40 @@ class NotesSubState extends MusicBeatSubstate
 
 	function pointerOverlaps(obj:Dynamic)
 	{
+		#if !mobileC
 		if (!controls.controllerMode) return FlxG.mouse.overlaps(obj);
+		return FlxG.mouse.overlaps(obj);
+		#else
 		return FlxG.overlap(controllerPointer, obj);
+		#end
 	}
 
 	function pointerX():Float
 	{
+		#if !mobileC
 		if (!controls.controllerMode) return FlxG.mouse.x;
+		return FlxG.mouse.x;
+		#else
 		return controllerPointer.x;
+		#end
 	}
 	function pointerY():Float
 	{
+		#if !mobileC
 		if (!controls.controllerMode) return FlxG.mouse.y;
+		return FlxG.mouse.y;
+		#else
 		return controllerPointer.y;
+		#end
 	}
 	function pointerFlxPoint():FlxPoint
 	{
+		#if !mobileC
 		if (!controls.controllerMode) return FlxG.mouse.getScreenPosition();
 		return controllerPointer.getScreenPosition();
+		#else
+		return FlxG.mouse.getScreenPosition();
+		#end
 	}
 
 	function centerHexTypeLine()
@@ -608,11 +621,9 @@ class NotesSubState extends MusicBeatSubstate
 
 		// clear groups
 		modeNotes.forEachAlive(function(note:FlxSprite) {
-			//note.kill();
 			note.destroy();
 		});
 		myNotes.forEachAlive(function(note:StrumNote) {
-			//note.kill();
 			note.destroy();
 		});
 		modeNotes.clear();
