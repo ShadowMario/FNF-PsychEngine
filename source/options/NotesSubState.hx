@@ -89,8 +89,12 @@ class NotesSubState extends MusicBeatSubstate
 		var bg:FlxSprite = new FlxSprite(750, 160).makeGraphic(FlxG.width - 780, 540, FlxColor.BLACK);
 		bg.alpha = 0.25;
 		add(bg);
-		
+
+		#if mobileC
+		var text:Alphabet = new Alphabet(50, 86, 'PRESS', false);
+		#else
 		var text:Alphabet = new Alphabet(50, 86, 'CTRL', false);
+		#end
 		text.alignment = CENTERED;
 		text.setScale(0.4);
 		add(text);
