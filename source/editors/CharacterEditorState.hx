@@ -1201,13 +1201,21 @@ class CharacterEditorState extends MusicBeatState
 					genBoyOffsets();
 				}
 
-				var controlArray:Array<Bool> = [FlxG.keys.justPressed.LEFT || #if android virtualPad.buttonLeft.justPressed, #end FlxG.keys.justPressed.RIGHT || #if android virtualPad.buttonRight.justPressed, #end FlxG.keys.justPressed.UP || #if android virtualPad.buttonUp.justPressed, #end FlxG.keys.justPressed.DOWN #if android || virtualPad.buttonDown.justPressed #end];
+				#if android
+				var controlArray:Array<Bool> = [virtualPad.buttonLeft.justPressed, virtualPad.buttonRight.justPressed, virtualPad.buttonUp.justPressed, virtualPad.buttonDown.justPressed];
+				#else
+				var controlArray:Array<Bool> = [FlxG.keys.justPressed.LEFT, FlxG.keys.justPressed.RIGHT, FlxG.keys.justPressed.UP, FlxG.keys.justPressed.DOWN];
+				#end //hopefully this fixes a weird issue where pressing any of the keys moves the character to the left by 1 pixel
 
 
 
 				for (i in 0...controlArray.length) {
 					if(controlArray[i]) {
-						var holdShift = FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonB.pressed #end;
+						#if android
+						var holdShift = virtualPad.buttonB.pressed;
+						#else
+						var holdShift = FlxG.keys.pressed.SHIFT;
+						#end
 						var multiplier = 1;
 						if (holdShift)
 							multiplier = 10;
