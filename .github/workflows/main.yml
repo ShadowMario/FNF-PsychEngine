@@ -28,7 +28,7 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: latest
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
@@ -36,8 +36,7 @@ jobs:
           sudo apt-get install libvlccore-dev
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
-          haxelib install hmm --quiet
-          haxelib run hmm install
+          haxe -cp ./setup -D analyzer-optimize -main Main --interp
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
@@ -56,14 +55,13 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: latest
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
           haxelib install hxcpp > /dev/null --quiet
-          haxelib install hmm --quiet
-          haxelib run hmm install
+          haxe -cp ./setup -D analyzer-optimize -main Main --interp
         shell: cmd
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -89,8 +87,7 @@ jobs:
         run: |
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
-          haxelib install hmm --quiet
-          haxelib run hmm install
+          haxe -cp ./setup -D analyzer-optimize -main Main --interp
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
