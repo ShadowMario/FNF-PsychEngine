@@ -420,6 +420,27 @@ class PlayState extends MusicBeatState
 			}
 		#end
 
+		#if MODS_ALLOWED
+		Achievements.loadModAchievements();
+		for (i => k in Achievements.modsAchievements)
+		{
+			#if LUA_ALLOWED
+			if(k.toLowerCase().endsWith('.lua') && FileSystem.exists(k)) 
+			{
+				var lua = new FunkinLua(k);
+				Achievements.setLuaAchievement(lua, i);
+			}
+			#end 
+			#if HSCRIPT_ALLOWED #if LUA_ALLOWED else #end if(k.toLowerCase().endsWith('.hx') && FileSystem.exists(k))
+			{
+				var script = initHScript(k);
+				if(script != null)
+					Achievements.setHaxeAchievement(script, i);
+			}
+			#end
+		}
+		#end
+
 		// STAGE SCRIPTS
 		#if LUA_ALLOWED
 		startLuasNamed('stages/' + curStage + '.lua');
@@ -3105,7 +3126,7 @@ class PlayState extends MusicBeatState
 		return false;
 	}
 
-	public function initHScript(file:String)
+	public function initHScript(file:String):HScript
 	{
 		try
 		{
@@ -3118,7 +3139,7 @@ class PlayState extends MusicBeatState
 					if(e != null)
 						addTextToDebug('ERROR ON LOADING ($file): ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
 				newScript.destroy();
-				return;
+				return null;
 			}
 
 			hscriptArray.push(newScript);
@@ -3134,10 +3155,12 @@ class PlayState extends MusicBeatState
 					newScript.destroy();
 					hscriptArray.remove(newScript);
 					trace('failed to initialize sscript interp!!! ($file)');
+					return null;
 				}
 				else trace('initialized sscript interp successfully: $file');
+				return newScript;
 			}
-			
+			return newScript;
 		}
 		catch(e)
 		{
@@ -3148,6 +3171,7 @@ class PlayState extends MusicBeatState
 				newScript.destroy();
 				hscriptArray.remove(newScript);
 			}
+			return null;
 		}
 	}
 	#end

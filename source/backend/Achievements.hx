@@ -4,6 +4,23 @@ import objects.AchievementPopup;
 import haxe.Exception;
 
 #if ACHIEVEMENTS_ALLOWED
+#if MODS_ALLOWED
+import sys.FileSystem;
+import sys.io.File;
+#end
+
+typedef AchievementMeta = {
+	public var name:String;
+	public var desc:String;
+	public var save_tag:String;
+	public var active:Null<Bool>;
+	public var ?hidden:Bool;
+
+	public var ?index:Int;
+	public var ?maxScore:Float;
+	public var ?maxDecimals:Int;
+}
+
 class Achievements {
 	public static var achievements:Array<Dynamic> = [
 		//Name -- Description -- Achievement save tag -- is hidden while locked -- max score -- max number of decimals you want it to display
@@ -24,10 +41,151 @@ class Achievements {
 		["Toaster Gamer",				"Have you tried to run the game on a toaster?",		'toastie'],
 		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",	'debugger',				true]
 	];
+	public static var copyAchievements:Array<Dynamic> = achievements.copy();
 
 	public static var variables:Map<String, Float> = [];
 	public static var achievementsUnlocked:Array<String> = [];
 	private static var _firstLoad:Bool = true;
+
+	public static function exists(name:String):Bool 
+		return getIndexOf(name) > -1;
+
+	#if MODS_ALLOWED
+	@:allow(states.PlayState)
+	static var modsAchievements:Map<String, String> = [];
+	public static function loadModAchievements():Void 
+	{
+		modsAchievements = [];
+		achievements = copyAchievements.copy();
+
+		var paths:Array<String> = [Paths.modsAchievement(),];
+		for (i in backend.Mods.getGlobalMods()) {
+			var path = Paths.mods(i + '/achievements/');
+			if(!paths.contains(path))
+				paths.push(path);
+		}
+		var path = Paths.mods('achievements/');
+		if(!paths.contains(path))
+			paths.push(path);
+
+		paths.push(Paths.getPreloadPath('achievements/'));
+
+		for (i in paths) 
+		{
+			if (FileSystem.exists(i))
+			{
+				for (file in FileSystem.readDirectory(i))
+				{
+					if(file.endsWith('.json')) 
+					{
+						var content:String = File.getContent(i + file);
+						if(content != null && content.length > 0) {
+							var meta:AchievementMeta = haxe.Json.parse(content);
+							var achievement:Array<Dynamic> = [];
+
+							if (meta.active == null || meta.active)
+							{
+								if (meta.name != null && meta.name.length > 0)
+									achievement.push(meta.name);
+								if (meta.desc != null && meta.desc.length > 0)
+									achievement.push(meta.desc);
+								if (meta.save_tag != null && meta.save_tag.length > 0)
+									achievement.push(meta.save_tag);
+
+								if(achievement.length < 3) throw new Exception('$file is badly formatted');
+
+								if (meta.hidden != null)
+								{
+									achievement.push(meta.hidden);
+
+									if (meta.maxScore != null)
+									{
+										achievement.push(meta.maxScore);
+										if (meta.maxDecimals != null)
+											achievement.push(meta.maxDecimals);
+										else
+											achievement.push(0);
+									}
+								}
+
+								if (meta.index != null && meta.index > -1)
+									achievements.insert(achievements.length - 1 + meta.index, achievement);
+								else 
+									achievements.push(achievement);
+
+								var script = i + file.substring(0, file.length - 5);
+								var luaScript = script + '.lua', hxScript = script + '.hx';
+
+								if(FileSystem.exists(luaScript))
+									modsAchievements[meta.save_tag] = luaScript;
+								if(FileSystem.exists(hxScript))
+									modsAchievements[meta.save_tag] = hxScript;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static function setLuaAchievement(lua:psychlua.FunkinLua, tag:String)
+	{
+		lua.addLocalCallback("unlockAchievement", function(name:String):String
+		{
+			if (!exists(name))
+				return "Achievement " + name + " does not exist";
+			if (isUnlocked(name))
+				return "Achievement " + name + " is already unlocked";
+
+			unlock(name);
+			return "Unlocked achievement " + name;
+		});
+
+		lua.addLocalCallback("getAchievementScore", function():Float
+		{
+			return getScore(tag);
+		});
+
+		lua.addLocalCallback("setAchievementScore", function(value:Float, saveIfNotUnlocked:Bool = true):Float
+		{
+			return setScore(tag, value, saveIfNotUnlocked);
+		});
+
+		lua.addLocalCallback("addAchievementScore", function(value:Float = 1, saveIfNotUnlocked:Bool = true)
+		{
+			return addScore(tag, value, saveIfNotUnlocked);
+		});
+	}
+	
+	public static function setHaxeAchievement(hx:psychlua.HScript, tag:String)
+	{
+		hx.set("unlockAchievement", function(name:String):String
+		{
+			if (!exists(name))
+				return "Achievement " + name + " does not exist";
+			if (isUnlocked(name))
+				return "Achievement " + name + " is already unlocked";
+
+			unlock(name);
+			return "Unlocked achievement " + name;
+		});
+
+		hx.set("getAchievementScore", function():Float
+		{
+			return getScore(tag);
+		});
+
+		hx.set("setAchievementScore", function(value:Float, saveIfNotUnlocked:Bool = true):Float
+		{
+			return setScore(tag, value, saveIfNotUnlocked);
+		});
+
+		hx.set("addAchievementScore", function(value:Float = 1, saveIfNotUnlocked:Bool = true)
+		{
+			return addScore(tag, value, saveIfNotUnlocked);
+		});
+	}
+	#end
 
 	public static function load():Void
 	{
@@ -107,8 +265,8 @@ class Achievements {
 	public static function unlock(name:String, autoStartPopup:Bool = true):String {
 		if(Achievements.getIndexOf(name) < 0)
 		{
-			FlxG.log.error('Achievement "$name" does not exists!');
-			throw new Exception('Achievement "$name" does not exists!');
+			FlxG.log.error('Achievement "$name" does not exist!');
+			throw new Exception('Achievement "$name" does not exist!');
 			return null;
 		}
 
