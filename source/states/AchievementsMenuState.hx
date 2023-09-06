@@ -2,6 +2,7 @@ package states;
 
 import flixel.FlxObject;
 import objects.Bar;
+import flixel.addons.transition.FlxTransitionableState;
 
 #if ACHIEVEMENTS_ALLOWED
 class AchievementsMenuState extends MusicBeatState
