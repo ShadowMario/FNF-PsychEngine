@@ -3386,7 +3386,7 @@ class PlayState extends MusicBeatState
 					unlock = true;
 			}
 
-			if(unlock) Achievements.unlockAchievement(name);
+			if(unlock) Achievements.unlock(name);
 		}
 	}
 	#end

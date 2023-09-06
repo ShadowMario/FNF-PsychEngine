@@ -263,10 +263,7 @@ class Limo extends BaseStage
 				limoKillingState = KILLING;
 
 				#if ACHIEVEMENTS_ALLOWED
-				var kills = Achievements.addToVar("henchmenKills");
-				if(kills >= 50) Achievements.unlockAchievement('roadkill_enthusiast');
-				Achievements.save();
-				FlxG.save.flush();
+				var kills = Achievements.addScore("roadkill_enthusiast");
 				FlxG.log.add('Henchmen kills: $kills');
 				#end
 			}
