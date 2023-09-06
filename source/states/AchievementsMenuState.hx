@@ -83,7 +83,7 @@ class AchievementsMenuState extends MusicBeatState
 		descText.scrollFactor.set();
 
 		#if mobileC
-		addVirtualPad(LEFT_FULL, B);
+		addVirtualPad(LEFT_FULL, B_C);
 		#end
 
 		progressBar = new Bar(0, descText.y + 50);
@@ -173,7 +173,7 @@ class AchievementsMenuState extends MusicBeatState
 				}
 			}
 			
-			if(controls.RESET && (options[curSelected].unlocked || options[curSelected].curProgress > 0))
+			if(#if mobileC virtualPad.buttonC.justPressed || #end controls.RESET && (options[curSelected].unlocked || options[curSelected].curProgress > 0))
 			{
 				openSubState(new ResetAchievementSubstate());
 			}
@@ -270,7 +270,7 @@ class ResetAchievementSubstate extends MusicBeatSubstate
 		updateOptions();
 
 		#if mobileC
-		addVirtualPad(LEFT_RIGHT, B);
+		addVirtualPad(LEFT_RIGHT, A);
 		#end
 	}
 
