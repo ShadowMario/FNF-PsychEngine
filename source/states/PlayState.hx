@@ -3353,7 +3353,7 @@ class PlayState extends MusicBeatState
 
 		for (name in achievesToCheck) {
 			var unlock:Bool = false;
-			if (name != WeekData.getWeekFileName() + '_nomiss') // any FC achievements, name should be "weekFileName_nomiss", e.g: "week3_nomiss";
+			if (name != WeekData.getWeekFileName() + '_nomiss') // common achievements
 			{
 				switch(name)
 				{
@@ -3379,7 +3379,7 @@ class PlayState extends MusicBeatState
 						unlock = (Paths.formatToSongPath(SONG.song) == 'test' && !usedPractice);
 				}
 			}
-			else
+			else // any FC achievements, name should be "weekFileName_nomiss", e.g: "week3_nomiss";
 			{
 				if(isStoryMode && campaignMisses + songMisses < 1 && Difficulty.getString().toUpperCase() == 'HARD'
 					&& storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
