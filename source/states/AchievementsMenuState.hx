@@ -82,7 +82,7 @@ class AchievementsMenuState extends MusicBeatState
 		descText.scrollFactor.set();
 
 		#if mobileC
-		addVirtualPad(UP_DOWN, B);
+		addVirtualPad(LEFT_FULL, B);
 		#end
 
 		progressBar = new Bar(0, descText.y + 50);
@@ -267,6 +267,10 @@ class ResetAchievementSubstate extends MusicBeatSubstate
 		noText.scrollFactor.set();
 		add(noText);
 		updateOptions();
+
+		#if mobileC
+		addVirtualPad(LEFT_RIGHT, B);
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -313,7 +317,12 @@ class ResetAchievementSubstate extends MusicBeatSubstate
 
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}
+			#if mobileC
+			FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 			return;
 		}
 	}
