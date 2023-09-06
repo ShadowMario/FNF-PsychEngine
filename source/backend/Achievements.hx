@@ -95,11 +95,8 @@ class Achievements {
 				}
 				variables.set(name, val);
 
-				if(saveIfNotUnlocked || val >= max)
-				{
-					Achievements.save();
-					FlxG.save.flush();
-				}
+				Achievements.save();
+				if(saveIfNotUnlocked || val >= max) FlxG.save.flush();
 				return val;
 			}
 		}

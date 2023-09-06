@@ -6,15 +6,14 @@ import objects.Bar;
 #if ACHIEVEMENTS_ALLOWED
 class AchievementsMenuState extends MusicBeatState
 {
-	var curSelected:Int = 0;
+	public var curSelected:Int = 0;
 
-	var names:Array<String> = [];
-	var options:Array<Dynamic> = [];
-	var grpOptions:FlxSpriteGroup;
-	var nameText:FlxText;
-	var descText:FlxText;
-	var progressTxt:FlxText;
-	var progressBar:Bar;
+	public var options:Array<Dynamic> = [];
+	public var grpOptions:FlxSpriteGroup;
+	public var nameText:FlxText;
+	public var descText:FlxText;
+	public var progressTxt:FlxText;
+	public var progressBar:Bar;
 
 	var camFollow:FlxObject;
 
@@ -26,10 +25,7 @@ class AchievementsMenuState extends MusicBeatState
 		for (achievement in Achievements.achievements)
 		{
 			if(achievement[3] != true || Achievements.isUnlocked(achievement[2]))
-			{
-				names.push(achievement[2]);
 				options.push(makeAchievement(achievement));
-			}
 		}
 
 		// TO DO: check for mods
@@ -116,12 +112,14 @@ class AchievementsMenuState extends MusicBeatState
 			maxProgress: achievement[4] != null ? achievement[4] : 0,
 			decProgress: achievement[5] != null ? achievement[5] : 0,
 			unlocked: unlocked,
+			//id: Achievements.achievements.indexOf(achievement), //this wouldnt be mod compatible me thinks
 			mod: mod
 		};
 	}
 
+	var goingBack:Bool = false;
 	override function update(elapsed:Float) {
-		if(options.length > 1)
+		if(!goingBack && options.length > 1)
 		{
 			var add:Int = 0;
 			if (controls.UI_LEFT_P) add = -1;
@@ -170,6 +168,11 @@ class AchievementsMenuState extends MusicBeatState
 					_changeSelection();
 				}
 			}
+			
+			if(controls.RESET && (options[curSelected].unlocked || options[curSelected].curProgress > 0))
+			{
+				openSubState(new ResetAchievementSubstate());
+			}
 		}
 
 		FlxG.camera.followLerp = FlxMath.bound(elapsed * 9 / (FlxG.updateFramerate / 60), 0, 1);
@@ -177,11 +180,12 @@ class AchievementsMenuState extends MusicBeatState
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new MainMenuState());
+			goingBack = true;
 		}
 		super.update(elapsed);
 	}
 
-	var barTween:FlxTween = null;
+	public var barTween:FlxTween = null;
 	function _changeSelection()
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -191,7 +195,6 @@ class AchievementsMenuState extends MusicBeatState
 		progressTxt.visible = progressBar.visible = hasProgress;
 
 		if(barTween != null) barTween.cancel();
-		progressBar.percent = 0;
 
 		if(hasProgress)
 		{
@@ -204,6 +207,7 @@ class AchievementsMenuState extends MusicBeatState
 				onUpdate: function(twn:FlxTween) progressBar.updateBar()
 			});
 		}
+		else progressBar.percent = 0;
 
 		var maxRows = Math.floor(grpOptions.members.length / MAX_PER_ROW);
 		if(maxRows > 0)
@@ -217,6 +221,110 @@ class AchievementsMenuState extends MusicBeatState
 			spr.alpha = 0.6;
 			if(spr.ID == curSelected) spr.alpha = 1;
 		});
+	}
+}
+
+class ResetAchievementSubstate extends MusicBeatSubstate
+{
+	var onYes:Bool = false;
+	var yesText:Alphabet;
+	var noText:Alphabet;
+
+	public function new()
+	{
+		super();
+
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		bg.alpha = 0;
+		bg.scrollFactor.set();
+		add(bg);
+		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
+
+		var text:Alphabet = new Alphabet(0, 180, "Reset Achievement:", true);
+		text.screenCenter(X);
+		text.scrollFactor.set();
+		add(text);
+		
+		var state:AchievementsMenuState = cast FlxG.state;
+		var text:FlxText = new FlxText(50, text.y + 90, FlxG.width - 100, state.options[state.curSelected].displayName, 40);
+		text.setFormat(Paths.font("vcr.ttf"), 40, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		text.scrollFactor.set();
+		text.borderSize = 2;
+		add(text);
+		
+		yesText = new Alphabet(0, text.y + 120, 'Yes', true);
+		yesText.screenCenter(X);
+		yesText.x -= 200;
+		yesText.scrollFactor.set();
+		for(letter in yesText.letters) letter.color = FlxColor.RED;
+		add(yesText);
+		noText = new Alphabet(0, text.y + 120, 'No', true);
+		noText.screenCenter(X);
+		noText.x += 200;
+		noText.scrollFactor.set();
+		add(noText);
+		updateOptions();
+	}
+
+	override function update(elapsed:Float)
+	{
+		if(controls.BACK)
+		{
+			close();
+			FlxG.sound.play(Paths.sound('cancelMenu'));
+			return;
+		}
+
+		super.update(elapsed);
+
+		if(controls.UI_LEFT_P || controls.UI_RIGHT_P) {
+			onYes = !onYes;
+			updateOptions();
+		}
+
+		if(controls.ACCEPT)
+		{
+			if(onYes)
+			{
+				var state:AchievementsMenuState = cast FlxG.state;
+				var option:Dynamic = state.options[state.curSelected];
+
+				Achievements.variables.remove(option.name);
+				Achievements.achievementsUnlocked.remove(option.name);
+				option.unlocked = false;
+				option.curProgress = 0;
+				option.name = state.nameText.text = '???';
+				if(option.maxProgress > 0) state.progressTxt.text = '0 / ' + option.maxProgress;
+				state.grpOptions.members[state.curSelected].loadGraphic(Paths.image('achievements/lockedachievement'));
+
+				if(state.progressBar.visible)
+				{
+					if(state.barTween != null) state.barTween.cancel();
+					state.barTween = FlxTween.tween(state.progressBar, {percent: 0}, 0.5, {ease: FlxEase.quadOut,
+						onComplete: function(twn:FlxTween) state.progressBar.updateBar(),
+						onUpdate: function(twn:FlxTween) state.progressBar.updateBar()
+					});
+				}
+				Achievements.save();
+				FlxG.save.flush();
+
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+			}
+			close();
+			return;
+		}
+	}
+
+	function updateOptions() {
+		var scales:Array<Float> = [0.75, 1];
+		var alphas:Array<Float> = [0.6, 1.25];
+		var confirmInt:Int = onYes ? 1 : 0;
+
+		yesText.alpha = alphas[confirmInt];
+		yesText.scale.set(scales[confirmInt], scales[confirmInt]);
+		noText.alpha = alphas[1 - confirmInt];
+		noText.scale.set(scales[1 - confirmInt], scales[1 - confirmInt]);
+		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 }
 #end
