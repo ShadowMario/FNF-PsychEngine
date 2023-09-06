@@ -17,15 +17,13 @@ import states.TitleState;
 import hl.Api;
 #end
 #if linux
-import lime.graphics.Image;
-#end
-
-#if linux
 @:cppInclude('./external/gamemode_client.h')
 @:cppFileCode('
 	#define GAMEMODE_AUTO
 ')
+import lime.graphics.Image;
 #end
+
 
 class Main extends Sprite
 {
@@ -138,6 +136,11 @@ class Main extends Sprite
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
+
+		#if linux
+		var icon = Image.fromFile("icon.png");
+		Lib.current.stage.window.setIcon(icon);
+		#end
 
 		#if linux
 		var icon = Image.fromFile("icon.png");
