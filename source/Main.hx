@@ -23,6 +23,13 @@ import sys.io.File;
 import sys.io.Process;
 #end
 
+#if linux
+@:cppInclude('./external/gamemode_client.h')
+@:cppFileCode('
+	#define GAMEMODE_AUTO
+')
+#end
+
 class Main extends Sprite
 {
 	var game = {
