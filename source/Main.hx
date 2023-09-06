@@ -24,7 +24,6 @@ import hl.Api;
 import lime.graphics.Image;
 #end
 
-
 class Main extends Sprite
 {
 	var game = {
@@ -122,7 +121,9 @@ class Main extends Sprite
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
-		#if (openfl >= "9.2.0")
+
+		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
+                #if (openfl >= "9.2.0")
 		addChild(new FlxGame(1280, 720, TitleState, #if (flixel < "5.0.0") -1, #end 60, 60, true, false));
 		#else
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
@@ -136,11 +137,6 @@ class Main extends Sprite
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
-
-		#if linux
-		var icon = Image.fromFile("icon.png");
-		Lib.current.stage.window.setIcon(icon);
-		#end
 
 		#if linux
 		var icon = Image.fromFile("icon.png");

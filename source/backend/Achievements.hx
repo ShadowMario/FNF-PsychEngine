@@ -3,12 +3,10 @@ package backend;
 import objects.AchievementPopup;
 import haxe.Exception;
 
+#if ACHIEVEMENTS_ALLOWED
 class Achievements {
-	public static var variables:Map<String, Float> = [
-		"henchmenKills" => 0
-	];
-	public static var achievementsStuff:Array<Dynamic> = [
-		//Name -- Description -- Achievement save tag -- is hidden while locked -- variable name -- max variable number -- max number of decimals you want it to display
+	public static var achievements:Array<Dynamic> = [
+		//Name -- Description -- Achievement save tag -- is hidden while locked -- max score -- max number of decimals you want it to display
 		["Freaky on a Friday Night",	"Play on a Friday... Night.",						'friday_night_play',	true],
 		["She Calls Me Daddy Too",		"Beat Week 1 on Hard with no Misses.",				'week1_nomiss'],
 		["No More Tricks",				"Beat Week 2 on Hard with no Misses.",				'week2_nomiss'],
@@ -19,7 +17,7 @@ class Achievements {
 		["God Effing Damn It!",			"Beat Week 7 on Hard with no Misses.",				'week7_nomiss'],
 		["What a Funkin' Disaster!",	"Complete a Song with a rating lower than 20%.",	'ur_bad'],
 		["Perfectionist",				"Complete a Song with a rating of 100%.",			'ur_good'],
-		["Roadkill Enthusiast",			"Watch the Henchmen die 50 times.",					'roadkill_enthusiast',	false,	'henchmenKills',	50,		0],
+		["Roadkill Enthusiast",			"Watch the Henchmen die 50 times.",					'roadkill_enthusiast',	false,	50,	0],
 		["Oversinging Much...?",		"Hold down a note for 10 seconds.",					'oversinging'],
 		["Hyperactive",					"Finish a Song without going Idle.",				'hype'],
 		["Just the Two of Us",			"Finish a Song pressing only two keys.",			'two_keys'],
@@ -27,6 +25,7 @@ class Achievements {
 		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",	'debugger',				true]
 	];
 
+	public static var variables:Map<String, Float> = [];
 	public static var achievementsUnlocked:Array<String> = [];
 	private static var _firstLoad:Bool = true;
 
@@ -56,50 +55,64 @@ class Achievements {
 		FlxG.save.data.achievementsVariables = variables;
 	}
 	
-	public static function getVar(name:String):Null<Float>
+	public static function getScore(name:String):Float
+		return _scoreFunc(name, 0);
+
+	public static function setScore(name:String, value:Float, saveIfNotUnlocked:Bool = true):Float
+		return _scoreFunc(name, 1, value, saveIfNotUnlocked);
+
+	public static function addScore(name:String, value:Float = 1, saveIfNotUnlocked:Bool = true):Float
+		return _scoreFunc(name, 2, value, saveIfNotUnlocked);
+
+	//mode 0 = get, 1 = set, 2 = add
+	static function _scoreFunc(name:String, mode:Int = 0, addOrSet:Float = 1, saveIfNotUnlocked:Bool = true):Float
 	{
 		if(!variables.exists(name))
 		{
-			FlxG.log.error('Invalid Achievement variable name: $name');
-			throw new Exception('Invalid Achievement variable name: $name');
-			return null;
+			variables.set(name, 0);
 		}
-		return variables.get(name);
-	}
-	public static function setVar(name:String, value:Float):Null<Float>
-	{
-		if(!variables.exists(name))
+
+		for (achievement in achievements)
 		{
-			FlxG.log.error('Invalid Achievement variable name: $name');
-			throw new Exception('Invalid Achievement variable name: $name');
-			return null;
+			if(achievement[2] == name)
+			{
+				if(achievement.length <= 4 || achievement[4] < 1) throw new Exception('Achievement has score disabled or is incorrectly configured: $name');
+
+				var max:Float = achievement[4];
+				if(achievementsUnlocked.contains(name)) return max;
+
+				var val = addOrSet;
+				switch(mode)
+				{
+					case 0: return variables.get(name); //get
+					case 2: val += variables.get(name); //add
+				}
+
+				if(val >= max)
+				{
+					unlock(name);
+					val = max;
+				}
+				variables.set(name, val);
+
+				Achievements.save();
+				if(saveIfNotUnlocked || val >= max) FlxG.save.flush();
+				return val;
+			}
 		}
-		variables.set(name, value);
-		return value;
-	}
-	public static function addToVar(name:String, add:Float = 1):Null<Float>
-	{
-		if(!variables.exists(name))
-		{
-			FlxG.log.error('Invalid Achievement variable name: $name');
-			throw new Exception('Invalid Achievement variable name: $name');
-			return null;
-		}
-		var val = variables.get(name) + add;
-		variables.set(name, val);
-		return val;
+		return -1;
 	}
 
 	static var _lastUnlock:Int = -999;
-	public static function unlockAchievement(name:String, autoStartPopup:Bool = true):String {
-		if(Achievements.getAchievementIndex(name) < 0)
+	public static function unlock(name:String, autoStartPopup:Bool = true):String {
+		if(Achievements.getIndexOf(name) < 0)
 		{
 			FlxG.log.error('Achievement "$name" does not exists!');
 			throw new Exception('Achievement "$name" does not exists!');
 			return null;
 		}
 
-		if(Achievements.isAchievementUnlocked(name)) return null;
+		if(Achievements.isUnlocked(name)) return null;
 
 		trace('Completed achievement "$name"');
 		achievementsUnlocked.push(name);
@@ -119,19 +132,18 @@ class Achievements {
 		return name;
 	}
 
-	inline public static function isAchievementUnlocked(name:String)
+	inline public static function isUnlocked(name:String)
 		return achievementsUnlocked.contains(name);
 
-	public static function getAchievementIndex(name:String)
+	public static function getIndexOf(name:String)
 	{
-		for (i in 0...achievementsStuff.length)
-			if(achievementsStuff[i][2] == name)
+		for (i in 0...achievements.length)
+			if(achievements[i][2] == name)
 				return i;
 
 		return -1;
 	}
 	
-	#if ACHIEVEMENTS_ALLOWED
 	@:allow(objects.AchievementPopup)
 	private static var _popups:Array<AchievementPopup> = [];
 
@@ -150,5 +162,5 @@ class Achievements {
 		_popups.push(newPop);
 		//trace('Giving achievement ' + achieve);
 	}
-	#end
 }
+#end

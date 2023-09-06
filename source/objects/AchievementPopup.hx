@@ -32,13 +32,13 @@ class AchievementPopup extends openfl.display.Sprite {
 		graphics.drawRect(imgX, imgY, sizeX + 10, sizeY + 10);
 
 		// achievement name/description
-		var id:Int = Achievements.getAchievementIndex(name);
+		var id:Int = Achievements.getIndexOf(name);
 		var name:String = 'Unknown';
 		var desc:String = 'Description not found';
 		if(id >= 0)
 		{
-			name = Achievements.achievementsStuff[id][0];
-			desc = Achievements.achievementsStuff[id][1];
+			name = Achievements.achievements[id][0];
+			desc = Achievements.achievements[id][1];
 		}
 
 		var textX = sizeX + imgX + 15;
