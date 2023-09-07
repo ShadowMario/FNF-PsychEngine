@@ -8273,17 +8273,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				if (ClientPrefs.showNPS) 
-				{
-				if (polyphony <= 500) {
-				for (i in 0...Std.int(polyphony))
-				{
-				notesHitArray.push(Date.now());
-				}
-				} else {
-				notesHitArray.push(Date.now()); //to prevent the game from lagging too much we'll only have it push multiple times IF the polyphony is less than 500
-				}
-				}
+				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && !cpuControlled && ClientPrefs.holdNoteHits)
@@ -8291,17 +8281,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				if (ClientPrefs.showNPS) 
-				{
-				if (polyphony <= 500) {
-				for (i in 0...Std.int(polyphony))
-				{
-				notesHitArray.push(Date.now());
-				}
-				} else {
-				notesHitArray.push(Date.now()); //to prevent the game from lagging too much we'll only have it push multiple times IF the polyphony is less than 500
-				}
-				}
+				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits && !ClientPrefs.lessBotLag)
@@ -8337,17 +8317,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
-				if (ClientPrefs.showNPS) 
-				{
-				if (polyphony <= 500) {
-				for (i in 0...Std.int(polyphony))
-				{
-				notesHitArray.push(Date.now());
-				}
-				} else {
-				notesHitArray.push(Date.now()); //to prevent the game from lagging too much we'll only have it push multiple times IF the polyphony is less than 500
-				}
-				}
+				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(false, note);
 				}
