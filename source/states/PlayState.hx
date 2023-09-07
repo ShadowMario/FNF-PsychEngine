@@ -420,7 +420,7 @@ class PlayState extends MusicBeatState
 			}
 		#end
 
-		#if MODS_ALLOWED
+		#if (MODS_ALLOWED && ACHIEVEMENTS_ALLOWED)
 		Achievements.loadModAchievements();
 		for (i => k in Achievements.modsAchievements)
 		{
