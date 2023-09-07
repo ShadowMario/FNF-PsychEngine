@@ -11,6 +11,9 @@ jobs:
         uses: maxim-lobanov/setup-xcode@master
         with:
           xcode-version: '12.4'
+        env:
+          DEVELOPMENT_TEAM: ShadowMario
+          IPHONEOS_DEPLOYMENT_TARGET: 9.0
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
