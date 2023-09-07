@@ -33,7 +33,7 @@ jobs:
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
       - name: Rebuild Needed Libs
         run: haxelib run lime rebuild extension-orientation ios -arm64 -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos-64.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
-      - name: Install The Apple Certificate And Proovisioning Profile
+      - name: Apply The Apple Certificate And Proovisioning Profile
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
