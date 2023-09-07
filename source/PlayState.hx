@@ -469,6 +469,8 @@ class PlayState extends MusicBeatState
 		randomBotplayText = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 		//trace('Playback Rate: ' + playbackRate);
 
+			if (ClientPrefs.memLeaks) cpp.vm.Gc.enable(false); //lagspike prevention
+
 			if (!ClientPrefs.memLeaks)
 			{
 			Paths.clearStoredMemory();
@@ -1734,7 +1736,7 @@ class PlayState extends MusicBeatState
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 
 		// startCountdown();
-		
+		trace ('Loading chart...');
 		if (!ClientPrefs.fasterChartLoad) generateSong(SONG.song);
 		if (ClientPrefs.fasterChartLoad) generateSongOptim(SONG.song);
 
@@ -4770,7 +4772,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
-		if (ClientPrefs.resyncType == 'Psych')
+		else if (ClientPrefs.resyncType == 'Psych')
 		{
 		vocals.pause();
 
@@ -6200,13 +6202,13 @@ class PlayState extends MusicBeatState
 							iconP2.changeIcon(dad.healthIcon);
 							if (ClientPrefs.hudType == 'VS Impostor') {
 								FlxTween.color(botplayTxt, 1, botplayTxt.color, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
-
-								FlxTween.color(scoreTxt, 1, scoreTxt.color, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+								
+								if (!ClientPrefs.hideScore) FlxTween.color(scoreTxt, 1, scoreTxt.color, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
 							}
 							if (ClientPrefs.hudType == 'JS Engine') {
 								FlxTween.color(botplayTxt, 1, botplayTxt.color, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
 
-								FlxTween.color(scoreTxt, 1, scoreTxt.color, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+								if (!ClientPrefs.hideScore) FlxTween.color(scoreTxt, 1, scoreTxt.color, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
 							}
 						}
 						setOnLuas('dadName', dad.curCharacter);
@@ -8051,7 +8053,17 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		if (!note.isSustainNote)
 		{
-		if (ClientPrefs.showNPS) oppNotesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) 
+				{
+				if (polyphony <= 500) {
+				for (i in 0...Std.int(polyphony))
+				{
+				oppNotesHitArray.push(Date.now());
+				}
+				} else {
+				oppNotesHitArray.push(Date.now()); //to prevent the game from lagging too much we'll only have it push multiple times IF the polyphony is less than 500
+				}
+				}
 		enemyHits += 1 * polyphony;
 			if (shouldKillNotes)
 			{
@@ -8261,7 +8273,17 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) 
+				{
+				if (polyphony <= 500) {
+				for (i in 0...Std.int(polyphony))
+				{
+				notesHitArray.push(Date.now());
+				}
+				} else {
+				notesHitArray.push(Date.now()); //to prevent the game from lagging too much we'll only have it push multiple times IF the polyphony is less than 500
+				}
+				}
 				popUpScore(note);
 			}
 			if (note.isSustainNote && !cpuControlled && ClientPrefs.holdNoteHits)
@@ -8269,7 +8291,17 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) 
+				{
+				if (polyphony <= 500) {
+				for (i in 0...Std.int(polyphony))
+				{
+				notesHitArray.push(Date.now());
+				}
+				} else {
+				notesHitArray.push(Date.now()); //to prevent the game from lagging too much we'll only have it push multiple times IF the polyphony is less than 500
+				}
+				}
 				popUpScore(note);
 			}
 			if (note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits && !ClientPrefs.lessBotLag)
@@ -8305,7 +8337,17 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
-				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) 
+				{
+				if (polyphony <= 500) {
+				for (i in 0...Std.int(polyphony))
+				{
+				notesHitArray.push(Date.now());
+				}
+				} else {
+				notesHitArray.push(Date.now()); //to prevent the game from lagging too much we'll only have it push multiple times IF the polyphony is less than 500
+				}
+				}
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(false, note);
 				}
