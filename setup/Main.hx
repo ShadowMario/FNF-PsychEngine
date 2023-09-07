@@ -1,8 +1,8 @@
 package;
 
 import haxe.Json;
-import sys.io.File;
 import sys.FileSystem;
+import sys.io.File;
 
 typedef Library = {
 	name:String, type:String,
@@ -12,8 +12,12 @@ typedef Library = {
 
 class Main {
 	public static function main():Void {
+		// Create a folder to prevent messing with hmm libraries
+		if (!FileSystem.exists(".haxelib"))
+			FileSystem.createDirectory(".haxelib");
+
 		// brief explanation: first we parse a json containing the library names, data, and such
-		final libs:Array<Library> = Json.parse(File.getContent('./setup/libraries.json')).dependencies;
+		final libs:Array<Library> = Json.parse(File.getContent('./hmm.json')).dependencies;
 
 		// now we loop through the data we currently have
 		for (data in libs) {
