@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - name: Setup XCode
+      - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@master
         with:
           xcode-version: '12.4'
@@ -22,30 +22,38 @@ jobs:
           haxelib install flixel-tools 1.5.1 --quiet
           haxelib install flixel-ui 2.5.0 --quiet
           haxelib install flixel 5.2.2 --quiet
-          haxelib git hxCodec https://github.com/mcagabe19-stuff/hxCodec.git
-          # haxelib install hxcpp-debug-server 1.2.4 --quiet
+          # haxelib git hxCodec https://github.com/mcagabe19-stuff/hxCodec.git
           # haxelib install hscript --quiet
           haxelib git hxcpp https://github.com/mcagabe19-stuff/hxcpp.git
-          haxelib git lime https://github.com/mcagabe19-stuff/lime7.9.0-arm.git
+          haxelib install lime 7.9.0 --quiet
           haxelib git linc_luajit https://github.com/mcagabe19-stuff/linc_luajit.git
           haxelib install openfl 9.2.1 --quiet
           haxelib install SScript 5.0.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
-      - name: Rebuild Libs
-        run: |
-          # haxelib run lime rebuild mac -64 -release # && ln -s /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos-64.a /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos.a
-          haxelib run lime rebuild extension-orientation ios -arm64 -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos-64.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
-      - name: Compile
-        continue-on-error: true
-        run: haxelib run lime build ios -release -arm64
+      - name: Rebuild Needed Libs
+        run: haxelib run lime rebuild extension-orientation ios -arm64 -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos-64.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
+      - name: Install The Apple Certificate And Proovisioning Profile
         env:
-          DEVELOPMENT_TEAM: PsychEngine
-          IPHONEOS_DEPLOYMENT_TARGET: 9.0 
-          # CODE_SIGN_ENTITLEMENTS: ""
-          # CODE_SIGNING_ALLOWED: "NO"
-      - name: Compile 2
-        run: cd export/release/ios && /Applications/Xcode_12.4.app/Contents/Developer/usr/bin/xcodebuild build -configuration Release PLATFORM_NAME=iphoneos SDKROOT=iphoneos14.4 -arch arm64 CODE_SIGNING_REQUIRED="NO" -project PsychEngine.xcodeproj
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+      - name: Compile
+        run: haxelib run lime build ios -release -arm64
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
