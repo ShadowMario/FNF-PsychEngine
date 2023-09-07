@@ -45,7 +45,7 @@ jobs:
           # CODE_SIGN_ENTITLEMENTS: ""
           # CODE_SIGNING_ALLOWED: "NO"
       - name: Compile 2
-        run: cd export/release/ios && /Applications/Xcode_12.4.app/Contents/Developer/usr/bin/xcodebuild build -configuration Release PLATFORM_NAME=iphoneos SDKROOT=iphoneos14.4 -arch arm64 CODE_SIGNING_REQUIRED="NO" -workspace PsychEngine.xcworkspace -scheme PsychEngine
+        run: cd export/release/ios && /Applications/Xcode_12.4.app/Contents/Developer/usr/bin/xcodebuild build -configuration Release PLATFORM_NAME=iphoneos SDKROOT=iphoneos14.4 -arch arm64 CODE_SIGNING_REQUIRED="NO" -workspace -project PsychEngine.xcodeproj  
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
