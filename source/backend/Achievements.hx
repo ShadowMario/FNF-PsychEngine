@@ -116,10 +116,19 @@ class Achievements {
 								var script = i + file.substring(0, file.length - 5);
 								var luaScript = script + '.lua', hxScript = script + '.hx';
 
+								var foundScript:Bool = false;
 								if(FileSystem.exists(luaScript))
+								{
 									modsAchievements[meta.save_tag] = luaScript;
+									foundScript = true;
+								}
 								if(FileSystem.exists(hxScript))
+								{	
 									modsAchievements[meta.save_tag] = hxScript;
+									foundScript = true;
+								}
+								if(!foundScript)
+									trace('Could not find any script for ${i + file}');
 							}
 						}
 					}
@@ -128,7 +137,7 @@ class Achievements {
 		}
 	}
 
-	public static function setLuaAchievement(lua:psychlua.FunkinLua, tag:String)
+	public static function setLuaAchievement(lua:psychlua.FunkinLua, tag:String):Void
 	{
 		lua.addLocalCallback("unlockAchievement", function(name:String):String
 		{
@@ -151,13 +160,13 @@ class Achievements {
 			return setScore(tag, value, saveIfNotUnlocked);
 		});
 
-		lua.addLocalCallback("addAchievementScore", function(value:Float = 1, saveIfNotUnlocked:Bool = true)
+		lua.addLocalCallback("addAchievementScore", function(value:Float = 1, saveIfNotUnlocked:Bool = true):Float
 		{
 			return addScore(tag, value, saveIfNotUnlocked);
 		});
 	}
 	
-	public static function setHaxeAchievement(hx:psychlua.HScript, tag:String)
+	public static function setHaxeAchievement(hx:psychlua.HScript, tag:String):Void
 	{
 		hx.set("unlockAchievement", function(name:String):String
 		{
@@ -180,7 +189,7 @@ class Achievements {
 			return setScore(tag, value, saveIfNotUnlocked);
 		});
 
-		hx.set("addAchievementScore", function(value:Float = 1, saveIfNotUnlocked:Bool = true)
+		hx.set("addAchievementScore", function(value:Float = 1, saveIfNotUnlocked:Bool = true):Float
 		{
 			return addScore(tag, value, saveIfNotUnlocked);
 		});
