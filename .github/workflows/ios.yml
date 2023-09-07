@@ -36,17 +36,16 @@ jobs:
         run: |
           # haxelib run lime rebuild mac -64 -release # && ln -s /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos-64.a /Users/runner/haxelib/lime/git/ndll/iPhone/liblime.iphoneos.a
           haxelib run lime rebuild extension-orientation ios -arm64 -release && ln -s /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation.iphoneos-64.a /Users/runner/haxelib/extension-orientation/git/ndll/iPhone/libes_orientation_legacy.iphoneos.a
-        env:
-          DEVELOPMENT_TEAM: ShadowMario
-          IPHONEOS_DEPLOYMENT_TARGET: 9.0
       - name: Compile
         continue-on-error: true
         run: haxelib run lime build ios -release -arm64
-        # env:
+        env:
+          DEVELOPMENT_TEAM: ShadowMario
+          IPHONEOS_DEPLOYMENT_TARGET: 9.0 
           # CODE_SIGN_ENTITLEMENTS: ""
           # CODE_SIGNING_ALLOWED: "NO"
       - name: Compile 2
-        run: cd export/release/ios && /Applications/Xcode_12.4.app/Contents/Developer/usr/bin/xcodebuild build -configuration Release PLATFORM_NAME=iphoneos SDKROOT=iphoneos14.4 -arch arm64 CODE_SIGNING_REQUIRED="NO" -workspace ShadowMario.xcworkspace -scheme PsychEngine
+        run: cd export/release/ios && /Applications/Xcode_12.4.app/Contents/Developer/usr/bin/xcodebuild build -configuration Release PLATFORM_NAME=iphoneos SDKROOT=iphoneos14.4 -arch arm64 CODE_SIGNING_REQUIRED="NO" -workspace PsychEngine.xcworkspace -scheme PsychEngine
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
