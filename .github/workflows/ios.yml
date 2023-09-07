@@ -40,7 +40,7 @@ jobs:
         continue-on-error: true
         run: haxelib run lime build ios -release -arm64
         env:
-          DEVELOPMENT_TEAM: ShadowMario
+          DEVELOPMENT_TEAM: PsychEngine
           IPHONEOS_DEPLOYMENT_TARGET: 9.0 
           # CODE_SIGN_ENTITLEMENTS: ""
           # CODE_SIGNING_ALLOWED: "NO"
