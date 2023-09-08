@@ -17,11 +17,12 @@ import states.TitleState;
 import hl.Api;
 #end
 #if linux
+import lime.graphics.Image;
+
 @:cppInclude('./external/gamemode_client.h')
 @:cppFileCode('
 	#define GAMEMODE_AUTO
 ')
-import lime.graphics.Image;
 #end
 
 class Main extends Sprite
