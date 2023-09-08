@@ -117,7 +117,7 @@ class SUtil
 		Sys.println(errorMessage);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
-		SUtil.applicationAlert(errorMessage, "Error!");
+		SUtil.applicationAlert("Error!", errorMessage);
 		System.exit(0);
 	}
 

@@ -154,7 +154,7 @@ class Main extends Sprite {
 
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
 	// very cool person for real they don't get enough credit for their work
-	#if (CRASH_HANDLER && android)
+	#if (CRASH_HANDLER)
 	function onCrash(e:UncaughtErrorEvent):Void {
 		var errorMessage:String = "";
 		var path:String;
@@ -188,46 +188,6 @@ class Main extends Sprite {
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
 		Application.current.window.alert("Error! JS Engine v" + MainMenuState.psychEngineJSVersion, errorMessage);
-		#if desktop
-		DiscordClient.shutdown();
-		#end
-		Sys.exit(1);
-	}
-	#elseif (CRASH_HANDLER && desktop)
-	function onCrash(e:UncaughtErrorEvent):Void
-	{
-		var errMsg:String = "";
-		var path:String;
-		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
-		var dateNow:String = Date.now().toString();
-
-		dateNow = dateNow.replace(" ", "_");
-		dateNow = dateNow.replace(":", "'");
-
-		path = "./crash/" + "PsychEngine_" + dateNow + ".txt";
-
-		for (stackItem in callStack)
-		{
-			switch (stackItem)
-			{
-				case FilePos(s, file, line, column):
-					errMsg += file + " (line " + line + ")\n";
-				default:
-					Sys.println(stackItem);
-			}
-		}
-
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag\n\n> Crash Handler written by: sqirra-rng";
-
-		if (!FileSystem.exists(SUtil.getPath() + "crash/"))
-			FileSystem.createDirectory(SUtil.getPath() + "crash/");
-
-		File.saveContent(path, errMsg + "\n");
-
-		Sys.println(errMsg);
-		Sys.println("Crash dump saved in " + Path.normalize(path));
-
-		Application.current.window.alert("Error!", errMsg);
 		#if desktop
 		DiscordClient.shutdown();
 		#end
