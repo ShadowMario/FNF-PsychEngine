@@ -36,8 +36,6 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
-		#if mobileC controls.isInSubstate = true; #end
-
 		if(Difficulty.list.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
 		if(PlayState.chartingMode)
