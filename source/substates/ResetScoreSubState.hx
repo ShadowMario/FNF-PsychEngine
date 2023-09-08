@@ -23,7 +23,6 @@ class ResetScoreSubState extends MusicBeatSubstate
 	// Week -1 = Freeplay
 	public function new(song:String, difficulty:Int, character:String, week:Int = -1)
 	{
-		#if mobileC controls.isInSubstate = true; #end
 		this.song = song;
 		this.difficulty = difficulty;
 		this.week = week;
