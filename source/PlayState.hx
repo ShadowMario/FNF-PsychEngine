@@ -471,7 +471,7 @@ class PlayState extends MusicBeatState
 		randomBotplayText = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 		//trace('Playback Rate: ' + playbackRate);
 
-			if (ClientPrefs.memLeaks) cpp.vm.Gc.enable(false); //lagspike prevention
+			if (ClientPrefs.memLeaks) #if sys cpp.vm.Gc.enable(false); #end//lagspike prevention
 
 			if (!ClientPrefs.memLeaks)
 			{
@@ -8055,7 +8055,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		var time:Float = 0.15 / playbackRate;
 		if (ClientPrefs.opponentLightStrum)
 		{
-		if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
+		if(note.isSustainNote && (ClientPrefs.showNotes && !note.animation.curAnim.name.endsWith('end'))) {
 			time += 0.15;
 		}
 		StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time);
@@ -8543,7 +8543,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				if (ClientPrefs.botLightStrum)
 				{
 				var time:Float = (!ClientPrefs.communityGameBot ? 0.15 : FlxG.random.float(0.05, 0.15)) / playbackRate;
-				if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
+				if(note.isSustainNote && (ClientPrefs.showNotes && !note.animation.curAnim.name.endsWith('end'))) {
 					time += (!ClientPrefs.communityGameBot ? 0.15 : FlxG.random.float(0.05, 0.15)) / playbackRate;
 				}
 				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)), time);

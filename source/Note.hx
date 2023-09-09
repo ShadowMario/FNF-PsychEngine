@@ -61,10 +61,6 @@ class Note extends FlxSprite
 	public var lateHitMult:Float = 1;
 	public var lowPriority:Bool = false;
 
-	public var noteHue:Float = 0;
-	public var noteSat:Float = 0;
-	public var noteBrt:Float = 0;
-
 	public static var swagWidth:Float = 160 * 0.7;
 	
 	private var colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
@@ -123,7 +119,7 @@ class Note extends FlxSprite
 	}
 
 	private function set_texture(value:String):String {
-		if(texture != value) {
+		if(texture != value && ClientPrefs.showNotes) {
 			reloadNote('', value);
 		}
 		texture = value;
@@ -250,7 +246,7 @@ class Note extends FlxSprite
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
 
-		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length && !ClientPrefs.colorQuants)
+		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length && !ClientPrefs.colorQuants && ClientPrefs.showNotes)
 		{
 			colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 			colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
@@ -288,9 +284,12 @@ class Note extends FlxSprite
 			}
 			noteType = value;
 		}
+		if (ClientPrefs.showNotes)
+		{
 		noteSplashHue = colorSwap.hue;
 		noteSplashSat = colorSwap.saturation;
 		noteSplashBrt = colorSwap.brightness;
+		}
 		return value;
 	}
 
@@ -313,7 +312,11 @@ class Note extends FlxSprite
 
 		this.noteData = noteData;
 
+		if (!ClientPrefs.showNotes) loadNoteAnims();
+
 		if(noteData > -1) {
+			if (ClientPrefs.showNotes)
+			{
 			texture = '';
 			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
 				texture = 'Nonsense_NOTE_assets';
@@ -347,7 +350,7 @@ class Note extends FlxSprite
 				theStrumStuff.colorSwap.saturation = colorSwap.saturation;
 				theStrumStuff.colorSwap.brightness = colorSwap.brightness;
 			}
-
+			}
 			x += swagWidth * (noteData);
 			if(!isSustainNote && noteData > -1 && noteData < 4) { //Doing this 'if' check to fix the warnings on Senpai songs
 				var animToPlay:String = '';
@@ -371,6 +374,8 @@ class Note extends FlxSprite
 			copyAngle = false;
 
 			animation.play(colArray[noteData % 4] + 'holdend');
+			if (ClientPrefs.showNotes)
+			{
 			if (ClientPrefs.colorQuants)
 			{
 			colorSwap.hue = prevNote.colorSwap.hue;
@@ -385,6 +390,7 @@ class Note extends FlxSprite
 			}
 
 			updateHitbox();
+			}
 
 			offsetX -= width / 2;
 
