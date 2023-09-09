@@ -10,7 +10,7 @@ There may be bugs with the bleeding edge versions/Nightly builds, and if so, do 
 * Hoovy - Helper #2
 
 ### Mobile Special Thanks
-* Mihai Alexandru - Author of mobile controls and his FlxRuntimeShader is used here
+* Mihai Alexandru - Author of mobile controls and also his new storage stuff and FlxRuntimeShader is used here
 * Hiho2950 - Optimizing Notes and Botplay (https://github.com/MobilePorting/FNF-PsychEngine-Mobile/pull/16)
 
 ## Psych Credits:
