@@ -41,11 +41,6 @@
       "version": null
     },
     {
-      "name": "hxjsonast",
-      "type": "haxelib",
-      "version": null
-    },
-    {
       "name": "hxCodec",
       "type": "haxelib",
       "version": null
