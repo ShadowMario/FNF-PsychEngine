@@ -41,6 +41,21 @@ class SUtil
 					+ '\nPress Ok to see what happens',
 					'Permissions?');
 		}
+		/*if (!FileSystem.exists())
+			{
+				try {
+				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE) && Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
+				{
+					if (!FileSystem.exists())
+						FileSystem.createDirectory();
+	
+				}
+			} 
+			catch (e){
+                        Lib.application.window.alert('Please create folder to\n' + Sys.getCwd(), '\nPress Ok to close the app', 'Error!');
+			LimeSystem.exit(1);
+                        }
+		}*/
 		#end
 		#if mobile
 		if (!FileSystem.exists('assets') && !FileSystem.exists('mods'))
