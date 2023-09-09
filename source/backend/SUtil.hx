@@ -7,7 +7,6 @@ import android.os.Build;
 #end
 import haxe.io.Path;
 import haxe.CallStack;
-import lime.app.Application;
 import lime.system.System as LimeSystem;
 import lime.utils.Assets as LimeAssets;
 import lime.utils.Log as LimeLogger;
@@ -67,7 +66,7 @@ class SUtil
 			'look through the window... =)');
 			LimeSystem.exit(1);
 			} else {
-			Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + Sys.getCwd(),
+			Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + '/storage/emulated/0/.PsychEngine',
 				'Error!');
 			LimeSystem.exit(1);
 		}
