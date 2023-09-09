@@ -34,10 +34,21 @@ class HScript extends SScript
 		else
 		{
 			hs.doString(code);
+			#if (SScript < "5.0.0")
+			@:privateAccess
+			if(hs.parsingExceptions != null && hs.parsingExceptions.length > 0)
+			{
+				@:privateAccess
+				for (e in hs.parsingExceptions)
+					if(e != null)
+						PlayState.instance.addTextToDebug('ERROR ON LOADING (${hs.origin}): ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
+			}
+			#else
 			if(hs.parsingException != null)
 			{
 				PlayState.instance.addTextToDebug('ERROR ON LOADING (${hs.origin}): ${hs.parsingException.message}', FlxColor.RED);
 			}
+			#end
 		}
 		#end
 	}
