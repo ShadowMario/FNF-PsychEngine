@@ -34,8 +34,7 @@ class SUtil
 	public static function checkFiles():Void
 	{
 		#if android
-		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-			|| !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
+		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
 		{
 				Permissions.requestPermissions(Permissions.WRITE_EXTERNAL_STORAGE);
 				Permissions.requestPermissions(Permissions.READ_EXTERNAL_STORAGE);
@@ -43,11 +42,10 @@ class SUtil
 					+ '\nPress Ok to see what happens',
 					'Permissions?');
 		}
-		if (!FileSystem.exists())
+		/*if (!FileSystem.exists())
 			{
 				try {
-				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
-					&& Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
+				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE) && Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
 				{
 					if (!FileSystem.exists())
 						FileSystem.createDirectory();
@@ -58,7 +56,7 @@ class SUtil
                         Lib.application.window.alert('Please create folder to\n' + Sys.getCwd(), '\nPress Ok to close the app', 'Error!');
 			LimeSystem.exit(1);
                         }
-		}
+		}*/
 		#end
 		#if mobile
 		if (!FileSystem.exists('assets') && !FileSystem.exists('mods'))
