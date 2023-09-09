@@ -72,7 +72,7 @@ class SUtil
 			'look through the window... =)');
 			LimeSystem.exit(1);
 			} else {
-			Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + ,
+			Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + Sys.getCwd(),
 				'Error!');
 			LimeSystem.exit(1);
 		}
