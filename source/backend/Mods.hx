@@ -100,9 +100,9 @@ class Mods
 	{
 		var foldersToCheck:Array<String> = [];
 		#if sys
-		trace("1-the file path is: "+ SUtil.getPath() + path + fileToFind);
-		if(FileSystem.exists(SUtil.getPath() + path + fileToFind))
-			foldersToCheck.push(SUtil.getPath() + path + fileToFind);
+		trace("1-the file path is: "+ path + fileToFind);
+		if(FileSystem.exists(path + fileToFind))
+			foldersToCheck.push(path + fileToFind);
 		#end
 		#if MODS_ALLOWED
 		if(mods)
@@ -221,7 +221,7 @@ class Mods
 			fileStr += values[0] + '|' + (values[1] ? '1' : '0');
 		}
 
-		File.saveContent(SUtil.getPath() + 'modsList.txt', fileStr);
+		File.saveContent('modsList.txt', fileStr);
 		updatedOnState = true;
 		//trace('Saved modsList.txt');
 		#end

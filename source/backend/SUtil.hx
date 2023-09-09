@@ -25,62 +25,12 @@ import sys.FileSystem;
 
 using StringTools;
 
-enum StorageType
-{
-	CUSTOM;
-	INTERNAL;
-	EXTERNAL;
-	EXTERNAL_DATA;
-	MEDIA;
-}
-
 /**
  * ...
  * @author Mihai Alexandru (M.A. Jigsaw)
  */
 class SUtil
 {
-	/**
-	 * This returns the external storage path that the game will use by the type.
-	 */
-	 public static var storageType:String;
-	 public static var fuck:FlxSave;
-	public static function getPath(#if EXTERNAL_DATA type:StorageType = EXTERNAL_DATA #elseif EXTERNAL type:StorageType = EXTERNAL #elseif MEDIA type:StorageType = MEDIA #elseif CUSTOM type:StorageType = CUSTOM #else type:StorageType = EXTERNAL_DATA #end):String
-	{
-		var daPath:String = '';
-
-		#if android
-		switch (type)
-		{
-			case CUSTOM:
-				/*if (fuck != null && fuck.data.currentDirectory == null){
-					fuck.data.currentDirectory = FileBrowser.getSelectedDirectoryPath();
-					fuck.flush();
-				}
-				trace(FileBrowser.getSelectedDirectoryPath());
-				if (fuck.data.currentDirectory != null) fuck.data.currentDirectory = FileBrowser.getSelectedDirectoryPath() + '/';
-				storageType='custom';
-				daPath = fuck.data.currentDirectory;*/
-			case INTERNAL:
-				daPath = Context.getFilesDir() + '/';
-				storageType='internal';
-			case EXTERNAL_DATA:
-				daPath = Context.getExternalFilesDir(null) + '/';
-				storageType='external_data';
-			case EXTERNAL:
-				daPath = Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/';
-				storageType='external';
-			case MEDIA:
-				daPath = Environment.getExternalStorageDirectory() + '/Android/media/' + Application.current.meta.get('packageName') + '/';
-				storageType='media';
-		}
-		#elseif ios
-		daPath = LimeSystem.applicationStorageDirectory;
-		#end
-
-		return daPath;
-	}
-
 	/**
 	 * A simple function that checks for game files/folders.
 	 */
@@ -119,7 +69,7 @@ class SUtil
 	}*/
 			//trace(FileBrowser.getSelectedDirectoryPath());
 
-		if (!FileSystem.exists(SUtil.getPath()))
+		if (!FileSystem.exists())
 			{
 				try {
 				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE)
@@ -128,19 +78,19 @@ class SUtil
 					&& Permissions.getGrantedPermissions().contains(Permissions.MANAGE_DOCUMENTS)
 					&& Permissions.getGrantedPermissions().contains(Permissions.MEDIA_CONTENT_CONTROL))
 				{
-					if (!FileSystem.exists(SUtil.getPath()))
-						FileSystem.createDirectory(SUtil.getPath());
+					if (!FileSystem.exists())
+						FileSystem.createDirectory();
 	
 				}
 			} 
 			catch (e){
-                        Lib.application.window.alert('Please create folder to\n' + SUtil.getPath() + '\nPress Ok to close the app', 'Error!');
+                        Lib.application.window.alert('Please create folder to\n' + '\nPress Ok to close the app', 'Error!');
 			LimeSystem.exit(1);
                         }
 		}
 		#end
 		#if mobile
-		if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
+		if (!FileSystem.exists('assets') && !FileSystem.exists('mods'))
 		{
 			if(FlxG.random.bool(10))
 				{
@@ -148,13 +98,13 @@ class SUtil
 			'look through the window... =)');
 			LimeSystem.exit(1);
 			} else {
-			Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + SUtil.getPath(),
+			Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + ,
 				'Error!');
 			LimeSystem.exit(1);
 		}
 	}
-		else if ((FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
-			&& (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods')))
+		else if ((FileSystem.exists('assets') && !FileSystem.isDirectory('assets'))
+			&& (FileSystem.exists('mods') && !FileSystem.isDirectory('mods')))
 		{
 			Lib.application.window.alert("Why did you create two files called assets and mods instead of copying the folders from the .APK?, expect a crash.",
 				'Error!');
@@ -162,26 +112,26 @@ class SUtil
 		}
 		else
 		{
-			if (!FileSystem.exists(SUtil.getPath() + 'assets'))
+			if (!FileSystem.exists('assets'))
 			{
-				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease copy the assets/assets folder from the .APK to\n" + SUtil.getPath(),
+				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease copy the assets/assets folder from the .APK to\n" + ,
 					'Error!');
 				LimeSystem.exit(1);
 			}
-			else if (FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
+			else if (FileSystem.exists('assets') && !FileSystem.isDirectory('assets'))
 			{
 				Lib.application.window.alert("Why did you create a file called assets instead of copying the assets directory from the .APK?, expect a crash.",
 					'Error!');
 				LimeSystem.exit(1);
 			}
 
-			if (!FileSystem.exists(SUtil.getPath() + 'mods'))
+			if (!FileSystem.exists('mods'))
 			{
-				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease copy the assets/mods folder from the .APK to\n" + SUtil.getPath(),
+				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease copy the assets/mods folder from the .APK to\n" + ,
 					'Error!');
 				LimeSystem.exit(1);
 			}
-			else if (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods'))
+			else if (FileSystem.exists('mods') && !FileSystem.isDirectory('mods'))
 			{
 				Lib.application.window.alert("Why did you create a file called mods instead of copying the mods directory from the .APK?, expect a crash.",
 					'Error!');
@@ -235,10 +185,10 @@ class SUtil
 		#if sys
 		try
 		{
-			if (!FileSystem.exists(SUtil.getPath() +  'logs'))
-				FileSystem.createDirectory(SUtil.getPath() + 'logs');
+			if (!FileSystem.exists( 'logs'))
+				FileSystem.createDirectory('logs');
 
-			File.saveContent(SUtil.getPath()
+			File.saveContent(
 				+ 'logs/'
 				+ Lib.application.meta.get('file')
 				+ '-'
@@ -288,10 +238,10 @@ class SUtil
 		#if sys
 		try
 		{
-			if (!FileSystem.exists(SUtil.getPath() +  'logs'))
-				FileSystem.createDirectory(SUtil.getPath() + 'logs');
+			if (!FileSystem.exists( 'logs'))
+				FileSystem.createDirectory('logs');
 
-			File.saveContent(SUtil.getPath()
+			File.saveContent(
 				+ 'logs/'
 				+ Lib.application.meta.get('file')
 				+ '-'
@@ -348,10 +298,10 @@ class SUtil
 	{
 		try
 		{
-			if (!FileSystem.exists(SUtil.getPath() + 'saves'))
-				FileSystem.createDirectory(SUtil.getPath() + 'saves');
+			if (!FileSystem.exists('saves'))
+				FileSystem.createDirectory('saves');
 
-			File.saveContent(SUtil.getPath() + 'saves/' + fileName + fileExtension, fileData);
+			File.saveContent('saves/' + fileName + fileExtension, fileData);
 			Lib.application.window.alert(fileName + " file has been saved", "Success!");
 		}
 		catch (e:Dynamic)
