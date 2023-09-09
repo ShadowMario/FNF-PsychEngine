@@ -65,6 +65,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var maxPerformance:Bool = false;
 	public static var voiidTrollMode:Bool = false;
 	public static var compactNumbers:Bool = false;
+	public static var ezSpam:Bool = false;
 	public static var longFCName:Bool = false;
 	public static var holdNoteHits:Bool = false;
 	public static var comboScoreEffect:Bool = false;
@@ -213,6 +214,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.songLoading = songLoading;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.shaders = shaders;
+		FlxG.save.data.ezSpam = ezSpam;
 		FlxG.save.data.evenLessBotLag = evenLessBotLag;
 		FlxG.save.data.framerate = framerate;
 		//FlxG.save.data.cursing = cursing;
@@ -361,6 +363,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
+		}
+		if(FlxG.save.data.ezSpam != null) {
+			ezSpam = FlxG.save.data.ezSpam;
 		}
 		if(FlxG.save.data.progAudioLoad != null) {
 			progAudioLoad = FlxG.save.data.progAudioLoad;

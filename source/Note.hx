@@ -123,7 +123,7 @@ class Note extends FlxSprite
 	}
 
 	private function set_texture(value:String):String {
-		if(texture != value) {
+		if(texture != value && ClientPrefs.showNotes) { //again, no point in loading the image if show notes is turned off
 			reloadNote('', value);
 		}
 		texture = value;
@@ -313,7 +313,7 @@ class Note extends FlxSprite
 
 		this.noteData = noteData;
 
-		if(noteData > -1) {
+		if(noteData > -1 && ClientPrefs.showNotes) { //no point in changing the hue or texture if you cant even see the note
 			texture = '';
 			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
 				texture = 'Nonsense_NOTE_assets';

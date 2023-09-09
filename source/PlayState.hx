@@ -278,6 +278,8 @@ class PlayState extends MusicBeatState
 	public static var chartingMode:Bool = false;
 	public static var playerIsCheating:Bool = false; //Whether the player is cheating. Enables if you change BOTPLAY or Practice Mode in the Pause menu
 
+	public var shownScore:Float = 0;
+
 	//Gameplay settings
 	public var healthGain:Float = 1;
 	public var healthLoss:Float = 1;
@@ -3840,7 +3842,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == "JS Engine")
 		{
-		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
+		scoreTxt.text = 'Score: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(shownScore, false) : compactScore) + (ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '')
 		+ ' | Misses: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses)
 		+ ' | Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ (ClientPrefs.showNPS ? ' | NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
@@ -3848,7 +3850,7 @@ class PlayState extends MusicBeatState
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
-		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore)
+		scoreTxt.text = "Bot Score: " + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(shownScore, false) : compactScore)
 		+ ' | Bot Combo: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo)
 		+ (ClientPrefs.showNPS ? ' | Bot NPS: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS) : '')
 		+ ' | Botplay Mode';
@@ -5004,6 +5006,10 @@ class PlayState extends MusicBeatState
 			maxCombo = combo;
 
 		super.update(elapsed);
+
+		shownScore = FlxMath.lerp(shownScore, songScore, .2/(ClientPrefs.framerate / 60));
+		if (Math.abs(shownScore - songScore) <= 10)
+			shownScore = songScore;
 
 		if (ClientPrefs.smoothHealth && ClientPrefs.smoothHealthType == 'Indie Cross')
 		{
@@ -7563,6 +7569,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//var notesDatas:Array<Int> = [];
 				var notesStopped:Bool = false;
 
+				var hittableSpam = [];
+
 				var sortedNotesList:Array<Note> = [];
 				notes.forEachAlive(function(daNote:Note)
 				{
@@ -7601,10 +7609,18 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 						goodNoteHit(epicNote);
 							pressNotes.push(epicNote);
 						}
-
+					if (sortedNotesList.length > 2 && ClientPrefs.ezSpam) //literally all you need to allow you to spam though impossiblely hard jacks
+					{
+						var notesThatCanBeHit = sortedNotesList.length;
+						for (i in 0...Std.int(notesThatCanBeHit)) //only hit half of them so its not tooooo easy for people, but its still possible to hit a lot of notes
+						{
+							goodNoteHit(sortedNotesList[i]);
+						}
+						
+					}
 					}
 				}
-				else{
+				else {
 					callOnLuas('onGhostTap', [key]);
 				if (!opponentChart && ClientPrefs.ghostTapAnim && ClientPrefs.charsAndBG)
 				{

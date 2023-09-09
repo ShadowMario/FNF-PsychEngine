@@ -214,6 +214,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('More Spammable Inputs',
+			'If checked, the input system is more spammable.',
+			'ezSpam',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Shit Gives Miss',
 			"If checked, hitting a Shit rating will count as a miss.",
 			'shitGivesMiss',
