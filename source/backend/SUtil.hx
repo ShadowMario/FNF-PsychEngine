@@ -88,7 +88,7 @@ class SUtil
 		{
 			if (!FileSystem.exists('assets'))
 			{
-				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease copy the assets/assets folder from the .APK to\n" + ,
+				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease copy the assets/assets folder from the .APK to\n" + Sys.getCwd(),
 					'Error!');
 				LimeSystem.exit(1);
 			}
