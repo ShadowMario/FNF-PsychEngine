@@ -6,7 +6,6 @@ import sys.io.File;
 #else
 import lime.utils.Assets;
 #end
-//import tjson.TJSON as Json;
 import haxe.Json;
 
 typedef ModsList = {
@@ -60,7 +59,7 @@ class Mods
 		if(FileSystem.exists(modsFolder)) {
 			for (folder in FileSystem.readDirectory(modsFolder))
 			{
-				var path = modsFolder + folder + '/';
+				var path = haxe.io.Path.join([modsFolder, folder]);
 				if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder.toLowerCase()) && !list.contains(folder))
 					list.push(folder);
 			}
@@ -100,10 +99,10 @@ class Mods
 	{
 		var foldersToCheck:Array<String> = [];
 		#if sys
-		trace("1-the file path is: "+ path + fileToFind);
 		if(FileSystem.exists(path + fileToFind))
-			foldersToCheck.push(path + fileToFind);
 		#end
+			foldersToCheck.push(path + fileToFind);
+
 		#if MODS_ALLOWED
 		if(mods)
 		{
@@ -111,20 +110,17 @@ class Mods
 			for(mod in Mods.getGlobalMods())
 			{
 				var folder:String = Paths.mods(mod + '/' + fileToFind);
-				trace("2-the file path is: "+ folder);
 				if(FileSystem.exists(folder)) foldersToCheck.push(folder);
 			}
 
 			// Then "PsychEngine/mods/" main folder
 			var folder:String = Paths.mods(fileToFind);
-			trace("3-the file path is: "+ folder);
 			if(FileSystem.exists(folder)) foldersToCheck.push(Paths.mods(fileToFind));
 
 			// And lastly, the loaded mod's folder
 			if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
 			{
 				var folder:String = Paths.mods(Mods.currentModDirectory + '/' + fileToFind);
-				trace("4-the file path is: "+ folder);
 				if(FileSystem.exists(folder)) foldersToCheck.push(folder);
 			}
 		}
@@ -143,9 +139,9 @@ class Mods
 				#if sys
 				var rawJson:String = File.getContent(path);
 				#else
-				var rawJson:String = Assets.getText(path); //this prop dosent work because its using SUtil.getPath() from Paths.mods
+				var rawJson:String = Assets.getText(path);
 				#end
-				if(rawJson != null && rawJson.length > 0) return cast Json.parse(rawJson);
+				if(rawJson != null && rawJson.length > 0) return Json.parse(rawJson);
 			} catch(e:Dynamic) {
 				trace(e);
 			}
