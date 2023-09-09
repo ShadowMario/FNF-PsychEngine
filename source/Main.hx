@@ -25,6 +25,14 @@ import lime.graphics.Image;
 ')
 #end
 
+enum StorageType
+{
+	INTERNAL;
+	EXTERNAL;
+	EXTERNAL_DATA;
+	MEDIA;
+}
+
 class Main extends Sprite
 {
 	var game = {
@@ -52,9 +60,26 @@ class Main extends Sprite
 		#end
 	}
 
-	public function new()
+	public function new(#if EXTERNAL_DATA type:StorageType = EXTERNAL_DATA #elseif EXTERNAL type:StorageType = EXTERNAL #elseif MEDIA type:StorageType = MEDIA #else type:StorageType = EXTERNAL_DATA #end)
 	{
 		super();
+
+		// https://github.com/MAJigsaw77/UTF/blob/972e4c27ec62e2279cddb53083a2fee98e76ce53/source/Main.hx#L45-L49 (but modified)
+	        #if android
+		switch (type)
+		{
+			case INTERNAL:
+				Sys.setCwd(Context.getFilesDir() + '/');
+			case EXTERNAL_DATA:
+				Sys.setCwd(Context.getExternalFilesDir(null) + '/');
+			case EXTERNAL:
+				Sys.setCwd(Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/');
+			case MEDIA:
+				Sys.setCwd(Environment.getExternalStorageDirectory() + '/Android/media/' + Application.current.meta.get('packageName') + '/');
+		}
+		#elseif ios
+		Sys.setCwd(LimeSystem.applicationStorageDirectory);
+		#end
 
 		SUtil.uncaughtErrorHandler();
 
