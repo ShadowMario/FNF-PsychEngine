@@ -22,8 +22,8 @@ import flash.media.Sound;
 import sys.io.File;
 import sys.FileSystem;
 #end
-//import tjson.TJSON as Json;
 import haxe.Json;
+
 
 #if MODS_ALLOWED
 import backend.Mods;
@@ -44,7 +44,6 @@ class Paths
 		'assets/music/freakyMenu.$SOUND_EXT',
 		'assets/shared/music/breakfast.$SOUND_EXT',
 		'assets/shared/music/tea-time.$SOUND_EXT',
-		#if mobileC 'assets/mobile/virtualpad.png', #end
 	];
 	/// haya I love you for the base cache dump I took to the max
 	public static function clearUnusedMemory() {
@@ -101,7 +100,6 @@ class Paths
 		#if !html5 openfl.Assets.cache.clear("songs"); #end
 	}
 
-	static public var currentModDirectory:String = '';
 	static public var currentLevel:String;
 	static public function setCurrentLevel(name:String)
 	{
@@ -191,7 +189,7 @@ class Paths
 			return file;
 		}
 		#end
-		return SUtil.getPath() + 'assets/videos/$key.$VIDEO_EXT';
+		return 'assets/videos/$key.$VIDEO_EXT';
 	}
 
 	static public function sound(key:String, ?library:String):Sound
@@ -286,23 +284,25 @@ class Paths
 
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
-		#if (sys && MODS_ALLOWED)
+		#if sys
+		#if MODS_ALLOWED
 		if (!ignoreMods && FileSystem.exists(modFolders(key)))
 			return File.getContent(modFolders(key));
+		#end
 
-		if (FileSystem.exists(SUtil.getPath() + getPreloadPath(key)))
-			return File.getContent(SUtil.getPath() + getPreloadPath(key));
+		if (FileSystem.exists(getPreloadPath(key)))
+			return File.getContent(getPreloadPath(key));
 
 		if (currentLevel != null)
 		{
 			var levelPath:String = '';
 			if(currentLevel != 'shared') {
-				levelPath = SUtil.getPath() + getLibraryPathForce(key, 'week_assets', currentLevel);
+				levelPath = getLibraryPathForce(key, 'week_assets', currentLevel);
 				if (FileSystem.exists(levelPath))
 					return File.getContent(levelPath);
 			}
 
-			levelPath = SUtil.getPath() + getLibraryPathForce(key, 'shared');
+			levelPath = getLibraryPathForce(key, 'shared');
 			if (FileSystem.exists(levelPath))
 				return File.getContent(levelPath);
 		}
@@ -320,7 +320,7 @@ class Paths
 			return file;
 		}
 		#end
-		return SUtil.getPath() + 'assets/fonts/$key';
+		return 'assets/fonts/$key';
 	}
 
 	public static function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String = null)
@@ -393,7 +393,7 @@ class Paths
 
 	inline static public function formatToSongPath(path:String) {
 		var invalidChars = ~/[~&\\;:<>#]/;
-		var hideChars = ~/[.,'"%?!]/; 
+		var hideChars = ~/[.,'"%?!]/;
 
 		var path = invalidChars.split(path.replace(' ', '-')).join("-");
 		return hideChars.split(path).join("").toLowerCase();
@@ -412,7 +412,7 @@ class Paths
 		}
 		#end
 		// I hate this so god damn much
-		var gottenPath:String = SUtil.getPath() + getPath('$path/$key.$SOUND_EXT', SOUND, library);
+		var gottenPath:String = getPath('$path/$key.$SOUND_EXT', SOUND, library);
 		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
 		// trace(gottenPath);
 		if(!currentTrackedSounds.exists(gottenPath))
@@ -432,24 +432,7 @@ class Paths
 
 	#if MODS_ALLOWED
 	inline static public function mods(key:String = '') {
-		return SUtil.getPath() + 'mods/' + key;
-		//trace("current used directory by Paths.mods is: " + SUtil.getPath() + 'mods/' + key);
-	}
-
-	static public function modFolders(key:String) {
-		if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) {
-			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);
-			if(FileSystem.exists(fileToCheck)) {
-				return fileToCheck;
-			}
-		}
-
-		for(mod in Mods.getGlobalMods()){
-			var fileToCheck:String = mods(mod + '/' + key);
-			if(FileSystem.exists(fileToCheck))
-				return fileToCheck;
-		}
-		return SUtil.getPath() + 'mods/' + key;
+		return #if mobile Sys.getCwd() + #end 'mods/' + key;
 	}
 
 	inline static public function modsFont(key:String) {
@@ -493,5 +476,21 @@ class Paths
 	inline static public function modsAchievements(key:String) {
 		return modFolders('achievements/' + key + '.json');
 	}*/
-    #end
+
+	static public function modFolders(key:String) {
+		if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) {
+			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);
+			if(FileSystem.exists(fileToCheck)) {
+				return fileToCheck;
+			}
+		}
+
+		for(mod in Mods.getGlobalMods()){
+			var fileToCheck:String = mods(mod + '/' + key);
+			if(FileSystem.exists(fileToCheck))
+				return fileToCheck;
+		}
+		return 'mods/' + key;
+	}
+	#end
 }

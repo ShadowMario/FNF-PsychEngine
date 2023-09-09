@@ -46,11 +46,10 @@ class Log
 				#if sys
 				try
 				{
-					if (!FileSystem.exists(SUtil.getPath() + 'logs'))
-						FileSystem.createDirectory(SUtil.getPath() + 'logs');
+					if (!FileSystem.exists('logs'))
+						FileSystem.createDirectory('logs');
 
-					File.saveContent(SUtil.getPath()
-						+ 'logs/'
+					File.saveContent('logs/'
 						+ Lib.application.meta.get('file')
 						+ '-'
 						+ Date.now().toString().replace(' ', '-').replace(':', "'")
