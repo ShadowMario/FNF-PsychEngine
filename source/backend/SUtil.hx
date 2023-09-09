@@ -1,12 +1,9 @@
 package backend;
 
 #if android
-import android.content.Context;
 import android.widget.Toast;
-import android.os.Environment;
 import android.Permissions;
 import android.os.Build;
-import android.FileBrowser;
 #end
 import haxe.io.Path;
 import haxe.CallStack;
