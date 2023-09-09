@@ -417,7 +417,7 @@ class Paths
 		// trace(gottenPath);
 		if(!currentTrackedSounds.exists(gottenPath))
 		#if MODS_ALLOWED
-			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
+			currentTrackedSounds.set(gottenPath, Sound.fromFile(#if !mobile './' + #end gottenPath));
 		#else
 		{
 			var folder:String = '';
