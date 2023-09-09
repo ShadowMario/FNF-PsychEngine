@@ -347,7 +347,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			10);
 		option.scrollSpeed = 5;
 		option.minValue = 2;
-		option.maxValue = 10;
+		option.maxValue = 20;
+		if (ClientPrefs.safeFrames > 10) option.displayFormat = '%v (Will not save)';
 		option.changeValue = 0.1;
 		addOption(option);
 

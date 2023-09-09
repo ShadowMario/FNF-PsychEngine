@@ -5007,7 +5007,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		shownScore = FlxMath.lerp(shownScore, songScore, .2/(ClientPrefs.framerate / 60));
+		shownScore = FlxMath.lerp(shownScore, songScore, .4/(ClientPrefs.framerate / 60));
 		if (Math.abs(shownScore - songScore) <= 10)
 			shownScore = songScore;
 
@@ -6742,7 +6742,7 @@ class PlayState extends MusicBeatState
 
 		var ret:Dynamic = callOnLuas('onEndSong', [], false);
 		if(ret != FunkinLua.Function_Stop && !transitioning) {
-			if (SONG.validScore && !cpuControlled && !playerIsCheating && ClientPrefs.comboMultLimit <= 10)
+			if (SONG.validScore && !cpuControlled && !playerIsCheating && ClientPrefs.comboMultLimit <= 10 && ClientPrefs.safeFrames <= 10)
 			{
 				#if !switch
 				var percent:Float = ratingPercent;
@@ -7049,7 +7049,7 @@ class PlayState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.35;
 		//
-		if(ClientPrefs.scoreZoom && ClientPrefs.hideScore && !cpuControlled)
+		if(ClientPrefs.scoreZoom && !ClientPrefs.hideScore && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {
 				scoreTxtTween.cancel();
@@ -8284,7 +8284,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					comboMultiplier = Math.fceil((combo+1)/10);
 				}
 
-			if (!note.isSustainNote && !cpuControlled || !note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot)
+			if (!note.isSustainNote && !cpuControlled && !ClientPrefs.lessBotLag || !note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot)
 			{
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
@@ -8347,6 +8347,26 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				missCombo = 0;
 				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				popUpScore(note);
+			}
+			if (!note.isSustainNote && !cpuControlled && ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot)
+			{
+				combo += 1 * polyphony;
+				totalNotesPlayed += 1 * polyphony;
+				//updateScore(); the update function handles updating this, so why make it update more
+				//updateRatingCounter(); the update function handles updating this, so why make it update more
+				missCombo = 0;
+				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
+				var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
+				var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
+
+				totalNotesHit += daRating.ratingMod;
+				//if (ClientPrefs.complexAccuracy) totalNotesHit += wife; whoopsies
+				note.ratingMod = daRating.ratingMod;
+				if(!note.ratingDisabled) daRating.increase();
+				note.rating = daRating.name;
+				songScore += daRating.score;
+				totalPlayed++;
+				RecalculateRating();
 			}
 			if (note.isSustainNote && cpuControlled && !ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits)
 			{
