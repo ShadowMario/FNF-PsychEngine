@@ -8398,7 +8398,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				note.ratingMod = daRating.ratingMod;
 				if(!note.ratingDisabled) daRating.increase();
 				note.rating = daRating.name;
-				songScore += daRating.score;
+				songScore += daRating.score * comboMultiplier * polyphony;
 				totalPlayed++;
 				RecalculateRating();
 			}
