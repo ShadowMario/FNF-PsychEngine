@@ -30,6 +30,7 @@ jobs:
         uses: actions/cache/restore@main
         with:
           path: |
+            ~/.hxcpp
             ~/haxelib
             ~/.gradle
             export/release/android/haxe
@@ -67,6 +68,7 @@ jobs:
       - name: Compile
         run: haxelib run lime build android -D ${{ matrix.build_type }} -D NO_PRECOMPILED_HEADERS -release
         env:
+          HXCPP_COMPILE_CACHE: ~/.hxcpp
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
       - name: Clear Previous Cache
@@ -101,6 +103,7 @@ jobs:
         uses: actions/cache/save@main
         with:
           path: |
+            ~/.hxcpp
             ~/haxelib
             ~/.gradle
             export/release/android/haxe
@@ -142,6 +145,7 @@ jobs:
         uses: actions/cache/restore@main
         with:
           path: |
+            ~/.hxcpp
             ~/haxelib
             ~/.gradle
             export/release/android/haxe
@@ -184,6 +188,7 @@ jobs:
       - name: Compile
         run: haxelib run lime build android -D ${{ matrix.build_type }} -release
         env:
+          HXCPP_COMPILE_CACHE: ~/.hxcpp
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
       - name: Clear Previous Cache
@@ -218,6 +223,7 @@ jobs:
         uses: actions/cache/save@main
         with:
           path: |
+            ~/.hxcpp
             ~/haxelib
             ~/.gradle
             export/release/android/haxe
