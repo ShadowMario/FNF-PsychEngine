@@ -259,10 +259,10 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
-	public var nps:Int = 0;
-	public var maxNPS:Int = 0;
-	public var oppNPS:Int = 0;
-	public var maxOppNPS:Int = 0;
+	public var nps:Float = 0;
+	public var maxNPS:Float = 0;
+	public var oppNPS:Float = 0;
+	public var maxOppNPS:Float = 0;
 	public var enemyHits:Float = 0;
 	public var opponentNoteTotal:Int = 0;
 	public var polyphony:Float = 1;
@@ -319,8 +319,8 @@ class PlayState extends MusicBeatState
 	var secretsong:FlxSprite;
 	var SPUNCHBOB:FlxSprite;
 
-	var notesHitArray:Array<Date> = [];
-	var oppNotesHitArray:Array<Date> = [];
+	var notesHitArray:Array<Float> = [];
+	var oppNotesHitArray:Array<Float> = [];
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
@@ -464,14 +464,14 @@ class PlayState extends MusicBeatState
         	var compactMaxCombo:String = formatCompactNumber(maxCombo);
 		var compactScore:String = formatCompactNumber(songScore);
 		var compactMisses:String = formatCompactNumberInt(songMisses);
-		var compactNPS:String = formatCompactNumberInt(nps);
+		var compactNPS:String = formatCompactNumber(nps);
 		var compactTotalPlays:String = formatCompactNumber(totalNotesPlayed);
 		theListBotplay = CoolUtil.coolTextFile(Paths.txt('botplayText'));
 
 		randomBotplayText = theListBotplay[FlxG.random.int(0, theListBotplay.length - 1)];
 		//trace('Playback Rate: ' + playbackRate);
 
-			if (ClientPrefs.memLeaks) #if sys cpp.vm.Gc.enable(false); #end//lagspike prevention
+			if (ClientPrefs.memLeaks) cpp.vm.Gc.enable(false); //lagspike prevention
 
 			if (!ClientPrefs.memLeaks)
 			{
@@ -3440,7 +3440,7 @@ class PlayState extends MusicBeatState
         	compactMaxCombo = formatCompactNumber(maxCombo);
 		compactScore = formatCompactNumber(songScore);
 		compactMisses = formatCompactNumberInt(songMisses);
-		compactNPS = formatCompactNumberInt(nps);
+		compactNPS = formatCompactNumber(nps);
 		compactTotalPlays = formatCompactNumber(totalNotesPlayed);
     }
 
@@ -4069,6 +4069,7 @@ class PlayState extends MusicBeatState
 	private var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
 	private function generateSong(dataPath:String):Void
 	{
+       		var startTime = Sys.time();
 		// FlxG.log.add(ChartParser.parse());
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
 
@@ -4298,12 +4299,19 @@ class PlayState extends MusicBeatState
 
 		// trace(unspawnNotes.length);
 		// playerCounter += 1;
+
+       		var endTime = Sys.time();
+
+        	var elapsedTime = endTime - startTime;
 		unspawnNotes.sort(sortByTime);
 		unspawnNotesCopy = unspawnNotes.copy();
 		generatedMusic = true;
 		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
+        	var elapsedTime = endTime - startTime;
+        	trace("Loaded chart in " + elapsedTime + " seconds");
 	}
 	private function generateSongOptim(dataPath:String):Void {
+       		var startTime = Sys.time();
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype', 'multiplicative');
 
 		if (songSpeedType == "multiplicative") {
@@ -4357,7 +4365,10 @@ class PlayState extends MusicBeatState
 		notesLoadedRN = 0;
 		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
 		generatedMusic = true;
-		trace('song loaded! notes loaded: ' + FlxStringUtil.formatMoney(unspawnNotes.length, false) + ', ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' being sung by the opponent and ' + FlxStringUtil.formatMoney(totalNotes, false) + ' being sung by the player!');
+       		var endTime = Sys.time();
+
+        	var elapsedTime = endTime - startTime;
+		trace('song loaded! notes loaded: ' + FlxStringUtil.formatMoney(unspawnNotes.length, false) + ', ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' being sung by the opponent and ' + FlxStringUtil.formatMoney(totalNotes, false) + ' being sung by the player! (Loaded in ' + elapsedTime + ' seconds)');
 	}
 
 	private function loadEventNotes():Void {
@@ -4977,30 +4988,28 @@ class PlayState extends MusicBeatState
 			moveCamTo[0] = FlxMath.lerp(moveCamTo[0], 0, panLerpVal);
 			moveCamTo[1] = FlxMath.lerp(moveCamTo[1], 0, panLerpVal);
 		}
-		if (ClientPrefs.showNPS)
-		{
-			for(i in 0...notesHitArray.length)
-			{
-				var cock:Date = notesHitArray[i];
-				if (cock != null)
-					if (cock.getTime() + (ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000) < Date.now().getTime())
-						notesHitArray.remove(cock);
-			}
-			nps = Math.floor(notesHitArray.length);
-			if (nps > maxNPS)
-				maxNPS = nps;
-			for(i in 0...oppNotesHitArray.length)
-			{
-				var cock:Date = oppNotesHitArray[i];
-				if (cock != null)
-					if (cock.getTime() + (ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000) < Date.now().getTime())
-						oppNotesHitArray.remove(cock);
-			}
-			oppNPS = Math.floor(oppNotesHitArray.length);
-			if (oppNPS > maxOppNPS)
-				maxOppNPS = oppNPS;
-		}
-		
+if (ClientPrefs.showNPS)
+{
+    var sum:Float = 0.0; // Sum of NPS values
+
+    for (value in notesHitArray) {
+        sum += value;
+    }
+    
+    nps = sum;
+
+    var oppSum:Float = 0.0; // Sum of NPS values
+
+    for (value in oppNotesHitArray) {
+        oppSum += value;
+    }
+    
+    oppNPS = oppSum;
+    if (oppNPS > maxOppNPS)
+        maxOppNPS = oppNPS;
+    if (nps > maxNPS)
+        maxNPS = nps;
+}
 
 		if (combo > maxCombo)
 			maxCombo = combo;
@@ -8069,16 +8078,11 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		if (!note.isSustainNote)
 		{
-				if (ClientPrefs.showNPS) 
-				{
-				if (polyphony <= 500) {
-				for (i in 0...Std.int(polyphony))
-				{
-				oppNotesHitArray.push(Date.now());
-				}
-				} else {
-				oppNotesHitArray.push(Date.now()); //to prevent the game from lagging too much we'll only have it push multiple times IF the polyphony is less than 500
-				}
+				if (ClientPrefs.showNPS) {
+				oppNotesHitArray.push(1 * polyphony);
+				haxe.Timer.delay(function() {
+           				oppNotesHitArray.shift();
+        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
 				}
 		enemyHits += 1 * polyphony;
 			if (shouldKillNotes)
@@ -8289,7 +8293,12 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) {
+				notesHitArray.push(1 * polyphony);
+				haxe.Timer.delay(function() {
+           				notesHitArray.shift();
+        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				}
 				popUpScore(note);
 			}
 			if (note.isSustainNote && !cpuControlled && ClientPrefs.holdNoteHits)
@@ -8297,7 +8306,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
 				popUpScore(note);
 			}
 			if (note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits && !ClientPrefs.lessBotLag)
@@ -8333,7 +8341,12 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
-				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) {
+				notesHitArray.push(1 * polyphony);
+				haxe.Timer.delay(function() {
+           				notesHitArray.shift();
+        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				}
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(false, note);
 				}
@@ -8345,7 +8358,12 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) {
+				notesHitArray.push(1 * polyphony);
+				haxe.Timer.delay(function() {
+           				notesHitArray.shift();
+        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				}
 				popUpScore(note);
 			}
 			if (!note.isSustainNote && !cpuControlled && ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot)
@@ -8355,7 +8373,12 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) {
+				notesHitArray.push(1 * polyphony);
+				haxe.Timer.delay(function() {
+           				notesHitArray.shift();
+        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				}
 				var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
 				var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
 
@@ -8375,7 +8398,12 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				if (ClientPrefs.showNPS) notesHitArray.push(Date.now());
+				if (ClientPrefs.showNPS) {
+				notesHitArray.push(1 * polyphony);
+				haxe.Timer.delay(function() {
+           				notesHitArray.shift();
+        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				}
 				popUpScore(note);
 			}
 			if (ClientPrefs.healthGainType == 'Psych Engine') {

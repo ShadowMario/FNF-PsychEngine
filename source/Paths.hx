@@ -93,7 +93,12 @@ class Paths
 		}
 
 		// run the garbage collector for good measure lmfao
-		System.gc();
+
+			#if sys
+			openfl.system.System.gc();
+			#elseif cpp
+			cpp.vm.Gc.run();
+			#end
 	}
 
 	// define the locally tracked assets
