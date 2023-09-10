@@ -35,8 +35,8 @@ class SUtil
 		#if android
 		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
 		{
-				Permissions.requestPermissions(Permissions.WRITE_EXTERNAL_STORAGE);
-				Permissions.requestPermissions(Permissions.READ_EXTERNAL_STORAGE);
+				Permissions.requestPermission(Permissions.WRITE_EXTERNAL_STORAGE);
+				Permissions.requestPermission(Permissions.READ_EXTERNAL_STORAGE);
 				Lib.application.window.alert('This game need external storage access to function properly' + "\nTo give it access you must accept the storage permission\nIf you accepted you're good to go!\nIf not you'll face issues inGame..."
 					+ '\nPress Ok to see what happens',
 					'Permissions?');
