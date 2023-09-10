@@ -53,7 +53,6 @@ jobs:
           haxelib install SScript 5.0.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
-          cp /home/runner/work/FNF-PsychEngine-Mobile/FNF-PsychEngine-Mobile/art/CustomManifest.xml /home/runner/haxelib/lime/7,9,0/templates/android/template/app/src/main/AndroidManifest.xml
       - name: Info
         run: haxe --version && haxelib list
       - name: Configure Android
@@ -138,7 +137,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.2
+          haxe-version: 4.3.0
       - name: Restore Previous Cache
         if: ${{ always() }}
         id: cache-debug-build-android-restore-clang
@@ -168,7 +167,6 @@ jobs:
           haxelib install SScript 5.0.0 --quiet
           # haxelib install tjson 1.4.0 --quiet
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
-          # cp /home/runner/work/FNF-PsychEngine-Mobile/FNF-PsychEngine-Mobile/art/CustomManifest.xml /home/runner/haxelib/lime/7,9,0/templates/android/template/app/src/main/AndroidManifest.xml
       - name: Setup git hxcpp
         run: |
           cd $(haxelib libpath hxcpp)/tools/hxcpp
