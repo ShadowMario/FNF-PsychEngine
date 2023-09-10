@@ -168,9 +168,9 @@
 		<section if="android">
                 <!-- Do whatever you want I'm tired uninstall and install everytime -->
 		<certificate path="key.keystore" password="nullfunni" alias="null" alias-password="nullfunni" unless="debug"/>
+		<android permission="android.permission.MANAGE_EXTERNAL_STORAGE"/>
 			<config>
-                                <!--<android permission="android.permission.RECORD_AUDIO" if="${lime &lt; 8.1.0}"/>-->
-				<!--Gradle-->
+                                <!--Gradle-->
 				<!--<android gradle-version="7.4.2" gradle-plugin="7.3.1" />-->
 	
 				<!--Target SDK-->
