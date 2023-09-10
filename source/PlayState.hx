@@ -321,6 +321,8 @@ class PlayState extends MusicBeatState
 
 	var notesHitArray:Array<Float> = [];
 	var oppNotesHitArray:Array<Float> = [];
+	var notesHitDateArray:Array<Date> = [];
+	var oppNotesHitDateArray:Array<Date> = [];
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
@@ -4992,6 +4994,25 @@ if (ClientPrefs.showNPS)
 {
     var sum:Float = 0.0; // Sum of NPS values
 
+			for(i in 0...notesHitDateArray.length)
+			{
+				var cock:Date = notesHitDateArray[i];
+				if (cock != null)
+					if (cock.getTime() + (ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000) < Date.now().getTime()) {
+						notesHitDateArray.remove(cock);
+						notesHitArray.shift();
+				}
+			}
+			for(i in 0...oppNotesHitDateArray.length)
+			{
+				var cock:Date = oppNotesHitDateArray[i];
+				if (cock != null)
+					if (cock.getTime() + (ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000) < Date.now().getTime()) {
+						oppNotesHitDateArray.remove(cock);
+						oppNotesHitArray.shift();
+				}
+			}
+
     for (value in notesHitArray) {
         sum += value;
     }
@@ -8078,11 +8099,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		if (!note.isSustainNote)
 		{
-				if (ClientPrefs.showNPS) {
+				if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
 				oppNotesHitArray.push(1 * polyphony);
-				haxe.Timer.delay(function() {
-           				oppNotesHitArray.shift();
-        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				oppNotesHitDateArray.push(Date.now());
 				}
 		enemyHits += 1 * polyphony;
 			if (shouldKillNotes)
@@ -8293,11 +8312,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
 				missCombo = 0;
-				if (ClientPrefs.showNPS) {
+				if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
 				notesHitArray.push(1 * polyphony);
-				haxe.Timer.delay(function() {
-           				notesHitArray.shift();
-        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				notesHitDateArray.push(Date.now());
 				}
 				popUpScore(note);
 			}
@@ -8341,11 +8358,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				combo += 1 * polyphony;
 				totalNotesPlayed += 1 * polyphony;
-				if (ClientPrefs.showNPS) {
+				if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
 				notesHitArray.push(1 * polyphony);
-				haxe.Timer.delay(function() {
-           				notesHitArray.shift();
-        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				notesHitDateArray.push(Date.now());
 				}
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(false, note);
@@ -8358,11 +8373,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				if (ClientPrefs.showNPS) {
+				if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
 				notesHitArray.push(1 * polyphony);
-				haxe.Timer.delay(function() {
-           				notesHitArray.shift();
-        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				notesHitDateArray.push(Date.now());
 				}
 				popUpScore(note);
 			}
@@ -8373,11 +8386,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				if (ClientPrefs.showNPS) {
+				if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
 				notesHitArray.push(1 * polyphony);
-				haxe.Timer.delay(function() {
-           				notesHitArray.shift();
-        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				notesHitDateArray.push(Date.now());
 				}
 				var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
 				var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
@@ -8398,11 +8409,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				//updateScore(); the update function handles updating this, so why make it update more
 				//updateRatingCounter(); the update function handles updating this, so why make it update more
 				missCombo = 0;
-				if (ClientPrefs.showNPS) {
+				if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
 				notesHitArray.push(1 * polyphony);
-				haxe.Timer.delay(function() {
-           				notesHitArray.shift();
-        			}, ((ClientPrefs.npsWithSpeed ? Std.int(1000 / playbackRate) : 1000)));
+				notesHitDateArray.push(Date.now());
 				}
 				popUpScore(note);
 			}
