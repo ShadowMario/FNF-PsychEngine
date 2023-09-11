@@ -2,8 +2,6 @@ package backend;
 
 #if android
 import android.widget.Toast;
-import android.Permissions;
-import android.os.Build;
 #end
 import haxe.io.Path;
 import haxe.CallStack;
@@ -32,45 +30,21 @@ class SUtil
 	 */
 	public static function checkFiles():Void
 	{
-		#if android
-		if (!Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
-		{
-				Permissions.requestPermission(Permissions.WRITE_EXTERNAL_STORAGE);
-				Permissions.requestPermission(Permissions.READ_EXTERNAL_STORAGE);
-				Lib.application.window.alert('This game need external storage access to function properly' + "\nTo give it access you must accept the storage permission\nIf you accepted you're good to go!\nIf not you'll face issues inGame..."
-					+ '\nPress Ok to see what happens',
-					'Permissions?');
-		}
-		/*if (!FileSystem.exists())
-			{
-				try {
-				if (Permissions.getGrantedPermissions().contains(Permissions.WRITE_EXTERNAL_STORAGE) && Permissions.getGrantedPermissions().contains(Permissions.READ_EXTERNAL_STORAGE))
-				{
-					if (!FileSystem.exists(Sys.getCwd()))
-						FileSystem.createDirectory(Sys.getCwd());
-	
-				}
-			} 
-			catch (e){
-                        Lib.application.window.alert('Please create folder to\n' + Sys.getCwd(), '\nPress Ok to close the app', 'Error!');
-			LimeSystem.exit(1);
-                        }
-		}*/
-		#end
 		#if mobile
 		if (!FileSystem.exists('assets') && !FileSystem.exists('mods'))
 		{
-			if(FlxG.random.bool(10))
-				{
-			Lib.application.window.alert(backend.CoolUtil.grabDaThing() + "\n W E  A R E\n C O M I N G . . .",
-			'look through the window... =)');
-			LimeSystem.exit(1);
-			} else {
-			Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n" + Sys.getCwd(),
-				'Error!');
-			LimeSystem.exit(1);
+			if (FlxG.random.bool(10))
+			{
+				Lib.application.window.alert(backend.CoolUtil.grabDaThing() + "\n W E  A R E\n C O M I N G . . .", 'look through the window... =)');
+				LimeSystem.exit(1);
+			}
+			else
+			{
+				Lib.application.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease copy the files from the .APK to\n"
+					+ Sys.getCwd(), 'Error!');
+				LimeSystem.exit(1);
+			}
 		}
-	}
 		else if ((FileSystem.exists('assets') && !FileSystem.isDirectory('assets'))
 			&& (FileSystem.exists('mods') && !FileSystem.isDirectory('mods')))
 		{
@@ -82,7 +56,8 @@ class SUtil
 		{
 			if (!FileSystem.exists('assets'))
 			{
-				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease copy the assets/assets folder from the .APK to\n" + Sys.getCwd(),
+				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease copy the assets/assets folder from the .APK to\n"
+					+ Sys.getCwd(),
 					'Error!');
 				LimeSystem.exit(1);
 			}
@@ -95,7 +70,8 @@ class SUtil
 
 			if (!FileSystem.exists('mods'))
 			{
-				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease copy the assets/mods folder from the .APK to\n" + Sys.getCwd(),
+				Lib.application.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease copy the assets/mods folder from the .APK to\n"
+					+ Sys.getCwd(),
 					'Error!');
 				LimeSystem.exit(1);
 			}
@@ -115,16 +91,12 @@ class SUtil
 	public static function uncaughtErrorHandler():Void
 	{
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onError);
-		Lib.application.onExit.add(function(exitCode:Int)
-		{
-			if (Lib.current.loaderInfo.uncaughtErrorEvents.hasEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR))
-				Lib.current.loaderInfo.uncaughtErrorEvents.removeEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onError);
-		});
 	}
 
 	private static function onError(e:UncaughtErrorEvent):Void
 	{
 		var stack:Array<String> = [];
+
 		stack.push(e.error);
 
 		for (stackItem in CallStack.exceptionStack(true))
@@ -156,12 +128,7 @@ class SUtil
 			if (!FileSystem.exists('logs'))
 				FileSystem.createDirectory('logs');
 
-			File.saveContent('logs/'
-				+ Lib.application.meta.get('file')
-				+ '-'
-				+ Date.now().toString().replace(' ', '-').replace(':', "'")
-				+ '.txt',
-				msg + '\n');
+			File.saveContent('logs/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '.txt', msg + '\n');
 		}
 		catch (e:Dynamic)
 		{
@@ -175,8 +142,12 @@ class SUtil
 
 		LimeLogger.println(msg);
 		Lib.application.window.alert(msg, 'Error!');
-		#if (desktop && !hl) DiscordClient.shutdown(); #end
-		#if sys Sys.exit(1); #else LimeSystem.exit(1); #end
+
+		#if (desktop && !hl)
+		DiscordClient.shutdown();
+		#end
+
+		LimeSystem.exit(1);
 	}
 
 	public static function onCriticalError(error:Dynamic):Void
@@ -208,12 +179,7 @@ class SUtil
 			if (!FileSystem.exists('logs'))
 				FileSystem.createDirectory('logs');
 
-			File.saveContent('logs/'
-				+ Lib.application.meta.get('file')
-				+ '-'
-				+ Date.now().toString().replace(' ', '-').replace(':', "'")
-				+ '.txt',
-				msg + '\n');
+			File.saveContent('logs/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '.txt', msg + '\n');
 		}
 		catch (e:Dynamic)
 		{
@@ -225,10 +191,14 @@ class SUtil
 		}
 		#end
 
-		haxe.Log.trace(msg);
+		LimeLogger.println(msg);
 		Lib.application.window.alert(msg, 'Critical Error!');
-		#if (desktop && !hl) DiscordClient.shutdown(); #end
-		#if sys Sys.exit(1); #else LimeSystem.exit(1); #end
+
+		#if (desktop && !hl)
+		DiscordClient.shutdown();
+		#end
+
+		LimeSystem.exit(1);
 	}
 
 	/**
@@ -260,7 +230,8 @@ class SUtil
 		}
 	}
 
-	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json', fileData:String = 'you forgot to add something in your code lol'):Void
+	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json',
+			fileData:String = 'you forgot to add something in your code lol'):Void
 	{
 		try
 		{
@@ -282,8 +253,7 @@ class SUtil
 
 	public static function copyContent(copyPath:String, savePath:String):Void
 	{
-		try
-		{
+		try {
 			if (!FileSystem.exists(savePath) && LimeAssets.exists(copyPath))
 			{
 				if (!FileSystem.exists(Path.directory(savePath)))
