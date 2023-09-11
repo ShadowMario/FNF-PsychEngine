@@ -1,12 +1,15 @@
 package backend;
 
 import flixel.util.FlxSave;
+
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
+
 #if sys
 import sys.io.File;
 import sys.FileSystem;
 #end
+
 class CoolUtil
 {
 	inline public static function quantize(f:Float, snap:Float){
@@ -25,10 +28,7 @@ class CoolUtil
 		#if (sys && MODS_ALLOWED)
 		var formatted:Array<String> = path.split(':'); //prevent "shared:", "preload:" and other library names on file path
 		path = formatted[formatted.length-1];
-		if(FileSystem.exists(path))
-			daList = File.getContent(path);
-		else if(FileSystem.exists(path))
-			daList = File.getContent(path);
+		if(FileSystem.exists(path)) daList = File.getContent(path);
 		#else
 		if(Assets.exists(path)) daList = Assets.getText(path);
 		#end
