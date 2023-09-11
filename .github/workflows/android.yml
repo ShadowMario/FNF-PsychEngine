@@ -4,7 +4,7 @@ jobs:
   Build-gcc:
     strategy:
       matrix:
-        build_type: [EXTERNAL_DATA, EXTERNAL]
+        build_type: [EXTERNAL_DATA]
     runs-on: ubuntu-20.04
     permissions: write-all
     steps:
@@ -118,7 +118,7 @@ jobs:
   Build-clang:
     strategy:
       matrix:
-        build_type: [EXTERNAL_DATA, EXTERNAL]
+        build_type: [EXTERNAL_DATA]
     runs-on: ubuntu-22.04
     permissions: write-all
     steps:
