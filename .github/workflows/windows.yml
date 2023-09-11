@@ -28,7 +28,7 @@ jobs:
           haxelib setup ~/haxelib
           haxelib git hxcpp https://github.com/mcagabe19-stuff/hxcpp.git
           haxelib install hmm --quiet
-          haxelib run hmm install > /dev/null
+          haxelib run hmm install > nul
         env:
           HXCPP_COMPILE_CACHE: ~/.hxcpp
       - name: Info
