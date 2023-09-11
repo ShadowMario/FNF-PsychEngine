@@ -2,7 +2,6 @@ package;
 
 #if android
 import android.content.Context;
-import android.os.Environment;
 #end
 import backend.SUtil;
 import flixel.graphics.FlxGraphic;
@@ -29,15 +28,6 @@ import lime.graphics.Image;
 	#define GAMEMODE_AUTO
 ')
 #end
-
-enum StorageType
-{
-	INTERNAL;
-	EXTERNAL;
-	EXTERNAL_DATA;
-	MEDIA;
-}
-
 class Main extends Sprite
 {
 	var game = {
@@ -59,29 +49,15 @@ class Main extends Sprite
 	public static function main():Void
 	{
 		Lib.current.addChild(new Main());
-		#if cpp
-		cpp.NativeGc.enable(true);
-		cpp.NativeGc.run(true);
-		#end
 	}
 
-	public function new(#if EXTERNAL_DATA type:StorageType = EXTERNAL_DATA #elseif EXTERNAL type:StorageType = EXTERNAL #elseif MEDIA type:StorageType = MEDIA #else type:StorageType = EXTERNAL_DATA #end)
+	public function new()
 	{
 		super();
 
 		// https://github.com/MAJigsaw77/UTF/blob/972e4c27ec62e2279cddb53083a2fee98e76ce53/source/Main.hx#L45-L49 (but modified)
 	        #if android
-		switch (type)
-		{
-			case INTERNAL:
-				Sys.setCwd(Context.getFilesDir() + '/');
-			case EXTERNAL_DATA:
-				Sys.setCwd(Context.getExternalFilesDir(null) + '/');
-			case EXTERNAL:
-				Sys.setCwd(Environment.getExternalStorageDirectory() + '/.' + Application.current.meta.get('file') + '/');
-			case MEDIA:
-				Sys.setCwd(Environment.getExternalStorageDirectory() + '/Android/media/' + Application.current.meta.get('packageName') + '/');
-		}
+		Sys.setCwd(Context.getExternalFilesDir(null) + '/');
 		#elseif ios
 		Sys.setCwd(LimeSystem.applicationStorageDirectory);
 		#end
@@ -93,23 +69,6 @@ class Main extends Sprite
 		#elseif hl
 		Api.setErrorHandler(SUtil.onCriticalError);
 		#end
-
-		// https://github.com/MAJigsaw77/UTF/blob/main/source/Main.hx
-		FlxG.signals.preStateCreate.add(function(state:FlxState)
-		{
-			// Clear the loaded graphics if they are no longer in flixel cache...
-			for (key in Assets.cache.getBitmapKeys())
-				if (!FlxG.bitmap.checkCache(key))
-					Assets.cache.removeBitmapData(key);
-
-			// Clear all the loaded sounds from the cache...
-			for (key in Assets.cache.getSoundKeys())
-				Assets.cache.removeSound(key);
-
-			// Run the garbage colector...
-			System.gc();
-		});
-		FlxG.signals.postStateSwitch.add(System.gc);
 
 		if (stage != null)
 		{
