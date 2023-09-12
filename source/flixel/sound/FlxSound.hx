@@ -20,7 +20,7 @@ import flixel.system.FlxSoundGroup;
 
 import openfl.Assets;
 #if flash11
-import openfl.utils.ByteArray;
+import flash.utils.ByteArray;
 #end
 #if (openfl >= "8.0.0")
 import openfl.utils.AssetType;
