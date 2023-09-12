@@ -9,7 +9,7 @@ import flixel.ui.FlxButton;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
-import flash.net.FileFilter;
+import openfl.net.FileFilter;
 //import tjson.TJSON as Json;
 import haxe.Json;
 #if sys

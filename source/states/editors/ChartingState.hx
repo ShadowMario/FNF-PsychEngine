@@ -1,6 +1,6 @@
 package states.editors;
 
-import flash.geom.Rectangle;
+import openfl.geom.Rectangle;
 //import tjson.TJSON as Json;
 import haxe.Json;
 import haxe.format.JsonParser;
@@ -42,7 +42,7 @@ import substates.Prompt;
 
 
 #if sys
-import flash.media.Sound;
+import openfl.media.Sound;
 import sys.FileSystem;
 import sys.io.File;
 #end
