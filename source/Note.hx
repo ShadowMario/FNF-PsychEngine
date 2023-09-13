@@ -246,7 +246,7 @@ class Note extends FlxSprite
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
 
-		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length && !ClientPrefs.colorQuants && ClientPrefs.showNotes)
+		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length && !ClientPrefs.colorQuants && ClientPrefs.showNotes && ClientPrefs.enableColorShader)
 		{
 			colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 			colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
@@ -284,7 +284,7 @@ class Note extends FlxSprite
 			}
 			noteType = value;
 		}
-		if (ClientPrefs.showNotes)
+		if (ClientPrefs.showNotes && ClientPrefs.enableColorShader)
 		{
 		noteSplashHue = colorSwap.hue;
 		noteSplashSat = colorSwap.saturation;
@@ -336,6 +336,8 @@ class Note extends FlxSprite
 			if(ClientPrefs.colorQuants) {
 				texture = 'RED_NOTE_assets';
 			}
+			if (ClientPrefs.enableColorShader)
+			{
 			colorSwap = new ColorSwap();
 			shader = colorSwap.shader;
 			if (!ClientPrefs.colorQuants)
@@ -349,6 +351,7 @@ class Note extends FlxSprite
 				theStrumStuff.colorSwap.hue = colorSwap.hue;
 				theStrumStuff.colorSwap.saturation = colorSwap.saturation;
 				theStrumStuff.colorSwap.brightness = colorSwap.brightness;
+			}
 			}
 			}
 			x += swagWidth * (noteData);

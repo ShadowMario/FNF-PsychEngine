@@ -143,6 +143,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Enable Note Colors',
+			'If unchecked, notes won\'t be able to use your currently set colors. \nI think this decreases loading time.',
+			'enableColorShader',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Camera Note Movement',
 			"If checked, note hits will move the camera depending on which note you hit.",
 			'cameraPanning',

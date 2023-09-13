@@ -21,6 +21,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var colorQuants:Bool = false;
 	public static var panIntensity:Float = 1;
 	public static var noteSplashes:Bool = true;
+	public static var enableColorShader:Bool = true;
 	public static var cacheOnGPU:Bool = false;
 	public static var communityGameBot:Bool = false;
 	public static var noSyncing:Bool = false;
@@ -278,6 +279,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.maxPerformance = maxPerformance;
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
+		FlxG.save.data.enableColorShader = enableColorShader;
 		FlxG.save.data.noPausing = noPausing;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.ratesAndCombo = ratesAndCombo;
@@ -417,6 +419,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.comboMultLimit != null) {
 			comboMultLimit = FlxG.save.data.comboMultLimit;
+		}
+		if(FlxG.save.data.enableColorShader != null) {
+			enableColorShader = FlxG.save.data.enableColorShader;
 		}
 		if(FlxG.save.data.showNPS != null) {
 			showNPS = FlxG.save.data.showNPS;
