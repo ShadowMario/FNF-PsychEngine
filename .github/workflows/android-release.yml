@@ -118,7 +118,7 @@ jobs:
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
   Releaser:
-    needs: [Build-gcc, Build-clang]
+    needs: Build-clang
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
