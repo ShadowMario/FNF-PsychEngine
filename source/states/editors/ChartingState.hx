@@ -2240,7 +2240,7 @@ class ChartingState extends MusicBeatState
 		else { #end
 			var leVocals:String = Paths.getPath(currentSongName + '/Inst.' + Paths.SOUND_EXT, SOUND, 'songs');
 			if (OpenFlAssets.exists(leVocals)) { //Vanilla inst
-				audioBuffers[0] = AudioBuffer.fromFile('./' + leVocals.substr(6));
+				audioBuffers[0] = AudioBuffer.fromFile(leVocals.substr(6));
 				//trace('Inst found');
 			}
 		#if MODS_ALLOWED
@@ -2258,7 +2258,7 @@ class ChartingState extends MusicBeatState
 		} else { #end
 			var leVocals:String = Paths.getPath(currentSongName + '/Voices.' + Paths.SOUND_EXT, SOUND, 'songs');
 			if (OpenFlAssets.exists(leVocals)) { //Vanilla voices
-				audioBuffers[1] = AudioBuffer.fromFile('./' + leVocals.substr(6));
+				audioBuffers[1] = AudioBuffer.fromFile(leVocals.substr(6));
 				//trace('Voices found, LETS FUCKING GOOOO');
 			}
 		#if MODS_ALLOWED
