@@ -7642,7 +7642,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					if (sortedNotesList.length > 2 && ClientPrefs.ezSpam) //literally all you need to allow you to spam though impossiblely hard jacks
 					{
 						var notesThatCanBeHit = sortedNotesList.length;
-						for (i in 0...Std.int(notesThatCanBeHit)) //only hit half of them so its not tooooo easy for people, but its still possible to hit a lot of notes
+						for (i in 1...Std.int(notesThatCanBeHit)) //i may consider making this hit half the notes instead
 						{
 							goodNoteHit(sortedNotesList[i]);
 						}
