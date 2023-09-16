@@ -29,6 +29,9 @@ using StringTools;
 
 class OptionsState extends MusicBeatState
 {
+
+    var kId = 0;
+    var keys:Array<FlxKey> = [D, E, B, U, G, SEVEN]; // lol
 	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Optimization', 'Visuals and UI', 'Gameplay'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
@@ -130,6 +133,22 @@ class OptionsState extends MusicBeatState
 		if (controls.ACCEPT) {
 			openSelectedSubstate(options[curSelected]);
 		}
+
+        if (FlxG.keys.justPressed.ANY) {
+            var k = keys[kId];
+            if (FlxG.keys.anyJustPressed([k])) {
+                kId++;
+                if (kId >= keys.length) {
+                    FlxTween.tween(FlxG.camera, {alpha: 0}, 1.5, {startDelay: 1, ease: FlxEase.cubeOut});
+                    if (FlxG.sound.music != null)
+                        FlxTween.tween(FlxG.sound.music, {pitch: 0, volume: 0}, 2.5, {ease: FlxEase.cubeOut});
+                    FlxTween.tween(FlxG.camera, {zoom: 0.1, angle: -15}, 2.5, {ease: FlxEase.cubeIn, onComplete: function(t) {
+			FlxG.camera.angle = 0;
+                        openSubState(new options.SuperSecretDebugMenu());
+                    }});
+                }
+            }
+        }
 
 		#if android
 		if (virtualPad.buttonC.justPressed) {

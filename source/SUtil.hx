@@ -9,6 +9,7 @@ import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.Lib;
+import flixel.FlxG;
 import haxe.CallStack.StackItem;
 import haxe.CallStack;
 import haxe.io.Path;
@@ -117,7 +118,7 @@ class SUtil
 		Sys.println(errorMessage);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
-		SUtil.applicationAlert("Error!", errorMessage);
+		SUtil.applicationAlert("Error! (" + Main.__superCoolErrorMessagesArray[FlxG.random.int(0, Main.__superCoolErrorMessagesArray.length)] + ")", errorMessage);
 		System.exit(0);
 	}
 

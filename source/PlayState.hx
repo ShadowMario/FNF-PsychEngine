@@ -384,6 +384,7 @@ class PlayState extends MusicBeatState
 	public var restartTimer:FlxTimer = null;
 
 	public var maxScore:Int = 0;
+	public var oppScore:Float = 0;
 	public var songScore:Float = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
@@ -1202,8 +1203,10 @@ class PlayState extends MusicBeatState
 		['Bad', 0.5], //From 40% to 49%
 		['Bruh', 0.6], //From 50% to 59%
 		['Meh', 0.69], //From 60% to 68%
-		['funny number', 0.7], //69%
-		['nice', 0.8], //From 70% to 79%
+		['funny number', 0.69417], //69.0% to 69.419% ( ͡° ͜ʖ ͡°)
+		['( ͡° ͜ʖ ͡°)', 0.6943], //69.420% ( ͡° ͜ʖ ͡°)
+		['funny number', 0.7], //69.421% to 69.999% ( ͡° ͜ʖ ͡°)
+		['nice', 0.8], //From 70% to 79% 
 		['awesome', 0.9], //From 80% to 89%
 		['thats amazing', 1], //From 90% to 99%
 		['PERFECT!!!!!!', 1] //The value on this one isn't used actually, since Perfect is always "1"
@@ -2131,7 +2134,7 @@ class PlayState extends MusicBeatState
 		boyfriendGroup.destroy();
 		}
 
-		judgementCounter = new FlxText(0, FlxG.height / 2 - (ClientPrefs.hudType != 'Box Funkin' || ClientPrefs.hudType != "Mic'd Up" ? 40 : 250), 0, "", 20);
+		judgementCounter = new FlxText(0, FlxG.height / 2 - (ClientPrefs.hudType != 'Box Funkin' || ClientPrefs.hudType != "Mic'd Up" ? 0 : 250), 0, "", 20);
 		judgementCounter.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Box Funkin') judgementCounter.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgementCounter.borderSize = 2;
@@ -5037,6 +5040,15 @@ if (ClientPrefs.showNPS)
 
 		super.update(elapsed);
 
+
+			for (i in 0...opponentStrums.length) {
+				if ((ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) && opponentStrums.members[i].resetAnim <= 0) {
+				opponentStrums.members[i].colorSwap.hue = 0;
+				opponentStrums.members[i].colorSwap.saturation = 0;
+				opponentStrums.members[i].colorSwap.brightness = 0;
+				}
+			}
+
 		shownScore = FlxMath.lerp(shownScore, songScore, .4/(ClientPrefs.framerate / 60));
 		if (Math.abs(shownScore - songScore) <= 10)
 			shownScore = songScore;
@@ -6427,6 +6439,7 @@ if (ClientPrefs.showNPS)
 							n.visible = true;
 							n.wasGoodHit = false;
 							n.noteWasHit = false;
+							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
 							n.spawned = false;
@@ -6467,6 +6480,7 @@ if (ClientPrefs.showNPS)
 							n.visible = true;
 							n.wasGoodHit = false;
 							n.noteWasHit = false;
+							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
 							n.spawned = false;
@@ -6506,6 +6520,7 @@ if (ClientPrefs.showNPS)
 							n.visible = true;
 							n.wasGoodHit = false;
 							n.noteWasHit = false;
+							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
 							n.spawned = false;
@@ -6543,6 +6558,7 @@ if (ClientPrefs.showNPS)
 							n.visible = true;
 							n.wasGoodHit = false;
 							n.noteWasHit = false;
+							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
 							n.spawned = false;
@@ -6579,6 +6595,7 @@ if (ClientPrefs.showNPS)
 							n.visible = true;
 							n.wasGoodHit = false;
 							n.noteWasHit = false;
+							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
 							n.spawned = false;
@@ -6614,10 +6631,12 @@ if (ClientPrefs.showNPS)
 							n.visible = true;
 							n.wasGoodHit = false;
 							n.noteWasHit = false;
+							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
 							n.spawned = false;
 							n.alpha = 1;
+							n.clipRect = null;
 							if (n.mustPress && !n.isSustainNote)
 							{
 							totalNotes += 1;
@@ -6648,10 +6667,12 @@ if (ClientPrefs.showNPS)
 							n.visible = true;
 							n.wasGoodHit = false;
 							n.noteWasHit = false;
+							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
 							n.spawned = false;
 							n.alpha = 1;
+							n.clipRect = null;
 							if (n.mustPress && !n.isSustainNote)
 							{
 							totalNotes += 1;
@@ -6671,10 +6692,12 @@ if (ClientPrefs.showNPS)
 							n.visible = true;
 							n.wasGoodHit = false;
 							n.noteWasHit = false;
+							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
 							n.spawned = false;
 							n.alpha = 1;
+							n.clipRect = null;
 							if (n.mustPress && !n.isSustainNote)
 							{
 							totalNotes += 1;
@@ -6683,7 +6706,43 @@ if (ClientPrefs.showNPS)
 							}
 						}
 				Conductor.songPosition = 0;
-				callOnLuas('onLoopSong', []);
+	}
+	public function infiniteLoopLua(startPoint:Float = 0):Void
+	{	
+					unspawnNotes = unspawnNotesCopy.copy();
+						for (n in unspawnNotes)
+						{
+							if (n.strumTime >= Conductor.songPosition)
+							{
+							n.active = true;
+							n.visible = true;
+							n.wasGoodHit = false;
+							n.noteWasHit = false;
+							n.tooLate = false;
+							n.canBeHit = false;
+							n.hitByOpponent = false;
+							n.spawned = false;
+							n.alpha = 1;
+							n.clipRect = null;
+							if (n.mustPress && !n.isSustainNote)
+							{
+							totalNotes += 1;
+							} else if (!n.mustPress && !n.isSustainNote) {
+							opponentNoteTotal += 1;
+							}
+						} else {
+							n.active = false;
+							n.visible = false;
+							n.wasGoodHit = true;
+							n.noteWasHit = true;
+							n.tooLate = false;
+							n.canBeHit = false;
+							n.hitByOpponent = true;
+							n.spawned = true;
+							n.alpha = 0;
+							n.clipRect = null;
+						}
+						}
 	}
 
 
@@ -8088,7 +8147,16 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		if(note.isSustainNote && (ClientPrefs.showNotes && !note.animation.curAnim.name.endsWith('end'))) {
 			time += 0.15;
 		}
-		StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time);
+				var spr:StrumNote = opponentStrums.members[note.noteData];
+
+				if(spr != null) {
+				if (ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
+				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
+				} else {
+				spr.playAnim('confirm', true);
+				}
+				spr.resetAnim = time;
+				}
 		}
 		note.hitByOpponent = true;
 
@@ -8583,13 +8651,26 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				if(note.isSustainNote && (ClientPrefs.showNotes && !note.animation.curAnim.name.endsWith('end'))) {
 					time += (!ClientPrefs.communityGameBot ? 0.15 : FlxG.random.float(0.05, 0.15)) / playbackRate;
 				}
-				StrumPlayAnim(false, Std.int(Math.abs(note.noteData)), time);
+				var spr:StrumNote = playerStrums.members[note.noteData];
+
+				if(spr != null) {
+				if (ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
+				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
+				} else {
+				spr.playAnim('confirm', true);
+				}
+				spr.resetAnim = time;
+				}
 				}
 			} else if (ClientPrefs.playerLightStrum) {
 				var spr = playerStrums.members[note.noteData];
 				if(spr != null)
 				{
-					spr.playAnim('confirm', true);
+				if (ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
+				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
+				} else {
+				spr.playAnim('confirm', true);
+				}
 				}
 			}
 			note.wasGoodHit = true;

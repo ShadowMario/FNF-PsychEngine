@@ -113,6 +113,15 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		/*
+		var option:Option = new Option('Cluttered UI',
+			'If checked, the UI will be cluttered with tons of unnecessary gameplay elements.',
+			'clutterUI',
+			'bool',
+			false);
+		addOption(option);
+		*/
+
 		var option:Option = new Option('Results Screen',
 			'If unchecked, the results screen will be skipped.',
 			'resultsScreen',

@@ -45,6 +45,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var comboMultLimit:Float = 5;
 	public static var autosaveCharts:Bool = true;
 	public static var antiCheatEnable:Bool = false;
+	public static var rainbowNotes:Bool = false;
 	public static var bfIconStyle:String = 'Default';
 	public static var noteStyleThing:String = 'Default';
 	public static var daMenuMusic:String = 'Mashup';
@@ -63,7 +64,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var resultsScreen:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var hideScore:Bool = false;
-	public static var maxPerformance:Bool = false;
 	public static var voiidTrollMode:Bool = false;
 	public static var compactNumbers:Bool = false;
 	public static var ezSpam:Bool = false;
@@ -276,7 +276,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.hudType = hudType;
 		FlxG.save.data.ratingCounter = ratingCounter;
 		FlxG.save.data.colorRatingHit = colorRatingHit;
-		FlxG.save.data.maxPerformance = maxPerformance;
+		FlxG.save.data.rainbowNotes = rainbowNotes;
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
 		FlxG.save.data.enableColorShader = enableColorShader;
@@ -414,8 +414,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.resyncType != null) {
 			resyncType = FlxG.save.data.resyncType;
 		}
-		if(FlxG.save.data.maxPerformance != null) {
-			maxPerformance = FlxG.save.data.maxPerformance;
+		if(FlxG.save.data.rainbowNotes != null) {
+			rainbowNotes = FlxG.save.data.rainbowNotes;
 		}
 		if(FlxG.save.data.comboMultLimit != null) {
 			comboMultLimit = FlxG.save.data.comboMultLimit;

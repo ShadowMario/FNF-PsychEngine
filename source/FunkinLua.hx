@@ -167,6 +167,8 @@ class FunkinLua {
 		set('altAnim', false);
 		set('gfSection', false);
 
+		set('shouldKillNotes', PlayState.instance.shouldKillNotes);
+
 		// Gameplay settings
 		set('healthGainMult', PlayState.instance.healthGain);
 		set('healthLossMult', PlayState.instance.healthLoss);
@@ -637,6 +639,11 @@ class FunkinLua {
 
 				}
 			}
+		});
+		Lua_helper.add_callback(lua, "loopTheSong", function(startingPoint:Float = 0) {
+			Conductor.songPosition = startingPoint;
+			FlxG.sound.music.time = startingPoint;
+			PlayState.instance.infiniteLoopLua();
 		});
 		Lua_helper.add_callback(lua, "setGlobalFromScript", function(luaFile:String, global:String, val:Dynamic){ // returns the global from a script
 			var cervix = luaFile + ".lua";

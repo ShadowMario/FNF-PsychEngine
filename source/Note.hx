@@ -246,7 +246,7 @@ class Note extends FlxSprite
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
 
-		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length && !ClientPrefs.colorQuants && ClientPrefs.showNotes && ClientPrefs.enableColorShader)
+		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length && !ClientPrefs.colorQuants && !ClientPrefs.rainbowNotes && ClientPrefs.showNotes && ClientPrefs.enableColorShader)
 		{
 			colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 			colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
@@ -333,24 +333,22 @@ class Note extends FlxSprite
 			if(ClientPrefs.noteStyleThing == 'TGT V4') {
 				texture = 'TGTNOTE_assets';
 			}
-			if(ClientPrefs.colorQuants) {
+			if(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
 				texture = 'RED_NOTE_assets';
 			}
 			if (ClientPrefs.enableColorShader)
 			{
 			colorSwap = new ColorSwap();
 			shader = colorSwap.shader;
-			if (!ClientPrefs.colorQuants)
+			if (!ClientPrefs.colorQuants && !ClientPrefs.rainbowNotes)
 			{
 				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
 				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
 			}
-			if (ClientPrefs.colorQuants && theStrumStuff != null)
+			if (ClientPrefs.rainbowNotes)
 			{
-				theStrumStuff.colorSwap.hue = colorSwap.hue;
-				theStrumStuff.colorSwap.saturation = colorSwap.saturation;
-				theStrumStuff.colorSwap.brightness = colorSwap.brightness;
+				colorSwap.hue = ((strumTime / 5000 * 360) / 360) % 1;
 			}
 			}
 			}
@@ -384,12 +382,6 @@ class Note extends FlxSprite
 			colorSwap.hue = prevNote.colorSwap.hue;
 			colorSwap.saturation = prevNote.colorSwap.saturation;
 			colorSwap.brightness = prevNote.colorSwap.brightness;
-			}
-			if (ClientPrefs.colorQuants && theStrumStuff != null)
-			{
-				theStrumStuff.colorSwap.hue = prevNote.colorSwap.hue;
-				theStrumStuff.colorSwap.saturation = prevNote.colorSwap.saturation;
-				theStrumStuff.colorSwap.brightness = prevNote.colorSwap.brightness;
 			}
 
 			updateHitbox();

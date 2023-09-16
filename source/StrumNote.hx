@@ -56,7 +56,7 @@ class StrumNote extends FlxSprite
 			if(ClientPrefs.noteStyleThing == 'TGT V4') {
 				skin = 'TGTNOTE_assets';
 			}
-			if(ClientPrefs.colorQuants) {
+			if(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
 				skin = 'RED_NOTE_assets';
 			}
 		}
@@ -156,6 +156,7 @@ class StrumNote extends FlxSprite
 			resetAnim -= elapsed;
 			if(resetAnim <= 0) {
 				playAnim('static');
+           			resetHue(); // Add this line to reset the hue value
 				resetAnim = 0;
 			}
 		}
@@ -168,7 +169,7 @@ class StrumNote extends FlxSprite
 		super.update(elapsed);
 	}
 
-	public function playAnim(anim:String, ?force:Bool = false) {
+	public function playAnim(anim:String, ?force:Bool = false, hue:Float = 0, sat:Float = 0, brt:Float = 0) {
 		animation.play(anim, force);
 		centerOffsets();
 		centerOrigin();
@@ -179,16 +180,28 @@ class StrumNote extends FlxSprite
 		} else {
 			if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
 			{
-				if (!ClientPrefs.colorQuants)
+				if (!ClientPrefs.colorQuants || !ClientPrefs.rainbowNotes)
 				{
 				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
 				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
+				}
+				if (ClientPrefs.colorQuants || ClientPrefs.rainbowNotes)
+				{
+				colorSwap.hue = hue;
+				colorSwap.saturation = sat;
+				colorSwap.brightness = brt;
 				}
 			}
 			if(animation.curAnim.name == 'confirm' && !PlayState.isPixelStage) {
 				centerOrigin();
 			}
 		}
+	}
+	public function resetHue() {
+    	// Reset the hue value to 0 (or any desired value)
+    	colorSwap.hue = 0;
+    	colorSwap.saturation = 0;
+    	colorSwap.brightness = 0;
 	}
 }
