@@ -397,6 +397,7 @@ class PlayState extends MusicBeatState
 	var timePercentTxt:FlxText;
 
 	var scoreTxtTween:FlxTween;
+	var timeTxtTween:FlxTween;
 	var judgementCounter:FlxText;
 
 	public static var campaignScore:Float = 0;
@@ -2142,7 +2143,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.hudType == 'Box Funkin') judgementCounter.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgementCounter.borderSize = 2;
 		judgementCounter.scrollFactor.set();
-		judgementCounter.visible = ClientPrefs.ratingCounter || !ClientPrefs.showcaseMode;
+		judgementCounter.visible = ClientPrefs.ratingCounter && !ClientPrefs.showcaseMode;
 		if (!ClientPrefs.noMarvJudge)
 		{
 		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses + (ClientPrefs.comboScoreEffect ? 'Score Multiplier: ' + comboMultiplier + 'x' : '');
@@ -2174,7 +2175,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled || !ClientPrefs.showcaseMode;
+		botplayTxt.visible = cpuControlled && !ClientPrefs.showcaseMode;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
@@ -2185,7 +2186,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.5;
-		botplayTxt.visible = cpuControlled || !ClientPrefs.showcaseMode;
+		botplayTxt.visible = cpuControlled && !ClientPrefs.showcaseMode;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
@@ -2196,7 +2197,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled || !ClientPrefs.showcaseMode;
+		botplayTxt.visible = cpuControlled && !ClientPrefs.showcaseMode;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
@@ -2208,7 +2209,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.scrollFactor.set();
 		botplayTxt.screenCenter(X);
 		botplayTxt.borderSize = 3;
-		botplayTxt.visible = cpuControlled || !ClientPrefs.showcaseMode;
+		botplayTxt.visible = cpuControlled && !ClientPrefs.showcaseMode;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
@@ -2227,7 +2228,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled || !ClientPrefs.showcaseMode;
+		botplayTxt.visible = cpuControlled && !ClientPrefs.showcaseMode;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
@@ -2238,7 +2239,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("Aller_rg.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled || !ClientPrefs.showcaseMode;
+		botplayTxt.visible = cpuControlled && !ClientPrefs.showcaseMode;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
@@ -2249,7 +2250,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("calibri.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled || !ClientPrefs.showcaseMode;
+		botplayTxt.visible = cpuControlled && !ClientPrefs.showcaseMode;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
@@ -2260,7 +2261,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled || !ClientPrefs.showcaseMode;
+		botplayTxt.visible = cpuControlled && !ClientPrefs.showcaseMode;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll) 
 			botplayTxt.y = timeBarBG.y - 78;
@@ -2271,7 +2272,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]), CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled || !ClientPrefs.showcaseMode;
+		botplayTxt.visible = cpuControlled && !ClientPrefs.showcaseMode;
 		add(botplayTxt);
 		if (ClientPrefs.downScroll)
 		{
@@ -8978,6 +8979,20 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	override function beatHit()
 	{
 		super.beatHit();
+
+		if(ClientPrefs.timeBounce)
+		{
+			if(timeTxtTween != null) {
+				timeTxtTween.cancel();
+			}
+			timeTxt.scale.x = 1.075;
+			timeTxt.scale.y = 1.075;
+			timeTxtTween = FlxTween.tween(timeTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					timeTxtTween = null;
+				}
+			});
+		}
 
 		if (curBeat % 32 == 0 && randomSpeedThing)
 		{

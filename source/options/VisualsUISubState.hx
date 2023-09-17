@@ -106,6 +106,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Time Text Bounce',
+			'If checked, the time bar text will bounce on every beat hit.',
+			'timeBounce',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('songLength Intro Animation',
 			'If checked, the song length will also have an intro animation.',
 			'lengthIntro',

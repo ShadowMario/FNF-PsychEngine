@@ -105,7 +105,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var smoothHealth:Bool = true;
 	public static var smoothHealthType:String = 'Golden Apple 1.5';
 	public static var rateNameStuff:String = 'Quotes';
-	public static var accuracyMod:String = 'Accurate';
+	public static var timeBounce:Bool = true;
 	public static var percentDecimals:Int = 2;
 	public static var healthGainType:String = 'Psych Engine';
 	public static var hitsoundType:String = 'osu!mania';
@@ -234,7 +234,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.longFCName = longFCName;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.skipResultsScreen = skipResultsScreen;
-		FlxG.save.data.accuracyMod = accuracyMod;
+		FlxG.save.data.timeBounce = timeBounce;
 		FlxG.save.data.maxCGBMS = maxCGBMS;
 		FlxG.save.data.minCGBMS = minCGBMS;
 		FlxG.save.data.playerLightStrum = playerLightStrum;
@@ -496,8 +496,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.noteStyleThing != null) {
 			noteStyleThing = FlxG.save.data.noteStyleThing;
 		}
-		if(FlxG.save.data.accuracyMod != null) {
-			accuracyMod = FlxG.save.data.accuracyMod;
+		if(FlxG.save.data.timeBounce != null) {
+			timeBounce = FlxG.save.data.timeBounce;
 		}
 		if(FlxG.save.data.lengthIntro != null) {
 			lengthIntro = FlxG.save.data.lengthIntro;
