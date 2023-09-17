@@ -40,6 +40,10 @@ class MainMenuState extends MusicBeatState
 		#end
 		Mods.loadTopMod();
 
+		#if (MODS_ALLOWED && ACHIEVEMENTS_ALLOWED)
+		Achievements.loadModAchievements();
+		#end
+		 
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);

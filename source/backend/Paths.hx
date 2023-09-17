@@ -435,6 +435,10 @@ class Paths
 		return 'mods/' + key;
 	}
 
+	inline static public function modsAchievement(key:String = '') {
+		return modFolders('achievements/' + key);
+	}
+
 	inline static public function modsFont(key:String) {
 		return modFolders('fonts/' + key);
 	}

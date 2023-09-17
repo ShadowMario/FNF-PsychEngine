@@ -21,6 +21,10 @@ class AchievementsMenuState extends MusicBeatState
 
 	override function create()
 	{
+		#if MODS_ALLOWED
+		Achievements.loadModAchievements();
+		#end 
+		
 		// prepare achievement list
 		for (achievement in Achievements.achievements)
 		{
