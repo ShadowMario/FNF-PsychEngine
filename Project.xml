@@ -8,7 +8,7 @@
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
 
 	<!-- NOTE TO SELF: DISABLE THIS IF ISSUES ARE FOUND -->
-	<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB"/> <!-- stable luas PUT AFTER FIRST LINE WITH APP NAME AND ETC -->
+	<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB" /> <!-- stable luas PUT AFTER FIRST LINE WITH APP NAME AND ETC -->
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -17,16 +17,26 @@
 
 	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8" />
-	
+
 	<!-- ______________________ PSYCH ENGINE CUSTOMIZATION ______________________ -->
 
+	<!-- COMMENT/DELETE THIS TO DISABLE MODDING SUPPORT -->
 	<define name="MODS_ALLOWED" if="desktop" />
-	<define name="HSCRIPT_ALLOWED" if="sys" />
+	<!-- COMMENT/DELETE THIS TO DISABLE HAXE SCRIPTING SUPPORT -->
+	<define name="HSCRIPT_ALLOWED" if="desktop" />
+	<!-- COMMENT/DELETE THIS TO DISABLE LUA SCRIPTING SUPPORT -->
 	<define name="LUA_ALLOWED" if="cpp" />
-	<define name="DISCORD_RPC" if="cpp" />
+	<!-- COMMENT/DELETE THIS TO DISABLE DISCORD RICH PRESENCE SUPPORT -->
+	<define name="DISCORD_ALLOWED" if="cpp" />
+	<!-- COMMENT/DELETE THIS TO DISABLE IN-GAME ACHIEVEMENTS -->
 	<define name="ACHIEVEMENTS_ALLOWED" />
+	<!-- COMMENT/DELETE THIS TO DISABLE VIDEO PLAYBACK SUPPORT -->
 	<define name="VIDEOS_ALLOWED" if="cpp" unless="32bits || mac"/>
-	<define name="PSYCH_WATERMARKS" /> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
+	<!-- COMMENT/DELETE THIS TO DISABLE THE CRASH HANDLER -->
+	<define name="CRASH_HANDLER" if="desktop release" />
+	<!-- COMMENT/DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
+	<define name="PSYCH_WATERMARKS" />
+
 	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild" /> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
 
 	<!-- ____________________________ Window Settings ___________________________ -->
@@ -55,9 +65,6 @@
 	<classpath name="source" />
 
 	<!-- __________________________ Game Assets & Etc. __________________________ -->
-	
-	<!-- Turn on Crash Handler -->
-	<define name="CRASH_HANDLER" if="desktop release" />
 
 	<!-- Preload Assets -->
 	<define name="PRELOAD_ALL" unless="web" />

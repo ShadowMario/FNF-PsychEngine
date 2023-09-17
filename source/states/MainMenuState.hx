@@ -40,7 +40,7 @@ class MainMenuState extends MusicBeatState
 		#end
 		Mods.loadTopMod();
 
-		#if desktop
+		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
@@ -219,13 +219,11 @@ class MainMenuState extends MusicBeatState
 					});
 				}
 			}
-			#if desktop
 			else if (controls.justPressed('debug_1'))
 			{
 				selectedSomethin = true;
 				MusicBeatState.switchState(new MasterEditorMenu());
 			}
-			#end
 		}
 
 		super.update(elapsed);
