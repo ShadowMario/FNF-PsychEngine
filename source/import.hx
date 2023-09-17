@@ -1,4 +1,3 @@
-
 #if !macro
 //Discord API
 #if desktop
