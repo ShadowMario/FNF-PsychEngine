@@ -92,6 +92,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Showcase Mode',
+			'If checked, hides all the UI elements except for the time bar and notes\nand enables Botplay.',
+			'showcaseMode',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Show Maximum Score',
 			'If checked, the score text will show the highest score you can achieve\nif you were to have 100% accuracy throughout the song.',
 			'showMaxScore',

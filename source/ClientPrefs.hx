@@ -43,6 +43,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var songPercentage:Bool = true;
 	public static var autosaveInterval:Float = 5.0;
 	public static var comboMultLimit:Float = 5;
+	public static var minCGBMS:Int = 5;
+	public static var maxCGBMS:Int = 5;
 	public static var autosaveCharts:Bool = true;
 	public static var antiCheatEnable:Bool = false;
 	public static var rainbowNotes:Bool = false;
@@ -82,7 +84,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noteSpawnTime:Float = 1;
 	public static var dynamicSpawnTime:Bool = false;
 	public static var evenLessBotLag:Bool = false;
-	public static var progChartLoad:Bool = false;
+	public static var showcaseMode:Bool = false;
 	public static var oppNoteAlpha:Float = 0.65;
 	public static var lessBotLag:Bool = false;
 	public static var ratesAndCombo:Bool = false;
@@ -233,6 +235,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.skipResultsScreen = skipResultsScreen;
 		FlxG.save.data.accuracyMod = accuracyMod;
+		FlxG.save.data.maxCGBMS = maxCGBMS;
+		FlxG.save.data.minCGBMS = minCGBMS;
 		FlxG.save.data.playerLightStrum = playerLightStrum;
 		FlxG.save.data.healthDisplay = healthDisplay;
 		FlxG.save.data.wrongCameras = wrongCameras;
@@ -321,7 +325,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.comboOffset = comboOffset;
 		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
 		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
-		FlxG.save.data.progChartLoad = progChartLoad;
+		FlxG.save.data.showcaseMode = showcaseMode;
 		FlxG.save.data.ratingOffset = ratingOffset;
 		FlxG.save.data.marvWindow = marvWindow;
 		FlxG.save.data.sickWindow = sickWindow;
@@ -438,8 +442,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.charsAndBG != null) {
 			charsAndBG = FlxG.save.data.charsAndBG;
 		}
-		if(FlxG.save.data.progChartLoad != null) {
-			progChartLoad = FlxG.save.data.progChartLoad;
+		if(FlxG.save.data.showcaseMode != null) {
+			showcaseMode = FlxG.save.data.showcaseMode;
 		}
 		if(FlxG.save.data.fasterChartLoad != null) {
 			fasterChartLoad = FlxG.save.data.fasterChartLoad;
@@ -449,6 +453,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.voiidTrollMode != null) {
 			voiidTrollMode = FlxG.save.data.voiidTrollMode;
+		}
+		if(FlxG.save.data.minCGBMS != null) {
+			minCGBMS = FlxG.save.data.minCGBMS;
+		}
+		if(FlxG.save.data.maxCGBMS != null) {
+			maxCGBMS = FlxG.save.data.maxCGBMS;
 		}
 		if(FlxG.save.data.compactNumbers != null) {
 			compactNumbers = FlxG.save.data.compactNumbers;

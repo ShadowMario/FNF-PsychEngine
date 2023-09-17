@@ -150,6 +150,29 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		if (ClientPrefs.communityGameBot)
+		{
+		var option:Option = new Option('Max MS (CGBM)',
+			"How late can note hits be when CommunityGame Botplay Mode is enabled?",
+			'maxCGBMS',
+			'int',
+			45);
+		option.minValue = 0;
+		option.maxValue = 180;
+		option.displayFormat = '%v ms';
+		addOption(option);
+
+		var option:Option = new Option('Min MS (CGBM)',
+			"How early can note hits be when CommunityGame Botplay Mode is enabled?",
+			'minCGBMS',
+			'int',
+			-20);
+		option.minValue = -30;
+		option.maxValue = 0;
+		option.displayFormat = '%v ms';
+		addOption(option);
+		}
+
 		var option:Option = new Option('Beginning Sync',
 			"If checked, the game will resync the vocals for the first 500ms of a song.",
 			'startingSync',
