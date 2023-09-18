@@ -7,7 +7,7 @@ import flixel.ui.FlxButton;
 import flixel.FlxBasic;
 import openfl.display.BitmapData;
 import openfl.geom.Rectangle;
-import lime.utils.Assets;
+import openfl.utils.Assets;
 import tjson.TJSON as Json;
 
 #if sys

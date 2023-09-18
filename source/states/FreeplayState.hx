@@ -4,7 +4,7 @@ import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
 import openfl.Lib;
-import lime.utils.Assets;
+import openfl.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 
 import objects.HealthIcon;

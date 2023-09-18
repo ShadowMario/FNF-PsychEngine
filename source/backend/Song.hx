@@ -1,7 +1,7 @@
 package backend;
 
 import tjson.TJSON as Json;
-import lime.utils.Assets;
+import openfl.utils.Assets;
 
 #if sys
 import sys.io.File;

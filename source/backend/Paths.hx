@@ -15,7 +15,7 @@ import openfl.utils.Assets as OpenFlAssets;
 import openfl.system.System;
 import openfl.geom.Rectangle;
 
-import lime.utils.Assets;
+import openfl.utils.Assets;
 import openfl.media.Sound;
 
 #if sys

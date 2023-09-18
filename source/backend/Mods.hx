@@ -4,7 +4,7 @@ package backend;
 import sys.FileSystem;
 import sys.io.File;
 #else
-import lime.utils.Assets;
+import openfl.utils.Assets;
 #end
 import haxe.Json;
 
