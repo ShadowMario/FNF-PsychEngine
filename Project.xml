@@ -170,14 +170,11 @@
 			<certificate path="key.keystore" password="nullfunni" alias="null" alias-password="nullfunni" unless="debug" />
 
 			<config>
-                                <!--Permissions-->
-				<!--<android permission="android.permission.MANAGE_EXTERNAL_STORAGE" />-->
-
                                 <!--Gradle-->
-				<!--<android gradle-version="7.4.2" gradle-plugin="7.3.1" if="GRADLE7" />-->
+				<android gradle-version="7.4.2" gradle-plugin="7.3.1" />
 	
 				<!--Target SDK-->
-				<android target-sdk-version="29" if="${lime &lt; 8.1.0}" />
+				<android target-sdk-version="30" if="${lime &lt; 8.1.0}" />
 			</config>
 		</section>
 	
