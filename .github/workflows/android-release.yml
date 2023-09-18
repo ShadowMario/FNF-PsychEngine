@@ -51,7 +51,7 @@ jobs:
           haxe compile.hxml
           cd ${{ github.workspace }}
       - name: Info
-        run: echo "Haxe Version: $(haxe --version)" && haxelib list
+        run: echo haxe --version && haxelib list
       - name: Configure Android
         run: |
           haxelib run lime setup -alias -y
