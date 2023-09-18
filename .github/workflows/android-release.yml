@@ -7,15 +7,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+
       - name: Setup Java JDK
         uses: actions/setup-java@main
         with:
           distribution: 'temurin'
           java-version: '11'
+
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
           haxe-version: latest
+
       - name: Restore Previous Cache
         if: ${{ always() }}
         id: cache-debug-build-android
@@ -28,6 +31,7 @@ jobs:
             export/release/android/haxe
             export/release/android/obj
           key: cache-android-build
+
       - name: Install Libraries
         run: |
           haxelib setup ~/haxelib
@@ -45,13 +49,16 @@ jobs:
           haxelib install SScript 5.0.0 --quiet
           haxelib install tjson 1.4.0 --quiet
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
+
       - name: Setup git hxcpp
         run: |
           cd $(haxelib libpath hxcpp)/tools/hxcpp
           haxe compile.hxml
           cd ${{ github.workspace }}
+
       - name: Info
         run: echo haxe --version && haxelib list
+
       - name: Configure Android
         run: |
           haxelib run lime setup -alias -y
@@ -59,14 +66,14 @@ jobs:
           haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
           haxelib run lime config JAVA_HOME $JAVA_HOME
           haxelib run lime config ANDROID_SETUP true
-        env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+
       - name: Compile
         run: haxelib run lime build android -release
         env:
           HXCPP_COMPILE_CACHE: ~/.hxcpp
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
+
       - name: Clear Previous Cache
         if: ${{ always() }}
         uses: actions/github-script@main
@@ -93,6 +100,7 @@ jobs:
             } catch (error) {
             	console.log(error.message);
             }
+
       - name: Save Current Cache
         if: ${{ always() }}
         id: cache-release-build-android-save
@@ -105,6 +113,7 @@ jobs:
             export/release/android/haxe
             export/release/android/obj
           key: cache-android-build
+
       - name: Upload Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@main
@@ -113,17 +122,18 @@ jobs:
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
   Releaser:
-    needs: Build-clang
+    needs: Build
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
       - name: Download The Build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@main
         with:
            name: androidBuild
            path: /home/runner
+
       - name: Publish The Release
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
