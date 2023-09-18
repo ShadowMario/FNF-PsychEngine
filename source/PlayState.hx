@@ -396,6 +396,8 @@ class PlayState extends MusicBeatState
 	var timeTxt:FlxText;
 	var timePercentTxt:FlxText;
 
+	var hitTxt:FlxText;
+
 	var scoreTxtTween:FlxTween;
 	var timeTxtTween:FlxTween;
 	var judgementCounter:FlxText;
@@ -1958,6 +1960,19 @@ class PlayState extends MusicBeatState
 		EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);
 		add(EngineWatermark);
 		}
+
+		if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG) {
+		hitTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 20, 600, "test", 32);
+		hitTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		hitTxt.scrollFactor.set();
+		hitTxt.borderSize = 2;
+		hitTxt.visible = true;
+		hitTxt.cameras = [camHUD];
+		hitTxt.alignment = FlxTextAlign.CENTER; // center the text
+		hitTxt.screenCenter(X);
+		hitTxt.screenCenter(Y);
+		add(hitTxt);
+		}
 		
 		if (ClientPrefs.hudType == 'Kade Engine')
 		{ 		
@@ -2138,7 +2153,7 @@ class PlayState extends MusicBeatState
 		boyfriendGroup.destroy();
 		}
 
-		judgementCounter = new FlxText(0, FlxG.height / 2 - (ClientPrefs.hudType != 'Box Funkin' || ClientPrefs.hudType != "Mic'd Up" ? 0 : 250), 0, "", 20);
+		judgementCounter = new FlxText(0, FlxG.height / 2 - (ClientPrefs.hudType != 'Box Funkin' || ClientPrefs.hudType != "Mic'd Up" ? 80 : 350), 0, "", 20);
 		judgementCounter.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		if (ClientPrefs.hudType == 'Box Funkin') judgementCounter.setFormat(Paths.font("MilkyNice.ttf"), 21, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		judgementCounter.borderSize = 2;
@@ -4580,6 +4595,10 @@ class PlayState extends MusicBeatState
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.strumTime, Obj2.strumTime);
 	}
 
+	function sortByShit(Obj1:Note, Obj2:Note):Int {
+		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.strumTime, Obj2.strumTime);
+	}
+
 	public var skipArrowStartTween:Bool = false; //for lua
 	private function generateStaticArrows(player:Int):Void
 	{
@@ -5039,19 +5058,15 @@ if (ClientPrefs.showNPS)
         maxNPS = nps;
 }
 
+		if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG) hitTxt.text = 'Notes Hit: ' + totalNotesPlayed
+		+ '\nNPS (Max): ' + nps + ' (' + maxNPS + ')'
+		+ '\nOpponent Notes Hit: ' + enemyHits
+		+ '\nOpponent NPS (Max): ' + oppNPS + ' (' + maxOppNPS + ')';
+
 		if (combo > maxCombo)
 			maxCombo = combo;
 
 		super.update(elapsed);
-
-
-			for (i in 0...opponentStrums.length) {
-				if ((ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) && opponentStrums.members[i].resetAnim <= 0) {
-				opponentStrums.members[i].colorSwap.hue = 0;
-				opponentStrums.members[i].colorSwap.saturation = 0;
-				opponentStrums.members[i].colorSwap.brightness = 0;
-				}
-			}
 
 		shownScore = FlxMath.lerp(shownScore, songScore, .4/(ClientPrefs.framerate / 60));
 		if (Math.abs(shownScore - songScore) <= 10)
@@ -5606,10 +5621,12 @@ if (ClientPrefs.showNPS)
 			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
 			{
 				var dunceNote:Note = unspawnNotes.shift();
-				notes.insert(0, dunceNote);
+				notes.add(dunceNote);
 				dunceNote.spawned=true;
 			}
 		}
+
+			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 
 		if (generatedMusic)
 		{
@@ -5692,16 +5709,55 @@ if (ClientPrefs.showNPS)
 
 						if (!daNote.mustPress && daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote && daNote.strumTime <= Conductor.songPosition)
 						{
-							opponentNoteHit(daNote);
+							if (!ClientPrefs.showcaseMode && ClientPrefs.charsAndBG) opponentNoteHit(daNote);
+								if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG)
+								{
+								if (!daNote.isSustainNote) {
+								enemyHits += 1 * polyphony;
+								if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
+								oppNotesHitArray.push(1 * polyphony);
+								oppNotesHitDateArray.push(Date.now());
+								if (shouldKillNotes)
+								{
+									daNote.kill();
+								}
+								notes.remove(daNote, true);
+								if (shouldKillNotes)
+								{
+									daNote.destroy();
+								}
+								}
+								}
+								}
 						}
 
 						if(!daNote.blockHit && daNote.mustPress && cpuControlled && daNote.canBeHit && !softlocked) { //wait you cant even hit notes when the game is softlocked im a dumbass
 							if(daNote.isSustainNote) {
 								if(daNote.canBeHit) {
-									goodNoteHit(daNote);
+									if (!ClientPrefs.showcaseMode && ClientPrefs.charsAndBG) goodNoteHit(daNote);
 								}
 							} else if(daNote.strumTime + (ClientPrefs.communityGameBot ? FlxG.random.float(ClientPrefs.minCGBMS, ClientPrefs.maxCGBMS) : 0) <= Conductor.songPosition || daNote.isSustainNote) {
-								goodNoteHit(daNote);
+								if (!ClientPrefs.showcaseMode && ClientPrefs.charsAndBG) goodNoteHit(daNote);
+								if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG)
+								{
+								if (!daNote.isSustainNote) {
+								totalNotesPlayed += 1 * polyphony;
+								missCombo = 0;
+								if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
+								notesHitArray.push(1 * polyphony);
+								notesHitDateArray.push(Date.now());
+								if (shouldKillNotes)
+								{
+									daNote.kill();
+								}
+								notes.remove(daNote, true);
+								if (shouldKillNotes)
+								{
+									daNote.destroy();
+								}
+								}
+								}
+								}
 							}
 						}
 

@@ -94,7 +94,7 @@ class Main extends Sprite {
         "\r\ni am a secret message",
         "this is garnet",
         "Error: Sorry i already have a girlfriend",
-        "did you know theres a total of $__superCoolErrorMessagesArray.length silly messages",
+        "did you know theres a total of 50 silly messages",
         "whoopsies looks like i forgot to fix this",
         "Game used Crash. It's super effective!"
     ];
