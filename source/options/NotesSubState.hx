@@ -50,10 +50,6 @@ class NotesSubState extends MusicBeatSubstate
 
 	public function new() {
 		super();
-
-		#if mobileC
-		
-		#end
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFEA71FD;
@@ -91,7 +87,7 @@ class NotesSubState extends MusicBeatSubstate
 		add(bg);
 
 		#if mobileC
-		var text:Alphabet = new Alphabet(50, 86, 'PRESS', false);
+		var text:Alphabet = new Alphabet(44, 86, 'PRESS', false);
 		#else
 		var text:Alphabet = new Alphabet(50, 86, 'CTRL', false);
 		#end
@@ -206,7 +202,6 @@ class NotesSubState extends MusicBeatSubstate
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			#if mobileC
-			
 			FlxTransitionableState.skipNextTransOut = true;
 			ClientPrefs.saveSettings();
 			FlxG.resetState();
