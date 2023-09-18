@@ -122,8 +122,6 @@ jobs:
         with:
            name: androidBuild
            path: /home/runner
-      - name: Rename Clang Build
-        run: mv /home/runner/PsychEngine-release.apk /home/runner/PsychEngine-release.apk
       - name: Publish The Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
