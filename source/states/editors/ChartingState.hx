@@ -25,7 +25,6 @@ import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import openfl.media.Sound;
 import openfl.net.FileReference;
-import openfl.utils.Assets as OpenFlAssets;
 
 import backend.Song;
 import backend.Section;
@@ -453,7 +452,7 @@ class ChartingState extends MusicBeatState
 			#if sys
 			if (#if MODS_ALLOWED FileSystem.exists(Paths.modsJson(songName + '/events')) || #end FileSystem.exists(file))
 			#else
-			if (OpenFlAssets.exists(file))
+			if (Assets.exists(file))
 			#end
 			{
 				clearEvents();
@@ -1408,7 +1407,7 @@ class ChartingState extends MusicBeatState
 
 		var file:Dynamic = Paths.voices(currentSongName);
 		vocals = new FlxSound();
-		if (Std.isOfType(file, Sound) || OpenFlAssets.exists(file)) {
+		if (Std.isOfType(file, Sound) || Assets.exists(file)) {
 			vocals.loadEmbedded(file);
 			vocals.autoDestroy = false;
 			FlxG.sound.list.add(vocals);
@@ -2238,7 +2237,7 @@ class ChartingState extends MusicBeatState
 		}
 		else { #end
 			var leVocals:String = Paths.getPath(currentSongName + '/Inst.' + Paths.SOUND_EXT, SOUND, 'songs');
-			if (OpenFlAssets.exists(leVocals)) { //Vanilla inst
+			if (Assets.exists(leVocals)) { //Vanilla inst
 				audioBuffers[0] = AudioBuffer.fromFile(leVocals.substr(6));
 				//trace('Inst found');
 			}
@@ -2256,7 +2255,7 @@ class ChartingState extends MusicBeatState
 			//trace('Custom vocals found');
 		} else { #end
 			var leVocals:String = Paths.getPath(currentSongName + '/Voices.' + Paths.SOUND_EXT, SOUND, 'songs');
-			if (OpenFlAssets.exists(leVocals)) { //Vanilla voices
+			if (Assets.exists(leVocals)) { //Vanilla voices
 				audioBuffers[1] = AudioBuffer.fromFile(leVocals.substr(6));
 				//trace('Voices found, LETS FUCKING GOOOO');
 			}
@@ -2703,7 +2702,7 @@ class ChartingState extends MusicBeatState
 		if (!FileSystem.exists(path))
 		#else
 		var path:String = Paths.getPreloadPath(characterPath);
-		if (!OpenFlAssets.exists(path))
+		if (!Assets.exists(path))
 		#end
 		{
 			path = Paths.getPreloadPath('characters/' + Character.DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
@@ -2712,7 +2711,7 @@ class ChartingState extends MusicBeatState
 		#if MODS_ALLOWED
 		var rawJson = File.getContent(path);
 		#else
-		var rawJson = OpenFlAssets.getText(path);
+		var rawJson = Assets.getText(path);
 		#end
 
 		var json:CharacterFile = cast Json.parse(rawJson);

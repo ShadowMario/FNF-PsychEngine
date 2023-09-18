@@ -4,8 +4,8 @@ package backend;
 import sys.io.File;
 import sys.FileSystem;
 #end
-import openfl.utils.Assets as OpenFlAssets;
-import haxe.Json;
+import openfl.utils.Assets;
+import tjson.TJSON as Json;
 
 typedef WeekFile =
 {
@@ -177,7 +177,7 @@ class WeekData {
 			rawJson = File.getContent(path);
 		}
 		#else
-		if(OpenFlAssets.exists(path)) {
+		if(Assets.exists(path)) {
 			rawJson = Assets.getText(path);
 		}
 		#end

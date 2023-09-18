@@ -3,9 +3,7 @@ package states;
 import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
-import openfl.Lib;
 import openfl.utils.Assets;
-import openfl.utils.Assets as OpenFlAssets;
 
 import objects.HealthIcon;
 import states.editors.ChartingState;
@@ -353,7 +351,7 @@ class FreeplayState extends MusicBeatState
 			/*#if MODS_ALLOWED
 			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
 			#else
-			if(!OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
+			if(!Assets.exists(Paths.json(songLowercase + '/' + poop))) {
 			#end
 				poop = songLowercase;
 				curDifficulty = 1;
