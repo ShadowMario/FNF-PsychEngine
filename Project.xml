@@ -112,7 +112,7 @@
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="discord_rpc" if="desktop" unless="hl"/>
 	<haxelib name="hxjsonast" if="desktop"/>
-	<!--<haxelib name="tjson" />-->
+	<haxelib name="tjson" />
 	<haxedef name="openflPos" />
 	<haxedef name="hscriptPos" />
 	<haxelib name="extension-androidtools" if="android" />
