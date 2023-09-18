@@ -10,8 +10,7 @@ import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import openfl.net.FileFilter;
-//import tjson.TJSON as Json;
-import haxe.Json;
+import tjson.TJSON as Json;
 #if sys
 import sys.io.File;
 #end

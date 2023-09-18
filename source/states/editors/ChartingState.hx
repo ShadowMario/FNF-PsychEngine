@@ -1,8 +1,7 @@
 package states.editors;
 
 import openfl.geom.Rectangle;
-//import tjson.TJSON as Json;
-import haxe.Json;
+import tjson.TJSON as Json;
 import haxe.format.JsonParser;
 import haxe.io.Bytes;
 

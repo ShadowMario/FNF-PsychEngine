@@ -16,8 +16,7 @@ import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import lime.system.Clipboard;
-//import tjson.TJSON as Json;
-import haxe.Json;
+import tjson.TJSON as Json;
 
 import objects.Character;
 import objects.HealthIcon;

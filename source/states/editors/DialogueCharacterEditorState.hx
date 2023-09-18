@@ -11,8 +11,7 @@ import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import openfl.net.FileFilter;
-//import tjson.TJSON as Json;
-import haxe.Json;
+import tjson.TJSON as Json;
 import lime.system.Clipboard;
 #if sys
 import sys.io.File;

@@ -30,8 +30,7 @@ import flixel.animation.FlxAnimationController;
 import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.events.KeyboardEvent;
-//import tjson.TJSON as Json;
-import haxe.Json;
+import tjson.TJSON as Json;
 
 import cutscenes.CutsceneHandler;
 import cutscenes.DialogueBoxPsych;

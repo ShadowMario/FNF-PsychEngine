@@ -9,8 +9,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
-//import tjson.TJSON as Json;
-import haxe.Json;
+import tjson.TJSON as Json;
 
 import openfl.Assets;
 import openfl.display.Bitmap;
