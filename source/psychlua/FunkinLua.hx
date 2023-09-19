@@ -357,9 +357,7 @@ class FunkinLua {
 			PlayState.instance.variables.set(varName, value);
 			return value;
 		});
-		set("getVar", function(varName:String) {
-			return PlayState.instance.variables.get(varName);
-		});
+		set("getVar", PlayState.instance.variables.get);
 
 		set("addLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) { //would be dope asf.
 			var foundScript:String = findScript(luaFile);
@@ -673,10 +671,7 @@ class FunkinLua {
 			}
 		});
 
-		set("cancelTween", function(tag:String) {
-			LuaUtils.cancelTween(tag);
-		});
-
+		set("cancelTween", LuaUtils.cancelTween);
 		set("runTimer", function(tag:String, time:Float = 1, loops:Int = 1) {
 			LuaUtils.cancelTimer(tag);
 			game.modchartTimers.set(tag, new FlxTimer().start(time, function(tmr:FlxTimer) {
@@ -687,9 +682,7 @@ class FunkinLua {
 				//trace('Timer Completed: ' + tag);
 			}, loops));
 		});
-		set("cancelTimer", function(tag:String) {
-			LuaUtils.cancelTimer(tag);
-		});
+		set("cancelTimer", LuaUtils.cancelTimer);
 
 		//stupid bietch ass functions
 		set("addScore", function(value:Int = 0) {
@@ -737,9 +730,9 @@ class FunkinLua {
 		});
 
 		//Identical functions
-		set("FlxColor", function(color:String) return FlxColor.fromString(color));
-		set("getColorFromName", function(color:String) return FlxColor.fromString(color));
-		set("getColorFromString", function(color:String) return FlxColor.fromString(color));
+		set("FlxColor", FlxColor.fromString);
+		set("getColorFromName", FlxColor.fromString);
+		set("getColorFromString", FlxColor.fromString);
 		set("getColorFromHex", function(color:String) return FlxColor.fromString('#$color'));
 
 		// precaching
@@ -754,12 +747,8 @@ class FunkinLua {
 		set("precacheImage", function(name:String, ?allowGPU:Bool = true) {
 			Paths.image(name, allowGPU);
 		});
-		set("precacheSound", function(name:String) {
-			Paths.sound(name);
-		});
-		set("precacheMusic", function(name:String) {
-			Paths.music(name);
-		});
+		set("precacheSound", Paths.sound);
+		set("precacheMusic", Paths.music);
 
 		// others
 		set("triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic) {
@@ -770,10 +759,7 @@ class FunkinLua {
 			return true;
 		});
 
-		set("startCountdown", function() {
-			game.startCountdown();
-			return true;
-		});
+		set("startCountdown", game.startCountdown);
 		set("endSong", function() {
 			game.KillNotes();
 			game.endSong();
@@ -1147,15 +1133,9 @@ class FunkinLua {
 			}
 		});
 
-		set("luaSpriteExists", function(tag:String) {
-			return game.modchartSprites.exists(tag);
-		});
-		set("luaTextExists", function(tag:String) {
-			return game.modchartTexts.exists(tag);
-		});
-		set("luaSoundExists", function(tag:String) {
-			return game.modchartSounds.exists(tag);
-		});
+		set("luaSpriteExists", game.modchartSprites.exists);
+		set("luaTextExists", game.modchartTexts.exists);
+		set("luaSoundExists", game.modchartSounds.exists);
 
 		set("setHealthBarColors", function(left:String, right:String) {
 			game.healthBar.setColors(CoolUtil.colorFromString(left), CoolUtil.colorFromString(right));
