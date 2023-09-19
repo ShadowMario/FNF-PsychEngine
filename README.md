@@ -120,7 +120,7 @@ If you want to, you can disable Lua scripts running or just disable videos all t
 * The engine comes with 15 example achievements that you can mess with and learn how it works (Check Achievements.hx and search for "checkForAchievement" on PlayState.hx)
 
 ## Options menu:
-* You can change note colors, audio offset and combo/rating positions, controls and other sorts of settings there.
+* You can change note colours, audio offset and combo/rating positions, controls and other sorts of settings there.
 * You can also toggle Downscroll, Middlescroll, Anti-Aliasing, Framerate, Low Quality, Note Splashes, Flashing Lights, etc.
 
 ## Other gameplay features:
