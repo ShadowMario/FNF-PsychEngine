@@ -200,8 +200,10 @@ class HScript extends Interp
 					retVal = retFunc;
 			}
 
-			if (funk.hscript.exception != null)
+			if (funk.hscript.exception != null) {
+				funk.hscript.active = false;
 				FunkinLua.luaTrace('ERROR (${funk.lastCalledFunction}) - ${funk.hscript.exception}', false, false, FlxColor.RED);
+			}
 
 			return retVal;
 		});
@@ -211,8 +213,10 @@ class HScript extends Interp
 
 			var retVal:Dynamic = funk.hscript.executeFunction(funcToRun, funcArgs);
 
-			if (funk.hscript.exception != null)
+			if (funk.hscript.exception != null) {
+				funk.hscript.active = false;
 				FunkinLua.luaTrace('ERROR (${funk.lastCalledFunction}) - ${funk.hscript.exception}', false, false, FlxColor.RED);
+			}
 
 			return retVal;
 		});
@@ -232,8 +236,10 @@ class HScript extends Interp
 			try {
 				funk.hscript.setVar(libName, c);
 			}
-			catch(e)
+			catch(e) {
+				funk.hscript.active = false;
 				FunkinLua.luaTrace('ERROR (${funk.lastCalledFunction}) - $e', false, false, FlxColor.RED);
+			}
 		});
 		#end
 	}
