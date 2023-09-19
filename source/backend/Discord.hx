@@ -3,6 +3,7 @@ package backend;
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
 import lime.app.Application;
+import psychlua.FunkinLua;
 
 class DiscordClient
 {
@@ -143,12 +144,12 @@ class DiscordClient
 	#end
 
 	#if LUA_ALLOWED
-	public static function addLuaCallbacks(lua:State) {
-		Lua_helper.add_callback(lua, "changeDiscordPresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
+	public static function addLuaCallbacks(funk:FunkinLua) {
+		funk.set("changeDiscordPresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
 			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
 		});
 
-		Lua_helper.add_callback(lua, "changeDiscordClientID", function(?newID:String = null) {
+		funk.set("changeDiscordClientID", function(?newID:String = null) {
 			if(newID == null) newID = _defaultID;
 			clientID = newID;
 		});
