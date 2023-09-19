@@ -51,11 +51,6 @@
       "version": null
     },
     {
-      "name": "SScript",
-      "type": "haxelib",
-      "version": null
-    },
-    {
       "name": "hxcpp-debug-server",
       "type": "haxelib",
       "version": null
@@ -66,6 +61,13 @@
       "dir": null,
       "ref": "master",
       "url": "https://github.com/Aidan63/linc_discord-rpc"
+    },
+    {
+      "name": "hscript",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/TheLeerName/hscript-improved"
     },
     {
       "name": "linc_luajit",

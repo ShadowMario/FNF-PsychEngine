@@ -282,8 +282,18 @@ class Paths
 		return null;
 	}
 
-	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
+	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false, ?absolute:Bool = false):String
 	{
+		if (absolute) {
+			#if sys
+			if (FileSystem.exists(key))
+				return File.getContent(key);
+			#end
+			if(OpenFlAssets.exists(key, TEXT))
+				return Assets.getText(key);
+
+			return null;
+		}
 		#if sys
 		#if MODS_ALLOWED
 		if (!ignoreMods && FileSystem.exists(modFolders(key)))
