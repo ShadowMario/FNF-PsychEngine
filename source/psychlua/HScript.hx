@@ -235,7 +235,7 @@ class HScript
 		// This function is unnecessary because import already exists in hscript-improved as a native feature
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
 			initHaxeModule(funk);
-			if (!funk.hscript.active) return null;
+			if (!funk.hscript.active) return;
 
 			var str:String = '';
 			if(libPackage.length > 0)
@@ -243,7 +243,7 @@ class HScript
 			else if(libName == null)
 				libName = '';
 
-			var c = funk.hscript.resolveClassOrEnum(str + libName);
+			var c:Dynamic = funk.hscript.resolveClassOrEnum(str + libName);
 
 			try {
 				funk.hscript.setVar(libName, c);
