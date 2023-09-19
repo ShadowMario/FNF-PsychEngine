@@ -25,8 +25,9 @@ class HScript
 	{
 		#if HSCRIPT_ALLOWED
 		if(parent.hscript == null) {
+			var times:Float = Date.now().getTime();
 			parent.hscript = new HScript(parent);
-			trace('initialized hscript interp successfully: ${parent.scriptName}');
+			trace('initialized hscript interp successfully: ${parent.scriptName} (${Std.int(Date.now().getTime() - times)}ms)');
 		}
 		#end
 	}

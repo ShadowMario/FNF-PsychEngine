@@ -3160,6 +3160,7 @@ class PlayState extends MusicBeatState
 
 		try
 		{
+			var times:Float = Date.now().getTime();
 			var newScript:HScript = new HScript(null, file);
 			hscriptArray.push(newScript);
 
@@ -3178,7 +3179,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			trace('initialized hscript interp successfully: $file');
+			trace('initialized hscript interp successfully: $file (${Std.int(Date.now().getTime() - times)}ms)');
 		}
 		catch(e)
 		{
