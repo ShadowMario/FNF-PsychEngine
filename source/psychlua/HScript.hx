@@ -8,12 +8,14 @@ import psychlua.CustomSubstate;
 #if HSCRIPT_ALLOWED
 import hscript.Parser;
 import hscript.Interp;
+#end
 
-class HScript extends Interp
+class HScript
+#if HSCRIPT_ALLOWED extends Interp #end
 {
 	public var active:Bool = true;
 
-	public var parser:Parser;
+	public var parser:#if HSCRIPT_ALLOWED Parser #else Dynamic #end;
 
 	public var parentLua:FunkinLua;
 
@@ -21,10 +23,12 @@ class HScript extends Interp
 
 	public static function initHaxeModule(parent:FunkinLua)
 	{
+		#if HSCRIPT_ALLOWED
 		if(parent.hscript == null) {
 			parent.hscript = new HScript(parent);
 			trace('initialized hscript interp successfully: ${parent.scriptName}');
 		}
+		#end
 	}
 
 	public static function initHaxeModuleCode(parent:FunkinLua, code:String)
@@ -41,6 +45,7 @@ class HScript extends Interp
 
 	public var origin:String;
 	public function new(?parent:FunkinLua, ?file:String) {
+		#if HSCRIPT_ALLOWED
 		super();
 
 		var content:String = null;
@@ -55,10 +60,12 @@ class HScript extends Interp
 
 		preset();
 		executeCode(content);
+		#end
 	}
 
 	function preset()
 	{
+		#if HSCRIPT_ALLOWED
 		parser = new Parser();
 		parser.allowJSON = parser.allowMetadata = parser.allowTypes = true;
 		scriptObject = PlayState.instance; // allow use vars from playstate without "game" thing
@@ -152,9 +159,11 @@ class HScript extends Interp
 		setVar('Function_StopLua', FunkinLua.Function_StopLua); //doesnt do much cuz HScript has a lower priority than Lua
 		setVar('Function_StopHScript', FunkinLua.Function_StopHScript);
 		setVar('Function_StopAll', FunkinLua.Function_StopAll);
+		#end
 	}
 
 	public function executeCode(?codeToRun:String):Dynamic {
+		#if HSCRIPT_ALLOWED
 		if (codeToRun == null || !active) return null;
 
 		try {
@@ -162,10 +171,12 @@ class HScript extends Interp
 		}
 		catch(e)
 			exception = e;
+		#end
 		return null;
 	}
 
 	public function executeFunction(?funcToRun:String, ?funcArgs:Array<Dynamic>):Dynamic {
+		#if HSCRIPT_ALLOWED
 		if (funcToRun == null || !active) return null;
 
 		if (variables.exists(funcToRun)) {
@@ -176,12 +187,13 @@ class HScript extends Interp
 			catch(e)
 				exception = e;
 		}
+		#end
 		return null;
 	}
 
 	public static function implement(funk:FunkinLua)
 	{
-		#if LUA_ALLOWED
+		#if (LUA_ALLOWED && HSCRIPT_ALLOWED)
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			initHaxeModule(funk);
 			if (!funk.hscript.active) return null;
@@ -256,6 +268,7 @@ class HScript extends Interp
 		parser = null;
 		origin = null;
 		parentLua = null;
+		#if HSCRIPT_ALLOWED
 		__instanceFields = [];
 		binops.clear();
 		customClasses.clear();
@@ -263,9 +276,11 @@ class HScript extends Interp
 		importBlocklist = [];
 		locals.clear();
 		resetVariables();
+		#end
 	}
 }
 
+#if HSCRIPT_ALLOWED
 class CustomFlxColor
 {
 	public static var TRANSPARENT(default, null):Int = FlxColor.TRANSPARENT;
