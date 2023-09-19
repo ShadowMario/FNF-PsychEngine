@@ -22,8 +22,8 @@ class HScript extends Interp
 	public static function initHaxeModule(parent:FunkinLua)
 	{
 		if(parent.hscript == null) {
-			trace('initializing haxe interp for: ${parent.scriptName}');
 			parent.hscript = new HScript(parent);
+			trace('initialized hscript interp successfully: ${parent.scriptName}');
 		}
 	}
 
@@ -32,6 +32,11 @@ class HScript extends Interp
 		initHaxeModule(parent);
 		if (parent.hscript != null)
 			parent.hscript.executeCode(code);
+	}
+
+	public static function hscriptTrace(text:String, color:FlxColor = FlxColor.WHITE) {
+		PlayState.instance.addTextToDebug(text, color);
+		trace(text);
 	}
 
 	public var origin:String;
@@ -161,15 +166,15 @@ class HScript extends Interp
 	}
 
 	public function executeFunction(?funcToRun:String, ?funcArgs:Array<Dynamic>):Dynamic {
-		if (funcToRun != null && active) {
-			if (variables.exists(funcToRun)) {
-				if (funcArgs == null) funcArgs = [];
-				try {
-					return Reflect.callMethod(null, variables.get(funcToRun), funcArgs);
-				}
-				catch(e)
-					exception = e;
+		if (funcToRun == null || !active) return null;
+
+		if (variables.exists(funcToRun)) {
+			if (funcArgs == null) funcArgs = [];
+			try {
+				return Reflect.callMethod(null, variables.get(funcToRun), funcArgs);
 			}
+			catch(e)
+				exception = e;
 		}
 		return null;
 	}
@@ -179,6 +184,7 @@ class HScript extends Interp
 		#if LUA_ALLOWED
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			initHaxeModule(funk);
+			if (!funk.hscript.active) return null;
 
 			if(varsToBring != null) {
 				for (key in Reflect.fields(varsToBring)) {
@@ -201,6 +207,8 @@ class HScript extends Interp
 		});
 
 		funk.addLocalCallback("runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic>) {
+			if (!funk.hscript.active) return null;
+
 			var retVal:Dynamic = funk.hscript.executeFunction(funcToRun, funcArgs);
 
 			if (funk.hscript.exception != null)
@@ -211,6 +219,7 @@ class HScript extends Interp
 		// This function is unnecessary because import already exists in hscript-improved as a native feature
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
 			initHaxeModule(funk);
+			if (!funk.hscript.active) return null;
 
 			var str:String = '';
 			if(libPackage.length > 0)

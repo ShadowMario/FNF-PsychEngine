@@ -2133,7 +2133,7 @@ class PlayState extends MusicBeatState
 				}
 				catch(e:Dynamic)
 				{
-					addTextToDebug('ERROR ("Set Property" Event) - $e', FlxColor.RED);
+					HScript.hscriptTrace('ERROR ("Set Property" Event) - $e', FlxColor.RED);
 				}
 			
 			case 'Play Sound':
@@ -3156,7 +3156,6 @@ class PlayState extends MusicBeatState
 			newScript.destroy();
 			newScript = null;
 			hscriptArray.remove(newScript);
-			trace('failed to initialize hscript interp!!! ($file)');
 		}
 
 		try
@@ -3165,7 +3164,7 @@ class PlayState extends MusicBeatState
 			hscriptArray.push(newScript);
 
 			if (newScript.exception != null) {
-				addTextToDebug('ERROR ON LOADING - ${newScript.exception.message}', FlxColor.RED);
+				HScript.hscriptTrace('ERROR ON LOADING - ${newScript.exception.message}', FlxColor.RED);
 				makeError(newScript);
 				return;
 			}
@@ -3173,7 +3172,7 @@ class PlayState extends MusicBeatState
 			if (newScript.variables.exists('onCreate')) {
 				var retVal:Dynamic = newScript.executeFunction('onCreate');
 				if (newScript.exception != null) {
-					addTextToDebug('ERROR (onCreate) - ${newScript.exception.message}', FlxColor.RED);
+					HScript.hscriptTrace('ERROR (onCreate) - ${newScript.exception.message}', FlxColor.RED);
 					makeError(newScript);
 					return;
 				}
@@ -3183,7 +3182,7 @@ class PlayState extends MusicBeatState
 		}
 		catch(e)
 		{
-			addTextToDebug('ERROR - $e', FlxColor.RED);
+			HScript.hscriptTrace('ERROR - $e', FlxColor.RED);
 			if (hscriptArray.length > 0)
 				makeError(hscriptArray[hscriptArray.length - 1]);
 		}
@@ -3257,7 +3256,6 @@ class PlayState extends MusicBeatState
 			try
 			{
 				returnVal = script.executeFunction(funcToCall, args);
-				trace(returnVal, script.exception);
 				if (script.exception != null) {
 					FunkinLua.luaTrace('ERROR ($funcToCall) - ${script.exception}', true, false, FlxColor.RED);
 				}
