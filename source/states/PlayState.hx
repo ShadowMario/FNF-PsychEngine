@@ -76,7 +76,7 @@ import psychlua.HScript;
 
 class PlayState extends MusicBeatState
 {
-	public static var STRUM_X = 42;
+	public static var STRUM_X = 48.5;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
@@ -113,13 +113,13 @@ class PlayState extends MusicBeatState
 	public var modchartSaves:Map<String, FlxSave> = new Map<String, FlxSave>();
 	#end
 
-        #if !flash
-        public var shader_chromatic_abberation:ChromaticAberrationEffect;
+	#if !flash
+	public var shader_chromatic_abberation:ChromaticAberrationEffect;
 	public var shaderUpdates:Array<Float->Void> = [];
 	public var camGameShaders:Array<ShaderEffect> = [];
 	public var camHUDShaders:Array<ShaderEffect> = [];
 	public var camOtherShaders:Array<ShaderEffect> = [];
-        #end
+	#end
 
 	public var BF_X:Float = 770;
 	public var BF_Y:Float = 100;
@@ -415,10 +415,6 @@ class PlayState extends MusicBeatState
 		luaDebugGroup = new FlxTypedGroup<DebugLuaText>();
 		luaDebugGroup.cameras = [camOther];
 		add(luaDebugGroup);
-		#end
-
-                #if (SScript >= "4.1.0" && SScript < "5.0.0")
-		SScript.defaultClassSupport = null;
 		#end
 
 		// "GLOBAL" SCRIPTS
