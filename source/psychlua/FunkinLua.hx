@@ -1,4 +1,4 @@
-	package psychlua;
+package psychlua;
 
 #if mobileC
 import mobile.MobileControls;
