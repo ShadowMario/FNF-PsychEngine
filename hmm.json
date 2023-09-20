@@ -50,11 +50,6 @@
       "url": "https://github.com/polybiusproxy/hxCodec"
     },
     {
-      "name": "SScript",
-      "type": "haxelib",
-      "version": "5.0.0"
-    },
-    {
       "name": "hxcpp-debug-server",
       "type": "haxelib",
       "version": null
@@ -65,6 +60,13 @@
       "dir": null,
       "ref": "master",
       "url": "https://github.com/Aidan63/linc_discord-rpc"
+    },
+    {
+      "name": "hscript-improved",
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/TheLeerName/hscript-improved"
     },
     {
       "name": "linc_luajit",
