@@ -21,6 +21,8 @@ import openfl.utils.Assets;
 
 class ExtraFunctions
 {
+	var mobileC:Bool = #if mobileC true; #else false; #end
+	var mobile:Bool = #if mobile true; #else false; #end
 	public static function implement(funk:FunkinLua)
 	{
 		var lua:State = funk.lua;
@@ -131,7 +133,7 @@ class ExtraFunctions
 			}
 			return false;
 		});
-		#if mobileC
+		if(mobileC) {
 		Lua_helper.add_callback(lua, "extraButtonPressed", function(button:String) {
 			button = button.toLowerCase();
 			switch (mobile.MobileControls.getMode()){
@@ -224,7 +226,7 @@ class ExtraFunctions
 		}
 			return false;
 		});
-                #end
+		}
 
 		Lua_helper.add_callback(lua, "vibrate", function(duration:Null<Int>, ?period:Null<Int>){
 		    if (period == null) period = 0;
@@ -232,7 +234,7 @@ class ExtraFunctions
 		    return Haptic.vibrate(period, duration);
 		});
 
-		#if mobile
+		if(mobile) {
 		Lua_helper.add_callback(lua, "changeOrientation", function(orientation:String){
 		    if (orientation != null) {
 			switch (orientation){
@@ -245,7 +247,7 @@ class ExtraFunctions
 			}}
 			return FunkinLua.luaTrace('changeOrientation: No orientation specified.');
 		});
-		#end
+		}
 
 		// Save data management
 		Lua_helper.add_callback(lua, "initSaveData", function(name:String, ?folder:String = 'psychenginemods') {
