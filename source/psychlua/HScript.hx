@@ -109,6 +109,10 @@ class HScript
 		#end
 		setVar('ShaderFilter', openfl.filters.ShaderFilter);
 		setVar('StringTools', StringTools);
+		#if VIDEOS_ALLOWED
+		setVar('VideoSpriteHandler', backend.VideoSpriteHandler);
+		setVar('VideoHandler', backend.VideoHandler);
+		#end
 
 		// Functions & Variables
 		setVar('setVar', function(name:String, value:Dynamic)
