@@ -71,6 +71,22 @@ class HScript
 		parser.allowJSON = parser.allowMetadata = parser.allowTypes = true;
 		scriptObject = PlayState.instance; // allow use vars from playstate without "game" thing
 
+		// classes from SScript (rip)
+		setVar('Date', Date);
+		setVar('DateTools', DateTools);
+		setVar('Math', Math);
+		setVar('Reflect', Reflect);
+		setVar('Std', Std);
+		setVar('HScript', HScript);
+		setVar('StringTools', StringTools);
+		setVar('Type', Type);
+		#if sys
+		setVar('File', sys.io.File);
+		setVar('FileSystem', sys.FileSystem);
+		setVar('Sys', Sys);
+		#end
+		setVar('Assets', openfl.Assets);
+
 		// Some very commonly used classes
 		setVar('FlxG', flixel.FlxG);
 		setVar('FlxSprite', flixel.FlxSprite);
