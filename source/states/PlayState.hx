@@ -830,7 +830,6 @@ class PlayState extends MusicBeatState
 	}
 
 	public function startVideo(name:String)
-	{public function startVideo(name:String)
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
