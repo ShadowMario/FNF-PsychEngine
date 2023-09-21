@@ -261,6 +261,8 @@ class PlayState extends MusicBeatState
 	public var startCallback:Void->Void = null;
 	public var endCallback:Void->Void = null;
 
+	#if VIDEOS_ALLOWED public var videoSprites:Array<backend.VideoSpriteHandler> = []; #end 
+
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -1517,6 +1519,21 @@ class PlayState extends MusicBeatState
 			for (timer in modchartTimers) timer.active = true;
 			#end
 
+			#if VIDEOS_ALLOWED
+			if(videoSprites.length > 0){
+			for(daVideoSprite in 0...videoSprites.length){
+				videoSprites[daVideoSprite].bitmap.resume();
+				if (FlxG.autoPause)
+					{
+							FlxG.signals.focusGained.add(videoSprites[daVideoSprite].bitmap.resume);
+			
+							FlxG.signals.focusLost.add(videoSprites[daVideoSprite].bitmap.pause);
+					}
+				}
+			}
+			#end
+
+
 			paused = false;
 			callOnScripts('onResume');
 			resetRPC(startTimer != null && startTimer.finished);
@@ -1792,6 +1809,24 @@ class PlayState extends MusicBeatState
 			MusicBeatState.switchState(new GitarooPause());
 		}
 		else {*/
+
+		#if VIDEOS_ALLOWED
+		if(videoSprites.length > 0){
+			for(daVideoSprite in 0...videoSprites.length){
+				videoSprites[daVideoSprite].bitmap.pause();
+			//prevent the video from resuming on focus change in pause menu
+			if (FlxG.autoPause)
+				{
+					if (FlxG.signals.focusGained.has(videoSprites[daVideoSprite].bitmap.resume))
+						FlxG.signals.focusGained.remove(videoSprites[daVideoSprite].bitmap.resume);
+		
+					if (FlxG.signals.focusLost.has(videoSprites[daVideoSprite].bitmap.pause))
+						FlxG.signals.focusLost.remove(videoSprites[daVideoSprite].bitmap.pause);
+				}
+			}
+		}
+		#end
+		
 		if(FlxG.sound.music != null) {
 			FlxG.sound.music.pause();
 			vocals.pause();
@@ -1861,6 +1896,17 @@ class PlayState extends MusicBeatState
 				}
 				for (timer in modchartTimers) {
 					timer.active = true;
+				}
+				#end
+				#if VIDEOS_ALLOWED
+				//i assume it's better removing the thing on gameover
+				if(videoSprites.length > 0){
+				for(daVideoSprite in 0...videoSprites.length){
+					videoSprites[daVideoSprite].bitmap.onEndReached();
+					videoSprites[daVideoSprite].kill();
+				}
+				for(i in videoSprites)
+					videoSprites.remove(i);
 				}
 				#end
 				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollow.x, camFollow.y));
@@ -2993,6 +3039,17 @@ class PlayState extends MusicBeatState
 
 		while (hscriptArray.length > 0)
 			hscriptArray.pop();
+		#end
+
+		#if VIDEOS_ALLOWED
+		if(videoSprites.length > 0){
+			for(daVideoSprite in 0...videoSprites.length){
+				videoSprites[daVideoSprite].bitmap.onEndReached(); //ends the video(using kill only didn't remove the sound so...)
+				videoSprites[daVideoSprite].kill(); //some sort of optmization
+			}
+			for(i in videoSprites)
+				videoSprites.remove(i); //clearing
+		}
 		#end
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);

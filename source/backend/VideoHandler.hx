@@ -29,9 +29,9 @@ class VideoHandler extends BaseVideoHandler {
      #end
     public function startVideo(path:String, loop:Bool = false #if (hxCodec < "3.0.0") , pauseDaMusic:Bool = false #end) {
         #if (hxCodec >= "3.0.0")
-        super.play(path, loop);
+        this.play(path, loop);
         #else
-        super.playVideo(path, loop, pauseDaMusic);
+        this.playVideo(path, loop, pauseDaMusic);
         #end
     }
 
@@ -41,14 +41,14 @@ class VideoHandler extends BaseVideoHandler {
 	 */
     public function setFinishCallBack(func:Dynamic){
         #if (hxCodec >= "3.0.0")
-        super.onEndReached.add(function() {
-            super.dispose();
+        this.onEndReached.add(function() {
+            this.dispose();
             if(func != null)
             func();
         }, true);
         #else
         if(func != null)
-        super.finishCallback = func;
+        this.finishCallback = func;
         #end
     }
 
@@ -59,10 +59,10 @@ class VideoHandler extends BaseVideoHandler {
     public function setStartCallBack(func:Dynamic){
         #if (hxCodec >= "3.0.0")
         if(func != null)
-        super.onOpening.add(func, true);
+        this.onOpening.add(func, true);
         #else
         if(func != null)
-        super.openingCallback = func;
+        this.openingCallback = func;
         #end
     }
 

@@ -10,6 +10,7 @@ package backend;
 class VideoSpriteHandler extends BaseVideoSprite {
     public function new(x:Float, y:Float #if (hxCodec < "2.6.0"),width:Float = 1280, height:Float = 720, autoScale:Bool = true #end){
         super(x, y #if (hxCodec < "2.6.0"),width, height, autoScale #end);
+        states.PlayState.instance.videoSprites.push(this); //hopefully will put the VideoSprite var in the array
     }
     #if VIDEOS_ALLOWED
 
@@ -29,9 +30,9 @@ class VideoSpriteHandler extends BaseVideoSprite {
      #end
     public function startVideo(path:String, loop:Bool = false #if (hxCodec < "3.0.0") , pauseDaMusic:Bool = false #end) {
         #if (hxCodec >= "3.0.0")
-        super.play(path, loop);
+        this.play(path, loop);
         #else
-        super.playVideo(path, loop, pauseDaMusic);
+        this.playVideo(path, loop, pauseDaMusic);
         #end
     }
 
@@ -41,14 +42,14 @@ class VideoSpriteHandler extends BaseVideoSprite {
 	 */
     public function setFinishCallBack(func:Dynamic){
         #if (hxCodec >= "3.0.0")
-        super.bitmap.onEndReached.add(function() {
-            //super.bitmap.dispose(); //i'm not sure about this...
+        this.bitmap.onEndReached.add(function() {
+            //this.bitmap.dispose(); //i'm not sure about this...
             if(func != null)
                 func();
         }, true);
         #else
         if(func != null)
-        super.bitmap.finishCallback = func;
+        this.bitmap.finishCallback = func;
         #end
     }
 
@@ -59,10 +60,10 @@ class VideoSpriteHandler extends BaseVideoSprite {
     public function setStartCallBack(func:Dynamic){
         #if (hxCodec >= "3.0.0")
         if(func != null)
-        super.bitmap.onOpening.add(func, true);
+        this.bitmap.onOpening.add(func, true);
         #else
         if(func != null)
-        super.bitmap.openingCallback = func;
+        this.bitmap.openingCallback = func;
         #end
     }
     /*if you want do smth such as pausing the video just do this -> yourVideo.bitmap.pause();
