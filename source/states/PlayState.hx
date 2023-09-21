@@ -829,7 +829,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String)
+	public function startVideo(name:String):VideoHandler
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
@@ -843,19 +843,21 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.log.warn('Couldnt find video file: ' + name);
 			startAndEnd();
-			return;
+			return null;
 		}
 
 		var video:VideoHandler = new VideoHandler();
 			video.startVideo(filepath);
 			video.setFinishCallBack(function(){
 				startAndEnd();
-				return;
+				return null;
 			});
+		return video;
+
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
-		return;
+		return null;
 		#end
 	}
 
