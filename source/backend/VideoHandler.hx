@@ -27,12 +27,15 @@ class VideoHandler extends BaseVideoHandler {
 	 * @param PauseMusic Pause music until the video ends.
 	 */
      #end
-    public function startVideo(path:String, loop:Bool = false #if (hxCodec < "3.0.0") , pauseDaMusic:Bool = false #end) {
+    public function startVideo(path:String, loop:Bool = false #if (hxCodec < "3.0.0") , pauseDaMusic:Bool = false #end):BaseVideoHandler
+	{
         #if (hxCodec >= "3.0.0")
         super.play(path, loop);
         #else
         super.playVideo(path, loop, pauseDaMusic);
         #end
+
+	return super;
     }
 
     /**
