@@ -1,13 +1,13 @@
 package backend;
 #if VIDEOS_ALLOWED 
-#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideoSprite as BaseVideoSprite;
-#elseif (hxCodec >= "2.6.1") import hxcodec.VideoSprite as BaseVideoSprite;
-#elseif (hxCodec == "2.6.0") import VideoSprite as BaseVideoSprite;
-#else import vlc.MP4Sprite as BaseVideoSprite; #end
+#if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideoSprite as VideoSprite;
+#elseif (hxCodec >= "2.6.1") import hxcodec.VideoSprite;
+#elseif (hxCodec == "2.6.0") import VideoSprite;
+#else import vlc.MP4Sprite as VideoSprite; #end
 #end
 
 /*A class made to handle VideoSprite from diffrent hxCodec versions*/
-class VideoSpriteManager extends BaseVideoSprite {
+class VideoSpriteManager extends VideoSprite {
     public function new(x:Float, y:Float #if (hxCodec < "2.6.0"),width:Float = 1280, height:Float = 720, autoScale:Bool = true #end){
         super(x, y #if (hxCodec < "2.6.0"),width, height, autoScale #end);
         states.PlayState.instance.videoSprites.push(this); //hopefully will put the VideoSprite var in the array
