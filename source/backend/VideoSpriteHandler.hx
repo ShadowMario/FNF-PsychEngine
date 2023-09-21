@@ -9,7 +9,7 @@ package backend;
 /*A class made to handle VideoSprite from diffrent hxCodec versions*/
 class VideoSpriteHandler extends BaseVideoSprite {
     public function new(x:Float, y:Float #if (hxCodec < "2.6.0"),width:Float = 1280, height:Float = 720, autoScale:Bool = true #end){
-        super(x, y);
+        super(x, y #if (hxCodec < "2.6.0"),width, height, autoScale #end);
     }
     #if VIDEOS_ALLOWED
 
