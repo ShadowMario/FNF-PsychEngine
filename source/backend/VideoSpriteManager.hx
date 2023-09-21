@@ -7,32 +7,23 @@ package backend;
 #end
 
 /*A class made to handle VideoSprite from diffrent hxCodec versions*/
-class VideoSpriteHandler extends BaseVideoSprite {
+class VideoSpriteManager extends BaseVideoSprite {
     public function new(x:Float, y:Float #if (hxCodec < "2.6.0"),width:Float = 1280, height:Float = 720, autoScale:Bool = true #end){
         super(x, y #if (hxCodec < "2.6.0"),width, height, autoScale #end);
         states.PlayState.instance.videoSprites.push(this); //hopefully will put the VideoSprite var in the array
     }
     #if VIDEOS_ALLOWED
 
-    #if (hxCodec >= "3.0.0")
     /**
 	 * Native video support for Flixel & OpenFL
 	 * @param Path Example: `your/video/here.mp4`
 	 * @param Loop Loop the video.
 	 */
-     #else
-    /**
-	 * Native video support for Flixel & OpenFL
-	 * @param Path Example: `your/video/here.mp4`
-	 * @param Loop Loop the video.
-	 * @param PauseMusic Pause music until the video ends.
-	 */
-     #end
-    public function startVideo(path:String, loop:Bool = false #if (hxCodec < "3.0.0") , pauseDaMusic:Bool = false #end) {
+    public function startVideo(path:String, loop:Bool = false) {
         #if (hxCodec >= "3.0.0")
         this.play(path, loop);
         #else
-        this.playVideo(path, loop, pauseDaMusic);
+        this.playVideo(path, loop, false);
         #end
     }
 

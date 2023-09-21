@@ -55,7 +55,7 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED 
-import backend.VideoHandler;
+import backend.VideoManager;
 #end
 
 import objects.Note.EventNote;
@@ -261,7 +261,7 @@ class PlayState extends MusicBeatState
 	public var startCallback:Void->Void = null;
 	public var endCallback:Void->Void = null;
 
-	#if VIDEOS_ALLOWED public var videoSprites:Array<backend.VideoSpriteHandler> = []; #end 
+	#if VIDEOS_ALLOWED public var videoSprites:Array<backend.VideoSpriteManager> = []; #end 
 
 	override public function create()
 	{
@@ -831,7 +831,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String):VideoHandler
+	public function startVideo(name:String):VideoManager
 	{
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
@@ -848,7 +848,7 @@ class PlayState extends MusicBeatState
 			return null;
 		}
 
-		var video:VideoHandler = new VideoHandler();
+		var video:VideoManager = new VideoManager();
 			video.startVideo(filepath);
 			video.setFinishCallBack(function(){
 				startAndEnd();
