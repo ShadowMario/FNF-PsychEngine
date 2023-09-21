@@ -6,8 +6,8 @@ import backend.Mods;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
 import openfl.display.BitmapData;
-import flash.geom.Rectangle;
-import lime.utils.Assets;
+import openfl.geom.Rectangle;
+import openfl.utils.Assets;
 import tjson.TJSON as Json;
 
 #if sys
@@ -59,7 +59,7 @@ class ModsMenuState extends MusicBeatState
 		Paths.clearUnusedMemory();
 		WeekData.setDirectoryFromWeek();
 
-		#if desktop
+		#if (desktop && !hl)
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
@@ -334,6 +334,10 @@ class ModsMenuState extends MusicBeatState
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 
 		FlxG.mouse.visible = true;
+
+		#if mobileC
+		addVirtualPad(UP_DOWN, B);
+		#end
 
 		super.create();
 	}

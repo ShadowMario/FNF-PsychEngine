@@ -32,7 +32,7 @@ class MasterEditorMenu extends MusicBeatState
 	override function create()
 	{
 		FlxG.camera.bgColor = FlxColor.BLACK;
-		#if desktop
+		#if (desktop && !hl)
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Editors Main Menu", null);
 		#end
@@ -76,6 +76,15 @@ class MasterEditorMenu extends MusicBeatState
 		changeSelection();
 
 		FlxG.mouse.visible = false;
+
+		#if mobileC
+		#if MODS_ALLOWED
+		addVirtualPad(LEFT_FULL, A_B);
+		#else
+		addVirtualPad(UP_DOWN, A_B);
+		#end
+		#end
+
 		super.create();
 	}
 

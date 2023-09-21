@@ -12,6 +12,16 @@ class OutdatedState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 
+		#if mobileC
+		warnText = new FlxText(0, 0, FlxG.width,
+			"Sup kiddo, looks like you're running an   \n
+			outdated version of Psych Engine (" + MainMenuState.psychEngineVersion + "),\n
+			please update to " + TitleState.updateVersion + "!\n
+			Press B to proceed anyway.\n
+			\n
+			Thank you for using the Port!",
+			32);
+		#else
 		warnText = new FlxText(0, 0, FlxG.width,
 			"Sup bro, looks like you're running an   \n
 			outdated version of Psych Engine (" + MainMenuState.psychEngineVersion + "),\n
@@ -20,9 +30,14 @@ class OutdatedState extends MusicBeatState
 			\n
 			Thank you for using the Engine!",
 			32);
+		#end
 		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
+
+		#if mobileC
+		addVirtualPad(NONE, A_B);
+		#end
 	}
 
 	override function update(elapsed:Float)
@@ -30,7 +45,7 @@ class OutdatedState extends MusicBeatState
 		if(!leftState) {
 			if (controls.ACCEPT) {
 				leftState = true;
-				CoolUtil.browserLoad("https://github.com/ShadowMario/FNF-PsychEngine/releases");
+				CoolUtil.browserLoad("https://github.com/mcagabe19/FNF-PsychEngine-Mobile/releases");
 			}
 			else if(controls.BACK) {
 				leftState = true;

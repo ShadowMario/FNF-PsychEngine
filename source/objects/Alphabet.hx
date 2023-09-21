@@ -1,6 +1,7 @@
 package objects;
 
 import flixel.math.FlxPoint;
+import flixel.util.FlxDestroyUtil;
 
 enum Alignment
 {
@@ -26,8 +27,8 @@ class Alphabet extends FlxSpriteGroup
 	public var scaleY(default, set):Float = 1;
 	public var rows:Int = 0;
 
-	public var distancePerItem:FlxPoint = new FlxPoint(20, 120);
-	public var startPosition:FlxPoint = new FlxPoint(0, 0); //for the calculations
+	public var distancePerItem:FlxPoint = FlxPoint.get(20, 120);
+	public var startPosition:FlxPoint = FlxPoint.get(0, 0); //for the calculations
 
 	public function new(x:Float, y:Float, text:String = "", ?bold:Bool = true)
 	{
@@ -37,6 +38,9 @@ class Alphabet extends FlxSpriteGroup
 		this.startPosition.y = y;
 		this.bold = bold;
 		this.text = text;
+
+		moves = false;
+		immovable = true;
 	}
 
 	public function setAlignmentFromString(align:String)
@@ -99,7 +103,7 @@ class Alphabet extends FlxSpriteGroup
 			var letter:AlphaCharacter = letters[i];
 			if(letter != null)
 			{
-				letter.kill();
+				//letter = FlxDestroyUtil.destroy(letter);
 				letters.remove(letter);
 				remove(letter);
 			}
@@ -247,6 +251,14 @@ class Alphabet extends FlxSpriteGroup
 
 		if(letters.length > 0) rows++;
 	}
+
+	override function destroy(){
+		distancePerItem.put();
+		startPosition.put();
+		letters = FlxDestroyUtil.destroyArray(letters);
+		active = false;
+		super.destroy();
+	}
 }
 
 
@@ -347,6 +359,9 @@ class AlphaCharacter extends FlxSprite
 		super(x, y);
 		image = 'alphabet';
 		antialiasing = ClientPrefs.data.antialiasing;
+
+		moves = false;
+		immovable = true;
 	}
 	
 	public var curLetter:Letter = null;
@@ -477,5 +492,10 @@ class AlphaCharacter extends FlxSprite
 	{
 		super.updateHitbox();
 		updateLetterOffset();
+	}
+
+	override function destroy(){
+		active = false;
+		super.destroy();
 	}
 }

@@ -2,9 +2,10 @@ package substates;
 
 import backend.WeekData;
 import backend.Highscore;
-
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxSubState;
 import objects.HealthIcon;
+import flixel.util.FlxDestroyUtil;
 
 class ResetScoreSubState extends MusicBeatSubstate
 {
@@ -69,6 +70,12 @@ class ResetScoreSubState extends MusicBeatSubstate
 		noText.screenCenter(X);
 		noText.x += 200;
 		add(noText);
+
+		#if mobileC
+		addVirtualPad(LEFT_RIGHT, A_B);
+		addPadCamera(false);
+		#end
+
 		updateOptions();
 	}
 
@@ -89,8 +96,16 @@ class ResetScoreSubState extends MusicBeatSubstate
 			updateOptions();
 		}
 		if(controls.BACK) {
+			#if mobileC
+			
+			#end
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			#if mobileC
+			FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 		} else if(controls.ACCEPT) {
 			if(onYes) {
 				if(week == -1) {
@@ -100,8 +115,21 @@ class ResetScoreSubState extends MusicBeatSubstate
 				}
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
+			#if mobileC
+			
+			FlxTransitionableState.skipNextTransOut = true;
+			FlxG.resetState();
+			#else
 			close();
+			#end
 		}
+		#if mobileC
+		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
+		addVirtualPad(LEFT_RIGHT, A_B);
+		addPadCamera(false);
+		
+		}
+		#end
 		super.update(elapsed);
 	}
 
@@ -115,5 +143,15 @@ class ResetScoreSubState extends MusicBeatSubstate
 		noText.alpha = alphas[1 - confirmInt];
 		noText.scale.set(scales[1 - confirmInt], scales[1 - confirmInt]);
 		if(week == -1) icon.animation.curAnim.curFrame = confirmInt;
+	}
+
+	override function destroy(){
+		bg = FlxDestroyUtil.destroy(bg);
+		alphabetArray = FlxDestroyUtil.destroyArray(alphabetArray);
+		icon = FlxDestroyUtil.destroy(icon);
+                yesText = FlxDestroyUtil.destroy(yesText);
+		noText = FlxDestroyUtil.destroy(noText);
+
+		super.destroy();
 	}
 }

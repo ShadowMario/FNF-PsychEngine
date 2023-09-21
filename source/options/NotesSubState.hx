@@ -10,7 +10,7 @@ import lime.system.Clipboard;
 import flixel.util.FlxGradient;
 import objects.StrumNote;
 import objects.Note;
-
+import flixel.addons.transition.FlxTransitionableState;
 import shaders.RGBPalette;
 import shaders.RGBPalette.RGBShaderReference;
 
@@ -85,8 +85,12 @@ class NotesSubState extends MusicBeatSubstate
 		var bg:FlxSprite = new FlxSprite(750, 160).makeGraphic(FlxG.width - 780, 540, FlxColor.BLACK);
 		bg.alpha = 0.25;
 		add(bg);
-		
+
+		#if mobileC
+		var text:Alphabet = new Alphabet(44, 86, 'PRESS', false);
+		#else
 		var text:Alphabet = new Alphabet(50, 86, 'CTRL', false);
+		#end
 		text.alignment = CENTERED;
 		text.setScale(0.4);
 		add(text);
@@ -143,7 +147,12 @@ class NotesSubState extends MusicBeatSubstate
 
 		var tipX = 20;
 		var tipY = 660;
+		#if mobileC
+		var tip:FlxText = new FlxText(tipX, tipY, 0, "Press C to Reset the selected Note Part.", 16);
+		tipY = 0;
+		#else
 		var tip:FlxText = new FlxText(tipX, tipY, 0, "Press RELOAD to Reset the selected Note Part.", 16);
+		#end
 		tip.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tip.borderSize = 2;
 		add(tip);
@@ -163,11 +172,21 @@ class NotesSubState extends MusicBeatSubstate
 		FlxG.mouse.visible = !controls.controllerMode;
 		controllerPointer.visible = controls.controllerMode;
 		_lastControllerMode = controls.controllerMode;
+
+		#if mobileC
+        addVirtualPad(NONE, B_C);
+		MusicBeatSubstate.virtualPad.buttonC.x = 0;
+		MusicBeatSubstate.virtualPad.buttonC.y = FlxG.height - 135;
+        #end
 	}
 
 	function updateTip()
 	{
+		#if mobileC
+		// do sex
+		#else
 		tipTxt.text = 'Hold ' + (!controls.controllerMode ? 'Shift' : 'Left Shoulder Button') + ' + Press RELOAD to fully reset the selected Note.';
+		#end
 	}
 
 	var _storedColor:FlxColor;
@@ -182,7 +201,13 @@ class NotesSubState extends MusicBeatSubstate
 		if (controls.BACK) {
 			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
+			#if mobileC
+			FlxTransitionableState.skipNextTransOut = true;
+			ClientPrefs.saveSettings();
+			FlxG.resetState();
+			#else
 			close();
+			#end
 			return;
 		}
 
@@ -415,6 +440,7 @@ class NotesSubState extends MusicBeatSubstate
 			else if(pointerY() >= hexTypeLine.y && pointerY() < hexTypeLine.y + hexTypeLine.height &&
 					Math.abs(pointerX() - 1000) <= 84)
 			{
+				FlxG.stage.window.textInputEnabled = true;
 				hexTypeNum = 0;
 				for (letter in alphabetHex.letters)
 				{
@@ -451,7 +477,7 @@ class NotesSubState extends MusicBeatSubstate
 				}
 				else if (holdingOnObj == colorWheel)
 				{
-					var center:FlxPoint = new FlxPoint(colorWheel.x + colorWheel.width/2, colorWheel.y + colorWheel.height/2);
+					var center:FlxPoint = FlxPoint.weak(colorWheel.x + colorWheel.width/2, colorWheel.y + colorWheel.height/2);
 					var mouse:FlxPoint = pointerFlxPoint();
 					var hue:Float = FlxMath.wrap(FlxMath.wrap(Std.int(mouse.degreesTo(center)), 0, 360) - 90, 0, 360);
 					var sat:Float = FlxMath.bound(mouse.dist(center) / colorWheel.width*2, 0, 1);
@@ -462,9 +488,9 @@ class NotesSubState extends MusicBeatSubstate
 				}
 			} 
 		}
-		else if(controls.RESET && hexTypeNum < 0)
+		else if(#if mobileC MusicBeatSubstate.virtualPad.buttonC.justPressed || #end controls.RESET && hexTypeNum < 0)
 		{
-			if(FlxG.keys.pressed.SHIFT || FlxG.gamepads.anyJustPressed(LEFT_SHOULDER))
+			if(/*#if mobileC virtualPad.buttonC.justPressed || #end*/ FlxG.keys.pressed.SHIFT || FlxG.gamepads.anyJustPressed(LEFT_SHOULDER))
 			{
 				for (i in 0...3)
 				{
@@ -577,11 +603,11 @@ class NotesSubState extends MusicBeatSubstate
 
 		// clear groups
 		modeNotes.forEachAlive(function(note:FlxSprite) {
-			note.kill();
+			//note.kill();
 			note.destroy();
 		});
 		myNotes.forEachAlive(function(note:StrumNote) {
-			note.kill();
+			//note.kill();
 			note.destroy();
 		});
 		modeNotes.clear();
@@ -628,8 +654,8 @@ class NotesSubState extends MusicBeatSubstate
 		{
 			Note.initializeGlobalRGBShader(i);
 			var newNote:StrumNote = new StrumNote(150 + (480 / dataArray.length * i), 200, i, 0);
-			newNote.useRGBShader = true;
 			newNote.setGraphicSize(102);
+                        newNote.useRGBShader = true;
 			newNote.updateHitbox();
 			newNote.ID = i;
 			myNotes.add(newNote);

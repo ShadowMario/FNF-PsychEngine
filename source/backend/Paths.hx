@@ -11,12 +11,10 @@ import flixel.math.FlxRect;
 import openfl.display.BitmapData;
 import openfl.display3D.textures.RectangleTexture;
 import openfl.utils.AssetType;
-import openfl.utils.Assets as OpenFlAssets;
+import openfl.utils.Assets;
 import openfl.system.System;
 import openfl.geom.Rectangle;
-
-import lime.utils.Assets;
-import flash.media.Sound;
+import openfl.media.Sound;
 
 #if sys
 import sys.io.File;
@@ -124,12 +122,12 @@ class Paths
 			var levelPath:String = '';
 			if(currentLevel != 'shared') {
 				levelPath = getLibraryPathForce(file, 'week_assets', currentLevel);
-				if (OpenFlAssets.exists(levelPath, type))
+				if (Assets.exists(levelPath, type))
 					return levelPath;
 			}
 
 			levelPath = getLibraryPathForce(file, "shared");
-			if (OpenFlAssets.exists(levelPath, type))
+			if (Assets.exists(levelPath, type))
 				return levelPath;
 		}
 
@@ -255,8 +253,8 @@ class Paths
 				localTrackedAssets.push(file);
 				return currentTrackedAssets.get(file);
 			}
-			else if (OpenFlAssets.exists(file, IMAGE))
-				bitmap = OpenFlAssets.getBitmapData(file);
+			else if (Assets.exists(file, IMAGE))
+				bitmap = Assets.getBitmapData(file);
 		}
 
 		if (bitmap != null)
@@ -282,8 +280,18 @@ class Paths
 		return null;
 	}
 
-	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
+	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false, ?absolute:Bool = false):String
 	{
+		if (absolute) {
+			#if sys
+			if (FileSystem.exists(key))
+				return File.getContent(key);
+			#end
+			if(Assets.exists(key, TEXT))
+				return Assets.getText(key);
+
+			return null;
+		}
 		#if sys
 		#if MODS_ALLOWED
 		if (!ignoreMods && FileSystem.exists(modFolders(key)))
@@ -308,7 +316,7 @@ class Paths
 		}
 		#end
 		var path:String = getPath(key, TEXT);
-		if(OpenFlAssets.exists(path, TEXT)) return Assets.getText(path);
+		if(Assets.exists(path, TEXT)) return Assets.getText(path);
 		return null;
 	}
 
@@ -337,7 +345,7 @@ class Paths
 		}
 		#end
 
-		if(OpenFlAssets.exists(getPath(key, type, library, false))) {
+		if(Assets.exists(getPath(key, type, library, false))) {
 			return true;
 		}
 		return false;
@@ -347,9 +355,9 @@ class Paths
 	static public function getAtlas(key:String, ?library:String = null):FlxAtlasFrames
 	{
 		#if MODS_ALLOWED
-		if(FileSystem.exists(modsXml(key)) || OpenFlAssets.exists(getPath('images/$key.xml', library), TEXT))
+		if(FileSystem.exists(modsXml(key)) || Assets.exists(getPath('images/$key.xml', library), TEXT))
 		#else
-		if(OpenFlAssets.exists(getPath('images/$key.xml', library)))
+		if(Assets.exists(getPath('images/$key.xml', library)))
 		#end
 		{
 			return getSparrowAtlas(key, library);
@@ -417,13 +425,13 @@ class Paths
 		// trace(gottenPath);
 		if(!currentTrackedSounds.exists(gottenPath))
 		#if MODS_ALLOWED
-			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
+			currentTrackedSounds.set(gottenPath, Sound.fromFile(gottenPath));
 		#else
 		{
 			var folder:String = '';
 			if(path == 'songs') folder = 'songs:';
 
-			currentTrackedSounds.set(gottenPath, OpenFlAssets.getSound(folder + getPath('$path/$key.$SOUND_EXT', SOUND, library)));
+			currentTrackedSounds.set(gottenPath, Assets.getSound(folder + getPath('$path/$key.$SOUND_EXT', SOUND, library)));
 		}
 		#end
 		localTrackedAssets.push(gottenPath);
@@ -432,7 +440,7 @@ class Paths
 
 	#if MODS_ALLOWED
 	inline static public function mods(key:String = '') {
-		return 'mods/' + key;
+		return  #if mobile Sys.getCwd() + #end 'mods/' + key;
 	}
 
 	inline static public function modsFont(key:String) {
@@ -490,7 +498,7 @@ class Paths
 			if(FileSystem.exists(fileToCheck))
 				return fileToCheck;
 		}
-		return 'mods/' + key;
+		return  #if mobile Sys.getCwd() + #end 'mods/' + key;
 	}
 	#end
 }

@@ -25,7 +25,7 @@ class CreditsState extends MusicBeatState
 
 	override function create()
 	{
-		#if desktop
+		#if (desktop && !hl)
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
@@ -44,6 +44,15 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var defaultList:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['Mobile Porting Team'],
+			['mcagabe19',		                'lily',		                'Head Porter of Psych Engine Mobile',							'https://www.youtube.com/@mcagabe19',           'FFE7C0'],
+			['Karim Akra',				'karim',			'Assistant Porter/Helper #1 of Psych Engine Mobile',						'https://youtube.com/@Karim0690',		'FFB4F0'],
+			['MemeHoovy',				'hoovy',			'Helper #2 of Psych Engine Mobile',							'https://twitter.com/meme_hoovy',               'F592C4'],
+			[''],
+			['Mobile Special Thanks'],
+			['MAJigsaw77',				'jigsaw',			'Author of Mobile Controls, New FlxRuntimeShader and Storage Stuff',							'https://github.com/MAJigsaw77',               '898989'],
+			['Hiho2950',				'github',			'Optimized Notes and BotPlay',							'https://github.com/Hiho2950',               'FFFFFF'],
+			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
 			['Riveren',				'riveren',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/riverennn',		'B42F71'],
@@ -90,8 +99,12 @@ class CreditsState extends MusicBeatState
 				}
 
 				var str:String = 'credits/missing_icon';
-				if (Paths.image('credits/' + creditsStuff[i][1]) != null) str = 'credits/' + creditsStuff[i][1];
+				var fileName = 'credits/' + creditsStuff[i][1];
+				if (Paths.fileExists('images/$fileName.png', IMAGE)) str = fileName;
+				else if (Paths.fileExists('images/$fileName-pixel.png', IMAGE)) str = fileName + '-pixel';
+
 				var icon:AttachedSprite = new AttachedSprite(str);
+				if(str.endsWith('-pixel')) icon.antialiasing = false;
 				icon.xAdd = optionText.width + 10;
 				icon.sprTracker = optionText;
 	
@@ -123,6 +136,11 @@ class CreditsState extends MusicBeatState
 		bg.color = CoolUtil.colorFromString(creditsStuff[curSelected][4]);
 		intendedColor = bg.color;
 		changeSelection();
+
+		#if mobileC
+		addVirtualPad(UP_DOWN, A_B);
+		#end
+
 		super.create();
 	}
 

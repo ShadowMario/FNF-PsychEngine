@@ -6,7 +6,7 @@ import tjson.TJSON as Json;
 import sys.FileSystem;
 import sys.io.File;
 #end
-import lime.utils.Assets;
+import openfl.utils.Assets;
 
 typedef DialogueAnimArray = {
 	var anim:String;

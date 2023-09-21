@@ -6,6 +6,8 @@ import objects.NoteSplash;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 
+using StringTools;
+
 class NoteSplashDebugState extends MusicBeatState
 {
 	var config:NoteSplashConfig;
@@ -26,6 +28,9 @@ class NoteSplashDebugState extends MusicBeatState
 	var curAnimText:FlxText;
 	var savedText:FlxText;
 	var selecArr:Array<Float> = null;
+	#if mobileC
+	var idk:Bool = true; // im lazy to remove and add alot so idk
+	#end
 
 	override function create()
 	{
@@ -64,6 +69,7 @@ class NoteSplashDebugState extends MusicBeatState
 		add(animName);
 
 		nameInputText = new FlxInputText(txtx, txty + 20, 360, '', 16);
+		nameInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		nameInputText.callback = function(text:String, action:String)
 		{
 			switch(action)
@@ -107,11 +113,19 @@ class NoteSplashDebugState extends MusicBeatState
 		curAnimText.scrollFactor.set();
 		add(curAnimText);
 
+		#if mobileC
+		var text:FlxText = new FlxText(0, 520, FlxG.width,
+			"Press Y to Reset animation\n
+			Press A twice to save to the loaded Note Splash PNG's folder\n
+			Press Top LEFT/RIGHT to change selected note - Arrow Keys to change offset\n
+			C/V - Copy & Paste", 16);
+		#else
 		var text:FlxText = new FlxText(0, 520, FlxG.width,
 			"Press SPACE to Reset animation\n
 			Press ENTER twice to save to the loaded Note Splash PNG's folder\n
 			A/D change selected note - Arrow Keys to change offset (Hold shift for 10x)\n
 			Ctrl + C/V - Copy & Paste", 16);
+		#end
 		text.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		text.scrollFactor.set();
 		add(text);
@@ -124,6 +138,9 @@ class NoteSplashDebugState extends MusicBeatState
 		loadFrames();
 		changeSelection();
 		super.create();
+		#if mobileC
+		addVirtualPad(NOTE_SPLASH_DEBUG, NOTE_SPLASH_DEBUG);
+		#end
 		FlxG.mouse.visible = true;
 	}
 
@@ -146,8 +163,8 @@ class NoteSplashDebugState extends MusicBeatState
 
 		if(!notTyping) return;
 		
-		if (FlxG.keys.justPressed.A) changeSelection(-1);
-		else if (FlxG.keys.justPressed.D) changeSelection(1);
+		if (FlxG.keys.justPressed.A #if mobileC || virtualPad.buttonUp.justPressed #end) changeSelection(-1);
+		else if (FlxG.keys.justPressed.D #if mobileC || virtualPad.buttonDown.justPressed #end) changeSelection(1);
 
 		if(maxAnims < 1) return;
 
@@ -155,13 +172,13 @@ class NoteSplashDebugState extends MusicBeatState
 		{
 			var movex = 0;
 			var movey = 0;
-			if(FlxG.keys.justPressed.LEFT) movex = -1;
-			else if(FlxG.keys.justPressed.RIGHT) movex = 1;
+			if(FlxG.keys.justPressed.LEFT #if mobileC || virtualPad.buttonLeft2.justPressed #end) movex = -1;
+			else if(FlxG.keys.justPressed.RIGHT #if mobileC || virtualPad.buttonRight2.justPressed #end) movex = 1;
 
-			if(FlxG.keys.justPressed.UP) movey = 1;
-			else if(FlxG.keys.justPressed.DOWN) movey = -1;
+			if(FlxG.keys.justPressed.UP #if mobileC || virtualPad.buttonUp2.justPressed #end) movey = 1;
+			else if(FlxG.keys.justPressed.DOWN #if mobileC || virtualPad.buttonDown2.justPressed #end) movey = -1;
 			
-			if(FlxG.keys.pressed.SHIFT)
+			if(FlxG.keys.pressed.SHIFT #if mobileC || virtualPad.buttonZ.pressed #end)
 			{
 				movex *= 10;
 				movey *= 10;
@@ -177,22 +194,24 @@ class NoteSplashDebugState extends MusicBeatState
 		}
 
 		// Copy & Paste
-		if(FlxG.keys.pressed.CONTROL)
+		if(FlxG.keys.pressed.CONTROL #if mobileC || idk #end)
 		{
-			if(FlxG.keys.justPressed.C)
+			if(FlxG.keys.justPressed.C #if mobileC || virtualPad.buttonC.justPressed #end)
 			{
 				var arr:Array<Float> = selectedArray();
 				if(copiedArray == null) copiedArray = [0, 0];
 				copiedArray[0] = arr[0];
 				copiedArray[1] = arr[1];
 			}
-			else if(FlxG.keys.justPressed.V && copiedArray != null)
+			else if((FlxG.keys.justPressed.V #if mobileC || virtualPad.buttonV.justPressed #end))
 			{
+			if (copiedArray != null){
 				var offs:Array<Float> = selectedArray();
 				offs[0] = copiedArray[0];
 				offs[1] = copiedArray[1];
 				splashes.members[curSelected].offset.set(10 + offs[0], 10 + offs[1]);
 				updateOffsetText();
+			}
 			}
 		}
 
@@ -205,9 +224,13 @@ class NoteSplashDebugState extends MusicBeatState
 				savedText.visible = false;
 		}
 
-		if(FlxG.keys.justPressed.ENTER)
+		if(FlxG.keys.justPressed.ENTER #if mobileC || virtualPad.buttonA.justPressed #end)
 		{
-			savedText.text = 'Press ENTER again to save.';
+			#if mobileC
+		        savedText.text = 'Press A again to save.';
+		        #else
+		        savedText.text = 'Press ENTER again to save.';
+		        #end
 			if(pressEnterToSave > 0) //save
 			{
 				saveFile();
@@ -224,15 +247,14 @@ class NoteSplashDebugState extends MusicBeatState
 		}
 
 		// Reset anim & change anim
-		if (FlxG.keys.justPressed.SPACE)
-			changeAnim();
-		else if (FlxG.keys.justPressed.S) changeAnim(-1);
-		else if (FlxG.keys.justPressed.W) changeAnim(1);
+		if (FlxG.keys.justPressed.SPACE #if mobileC || virtualPad.buttonY.justPressed #end) changeAnim();
+		else if (FlxG.keys.justPressed.S #if mobileC || virtualPad.buttonLeft.justPressed #end) changeAnim(-1);
+		else if (FlxG.keys.justPressed.W #if mobileC || virtualPad.buttonRight.justPressed #end) changeAnim(1);
 
 		// Force frame
 		var updatedFrame:Bool = false;
-		if(updatedFrame = FlxG.keys.justPressed.Q) forceFrame--;
-		else if(updatedFrame = FlxG.keys.justPressed.E) forceFrame++;
+		if(updatedFrame = FlxG.keys.justPressed.Q #if mobileC || virtualPad.buttonX.justPressed #end) forceFrame--;
+		else if(updatedFrame = FlxG.keys.justPressed.E #if mobileC || virtualPad.buttonE.justPressed #end) forceFrame++;
 
 		if(updatedFrame)
 		{
@@ -289,12 +311,12 @@ class NoteSplashDebugState extends MusicBeatState
 		var strToSave = config.anim + '\n' + config.minFps + ' ' + config.maxFps;
 		for (offGroup in config.offsets)
 			strToSave += '\n' + offGroup[0] + ' ' + offGroup[1];
-
-		var pathSplit:Array<String> = (Paths.getPath('images/$texturePath.png', IMAGE, true).split('.png')[0] + '.txt').split(':');
-		var path:String = pathSplit[pathSplit.length-1].trim();
+			
+		var pathSplit:Array<String> = (Paths.getPath('images/$texturePath.png', IMAGE, true).split('.png')[0]).split(':');
+		var path:String = pathSplit[pathSplit.length-1].trim() + '.txt';
+		var assetsDir:String = '';
 		savedText.text = 'Saved to: $path';
 		sys.io.File.saveContent(path, strToSave);
-
 		//trace(strToSave);
 		#else
 		savedText.text = 'Can\'t save on this platform, too bad.';
@@ -361,9 +383,13 @@ class NoteSplashDebugState extends MusicBeatState
 			curAnim += change;
 			if(curAnim > maxAnims) curAnim = 1;
 			else if(curAnim < 1) curAnim = maxAnims;
-
+			#if mobileC
+			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press Top UP/DOWN to change)';
+			curFrameText.text = 'Force Frame Disabled\n(Press X/E to change)';
+			#else
 			curAnimText.text = 'Current Animation: $curAnim / $maxAnims\n(Press W/S to change)';
 			curFrameText.text = 'Force Frame Disabled\n(Press Q/E to change)';
+			#end
 
 			for (i in 0...maxNotes)
 			{

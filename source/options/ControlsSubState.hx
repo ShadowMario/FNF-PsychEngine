@@ -4,7 +4,7 @@ import backend.InputFormatter;
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import objects.AttachedSprite;
-
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.input.keyboard.FlxKey;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.input.gamepad.FlxGamepadInputID;
@@ -64,6 +64,10 @@ class ControlsSubState extends MusicBeatSubstate
 	{
 		super();
 
+		#if mobileC
+		
+		#end
+
 		options.push([true]);
 		options.push([true]);
 		options.push([true, defaultKey]);
@@ -104,6 +108,10 @@ class ControlsSubState extends MusicBeatSubstate
 		text.alignment = CENTERED;
 		text.setScale(0.4);
 		add(text);
+
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B_C);
+		#end
 
 		createTexts();
 	}
@@ -247,7 +255,6 @@ class ControlsSubState extends MusicBeatSubstate
 		attach.scaleX = Math.min(1, 230 / attach.width);
 		//attach.text = text;
 
-		bind.kill();
 		grpBinds.remove(bind);
 		grpBinds.insert(num, attach);
 		bind.destroy();
@@ -271,20 +278,26 @@ class ControlsSubState extends MusicBeatSubstate
 
 		if(!binding)
 		{
-			if(FlxG.keys.justPressed.ESCAPE || FlxG.gamepads.anyJustPressed(B))
+			if(controls.BACK || FlxG.gamepads.anyJustPressed(B))
 			{
+				#if mobileC
+				
+				FlxTransitionableState.skipNextTransOut = true;
+				FlxG.resetState();
+				#else
 				close();
+				#end
 				return;
 			}
 			if(FlxG.keys.justPressed.CONTROL || FlxG.gamepads.anyJustPressed(LEFT_SHOULDER) || FlxG.gamepads.anyJustPressed(RIGHT_SHOULDER)) swapMode();
 
-			if(FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.RIGHT || FlxG.gamepads.anyJustPressed(DPAD_LEFT) || FlxG.gamepads.anyJustPressed(DPAD_RIGHT) ||
+			if(controls.UI_LEFT_P || controls.UI_RIGHT_P || FlxG.gamepads.anyJustPressed(DPAD_LEFT) || FlxG.gamepads.anyJustPressed(DPAD_RIGHT) ||
 				FlxG.gamepads.anyJustPressed(LEFT_STICK_DIGITAL_LEFT) || FlxG.gamepads.anyJustPressed(LEFT_STICK_DIGITAL_RIGHT)) updateAlt(true);
 
-			if(FlxG.keys.justPressed.UP || FlxG.gamepads.anyJustPressed(DPAD_UP) || FlxG.gamepads.anyJustPressed(LEFT_STICK_DIGITAL_UP)) updateText(-1);
-			else if(FlxG.keys.justPressed.DOWN || FlxG.gamepads.anyJustPressed(DPAD_DOWN) || FlxG.gamepads.anyJustPressed(LEFT_STICK_DIGITAL_DOWN)) updateText(1);
+			if(controls.UI_UP_P || FlxG.gamepads.anyJustPressed(DPAD_UP) || FlxG.gamepads.anyJustPressed(LEFT_STICK_DIGITAL_UP)) updateText(-1);
+			else if(controls.UI_DOWN_P || FlxG.gamepads.anyJustPressed(DPAD_DOWN) || FlxG.gamepads.anyJustPressed(LEFT_STICK_DIGITAL_DOWN)) updateText(1);
 
-			if(FlxG.keys.justPressed.ENTER || FlxG.gamepads.anyJustPressed(START) || FlxG.gamepads.anyJustPressed(A))
+			if(controls.ACCEPT || FlxG.gamepads.anyJustPressed(START) || FlxG.gamepads.anyJustPressed(A))
 			{
 				if(options[curOptions[curSelected]][1] != defaultKey)
 				{
@@ -296,8 +309,12 @@ class ControlsSubState extends MusicBeatSubstate
 					bindingText = new Alphabet(FlxG.width / 2, 160, "Rebinding " + options[curOptions[curSelected]][3], false);
 					bindingText.alignment = CENTERED;
 					add(bindingText);
-					
+
+					#if mobileC
+					bindingText2 = new Alphabet(FlxG.width / 2, 340, "Hold B to Cancel\nHold C to Delete", true);
+					#else
 					bindingText2 = new Alphabet(FlxG.width / 2, 340, "Hold ESC to Cancel\nHold Backspace to Delete", true);
+					#end
 					bindingText2.alignment = CENTERED;
 					add(bindingText2);
 
@@ -305,6 +322,9 @@ class ControlsSubState extends MusicBeatSubstate
 					holdingEsc = 0;
 					ClientPrefs.toggleVolumeKeys(false);
 					FlxG.sound.play(Paths.sound('scrollMenu'));
+					/*#if mobileC
+					addVirtualPad(NONE, A_B);
+					#end*/
 				}
 				else
 				{
@@ -323,7 +343,7 @@ class ControlsSubState extends MusicBeatSubstate
 		{
 			var altNum:Int = curAlt ? 1 : 0;
 			var curOption:Array<Dynamic> = options[curOptions[curSelected]];
-			if(FlxG.keys.pressed.ESCAPE || FlxG.gamepads.anyPressed(B))
+			if(#if mobileC MusicBeatSubstate.virtualPad.buttonB.pressed || #end controls.BACK || FlxG.gamepads.anyPressed(B))
 			{
 				holdingEsc += elapsed;
 				if(holdingEsc > 0.5)
@@ -332,7 +352,7 @@ class ControlsSubState extends MusicBeatSubstate
 					closeBinding();
 				}
 			}
-			else if (FlxG.keys.pressed.BACKSPACE || FlxG.gamepads.anyPressed(BACK))
+			else if (#if mobileC MusicBeatSubstate.virtualPad.buttonC.pressed || #end FlxG.keys.pressed.BACKSPACE || FlxG.gamepads.anyPressed(BACK))
 			{
 				holdingEsc += elapsed;
 				if(holdingEsc > 0.5)
@@ -454,6 +474,10 @@ class ControlsSubState extends MusicBeatSubstate
 		bindingText2.destroy();
 		remove(bindingText2);
 		ClientPrefs.reloadVolumeKeys();
+		
+		/*#if mobileC
+		removeVirtualPad();
+		#end*/
 	}
 
 	function updateText(?move:Int = 0)

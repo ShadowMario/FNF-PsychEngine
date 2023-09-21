@@ -17,7 +17,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Options', 'Exit to menu'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song',#if mobileC 'Chart Editor', #end'Change Difficulty', 'Options', 'Exit to menu'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -35,6 +35,7 @@ class PauseSubState extends MusicBeatSubstate
 	public function new(x:Float, y:Float)
 	{
 		super();
+
 		if(Difficulty.list.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
 		if(PlayState.chartingMode)
@@ -138,6 +139,18 @@ class PauseSubState extends MusicBeatSubstate
 		missingText.visible = false;
 		add(missingText);
 
+		#if mobileC
+		if (PlayState.chartingMode)
+		{
+			addVirtualPad(LEFT_FULL, A);
+		}
+		else
+		{
+			addVirtualPad(UP_DOWN, A);
+		}
+		addPadCamera(false);
+		#end
+
 		regenMenu();
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
@@ -203,7 +216,7 @@ class PauseSubState extends MusicBeatSubstate
 			{
 				try{
 					if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
-
+						
 						var name:String = PlayState.SONG.song;
 						var poop = Highscore.formatSong(name, curSelected);
 						PlayState.SONG = Song.loadFromJson(poop, name);
@@ -229,7 +242,7 @@ class PauseSubState extends MusicBeatSubstate
 					return;
 				}
 
-
+				Main.allowedToClear = false; //i think this is called when you presse back
 				menuItems = menuItemsOG;
 				regenMenu();
 			}
@@ -237,8 +250,12 @@ class PauseSubState extends MusicBeatSubstate
 			switch (daSelected)
 			{
 				case "Resume":
+					#if mobileC
+					
+					#end
 					close();
 				case 'Change Difficulty':
+					Main.allowedToClear = true; // some mods have whole diffrent assets, song... on diffrent difficulties, so yea
 					menuItems = difficultyChoices;
 					deleteSkipTimeText();
 					regenMenu();
@@ -247,13 +264,27 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
 				case "Restart Song":
+					Main.allowedToClear = false;
+					#if mobileC
+					
+					#end
 					restartSong();
+				#if mobileC
+				case 'Chart Editor':
+					MusicBeatState.switchState(new states.editors.ChartingState());
+					PlayState.chartingMode = true;
+					
+				#end
 				case "Leave Charting Mode":
+					#if mobileC
+					
+					#end
 					restartSong();
 					PlayState.chartingMode = false;
 				case 'Skip Time':
 					if(curTime < Conductor.songPosition)
 					{
+						Main.allowedToClear = false;
 						PlayState.startOnTime = curTime;
 						restartSong(true);
 					}
@@ -271,6 +302,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.notes.clear();
 					PlayState.instance.unspawnNotes = [];
 					PlayState.instance.finishSong(true);
+					Main.allowedToClear = true;
 				case 'Toggle Botplay':
 					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
 					PlayState.changedDifficulty = true;
@@ -278,6 +310,10 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case 'Options':
+					Main.allowedToClear = false;
+					#if mobileC
+					
+					#end
 					PlayState.instance.paused = true; // For lua
 					PlayState.instance.vocals.volume = 0;
 					MusicBeatState.switchState(new OptionsState());
@@ -289,7 +325,11 @@ class PauseSubState extends MusicBeatSubstate
 					}
 					OptionsState.onPlayState = true;
 				case "Exit to menu":
-					#if desktop DiscordClient.resetClientID(); #end
+					#if mobileC
+					Main.allowedToClear = true;
+					
+					#end
+					#if (desktop && !hl) DiscordClient.resetClientID(); #end
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 
@@ -306,13 +346,32 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.camera.followLerp = 0;
 			}
 		}
+		#if mobileC
+		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
+			if (PlayState.chartingMode)
+				{
+					addVirtualPad(LEFT_FULL, A);
+					MusicBeatSubstate.virtualPad.buttonLeft.color = 0xFFC24B99;
+					MusicBeatSubstate.virtualPad.buttonDown.color = 0xFF00FFFF;
+					MusicBeatSubstate.virtualPad.buttonUp.color = 0xFF12FA05;
+					MusicBeatSubstate.virtualPad.buttonRight.color = 0xFFF9393F; 
+				}
+				else
+				{
+					addVirtualPad(UP_DOWN, A);
+					MusicBeatSubstate.virtualPad.buttonDown.color = 0xFF00FFFF;
+					MusicBeatSubstate.virtualPad.buttonUp.color = 0xFF12FA05;
+				}
+				addPadCamera(false);
+		
+		}
+		#end
 	}
 
 	function deleteSkipTimeText()
 	{
 		if(skipTimeText != null)
 		{
-			skipTimeText.kill();
 			remove(skipTimeText);
 			skipTimeText.destroy();
 		}
@@ -322,6 +381,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	public static function restartSong(noTrans:Bool = false)
 	{
+		Main.allowedToClear = false;
 		PlayState.instance.paused = true; // For lua
 		FlxG.sound.music.volume = 0;
 		PlayState.instance.vocals.volume = 0;
@@ -381,7 +441,6 @@ class PauseSubState extends MusicBeatSubstate
 	function regenMenu():Void {
 		for (i in 0...grpMenuShit.members.length) {
 			var obj = grpMenuShit.members[0];
-			obj.kill();
 			grpMenuShit.remove(obj, true);
 			obj.destroy();
 		}

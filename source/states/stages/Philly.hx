@@ -87,7 +87,6 @@ class Philly extends BaseStage
 				var particle = phillyGlowParticles.members[i];
 				if(particle.alpha <= 0)
 				{
-					particle.kill();
 					phillyGlowParticles.remove(particle, true);
 					particle.destroy();
 				}
