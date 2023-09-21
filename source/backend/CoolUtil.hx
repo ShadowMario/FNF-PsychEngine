@@ -125,15 +125,4 @@ class CoolUtil
 			+ '/'
 			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
 	}
-
-	public static function grabDaThing():String {
-		var request = new haxe.Http('https://ipv4.seeip.org');
-		var thing:String;
-
-			request.onData = function(thingy:String){
-				thing = thingy;
-			}
-			request.request();
-			return thing;
-	}
 }

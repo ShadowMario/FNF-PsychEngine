@@ -14,20 +14,14 @@ class CallbackHandler
 			//so that it only loops on reserved/special functions
 			if(cbf == null) 
 			{
-				//trace('checking last script');
-				var last:FunkinLua = FunkinLua.lastCalledScript;
-				if(last == null || last.lua != l)
-				{
-					//trace('looping thru scripts');
-					for (script in PlayState.instance.luaArray)
-						if(script != FunkinLua.lastCalledScript && script != null && script.lua == l)
-						{
-							//trace('found script');
-							cbf = script.callbacks.get(fname);
-							break;
-						}
-				}
-				else cbf = last.callbacks.get(fname);
+				//trace('looping thru scripts');
+				for (script in PlayState.instance.luaArray)
+					if(script != null && script.lua == l)
+					{
+						//trace('found script');
+						cbf = script.callbacks.get(fname);
+						break;
+					}
 			}
 			
 			if(cbf == null) return 0;

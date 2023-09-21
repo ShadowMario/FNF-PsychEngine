@@ -8,7 +8,7 @@ import cutscenes.DialogueBox;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #else
-import openfl.utils.Assets;
+import openfl.utils.Assets as OpenFlAssets;
 #end
 
 class SchoolEvil extends BaseStage
@@ -93,7 +93,7 @@ class SchoolEvil extends BaseStage
 		#if MODS_ALLOWED
 		if (!FileSystem.exists(file))
 		#else
-		if (!Assets.exists(file))
+		if (!OpenFlAssets.exists(file))
 		#end
 		{
 			startCountdown();

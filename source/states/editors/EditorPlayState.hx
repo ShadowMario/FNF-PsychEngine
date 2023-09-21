@@ -3,10 +3,11 @@ package states.editors;
 import backend.Song;
 import backend.Section;
 import backend.Rating;
+
 import objects.Note;
 import objects.NoteSplash;
 import objects.StrumNote;
-import backend.MusicBeatState;
+
 import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.animation.FlxAnimationController;
@@ -70,10 +71,6 @@ class EditorPlayState extends MusicBeatSubstate
 	public function new(playbackRate:Float)
 	{
 		super();
-
-		#if mobileC
-		
-		#end
 		
 		/* setting up some important data */
 		this.playbackRate = playbackRate;
@@ -129,13 +126,7 @@ class EditorPlayState extends MusicBeatSubstate
 		dataTxt.borderSize = 1.25;
 		add(dataTxt);
 
-		#if android
-		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK to Go Back to Chart Editor', 16);
-		#elseif (mobileC && !android)
-		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press X to Go Back to Chart Editor', 16);
-		#elseif (!mobileC && !android)
 		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press ESC to Go Back to Chart Editor', 16);
-		#end
 		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2;
 		tipText.scrollFactor.set();
@@ -147,32 +138,17 @@ class EditorPlayState extends MusicBeatSubstate
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		
-		#if (desktop && !hl)
+		#if desktop
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence('Playtesting on Chart Editor', PlayState.SONG.song, null, true, songLength);
 		#end
-
-		#if (mobileC && !android)
-		addVirtualPad(NONE, P);
-		addPadCamera(false);
-		#end
-
-		#if mobileC 
-		addMobileControls(false);
-		MusicBeatSubstate.mobileControls.visible = true;
-		#end
-
 		RecalculateRating();
 	}
 
 	override function update(elapsed:Float)
 	{
-		if(#if (mobileC && !android) MusicBeatSubstate.virtualPad.buttonP.justPressed || #end FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end)
+		if(controls.BACK || FlxG.keys.justPressed.ESCAPE)
 		{
-			#if mobileC
-			MusicBeatSubstate.mobileControls.visible = false;
-			
-			#end
 			endSong();
 			super.update(elapsed);
 			return;
@@ -229,6 +205,7 @@ class EditorPlayState extends MusicBeatSubstate
 					daNote.active = false;
 					daNote.visible = false;
 
+					daNote.kill();
 					notes.remove(daNote, true);
 					daNote.destroy();
 				}
@@ -600,7 +577,7 @@ class EditorPlayState extends MusicBeatSubstate
 		{
 			while (lastScore.length > 0)
 			{
-				lastScore[0].destroy();
+				lastScore[0].kill();
 				lastScore.remove(lastScore[0]);
 			}
 		}
@@ -679,46 +656,41 @@ class EditorPlayState extends MusicBeatSubstate
 			var lastTime:Float = Conductor.songPosition;
 			if(Conductor.songPosition >= 0) Conductor.songPosition = FlxG.sound.music.time;
 
-			var canMiss:Bool = !ClientPrefs.data.ghostTapping;
-
 			// heavily based on my own code LOL if it aint broke dont fix it
+			var pressNotes:Array<Note> = [];
+			var notesStopped:Bool = false;
+
 			var sortedNotesList:Array<Note> = [];
-			for (daNote in notes)
+			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.exists && daNote.canBeHit && daNote.mustPress &&
-					!daNote.tooLate && !daNote.wasGoodHit && !daNote.isSustainNote && !daNote.blockHit)
+				if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate &&
+					!daNote.wasGoodHit && !daNote.isSustainNote && !daNote.blockHit)
 				{
-					if(daNote.noteData == key) sortedNotesList.push(daNote);
-					canMiss = true;
+					if(daNote.noteData == key)
+						sortedNotesList.push(daNote);
 				}
-			}
-			sortedNotesList.sort(PlayState.sortHitNotes);
+			});
 
 			if (sortedNotesList.length > 0) {
-				var epicNote:Note = sortedNotesList[0];
-				if (sortedNotesList.length > 1) {
-					for (bad in 1...sortedNotesList.length)
-					{
-						var doubleNote:Note = sortedNotesList[bad];
-						// no point in jack detection if it isn't a jack
-						if (doubleNote.noteData != epicNote.noteData)
-							break;
-
+				sortedNotesList.sort(PlayState.sortHitNotes);
+				for (epicNote in sortedNotesList)
+				{
+					for (doubleNote in pressNotes) {
 						if (Math.abs(doubleNote.strumTime - epicNote.strumTime) < 1) {
+							doubleNote.kill();
 							notes.remove(doubleNote, true);
 							doubleNote.destroy();
-							break;
-						} else if (doubleNote.strumTime < epicNote.strumTime)
-						{
-							// replace the note if its ahead of time
-							epicNote = doubleNote; 
-							break;
-						}
+						} else
+							notesStopped = true;
 					}
-				}
 
-				// eee jack detection before was not super good
-				goodNoteHit(epicNote);
+					// eee jack detection before was not super good
+					if (!notesStopped) {
+						goodNoteHit(epicNote);
+						pressNotes.push(epicNote);
+					}
+
+				}
 			}
 			//more accurate hit time for the ratings? part 2 (Now that the calculations are done, go back to the time it was before for not causing a note stutter)
 			Conductor.songPosition = lastTime;
@@ -802,6 +774,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 		if (!note.isSustainNote)
 		{
+			note.kill();
 			notes.remove(note, true);
 			note.destroy();
 		}
@@ -822,6 +795,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 				if (!note.isSustainNote)
 				{
+					note.kill();
 					notes.remove(note, true);
 					note.destroy();
 				}
@@ -841,6 +815,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 			if (!note.isSustainNote)
 			{
+				note.kill();
 				notes.remove(note, true);
 				note.destroy();
 			}
@@ -851,6 +826,7 @@ class EditorPlayState extends MusicBeatSubstate
 		//Dupe note remove
 		notes.forEachAlive(function(note:Note) {
 			if (daNote != note && daNote.mustPress && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 1) {
+				note.kill();
 				notes.remove(note, true);
 				note.destroy();
 			}

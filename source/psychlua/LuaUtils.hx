@@ -271,6 +271,7 @@ class LuaUtils
 		}
 
 		var target:FlxText = PlayState.instance.modchartTexts.get(tag);
+		target.kill();
 		PlayState.instance.remove(target, true);
 		target.destroy();
 		PlayState.instance.modchartTexts.remove(tag);
@@ -284,6 +285,7 @@ class LuaUtils
 		}
 
 		var target:ModchartSprite = PlayState.instance.modchartSprites.get(tag);
+		target.kill();
 		PlayState.instance.remove(target, true);
 		target.destroy();
 		PlayState.instance.modchartSprites.remove(tag);

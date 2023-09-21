@@ -1,5 +1,5 @@
 name: Bug report
-description: Report bugs with the port here
+description: Report bugs with the engine here
 labels: [bug]
 body:
   - type: textarea
@@ -12,7 +12,7 @@ body:
   - type: textarea
     id: terminal
     attributes:
-      label: "Crash Log or logcat logs (if existing)"
+      label: "Command Prompt/Terminal logs (if existing)"
       render: bash
     validations:
       required: false
@@ -32,11 +32,12 @@ body:
     attributes:
       label: "What is your build target?"
       options:
-        - "Desktop (Linux or Windows)"
-        - "HTML5/Web"
-        - "Android"
-        - "iOS"
-        - "Unknown/I don't know"
+        - "Windows"
+        - "Linux"
+        - "Mac"
+        - "HTML5"
+        - "Flash/Air-based target"
+        - "Neko, HashLink, or other build system"
     validations:
       required: true
 

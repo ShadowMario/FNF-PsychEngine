@@ -7,7 +7,6 @@ import sys.FileSystem;
 import openfl.utils.Assets;
 #end
 import tjson.TJSON as Json;
-import haxe.format.JsonParser;
 import backend.Song;
 
 typedef StageFile = {

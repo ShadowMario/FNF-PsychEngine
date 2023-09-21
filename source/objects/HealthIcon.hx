@@ -1,7 +1,5 @@
 package objects;
 
-import flixel.util.FlxDestroyUtil;
-
 class HealthIcon extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
@@ -59,11 +57,5 @@ class HealthIcon extends FlxSprite
 
 	public function getCharacter():String {
 		return char;
-	}
-
-	override function destroy()
-	{
-		sprTracker = FlxDestroyUtil.destroy(sprTracker);
-		super.destroy();
 	}
 }

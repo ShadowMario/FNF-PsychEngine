@@ -3,17 +3,9 @@ package backend;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxState;
-#if mobileC
-import mobile.MobileControls;
-import mobile.flixel.FlxVirtualPad;
-import flixel.util.FlxDestroyUtil;
-import flixel.FlxCamera;
-#end
 
 class MusicBeatState extends FlxUIState
 {
-	public static var instance:MusicBeatState;
-
 	private var curSection:Int = 0;
 	private var stepsToDo:Int = 0;
 
@@ -28,137 +20,9 @@ class MusicBeatState extends FlxUIState
 		return Controls.instance;
 	}
 
-	#if mobileC
-	public var virtualPad:FlxVirtualPad;
-	public var mobileControls:MobileControls;
-	public var camControls:FlxCamera;
-	public var vpadCam:FlxCamera;
-
-	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
-	{
-		virtualPad = new FlxVirtualPad(DPad, Action);
-		virtualPad.alpha = ClientPrefs.data.controlsAlpha;
-		add(virtualPad);
-	}
-
-	public function removeVirtualPad()
-	{
-		if (virtualPad != null)
-			remove(virtualPad);
-	}
-
-	public function addMobileControls(DefaultDrawTarget:Bool = true):Void
-	{
-		mobileControls = new MobileControls();
-
-		camControls = new FlxCamera();
-		camControls.bgColor.alpha = 0;
-		FlxG.cameras.add(camControls, DefaultDrawTarget);
-
-		mobileControls.cameras = [camControls];
-		mobileControls.visible = false;
-		mobileControls.alpha = ClientPrefs.data.controlsAlpha;
-		add(mobileControls);
-		// configure the current mobile control binds, without this there gonna be conflict and input issues.
-		switch (MobileControls.getMode())
-				{
-					case 0 | 1 | 2: // RIGHT_FULL, LEFT_FULL and CUSTOM
-					ClientPrefs.mobileBinds = controls.mobileBinds = [
-						'note_up'		=> [UP],
-						'note_left'		=> [LEFT],
-						'note_down'		=> [DOWN],
-						'note_right'	=> [RIGHT],
-				
-						'ui_up'			=> [UP], //idk if i remove these the controls in menus gonna get fucked
-						'ui_left'		=> [LEFT],
-						'ui_down'		=> [DOWN],
-						'ui_right'		=> [RIGHT],
-				
-						'accept'		=> [A],
-						'back'			=> [B],
-						'pause'			=> [NONE],
-						'reset'			=> [NONE]
-					];
-					case 3: // BOTH
-					ClientPrefs.mobileBinds = controls.mobileBinds = [
-						'note_up'		=> [UP, UP2],
-						'note_left'		=> [LEFT, LEFT2],
-						'note_down'		=> [DOWN, DOWN2],
-						'note_right'	=> [RIGHT, RIGHT2],
-				
-						'ui_up'			=> [UP],
-						'ui_left'		=> [LEFT],
-						'ui_down'		=> [DOWN],
-						'ui_right'		=> [RIGHT],
-				
-						'accept'		=> [A],
-						'back'			=> [B],
-						'pause'			=> [NONE],
-						'reset'			=> [NONE]
-					];
-					case 4: // HITBOX
-					ClientPrefs.mobileBinds = controls.mobileBinds = [
-						'note_up'		=> [hitboxUP],
-						'note_left'		=> [hitboxLEFT],
-						'note_down'		=> [hitboxDOWN],
-						'note_right'	=> [hitboxRIGHT],
-				
-						'ui_up'			=> [UP],
-						'ui_left'		=> [LEFT],
-						'ui_down'		=> [DOWN],
-						'ui_right'		=> [RIGHT],
-				
-						'accept'		=> [A],
-						'back'			=> [B],
-						'pause'			=> [NONE],
-						'reset'			=> [NONE]
-					];
-					case 5: // KEYBOARD
-					//sex, idk maybe nothin'?
-				}
-	}
-
-	public function removeMobileControls()
-	{
-		if (mobileControls != null)
-			remove(mobileControls);
-	}
-
-	public function addPadCamera(DefaultDrawTarget:Bool = true):Void
-	{
-		if (virtualPad != null)
-		{
-			vpadCam = new FlxCamera();
-			vpadCam.bgColor.alpha = 0;
-			FlxG.cameras.add(vpadCam, DefaultDrawTarget);
-			virtualPad.cameras = [vpadCam];
-		}
-	}
-	#end
-
-	override function destroy()
-	{
-		super.destroy();
-
-		#if mobileC
-		if (virtualPad != null)
-		{
-			virtualPad = FlxDestroyUtil.destroy(virtualPad);
-			virtualPad = null;
-		}
-
-		if (mobileControls != null)
-		{
-			mobileControls = FlxDestroyUtil.destroy(mobileControls);
-			mobileControls = null;
-		}
-		#end
-	}
-
 	public static var camBeat:FlxCamera;
 
 	override function create() {
-		instance = this;
 		camBeat = FlxG.camera;
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		#if MODS_ALLOWED Mods.updatedOnState = false; #end

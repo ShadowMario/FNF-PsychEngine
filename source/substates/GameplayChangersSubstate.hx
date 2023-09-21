@@ -2,7 +2,6 @@ package substates;
 
 import objects.AttachedText;
 import objects.CheckboxThingie;
-import flixel.addons.transition.FlxTransitionableState;
 
 class GameplayChangersSubstate extends MusicBeatSubstate
 {
@@ -87,7 +86,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	public function new()
 	{
 		super();
-
+		
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0.6;
 		add(bg);
@@ -134,11 +133,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			updateTextFrom(optionsArray[i]);
 		}
 
-		#if mobileC
-		addVirtualPad(LEFT_FULL, A_B_C);
-		addPadCamera(false);
-		#end
-
 		changeSelection();
 		reloadCheckboxes();
 	}
@@ -158,13 +152,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		}
 
 		if (controls.BACK) {
-			#if mobileC
-			
-			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.resetState();
-			#else
 			close();
-			#end
 			ClientPrefs.saveSettings();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
@@ -277,7 +265,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				}
 			}
 
-			if(controls.RESET #if mobileC || MusicBeatSubstate.virtualPad.buttonC.justPressed #end)
+			if(controls.RESET)
 			{
 				for (i in 0...optionsArray.length)
 				{
@@ -312,13 +300,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if(nextAccept > 0) {
 			nextAccept -= 1;
 		}
-		#if mobileC
-		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
-		addVirtualPad(LEFT_FULL, A_B_C);
-		addPadCamera(false);
-		
-		}
-		#end
 		super.update(elapsed);
 	}
 

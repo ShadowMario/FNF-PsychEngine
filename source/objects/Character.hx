@@ -11,7 +11,6 @@ import sys.FileSystem;
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
 import tjson.TJSON as Json;
-import haxe.format.JsonParser;
 
 import backend.Song;
 import backend.Section;
@@ -103,7 +102,7 @@ class Character extends FlxSprite
 				if (!Assets.exists(path))
 				#end
 				{
-					path = #if MODS_ALLOWED #end Paths.getPreloadPath('characters/' + DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
+					path = Paths.getPreloadPath('characters/' + DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
 				}
 
 				#if MODS_ALLOWED

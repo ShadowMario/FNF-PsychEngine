@@ -3,51 +3,57 @@
     {
       "name": "lime",
       "type": "haxelib",
-      "version": "7.9.0"
+      "version": null
     },
     {
       "name": "openfl",
       "type": "haxelib",
-      "version": "9.2.1"
+      "version": null
     },
     {
       "name": "flixel",
       "type": "haxelib",
-      "version": "5.2.2"
+      "version": null
     },
     {
       "name": "flixel-addons",
       "type": "haxelib",
-      "version": "3.0.2"
+      "version": null
     },
     {
       "name": "flixel-tools",
       "type": "haxelib",
-      "version": "1.5.1"
+      "version": null
     },
     {
       "name": "flixel-ui",
       "type": "haxelib",
-      "version": "2.5.0"
+      "version": null
     },
     {
       "name": "hxcpp",
-      "type": "git",
-      "dir": null,
-      "ref": "main",
-      "url": "https://github.com/mcagabe19-stuff/hxcpp"
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "tjson",
+      "type": "haxelib",
+      "version": null
     },
     {
       "name": "hxjsonast",
       "type": "haxelib",
-      "version": "1.1.0"
+      "version": null
     },
     {
       "name": "hxCodec",
-      "type": "git",
-      "dir": null,
-      "ref": "c8c47e706ad82a423783006ed901b6d93c89a421",
-      "url": "https://github.com/polybiusproxy/hxCodec"
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "SScript",
+      "type": "haxelib",
+      "version": null
     },
     {
       "name": "hxcpp-debug-server",
@@ -60,13 +66,6 @@
       "dir": null,
       "ref": "master",
       "url": "https://github.com/Aidan63/linc_discord-rpc"
-    },
-    {
-      "name": "hscript-improved",
-      "type": "git",
-      "dir": null,
-      "ref": "master",
-      "url": "https://github.com/TheLeerName/hscript-improved"
     },
     {
       "name": "linc_luajit",

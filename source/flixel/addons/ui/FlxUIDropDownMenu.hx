@@ -1,6 +1,6 @@
 package flixel.addons.ui;
 
-import openfl.geom.Rectangle;
+import flash.geom.Rectangle;
 import flixel.addons.ui.interfaces.IFlxUIClickable;
 import flixel.addons.ui.interfaces.IFlxUIWidget;
 import flixel.addons.ui.interfaces.IHasParams;
@@ -338,13 +338,7 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				}
 			}
 
-			try {
-				if (DataList != null)
-					selectSomething(DataList[0].name, DataList[0].label);
-			}
-			catch(e){
-				trace('error! ${e.message}');
-			}
+			selectSomething(DataList[0].name, DataList[0].label);
 		}
 
 		dropPanel.resize(header.background.width, getPanelHeight());
@@ -437,37 +431,8 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 		#if FLX_MOUSE
 		if (dropPanel.visible)
 		{
-			#if mobileC
-			if(list.length > 1 && canScroll) 
-			{
-				for (swipe in FlxG.swipes)
-				{
-					var f = swipe.startPosition.x - swipe.endPosition.x;
-					var g = swipe.startPosition.y - swipe.endPosition.y;
-					if (25 <= Math.sqrt(f * f + g * g))
-					{
-						if ((-45 <= swipe.startPosition.angleBetween(swipe.endPosition) && 45 >= swipe.startPosition.angleBetween(swipe.endPosition)))
-						{
-							// Go down
-							currentScroll++;
-							if(currentScroll >= list.length) currentScroll = list.length-1;
-							updateButtonPositions();
-						}
-						else if (-180 <= swipe.startPosition.angleBetween(swipe.endPosition) && -135 >= swipe.startPosition.angleBetween(swipe.endPosition) || (135 <= swipe.startPosition.angleBetween(swipe.endPosition) && 180 >= swipe.startPosition.angleBetween(swipe.endPosition)))
-						{
-							// Go up
-							--currentScroll;
-							if(currentScroll < 0) currentScroll = 0;
-							updateButtonPositions();
-						}
-					}
-				}
-			}
-			#else
-			if(list.length > 1 && canScroll) 
-			{
-				if(FlxG.mouse.wheel > 0 || FlxG.keys.justPressed.UP) 
-				{
+			if(list.length > 1 && canScroll) {
+				if(FlxG.mouse.wheel > 0 || FlxG.keys.justPressed.UP) {
 					// Go up
 					--currentScroll;
 					if(currentScroll < 0) currentScroll = 0;
@@ -481,13 +446,24 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				}
 			}
 
-			if (FlxG.mouse.justPressed && !FlxG.mouse.overlaps(this))
+			if (FlxG.mouse.justPressed && !mouseOverlapping())
 			{
 				showList(false);
 			}
-		#end
 		}
 		#end
+	}
+
+	function mouseOverlapping()
+	{
+		var mousePoint = FlxG.mouse.getScreenPosition(camera);
+		var objPoint = this.getScreenPosition(null, camera);
+		if(mousePoint.x >= objPoint.x && mousePoint.y >= objPoint.y &&
+			mousePoint.x < objPoint.x + this.width && mousePoint.y < objPoint.y + this.height)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	override public function destroy():Void

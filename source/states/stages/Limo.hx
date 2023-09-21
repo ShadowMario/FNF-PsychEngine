@@ -1,6 +1,7 @@
 package states.stages;
 
 import states.stages.objects.*;
+import backend.Achievements;
 
 enum HenchmenKillState
 {
@@ -90,6 +91,7 @@ class Limo extends BaseStage
 		if(!ClientPrefs.data.lowQuality) {
 			grpLimoParticles.forEach(function(spr:BGSprite) {
 				if(spr.animation.curAnim.finished) {
+					spr.kill();
 					grpLimoParticles.remove(spr, true);
 					spr.destroy();
 				}
@@ -262,8 +264,15 @@ class Limo extends BaseStage
 				limoKillingState = KILLING;
 
 				#if ACHIEVEMENTS_ALLOWED
-				var kills = Achievements.addScore("roadkill_enthusiast");
-				FlxG.log.add('Henchmen kills: $kills');
+				Achievements.henchmenDeath++;
+				FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
+				var achieve:String = game.checkForAchievement(['roadkill_enthusiast']);
+				if (achieve != null) {
+					game.startAchievement(achieve);
+				} else {
+					FlxG.save.flush();
+				}
+				FlxG.log.add('Deaths: ' + Achievements.henchmenDeath);
 				#end
 			}
 		}

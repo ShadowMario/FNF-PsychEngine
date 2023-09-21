@@ -1,7 +1,7 @@
 package substates;
 
 import backend.WeekData;
-import lime.ui.Haptic;
+
 import objects.Character;
 import flixel.FlxObject;
 import flixel.FlxSubState;
@@ -47,9 +47,6 @@ class GameOverSubstate extends MusicBeatSubstate
 		instance = this;
 		PlayState.instance.callOnScripts('onGameOverStart', []);
 
-                if (ClientPrefs.data.gameOverVibration)
-			Haptic.vibrate(0, 500);
-
 		super.create();
 	}
 
@@ -74,14 +71,8 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollow.setPosition(boyfriend.getGraphicMidpoint().x, boyfriend.getGraphicMidpoint().y);
-		FlxG.camera.focusOn(FlxPoint.weak(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2)));
+		FlxG.camera.focusOn(new FlxPoint(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2)));
 		add(camFollow);
-		#if mobileC
-		addVirtualPad(NONE, A_B);
-		addPadCamera(false);
-		
-		#end
-		
 	}
 
 	public var startedDeath:Bool = false;
@@ -94,15 +85,12 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (controls.ACCEPT)
 		{
-			Main.allowedToClear = false;
 			endBullshit();
 		}
 
 		if (controls.BACK)
 		{
-			Main.allowedToClear = true;
-			
-			#if (desktop && !hl) DiscordClient.resetClientID(); #end
+			#if desktop DiscordClient.resetClientID(); #end
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
 			PlayState.seenCutscene = false;
@@ -188,7 +176,6 @@ class GameOverSubstate extends MusicBeatSubstate
 				});
 			});
 			PlayState.instance.callOnScripts('onGameOverConfirm', [true]);
-			
 		}
 	}
 

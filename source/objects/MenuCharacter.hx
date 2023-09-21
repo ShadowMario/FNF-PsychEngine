@@ -92,4 +92,3 @@ class MenuCharacter extends FlxSprite
 		}
 	}
 }
-

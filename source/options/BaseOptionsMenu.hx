@@ -3,7 +3,6 @@ package options;
 import objects.CheckboxThingie;
 import objects.AttachedText;
 import options.Option;
-import flixel.addons.transition.FlxTransitionableState;
 
 class BaseOptionsMenu extends MusicBeatSubstate
 {
@@ -28,7 +27,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		if(title == null) title = 'Options';
 		if(rpcTitle == null) rpcTitle = 'Options Menu';
 		
-		#if (desktop && !hl)
+		#if desktop
 		DiscordClient.changePresence(rpcTitle, null);
 		#end
 		
@@ -73,7 +72,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			grpOptions.add(optionText);
 
 			if(optionsArray[i].type == 'bool') {
-			  var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
+				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.ID = i;
 				checkboxGroup.add(checkbox);
@@ -94,10 +93,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 		changeSelection();
 		reloadCheckboxes();
-
-		#if mobileC
-                addVirtualPad(LEFT_FULL, A_B_C);
-                #end
 	}
 
 	public function addOption(option:Option) {
@@ -120,14 +115,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 
 		if (controls.BACK) {
-			#if mobileC
-			FlxTransitionableState.skipNextTransOut = true;
-			ClientPrefs.saveSettings();
-			FlxG.resetState();
-			
-			#else
 			close();
-			#end
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 
@@ -220,7 +208,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				}
 			}
 
-			if(controls.RESET #if mobileC || MusicBeatSubstate.virtualPad.buttonC.justPressed #end)
+			if(controls.RESET)
 			{
 				var leOption:Option = optionsArray[curSelected];
 				leOption.setValue(leOption.defaultValue);

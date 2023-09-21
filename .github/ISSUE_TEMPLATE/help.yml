@@ -1,5 +1,5 @@
 name: Help me!
-description: If you need help using the port.
+description: If you need help using the engine.
 labels: [help wanted]
 body:
   - type: textarea
@@ -24,11 +24,13 @@ body:
     attributes:
       label: "What is your build target?"
       options:
-        - "Desktop (Linux or Windows)"
-        - "HTML5/Web"
-        - "Android"
-        - "iOS"
-        - "Unknown/I don't know"
+        - "Windows x64"
+        - "Windows x86/x32"
+        - "Linux"
+        - "Mac"
+        - "HTML5/Browser"
+        - "Flash/Air-based target"
+        - "Neko, HashLink, or other build system"
     validations:
       required: true
 

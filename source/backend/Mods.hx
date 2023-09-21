@@ -4,7 +4,7 @@ package backend;
 import sys.FileSystem;
 import sys.io.File;
 #else
-import openfl.utils.Assets;
+import lime.utils.Assets;
 #end
 import tjson.TJSON as Json;
 

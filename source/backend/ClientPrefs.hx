@@ -1,19 +1,13 @@
 package backend;
-#if mobileC
-import mobile.flixel.FlxMobileControlsID;
-import mobile.MobileControls;
-#end
+
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
 import flixel.input.gamepad.FlxGamepadInputID;
+
 import states.TitleState;
 
 // Add a variable here and it will get automatically saved
 class SaveVariables {
-	public var extraButtons:String = "NONE"; // mobile extra button option
-	public var hitbox2:Bool = true; // hitbox extra button position option
-	public var dynamicColors:Bool = true; // yes cause its cool -Karim
-	public var controlsAlpha:Float = 0.6;
 	public var downScroll:Bool = false;
 	public var middleScroll:Bool = false;
 	public var opponentStrums:Bool = true;
@@ -28,7 +22,6 @@ class SaveVariables {
 	public var shaders:Bool = true;
 	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
 	public var framerate:Int = 60;
-	public var gameOverVibration:Bool = false;
 	public var camZooms:Bool = true;
 	public var hideHud:Bool = false;
 	public var noteOffset:Int = 0;
@@ -98,7 +91,7 @@ class ClientPrefs {
 		'note_up'		=> [W, UP],
 		'note_left'		=> [A, LEFT],
 		'note_down'		=> [S, DOWN],
-		'note_right'	        => [D, RIGHT],
+		'note_right'	=> [D, RIGHT],
 		
 		'ui_up'			=> [W, UP],
 		'ui_left'		=> [A, LEFT],
@@ -121,7 +114,7 @@ class ClientPrefs {
 		'note_up'		=> [DPAD_UP, Y],
 		'note_left'		=> [DPAD_LEFT, X],
 		'note_down'		=> [DPAD_DOWN, A],
-		'note_right'	        => [DPAD_RIGHT, B],
+		'note_right'	=> [DPAD_RIGHT, B],
 		
 		'ui_up'			=> [DPAD_UP, LEFT_STICK_DIGITAL_UP],
 		'ui_left'		=> [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT],
@@ -133,25 +126,6 @@ class ClientPrefs {
 		'pause'			=> [START],
 		'reset'			=> [BACK]
 	];
-	#if mobileC
-	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
-		'note_up'		=> [UP],
-		'note_left'		=> [LEFT],
-		'note_down'		=> [DOWN],
-		'note_right'	=> [RIGHT],
-
-		'ui_up'			=> [UP],
-		'ui_left'		=> [LEFT],
-		'ui_down'		=> [DOWN],
-		'ui_right'		=> [RIGHT],
-
-		'accept'		=> [A],
-		'back'			=> [B],
-		'pause'			=> [NONE],
-		'reset'			=> [NONE]
-	];
-	public static var defaultPads:Map<String, Array<FlxMobileControlsID>> = null;
-	#end
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 	public static var defaultButtons:Map<String, Array<FlxGamepadInputID>> = null;
 
@@ -180,25 +154,20 @@ class ClientPrefs {
 		var gamepadBind:Array<FlxGamepadInputID> = gamepadBinds.get(key);
 		while(keyBind != null && keyBind.contains(NONE)) keyBind.remove(NONE);
 		while(gamepadBind != null && gamepadBind.contains(NONE)) gamepadBind.remove(NONE);
-		#if mobileC
-		var mobileBind:Array<FlxMobileControlsID> = mobileBinds.get(key);
-		while(mobileBind != null && mobileBind.contains(NONE)) mobileBind.remove(NONE);
-		#end
 	}
 
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
 		defaultButtons = gamepadBinds.copy();
-                #if mobileC
-		defaultPads = mobileBinds.copy();
-                #end
 	}
 
 	public static function saveSettings() {
 		for (key in Reflect.fields(data)) {
 			//trace('saved variable: $key');
-			Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));	}
-		#if ACHIEVEMENTS_ALLOWED Achievements.save(); #end
+			Reflect.setField(FlxG.save.data, key, Reflect.field(data, key));
+		}
+		FlxG.save.data.achievementsMap = Achievements.achievementsMap;
+		FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 		FlxG.save.flush();
 
 		//Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
@@ -206,7 +175,6 @@ class ClientPrefs {
 		save.bind('controls_v3', CoolUtil.getSavePath());
 		save.data.keyboard = keyBinds;
 		save.data.gamepad = gamepadBinds;
-		#if mobileC save.data.mobile = mobileBinds; #end
 		save.flush();
 		FlxG.log.add("Settings saved!");
 	}
@@ -214,7 +182,6 @@ class ClientPrefs {
 	public static function loadPrefs() {
 		if(data == null) data = new SaveVariables();
 		if(defaultData == null) defaultData = new SaveVariables();
-		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 
 		for (key in Reflect.fields(data)) {
 			if (key != 'gameplaySettings' && Reflect.hasField(FlxG.save.data, key)) {
@@ -251,7 +218,7 @@ class ClientPrefs {
 		if (FlxG.save.data.mute != null)
 			FlxG.sound.muted = FlxG.save.data.mute;
 
-		#if (desktop && !hl)
+		#if desktop
 		DiscordClient.check();
 		#end
 
@@ -272,12 +239,6 @@ class ClientPrefs {
 					if(gamepadBinds.exists(control)) gamepadBinds.set(control, keys);
 				}
 			}
-			#if mobileC if(save.data.mobile != null) {
-					var loadedControls:Map<String, Array<FlxMobileControlsID>> = save.data.mobile;
-					for (control => keys in loadedControls){
-						if(mobileBinds.exists(control)) mobileBinds.set(control, keys);
-					}
-			} #end
 			reloadVolumeKeys();
 		}
 	}

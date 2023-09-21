@@ -1,11 +1,11 @@
 package flixel.sound;
 
-import openfl.events.Event;
-import openfl.events.IEventDispatcher;
-import openfl.media.Sound;
-import openfl.media.SoundChannel;
-import openfl.media.SoundTransform;
-import openfl.net.URLRequest;
+import flash.events.Event;
+import flash.events.IEventDispatcher;
+import flash.media.Sound;
+import flash.media.SoundChannel;
+import flash.media.SoundTransform;
+import flash.net.URLRequest;
 import flixel.FlxBasic;
 
 import flixel.math.FlxPoint;
@@ -590,9 +590,6 @@ class FlxSound extends FlxBasic
 	 */
 	public function updateTransform():Void
 	{
-		if (_transform == null)
-			return;
-
 		_transform.volume = #if FLX_SOUND_SYSTEM (FlxG.sound.muted ? 0 : 1) * FlxG.sound.volume * #end
 			(group != null ? group.volume : 1) * _volume * _volumeAdjust;
 
