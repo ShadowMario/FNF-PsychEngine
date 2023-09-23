@@ -151,6 +151,10 @@ class HScript extends BrewScript
 		set('parentLua', parentLua);
 		set('this', this);
 		set('game', PlayState.instance);
+		#if (BrewScript >= "6.1.80")
+		if (PlayState.instance != null)
+			setSpecialObject(PlayState.instance, false, PlayState.instance.instancesExclude);
+		#end
 		set('buildTarget', FunkinLua.getBuildTarget());
 		set('customSubstate', CustomSubstate.instance);
 		set('customSubstateName', CustomSubstate.name);
