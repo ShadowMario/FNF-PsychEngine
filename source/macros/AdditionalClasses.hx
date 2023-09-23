@@ -11,13 +11,14 @@ class AdditionalClasses {
 		var includePackages:Array<String> = [
 			#if desktop "discord_rpc", #end
 			"flixel",
-			"hscript",
-			#if VIDEOS_ALLOWED "vlc", #end
-			#if VIDEOS_ALLOWED "hxcodec", #end
+
+			#if (VIDEOS_ALLOWED && hxCodec >= "2.6.1") "hxcodec", #end
+			#if (VIDEOS_ALLOWED && hxCodec < "2.6.0") "vlc", #end
 			"lime",
 			#if LUA_ALLOWED "llua", #end
 			"openfl",
-			#if SScript "tea", #end
+			#if BrewScript "brew", #end
+			#if BrewScript "haxescript", #end
 
 			"haxe",
 			#if flash "flash", #end
@@ -25,10 +26,6 @@ class AdditionalClasses {
 			#if hl "hl", #end
 			#if neko "neko", #end
 			#if sys "sys", #end
-			"DateTools",
-			"EReg",
-			"Lambda",
-			"StringBuf",
 		];
 
 		var excludePackages:Array<String> = [
@@ -44,6 +41,7 @@ class AdditionalClasses {
 			"lime._internal.backend.kha",
 			"lime.tools",
 		];
+		Compiler.define('dce', 'no');
 		for (pkg in includePackages) Compiler.include(pkg, true, excludePackages);
 	}
 }
