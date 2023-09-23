@@ -840,7 +840,7 @@ class PlayState extends MusicBeatState
 		#if sys
 		if(!FileSystem.exists(filepath))
 		#else
-		if(!OpenFLAssets.exists(filepath))
+		if(!OpenFlAssets.exists(filepath))
 		#end
 		{
 			FlxG.log.warn('Couldnt find video file: ' + name);
