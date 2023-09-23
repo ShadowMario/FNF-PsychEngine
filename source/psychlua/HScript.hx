@@ -151,12 +151,6 @@ class HScript extends BrewScript
 		set('parentLua', parentLua);
 		set('this', this);
 		set('game', PlayState.instance);
-		for (i in Type.getInstanceFields(PlayState))
-		{
-			var property:Dynamic = Reflect.getProperty(PlayState.instance, i);
-			if (property != null)
-				set(i, property);
-		}
 		set('buildTarget', FunkinLua.getBuildTarget());
 		set('customSubstate', CustomSubstate.instance);
 		set('customSubstateName', CustomSubstate.name);
