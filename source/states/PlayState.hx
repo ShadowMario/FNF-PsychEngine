@@ -72,8 +72,8 @@ import psychlua.LuaUtils;
 import psychlua.HScript;
 #end
 
-#if (SScript >= "3.0.0")
-import tea.SScript;
+#if BrewScript
+import brew.BrewScript;
 #end
 
 class PlayState extends MusicBeatState
@@ -801,7 +801,7 @@ class PlayState extends MusicBeatState
 		
 		if(doPush)
 		{
-			if(SScript.global.exists(scriptFile))
+			if(BrewScript.global.exists(scriptFile))
 				doPush = false;
 
 			if(doPush) initHScript(scriptFile);
@@ -2955,7 +2955,7 @@ class PlayState extends MusicBeatState
 			if(script != null)
 			{
 				script.call('onDestroy');
-				script.destroy();
+				script.kill();
 			}
 
 		while (hscriptArray.length > 0)
@@ -3097,7 +3097,7 @@ class PlayState extends MusicBeatState
 		
 		if(FileSystem.exists(scriptToLoad))
 		{
-			if (SScript.global.exists(scriptToLoad)) return false;
+			if (BrewScript.global.exists(scriptToLoad)) return false;
 	
 			initHScript(scriptToLoad);
 			return true;
@@ -3110,14 +3110,10 @@ class PlayState extends MusicBeatState
 		try
 		{
 			var newScript:HScript = new HScript(null, file);
-			@:privateAccess
-			if(newScript.parsingExceptions != null && newScript.parsingExceptions.length > 0)
+			if(newScript.parsingException != null)
 			{
-				@:privateAccess
-				for (e in newScript.parsingExceptions)
-					if(e != null)
-						addTextToDebug('ERROR ON LOADING ($file): ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
-				newScript.destroy();
+				addTextToDebug('ERROR ON LOADING ($file): ${newScript.parsingException.message}', FlxColor.RED);
+				newScript.kill();
 				return;
 			}
 
@@ -3131,21 +3127,21 @@ class PlayState extends MusicBeatState
 						if (e != null)
 							addTextToDebug('ERROR ($file: onCreate) - ${e.message.substr(0, e.message.indexOf('\n'))}', FlxColor.RED);
 
-					newScript.destroy();
+					newScript.kill();
 					hscriptArray.remove(newScript);
-					trace('failed to initialize sscript interp!!! ($file)');
+					trace('failed to initialize brew interp!!! ($file)');
 				}
-				else trace('initialized sscript interp successfully: $file');
+				else trace('initialized brew interp successfully: $file');
 			}
 			
 		}
 		catch(e)
 		{
 			addTextToDebug('ERROR ($file) - ' + e.message.substr(0, e.message.indexOf('\n')), FlxColor.RED);
-			var newScript:HScript = cast (SScript.global.get(file), HScript);
+			var newScript:HScript = cast (BrewScript.global.get(file), HScript);
 			if(newScript != null)
 			{
-				newScript.destroy();
+				newScript.kill();
 				hscriptArray.remove(newScript);
 			}
 		}
