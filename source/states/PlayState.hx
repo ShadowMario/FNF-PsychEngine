@@ -840,7 +840,7 @@ class PlayState extends MusicBeatState
 		#if sys
 		if(!FileSystem.exists(filepath))
 		#else
-		if(!Assets.exists(filepath))
+		if(!OpenFLAssets.exists(filepath))
 		#end
 		{
 			FlxG.log.warn('Couldnt find video file: ' + name);
@@ -1521,15 +1521,8 @@ class PlayState extends MusicBeatState
 
 			#if VIDEOS_ALLOWED
 			if(videoSprites.length > 0){
-			for(daVideoSprite in 0...videoSprites.length){
-				videoSprites[daVideoSprite].bitmap.resume();
-				if (FlxG.autoPause)
-					{
-							FlxG.signals.focusGained.add(videoSprites[daVideoSprite].bitmap.resume);
-			
-							FlxG.signals.focusLost.add(videoSprites[daVideoSprite].bitmap.pause);
-					}
-				}
+			for(daVideoSprite in 0...videoSprites.length)
+				videoSprites[daVideoSprite].resume();
 			}
 			#end
 
@@ -1812,18 +1805,8 @@ class PlayState extends MusicBeatState
 
 		#if VIDEOS_ALLOWED
 		if(videoSprites.length > 0){
-			for(daVideoSprite in 0...videoSprites.length){
-				videoSprites[daVideoSprite].bitmap.pause();
-			//prevent the video from resuming on focus change in pause menu
-			if (FlxG.autoPause)
-				{
-					if (FlxG.signals.focusGained.has(videoSprites[daVideoSprite].bitmap.resume))
-						FlxG.signals.focusGained.remove(videoSprites[daVideoSprite].bitmap.resume);
-		
-					if (FlxG.signals.focusLost.has(videoSprites[daVideoSprite].bitmap.pause))
-						FlxG.signals.focusLost.remove(videoSprites[daVideoSprite].bitmap.pause);
-				}
-			}
+			for(daVideoSprite in 0...videoSprites.length)
+				videoSprites[daVideoSprite].pause();
 		}
 		#end
 		

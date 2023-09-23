@@ -57,8 +57,26 @@ class VideoSpriteManager extends VideoSprite {
         this.bitmap.openingCallback = func;
         #end
     }
-    /*if you want do smth such as pausing the video just do this -> yourVideo.bitmap.pause();
-     same thing for resume but call resume(); instead*/
 
+    public function pause() {
+        this.bitmap.pause();
+        if (FlxG.autoPause)
+            {
+                if (FlxG.signals.focusGained.has(this.bitmap.resume))
+                    FlxG.signals.focusGained.remove(this.bitmap.resume);
+    
+                if (FlxG.signals.focusLost.has(this.bitmap.pause))
+                    FlxG.signals.focusLost.remove(this.bitmap.pause);
+            }
+    }
+
+    public function resume(){
+        this.bitmap.resume();
+        if (FlxG.autoPause)
+            {
+                FlxG.signals.focusGained.add(this.bitmap.resume);
+                FlxG.signals.focusLost.add(this.bitmap.pause);
+            }
+    }
     #end
 }
