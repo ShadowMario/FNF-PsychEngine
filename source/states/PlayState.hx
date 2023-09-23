@@ -831,9 +831,9 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
+	#if VIDEOS_ALLOWED
 	public function startVideo(name:String):VideoManager
 	{
-		#if VIDEOS_ALLOWED
 		inCutscene = true;
 
 		var filepath:String = Paths.video(name);
@@ -855,8 +855,10 @@ class PlayState extends MusicBeatState
 				return null;
 			});
 		return video;
-
+	}
 		#else
+		//because it returns a VideoManager which dosen't exists on unsupported platforms so it results in a error during compile.
+		public function startVideo(ignoreThisThing:String){
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
 		return null;
@@ -1885,8 +1887,12 @@ class PlayState extends MusicBeatState
 				//i assume it's better removing the thing on gameover
 				if(videoSprites.length > 0){
 				for(daVideoSprite in 0...videoSprites.length){
-					videoSprites[daVideoSprite].bitmap.onEndReached();
-					videoSprites[daVideoSprite].kill();
+					#if (hxCodec >= "3.0.0")
+				videoSprites[daVideoSprite].destroy();
+				#else
+				videoSprites[daVideoSprite].bitmap.onEndReached(); //ends the video(using kill only didn't remove the sound so...)
+				#end
+				videoSprites[daVideoSprite].kill();
 				}
 				for(i in videoSprites)
 					videoSprites.remove(i);
@@ -3027,8 +3033,12 @@ class PlayState extends MusicBeatState
 		#if VIDEOS_ALLOWED
 		if(videoSprites.length > 0){
 			for(daVideoSprite in 0...videoSprites.length){
+				#if (hxCodec >= "3.0.0")
+				videoSprites[daVideoSprite].destroy();
+				#else
 				videoSprites[daVideoSprite].bitmap.onEndReached(); //ends the video(using kill only didn't remove the sound so...)
-				videoSprites[daVideoSprite].kill(); //some sort of optmization
+				#end
+				videoSprites[daVideoSprite].kill();
 			}
 			for(i in videoSprites)
 				videoSprites.remove(i); //clearing

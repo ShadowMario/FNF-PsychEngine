@@ -57,9 +57,17 @@ class VideoSpriteManager extends VideoSprite {
         this.bitmap.openingCallback = func;
         #end
     }
-
-    public function pause() {
+    #if (hxCodec >= "3.0.0")
+    override public function pause()
+    #else
+    public function pause()
+    #end
+        {
+        #if (hxCodec >= "3.0.0")
+        super.pause();
+        #else
         this.bitmap.pause();
+        #end
         if (FlxG.autoPause)
             {
                 if (FlxG.signals.focusGained.has(this.bitmap.resume))
@@ -69,9 +77,17 @@ class VideoSpriteManager extends VideoSprite {
                     FlxG.signals.focusLost.remove(this.bitmap.pause);
             }
     }
-
-    public function resume(){
+    #if (hxCodec >= "3.0.0")
+    override public function resume()
+    #else
+    public function resume()
+    #end
+        {
+       #if (hxCodec >= "3.0.0")
+        super.resume();
+        #else
         this.bitmap.resume();
+        #end
         if (FlxG.autoPause)
             {
                 FlxG.signals.focusGained.add(this.bitmap.resume);
