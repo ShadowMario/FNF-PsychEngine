@@ -65,6 +65,8 @@ class FunkinLua {
 
 	public function new(scriptName:String) {
 		#if LUA_ALLOWED
+		var times:Float = Date.now().getTime();
+
 		lua = LuaL.newstate();
 		LuaL.openlibs(lua);
 
@@ -1446,7 +1448,7 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "debugPrint", function(text:Dynamic = '', color:String = 'WHITE') PlayState.instance.addTextToDebug(text, CoolUtil.colorFromString(color)));
-		
+
 		addLocalCallback("close", function() {
 			closed = true;
 			trace('Closing script $scriptName');
@@ -1461,7 +1463,7 @@ class FunkinLua {
 		CustomSubstate.implement(this);
 		ShaderFunctions.implement(this);
 		DeprecatedFunctions.implement(this);
-		
+
 		try{
 			var result:Dynamic = LuaL.dofile(lua, scriptName);
 			var resultStr:String = Lua.tostring(lua, result);
@@ -1479,9 +1481,9 @@ class FunkinLua {
 			trace(e);
 			return;
 		}
-		trace('lua file loaded succesfully:' + scriptName);
 
 		call('onCreate', []);
+		trace('lua file loaded succesfully: $scriptName (${Std.int(Date.now().getTime() - times)}ms)');
 		#end
 	}
 

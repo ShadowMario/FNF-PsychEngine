@@ -15,28 +15,33 @@ class HScript extends BrewScript
 	{
 		if(parent.hscript == null)
 		{
-			trace('initializing haxe interp for: ${parent.scriptName}');
+			var times:Float = Date.now().getTime();
 			parent.hscript = new HScript(parent);
+			trace('initialized brewscript interp successfully: ${parent.scriptName} (${Std.int(Date.now().getTime() - times)}ms)');
 		}
 	}
 
 	public static function initHaxeModuleCode(parent:FunkinLua, code:String)
 	{
+		initHaxeModule(parent);
 		var hs:HScript = try parent.hscript catch (e) null;
-		if(hs == null)
-		{
-			trace('initializing haxe interp for: ${parent.scriptName}');
-			parent.hscript = new HScript(parent, code);
-		}
-		else
+		if(hs != null)
 		{
 			hs.doScript(code);
 			@:privateAccess
-			if(hs.parsingException != null )
+			if(hs.parsingException != null)
 			{
-				PlayState.instance.addTextToDebug('ERROR ON LOADING (${hs.origin}): ${hs.parsingException.message}', FlxColor.RED);
+				var e:String = hs.parsingException.message;
+				if (!e.contains(hs.origin)) e = '${hs.origin}: $e';
+				FunkinLua.luaTrace('ERROR ON LOADING - $e', FlxColor.RED);
+				hs.kill();
 			}
 		}
+	}
+
+	public static function hscriptTrace(text:String, color:FlxColor = FlxColor.WHITE) {
+		PlayState.instance.addTextToDebug(text, color);
+		trace(text);
 	}
 
 	public var origin:String;
@@ -60,27 +65,26 @@ class HScript extends BrewScript
 		super.preset();
 
 		// Some very commonly used classes
-		set('FlxG', flixel.FlxG);
-		set('FlxSprite', flixel.FlxSprite);
-		set('FlxCamera', flixel.FlxCamera);
-		set('FlxTimer', flixel.util.FlxTimer);
-		set('FlxTween', flixel.tweens.FlxTween);
-		set('FlxEase', flixel.tweens.FlxEase);
+		setClass(flixel.FlxG);
+		setClass(flixel.FlxSprite);
+		setClass(flixel.FlxCamera);
+		setClass(flixel.util.FlxTimer);
+		setClass(flixel.tweens.FlxTween);
+		setClass(flixel.tweens.FlxEase);
 		set('FlxColor', CustomFlxColor);
-		set('PlayState', PlayState);
-		set('Paths', Paths);
-		set('Conductor', Conductor);
-		set('ClientPrefs', ClientPrefs);
-		set('Character', Character);
-		set('Alphabet', Alphabet);
-		set('Note', objects.Note);
-		set('CustomSubstate', CustomSubstate);
-		set('Countdown', backend.BaseStage.Countdown);
+		setClass(PlayState);
+		setClass(Paths);
+		setClass(Conductor);
+		setClass(ClientPrefs);
+		setClass(Character);
+		setClass(Alphabet);
+		setClass(objects.Note);
+		setClass(CustomSubstate);
+		setClass(backend.BaseStage.Countdown);
 		#if (!flash && sys)
-		set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);
+		setClass(flixel.addons.display.FlxRuntimeShader);
 		#end
-		set('ShaderFilter', openfl.filters.ShaderFilter);
-		set('StringTools', StringTools);
+		setClass(openfl.filters.ShaderFilter);
 
 		// Functions & Variables
 		set('setVar', function(name:String, value:Dynamic)
@@ -135,10 +139,10 @@ class HScript extends BrewScript
 				if(libPackage.length > 0)
 					str = libPackage + '.';
 
-				set(libName, Type.resolveClass(str + libName));
+				set(libName, resolveClassOrEnum(str + libName));
 			}
 			catch (e:Dynamic) {
-				var msg:String = e.message.substr(0, e.message.indexOf('\n'));
+				var msg:String = e.message;
 				if(parentLua != null)
 				{
 					FunkinLua.lastCalledScript = parentLua;
@@ -181,7 +185,7 @@ class HScript extends BrewScript
 
 		if(!exists(funcToRun))
 		{
-			FunkinLua.luaTrace(origin + ' - No HScript function named: $funcToRun', false, false, FlxColor.RED);
+			FunkinLua.luaTrace('$origin: No HScript function named: $funcToRun', false, false, FlxColor.RED);
 			return null;
 		}
 
@@ -192,8 +196,9 @@ class HScript extends BrewScript
 			if (e != null)
 			{
 				var msg:String = e.toString();
-				if(parentLua != null) msg = origin + ":" + parentLua.lastCalledFunction + " - " + msg;
-				else msg = '$origin - $msg';
+				if (!msg.contains(origin)) msg = '$origin: $msg';
+				if(parentLua != null) msg = 'ERROR (${parentLua.lastCalledFunction}) - $msg';
+				else msg = 'ERROR - $msg';
 				FunkinLua.luaTrace(msg, parentLua == null, false, FlxColor.RED);
 			}
 			return null;
@@ -213,8 +218,8 @@ class HScript extends BrewScript
 	{
 		#if LUA_ALLOWED
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
-			var retVal:BrewCall = null;
 			#if BrewScript
+			var retVal:BrewCall = null;
 			initHaxeModuleCode(funk, codeToRun);
 			if(varsToBring != null)
 			{
@@ -233,7 +238,7 @@ class HScript extends BrewScript
 				var e = retVal.exceptions[0];
 				var calledFunc:String = if(funk.hscript.origin == funk.lastCalledFunction) funcToRun else funk.lastCalledFunction;
 				if (e != null)
-					FunkinLua.luaTrace(funk.hscript.origin + ":" + calledFunc + " - " + e, false, false, FlxColor.RED);
+					FunkinLua.luaTrace('ERROR (${calledFunc}) - $e', false, false, FlxColor.RED);
 				return null;
 			}
 			else if (funk.hscript.returnValue != null)
@@ -241,7 +246,7 @@ class HScript extends BrewScript
 				return funk.hscript.returnValue;
 			}
 			#else
-			FunkinLua.luaTrace("runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
+			FunkinLua.luaTrace(origin + ": runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 			return null;
 		});
@@ -253,33 +258,29 @@ class HScript extends BrewScript
 			{
 				var e = callValue.exceptions[0];
 				if (e != null)
-					FunkinLua.luaTrace('ERROR (${funk.hscript.origin}: ${callValue.calledFunction}) - ' + e.message.substr(0, e.message.indexOf('\n')), false, false, FlxColor.RED);
+					FunkinLua.luaTrace('ERROR (${callValue.calledFunction}) - $e', false, false, FlxColor.RED);
 				return null;
 			}
 			else
 				return callValue.returnValue;
 			#else
-			FunkinLua.luaTrace("runHaxeFunction: HScript isn't supported on this platform!", false, false, FlxColor.RED);
+			FunkinLua.luaTrace(origin + ": runHaxeFunction: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 		});
 		// This function is unnecessary because import already exists in Brew as a native feature
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
+			#if BrewScript
 			var str:String = '';
 			if(libPackage.length > 0)
 				str = libPackage + '.';
 			else if(libName == null)
 				libName = '';
 
-			var c:Dynamic = Type.resolveClass(str + libName);
-			if (c == null)
-				c = Type.resolveEnum(str + libName);
+			var c:Dynamic = funk.hscript.resolveClassOrEnum(str + libName);
 
-			#if BrewScript
 			if (c != null)
 				BrewScript.globalVariables[libName] = c;
-			#end
 
-			#if BrewScript
 			if (funk.hscript != null)
 			{
 				try {
@@ -287,14 +288,21 @@ class HScript extends BrewScript
 						funk.hscript.set(libName, c);
 				}
 				catch (e:Dynamic) {
-					FunkinLua.luaTrace(funk.hscript.origin + ":" + funk.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
+					FunkinLua.luaTrace('ERROR (${funk.lastCalledFunction}) - $e', false, false, FlxColor.RED);
 				}
 			}
 			#else
-			FunkinLua.luaTrace("addHaxeLibrary: HScript isn't supported on this platform!", false, false, FlxColor.RED);
+			FunkinLua.luaTrace(origin + ": addHaxeLibrary: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 		});
 		#end
+	}
+
+	function resolveClassOrEnum(name:String):Dynamic {
+		var c:Dynamic = Type.resolveClass(name);
+		if (c == null)
+			c = Type.resolveEnum(name);
+		return c;
 	}
 
 	override public function kill()
