@@ -32,7 +32,7 @@ HXJSONAST `haxelib install hxjsonast`
 
 HXCodec `haxelib install hxCodec`
 
-SScript (sscript is deleted, will push a change when new script library is added)
+BrewScript `haxelib install BrewScript`
 
 HXCPP Debug Server `haxelib install hxcpp-debug-server`
 
