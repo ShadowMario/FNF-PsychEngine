@@ -65,9 +65,16 @@ class VideoSpriteManager extends VideoSprite {
         {
         #if (hxCodec >= "3.0.0")
         super.pause();
+        if (FlxG.autoPause)
+            {
+                if (FlxG.signals.focusGained.has(this.resume))
+                    FlxG.signals.focusGained.remove(this.resume);
+    
+                if (FlxG.signals.focusLost.has(this.bitmap.pause))
+                    FlxG.signals.focusLost.remove(this.bitmap.pause);
+            }
         #else
         this.bitmap.pause();
-        #end
         if (FlxG.autoPause)
             {
                 if (FlxG.signals.focusGained.has(this.bitmap.resume))
@@ -76,6 +83,7 @@ class VideoSpriteManager extends VideoSprite {
                 if (FlxG.signals.focusLost.has(this.bitmap.pause))
                     FlxG.signals.focusLost.remove(this.bitmap.pause);
             }
+        #end
     }
     #if (hxCodec >= "3.0.0")
     override public function resume()
@@ -85,14 +93,19 @@ class VideoSpriteManager extends VideoSprite {
         {
        #if (hxCodec >= "3.0.0")
         super.resume();
+        if (FlxG.autoPause)
+            {
+                FlxG.signals.focusGained.add(this.resume);
+                FlxG.signals.focusLost.add(this.pause);
+            }
         #else
         this.bitmap.resume();
-        #end
         if (FlxG.autoPause)
             {
                 FlxG.signals.focusGained.add(this.bitmap.resume);
                 FlxG.signals.focusLost.add(this.bitmap.pause);
             }
+        #end
     }
     #end
 }
