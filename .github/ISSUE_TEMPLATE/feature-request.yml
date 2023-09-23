@@ -1,5 +1,5 @@
 name: Feature Request
-description: No, i won't add 6K/etc to the engine or winning icons, stop asking for it. I won't add a Stage Editor neither since you guys already did it using LUA
+description: No, i won't add 6K/etc to the engine, stop asking for it. I won't add a Stage Editor neither since you guys already did it using LUA
 labels: [enhancement]
 body:
   - type: textarea
@@ -17,7 +17,7 @@ body:
         - Useful feature
         - Actual feedback
         - A good idea
-        - Stage Editor, 6K+ support, and winning icons.
+        - Stage Editor and 6K+ support.
         - Better LUA mod support idea
         - Code optimization that would make the game faster. (You should make a PR if this is your request, by the way.)
     validations:
