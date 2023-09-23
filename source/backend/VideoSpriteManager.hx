@@ -107,5 +107,10 @@ class VideoSpriteManager extends VideoSprite {
             }
         #end
     }
+
+    //REAL
+    public function setPlayBackRate(multi:Float){
+        this.bitmap.rate = multi;
+    }
     #end
 }
