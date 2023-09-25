@@ -6,8 +6,8 @@ import psychlua.FunkinLua;
 import psychlua.CustomSubstate;
 
 #if HSCRIPT_ALLOWED
-import brew.BrewScript;
-class HScript extends BrewScript
+import tea.SScript;
+class HScript extends SScript
 {
 	public var parentLua:FunkinLua;
 	
@@ -17,7 +17,7 @@ class HScript extends BrewScript
 		{
 			var times:Float = Date.now().getTime();
 			parent.hscript = new HScript(parent);
-			trace('initialized brewscript interp successfully: ${parent.scriptName} (${Std.int(Date.now().getTime() - times)}ms)');
+			trace('initialized sscript interp successfully: ${parent.scriptName} (${Std.int(Date.now().getTime() - times)}ms)');
 		}
 	}
 
@@ -155,12 +155,8 @@ class HScript extends BrewScript
 		set('parentLua', parentLua);
 		set('this', this);
 		set('game', PlayState.instance);
-		for (i in Type.getInstanceFields(PlayState))
-		{
-			var property:Dynamic = Reflect.getProperty(PlayState.instance, i);
-			if (property != null)
-				set(i, property);
-		}
+		if (PlayState.instance != null)
+			setSpecialObject(PlayState.instance, false, PlayState.instance.instancesExclude);
 		set('buildTarget', FunkinLua.getBuildTarget());
 		set('customSubstate', CustomSubstate.instance);
 		set('customSubstateName', CustomSubstate.name);
@@ -179,7 +175,7 @@ class HScript extends BrewScript
 		set('remove', function(obj:FlxBasic, splice:Bool = false) PlayState.instance.remove(obj, splice));
 	}
 
-	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):BrewCall
+	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):TeaCall
 	{
 		if (funcToRun == null) return null;
 
@@ -206,7 +202,7 @@ class HScript extends BrewScript
 		return callValue;
 	}
 
-	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):BrewCall
+	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):TeaCall
 	{
 		if (funcToRun == null)
 			return null;
@@ -218,8 +214,8 @@ class HScript extends BrewScript
 	{
 		#if LUA_ALLOWED
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
-			#if BrewScript
-			var retVal:BrewCall = null;
+			#if SScript
+			var retVal:TeaCall = null;
 			initHaxeModuleCode(funk, codeToRun);
 			if(varsToBring != null)
 			{
@@ -252,7 +248,7 @@ class HScript extends BrewScript
 		});
 		
 		funk.addLocalCallback("runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic> = null) {
-			#if BrewScript
+			#if SScript
 			var callValue = funk.hscript.executeFunction(funcToRun, funcArgs);
 			if (!callValue.succeeded)
 			{
@@ -267,7 +263,7 @@ class HScript extends BrewScript
 			FunkinLua.luaTrace(origin + ": runHaxeFunction: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 		});
-		// This function is unnecessary because import already exists in Brew as a native feature
+		// This function is unnecessary because import already exists in SScript as a native feature
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
 			#if BrewScript
 			var str:String = '';
@@ -279,7 +275,7 @@ class HScript extends BrewScript
 			var c:Dynamic = funk.hscript.resolveClassOrEnum(str + libName);
 
 			if (c != null)
-				BrewScript.globalVariables[libName] = c;
+				SScript.globalVariables[libName] = c;
 
 			if (funk.hscript != null)
 			{
@@ -333,6 +329,11 @@ class CustomFlxColor
 	public static var MAGENTA(default, null):Int = FlxColor.MAGENTA;
 	public static var CYAN(default, null):Int = FlxColor.CYAN;
 
+	public static function fromInt(Value:Int):Int 
+	{
+		return cast FlxColor.fromInt(Value);
+	}
+
 	public static function fromRGB(Red:Int, Green:Int, Blue:Int, Alpha:Int = 255):Int
 	{
 		return cast FlxColor.fromRGB(Red, Green, Blue, Alpha);
@@ -340,6 +341,11 @@ class CustomFlxColor
 	public static function fromRGBFloat(Red:Float, Green:Float, Blue:Float, Alpha:Float = 1):Int
 	{	
 		return cast FlxColor.fromRGBFloat(Red, Green, Blue, Alpha);
+	}
+
+	public static inline function fromCMYK(Cyan:Float, Magenta:Float, Yellow:Float, Black:Float, Alpha:Float = 1):Int
+	{
+		return cast FlxColor.fromCMYK(Cyan, Magenta, Yellow, Black, Alpha);
 	}
 
 	public static function fromHSB(Hue:Float, Sat:Float, Brt:Float, Alpha:Float = 1):Int

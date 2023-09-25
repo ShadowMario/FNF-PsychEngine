@@ -72,8 +72,8 @@ import psychlua.LuaUtils;
 import psychlua.HScript;
 #end
 
-#if BrewScript
-import brew.BrewScript;
+#if SScript
+import tea.SScript;
 #end
 
 class PlayState extends MusicBeatState
@@ -104,6 +104,7 @@ class PlayState extends MusicBeatState
 	
 	#if HSCRIPT_ALLOWED
 	public var hscriptArray:Array<HScript> = [];
+	public var instancesExclude:Array<String> = [];
 	#end
 
 	#if LUA_ALLOWED
@@ -801,7 +802,7 @@ class PlayState extends MusicBeatState
 		
 		if(doPush)
 		{
-			if(BrewScript.global.exists(scriptFile))
+			if(SScript.global.exists(scriptFile))
 				doPush = false;
 
 			if(doPush) initHScript(scriptFile);
@@ -3097,7 +3098,7 @@ class PlayState extends MusicBeatState
 		
 		if(FileSystem.exists(scriptToLoad))
 		{
-			if (BrewScript.global.exists(scriptToLoad)) return false;
+			if (SScript.global.exists(scriptToLoad)) return false;
 	
 			initHScript(scriptToLoad);
 			return true;
@@ -3137,12 +3138,14 @@ class PlayState extends MusicBeatState
 					hscriptArray.remove(newScript);
 					return;
 				}
-			}
-			trace('initialized brewscript interp successfully: $file (${Std.int(Date.now().getTime() - times)}ms)');
+      }
+
+			trace('initialized sscript interp successfully: $file (${Std.int(Date.now().getTime() - times)}ms)');
 		}
 		catch(e)
 		{
-			var newScript:HScript = cast (BrewScript.global.get(file), HScript);
+
+			var newScript:HScript = cast (SScript.global.get(file), HScript);
 
 			var e:String = e.toString();
 			if (!e.contains(newScript.origin)) e = '${newScript.origin}: $e';
@@ -3274,6 +3277,8 @@ class PlayState extends MusicBeatState
 			if(exclusions.contains(script.origin))
 				continue;
 
+			if(!instancesExclude.contains(variable))
+				instancesExclude.push(variable);
 			script.set(variable, arg);
 		}
 		#end
