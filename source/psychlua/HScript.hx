@@ -265,7 +265,7 @@ class HScript extends SScript
 		});
 		// This function is unnecessary because import already exists in SScript as a native feature
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
-			#if BrewScript
+			#if SScript
 			var str:String = '';
 			if(libPackage.length > 0)
 				str = libPackage + '.';
