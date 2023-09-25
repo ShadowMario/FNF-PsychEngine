@@ -855,15 +855,15 @@ class PlayState extends MusicBeatState
 				return null;
 			});
 		return video;
-	}
-		#else
+		}
+	#else
 		//because it returns a VideoManager which dosen't exists on unsupported platforms so it results in a error during compile.
 		public function startVideo(ignoreThisThing:String){
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
 		return null;
-		#end
-	}
+		}
+	#end
 
 	function startAndEnd()
 	{
@@ -1524,6 +1524,7 @@ class PlayState extends MusicBeatState
 			#if VIDEOS_ALLOWED
 			if(videoSprites.length > 0){
 			for(daVideoSprite in 0...videoSprites.length)
+				if(videoSprites[daVideoSprite].bitmap.isDisplaying && videoSprites[daVideoSprite] != null) // prevents null function pointer when pausing after the video is finished
 				videoSprites[daVideoSprite].resume();
 			}
 			#end
@@ -1770,6 +1771,13 @@ class PlayState extends MusicBeatState
 			checkEventNote();
 		}
 
+		#if VDEIOS_ALLOWED
+		for(daVideoSprite in 0...videoSprites.length){
+			if(!videoSprites[daVideoSprite].bitmap.isDisplaying)
+				videoSprites.remove(daVideoSprite);
+		}
+		#end
+
 		#if debug
 		if(!endingSong && !startingSong) {
 			if (FlxG.keys.justPressed.ONE) {
@@ -1807,8 +1815,10 @@ class PlayState extends MusicBeatState
 
 		#if VIDEOS_ALLOWED
 		if(videoSprites.length > 0){
-			for(daVideoSprite in 0...videoSprites.length)
+			for(daVideoSprite in 0...videoSprites.length){
+				if(videoSprites[daVideoSprite].bitmap.isDisplaying && videoSprites[daVideoSprite] != null) // prevents null function pointer when pausing after the video is finished
 				videoSprites[daVideoSprite].pause();
+			}
 		}
 		#end
 		
@@ -1887,11 +1897,10 @@ class PlayState extends MusicBeatState
 				//i assume it's better removing the thing on gameover
 				if(videoSprites.length > 0){
 				for(daVideoSprite in 0...videoSprites.length){
-					#if (hxCodec >= "3.0.0")
-				videoSprites[daVideoSprite].destroy();
-				#else
+				#if (hxCodec < "3.0.0")
 				videoSprites[daVideoSprite].bitmap.onEndReached(); //ends the video(using kill only didn't remove the sound so...)
 				#end
+				videoSprites[daVideoSprite].destroy();
 				videoSprites[daVideoSprite].kill();
 				}
 				for(i in videoSprites)
@@ -3033,16 +3042,15 @@ class PlayState extends MusicBeatState
 		#if VIDEOS_ALLOWED
 		if(videoSprites.length > 0){
 			for(daVideoSprite in 0...videoSprites.length){
-				#if (hxCodec >= "3.0.0")
-				videoSprites[daVideoSprite].destroy();
-				#else
-				videoSprites[daVideoSprite].bitmap.onEndReached(); //ends the video(using kill only didn't remove the sound so...)
-				#end
-				videoSprites[daVideoSprite].kill();
+			#if (hxCodec < "3.0.0")
+			videoSprites[daVideoSprite].bitmap.onEndReached();
+			#end
+			videoSprites[daVideoSprite].destroy();
+			videoSprites[daVideoSprite].kill();
 			}
 			for(i in videoSprites)
-				videoSprites.remove(i); //clearing
-		}
+				videoSprites.remove(i);
+			}
 		#end
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);

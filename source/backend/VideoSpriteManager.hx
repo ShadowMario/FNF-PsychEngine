@@ -11,20 +11,20 @@ class VideoSpriteManager extends VideoSprite {
     public function new(x:Float, y:Float #if (hxCodec < "2.6.0"),width:Float = 1280, height:Float = 720, autoScale:Bool = true #end){
         super(x, y #if (hxCodec < "2.6.0"),width, height, autoScale #end);
         states.PlayState.instance.videoSprites.push(this); //hopefully will put the VideoSprite var in the array
-        this.setPlayBackRate(states.PlayState.instance.playbackRate);
     }
     #if VIDEOS_ALLOWED
-
+    
     /**
-	 * Native video support for Flixel & OpenFL
-	 * @param Path Example: `your/video/here.mp4`
-	 * @param Loop Loop the video.
-	 */
-    public function startVideo(path:String, loop:Bool = false) {
-        #if (hxCodec >= "3.0.0")
-        this.play(path, loop);
-        #else
-        this.playVideo(path, loop, false);
+        * Native video support for Flixel & OpenFL
+        * @param Path Example: `your/video/here.mp4`
+        * @param Loop Loop the video.
+        */
+        public function startVideo(path:String, loop:Bool = false) {
+            #if (hxCodec >= "3.0.0")
+            this.play(path, loop);
+            #else
+            this.playVideo(path, loop, false);
+            this.setPlayBackRate(states.PlayState.instance.playbackRate);
         #end
     }
 
