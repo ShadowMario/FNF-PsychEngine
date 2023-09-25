@@ -17,8 +17,8 @@ class AdditionalClasses {
 			"lime",
 			#if LUA_ALLOWED "llua", #end
 			"openfl",
-			#if BrewScript "brew", #end
-			#if BrewScript "haxescript", #end
+			#if SScript "tea", #end
+			#if SScript "haxescript", #end
 
 			"haxe",
 			#if flash "flash", #end
