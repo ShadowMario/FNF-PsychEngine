@@ -112,7 +112,6 @@
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="discord_rpc" if="desktop"/>
 	<haxelib name="tjson" />
-	<haxedef name="openflPos" />
 	<haxedef name="hscriptPos" />
 
 	<!-- Enables a terminal log prompt on debug builds -->

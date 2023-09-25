@@ -5,7 +5,7 @@ import objects.Character;
 import psychlua.FunkinLua;
 import psychlua.CustomSubstate;
 
-#if (HSCRIPT_ALLOWED && SScript >= "3.0.0")
+#if HSCRIPT_ALLOWED
 import tea.SScript;
 class HScript extends SScript
 {
@@ -13,24 +13,30 @@ class HScript extends SScript
 	
 	public static function initHaxeModule(parent:FunkinLua)
 	{
-		#if (SScript >= "3.0.0")
 		if(parent.hscript == null)
 		{
 			trace('initializing haxe interp for: ${parent.scriptName}');
 			parent.hscript = new HScript(parent);
 		}
-		#end
 	}
 
 	public static function initHaxeModuleCode(parent:FunkinLua, code:String)
 	{
-		#if (SScript >= "3.0.0")
-		if(parent.hscript == null)
+		var hs:HScript = try parent.hscript catch (e) null;
+		if(hs == null)
 		{
 			trace('initializing haxe interp for: ${parent.scriptName}');
 			parent.hscript = new HScript(parent, code);
 		}
-		#end
+		else
+		{
+			hs.doScript(code);
+			@:privateAccess
+			if(hs.parsingException != null)
+			{
+				PlayState.instance.addTextToDebug('ERROR ON LOADING (${hs.origin}): ${hs.parsingException.message}', FlxColor.RED);
+			}
+		}
 	}
 
 	public var origin:String;
@@ -51,7 +57,6 @@ class HScript extends SScript
 
 	override function preset()
 	{
-		#if (SScript >= "3.0.0")
 		super.preset();
 
 		// Some very commonly used classes
@@ -150,6 +155,8 @@ class HScript extends SScript
 		set('parentLua', parentLua);
 		set('this', this);
 		set('game', PlayState.instance);
+		if (PlayState.instance != null)
+			setSpecialObject(PlayState.instance, false, PlayState.instance.instancesExclude);
 		set('buildTarget', FunkinLua.getBuildTarget());
 		set('customSubstate', CustomSubstate.instance);
 		set('customSubstateName', CustomSubstate.name);
@@ -166,10 +173,9 @@ class HScript extends SScript
 		set('addBehindBF', function(obj:FlxBasic) PlayState.instance.addBehindBF(obj));
 		set('insert', function(pos:Int, obj:FlxBasic) PlayState.instance.insert(pos, obj));
 		set('remove', function(obj:FlxBasic, splice:Bool = false) PlayState.instance.remove(obj, splice));
-		#end
 	}
 
-	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):SCall
+	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):TeaCall
 	{
 		if (funcToRun == null) return null;
 
@@ -195,7 +201,7 @@ class HScript extends SScript
 		return callValue;
 	}
 
-	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):SCall
+	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):TeaCall
 	{
 		if (funcToRun == null)
 			return null;
@@ -207,8 +213,8 @@ class HScript extends SScript
 	{
 		#if LUA_ALLOWED
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
-			var retVal:SCall = null;
-			#if (SScript >= "3.0.0")
+			var retVal:TeaCall = null;
+			#if SScript
 			initHaxeModuleCode(funk, codeToRun);
 			if(varsToBring != null)
 			{
@@ -225,12 +231,15 @@ class HScript extends SScript
 					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
 
 				var e = retVal.exceptions[0];
+				var calledFunc:String = if(funk.hscript.origin == funk.lastCalledFunction) funcToRun else funk.lastCalledFunction;
 				if (e != null)
-					FunkinLua.luaTrace(funk.hscript.origin + ":" + funk.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
+					FunkinLua.luaTrace(funk.hscript.origin + ":" + calledFunc + " - " + e, false, false, FlxColor.RED);
 				return null;
 			}
 			else if (funk.hscript.returnValue != null)
+			{
 				return funk.hscript.returnValue;
+			}
 			#else
 			FunkinLua.luaTrace("runHaxeCode: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
@@ -238,7 +247,7 @@ class HScript extends SScript
 		});
 		
 		funk.addLocalCallback("runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic> = null) {
-			#if (SScript >= "3.0.0")
+			#if SScript
 			var callValue = funk.hscript.executeFunction(funcToRun, funcArgs);
 			if (!callValue.succeeded)
 			{
@@ -261,14 +270,16 @@ class HScript extends SScript
 			else if(libName == null)
 				libName = '';
 
-			var c = Type.resolveClass(str + libName);
+			var c:Dynamic = Type.resolveClass(str + libName);
+			if (c == null)
+				c = Type.resolveEnum(str + libName);
 
-			#if (SScript >= "3.0.3")
+			#if SScript
 			if (c != null)
 				SScript.globalVariables[libName] = c;
 			#end
 
-			#if (SScript >= "3.0.0")
+			#if SScript
 			if (funk.hscript != null)
 			{
 				try {
@@ -286,20 +297,13 @@ class HScript extends SScript
 		#end
 	}
 
-	#if (SScript >= "3.0.3")
-	override public function destroy()
+	override public function kill()
 	{
 		origin = null;
 		parentLua = null;
 
-		super.destroy();
+		super.kill();
 	}
-	#else
-	public function destroy()
-	{
-		active = false;
-	}
-	#end
 }
 
 class CustomFlxColor
@@ -321,6 +325,11 @@ class CustomFlxColor
 	public static var MAGENTA(default, null):Int = FlxColor.MAGENTA;
 	public static var CYAN(default, null):Int = FlxColor.CYAN;
 
+	public static function fromInt(Value:Int):Int 
+	{
+		return cast FlxColor.fromInt(Value);
+	}
+
 	public static function fromRGB(Red:Int, Green:Int, Blue:Int, Alpha:Int = 255):Int
 	{
 		return cast FlxColor.fromRGB(Red, Green, Blue, Alpha);
@@ -328,6 +337,11 @@ class CustomFlxColor
 	public static function fromRGBFloat(Red:Float, Green:Float, Blue:Float, Alpha:Float = 1):Int
 	{	
 		return cast FlxColor.fromRGBFloat(Red, Green, Blue, Alpha);
+	}
+
+	public static inline function fromCMYK(Cyan:Float, Magenta:Float, Yellow:Float, Black:Float, Alpha:Float = 1):Int
+	{
+		return cast FlxColor.fromCMYK(Cyan, Magenta, Yellow, Black, Alpha);
 	}
 
 	public static function fromHSB(Hue:Float, Sat:Float, Brt:Float, Alpha:Float = 1):Int

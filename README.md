@@ -2,11 +2,27 @@
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
-You must have [Haxe version 4.2.5](https://haxe.org/download/version/4.2.5/), seriously, stop using older or newer versions, it won't work!
+You must have [Haxe](https://haxe.org/download/), installed in order to move on to these next steps
 
-open up a Command Prompt/PowerShell or Terminal, type `haxelib install hmm`
+------------------
 
-after it finishes, simply type `haxelib run hmm install` in order to install all the needed libraries for *Psych Engine!*
+Go into your `setup` folder located in the root directory of the source code, and execute the respective script for your operating system
+
+`setup-unix.sh` was designed for Linux and Mac, `setup-windows.bat` was designed for (duh) Windows
+
+for Windows users, double click the `setup-windows.bat` file, and wait until the process of installing the libraries is finished
+
+------------------
+
+for Linux and Mac users, often double clicking on `setup-unix.sh` is the solution, but if not, open up a terminal on the script's folder location, and execute the following command:
+
+`sh setup-unix.sh`
+
+------------------
+
+once finished, you should be ready to compile, you can open a terminal in the source code folder, and then type `lime test <target>`
+
+with `<target>` being either `windows`, `mac` or `linux`
 
 If the compiler gives an error saying that hxCodec cannot be found read this issue to fix it: ShadowMario/FNF-PsychEngine#12770
 
