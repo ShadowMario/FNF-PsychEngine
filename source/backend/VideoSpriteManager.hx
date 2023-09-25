@@ -28,10 +28,10 @@ class VideoSpriteManager extends VideoSprite {
         #end
     }
 
-     /**
+    	/**
 	 * Adds a function that is called when the Video ends.
 	 * @param func Example: `function() { //code to run }`
-	 */
+	*/
     public function setFinishCallBack(func:Dynamic){
         #if (hxCodec >= "3.0.0")
         this.bitmap.onEndReached.add(function() {
@@ -45,7 +45,7 @@ class VideoSpriteManager extends VideoSprite {
         #end
     }
 
-     /**
+    	 /**
 	 * Adds a function which is called when the Codec is opend(video starts).
 	 * @param func Example: `function() { //code to run }`
 	 */
