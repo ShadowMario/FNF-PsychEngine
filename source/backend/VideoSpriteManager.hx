@@ -24,8 +24,8 @@ class VideoSpriteManager extends VideoSprite {
             this.play(path, loop);
             #else
             this.playVideo(path, loop, false);
-            this.setPlayBackRate(states.PlayState.instance.playbackRate);
         #end
+            this.setPlayBackRate(states.PlayState.instance.playbackRate); 
     }
 
     	/**
