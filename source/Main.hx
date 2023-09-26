@@ -158,30 +158,6 @@ class Main extends Sprite {
 		threadPool = new ElasticThreadPool(12, 30);
 		#end
 
-		inline function gc(?minor:Bool = false) {
-			#if !android
-			Gc.run(!minor);
-			if (!minor) Gc.compact();
-			//trace('${Gc.memInfo(0) / 1024 / 1024} MB NEEDED\n${Gc.memInfo(1) / 1024 / 1024} MB RESERVED\n${Gc.memInfo(2) / 1024 / 1024} MB IN USE');
-			#else
-			openfl.system.System.gc();
-			#end
-		}
-
-		//negates need for constant clearStored etc
-#if !android
-		FlxG.signals.preStateSwitch.add(() -> {
-			Paths.clearStoredMemory(true);
-			FlxG.sound.destroy(false);
-
-			gc(true);
-		});
-		FlxG.signals.postStateSwitch.add(() -> {
-			Paths.clearUnusedMemory();
-			gc();
-		});
-	#end
-
 		FlxG.autoPause = false;
 
 		#if html5

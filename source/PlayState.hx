@@ -2142,8 +2142,11 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud || !ClientPrefs.showcaseMode;
 		add(scoreTxt);
 		}
-		if (ClientPrefs.hideScore) {
+		if (ClientPrefs.hideScore || ClientPrefs.showcaseMode) {
 		scoreTxt.destroy();
+		healthBarBG.visible = false;
+		healthBar.visible = false;
+		iconP2.visible = iconP1.visible = false;
 		}
 		if (!ClientPrefs.charsAndBG) {
 		remove(dadGroup);
@@ -5669,6 +5672,8 @@ if (ClientPrefs.showNPS) {
 						var strumAlpha:Float = strumGroup.members[daNote.noteData].alpha;
 						var strumScroll:Bool = strumGroup.members[daNote.noteData].downScroll;
 
+						if (ClientPrefs.showNotes)
+						{
 						strumX += daNote.offsetX;
 						strumY += daNote.offsetY;
 						strumAngle += daNote.offsetAngle;
@@ -5700,7 +5705,7 @@ if (ClientPrefs.showNPS) {
 							daNote.y = strumY + Math.sin(angleDir) * daNote.distance;
 
 							//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
-							if(strumScroll && daNote.isSustainNote)
+							if(strumScroll && daNote.isSustainNote && ClientPrefs.showNotes)
 							{
 								if (daNote.animation.curAnim.name.endsWith('end')) {
 									daNote.y += 10.5 * (fakeCrochet / 400) * 1.5 * songSpeed + (46 * (songSpeed - 1));
@@ -5714,6 +5719,7 @@ if (ClientPrefs.showNPS) {
 								daNote.y += (Note.swagWidth / 2) - (60.5 * (songSpeed - 1));
 								daNote.y += 27.5 * ((SONG.bpm / 100) - 1) * (songSpeed - 1);
 							}
+						}
 						}
 
 						if (!daNote.mustPress && !daNote.hitByOpponent && !daNote.ignoreNote && daNote.strumTime <= Conductor.songPosition)
@@ -8530,6 +8536,10 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				note.rating = daRating.name;
 				songScore += daRating.score * comboMultiplier * polyphony;
 				totalPlayed++;
+				if(daRating.noteSplash && !note.noteSplashDisabled)
+				{
+					spawnNoteSplashOnNote(false, note);
+				}
 				RecalculateRating();
 			}
 			if (note.isSustainNote && cpuControlled && !ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot && ClientPrefs.holdNoteHits)
