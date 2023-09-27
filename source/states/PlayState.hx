@@ -1775,8 +1775,8 @@ class PlayState extends MusicBeatState
 
 		#if VIDEOS_ALLOWED
 		if(videoSprites.length > 0){
-		for(daVideoSprite in 0...videoSprites.length){
-			if(!videoSprites[daVideoSprite].bitmap.isDisplaying)
+		for(daVideoSprite in videoSprites){
+			if(!daVideoSprite.bitmap.isDisplaying)
 				videoSprites.remove(daVideoSprite);
 		}
 	}
