@@ -200,10 +200,6 @@
 	<!-- _________________________________ Android Stuff _______________________________ -->
 	<config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
 	<config:android permission="android.permission.WRITE_EXTERNAL_STORAGE" if="android"/>
-	<config:android permission="android.permission.INTERNET" if="android"/>
-	<config:android permission="android.permission.ACCESS_NETWORK_STATE" if="android"/>
-	<config:android permission="android.permission.ACCESS_WIFI_STATE" if="android"/>
-	<config:android permission="android.permission.RECORD_AUDIO" if="android"/>
         <config:android gradle-version="7.5.1" />
         <config:android gradle-plugin="7.3.1" />
 
