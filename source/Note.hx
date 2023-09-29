@@ -9,6 +9,7 @@ import flash.display.BitmapData;
 import editors.ChartingState;
 import flixel.util.FlxPool;
 import flixel.math.FlxRect;
+import openfl.system.System;
 
 using StringTools;
 

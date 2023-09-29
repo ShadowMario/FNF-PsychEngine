@@ -20,6 +20,7 @@ import flixel.system.FlxSound;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import openfl.utils.Assets as OpenFlAssets;
+import flixel.util.FlxStringUtil; //for formatting the note count
 import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -43,6 +44,8 @@ class FreeplayState extends MusicBeatState
 	var lerpRating:Float = 0;
 	var intendedScore:Float = 0;
 	var intendedRating:Float = 0;
+	var requiredRamLoad:Float = 0;
+	var noteCount:Float = 0;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 
@@ -377,6 +380,8 @@ class FreeplayState extends MusicBeatState
 		}
 		else if(space)
 		{
+		requiredRamLoad = 0;
+		noteCount = 0;
 				function playSong() {
 				#if PRELOAD_ALL
 				destroyFreeplayVocals();
@@ -402,6 +407,14 @@ class FreeplayState extends MusicBeatState
 				iconArray[instPlaying].canBounce = true;
 				curPlaying = true;
 				#end
+
+				if (FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonZ.pressed #end) {
+					for (section in PlayState.SONG.notes) {
+					noteCount += section.sectionNotes.length;
+					requiredRamLoad += 72872 * section.sectionNotes.length;
+					}
+					CoolUtil.coolError("There are " + FlxStringUtil.formatMoney(noteCount, false) + " notes in this chart!\nWith Show Notes turned on, you'd need " + formatCompactNumber(requiredRamLoad / 2) + " of ram to load this.", "JS Engine Chart Diagnosis");
+				}
 			}
 			function songJsonPopup() { //you pressed space, but the song's ogg files don't exist
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
@@ -530,6 +543,27 @@ class FreeplayState extends MusicBeatState
 		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
 		positionHighscore();
 	}
+
+    public static function formatCompactNumber(number:Float):String //this entire function is ai generated LMAO
+    {
+        var suffixes:Array<String> = [' bytes', ' KB', ' MB', ' GB', 'TB'];
+        var magnitude:Int = 0;
+        var num:Float = number;
+
+        while (num >= 1000.0 && magnitude < suffixes.length - 1)
+        {
+            num /= 1000.0;
+            magnitude++;
+        }
+
+        // Use the floor value for the compact representation
+        var compactValue:Float = Math.floor(num * 100) / 100;
+	if (compactValue <= 0.001) {
+		return "0"; //Return 0 if compactValue = null
+	} else {
+        	return compactValue + (magnitude == 0 ? "" : "") + suffixes[magnitude];
+	}
+    }
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
 	{

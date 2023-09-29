@@ -84,6 +84,7 @@ class Main extends Sprite {
         "motherfucking ordinal 344 (TaskDialog) forcing me to create a even fancier window",
         "Died due to missing a sawblade. (Press Space to dodge!)",
         "yes rico, kaboom.",
+        "hey, while in freeplay, press shift while pressing space",
         "goofy ahh engine",
         "pssst, try typing debug7 in the options menu",
         "this crash handler is sponsored by rai-",
@@ -94,7 +95,7 @@ class Main extends Sprite {
         "\r\ni am a secret message",
         "this is garnet",
         "Error: Sorry i already have a girlfriend",
-        "did you know theres a total of 50 silly messages",
+        "did you know theres a total of 51 silly messages",
         "whoopsies looks like i forgot to fix this",
         "Game used Crash. It's super effective!"
     ];

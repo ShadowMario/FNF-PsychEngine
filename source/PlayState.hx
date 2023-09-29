@@ -5076,7 +5076,8 @@ if (ClientPrefs.showNPS) {
 		if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG) hitTxt.text = 'Notes Hit: ' + FlxStringUtil.formatMoney(totalNotesPlayed, false)
 		+ '\nNPS (Max): ' + FlxStringUtil.formatMoney(nps, false) + ' (' + FlxStringUtil.formatMoney(maxNPS, false) + ')'
 		+ '\nOpponent Notes Hit: ' + FlxStringUtil.formatMoney(enemyHits, false)
-		+ '\nOpponent NPS (Max): ' + FlxStringUtil.formatMoney(oppNPS, false) + ' (' + FlxStringUtil.formatMoney(maxOppNPS, false) + ')';
+		+ '\nOpponent NPS (Max): ' + FlxStringUtil.formatMoney(oppNPS, false) + ' (' + FlxStringUtil.formatMoney(maxOppNPS, false) + ')'
+		+ '\nTotal Note Hits: ' + FlxStringUtil.formatMoney(Math.abs(totalNotesPlayed + enemyHits), false);
 
 		if (combo > maxCombo)
 			maxCombo = combo;
