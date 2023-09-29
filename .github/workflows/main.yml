@@ -255,7 +255,7 @@ jobs:
           java-version: 11
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@main
+        uses: android-actions/setup-android@899d70efad39c17b8a26d5c7ca32ceac944d05d1
 
       - name: Setup Haxe
         uses: krdlab/setup-haxe@v1.2.0
