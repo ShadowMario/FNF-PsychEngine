@@ -1,4 +1,5 @@
-1.10.0;
-- Complex Accuracy RETURNS
-- More options
-- I said I would remove this with 1.10.0, \nbut was too lazy to remove it
+1.11.0;
+- funny crash messages
+- SHOWCASE MODE!!
+- Fixed Discord RPC
+- Chart Diagnosis
