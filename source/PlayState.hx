@@ -2557,7 +2557,7 @@ class PlayState extends MusicBeatState
 			}
 
 		cacheCountdown();
-		cachePopUpScore();
+		if (ClientPrefs.ratesAndCombo) cachePopUpScore(); //Caching the ratings is unnecessary if you turn off rating popups
 		for (key => type in precacheList)
 		{
 			//trace('Key $key is type $type');
@@ -5627,7 +5627,7 @@ if (ClientPrefs.showNPS) {
 			{
 			time = spawnTime * ClientPrefs.noteSpawnTime;
 			}
-			else
+			if (ClientPrefs.dynamicSpawnTime)
 			{
 			time = spawnTime / songSpeed;
 			}
@@ -5907,21 +5907,23 @@ if (ClientPrefs.showNPS) {
 								if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG)
 								{
 								if (!daNote.isSustainNote) {
-								enemyHits += 1 * polyphony;
-								if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
-								oppNotesHitArray.push(1 * polyphony);
-								oppNotesHitDateArray.push(Date.now());
-								if (shouldKillNotes)
-								{
-									daNote.kill();
+									enemyHits += 1 * polyphony;
+								if (ClientPrefs.showNPS) {
+									oppNotesHitArray.push(1 * polyphony);
+									oppNotesHitDateArray.push(Date.now());
+									}
 								}
-								notes.remove(daNote, true);
-								if (shouldKillNotes)
-								{
-									daNote.destroy();
-								}
-								}
-								}
+								if (!daNote.isSustainNote) {
+									if (shouldKillNotes)
+									{
+										daNote.kill();
+									}
+									notes.remove(daNote, true);
+									if (shouldKillNotes)
+									{
+										daNote.destroy();
+									}
+									}
 								}
 						}
 
