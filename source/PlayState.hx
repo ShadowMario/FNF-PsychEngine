@@ -1963,16 +1963,22 @@ class PlayState extends MusicBeatState
 		}
 
 		if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG) {
-		hitTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 20, 10000, "test", 42);
-		hitTxt.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		//hitTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 20, 10000, "test", 42);
+		hitTxt = new FlxText(0, 20, 10000, "test", 42);
+		hitTxt.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		hitTxt.scrollFactor.set();
 		hitTxt.borderSize = 2;
 		hitTxt.visible = true;
 		hitTxt.cameras = [camHUD];
-		hitTxt.alignment = FlxTextAlign.CENTER; // center the text
-		hitTxt.screenCenter(X);
+		//hitTxt.alignment = FlxTextAlign.LEFT; // center the text
+		//hitTxt.screenCenter(X);
 		hitTxt.screenCenter(Y);
 		add(hitTxt);
+			var chromaScreen = new FlxSprite(-5000, -2000).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.GREEN);
+			chromaScreen.scrollFactor.set(0, 0);
+			chromaScreen.scale.set(3, 3);
+			chromaScreen.updateHitbox();
+			add(chromaScreen);
 		}
 		
 		if (ClientPrefs.hudType == 'Kade Engine')

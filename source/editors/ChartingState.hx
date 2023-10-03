@@ -3206,7 +3206,7 @@ class ChartingState extends MusicBeatState
 			sectionBeats: getSectionBeats(),
 			bpm: _song.bpm,
 			changeBPM: false,
-			mustHitSection: true,
+			mustHitSection: _song.notes[curSec].mustHitSection,
 			gfSection: false,
 			sectionNotes: [],
 			typeOfSection: 0,

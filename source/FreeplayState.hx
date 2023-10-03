@@ -436,10 +436,11 @@ class FreeplayState extends MusicBeatState
 				});
 			}
 			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			#if desktop
 			if(instPlaying != curSelected)
 			{
-				if(sys.FileSystem.exists(Paths.inst(poop + '/'  + poop)) || sys.FileSystem.exists(Paths.json(poop + '/' + poop)) || sys.FileSystem.exists(Paths.modsJson(poop + '/' + poop)))
+				if(sys.FileSystem.exists(Paths.inst(songLowercase + '/'  + poop)) || sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop)) || sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)))
 					playSong();
 				else
 					songJsonPopup();
@@ -447,7 +448,7 @@ class FreeplayState extends MusicBeatState
 			#else
 			if(instPlaying != curSelected)
 			{
-				if(OpenFlAssets.exists(Paths.inst(poop + '/' + poop)) || OpenFlAssets.exists(Paths.json(poop + '/' + poop)))
+				if(OpenFlAssets.exists(Paths.inst(songLowercase + '/' + poop)) || OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop)))
 					playSong();
 				else
 					songJsonPopup();
