@@ -51,6 +51,11 @@
       "version": null
     },
     {
+      "name": "parallaxlt",
+      "type": "haxelib",
+      "version": "0.0.0"
+    },
+    {
       "name": "hxcpp-debug-server",
       "type": "haxelib",
       "version": null
