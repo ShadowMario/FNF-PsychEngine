@@ -41,6 +41,7 @@ import psychlua.HScript;
 #end
 import psychlua.DebugLuaText;
 import psychlua.ModchartSprite;
+import flixel_5_3_1.ParallaxSprite; // flixel 5 render pipeline
 
 class FunkinLua {
 	public static var Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
@@ -981,6 +982,13 @@ class FunkinLua {
 
 			LuaUtils.loadFrames(leSprite, image, spriteType);
 			game.modchartSprites.set(tag, leSprite);
+		});
+		Lua_helper.add_callback(lua, "makeParallaxSprite", function(tag:String, ?image:String = null, ?x:Float = 0, ?y:Float = 0) {
+			tag = tag.replace('.', '');
+			LuaUtils.resetSpriteTag(tag, true);
+			var leSprite:ParallaxSprite = new ParallaxSprite(x, y, Paths.image(image));
+			game.modchartParallax.set(tag, leSprite);
+			leSprite.active = true;
 		});
 
 		Lua_helper.add_callback(lua, "makeGraphic", function(obj:String, width:Int = 256, height:Int = 256, color:String = 'FFFFFF') {
