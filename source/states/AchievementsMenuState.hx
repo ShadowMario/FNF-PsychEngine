@@ -1,6 +1,7 @@
 package states;
 
 import flixel.FlxObject;
+import flixel.util.FlxSort;
 import objects.Bar;
 
 #if ACHIEVEMENTS_ALLOWED
@@ -29,10 +30,11 @@ class AchievementsMenuState extends MusicBeatState
 		#end
 
 		// prepare achievement list
-		for (achievement in Achievements.achievements)
+		for (achievement => data in Achievements.achievements)
 		{
-			if(achievement[3] != true || Achievements.isUnlocked(achievement[2]))
-				options.push(makeAchievement(achievement));
+			var unlocked:Bool = Achievements.isUnlocked(achievement);
+			if(data.hidden != true || unlocked)
+				options.push(makeAchievement(achievement, data, unlocked));
 		}
 
 		// TO DO: check for mods
@@ -53,6 +55,7 @@ class AchievementsMenuState extends MusicBeatState
 		grpOptions = new FlxSpriteGroup();
 		grpOptions.scrollFactor.x = 0;
 
+		options.sort(sortByID);
 		for (option in options)
 		{
 			var hasAntialias:Bool = ClientPrefs.data.antialiasing;
@@ -123,21 +126,24 @@ class AchievementsMenuState extends MusicBeatState
 		super.create();
 	}
 
-	function makeAchievement(achievement:Array<Dynamic>, mod:String = null)
+	function makeAchievement(achievement:String, data:Achievement, unlocked:Bool, mod:String = null)
 	{
-		var unlocked:Bool = Achievements.isUnlocked(achievement[2]);
+		var unlocked:Bool = Achievements.isUnlocked(achievement);
 		return {
-			name: achievement[2],
-			displayName: unlocked ? achievement[0] : '???',
-			description: achievement[1],
-			curProgress: achievement[4] != null ? Achievements.getScore(achievement[2]) : 0,
-			maxProgress: achievement[4] != null ? achievement[4] : 0,
-			decProgress: achievement[5] != null ? achievement[5] : 0,
+			name: achievement,
+			displayName: unlocked ? data.name : '???',
+			description: data.description,
+			curProgress: data.maxScore > 0 ? Achievements.getScore(achievement) : 0,
+			maxProgress: data.maxScore > 0 ? data.maxScore : 0,
+			decProgress: data.maxScore > 0 ? data.maxDecimals : 0,
 			unlocked: unlocked,
-			//id: Achievements.achievements.indexOf(achievement), //this wouldnt be mod compatible me thinks
+			ID: data.ID,
 			mod: mod
 		};
 	}
+
+	public static function sortByID(Obj1:Dynamic, Obj2:Dynamic):Int
+		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.ID, Obj2.ID);
 
 	var goingBack:Bool = false;
 	override function update(elapsed:Float) {

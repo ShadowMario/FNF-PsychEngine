@@ -10,7 +10,7 @@ class AchievementPopup extends openfl.display.Sprite {
 	public var onFinish:Void->Void = null;
 	var alphaTween:FlxTween;
 	var lastScale:Float = 1;
-	public function new(name:String, onFinish:Void->Void)
+	public function new(achieve:String, onFinish:Void->Void)
 	{
 		super();
 
@@ -21,7 +21,7 @@ class AchievementPopup extends openfl.display.Sprite {
 		// achievement icon
 		var graphic = null;
 		var hasAntialias:Bool = ClientPrefs.data.antialiasing;
-		var image:String = 'achievements/$name';
+		var image:String = 'achievements/$achieve';
 		if(Paths.fileExists('images/$image-pixel.png', IMAGE))
 		{
 			graphic = Paths.image('$image-pixel', false);
@@ -41,13 +41,13 @@ class AchievementPopup extends openfl.display.Sprite {
 		graphics.drawRect(imgX, imgY, sizeX + 10, sizeY + 10);
 
 		// achievement name/description
-		var id:Int = Achievements.getIndexOf(name);
 		var name:String = 'Unknown';
 		var desc:String = 'Description not found';
-		if(id >= 0)
+		if(Achievements.exists(achieve))
 		{
-			name = Achievements.achievements[id][0];
-			desc = Achievements.achievements[id][1];
+			var achievement:Achievement = Achievements.get(achieve);
+			if(achievement.name != null) name = achievement.name;
+			if(achievement.description != null)  desc = achievement.description;
 		}
 
 		var textX = sizeX + imgX + 15;
