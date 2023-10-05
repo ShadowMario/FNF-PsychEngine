@@ -5,6 +5,7 @@ import objects.Character;
 
 import openfl.display.BlendMode;
 import animateatlas.AtlasFrameMaker;
+import flixel_5_3_1.ParallaxSprite;
 import Type.ValueType;
 
 import substates.GameOverSubstate;
@@ -278,9 +279,18 @@ class LuaUtils
 		#end
 	}
 
-	public static function resetSpriteTag(tag:String) {
+	public static function resetSpriteTag(tag:String, isParallax:Bool = false) {
 		#if LUA_ALLOWED
-		if(!PlayState.instance.modchartSprites.exists(tag)) {
+		if(!PlayState.instance.modchartSprites.exists(tag) || !PlayState.instance.modchartParallax.exists(tag)) {
+			return;
+		}
+		if (isParallax)
+		{
+			var target:ParallaxSprite = PlayState.instance.modchartParallax.get(tag);
+			target.kill();
+			PlayState.instance.remove(target, true);
+			target.destroy();
+			PlayState.instance.modchartParallax.remove(tag);
 			return;
 		}
 
