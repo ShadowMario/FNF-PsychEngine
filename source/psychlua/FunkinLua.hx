@@ -1082,6 +1082,20 @@ class FunkinLua {
 				}
 			}
 		});
+		Lua_helper.add_callback(lua, "addParallaxSprite", function(tag:String, front:Bool = false) {
+			if(game.modchartParallax.exists(tag)) {
+				var spr:ParallaxSprite = game.modchartParallax.get(tag);
+				if(front)
+					LuaUtils.getTargetInstance().add(spr);
+				else
+				{
+					if(!game.isDead)
+						game.insert(game.members.indexOf(LuaUtils.getLowestCharacterGroup()), spr);
+					else
+						GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), spr);
+				}
+			}
+		});
 		Lua_helper.add_callback(lua, "setGraphicSize", function(obj:String, x:Int, y:Int = 0, updateHitbox:Bool = true) {
 			if(game.getLuaObject(obj)!=null) {
 				var shit:FlxSprite = game.getLuaObject(obj);
