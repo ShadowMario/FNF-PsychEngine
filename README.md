@@ -51,6 +51,7 @@ same goes for *Lua Scripts*, comment out or delete the line with `LUA_ALLOWED`, 
 * Keoiki - Note Splash Animations
 * Smokey - Sprite Atlas Support
 * Nebula the Zorua - LUA JIT Fork and some Lua reworks
+* It'z_Miles - Linear GFX Transformations Library (ParallaxLT)
 _____________________________________
 
 # Features
