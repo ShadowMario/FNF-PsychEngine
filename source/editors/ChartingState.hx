@@ -787,15 +787,15 @@ class ChartingState extends MusicBeatState
 
 		check_mustHitSection = new FlxUICheckBox(10, 15, null, null, "Must hit section", 100);
 		check_mustHitSection.name = 'check_mustHit';
-		check_mustHitSection.checked = _song.notes[curSec].mustHitSection;
+		check_mustHitSection.checked = (_song.notes[curSec] != null ? _song.notes[curSec].mustHitSection : true);
 
 		check_gfSection = new FlxUICheckBox(10, check_mustHitSection.y + 22, null, null, "GF section", 100);
 		check_gfSection.name = 'check_gf';
-		check_gfSection.checked = _song.notes[curSec].gfSection;
+		check_gfSection.checked = (_song.notes[curSec] != null ? _song.notes[curSec].gfSection : false);
 		// _song.needsVoices = check_mustHit.checked;
 
 		check_altAnim = new FlxUICheckBox(check_gfSection.x + 120, check_gfSection.y, null, null, "Alt Animation", 100);
-		check_altAnim.checked = _song.notes[curSec].altAnim;
+		check_altAnim.checked = (_song.notes[curSec] != null ? _song.notes[curSec].altAnim : false);
 
 		stepperBeats = new FlxUINumericStepper(10, 100, 1, 4, 1, 8192, 2); //idk why youd need 8k beats in a single section but ok i guess??
 		stepperBeats.value = getSectionBeats();
@@ -804,7 +804,7 @@ class ChartingState extends MusicBeatState
 		check_altAnim.name = 'check_altAnim';
 
 		check_changeBPM = new FlxUICheckBox(10, stepperBeats.y + 30, null, null, 'Change BPM', 100);
-		check_changeBPM.checked = _song.notes[curSec].changeBPM;
+		check_changeBPM.checked = (_song.notes[curSec] != null ? _song.notes[curSec].changeBPM : false);
 		check_changeBPM.name = 'check_changeBPM';
 
 		stepperSectionBPM = new FlxUINumericStepper(10, check_changeBPM.y + 20, 1, Conductor.bpm, 0, 999999, 1);
@@ -2355,8 +2355,14 @@ class ChartingState extends MusicBeatState
 			if (FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonY.pressed #end)
 				shiftThing = 4;
 
-			if (FlxG.keys.justPressed.D #if android || virtualPad.buttonRight.justPressed #end)
+			if (FlxG.keys.justPressed.D #if android || virtualPad.buttonRight.justPressed #end) {
+				if (_song.notes[curSec + shiftThing] == null)
+				{
+					addSection(getSectionBeats());
+				}
+
 				changeSection(curSec + shiftThing);
+				}
 			if (FlxG.keys.justPressed.A #if android || virtualPad.buttonLeft.justPressed #end) {
 				if(curSec <= 0) {
 					changeSection(_song.notes.length-1);
@@ -2917,7 +2923,7 @@ class ChartingState extends MusicBeatState
 	{
 		var healthIconP1:String = loadHealthIconFromCharacter(_song.player1);
 		var healthIconP2:String = loadHealthIconFromCharacter(_song.player2);
-
+		if (_song.notes[curSec] != null) {
 		if (_song.notes[curSec].mustHitSection)
 		{
 			leftIcon.changeIcon(healthIconP1);
@@ -2929,6 +2935,7 @@ class ChartingState extends MusicBeatState
 			leftIcon.changeIcon(healthIconP2);
 			rightIcon.changeIcon(healthIconP1);
 			if (_song.notes[curSec].gfSection) leftIcon.changeIcon('gf');
+		}
 		}
 	}
 
@@ -3014,6 +3021,8 @@ class ChartingState extends MusicBeatState
 			nextRenderedSustains.clear();
 			}
 
+		if (_song.notes[curSec] != null)
+		{
 		if (_song.notes[curSec].changeBPM && _song.notes[curSec].bpm > 0)
 		{
 			Conductor.changeBPM(_song.notes[curSec].bpm);
@@ -3107,6 +3116,7 @@ class ChartingState extends MusicBeatState
 				note.alpha = 0.6;
 				nextRenderedNotes.add(note);
 			}
+		}
 		}
 	}
 
@@ -3203,10 +3213,10 @@ class ChartingState extends MusicBeatState
 	private function addSection(sectionBeats:Float = 4):Void
 	{
 		var sec:SwagSection = {
-			sectionBeats: getSectionBeats(),
+			sectionBeats: (_song.notes[curSec] != null ? getSectionBeats() : sectionBeats),
 			bpm: _song.bpm,
 			changeBPM: false,
-			mustHitSection: _song.notes[curSec].mustHitSection,
+			mustHitSection: (_song.notes[curSec] != null ? _song.notes[curSec].mustHitSection : true),
 			gfSection: false,
 			sectionNotes: [],
 			typeOfSection: 0,

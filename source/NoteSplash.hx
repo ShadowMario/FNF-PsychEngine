@@ -63,7 +63,11 @@ class NoteSplash extends FlxSprite
 		colorSwap.saturation = satColor;
 		colorSwap.brightness = brtColor;
 		}
+		if (ClientPrefs.splashType != 'Base Game') {
 		offset.set(10, 10);
+		} else {
+		offset.set(-10, 0);
+		}
 
 		var animNum:Int = 0;
 		if (ClientPrefs.splashType != 'Doki Doki+' && ClientPrefs.splashType != 'Base Game')

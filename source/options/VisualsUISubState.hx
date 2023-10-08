@@ -456,6 +456,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
+
+		var option:Option = new Option('Botplay Text Fading',
+			"If checked, the botplay text will do cool fading.",
+			'botTxtFade',
+			'bool',
+			true);
+		addOption(option);
 		
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",
@@ -487,6 +494,20 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Combo Stacking',
 			"If unchecked, Ratings and Combo won't stack, saving on System Memory and making them easier to read",
 			'comboStacking',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Show RAM Usage',
+			"If checked, the game will show your RAM usage.",
+			'showRamUsage',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Show Peak RAM Usage',
+			"If checked, the game will show your maximum RAM usage.",
+			'showMaxRamUsage',
 			'bool',
 			true);
 		addOption(option);

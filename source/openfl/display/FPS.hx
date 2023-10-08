@@ -12,7 +12,7 @@ import openfl.display._internal.stats.DrawCallContext;
 #if flash
 import openfl.Lib;
 #end
-
+import external.memory.Memory;
 #if openfl
 import openfl.system.System;
 #end
@@ -82,16 +82,13 @@ class FPS extends TextField
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
-			text = "FPS: " + currentFPS;
+			text = (ClientPrefs.showFPS ? "FPS: " + currentFPS : "");
 			var memoryMegas:Float = 0;
 			
-			#if openfl
-			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
-			text += "\nMemory: " + memoryMegas + " MB";
-			#end
+			if (ClientPrefs.showRamUsage) text += "\nMemory: " + CoolUtil.formatBytes(Memory.getCurrentUsage()) + (ClientPrefs.showMaxRamUsage ? " / " + CoolUtil.formatBytes(Memory.getPeakUsage()) : "");
 
 			textColor = 0xFFFFFFFF;
-			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
+			if (currentFPS <= ClientPrefs.framerate / 2)
 			{
 				textColor = 0xFFFF0000;
 			}

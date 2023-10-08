@@ -45,6 +45,13 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Playback Rate Controls',
+			"If checked, allows you to control the playback rate in PlayState \nwithout the need for the Pause Menu.",
+			'pbRControls',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Crash the Engine',
 			"Select this to crash the engine.",
 			'crashEngine',

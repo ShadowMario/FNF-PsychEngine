@@ -47,6 +47,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var maxCGBMS:Int = 5;
 	public static var autosaveCharts:Bool = true;
 	public static var antiCheatEnable:Bool = false;
+	public static var showRamUsage:Bool = true;
+	public static var showMaxRamUsage:Bool = true;
 	public static var rainbowNotes:Bool = false;
 	public static var bfIconStyle:String = 'Default';
 	public static var noteStyleThing:String = 'Default';
@@ -64,6 +66,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var doubleGhost:Bool = true;
 	public static var songLoading:Bool = true;
 	public static var resultsScreen:Bool = true;
+	public static var botTxtFade:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var hideScore:Bool = false;
 	public static var voiidTrollMode:Bool = false;
@@ -78,6 +81,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var ghostTapping:Bool = true;
 	public static var communityGameMode:Bool = false;
 	public static var wrongCameras:Bool = false;
+	public static var pbRControls:Bool = false;
 	public static var shitGivesMiss:Bool = false;
 	public static var trollMaxSpeed:String = 'Medium';
 	public static var timebarShowSpeed:Bool = false;
@@ -232,11 +236,14 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.rateNameStuff = rateNameStuff;
 		FlxG.save.data.fasterChartLoad = fasterChartLoad;
 		FlxG.save.data.longFCName = longFCName;
+		FlxG.save.data.botTxtFade = botTxtFade;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.skipResultsScreen = skipResultsScreen;
 		FlxG.save.data.timeBounce = timeBounce;
 		FlxG.save.data.maxCGBMS = maxCGBMS;
 		FlxG.save.data.minCGBMS = minCGBMS;
+		FlxG.save.data.showRamUsage = showRamUsage;
+		FlxG.save.data.showMaxRamUsage = showMaxRamUsage;
 		FlxG.save.data.playerLightStrum = playerLightStrum;
 		FlxG.save.data.healthDisplay = healthDisplay;
 		FlxG.save.data.wrongCameras = wrongCameras;
@@ -245,6 +252,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.comboScoreEffect = comboScoreEffect;
 		FlxG.save.data.comboMultiType = comboMultiType;
 		FlxG.save.data.charsAndBG = charsAndBG;
+		FlxG.save.data.pbRControls = pbRControls;
 		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.bfIconStyle = bfIconStyle;
 		FlxG.save.data.noteStyleThing = noteStyleThing;
@@ -388,11 +396,23 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.communityGameBot != null) {
 			communityGameBot = FlxG.save.data.communityGameBot;
 		}
+		if(FlxG.save.data.showRamUsage != null) {
+			showRamUsage = FlxG.save.data.showRamUsage;
+		}
+		if(FlxG.save.data.showMaxRamUsage != null) {
+			showMaxRamUsage = FlxG.save.data.showMaxRamUsage;
+		}
 		if(FlxG.save.data.colorQuants != null) {
 			colorQuants = FlxG.save.data.colorQuants;
 		}
+		if(FlxG.save.data.pbRControls != null) {
+			pbRControls = FlxG.save.data.pbRControls;
+		}
 		if(FlxG.save.data.cameraPanning != null) {
 			cameraPanning = FlxG.save.data.cameraPanning;
+		}
+		if(FlxG.save.data.botTxtFade != null) {
+			botTxtFade = FlxG.save.data.botTxtFade;
 		}
 		if(FlxG.save.data.startingSync != null) {
 			startingSync = FlxG.save.data.startingSync;
