@@ -1967,8 +1967,7 @@ class PlayState extends MusicBeatState
 		add(EngineWatermark);
 		}
 
-		if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG) {
-		//hitTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 20, 10000, "test", 42);
+		//hitTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 20, 10000, "", 42);
 		hitTxt = new FlxText(0, 20, 10000, "test", 42);
 		hitTxt.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		hitTxt.scrollFactor.set();
@@ -1979,6 +1978,7 @@ class PlayState extends MusicBeatState
 		//hitTxt.screenCenter(X);
 		hitTxt.screenCenter(Y);
 		add(hitTxt);
+		if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG) {
 			var chromaScreen = new FlxSprite(-5000, -2000).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.GREEN);
 			chromaScreen.scrollFactor.set(0, 0);
 			chromaScreen.scale.set(3, 3);
@@ -5038,20 +5038,24 @@ if (ClientPrefs.showNPS) {
     var currentTime = Date.now().getTime();
     var timeThreshold = ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000;
     
-    // Remove expired notes from notesHitDateArray and notesHitArray
+    // Create new arrays to store items you want to keep
+    var filteredNotesHitDateArray:Array<Date> = [];
+    var filteredNotesHitArray:Array<Float> = [];
     var notesToRemove:Array<Int> = [];
-    var oppNotesToRemove:Array<Int> = [];
+
     for (i in 0...notesHitDateArray.length) {
         var cock:Date = notesHitDateArray[i];
-        if (cock != null && (cock.getTime() + timeThreshold < currentTime)) {
+        if (cock == null || (cock.getTime() + timeThreshold >= currentTime)) {
+            filteredNotesHitDateArray.push(cock);
+            filteredNotesHitArray.push(notesHitArray[i]);
+        } else {
             notesToRemove.push(i);
         }
     }
-    
-    for (i in notesToRemove) {
-        notesHitDateArray.splice(i, 1);
-        notesHitArray.splice(i, 1);
-    }
+
+    // Update notesHitDateArray and notesHitArray with the filtered arrays
+    notesHitDateArray = filteredNotesHitDateArray;
+    notesHitArray = filteredNotesHitArray;
 
     // Calculate sum of NPS values
     var sum:Float = 0.0;
@@ -5060,17 +5064,25 @@ if (ClientPrefs.showNPS) {
     }
     nps = sum;
 
+    // Similar filtering logic for oppNotesHitDateArray and oppNotesHitArray
+    var filteredOppNotesHitDateArray:Array<Date> = [];
+    var filteredOppNotesHitArray:Array<Float> = [];
+    var oppNotesToRemove:Array<Int> = [];
+
     for (i in 0...oppNotesHitDateArray.length) {
         var cock:Date = oppNotesHitDateArray[i];
-        if (cock != null && (cock.getTime() + timeThreshold < currentTime)) {
+        if (cock == null || (cock.getTime() + timeThreshold >= currentTime)) {
+            filteredOppNotesHitDateArray.push(cock);
+            filteredOppNotesHitArray.push(oppNotesHitArray[i]);
+        } else {
             oppNotesToRemove.push(i);
         }
     }
 
-    for (i in oppNotesToRemove) {
-        oppNotesHitDateArray.splice(i, 1);
-        oppNotesHitArray.splice(i, 1);
-    }
+    // Update oppNotesHitDateArray and oppNotesHitArray with the filtered arrays
+    oppNotesHitDateArray = filteredOppNotesHitDateArray;
+    oppNotesHitArray = filteredOppNotesHitArray;
+
     // Calculate sum of NPS values for the opponent
     var oppSum:Float = 0.0;
     for (value in oppNotesHitArray) {
@@ -5078,6 +5090,7 @@ if (ClientPrefs.showNPS) {
     }
     oppNPS = oppSum;
 
+    // Update maxNPS and maxOppNPS if needed
     if (oppNPS > maxOppNPS) {
         maxOppNPS = oppNPS;
     }
@@ -5086,11 +5099,16 @@ if (ClientPrefs.showNPS) {
     }
 }
 
-		if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG) hitTxt.text = 'Notes Hit: ' + FlxStringUtil.formatMoney(totalNotesPlayed, false)
+		if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG) {
+		hitTxt.text = 'Notes Hit: ' + FlxStringUtil.formatMoney(totalNotesPlayed, false) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false)
 		+ '\nNPS (Max): ' + FlxStringUtil.formatMoney(nps, false) + ' (' + FlxStringUtil.formatMoney(maxNPS, false) + ')'
 		+ '\nOpponent Notes Hit: ' + FlxStringUtil.formatMoney(enemyHits, false)
 		+ '\nOpponent NPS (Max): ' + FlxStringUtil.formatMoney(oppNPS, false) + ' (' + FlxStringUtil.formatMoney(maxOppNPS, false) + ')'
-		+ '\nTotal Note Hits: ' + FlxStringUtil.formatMoney(Math.abs(totalNotesPlayed + enemyHits), false);
+		+ '\nTotal Note Hits: ' + FlxStringUtil.formatMoney(Math.abs(totalNotesPlayed + enemyHits), false)
+		+ '\nVideo Speedup: ' + Math.abs(playbackRate / playbackRate / playbackRate) + 'x';
+		} else if (ClientPrefs.showcaseMode) {
+		hitTxt.text = 'Video Speedup: ' + Math.abs(playbackRate / playbackRate / playbackRate) + 'x';
+		}
 
 		if (combo > maxCombo)
 			maxCombo = combo;
@@ -5564,27 +5582,48 @@ if (ClientPrefs.showNPS) {
 		}
 		doDeathCheck();
 
-		if (unspawnNotes[0] != null)
-		{
-			var time:Float = 0;
-			if (!ClientPrefs.dynamicSpawnTime) 
-			{
-			time = spawnTime * ClientPrefs.noteSpawnTime;
-			}
-			if (ClientPrefs.dynamicSpawnTime)
-			{
-			time = spawnTime / songSpeed;
-			}
-			if(unspawnNotes[0].multSpeed < 1) time /= unspawnNotes[0].multSpeed;
-			time /= (FlxMath.bound(camHUD.zoom, null, 1));
-		
-			while (unspawnNotes.length > 0 && unspawnNotes[0].strumTime - Conductor.songPosition < time)
-			{
-				var dunceNote:Note = unspawnNotes.shift();
-				notes.insert(0, dunceNote);
-				dunceNote.spawned=true;
-			}
-		}
+if (unspawnNotes[0] != null)
+{
+    var currentTime = Conductor.songPosition;
+    var timeThreshold:Float = 0;
+    
+    if (!ClientPrefs.dynamicSpawnTime) 
+    {
+        timeThreshold = spawnTime * ClientPrefs.noteSpawnTime;
+    }
+    else
+    {
+        timeThreshold = spawnTime / songSpeed;
+    }
+    
+    if (unspawnNotes[0].multSpeed < 1) 
+    {
+        timeThreshold /= unspawnNotes[0].multSpeed;
+    }
+    
+    timeThreshold /= (FlxMath.bound(camHUD.zoom, null, 1));
+
+    // Create a new array to store items you want to keep
+    var filteredUnspawnNotes:Array<Note> = [];
+    
+    // Add notes to 'notes' one by one if they meet the criteria
+    for (dunceNote in unspawnNotes) {
+        if (dunceNote.strumTime - currentTime < timeThreshold) {
+            if (ClientPrefs.showNotes) {
+                notes.insert(0, dunceNote);
+            } else {
+                notes.add(dunceNote);
+            }
+            dunceNote.spawned = true;
+        } else {
+            // Note is still within the time threshold, keep it
+            filteredUnspawnNotes.push(dunceNote);
+        }
+    }
+
+    // Update 'unspawnNotes' with the filtered array
+    unspawnNotes = filteredUnspawnNotes;
+}
 
 		if (generatedMusic)
 		{
@@ -5906,7 +5945,6 @@ if (ClientPrefs.showNPS) {
 								{
 								if (!daNote.isSustainNote) {
 								totalNotesPlayed += 1 * polyphony;
-								missCombo = 0;
 								if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
 								notesHitArray.push(1 * polyphony);
 								notesHitDateArray.push(Date.now());
@@ -6632,7 +6670,6 @@ if (ClientPrefs.showNPS) {
 							n.active = true;
 							n.visible = true;
 							n.wasGoodHit = false;
-							n.noteWasHit = false;
 							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
@@ -6673,7 +6710,6 @@ if (ClientPrefs.showNPS) {
 							n.active = true;
 							n.visible = true;
 							n.wasGoodHit = false;
-							n.noteWasHit = false;
 							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
@@ -6713,7 +6749,6 @@ if (ClientPrefs.showNPS) {
 							n.active = true;
 							n.visible = true;
 							n.wasGoodHit = false;
-							n.noteWasHit = false;
 							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
@@ -6751,7 +6786,6 @@ if (ClientPrefs.showNPS) {
 							n.active = true;
 							n.visible = true;
 							n.wasGoodHit = false;
-							n.noteWasHit = false;
 							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
@@ -6788,7 +6822,6 @@ if (ClientPrefs.showNPS) {
 							n.active = true;
 							n.visible = true;
 							n.wasGoodHit = false;
-							n.noteWasHit = false;
 							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
@@ -6824,7 +6857,6 @@ if (ClientPrefs.showNPS) {
 							n.active = true;
 							n.visible = true;
 							n.wasGoodHit = false;
-							n.noteWasHit = false;
 							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
@@ -6860,7 +6892,6 @@ if (ClientPrefs.showNPS) {
 							n.active = true;
 							n.visible = true;
 							n.wasGoodHit = false;
-							n.noteWasHit = false;
 							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
@@ -6885,7 +6916,6 @@ if (ClientPrefs.showNPS) {
 							n.active = true;
 							n.visible = true;
 							n.wasGoodHit = false;
-							n.noteWasHit = false;
 							n.canBeHit = false;
 							n.tooLate = false;
 							n.hitByOpponent = false;
@@ -6911,7 +6941,6 @@ if (ClientPrefs.showNPS) {
 							n.active = true;
 							n.visible = true;
 							n.wasGoodHit = false;
-							n.noteWasHit = false;
 							n.tooLate = false;
 							n.canBeHit = false;
 							n.hitByOpponent = false;
@@ -6928,7 +6957,6 @@ if (ClientPrefs.showNPS) {
 							n.active = false;
 							n.visible = false;
 							n.wasGoodHit = true;
-							n.noteWasHit = true;
 							n.tooLate = false;
 							n.canBeHit = false;
 							n.hitByOpponent = true;

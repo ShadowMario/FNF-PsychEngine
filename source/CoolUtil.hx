@@ -10,6 +10,7 @@ import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
+import Song.SwagSong;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -179,6 +180,14 @@ class CoolUtil
 		#else
 		FlxG.openURL(site);
 		#end
+	}
+
+	public static function getNoteAmount(song:SwagSong):Int {
+		var total:Int = 0;
+		for (section in song.notes) {
+			total += section.sectionNotes.length;
+		}
+		return total;
 	}
 
 	/*

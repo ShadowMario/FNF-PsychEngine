@@ -30,9 +30,9 @@ class FPS extends TextField
 	/**
 		The current frame rate, expressed using frames-per-second
 	**/
-	public var currentFPS(default, null):Int;
+	public var currentFPS(default, null):Float;
 
-	@:noCompletion private var cacheCount:Int;
+	@:noCompletion private var cacheCount:Float;
 	@:noCompletion private var currentTime:Float;
 	@:noCompletion private var times:Array<Float>;
 
@@ -46,7 +46,7 @@ class FPS extends TextField
 		currentFPS = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat("_sans", 14, color);
+		defaultTextFormat = new TextFormat("_sans", 12, color);
 		autoSize = LEFT;
 		multiline = true;
 		text = "FPS: ";

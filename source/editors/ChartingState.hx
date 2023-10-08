@@ -264,7 +264,7 @@ class ChartingState extends MusicBeatState
 
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
+		DiscordClient.changePresence("Chart Editor - Charting " + StringTools.replace(_song.song, '-', ' '), '${FlxStringUtil.formatMoney(CoolUtil.getNoteAmount(_song), false)} Notes');
 		#end
 
 		vortex = FlxG.save.data.chart_vortex;
@@ -1066,7 +1066,7 @@ class ChartingState extends MusicBeatState
 			changeSection(value);
 		});
 
-		var CopyNextSectionCount:FlxUINumericStepper = new FlxUINumericStepper(jumpSection.x, jumpSection.y + 60, 1, 1, -999, 999, 0);
+		var CopyNextSectionCount:FlxUINumericStepper = new FlxUINumericStepper(jumpSection.x, jumpSection.y + 60, 1, 1, -16384, 16384, 0);
 		blockPressWhileTypingOnStepper.push(CopyNextSectionCount);
 
 		var copyNextButton:FlxButton = new FlxButton(CopyNextSectionCount.x, CopyNextSectionCount.y + 20, "Copy to the next..", function()
@@ -2427,7 +2427,8 @@ class ChartingState extends MusicBeatState
 		"\nSection: " + curSec +
 		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) +
 		"\n\nStep: " + curStep +
-		"\n\nBeat Snap: " + quantization + "th";
+		"\n\nBeat Snap: " + quantization + "th" + 
+		"\n\n" + FlxStringUtil.formatMoney(CoolUtil.getNoteAmount(_song), false) + ' Notes';
 
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note) {
@@ -3118,6 +3119,10 @@ class ChartingState extends MusicBeatState
 			}
 		}
 		}
+		#if desktop
+		// Updating Discord Rich Presence (for updating Note Count)
+		DiscordClient.changePresence("Chart Editor - Charting " + StringTools.replace(_song.song, '-', ' '), '${FlxStringUtil.formatMoney(CoolUtil.getNoteAmount(_song), false)} Notes');
+		#end
 	}
 
 	function setupNoteData(i:Array<Dynamic>, isNextSection:Bool):Note

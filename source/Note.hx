@@ -31,11 +31,9 @@ class Note extends FlxSprite
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
 	public var ignoreNote:Bool = false;
-	public var hitByOpponent:Bool = false;
-	public var noteWasHit:Bool = false;
+	public var hitByOpponent:Bool = false; //For Opponent notes
 	public var prevNote:Note;
 	public var nextNote:Note;
-	public var theStrumStuff:StrumNote;
 
 	public var spawned:Bool = false;
 
@@ -99,8 +97,6 @@ class Note extends FlxSprite
 	public var distance:Float = 2000; //plan on doing scroll directions soon -bb
 
 	public var hitsoundDisabled:Bool = false;
-
-	public static var __pool:FlxPool<Note>;
 
 	private function set_multSpeed(value:Float):Float {
 		resizeByRatio(value / multSpeed);

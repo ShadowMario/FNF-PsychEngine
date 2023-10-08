@@ -459,7 +459,7 @@ class EditorPlayState extends MusicBeatState
 					}
 				}
 
-				if (!daNote.mustPress && daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote)
+				if (!daNote.mustPress && daNote.strumTime <= Conductor.songPosition)
 				{
 					if (PlayState.SONG.needsVoices)
 						vocals.volume = 1;

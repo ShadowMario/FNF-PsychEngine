@@ -56,12 +56,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if (goption.getValue() != "constant")
 		{
 			option.displayFormat = '%vX';
-			option.maxValue = 30;
+			option.maxValue = 100;
 		}
 		else
 		{
 			option.displayFormat = "%v";
-			option.maxValue = 60;
+			option.maxValue = 200;
 		}
 		optionsArray.push(option);
 
