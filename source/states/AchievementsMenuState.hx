@@ -29,6 +29,10 @@ class AchievementsMenuState extends MusicBeatState
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
 
+		#if CUSTOM_ACHIEVEMENTS_ALLOWED
+		Achievements.loadModAchievements();
+		#end
+
 		// prepare achievement list
 		for (achievement => data in Achievements.achievements)
 		{
@@ -36,8 +40,6 @@ class AchievementsMenuState extends MusicBeatState
 			if(data.hidden != true || unlocked)
 				options.push(makeAchievement(achievement, data, unlocked));
 		}
-
-		// TO DO: check for mods
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
