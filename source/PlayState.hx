@@ -170,6 +170,7 @@ class PlayState extends MusicBeatState
 	public static var storyDifficulty:Int = 1;
 	public var tries:Int = 0;
 	public var notesLoadedRN:Int = 0;
+	public var firstNoteStrumTime:Float = 0;
 
 	public var spawnTime:Float = 1800; //just enough for the notes to barely inch off the screen
 
@@ -1757,6 +1758,8 @@ class PlayState extends MusicBeatState
 		// After all characters being loaded, it makes then invisible 0.01s later so that the player won't freeze when you change characters
 		// add(strumLine);
 
+		if (unspawnNotes[0] != null) firstNoteStrumTime = unspawnNotes[0].strumTime;
+
 		camFollow = new FlxPoint();
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 
@@ -1967,6 +1970,7 @@ class PlayState extends MusicBeatState
 		add(EngineWatermark);
 		}
 
+		if (ClientPrefs.showcaseMode) {
 		//hitTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 20, 10000, "", 42);
 		hitTxt = new FlxText(0, 20, 10000, "test", 42);
 		hitTxt.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1984,6 +1988,7 @@ class PlayState extends MusicBeatState
 			chromaScreen.scale.set(3, 3);
 			chromaScreen.updateHitbox();
 			add(chromaScreen);
+		}
 		}
 		
 		if (ClientPrefs.hudType == 'Kade Engine')
@@ -5037,25 +5042,23 @@ class PlayState extends MusicBeatState
 if (ClientPrefs.showNPS) {
     var currentTime = Date.now().getTime();
     var timeThreshold = ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000;
-    
-    // Create new arrays to store items you want to keep
-    var filteredNotesHitDateArray:Array<Date> = [];
-    var filteredNotesHitArray:Array<Float> = [];
-    var notesToRemove:Array<Int> = [];
 
+    // Track the count of items to remove for notesHitDateArray
+    var notesToRemoveCount:Int = 0;
+
+    // Filter notesHitDateArray and notesHitArray in place
     for (i in 0...notesHitDateArray.length) {
         var cock:Date = notesHitDateArray[i];
-        if (cock == null || (cock.getTime() + timeThreshold >= currentTime)) {
-            filteredNotesHitDateArray.push(cock);
-            filteredNotesHitArray.push(notesHitArray[i]);
-        } else {
-            notesToRemove.push(i);
+        if (cock != null && (cock.getTime() + timeThreshold < currentTime)) {
+            notesToRemoveCount++;
         }
     }
 
-    // Update notesHitDateArray and notesHitArray with the filtered arrays
-    notesHitDateArray = filteredNotesHitDateArray;
-    notesHitArray = filteredNotesHitArray;
+    // Remove items from notesHitDateArray and notesHitArray if needed
+    if (notesToRemoveCount > 0) {
+        notesHitDateArray.splice(0, notesToRemoveCount);
+        notesHitArray.splice(0, notesToRemoveCount);
+    }
 
     // Calculate sum of NPS values
     var sum:Float = 0.0;
@@ -5064,24 +5067,21 @@ if (ClientPrefs.showNPS) {
     }
     nps = sum;
 
-    // Similar filtering logic for oppNotesHitDateArray and oppNotesHitArray
-    var filteredOppNotesHitDateArray:Array<Date> = [];
-    var filteredOppNotesHitArray:Array<Float> = [];
-    var oppNotesToRemove:Array<Int> = [];
-
+    // Similar tracking and filtering logic for oppNotesHitDateArray
+    var oppNotesToRemoveCount:Int = 0;
+    
     for (i in 0...oppNotesHitDateArray.length) {
         var cock:Date = oppNotesHitDateArray[i];
-        if (cock == null || (cock.getTime() + timeThreshold >= currentTime)) {
-            filteredOppNotesHitDateArray.push(cock);
-            filteredOppNotesHitArray.push(oppNotesHitArray[i]);
-        } else {
-            oppNotesToRemove.push(i);
+        if (cock != null && (cock.getTime() + timeThreshold < currentTime)) {
+            oppNotesToRemoveCount++;
         }
     }
 
-    // Update oppNotesHitDateArray and oppNotesHitArray with the filtered arrays
-    oppNotesHitDateArray = filteredOppNotesHitDateArray;
-    oppNotesHitArray = filteredOppNotesHitArray;
+    // Remove items from oppNotesHitDateArray and oppNotesHitArray if needed
+    if (oppNotesToRemoveCount > 0) {
+        oppNotesHitDateArray.splice(0, oppNotesToRemoveCount);
+        oppNotesHitArray.splice(0, oppNotesToRemoveCount);
+    }
 
     // Calculate sum of NPS values for the opponent
     var oppSum:Float = 0.0;
@@ -5581,12 +5581,11 @@ if (ClientPrefs.showNPS) {
 			trace("RESET = True");
 		}
 		doDeathCheck();
-
-if (unspawnNotes[0] != null)
+if (unspawnNotes[0] != null && (Conductor.songPosition + 1000) >= firstNoteStrumTime)
 {
     var currentTime = Conductor.songPosition;
     var timeThreshold:Float = 0;
-    
+
     if (!ClientPrefs.dynamicSpawnTime) 
     {
         timeThreshold = spawnTime * ClientPrefs.noteSpawnTime;
@@ -5601,28 +5600,28 @@ if (unspawnNotes[0] != null)
         timeThreshold /= unspawnNotes[0].multSpeed;
     }
     
-    timeThreshold /= (FlxMath.bound(camHUD.zoom, null, 1));
+    timeThreshold /= FlxMath.bound(camHUD.zoom, null, 1);
 
-    // Create a new array to store items you want to keep
-    var filteredUnspawnNotes:Array<Note> = [];
-    
-    // Add notes to 'notes' one by one if they meet the criteria
-    for (dunceNote in unspawnNotes) {
+    // Track the count of notes added
+    var notesAddedCount:Int = 0;
+
+    for (i in 0...unspawnNotes.length) {
+        var dunceNote = unspawnNotes[i];
         if (dunceNote.strumTime - currentTime < timeThreshold) {
             if (ClientPrefs.showNotes) {
+                // Add notes to 'notes' one by one if they meet the criteria
                 notes.insert(0, dunceNote);
             } else {
                 notes.add(dunceNote);
             }
             dunceNote.spawned = true;
-        } else {
-            // Note is still within the time threshold, keep it
-            filteredUnspawnNotes.push(dunceNote);
+            notesAddedCount++;
         }
     }
 
-    // Update 'unspawnNotes' with the filtered array
-    unspawnNotes = filteredUnspawnNotes;
+    if (notesAddedCount > 0) {
+        unspawnNotes.splice(0, notesAddedCount);
+    }
 }
 
 		if (generatedMusic)
