@@ -8611,7 +8611,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				{
 					note.kill();
 				}
-					notes.remove(note, true);
 					if (ClientPrefs.showNotes) notes.remove(note, true);
 				if (shouldKillNotes)
 				{
