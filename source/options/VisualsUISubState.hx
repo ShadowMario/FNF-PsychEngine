@@ -4,6 +4,8 @@ package options;
 import Discord.DiscordClient;
 #end
 import flash.text.TextField;
+import Note;
+import StrumNote;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -29,6 +31,11 @@ using StringTools;
 
 class VisualsUISubState extends BaseOptionsMenu
 {
+
+	var noteOptionID:Int = -1;
+	var notes:FlxTypedGroup<StrumNote>;
+	var notesTween:Array<FlxTween> = [];
+	var noteY:Float = 90;
 	public function new()
 	{
 		title = 'Visuals and UI';
@@ -279,7 +286,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'noteStyleThing',
 			'string',
 			'Default',
-			['Default', 'VS Nonsense V2', 'VS AGOTI', 'Doki Doki+', 'TGT V4', 'DNB 3D']);
+			['Default', 'VS Nonsense V2', 'VS AGOTI', 'Doki Doki+', 'TGT V4', 'DNB 3D', 'Pink Circles']);
 		addOption(option);
 
 		var option:Option = new Option('BF Icon Style:',

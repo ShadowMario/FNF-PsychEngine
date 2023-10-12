@@ -83,7 +83,6 @@ class Paths
 					FlxG.bitmap._cache.remove(key);
 					openfl.Assets.cache.removeBitmapData(key);
 					currentTrackedAssets.remove(key);
-
 					// and get rid of the object
 					obj.persist = false; // make sure the garbage collector actually clears it up
 					obj.destroyOnNoUse = true;
@@ -91,16 +90,13 @@ class Paths
 				}
 			}
 		}
-
 		// run the garbage collector for good measure lmfao
-
 			#if sys
 			openfl.system.System.gc();
 			#elseif cpp
 			cpp.vm.Gc.run();
 			#end
 	}
-
 	// define the locally tracked assets
 	public static var localTrackedAssets:Array<String> = [];
 	public static function clearStoredMemory(?cleanUnused:Bool = false) {
@@ -115,7 +111,6 @@ class Paths
 				obj.destroy();
 			}
 		}
-
 		// clear all sounds that are cached
 		for (key in currentTrackedSounds.keys()) {
 			if (!localTrackedAssets.contains(key)

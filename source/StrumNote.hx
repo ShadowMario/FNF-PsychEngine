@@ -37,7 +37,7 @@ class StrumNote extends FlxSprite
 		super(x, y);
 
 		var skin:String = 'NOTE_assets';
-		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
+		if(PlayState.instance != null && PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 			
 		if (!PlayState.isPixelStage)
 		{
@@ -55,6 +55,9 @@ class StrumNote extends FlxSprite
 			}
 			if(ClientPrefs.noteStyleThing == 'TGT V4') {
 				skin = 'TGTNOTE_assets';
+			}
+			if (ClientPrefs.noteStyleThing != 'VS Nonsense V2' && ClientPrefs.noteStyleThing != 'DNB 3D' && ClientPrefs.noteStyleThing != 'VS AGOTI' && ClientPrefs.noteStyleThing != 'Doki Doki+' && ClientPrefs.noteStyleThing != 'TGT V4' && ClientPrefs.noteStyleThing != 'Default') {
+				skin = 'NOTE_assets_' + ClientPrefs.noteStyleThing;
 			}
 			if(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
 				skin = 'RED_NOTE_assets';
