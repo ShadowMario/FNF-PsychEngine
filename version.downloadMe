@@ -1,5 +1,5 @@
-1.11.0;
-- funny crash messages
-- SHOWCASE MODE!!
-- Fixed Discord RPC
-- Chart Diagnosis
+1.12.0;
+- Accurate RAM
+- Toggleable RAM Counter
+- Chart Editor Improvements
+- More optimizations
