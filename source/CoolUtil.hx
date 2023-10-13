@@ -244,6 +244,19 @@ class CoolUtil
 		return formatted_bytes;
 	}
 
+	public static function getSizeLabel(num:UInt):String{
+        var size:Float = num;
+        var data = 0;
+        var dataTexts = ["B", "KB", "MB", "GB", "TB", "PB"]; // IS THAT A QT MOD REFERENCE!!!??!!111!!11???
+        while(size > 1024 && data < dataTexts.length - 1) {
+          data++;
+          size = size / 1024;
+        }
+        
+        size = Math.round(size * 100) / 100;
+        return size + " " + dataTexts[data];
+    }
+
 	/** Quick Function to Fix Save Files for Flixel 5
 		if you are making a mod, you are gonna wanna change "ShadowMario" to something else
 		so Base Psych saves won't conflict with yours

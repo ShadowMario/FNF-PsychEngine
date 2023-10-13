@@ -5391,12 +5391,18 @@ if (ClientPrefs.showNPS) {
 					FlxG.sound.music.time = 0;
 					vocals.time = 0;
 					Conductor.songPosition = 0;
+					curSection = 0; 
+					curBeat = 0;
+					curStep = 0;
 				}
 				if (ClientPrefs.songLoading && FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && SONG.song.toLowerCase() == 'anti-cheat-song') { //stop crashes when playing normally
 					infiniteLoop();
 					FlxG.sound.music.time = 0;
 					vocals.time = 0;
 					Conductor.songPosition = 0;
+					curSection = 0; 
+					curBeat = 0;
+					curStep = 0;
 				}
 			}
 		}
