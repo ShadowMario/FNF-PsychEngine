@@ -2734,10 +2734,10 @@ class PlayState extends MusicBeatState
 				note.tooLate = note.ignoreNote = true;
 				note.canBeHit = false;
 				note.multAlpha *= 0.35;
-			}
 
-			subtract += 0.385; // you take more damage if playing with this gameplay changer enabled.
-			// i mean its fair :p -Crow
+				subtract += 0.385; // you take more damage if playing with this gameplay changer enabled.
+				// i mean its fair :p -Crow
+			}
 
 			if (note.parent != null && note.parent.ignoreNote)
 				return;
