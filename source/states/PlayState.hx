@@ -1116,31 +1116,41 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
+		var ret:Dynamic = callOnScripts('preUpdateScore', [miss], true);
+		if (ret == FunkinLua.Function_Stop)
+			return;
+
 		var str:String = ratingName;
 		if(totalPlayed != 0)
 		{
 			var percent:Float = CoolUtil.floorDecimal(ratingPercent * 100, 2);
-			str += ' ($percent%) - $ratingFC';
+			str += ' (${percent}%) - ${ratingFC}';
 		}
 
-		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Misses: ' + songMisses
-		+ ' | Rating: ' + str;
+		scoreTxt.text = 'Score: ${songScore}'
+		+ (!instakillOnMiss ? ' | Misses: ${songMisses}' : "")
+		+ ' | Rating: ${str}';
 
-		if(ClientPrefs.data.scoreZoom && !miss && !cpuControlled)
-		{
-			if(scoreTxtTween != null) {
-				scoreTxtTween.cancel();
-			}
-			scoreTxt.scale.x = 1.075;
-			scoreTxt.scale.y = 1.075;
-			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween) {
-					scoreTxtTween = null;
-				}
-			});
-		}
+		if (!miss && !cpuControlled)
+			doScoreBop();
+
 		callOnScripts('onUpdateScore', [miss]);
+	}
+
+	public function doScoreBop():Void {
+		if(!ClientPrefs.data.scoreZoom)
+			return;
+
+		if(scoreTxtTween != null)
+			scoreTxtTween.cancel();
+
+		scoreTxt.scale.x = 1.075;
+		scoreTxt.scale.y = 1.075;
+		scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
+			onComplete: function(twn:FlxTween) {
+				scoreTxtTween = null;
+			}
+		});
 	}
 
 	public function setSongTime(time:Float)
