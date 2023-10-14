@@ -2561,8 +2561,8 @@ class PlayState extends MusicBeatState
 					var doubleNote:Note = plrInputNotes[bad];
 					// no point in jack detection if it isn't a jack
 					if (doubleNote.noteData == funnyNote.noteData) {
-						// if the note has a 5ms distance, kill it
-						if (Math.abs(doubleNote.strumTime - funnyNote.strumTime) <= 5.0) {
+						// if the note has a 0ms distance (is on top of the current note), kill it
+						if (Math.abs(doubleNote.strumTime - funnyNote.strumTime) < 1.0) {
 							invalidateNote(doubleNote);
 							break;
 						} else if (doubleNote.strumTime < funnyNote.strumTime)
