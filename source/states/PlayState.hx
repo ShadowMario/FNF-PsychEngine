@@ -2560,12 +2560,8 @@ class PlayState extends MusicBeatState
 
 				if (doubleNote.noteData == funnyNote.noteData) {
 					// if the note has a 0ms distance (is on top of the current note), kill it
-					if (Math.abs(doubleNote.strumTime - funnyNote.strumTime) < 1.0) {
+					if (Math.abs(doubleNote.strumTime - funnyNote.strumTime) < 1.0)
 						invalidateNote(doubleNote);
-						// remove if needed (lol!)
-						if (plrInputNotes.contains(doubleNote))
-							plrInputNotes.remove(doubleNote);
-					}
 					else if (doubleNote.strumTime < funnyNote.strumTime)
 					{
 						// replace the note if its ahead of time (or at least ensure "doubleNote" is ahead)
