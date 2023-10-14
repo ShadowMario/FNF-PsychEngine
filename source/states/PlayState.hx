@@ -2534,7 +2534,7 @@ class PlayState extends MusicBeatState
 		if(cpuControlled || paused || key < 0) return;
 		if(!generatedMusic || endingSong || boyfriend.stunned) return;
 
-		// ha\d to name it like this else it'd break older scripts lol
+		// had to name it like this else it'd break older scripts lol
 		var ret:Dynamic = callOnScripts('preKeyPress', [key], true);
 		if(ret == FunkinLua.Function_Stop) return;
 
