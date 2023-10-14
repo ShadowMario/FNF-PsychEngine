@@ -1292,14 +1292,13 @@ class PlayState extends MusicBeatState
 
 				swagNote.scrollFactor.set();
 
-				var susLength:Float = swagNote.sustainLength;
-
-				susLength = susLength / Conductor.stepCrochet;
 				unspawnNotes.push(swagNote);
 
-				var floorSus:Int = Math.floor(susLength);
+				final susLength:Float = swagNote.sustainLength / Conductor.stepCrochet;
+				final floorSus:Int = Math.floor(susLength);
+
 				if(floorSus > 0) {
-					for (susNote in 0...floorSus+1)
+					for (susNote in 0...floorSus + 1)
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
@@ -1308,10 +1307,11 @@ class PlayState extends MusicBeatState
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
 						sustainNote.scrollFactor.set();
-						swagNote.tail.push(sustainNote);
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
-						
+
+						swagNote.tail.push(sustainNote);
+
 						sustainNote.correctionOffset = swagNote.height / 2;
 						if(!PlayState.isPixelStage)
 						{
@@ -1336,9 +1336,7 @@ class PlayState extends MusicBeatState
 						{
 							sustainNote.x += 310;
 							if(daNoteData > 1) //Up and Right
-							{
 								sustainNote.x += FlxG.width / 2 + 25;
-							}
 						}
 					}
 				}
@@ -2676,8 +2674,14 @@ class PlayState extends MusicBeatState
 			if (notes.length > 0) {
 				for (n in notes) { // I can't do a filter here, that's kinda awesome
 					var canHit:Bool = !strumsBlocked[n.noteData] && n.canBeHit && n.mustPress && !n.tooLate && !n.wasGoodHit && !n.blockHit;
-					if (canHit && n.isSustainNote && holdArray[n.noteData] == true)
-						goodNoteHit(n);
+					if (canHit && n.isSustainNote) {
+						if (holdArray[n.noteData] == true)
+							goodNoteHit(n);
+						else {
+							// TODO: handle guitar hero sustain misses
+							// prolly will need help with this one -Crow
+						}
+					}
 				}
 			}
 
@@ -2729,11 +2733,11 @@ class PlayState extends MusicBeatState
 				for(childNote in note.tail) {
 					childNote.tooLate = note.ignoreNote = true;
 					childNote.canBeHit = false;
-					childNote.multAlpha *= 0.35;
+					childNote.alpha = 0.35;
 				}
 				note.tooLate = note.ignoreNote = true;
 				note.canBeHit = false;
-				note.multAlpha *= 0.35;
+				note.alpha = 0.35;
 
 				subtract += 0.385; // you take more damage if playing with this gameplay changer enabled.
 				// i mean its fair :p -Crow
