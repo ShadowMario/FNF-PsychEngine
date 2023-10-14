@@ -2545,7 +2545,7 @@ class PlayState extends MusicBeatState
 		// obtain notes that the player can hit
 		var plrInputNotes:Array<Note> = notes.members.filter(function(n:Note):Bool {
 			var canHit:Bool = !strumsBlocked[n.noteData] && n.canBeHit && n.mustPress && !n.tooLate && !n.wasGoodHit && !n.blockHit;
-			return canHit && !n.isSustainNote && n.noteData == key;
+			return note != null && canHit && !n.isSustainNote && n.noteData == key;
 		});
 		plrInputNotes.sort(sortHitNotes);
 
@@ -2556,24 +2556,24 @@ class PlayState extends MusicBeatState
 			// trace('✡⚐🕆☼ 💣⚐💣');
 
 			if (plrInputNotes.length > 1) {
-				for (bad in 1...plrInputNotes.length)
-				{
-					var doubleNote:Note = plrInputNotes[bad];
-					// no point in jack detection if it isn't a jack
-					if (doubleNote.noteData == funnyNote.noteData) {
-						// if the note has a 0ms distance (is on top of the current note), kill it
-						if (Math.abs(doubleNote.strumTime - funnyNote.strumTime) < 1.0) {
-							invalidateNote(doubleNote);
-							break;
-						} else if (doubleNote.strumTime < funnyNote.strumTime)
-						{
-							// replace the note if its ahead of time (or at least ensure "doubleNote" is ahead)
-							funnyNote = doubleNote; 
-							break;
-						}
+				var doubleNote:Note = plrInputNotes[1];
+
+				if (doubleNote.noteData == funnyNote.noteData) {
+					// if the note has a 0ms distance (is on top of the current note), kill it
+					if (Math.abs(doubleNote.strumTime - funnyNote.strumTime) < 1.0) {
+						invalidateNote(doubleNote);
+						// remove if needed (lol!)
+						if (plrInputNotes.contains(doubleNote))
+							plrInputNotes.remove(doubleNote);
+					}
+					else if (doubleNote.strumTime < funnyNote.strumTime)
+					{
+						// replace the note if its ahead of time (or at least ensure "doubleNote" is ahead)
+						funnyNote = doubleNote;
 					}
 				}
 			}
+
 			goodNoteHit(funnyNote);
 		}
 		else {
