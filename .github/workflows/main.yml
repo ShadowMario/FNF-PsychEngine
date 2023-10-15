@@ -268,7 +268,7 @@ jobs:
         with:
           path: |
             .haxelib/
-            export/release/windows/haxe/
+            export/release/android/haxe/
             export/release/android/obj/
           key: cache-android-build
 
@@ -346,7 +346,7 @@ jobs:
         with:
           path: |
             .haxelib/
-            export/release/windows/haxe/
+            export/release/android/haxe/
             export/release/android/obj/
           key: cache-android-build
 
