@@ -66,9 +66,9 @@ class Paths
 
 	public static var dumpExclusions:Array<String> =
 	[
-		'assets/music/freakyMenu.$SOUND_EXT',
-		'assets/shared/music/breakfast.$SOUND_EXT',
-		'assets/shared/music/tea-time.$SOUND_EXT',
+		SUtil.getPath() + 'assets/music/freakyMenu.$SOUND_EXT',
+		SUtil.getPath() + 'assets/shared/music/breakfast.$SOUND_EXT',
+		SUtil.getPath() + 'assets/shared/music/tea-time.$SOUND_EXT',
 	];
 	/// haya I love you for the base cache dump I took to the max
 	public static function clearUnusedMemory() {
@@ -167,7 +167,7 @@ class Paths
 
 	inline public static function getPreloadPath(file:String = '')
 	{
-		return SUtil.getPath() + 'assets/$file';
+		return 'assets/$file';
 	}
 
 	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
