@@ -2732,7 +2732,7 @@ class PlayState extends MusicBeatState
 
 		// GUITAR HERO SUSTAIN CHECK LOL!!!!
 		if (note != null && guitarHeroSustains) {
-			if(note.tail.length > 0) {
+			if(note.tail.length >= 0 && note.isSustainNote) {
 				note.alpha = 0.35;
 				for(childNote in note.tail) {
 					childNote.alpha = note.alpha;
