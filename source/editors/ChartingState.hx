@@ -96,6 +96,8 @@ class ChartingState extends MusicBeatState
 		['Play Animation', "Plays an animation on a Character,\nonce the animation is completed,\nthe animation changes to Idle\n\nValue 1: Animation to play.\nValue 2: Character (Dad, BF, GF)"],
 		['Camera Follow Pos', "Value 1: X\nValue 2: Y\n\nThe camera won't change the follow point\nafter using this, for getting it back\nto normal, leave both values blank."],
 		['Alt Idle Animation', "Sets a specified suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (Dad, BF or GF)\nValue 2: New suffix (Leave it blank to disable)"],
+		['Enable Camera Bop', "Enables camera bopping. Useful if you don't want the\nopponent to hit a note, but you want camera bouncing."],
+		['Disable Camera Bop', "Same thing as 'Enable Camera Bopping', but disables it\ninstead."],
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
 		['Camera Bopping', "Makes the camera do funny bopping\n\nValue 1: Bopping Speed (how many beats you want before it bops)\nValue 2: Bopping Intensity (how hard you want it to bop, default is 1)\n\nTo reset camera bopping, place a new event and put both values as '4' and '1' respectively."],
 		['Change Note Multiplier', "Changes the amount of notes played every time you hit a note.\n\nValue 1: Note Multiplier that you want."],
@@ -250,6 +252,7 @@ class ChartingState extends MusicBeatState
 				player1: 'bf',
 				player2: 'dad',
 				gfVersion: 'gf',
+				songCredit: '',
 				speed: 1,
 				stage: 'stage',
 				validScore: false,
@@ -391,6 +394,7 @@ class ChartingState extends MusicBeatState
 			{name: "Note", label: 'Note'},
 			{name: "Events", label: 'Events'},
 			{name: "Charting", label: 'Charting'},
+			{name: "Data", label: 'Data'},
 			{name: "Note Spamming", label: 'Note Spamming'},
 		];
 
@@ -447,6 +451,7 @@ class ChartingState extends MusicBeatState
 		addEventsUI();
 		addChartingUI();
 		addNoteStackingUI();
+		addSongDataUI();
 		updateHeads();
 		updateWaveform();
 		//UI_box.selected_tab = 4;
@@ -768,6 +773,21 @@ class ChartingState extends MusicBeatState
 		UI_box.addGroup(tab_group_song);
 
 		FlxG.camera.follow(camPos);
+	}
+
+	var creditInputText:FlxUIInputText;
+	function addSongDataUI():Void //therell be more added here later
+	{
+		var tab_group_songdata = new FlxUI(null, UI_box);
+		tab_group_songdata.name = "Data";
+
+		creditInputText = new FlxUIInputText(10, 30, 100, _song.songCredit, 8);
+		blockPressWhileTypingOn.push(creditInputText);
+
+		tab_group_songdata.add(creditInputText);
+		tab_group_songdata.add(new FlxText(creditInputText.x, creditInputText.y - 15, 0, 'Song Credit:'));
+
+		UI_box.addGroup(tab_group_songdata);
 	}
 
 	var stepperBeats:FlxUINumericStepper;
@@ -1856,6 +1876,8 @@ class ChartingState extends MusicBeatState
 		}
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = UI_songTitle.text;
+
+		_song.songCredit = creditInputText.text;
 
 		strumLineUpdateY();
 		for (i in 0...8){

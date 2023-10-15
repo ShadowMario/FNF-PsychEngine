@@ -60,6 +60,19 @@ class CoolUtil
 		return difficulties[PlayState.storyDifficulty].toUpperCase();
 	}
 
+	public static function getMinAndMax(value1:Float, value2:Float):Array<Float>
+	{
+		var minAndMaxs = new Array<Float>();
+
+		var min = Math.min(value1, value2);
+		var max = Math.max(value1, value2);
+
+		minAndMaxs.push(min);
+		minAndMaxs.push(max);
+		
+		return minAndMaxs;
+	}
+
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
 		return Math.max(min, Math.min(max, value));
 	}

@@ -177,30 +177,30 @@ class Paths
 
 	inline static public function txt(key:String, ?library:String)
 	{
-		return getPath('data/$key.txt', TEXT, library);
+		return getPath(SUtil.getPath() + 'data/$key.txt', TEXT, library);
 	}
 
 	inline static public function xml(key:String, ?library:String)
 	{
-		return getPath('data/$key.xml', TEXT, library);
+		return getPath(SUtil.getPath() + 'data/$key.xml', TEXT, library);
 	}
 
 	inline static public function json(key:String, ?library:String)
 	{
-		return getPath('data/$key.json', TEXT, library);
+		return getPath(SUtil.getPath() + 'data/$key.json', TEXT, library);
 	}
 
 	inline static public function shaderFragment(key:String, ?library:String)
 	{
-		return getPath('shaders/$key.frag', TEXT, library);
+		return getPath(SUtil.getPath() + 'shaders/$key.frag', TEXT, library);
 	}
 	inline static public function shaderVertex(key:String, ?library:String)
 	{
-		return getPath('shaders/$key.vert', TEXT, library);
+		return getPath(SUtil.getPath() + 'shaders/$key.vert', TEXT, library);
 	}
 	inline static public function lua(key:String, ?library:String)
 	{
-		return getPath('$key.lua', TEXT, library);
+		return getPath(SUtil.getPath() + '$key.lua', TEXT, library);
 	}
 	//Video loading (part of it)
 	static public function video(key:String)

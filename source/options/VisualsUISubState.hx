@@ -310,7 +310,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'iconBounceType',
 			'string',
 			'Golden Apple',
-			['Golden Apple', 'Dave and Bambi', 'Old Psych', 'New Psych', 'VS Steve', 'Plank Engine']);
+			['Golden Apple', 'Dave and Bambi', 'Old Psych', 'New Psych', 'VS Steve', 'Plank Engine', 'Strident Crisis']);
 		addOption(option);
 
 		var option:Option = new Option('Note Splash Type:',

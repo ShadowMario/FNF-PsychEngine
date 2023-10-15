@@ -1530,7 +1530,7 @@ class PlayState extends MusicBeatState
 				timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
 					'songPercent', 0, 1);
 				timeBar.scrollFactor.set();
-				timeBar.createFilledBar(FlxColor.BLACK, FlxColor.CYAN);
+				timeBar.createFilledBar(FlxColor.BLACK, FlxColor.WHITE);
 				timeBar.numDivisions = 400;
 				timeBar.alpha = 0;
 				timeBar.visible = showTime;
@@ -1917,7 +1917,7 @@ class PlayState extends MusicBeatState
 		}
 		if (ClientPrefs.hudType == 'JS Engine') {
 		// Add Engine watermark
-		EngineWatermark = new FlxText(4,FlxG.height * 0.1 - 70,0,"", 18);
+		EngineWatermark = new FlxText(4,FlxG.height * 0.1 - 70,0,"", 15);
 		EngineWatermark.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		EngineWatermark.scrollFactor.set();
 		if (ClientPrefs.downScroll) EngineWatermark.y = (FlxG.height * 0.9 + 50);
@@ -3718,6 +3718,22 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
 					case 4:
+					if (SONG.songCredit != null)
+					{
+						var creditsPopup:CreditsPopUp = new CreditsPopUp(FlxG.width, 200);
+						creditsPopup.camera = camHUD;
+						creditsPopup.scrollFactor.set();
+						creditsPopup.x = creditsPopup.width * -1;
+						add(creditsPopup);
+	
+						FlxTween.tween(creditsPopup, {x: 0}, 0.5, {ease: FlxEase.backOut, onComplete: function(tweeen:FlxTween)
+						{
+							FlxTween.tween(creditsPopup, {x: creditsPopup.width * -1} , 1, {ease: FlxEase.backIn, onComplete: function(tween:FlxTween)
+							{
+								creditsPopup.destroy();
+							}, startDelay: 3});
+						}});
+					}
 				}
 
 				notes.forEachAlive(function(note:Note) {
@@ -5035,6 +5051,8 @@ class PlayState extends MusicBeatState
 			moveCamTo[0] = FlxMath.lerp(moveCamTo[0], 0, panLerpVal);
 			moveCamTo[1] = FlxMath.lerp(moveCamTo[1], 0, panLerpVal);
 		}
+
+				if (ClientPrefs.hudType == 'Leather Engine' && SONG.notes[curSection] != null) timeBar.color = SONG.notes[curSection].mustHitSection ? FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]) : FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
 if (ClientPrefs.showNPS) {
     var currentTime = Date.now().getTime();
     var timeThreshold = ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000;
@@ -5324,9 +5342,16 @@ if (ClientPrefs.showNPS) {
 		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, CoolUtil.boundTo(1 - (elapsed * 30 * playbackRate), 0, 1))));
 		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, CoolUtil.boundTo(1 - (elapsed * 30 * playbackRate), 0, 1))));
 		}
+		if (ClientPrefs.iconBounceType == 'Strident Crisis') {
+		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.50 / playbackRate)));
+		iconP1.updateHitbox();
+
+		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.50 / playbackRate)));
+		iconP2.updateHitbox();
+		}
 		if (ClientPrefs.iconBounceType == 'Dave and Bambi') {
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.9 * playbackRate)),Std.int(FlxMath.lerp(150, iconP1.height, 0.9 * playbackRate)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.9 * playbackRate)),Std.int(FlxMath.lerp(150, iconP2.height, 0.9 * playbackRate)));
+		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.8 / playbackRate)),Std.int(FlxMath.lerp(150, iconP1.height, 0.8 / playbackRate)));
+		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.8 / playbackRate)),Std.int(FlxMath.lerp(150, iconP2.height, 0.8 / playbackRate)));
 		}
 		if (ClientPrefs.iconBounceType == 'Plank Engine') {
 		var funnyBeat = (Conductor.songPosition / 1000) * (Conductor.bpm / 60);
@@ -6526,6 +6551,12 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 
 			case 'Kill Henchmen':
 				killHenchmen();
+
+			case 'Enable Camera Bop':
+				camZooming = true;
+
+			case 'Disable Camera Bop':
+				camZooming = false;
 
 			case 'Camera Bopping':
 				var _interval:Int = Std.parseInt(value1);
@@ -9256,7 +9287,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			var randomShit = FlxMath.roundDecimal(FlxG.random.float(0.4, 3), 2);
 			lerpSongSpeed(randomShit, 1);
 		}
-		if (camZooming && enemyHits != 0 && !endingSong && !startingSong && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && curBeat % camBopInterval == 0 && !softlocked)
+		if (camZooming && !endingSong && !startingSong && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && curBeat % camBopInterval == 0 && !softlocked)
 		{
 			FlxG.camera.zoom += 0.015 * camBopIntensity;
 			camHUD.zoom += 0.03 * camBopIntensity;
@@ -9268,14 +9299,40 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		}
 
 		if (ClientPrefs.iconBounceType == 'Dave and Bambi') {
-		var funny:Float = Math.max(Math.min(healthBar.value,1.9),0.01);
+		var funny:Float = Math.max(Math.min(healthBar.value,(maxHealth/0.95)),0.1);
 
-		iconP2.setGraphicSize(Std.int(iconP2.width + (50 / funny)),Std.int(iconP2.height - (25 * funny)));
-		iconP1.setGraphicSize(Std.int(iconP1.width + (50 / ((2 - funny) + 0.1))),Std.int(iconP1.height - (25 * ((2 - funny) + 0.1))));
+		//health icon bounce but epic
+		if (!opponentChart)
+		{
+			iconP1.setGraphicSize(Std.int(iconP1.width + (50 * (funny + 0.1))),Std.int(iconP1.height - (25 * funny)));
+			iconP2.setGraphicSize(Std.int(iconP2.width + (50 * ((2 - funny) + 0.1))),Std.int(iconP2.height - (25 * ((2 - funny) + 0.1))));
+		} else {
+			iconP2.setGraphicSize(Std.int(iconP2.width + (50 * funny)),Std.int(iconP2.height - (25 * funny)));
+			iconP1.setGraphicSize(Std.int(iconP1.width + (50 * ((2 - funny) + 0.1))),Std.int(iconP1.height - (25 * ((2 - funny) + 0.1))));
+			}
 		}
 		if (ClientPrefs.iconBounceType == 'Old Psych') {
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
 		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+		}
+		if (ClientPrefs.iconBounceType == 'Strident Crisis') {
+		var funny:Float = (healthBar.percent * 0.01) + 0.01;
+
+		//health icon bounce but epic
+		iconP1.setGraphicSize(Std.int(iconP1.width + (50 * (2 + funny))),Std.int(iconP2.height - (25 * (2 + funny))));
+		iconP2.setGraphicSize(Std.int(iconP2.width + (50 * (2 - funny))),Std.int(iconP2.height - (25 * (2 - funny))));
+
+		iconP1.scale.set(1.1, 0.8);
+		iconP2.scale.set(1.1, 0.8);
+
+		FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+		FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut}); 
+
+		FlxTween.tween(iconP1, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
+		FlxTween.tween(iconP2, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
+
+		iconP1.updateHitbox();
+		iconP2.updateHitbox();
 		}
 		if (ClientPrefs.iconBounceType == 'Plank Engine') {
 		iconP1.scale.x = 1.3;
