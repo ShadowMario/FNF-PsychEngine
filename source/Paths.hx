@@ -167,7 +167,7 @@ class Paths
 
 	inline public static function getPreloadPath(file:String = '')
 	{
-		return 'assets/$file';
+		return SUtil.getPath() + 'assets/$file';
 	}
 
 	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
@@ -177,30 +177,30 @@ class Paths
 
 	inline static public function txt(key:String, ?library:String)
 	{
-		return getPath(SUtil.getPath() + 'data/$key.txt', TEXT, library);
+		return getPath('data/$key.txt', TEXT, library);
 	}
 
 	inline static public function xml(key:String, ?library:String)
 	{
-		return getPath(SUtil.getPath() + 'data/$key.xml', TEXT, library);
+		return getPath('data/$key.xml', TEXT, library);
 	}
 
 	inline static public function json(key:String, ?library:String)
 	{
-		return getPath(SUtil.getPath() + 'data/$key.json', TEXT, library);
+		return getPath('data/$key.json', TEXT, library);
 	}
 
 	inline static public function shaderFragment(key:String, ?library:String)
 	{
-		return getPath(SUtil.getPath() + 'shaders/$key.frag', TEXT, library);
+		return getPath('shaders/$key.frag', TEXT, library);
 	}
 	inline static public function shaderVertex(key:String, ?library:String)
 	{
-		return getPath(SUtil.getPath() + 'shaders/$key.vert', TEXT, library);
+		return getPath('shaders/$key.vert', TEXT, library);
 	}
 	inline static public function lua(key:String, ?library:String)
 	{
-		return getPath(SUtil.getPath() + '$key.lua', TEXT, library);
+		return getPath('$key.lua', TEXT, library);
 	}
 	//Video loading (part of it)
 	static public function video(key:String)
@@ -450,7 +450,7 @@ class Paths
         #end
         {
 			// I hate this so god damn much
-			var gottenPath:String = SUtil.getPath() + getPath('$path/$key.$SOUND_EXT', SOUND, library);
+			var gottenPath:String = getPath('$path/$key.$SOUND_EXT', SOUND, library);
 			file = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
 			if (path == 'songs')
 				gottenPath = 'songs:' + gottenPath;
@@ -493,7 +493,7 @@ class Paths
 		}
 		#end
 		// I hate this so god damn much
-		var gottenPath:String = SUtil.getPath() + getPath('$path/$key.$SOUND_EXT', SOUND, library);
+		var gottenPath:String = getPath('$path/$key.$SOUND_EXT', SOUND, library);
 		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
 		// trace(gottenPath);
 		if(!currentTrackedSounds.exists(gottenPath))
