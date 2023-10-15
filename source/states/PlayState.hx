@@ -2722,23 +2722,41 @@ class PlayState extends MusicBeatState
 		if(note != null) subtract = note.missHealth;
 
 		// GUITAR HERO SUSTAIN CHECK LOL!!!!
-		if (note != null && guitarHeroSustains) {
-			if(note.tail.length >= 0 && note.isSustainNote) {
+		if (note != null && guitarHeroSustains && note.parent == null) {
+			if(note.tail.length > 0) {
 				note.alpha = 0.35;
 				for(childNote in note.tail) {
 					childNote.alpha = note.alpha;
 					childNote.missed = true;
 					childNote.canBeHit = false;
+					childNote.ignoreNote = true;
+					childNote.tooLate = true;
 				}
 				note.missed = true;
 				note.canBeHit = false;
 
-				subtract += 0.385; // you take more damage if playing with this gameplay changer enabled.
+				//subtract += 0.385; // you take more damage if playing with this gameplay changer enabled.
 				// i mean its fair :p -Crow
+				subtract *= note.tail.length + 1;
+				// i think it would be fair if damage multiplied based on how long the sustain is -Tahir
 			}
 
 			if (note.missed)
 				return;
+		}
+		if (guitarHeroSustains && note.parent != null && note.isSustainNote) {
+			if (note.missed)
+				return; 
+			
+			var parentNote:Note = note.parent;
+			if (parentNote.wasGoodHit && parentNote.tail.length > 0) {
+				for (child in parentNote.tail) if (child != note) {
+					child.missed = true;
+					child.canBeHit = false;
+					child.ignoreNote = true;
+					child.tooLate = true;
+				}
+			}
 		}
 
 		if(instakillOnMiss)
