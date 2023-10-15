@@ -17,6 +17,12 @@ class Tank extends BaseStage
 
 	override function create()
 	{
+    if (songName == 'stress')
+    {
+      var _song = PlayState.SONG;
+	   	if(_song.gameOverChar == null || _song.gameOverChar.trim().length < 1) GameOverSubstate.characterName = 'bf-holding-gf-dead';
+    }
+
 		var sky:BGSprite = new BGSprite('tankSky', -400, -400, 0, 0);
 		add(sky);
 
