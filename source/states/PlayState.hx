@@ -1309,7 +1309,6 @@ class PlayState extends MusicBeatState
 						sustainNote.scrollFactor.set();
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
-
 						swagNote.tail.push(sustainNote);
 
 						sustainNote.correctionOffset = swagNote.height / 2;
@@ -1750,11 +1749,12 @@ class PlayState extends MusicBeatState
 							// Kill extremely late notes and cause misses
 							if (Conductor.songPosition - daNote.strumTime > noteKillOffset)
 							{
-								if (daNote.mustPress && !cpuControlled &&!daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit))
-									noteMiss(daNote);
+								if (daNote.mustPress && !cpuControlled && !daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
+									var willMiss:Bool = true;
+									if (willMiss) noteMiss(daNote);
+								}
 
-								daNote.active = false;
-								daNote.visible = false;
+								daNote.active = daNote.visible = false;
 								invalidateNote(daNote);
 							}
 						});
@@ -2673,14 +2673,17 @@ class PlayState extends MusicBeatState
 		{
 			if (notes.length > 0) {
 				for (n in notes) { // I can't do a filter here, that's kinda awesome
-					var canHit:Bool = !strumsBlocked[n.noteData] && n.canBeHit && n.mustPress && !n.tooLate && !n.wasGoodHit && !n.blockHit;
+					var canHit:Bool = (n != null && !strumsBlocked[n.noteData] && n.canBeHit
+						&& n.mustPress && !n.tooLate && !n.wasGoodHit && !n.blockHit);
+
+					if (guitarHeroSustains)
+						canHit = canHit && n.parent != null && n.parent.wasGoodHit;
+
 					if (canHit && n.isSustainNote) {
-						if (holdArray[n.noteData] == true)
+						var released:Bool = !holdArray[n.noteData];
+						
+						if (!released)
 							goodNoteHit(n);
-						else {
-							// TODO: handle guitar hero sustain misses
-							// prolly will need help with this one -Crow
-						}
 					}
 				}
 			}
@@ -2730,20 +2733,20 @@ class PlayState extends MusicBeatState
 		// GUITAR HERO SUSTAIN CHECK LOL!!!!
 		if (note != null && guitarHeroSustains) {
 			if(note.tail.length > 0) {
-				for(childNote in note.tail) {
-					childNote.tooLate = note.ignoreNote = true;
-					childNote.canBeHit = false;
-					childNote.alpha = 0.35;
-				}
-				note.tooLate = note.ignoreNote = true;
-				note.canBeHit = false;
 				note.alpha = 0.35;
+				for(childNote in note.tail) {
+					childNote.alpha = note.alpha;
+					childNote.missed = true;
+					childNote.canBeHit = false;
+				}
+				note.missed = true;
+				note.canBeHit = false;
 
 				subtract += 0.385; // you take more damage if playing with this gameplay changer enabled.
 				// i mean its fair :p -Crow
 			}
 
-			if (note.parent != null && note.parent.ignoreNote)
+			if (note.missed)
 				return;
 		}
 
