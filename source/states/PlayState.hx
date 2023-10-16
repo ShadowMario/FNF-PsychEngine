@@ -2744,7 +2744,7 @@ class PlayState extends MusicBeatState
 			if (note.missed)
 				return;
 		}
-		if (guitarHeroSustains && note.parent != null && note.isSustainNote) {
+		if (note != null && guitarHeroSustains && note.parent != null && note.isSustainNote) {
 			if (note.missed)
 				return; 
 			
