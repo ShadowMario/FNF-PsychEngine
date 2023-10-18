@@ -5120,8 +5120,6 @@ if (ClientPrefs.showNPS) {
 		+ '\nOpponent NPS (Max): ' + FlxStringUtil.formatMoney(oppNPS, false) + ' (' + FlxStringUtil.formatMoney(maxOppNPS, false) + ')'
 		+ '\nTotal Note Hits: ' + FlxStringUtil.formatMoney(Math.abs(totalNotesPlayed + enemyHits), false)
 		+ '\nVideo Speedup: ' + Math.abs(playbackRate / playbackRate / playbackRate) + 'x';
-		} else if (ClientPrefs.showcaseMode) {
-		hitTxt.text = 'Video Speedup: ' + Math.abs(playbackRate / playbackRate / playbackRate) + 'x';
 		}
 
 		if (combo > maxCombo)
