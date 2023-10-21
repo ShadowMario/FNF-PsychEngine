@@ -277,6 +277,8 @@ class PlayState extends MusicBeatState
 	public var comboMultiplier:Float = 1;
 	private var allSicks:Bool = true;
 
+	private var lerpingScore:Bool = false;
+
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
 	public var startingSong:Bool = false;
@@ -5163,9 +5165,15 @@ if (ClientPrefs.showNPS) {
 		compactUpdateFrame = 0;
 		scoreTxtUpdateFrame = 0;
 
-		shownScore = FlxMath.lerp(shownScore, songScore, .4/(ClientPrefs.framerate / 60));
-		if (Math.abs(shownScore - songScore) <= 10)
+		if (shownScore != songScore && ClientPrefs.hudType == 'JS Engine' && Math.abs(shownScore - songScore) >= 10) {
+		    shownScore = FlxMath.lerp(shownScore, songScore, 0.4 / (ClientPrefs.framerate / 60));
+    			lerpingScore = true; // Indicate that lerping is in progress
+		} else {
 			shownScore = songScore;
+			lerpingScore = false;
+		}
+
+		if (lerpingScore) updateScore();
 
 		if (ClientPrefs.smoothHealth && ClientPrefs.smoothHealthType == 'Indie Cross')
 		{
