@@ -287,6 +287,7 @@ class Paths
 	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
 	static public function image(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxGraphic
 	{
+		if (ClientPrefs.cacheOnGPU) {
 		var bitmap:BitmapData = null;
 		var file:String = null;
 
@@ -333,6 +334,35 @@ class Paths
 
 		trace('oh no its returning null NOOOO ($file)');
 		return null;
+		} else {
+		#if MODS_ALLOWED
+		var modKey:String = modsImages(key);
+		if(FileSystem.exists(modKey)) {
+			if(!currentTrackedAssets.exists(modKey)) {
+				var newBitmap:BitmapData = BitmapData.fromFile(modKey);
+				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, modKey);
+				newGraphic.persist = true;
+				currentTrackedAssets.set(modKey, newGraphic);
+			}
+			localTrackedAssets.push(modKey);
+			return currentTrackedAssets.get(modKey);
+		}
+		#end
+
+		var path = getPath('images/$key.png', IMAGE, library);
+		//trace(path);
+		if (OpenFlAssets.exists(path, IMAGE)) {
+			if(!currentTrackedAssets.exists(path)) {
+				var newGraphic:FlxGraphic = FlxG.bitmap.add(path, false, path);
+				newGraphic.persist = true;
+				currentTrackedAssets.set(path, newGraphic);
+			}
+			localTrackedAssets.push(path);
+			return currentTrackedAssets.get(path);
+		}
+		trace('oh no its returning null NOOOO (' + modKey + ')');
+		return null;
+		}
 	}
 
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String

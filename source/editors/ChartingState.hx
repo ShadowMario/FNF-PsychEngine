@@ -1926,6 +1926,8 @@ class ChartingState extends MusicBeatState
 						if (touch.overlaps(note)) {
 							// trace('tryin to delete note...');
 							deleteNote(note);
+							updateGrid(false);
+							updateNoteUI();
 						}
 					});
 				} else {
@@ -1935,6 +1937,16 @@ class ChartingState extends MusicBeatState
 						&& touch.y < gridBG.y + (GRID_SIZE * getSectionBeats() * 4) * zoomList[curZoom]) {
 						FlxG.log.add('added note');
 						addNote();
+					var addCount:Int = 0;
+					if (check_stackActive.checked) {
+						addCount = (Math.floor(stepperStackNum.value)) * Math.floor(stepperStackOffset.value) - 1;
+					}
+					// var funnySnap:Float = ((GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]) + Conductor.stepCrochet / stepperStackOffset.value);
+					for(i in 0...Std.int(addCount)) {
+						addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/stepperStackOffset.value, curSelectedNote[1] + Math.floor(stepperStackSideOffset.value), currentType);
+					}
+				updateGrid(false);
+				updateNoteUI();
 					}
 				}
 			}

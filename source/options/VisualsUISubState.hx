@@ -519,6 +519,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Show Debug Info',
+			"If checked, the game will show additional debug info.\nNote: Turn on FPS Counter before using this!",
+			'debugInfo',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('NPS with Speed in Mind',
 			"If unchecked, the NPS won't have Playback Rate in mind.\n(Pretty dumb option to add, if you ask me!\nThat's why this is in the bottom of the Visuals & UI menu!)",
 			'npsWithSpeed',

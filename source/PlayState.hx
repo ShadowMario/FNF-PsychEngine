@@ -88,6 +88,8 @@ import vlc.MP4Handler;
 #end
 #end
 
+import ColorSwap.ColorSwapShader; //for motion blur
+
 
 using StringTools;
 
@@ -187,6 +189,8 @@ class PlayState extends MusicBeatState
 	public static var death:FlxSprite;
 	public static var deathanim:Bool = false;
 	public static var dead:Bool = false;
+
+	var tankmanAscend:Bool = false; // funni (2021 nostalgia oh my god)
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
@@ -322,6 +326,10 @@ class PlayState extends MusicBeatState
 	var hueh231:FlxSprite;
 	var secretsong:FlxSprite;
 	var SPUNCHBOB:FlxSprite;
+
+	public var scoreTxtUpdateFrame:Int = 0;
+	public var judgeCountUpdateFrame:Int = 0;
+	public var compactUpdateFrame:Int = 0;
 
 	var notesHitArray:Array<Float> = [];
 	var oppNotesHitArray:Array<Float> = [];
@@ -1731,11 +1739,7 @@ class PlayState extends MusicBeatState
 		add(strumLineNotes);
 		add(grpNoteSplashes);
 
-		if(ClientPrefs.timeBarType == 'Song Name')
-		{
-			timeTxt.size = 24;
-			timeTxt.y += 3;
-		}
+
 		if(ClientPrefs.timeBarType == 'Song Name' && ClientPrefs.hudType == 'VS Impostor')
 		{
 			timeTxt.size = 14;
@@ -1752,6 +1756,19 @@ class PlayState extends MusicBeatState
 		trace ('Loading chart...');
 		if (!ClientPrefs.fasterChartLoad) generateSong(SONG.song);
 		if (ClientPrefs.fasterChartLoad) generateSongOptim(SONG.song);
+
+		if (curSong.toLowerCase() == "guns") // added this to bring back the old 2021 fnf vibes, i wish the fnf fandom revives one day :(
+		{
+			var randomVar:Int = 0;
+			if (!ClientPrefs.noGunsRNG) randomVar = Std.random(15);
+			if (ClientPrefs.noGunsRNG) randomVar = 8;
+			trace(randomVar);
+			if (randomVar == 8)
+			{
+				trace('AWW YEAH, ITS ASCENDING TIME');
+				tankmanAscend = true;
+			}
+		}
 
 		// After all characters being loaded, it makes then invisible 0.01s later so that the player won't freeze when you change characters
 		// add(strumLine);
@@ -2168,6 +2185,7 @@ class PlayState extends MusicBeatState
 		dadGroup.destroy();
 		boyfriendGroup.destroy();
 		}
+		if (!ClientPrefs.hideScore) updateScore();
 
 		judgementCounter = new FlxText(0, FlxG.height / 2 - (ClientPrefs.hudType != 'Box Funkin' || ClientPrefs.hudType != "Mic'd Up" ? 80 : 350), 0, "", 20);
 		judgementCounter.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -3478,6 +3496,7 @@ class PlayState extends MusicBeatState
 
     private function updateCompactNumbers():Void
     {
+		compactUpdateFrame++;
         	compactCombo = formatCompactNumber(combo);
         	compactMaxCombo = formatCompactNumber(maxCombo);
 		compactScore = formatCompactNumber(songScore);
@@ -3978,6 +3997,7 @@ class PlayState extends MusicBeatState
 			});
 		} moving this to popupscore so that it doesn't just break scoretxt*/
 		callOnLuas('onUpdateScore', [miss]);
+		scoreTxtUpdateFrame++;
 	}
 
 	public function setSongTime(time:Float)
@@ -4240,7 +4260,7 @@ class PlayState extends MusicBeatState
 				{
 					songNotes[3] = 'Behind Note';
 				}
-				if (gottaHitNote)
+				if (gottaHitNote && !songNotes.hitCausesMiss)
 				{
 					totalNotes += 1;
 				}
@@ -4904,6 +4924,14 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		if (tankmanAscend)
+		{
+			if (curStep > 895 && curStep < 1151)
+			{
+				camGame.zoom = 0.8;
+			}
+		}
+
 		switch (curStage)
 		{
 			case 'tank':
@@ -5072,6 +5100,9 @@ if (ClientPrefs.showNPS) {
     if (notesToRemoveCount > 0) {
         notesHitDateArray.splice(0, notesToRemoveCount);
         notesHitArray.splice(0, notesToRemoveCount);
+		if (ClientPrefs.ratingCounter && judgeCountUpdateFrame == 0 && judgementCounter != null) updateRatingCounter();
+		if (!ClientPrefs.hideScore && scoreTxtUpdateFrame == 0 && scoreTxt != null) updateScore();
+           	if (ClientPrefs.compactNumbers && compactUpdateFrame == 0) updateCompactNumbers();
     }
 
     // Calculate sum of NPS values
@@ -5095,6 +5126,8 @@ if (ClientPrefs.showNPS) {
     if (oppNotesToRemoveCount > 0) {
         oppNotesHitDateArray.splice(0, oppNotesToRemoveCount);
         oppNotesHitArray.splice(0, oppNotesToRemoveCount);
+		if (ClientPrefs.ratingCounter && judgeCountUpdateFrame == 0 && judgementCounter != null) updateRatingCounter();
+           	if (ClientPrefs.compactNumbers && compactUpdateFrame == 0) updateCompactNumbers();
     }
 
     // Calculate sum of NPS values for the opponent
@@ -5126,6 +5159,9 @@ if (ClientPrefs.showNPS) {
 			maxCombo = combo;
 
 		super.update(elapsed);
+		judgeCountUpdateFrame = 0;
+		compactUpdateFrame = 0;
+		scoreTxtUpdateFrame = 0;
 
 		shownScore = FlxMath.lerp(shownScore, songScore, .4/(ClientPrefs.framerate / 60));
 		if (Math.abs(shownScore - songScore) <= 10)
@@ -5152,9 +5188,6 @@ if (ClientPrefs.showNPS) {
 
 		setOnLuas('curDecStep', curDecStep);
 		setOnLuas('curDecBeat', curDecBeat);
-		if (ClientPrefs.ratingCounter) updateRatingCounter();
-		if (!ClientPrefs.hideScore) updateScore();
-           	if (ClientPrefs.compactNumbers) updateCompactNumbers();
 
 		if(botplayTxt != null && ClientPrefs.hudType != "Mic'd Up" && ClientPrefs.hudType != 'Kade Engine' && ClientPrefs.botTxtFade) {
 			botplaySine += 180 * elapsed;
@@ -5254,7 +5287,7 @@ if (ClientPrefs.showNPS) {
 				}
 		}
 
-		if (controls.PAUSE && startedCountdown && canPause && !softlocked)
+		if ((controls.PAUSE #if android || FlxG.android.justReleased.BACK #end) && startedCountdown && canPause && !softlocked)
 		{
 			if (!ClientPrefs.noPausing) {
 			var ret:Dynamic = callOnLuas('onPause', [], false);
@@ -6143,6 +6176,8 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 				oppNotesHitDateArray.push(Date.now());
 				}
 		enemyHits += 1 * polyphony;
+		if (ClientPrefs.ratingCounter && judgeCountUpdateFrame == 0) updateRatingCounter();
+           	if (ClientPrefs.compactNumbers && compactUpdateFrame == 0) updateCompactNumbers();
 			if (shouldKillNotes)
 			{
 				daNote.kill();
@@ -6186,6 +6221,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 								if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
 								notesHitArray.push(1 * polyphony);
 								notesHitDateArray.push(Date.now());
+								}
 								if (shouldKillNotes)
 								{
 									daNote.kill();
@@ -6193,7 +6229,6 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 								if (shouldKillNotes)
 								{
 									daNote.destroy();
-								}
 								}
 								}
 								}
@@ -8932,6 +8967,10 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 			}
 
+			if (ClientPrefs.ratingCounter && judgeCountUpdateFrame == 0) updateRatingCounter();
+			if (!ClientPrefs.hideScore && scoreTxtUpdateFrame == 0) updateScore();
+           		if (ClientPrefs.compactNumbers && compactUpdateFrame == 0) updateCompactNumbers();
+
 			if(cpuControlled) {
 				if (ClientPrefs.botLightStrum)
 				{
@@ -9237,6 +9276,75 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	override function stepHit()
 	{
 		super.stepHit();
+
+		if (tankmanAscend)
+		{
+			if (curStep >= 896 && curStep <= 1152) moveCameraSection();
+			switch (curStep)
+			{
+				case 896:
+					{
+						opponentStrums.forEachAlive(function(daNote:FlxSprite)
+						{
+							FlxTween.tween(daNote, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						});
+						FlxTween.tween(EngineWatermark, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(timeBar, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(judgementCounter, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(scoreTxt, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(healthBar, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(healthBarBG, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(iconP1, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(iconP2, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(timeTxt, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						dad.velocity.y = -35;
+					}
+				case 906:
+					{
+						playerStrums.forEachAlive(function(daNote:FlxSprite)
+						{
+							FlxTween.tween(daNote, {alpha: 0}, 0.5, {ease: FlxEase.expoOut,});
+						});
+					}
+				case 1020:
+					{
+						playerStrums.forEachAlive(function(daNote:FlxSprite)
+						{
+							FlxTween.tween(daNote, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						});
+					}
+				case 1024:
+					dad.velocity.y = 0;
+					boyfriend.velocity.y = -33.5;
+				case 1151:
+					cameraSpeed = 100;
+				case 1152:
+					{
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						opponentStrums.forEachAlive(function(daNote:FlxSprite)
+						{
+							FlxTween.tween(daNote, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						});
+						FlxTween.tween(EngineWatermark, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(judgementCounter, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(healthBar, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(healthBarBG, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(scoreTxt, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(iconP1, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(iconP2, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.expoOut,});
+						dad.x = 100;
+						dad.y = 280;
+						boyfriend.x = 810;
+						boyfriend.y = 450;
+						dad.velocity.y = 0;
+						boyfriend.velocity.y = 0;
+					}
+				case 1153:
+					cameraSpeed = 1;
+			}
+		}
 		var gamerValue = 20 * playbackRate;
 		if (!ClientPrefs.noSyncing && ClientPrefs.songLoading && playbackRate < 256) //much better resync code, doesn't just resync every step!!
 		{
@@ -9590,6 +9698,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	}
 
 	public function updateRatingCounter() {
+		judgeCountUpdateFrame++;
 		if (!ClientPrefs.noMarvJudge)
 		{
 		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');

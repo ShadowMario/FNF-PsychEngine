@@ -146,6 +146,8 @@ class FlxText extends FlxSprite
 	 */
 	var _regen:Bool = true;
 
+	var mainThing:Main;
+
 	/**
 	 * Helper vars to draw border styles with transparency.
 	 */
@@ -814,6 +816,7 @@ class FlxText extends FlxSprite
 			_flashRect.y = 0;
 			_flashRect.width = newWidth;
 			_flashRect.height = newHeight;
+			Main.textGenerations++;
 		}
 		else // Else just clear the old buffer before redrawing the text
 		{

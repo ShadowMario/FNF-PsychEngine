@@ -45,6 +45,8 @@ class Main extends Sprite {
 	public static var fpsVar:FPS;
 	public static var changeID:Int = 0;
 
+	public static var textGenerations:Int = 0;
+
     public static var __superCoolErrorMessagesArray:Array<String> = [
         "A fatal error has occ- wait what?",
         "missigno.",

@@ -47,6 +47,11 @@ class ColorSwapShader extends FlxShader {
 
 		uniform bool hasTransform;
 		uniform bool hasColorTransform;
+    		uniform bool blurEnabled;
+    		uniform int passes;
+       		uniform float x;
+        	uniform float y;
+       		uniform bool isNote;
 
 		vec4 flixel_texture2D(sampler2D bitmap, vec2 coord)
 		{
@@ -213,5 +218,9 @@ class ColorSwapShader extends FlxShader {
 	public function new()
 	{
 		super();
+		var motion_blur = ClientPrefs.noteMotionBlur;
+       		this.blurEnabled.value = [motion_blur];
+        	this.y.value = [0.0075];
+		this.passes.value = [10];
 	}
 }

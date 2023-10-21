@@ -9,6 +9,7 @@ import flixel.math.FlxMath;
 import openfl.display._internal.stats.Context3DStats;
 import openfl.display._internal.stats.DrawCallContext;
 #end
+import flixel.FlxG;
 #if flash
 import openfl.Lib;
 #end
@@ -16,6 +17,7 @@ import external.memory.Memory;
 #if openfl
 import openfl.system.System;
 #end
+import Main;
 
 /**
 	The FPS class provides an easy-to-use monitor to display
@@ -36,6 +38,8 @@ class FPS extends TextField
 	@:noCompletion private var cacheCount:Float;
 	@:noCompletion private var currentTime:Float;
 	@:noCompletion private var times:Array<Float>;
+
+	public static var mainThing:Main;
 
 	public function new(x:Float = 10, y:Float = 10, color:Int = 0x000000)
 	{
@@ -87,6 +91,14 @@ class FPS extends TextField
 			var memoryMegas:Float = 0;
 			
 			if (ClientPrefs.showRamUsage) text += "\nMemory: " + CoolUtil.formatBytes(Memory.getCurrentUsage()) + (ClientPrefs.showMaxRamUsage ? " / " + CoolUtil.formatBytes(Memory.getPeakUsage()) : "");
+
+			if (ClientPrefs.debugInfo) {
+				text += '\nState: ${Type.getClassName(Type.getClass(FlxG.state))}';
+				if (FlxG.state.subState != null)
+					text += '\nSubstate: ${Type.getClassName(Type.getClass(FlxG.state.subState))}';
+				text += "\nSystem: " + '${lime.system.System.platformLabel} ${lime.system.System.platformVersion}';
+				text += "\nText bitmaps generated: " + Main.textGenerations;
+			}
 
 			textColor = 0xFFFFFFFF;
 			if (currentFPS <= ClientPrefs.framerate / 2)

@@ -45,12 +45,41 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('No Ascend RNG',
+			"If checked, makes the RNG Guns ascend part play every time.",
+			'noGunsRNG',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Playback Rate Controls',
 			"If checked, allows you to control the playback rate in PlayState \nwithout the need for the Pause Menu.",
 			'pbRControls',
 			'bool',
 			false);
 		addOption(option);
+
+		/*
+		var option:Option = new Option('Note Motion Blur',
+			"If checked, notes will go BLURRRR",
+			'noteMotionBlur',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('Motion Blur Mult: ',
+			"Multiplier for motion blur. If you still feel like the notes stutter, this can help.\nHigher values mean blurrier notes.",
+			'noteMBMult',
+			'float',
+			1);
+		addOption(option);
+		*/ //while this did work the hsv behaved incorrectly
+		option.scrollSpeed = 2.2;
+		option.minValue = 0.1;
+		option.maxValue = 10;
+		option.changeValue = 0.1;
+		option.decimals = 2;
+		option.displayFormat = '%vx';
 
 		var option:Option = new Option('Crash the Engine',
 			"Select this to crash the engine.",

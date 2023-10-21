@@ -9,6 +9,7 @@ using StringTools;
 class StrumNote extends FlxSprite
 {
 	public var colorSwap:ColorSwap;
+    	public var notes_angle:Null<Float> = null;
 	public var noteThing:Note;
 	public var resetAnim:Float = 0;
 	private var noteData:Int = 0;
@@ -27,6 +28,10 @@ class StrumNote extends FlxSprite
 		}
 		return value;
 	}
+
+    	public function getAngle() {
+       		return (notes_angle == null ? angle : notes_angle);
+    	}
 
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
 		colorSwap = new ColorSwap();

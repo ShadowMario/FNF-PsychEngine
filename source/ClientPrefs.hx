@@ -42,6 +42,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var moreMaxHP:Bool = false;
 	public static var songPercentage:Bool = true;
 	public static var autosaveInterval:Float = 5.0;
+	public static var noteMotionBlur:Bool = false;
+	public static var noteMBMult:Float = 1;
 	public static var comboMultLimit:Float = 5;
 	public static var minCGBMS:Int = 5;
 	public static var maxCGBMS:Int = 5;
@@ -68,6 +70,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var resultsScreen:Bool = true;
 	public static var botTxtFade:Bool = true;
 	public static var hideHud:Bool = false;
+	public static var debugInfo:Bool = false;
 	public static var hideScore:Bool = false;
 	public static var voiidTrollMode:Bool = false;
 	public static var compactNumbers:Bool = false;
@@ -75,6 +78,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var longFCName:Bool = false;
 	public static var holdNoteHits:Bool = false;
 	public static var comboScoreEffect:Bool = false;
+	public static var noGunsRNG:Bool = false;
 	public static var comboMultiType:String = 'osu!';
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -219,6 +223,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.oppNoteSplashes = oppNoteSplashes;
 		FlxG.save.data.songLoading = songLoading;
+		FlxG.save.data.debugInfo = debugInfo;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.shaders = shaders;
 		FlxG.save.data.ezSpam = ezSpam;
@@ -227,6 +232,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.progAudioLoad = progAudioLoad;
+		FlxG.save.data.noGunsRNG = noGunsRNG;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.daMenuMusic = daMenuMusic;
 		FlxG.save.data.maxSplashLimit = maxSplashLimit;
@@ -237,6 +243,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.fasterChartLoad = fasterChartLoad;
 		FlxG.save.data.longFCName = longFCName;
 		FlxG.save.data.botTxtFade = botTxtFade;
+		FlxG.save.data.noteMotionBlur = noteMotionBlur;
+		FlxG.save.data.noteMBMult = noteMBMult;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.skipResultsScreen = skipResultsScreen;
 		FlxG.save.data.timeBounce = timeBounce;
@@ -378,6 +386,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;
 		}
+		if(FlxG.save.data.debugInfo != null) {
+			debugInfo = FlxG.save.data.debugInfo;
+		}
 		if(FlxG.save.data.ezSpam != null) {
 			ezSpam = FlxG.save.data.ezSpam;
 		}
@@ -395,6 +406,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.communityGameBot != null) {
 			communityGameBot = FlxG.save.data.communityGameBot;
+		}
+		if(FlxG.save.data.noGunsRNG != null) {
+			noGunsRNG = FlxG.save.data.noGunsRNG;
 		}
 		if(FlxG.save.data.showRamUsage != null) {
 			showRamUsage = FlxG.save.data.showRamUsage;
@@ -440,6 +454,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.rainbowNotes != null) {
 			rainbowNotes = FlxG.save.data.rainbowNotes;
+		}
+		if(FlxG.save.data.noteMotionBlur != null) {
+			noteMotionBlur = FlxG.save.data.noteMotionBlur;
+		}
+		if(FlxG.save.data.noteMBMult != null) {
+			noteMBMult = FlxG.save.data.noteMBMult;
 		}
 		if(FlxG.save.data.comboMultLimit != null) {
 			comboMultLimit = FlxG.save.data.comboMultLimit;
