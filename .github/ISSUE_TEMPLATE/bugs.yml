@@ -48,3 +48,13 @@ body:
       placeholder: "Yes, I edited ClientPrefs.hx and tried to add a new setting"
     validations:
       required: true
+
+  - type: dropdown
+    id: oclt
+    attributes:
+      label: "If you use 1.12.0 or earlier, did you have Optimized Chart Loading turned on?"
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: false
