@@ -156,6 +156,16 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
+
+		var option:Option = new Option('ScoreTxt Size: ',
+			"Sets the size of scoreTxt. Logically, higher values mean\nthe scoreTxt is bigger. If set to 0, then it will\nuse the default size for each HUD type.",
+			'scoreTxtSize',
+			'int',
+			'0');
+		addOption(option);
+
+		option.minValue = 0;
+		option.maxValue = 100;
 		
 		/* ignore this i was just making a joke about fnf's naughtiness option
 		var option:Option = new Option('Family Friendly Mode',

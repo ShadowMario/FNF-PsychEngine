@@ -153,6 +153,7 @@ class DialogueEditorState extends MusicBeatState
 
 		characterInputText = new FlxUIInputText(10, 20, 80, DialogueCharacter.DEFAULT_CHARACTER, 8);
 		blockPressWhileTypingOn.push(characterInputText);
+		characterInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		speedStepper = new FlxUINumericStepper(10, characterInputText.y + 40, 0.005, 0.05, 0, 0.5, 3);
 
@@ -165,9 +166,11 @@ class DialogueEditorState extends MusicBeatState
 
 		soundInputText = new FlxUIInputText(10, speedStepper.y + 40, 150, '', 8);
 		blockPressWhileTypingOn.push(soundInputText);
+		soundInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		
 		lineInputText = new FlxUIInputText(10, soundInputText.y + 35, 200, DEFAULT_TEXT, 8);
 		blockPressWhileTypingOn.push(lineInputText);
+		lineInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		#if !android
 		var loadButton:FlxButton = new FlxButton(20, lineInputText.y + 25, "Load Dialogue", function() {

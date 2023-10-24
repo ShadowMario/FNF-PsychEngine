@@ -61,6 +61,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var opponentLightStrum:Bool = true;
 	public static var complexAccuracy:Bool = false;
 	public static var resyncType:String = 'Psych';
+	public static var scoreTxtSize:Int = 0;
 	public static var botLightStrum:Bool = true;
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
@@ -224,6 +225,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.oppNoteSplashes = oppNoteSplashes;
 		FlxG.save.data.songLoading = songLoading;
 		FlxG.save.data.debugInfo = debugInfo;
+		FlxG.save.data.scoreTxtSize = scoreTxtSize;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.shaders = shaders;
 		FlxG.save.data.ezSpam = ezSpam;
@@ -388,6 +390,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.debugInfo != null) {
 			debugInfo = FlxG.save.data.debugInfo;
+		}
+ 		if(FlxG.save.data.scoreTxtSize != null) {
+			scoreTxtSize = FlxG.save.data.scoreTxtSize;
 		}
 		if(FlxG.save.data.ezSpam != null) {
 			ezSpam = FlxG.save.data.ezSpam;

@@ -178,26 +178,33 @@ class WeekEditorState extends MusicBeatState
 		
 		songsInputText = new FlxUIInputText(10, 30, 200, '', 8);
 		blockPressWhileTypingOn.push(songsInputText);
+		songsInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		opponentInputText = new FlxUIInputText(10, songsInputText.y + 40, 70, '', 8);
 		blockPressWhileTypingOn.push(opponentInputText);
+		opponentInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		boyfriendInputText = new FlxUIInputText(opponentInputText.x + 75, opponentInputText.y, 70, '', 8);
 		blockPressWhileTypingOn.push(boyfriendInputText);
+		boyfriendInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		girlfriendInputText = new FlxUIInputText(boyfriendInputText.x + 75, opponentInputText.y, 70, '', 8);
 		blockPressWhileTypingOn.push(girlfriendInputText);
+		girlfriendInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		backgroundInputText = new FlxUIInputText(10, opponentInputText.y + 40, 120, '', 8);
 		blockPressWhileTypingOn.push(backgroundInputText);
-		
+		backgroundInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		displayNameInputText = new FlxUIInputText(10, backgroundInputText.y + 60, 200, '', 8);
 		blockPressWhileTypingOn.push(backgroundInputText);
+		displayNameInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		weekNameInputText = new FlxUIInputText(10, displayNameInputText.y + 60, 150, '', 8);
 		blockPressWhileTypingOn.push(weekNameInputText);
+		weekNameInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		weekFileInputText = new FlxUIInputText(10, weekNameInputText.y + 40, 100, '', 8);
 		blockPressWhileTypingOn.push(weekFileInputText);
+		weekFileInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		reloadWeekThing();
 
 		hideCheckbox = new FlxUICheckBox(10, weekFileInputText.y + 40, null, null, "Hide Week from Story Mode?", 100);
@@ -252,9 +259,11 @@ class WeekEditorState extends MusicBeatState
 
 		weekBeforeInputText = new FlxUIInputText(10, hiddenUntilUnlockCheckbox.y + 55, 100, '', 8);
 		blockPressWhileTypingOn.push(weekBeforeInputText);
+		weekBeforeInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		difficultiesInputText = new FlxUIInputText(10, weekBeforeInputText.y + 60, 200, '', 8);
 		blockPressWhileTypingOn.push(difficultiesInputText);
+		difficultiesInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		
 		tab_group.add(new FlxText(weekBeforeInputText.x, weekBeforeInputText.y - 28, 0, 'Week File name of the Week you have\nto finish for Unlocking:'));
 		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y - 20, 0, 'Difficulties:'));
@@ -729,6 +738,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 		});
 
 		iconInputText = new FlxUIInputText(10, bgColorStepperR.y + 70, 100, '', 8);
+		iconInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		var hideFreeplayCheckbox:FlxUICheckBox = new FlxUICheckBox(10, iconInputText.y + 30, null, null, "Hide Week from Freeplay?", 100);
 		hideFreeplayCheckbox.checked = weekFile.hideFreeplay;

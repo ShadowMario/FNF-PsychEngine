@@ -188,10 +188,13 @@ class MenuCharacterEditorState extends MusicBeatState
 		
 		imageInputText = new FlxUIInputText(10, 20, 80, characterFile.image, 8);
 		blockPressWhileTypingOn.push(imageInputText);
+		imageInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		idleInputText = new FlxUIInputText(10, imageInputText.y + 35, 100, characterFile.idle_anim, 8);
 		blockPressWhileTypingOn.push(idleInputText);
+		idleInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		confirmInputText = new FlxUIInputText(10, idleInputText.y + 35, 100, characterFile.confirm_anim, 8);
 		blockPressWhileTypingOn.push(confirmInputText);
+		confirmInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		flipXCheckbox = new FlxUICheckBox(10, confirmInputText.y + 30, null, null, "Flip X", 100);
 		flipXCheckbox.callback = function()

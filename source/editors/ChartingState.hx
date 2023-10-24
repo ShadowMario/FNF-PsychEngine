@@ -533,6 +533,7 @@ class ChartingState extends MusicBeatState
 	function addSongUI():Void
 	{
 		UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
+		UI_songTitle.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		blockPressWhileTypingOn.push(UI_songTitle);
 
 
@@ -728,9 +729,11 @@ class ChartingState extends MusicBeatState
 		if(skin == null) skin = '';
 		noteSkinInputText = new FlxUIInputText(player2DropDown.x, player2DropDown.y + 50, 150, skin, 8);
 		blockPressWhileTypingOn.push(noteSkinInputText);
+		noteSkinInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		noteSplashesInputText = new FlxUIInputText(noteSkinInputText.x, noteSkinInputText.y + 35, 150, _song.splashSkin, 8);
 		blockPressWhileTypingOn.push(noteSplashesInputText);
+		noteSplashesInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function() {
 			_song.arrowSkin = noteSkinInputText.text;
@@ -783,6 +786,7 @@ class ChartingState extends MusicBeatState
 
 		creditInputText = new FlxUIInputText(10, 30, 100, _song.songCredit, 8);
 		blockPressWhileTypingOn.push(creditInputText);
+		creditInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		tab_group_songdata.add(creditInputText);
 		tab_group_songdata.add(new FlxText(creditInputText.x, creditInputText.y - 15, 0, 'Song Credit:'));
@@ -1359,11 +1363,13 @@ class ChartingState extends MusicBeatState
 		tab_group_event.add(text);
 		value1InputText = new FlxUIInputText(20, 110, 100, "");
 		blockPressWhileTypingOn.push(value1InputText);
+		value1InputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		var text:FlxText = new FlxText(20, 130, 0, "Value 2:");
 		tab_group_event.add(text);
 		value2InputText = new FlxUIInputText(20, 150, 100, "");
 		blockPressWhileTypingOn.push(value2InputText);
+		value2InputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
 		// New event buttons
 		var removeButton:FlxButton = new FlxButton(eventDropDown.x + eventDropDown.width + 10, eventDropDown.y, '-', function()

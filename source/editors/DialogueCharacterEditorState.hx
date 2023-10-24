@@ -278,10 +278,13 @@ class DialogueCharacterEditorState extends MusicBeatState
 		
 		animationInputText = new FlxUIInputText(15, 85, 80, '', 8);
 		blockPressWhileTypingOn.push(animationInputText);
+		animationInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		loopInputText = new FlxUIInputText(animationInputText.x, animationInputText.y + 35, 150, '', 8);
 		blockPressWhileTypingOn.push(loopInputText);
+		loopInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		idleInputText = new FlxUIInputText(loopInputText.x, loopInputText.y + 40, 150, '', 8);
 		blockPressWhileTypingOn.push(idleInputText);
+		idleInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		
 		var addUpdateButton:FlxButton = new FlxButton(10, idleInputText.y + 30, "Add/Update", function() {
 			var theAnim:String = animationInputText.text.trim();
@@ -383,6 +386,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 		imageInputText = new FlxUIInputText(10, 30, 80, character.jsonFile.image, 8);
 		blockPressWhileTypingOn.push(imageInputText);
+		imageInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		xStepper = new FlxUINumericStepper(imageInputText.x, imageInputText.y + 50, 10, character.jsonFile.position[0], -2000, 2000, 0);
 		yStepper = new FlxUINumericStepper(imageInputText.x + 80, xStepper.y, 10, character.jsonFile.position[1], -2000, 2000, 0);
 		scaleStepper = new FlxUINumericStepper(imageInputText.x, xStepper.y + 50, 0.05, character.jsonFile.scale, 0.1, 10, 2);
