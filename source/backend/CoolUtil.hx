@@ -114,6 +114,25 @@ class CoolUtil
 		#end
 	}
 
+	inline public static function openFolder(folder:String, absolute:Bool = false) {
+		#if sys
+			#if linux
+			// TO DO: get linux command
+			//Sys.command('explorer.exe $folder');
+			#else
+			if(!absolute) folder =  Sys.getCwd() + '$folder';
+
+			folder = folder.replace('/', '\\');
+			if(folder.endsWith('/')) folder.substr(0, folder.length - 1);
+
+			Sys.command('explorer.exe $folder');
+			trace('explorer.exe $folder');
+			#end
+		#else
+			FlxG.error("Platform is not supported for CoolUtil.openFolder");
+		#end
+	}
+
 	/** Quick Function to Fix Save Files for Flixel 5
 		if you are making a mod, you are gonna wanna change "ShadowMario" to something else
 		so Base Psych saves won't conflict with yours
