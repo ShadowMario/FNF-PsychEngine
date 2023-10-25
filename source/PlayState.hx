@@ -5324,44 +5324,24 @@ if (ClientPrefs.showNPS) {
 		if (health > maxHealth)
 			health = maxHealth;
 
-		if (iconP1.animation.frames == 3) {
-			if (healthBar.percent < 20)
-			(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 1;
-			else if (healthBar.percent > 80)
-			(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 2;
-			else
-			(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 0;
-		} else {
-			if (healthBar.percent < 20)
-			(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 1;
-		else
-			(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 0;
-		}
-		if (iconP2.animation.frames == 3) {
-			if (healthBar.percent > 80)
-			(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 1;
-			else if (healthBar.percent < 20)
-			(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 2;
-		else
-			(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 0;
-		} else {
-			if (healthBar.percent > 80)
-			(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 1;
-		else
-			(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 0;
-		}
-		
-		/*
-		if (healthBar.percent < 20)
-			(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 1;
-		else
-			(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 0;
+		// this was giving me a headache rewriting this :D
+		var stupidIcons:Array<HealthIcon> = [iconP1, iconP2];
+		if (opponentChart) stupidIcons = [iconP2, iconP1];
 
-		if (healthBar.percent > 80)
-			(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 1;
-		else
-			(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 0;
-		*/
+		if (healthBar.percent < 20){
+			stupidIcons[0].animation.curAnim.curFrame = 1;
+			if (stupidIcons[1].width == 450)
+				stupidIcons[1].animation.curAnim.curFrame = 2;
+		}
+		else if (healthBar.percent > 80){
+			if (stupidIcons[0].width == 450)
+				stupidIcons[0].animation.curAnim.curFrame = 2;
+			stupidIcons[1].animation.curAnim.curFrame = 1;
+		}
+		else{
+			stupidIcons[0].animation.curAnim.curFrame = 0;
+			stupidIcons[1].animation.curAnim.curFrame = 0;
+		}
 
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene && !softlocked) {
 			persistentUpdate = false;
