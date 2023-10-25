@@ -5047,7 +5047,7 @@ if (ClientPrefs.showNPS) {
 			botplaySine += 180 * elapsed;
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180 * playbackRate);
 		}
-		if(cpuControlled && ClientPrefs.randomBotplayText && !ClientPrefs.communityGameBot && botplayTxt != null) {
+		if((botplayTxt != null && cpuControlled && !ClientPrefs.showcaseMode) && ClientPrefs.randomBotplayText && !ClientPrefs.communityGameBot) {
 			if(botplayTxt.text == "this text is gonna kick you out of botplay in 10 seconds" && !botplayUsed || botplayTxt.text == "Your Botplay Free Trial will end in 10 seconds." && !botplayUsed)
 				{
 					botplayUsed = true;
