@@ -22,7 +22,8 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Gameplay Settings', 'Change Difficulty', 'Options', 'Exit to menu'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Gameplay Settings', 'Change Difficulty', 'Options', 'Exit'];
+	var menuItemsExit:Array<String> = [(PlayState.isStoryMode ? 'Exit to Story Menu' : 'Exit to Freeplay'), 'Exit to Main Menu', 'Exit Game', 'Back'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -233,7 +234,25 @@ class PauseSubState extends MusicBeatSubstate
 				menuItems = menuItemsOG;
 				regenMenu();
 			}
+			if (menuItems == difficultyChoices)
+			{
+				if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
+					var name:String = PlayState.SONG.song;
+					var poop = Highscore.formatSong(name, curSelected);
+					PlayState.SONG = Song.loadFromJson(poop, name);
+					PlayState.storyDifficulty = curSelected;
+					MusicBeatState.resetState();
+					FlxG.sound.music.volume = 0;
+					PlayState.changedDifficulty = true;
+					PlayState.chartingMode = false;
+					return;
+				}
 
+				menuItems = menuItemsOG;
+				regenMenu();
+			}
+
+			if (menuItems == menuItemsOG) {
 			switch (daSelected)
 			{
 				case "Resume":
@@ -291,20 +310,51 @@ class PauseSubState extends MusicBeatSubstate
 						FlxTween.tween(FlxG.sound.music, {volume: 1}, 0.8);
 						FlxG.sound.music.time = pauseMusic.time;
 					}
-				case "Exit to menu":
+				case "Exit":
+				menuItems = menuItemsExit;
+				if (FlxG.random.bool(0.1)) menuItemsExit[0] = 'Exit To Your Mother';
+				regenMenu();
+				}
+			}
+			if (menuItems == menuItemsExit) {
+			switch(daSelected) {
+			case "Exit to Story Menu", "Exit to Freeplay":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 
 					WeekData.loadTheFirstEnabledMod();
 					if(PlayState.isStoryMode) {
 						MusicBeatState.switchState(new StoryMenuState());
-					} else {
+					} else if (!PlayState.isStoryMode) {
 						MusicBeatState.switchState(new FreeplayState());
 					}
 					PlayState.cancelMusicFadeTween();
 					FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 					PlayState.changedDifficulty = false;
 					PlayState.chartingMode = false;
+			case "Exit to Main Menu":
+					PlayState.deathCounter = 0;
+					PlayState.seenCutscene = false;
+
+					WeekData.loadTheFirstEnabledMod();
+					if(PlayState.isStoryMode) {
+						MusicBeatState.switchState(new MainMenuState());
+					}
+					PlayState.cancelMusicFadeTween();
+					FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
+					PlayState.changedDifficulty = false;
+					PlayState.chartingMode = false;
+			case "Exit Game":
+					trace ("Exiting game...");
+					openfl.system.System.exit(0);
+			case "Back":
+					menuItems = menuItemsOG;
+					regenMenu();
+			case "Exit to your Mother":
+					trace ("YO MAMA");
+					var aLittleCrashing:FlxSprite = null;
+					aLittleCrashing.destroy();
+				}
 			}
 		}
 	}
@@ -341,6 +391,7 @@ class PauseSubState extends MusicBeatSubstate
 	override function destroy()
 	{
 		pauseMusic.destroy();
+		if (PlayState != null) MusicBeatState.windowNameSuffix = " - " + PlayState.SONG.song + " " + (PlayState.isStoryMode ? "(Story Mode)" : "(Freeplay)");
 
 		super.destroy();
 	}

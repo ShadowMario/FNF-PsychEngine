@@ -21,6 +21,8 @@ class FlashingState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		MusicBeatState.windowNameSuffix = " - Flashing Lights Warning Screen";
+
 		super.create();
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);

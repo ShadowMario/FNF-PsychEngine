@@ -140,6 +140,7 @@ class MusicBeatState extends FlxUIState
 	}
 
 	public static var windowNameSuffix:String = "";
+	public static var windowNameSuffix2:String = ""; //changes to "Outdated!" if the version of the engine is outdated
 	public static var windowNamePrefix:String = "Friday Night Funkin': JS Engine";
 
 	override public function new() {
@@ -185,7 +186,7 @@ class MusicBeatState extends FlxUIState
 		FlxG.autoPause = ClientPrefs.autoPause;
 
 		super.update(elapsed);
-		Application.current.window.title = windowNamePrefix + windowNameSuffix;
+		Application.current.window.title = windowNamePrefix + windowNameSuffix + windowNameSuffix2;
 	}
 
 	private function updateSection():Void

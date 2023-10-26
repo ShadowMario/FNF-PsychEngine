@@ -42,9 +42,11 @@ class CreditsState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		MusicBeatState.windowNameSuffix = " - Credits";
+
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
+		DiscordClient.changePresence("Viewing the Credits", null);
 		#end
 
 		persistentUpdate = true;

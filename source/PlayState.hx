@@ -2188,7 +2188,7 @@ class PlayState extends MusicBeatState
 		dadGroup.destroy();
 		boyfriendGroup.destroy();
 		}
-		if (ClientPrefs.scoreTxtSize > 0 && scoreTxt != null) scoreTxt.size = ClientPrefs.scoreTxtSize;
+		if (ClientPrefs.scoreTxtSize > 0 && scoreTxt != null && !ClientPrefs.showcaseMode && !ClientPrefs.hideScore) scoreTxt.size = ClientPrefs.scoreTxtSize;
 		if (!ClientPrefs.hideScore) updateScore();
 
 		judgementCounter = new FlxText(0, FlxG.height / 2 - (ClientPrefs.hudType != 'Box Funkin' || ClientPrefs.hudType != "Mic'd Up" ? 80 : 350), 0, "", 20);
@@ -7209,11 +7209,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 					if(FlxTransitionableState.skipNextTransIn) {
 						CustomFadeTransition.nextCamera = null;
 					}
-					if (ClientPrefs.resultsScreen)
-						openSubState(new ResultsScreenSubState([marvs, sicks, goods, bads, shits], Std.int(campaignScore), songMisses,
-							Highscore.floorDecimal(ratingPercent * 100, 2), ratingName + (' [' + ratingFC + '] ')));
-					else
-						MusicBeatState.switchState(new StoryMenuState());
+					MusicBeatState.switchState(new StoryMenuState()); //removed results screen from story mode because for some reason it opens the screen after the first song even if the story playlist's length is greater than 0??
 
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
@@ -8297,6 +8293,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		}
 
 		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
+		if (!ClientPrefs.hideScore && scoreTxtUpdateFrame == 0 && scoreTxt != null) updateScore();
 	}
 
 	function noteMissPress(direction:Int = 1):Void //You pressed a key when there was no notes to press for this key
@@ -8347,6 +8344,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			vocals.volume = 0;
 		}
 		callOnLuas('noteMissPress', [direction]);
+		if (!ClientPrefs.hideScore && scoreTxtUpdateFrame == 0 && scoreTxt != null) updateScore();
 	}
 
 	var hitsound:FlxSound;

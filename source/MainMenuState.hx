@@ -25,7 +25,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineJSVersion:String = '1.12.0'; //This is also used for Discord RPC
+	public static var psychEngineJSVersion:String = '1.13.0'; //This is also used for Discord RPC
 	public static var psychEngineVersion:String = '0.6.3'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
@@ -50,6 +50,7 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		MusicBeatState.windowNameSuffix = " - Main Menu";
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 

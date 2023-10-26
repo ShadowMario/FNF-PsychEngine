@@ -89,6 +89,8 @@ class TitleState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		MusicBeatState.windowNameSuffix = " - Title Screen";
+
 		#if android
 		FlxG.android.preventDefaultKeys = [BACK];
 		#end

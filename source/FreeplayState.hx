@@ -194,6 +194,8 @@ class FreeplayState extends MusicBeatState
 		changeSelection();
 		changeDiff();
 
+		MusicBeatState.windowNameSuffix = " - Freeplay Menu";
+
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
 
 		// JUST DOIN THIS SHIT FOR TESTING!!!

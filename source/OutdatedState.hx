@@ -24,6 +24,8 @@ class OutdatedState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		MusicBeatState.windowNameSuffix2 = " (Outdated!)";
+
 		super.create();
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
