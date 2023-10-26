@@ -43,6 +43,9 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 		if(CoolUtil.difficulties.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
+		#if android
+		menuItemsOG.remove('Change Gameplay Settings');
+		#end
 		if(botplayLockout) menuItemsOG.remove('Toggle Botplay'); //you cant toggle it on MWAHAHAHAHAHA
 
 		if(PlayState.chartingMode)
@@ -311,8 +314,8 @@ class PauseSubState extends MusicBeatSubstate
 						FlxG.sound.music.time = pauseMusic.time;
 					}
 				case "Exit":
+				if (FlxG.random.int(0, 999) == 10) menuItemsExit = ['Exit To Your Mother'];
 				menuItems = menuItemsExit;
-				if (FlxG.random.bool(0.1)) menuItemsExit[0] = 'Exit To Your Mother';
 				regenMenu();
 				}
 			}

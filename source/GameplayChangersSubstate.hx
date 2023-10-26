@@ -27,6 +27,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import flixel.FlxState;
 
 using StringTools;
 
@@ -379,7 +380,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 					clearHold();
 				}
 			}
-			if(controls.RESET && FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonC.justPressed #end)
+			if(controls.RESET && FlxG.keys.pressed.SHIFT #if android || virtualPad != null && virtualPad.buttonC.justPressed #end)
 			{
 				for (i in 0...optionsArray.length)
 				{
