@@ -52,6 +52,12 @@ class Main extends Sprite
 	{
 		super();
 
+		#if android
+		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
+		#elseif ios
+		Sys.setCwd(LimeSystem.applicationStorageDirectory);
+		#end
+
 		if (stage != null)
 		{
 			init();
