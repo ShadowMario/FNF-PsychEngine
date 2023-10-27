@@ -1,9 +1,12 @@
 package;
 
+#if android
+import android.content.Context;
+#end
 import flixel.graphics.FlxGraphic;
-
 import flixel.FlxGame;
 import flixel.FlxState;
+import haxe.io.Path;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.FPS;
@@ -52,10 +55,11 @@ class Main extends Sprite
 	{
 		super();
 
+		// Credits to MAJigsaw77 (he's the og author for this code)
 		#if android
 		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
 		#elseif ios
-		Sys.setCwd(LimeSystem.applicationStorageDirectory);
+		Sys.setCwd(lime.system.System.applicationStorageDirectory);
 		#end
 
 		if (stage != null)
