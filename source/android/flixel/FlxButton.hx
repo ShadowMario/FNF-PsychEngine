@@ -1,7 +1,11 @@
 package android.flixel;
 
-import flixel.FlxG;
+
+import flixel.math.FlxPoint;
 import flixel.FlxCamera;
+import flixel.FlxG;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.text.FlxText;
 import flixel.FlxSprite;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.atlas.FlxNode;
@@ -9,10 +13,12 @@ import flixel.graphics.frames.FlxTileFrames;
 import flixel.input.FlxInput;
 import flixel.input.FlxPointer;
 import flixel.input.IFlxInput;
-import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
-import flixel.text.FlxText;
+import flixel.util.FlxDestroyUtil.IFlxDestroyable;
 import flixel.util.FlxDestroyUtil;
+
+import flixel.system.FlxSound;
+
+
 import flixel.input.touch.FlxTouch;
 
 /**

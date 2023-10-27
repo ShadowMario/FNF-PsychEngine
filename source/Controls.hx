@@ -3,6 +3,7 @@ package;
 #if android
 import android.flixel.FlxButton;
 import android.flixel.FlxHitbox;
+import android.flixel.FlxNewHitbox;
 import android.flixel.FlxVirtualPad;
 #end
 import flixel.FlxG;
@@ -400,11 +401,18 @@ class Controls extends FlxActionSet
 		action.add(input);
 	}
 
-	public function setHitBox(Hitbox:FlxHitbox) {
+	public function setHitBox(Hitbox:FlxHitbox, NewHitbox:FlxNewHitbox) {
+		if (Hitbox != null) {
 		inline forEachBound(Control.NOTE_UP, (action, state) -> addbuttonNOTES(action, Hitbox.buttonUp, state));
 		inline forEachBound(Control.NOTE_DOWN, (action, state) -> addbuttonNOTES(action, Hitbox.buttonDown, state));
 		inline forEachBound(Control.NOTE_LEFT, (action, state) -> addbuttonNOTES(action, Hitbox.buttonLeft, state));
 		inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addbuttonNOTES(action, Hitbox.buttonRight, state));
+		} else if (NewHitbox != null) {
+		inline forEachBound(Control.NOTE_UP, (action, state) -> addbuttonNOTES(action, NewHitbox.buttonUp, state));
+		inline forEachBound(Control.NOTE_DOWN, (action, state) -> addbuttonNOTES(action, NewHitbox.buttonDown, state));
+		inline forEachBound(Control.NOTE_LEFT, (action, state) -> addbuttonNOTES(action, NewHitbox.buttonLeft, state));
+		inline forEachBound(Control.NOTE_RIGHT, (action, state) -> addbuttonNOTES(action, NewHitbox.buttonRight, state));
+		}
 	}
 
 	public function setVirtualPadUI(VirtualPad:FlxVirtualPad, DPad:FlxDPadMode, Action:FlxActionMode) {

@@ -81,6 +81,7 @@ class OptionsState extends MusicBeatState
 	var selectorLeft:Alphabet;
 	var selectorRight:Alphabet;
 	var customizeAndroidControlsTipText:FlxText;
+	var androidControlsStyleTipText:FlxText;
 
 	override function create() {
 		Paths.clearStoredMemory();
@@ -118,8 +119,22 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.saveSettings();
 
 		#if android
-		addVirtualPad(UP_DOWN, A_B_C);
-		virtualPad.y = -42;
+		addVirtualPad(UP_DOWN, A_B_X_Y);
+		virtualPad.y = -44;
+		#end
+
+		#if android
+		androidControlsStyleTipText = new FlxText(10, FlxG.height - 44, 0, 'Press Y to customize your opacity for hitbox, virtual pads and hitbox style!', 16);
+		customizeAndroidControlsTipText = new FlxText(10, FlxG.height - 24, 0, 'Press X to customize your android controls!', 16);
+			androidControlsStyleTipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			customizeAndroidControlsTipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+
+		androidControlsStyleTipText.borderSize = 1.25;
+		androidControlsStyleTipText.scrollFactor.set();
+		customizeAndroidControlsTipText.borderSize = 1.25;
+		customizeAndroidControlsTipText.scrollFactor.set();
+		add(androidControlsStyleTipText);
+		add(customizeAndroidControlsTipText);
 		#end
 
 		super.create();
@@ -154,6 +169,20 @@ class OptionsState extends MusicBeatState
 		if (controls.ACCEPT) {
 			openSelectedSubstate(options[curSelected]);
 		}
+		#if android
+		if (virtualPad.buttonX.justPressed) {
+			#if android
+			removeVirtualPad();
+			#end
+			openSubState(new android.AndroidControlsSubState());
+		}
+		if (virtualPad.buttonY.justPressed) {
+			#if android
+			removeVirtualPad();
+			#end
+			openSubState(new android.AndroidControlsSettingsSubState());
+		}
+		#end
 
         if (FlxG.keys.justPressed.ANY) {
             var k = keys[kId];

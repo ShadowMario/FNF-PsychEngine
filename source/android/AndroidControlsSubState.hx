@@ -2,25 +2,38 @@ package android;
 
 import android.flixel.FlxButton;
 import android.flixel.FlxHitbox;
+import android.flixel.FlxNewHitbox;
 import android.flixel.FlxVirtualPad;
-import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.FlxSubState;
-import flixel.addons.transition.FlxTransitionableState;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxSpriteGroup;
-import flixel.util.FlxSave;
-import flixel.util.FlxColor;
-import flixel.input.touch.FlxTouch;
+import flixel.math.FlxPoint;
 import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
+import flixel.FlxSprite;
+import flixel.addons.display.FlxBackdrop;
+import flixel.FlxG;
+import flixel.util.FlxColor;
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.tweens.FlxTween;
+import flixel.addons.display.FlxGridOverlay;
+import flixel.tweens.FlxEase;
+
+
+import flixel.addons.transition.FlxTransitionableState;
+
+
+import flixel.util.FlxSave;
+
+import flixel.input.touch.FlxTouch;
+
+
+
 import openfl.utils.Assets;
+
 
 class AndroidControlsSubState extends FlxSubState {
 	final controlsItems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Pad-Duo', 'Hitbox', 'Keyboard'];
 	var virtualPad:FlxVirtualPad;
 	var hitbox:FlxHitbox;
+	var newHitbox:FlxNewHitbox;
 	var upPosition:FlxText;
 	var downPosition:FlxText;
 	var leftPosition:FlxText;
@@ -35,12 +48,19 @@ class AndroidControlsSubState extends FlxSubState {
 	var bindButton:FlxButton;
 	var resetButton:FlxButton;
 	var background:FlxSprite;
+	var velocityBackground:FlxBackdrop;
 
 	override function create() {
-		background = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromHSB(FlxG.random.int(0, 359), FlxG.random.float(0, 0.8), FlxG.random.float(0.3, 1)));
+				background = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromHSB(FlxG.random.int(0, 359), FlxG.random.float(0, 0.8), FlxG.random.float(0.3, 1)));
 		background.alpha = 0.00001;
 		background.scrollFactor.set();
 		add(background);
+
+		velocityBackground = new FlxBackdrop(FlxGridOverlay.createGrid(30, 30, 60, 60, true, 0x3B161932, 0x0), XY);
+		velocityBackground.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
+		velocityBackground.visible = true;
+		velocityBackground.alpha = 0;
+		add(velocityBackground);
 
 		resetButton = new FlxButton(FlxG.width - 200, 50, 'Reset', function() {
 			if (resetButton.visible) {
@@ -54,8 +74,9 @@ class AndroidControlsSubState extends FlxSubState {
 				virtualPad.buttonLeft.y = FlxG.height - 309;
 			}
 		});
+			   resetButton.label.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, CENTER);
+
 		resetButton.setGraphicSize(Std.int(resetButton.width) * 3);
-		resetButton.label.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, CENTER);
 		resetButton.color = FlxColor.RED;
 		resetButton.visible = false;
 		add(resetButton);
@@ -64,21 +85,25 @@ class AndroidControlsSubState extends FlxSubState {
 		virtualPad.visible = false;
 		add(virtualPad);
 
+		newHitbox = new FlxNewHitbox();
+		newHitbox.visible = false;
+		add(newHitbox);
+
 		hitbox = new FlxHitbox();
 		hitbox.visible = false;
 		add(hitbox);
 
 		noAndroidControlsText = new FlxText(0, 50, 0, 'You dont have any Android Controls!', 32);
-		noAndroidControlsText.setFormat('VCR OSD Mono', 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		inputText = new FlxText(0, 100, 0, '', 32);
+			    noAndroidControlsText.setFormat('VCR OSD Mono', 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			    inputText.setFormat('VCR OSD Mono', 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		
 		noAndroidControlsText.borderSize = 2.4;
 		noAndroidControlsText.screenCenter();
 		noAndroidControlsText.visible = false;
-		add(noAndroidControlsText);
-
-		inputText = new FlxText(0, 100, 0, '', 32);
-		inputText.setFormat('VCR OSD Mono', 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		inputText.borderSize = 2.4;
 		inputText.screenCenter(X);
+		add(noAndroidControlsText);
 		add(inputText);
 
 		leftArrow = new FlxSprite(inputText.x - 60, inputText.y - 25);
@@ -96,29 +121,26 @@ class AndroidControlsSubState extends FlxSubState {
 		add(rightArrow);
 
 		tipText = new FlxText(10, FlxG.height - 24, 0, 'Press BACK on your phone to get back to the options menu', 16);
-		tipText.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		tipText.borderSize = 1.25;
-		tipText.scrollFactor.set();
-		add(tipText);
-
-		rightPosition = new FlxText(10, FlxG.height - 44, 0, '', 16);
-		rightPosition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		rightPosition.borderSize = 2.4;
-		add(rightPosition);
-
 		leftPosition = new FlxText(10, FlxG.height - 64, 0, '', 16);
-		leftPosition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		leftPosition.borderSize = 2.4;
-		add(leftPosition);
-
+		rightPosition = new FlxText(10, FlxG.height - 44, 0, '', 16);
 		downPosition = new FlxText(10, FlxG.height - 84, 0, '', 16);
-		downPosition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		downPosition.borderSize = 2.4;
-		add(downPosition);
-
 		upPosition = new FlxText(10, FlxG.height - 104, 0, '', 16);
-		upPosition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			    tipText.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			    rightPosition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			    leftPosition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			    downPosition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			    upPosition.setFormat('VCR OSD Mono', 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+
+		tipText.scrollFactor.set();
+		rightPosition.borderSize = 2.4;
+		leftPosition.borderSize = 2.4;
+		downPosition.borderSize = 2.4;
 		upPosition.borderSize = 2.4;
+
+		add(tipText);
+		add(rightPosition);
+		add(leftPosition);
+		add(downPosition);
 		add(upPosition);
 
 		changeSelection();
@@ -126,6 +148,7 @@ class AndroidControlsSubState extends FlxSubState {
 		super.create();
 
 		FlxTween.tween(background, {alpha: 0.6}, 1, {ease: FlxEase.circInOut});
+		FlxTween.tween(velocityBackground, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
 	}
 
 	override function update(elapsed:Float) {
@@ -223,11 +246,21 @@ class AndroidControlsSubState extends FlxSubState {
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(virtualPad);
 			case 'Hitbox':
-				hitbox.visible = true;
 				virtualPad.visible = false;
 			case 'Keyboard':
 				hitbox.visible = false;
 				virtualPad.visible = false;
+		}
+
+		if (daChoice != "Hitbox") {
+			hitbox.visible = false;
+			newHitbox.visible = false;
+		} else {
+			if (ClientPrefs.hitboxSelection != 'New') {
+				hitbox.visible = true;
+			} else {
+				newHitbox.visible = true;
+			}
 		}
 
 		noAndroidControlsText.visible = daChoice == 'Keyboard';

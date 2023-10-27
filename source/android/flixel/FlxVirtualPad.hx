@@ -1,14 +1,18 @@
 package android.flixel;
 
 import android.flixel.FlxButton;
-import flixel.FlxG;
+
 import flixel.graphics.frames.FlxTileFrames;
-import flixel.group.FlxSpriteGroup;
-import flixel.math.FlxPoint;
-import flixel.util.FlxDestroyUtil;
 import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.graphics.FlxGraphic;
+import flixel.FlxG;
+import flixel.math.FlxPoint;
+
+
+
+
+
 import openfl.utils.Assets;
+
 
 /**
  * A gamepad.
@@ -163,10 +167,12 @@ class FlxVirtualPad extends FlxSpriteGroup {
 			.getByName(Graphic),
 			FlxPoint.get(Width, Height));
 		button.resetSizeFromFrame();
+		button.moves = false;
 		button.solid = false;
 		button.immovable = true;
 		button.scrollFactor.set();
 		button.color = Color;
+		button.alpha = ClientPrefs.virtualPadAlpha;
 		#if FLX_DEBUG
 		button.ignoreDrawDebug = true;
 		#end

@@ -1,15 +1,13 @@
 package android.flixel;
 
 import android.flixel.FlxButton;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.util.FlxDestroyUtil;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.graphics.FlxGraphic;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
-import flixel.group.FlxSpriteGroup;
 import openfl.utils.Assets;
+import flixel.util.FlxDestroyUtil;
+import flixel.FlxG;
+import flixel.util.FlxColor;
+import flixel.tweens.FlxTween;
+import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxAtlasFrames;
 
 /**
  * A zone with 4 buttons (A hitbox).
@@ -29,12 +27,28 @@ class FlxHitbox extends FlxSpriteGroup {
 	public function new() {
 		super();
 
+		var buttonLeftColor:Array<FlxColor>;
+		var buttonDownColor:Array<FlxColor>;
+		var buttonUpColor:Array<FlxColor>;
+		var buttonRightColor:Array<FlxColor>;
+		if (ClientPrefs.dynamicColors) { //bri'ish type option
+			buttonLeftColor = ClientPrefs.arrowHSV[0];
+			buttonDownColor = ClientPrefs.arrowHSV[1];
+			buttonUpColor = ClientPrefs.arrowHSV[2];
+			buttonRightColor = ClientPrefs.arrowHSV[3];
+		} else {
+			buttonLeftColor = ClientPrefs.arrowHSV[0];
+			buttonDownColor = ClientPrefs.arrowHSV[1];
+			buttonUpColor = ClientPrefs.arrowHSV[2];
+			buttonRightColor = ClientPrefs.arrowHSV[3];
+		}
+
 		scrollFactor.set();
 
-		add(buttonLeft = createHint(0, 0, 'left', 0xFF00FF));
-		add(buttonDown = createHint(FlxG.width / 4, 0, 'down', 0x00FFFF));
-		add(buttonUp = createHint(FlxG.width / 2, 0, 'up', 0x00FF00));
-		add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), 0, 'right', 0xFF0000));
+		add(buttonLeft = createHint(0, 0, 'left', buttonLeftColor[0]));
+		add(buttonDown = createHint(FlxG.width / 4, 0, 'down', buttonDownColor[0]));
+		add(buttonUp = createHint(FlxG.width / 2, 0, 'up', buttonUpColor[0]));
+		add(buttonRight = createHint((FlxG.width / 2) + (FlxG.width / 4), 0, 'right', buttonRightColor[0]));
 	}
 
 	/**
@@ -63,6 +77,8 @@ class FlxHitbox extends FlxSpriteGroup {
 		hint.color = Color;
 		hint.alpha = 0.00001;
 		hint.onDown.callback = hint.onOver.callback = function() {
+			if (hint.alpha != ClientPrefs.hitboxAlpha)
+				hint.alpha = ClientPrefs.hitboxAlpha;
 		}
 		hint.onUp.callback = hint.onOut.callback = function() {
 			if (hint.alpha != 0.00001)

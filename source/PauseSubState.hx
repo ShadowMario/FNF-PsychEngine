@@ -22,7 +22,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Gameplay Settings', 'Change Difficulty', 'Options', 'Exit'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Gameplay Settings', 'Change Difficulty', #if android 'Chart Editor', #end 'Options', 'Exit'];
 	var menuItemsExit:Array<String> = [(PlayState.isStoryMode ? 'Exit to Story Menu' : 'Exit to Freeplay'), 'Exit to Main Menu', 'Exit Game', 'Back'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
@@ -291,6 +291,10 @@ class PauseSubState extends MusicBeatSubstate
 				case "End Song":
 					close();
 					PlayState.instance.finishSong(true);
+				case 'Chart Editor':
+					MusicBeatState.switchState(new editors.ChartingState());
+					MusicBeatState.windowNameSuffix = " - Chart Editor";
+					PlayState.chartingMode = true;
 				case "Change Gameplay Settings":
 					persistentUpdate = false;
 					openSubState(new GameplayChangersSubstate());

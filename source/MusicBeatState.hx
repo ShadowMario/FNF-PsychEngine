@@ -75,7 +75,8 @@ class MusicBeatState extends FlxUIState
 			case 3: // BOTH_FULL
 				controls.setVirtualPadNOTES(androidControls.virtualPad, BOTH_FULL, NONE);
 			case 4: // HITBOX
-				controls.setHitBox(androidControls.hitbox);
+				if (ClientPrefs.hitboxSelection != 'New') controls.setHitBox(androidControls.hitbox, null);
+				if (ClientPrefs.hitboxSelection == 'New') controls.setHitBox(null, androidControls.newHitbox);
 			case 5: // KEYBOARD
 		}
 

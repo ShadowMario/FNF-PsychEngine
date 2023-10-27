@@ -14,6 +14,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var showFPS:Bool = true;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
+	public static var dynamicColors:Bool = true;
 	public static var healthDisplay:Bool = true;
 	public static var ghostTapAnim:Bool = true;
 	public static var spaceVPose:Bool = true;
@@ -79,6 +80,11 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var holdNoteHits:Bool = false;
 	public static var comboScoreEffect:Bool = false;
 	public static var noGunsRNG:Bool = false;
+	public static var hitboxSelection:String = 'Original';
+	public static var hitboxAlpha:Float = 0.5;
+	public static var virtualPadAlpha:Float = 0.5;
+	public static var hitboxSpace:Bool = false;
+	public static var hitboxSpaceLocation:String = 'Bottom';
 	public static var comboMultiType:String = 'osu!';
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -263,7 +269,13 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.pbRControls = pbRControls;
 		FlxG.save.data.doubleGhost = doubleGhost;
 		FlxG.save.data.bfIconStyle = bfIconStyle;
+		FlxG.save.data.hitboxSelection = hitboxSelection;
+		FlxG.save.data.hitboxAlpha = hitboxAlpha;
+		FlxG.save.data.virtualPadAlpha = virtualPadAlpha;
+		FlxG.save.data.hitboxSpace = hitboxSpace;
+		FlxG.save.data.hitboxSpaceLocation = hitboxSpaceLocation;
 		FlxG.save.data.noteStyleThing = noteStyleThing;
+		FlxG.save.data.dynamicColors = dynamicColors;
 		FlxG.save.data.antiCheatEnable = antiCheatEnable;
 		FlxG.save.data.randomBotplayText = randomBotplayText;
 		FlxG.save.data.showNPS = showNPS;
@@ -421,6 +433,18 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.colorQuants != null) {
 			colorQuants = FlxG.save.data.colorQuants;
+		}
+		if (FlxG.save.data.hitboxSelection != null) {
+			hitboxSelection = FlxG.save.data.hitboxSelection;
+		}
+		if (FlxG.save.data.hitboxAlpha != null) {
+			hitboxAlpha = FlxG.save.data.hitboxAlpha;
+		}
+		if (FlxG.save.data.virtualPadAlpha != null) {
+			virtualPadAlpha = FlxG.save.data.virtualPadAlpha;
+		}
+		if (FlxG.save.data.dynamicColors != null) {
+			dynamicColors = FlxG.save.data.dynamicColors;
 		}
 		if(FlxG.save.data.pbRControls != null) {
 			pbRControls = FlxG.save.data.pbRControls;
