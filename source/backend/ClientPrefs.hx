@@ -45,6 +45,9 @@ class SaveVariables {
 	public var pauseMusic:String = 'Tea Time';
 	public var checkForUpdates:Bool = true;
 	public var comboStacking:Bool = true;
+  public var spaceVar:String = 'Hitbox';
+  public var spaceEnabled:Bool = false;
+  public var spaceType:String = 'Space Only';
 	public var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
