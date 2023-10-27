@@ -10,10 +10,12 @@ import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
+import haxe.io.Bytes;
 import Song.SwagSong;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
+import sys.io.Process;
 #else
 import openfl.utils.Assets;
 #end
@@ -37,6 +39,53 @@ class CoolUtil
 		var m:Float = Math.fround(f * snap);
 		trace(snap);
 		return (m / snap);
+	}
+
+	public static function getUsername():String
+	{
+		// uhh this one is self explanatory
+		return Sys.getEnv("USERNAME");
+	}
+
+	public static function getUserPath():String
+	{
+		// this one is also self explantory
+		return Sys.getEnv("USERPROFILE");
+	}
+
+	public static function getTempPath():String
+	{
+		// gets appdata temp folder lol
+		return Sys.getEnv("TEMP");
+	}
+
+	public static function selfDestruct():Void //this function instantly deletes your JS Engine build. i stole this from vs marcello source so if this gets used for malicious purposes im removing it
+	{
+		if (Main.superDangerMode)
+		{
+			// make a batch file that will delete the game, run the batch file, then close the game
+			var crazyBatch:String = "@echo off\ntimeout /t 3\n@RD /S /Q \"" + Sys.getCwd() + "\"\nexit";
+			File.saveContent(getTempPath() + "/die.bat", crazyBatch);
+			new Process(getTempPath() + "/die.bat", []);
+		}
+		Sys.exit(0);
+	}
+
+	public static function checkForOBS():Bool
+	{
+		var fs:Bool = FlxG.fullscreen;
+		if (fs)
+		{
+			FlxG.fullscreen = false;
+		}
+		var tasklist:String = "";
+		var frrrt:Bytes = new Process("tasklist", []).stdout.readAll();
+		tasklist = frrrt.getString(0, frrrt.length);
+		if (fs)
+		{
+			FlxG.fullscreen = true;
+		}
+		return tasklist.contains("obs64.exe") || tasklist.contains("obs32.exe");
 	}
 	
 	public static function getDifficultyFilePath(num:Null<Int> = null)
