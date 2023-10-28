@@ -254,7 +254,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		
 		var option:Option = new Option('Health Tween Type:',
-			"What should the Time Bar display?",
+			"How would you like your health tween to look like?",
 			'smoothHealthType',
 			'string',
 			'Golden Apple 1.5',
@@ -291,12 +291,20 @@ class VisualsUISubState extends BaseOptionsMenu
 			['VS Impostor', 'Kade Engine', 'Tails Gets Trolled V4', 'Dave and Bambi', 'Doki Doki+', 'Psych Engine', 'Leather Engine', 'Box Funkin', "Mic'd Up", 'JS Engine']);
 		addOption(option);
 
+		var option:Option = new Option('Strum Light Up Style:',
+			"How would you like the strum animations to play when lit up? \nNote: Turn on 'Light Opponent/Botplay Strums' to see this in action!",
+			'strumLitStyle',
+			'string',
+			'Full Anim',
+			['Full Anim', 'BPM Based']);
+		addOption(option);
+
 		var option:Option = new Option('Note Style:',
 			"How would you like your notes to look like? \n(ANY NOTESTYLE OTHER THAN DEFAULT WILL OVERWRITE CHART SETTINGS AS WELL)",
 			'noteStyleThing',
 			'string',
 			'Default',
-			['Default', 'VS Nonsense V2', 'VS AGOTI', 'Doki Doki+', 'TGT V4', 'DNB 3D', 'Pink Circles']);
+			['Default', 'VS Nonsense V2', 'VS AGOTI', 'Doki Doki+', 'TGT V4', 'DNB 3D', 'Pink Circles', 'Chip', 'Future', 'Circle']);
 		addOption(option);
 
 		var option:Option = new Option('BF Icon Style:',
@@ -349,7 +357,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			"If checked, shows how much health you have remaining.",
 			'healthDisplay',
 			'bool',
-			true);
+			false);
 		addOption(option);
 
 		var option:Option = new Option('Opponent Note Hit Count',

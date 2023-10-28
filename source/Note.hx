@@ -78,6 +78,8 @@ class Note extends FlxSprite
 	public var multAlpha:Float = 1;
 	public var multSpeed(default, set):Float = 1;
 
+	public static var SUSTAIN_SIZE:Int = 44;
+
 	public var copyX:Bool = true;
 	public var copyY:Bool = true;
 	public var copyAngle:Bool = true;
@@ -330,7 +332,7 @@ class Note extends FlxSprite
 				texture = 'TGTNOTE_assets';
 			}
 			if (ClientPrefs.noteStyleThing != 'VS Nonsense V2' && ClientPrefs.noteStyleThing != 'DNB 3D' && ClientPrefs.noteStyleThing != 'VS AGOTI' && ClientPrefs.noteStyleThing != 'Doki Doki+' && ClientPrefs.noteStyleThing != 'TGT V4' && ClientPrefs.noteStyleThing != 'Default') {
-				texture = 'NOTE_assets_' + ClientPrefs.noteStyleThing;
+				texture = 'NOTE_assets_' + ClientPrefs.noteStyleThing.toLowerCase();
 			}
 			if(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
 				texture = 'RED_NOTE_assets';
@@ -415,6 +417,8 @@ class Note extends FlxSprite
 			}
 		} else if(!isSustainNote) {
 			earlyHitMult = 1;
+			centerOffsets();
+			centerOrigin();
 		}
 		x += offsetX;
 		if (ClientPrefs.colorQuants) quantCheck();
@@ -423,6 +427,7 @@ class Note extends FlxSprite
 	var lastNoteOffsetXForPixelAutoAdjusting:Float = 0;
 	var lastNoteScaleToo:Float = 1;
 	public var originalHeightForCalcs:Float = 6;
+	public var correctionOffset:Float = 0; //dont mess with this
 	function reloadNote(?prefix:String = '', ?texture:String = '', ?suffix:String = '') {
 		if(prefix == null) prefix = '';
 		if(texture == null) texture = '';
@@ -478,6 +483,11 @@ class Note extends FlxSprite
 		} else {
 			frames = Paths.getSparrowAtlas(blahblah);
 			loadNoteAnims();
+			if(!isSustainNote)
+			{
+				centerOffsets();
+				centerOrigin();
+			}
 			antialiasing = ClientPrefs.globalAntialiasing;
 		}
 		if(isSustainNote) {
@@ -548,6 +558,69 @@ class Note extends FlxSprite
 		{
 			if (alpha > 0.3)
 				alpha = 0.3;
+		}
+	}
+
+	public function followStrumNote(myStrum:StrumNote, fakeCrochet:Float, songSpeed:Float = 1)
+	{
+		var strumX:Float = myStrum.x;
+		var strumY:Float = myStrum.y;
+		var strumAngle:Float = myStrum.angle;
+		var strumAlpha:Float = myStrum.alpha;
+		var strumDirection:Float = myStrum.direction;
+
+		distance = (0.45 * (Conductor.songPosition - strumTime) * songSpeed * multSpeed);
+		if (!myStrum.downScroll) distance *= -1;
+
+		var angleDir = strumDirection * Math.PI / 180;
+		if (copyAngle)
+			angle = strumDirection - 90 + strumAngle + offsetAngle;
+
+		if(copyAlpha)
+			alpha = strumAlpha * multAlpha;
+
+		if(copyX)
+			x = strumX + offsetX + Math.cos(angleDir) * distance;
+
+		if(copyY)
+		{
+			y = strumY + offsetY + correctionOffset + Math.sin(angleDir) * distance;
+			if(myStrum.downScroll && isSustainNote)
+			{
+				if(PlayState.isPixelStage)
+				{
+					y -= PlayState.daPixelZoom * 9.5;
+				}
+				y -= (frameHeight * scale.y) - (Note.swagWidth / 2);
+			}
+		}
+	}
+
+	public function clipToStrumNote(myStrum:StrumNote)
+	{
+		var center:Float = myStrum.y + offsetY + Note.swagWidth / 2;
+		if(isSustainNote && (mustPress || !ignoreNote) &&
+			(!mustPress || (wasGoodHit || (prevNote.wasGoodHit && !canBeHit))))
+		{
+			var swagRect:FlxRect = clipRect;
+			if(swagRect == null) swagRect = new FlxRect(0, 0, frameWidth, frameHeight);
+
+			if (myStrum.downScroll)
+			{
+				if(y - offset.y * scale.y + height >= center)
+				{
+					swagRect.width = frameWidth;
+					swagRect.height = (center - y) / scale.y;
+					swagRect.y = frameHeight - swagRect.height;
+				}
+			}
+			else if (y + offset.y * scale.y <= center)
+			{
+				swagRect.y = (center - y) / scale.y;
+				swagRect.width = width / scale.x;
+				swagRect.height = (height / scale.y) - swagRect.y;
+			}
+			clipRect = swagRect;
 		}
 	}
 

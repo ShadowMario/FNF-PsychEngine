@@ -62,7 +62,7 @@ class StrumNote extends FlxSprite
 				skin = 'TGTNOTE_assets';
 			}
 			if (ClientPrefs.noteStyleThing != 'VS Nonsense V2' && ClientPrefs.noteStyleThing != 'DNB 3D' && ClientPrefs.noteStyleThing != 'VS AGOTI' && ClientPrefs.noteStyleThing != 'Doki Doki+' && ClientPrefs.noteStyleThing != 'TGT V4' && ClientPrefs.noteStyleThing != 'Default') {
-				skin = 'NOTE_assets_' + ClientPrefs.noteStyleThing;
+				skin = 'NOTE_assets_' + ClientPrefs.noteStyleThing.toLowerCase();
 			}
 			if(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
 				skin = 'RED_NOTE_assets';

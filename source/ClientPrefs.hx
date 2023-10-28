@@ -15,7 +15,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
 	public static var dynamicColors:Bool = true;
-	public static var healthDisplay:Bool = true;
+	public static var healthDisplay:Bool = false;
 	public static var ghostTapAnim:Bool = true;
 	public static var spaceVPose:Bool = true;
 	public static var cameraPanning:Bool = true;
@@ -53,6 +53,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var showMaxRamUsage:Bool = true;
 	public static var rainbowNotes:Bool = false;
 	public static var bfIconStyle:String = 'Default';
+	public static var strumLitStyle:String = 'Full Anim';
 	public static var noteStyleThing:String = 'Default';
 	public static var daMenuMusic:String = 'Mashup';
 	public static var ratingIntensity:String = 'Normal';
@@ -274,6 +275,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.virtualPadAlpha = virtualPadAlpha;
 		FlxG.save.data.hitboxSpace = hitboxSpace;
 		FlxG.save.data.hitboxSpaceLocation = hitboxSpaceLocation;
+		FlxG.save.data.strumLitStyle = strumLitStyle;
 		FlxG.save.data.noteStyleThing = noteStyleThing;
 		FlxG.save.data.dynamicColors = dynamicColors;
 		FlxG.save.data.antiCheatEnable = antiCheatEnable;
@@ -556,6 +558,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.daMenuMusic != null) {
 			daMenuMusic = FlxG.save.data.daMenuMusic;
+		}
+		if(FlxG.save.data.strumLitStyle != null) {
+			strumLitStyle = FlxG.save.data.strumLitStyle;
 		}
 		if(FlxG.save.data.noteStyleThing != null) {
 			noteStyleThing = FlxG.save.data.noteStyleThing;
