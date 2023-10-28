@@ -32,11 +32,15 @@ class OptionsState extends MusicBeatState
 
     var kId = 0;
     var keys:Array<FlxKey> = [D, E, B, U, G, SEVEN]; // lol
+var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
+	var konamiCode = [];
+	var isEnteringKonamiCode:Bool = false;
 	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Optimization', 'Visuals and UI', 'Gameplay'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
 	public static var onPlayState:Bool = false;
+	public var enteringDebugMenu:Bool = false;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
@@ -119,7 +123,7 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.saveSettings();
 
 		#if android
-		addVirtualPad(UP_DOWN, A_B_X_Y);
+		addVirtualPad(LEFT_FULL, A_B_X_Y);
 		virtualPad.y = -44;
 		#end
 
@@ -155,7 +159,7 @@ class OptionsState extends MusicBeatState
 			changeSelection(1);
 		}
 
-		if (controls.BACK) {
+		if (controls.BACK && !isEnteringKonamiCode) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			if(PauseSubState.inPause)
 			{
@@ -166,7 +170,8 @@ class OptionsState extends MusicBeatState
 			}
 			else MusicBeatState.switchState(new MainMenuState());
 		}
-		if (controls.ACCEPT) {
+		if (controls.ACCEPT && !isEnteringKonamiCode) {
+			if (isEnteringKonamiCode) return;
 			openSelectedSubstate(options[curSelected]);
 		}
 		#if android
@@ -184,11 +189,13 @@ class OptionsState extends MusicBeatState
 		}
 		#end
 
-        if (FlxG.keys.justPressed.ANY) {
+        if (FlxG.keys.justPressed.ANY #if android || virtualPad.buttonUp.justPressed || virtualPad.buttonDown.justPressed || virtualPad.buttonLeft.justPressed || virtualPad.buttonRight.justPressed || virtualPad.buttonB.justPressed || virtualPad.buttonA.justPressed #end) {
             var k = keys[kId];
-            if (FlxG.keys.anyJustPressed([k])) {
-                kId++;
-                if (kId >= keys.length) {
+		konamiCode = [virtualPad.buttonUp, virtualPad.buttonUp, virtualPad.buttonDown, virtualPad.buttonDown, virtualPad.buttonLeft, virtualPad.buttonRight, virtualPad.buttonLeft, virtualPad.buttonRight, virtualPad.buttonB, virtualPad.buttonA];
+            if (FlxG.keys.anyJustPressed([k]) #if android || !enteringDebugMenu && checkKonamiCode() #end) {
+                #if desktop kId++; #end
+                if (kId >= keys.length #if android || konamiIndex >= konamiCode.length #end) {
+			enteringDebugMenu = true;
                     FlxTween.tween(FlxG.camera, {alpha: 0}, 1.5, {startDelay: 1, ease: FlxEase.cubeOut});
                     if (FlxG.sound.music != null)
                         FlxTween.tween(FlxG.sound.music, {pitch: 0, volume: 0}, 2.5, {ease: FlxEase.cubeOut});
@@ -234,4 +241,18 @@ class OptionsState extends MusicBeatState
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
+function checkKonamiCode():Bool {
+    if (konamiCode[konamiIndex].justPressed) {
+        konamiIndex++;
+	if (konamiIndex > 0) isEnteringKonamiCode = true;
+        if (konamiIndex >= konamiCode.length) {
+            return true;
+	    konamiIndex = 0;
+        }
+    } else { //you messed up the code
+        konamiIndex = 0;
+	isEnteringKonamiCode = false;
+    }
+    return false;
+}
 }
