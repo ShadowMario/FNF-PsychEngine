@@ -191,7 +191,7 @@ var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
 
         if (FlxG.keys.justPressed.ANY #if android || virtualPad.buttonUp.justPressed || virtualPad.buttonDown.justPressed || virtualPad.buttonLeft.justPressed || virtualPad.buttonRight.justPressed || virtualPad.buttonB.justPressed || virtualPad.buttonA.justPressed #end) {
             var k = keys[kId];
-		konamiCode = [virtualPad.buttonUp, virtualPad.buttonUp, virtualPad.buttonDown, virtualPad.buttonDown, virtualPad.buttonLeft, virtualPad.buttonRight, virtualPad.buttonLeft, virtualPad.buttonRight, virtualPad.buttonB, virtualPad.buttonA];
+		#if android konamiCode = [virtualPad.buttonUp, virtualPad.buttonUp, virtualPad.buttonDown, virtualPad.buttonDown, virtualPad.buttonLeft, virtualPad.buttonRight, virtualPad.buttonLeft, virtualPad.buttonRight, virtualPad.buttonB, virtualPad.buttonA]; #end
             if (FlxG.keys.anyJustPressed([k]) #if android || !enteringDebugMenu && checkKonamiCode() #end) {
                 #if desktop kId++; #end
                 if (kId >= keys.length #if android || konamiIndex >= konamiCode.length #end) {
