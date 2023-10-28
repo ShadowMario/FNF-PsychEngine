@@ -116,18 +116,18 @@ class CoolUtil
 
 	inline public static function openFolder(folder:String, absolute:Bool = false) {
 		#if sys
-			#if linux
-			// TO DO: get linux command
-			//Sys.command('explorer.exe $folder');
-			#else
 			if(!absolute) folder =  Sys.getCwd() + '$folder';
 
 			folder = folder.replace('/', '\\');
 			if(folder.endsWith('/')) folder.substr(0, folder.length - 1);
 
-			Sys.command('explorer.exe $folder');
-			trace('explorer.exe $folder');
+			#if linux
+			var command:String = 'explorer.exe';
+			#else
+			var command:String = '/usr/bin/xdg-open';
 			#end
+			Sys.command(command, [folder]);
+			trace('$command $folder');
 		#else
 			FlxG.error("Platform is not supported for CoolUtil.openFolder");
 		#end

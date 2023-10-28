@@ -202,11 +202,11 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new ModsMenuState());
 									#end
 									case 'awards':
-										LoadingState.loadAndSwitchState(new AchievementsMenuState());
+										MusicBeatState.switchState(new AchievementsMenuState());
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':
-										LoadingState.loadAndSwitchState(new OptionsState());
+										MusicBeatState.switchState(new OptionsState());
 										OptionsState.onPlayState = false;
 										if (PlayState.SONG != null)
 										{
