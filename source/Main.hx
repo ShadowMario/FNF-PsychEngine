@@ -214,9 +214,9 @@ class Main extends Sprite {
 			}
 		}
 
-		errorMessage += "\nUncaught Error: "
-			+ e.error
-			+ "\nPlease don't report this error to the GitHub page\n\n> Crash Handler written by: sqirra-rng";
+		errorMessage += "\nUncaught Error: " 
+				+ e.error 
+				+ "\nPlease report this error to the GitHub page: https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag\n\n> Crash Handler written by: sqirra-rng";
 
 		if (!FileSystem.exists(SUtil.getPath() + "crash/"))
 			FileSystem.createDirectory(SUtil.getPath() + "crash/");
@@ -226,7 +226,7 @@ class Main extends Sprite {
 		Sys.println(errorMessage);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
-		Application.current.window.alert("Error! JS Engine v" + MainMenuState.psychEngineJSVersion + " (" + Main.__superCoolErrorMessagesArray[FlxG.random.int(0, Main.__superCoolErrorMessagesArray.length)] + ")", errorMessage);
+		Application.current.window.alert(errorMessage, "Error! JS Engine v" + MainMenuState.psychEngineJSVersion + " (" + Main.__superCoolErrorMessagesArray[FlxG.random.int(0, Main.__superCoolErrorMessagesArray.length)] + ")");
 		#if desktop
 		DiscordClient.shutdown();
 		#end

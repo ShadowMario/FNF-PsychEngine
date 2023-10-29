@@ -49,6 +49,7 @@ class Song
 	public var songCredit:String;
 	public var event7:String;
 	public var event7Value:String;
+	public var validScore:Bool = true;
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
@@ -146,7 +147,6 @@ class Song
 	public static function parseJSONshit(rawJson:String):SwagSong
 	{
 		var swagShit:SwagSong = cast Json.parse(rawJson).song;
-		swagShit.validScore = true;
 		return swagShit;
 	}
 }

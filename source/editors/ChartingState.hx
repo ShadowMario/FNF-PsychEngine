@@ -53,7 +53,7 @@ import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
-
+import openfl.events.UncaughtErrorEvent;
 using StringTools;
 #if sys
 import flash.media.Sound;
@@ -79,8 +79,8 @@ class ChartingState extends MusicBeatState
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
 	public var ignoreWarnings = false;
-	var undos = [];
-	var redos = [];
+	public var undos = [];
+	public var redos = [];
 	var eventStuff:Array<Dynamic> =
 	[
 		['', "Nothing. Yep, that's right."],
@@ -235,6 +235,8 @@ class ChartingState extends MusicBeatState
 	public var mouseQuant:Bool = false;
 	override function create()
 	{
+		undos = [];
+		redos = [];
 		if (PlayState.SONG != null)
 			_song = PlayState.SONG;
 		else
@@ -420,7 +422,7 @@ class ChartingState extends MusicBeatState
 		\nHold Alt and click on a note to change it to the selected note type
 		\nHold CTRL and use the Mouse Wheel to decrease/increase the note's sustain length
 		\nZ/X - Zoom in/out
-		\nC - Draw your charts! Easier charting for your Bambi fansongs lmao
+		\nCTRL + Z - Undo
 		\n
 		\n(Hold) CTRL + Left/Right - Shift the currently selected note
 		\nEsc - Test your chart inside Chart Editor
@@ -1277,11 +1279,11 @@ class ChartingState extends MusicBeatState
 		check_stackActive = new FlxUICheckBox(10, 10, null, null, "Enable EZ Spam Mode", 100);
 		check_stackActive.name = 'check_stackActive';
 
-		stepperStackNum = new FlxUINumericStepper(10, 30, 1, 1, 0, 999999);
+		stepperStackNum = new FlxUINumericStepper(10, 30, 1, 1, 0, 999999, 4);
 		stepperStackNum.name = 'stack_count';
 		blockPressWhileTypingOnStepper.push(stepperStackNum);
 
-		stepperStackOffset = new FlxUINumericStepper(10, 50, 1, 1, 0, 8192);
+		stepperStackOffset = new FlxUINumericStepper(10, 50, 1, 1, 0, 8192, 4);
 		stepperStackOffset.name = 'stack_offset';
 		blockPressWhileTypingOnStepper.push(stepperStackOffset);
 
@@ -1959,6 +1961,7 @@ class ChartingState extends MusicBeatState
 
 			if (touch.justReleased) {
 				if (touch.overlaps(curRenderedNotes)) {
+							saveUndo(_song);
 					curRenderedNotes.forEachAlive(function(note:Note) {
 						if (touch.overlaps(note)) {
 							// trace('tryin to delete note...');
@@ -1972,11 +1975,12 @@ class ChartingState extends MusicBeatState
 						&& touch.x < gridBG.x + gridBG.width
 						&& touch.y > gridBG.y
 						&& touch.y < gridBG.y + (GRID_SIZE * getSectionBeats() * 4) * zoomList[curZoom]) {
+						saveUndo(_song);
 						FlxG.log.add('added note');
 						addNote();
-					var addCount:Int = 0;
+					var addCount:Float = 0;
 					if (check_stackActive.checked) {
-						addCount = (Math.floor(stepperStackNum.value)) * Math.floor(stepperStackOffset.value) - 1;
+						addCount = stepperStackNum.value * stepperStackOffset.value - 1;
 					}
 					// var funnySnap:Float = ((GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]) + Conductor.stepCrochet / stepperStackOffset.value);
 					for(i in 0...Std.int(addCount)) {
@@ -2011,6 +2015,7 @@ class ChartingState extends MusicBeatState
 		{
 			if (FlxG.mouse.overlaps(curRenderedNotes))
 			{
+			if (!FlxG.keys.pressed.CONTROL || !FlxG.keys.pressed.ALT) saveUndo(_song);
 				curRenderedNotes.forEachAlive(function(note:Note)
 				{
 					if (FlxG.mouse.overlaps(note))
@@ -2041,16 +2046,18 @@ class ChartingState extends MusicBeatState
 					&& FlxG.mouse.y > gridBG.y
 					&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * getSectionBeats() * 4) * zoomList[curZoom])
 				{
+					saveUndo(_song);
 					FlxG.log.add('added note');
 					addNote();
-					var addCount:Int = 0;
+					var addCount:Float = 0;
 					if (check_stackActive.checked) {
-						addCount = (Math.floor(stepperStackNum.value)) * Math.floor(stepperStackOffset.value) - 1;
+						addCount = stepperStackNum.value * stepperStackOffset.value - 1;
 					}
 					// var funnySnap:Float = ((GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]) + Conductor.stepCrochet / stepperStackOffset.value);
 					for(i in 0...Std.int(addCount)) {
 						addNote(curSelectedNote[0] + (_song.notes[curSec].changeBPM ? 15000/_song.notes[curSec].bpm : 15000/_song.bpm)/stepperStackOffset.value, curSelectedNote[1] + Math.floor(stepperStackSideOffset.value), currentType);
 					}
+
 				updateGrid(false);
 				updateNoteUI();
 				}
@@ -2148,13 +2155,21 @@ class ChartingState extends MusicBeatState
 				return;
 			}
 
-			if(FlxG.keys.justPressed.Z #if android || virtualPad.buttonZ.justPressed #end && FlxG.keys.pressed.CONTROL) {
+				if (FlxG.keys.pressed.CONTROL)
+				{
+					if (FlxG.keys.justPressed.Z)
+						undo();
+				}
+
+			#if android 
+			if (virtualPad.buttonV.justPressed) {
 				undo();
 			}
+			#end
 
 
 
-			if(FlxG.keys.justPressed.Z #if android || virtualPad.buttonZ.justPressed #end && curZoom > 0 && !FlxG.keys.pressed.CONTROL) {
+			if(FlxG.keys.justPressed.Z && curZoom > 0 && !FlxG.keys.pressed.CONTROL #if android || virtualPad.buttonZ.justPressed && curZoom > 0 #end) {
 				--curZoom;
 				updateZoom();
 				updateGrid();
@@ -2163,19 +2178,6 @@ class ChartingState extends MusicBeatState
 				curZoom++;
 				updateZoom();
 				updateGrid();
-			}
-
-			if (FlxG.keys.pressed.C && !FlxG.keys.pressed.CONTROL)
-			{
-				if (!FlxG.mouse.overlaps(curRenderedNotes)) //lmao cant place notes when your cursor already overlaps one
-					if (FlxG.mouse.x > gridBG.x
-						&& FlxG.mouse.x < gridBG.x + gridBG.width
-						&& FlxG.mouse.y > gridBG.y
-						&& FlxG.mouse.y < gridBG.y + gridBG.height)
-							if (!FlxG.keys.pressed.CONTROL) //stop crashing
-								addNote(); //allows you to draw notes by holding left click
-								updateGrid(false);
-				updateNoteUI();
 			}
 
 			if (FlxG.keys.justPressed.TAB)
@@ -2226,7 +2228,7 @@ class ChartingState extends MusicBeatState
 			}
 			if (FlxG.keys.pressed.CONTROL)
 			{
-				if (FlxG.keys.pressed.RIGHT)
+				if (FlxG.keys.justPressed.RIGHT)
 					if (curSelectedNote != null && curSelectedNote[1] > -1 && curSelectedNote[2] != null) {
 						if (curSelectedNote[1] < 6 + 1) {
 							curSelectedNote[1] += 1;
@@ -2235,7 +2237,7 @@ class ChartingState extends MusicBeatState
 						}
 						updateGrid(false);
 					}
-				if (FlxG.keys.pressed.LEFT)
+				if (FlxG.keys.justPressed.LEFT)
 					if (curSelectedNote != null && curSelectedNote[1] > -1 && curSelectedNote[2] != null) {
 						if (curSelectedNote[1] > 0) {
 							curSelectedNote[1] -= 1;
@@ -3382,6 +3384,7 @@ class ChartingState extends MusicBeatState
 				if (note.overlapsPoint(new FlxPoint(strumLineNotes.members[d].x + 1,strumLine.y+1)) && note.noteData == d%4)
 				{
 						//trace('tryin to delete note...');
+						saveUndo(_song);
 						if(!delnote) deleteNote(note);
 						delnote = true;
 				}
@@ -3389,6 +3392,7 @@ class ChartingState extends MusicBeatState
 		}
 
 		if (!delnote){
+			saveUndo(_song);
 			addNote(cs, d, style);
 		}
 	}
@@ -3404,9 +3408,6 @@ class ChartingState extends MusicBeatState
 
 	private function addNote(strum:Null<Float> = null, data:Null<Int> = null, type:Null<Int> = null, ?gridUpdate:Bool = true):Void
 	{
-		//curUndoIndex++;
-		//var newsong = _song.notes;
-		//	undos.push(newsong);
 		var noteStrum = getStrumTime(dummyArrow.y * (getSectionBeats() / 4), false) + sectionStartTime();
 		var noteData = 0; //initialize this so github doesnt complain about this not being initialized yet
 		#if android
@@ -3460,15 +3461,6 @@ class ChartingState extends MusicBeatState
 		//_song = redos[curRedoIndex];
 	}
 
-	function undo()
-	{
-		//redos.push(_song);
-		undos.pop();
-		//_song.notes = undos[undos.length - 1];
-		///trace(_song.notes);
-		//updateGrid();
-	}
-
 	function getStrumTime(yPos:Float, doZoomCalc:Bool = true):Float
 	{
 		var leZoom:Float = zoomList[curZoom];
@@ -3488,6 +3480,32 @@ class ChartingState extends MusicBeatState
 		var value:Float = strumTime / (beats * 4 * Conductor.stepCrochet);
 		return GRID_SIZE * beats * 4 * zoomList[curZoom] * value + gridBG.y;
 	}
+
+    public function saveUndo(_song:SwagSong)
+    {
+        var shit = Json.stringify({ //doin this so it doesnt act as a reference
+			"song": _song
+		});
+        var song:SwagSong = Song.parseJSONshit(shit);
+
+        undos.unshift(song.notes);
+	redos = []; //Reset redos
+        if (undos.length >= 100) //if you save more than 100 times, remove the oldest undo
+            undos.remove(undos[100]);
+    }
+
+    public function undo()
+    {
+	if (undos.length > 0) {
+        _song.notes = undos[0];
+        redos.unshift(undos[0]);
+        undos.splice(0, 1);
+	trace("Performed an Undo! Undos remaining: " + undos.length);
+	updateGrid();
+	} else {
+	trace ("Hold on there! You can't undo if there's nothing to undo yet!");
+	}
+    }
 
 	function getNotes():Array<Dynamic>
 	{
@@ -3516,8 +3534,8 @@ class ChartingState extends MusicBeatState
 		}
 		MusicBeatState.resetState();
 	}
-
-	function autosaveSong():Void
+	
+	public function autosaveSong():Void
 	{
 		FlxG.save.data.autosave = Json.stringify({
 			"song": _song
