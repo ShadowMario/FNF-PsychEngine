@@ -113,7 +113,6 @@ class Main extends Sprite {
 	public function new() {
 		super();
 
-		SUtil.gameCrashCheck();
 		if (stage != null) {
 			init();
 		} else {
@@ -149,7 +148,12 @@ class Main extends Sprite {
 		SUtil.doTheCheck();
 
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		// This is gonna make your FPS counter to be outside from game screen and fix full screen issue because of latest OpenFL library version. -- MaysLastPlay says 
+		#if android
+		addChild(new FlxGame(1280, 720, TitleState, 60, 60, true, false));
+		#else
+		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		#end
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
@@ -222,7 +226,7 @@ class Main extends Sprite {
 		Sys.println(errorMessage);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
-		Application.current.window.alert("Error! JS Engine v" + MainMenuState.psychEngineJSVersion, errorMessage);
+		Application.current.window.alert("Error! JS Engine v" + MainMenuState.psychEngineJSVersion + "(" + Main.__superCoolErrorMessagesArray[FlxG.random.int(0, Main.__superCoolErrorMessagesArray.length)] + ")", errorMessage);
 		#if desktop
 		DiscordClient.shutdown();
 		#end
