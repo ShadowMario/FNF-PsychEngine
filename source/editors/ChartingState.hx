@@ -253,6 +253,8 @@ class ChartingState extends MusicBeatState
 				player2: 'dad',
 				gfVersion: 'gf',
 				songCredit: '',
+				event7: '',
+				event7Value: '',
 				speed: 1,
 				stage: 'stage',
 				validScore: false,
@@ -1302,6 +1304,8 @@ class ChartingState extends MusicBeatState
 	var eventDropDown:FlxUIDropDownMenuCustom;
 	var descText:FlxText;
 	var selectedEventText:FlxText;
+	var event7DropDown:FlxUIDropDownMenuCustom;
+	var event7InputText:FlxUIInputText;
 	function addEventsUI():Void
 	{
 		var tab_group_event = new FlxUI(null, UI_box);
@@ -1370,6 +1374,18 @@ class ChartingState extends MusicBeatState
 		value2InputText = new FlxUIInputText(20, 150, 100, "");
 		blockPressWhileTypingOn.push(value2InputText);
 		value2InputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
+
+		var pressing7Events:Array<String> = ['---', 'None', 'Game Over', 'Go to Song', 'Close Game', 'Play Video'];
+
+		event7DropDown = new FlxUIDropDownMenuCustom(160, 300, FlxUIDropDownMenuCustom.makeStrIdLabelArray(pressing7Events, true), function(pressed:String) {
+			trace('event pressed 1');
+			var whatIsIt:Int = Std.parseInt(pressed);
+			var arraySelectedShit:String = pressing7Events[whatIsIt];
+			_song.event7 = arraySelectedShit;
+		});
+		event7DropDown.selectedLabel = _song.event7;
+		var text:FlxText = new FlxText(160, 280, 0, "7 Event:");
+		tab_group_event.add(text);
 
 		// New event buttons
 		var removeButton:FlxButton = new FlxButton(eventDropDown.x + eventDropDown.width + 10, eventDropDown.y, '-', function()
@@ -1446,6 +1462,13 @@ class ChartingState extends MusicBeatState
 		selectedEventText.alignment = CENTER;
 		tab_group_event.add(selectedEventText);
 
+		event7InputText = new FlxUIInputText(160, event7DropDown.y + 40, 100, _song.event7Value);
+		blockPressWhileTypingOn.push(event7InputText);
+		event7InputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
+		blockPressWhileScrolling.push(event7DropDown);
+
+		tab_group_event.add(event7DropDown);
+		tab_group_event.add(event7InputText);
 		tab_group_event.add(descText);
 		tab_group_event.add(value1InputText);
 		tab_group_event.add(value2InputText);
@@ -1884,6 +1907,14 @@ class ChartingState extends MusicBeatState
 		_song.song = UI_songTitle.text;
 
 		_song.songCredit = creditInputText.text;
+
+		if (event7InputText.text == null || event7InputText.text ==  '') {
+			_song.event7Value = null;
+		}
+		else
+			{
+				_song.event7Value = event7InputText.text;
+			}
 
 		strumLineUpdateY();
 		for (i in 0...8){

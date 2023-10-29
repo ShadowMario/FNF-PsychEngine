@@ -437,6 +437,8 @@ class PlayState extends MusicBeatState
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
 
+	var heyStopTrying:Bool = false;
+
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -5156,7 +5158,7 @@ if (ClientPrefs.showNPS) {
 				}
 		}
 
-		if ((controls.PAUSE #if android || FlxG.android.justReleased.BACK #end) && startedCountdown && canPause && !softlocked)
+		if ((controls.PAUSE #if android || FlxG.android.justReleased.BACK #end) && startedCountdown && canPause && !softlocked && !heyStopTrying)
 		{
 			if (!ClientPrefs.noPausing) {
 			var ret:Dynamic = callOnLuas('onPause', [], false);
@@ -5224,15 +5226,39 @@ if (ClientPrefs.showNPS) {
 
 		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene && !softlocked)
 		{
-			if (!ClientPrefs.antiCheatEnable)
-			{
-			openChartEditor();
-			}
-			if (ClientPrefs.antiCheatEnable)
-			{
-			PlayState.SONG = Song.loadFromJson('Anti-cheat-song', 'Anti-cheat-song');
-			LoadingState.loadAndSwitchState(new PlayState());
-			} 
+			switch(SONG.event7)
+				{
+				case "---", null:
+				if (!ClientPrefs.antiCheatEnable)
+				{
+				openChartEditor();
+				}
+				if (ClientPrefs.antiCheatEnable)
+				{
+				PlayState.SONG = Song.loadFromJson('Anti-cheat-song', 'Anti-cheat-song');
+				LoadingState.loadAndSwitchState(new PlayState());
+				} 
+				case "Game Over":
+					health = 0;
+				case "Go to Song":
+						PlayState.SONG = Song.loadFromJson(SONG.event7Value + (CoolUtil.difficultyString() == 'NORMAL' ? '' : '-' + CoolUtil.difficulties[storyDifficulty]), SONG.event7Value);
+				LoadingState.loadAndSwitchState(new PlayState());
+				case "Close Game":
+					openfl.system.System.exit(0);
+				case "Play Video":
+					updateTime = false;
+					FlxG.sound.music.volume = 0;
+					vocals.volume = 0;
+					vocals.stop();
+					FlxG.sound.music.stop();
+					KillNotes();
+					heyStopTrying = true;
+
+					var bg = new FlxSprite(-FlxG.width, -FlxG.height).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
+					add(bg);
+					bg.cameras = [camHUD];
+					startVideo(SONG.event7Value);
+				}
 		}
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
@@ -5491,7 +5517,7 @@ if (ClientPrefs.showNPS) {
 		FlxG.watch.addQuick("stepShit", curStep);
 
 		// RESET = Quick Game Over Screen
-		if (!ClientPrefs.noReset && controls.RESET && canReset && !inCutscene && startedCountdown && !endingSong && !softlocked)
+		if (!ClientPrefs.noReset && controls.RESET && canReset && !inCutscene && startedCountdown && !endingSong && !softlocked && !heyStopTrying)
 		{
 			health = 0;
 			trace("RESET = True");
