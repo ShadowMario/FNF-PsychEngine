@@ -40,7 +40,7 @@ class AndroidSettingsSubState extends BaseOptionsMenu
 		rpcTitle = 'Android Controls Settings Menu'; // hi, you can ask what is that, i will answer it's all what you needed lol.
 
 		var option:Option = new Option('Vpad Opacity', // mariomaster was here again
-			'Changes Vpad Opacity -yeah ', 'padalpha', 'float', 0.5);
+			'Changes Vpad Opacity -yeah ', 'padalpha', 'float');
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.1; // prevent invisible vpad
 		option.maxValue = 1;
@@ -49,7 +49,7 @@ class AndroidSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Hitbox Opacity', // mariomaster is dead :00000
-			'Changes Hitbox opacity -what', 'hitboxalpha', 'float', 0.2);
+			'Changes Hitbox opacity -what', 'hitboxalpha', 'float');
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.0;
 		option.maxValue = 1;
