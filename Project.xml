@@ -95,7 +95,6 @@
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="discord_rpc" if="desktop"/>
 	<haxelib name="tjson" />
-	<haxedef name="hscriptPos" />
 
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
@@ -141,6 +140,7 @@
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_TRACE" if="CRASH_HANDLER" />
 	<haxedef name='no-deprecation-warnings' />
+
 	
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
