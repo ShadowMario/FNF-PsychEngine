@@ -15,11 +15,6 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.display.FlxRuntimeShader;
 #end
 
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#end
-
 import cutscenes.DialogueBoxPsych;
 
 import objects.StrumNote;
@@ -1455,6 +1450,7 @@ class FunkinLua {
 
 		#if desktop DiscordClient.addLuaCallbacks(lua); #end
 		#if SScript HScript.implement(this); #end
+		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(lua); #end
 		ReflectionFunctions.implement(this);
 		TextFunctions.implement(this);
 		ExtraFunctions.implement(this);

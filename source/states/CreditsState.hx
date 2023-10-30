@@ -1,10 +1,5 @@
 package states;
 
-#if MODS_ALLOWED
-import sys.FileSystem;
-import sys.io.File;
-#end
-
 import objects.AttachedSprite;
 
 class CreditsState extends MusicBeatState

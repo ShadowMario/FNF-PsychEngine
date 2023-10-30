@@ -3,13 +3,7 @@ package cutscenes;
 import tjson.TJSON as Json;
 import openfl.utils.Assets;
 
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#end
-
 import objects.TypedAlphabet;
-
 import cutscenes.DialogueCharacter;
 
 // Gonna try to kind of make it compatible to Forever Engine,

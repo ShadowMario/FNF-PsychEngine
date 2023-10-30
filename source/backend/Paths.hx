@@ -18,10 +18,6 @@ import openfl.geom.Rectangle;
 import lime.utils.Assets;
 import flash.media.Sound;
 
-#if sys
-import sys.io.File;
-import sys.FileSystem;
-#end
 import tjson.TJSON as Json;
 
 

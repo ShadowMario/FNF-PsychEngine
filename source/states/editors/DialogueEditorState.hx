@@ -11,9 +11,6 @@ import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
 import tjson.TJSON as Json;
-#if sys
-import sys.io.File;
-#end
 
 import objects.TypedAlphabet;
 

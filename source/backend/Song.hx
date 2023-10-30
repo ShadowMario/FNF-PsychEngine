@@ -3,11 +3,6 @@ package backend;
 import tjson.TJSON as Json;
 import lime.utils.Assets;
 
-#if sys
-import sys.io.File;
-import sys.FileSystem;
-#end
-
 import backend.Section;
 
 typedef SwagSong =

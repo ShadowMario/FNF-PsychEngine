@@ -11,11 +11,6 @@ import flash.geom.Rectangle;
 import lime.utils.Assets;
 import tjson.TJSON as Json;
 
-#if sys
-import sys.io.File;
-import sys.FileSystem;
-#end
-
 import flixel.util.FlxSpriteUtil;
 import objects.AttachedSprite;
 import flixel.addons.transition.FlxTransitionableState;

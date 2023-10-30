@@ -1,9 +1,5 @@
 package backend;
 
-#if MODS_ALLOWED
-import sys.io.File;
-import sys.FileSystem;
-#end
 import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import tjson.TJSON as Json;
@@ -121,7 +117,7 @@ class WeekData {
 				for (daWeek in listOfWeeks)
 				{
 					var path:String = directory + daWeek + '.json';
-					if(sys.FileSystem.exists(path))
+					if(FileSystem.exists(path))
 					{
 						addWeek(daWeek, path, directories[i], i, originalLength);
 					}
@@ -130,7 +126,7 @@ class WeekData {
 				for (file in FileSystem.readDirectory(directory))
 				{
 					var path = haxe.io.Path.join([directory, file]);
-					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json'))
+					if (!FileSystem.isDirectory(path) && file.endsWith('.json'))
 					{
 						addWeek(file.substr(0, file.length - 5), path, directories[i], i, originalLength);
 					}

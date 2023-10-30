@@ -42,8 +42,6 @@ import substates.Prompt;
 
 #if sys
 import flash.media.Sound;
-import sys.FileSystem;
-import sys.io.File;
 #end
 
 @:access(flixel.sound.FlxSound._sound)

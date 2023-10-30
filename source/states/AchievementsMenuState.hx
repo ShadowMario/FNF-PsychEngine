@@ -34,7 +34,7 @@ class AchievementsMenuState extends MusicBeatState
 		{
 			var unlocked:Bool = Achievements.isUnlocked(achievement);
 			if(data.hidden != true || unlocked)
-				options.push(makeAchievement(achievement, data, unlocked));
+				options.push(makeAchievement(achievement, data, unlocked, data.mod));
 		}
 
 		// TO DO: check for mods
@@ -62,6 +62,7 @@ class AchievementsMenuState extends MusicBeatState
 			var graphic = null;
 			if(option.unlocked)
 			{
+				#if MODS_ALLOWED Mods.currentModDirectory = option.mod; #end
 				var image:String = 'achievements/' + option.name;
 				if(Paths.fileExists('images/$image-pixel.png', IMAGE))
 				{
@@ -82,6 +83,7 @@ class AchievementsMenuState extends MusicBeatState
 			spr.antialiasing = hasAntialias;
 			grpOptions.add(spr);
 		}
+		#if MODS_ALLOWED Mods.loadTopMod(); #end
 
 		var box:FlxSprite = new FlxSprite(0, -30).makeGraphic(1, 1, FlxColor.BLACK);
 		box.scale.set(grpOptions.width + 60, grpOptions.height + 60);
@@ -103,11 +105,11 @@ class AchievementsMenuState extends MusicBeatState
 		nameText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
 		nameText.scrollFactor.set();
 
-		descText = new FlxText(50, nameText.y + 40, FlxG.width - 100, "", 24);
+		descText = new FlxText(50, nameText.y + 38, FlxG.width - 100, "", 24);
 		descText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER);
 		descText.scrollFactor.set();
 
-		progressBar = new Bar(0, descText.y + 50);
+		progressBar = new Bar(0, descText.y + 52);
 		progressBar.screenCenter(X);
 		progressBar.scrollFactor.set();
 		progressBar.enabled = false;

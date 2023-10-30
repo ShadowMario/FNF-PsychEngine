@@ -21,11 +21,6 @@ import states.StoryMenuState;
 import states.OutdatedState;
 import states.MainMenuState;
 
-#if MODS_ALLOWED
-import sys.FileSystem;
-import sys.io.File;
-#end
-
 typedef TitleData =
 {
 	titlex:Float,

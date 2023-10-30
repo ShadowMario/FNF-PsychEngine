@@ -2,10 +2,6 @@ package states.editors;
 
 import backend.WeekData;
 
-#if MODS_ALLOWED
-import sys.FileSystem;
-#end
-
 import objects.Character;
 
 import states.MainMenuState;

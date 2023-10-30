@@ -1,11 +1,6 @@
 package backend;
 
-#if MODS_ALLOWED
-import sys.io.File;
-import sys.FileSystem;
-#else
 import openfl.utils.Assets;
-#end
 import tjson.TJSON as Json;
 import backend.Song;
 
