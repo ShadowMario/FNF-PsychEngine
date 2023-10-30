@@ -963,6 +963,7 @@ class ChartingState extends MusicBeatState
 		var stepperCopy:FlxUINumericStepper = null;
 		var copyLastButton:FlxButton = new FlxButton(10, swapSection.y + 30, "Copy last section", function()
 		{
+			saveUndo(_song); //in case you copy from the wrong section and want to easily undo it
 			var value:Int = Std.int(stepperCopy.value);
 			if(value == 0) return;
 
@@ -1048,6 +1049,7 @@ class ChartingState extends MusicBeatState
 		});
 		var clearLeftSectionButton:FlxButton = new FlxButton(duetButton.x, duetButton.y + 30, "Clear Left Side", function()
 		{
+		saveUndo(_song); //this is really weird so im saving it as an undoable action just in case it does the wrong section
 		var removeThese = [];
 		for (noteIndex in 0..._song.notes[curSection].sectionNotes.length) {
 				if (_song.notes[curSection].sectionNotes[noteIndex][1] < 4) {
@@ -1065,6 +1067,7 @@ class ChartingState extends MusicBeatState
 		});
 		var clearRightSectionButton:FlxButton = new FlxButton(clearLeftSectionButton.x + 100, clearLeftSectionButton.y, "Clear Right Side", function()
 		{
+		saveUndo(_song); //this is really weird so im saving it as an undoable action just in case it does the wrong section
 		var removeThese = [];
 		for (noteIndex in 0..._song.notes[curSection].sectionNotes.length) {
 				if (_song.notes[curSection].sectionNotes[noteIndex][1] >= 4) {
@@ -1107,6 +1110,7 @@ class ChartingState extends MusicBeatState
 			trace ("HEY! your section doesn't have any notes! please place at least 1 note then try using this.");
 			return; //prevent a crash if the section doesn't have any notes
 			}
+			saveUndo(_song); //I don't even know why.
 
 			for(i in 0...value) {
 			for (note in _song.notes[curSec].sectionNotes)
@@ -3483,6 +3487,7 @@ class ChartingState extends MusicBeatState
 
     public function saveUndo(_song:SwagSong)
     {
+	if (CoolUtil.getNoteAmount(_song) <= 50000) {
         var shit = Json.stringify({ //doin this so it doesnt act as a reference
 			"song": _song
 		});
@@ -3492,6 +3497,9 @@ class ChartingState extends MusicBeatState
 	redos = []; //Reset redos
         if (undos.length >= 100) //if you save more than 100 times, remove the oldest undo
             undos.remove(undos[100]);
+	} else {
+	trace("there's too many notes! to prevent lag and excessive memory usage, you can't save undos if a song has over 50K notes.");
+	}
     }
 
     public function undo()
