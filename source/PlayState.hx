@@ -2341,7 +2341,7 @@ class PlayState extends MusicBeatState
 		}
 		}
 	}
-		if (ClientPrefs.communityGameBot || ClientPrefs.showcaseMode && botplayTxt != null) botplayTxt.destroy();
+		if (ClientPrefs.communityGameBot && botplayTxt != null || ClientPrefs.showcaseMode && botplayTxt != null) botplayTxt.destroy();
 
 		laneunderlayOpponent.cameras = [camHUD];
 		laneunderlay.cameras = [camHUD];
