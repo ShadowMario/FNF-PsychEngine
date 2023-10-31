@@ -3116,7 +3116,7 @@ class PlayState extends MusicBeatState
 		{
 			var times:Float = Date.now().getTime();
 			var newScript:HScript = new HScript(null, file);
-			if(newScript.parsingException != null)
+			if(newScript.parsingException != null) {
 				var e = newScript.parsingException.message;
 				if (!e.contains(newScript.origin)) e = '${newScript.origin}: $e';
 				HScript.hscriptTrace('ERROR ON LOADING - $e', FlxColor.RED);
@@ -3141,7 +3141,7 @@ class PlayState extends MusicBeatState
 					hscriptArray.remove(newScript);
 					return;
 				}
-      }
+      			}
 
 			trace('initialized sscript interp successfully: $file (${Std.int(Date.now().getTime() - times)}ms)');
 		}
