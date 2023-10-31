@@ -138,6 +138,7 @@ class FunkinLua {
 		set('healthGainMult', game.healthGain);
 		set('healthLossMult', game.healthLoss);
 		set('playbackRate', game.playbackRate);
+		set('guitarHeroSustains', game.guitarHeroSustains);
 		set('instakillOnMiss', game.instakillOnMiss);
 		set('botPlay', game.cpuControlled);
 		set('practice', game.practiceMode);
@@ -187,6 +188,7 @@ class FunkinLua {
 		set('splashSkinPostfix', NoteSplash.getSplashSkinPostfix());
 		set('splashAlpha', ClientPrefs.data.splashAlpha);
 
+		// build target (windows, mac, linux, etc.)
 		set('buildTarget', getBuildTarget());
 
 		for (name => func in customFunctions)
@@ -1010,7 +1012,7 @@ class FunkinLua {
 			return false;
 		});
 
-		Lua_helper.add_callback(lua, "addAnimationByIndices", function(obj:String, name:String, prefix:String, indices:String, framerate:Int = 24, loop:Bool = false) {
+		Lua_helper.add_callback(lua, "addAnimationByIndices", function(obj:String, name:String, prefix:String, indices:Any, framerate:Int = 24, loop:Bool = false) {
 			return LuaUtils.addAnimByIndices(obj, name, prefix, indices, framerate, loop);
 		});
 
