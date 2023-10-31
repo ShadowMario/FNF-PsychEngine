@@ -30,7 +30,7 @@ class HScript extends SScript
 		}
 		else
 		{
-			hs.doScript(code);
+			hs.doString(code);
 			@:privateAccess
 			if(hs.parsingException != null)
 			{
@@ -293,12 +293,12 @@ class HScript extends SScript
 		#end
 	}
 
-	override public function kill()
+	override public function destroy()
 	{
 		origin = null;
 		parentLua = null;
 
-		super.kill();
+		super.destroy();
 	}
 }
 
