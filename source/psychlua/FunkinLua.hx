@@ -1575,12 +1575,14 @@ class FunkinLua {
 		return 'browser';
 		#elseif webos
 		return 'webos';
+		#elseif tvos
+		return 'tvos';
+		#elseif watchos
+		return 'watchos';
 		#elseif air
 		return 'air';
 		#elseif flash
 		return 'flash';
-		#elseif android
-		return 'android';
 		#elseif (ios || iphonesim)
 		return 'ios';
 		#elseif neko
