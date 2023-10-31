@@ -1569,8 +1569,22 @@ class FunkinLua {
 		return 'linux';
 		#elseif mac
 		return 'mac';
-		#elseif html5
+		#elseif hl
+		return 'hashlink';
+		#elseif (html5 || emscripten || nodejs || winjs || electron)
 		return 'browser';
+		#elseif webos
+		return 'webos';
+		#elseif air
+		return 'air';
+		#elseif flash
+		return 'flash';
+		#elseif android
+		return 'android';
+		#elseif (ios || iphonesim)
+		return 'ios';
+		#elseif neko
+		return 'neko';
 		#elseif android
 		return 'android';
 		#elseif switch
