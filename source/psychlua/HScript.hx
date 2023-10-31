@@ -27,7 +27,7 @@ class HScript extends SScript
 		var hs:HScript = try parent.hscript catch (e) null;
 		if(hs != null)
 		{
-			hs.doScript(code);
+			hs.doString(code);
 			@:privateAccess
 			if(hs.parsingException != null)
 			{
@@ -301,12 +301,12 @@ class HScript extends SScript
 		return c;
 	}
 
-	override public function kill()
+	override public function destroy()
 	{
 		origin = null;
 		parentLua = null;
 
-		super.kill();
+		super.destroy();
 	}
 }
 

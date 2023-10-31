@@ -15,11 +15,6 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.display.FlxRuntimeShader;
 #end
 
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#end
-
 import cutscenes.DialogueBoxPsych;
 
 import objects.StrumNote;
@@ -1457,6 +1452,7 @@ class FunkinLua {
 
 		#if desktop DiscordClient.addLuaCallbacks(lua); #end
 		#if SScript HScript.implement(this); #end
+		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(lua); #end
 		ReflectionFunctions.implement(this);
 		TextFunctions.implement(this);
 		ExtraFunctions.implement(this);
@@ -1559,7 +1555,7 @@ class FunkinLua {
 		#if HSCRIPT_ALLOWED
 		if(hscript != null)
 		{
-			hscript.kill();
+			hscript.destroy();
 			hscript = null;
 		}
 		#end
@@ -1637,7 +1633,7 @@ class FunkinLua {
 	function findScript(scriptFile:String, ext:String = '.lua')
 	{
 		if(!scriptFile.endsWith(ext)) scriptFile += ext;
-		var preloadPath:String = Paths.getPreloadPath(scriptFile);
+		var preloadPath:String = Paths.getSharedPath(scriptFile);
 		#if MODS_ALLOWED
 		var path:String = Paths.modFolders(scriptFile);
 		if(FileSystem.exists(scriptFile))
