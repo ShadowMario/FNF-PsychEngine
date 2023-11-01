@@ -1452,7 +1452,7 @@ class FunkinLua {
 
 		#if desktop DiscordClient.addLuaCallbacks(this); #end
 		#if SScript HScript.implement(this); #end
-		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(lua); #end
+		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(this); #end
 		ReflectionFunctions.implement(this);
 		TextFunctions.implement(this);
 		ExtraFunctions.implement(this);
