@@ -33,7 +33,7 @@ class HScript extends SScript
 				var e:String = hs.parsingException.message;
 				if (!e.contains(hs.origin)) e = '${hs.origin}: $e';
 				FunkinLua.luaTrace('ERROR ON LOADING - $e', FlxColor.RED);
-				hs.kill();
+				hs.destroy();
 			}
 		}
 	}
@@ -75,7 +75,7 @@ class HScript extends SScript
 		setClass(flixel.tweens.FlxTween);
 		setClass(flixel.tweens.FlxEase);
 		set('FlxColor', CustomFlxColor);
-		setClass(backend.BaseStage.Countdown);
+		set('Countdown', backend.BaseStage.Countdown);
 		setClass(PlayState);
 		setClass(Paths);
 		setClass(Conductor);
