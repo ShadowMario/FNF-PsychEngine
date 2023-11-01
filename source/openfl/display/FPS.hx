@@ -111,6 +111,6 @@ class FPS extends TextField
 		}
 
 		cacheCount = currentCount;
-		deltaTimeout += delta;
+		deltaTimeout += deltaTime;
 	}
 }
