@@ -94,7 +94,7 @@ class FPS extends TextField
 			
 			#if openfl
 			memoryMegas = cast(System.totalMemory, UInt);
-			text += '\nMemory: ${flixel.FlxStringUtil.formatBytes(memoryMegas)}';
+			text += '\nMemory: ${flixel.util.FlxStringUtil.formatBytes(memoryMegas)}';
 			#end
 
 			textColor = 0xFFFFFFFF;
