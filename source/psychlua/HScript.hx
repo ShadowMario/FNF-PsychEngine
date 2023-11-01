@@ -81,7 +81,7 @@ class HScript extends SScript
 		setClass(flixel.tweens.FlxTween);
 		setClass(flixel.tweens.FlxEase);
 		set('FlxColor', CustomFlxColor);
-    setClass(backend.BaseStage.Countdown);
+		setClass(backend.BaseStage.Countdown);
 		setClass(PlayState);
 		setClass(Paths);
 		setClass(Conductor);
