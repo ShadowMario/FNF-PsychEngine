@@ -9,6 +9,13 @@ import backend.Discord;
 import backend.Achievements;
 #end
 
+#if sys
+import sys.*;
+import sys.io.*;
+#elseif js
+import js.html.*;
+#end
+
 import backend.Paths;
 import backend.Controls;
 import backend.CoolUtil;
