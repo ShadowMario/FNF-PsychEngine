@@ -2850,7 +2850,7 @@ class PlayState extends MusicBeatState
 
 		note.wasGoodHit = true;
 		if (ClientPrefs.data.hitsoundVolume > 0 && !note.hitsoundDisabled)
-			FlxG.sound.play(Paths.sound(note.hitsound), ClientPrefs.data.hitsoundVolume);
+			FlxG.sound.play(Paths.sound(note.hitsound), ClientPrefs.data.hitsoundVolume).pan = note.noteData < 4? -0.3 : 0.3;
 
 		if(note.hitCausesMiss) {
 			noteMiss(note);
