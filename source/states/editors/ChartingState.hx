@@ -2373,7 +2373,7 @@ class ChartingState extends MusicBeatState
 	function waveformData(buffer:AudioBuffer, bytes:Bytes, time:Float, endTime:Float, multiply:Float = 1, ?array:Array<Array<Array<Float>>>, ?steps:Float):Array<Array<Array<Float>>>
 	{
 		#if (lime_cffi && !macro)
-		if (buffer == null || buffer.data == null || buffer.data.length == 0) return [[[0], [0]], [[0], [0]]];
+		if (buffer == null || buffer.data == null) return [[[0], [0]], [[0], [0]]];
 
 		var khz:Float = (buffer.sampleRate / 1000);
 		var channels:Int = buffer.channels;
