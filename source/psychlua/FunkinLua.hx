@@ -1026,7 +1026,8 @@ class FunkinLua {
 			}
 			else
 			{
-				obj.animation.play(name, forced, reverse, startFrame);
+				if(obj.anim != null) obj.anim.play(name, forced, reverse, startFrame); //FlxAnimate
+				else obj.animation.play(name, forced, reverse, startFrame);
 				return true;
 			}
 			return false;
@@ -1053,18 +1054,22 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "addLuaSprite", function(tag:String, front:Bool = false) {
-			if(game.modchartSprites.exists(tag)) {
-				var shit:ModchartSprite = game.modchartSprites.get(tag);
-				if(front)
-					LuaUtils.getTargetInstance().add(shit);
+			var mySprite:FlxSprite = null;
+			if(game.modchartSprites.exists(tag)) mySprite = game.modchartSprites.get(tag);
+			else if(game.variables.exists(tag)) mySprite = game.variables.get(tag);
+			
+			if(mySprite == null) return false;
+
+			if(front)
+				LuaUtils.getTargetInstance().add(mySprite);
+			else
+			{
+				if(!game.isDead)
+					game.insert(game.members.indexOf(LuaUtils.getLowestCharacterGroup()), mySprite);
 				else
-				{
-					if(!game.isDead)
-						game.insert(game.members.indexOf(LuaUtils.getLowestCharacterGroup()), shit);
-					else
-						GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), shit);
-				}
+					GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), mySprite);
 			}
+			return true;
 		});
 		Lua_helper.add_callback(lua, "setGraphicSize", function(obj:String, x:Int, y:Int = 0, updateHitbox:Bool = true) {
 			if(game.getLuaObject(obj)!=null) {
@@ -1453,6 +1458,7 @@ class FunkinLua {
 		#if desktop DiscordClient.addLuaCallbacks(lua); #end
 		#if SScript HScript.implement(this); #end
 		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(lua); #end
+		#if flxanimate FlxAnimateFunctions.implement(this); #end
 		ReflectionFunctions.implement(this);
 		TextFunctions.implement(this);
 		ExtraFunctions.implement(this);
