@@ -4,6 +4,9 @@ import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.gamepad.mappings.FlxGamepadMapping;
 import flixel.input.keyboard.FlxKey;
+#if mobile
+import mobile.flixel.FlxVirtualPad;
+#end
 
 class Controls
 {
@@ -90,7 +93,7 @@ class Controls
 		var result:Bool = (FlxG.keys.anyJustPressed(keyboardBinds[key]) == true);
 		if(result) controllerMode = false;
 
-		return result || _myGamepadJustPressed(gamepadBinds[key]) == true;
+		return result || _myGamepadJustPressed(gamepadBinds[key]) == true #if mobile || mobileControlsJustPressed(key) == true #end;
 	}
 
 	public function pressed(key:String)
@@ -98,7 +101,7 @@ class Controls
 		var result:Bool = (FlxG.keys.anyPressed(keyboardBinds[key]) == true);
 		if(result) controllerMode = false;
 
-		return result || _myGamepadPressed(gamepadBinds[key]) == true;
+		return result || _myGamepadPressed(gamepadBinds[key]) == true #if mobile || mobileControlsPressed(key) == true #end;
 	}
 
 	public function justReleased(key:String)
@@ -106,7 +109,7 @@ class Controls
 		var result:Bool = (FlxG.keys.anyJustReleased(keyboardBinds[key]) == true);
 		if(result) controllerMode = false;
 
-		return result || _myGamepadJustReleased(gamepadBinds[key]) == true;
+		return result || _myGamepadJustReleased(gamepadBinds[key]) == true #if mobile || mobileControlsJustReleased(key) == true #end;
 	}
 
 	public var controllerMode:Bool = false;
@@ -155,6 +158,189 @@ class Controls
 		}
 		return false;
 	}
+	
+	#if mobile
+	public var substate:Bool = false;
+	public var virtualpad:FlxVirtualPad;
+	
+	// Based on NF|beihu code.
+	private function mobileControlsJustPressed(key:String):Bool
+	{
+		virtualpad = substate ? MusicBeatSubstate.instance.virtualPad : MusicBeatState.instance.virtualPad;
+		controllerMode = true;
+		if (virtualpad != null) {
+			switch(key) {
+				case 'accept':
+					if (virtualpad.buttonA.justPressed)
+					        return true;
+				case 'back':
+					if (virtualpad.buttonB.justPressed)
+						return true;
+				case 'ui_up':
+					if (virtualpad.buttonUp.justPressed)
+					        return true;
+				case 'ui_down':
+					if (virtualpad.buttonDown.justPressed)
+						return true;
+				case 'ui_left':
+					if (virtualpad.buttonLeft.justPressed)
+					        return true;
+				case 'ui_right':
+					if (virtualpad.buttonRight.justPressed)
+						return true;
+			}
+		}
+		if ((mobile.MobileControls.mode.startsWith('Pad-')) && (mobile.MobileControls.mode != 'Hitbox' && mobile.MobileControls.mode != 'keyboard'))
+			{
+				switch(key) {
+					case 'note_up':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonUp.justPressed || MusicBeatState.instance.mobileControls.virtualPad.buttonUp2.justPressed)
+						        return true;
+					case 'note_down':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonDown.justPressed || MusicBeatState.instance.mobileControls.virtualPad.buttonDown2.justPressed)
+							return true;
+					case 'note_left':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonLeft.justPressed || MusicBeatState.instance.mobileControls.virtualPad.buttonLeft2.justPressed)
+							return true;
+					case 'note_right':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonRight.justPressed || MusicBeatState.instance.mobileControls.virtualPad.buttonRight2.justPressed)
+							return true;
+				}
+			} else if (mobile.MobileControls.mode == 'Hitbox')
+			{
+				switch (key)
+				{
+					case 'note_up':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonUp.justPressed)
+							return true;
+					case 'note_down':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonDown.justPressed)
+							return true;
+					case 'note_left':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonLeft.justPressed)
+							return true;
+					case 'note_right':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonRight.justPressed)
+							return true;
+				}
+			}
+		return false;
+	}
+	
+	private function mobileControlsPressed(key:String):Bool
+	{
+		virtualpad = substate ? MusicBeatSubstate.instance.virtualPad : MusicBeatState.instance.virtualPad;
+		controllerMode = true;
+		if (virtualpad != null) {
+			switch(key) {
+				case 'ui_up':
+					if (virtualpad.buttonUp.pressed)
+					        return true;
+				case 'ui_down':
+					if (virtualpad.buttonDown.pressed)
+						return true;
+				case 'ui_left':
+					if (virtualpad.buttonLeft.pressed)
+					        return true;
+				case 'ui_right':
+					if (virtualpad.buttonRight.pressed)
+						return true;
+			}
+		}
+		if ((mobile.MobileControls.mode.startsWith('Pad-')) && (mobile.MobileControls.mode != 'Hitbox' && mobile.MobileControls.mode != 'keyboard'))
+			{
+				switch(key) {
+					case 'note_up':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonUp.pressed || MusicBeatState.instance.mobileControls.virtualPad.buttonUp2.pressed)
+						        return true;
+					case 'note_down':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonDown.pressed || MusicBeatState.instance.mobileControls.virtualPad.buttonDown2.pressed)
+							return true;
+					case 'note_left':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonLeft.pressed || MusicBeatState.instance.mobileControls.virtualPad.buttonLeft2.pressed)
+						        return true;
+					case 'note_right':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonRight.pressed || MusicBeatState.instance.mobileControls.virtualPad.buttonRight2.pressed)
+							return true;
+				}
+			} else if (mobile.MobileControls.mode == 'Hitbox')
+			{
+				switch (key)
+				{
+					case 'note_up':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonUp.pressed)
+						        return true;
+					case 'note_down':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonDown.pressed)
+							return true;
+					case 'note_left':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonLeft.pressed)
+						        return true;
+					case 'note_right':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonRight.pressed)
+							return true;
+				}
+			}
+		return false;
+	}
+	
+	private function mobileControlsJustReleased(key:String):Bool
+	{
+		virtualpad = substate ? MusicBeatSubstate.instance.virtualPad : MusicBeatState.instance.virtualPad;
+		controllerMode = true;
+		if (virtualpad != null) {
+			switch(key) {
+				case 'ui_up':
+					if (virtualpad.buttonUp.justReleased)
+					        return true;
+				case 'ui_down':
+					if (virtualpad.buttonDown.justReleased)
+						return true;
+				case 'ui_left':
+					if (virtualpad.buttonLeft.justReleased)
+					        return true;
+				case 'ui_right':
+					if (virtualpad.buttonRight.justReleased)
+						return true;
+			}
+		}
+		if ((mobile.MobileControls.mode.startsWith('Pad-')) && (mobile.MobileControls.mode != 'Hitbox' || mobile.MobileControls.mode != 'keyboard'))
+			{
+				switch(key) {
+					case 'note_up':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonUp.justReleased || MusicBeatState.instance.mobileControls.virtualPad.buttonUp2.justReleased)
+						        return true;
+					case 'note_down':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonDown.justReleased || MusicBeatState.instance.mobileControls.virtualPad.buttonDown2.justReleased)
+							return true;
+					case 'note_left':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonLeft.justReleased || MusicBeatState.instance.mobileControls.virtualPad.buttonLeft2.justReleased)
+						        return true;
+					case 'note_right':
+						if (MusicBeatState.instance.mobileControls.virtualPad.buttonRight.justReleased || MusicBeatState.instance.mobileControls.virtualPad.buttonRight2.justReleased)
+							return true;
+				}
+			} else if (mobile.MobileControls.mode == 'Hitbox')
+			{
+				switch (key)
+				{
+					case 'note_up':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonUp.justReleased)
+						        return true;
+					case 'note_down':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonDown.justReleased)
+							return true;
+					case 'note_left':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonLeft.justReleased)
+						        return true;
+					case 'note_right':
+						if (MusicBeatState.instance.mobileControls.hitbox.buttonRight.justReleased)
+							return true;
+				}
+			}
+		return false;
+	}
+	#end
 
 	// IGNORE THESE
 	public static var instance:Controls;

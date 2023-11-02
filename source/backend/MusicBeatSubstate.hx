@@ -10,8 +10,11 @@ import flixel.util.FlxDestroyUtil;
 
 class MusicBeatSubstate extends FlxSubState
 {
+	public static var instance:MusicBeatSubstate;
 	public function new()
 	{
+		instance = this;
+		#if mobile controls.substate = true; #end
 		super();
 	}
 
@@ -30,9 +33,9 @@ class MusicBeatSubstate extends FlxSubState
 
 	inline function get_controls():Controls
 		return Controls.instance;
-
-		#if mobile
-	var virtualPad:FlxVirtualPad;
+		
+	#if mobile
+	public var virtualPad:FlxVirtualPad;
 	var trackedInputsVirtualPad:Array<FlxActionInput> = [];
 
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
@@ -43,21 +46,21 @@ class MusicBeatSubstate extends FlxSubState
 		virtualPad = new FlxVirtualPad(DPad, Action);
 		add(virtualPad);
 
-		controls.setVirtualPadUI(virtualPad, DPad, Action);
+		/*controls.setVirtualPadUI(virtualPad, DPad, Action);
 		trackedInputsVirtualPad = controls.trackedInputsUI;
-		controls.trackedInputsUI = [];
+		controls.trackedInputsUI = [];*/
 	}
 
 	public function removeVirtualPad()
 	{
-		if (trackedInputsVirtualPad.length > 0)
-			controls.removeVirtualControlsInput(trackedInputsVirtualPad);
+		if (trackedInputsVirtualPad != [])
+			//controls.removeVirtualControlsInput(trackedInputsVirtualPad);
 
 		if (virtualPad != null)
 			remove(virtualPad);
 	}
 
-	public function addVirtualPadCamera(DefaultDrawTarget:Bool = true)
+	public function addVirtualPadCamera(DefaultDrawTarget:Bool = false)
 	{
 		if (virtualPad != null)
 		{
@@ -72,15 +75,20 @@ class MusicBeatSubstate extends FlxSubState
 	override function destroy()
 	{
 		#if mobile
-		if (trackedInputsVirtualPad.length > 0)
-			controls.removeVirtualControlsInput(trackedInputsVirtualPad);
+		if (trackedInputsVirtualPad != [])
+			//controls.removeVirtualControlsInput(trackedInputsVirtualPad);
 		#end
+
+		#if mobile controls.substate = false; #end
 
 		super.destroy();
 
 		#if mobile
 		if (virtualPad != null)
+		{
 			virtualPad = FlxDestroyUtil.destroy(virtualPad);
+			virtualPad = null;
+		}
 		#end
 	}
 

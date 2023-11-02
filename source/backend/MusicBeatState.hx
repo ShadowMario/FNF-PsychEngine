@@ -18,6 +18,7 @@ class MusicBeatState extends FlxUIState
 
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
+	public static var instance:MusicBeatState;
 
 	private var curDecStep:Float = 0;
 	private var curDecBeat:Float = 0;
@@ -26,12 +27,12 @@ class MusicBeatState extends FlxUIState
 	{
 		return Controls.instance;
 	}
-
+	
 	#if mobile
-	var mobileControls:MobileControls;
-	var virtualPad:FlxVirtualPad;
-	var trackedInputsMobileControls:Array<FlxActionInput> = [];
-	var trackedInputsVirtualPad:Array<FlxActionInput> = [];
+	public var mobileControls:MobileControls;
+	public var virtualPad:FlxVirtualPad;
+	public var trackedInputsMobileControls:Array<FlxActionInput> = [];
+	public var trackedInputsVirtualPad:Array<FlxActionInput> = [];
 
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
@@ -41,21 +42,21 @@ class MusicBeatState extends FlxUIState
 		virtualPad = new FlxVirtualPad(DPad, Action);
 		add(virtualPad);
 
-		controls.setVirtualPadUI(virtualPad, DPad, Action);
+		/*controls.setVirtualPadUI(virtualPad, DPad, Action);
 		trackedInputsVirtualPad = controls.trackedInputsUI;
-		controls.trackedInputsUI = [];
+		controls.trackedInputsUI = [];*/
 	}
 
 	public function removeVirtualPad()
 	{
-		if (trackedInputsVirtualPad.length > 0)
-			controls.removeVirtualControlsInput(trackedInputsVirtualPad);
+		if (trackedInputsVirtualPad != [])
+			//controls.removeVirtualControlsInput(trackedInputsVirtualPad);
 
 		if (virtualPad != null)
 			remove(virtualPad);
 	}
 
-	public function addMobileControls(DefaultDrawTarget:Bool = true)
+	public function addMobileControls(DefaultDrawTarget:Bool = false)
 	{
 		if (mobileControls != null)
 			removeMobileControls();
@@ -65,16 +66,16 @@ class MusicBeatState extends FlxUIState
 		switch (MobileControls.mode)
 		{
 			case 'Pad-Right' | 'Pad-Left' | 'Pad-Custom':
-				controls.setVirtualPadNOTES(mobileControls.virtualPad, RIGHT_FULL, NONE);
+				//controls.setVirtualPadNOTES(mobileControls.virtualPad, RIGHT_FULL, NONE);
 			case 'Pad-Duo':
-				controls.setVirtualPadNOTES(mobileControls.virtualPad, BOTH_FULL, NONE);
+				//controls.setVirtualPadNOTES(mobileControls.virtualPad, BOTH_FULL, NONE);
 			case 'Hitbox':
-				controls.setHitBox(mobileControls.hitbox);
+				//controls.setHitBox(mobileControls.hitbox);
 			case 'Keyboard': // do nothing
 		}
 
-		trackedInputsMobileControls = controls.trackedInputsNOTES;
-		controls.trackedInputsNOTES = [];
+		/*trackedInputsMobileControls = controls.trackedInputsNOTES;
+		controls.trackedInputsNOTES = [];*/
 
 		var camControls:FlxCamera = new FlxCamera();
 		FlxG.cameras.add(camControls, DefaultDrawTarget);
@@ -87,14 +88,14 @@ class MusicBeatState extends FlxUIState
 
 	public function removeMobileControls()
 	{
-		if (trackedInputsMobileControls.length > 0)
-			controls.removeVirtualControlsInput(trackedInputsMobileControls);
+		if (trackedInputsMobileControls != [])
+			//controls.removeVirtualControlsInput(trackedInputsMobileControls);
 
 		if (mobileControls != null)
 			remove(mobileControls);
 	}
 
-	public function addVirtualPadCamera(DefaultDrawTarget:Bool = true)
+	public function addVirtualPadCamera(DefaultDrawTarget:Bool = false)
 	{
 		if (virtualPad != null)
 		{
@@ -109,21 +110,27 @@ class MusicBeatState extends FlxUIState
 	override function destroy()
 	{
 		#if mobile
-		if (trackedInputsMobileControls.length > 0)
-			controls.removeVirtualControlsInput(trackedInputsMobileControls);
+		if (trackedInputsMobileControls != [])
+			//controls.removeVirtualControlsInput(trackedInputsMobileControls);
 
-		if (trackedInputsVirtualPad.length > 0)
-			controls.removeVirtualControlsInput(trackedInputsVirtualPad);
+		if (trackedInputsVirtualPad != [])
+			//controls.removeVirtualControlsInput(trackedInputsVirtualPad);
 		#end
 
 		super.destroy();
 
 		#if mobile
 		if (virtualPad != null)
+		{
 			virtualPad = FlxDestroyUtil.destroy(virtualPad);
+			virtualPad = null;
+		}
 
 		if (mobileControls != null)
+		{
 			mobileControls = FlxDestroyUtil.destroy(mobileControls);
+			mobileControls = null;
+		}
 		#end
 	}
 
@@ -133,7 +140,8 @@ class MusicBeatState extends FlxUIState
 		camBeat = FlxG.camera;
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		#if MODS_ALLOWED Mods.updatedOnState = false; #end
-
+		instance = this;
+		
 		super.create();
 
 		if(!skip) {
