@@ -35,7 +35,7 @@ class FlxAnimateFunctions
 			if(cast (obj, FlxAnimate) == null) return false;
 
 			obj.anim.addBySymbol(name, symbol, framerate, loop, matX, matY);
-			if(obj.anim.curSymbol == null)
+			if(obj.anim.lastPlayedAnim == null)
 			{
 				if(obj.playAnim != null) obj.playAnim(name, true); //is ModchartAnimateSprite
 				else obj.animation.play(name, true);
@@ -61,7 +61,7 @@ class FlxAnimateFunctions
 			}
 
 			obj.anim.addBySymbolIndices(name, symbol, indices, framerate, loop, matX, matY);
-			if(obj.anim.curSymbol == null)
+			if(obj.anim.lastPlayedAnim == null)
 			{
 				if(obj.playAnim != null) obj.playAnim(name, true); //is ModchartAnimateSprite
 				else obj.animation.play(name, true);
@@ -145,7 +145,7 @@ class FlxAnimateFunctions
 		var path:String = Paths.getPath(path, TEXT, true);
 		if(FileSystem.exists(path) || (onAssets = true && Assets.exists(path, TEXT)))
 		{
-			trace('Found text: $path');
+			//trace('Found text: $path');
 			return !onAssets ? File.getContent(path) : Assets.getText(path);
 		}
 		return null;
