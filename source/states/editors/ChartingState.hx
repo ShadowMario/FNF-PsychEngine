@@ -329,7 +329,7 @@ class ChartingState extends MusicBeatState
 		\nLeft Bracket / Right Bracket - Change Song Playback Rate (SHIFT to go Faster)
 		\nALT + Left Bracket / Right Bracket - Reset Song Playback Rate
 		\nHold Shift to move 4x faster
-		\nHold Control and click on an arrow to select it
+		\nRight Click on an arrow to select it
 		\nZ/X - Zoom in/out
 		\n
 		\nEsc - Test your chart inside Chart Editor
@@ -1675,11 +1675,7 @@ class ChartingState extends MusicBeatState
 				{
 					if (FlxG.mouse.overlaps(note))
 					{
-						if (FlxG.keys.pressed.CONTROL)
-						{
-							selectNote(note);
-						}
-						else if (FlxG.keys.pressed.ALT)
+						if (FlxG.keys.pressed.ALT)
 						{
 							selectNote(note);
 							curSelectedNote[3] = curNoteTypes[currentType];
@@ -1703,6 +1699,17 @@ class ChartingState extends MusicBeatState
 					FlxG.log.add('added note');
 					addNote();
 				}
+			}
+		}
+		else if (FlxG.mouse.justPressedRight)
+		{
+			if (FlxG.mouse.overlaps(curRenderedNotes))
+			{
+				curRenderedNotes.forEachAlive(function(note:Note) 
+				{
+					if (FlxG.mouse.overlaps(note))
+						selectNote(note);
+				});
 			}
 		}
 
