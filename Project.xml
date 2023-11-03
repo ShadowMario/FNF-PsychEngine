@@ -115,6 +115,7 @@
 	<haxelib name="tjson" />
 	<haxedef name="openflPos" if="desktop" />
   <haxedef name="hscriptPos" />
+  <haxelib name="extension-androidtools" if="mobile" />
 
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
