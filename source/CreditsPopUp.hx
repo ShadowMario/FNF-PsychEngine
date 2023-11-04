@@ -22,15 +22,13 @@ class CreditsPopUp extends FlxSpriteGroup
 	public var funnyText:FlxText;
 	var curHeading:SongHeading;
 
-	public function new(x:Float, y:Float)
+	public function new(x:Float, y:Float, title:String = '', songCreator:String = '')
 	{
 		super(x, y);
 		bg = new FlxSprite().makeGraphic(400, 50, FlxColor.WHITE);
 		add(bg);
-		var songCreator:String = '';
 		var headingPath:SongHeading = null;
 
-		songCreator = PlayState.SONG.songCredit;
 				headingPath = {path: 'JSEHeading', antiAliasing: false, iconOffset: 0};
 
 		if (headingPath != null)
@@ -39,7 +37,7 @@ class CreditsPopUp extends FlxSpriteGroup
 			bg.antialiasing = headingPath.antiAliasing;
 			curHeading = headingPath;
 		}
-		createHeadingText("Song by" + ' ' + songCreator);
+		createHeadingText(title + "\nComposed by" + ' ' + songCreator);
 		if (PlayState.instance != null) bg.color = FlxColor.fromRGB(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
 
 		rescaleBG();

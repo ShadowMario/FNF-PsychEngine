@@ -98,6 +98,7 @@ class ChartingState extends MusicBeatState
 		['Alt Idle Animation', "Sets a specified suffix after the idle animation name.\nYou can use this to trigger 'idle-alt' if you set\nValue 2 to -alt\n\nValue 1: Character to set (Dad, BF or GF)\nValue 2: New suffix (Leave it blank to disable)"],
 		['Enable Camera Bop', "Enables camera bopping. Useful if you don't want the\nopponent to hit a note, but you want camera bouncing."],
 		['Disable Camera Bop', "Same thing as 'Enable Camera Bopping', but disables it\ninstead."],
+		['Credits Popup', "Makes some credits pop up. \n\nValue 1: The title. \nValue 2: The composer(s)"],
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
 		['Camera Bopping', "Makes the camera do funny bopping\n\nValue 1: Bopping Speed (how many beats you want before it bops)\nValue 2: Bopping Intensity (how hard you want it to bop, default is 1)\n\nTo reset camera bopping, place a new event and put both values as '4' and '1' respectively."],
 		['Change Note Multiplier', "Changes the amount of notes played every time you hit a note.\n\nValue 1: Note Multiplier that you want."],

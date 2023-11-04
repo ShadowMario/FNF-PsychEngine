@@ -3750,9 +3750,9 @@ class PlayState extends MusicBeatState
 						});
 						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
 					case 4:
-					if (SONG.songCredit != null)
+					if (SONG.songCredit != null && SONG.songCredit != '')
 					{
-						var creditsPopup:CreditsPopUp = new CreditsPopUp(FlxG.width, 200);
+						var creditsPopup:CreditsPopUp = new CreditsPopUp(FlxG.width, 200, SONG.song, SONG.songCredit);
 						creditsPopup.camera = camHUD;
 						creditsPopup.scrollFactor.set();
 						creditsPopup.x = creditsPopup.width * -1;
@@ -5027,6 +5027,8 @@ if (ClientPrefs.showNPS) {
 		compactUpdateFrame = 0;
 		scoreTxtUpdateFrame = 0;
 
+		if (deathCounter < 0) botplayTxt.text = 'DEAR GOD YOU OVERFLOWED THE DEATH COUNTER;
+
 		if (shownScore != songScore && ClientPrefs.hudType == 'JS Engine' && Math.abs(shownScore - songScore) >= 10) {
 		    shownScore = FlxMath.lerp(shownScore, songScore, 0.4 / (ClientPrefs.framerate / 60));
     			lerpingScore = true; // Indicate that lerping is in progress
@@ -5976,10 +5978,6 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 		}
 		daNote.hitByOpponent = true;
 
-		if (opponentDrain && health > 0.1 && !practiceMode || opponentDrain && practiceMode) {
-		health -= daNote.hitHealth * hpDrainLevel * polyphony;
-		if (ClientPrefs.healthDisplay && !ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4 && scoreTxt != null) updateScore();
-		}
 
 		callOnLuas('opponentNoteHit', [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
 		callOnLuas((opponentChart ? 'goodNoteHitFix' : 'opponentNoteHitFix'), [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
@@ -6003,6 +6001,12 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 				daNote.destroy();
 			}
 		}
+		if (opponentDrain && health > 0.1 && !practiceMode || opponentDrain && practiceMode) {
+		health -= daNote.hitHealth * hpDrainLevel * polyphony;
+		if (ClientPrefs.healthDisplay && !ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4 && scoreTxt != null) updateScore();
+		}
+		if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
+           	if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
 	}
 								if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG)
 								{
@@ -6406,6 +6410,22 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 			case 'Disable Camera Bop':
 				camZooming = false;
 
+			case 'Credits Popup':
+			{
+			var creditsPopup:CreditsPopUp = new CreditsPopUp(FlxG.width, 200, value1, value2);
+				creditsPopup.camera = camHUD;
+				creditsPopup.scrollFactor.set();
+				creditsPopup.x = creditsPopup.width * -1;
+				add(creditsPopup);
+	
+				FlxTween.tween(creditsPopup, {x: 0}, 0.5, {ease: FlxEase.backOut, onComplete: function(tweeen:FlxTween)
+				{
+					FlxTween.tween(creditsPopup, {x: creditsPopup.width * -1} , 1, {ease: FlxEase.backIn, onComplete: function(tween:FlxTween)
+					{
+						creditsPopup.destroy();
+							}, startDelay: 3});
+						}});
+			}
 			case 'Camera Bopping':
 				var _interval:Int = Std.parseInt(value1);
 				if (Math.isNaN(_interval))
