@@ -40,6 +40,7 @@ class CreditsPopUp extends FlxSpriteGroup
 			curHeading = headingPath;
 		}
 		createHeadingText("Song by" + ' ' + songCreator);
+		if (PlayState.instance != null) bg.color = FlxColor.fromRGB(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
 
 		rescaleBG();
 
