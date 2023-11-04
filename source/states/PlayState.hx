@@ -313,7 +313,6 @@ class PlayState extends MusicBeatState
 
 		#if mobile
 		addMobileControls();
-		MusicBeatState.mobileControls.visible = false;
 		#end
 
 		persistentUpdate = true;
@@ -952,9 +951,9 @@ class PlayState extends MusicBeatState
 
 	public function startCountdown()
 	{
-	  #if mobile
-	  		MusicBeatState.mobileControls.visible = true;
-	  #end
+		#if mobile
+		mobileControls.visible = true;
+		#end
 		if(startedCountdown) {
 			callOnScripts('onStartCountdown');
 			return false;
@@ -2233,9 +2232,9 @@ class PlayState extends MusicBeatState
 	public var transitioning = false;
 	public function endSong()
 	{
-	    #if mobile
-	 		MusicBeatState.mobileControls.visible = false;
-	 		#end
+		#if mobile
+		mobileControls.visible = false;
+		#end
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
