@@ -5027,7 +5027,7 @@ if (ClientPrefs.showNPS) {
 		compactUpdateFrame = 0;
 		scoreTxtUpdateFrame = 0;
 
-		if (deathCounter < 0) botplayTxt.text = 'DEAR GOD YOU OVERFLOWED THE DEATH COUNTER;
+		if (deathCounter < 0) botplayTxt.text = 'DEAR GOD YOU OVERFLOWED THE DEATH COUNTER';
 
 		if (shownScore != songScore && ClientPrefs.hudType == 'JS Engine' && Math.abs(shownScore - songScore) >= 10) {
 		    shownScore = FlxMath.lerp(shownScore, songScore, 0.4 / (ClientPrefs.framerate / 60));
