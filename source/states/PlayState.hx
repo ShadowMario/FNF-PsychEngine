@@ -311,6 +311,11 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		CustomFadeTransition.nextCamera = camOther;
 
+		#if mobile
+		addMobileControls();
+		MusicBeatState.mobileControls.visible = false;
+		#end
+
 		persistentUpdate = true;
 		persistentDraw = true;
 
@@ -947,6 +952,9 @@ class PlayState extends MusicBeatState
 
 	public function startCountdown()
 	{
+	  #if mobile
+	  		MusicBeatState.mobileControls.visible = true;
+	  #end
 		if(startedCountdown) {
 			callOnScripts('onStartCountdown');
 			return false;
@@ -1618,7 +1626,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
 
-		if (controls.PAUSE && startedCountdown && canPause)
+		if (controls.PAUSE #if mobile || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnScripts('onPause', null, true);
 			if(ret != FunkinLua.Function_Stop) {
@@ -2225,6 +2233,9 @@ class PlayState extends MusicBeatState
 	public var transitioning = false;
 	public function endSong()
 	{
+	    #if mobile
+	 		MusicBeatState.mobileControls.visible = false;
+	 		#end
 		//Should kill you if you tried to cheat
 		if(!startingSong) {
 			notes.forEach(function(daNote:Note) {
