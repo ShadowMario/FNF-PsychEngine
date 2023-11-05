@@ -34,6 +34,10 @@ import objects.BGSprite;
 import states.PlayState;
 import states.LoadingState;
 
+#if flxanimate
+import flxanimate.*;
+#end
+
 //Flixel
 #if (flixel >= "5.3.0")
 import flixel.sound.FlxSound;

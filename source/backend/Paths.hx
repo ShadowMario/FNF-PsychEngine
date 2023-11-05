@@ -264,7 +264,6 @@ class Paths
 			#if MODS_ALLOWED
 			if (FileSystem.exists(file))
 				bitmap = BitmapData.fromFile(file);
-			#else
 			else
 			#end
 			{
@@ -339,6 +338,9 @@ class Paths
 					return true;
 
 			if (FileSystem.exists(mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
+				return true;
+			
+			if (FileSystem.exists(mods('$key')))
 				return true;
 		}
 		#end
