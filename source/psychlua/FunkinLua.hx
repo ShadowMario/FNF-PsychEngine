@@ -1053,7 +1053,7 @@ class FunkinLua {
 				object.scrollFactor.set(scrollX, scrollY);
 			}
 		});
-    set("addLuaSprite", function(tag:String, front:Bool = false) {
+		set("addLuaSprite", function(tag:String, front:Bool = false) {
 			var mySprite:FlxSprite = null;
 			if(game.modchartSprites.exists(tag)) mySprite = game.modchartSprites.get(tag);
 			else if(game.variables.exists(tag)) mySprite = game.variables.get(tag);
