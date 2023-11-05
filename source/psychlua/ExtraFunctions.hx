@@ -1,10 +1,5 @@
 package psychlua;
 
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#end
-
 import flixel.util.FlxSave;
 import openfl.utils.Assets;
 
@@ -164,6 +159,15 @@ class ExtraFunctions
 				return;
 			}
 			FunkinLua.luaTrace('setDataFromSave: Save file not initialized: ' + name, false, false, FlxColor.RED);
+		});
+		Lua_helper.add_callback(lua, "eraseSaveData", function(name:String)
+		{
+			if (PlayState.instance.modchartSaves.exists(name))
+			{
+				PlayState.instance.modchartSaves.get(name).erase();
+				return;
+			}
+			FunkinLua.luaTrace('eraseSaveData: Save file not initialized: ' + name, false, false, FlxColor.RED);
 		});
 
 		// File management

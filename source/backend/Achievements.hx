@@ -1,37 +1,66 @@
 package backend;
 
+#if ACHIEVEMENTS_ALLOWED
 import objects.AchievementPopup;
 import haxe.Exception;
+import tjson.TJSON as Json;
 
-#if ACHIEVEMENTS_ALLOWED
+#if LUA_ALLOWED
+import psychlua.FunkinLua;
+#end
+
+typedef Achievement =
+{
+	var name:String;
+	var description:String;
+	@:optional var hidden:Bool;
+	@:optional var maxScore:Float;
+	@:optional var maxDecimals:Int;
+
+	//handled automatically, ignore these two
+	@:optional var mod:String;
+	@:optional var ID:Int; 
+}
+
 class Achievements {
-	public static var achievements:Array<Dynamic> = [
-		//Name -- Description -- Achievement save tag -- is hidden while locked -- max score -- max number of decimals you want it to display
-		["Freaky on a Friday Night",	"Play on a Friday... Night.",						'friday_night_play',	true],
-		["She Calls Me Daddy Too",		"Beat Week 1 on Hard with no Misses.",				'week1_nomiss'],
-		["No More Tricks",				"Beat Week 2 on Hard with no Misses.",				'week2_nomiss'],
-		["Call Me The Hitman",			"Beat Week 3 on Hard with no Misses.",				'week3_nomiss'],
-		["Lady Killer",					"Beat Week 4 on Hard with no Misses.",				'week4_nomiss'],
-		["Missless Christmas",			"Beat Week 5 on Hard with no Misses.",				'week5_nomiss'],
-		["Highscore!!",					"Beat Week 6 on Hard with no Misses.",				'week6_nomiss'],
-		["God Effing Damn It!",			"Beat Week 7 on Hard with no Misses.",				'week7_nomiss'],
-		["What a Funkin' Disaster!",	"Complete a Song with a rating lower than 20%.",	'ur_bad'],
-		["Perfectionist",				"Complete a Song with a rating of 100%.",			'ur_good'],
-		["Roadkill Enthusiast",			"Watch the Henchmen die 50 times.",					'roadkill_enthusiast',	false,	50,	0],
-		["Oversinging Much...?",		"Hold down a note for 10 seconds.",					'oversinging'],
-		["Hyperactive",					"Finish a Song without going Idle.",				'hype'],
-		["Just the Two of Us",			"Finish a Song pressing only two keys.",			'two_keys'],
-		["Toaster Gamer",				"Have you tried to run the game on a toaster?",		'toastie'],
-		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",	'debugger',				true]
-	];
+	public static function init()
+	{
+		createAchievement('friday_night_play',		{name: "Freaky on a Friday Night", description: "Play on a Friday... Night.", hidden: true});
+		createAchievement('week1_nomiss',			{name: "She Calls Me Daddy Too", description: "Beat Week 1 on Hard with no Misses."});
+		createAchievement('week2_nomiss',			{name: "No More Tricks", description: "Beat Week 2 on Hard with no Misses."});
+		createAchievement('week3_nomiss',			{name: "Call Me The Hitman", description: "Beat Week 3 on Hard with no Misses."});
+		createAchievement('week4_nomiss',			{name: "Lady Killer", description: "Beat Week 4 on Hard with no Misses."});
+		createAchievement('week5_nomiss',			{name: "Missless Christmas", description: "Beat Week 5 on Hard with no Misses."});
+		createAchievement('week6_nomiss',			{name: "Highscore!!", description: "Beat Week 6 on Hard with no Misses."});
+		createAchievement('week7_nomiss',			{name: "God Effing Damn It!", description: "Beat Week 7 on Hard with no Misses."});
+		createAchievement('ur_bad',					{name: "What a Funkin' Disaster!", description: "Complete a Song with a rating lower than 20%."});
+		createAchievement('ur_good',				{name: "Perfectionist", description: "Complete a Song with a rating of 100%."});
+		createAchievement('roadkill_enthusiast',	{name: "Roadkill Enthusiast", description: "Watch the Henchmen die 50 times.", maxScore: 50, maxDecimals: 0});
+		createAchievement('oversinging', 			{name: "Oversinging Much...?", description: "Hold down a note for 10 seconds."});
+		createAchievement('hype',					{name: "Hyperactive", description: "Finish a Song without going Idle."});
+		createAchievement('two_keys',				{name: "Just the Two of Us", description: "Finish a Song pressing only two keys."});
+		createAchievement('toastier',				{name: "Toaster Gamer", description: "Have you tried to run the game on a toaster?"});
+		createAchievement('debugger',				{name: "Debugger", description: "Beat the \"Test\" Stage from the Chart Editor.", hidden: true});
+		
+		//dont delete this thing below
+		_originalLength = _sortID + 1;
+	}
 
+	public static var achievements:Map<String, Achievement> = new Map<String, Achievement>();
 	public static var variables:Map<String, Float> = [];
 	public static var achievementsUnlocked:Array<String> = [];
 	private static var _firstLoad:Bool = true;
 
+	public static function get(name:String):Achievement
+		return achievements.get(name);
+	public static function exists(name:String):Bool
+		return achievements.exists(name);
+
 	public static function load():Void
 	{
 		if(!_firstLoad) return;
+
+		if(_originalLength < 0) init();
 
 		if(FlxG.save.data != null) {
 			if(FlxG.save.data.achievementsUnlocked != null)
@@ -68,44 +97,39 @@ class Achievements {
 	static function _scoreFunc(name:String, mode:Int = 0, addOrSet:Float = 1, saveIfNotUnlocked:Bool = true):Float
 	{
 		if(!variables.exists(name))
-		{
 			variables.set(name, 0);
-		}
 
-		for (achievement in achievements)
+		if(achievements.exists(name))
 		{
-			if(achievement[2] == name)
+			var achievement:Achievement = achievements.get(name);
+			if(achievement.maxScore < 1) throw new Exception('Achievement has score disabled or is incorrectly configured: $name');
+
+			if(achievementsUnlocked.contains(name)) return achievement.maxScore;
+
+			var val = addOrSet;
+			switch(mode)
 			{
-				if(achievement.length <= 4 || achievement[4] < 1) throw new Exception('Achievement has score disabled or is incorrectly configured: $name');
-
-				var max:Float = achievement[4];
-				if(achievementsUnlocked.contains(name)) return max;
-
-				var val = addOrSet;
-				switch(mode)
-				{
-					case 0: return variables.get(name); //get
-					case 2: val += variables.get(name); //add
-				}
-
-				if(val >= max)
-				{
-					unlock(name);
-					val = max;
-				}
-				variables.set(name, val);
-
-				Achievements.save();
-				if(saveIfNotUnlocked || val >= max) FlxG.save.flush();
-				return val;
+				case 0: return variables.get(name); //get
+				case 2: val += variables.get(name); //add
 			}
+
+			if(val >= achievement.maxScore)
+			{
+				unlock(name);
+				val = achievement.maxScore;
+			}
+			variables.set(name, val);
+
+			Achievements.save();
+			if(saveIfNotUnlocked || val >= achievement.maxScore) FlxG.save.flush();
+			return val;
 		}
 		return -1;
 	}
 
 	static var _lastUnlock:Int = -999;
 	public static function unlock(name:String, autoStartPopup:Bool = true):String {
-		if(Achievements.getIndexOf(name) < 0)
+		if(!achievements.exists(name))
 		{
 			FlxG.log.error('Achievement "$name" does not exists!');
 			throw new Exception('Achievement "$name" does not exists!');
@@ -135,15 +159,6 @@ class Achievements {
 	inline public static function isUnlocked(name:String)
 		return achievementsUnlocked.contains(name);
 
-	public static function getIndexOf(name:String)
-	{
-		for (i in 0...achievements.length)
-			if(achievements[i][2] == name)
-				return i;
-
-		return -1;
-	}
-	
 	@:allow(objects.AchievementPopup)
 	private static var _popups:Array<AchievementPopup> = [];
 
@@ -162,5 +177,144 @@ class Achievements {
 		_popups.push(newPop);
 		//trace('Giving achievement ' + achieve);
 	}
+
+	// Map sorting cuz haxe is physically incapable of doing that by itself
+	static var _sortID = 0;
+	static var _originalLength = -1;
+	public static function createAchievement(name:String, data:Achievement, ?mod:String = null)
+	{
+		data.ID = _sortID;
+		data.mod = mod;
+		achievements.set(name, data);
+		_sortID++;
+	}
+
+	#if MODS_ALLOWED
+	public static function reloadList()
+	{
+		// remove modded achievements
+		if((_sortID + 1) > _originalLength)
+			for (key => value in achievements)
+				if(value.mod != null)
+					achievements.remove(key);
+
+		_sortID = _originalLength-1;
+
+		var modLoaded:String = Mods.currentModDirectory;
+		Mods.currentModDirectory = null;
+		loadAchievementJson(Paths.mods('data/achievements.json'));
+		for (i => mod in Mods.parseList().enabled)
+		{
+			Mods.currentModDirectory = mod;
+			loadAchievementJson(Paths.mods('$mod/data/achievements.json'));
+		}
+		Mods.currentModDirectory = modLoaded;
+	}
+
+	inline static function loadAchievementJson(path:String, addMods:Bool = true)
+	{
+		var retVal:Array<Dynamic> = null;
+		if(FileSystem.exists(path)) {
+			try {
+				var rawJson:String = File.getContent(path).trim();
+				if(rawJson != null && rawJson.length > 0) retVal = Json.parse(rawJson); //Json.parse('{"achievements": $rawJson}').achievements;
+				
+				if(addMods && retVal != null)
+				{
+					for (i in 0...retVal.length)
+					{
+						var achieve:Dynamic = retVal[i];
+						if(achieve == null)
+						{
+							var errorTitle = 'Mod name: ' + Mods.currentModDirectory != null ? Mods.currentModDirectory : "None";
+							var errorMsg = 'Achievement #${i+1} is invalid.';
+							#if windows
+							lime.app.Application.current.window.alert(errorMsg, errorTitle);
+							#end
+							trace('$errorTitle - $errorMsg');
+							continue;
+						}
+
+						var key:String = achieve.save;
+						if(key == null || key.trim().length < 1)
+						{
+							var errorTitle = 'Error on Achievement: ' + (achieve.name != null ? achieve.name : achieve.save);
+							var errorMsg = 'Missing valid "save" value.';
+							#if windows
+							lime.app.Application.current.window.alert(errorMsg, errorTitle);
+							#end
+							trace('$errorTitle - $errorMsg');
+							continue;
+						}
+						key = key.trim();
+						if(achievements.exists(key)) continue;
+
+						createAchievement(key, achieve, Mods.currentModDirectory);
+					}
+				}
+			} catch(e:Dynamic) {
+				var errorTitle = 'Mod name: ' + Mods.currentModDirectory != null ? Mods.currentModDirectory : "None";
+				var errorMsg = 'Error loading achievements.json: $e';
+				#if windows
+				lime.app.Application.current.window.alert(errorMsg, errorTitle);
+				#end
+				trace('$errorTitle - $errorMsg');
+			}
+		}
+		return retVal;
+	}
+
+	#if LUA_ALLOWED
+	public static function addLuaCallbacks(lua:State)
+	{
+		Lua_helper.add_callback(lua, "getAchievementScore", function(name:String):Float
+		{
+			if(!achievements.exists(name))
+			{
+				FunkinLua.luaTrace('getAchievementScore: Couldnt find achievement: $name', false, false, FlxColor.RED);
+				return -1;
+			}
+			return getScore(name);
+		});
+		Lua_helper.add_callback(lua, "setAchievementScore", function(name:String, ?value:Float = 1, ?saveIfNotUnlocked:Bool = true):Float
+		{
+			if(!achievements.exists(name))
+			{
+				FunkinLua.luaTrace('setAchievementScore: Couldnt find achievement: $name', false, false, FlxColor.RED);
+				return -1;
+			}
+			return setScore(name, value, saveIfNotUnlocked);
+		});
+		Lua_helper.add_callback(lua, "addAchievementScore", function(name:String, ?value:Float = 1, ?saveIfNotUnlocked:Bool = true):Float
+		{
+			if(!achievements.exists(name))
+			{
+				FunkinLua.luaTrace('addAchievementScore: Couldnt find achievement: $name', false, false, FlxColor.RED);
+				return -1;
+			}
+			return addScore(name, value, saveIfNotUnlocked);
+		});
+		Lua_helper.add_callback(lua, "unlockAchievement", function(name:String):Dynamic
+		{
+			if(!achievements.exists(name))
+			{
+				FunkinLua.luaTrace('unlockAchievement: Couldnt find achievement: $name', false, false, FlxColor.RED);
+				return null;
+			}
+			return unlock(name);
+		});
+		Lua_helper.add_callback(lua, "isAchievementUnlocked", function(name:String):Dynamic
+		{
+			if(!achievements.exists(name))
+			{
+				FunkinLua.luaTrace('isAchievementUnlocked: Couldnt find achievement: $name', false, false, FlxColor.RED);
+				return null;
+			}
+			return isUnlocked(name);
+		});
+		Lua_helper.add_callback(lua, "achievementExists", function(name:String) return achievements.exists(name));
+	}
+	#end
+	#end
 }
 #end
