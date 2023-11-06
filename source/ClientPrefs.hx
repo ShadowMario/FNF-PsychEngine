@@ -43,7 +43,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var songPercentage:Bool = true;
 	public static var autosaveInterval:Float = 5.0;
 	public static var noteMotionBlur:Bool = false;
-	public static var onlyBopWhenSing:Bool = false;
 	public static var noteMBMult:Float = 1;
 	public static var comboMultLimit:Float = 5;
 	public static var minCGBMS:Int = 5;
@@ -244,7 +243,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.noGunsRNG = noGunsRNG;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.daMenuMusic = daMenuMusic;
-		FlxG.save.data.onlyBopWhenSing = onlyBopWhenSing;
 		FlxG.save.data.maxSplashLimit = maxSplashLimit;
 		FlxG.save.data.showMaxScore = showMaxScore;
 		FlxG.save.data.autosaveInterval = autosaveInterval;
@@ -449,9 +447,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if (FlxG.save.data.dynamicColors != null) {
 			dynamicColors = FlxG.save.data.dynamicColors;
-		}
-		if (FlxG.save.data.onlyBopWhenSing != null) {
-			onlyBopWhenSing = FlxG.save.data.onlyBopWhenSing;
 		}
 		if(FlxG.save.data.pbRControls != null) {
 			pbRControls = FlxG.save.data.pbRControls;

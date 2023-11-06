@@ -176,13 +176,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		*/
 
-		var option:Option = new Option('Icon Bop Only when Singing',
-			'If checked, the icons will ONLY bop if the respective side is singing.',
-			'onlyBopWhenSing',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('Color Quantization',
 			'If checked, notes are colored based on their quantization.',
 			'colorQuants',

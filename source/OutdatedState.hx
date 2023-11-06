@@ -50,10 +50,10 @@ class OutdatedState extends MusicBeatState
 			+ "\nwhile the most recent version is "
 			+ TitleState.updateVersion
 			+ "."
-			+ "\n\nHere's what's new:\n\n"
-			+ currChanges
-			+ "\n& more changes and bugfixes in the full changelog"
-			+ "\n\nPress Space to view the full changelog and update\nor ESCAPE to ignore this",
+			//+ "\n\nHere's what's new:\n\n"
+			//+ currChanges
+			//+ "\n& more changes and bugfixes in the full changelog"
+			+ "\n\nPress Space to view the full changelog, ENTER to update\nor ESCAPE to ignore this",
 			32);
 		#end
 		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
@@ -70,7 +70,8 @@ class OutdatedState extends MusicBeatState
 		if(!leftState) {
 			if (controls.ACCEPT) {
 				leftState = true;
-				CoolUtil.browserLoad("https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/latest");
+				MusicBeatState.switchState(new UpdateState());
+				//CoolUtil.browserLoad("https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/latest");
 			}
 			else if(controls.BACK) {
 				leftState = true;

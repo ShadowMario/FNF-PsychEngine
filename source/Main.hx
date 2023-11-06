@@ -25,9 +25,6 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 #end
-#if (target.threaded && sys && desktop)
-import sys.thread.ElasticThreadPool;
-#end
 
 using StringTools;
 
@@ -128,10 +125,6 @@ class Main extends Sprite {
 		setupGame();
 	}
 
-	#if (target.threaded && sys && desktop)
-	public static var threadPool:ElasticThreadPool;
-	#end
-
 	private function setupGame():Void {
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
@@ -162,10 +155,6 @@ class Main extends Sprite {
 		if (fpsVar != null) {
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
-
-		#if (target.threaded && sys && desktop)
-		threadPool = new ElasticThreadPool(12, 30);
-		#end
 
 		FlxG.autoPause = false;
 

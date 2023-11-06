@@ -71,6 +71,53 @@ class CoolUtil
 		Sys.exit(0);
 	}
 
+public static function updateTheEngine():Void {
+    // Get the directory of the executable
+    var exePath = Sys.executablePath();
+    var exeDir = haxe.io.Path.directory(exePath);
+
+    // Construct the source directory path based on the executable location
+    var sourceDirectory = haxe.io.Path.join([exeDir, "update", "raw"]);
+
+    // Escape backslashes for use in the batch script
+    sourceDirectory = sourceDirectory.split('\\').join('\\\\');
+
+    var destinationDirectory = exeDir;
+    var excludeFolder = "mods";
+
+    // Escape backslashes for use in the batch script
+
+    // Construct the batch script with echo statements
+    var theBatch = "@echo off\r\n";
+    theBatch += "taskkill /IM JSEngine.exe\r\n";
+    theBatch += "setlocal enabledelayedexpansion\r\n";
+    theBatch += "set \"sourceDirectory=" + sourceDirectory + "\"\r\n";
+    theBatch += "set \"destinationDirectory=" + destinationDirectory + "\"\r\n";
+    theBatch += "set \"excludeFolder=mods\"\r\n";
+    theBatch += "if not exist \"!sourceDirectory!\" (\r\n";
+    theBatch += "  echo Source directory does not exist: !sourceDirectory!\r\n";
+    theBatch += "  pause\r\n";
+    theBatch += "  exit /b\r\n";
+    theBatch += ")\r\n";
+    theBatch += "cd /d \"!destinationDirectory!\"\r\n";
+    theBatch += "for /f \"delims=\" %%F in ('dir /b /a-d ^| findstr /v /c:\"!excludeFolder!\" ^| findstr /v /c:\"update\" ^| findstr /v /c:\"%~nx0\"') do (\r\n";
+    theBatch += "  del \"%%F\"\r\n";
+    theBatch += ")\r\n";
+    theBatch += "cd /d \"%~dp0\"\r\n";
+    theBatch += "xcopy /e /y \"!sourceDirectory!\" \"!destinationDirectory!\"\r\n";
+    theBatch += "rd /s /q \"!sourceDirectory!\"\r\n";
+    theBatch += "echo Contents of sourceDirectory (excluding !excludeFolder!) have been moved to destinationDirectory.\r\n";
+    theBatch += "endlocal\r\n";
+    theBatch += "pause\r\n";
+
+    // Save the batch file in the executable's directory
+    File.saveContent(haxe.io.Path.join([exeDir, "update.bat"]), theBatch);
+
+    // Execute the batch file
+			new Process(exeDir + "/update.bat", []);
+    Sys.exit(0);
+}
+
 	public static function checkForOBS():Bool
 	{
 		var fs:Bool = FlxG.fullscreen;

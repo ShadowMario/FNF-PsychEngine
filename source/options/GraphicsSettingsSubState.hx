@@ -108,6 +108,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			60);
 		addOption(option);
 
+		option.scrollSpeed = 120;
 		option.minValue = 1;
 		option.maxValue = 1000;
 		option.displayFormat = '%v FPS';

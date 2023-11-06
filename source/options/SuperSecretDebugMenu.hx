@@ -90,6 +90,15 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 		option.onChange = crashDaEngine;
 		addOption(option);
 
+		var option:Option = new Option('Test Update Screen',
+			"Select this to test the engine's update screen.",
+			'updateThing',
+			'bool',
+			false);
+
+		option.onChange = doDaUpdate;
+		addOption(option);
+
 		super();
 	}
 	function crashDaEngine():Void {
@@ -133,5 +142,29 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
     }
     
     nextMessage();
+	}
+	function doDaUpdate():Void {
+		if(ClientPrefs.checkForUpdates) {
+			trace('checking for update');
+			var http = new haxe.Http("https://raw.githubusercontent.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/main/version.downloadMe");
+			var returnedData:Array<String> = [];
+
+			http.onData = function (data:String)
+			{
+					returnedData[0] = data.substring(0, data.indexOf(';'));
+					returnedData[1] = data.substring(data.indexOf('-'), data.length);
+				var updateVersion:String = returnedData[0];
+				var curVersion:String = MainMenuState.psychEngineJSVersion.trim();
+					OutdatedState.currChanges = returnedData[1];
+			}
+
+			http.onError = function (error) {
+				trace('error: $error');
+			}
+
+			http.request();
+		}
+    
+    MusicBeatState.switchState(new OutdatedState());
 	}
 }
