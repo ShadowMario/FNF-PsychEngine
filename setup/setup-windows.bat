@@ -9,6 +9,7 @@ haxelib install flixel
 haxelib install tjson
 haxelib install flixel-addons
 haxelib install flixel-tools
+haxelib install flxanimate
 haxelib install SScript
 haxelib install hxCodec
 haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
