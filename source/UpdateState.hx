@@ -85,7 +85,7 @@ class UpdateState extends MusicBeatState
 		progressBar = new FlxBar(progBar_bg.x + 5, progBar_bg.y + 5, LEFT_TO_RIGHT, Std.int(progBar_bg.width - 10), Std.int(progBar_bg.height - 10), this,
 			"entire_progress", 0, 100);
 		progressBar.numDivisions = 3000;
-		progressBar.createFilledBar(0xFF8F8F8F, 0xFF005FAD);
+		progressBar.createFilledBar(0xFF8F8F8F, 0xFFAD4E00);
 		add(progressBar);
 
 		progressText = new FlxText(progressBar.x, progressBar.y - 20, 0, "0%", 16);
@@ -158,7 +158,7 @@ class UpdateState extends MusicBeatState
 
 	function getUpdateLink()
 	{
-			online_url = "https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/download/latest/FNF-JS-Engine.zip";
+			online_url = "https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/download/" + TitleState.updateVersion + "/FNF-JS-Engine.zip";
 			trace("update url: " + online_url);
 	}
 

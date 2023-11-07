@@ -68,10 +68,13 @@ class OutdatedState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if(!leftState) {
-			if (controls.ACCEPT) {
+			if (FlxG.keys.justPressed.ENTER) {
 				leftState = true;
 				MusicBeatState.switchState(new UpdateState());
 				//CoolUtil.browserLoad("https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/latest");
+			}
+			if (FlxG.keys.justPressed.SPACE) {
+				CoolUtil.browserLoad("https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/latest");
 			}
 			else if(controls.BACK) {
 				leftState = true;
