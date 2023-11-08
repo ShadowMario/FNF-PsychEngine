@@ -48,6 +48,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var minCGBMS:Int = 5;
 	public static var maxCGBMS:Int = 5;
 	public static var autosaveCharts:Bool = true;
+	public static var tipTexts:Bool = true;
 	public static var antiCheatEnable:Bool = false;
 	public static var showRamUsage:Bool = true;
 	public static var showMaxRamUsage:Bool = true;
@@ -240,6 +241,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
 		FlxG.save.data.progAudioLoad = progAudioLoad;
+		FlxG.save.data.tipTexts = tipTexts;
 		FlxG.save.data.noGunsRNG = noGunsRNG;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.daMenuMusic = daMenuMusic;
@@ -453,6 +455,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.cameraPanning != null) {
 			cameraPanning = FlxG.save.data.cameraPanning;
+		}
+		if(FlxG.save.data.tipTexts != null) {
+			tipTexts = FlxG.save.data.tipTexts;
 		}
 		if(FlxG.save.data.botTxtFade != null) {
 			botTxtFade = FlxG.save.data.botTxtFade;

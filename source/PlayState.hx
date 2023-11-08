@@ -38,7 +38,6 @@ import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import haxe.Json;
-import haxe.Int64;
 import lime.utils.Assets;
 import openfl.Lib;
 import openfl.filters.BitmapFilter;
@@ -1920,9 +1919,11 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 		reloadHealthBarColors();
 
+		if (SONG.player1 == 'bf' || SONG.player1 == 'boyfriend') { //in case any mods just have bfs json name set to boyfriend and not bf
 		if (ClientPrefs.bfIconStyle == 'VS Nonsense V2') iconP1.changeIcon('bfnonsense'); 
 		if (ClientPrefs.bfIconStyle == 'Doki Doki+') iconP1.changeIcon('bfdoki'); 
 		if (ClientPrefs.bfIconStyle == 'Leather Engine') iconP1.changeIcon('bfleather'); 
+		}
 
 		if (ClientPrefs.timeBarType == 'Disabled') {
 		timeBarBG.destroy();
@@ -5288,7 +5289,7 @@ if (ClientPrefs.showNPS) {
 		iconP1.offset.y = Math.abs(Math.sin(funnyBeat * Math.PI))  * 16 - 4;
 		iconP2.offset.y = Math.abs(Math.sin(funnyBeat * Math.PI))  * 16 - 4;
 		}
-		if (ClientPrefs.iconBounceType == 'New Psych') {
+		if (ClientPrefs.iconBounceType == 'New Psych' || ClientPrefs.iconBounceType == 'SB Engine') {
 		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
 		iconP1.scale.set(mult, mult);
 		iconP1.updateHitbox();
@@ -5310,6 +5311,29 @@ if (ClientPrefs.showNPS) {
 		if (ClientPrefs.iconBounceType == 'Golden Apple') {
 		iconP1.centerOffsets();
 		iconP2.centerOffsets();
+		}
+		var speed:Float = 1;
+		//you're welcome Stefan2008 :)
+		if (ClientPrefs.iconBounceType == 'SB Engine') {
+			speed *= playbackRate;
+			if (iconP1.angle >= 0) {
+				if (iconP1.angle != 0) {
+					iconP1.angle -= speed;
+				}
+			} else {
+				if (iconP1.angle != 0) {
+					iconP1.angle += speed;
+				}
+			}
+			if (iconP2.angle >= 0) {
+				if (iconP2.angle != 0) {
+					iconP2.angle -= speed;
+				}
+			} else {
+				if (iconP2.angle != 0) {
+					iconP2.angle += speed;
+				}
+			}
 		}
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -7695,7 +7719,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 			pixelShitPart1 = 'kadethings/';
 			pixelShitPart2 = '';
 		}
-		if (allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
+		if (allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.sickWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
 		{
 			pixelShitPart1 = 'goldstuff/';
 			pixelShitPart2 = '';
@@ -9327,6 +9351,24 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		if (ClientPrefs.iconBounceType == 'New Psych') {
 		iconP1.scale.set(1.2, 1.2);
 		iconP2.scale.set(1.2, 1.2);
+		}
+		//you're welcome Stefan2008 :)
+		if (ClientPrefs.iconBounceType == 'SB Engine') {
+			if (curBeat % gfSpeed == 0) {
+				if (curBeat % (gfSpeed * 2) == 0) {
+					iconP1.scale.set(0.8, 0.8);
+					iconP2.scale.set(1.2, 1.3);
+					
+					iconP1.angle = -15;
+					iconP2.angle = 15;
+				} else {
+					iconP2.scale.set(0.8, 0.8);
+					iconP1.scale.set(1.2, 1.3);
+					
+					iconP2.angle = -15;
+					iconP1.angle = 15;
+				}
+			}
 		}
 
 		iconP1.updateHitbox();

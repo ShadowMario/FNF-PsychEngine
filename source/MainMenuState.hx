@@ -20,6 +20,7 @@ import lime.app.Application;
 import Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
+import flixel.util.FlxTimer;
 
 using StringTools;
 
@@ -47,6 +48,13 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+
+	var tipTextMargin:Float = 10;
+	var tipTextScrolling:Bool = false;
+	var tipBackground:FlxSprite;
+	var tipText:FlxText;
+	var isTweening:Bool = false;
+	var lastString:String = '';
 
 	override function create()
 	{
@@ -86,6 +94,7 @@ class MainMenuState extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
@@ -150,6 +159,21 @@ class MainMenuState extends MusicBeatState
 
 		// NG.core.calls.event.logEvent('swag').send();
 
+		tipBackground = new FlxSprite();
+		tipBackground.scrollFactor.set();
+		tipBackground.alpha = 0.7;
+		tipBackground.visible = ClientPrefs.tipTexts;
+		add(tipBackground);
+
+		tipText = new FlxText(0, 0, 0, "");
+		tipText.scrollFactor.set();
+		tipText.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, CENTER);
+		tipText.updateHitbox();
+		tipText.visible = ClientPrefs.tipTexts;
+		add(tipText);
+
+		tipBackground.makeGraphic(FlxG.width, Std.int((tipTextMargin * 2) + tipText.height), FlxColor.BLACK);
+
 		changeItem();
 
 		#if ACHIEVEMENTS_ALLOWED
@@ -164,6 +188,9 @@ class MainMenuState extends MusicBeatState
 			}
 		}
 		#end
+
+		changeItem();
+		tipTextStartScrolling();
 
 		#if android
 		addVirtualPad(UP_DOWN, A_B_C);
@@ -182,9 +209,64 @@ class MainMenuState extends MusicBeatState
 	#end
 
 	var selectedSomethin:Bool = false;
+	//credit to stefan2008 and sb engine for this code
+	function tipTextStartScrolling()
+	{
+		tipText.x = tipTextMargin;
+		tipText.y = -tipText.height;
+
+		new FlxTimer().start(1.0, function(timer:FlxTimer)
+		{
+			FlxTween.tween(tipText, {y: tipTextMargin}, 0.3);
+			new FlxTimer().start(2.25, function(timer:FlxTimer)
+			{
+				tipTextScrolling = true;
+			});
+		});
+	}
+
+	function changeTipText() {
+		var selectedText:String = '';
+		var textArray:Array<String> = CoolUtil.coolTextFile(SUtil.getPath() + Paths.txt('funnyTips'));
+
+		tipText.alpha = 1;
+		isTweening = true;
+		selectedText = textArray[FlxG.random.int(0, (textArray.length - 1))].replace('--', '\n');
+		FlxTween.tween(tipText, {alpha: 0}, 1, {
+			ease: FlxEase.linear,
+			onComplete: function(freak:FlxTween) {
+				if (selectedText != lastString) {
+					tipText.text = selectedText;
+					lastString = selectedText;
+				} else {
+					selectedText = textArray[FlxG.random.int(0, (textArray.length - 1))].replace('--', '\n');
+					tipText.text = selectedText;
+				}
+
+				tipText.alpha = 0;
+
+				FlxTween.tween(tipText, {alpha: 1}, 1, {
+					ease: FlxEase.linear,
+					onComplete: function(freak:FlxTween) {
+						isTweening = false;
+					}
+				});
+			}
+		});
+	}
 
 	override function update(elapsed:Float)
 	{
+		if (tipTextScrolling)
+		{
+			tipText.x -= elapsed * 130;
+			if (tipText.x < -tipText.width)
+			{
+				tipTextScrolling = false;
+				tipTextStartScrolling();
+				changeTipText();
+			}
+		}
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;

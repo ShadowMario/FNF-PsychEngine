@@ -328,7 +328,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'iconBounceType',
 			'string',
 			'Golden Apple',
-			['Golden Apple', 'Dave and Bambi', 'Old Psych', 'New Psych', 'VS Steve', 'Plank Engine', 'Strident Crisis']);
+			['Golden Apple', 'Dave and Bambi', 'Old Psych', 'New Psych', 'VS Steve', 'Plank Engine', 'Strident Crisis', 'SB Engine']);
 		addOption(option);
 
 		var option:Option = new Option('Note Splash Type:',
@@ -551,6 +551,12 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Main Menu Tips',
+			"If unchecked, hides those tips at the top in the main menu!",
+			'tipTexts',
+			'bool',
+			true);
+		addOption(option);
 
 		super();
 	}
