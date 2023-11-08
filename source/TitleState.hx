@@ -147,8 +147,11 @@ class TitleState extends MusicBeatState
 
 			http.onData = function (data:String)
 			{
-					returnedData[0] = data.substring(0, data.indexOf(';'));
-					returnedData[1] = data.substring(data.indexOf('-'), data.length);
+    				var versionEndIndex:Int = data.indexOf(';');
+    				returnedData[0] = data.substring(0, versionEndIndex);
+
+    				// Extract the changelog after the version number
+    				returnedData[1] = data.substring(versionEndIndex + 1, data.length);
 				updateVersion = returnedData[0];
 				var curVersion:String = MainMenuState.psychEngineJSVersion.trim();
 				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
