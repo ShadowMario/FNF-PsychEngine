@@ -44,21 +44,17 @@ class OutdatedState extends MusicBeatState
 			+ "\n\nPress A button to view the full changelog and update\nor B button to ignore this",
 			32);
 		#else
-		warnText = new FlxText(0, 0, FlxG.width,
-			"Your version of JS Engine is outdated!\nYou are on "
-			+ MainMenuState.psychEngineJSVersion
-			+ "\nwhile the most recent version is "
-			+ TitleState.updateVersion
-			+ "."
-			//+ "\n\nHere's what's new:\n\n"
-			//+ currChanges
-			//+ "\n& more changes and bugfixes in the full changelog"
-			+ "\n\nPress Space to view the full changelog, ENTER to update\nor ESCAPE to ignore this",
-			32);
-		#end
-		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
-		warnText.screenCenter(Y);
+		warnText = new FlxText(0, 10, FlxG.width,
+			"HEY! Your JS Engine is outdated!\n"
+			+ 'v$MainMenuState.psychEngineJSVersion < v$TitleState.updateVersion\n'
+			,32);
+		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		warnText.screenCenter(X);
 		add(warnText);
+
+		var changelog = new FlxText(100, txt.y + txt.height + 20, 1080, currChanges, 16);
+		changelog.setFormat(Paths.font("vcr.ttf"), Std.int(16), FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(changelog);
 
 		#if android
         addVirtualPad(NONE, A_B);
@@ -70,8 +66,10 @@ class OutdatedState extends MusicBeatState
 		if(!leftState) {
 			if (FlxG.keys.justPressed.ENTER) {
 				leftState = true;
-				MusicBeatState.switchState(new UpdateState());
-				//CoolUtil.browserLoad("https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/latest");
+				#if windows MusicBeatState.switchState(new UpdateState());
+				#else
+				CoolUtil.browserLoad("https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/latest");
+				#end
 			}
 			if (FlxG.keys.justPressed.SPACE) {
 				CoolUtil.browserLoad("https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/latest");

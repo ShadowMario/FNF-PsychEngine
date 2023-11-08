@@ -7484,6 +7484,8 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 		//trace(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
 		if (note != null && note.isSustainNote && ClientPrefs.holdNoteHits) noteDiff = 0;
 		var wife:Float = EtternaFunctions.wife3(noteDiff, Conductor.timeScale);
+		noteDiff /= playbackRate;
+		wife /= playbackRate;
 
 		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
@@ -7514,7 +7516,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 		if (noteDiff > ClientPrefs.marvWindow && noteDiff < ClientPrefs.sickWindow && !ClientPrefs.noMarvJudge) maxScore -= 150 * Std.int(polyphony); //if you enable marvelous judges and hit a sick, lower the max score by 150 points. otherwise it won't make sense
 
 		//tryna do MS based judgment due to popular demand
-		var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
+		var daRating:Rating = Conductor.judgeNote(note, noteDiff);
 
 		if (!ClientPrefs.complexAccuracy) totalNotesHit += daRating.ratingMod;
 		if (ClientPrefs.complexAccuracy) totalNotesHit += wife;
