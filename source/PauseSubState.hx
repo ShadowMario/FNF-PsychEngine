@@ -469,11 +469,11 @@ class PauseSubState extends MusicBeatSubstate
 	
 	function updateSkipTextStuff()
 	{
-		if(skipTimeText == null || skipTimeTracker == null) return;
-
+		if(skipTimeText != null || skipTimeTracker != null) {
 		skipTimeText.x = skipTimeTracker.x + skipTimeTracker.width + 60;
 		skipTimeText.y = skipTimeTracker.y;
 		skipTimeText.visible = (skipTimeTracker.alpha >= 1);
+		}
 	}
 
 	function updateSkipTimeText()
