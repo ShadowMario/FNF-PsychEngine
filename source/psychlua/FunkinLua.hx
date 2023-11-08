@@ -434,6 +434,7 @@ class FunkinLua {
 						if (script.origin == foundScript)
 						{
 							trace('Closing script: ' + script.origin);
+							game.hscriptArray.remove(script);
 							script.destroy();
 							return true;
 						}
