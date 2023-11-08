@@ -24,6 +24,7 @@ class OutdatedState extends MusicBeatState
 	var changelog:FlxText;
 	var updateText:FlxText;
 	var checker:FlxBackdrop;
+	var bg:FlxSprite;
 	override function create()
 	{
 		Paths.clearStoredMemory();
@@ -33,7 +34,7 @@ class OutdatedState extends MusicBeatState
 
 		super.create();
 
-		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
+		bg = new FlxSprite(0, 0).loadGraphic(Paths.image("aboutMenu", "preload"));
 		bg.color = 0xFFffd700;
 		bg.scale.set(1.1, 1.1);
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
@@ -115,6 +116,21 @@ class OutdatedState extends MusicBeatState
 					}
 				});
 				FlxTween.tween(changelog, {alpha: 0}, 1, {
+					onComplete: function (twn:FlxTween) {
+						MusicBeatState.switchState(new MainMenuState());
+					}
+				});
+				FlxTween.tween(updateText, {alpha: 0}, 1, {
+					onComplete: function (twn:FlxTween) {
+						MusicBeatState.switchState(new MainMenuState());
+					}
+				});
+				FlxTween.tween(checker, {alpha: 0}, 1, {
+					onComplete: function (twn:FlxTween) {
+						MusicBeatState.switchState(new MainMenuState());
+					}
+				});
+				FlxTween.tween(bg, {alpha: 0}, 1, {
 					onComplete: function (twn:FlxTween) {
 						MusicBeatState.switchState(new MainMenuState());
 					}
