@@ -1535,7 +1535,13 @@ class FunkinLua {
 		DeprecatedFunctions.implement(this);
 		
 		try{
-			var result:Dynamic = LuaL.dofile(lua, scriptName);
+			var isString:Bool = !FileSystem.exists(scriptName);
+			var result:Dynamic = null;
+			if(!isString)
+				result = LuaL.dofile(lua, scriptName);
+			else
+				result = LuaL.dostring(lua, scriptName);
+
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
 				trace(resultStr);
@@ -1547,6 +1553,7 @@ class FunkinLua {
 				lua = null;
 				return;
 			}
+			if(isString) scriptName = 'unknown';
 		} catch(e:Dynamic) {
 			trace(e);
 			return;
