@@ -2475,7 +2475,7 @@ class PlayState extends MusicBeatState
 			numScore.x = placement + (43 * daLoop) - 90 + ClientPrefs.data.comboOffset[2];
 			numScore.y += 80 - ClientPrefs.data.comboOffset[3];
 			
-			if (!PlayState.isPixelStage || stageUI.endsWith("-pixel")) numScore.setGraphicSize(Std.int(numScore.width * 0.5));
+			if (!PlayState.isPixelStage && !stageUI.endsWith("-pixel")) numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			else numScore.setGraphicSize(Std.int(numScore.width * daPixelZoom));
 			numScore.updateHitbox();
 
