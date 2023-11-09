@@ -996,7 +996,7 @@ class PlayState extends MusicBeatState
 				introAssets.set(stageUI, introImagesArray);
 
 				var introAlts:Array<String> = introAssets.get(stageUI);
-				var antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage);
+				var antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage && !stageUI.endsWith("-pixel"));
 				var tick:Countdown = THREE;
 
 				switch (swagCounter)
@@ -1047,7 +1047,7 @@ class PlayState extends MusicBeatState
 		spr.scrollFactor.set();
 		spr.updateHitbox();
 
-		if (PlayState.isPixelStage)
+		if (PlayState.isPixelStage || stageUI.endsWith("-pixel"))
 			spr.setGraphicSize(Std.int(spr.width * daPixelZoom));
 
 		spr.screenCenter();
@@ -1307,7 +1307,7 @@ class PlayState extends MusicBeatState
 						swagNote.tail.push(sustainNote);
 
 						sustainNote.correctionOffset = swagNote.height / 2;
-						if(!PlayState.isPixelStage)
+						if(!PlayState.isPixelStage && !stageUI.endsWith("-pixel"))
 						{
 							if(oldNote.isSustainNote)
 							{
@@ -2412,7 +2412,7 @@ class PlayState extends MusicBeatState
 		{
 			uiPrefix = '${stageUI}UI/';
 			if (PlayState.isPixelStage) uiSuffix = '-pixel';
-			antialias = !isPixelStage;
+			antialias = !isPixelStage && !stageUI.endsWith("-pixel");
 		}
 
 		rating.loadGraphic(Paths.image(uiPrefix + daRating.image + uiSuffix));
@@ -2440,7 +2440,7 @@ class PlayState extends MusicBeatState
 		comboSpr.velocity.x += FlxG.random.int(1, 10) * playbackRate;
 		comboGroup.add(rating);
 
-		if (!PlayState.isPixelStage)
+		if (!PlayState.isPixelStage && !stageUI.endsWith("-pixel"))
 		{
 			rating.setGraphicSize(Std.int(rating.width * 0.7));
 			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
@@ -2475,7 +2475,7 @@ class PlayState extends MusicBeatState
 			numScore.x = placement + (43 * daLoop) - 90 + ClientPrefs.data.comboOffset[2];
 			numScore.y += 80 - ClientPrefs.data.comboOffset[3];
 			
-			if (!PlayState.isPixelStage) numScore.setGraphicSize(Std.int(numScore.width * 0.5));
+			if (!PlayState.isPixelStage || stageUI.endsWith("-pixel")) numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			else numScore.setGraphicSize(Std.int(numScore.width * daPixelZoom));
 			numScore.updateHitbox();
 
@@ -2484,14 +2484,11 @@ class PlayState extends MusicBeatState
 			numScore.velocity.x = FlxG.random.float(-5, 5) * playbackRate;
 			numScore.visible = !ClientPrefs.data.hideHud;
 			numScore.antialiasing = antialias;
-
 			//if (combo >= 10 || combo == 0)
-			if(showComboNum)
-				comboGroup.add(numScore);
+			if(showComboNum) comboGroup.add(numScore);
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2 / playbackRate, {
-				onComplete: function(tween:FlxTween)
-				{
+				onComplete: function(tween:FlxTween) {
 					numScore.destroy();
 				},
 				startDelay: Conductor.crochet * 0.002 / playbackRate
