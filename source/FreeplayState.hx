@@ -391,6 +391,11 @@ class FreeplayState extends MusicBeatState
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+				for (i in 0...CoolUtil.defaultSongs.length) {
+					if (Paths.formatToSongPath(PlayState.SONG.song) == CoolUtil.defaultSongs[i] && curDifficulty == 2 && ClientPrefs.JSEngineRecharts) {
+						PlayState.SONG = Song.loadFromJson(songs[curSelected].songName.toLowerCase() + '-jshard', songs[curSelected].songName.toLowerCase());
+					}
+				}
 				if (PlayState.SONG.needsVoices)
 					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 				else
@@ -415,7 +420,7 @@ class FreeplayState extends MusicBeatState
 					noteCount += section.sectionNotes.length;
 					requiredRamLoad += 72872 * section.sectionNotes.length;
 					}
-					CoolUtil.coolError("There are " + FlxStringUtil.formatMoney(noteCount, false) + " notes in this chart!\nWith Show Notes turned on, you'd need " + formatCompactNumber(requiredRamLoad / 2) + " of ram to load this.", "JS Engine Chart Diagnosis");
+					CoolUtil.coolError("There are " + FlxStringUtil.formatMoney(noteCount, false) + " notes in this chart!\nWith Show Notes turned on, you'd need " + CoolUtil.formatBytes((requiredRamLoad / 2), false, 2) + " of ram to load this.", "JS Engine Chart Diagnosis");
 				}
 			}
 			function songJsonPopup() { //you pressed space, but the song's ogg files don't exist
@@ -439,7 +444,7 @@ class FreeplayState extends MusicBeatState
 			}
 			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
-			#if desktop
+			#if MODS_ALLOWED
 			if(instPlaying != curSelected)
 			{
 				if(sys.FileSystem.exists(Paths.inst(songLowercase + '/'  + poop)) || sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop)) || sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)))
@@ -474,11 +479,18 @@ class FreeplayState extends MusicBeatState
 				trace('Couldnt find file');
 			}*/
 			trace(poop);
-
-			if(sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) || sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {//fix an issue where any song in the mods folder would return an error even if both the json and song files existed
 			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
+
+			if(sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) || sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop)) || OpenFlAssets.exists(Paths.modsJson(songLowercase + '/' + poop)) || OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
+				for (i in 0...CoolUtil.defaultSongs.length) {
+					if (Paths.formatToSongPath(PlayState.SONG.song) == CoolUtil.defaultSongs[i] && curDifficulty == 2 && ClientPrefs.JSEngineRecharts) {
+						PlayState.SONG = Song.loadFromJson(songs[curSelected].songName.toLowerCase() + '-jshard', songs[curSelected].songName.toLowerCase());
+						PlayState.storyDifficulty == 2;
+					} else {
+						PlayState.storyDifficulty = curDifficulty;
+					}
+				}
 			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
 
 			trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
 			if(colorTween != null) {

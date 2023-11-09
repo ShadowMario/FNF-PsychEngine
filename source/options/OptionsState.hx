@@ -6,6 +6,7 @@ import Discord.DiscordClient;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxCamera;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
@@ -15,6 +16,7 @@ import lime.utils.Assets;
 import flixel.FlxSubState;
 import flash.text.TextField;
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.util.FlxSave;
 import haxe.Json;
@@ -35,12 +37,14 @@ class OptionsState extends MusicBeatState
 var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
 	var konamiCode = [];
 	var isEnteringKonamiCode:Bool = false;
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Optimization', 'Visuals and UI', 'Gameplay'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Optimization', 'Visuals and UI', 'Gameplay', 'Misc'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
 	public static var onPlayState:Bool = false;
 	public var enteringDebugMenu:Bool = false;
+	private var mainCamera:FlxCamera;
+	private var subCamera:FlxCamera;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
@@ -79,6 +83,11 @@ var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
 			removeVirtualPad();
 			#end
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
+			case 'Misc':
+			#if android
+			removeVirtualPad();
+			#end
+				openSubState(new options.MiscSettingsSubState());
 		}
 	}
 
@@ -86,20 +95,40 @@ var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
 	var selectorRight:Alphabet;
 	var customizeAndroidControlsTipText:FlxText;
 	var androidControlsStyleTipText:FlxText;
+	var camFollow:FlxObject;
+	var camFollowPos:FlxObject;
 
 	override function create() {
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+		mainCamera = new FlxCamera();
+		subCamera = new FlxCamera();
+		subCamera.bgColor.alpha = 0;
+
+		FlxG.cameras.reset(mainCamera);
+		FlxG.cameras.add(subCamera, false);
+
+		FlxG.cameras.setDefaultDrawTarget(mainCamera, true);
+		CustomFadeTransition.nextCamera = subCamera;
+
+		camFollow = new FlxObject(0, 0, 1, 1);
+		camFollowPos = new FlxObject(0, 0, 1, 1);
+		add(camFollow);
+		add(camFollowPos);
+		FlxG.camera.follow(camFollowPos, null, 1);
 
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 
+		var yScroll:Float = Math.max(0.25 - (0.05 * (options.length - 4)), 0.1);
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
 		bg.updateHitbox();
+		bg.scrollFactor.set(0, yScroll / 4);
 
 		bg.screenCenter();
+		bg.y -= 5;
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
@@ -111,12 +140,15 @@ var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
 			var optionText:Alphabet = new Alphabet(0, 0, options[i], true);
 			optionText.screenCenter();
 			optionText.y += (100 * (i - (options.length / 2))) + 50;
+			optionText.scrollFactor.set(0, yScroll*1.5);
 			grpOptions.add(optionText);
 		}
-
+		//I TOOK THIS FROM THE MAIN MENU STATE, NOT FROM DENPA ENGINE
 		selectorLeft = new Alphabet(0, 0, '>', true);
+		selectorLeft.scrollFactor.set(0, yScroll*1.5);
 		add(selectorLeft);
 		selectorRight = new Alphabet(0, 0, '<', true);
+		selectorRight.scrollFactor.set(0, yScroll*1.5);
 		add(selectorRight);
 
 		changeSelection();
@@ -151,6 +183,9 @@ var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
+
+		var lerpVal:Float = CoolUtil.clamp(elapsed * 7.5, 0, 1);
+		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
 		if (controls.UI_UP_P) {
 			changeSelection(-1);
@@ -231,12 +266,17 @@ var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
 			bullShit++;
 
 			item.alpha = 0.6;
+			var thing:Float = 0;
 			if (item.targetY == 0) {
 				item.alpha = 1;
+				if(grpOptions.members.length > 4) {
+					thing = grpOptions.members.length * 8;
+				}
 				selectorLeft.x = item.x - 63;
 				selectorLeft.y = item.y;
 				selectorRight.x = item.x + item.width + 15;
 				selectorRight.y = item.y;
+				camFollow.setPosition(item.getGraphicMidpoint().x, item.getGraphicMidpoint().y - thing);
 			}
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));

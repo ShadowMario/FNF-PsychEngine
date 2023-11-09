@@ -31,10 +31,14 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 {
 	public function new()
 	{
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 		FlxG.mouse.visible = true;
-        FlxG.camera.zoom = 10;
-        FlxG.camera.alpha = 0;
-        FlxTween.tween(FlxG.camera, {zoom: 1, alpha: 1}, 2, {ease: FlxEase.quartOut});
+        FlxG.cameras.list[FlxG.cameras.list.length-1].zoom = 10;
+        FlxG.cameras.list[FlxG.cameras.list.length-1].alpha = 0;
+        FlxTween.tween(FlxG.cameras.list[FlxG.cameras.list.length-1], {zoom: 1, alpha: 1}, 2, {ease: FlxEase.quartOut, onComplete: function(twn:FlxTween) {
+			FlxG.camera.alpha = 1;
+			FlxG.camera.zoom = 1;
+			}});
 		title = 'Secret Debug Menu';
 		rpcTitle = 'Super Secret Debug Menu!!'; //for Discord Rich Presence
 
@@ -73,13 +77,14 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 			'float',
 			1);
 		addOption(option);
-		*/ //while this did work the hsv behaved incorrectly
+		//while this did work the hsv behaved incorrectly
 		option.scrollSpeed = 2.2;
 		option.minValue = 0.1;
 		option.maxValue = 10;
 		option.changeValue = 0.1;
 		option.decimals = 2;
 		option.displayFormat = '%vx';
+		*/
 
 		var option:Option = new Option('Crash the Engine',
 			"Select this to crash the engine.",
@@ -98,6 +103,15 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 
 		option.onChange = doDaUpdate;
 		addOption(option);
+
+		/* doesnt work
+		var option:Option = new Option('WIDESCREEN SWEEP',
+			"cool stuff hehe, hidden cause not every mod is compatible with it.",
+			'widescreenSweep',
+			'bool',
+			false);
+		addOption(option);
+		*/
 
 		super();
 	}

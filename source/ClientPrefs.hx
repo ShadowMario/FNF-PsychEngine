@@ -29,6 +29,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var startingSync:Bool = false;
 	public static var playerLightStrum:Bool = true;
 	public static var progAudioLoad:Bool = false;
+	public static var JSEngineRecharts:Bool = false;
 	public static var oppNoteSplashes:Bool = true;
 	public static var instaRestart:Bool = false;
 	public static var charsAndBG:Bool = true;
@@ -53,6 +54,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var showRamUsage:Bool = true;
 	public static var showMaxRamUsage:Bool = true;
 	public static var rainbowNotes:Bool = false;
+	public static var widescreenSweep:Bool = false;
 	public static var bfIconStyle:String = 'Default';
 	public static var strumLitStyle:String = 'Full Anim';
 	public static var noteStyleThing:String = 'Default';
@@ -87,6 +89,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var virtualPadAlpha:Float = 0.5;
 	public static var hitboxSpace:Bool = false;
 	public static var hitboxSpaceLocation:String = 'Bottom';
+	public static var resolution:String = '1280x720';
 	public static var comboMultiType:String = 'osu!';
 	public static var noteOffset:Int = 0;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -237,6 +240,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.shaders = shaders;
 		FlxG.save.data.ezSpam = ezSpam;
 		FlxG.save.data.evenLessBotLag = evenLessBotLag;
+		FlxG.save.data.JSEngineRecharts = JSEngineRecharts;
 		FlxG.save.data.framerate = framerate;
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
@@ -277,6 +281,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.virtualPadAlpha = virtualPadAlpha;
 		FlxG.save.data.hitboxSpace = hitboxSpace;
 		FlxG.save.data.hitboxSpaceLocation = hitboxSpaceLocation;
+		FlxG.save.data.resolution = resolution;
 		FlxG.save.data.strumLitStyle = strumLitStyle;
 		FlxG.save.data.noteStyleThing = noteStyleThing;
 		FlxG.save.data.dynamicColors = dynamicColors;
@@ -313,6 +318,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.ratingCounter = ratingCounter;
 		FlxG.save.data.colorRatingHit = colorRatingHit;
 		FlxG.save.data.rainbowNotes = rainbowNotes;
+		FlxG.save.data.widescreenSweep = widescreenSweep;
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
 		FlxG.save.data.enableColorShader = enableColorShader;
@@ -411,6 +417,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.ezSpam != null) {
 			ezSpam = FlxG.save.data.ezSpam;
 		}
+		if(FlxG.save.data.JSEngineRecharts != null) {
+			JSEngineRecharts = FlxG.save.data.JSEngineRecharts;
+		}
 		if(FlxG.save.data.progAudioLoad != null) {
 			progAudioLoad = FlxG.save.data.progAudioLoad;
 		}
@@ -450,6 +459,26 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if (FlxG.save.data.dynamicColors != null) {
 			dynamicColors = FlxG.save.data.dynamicColors;
 		}
+		if (FlxG.save.data.resolution != null) {
+			resolution = FlxG.save.data.resolution;
+    			var resolutionValue = cast(ClientPrefs.resolution, String);
+
+    			if (resolutionValue != null) {
+        			var parts = resolutionValue.split('x');
+        
+        			if (parts.length == 2) {
+            				var width = Std.parseInt(parts[0]);
+            				var height = Std.parseInt(parts[1]);
+            	
+            				if (width != null && height != null) {
+						CoolUtil.resetResScale(width, height);
+                				FlxG.resizeGame(width, height);
+						lime.app.Application.current.window.width = width;
+						lime.app.Application.current.window.height = height;
+            				}
+        			}
+    			}
+		}
 		if(FlxG.save.data.pbRControls != null) {
 			pbRControls = FlxG.save.data.pbRControls;
 		}
@@ -488,6 +517,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.rainbowNotes != null) {
 			rainbowNotes = FlxG.save.data.rainbowNotes;
+		}
+		if(FlxG.save.data.widescreenSweep != null) {
+			widescreenSweep = FlxG.save.data.widescreenSweep;
 		}
 		if(FlxG.save.data.noteMotionBlur != null) {
 			noteMotionBlur = FlxG.save.data.noteMotionBlur;

@@ -111,6 +111,7 @@ class ControlsSubState extends MusicBeatSubstate {
 			}
 		}
 		changeSelection();
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 	}
 
 	var leaving:Bool = false;

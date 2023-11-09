@@ -109,6 +109,12 @@ class Main extends Sprite {
 
 	public function new() {
 		super();
+		#if windows //DPI AWARENESS BABY
+		@:functionCode('
+		#include <Windows.h>
+		SetProcessDPIAware()
+		')
+		#end
 
 		if (stage != null) {
 			init();

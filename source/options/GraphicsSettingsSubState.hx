@@ -25,6 +25,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import openfl.display.Stage;
 import openfl.Lib;
 
 using StringTools;
@@ -100,7 +101,19 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			false); //Default value
 		addOption(option);
 
-		#if !html5 //Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
+		#if !html5 
+		//different res cant really be done on browser lol
+		var option:Option = new Option('Resolution: ',
+			"What resolution do you want the game to run in?",
+			'resolution',
+			'string',
+			'1280x720',
+			//9p,     18p,    36p, 	   72p,       120p,      144p,      270p       360p,      540p,      720p,       1080p (HD),  1440p (FHD),  2160p (UHD, 4K) yeah i went a bit too far with these
+			['16x9', '32x18', '64x36', '128x72', '214x120', '256x144', '480x270', '640x360', '960x540', '1280x720', '1920x1080', '2560x1440', '3840x2160']);
+		addOption(option);
+		option.onChange = onChangeResolution;
+		
+		//Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		var option:Option = new Option('Framerate',
 			"Pretty self explanatory, isn't it?",
 			'framerate',
@@ -114,6 +127,8 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.displayFormat = '%v FPS';
 		option.onChange = onChangeFramerate;
 		#end
+
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 
 		super();
 	}
@@ -142,5 +157,24 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			FlxG.drawFramerate = ClientPrefs.framerate;
 			FlxG.updateFramerate = ClientPrefs.framerate;
 		}
+	}
+	function onChangeResolution() {
+    		var resolutionValue = cast(ClientPrefs.resolution, String); // Assuming 'clientprefs.resolution' holds the selected resolution
+
+    		if (resolutionValue != null) {
+        		var parts = resolutionValue.split('x');
+        
+        		if (parts.length == 2) {
+            			var width = Std.parseInt(parts[0]);
+            			var height = Std.parseInt(parts[1]);
+            
+            			if (width != null && height != null) {
+					CoolUtil.resetResScale(width, height);
+                			FlxG.resizeGame(width, height);
+					lime.app.Application.current.window.width = width;
+					lime.app.Application.current.window.height = height;
+            			}
+        		}
+    		}
 	}
 }

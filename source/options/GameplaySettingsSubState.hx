@@ -397,6 +397,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			['Disabled', 'Lowest', 'Lower', 'Low', 'Medium', 'High', 'Highest']);
 		addOption(option);
 
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
+
 		super();
 	}
 

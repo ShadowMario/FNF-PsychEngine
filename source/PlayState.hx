@@ -7264,7 +7264,18 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 					prevCamFollow = camFollow;
 					prevCamFollowPos = camFollowPos;
 
+
+					if (storyDifficulty == 2 && ClientPrefs.JSEngineRecharts)
+					{
+						for (i in 0...CoolUtil.defaultSongs.length) {
+						if (Paths.formatToSongPath(SONG.song) == CoolUtil.defaultSongs[i]) {
+							PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + '-jshard', PlayState.storyPlaylist[0]);
+							PlayState.storyDifficulty == 2;
+							}
+						}
+					} else {
 					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
+					}
 					FlxG.sound.music.stop();
 
 					if(winterHorrorlandNext) {

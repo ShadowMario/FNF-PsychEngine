@@ -34,11 +34,22 @@ class CoolUtil
 
 	public static var difficulties:Array<String> = [];
 
+	public static var defaultSongs:Array<String> = ['tutorial', 'bopeebo', 'fresh', 'dad-battle', 'spookeez', 'south', 'monster', 'pico', 'philly-nice', 'blammed', 'satin-panties', 'high', 'milf', 'cocoa', 'eggnog', 'winter-horrorland', 'senpai', 'roses', 'thorns', 'ugh', 'guns', 'stress'];
+
 	inline public static function quantize(f:Float, snap:Float){
 		// changed so this actually works lol
 		var m:Float = Math.fround(f * snap);
 		trace(snap);
 		return (m / snap);
+	}
+
+	public static var resW:Float = 1;
+	public static var resH:Float = 1;
+	public static var baseW:Float = 1;
+	public static var baseH:Float = 1;
+	inline public static function resetResScale(wid:Int = 1280, height:Int = 720) {
+		resW = wid/baseW;
+		resH = height/baseH;
 	}
 
 	public static function getUsername():String

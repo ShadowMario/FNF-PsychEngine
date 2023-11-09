@@ -323,6 +323,16 @@ class StoryMenuState extends MusicBeatState
 
 			PlayState.storyDifficulty = curDifficulty;
 
+			if (curWeek >= 0 && curWeek <= 7 && curDifficulty == 2 && ClientPrefs.JSEngineRecharts) {
+			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + '-jshard', PlayState.storyPlaylist[0].toLowerCase());
+			PlayState.campaignScore = 0;
+			PlayState.campaignMisses = 0;
+			new FlxTimer().start(1, function(tmr:FlxTimer)
+			{
+				LoadingState.loadAndSwitchState(new PlayState(), true);
+				FreeplayState.destroyFreeplayVocals();
+			});
+			} else {
 			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
 			PlayState.campaignScore = 0;
 			PlayState.campaignMisses = 0;
@@ -331,6 +341,7 @@ class StoryMenuState extends MusicBeatState
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 				FreeplayState.destroyFreeplayVocals();
 			});
+			}
 		} else {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
