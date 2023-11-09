@@ -7272,12 +7272,16 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 					prevCamFollowPos = camFollowPos;
 
 
-					if (storyDifficulty == 2 && ClientPrefs.JSEngineRecharts)
+					if (storyDifficulty == 2)
 					{
-						for (i in 0...CoolUtil.defaultSongs.length) {
-						if (Paths.formatToSongPath(SONG.song) == CoolUtil.defaultSongs[i]) {
+						for (defaultSong in CoolUtil.defaultSongs) {
+						if (ClientPrefs.JSEngineRecharts && CoolUtil.defaultSongs.contains(PlayState.storyPlaylist[0].toLowerCase())) {
 							PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + '-jshard', PlayState.storyPlaylist[0]);
-							PlayState.storyDifficulty == 2;
+							break;
+							}
+							else if (ClientPrefs.JSEngineRecharts && !CoolUtil.defaultSongs.contains(PlayState.storyPlaylist[0].toLowerCase())) 	{
+							PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
+							break;
 							}
 						}
 					} else {
