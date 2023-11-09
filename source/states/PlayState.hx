@@ -134,7 +134,7 @@ class PlayState extends MusicBeatState
 
 	@:noCompletion
 	static function get_isPixelStage():Bool
-		return stageUI == "pixel";
+		return stageUI == "pixel" || stageUI.endsWith("-pixel");
 
 	public static var SONG:SwagSong = null;
 	public static var isStoryMode:Bool = false;
@@ -996,7 +996,7 @@ class PlayState extends MusicBeatState
 				introAssets.set(stageUI, introImagesArray);
 
 				var introAlts:Array<String> = introAssets.get(stageUI);
-				var antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage && !stageUI.endsWith("-pixel"));
+				var antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage);
 				var tick:Countdown = THREE;
 
 				switch (swagCounter)
@@ -1047,7 +1047,7 @@ class PlayState extends MusicBeatState
 		spr.scrollFactor.set();
 		spr.updateHitbox();
 
-		if (PlayState.isPixelStage || stageUI.endsWith("-pixel"))
+		if (PlayState.isPixelStage)
 			spr.setGraphicSize(Std.int(spr.width * daPixelZoom));
 
 		spr.screenCenter();
@@ -1307,7 +1307,7 @@ class PlayState extends MusicBeatState
 						swagNote.tail.push(sustainNote);
 
 						sustainNote.correctionOffset = swagNote.height / 2;
-						if(!PlayState.isPixelStage && !stageUI.endsWith("-pixel"))
+						if(!PlayState.isPixelStage)
 						{
 							if(oldNote.isSustainNote)
 							{
@@ -2412,7 +2412,7 @@ class PlayState extends MusicBeatState
 		{
 			uiPrefix = '${stageUI}UI/';
 			if (PlayState.isPixelStage) uiSuffix = '-pixel';
-			antialias = !isPixelStage && !stageUI.endsWith("-pixel");
+			antialias = !isPixelStage;
 		}
 
 		rating.loadGraphic(Paths.image(uiPrefix + daRating.image + uiSuffix));
@@ -2440,7 +2440,7 @@ class PlayState extends MusicBeatState
 		comboSpr.velocity.x += FlxG.random.int(1, 10) * playbackRate;
 		comboGroup.add(rating);
 
-		if (!PlayState.isPixelStage && !stageUI.endsWith("-pixel"))
+		if (!PlayState.isPixelStage)
 		{
 			rating.setGraphicSize(Std.int(rating.width * 0.7));
 			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
@@ -2475,7 +2475,7 @@ class PlayState extends MusicBeatState
 			numScore.x = placement + (43 * daLoop) - 90 + ClientPrefs.data.comboOffset[2];
 			numScore.y += 80 - ClientPrefs.data.comboOffset[3];
 			
-			if (!PlayState.isPixelStage && !stageUI.endsWith("-pixel")) numScore.setGraphicSize(Std.int(numScore.width * 0.5));
+			if (!PlayState.isPixelStage) numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			else numScore.setGraphicSize(Std.int(numScore.width * daPixelZoom));
 			numScore.updateHitbox();
 
