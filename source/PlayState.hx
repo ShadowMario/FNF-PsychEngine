@@ -2183,6 +2183,13 @@ class PlayState extends MusicBeatState
 		healthBar.visible = false;
 		iconP2.visible = iconP1.visible = false;
 		}
+		if (ClientPrefs.hideHud) {
+		scoreTxt.destroy();
+		botplayTxt.visible = false;
+		healthBarBG.visible = false;
+		healthBar.visible = false;
+		iconP2.visible = iconP1.visible = false;
+		}
 		if (!ClientPrefs.charsAndBG) {
 		remove(dadGroup);
 		remove(boyfriendGroup);
