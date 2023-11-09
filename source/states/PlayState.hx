@@ -2827,6 +2827,9 @@ class PlayState extends MusicBeatState
 
 	function opponentNoteHit(note:Note):Void
 	{
+		var result:Dynamic = callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
+		if(result != FunkinLua.Function_Stop && result != FunkinLua.Function_StopHScript && result != FunkinLua.Function_StopAll) callOnHScript('opponentNoteHit', [note]);
+
 		if (Paths.formatToSongPath(SONG.song) != 'tutorial')
 			camZooming = true;
 
@@ -2838,17 +2841,12 @@ class PlayState extends MusicBeatState
 			var altAnim:String = note.animSuffix;
 
 			if (SONG.notes[curSection] != null)
-			{
-				if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection) {
+				if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection)
 					altAnim = '-alt';
-				}
-			}
 
 			var char:Character = dad;
 			var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, note.noteData)))] + altAnim;
-			if(note.gfNote) {
-				char = gf;
-			}
+			if(note.gfNote) char = gf;
 
 			if(char != null)
 			{
@@ -2857,14 +2855,9 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (SONG.needsVoices)
-			vocals.volume = 1;
-
+		vocals.volume = 1;
 		strumPlayAnim(true, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
 		note.hitByOpponent = true;
-
-		var result:Dynamic = callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
-		if(result != FunkinLua.Function_Stop && result != FunkinLua.Function_StopHScript && result != FunkinLua.Function_StopAll) callOnHScript('opponentNoteHit', [note]);
 
 		if (!note.isSustainNote)
 			invalidateNote(note);
@@ -2873,19 +2866,21 @@ class PlayState extends MusicBeatState
 	public function goodNoteHit(note:Note):Void
 	{
 		if(note.wasGoodHit) return;
-		if(cpuControlled && (note.ignoreNote || note.hitCausesMiss)) return;
+		if(cpuControlled && note.ignoreNote) return;
+		var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
+		var leData:Int = Math.round(Math.abs(note.noteData));
+		var leType:String = note.noteType;
+		
+		var result:Dynamic = callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
+		if(result != FunkinLua.Function_Stop && result != FunkinLua.Function_StopHScript && result != FunkinLua.Function_StopAll) callOnHScript('goodNoteHit', [note]);
 
 		note.wasGoodHit = true;
+
 		if (ClientPrefs.data.hitsoundVolume > 0 && !note.hitsoundDisabled)
 			FlxG.sound.play(Paths.sound(note.hitsound), ClientPrefs.data.hitsoundVolume);
 
 		if(note.hitCausesMiss) {
-			noteMiss(note);
-			if(!note.noteSplashData.disabled && !note.isSustainNote)
-				spawnNoteSplashOnNote(note);
-
-			if(!note.noMissAnimation)
-			{
+			if(!note.noMissAnimation) {
 				switch(note.noteType) {
 					case 'Hurt Note': //Hurt note
 						if(boyfriend.animation.getByName('hurt') != null) {
@@ -2895,23 +2890,11 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			if (!note.isSustainNote)
-				invalidateNote(note);
+			noteMiss(note);
+			if(!note.noteSplashData.disabled && !note.isSustainNote) spawnNoteSplashOnNote(note);
+			if(!note.isSustainNote) invalidateNote(note);
 			return;
 		}
-
-		if (!note.isSustainNote)
-		{
-			combo++;
-			if(combo > 9999) combo = 9999;
-			popUpScore(note);
-		}
-		var gainHealth:Bool = true; // prevent health gain, as sustains are threated as a singular note
-		if (guitarHeroSustains && note.isSustainNote)
-			gainHealth = false;
-
-		if (gainHealth)
-			health += note.hitHealth * healthGain;
 
 		if(!note.noAnimation) {
 			var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, note.noteData)))];
@@ -2947,15 +2930,15 @@ class PlayState extends MusicBeatState
 		else strumPlayAnim(false, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
 		vocals.volume = 1;
 
-		var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
-		var leData:Int = Math.round(Math.abs(note.noteData));
-		var leType:String = note.noteType;
-		
-		var result:Dynamic = callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
-		if(result != FunkinLua.Function_Stop && result != FunkinLua.Function_StopHScript && result != FunkinLua.Function_StopAll) callOnHScript('goodNoteHit', [note]);
-
-		if (!note.isSustainNote)
+		if (!note.isSustainNote) {
+			combo++;
+			if(combo > 9999) combo = 9999;
+			popUpScore(note);
+			var gainHealth:Bool = true; // prevent health gain, as sustains are threated as a singular note
+			if (guitarHeroSustains && note.isSustainNote) gainHealth = false;
+			if (gainHealth) health += note.hitHealth * healthGain;
 			invalidateNote(note);
+		}
 	}
 
 	public function invalidateNote(note:Note):Void {
