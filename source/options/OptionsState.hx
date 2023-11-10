@@ -231,6 +231,7 @@ var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
                 #if desktop kId++; #end
                 if (kId >= keys.length #if android || konamiIndex >= konamiCode.length #end) {
 			enteringDebugMenu = true;
+			kId = 0;
                     FlxTween.tween(FlxG.camera, {alpha: 0}, 1.5, {startDelay: 1, ease: FlxEase.cubeOut});
                     if (FlxG.sound.music != null)
                         FlxTween.tween(FlxG.sound.music, {pitch: 0, volume: 0}, 2.5, {ease: FlxEase.cubeOut});
@@ -284,7 +285,7 @@ var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
 function checkKonamiCode():Bool {
     if (konamiCode[konamiIndex].justPressed) {
         konamiIndex++;
-	if (konamiIndex > 0) isEnteringKonamiCode = true;
+	if (konamiIndex > 6) isEnteringKonamiCode = true;
         if (konamiIndex >= konamiCode.length) {
             return true;
 	    konamiIndex = 0;
