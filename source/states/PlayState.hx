@@ -668,6 +668,7 @@ class PlayState extends MusicBeatState
 
 	function set_playbackRate(value:Float):Float
 	{
+		#if FLX_PITCH
 		if(generatedMusic)
 		{
 			if(vocals != null) vocals.pitch = value;
@@ -681,10 +682,13 @@ class PlayState extends MusicBeatState
 			}
 		}
 		playbackRate = value;
-		FlxAnimationController.globalSpeed = value;
+		FlxG.animationTimeScale = value;
 		Conductor.safeZoneOffset = (ClientPrefs.data.safeFrames / 60) * 1000 * value;
 		setOnScripts('playbackRate', playbackRate);
-		return value;
+		#else
+		playbackRate = 1.0; // ensuring -Crow
+		#end
+		return playbackRate;
 	}
 
 	public function addTextToDebug(text:String, color:FlxColor) {
@@ -1156,13 +1160,13 @@ class PlayState extends MusicBeatState
 		vocals.pause();
 
 		FlxG.sound.music.time = time;
-		FlxG.sound.music.pitch = playbackRate;
+		#if FLX_PITCH FlxG.sound.music.pitch = playbackRate; #end
 		FlxG.sound.music.play();
 
 		if (Conductor.songPosition <= vocals.length)
 		{
 			vocals.time = time;
-			vocals.pitch = playbackRate;
+			#if FLX_PITCH vocals.pitch = playbackRate; #end
 		}
 		vocals.play();
 		Conductor.songPosition = time;
@@ -1183,7 +1187,7 @@ class PlayState extends MusicBeatState
 
 		@:privateAccess
 		FlxG.sound.playMusic(inst._sound, 1, false);
-		FlxG.sound.music.pitch = playbackRate;
+		#if FLX_PITCH FlxG.sound.music.pitch = playbackRate; #end
 		FlxG.sound.music.onComplete = finishSong.bind();
 		vocals.play();
 
@@ -1233,7 +1237,7 @@ class PlayState extends MusicBeatState
 		vocals = new FlxSound();
 		if (songData.needsVoices) vocals.loadEmbedded(Paths.voices(songData.song));
 
-		vocals.pitch = playbackRate;
+		#if FLX_PITCH vocals.pitch = playbackRate; #end
 		FlxG.sound.list.add(vocals);
 
 		inst = new FlxSound().loadEmbedded(Paths.inst(songData.song));
@@ -1566,12 +1570,12 @@ class PlayState extends MusicBeatState
 		vocals.pause();
 
 		FlxG.sound.music.play();
-		FlxG.sound.music.pitch = playbackRate;
+		#if FLX_PITCH FlxG.sound.music.pitch = playbackRate; #end
 		Conductor.songPosition = FlxG.sound.music.time;
 		if (Conductor.songPosition <= vocals.length)
 		{
 			vocals.time = Conductor.songPosition;
-			vocals.pitch = playbackRate;
+			#if FLX_PITCH vocals.pitch = playbackRate; #end
 		}
 		vocals.play();
 	}
@@ -1843,6 +1847,7 @@ class PlayState extends MusicBeatState
 		{
 			var ret:Dynamic = callOnScripts('onGameOver', null, true);
 			if(ret != FunkinLua.Function_Stop) {
+				FlxG.animationTimeScale = 1;
 				boyfriend.stunned = true;
 				deathCounter++;
 
@@ -2978,8 +2983,8 @@ class PlayState extends MusicBeatState
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
-		FlxAnimationController.globalSpeed = 1;
-		FlxG.sound.music.pitch = 1;
+		FlxG.animationTimeScale = 1;
+		#if FLX_PITCH FlxG.sound.music.pitch = 1; #end
 		Note.globalRgbShaders = [];
 		backend.NoteTypesConfig.clearNoteTypesData();
 		instance = null;
@@ -3053,7 +3058,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public function playerDance(force:Bool = false):Void {
-		if(force || boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+		if(force || boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 #if FLX_PITCH / FlxG.sound.music.pitch #end) * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			boyfriend.dance();
 	}
 
