@@ -102,6 +102,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		#if !html5 
+		#if desktop
 		//different res cant really be done on browser lol
 		var option:Option = new Option('Resolution: ',
 			"What resolution do you want the game to run in?",
@@ -112,6 +113,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			['16x9', '32x18', '64x36', '128x72', '214x120', '256x144', '480x270', '640x360', '960x540', '1280x720', '1920x1080', '2560x1440', '3840x2160']);
 		addOption(option);
 		option.onChange = onChangeResolution;
+		#end
 		
 		//Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		var option:Option = new Option('Framerate',
@@ -159,6 +161,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		}
 	}
 	function onChangeResolution() {
+		#if desktop
     		var resolutionValue = cast(ClientPrefs.resolution, String); // Assuming 'clientprefs.resolution' holds the selected resolution
 
     		if (resolutionValue != null) {
@@ -176,5 +179,6 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
             			}
         		}
     		}
+		#end
 	}
 }

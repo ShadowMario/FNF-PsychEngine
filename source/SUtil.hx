@@ -36,7 +36,7 @@ class SUtil
 		if (aDir != null && aDir.length > 0)
 			return aDir;
 		else
-			return aDir = Tools.getExternalStorageDirectory() + '/.PsychEngine/'; // i wanna do this to have the ability to use same mods from other ports without making storage full
+			return aDir = Tools.getExternalStorageDirectory() + '/.JSEngine/'; // while using .PsychEngine does save more space, just.. it causes problems with this engine
 		#else
 		return '';
 		#end

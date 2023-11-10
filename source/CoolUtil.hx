@@ -34,7 +34,7 @@ class CoolUtil
 
 	public static var difficulties:Array<String> = [];
 
-	public static var defaultSongs:Array<String> = ['tutorial', 'bopeebo', 'fresh', 'dad-battle', 'spookeez', 'south', 'monster', 'pico', 'philly-nice', 'blammed', 'satin-panties', 'high', 'milf', 'cocoa', 'eggnog', 'winter-horrorland', 'senpai', 'roses', 'thorns', 'ugh', 'guns', 'stress'];
+	public static var defaultSongs:Array<String> = ['tutorial', 'bopeebo', 'fresh', 'dad battle', 'spookeez', 'south', 'monster', 'pico', 'philly nice', 'blammed', 'satin panties', 'high', 'milf', 'cocoa', 'eggnog', 'winter horrorland', 'senpai', 'roses', 'thorns', 'ugh', 'guns', 'stress'];
 
 	inline public static function quantize(f:Float, snap:Float){
 		// changed so this actually works lol
@@ -43,6 +43,7 @@ class CoolUtil
 		return (m / snap);
 	}
 
+	#if desktop
 	public static var resW:Float = 1;
 	public static var resH:Float = 1;
 	public static var baseW:Float = 1;
@@ -51,6 +52,7 @@ class CoolUtil
 		resW = wid/baseW;
 		resH = height/baseH;
 	}
+	#end
 
 	public static function getUsername():String
 	{
