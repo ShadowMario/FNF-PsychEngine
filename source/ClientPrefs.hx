@@ -461,6 +461,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if (FlxG.save.data.resolution != null) {
 			resolution = FlxG.save.data.resolution;
+			#if desktop
     			var resolutionValue = cast(ClientPrefs.resolution, String);
 
     			if (resolutionValue != null) {
@@ -478,6 +479,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
             				}
         			}
     			}
+			#end
 		}
 		if(FlxG.save.data.pbRControls != null) {
 			pbRControls = FlxG.save.data.pbRControls;

@@ -50,6 +50,7 @@ class Prompt extends MusicBeatSubstate
 	
 	override public function create():Void 
 	{
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 		super.create();
 		if (goAnyway){
 			

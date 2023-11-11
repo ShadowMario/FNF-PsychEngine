@@ -4520,8 +4520,7 @@ class PlayState extends MusicBeatState
 			if (player < 1)
 			{
 				if(!ClientPrefs.opponentStrums) targetAlpha = 0;
-				else if(ClientPrefs.middleScroll || ClientPrefs.mobileMidScroll) targetAlpha = ClientPrefs.oppNoteAlpha;
-				if (ClientPrefs.mobileMidScroll) opponentStrums.members[i].x == FlxG.width - 2; //make it so that you're unable to see the opponent's strums if you have mobile styled middlescroll on
+				else if(ClientPrefs.middleScroll) targetAlpha = ClientPrefs.oppNoteAlpha;
 			}
 
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll || ClientPrefs.mobileMidScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
@@ -4551,10 +4550,6 @@ class PlayState extends MusicBeatState
 					if(i > 1) { //Up and Right
 						babyArrow.x += FlxG.width / 2 + 25;
 					}
-				}
-				if(ClientPrefs.mobileMidScroll)
-				{
-					babyArrow.x += FlxG.width / 2;
 				}
 				if (!opponentChart || opponentChart && ClientPrefs.mobileMidScroll || opponentChart && ClientPrefs.mobileMidScroll || !opponentChart && ClientPrefs.mobileMidScroll) opponentStrums.add(babyArrow);
 			else if (ClientPrefs.mobileMidScroll) insert(members.indexOf(playerStrums), babyArrow);
