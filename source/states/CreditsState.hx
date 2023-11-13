@@ -123,6 +123,9 @@ class CreditsState extends MusicBeatState
 		bg.color = CoolUtil.colorFromString(creditsStuff[curSelected][4]);
 		intendedColor = bg.color;
 		changeSelection();
+		
+		#if mobile addVirtualPad(UP_DOWN, A_B); #end
+		
 		super.create();
 	}
 
