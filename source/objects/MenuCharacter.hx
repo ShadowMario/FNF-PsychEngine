@@ -1,7 +1,7 @@
 package objects;
 
 import openfl.utils.Assets;
-import tjson.TJSON as Json;
+import haxe.Json;
 
 typedef MenuCharacterFile = {
 	var image:String;

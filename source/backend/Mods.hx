@@ -1,6 +1,6 @@
 package backend;
 
-import tjson.TJSON as Json;
+import haxe.Json;
 
 typedef ModsList = {
 	enabled:Array<String>,

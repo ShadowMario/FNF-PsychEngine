@@ -9,7 +9,7 @@ import flixel.FlxBasic;
 import flixel.graphics.FlxGraphic;
 import flash.geom.Rectangle;
 import lime.utils.Assets;
-import tjson.TJSON as Json;
+import haxe.Json;
 
 import flixel.util.FlxSpriteUtil;
 import objects.AttachedSprite;
