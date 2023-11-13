@@ -192,6 +192,7 @@ class PlayState extends MusicBeatState
 	var tankmanAscend:Bool = false; // funni (2021 nostalgia oh my god)
 
 	public var notes:FlxTypedGroup<Note>;
+	public var sustainNotes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
 	public var unspawnNotesCopy:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
@@ -1740,6 +1741,9 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.hudType == 'Kade Engine' && ClientPrefs.hudType == 'Dave and Bambi') timePercentTxt.x = timeBarBG.x + 600;
 		add(timePercentTxt);
 
+		sustainNotes = new FlxTypedGroup<Note>();
+		add(sustainNotes);
+
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		add(strumLineNotes);
 		add(grpNoteSplashes);
@@ -2236,8 +2240,6 @@ class PlayState extends MusicBeatState
 		pauseWarnText.y -= 25;
 		pauseWarnText.alpha = 0;
 
-	if (cpuControlled && !ClientPrefs.showcaseMode)
-	{
 		if (ClientPrefs.hudType == 'Psych Engine')
 		{
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
@@ -2348,7 +2350,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.y = timeBarBG.y - 78;
 		}
 		}
-	}
+
 		if (ClientPrefs.communityGameBot && botplayTxt != null || ClientPrefs.showcaseMode && botplayTxt != null) botplayTxt.destroy();
 
 		laneunderlayOpponent.cameras = [camHUD];
@@ -2356,6 +2358,7 @@ class PlayState extends MusicBeatState
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
+		sustainNotes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
@@ -2718,6 +2721,11 @@ class PlayState extends MusicBeatState
 						continue;
 					note.resizeByRatio(ratio);
 				}
+				for (note in sustainNotes){
+				 	if (note == null) 
+						continue;
+					note.resizeByRatio(ratio);
+				}
 				for (note in unspawnNotes){
 				 	if (note == null) 
 						continue;
@@ -2761,10 +2769,15 @@ class PlayState extends MusicBeatState
 	}
 
 	public function reloadHealthBarColors() {
+		if (!ClientPrefs.ogHPColor) {
 		if (!opponentChart) healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
 		else healthBar.createFilledBar(FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]),
 			FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+		} else {
+		if (!opponentChart) healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		else healthBar.createFilledBar(0xFF66FF33, 0xFFFF0000);
+		}
 
 		healthBar.updateBar();
 	}
@@ -3773,7 +3786,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 
-				notes.forEachAlive(function(note:Note) {
+				for (group in [notes, sustainNotes]) group.forEachAlive(function(note:Note) {
 					if(ClientPrefs.opponentStrums || !ClientPrefs.opponentStrums && ClientPrefs.mobileMidScroll || ClientPrefs.middleScroll || !note.mustPress)
 					{
 							note.alpha *= 0.35;
@@ -3846,6 +3859,26 @@ class PlayState extends MusicBeatState
 				daNote.kill();
 				}
 				notes.remove(daNote, true);
+				if (shouldKillNotes) {
+				daNote.destroy();
+				}
+			}
+			--i;
+		}
+
+		i = sustainNotes.length - 1;
+		while (i >= 0) {
+			var daNote:Note = sustainNotes.members[i];
+			if(daNote.strumTime - 350 < time)
+			{
+				daNote.active = false;
+				daNote.visible = false;
+				daNote.ignoreNote = true;
+
+				if (shouldKillNotes) {
+				daNote.kill();
+				}
+				sustainNotes.remove(daNote, true);
 				if (shouldKillNotes) {
 				daNote.destroy();
 				}
@@ -5568,10 +5601,9 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
     for (i in 0...unspawnNotes.length) {
         if (unspawnNotes[i].strumTime - Conductor.songPosition < spawnTime) {
             if (ClientPrefs.showNotes) {
-                // Add notes to 'notes' one by one if they meet the criteria
-                notes.insert(0, unspawnNotes[i]);
+                !unspawnNotes[i].isSustainNote ? notes.insert(0, unspawnNotes[i]) : sustainNotes.insert(0, unspawnNotes[i]); //If it's NOT a sustain note, we add it to notes. else, we add it to sustainNotes
             } else {
-                notes.add(unspawnNotes[i]);
+                !unspawnNotes[i].isSustainNote ? notes.add(unspawnNotes[i]) : sustainNotes.add(unspawnNotes[i]);
             }
             unspawnNotes[i].spawned = true;
             notesAddedCount++;
@@ -5591,7 +5623,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
     notesAddedCount = 0;
 
     for (i in 0...unspawnNotes.length) {
-        var daNote = unspawnNotes[i];
+        final daNote = unspawnNotes[i];
 							if(daNote.mustPress && cpuControlled) {
 							if (daNote.strumTime + (ClientPrefs.communityGameBot ? FlxG.random.float(ClientPrefs.minCGBMS, ClientPrefs.maxCGBMS) : 0) <= Conductor.songPosition || daNote.isSustainNote && daNote.strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * daNote.earlyHitMult /2)) {
 								if (!ClientPrefs.showcaseMode || ClientPrefs.charsAndBG) goodNoteHit(daNote);
@@ -5771,6 +5803,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 		daNote.hitByOpponent = true;
 
 		if (opponentDrain && health > 0.1) health -= daNote.hitHealth * hpDrainLevel * polyphony;
+		if (ClientPrefs.denpaDrainBug) displayedHealth -= daNote.hitHealth * hpDrainLevel * polyphony;
 
 		callOnLuas('opponentNoteHit', [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
 		callOnLuas((opponentChart ? 'goodNoteHitFix' : 'opponentNoteHitFix'), [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
@@ -5832,7 +5865,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 				if(startedCountdown)
 				{
 					var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
-					notes.forEachAlive(function(daNote:Note)
+					for (group in [notes, sustainNotes]) group.forEachAlive(function(daNote:Note) //inspired by denpa, but not directly denpa code
 					{
 						if (ClientPrefs.showNotes)
 						{
@@ -6032,6 +6065,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 		health -= daNote.hitHealth * hpDrainLevel * polyphony;
 		if (ClientPrefs.healthDisplay && !ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4 && scoreTxt != null) updateScore();
 		}
+		if (ClientPrefs.denpaDrainBug) displayedHealth -= daNote.hitHealth * hpDrainLevel * polyphony;
 		if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
            	if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
 	}
@@ -6098,7 +6132,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 						{
 							daNote.kill();
 						}
-							notes.remove(daNote, true);
+							group.remove(daNote, true);
 						if (shouldKillNotes)
 						{
 							daNote.destroy();
@@ -6108,7 +6142,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 				}
 				else
 				{
-					notes.forEachAlive(function(daNote:Note)
+					for (group in [notes, sustainNotes]) group.forEachAlive(function(daNote:Note)
 					{
 						daNote.canBeHit = false;
 						daNote.wasGoodHit = false;
@@ -6815,6 +6849,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 							n.hitByOpponent = false;
 							n.spawned = false;
 							n.alpha = 1;
+							n.clipRect = null;
 							if (n.mustPress && !n.isSustainNote)
 							{
 							totalNotes += 1;
@@ -6855,6 +6890,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 							n.hitByOpponent = false;
 							n.spawned = false;
 							n.alpha = 1;
+							n.clipRect = null;
 							if (n.mustPress && !n.isSustainNote)
 							{
 							totalNotes += 1;
@@ -6894,6 +6930,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 							n.hitByOpponent = false;
 							n.spawned = false;
 							n.alpha = 1;
+							n.clipRect = null;
 							if (n.mustPress && !n.isSustainNote)
 							{
 							totalNotes += 1;
@@ -6931,6 +6968,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 							n.hitByOpponent = false;
 							n.spawned = false;
 							n.alpha = 1;
+							n.clipRect = null;
 							if (n.mustPress && !n.isSustainNote)
 							{
 							totalNotes += 1;
@@ -6967,6 +7005,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 							n.hitByOpponent = false;
 							n.spawned = false;
 							n.alpha = 1;
+							n.clipRect = null;
 							if (n.mustPress && !n.isSustainNote)
 							{
 							totalNotes += 1;
@@ -8036,7 +8075,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				var hittableSpam = [];
 
 				var sortedNotesList:Array<Note> = [];
-				notes.forEachAlive(function(daNote:Note)
+				for (group in [notes, sustainNotes]) group.forEachAlive(function(daNote:Note)
 				{
 					if (strumsBlocked[daNote.noteData] != true && daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit && !daNote.isSustainNote && !daNote.blockHit)
 					{
@@ -8196,7 +8235,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		if (startedCountdown && !char.stunned && generatedMusic)
 		{
 			// rewritten inputs???
-			notes.forEachAlive(function(daNote:Note)
+			for (group in [notes, sustainNotes]) group.forEachAlive(function(daNote:Note)
 			{
 				// hold note functions
 				if (strumsBlocked[daNote.noteData] != true && daNote.isSustainNote && parsedHoldArray[daNote.noteData] && daNote.canBeHit
@@ -8259,13 +8298,13 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
 		//Dupe note remove
-		notes.forEachAlive(function(note:Note) {
+		for (group in [notes, sustainNotes]) group.forEachAlive(function(note:Note) {
 			if (daNote != note && daNote.mustPress && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 1) {
 				if (shouldKillNotes)
 				{
 					note.kill();
 				}
-				notes.remove(note, true);
+				group.remove(note, true);
 				if (shouldKillNotes)
 				{
 					note.destroy();
@@ -8324,6 +8363,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
 			char.playAnim(animToPlay, true);
 		}
+
+		daNote.tooLate = true;
 
 		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
 		if (!ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4 && scoreTxt != null) updateScore();
@@ -9311,6 +9352,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		if (generatedMusic)
 		{
 			if (ClientPrefs.showNotes) notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
+			if (ClientPrefs.showNotes) sustainNotes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 
 		if (ClientPrefs.iconBounceType == 'Dave and Bambi') {

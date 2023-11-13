@@ -78,12 +78,17 @@ class Note extends FlxSprite
 	public var multAlpha:Float = 1;
 	public var multSpeed(default, set):Float = 1;
 
+	public var prevNoteIsSustainNote:Bool = false;
+
 	public static var SUSTAIN_SIZE:Int = 44;
 
 	public var copyX:Bool = true;
 	public var copyY:Bool = true;
+	public var copyScale:Bool = true;
 	public var copyAngle:Bool = true;
 	public var copyAlpha:Bool = true;
+
+	public var dumbHitboxThing:Bool = true;
 
 	public var hitHealth:Float = 0.023;
 	public var missHealth:Float = 0.0475;
@@ -371,6 +376,7 @@ class Note extends FlxSprite
 			multAlpha = 0.6;
 			hitsoundDisabled = true;
 			if(ClientPrefs.downScroll) flipY = true;
+			prevNoteIsSustainNote = prevNote.isSustainNote;
 
 			offsetX += width / 2;
 			copyAngle = false;
@@ -572,6 +578,20 @@ class Note extends FlxSprite
 		distance = (0.45 * (Conductor.songPosition - strumTime) * songSpeed * multSpeed);
 		if (!myStrum.downScroll) distance *= -1;
 
+						if(animation != null && animation.curAnim != null && animation.curAnim.name.endsWith('end'))
+						{
+							y -= height-2;
+							if (!prevNoteIsSustainNote) //only for really short sustains that only have an end and no regular parts
+							{
+								y += height*0.25; //move back down slightly into the note
+							}
+						}
+
+		if(copyScale && isSustainNote)
+			//scale.set(myStrum.scale.x, myStrum.scale.y);
+			if (!dumbHitboxThing)
+				updateHitbox();
+
 		var angleDir = strumDirection * Math.PI / 180;
 		if (copyAngle)
 			angle = strumDirection - 90 + strumAngle + offsetAngle;
@@ -622,17 +642,5 @@ class Note extends FlxSprite
 			}
 			clipRect = swagRect;
 		}
-	}
-
-	@:noCompletion
-	override function set_clipRect(rect:FlxRect):FlxRect // original fix by Ne_Eo
-	{
-		if (rect != null)
-			clipRect = rect;
-
-		if (frames != null)
-			frame = frames.frames[animation.frameIndex];
-
-		return rect;
 	}
 }

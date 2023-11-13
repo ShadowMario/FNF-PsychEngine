@@ -120,6 +120,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var opponentRateCount:Bool = true;
 	public static var coolGameplay:Bool = false;
 	public static var skipResultsScreen:Bool = false;
+	public static var denpaDrainBug:Bool = false;
+	public static var ogHPColor:Bool = false;
 	public static var hudType:String = 'Kade Engine';
 	public static var smoothHealth:Bool = true;
 	public static var smoothHealthType:String = 'Golden Apple 1.5';
@@ -272,6 +274,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.holdNoteHits = holdNoteHits;
 		FlxG.save.data.comboScoreEffect = comboScoreEffect;
 		FlxG.save.data.comboMultiType = comboMultiType;
+		FlxG.save.data.denpaDrainBug = denpaDrainBug;
+		FlxG.save.data.ogHPColor = ogHPColor;
 		FlxG.save.data.charsAndBG = charsAndBG;
 		FlxG.save.data.pbRControls = pbRControls;
 		FlxG.save.data.doubleGhost = doubleGhost;
@@ -437,6 +441,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.noGunsRNG != null) {
 			noGunsRNG = FlxG.save.data.noGunsRNG;
+		}
+		if(FlxG.save.data.denpaDrainBug != null) {
+			denpaDrainBug = FlxG.save.data.denpaDrainBug;
+		}
+		if(FlxG.save.data.ogHPColor != null) {
+			ogHPColor = FlxG.save.data.ogHPColor;
 		}
 		if(FlxG.save.data.showRamUsage != null) {
 			showRamUsage = FlxG.save.data.showRamUsage;

@@ -1365,7 +1365,7 @@ class ChartingState extends MusicBeatState
 				curSelectedNote[1][curEventSelected][0] = eventStuff[selectedEvent][0];
 
 				}
-				updateGrid();
+				updateGrid(false);
 			}
 		});
 		blockPressWhileScrolling.push(eventDropDown);
@@ -3074,12 +3074,12 @@ class ChartingState extends MusicBeatState
 	function updateGrid(?andNext:Bool = true):Void
 	{
 		//classic fnf styled grid updating
-		while (curRenderedNotes.members.length > 0)
+		while (curRenderedNotes.length > 0)
 		{
 			curRenderedNotes.remove(curRenderedNotes.members[0], true);
 		}
 
-		while (curRenderedSustains.members.length > 0)
+		while (curRenderedSustains.length > 0)
 		{
 			curRenderedSustains.remove(curRenderedSustains.members[0], true);
 		}
@@ -3169,9 +3169,10 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
+		if (andNext) {
 		// NEXT SECTION, which shouldnt even update if you're in the current section
 		var beats:Float = getSectionBeats(1);
-		if(curSec < _song.notes.length-1 && andNext) {
+		if(curSec < _song.notes.length-1) {
 			for (i in _song.notes[curSec+1].sectionNotes)
 			{
 				var note:Note = setupNoteData(i, true);
@@ -3195,6 +3196,7 @@ class ChartingState extends MusicBeatState
 				note.alpha = 0.6;
 				nextRenderedNotes.add(note);
 			}
+		}
 		}
 		}
 		#if desktop

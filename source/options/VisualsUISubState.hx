@@ -261,6 +261,20 @@ class VisualsUISubState extends BaseOptionsMenu
 			['Golden Apple 1.5', 'Indie Cross']);
 		addOption(option);
 
+		var option:Option = new Option('Denpa Engine Health Bug', //ill remove this at the request of AT - Jordan Santiago
+			'If checked, well.. replicates the health drain bug in Denpa Engine.',
+			'denpaDrainBug',
+			'bool',
+			false);
+		addOption(option);
+
+		var option:Option = new Option('OG HP Colors',
+			'If checked, the health bar will globally use Red/Green as the colors.',
+			'ogHPColor',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('Double Note Ghosts',
 			"If this is checked, hitting a Double Note will show an afterimage, just like in VS Impostor!",
 			'doubleGhost',

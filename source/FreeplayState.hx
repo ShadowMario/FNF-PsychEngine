@@ -391,11 +391,12 @@ class FreeplayState extends MusicBeatState
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				for (i in 0...CoolUtil.defaultSongs.length) {
-					if (Paths.formatToSongPath(PlayState.SONG.song) == CoolUtil.defaultSongs[i] && curDifficulty == 2 && ClientPrefs.JSEngineRecharts) {
+					if (CoolUtil.defaultSongs.contains(PlayState.SONG.song.toLowerCase()) && curDifficulty == 2 && ClientPrefs.JSEngineRecharts) {
 						PlayState.SONG = Song.loadFromJson(songs[curSelected].songName.toLowerCase() + '-jshard', songs[curSelected].songName.toLowerCase());
-					}
+					} else {
+				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				}
+				
 				if (PlayState.SONG.needsVoices)
 					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 				else
@@ -482,14 +483,12 @@ class FreeplayState extends MusicBeatState
 			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 
 			if(sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) || sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop)) || OpenFlAssets.exists(Paths.modsJson(songLowercase + '/' + poop)) || OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
-				for (i in 0...CoolUtil.defaultSongs.length) {
-					if (Paths.formatToSongPath(PlayState.SONG.song) == CoolUtil.defaultSongs[i] && curDifficulty == 2 && ClientPrefs.JSEngineRecharts) {
+					if (CoolUtil.defaultSongs.contains(PlayState.SONG.song.toLowerCase()) && curDifficulty == 2 && ClientPrefs.JSEngineRecharts) {
 						PlayState.SONG = Song.loadFromJson(songs[curSelected].songName.toLowerCase() + '-jshard', songs[curSelected].songName.toLowerCase());
 						PlayState.storyDifficulty == 2;
 					} else {
 						PlayState.storyDifficulty = curDifficulty;
 					}
-				}
 			PlayState.isStoryMode = false;
 
 			trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
