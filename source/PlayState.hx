@@ -8368,6 +8368,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
 		if (!ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4 && scoreTxt != null) updateScore();
+		if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
+           	if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
 	}
 
 	function noteMissPress(direction:Int = 1):Void //You pressed a key when there was no notes to press for this key
@@ -8885,10 +8887,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 			}
 
-			if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
-			if (!ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4) updateScore();
-           		if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
-
 			if(cpuControlled) {
 				if (ClientPrefs.botLightStrum)
 				{
@@ -8946,6 +8944,9 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					note.destroy();
 				}
 			}
+			if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
+			if (!ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4) updateScore();
+           		if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
 		}
 	}
 

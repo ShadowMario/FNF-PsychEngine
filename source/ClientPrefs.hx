@@ -70,7 +70,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var violence:Bool = true;
 	public static var camZooms:Bool = true;
 	public static var showNotes:Bool = true;
-	public static var doubleGhost:Bool = true;
+	public static var doubleGhost:Bool = false;
 	public static var songLoading:Bool = true;
 	public static var resultsScreen:Bool = true;
 	public static var botTxtFade:Bool = true;

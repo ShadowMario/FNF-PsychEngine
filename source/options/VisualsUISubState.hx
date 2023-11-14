@@ -279,7 +279,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			"If this is checked, hitting a Double Note will show an afterimage, just like in VS Impostor!",
 			'doubleGhost',
 			'bool',
-			true);
+			false);
 		addOption(option);
 
 		var option:Option = new Option('Double Note Ghost Camera Zoom',

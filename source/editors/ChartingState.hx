@@ -177,6 +177,8 @@ class ChartingState extends MusicBeatState
 	var currentSongName:String;
 	var autosaveIndicator:FlxSprite;
 
+	var lilBuddiesColorSwap:ColorSwap;
+	var lilBuddies2ColorSwap:ColorSwap;
 	var hitsound:FlxSound = null;
 
 	var zoomTxt:FlxText;
@@ -286,7 +288,7 @@ class ChartingState extends MusicBeatState
 		lilStage.scrollFactor.set();
 		add(lilStage);
 
-		lilBf = new FlxSprite(32, 432).loadGraphic(Paths.image("chartEditor/lilBf"), true, 300, 256);
+		lilBf = new FlxSprite(32, 432).loadGraphic(Paths.image(!(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) ? "chartEditor/lilBf" : "chartEditor/lilBfRed"), true, 300, 256);
 		lilBf.animation.add("idle", [0, 1], 12, true);
 		lilBf.animation.add("0", [3, 4, 5], 12, false);
 		lilBf.animation.add("1", [6, 7, 8], 12, false);
@@ -300,7 +302,11 @@ class ChartingState extends MusicBeatState
 		lilBf.scrollFactor.set();
 		add(lilBf);
 
-		lilOpp = new FlxSprite(32, 432).loadGraphic(Paths.image("chartEditor/lilOpp"), true, 300, 256);
+
+		lilBuddiesColorSwap = new ColorSwap();
+		lilBuddies2ColorSwap = new ColorSwap();
+		lilBf.shader = lilBuddiesColorSwap.shader;
+		lilOpp = new FlxSprite(32, 432).loadGraphic(Paths.image(!(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) ? "chartEditor/lilOpp" : "chartEditor/lilOppRed"), true, 300, 256);
 		lilOpp.animation.add("idle", [0, 1], 12, true);
 		lilOpp.animation.add("0", [3, 4, 5], 12, false);
 		lilOpp.animation.add("1", [6, 7, 8], 12, false);
@@ -312,7 +318,7 @@ class ChartingState extends MusicBeatState
 		}
 		lilOpp.scrollFactor.set();
 		add(lilOpp);
-
+		lilOpp.shader = lilBuddies2ColorSwap.shader;
 		gridLayer = new FlxTypedGroup<FlxSprite>();
 		add(gridLayer);
 
@@ -1971,7 +1977,6 @@ class ChartingState extends MusicBeatState
 						if (touch.overlaps(note)) {
 							// trace('tryin to delete note...');
 							deleteNote(note);
-							updateGrid(false);
 							updateNoteUI();
 						}
 					});
@@ -1991,7 +1996,7 @@ class ChartingState extends MusicBeatState
 					for(i in 0...Std.int(addCount)) {
 						addNote(curSelectedNote[0] + (15000/Conductor.bpm)/stepperStackOffset.value, curSelectedNote[1] + Math.floor(stepperStackSideOffset.value), currentType);
 					}
-				updateGrid(false);
+				//updateGrid(false);
 				updateNoteUI();
 					}
 				}
@@ -2037,9 +2042,9 @@ class ChartingState extends MusicBeatState
 						}
 						else
 						{
+							selectNote(note, false);
 							//trace('tryin to delete note...');
 							deleteNote(note);
-							updateGrid(false);
 						}
 					}
 				});
@@ -2063,7 +2068,7 @@ class ChartingState extends MusicBeatState
 						addNote(curSelectedNote[0] + (15000/Conductor.bpm)/stepperStackOffset.value, curSelectedNote[1] + Math.floor(stepperStackSideOffset.value), currentType);
 					}
 
-				updateGrid(false);
+				//updateGrid(false);
 				updateNoteUI();
 				}
 			}
@@ -2529,6 +2534,9 @@ class ChartingState extends MusicBeatState
 					var data:Int = note.noteData % 4;
 					var noteDataToCheck:Int = note.noteData;
 					if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
+					if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader)
+						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
+					else
 						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true);
 						strumLineNotes.members[noteDataToCheck].resetAnim = ((note.sustainLength / 1000) + 0.15) / playbackSpeed;
 					if(!playedSound[data]) {
@@ -2544,8 +2552,25 @@ class ChartingState extends MusicBeatState
 						}
 
 						data = note.noteData;
-						if (note.mustPress) lilBf.animation.play("" + (data % 4), true);
-						if (!note.mustPress) lilOpp.animation.play("" + (data % 4), true);
+						if (note.mustPress) {
+						if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader) 
+						{
+						lilBuddiesColorSwap.hue = note.colorSwap.hue;
+						lilBuddiesColorSwap.saturation = note.colorSwap.saturation;
+						lilBuddiesColorSwap.brightness = note.colorSwap.brightness;
+						}
+						lilBf.animation.play("" + (data % 4), true);
+						}
+						if (!note.mustPress) 
+						{
+							if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader) 
+							{
+							lilBuddies2ColorSwap.hue = note.colorSwap.hue;
+							lilBuddies2ColorSwap.saturation = note.colorSwap.saturation;
+							lilBuddies2ColorSwap.brightness = note.colorSwap.brightness;
+							}
+						lilOpp.animation.play("" + (data % 4), true);
+						}
 						if(note.mustPress != _song.notes[curSec].mustHitSection)
 						{
 							data += 4;
@@ -3311,7 +3336,7 @@ class ChartingState extends MusicBeatState
 		_song.notes.push(sec);
 	}
 
-	function selectNote(note:Note):Void
+	function selectNote(note:Note, ?updateTheGrid:Bool = true):Void
 	{
 		var noteDataToCheck:Int = note.noteData;
 
@@ -3341,14 +3366,17 @@ class ChartingState extends MusicBeatState
 		}
 		changeEventSelected();
 
+		if (updateTheGrid) {
 		updateGrid(false);
 		updateNoteUI();
+		}
 	}
 
 	function deleteNote(note:Note):Void
 	{
 		var noteDataToCheck:Int = note.noteData;
 		if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
+
 
 		if(note.noteData > -1) //Normal Notes
 		{
@@ -3380,6 +3408,17 @@ class ChartingState extends MusicBeatState
 				}
 			}
 		}
+		curRenderedNoteType.forEach(txt -> {
+			curRenderedNoteType.remove(txt, true);
+			txt.destroy();
+		});
+		if (note.sustainLength > 0) {
+		curRenderedSustains.remove(note, true);
+		updateGrid(false);
+		}
+
+		curRenderedNotes.remove(note, true);
+		note.destroy();
 	}
 
 	public function doANoteThing(cs, d, style){
@@ -3456,10 +3495,51 @@ class ChartingState extends MusicBeatState
 		//trace(noteData + ', ' + noteStrum + ', ' + curSec);
 		strumTimeInputText.text = '' + curSelectedNote[0];
 		//wow its not laggy who wouldve guessed
-		/*if (gridUpdate) {
-			updateGrid();
+		if (gridUpdate) {
+			switch (noteData) 
+			{
+				case -1: 
+					var note:Note = setupNoteData(curSelectedNote, false);
+					curRenderedNotes.add(note);
+
+					var text:String = 'Event: ' + note.eventName + ' (' + Math.floor(note.strumTime) + ' ms)' + '\nValue 1: ' + note.eventVal1 + '\nValue 2: ' + note.eventVal2;
+					if(note.eventLength > 1) text = note.eventLength + ' Events:\n' + note.eventName;
+
+					var daText:AttachedFlxText = new AttachedFlxText(0, 0, 400, text, 12);
+					daText.setFormat(Paths.font("vcr.ttf"), 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
+					daText.xAdd = -410;
+					daText.borderSize = 1;
+					if(note.eventLength > 1) daText.yAdd += 8;
+					curRenderedNoteType.add(daText);
+					daText.sprTracker = note;
+					//trace('test: ' + i[0], 'startThing: ' + startThing, 'endThing: ' + endThing);
+				default:
+					var beats:Float = getSectionBeats();
+					var note:Note = setupNoteData(curSelectedNote, false);
+					curRenderedNotes.add(note);
+					if (note.sustainLength > 0)
+					{
+						curRenderedSustains.add(setupSusNote(note, beats));
+					}
+
+					if(curSelectedNote[3] != null && note.noteType != null && note.noteType.length > 0) {
+						var typeInt:Null<Int> = noteTypeMap.get(curSelectedNote[3]);
+						var theType:String = '' + typeInt;
+						if(typeInt == null) theType = '?';
+
+						var daText:AttachedFlxText = new AttachedFlxText(0, 0, 100, theType, 24);
+						daText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+						daText.xAdd = -32;
+						daText.yAdd = 6;
+						daText.borderSize = 1;
+						curRenderedNoteType.add(daText);
+						daText.sprTracker = note;
+					}
+					note.mustPress = _song.notes[curSec].mustHitSection;
+					if(curSelectedNote[1] > 3) note.mustPress = !note.mustPress;
+				}
 			updateNoteUI();
-		}*/
+		}
 	}
 
 	// will figure this out l8r
