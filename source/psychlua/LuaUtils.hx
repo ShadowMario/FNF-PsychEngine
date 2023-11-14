@@ -224,8 +224,9 @@ class LuaUtils
 		var obj:Dynamic = LuaUtils.getObjectDirectly(obj, false);
 		if(obj != null && obj.animation != null)
 		{
-			if(indices == null) indices = [];
-			if(Std.isOfType(indices, String))
+			if(indices == null)
+				indices = [0];
+			else if(Std.isOfType(indices, String))
 			{
 				var strIndices:Array<String> = cast (indices, String).trim().split(',');
 				var myIndices:Array<Int> = [];
