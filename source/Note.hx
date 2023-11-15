@@ -660,4 +660,12 @@ class Note extends FlxSprite
 			clipRect = swagRect;
 		}
 	}
+	public function updateRGBColors() {
+        	if (Std.isOfType(this.shader, ColoredNoteShader))
+		{
+			if (mustPress)
+	    			cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
+	    		else cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
+		}
+	}
 }

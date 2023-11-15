@@ -480,9 +480,9 @@ class FreeplayState extends MusicBeatState
 				trace('Couldnt find file');
 			}*/
 			trace(poop);
-			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 
 			if(sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) || sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop)) || OpenFlAssets.exists(Paths.modsJson(songLowercase + '/' + poop)) || OpenFlAssets.exists(Paths.json(songLowercase + '/' + poop))) {
+					PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 					if (CoolUtil.defaultSongs.contains(PlayState.SONG.song.toLowerCase()) && curDifficulty == 2 && ClientPrefs.JSEngineRecharts) {
 						PlayState.SONG = Song.loadFromJson(songs[curSelected].songName.toLowerCase() + '-jshard', songs[curSelected].songName.toLowerCase());
 						PlayState.storyDifficulty == 2;

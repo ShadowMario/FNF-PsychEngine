@@ -36,7 +36,8 @@ class StrumNote extends FlxSprite
 
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
 		colorSwap = new ColorSwap();
-		shader = ClientPrefs.noteColorStyle == 'Char-Based' ? new ColoredNoteShader(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2], false, 10) : colorSwap.shader;
+		shader = colorSwap.shader;
+		if (ClientPrefs.noteColorStyle == 'Char-Based' && PlayState.instance != null) shader = new ColoredNoteShader(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2], false, 10);
 		noteData = leData;
 		this.player = player;
 		this.noteData = leData;
@@ -236,5 +237,13 @@ class StrumNote extends FlxSprite
         if (Std.isOfType(this.shader, ColoredNoteShader))
 	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
             cast(this.shader, ColoredNoteShader).enabled.value = [true];
+	}
+	public function updateRGBColors(?updateBF:Bool = false) {
+        	if (Std.isOfType(this.shader, ColoredNoteShader))
+		{
+			if (updateBF)
+	    			cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
+	    		else cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
+		}
 	}
 }

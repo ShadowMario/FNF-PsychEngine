@@ -141,7 +141,8 @@ class ChartingState extends MusicBeatState
 
 	var curRenderedSustains:FlxTypedGroup<FlxSprite>;
 	var curRenderedNotes:FlxTypedGroup<Note>;
-	var curRenderedNoteType:FlxTypedGroup<FlxText>;
+	var curRenderedNoteType:FlxTypedGroup<AttachedFlxText>;
+	var curRenderedEventText:FlxTypedGroup<AttachedFlxText>;
 
 	var nextRenderedSustains:FlxTypedGroup<FlxSprite>;
 	var nextRenderedNotes:FlxTypedGroup<Note>;
@@ -345,7 +346,8 @@ class ChartingState extends MusicBeatState
 
 		curRenderedSustains = new FlxTypedGroup<FlxSprite>();
 		curRenderedNotes = new FlxTypedGroup<Note>();
-		curRenderedNoteType = new FlxTypedGroup<FlxText>();
+		curRenderedNoteType = new FlxTypedGroup<AttachedFlxText>();
+		curRenderedEventText = new FlxTypedGroup<AttachedFlxText>();
 
 		nextRenderedSustains = new FlxTypedGroup<FlxSprite>();
 		nextRenderedNotes = new FlxTypedGroup<Note>();
@@ -470,6 +472,7 @@ class ChartingState extends MusicBeatState
 		add(curRenderedSustains);
 		add(curRenderedNotes);
 		add(curRenderedNoteType);
+		add(curRenderedEventText);
 		add(nextRenderedSustains);
 		add(nextRenderedNotes);
 
@@ -814,6 +817,10 @@ class ChartingState extends MusicBeatState
 
 	var sectionToCopy:Int = 0;
 	var notesCopied:Array<Dynamic>;
+	var CopyLastSectionCount:FlxUINumericStepper;
+	var CopyFutureSectionCount:FlxUINumericStepper;
+	var CopyLoopCount:FlxUINumericStepper;
+	var copyMultiSectButton:FlxButton;
 
 	function addSectionUI():Void
 	{
@@ -1107,6 +1114,58 @@ class ChartingState extends MusicBeatState
 		var CopyNextSectionCount:FlxUINumericStepper = new FlxUINumericStepper(jumpSection.x, jumpSection.y + 60, 1, 1, -16384, 16384, 0);
 		blockPressWhileTypingOnStepper.push(CopyNextSectionCount);
 
+		CopyLastSectionCount = new FlxUINumericStepper(CopyNextSectionCount.x + 100, CopyNextSectionCount.y, 1, 1, -16384, 16384, 0);
+		blockPressWhileTypingOnStepper.push(CopyLastSectionCount);
+
+		CopyFutureSectionCount = new FlxUINumericStepper(CopyLastSectionCount.x + 70, CopyLastSectionCount.y, 1, 1, -16384, 16384, 0);
+		blockPressWhileTypingOnStepper.push(CopyFutureSectionCount);
+
+		CopyLoopCount = new FlxUINumericStepper(CopyFutureSectionCount.x - 60, CopyLastSectionCount.y + 40, 1, 1, -16384, 16384, 0);
+		blockPressWhileTypingOnStepper.push(CopyFutureSectionCount);
+
+		copyMultiSectButton = new FlxButton(CopyFutureSectionCount.x, CopyLastSectionCount.y + 40, "Copy from the last " + Std.int(CopyFutureSectionCount.value) + " to the next " + Std.int(CopyFutureSectionCount.value) + " sections, " + Std.int(CopyLoopCount.value) + " times", function()
+		{
+			var daSec = FlxMath.maxInt(curSec, Std.int(CopyLastSectionCount.value));
+			var value1:Int = Std.int(CopyLastSectionCount.value);
+			var value2:Int = Std.int(CopyFutureSectionCount.value) * Std.int(CopyLoopCount.value);
+			if(value1 == 0) {
+			return;
+			} 
+			if(Math.isNaN(_song.notes[curSection].sectionNotes.length)) {
+			trace ("HEY! your section doesn't have any notes! please place at least 1 note then try using this.");
+			return; //prevent a crash if the section doesn't have any notes
+			}
+			saveUndo(_song); //I don't even know why.
+
+			for(i in 0...value2) {
+			for (note in _song.notes[daSec - value1].sectionNotes)
+			{
+				var strum = note[0] + Conductor.stepCrochet * (getSectionBeats(daSec - value1) * 4 * value1);
+
+
+				var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3]];
+				_song.notes[daSec].sectionNotes.push(copiedNote);
+			}
+				if (_song.notes[curSec+1] == null)
+				{
+				trace ("UH OH! looks like we've hit a null section! we're gonna have to stop this to prevent it from crashing the engine!");
+				break;
+				}
+				if (curSection - value1 < 0)
+				{
+				trace ("value1's section is less than 0 LMAO");
+				break;
+				}
+				if (_song.notes[curSec+1].sectionNotes != null) changeSection(curSec+1);
+				daSec = FlxMath.maxInt(curSec, Std.int(CopyLastSectionCount.value)-1);
+			}
+			updateGrid(false);
+		});
+		copyMultiSectButton.color = FlxColor.BLUE;
+		copyMultiSectButton.label.color = FlxColor.WHITE;
+		copyMultiSectButton.setGraphicSize(Std.int(copyMultiSectButton.width), Std.int(copyMultiSectButton.height));
+		copyMultiSectButton.updateHitbox();
+
 		var copyNextButton:FlxButton = new FlxButton(CopyNextSectionCount.x, CopyNextSectionCount.y + 20, "Copy to the next..", function()
 		{
 			var value:Int = Std.int(CopyNextSectionCount.value);
@@ -1155,6 +1214,9 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(clearLeftSectionButton);
 		tab_group_section.add(copyNextButton);
 		tab_group_section.add(CopyNextSectionCount);
+		tab_group_section.add(CopyLastSectionCount);
+		tab_group_section.add(CopyFutureSectionCount);
+		tab_group_section.add(CopyLoopCount);
 		tab_group_section.add(clearSectionButton);
 		tab_group_section.add(check_notesSec);
 		tab_group_section.add(check_eventsSec);
@@ -1163,6 +1225,7 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(copyLastButton);
 		tab_group_section.add(duetButton);
 		tab_group_section.add(mirrorButton);
+		tab_group_section.add(copyMultiSectButton);
 
 		UI_box.addGroup(tab_group_section);
 	}
@@ -1928,6 +1991,8 @@ class ChartingState extends MusicBeatState
 			{
 				_song.event7Value = event7InputText.text;
 			}
+
+			copyMultiSectButton.text = "Copy from the last " + Std.int(CopyLastSectionCount.value) + " to the next " + Std.int(CopyFutureSectionCount.value) + " sections, " + Std.int(CopyLoopCount.value) + " times";
 
 		strumLineUpdateY();
 		for (i in 0...8){
@@ -3115,6 +3180,11 @@ class ChartingState extends MusicBeatState
 			txt.destroy();
 		});
 		curRenderedNoteType.clear();
+		curRenderedEventText.forEach(txt -> {
+			curRenderedEventText.remove(txt, true);
+			txt.destroy();
+		});
+		curRenderedEventText.clear();
 			if (andNext) 
 			{
 			nextRenderedNotes.forEach(TheNoteThatShouldBeKilledBecauseWeDontNeedIt -> {
@@ -3188,7 +3258,7 @@ class ChartingState extends MusicBeatState
 				daText.xAdd = -410;
 				daText.borderSize = 1;
 				if(note.eventLength > 1) daText.yAdd += 8;
-				curRenderedNoteType.add(daText);
+				curRenderedEventText.add(daText);
 				daText.sprTracker = note;
 				//trace('test: ' + i[0], 'startThing: ' + startThing, 'endThing: ' + endThing);
 			}
@@ -3409,8 +3479,18 @@ class ChartingState extends MusicBeatState
 			}
 		}
 		curRenderedNoteType.forEach(txt -> {
-			curRenderedNoteType.remove(txt, true);
-			txt.destroy();
+			if (txt.sprTracker == note) 
+			{
+				curRenderedNoteType.remove(txt, true);
+				txt.destroy();
+			}
+		});
+		curRenderedEventText.forEach(txt -> {
+			if (txt.sprTracker == note) 
+			{
+				curRenderedEventText.remove(txt, true);
+				txt.destroy();
+			}
 		});
 		if (note.sustainLength > 0) {
 		curRenderedSustains.remove(note, true);

@@ -47,7 +47,8 @@ typedef TitleData =
 	gfx:Float,
 	gfy:Float,
 	backgroundSprite:String,
-	bpm:Int
+	bpm:Int,
+	endY:Float,
 }
 class TitleState extends MusicBeatState
 {
@@ -725,7 +726,7 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			FlxTween.tween(logoBl, {y: -100}, 1.4, {ease: FlxEase.expoInOut});
+			FlxTween.tween(logoBl, {y: titleJSON.endY}, 1.4, {ease: FlxEase.expoInOut});
 
 			logoBl.angle = -4;
 

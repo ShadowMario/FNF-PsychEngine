@@ -6685,6 +6685,34 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 						}
 				}
 				reloadHealthBarColors();
+				if (ClientPrefs.noteColorStyle == 'Char-Based')
+				{
+				for (note in notes){
+				 	if (note == null) 
+						continue;
+					note.updateRGBColors();
+				}
+				for (note in sustainNotes){
+				 	if (note == null) 
+						continue;
+					note.updateRGBColors();
+				}
+				for (note in unspawnNotes){
+				 	if (note == null) 
+						continue;
+					note.updateRGBColors();
+				}	
+				for (note in playerStrums.members){
+				 	if (note == null) 
+						continue;
+					note.updateRGBColors(true);
+				}	
+				for (note in opponentStrums.members){
+				 	if (note == null) 
+						continue;
+					note.updateRGBColors(false);
+				}	
+				}
 
 			case 'BG Freaks Expression':
 				if(bgGirls != null) bgGirls.swapDanceType();
@@ -8914,7 +8942,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				var spr = playerStrums.members[note.noteData];
 				if(spr != null)
 				{
-				if ((ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
+				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
 				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
 				} else {
 				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', note.mustPress);
