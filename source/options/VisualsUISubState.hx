@@ -174,13 +174,22 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
-		*/
-
+		// and this is scrapped now
 		var option:Option = new Option('Color Quantization',
 			'If checked, notes are colored based on their quantization.',
 			'colorQuants',
 			'bool',
 			false);
+		addOption(option);
+		*/
+
+
+		var option:Option = new Option('Note Color Style: ',
+			"How would you like your notes colored?",
+			'noteColorStyle',
+			'string',
+			'Normal',
+			['Normal', 'Quant-Based', 'Char-Based', 'Grayscale']);
 		addOption(option);
 
 		var option:Option = new Option('Enable Note Colors',

@@ -44,6 +44,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var songPercentage:Bool = true;
 	public static var autosaveInterval:Float = 5.0;
 	public static var noteMotionBlur:Bool = false;
+	public static var noteColorStyle:String = 'Normal';
 	public static var noteMBMult:Float = 1;
 	public static var comboMultLimit:Float = 5;
 	public static var minCGBMS:Int = 5;
@@ -259,6 +260,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.longFCName = longFCName;
 		FlxG.save.data.botTxtFade = botTxtFade;
 		FlxG.save.data.noteMotionBlur = noteMotionBlur;
+		FlxG.save.data.noteColorStyle = noteColorStyle;
 		FlxG.save.data.noteMBMult = noteMBMult;
 		FlxG.save.data.showNotes = showNotes;
 		FlxG.save.data.skipResultsScreen = skipResultsScreen;
@@ -426,6 +428,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.progAudioLoad != null) {
 			progAudioLoad = FlxG.save.data.progAudioLoad;
+		}
+		if(FlxG.save.data.noteColorStyle != null) {
+			noteColorStyle = FlxG.save.data.noteColorStyle;
 		}
 		if(FlxG.save.data.rateNameStuff != null) {
 			rateNameStuff = FlxG.save.data.rateNameStuff;

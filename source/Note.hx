@@ -10,6 +10,7 @@ import editors.ChartingState;
 import flixel.util.FlxPool;
 import flixel.math.FlxRect;
 import openfl.system.System;
+import NoteShader.ColoredNoteShader;
 
 using StringTools;
 
@@ -131,7 +132,7 @@ class Note extends FlxSprite
 
 	function quantCheck():Void 
 	{
-		if (ClientPrefs.colorQuants && !isSustainNote)
+		if (ClientPrefs.noteColorStyle == 'Quant-Based' && !isSustainNote)
 			{
 				var time = strumTime;
 				var theCurBPM = Conductor.bpm;
@@ -249,7 +250,7 @@ class Note extends FlxSprite
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
 
-		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length && !ClientPrefs.colorQuants && !ClientPrefs.rainbowNotes && ClientPrefs.showNotes && ClientPrefs.enableColorShader)
+		if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length && ClientPrefs.noteColorStyle == 'Normal' && !ClientPrefs.rainbowNotes && ClientPrefs.showNotes && ClientPrefs.enableColorShader)
 		{
 			colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 			colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
@@ -296,7 +297,7 @@ class Note extends FlxSprite
 		return value;
 	}
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false, ?mustPressIt:Bool = false)
 	{
 		super();
 
@@ -306,6 +307,7 @@ class Note extends FlxSprite
 		this.prevNote = prevNote;
 		isSustainNote = sustainNote;
 		this.inEditor = inEditor;
+		mustPress = mustPressIt;
 
 		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
@@ -339,23 +341,38 @@ class Note extends FlxSprite
 			if (ClientPrefs.noteStyleThing != 'VS Nonsense V2' && ClientPrefs.noteStyleThing != 'DNB 3D' && ClientPrefs.noteStyleThing != 'VS AGOTI' && ClientPrefs.noteStyleThing != 'Doki Doki+' && ClientPrefs.noteStyleThing != 'TGT V4' && ClientPrefs.noteStyleThing != 'Default') {
 				texture = 'NOTE_assets_' + ClientPrefs.noteStyleThing.toLowerCase();
 			}
-			if(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
+			if(ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) {
 				texture = 'RED_NOTE_assets';
+			}
+			if(ClientPrefs.noteColorStyle == 'Char-Based') {
+				texture = 'NOTE_assets_colored';
+			}
+			if(ClientPrefs.noteColorStyle == 'Grayscale') {
+				texture = 'GRAY_NOTE_assets';
 			}
 			if (ClientPrefs.enableColorShader)
 			{
-			colorSwap = new ColorSwap();
-			shader = colorSwap.shader;
-			if (!ClientPrefs.colorQuants && !ClientPrefs.rainbowNotes)
-			{
-				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
-				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
-				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
-			}
-			if (ClientPrefs.rainbowNotes)
-			{
-				colorSwap.hue = ((strumTime / 5000 * 360) / 360) % 1;
-			}
+					colorSwap = new ColorSwap();
+					shader = colorSwap.shader;
+					if (ClientPrefs.noteColorStyle == 'Normal' && !ClientPrefs.rainbowNotes)
+					{
+						colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
+						colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
+						colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
+					}
+					if (ClientPrefs.rainbowNotes)
+					{
+						colorSwap.hue = ((strumTime / 5000 * 360) / 360) % 1;
+					}
+				if (ClientPrefs.noteColorStyle == 'Char-Based')
+				{
+					if (PlayState.instance != null) {
+ 						if (!mustPress) this.shader = new ColoredNoteShader(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2], false, 10);
+						if (mustPress) {
+						this.shader = new ColoredNoteShader(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2], false, 10);
+						}
+					}
+				}
 			}
 			}
 			x += swagWidth * (noteData);
@@ -384,12 +401,12 @@ class Note extends FlxSprite
 			animation.play(colArray[noteData % 4] + 'holdend');
 			if (ClientPrefs.showNotes)
 			{
-			if (ClientPrefs.colorQuants)
-			{
-			colorSwap.hue = prevNote.colorSwap.hue;
-			colorSwap.saturation = prevNote.colorSwap.saturation;
-			colorSwap.brightness = prevNote.colorSwap.brightness;
-			}
+				if (ClientPrefs.noteColorStyle == 'Quant-Based')
+				{
+				colorSwap.hue = prevNote.colorSwap.hue;
+				colorSwap.saturation = prevNote.colorSwap.saturation;
+				colorSwap.brightness = prevNote.colorSwap.brightness;
+				}
 
 			updateHitbox();
 			}
@@ -427,7 +444,7 @@ class Note extends FlxSprite
 			centerOrigin();
 		}
 		x += offsetX;
-		if (ClientPrefs.colorQuants) quantCheck();
+		if (ClientPrefs.noteColorStyle == 'Quant-Based') quantCheck();
 	}
 
 	var lastNoteOffsetXForPixelAutoAdjusting:Float = 0;

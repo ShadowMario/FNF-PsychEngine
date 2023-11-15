@@ -4322,7 +4322,7 @@ class PlayState extends MusicBeatState
 
 				var oldNote:Note = unspawnNotes.length > 0 ? unspawnNotes[Std.int(unspawnNotes.length - 1)] : null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, false, gottaHitNote);
 				if (ClientPrefs.doubleGhost)
 					{
 					swagNote.row = Conductor.secsToRow(daStrumTime);
@@ -4345,7 +4345,7 @@ class PlayState extends MusicBeatState
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote), daNoteData, oldNote, true);
+						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote), daNoteData, oldNote, true, false, swagNote.mustPress);
 						sustainNote.mustPress = gottaHitNote;
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
@@ -4376,10 +4376,9 @@ class PlayState extends MusicBeatState
 				{
 					for (i in 0...Std.int(jackingtime))
 					{
-						jackNote = new Note(swagNote.strumTime + (15000/SONG.bpm) * (i + 1), swagNote.noteData, oldNote);
+						jackNote = new Note(swagNote.strumTime + (15000/SONG.bpm) * (i + 1), swagNote.noteData, oldNote, false, false, swagNote.mustPress);
 						jackNote.scrollFactor.set();
 
-				jackNote.mustPress = swagNote.mustPress;
 				jackNote.sustainLength = swagNote.sustainLength;
 				jackNote.gfNote = swagNote.gfNote;
 				jackNote.noteType = swagNote.noteType;
@@ -5792,10 +5791,10 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 				var spr:StrumNote = opponentStrums.members[daNote.noteData];
 
 				if(spr != null) {
-				if ((ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
+				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
 				spr.playAnim('confirm', true, daNote.colorSwap.hue, daNote.colorSwap.saturation, daNote.colorSwap.brightness);
 				} else {
-				spr.playAnim('confirm', true);
+				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based');
 				}
 				spr.resetAnim = time;
 				}
@@ -6028,10 +6027,10 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 				var spr:StrumNote = opponentStrums.members[daNote.noteData];
 
 				if(spr != null) {
-				if ((ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
+				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
 				spr.playAnim('confirm', true, daNote.colorSwap.hue, daNote.colorSwap.saturation, daNote.colorSwap.brightness);
 				} else {
-				spr.playAnim('confirm', true);
+				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based');
 				}
 				spr.resetAnim = time;
 				}
@@ -8903,10 +8902,10 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				var spr:StrumNote = playerStrums.members[note.noteData];
 
 				if(spr != null) {
-				if ((ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
+				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
 				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
 				} else {
-				spr.playAnim('confirm', true);
+				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', note.mustPress);
 				}
 				spr.resetAnim = time;
 				}
@@ -8918,7 +8917,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				if ((ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
 				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
 				} else {
-				spr.playAnim('confirm', true);
+				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', note.mustPress);
 				}
 				}
 			}

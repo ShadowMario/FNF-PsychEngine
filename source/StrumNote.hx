@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import NoteShader.ColoredNoteShader;
 
 using StringTools;
 
@@ -35,7 +36,7 @@ class StrumNote extends FlxSprite
 
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
 		colorSwap = new ColorSwap();
-		shader = colorSwap.shader;
+		shader = ClientPrefs.noteColorStyle == 'Char-Based' ? new ColoredNoteShader(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2], false, 10) : colorSwap.shader;
 		noteData = leData;
 		this.player = player;
 		this.noteData = leData;
@@ -64,8 +65,14 @@ class StrumNote extends FlxSprite
 			if (ClientPrefs.noteStyleThing != 'VS Nonsense V2' && ClientPrefs.noteStyleThing != 'DNB 3D' && ClientPrefs.noteStyleThing != 'VS AGOTI' && ClientPrefs.noteStyleThing != 'Doki Doki+' && ClientPrefs.noteStyleThing != 'TGT V4' && ClientPrefs.noteStyleThing != 'Default') {
 				skin = 'NOTE_assets_' + ClientPrefs.noteStyleThing.toLowerCase();
 			}
-			if(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) {
+			if(ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) {
 				skin = 'RED_NOTE_assets';
+			}
+			if(ClientPrefs.noteColorStyle == 'Grayscale') {
+				skin = 'GRAY_NOTE_assets';
+			}
+			if(ClientPrefs.noteColorStyle == 'Char-Based') {
+				skin = 'NOTE_assets_colored';
 			}
 		}
 		texture = skin; //Load texture and anims
@@ -164,7 +171,8 @@ class StrumNote extends FlxSprite
 			resetAnim -= elapsed;
 			if(resetAnim <= 0) {
 				playAnim('static');
-           			resetHue(); // Add this line to reset the hue value
+           			if (ClientPrefs.noteColorStyle != 'Char-Based') resetHue(); // Add this line to reset the hue value
+						else disableRGB();
 				resetAnim = 0;
 			}
 		}
@@ -177,24 +185,28 @@ class StrumNote extends FlxSprite
 		super.update(elapsed);
 	}
 
-	public function playAnim(anim:String, ?force:Bool = false, hue:Float = 0, sat:Float = 0, brt:Float = 0) {
+	public function playAnim(anim:String, ?force:Bool = false, hue:Float = 0, sat:Float = 0, brt:Float = 0, ?enableRGBShader:Bool = false, ?bfRGB:Bool = false) {
 		animation.play(anim, force);
 		centerOffsets();
 		centerOrigin();
+		if (enableRGBShader && !bfRGB) enableRGB();
+		//stupid workaround but it works
+		if (enableRGBShader && bfRGB) enableRGBBF();
 		if(animation.curAnim == null || animation.curAnim.name == 'static') {
 			colorSwap.hue = 0;
 			colorSwap.saturation = 0;
 			colorSwap.brightness = 0;
+			disableRGB();
 		} else {
 			if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
 			{
-				if (!ClientPrefs.colorQuants || !ClientPrefs.rainbowNotes)
+				if (ClientPrefs.noteColorStyle == 'Normal' || !ClientPrefs.rainbowNotes)
 				{
 				colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 				colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;
 				colorSwap.brightness = ClientPrefs.arrowHSV[noteData][2] / 100;
 				}
-				if (ClientPrefs.colorQuants || ClientPrefs.rainbowNotes)
+				if (ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes)
 				{
 				colorSwap.hue = hue;
 				colorSwap.saturation = sat;
@@ -207,9 +219,22 @@ class StrumNote extends FlxSprite
 		}
 	}
 	public function resetHue() {
-    	// Reset the hue value to 0 (or any desired value)
+  	// Reset the hue value to 0 (or any desired value)
     	colorSwap.hue = 0;
     	colorSwap.saturation = 0;
     	colorSwap.brightness = 0;
+	}
+	public function disableRGB() {
+        if (Std.isOfType(this.shader, ColoredNoteShader))
+            cast(this.shader, ColoredNoteShader).enabled.value = [false];
+	}
+	public function enableRGB() {
+        if (Std.isOfType(this.shader, ColoredNoteShader))
+            cast(this.shader, ColoredNoteShader).enabled.value = [true];
+	}
+	public function enableRGBBF() {
+        if (Std.isOfType(this.shader, ColoredNoteShader))
+	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
+            cast(this.shader, ColoredNoteShader).enabled.value = [true];
 	}
 }
