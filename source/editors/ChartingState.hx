@@ -1179,20 +1179,20 @@ class ChartingState extends MusicBeatState
 			saveUndo(_song); //I don't even know why.
 
 			for(i in 0...value) {
-			for (note in _song.notes[curSec].sectionNotes)
+			if (_song.notes[curSec+1].sectionNotes != null) changeSection(curSec+1);
+			for (note in _song.notes[curSec-1].sectionNotes)
 			{
-				var strum = note[0] + Conductor.stepCrochet * (getSectionBeats(curSec) * 4);
+				var strum = note[0] + Conductor.stepCrochet * (getSectionBeats(curSec-1) * 4);
 
 
 				var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3]];
-				if (_song.notes[curSec+1] != null) _song.notes[curSec+1].sectionNotes.push(copiedNote);
+				_song.notes[curSec].sectionNotes.push(copiedNote);
 			}
 				if (_song.notes[curSec+1] == null)
 				{
 				trace ("UH OH! looks like we've hit a null section! we're gonna have to stop this to prevent it from crashing the engine!");
 				break;
 				}
-				if (_song.notes[curSec+1].sectionNotes != null) changeSection(curSec+1);
 			}
 			updateGrid(false);
 		});

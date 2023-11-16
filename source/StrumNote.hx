@@ -186,13 +186,14 @@ class StrumNote extends FlxSprite
 		super.update(elapsed);
 	}
 
-	public function playAnim(anim:String, ?force:Bool = false, hue:Float = 0, sat:Float = 0, brt:Float = 0, ?enableRGBShader:Bool = false, ?bfRGB:Bool = false) {
+	public function playAnim(anim:String, ?force:Bool = false, hue:Float = 0, sat:Float = 0, brt:Float = 0, ?enableRGBShader:Bool = false, ?bfRGB:Bool = false, ?gfRGB:Bool = false) {
 		animation.play(anim, force);
 		centerOffsets();
 		centerOrigin();
 		if (enableRGBShader && !bfRGB) enableRGB();
 		//stupid workaround but it works
 		if (enableRGBShader && bfRGB) enableRGBBF();
+		if (enableRGBShader && gfRGB) enableRGBGF();
 		if(animation.curAnim == null || animation.curAnim.name == 'static') {
 			colorSwap.hue = 0;
 			colorSwap.saturation = 0;
@@ -231,11 +232,17 @@ class StrumNote extends FlxSprite
 	}
 	public function enableRGB() {
         if (Std.isOfType(this.shader, ColoredNoteShader))
+	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
             cast(this.shader, ColoredNoteShader).enabled.value = [true];
 	}
 	public function enableRGBBF() {
         if (Std.isOfType(this.shader, ColoredNoteShader))
 	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
+            cast(this.shader, ColoredNoteShader).enabled.value = [true];
+	}
+	public function enableRGBGF() {
+        if (Std.isOfType(this.shader, ColoredNoteShader))
+	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.gf.healthColorArray[0], PlayState.instance.gf.healthColorArray[1], PlayState.instance.gf.healthColorArray[2]);
             cast(this.shader, ColoredNoteShader).enabled.value = [true];
 	}
 	public function updateRGBColors(?updateBF:Bool = false) {

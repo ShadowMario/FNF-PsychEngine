@@ -276,8 +276,9 @@ class PlayState extends MusicBeatState
 	public var polyphony:Float = 1;
 	public var comboMultiplier:Float = 1;
 	private var allSicks:Bool = true;
-	public var stupidIcon1:HealthIcon;
-	public var stupidIcon2:HealthIcon;
+
+	public var oldNPS:Float = 0;
+	public var oldOppNPS:Float = 0;
 
 	private var lerpingScore:Bool = false;
 
@@ -314,6 +315,12 @@ class PlayState extends MusicBeatState
 
 	public var songWasLooped:Bool = false; //If the song was looped. Used in Troll Mode
 	public var shouldKillNotes:Bool = true; //Whether notes should be killed when you hit them. Disables automatically when in Troll Mode because you can't end the song anyway
+
+	private var npsIncreased:Bool = false;
+	private var npsDecreased:Bool = false;
+
+	private var oppNpsIncreased:Bool = false;
+	private var oppNpsDecreased:Bool = false;
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -4306,11 +4313,6 @@ class PlayState extends MusicBeatState
 				{
 					gottaHitNote = true;
 				}
-
-				if (!gottaHitNote && !bothsides && ClientPrefs.mobileMidScroll)
-				{
-					songNotes[3] = 'Behind Note';
-				}
 				if (gottaHitNote && !songNotes.hitCausesMiss)
 				{
 					totalNotes += 1;
@@ -4322,7 +4324,7 @@ class PlayState extends MusicBeatState
 
 				var oldNote:Note = unspawnNotes.length > 0 ? unspawnNotes[Std.int(unspawnNotes.length - 1)] : null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, false, gottaHitNote);
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, false, gottaHitNote, (section.gfSection && (songNotes[1]<4) || songNotes[3] == 'GF Sing'));
 				if (ClientPrefs.doubleGhost)
 					{
 					swagNote.row = Conductor.secsToRow(daStrumTime);
@@ -4345,7 +4347,7 @@ class PlayState extends MusicBeatState
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote), daNoteData, oldNote, true, false, swagNote.mustPress);
+						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote), daNoteData, oldNote, true, false, swagNote.mustPress, swagNote.gfNote);
 						sustainNote.mustPress = gottaHitNote;
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
@@ -4376,7 +4378,7 @@ class PlayState extends MusicBeatState
 				{
 					for (i in 0...Std.int(jackingtime))
 					{
-						jackNote = new Note(swagNote.strumTime + (15000/SONG.bpm) * (i + 1), swagNote.noteData, oldNote, false, false, swagNote.mustPress);
+						jackNote = new Note(swagNote.strumTime + (15000/SONG.bpm) * (i + 1), swagNote.noteData, oldNote, false, false, swagNote.mustPress, swagNote.gfNote);
 						jackNote.scrollFactor.set();
 
 				jackNote.sustainLength = swagNote.sustainLength;
@@ -5006,12 +5008,11 @@ if (ClientPrefs.showNPS) {
            	if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
     }
 
-    // Calculate sum of NPS values
-    var sum:Float = 0.0;
+	var sum:Float = 0;
     for (value in notesHitArray) {
         sum += value;
     }
-    nps = sum;
+	nps = sum;
 
     // Similar tracking and filtering logic for oppNotesHitDateArray
     var oppNotesToRemoveCount:Int = 0;
@@ -5032,12 +5033,12 @@ if (ClientPrefs.showNPS) {
     }
 
     // Calculate sum of NPS values for the opponent
-    var oppSum:Float = 0.0;
+	var oppSum:Float = 0;
     for (value in oppNotesHitArray) {
         oppSum += value;
     }
-    oppNPS = oppSum;
 
+	oppNPS = oppSum;
     // Update maxNPS and maxOppNPS if needed
     if (oppNPS > maxOppNPS) {
         maxOppNPS = oppNPS;
@@ -5045,6 +5046,29 @@ if (ClientPrefs.showNPS) {
     if (nps > maxNPS) {
         maxNPS = nps;
     }
+	if (nps > oldNPS)
+		npsIncreased = true;
+
+	if (nps < oldNPS)
+		npsDecreased = true;
+
+	if (oppNPS > oldOppNPS)
+		oppNpsIncreased = true;
+
+	if (oppNPS < oldOppNPS)
+		oppNpsDecreased = true;
+
+	if (npsIncreased || npsDecreased || oppNpsIncreased || oppNpsDecreased) {
+		if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 8 && judgementCounter != null) updateRatingCounter();
+		if (!ClientPrefs.hideScore && scoreTxtUpdateFrame <= 8 && scoreTxt != null) updateScore();
+           	if (ClientPrefs.compactNumbers && compactUpdateFrame <= 8) updateCompactNumbers();
+		if (npsIncreased) npsIncreased = false;
+		if (npsDecreased) npsDecreased = false;
+		if (oppNpsIncreased) oppNpsIncreased = false;
+		if (oppNpsDecreased) oppNpsDecreased = false;
+		oldNPS = nps;
+		oldOppNPS = oppNPS;
+	}
 }
 
 		if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG) {
@@ -5794,7 +5818,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
 				spr.playAnim('confirm', true, daNote.colorSwap.hue, daNote.colorSwap.saturation, daNote.colorSwap.brightness);
 				} else {
-				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based');
+				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', false, daNote.gfNote);
 				}
 				spr.resetAnim = time;
 				}
@@ -6030,7 +6054,7 @@ if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= fi
 				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
 				spr.playAnim('confirm', true, daNote.colorSwap.hue, daNote.colorSwap.saturation, daNote.colorSwap.brightness);
 				} else {
-				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based');
+				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', false, daNote.gfNote);
 				}
 				spr.resetAnim = time;
 				}
@@ -8933,7 +8957,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
 				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
 				} else {
-				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', note.mustPress);
+				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', note.mustPress, note.gfNote);
 				}
 				spr.resetAnim = time;
 				}
@@ -8945,7 +8969,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
 				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
 				} else {
-				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', note.mustPress);
+				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', note.mustPress, note.gfNote);
 				}
 				}
 			}
