@@ -30,6 +30,8 @@ typedef SwagSong =
 	var event7:String;
 	var event7Value:String;
 
+	var windowName:String;
+
 	var arrowSkin:String;
 	var splashSkin:String;
 	var validScore:Bool;
@@ -49,6 +51,7 @@ class Song
 	public var songCredit:String;
 	public var event7:String;
 	public var event7Value:String;
+	public var windowName:String;
 	public var validScore:Bool = true;
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';

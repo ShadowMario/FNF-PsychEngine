@@ -4055,6 +4055,9 @@ class PlayState extends MusicBeatState
 
 		curSong = SONG.song;
 
+		if (SONG.windowName != null && SONG.windowName != '')
+			MusicBeatState.windowNamePrefix = SONG.windowName;
+
 		if (SONG.needsVoices && ClientPrefs.songLoading)
 			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 		else
@@ -8754,6 +8757,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		FlxG.sound.music.pitch = 1;
 		cpp.vm.Gc.enable(true);
 		KillNotes();
+		MusicBeatState.windowNamePrefix = "Friday Night Funkin': JS Engine";
 		super.destroy();
 	}
 

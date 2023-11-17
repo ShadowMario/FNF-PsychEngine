@@ -259,6 +259,7 @@ class ChartingState extends MusicBeatState
 				player2: 'dad',
 				gfVersion: 'gf',
 				songCredit: '',
+				windowName: '',
 				event7: '',
 				event7Value: '',
 				speed: 1,
@@ -793,6 +794,7 @@ class ChartingState extends MusicBeatState
 	}
 
 	var creditInputText:FlxUIInputText;
+	var winNameInputText:FlxUIInputText;
 	function addSongDataUI():Void //therell be more added here later
 	{
 		var tab_group_songdata = new FlxUI(null, UI_box);
@@ -802,8 +804,14 @@ class ChartingState extends MusicBeatState
 		blockPressWhileTypingOn.push(creditInputText);
 		creditInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 
+		winNameInputText = new FlxUIInputText(10, 60, 100, _song.windowName, 8);
+		blockPressWhileTypingOn.push(winNameInputText);
+		winNameInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
+
 		tab_group_songdata.add(creditInputText);
 		tab_group_songdata.add(new FlxText(creditInputText.x, creditInputText.y - 15, 0, 'Song Credit:'));
+		tab_group_songdata.add(winNameInputText);
+		tab_group_songdata.add(new FlxText(winNameInputText.x, winNameInputText.y - 15, 0, 'Window Name:'));
 
 		UI_box.addGroup(tab_group_songdata);
 	}
@@ -1983,6 +1991,8 @@ class ChartingState extends MusicBeatState
 		_song.song = UI_songTitle.text;
 
 		_song.songCredit = creditInputText.text;
+
+		_song.windowName = winNameInputText.text;
 
 		if (event7InputText.text == null || event7InputText.text ==  '') {
 			_song.event7Value = null;
