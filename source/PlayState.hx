@@ -3832,17 +3832,17 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{
 		//GAH DAYUM THIS IS MORE OPTIMIZED THAN BEFORE
-		var formattedMaxScore:String = ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '';
-		var formattedSongScore:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore;
-		var formattedScore:String = (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + formattedMaxScore;
-		var formattedSongMisses:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses;
-		var formattedCombo:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo;
-		var formattedNPS:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS;
-		var npsString:String = ClientPrefs.showNPS ? (ClientPrefs.hudType != 'Leather Engine' ? ' | ' : ' ~ ') + (cpuControlled ? 'Bot ' : '') + 'NPS: ' + formattedNPS : '';
-		var accuracy:String = Highscore.floorDecimal(ratingPercent * 100, 2) + '%';
-		var fcString:String = ratingFC;
+		final formattedMaxScore:String = ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '';
+		final formattedSongScore:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore;
+		final formattedScore:String = (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + formattedMaxScore;
+		final formattedSongMisses:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses;
+		final formattedCombo:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo;
+		final formattedNPS:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS;
+		final npsString:String = ClientPrefs.showNPS ? (ClientPrefs.hudType != 'Leather Engine' ? ' | ' : ' ~ ') + (cpuControlled ? 'Bot ' : '') + 'NPS: ' + formattedNPS : '';
+		final accuracy:String = Highscore.floorDecimal(ratingPercent * 100, 2) + '%';
+		final fcString:String = ratingFC;
 
-		var botText:String = cpuControlled && !ClientPrefs.communityGameBot ? ' | Botplay Mode' : '';
+		final botText:String = cpuControlled && !ClientPrefs.communityGameBot ? ' | Botplay Mode' : '';
 
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
@@ -3884,7 +3884,7 @@ class PlayState extends MusicBeatState
 				case 'VS Impostor':
 				scoreTxt.text = 'Score: ' + formattedScore + ' | Combo Breaks: ' + formattedSongMisses  + ' | Combo: ' + formattedCombo + npsString + ' | Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%'  + fcString;
 			}
-			if (ClientPrefs.healthDisplay) scoreTxt.text += ' | Health: ' + FlxMath.roundDecimal(health * 50, 2) + '%';
+			if (ClientPrefs.healthDisplay && !cpuControlled) scoreTxt.text += ' | Health: ' + FlxMath.roundDecimal(health * 50, 2) + '%';
 
 			callOnLuas('onUpdateScore', [miss]);
 			scoreTxtUpdateFrame++;
@@ -5512,11 +5512,10 @@ if (ClientPrefs.showNPS) {
 					daNote.hitByOpponent = true;
 				}
 			}
-				notesAddedCount++;
+			if (daNote.strumTime <= Conductor.songPosition - 100) notesAddedCount++; //we remove the notes 100ms later so that it doesnt cause unnecessary note removals at high nps's
 		}
 
 		if (notesAddedCount > 0) {
-			for (i in 0...notesAddedCount)
 			unspawnNotes.splice(0, notesAddedCount);
 		}
 	}
