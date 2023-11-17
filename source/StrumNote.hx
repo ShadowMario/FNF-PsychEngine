@@ -18,6 +18,7 @@ class StrumNote extends FlxSprite
 	public var downScroll:Bool = false;//plan on doing scroll directions soon -bb
 	public var sustainReduce:Bool = true;
 	public var noteShit = new Note(0, 0, null, false, false);
+	public var rgbShaderEnabled:Bool = false;
 	
 	private var player:Int;
 	
@@ -190,16 +191,16 @@ class StrumNote extends FlxSprite
 		animation.play(anim, force);
 		centerOffsets();
 		centerOrigin();
-		if (enableRGBShader && !bfRGB) enableRGB();
-		//stupid workaround but it works
-		if (enableRGBShader && bfRGB) enableRGBBF();
-		if (enableRGBShader && gfRGB) enableRGBGF();
 		if(animation.curAnim == null || animation.curAnim.name == 'static') {
 			colorSwap.hue = 0;
 			colorSwap.saturation = 0;
 			colorSwap.brightness = 0;
 			disableRGB();
 		} else {
+		if (enableRGBShader && !bfRGB && !rgbShaderEnabled) enableRGB();
+		//stupid workaround but it works
+		if (enableRGBShader && bfRGB && !rgbShaderEnabled) enableRGBBF();
+		if (enableRGBShader && gfRGB) enableRGBGF();
 			if (noteData > -1 && noteData < ClientPrefs.arrowHSV.length)
 			{
 				if (ClientPrefs.noteColorStyle == 'Normal' || !ClientPrefs.rainbowNotes)
@@ -229,21 +230,25 @@ class StrumNote extends FlxSprite
 	public function disableRGB() {
         if (Std.isOfType(this.shader, ColoredNoteShader))
             cast(this.shader, ColoredNoteShader).enabled.value = [false];
+			rgbShaderEnabled = false;
 	}
 	public function enableRGB() {
         if (Std.isOfType(this.shader, ColoredNoteShader))
 	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
             cast(this.shader, ColoredNoteShader).enabled.value = [true];
+			rgbShaderEnabled = true;
 	}
 	public function enableRGBBF() {
         if (Std.isOfType(this.shader, ColoredNoteShader))
 	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
             cast(this.shader, ColoredNoteShader).enabled.value = [true];
+			rgbShaderEnabled = true;
 	}
 	public function enableRGBGF() {
         if (Std.isOfType(this.shader, ColoredNoteShader))
 	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.gf.healthColorArray[0], PlayState.instance.gf.healthColorArray[1], PlayState.instance.gf.healthColorArray[2]);
             cast(this.shader, ColoredNoteShader).enabled.value = [true];
+			rgbShaderEnabled = true;
 	}
 	public function updateRGBColors(?updateBF:Bool = false) {
         	if (Std.isOfType(this.shader, ColoredNoteShader))
