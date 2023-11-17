@@ -1,5 +1,6 @@
 The code for this was made by Stefan2008!
 OS Engine? Hah, that engine sucks.
+"waaaah this engine sucks because its unoptimized!!" HOW ABOUT ACTUALLY SUGGEST SOME OPTIMIZATIONS THAT I CAN DO? OPTIMIZE THE CODE AND MAKE A PR BECAUSE I DON'T KNOW OPTIMIZATION
 It's always Bambi being a printer
 If you see that your memory is leaking, then KJLÑWQEJKLÑTFIKOREI,POǛT45O,`.P6B+.O,P`5R7,IO56KPO.
 Follow the rhythm ------ of your heart~

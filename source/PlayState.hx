@@ -5479,223 +5479,47 @@ if (ClientPrefs.showNPS) {
 
 		for (i in 0...unspawnNotes.length) {
 			final daNote = unspawnNotes[i];
-								if(daNote.mustPress && cpuControlled) {
-								if (daNote.strumTime + (ClientPrefs.communityGameBot ? FlxG.random.float(ClientPrefs.minCGBMS, ClientPrefs.maxCGBMS) : 0) <= Conductor.songPosition || daNote.isSustainNote && daNote.strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * daNote.earlyHitMult /2)) {
-									if (!ClientPrefs.showcaseMode || ClientPrefs.charsAndBG) goodNoteHit(daNote);
-									if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG && !daNote.wasGoodHit)
-									{
-									if (!daNote.isSustainNote) {
-									totalNotesPlayed += 1 * polyphony;
-									if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
-									notesHitArray.push(1 * polyphony);
-									notesHitDateArray.push(Date.now());
-									}
-									}
-									}
-									daNote.wasGoodHit = true;
-								}
+			if(daNote.mustPress && cpuControlled) {
+				if (daNote.strumTime + (ClientPrefs.communityGameBot ? FlxG.random.float(ClientPrefs.minCGBMS, ClientPrefs.maxCGBMS) : 0) <= Conductor.songPosition || daNote.isSustainNote && daNote.strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * daNote.earlyHitMult /2)) 
+				{
+					if (!ClientPrefs.showcaseMode || ClientPrefs.charsAndBG) goodNoteHit(daNote);
+					if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG && !daNote.wasGoodHit)
+					{
+						if (!daNote.isSustainNote) {
+							totalNotesPlayed += 1 * polyphony;
+							if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
+								notesHitArray.push(1 * polyphony);
+								notesHitDateArray.push(Date.now());
 							}
-					
-							if (!daNote.mustPress && !daNote.hitByOpponent && !daNote.ignoreNote && daNote.strumTime <= Conductor.songPosition)
-							{
-													if (!ClientPrefs.showcaseMode || ClientPrefs.charsAndBG) {
-															if (!opponentChart) {
-									if (Paths.formatToSongPath(SONG.song) != 'tutorial' && !camZooming)
-										camZooming = true;
-								}
-
-								var char:Character = dad;
-								if(opponentChart) char = boyfriend;
-								if(daNote.noteType == 'Hey!' && char.animOffsets.exists('hey')) {
-									char.playAnim('hey', true);
-									char.specialAnim = true;
-									char.heyTimer = 0.6;
-								} else if(!daNote.noAnimation) {
-									var altAnim:String = daNote.animSuffix;
-
-									if (SONG.notes[curSection] != null)
-									{
-										if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection && !opponentChart) {
-											altAnim = '-alt';
-										}
-									}
-
-									var char:Character = dad;
-									var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + altAnim;
-									if(daNote.gfNote && ClientPrefs.charsAndBG) {
-										char = gf;
-											if (ClientPrefs.doubleGhost)
-											{
-											if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
-												{
-													// potentially have jump anims?
-													var chord = noteRows[daNote.mustPress?0:1][daNote.row];
-													var animNote = chord[0];
-													var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
-													if (gf.mostRecentRow != daNote.row)
-													{
-														gf.playAnim(realAnim, true);
-													}
-		
-													// if (daNote != animNote)
-													// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
-
-		
-													gf.mostRecentRow = daNote.row;
-													// dad.angle += 15; lmaooooo
-													doGhostAnim('gf', animToPlay);
-													}
-												}
-									}
-									if(opponentChart && ClientPrefs.charsAndBG) {
-										boyfriend.playAnim(animToPlay, true);
-										boyfriend.holdTimer = 0;
-									}
-									else if(char != null && !opponentChart && ClientPrefs.charsAndBG)
-									{
-											char.playAnim(animToPlay, true);
-											char.holdTimer = 0;
-											if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'oppt');
-											if (ClientPrefs.doubleGhost)
-											{
-											if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
-												{
-													// potentially have jump anims?
-													var chord = noteRows[daNote.mustPress?0:1][daNote.row];
-													var animNote = chord[0];
-													var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
-													if (char.mostRecentRow != daNote.row)
-													{
-														char.playAnim(realAnim, true);
-													}
-		
-													// if (daNote != animNote)
-													// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
-		
-													// dad.angle += 15; lmaooooo
-															if (!daNote.noAnimation && !daNote.gfNote)
-															{
-																if(char.mostRecentRow != daNote.row)
-																	doGhostAnim('char', animToPlay + altAnim);
-																	dadGhost.color = FlxColor.fromRGB(dad.healthColorArray[0] + 50, dad.healthColorArray[1] + 50, dad.healthColorArray[2] + 50);
-																	dadGhostTween = FlxTween.tween(dadGhost, {alpha: 0}, 0.75, {
-																		ease: FlxEase.linear,
-																		onComplete: function(twn:FlxTween)
-																		{
-																			dadGhostTween = null;
-																		}
-																	});
-															}
-															char.mostRecentRow = daNote.row;
-												}
-												}
-												else{
-													char.playAnim(animToPlay + daNote.animSuffix, true);
-													// dad.angle = 0;
-												}
-									}
-										if (opponentChart && ClientPrefs.charsAndBG)
-										{
-											boyfriend.playAnim(animToPlay + daNote.animSuffix, true);
-											boyfriend.holdTimer = 0;
-											if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'bf');
-											if (ClientPrefs.doubleGhost)
-											{
-											if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
-												{
-													// potentially have jump anims?
-													var chord = noteRows[daNote.mustPress?0:1][daNote.row];
-													var animNote = chord[0];
-													var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
-													if (boyfriend.mostRecentRow != daNote.row)
-													{
-														boyfriend.playAnim(realAnim, true);
-													}
-		
-													// if (daNote != animNote)
-													// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
-		
-													boyfriend.mostRecentRow = daNote.row;
-													// dad.angle += 15; lmaooooo
-													doGhostAnim('bf', animToPlay);
-												}
-												else{
-													boyfriend.playAnim(animToPlay + daNote.animSuffix, true);
-													// dad.angle = 0;
-												}
-											}
-										}
-								}
-
-								if(ClientPrefs.oppNoteSplashes && !daNote.isSustainNote)
-								{
-									spawnNoteSplashOnNote(true, daNote);
-								}
-
-								if (SONG.needsVoices)
-									vocals.volume = 1;
-
-								var time:Float = 0;
-								if (ClientPrefs.strumLitStyle == 'Full Anim') time = 0.15 / playbackRate;
-								if (ClientPrefs.strumLitStyle == 'BPM Based') time = (Conductor.stepCrochet * 1.5 / 1000) / playbackRate;
-								if (ClientPrefs.opponentLightStrum)
-								{
-								if(daNote.isSustainNote && (ClientPrefs.showNotes && !daNote.animation.curAnim.name.endsWith('end'))) {
-								if (ClientPrefs.strumLitStyle == 'Full Anim') time += 0.15 / playbackRate;
-								if (ClientPrefs.strumLitStyle == 'BPM Based') time += (Conductor.stepCrochet * 1.5 / 1000) / playbackRate;
-								}
-										var spr:StrumNote = opponentStrums.members[daNote.noteData];
-
-										if(spr != null) {
-										if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
-										spr.playAnim('confirm', true, daNote.colorSwap.hue, daNote.colorSwap.saturation, daNote.colorSwap.brightness);
-										} else {
-										spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', false, daNote.gfNote);
-										}
-										spr.resetAnim = time;
-										}
-								}
-								daNote.hitByOpponent = true;
-
-								if (opponentDrain && health > 0.1) health -= daNote.hitHealth * hpDrainLevel * polyphony;
-								if (ClientPrefs.denpaDrainBug) displayedHealth -= daNote.hitHealth * hpDrainLevel * polyphony;
-
-								callOnLuas('opponentNoteHit', [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
-								callOnLuas((opponentChart ? 'goodNoteHitFix' : 'opponentNoteHitFix'), [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
-
-								if (!daNote.isSustainNote)
-								{
-										if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
-										oppNotesHitArray.push(1 * polyphony);
-										oppNotesHitDateArray.push(Date.now());
-										}
-								enemyHits += 1 * polyphony;
-									if (ClientPrefs.showNotes) notes.remove(daNote, true);
-									if (shouldKillNotes)
-									{
-										daNote.destroy();
-									}
-								}
-							}
-														if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG)
-														{
-														if (!daNote.isSustainNote) {
-															enemyHits += 1 * polyphony;
-														if (ClientPrefs.showNPS) {
-															oppNotesHitArray.push(1 * polyphony);
-															oppNotesHitDateArray.push(Date.now());
-															}
-														}
-																daNote.hitByOpponent = true;
-															}
-													}
+						}
+					}
+					daNote.wasGoodHit = true;
+				}
+			}
+			else if (!daNote.mustPress && daNote.strumTime <= Conductor.songPosition && !daNote.hitByOpponent)
+			{
+				if (!ClientPrefs.showcaseMode || ClientPrefs.charsAndBG) opponentNoteHit(daNote);
+				if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG)
+				{
+					if (!daNote.isSustainNote) 
+					{
+						enemyHits += 1 * polyphony;
+						if (ClientPrefs.showNPS) {
+							oppNotesHitArray.push(1 * polyphony);
+							oppNotesHitDateArray.push(Date.now());
+						}
+					}
+					daNote.hitByOpponent = true;
+				}
+			}
+				notesAddedCount++;
 		}
 
 		if (notesAddedCount > 0) {
 			for (i in 0...notesAddedCount)
-			unspawnNotes.shift();
+			unspawnNotes.splice(0, notesAddedCount);
 		}
-}
+	}
 		if (generatedMusic)
 		{
 			if(!inCutscene)
@@ -5730,192 +5554,7 @@ if (ClientPrefs.showNPS) {
 
 						if (!daNote.mustPress && !daNote.hitByOpponent && !daNote.ignoreNote && daNote.strumTime <= Conductor.songPosition)
 						{
-							if (!ClientPrefs.showcaseMode || ClientPrefs.charsAndBG) {
-									if (!opponentChart) {
-										if (Paths.formatToSongPath(SONG.song) != 'tutorial' && !camZooming)
-											camZooming = true;
-									}
-
-									var char:Character = dad;
-									if(opponentChart) char = boyfriend;
-									if(daNote.noteType == 'Hey!' && char.animOffsets.exists('hey')) {
-										char.playAnim('hey', true);
-										char.specialAnim = true;
-										char.heyTimer = 0.6;
-									} else if(!daNote.noAnimation) {
-										var altAnim:String = daNote.animSuffix;
-
-										if (SONG.notes[curSection] != null)
-										{
-											if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection && !opponentChart) {
-												altAnim = '-alt';
-											}
-										}
-
-										var char:Character = dad;
-										var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + altAnim;
-										if(daNote.gfNote && ClientPrefs.charsAndBG) {
-											char = gf;
-												if (ClientPrefs.doubleGhost)
-												{
-												if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
-													{
-														// potentially have jump anims?
-														var chord = noteRows[daNote.mustPress?0:1][daNote.row];
-														var animNote = chord[0];
-														var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
-														if (gf.mostRecentRow != daNote.row)
-														{
-															gf.playAnim(realAnim, true);
-														}
-		
-														// if (daNote != animNote)
-														// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
-
-		
-														gf.mostRecentRow = daNote.row;
-														// dad.angle += 15; lmaooooo
-														doGhostAnim('gf', animToPlay);
-														}
-													}
-										}
-										if(opponentChart && ClientPrefs.charsAndBG) {
-											boyfriend.playAnim(animToPlay, true);
-											boyfriend.holdTimer = 0;
-										}
-										else if(char != null && !opponentChart && ClientPrefs.charsAndBG)
-										{
-												char.playAnim(animToPlay, true);
-												char.holdTimer = 0;
-												if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'oppt');
-												if (ClientPrefs.doubleGhost)
-												{
-												if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
-													{
-														// potentially have jump anims?
-														var chord = noteRows[daNote.mustPress?0:1][daNote.row];
-														var animNote = chord[0];
-														var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
-														if (char.mostRecentRow != daNote.row)
-														{
-															char.playAnim(realAnim, true);
-														}
-		
-														// if (daNote != animNote)
-														// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
-		
-														// dad.angle += 15; lmaooooo
-																if (!daNote.noAnimation && !daNote.gfNote)
-																{
-																	if(char.mostRecentRow != daNote.row)
-																		doGhostAnim('char', animToPlay + altAnim);
-																		dadGhost.color = FlxColor.fromRGB(dad.healthColorArray[0] + 50, dad.healthColorArray[1] + 50, dad.healthColorArray[2] + 50);
-																		dadGhostTween = FlxTween.tween(dadGhost, {alpha: 0}, 0.75, {
-																			ease: FlxEase.linear,
-																			onComplete: function(twn:FlxTween)
-																			{
-																				dadGhostTween = null;
-																			}
-																		});
-																}
-																char.mostRecentRow = daNote.row;
-													}
-													}
-													else{
-														char.playAnim(animToPlay + daNote.animSuffix, true);
-														// dad.angle = 0;
-													}
-										}
-											if (opponentChart && ClientPrefs.charsAndBG)
-											{
-												boyfriend.playAnim(animToPlay + daNote.animSuffix, true);
-												boyfriend.holdTimer = 0;
-												if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'bf');
-												if (ClientPrefs.doubleGhost)
-												{
-												if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
-													{
-														// potentially have jump anims?
-														var chord = noteRows[daNote.mustPress?0:1][daNote.row];
-														var animNote = chord[0];
-														var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
-														if (boyfriend.mostRecentRow != daNote.row)
-														{
-															boyfriend.playAnim(realAnim, true);
-														}
-		
-														// if (daNote != animNote)
-														// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
-		
-														boyfriend.mostRecentRow = daNote.row;
-														// dad.angle += 15; lmaooooo
-														doGhostAnim('bf', animToPlay);
-													}
-													else{
-														boyfriend.playAnim(animToPlay + daNote.animSuffix, true);
-														// dad.angle = 0;
-													}
-												}
-											}
-									}
-
-									if(ClientPrefs.oppNoteSplashes && !daNote.isSustainNote)
-									{
-										spawnNoteSplashOnNote(true, daNote);
-									}
-
-									if (SONG.needsVoices)
-										vocals.volume = 1;
-
-									var time:Float = 0;
-									if (ClientPrefs.strumLitStyle == 'Full Anim') time = 0.15 / playbackRate;
-									if (ClientPrefs.strumLitStyle == 'BPM Based') time = (Conductor.stepCrochet * 1.5 / 1000) / playbackRate;
-									if (ClientPrefs.opponentLightStrum)
-									{
-									if(daNote.isSustainNote && (ClientPrefs.showNotes && !daNote.animation.curAnim.name.endsWith('end'))) {
-									if (ClientPrefs.strumLitStyle == 'Full Anim') time += 0.15 / playbackRate;
-									if (ClientPrefs.strumLitStyle == 'BPM Based') time += (Conductor.stepCrochet * 1.5 / 1000) / playbackRate;
-									}
-											var spr:StrumNote = opponentStrums.members[daNote.noteData];
-
-											if(spr != null) {
-											if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
-											spr.playAnim('confirm', true, daNote.colorSwap.hue, daNote.colorSwap.saturation, daNote.colorSwap.brightness);
-											} else {
-											spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', false, daNote.gfNote);
-											}
-											spr.resetAnim = time;
-											}
-									}
-									daNote.hitByOpponent = true;
-
-
-									callOnLuas('opponentNoteHit', [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
-									callOnLuas((opponentChart ? 'goodNoteHitFix' : 'opponentNoteHitFix'), [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
-									if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
-           								if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
-
-									if (!daNote.isSustainNote)
-									{
-											if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
-											oppNotesHitArray.push(1 * polyphony);
-											oppNotesHitDateArray.push(Date.now());
-											}
-									enemyHits += 1 * polyphony;
-										if (ClientPrefs.showNotes) notes.remove(daNote, true);
-										if (shouldKillNotes)
-										{
-											daNote.destroy();
-										}
-									}
-									if (opponentDrain && health > 0.1 && !practiceMode || opponentDrain && practiceMode) {
-									health -= daNote.hitHealth * hpDrainLevel * polyphony;
-									if (ClientPrefs.healthDisplay && !ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4 && scoreTxt != null) updateScore();
-									}
-									if (ClientPrefs.denpaDrainBug) displayedHealth -= daNote.hitHealth * hpDrainLevel * polyphony;
-									if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
-           								if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
-								}
+							if (!ClientPrefs.showcaseMode || ClientPrefs.charsAndBG) opponentNoteHit(daNote);
 								if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG)
 								{
 								if (!daNote.isSustainNote) {
@@ -8319,39 +7958,28 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				if (hitSoundString == 'vine boom')
 				{
 					SPUNCHBOB = new FlxSprite().loadGraphic(Paths.image('sadsponge'));
-					SPUNCHBOB.antialiasing = ClientPrefs.globalAntialiasing;
-					SPUNCHBOB.scrollFactor.set();
-					SPUNCHBOB.setGraphicSize(Std.int(SPUNCHBOB.width / FlxG.camera.zoom));
-					SPUNCHBOB.updateHitbox();
-					SPUNCHBOB.screenCenter();
-					SPUNCHBOB.alpha = 1;
-					SPUNCHBOB.cameras = [camGame];
-					add(SPUNCHBOB);
-					FlxTween.tween(SPUNCHBOB, {alpha: 0}, 1 / (SONG.bpm/100) / playbackRate, {
-						onComplete: function(tween:FlxTween)
-						{
-							SPUNCHBOB.destroy();
-						}
-					});
 				}
 				if (hitSoundString == "i'm spongebob!")
 				{
 					SPUNCHBOB = new FlxSprite().loadGraphic(Paths.image('itspongebob'));
-					SPUNCHBOB.antialiasing = ClientPrefs.globalAntialiasing;
-					SPUNCHBOB.scrollFactor.set();
-					SPUNCHBOB.setGraphicSize(Std.int(SPUNCHBOB.width / FlxG.camera.zoom));
-					SPUNCHBOB.updateHitbox();
-					SPUNCHBOB.screenCenter();
-					SPUNCHBOB.alpha = 1;
-					SPUNCHBOB.cameras = [camGame];
-					add(SPUNCHBOB);
-					FlxTween.tween(SPUNCHBOB, {alpha: 0}, 1 / (SONG.bpm/100) / playbackRate, {
-						onComplete: function(tween:FlxTween)
-						{
-							SPUNCHBOB.destroy();
-						}
-					});
 				}
+					if (hitSoundString == "i'm spongebob!" || hitSoundString == 'vine boom') 
+					{
+						SPUNCHBOB.antialiasing = ClientPrefs.globalAntialiasing;
+						SPUNCHBOB.scrollFactor.set();
+						SPUNCHBOB.setGraphicSize(Std.int(SPUNCHBOB.width / FlxG.camera.zoom));
+						SPUNCHBOB.updateHitbox();
+						SPUNCHBOB.screenCenter();
+						SPUNCHBOB.alpha = 1;
+						SPUNCHBOB.cameras = [camGame];
+						add(SPUNCHBOB);
+						FlxTween.tween(SPUNCHBOB, {alpha: 0}, 1 / (SONG.bpm/100) / playbackRate, {
+							onComplete: function(tween:FlxTween)
+							{
+								SPUNCHBOB.destroy();
+							}
+						});
+					}
 			}
 
 			if(note.hitCausesMiss) {
@@ -8701,6 +8329,194 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
            		if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
 		}
 	}
+	function opponentNoteHit(daNote:Note):Void
+	{
+				if (!opponentChart) {
+				if (Paths.formatToSongPath(SONG.song) != 'tutorial' && !camZooming)
+					camZooming = true;
+			}
+
+			var char:Character = dad;
+			if(opponentChart) char = boyfriend;
+			if(daNote.noteType == 'Hey!' && char.animOffsets.exists('hey')) {
+				char.playAnim('hey', true);
+				char.specialAnim = true;
+				char.heyTimer = 0.6;
+			} else if(!daNote.noAnimation) {
+				var altAnim:String = daNote.animSuffix;
+
+				if (SONG.notes[curSection] != null)
+				{
+					if (SONG.notes[curSection].altAnim && !SONG.notes[curSection].gfSection && !opponentChart) {
+						altAnim = '-alt';
+					}
+				}
+
+				var char:Character = dad;
+				var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + altAnim;
+				if(daNote.gfNote && ClientPrefs.charsAndBG) {
+					char = gf;
+						if (ClientPrefs.doubleGhost)
+						{
+						if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
+							{
+								// potentially have jump anims?
+								var chord = noteRows[daNote.mustPress?0:1][daNote.row];
+								var animNote = chord[0];
+								var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
+								if (gf.mostRecentRow != daNote.row)
+								{
+									gf.playAnim(realAnim, true);
+								}
+		
+								// if (daNote != animNote)
+								// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
+
+		
+								gf.mostRecentRow = daNote.row;
+								// dad.angle += 15; lmaooooo
+								doGhostAnim('gf', animToPlay);
+								}
+							}
+				}
+				if(opponentChart && ClientPrefs.charsAndBG) {
+					boyfriend.playAnim(animToPlay, true);
+					boyfriend.holdTimer = 0;
+				}
+				else if(char != null && !opponentChart && ClientPrefs.charsAndBG)
+				{
+						char.playAnim(animToPlay, true);
+						char.holdTimer = 0;
+						if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'oppt');
+						if (ClientPrefs.doubleGhost)
+						{
+						if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
+							{
+								// potentially have jump anims?
+								var chord = noteRows[daNote.mustPress?0:1][daNote.row];
+								var animNote = chord[0];
+								var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
+								if (char.mostRecentRow != daNote.row)
+								{
+									char.playAnim(realAnim, true);
+								}
+		
+								// if (daNote != animNote)
+								// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
+		
+								// dad.angle += 15; lmaooooo
+										if (!daNote.noAnimation && !daNote.gfNote)
+										{
+											if(char.mostRecentRow != daNote.row)
+												doGhostAnim('char', animToPlay + altAnim);
+												dadGhost.color = FlxColor.fromRGB(dad.healthColorArray[0] + 50, dad.healthColorArray[1] + 50, dad.healthColorArray[2] + 50);
+												dadGhostTween = FlxTween.tween(dadGhost, {alpha: 0}, 0.75, {
+													ease: FlxEase.linear,
+													onComplete: function(twn:FlxTween)
+													{
+														dadGhostTween = null;
+													}
+												});
+										}
+										char.mostRecentRow = daNote.row;
+							}
+							}
+							else{
+								char.playAnim(animToPlay + daNote.animSuffix, true);
+								// dad.angle = 0;
+							}
+				}
+					if (opponentChart && ClientPrefs.charsAndBG)
+					{
+						boyfriend.playAnim(animToPlay + daNote.animSuffix, true);
+						boyfriend.holdTimer = 0;
+						if (ClientPrefs.cameraPanning) camPanRoutine(animToPlay, 'bf');
+						if (ClientPrefs.doubleGhost)
+						{
+						if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
+							{
+								// potentially have jump anims?
+								var chord = noteRows[daNote.mustPress?0:1][daNote.row];
+								var animNote = chord[0];
+								var realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
+								if (boyfriend.mostRecentRow != daNote.row)
+								{
+									boyfriend.playAnim(realAnim, true);
+								}
+		
+								// if (daNote != animNote)
+								// dad.playGhostAnim(chord.indexOf(daNote)-1, animToPlay, true);
+		
+								boyfriend.mostRecentRow = daNote.row;
+								// dad.angle += 15; lmaooooo
+								doGhostAnim('bf', animToPlay);
+							}
+							else{
+								boyfriend.playAnim(animToPlay + daNote.animSuffix, true);
+								// dad.angle = 0;
+							}
+						}
+					}
+		}
+
+			if(ClientPrefs.oppNoteSplashes && !daNote.isSustainNote)
+			{
+				spawnNoteSplashOnNote(true, daNote);
+			}
+
+			if (SONG.needsVoices)
+				vocals.volume = 1;
+
+			var time:Float = 0;
+			if (ClientPrefs.strumLitStyle == 'Full Anim') time = 0.15 / playbackRate;
+			if (ClientPrefs.strumLitStyle == 'BPM Based') time = (Conductor.stepCrochet * 1.5 / 1000) / playbackRate;
+			if (ClientPrefs.opponentLightStrum)
+			{
+			if(daNote.isSustainNote && (ClientPrefs.showNotes && !daNote.animation.curAnim.name.endsWith('end'))) {
+			if (ClientPrefs.strumLitStyle == 'Full Anim') time += 0.15 / playbackRate;
+			if (ClientPrefs.strumLitStyle == 'BPM Based') time += (Conductor.stepCrochet * 1.5 / 1000) / playbackRate;
+			}
+					var spr:StrumNote = opponentStrums.members[daNote.noteData];
+
+					if(spr != null) {
+					if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
+					spr.playAnim('confirm', true, daNote.colorSwap.hue, daNote.colorSwap.saturation, daNote.colorSwap.brightness);
+					} else {
+					spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', false, daNote.gfNote);
+					}
+					spr.resetAnim = time;
+					}
+			}
+			daNote.hitByOpponent = true;
+
+
+			callOnLuas('opponentNoteHit', [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
+			callOnLuas((opponentChart ? 'goodNoteHitFix' : 'opponentNoteHitFix'), [notes.members.indexOf(daNote), Math.abs(daNote.noteData), daNote.noteType, daNote.isSustainNote]);
+			if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
+           		if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
+
+			if (!daNote.isSustainNote)
+			{
+					if (ClientPrefs.showNPS) { //i dont think we should be pushing to 2 arrays at the same time but oh well
+					oppNotesHitArray.push(1 * polyphony);
+					oppNotesHitDateArray.push(Date.now());
+					}
+			enemyHits += 1 * polyphony;
+				if (ClientPrefs.showNotes) notes.remove(daNote, true);
+				if (shouldKillNotes)
+				{
+					daNote.destroy();
+				}
+			}
+			if (opponentDrain && health > 0.1 && !practiceMode || opponentDrain && practiceMode) {
+			health -= daNote.hitHealth * hpDrainLevel * polyphony;
+			if (ClientPrefs.healthDisplay && !ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4 && scoreTxt != null) updateScore();
+			}
+			if (ClientPrefs.denpaDrainBug) displayedHealth -= daNote.hitHealth * hpDrainLevel * polyphony;
+			if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
+           		if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
+		}
+
 
 	public function spawnNoteSplashOnNote(isDad:Bool, note:Note) {
 		if(ClientPrefs.noteSplashes && note != null) {
