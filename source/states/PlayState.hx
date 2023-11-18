@@ -2541,60 +2541,51 @@ class PlayState extends MusicBeatState
 		var ret:Dynamic = callOnScripts('preKeyPress', [key], true);
 		if(ret == FunkinLua.Function_Stop) return;
 
-		// more accurate hit time for the ratings?
-		var lastTime:Float = Conductor.songPosition;
-		if(Conductor.songPosition >= 0) Conductor.songPosition = FlxG.sound.music.time;
-
 		// obtain notes that the player can hit
-		var plrInputNotes:Array<Note> = notes.members.filter(function(n:Note):Bool {
-			var canHit:Bool = !strumsBlocked[n.noteData] && n.canBeHit && n.mustPress && !n.tooLate && !n.wasGoodHit && !n.blockHit;
-			return n != null && canHit && !n.isSustainNote && n.noteData == key;
+		final inputNotes:Array<Note> = notes.members.filter(function(n:Note):Bool {
+			final isInputNote:Bool = !strumsBlocked[n.noteData] && n.canBeHit && n.mustPress && !n.isSustainNote;
+			return n != null && isInputNote && !n.wasGoodHit && !n.blockHit && !n.tooLate && n.noteData == key;
 		});
-		plrInputNotes.sort(sortHitNotes);
 
-		var shouldMiss:Bool = !ClientPrefs.data.ghostTapping;
-
-		if (plrInputNotes.length != 0) { // slightly faster than doing `> 0` lol
-			var funnyNote:Note = plrInputNotes[0]; // front note
-			// trace('✡⚐🕆☼ 💣⚐💣');
-
-			if (plrInputNotes.length > 1) {
-				var doubleNote:Note = plrInputNotes[1];
-
-				if (doubleNote.noteData == funnyNote.noteData) {
-					// if the note has a 0ms distance (is on top of the current note), kill it
-					if (Math.abs(doubleNote.strumTime - funnyNote.strumTime) < 1.0)
-						invalidateNote(doubleNote);
-					else if (doubleNote.strumTime < funnyNote.strumTime)
-					{
-						// replace the note if its ahead of time (or at least ensure "doubleNote" is ahead)
-						funnyNote = doubleNote;
-					}
-				}
-			}
-
-			goodNoteHit(funnyNote);
-		}
-		else {
-			if (shouldMiss && !boyfriend.stunned) {
-				callOnScripts('onGhostTap', [key]);
-				noteMissPress(key);
-			}
-		}
-
-		// Needed for the  "Just the Two of Us" achievement.
-		//									- Shadow Mario
-		if(!keysPressed.contains(key)) keysPressed.push(key);
-
-		//more accurate hit time for the ratings? part 2 (Now that the calculations are done, go back to the time it was before for not causing a note stutter)
-		Conductor.songPosition = lastTime;
-
-		var spr:StrumNote = playerStrums.members[key];
+		final spr:StrumNote = playerStrums.members[key];
 		if(strumsBlocked[key] != true && spr != null && spr.animation.curAnim.name != 'confirm')
 		{
 			spr.playAnim('pressed');
 			spr.resetAnim = 0;
 		}
+
+		if(inputNotes.length == 0) {
+			if (ClientPrefs.data.ghostTapping && !boyfriend.stunned) {
+				callOnScripts('onGhostTap', [key]);
+				noteMissPress(key);
+			}
+		}
+		else {
+			while (inputNotes.length != 0) {
+				var funnyNote:Note = inputNotes[0]; // front note
+				// trace('✡⚐🕆☼ 💣⚐💣');
+				if(inputNotes.length > 1) {
+					inputNotes.sort(sortHitNotes);
+
+					final doubleNote:Note = inputNotes[1];
+					if(doubleNote.noteData == funnyNote.noteData) {
+						// if the note has a 0ms distance (is on top of the current note), kill it
+						if (Math.abs(doubleNote.strumTime - funnyNote.strumTime) < 1.0)
+							invalidateNote(doubleNote);
+						else if (doubleNote.strumTime < funnyNote.strumTime) {
+							// replace the note if its ahead of time (or at least ensure "doubleNote" is ahead)
+							funnyNote = doubleNote;
+						}
+					}
+				}
+				goodNoteHit(funnyNote);
+				break;
+			}
+		}
+
+		// Needed for the  "Just the Two of Us" achievement.
+		//									 - Shadow Mario
+		if(!keysPressed.contains(key)) keysPressed.push(key);
 		callOnScripts('onKeyPress', [key]);
 	}
 
