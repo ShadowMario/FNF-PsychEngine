@@ -9,7 +9,6 @@ import flixel.math.FlxPoint;
 
 
 
-
 class AndroidControls extends FlxSpriteGroup {
 	public var virtualPad:FlxVirtualPad;
 	public var hitbox:FlxHitbox;
@@ -17,6 +16,7 @@ class AndroidControls extends FlxSpriteGroup {
 
 	public function new() {
 		super();
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 
 		switch (AndroidControls.getMode()) {
 			case 0: // RIGHT_FULL

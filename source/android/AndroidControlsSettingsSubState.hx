@@ -7,11 +7,13 @@ import haxe.Json;
 import options.BaseOptionsMenu;
 import options.Option;
 import openfl.Lib;
+import flixel.FlxG;
 
 using StringTools;
 
 class AndroidControlsSettingsSubState extends BaseOptionsMenu {
 	public function new() {
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 		title = 'Android settings for virtual pads and hitbox';
 		rpcTitle = 'Virtual pads and hitbox Menu';
 
