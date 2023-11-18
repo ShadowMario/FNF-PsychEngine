@@ -104,6 +104,15 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 		option.onChange = doDaUpdate;
 		addOption(option);
 
+		var option:Option = new Option('Rainbow FPS',
+			"If checked, allows the FPS color to be rainbow.",
+			'rainbowFPS',
+			'bool',
+			false);
+
+		option.onChange = onChangeRainbowFPS;
+		addOption(option);
+
 		/* doesnt work
 		var option:Option = new Option('WIDESCREEN SWEEP',
 			"cool stuff hehe, hidden cause not every mod is compatible with it.",
@@ -183,5 +192,13 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 		}
     
     MusicBeatState.switchState(new OutdatedState());
+	}
+
+	function onChangeRainbowFPS()
+	{
+		if(!ClientPrefs.rainbowFPS)
+		{
+			Main.changeFPSColor(0xFFFFFFFF);
+		}
 	}
 }

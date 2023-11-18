@@ -189,6 +189,8 @@ class PlayState extends MusicBeatState
 	public static var deathanim:Bool = false;
 	public static var dead:Bool = false;
 
+	public static var iconOffset:Int = 26;
+
 	var tankmanAscend:Bool = false; // funni (2021 nostalgia oh my god)
 
 	public var notes:FlxTypedGroup<Note>;
@@ -4803,7 +4805,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(!inCutscene) {
-			var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed * playbackRate, 0, 1);
+			final lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed * playbackRate, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x + moveCamTo[0]/102, camFollow.x + moveCamTo[0]/102, lerpVal), FlxMath.lerp(camFollowPos.y + moveCamTo[1]/102, camFollow.y + moveCamTo[1]/102, lerpVal));
 			if (ClientPrefs.charsAndBG) {
 			if(!startingSong && !endingSong && boyfriend.animation.curAnim != null && boyfriend.animation.curAnim.name.startsWith('idle')) {
@@ -4914,9 +4916,6 @@ if (ClientPrefs.showNPS) {
 		+ '\nTotal Note Hits: ' + FlxStringUtil.formatMoney(Math.abs(totalNotesPlayed + enemyHits), false)
 		+ '\nVideo Speedup: ' + Math.abs(playbackRate / playbackRate / playbackRate) + 'x';
 		}
-
-		if (combo > maxCombo)
-			maxCombo = combo;
 
 		super.update(elapsed);
 		judgeCountUpdateFrame = 0;
@@ -5177,13 +5176,13 @@ if (ClientPrefs.showNPS) {
 		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.8 / playbackRate)),Std.int(FlxMath.lerp(150, iconP2.height, 0.8 / playbackRate)));
 		}
 		if (ClientPrefs.iconBounceType == 'Plank Engine') {
-		var funnyBeat = (Conductor.songPosition / 1000) * (Conductor.bpm / 60);
+		final funnyBeat = (Conductor.songPosition / 1000) * (Conductor.bpm / 60);
 
 		iconP1.offset.y = Math.abs(Math.sin(funnyBeat * Math.PI))  * 16 - 4;
 		iconP2.offset.y = Math.abs(Math.sin(funnyBeat * Math.PI))  * 16 - 4;
 		}
 		if (ClientPrefs.iconBounceType == 'New Psych' || ClientPrefs.iconBounceType == 'SB Engine') {
-		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
+		final mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
 		iconP1.scale.set(mult, mult);
 		iconP1.updateHitbox();
 
@@ -5192,7 +5191,7 @@ if (ClientPrefs.showNPS) {
 		iconP2.updateHitbox();
 		}
 		if (ClientPrefs.iconBounceType == 'VS Steve') {
-		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
+		final mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
 		iconP1.scale.set(mult, mult);
 		iconP1.updateHitbox();
 
@@ -5230,8 +5229,6 @@ if (ClientPrefs.showNPS) {
 		}
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
-
-		var iconOffset:Int = 26;
 		
 		if (ClientPrefs.smoothHealth && ClientPrefs.smoothHealthType != 'Golden Apple 1.5' || !ClientPrefs.smoothHealth) //checks if you're using smooth health. if you are, but are not using the indie cross one then you know what that means
 		{
@@ -5382,27 +5379,34 @@ if (ClientPrefs.showNPS) {
 					if(secondsShown.length < 2) secondsShown = '0' + secondsShown; //let's see if the old time format works actually
 					if (minutesShownShit.length < 2) minutesShownShit = '0' + minutesShown;
 
-
-					if(ClientPrefs.timeBarType != 'Song Name' && songLength <= 3600000)
+					switch (ClientPrefs.timeBarType)
+					{
+					case 'Time Left', 'Time Elapsed':
+					if(songLength <= 3600000)
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+					else
+						timeTxt.text = hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining;
 
-					if(ClientPrefs.timeBarType != 'Song Name' && songLength >= 3600000)
-					timeTxt.text = hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining;
-
-					if(ClientPrefs.timeBarType == 'Modern Time' && songLength <= 3600000)
+					case 'Modern Time':
+					if(songLength <= 3600000)
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false) + ' / ' + FlxStringUtil.formatTime(songLength / 1000, false);
-
-					if(ClientPrefs.timeBarType == 'Modern Time' && songLength >= 3600000)
+					else
 						timeTxt.text = hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining + ' / ' + hoursShown + ':' + minutesShownShit + ':' + secondsShown;
-
-					if(ClientPrefs.timeBarType == 'Song Name + Time' && songLength <= 3600000)
+					
+					case 'Song Name + Time':
+					if(songLength <= 3600000)
 						timeTxt.text = SONG.song + ' (' + FlxStringUtil.formatTime(secondsTotal, false) + ' / ' + FlxStringUtil.formatTime(songLength / 1000, false) + ')';
 
-					if(ClientPrefs.timeBarType == 'Song Name + Time' && songLength >= 3600000)
+					else
 						timeTxt.text = SONG.song + ' (' + hoursRemaining + ':' + minutesRemainingShit + ':' + secondsRemaining + ' / ' + hoursShown + ':' + minutesShownShit + ':' + secondsShown + ')';
+					}
 
-					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType != 'Song Name') timeTxt.text += ' (' + playbackRateDecimal + 'x)';
-					if(ClientPrefs.timebarShowSpeed && ClientPrefs.timeBarType == 'Song Name') timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x)';
+					if(ClientPrefs.timebarShowSpeed)
+					{
+						if (ClientPrefs.timeBarType != 'Song Name')
+							timeTxt.text += ' (' + playbackRateDecimal + 'x)';
+						else timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x)';
+					}
 		if (cpuControlled && ClientPrefs.timeBarType != 'Song Name' && !ClientPrefs.communityGameBot) timeTxt.text += ' (Bot)';
 					if(ClientPrefs.timebarShowSpeed && cpuControlled && ClientPrefs.timeBarType == 'Song Name') timeTxt.text = SONG.song + ' (' + playbackRateDecimal + 'x) (Bot)';
 				}
@@ -8123,6 +8127,10 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 				popUpScore(note);
 			}
+
+			if (combo > maxCombo)
+				maxCombo = combo;
+
 			if (ClientPrefs.healthGainType == 'Psych Engine' || ClientPrefs.healthGainType == 'Leather Engine' || ClientPrefs.healthGainType == 'Kade (1.2)' || ClientPrefs.healthGainType == 'Kade (1.6+)' || ClientPrefs.healthGainType == 'Doki Doki+' || ClientPrefs.healthGainType == 'VS Impostor') {
 			health += note.hitHealth * healthGain * polyphony;
 			}

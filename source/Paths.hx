@@ -32,6 +32,14 @@ import lime.media.AudioBuffer;
 
 import flash.media.Sound;
 
+#if cpp
+import cpp.vm.Gc;
+#elseif hl
+import hl.Gc;
+#elseif neko
+import neko.vm.Gc;
+#end
+
 using StringTools;
 
 class Paths
@@ -70,6 +78,29 @@ class Paths
 		SUtil.getPath() + 'assets/shared/music/breakfast.$SOUND_EXT',
 		SUtil.getPath() + 'assets/shared/music/tea-time.$SOUND_EXT',
 	];
+
+	@:noCompletion private inline static function _gc(major:Bool) {
+		#if (cpp || neko)
+		Gc.run(major);
+		#elseif hl
+		Gc.major();
+		#end
+	}
+
+	@:noCompletion public inline static function compress() {
+		#if cpp
+		Gc.compact();
+		#elseif hl
+		Gc.major();
+		#elseif neko
+		Gc.run(true);
+		#end
+	}
+
+	public inline static function gc(major:Bool = false, repeat:Int = 1) {
+		while(repeat-- > 0) _gc(major);
+	}
+
 	/// haya I love you for the base cache dump I took to the max
 	public static function clearUnusedMemory() {
 		// clear non local assets in the tracked assets list
@@ -91,12 +122,10 @@ class Paths
 			}
 		}
 		// run the garbage collector for good measure lmfao
-			#if sys
-			openfl.system.System.gc();
-			#elseif cpp
-			cpp.vm.Gc.run();
-			#end
+		compress();
+		gc(true);
 	}
+
 	// define the locally tracked assets
 	public static var localTrackedAssets:Array<String> = [];
 	public static function clearStoredMemory(?cleanUnused:Bool = false) {
@@ -123,6 +152,8 @@ class Paths
 		// flags everything to be cleared out next unused memory clear
 		localTrackedAssets = [];
 		#if !html5 openfl.Assets.cache.clear("songs"); #end
+		gc(true);
+		compress();
 	}
 
 	static public var currentModDirectory:String = '';

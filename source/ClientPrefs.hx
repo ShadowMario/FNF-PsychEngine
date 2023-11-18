@@ -55,6 +55,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var showRamUsage:Bool = true;
 	public static var showMaxRamUsage:Bool = true;
 	public static var rainbowNotes:Bool = false;
+	public static var rainbowFPS:Bool = false;
 	public static var widescreenSweep:Bool = false;
 	public static var bfIconStyle:String = 'Default';
 	public static var strumLitStyle:String = 'Full Anim';
@@ -324,6 +325,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.ratingCounter = ratingCounter;
 		FlxG.save.data.colorRatingHit = colorRatingHit;
 		FlxG.save.data.rainbowNotes = rainbowNotes;
+		FlxG.save.data.rainbowFPS = rainbowFPS;
 		FlxG.save.data.widescreenSweep = widescreenSweep;
 		FlxG.save.data.healthGainType = healthGainType;
 		FlxG.save.data.oppNoteAlpha = oppNoteAlpha;
@@ -534,6 +536,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.rainbowNotes != null) {
 			rainbowNotes = FlxG.save.data.rainbowNotes;
+		}
+		if(FlxG.save.data.rainbowFPS != null) {
+			rainbowFPS = FlxG.save.data.rainbowFPS;
 		}
 		if(FlxG.save.data.widescreenSweep != null) {
 			widescreenSweep = FlxG.save.data.widescreenSweep;

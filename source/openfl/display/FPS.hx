@@ -18,6 +18,7 @@ import external.memory.Memory;
 import openfl.system.System;
 #end
 import Main;
+import flixel.util.FlxColor;
 
 /**
 	The FPS class provides an easy-to-use monitor to display
@@ -51,7 +52,7 @@ class FPS extends TextField
 		currentFPS = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat("_sans", 12, color);
+		defaultTextFormat = new TextFormat("VCR OSD Mono", 12, color);
 		autoSize = LEFT;
 		multiline = true;
 		text = "FPS: ";
@@ -69,6 +70,11 @@ class FPS extends TextField
 		#end
 	}
 
+	// All the colors:		  Red,	      Orange,     Yellow,     Green,      Blue,       Violet/Purple
+    	final rainbowColors:Array<Int> = [0xFFFF0000, 0xFFFFA500, 0xFFFFFF00, 0xFF00FF00, 0xFF0000FF, 0xFFFF00FF];
+	var colorInterp:Float = 0;
+	var currentColor:Int = 0;
+
 	// Event Handlers
 	@:noCompletion
 	private #if !flash override #end function __enterFrame(deltaTime:Float):Void
@@ -81,14 +87,12 @@ class FPS extends TextField
 			times.shift();
 		}
 
+		//Literally the stupidest thing i've done for the FPS counter but it allows it to update correctly when on 60 FPS??
 		var currentCount = times.length;
 		currentFPS = Math.round((currentCount + cacheCount) / 2);
 		if (currentFPS > ClientPrefs.framerate) currentFPS = ClientPrefs.framerate;
 
-		if (currentCount != cacheCount /*&& visible*/)
-		{
 			text = (ClientPrefs.showFPS ? "FPS: " + currentFPS : "");
-			var memoryMegas:Float = 0;
 			
 			if (ClientPrefs.showRamUsage) text += "\nMemory: " + CoolUtil.formatBytes(Memory.getCurrentUsage(), false, 2) + (ClientPrefs.showMaxRamUsage ? " / " + CoolUtil.formatBytes(Memory.getPeakUsage(), false, 2) : "");
 
@@ -100,10 +104,35 @@ class FPS extends TextField
 				text += "\nText bitmaps generated: " + Main.textGenerations;
 			}
 
-			textColor = 0xFFFFFFFF;
-			if (currentFPS <= ClientPrefs.framerate / 2)
+    			if (ClientPrefs.rainbowFPS)
+    			{
+		 	        colorInterp += deltaTime / 330; // Division so that it doesn't give you a seizure on 60 FPS
+            var colorIndex1:Int = Math.floor(colorInterp);
+            var colorIndex2:Int = (colorIndex1 + 1) % rainbowColors.length;
+
+            var startColor:Int = rainbowColors[colorIndex1];
+            var endColor:Int = rainbowColors[colorIndex2];
+
+            var segmentInterp:Float = colorInterp - colorIndex1;
+
+            var interpolatedColor:Int = interpolateColor(startColor, endColor, segmentInterp);
+
+            textColor = interpolatedColor;
+
+            // Check if the current color segment interpolation is complete
+            if (colorInterp >= rainbowColors.length) {
+                // Reset colorInterp to start the interpolation cycle again
+		textColor = rainbowColors[0];
+                colorInterp = 0;
+            }
+    			}
+			else
 			{
-				textColor = 0xFFFF0000;
+				textColor = 0xFFFFFFFF;
+				if (currentFPS <= ClientPrefs.framerate / 2)
+				{
+					textColor = 0xFFFF0000;
+				}
 			}
 
 			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
@@ -113,8 +142,31 @@ class FPS extends TextField
 			#end
 
 			text += "\n";
-		}
 
 		cacheCount = currentCount;
 	}
+    private function interpolateColor(startColor:Int, endColor:Int, t:Float):Int {
+        // Extract color components (RGBA) from startColor
+        var startR:Int = (startColor >> 16) & 0xFF;
+        var startG:Int = (startColor >> 8) & 0xFF;
+        var startB:Int = startColor & 0xFF;
+        var startA:Int = (startColor >> 24) & 0xFF;
+
+        // Extract color components (RGBA) from endColor
+        var endR:Int = (endColor >> 16) & 0xFF;
+        var endG:Int = (endColor >> 8) & 0xFF;
+        var endB:Int = endColor & 0xFF;
+        var endA:Int = (endColor >> 24) & 0xFF;
+
+        // Perform linear interpolation for each color component
+        var interpolatedR:Int = Math.round(startR + t * (endR - startR));
+        var interpolatedG:Int = Math.round(startG + t * (endG - startG));
+        var interpolatedB:Int = Math.round(startB + t * (endB - startB));
+        var interpolatedA:Int = Math.round(startA + t * (endA - startA));
+
+        // Combine interpolated color components into a single color value
+        var interpolatedColor:Int = (interpolatedA << 24) | (interpolatedR << 16) | (interpolatedG << 8) | interpolatedB;
+
+        return interpolatedColor;
+    }
 }

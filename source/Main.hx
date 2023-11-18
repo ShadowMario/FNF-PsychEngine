@@ -182,7 +182,7 @@ class Main extends Sprite {
 		#end
 	}
 
-	public function changeFPSColor(color:FlxColor) {
+	public static function changeFPSColor(color:FlxColor) {
 		fpsVar.textColor = color;
 	}
 
