@@ -106,25 +106,25 @@ class FPS extends TextField
 
     			if (ClientPrefs.rainbowFPS)
     			{
-		 	        colorInterp += deltaTime / 330; // Division so that it doesn't give you a seizure on 60 FPS
-            var colorIndex1:Int = Math.floor(colorInterp);
-            var colorIndex2:Int = (colorIndex1 + 1) % rainbowColors.length;
+		 			colorInterp += deltaTime / 330; // Division so that it doesn't give you a seizure on 60 FPS
+					var colorIndex1:Int = Math.floor(colorInterp);
+					var colorIndex2:Int = (colorIndex1 + 1) % rainbowColors.length;
 
-            var startColor:Int = rainbowColors[colorIndex1];
-            var endColor:Int = rainbowColors[colorIndex2];
+					var startColor:Int = rainbowColors[colorIndex1];
+					var endColor:Int = rainbowColors[colorIndex2];
 
-            var segmentInterp:Float = colorInterp - colorIndex1;
+					var segmentInterp:Float = colorInterp - colorIndex1;
 
-            var interpolatedColor:Int = interpolateColor(startColor, endColor, segmentInterp);
+					var interpolatedColor:Int = interpolateColor(startColor, endColor, segmentInterp);
 
-            textColor = interpolatedColor;
+					textColor = interpolatedColor;
 
-            // Check if the current color segment interpolation is complete
-            if (colorInterp >= rainbowColors.length) {
-                // Reset colorInterp to start the interpolation cycle again
-		textColor = rainbowColors[0];
-                colorInterp = 0;
-            }
+					// Check if the current color segment interpolation is complete
+					if (colorInterp >= rainbowColors.length) {
+						// Reset colorInterp to start the interpolation cycle again
+					textColor = rainbowColors[0];
+					colorInterp = 0;
+					}
     			}
 			else
 			{
