@@ -491,6 +491,18 @@ class PlayState extends MusicBeatState
 
 	var theListBotplay:Array<String> = [];
 
+		var formattedMaxScore:String;
+		var formattedSongScore:String;
+		var formattedScore:String;
+		var formattedSongMisses:String;
+		var formattedCombo:String;
+		var formattedNPS:String;
+		var npsString:String;
+		var accuracy:String;
+		var fcString:String;
+
+		var botText:String;
+
 	override public function create()
 	{
         	var compactCombo:String = formatCompactNumber(combo);
@@ -3480,26 +3492,60 @@ class PlayState extends MusicBeatState
 		compactTotalPlays = formatCompactNumber(totalNotesPlayed);
     }
 
-    public static function formatCompactNumber(number:Float):String //this entire function is ai generated LMAO
-    {
-        var suffixes:Array<String> = ['', 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion', 'decillion', 'undecillion', 'duodecillion', 'tredecillion', 'quattuordecillion', 'quindecillion', 'sexdecillion', 'septendecillion', 'octodecillion', 'novemdecillion', 'vigintillion', 'unvigintillion', 'duovigintillion', 'trevigintillion', 'quattuorvigintillion', 'quinvigintillion', 'sesvigintillion', 'septemvigintillion', 'octovigintillion', 'novemvigintillion', 'trigintillion', 'untrigintillion', 'duotrigintillion', 'trestrigintillion', 'quattuortrigintillion', 'quintrigintillion', 'sestrigintillion', 'septentrigintillion', 'octotrigintillion', 'noventrigintillion', 'quadragintillion', 'unquadragintillion', 'duoquadragintillion', 'trequadragintillion', 'quattuorquadragintillion', 'quinquadragintillion', 'sesquadragintillion', 'septenquadragintillion', 'octoquadragintillion', 'novenquadragintillion', 'quinquagintillion', 'unquinquagintillion', 'duoquinquagintillion', 'trequinquagintillion', 'quattuorquinquagintillion', 'quinquinquagintillion', 'sesquinquagintillion', 'septenquinquagintillion', 'octoquinquagintillion', 'novenquinquagintillion', 'sexagintillion', 'unsexagintillion', 'duosexagintillion', 'tresexagintillion', 'quattuorsexagintillion', 'quinsexagintillion', 'sesagintillion', 'septensexagintillion', 'octosexagintillion', 'novensexagintillion', 'septuagintillion', 'unseptuagintillion', 'duoseptuagintillion', 'treseptuagintillion', 'quattuorseptuagintillion', 'quinseptuagintillion', 'seseptuaintillion', 'septenseptuagintillion', 'octoseptuagintillion', 'novenseptuagintillion', 'octogintillion', 'unoctogintillion', 'duooctogintillion', 'tresoctogintillion', 'quattuoroctogintillion', 'quinoctogintillion', 'sesoctogintillion', 'septenoctogintillion', 'octooctogintillion', 'novenoctogintillion', 'nonagintillion', 'unnonagintillion', 'duononagintillion', 'tresnonagintillion', 'quattuornonagintillion', 'quinnonagintillion', 'sesnonagintillion', 'septennonagintillion', 'octononagintillion', 'novennonagintillion', 'centillion', 'uncentillion']; //Every 'illion' up to 10^308, taken straight from Conway's zillion number list
-        var magnitude:Int = 0;
-        var num:Float = number;
+	public static function formatCompactNumber(number:Float):String
+	{
+		var suffixes1:Array<String> = ['ni', 'mi', 'bi', 'tri', 'quadri', 'quinti', 'sexti', 'septi', 'octi', 'noni'];
+		var tenSuffixes:Array<String> = ['', 'deci', 'viginti', 'triginti', 'quadraginti', 'quinquaginti', 'sexaginti', 'septuaginti', 'octoginti', 'nonaginti', 'centi'];
+		var decSuffixes:Array<String> = ['', 'un', 'duo', 'tre', 'quattuor', 'quin', 'sex', 'septe', 'octo', 'nove'];
+		var centiSuffixes:Array<String> = ['centi', 'ducenti', 'trecenti', 'quadringenti', 'quingenti', 'sescenti', 'septingenti', 'octingenti', 'nongenti'];
 
-        while (num >= 1000.0 && magnitude < suffixes.length - 1)
-        {
-            num /= 1000.0;
-            magnitude++;
-        }
+		var magnitude:Int = 0;
+		var num:Float = number;
+		var tenIndex:Int = 0;
 
-        // Use the floor value for the compact representation
-        var compactValue:Float = Math.floor(num * 100) / 100;
-	if (compactValue <= 0.001) {
-		return "0"; //Return 0 if compactValue = null
-	} else {
-        	return compactValue + (magnitude == 0 ? "" : " ") + suffixes[magnitude];
+		while (num >= 1000.0)
+		{
+			num /= 1000.0;
+
+			// Increment tenSuffix and switch to decSuffixes after reaching 1 decillion
+			if (magnitude == suffixes1.length - 1) {
+				tenIndex++;
+			}
+
+			magnitude++;
+
+			// Handle the transition from tenSuffixes to centiSuffixes
+			if (magnitude == 21) {
+				tenIndex++;
+				magnitude = 11;
+			}
+		}
+
+		// Determine which set of suffixes to use
+		var suffixSet:Array<String> = (magnitude <= suffixes1.length) ? suffixes1 : ((magnitude <= suffixes1.length + decSuffixes.length) ? decSuffixes : centiSuffixes);
+
+		// Use the appropriate suffix based on magnitude
+		var suffix:String = (magnitude <= suffixes1.length) ? suffixSet[magnitude - 1] : suffixSet[magnitude - 1 - suffixes1.length];
+		var tenSuffix:String = (tenIndex <= 10) ? tenSuffixes[tenIndex] : centiSuffixes[tenIndex - 11];
+
+		// Use the floor value for the compact representation
+		var compactValue:Float = Math.floor(num * 100) / 100;
+
+		if (compactValue <= 0.001) {
+			return "0"; // Return 0 if compactValue = null
+		} else {
+			var illionRepresentation:String = "";
+
+			if (magnitude > 0) {
+				illionRepresentation += suffix + tenSuffix;
+			}
+
+				if (magnitude > 1) illionRepresentation += "llion";
+
+			return compactValue + (magnitude == 0 ? "" : " ") + (magnitude == 1 ? 'thousand' : illionRepresentation);
+		}
 	}
-    }
+
     public static function formatCompactNumberInt(number:Int):String //this entire function is ai generated LMAO
     {
         var suffixes:Array<String> = ['', 'thousand', 'million', 'billion']; //Illions up to billion, nothing higher because integers can't go past 2,147,483,647
@@ -3834,17 +3880,17 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{
 		//GAH DAYUM THIS IS MORE OPTIMIZED THAN BEFORE
-		final formattedMaxScore:String = ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '';
-		final formattedSongScore:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore;
-		final formattedScore:String = (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + formattedMaxScore;
-		final formattedSongMisses:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses;
-		final formattedCombo:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo;
-		final formattedNPS:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS;
-		final npsString:String = ClientPrefs.showNPS ? (ClientPrefs.hudType != 'Leather Engine' ? ' | ' : ' ~ ') + (cpuControlled ? 'Bot ' : '') + 'NPS: ' + formattedNPS : '';
-		final accuracy:String = Highscore.floorDecimal(ratingPercent * 100, 2) + '%';
-		final fcString:String = ratingFC;
+		formattedMaxScore = ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '';
+		formattedSongScore = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore;
+		formattedScore = (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + formattedMaxScore;
+		formattedSongMisses = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses;
+		formattedCombo = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo;
+		formattedNPS = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS;
+		npsString = ClientPrefs.showNPS ? (ClientPrefs.hudType != 'Leather Engine' ? ' | ' : ' ~ ') + (cpuControlled ? 'Bot ' : '') + 'NPS: ' + formattedNPS : '';
+		accuracy = Highscore.floorDecimal(ratingPercent * 100, 2) + '%';
+		fcString = ratingFC;
 
-		final botText:String = cpuControlled && !ClientPrefs.communityGameBot ? ' | Botplay Mode' : '';
+		botText = cpuControlled && !ClientPrefs.communityGameBot ? ' | Botplay Mode' : '';
 
 		if (cpuControlled && !ClientPrefs.communityGameBot)
 		{
@@ -6986,62 +7032,77 @@ if (ClientPrefs.showNPS) {
 					ghost = gfGhost;
 					player = gf;
 			}
-	
-									
-			ghost.frames = player.frames;
-			ghost.animation.copyFrom(player.animation);
-			ghost.x = player.x;
-			ghost.y = player.y;
-			ghost.animation.play(animToPlay, true);
-			ghost.offset.set(player.animOffsets.get(animToPlay)[0], player.animOffsets.get(animToPlay)[1]);
-			ghost.flipX = player.flipX;
-			ghost.flipY = player.flipY;
-			ghost.blend = HARDLIGHT;
-			ghost.alpha = 0.8;
-			ghost.visible = true;
 
-			if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && camZooming && ClientPrefs.doubleGhostZoom)
+			if (player.animation != null)
 			{
+				ghost.frames = player.frames;
+
+				// Check for null before copying from player.animation
+				if (player.animation != null)
+				{
+					ghost.animation.copyFrom(player.animation);
+				}
+
+				ghost.x = player.x;
+				ghost.y = player.y;
+				ghost.animation.play(animToPlay, true);
+
+				// Check for null before accessing animOffsets
+				if (player.animOffsets != null && player.animOffsets.exists(animToPlay))
+				{
+					ghost.offset.set(player.animOffsets.get(animToPlay)[0], player.animOffsets.get(animToPlay)[1]);
+				}
+
+				ghost.flipX = player.flipX;
+				ghost.flipY = player.flipY;
+				ghost.blend = HARDLIGHT;
+				ghost.alpha = 0.8;
+				ghost.visible = true;
+
+				if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && camZooming && ClientPrefs.doubleGhostZoom)
+				{
 					FlxG.camera.zoom += 0.0075;
 					camHUD.zoom += 0.015;
-			}
-	
-			switch (char.toLowerCase().trim())
-			{
-				case 'bf':
-					if (bfGhostTween != null)
-						bfGhostTween.cancel();
-					ghost.color = FlxColor.fromRGB(boyfriend.healthColorArray[0] + 50, boyfriend.healthColorArray[1] + 50, boyfriend.healthColorArray[2] + 50);
-					bfGhostTween = FlxTween.tween(bfGhost, {alpha: 0}, 0.75, {
-						ease: FlxEase.linear,
-						onComplete: function(twn:FlxTween)
-						{
-							bfGhostTween = null;
-						}
-					});
-	
-				case 'dad':
-					if (dadGhostTween != null)
-						dadGhostTween.cancel();
-					ghost.color = FlxColor.fromRGB(dad.healthColorArray[0] + 50, dad.healthColorArray[1] + 50, dad.healthColorArray[2] + 50);
-					dadGhostTween = FlxTween.tween(dadGhost, {alpha: 0}, 0.75, {
-						ease: FlxEase.linear,
-						onComplete: function(twn:FlxTween)
-						{
-							dadGhostTween = null;
-						}
-					});
-				case 'gf':
-					if (gfGhostTween != null)
-						gfGhostTween.cancel();
-					ghost.color = FlxColor.fromRGB(gf.healthColorArray[0] + 50, gf.healthColorArray[1] + 50, gf.healthColorArray[2] + 50);
-					gfGhostTween = FlxTween.tween(gfGhost, {alpha: 0}, 0.75, {
-						ease: FlxEase.linear,
-						onComplete: function(twn:FlxTween)
-						{
-							gfGhostTween = null;
-						}
-					});
+				}
+
+				switch (char.toLowerCase().trim())
+				{
+					case 'bf':
+						if (bfGhostTween != null)
+							bfGhostTween.cancel();
+						ghost.color = FlxColor.fromRGB(boyfriend.healthColorArray[0] + 50, boyfriend.healthColorArray[1] + 50, boyfriend.healthColorArray[2] + 50);
+						bfGhostTween = FlxTween.tween(bfGhost, {alpha: 0}, 0.75, {
+							ease: FlxEase.linear,
+							onComplete: function(twn:FlxTween)
+							{
+								bfGhostTween = null;
+							}
+						});
+
+					case 'dad':
+						if (dadGhostTween != null)
+							dadGhostTween.cancel();
+						ghost.color = FlxColor.fromRGB(dad.healthColorArray[0] + 50, dad.healthColorArray[1] + 50, dad.healthColorArray[2] + 50);
+						dadGhostTween = FlxTween.tween(dadGhost, {alpha: 0}, 0.75, {
+							ease: FlxEase.linear,
+							onComplete: function(twn:FlxTween)
+							{
+								dadGhostTween = null;
+							}
+						});
+
+					case 'gf':
+						if (gfGhostTween != null)
+							gfGhostTween.cancel();
+						ghost.color = FlxColor.fromRGB(gf.healthColorArray[0] + 50, gf.healthColorArray[1] + 50, gf.healthColorArray[2] + 50);
+						gfGhostTween = FlxTween.tween(gfGhost, {alpha: 0}, 0.75, {
+							ease: FlxEase.linear,
+							onComplete: function(twn:FlxTween)
+							{
+								gfGhostTween = null;
+							}
+						});
+				}
 			}
 		}
 	}
@@ -7049,21 +7110,19 @@ if (ClientPrefs.showNPS) {
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
-		//trace(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
 		if (note != null && note.isSustainNote && ClientPrefs.holdNoteHits) noteDiff = 0;
 		var wife:Float = EtternaFunctions.wife3(noteDiff, Conductor.timeScale);
 		noteDiff /= playbackRate;
 		wife /= playbackRate;
 
-		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
+		var xThing:Float = 0;
 
 		var placement:String = Std.string(combo);
 
 		var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.35;
-		//
 		if(ClientPrefs.scoreZoom && !ClientPrefs.hideScore && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {
@@ -7077,14 +7136,13 @@ if (ClientPrefs.showNPS) {
 				}
 			});
 		}
-
-		var rating:FlxSprite = new FlxSprite();
+		
 		var score:Float = 500 * polyphony;
 
-		if (noteDiff > ClientPrefs.marvWindow && noteDiff < ClientPrefs.sickWindow && !ClientPrefs.noMarvJudge) maxScore -= 150 * Std.int(polyphony); //if you enable marvelous judges and hit a sick, lower the max score by 150 points. otherwise it won't make sense
-
 		//tryna do MS based judgment due to popular demand
-		var daRating:Rating = Conductor.judgeNote(note, noteDiff);
+		var daRating:Rating = Conductor.judgeNote(note, noteDiff, cpuControlled);
+
+		if (Std.string(daRating) == 'sick' && ClientPrefs.noMarvJudge) maxScore -= 150 * Std.int(polyphony); //if you enable marvelous judges and hit a sick, lower the max score by 150 points. otherwise it won't make sense
 
 		if (!ClientPrefs.complexAccuracy) totalNotesHit += daRating.ratingMod;
 		if (ClientPrefs.complexAccuracy) totalNotesHit += wife;
@@ -7100,7 +7158,7 @@ if (ClientPrefs.showNPS) {
 				allSicks = false;
 
 		}
-		if (noteDiff > ClientPrefs.badWindow && ClientPrefs.shitGivesMiss && ClientPrefs.ratingIntensity == 'Normal')
+		if (Std.string(daRating) == 'shit' && ClientPrefs.shitGivesMiss && ClientPrefs.ratingIntensity == 'Normal')
 		{	
 			noteMiss(note);
 		}
@@ -7112,141 +7170,48 @@ if (ClientPrefs.showNPS) {
 		{	
 			noteMiss(note);
 		}
-		if (ClientPrefs.healthGainType == 'VS Impostor') {
-		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
+		switch (ClientPrefs.healthGainType)
 		{
-			health += note.hitHealth * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
-		{
-			health += note.hitHealth * healthGain * polyphony;
-		}
-		if (note.isSustainNote)
-		{
-			health += note.hitHealth * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.sickWindow)
-		{
-			health += note.hitHealth * 0.5 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.goodWindow)
-		{
-			health += note.hitHealth * 0.25 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.badWindow)
-		{
-			health += note.hitHealth * 0.1 * healthGain * polyphony;
-		}
-		}
-		if (ClientPrefs.healthGainType == 'Leather Engine') {
-		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge) //you hit a marvelous!!
-		{
-			health += 0.012 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
-		{
-			health += 0.012 * healthGain * polyphony; //you hit a sick!
-		}
-		if (noteDiff > ClientPrefs.sickWindow) //you hit a good rating
-		{
-			health += -0.008 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.goodWindow) //you hit a bad rating
-		{
-			health += -0.018 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.badWindow) //you hit a shit rating
-		{
-			health += -0.23;
-		}
-		}
-		if (ClientPrefs.healthGainType == 'Kade (1.4.2 to 1.6)') {
-		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
-		{
-			health += 0.1 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
-		{
-			health += 0.1 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.sickWindow)
-		{
-			health += 0.04 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.goodWindow)
-		{
-			health -= 0.06 * healthLoss;
-		}
-		if (noteDiff > ClientPrefs.badWindow)
-		{
-			health -= 0.2 * healthLoss;
-		}
-		}
-		if (ClientPrefs.healthGainType == 'Doki Doki+') {
-		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
-		{
-			health += 0.077 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
-		{
-			health += 0.077 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.sickWindow)
-		{
-			health += 0.04 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.goodWindow)
-		{
-			health -= 0.06 * healthLoss;
-		}
-		if (noteDiff > ClientPrefs.badWindow)
-		{
-			health -= 0.1 * healthLoss;
-		}
-		}
-		if (ClientPrefs.healthGainType == 'Kade (1.6+)') {
-		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
-		{
-			health += 0.017 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
-		{
-			health += 0.017 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.sickWindow)
-		{
-			health += 0;
-		}
-		if (noteDiff > ClientPrefs.goodWindow)
-		{
-			health -= 0.03 * healthLoss;
-		}
-		if (noteDiff > ClientPrefs.badWindow)
-		{
-			health -= 0.06 * healthLoss;
-		}
-		}
-		if (ClientPrefs.healthGainType == 'Kade (1.2)') {
-		if (noteDiff < ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge)
-		{
-			health += 0.023 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.marvWindow || noteDiff < ClientPrefs.sickWindow && ClientPrefs.noMarvJudge)
-		{
-			health += 0.023 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.sickWindow)
-		{
-			health += 0.004 * healthGain * polyphony;
-		}
-		if (noteDiff > ClientPrefs.goodWindow)
-		{
-			health -= 0;
-		}
-		if (noteDiff > ClientPrefs.badWindow)
-		{
-			health -= 0;
-		}
+			case 'VS Impostor':
+				switch(Std.string(daRating))
+				{
+				case 'marv', 'sick': health += note.hitHealth * healthGain * polyphony;
+				case 'good': health += note.hitHealth * 0.5 * healthGain * polyphony;
+				case 'bad': health += note.hitHealth * 0.25 * healthGain * polyphony;
+				case 'shit': health += note.hitHealth * 0.1 * healthGain * polyphony;
+				}
+			case 'Leather Engine':
+				switch(Std.string(daRating))
+				{
+				case 'marv', 'sick': health += 0.012 * healthGain * polyphony;
+				case 'good': health += -0.008 * healthGain * polyphony;
+				case 'bad': health += -0.018 * healthGain * polyphony;
+				case 'shit': health += -0.023 * healthGain * polyphony;
+				}
+			case 'Kade (1.4.2 to 1.6)', 'Doki Doki+':
+				switch(Std.string(daRating))
+				{
+				case 'marv', 'sick': health += (ClientPrefs.healthGainType == 'Doki Doki+' ? 0.077 : 0.1) * healthGain * polyphony;
+				case 'good': health += 0.04 * healthGain * polyphony;
+				case 'bad': health -= 0.06 * healthGain * polyphony;
+				case 'shit': health -= (ClientPrefs.healthGainType == 'Doki Doki+' ? 0.1 : 0.2) * healthGain * polyphony;
+				}
+			case 'Kade (1.6+)':
+				switch(Std.string(daRating))
+				{
+				case 'marv', 'sick': health += 0.017 * healthGain * polyphony;
+				case 'good': health += 0 * healthGain * polyphony;
+				case 'bad': health += -0.03 * healthLoss;
+				case 'shit': health += -0.06 * healthLoss;
+				}
+			case 'Kade (1.2)': 
+				switch(Std.string(daRating))
+				{
+				case 'marv', 'sick': health += 0.023 * healthGain * polyphony;
+				case 'good': health += 0.004 * healthGain * polyphony;
+				case 'bad': health += 0;
+				case 'shit': health += 0;
+				}
 		}
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
@@ -7274,20 +7239,11 @@ if (ClientPrefs.showNPS) {
 			pixelShitPart1 = 'pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
-		if (ClientPrefs.ratingType == 'Doki Doki+')
+		switch (ClientPrefs.ratingType)
 		{
-			pixelShitPart1 = 'dokistuff/';
-			pixelShitPart2 = '';
-		}
-		if (ClientPrefs.ratingType == 'Tails Gets Trolled V4')
-		{
-			pixelShitPart1 = 'tgtstuff/';
-			pixelShitPart2 = '';
-		}
-		if (ClientPrefs.ratingType == 'Kade Engine')
-		{
-			pixelShitPart1 = 'kadethings/';
-			pixelShitPart2 = '';
+			case 'Doki Doki+': pixelShitPart1 = 'dokistuff/';
+			case 'Tails Gets Trolled V4': pixelShitPart1 = 'tgtstuff/';
+			case 'Kade Engine': pixelShitPart1 = 'kadethings/';
 		}
 		if (allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.sickWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
 		{
@@ -7305,7 +7261,7 @@ if (ClientPrefs.showNPS) {
 			pixelShitPart2 = '';
 		}
 		if (ClientPrefs.ratesAndCombo) {
-		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
+		var rating = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
 		rating.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
@@ -7336,32 +7292,24 @@ if (!allSicks && ClientPrefs.colorRatingFC && shits > 0 && noteDiff > ClientPref
 		{
 		rating.color = judgeColours.get('shit');
 		}
-if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.noMarvJudge) 
+if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
 		{
-		rating.color = judgeColours.get('marv');
-		}
-if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.marvWindow && noteDiff < ClientPrefs.sickWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.marvRateColor != 'Golden' && !ClientPrefs.noMarvJudge) 
-		{
-		rating.color = judgeColours.get('sick');
-		}
-if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.sickWindow && noteDiff < ClientPrefs.goodWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
-		{
-		rating.color = judgeColours.get('good');
-		}
-if (!allSicks && ClientPrefs.colorRatingHit && bads > 0 && noteDiff > ClientPrefs.goodWindow && noteDiff < ClientPrefs.badWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
-		{
-		rating.color = judgeColours.get('bad');
-		}
-if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.badWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
-		{
-		rating.color = judgeColours.get('shit');
+			switch (Std.string(daRating)) //This is so stupid, but it works
+			{
+			case 'marv': rating.color = FlxColor.YELLOW;
+			case 'sick':  rating.color = FlxColor.CYAN;
+			case 'good': rating.color = FlxColor.LIME;
+			case 'bad': rating.color = FlxColor.ORANGE;
+			case 'shit': rating.color = FlxColor.RED;
+			default: rating.color = FlxColor.WHITE;
+			}
 		}
 		insert(members.indexOf(strumLineNotes), rating);
 
 		if (ClientPrefs.showMS && !ClientPrefs.hideHud) {
 			FlxTween.cancelTweensOf(msTxt);
 			FlxTween.cancelTweensOf(msTxt.scale);
-			var msTiming:Float = note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset;
+			var msTiming:Float = noteDiff;
 			var time = (Conductor.stepCrochet * 0.001); //ms popup shit
 			msTxt.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
 			msTxt.visible = true;
@@ -7387,82 +7335,52 @@ if (!allSicks && ClientPrefs.colorRatingHit && noteDiff > ClientPrefs.badWindow 
 						});
 					}
 				});
-			if (noteDiff <= ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge) msTxt.color = FlxColor.YELLOW;
-			if (noteDiff <= ClientPrefs.sickWindow && ClientPrefs.noMarvJudge) msTxt.color = FlxColor.CYAN;
-			if (noteDiff <= ClientPrefs.sickWindow && noteDiff >= ClientPrefs.marvWindow && !ClientPrefs.noMarvJudge) msTxt.color = FlxColor.CYAN;
-			if (noteDiff >= ClientPrefs.sickWindow) msTxt.color = FlxColor.LIME;
-			if (noteDiff >= ClientPrefs.goodWindow) msTxt.color = FlxColor.ORANGE;
-			if (noteDiff >= ClientPrefs.badWindow) msTxt.color = FlxColor.RED;
-			if (!msTxt.visible) msTxt.color = FlxColor.WHITE;
-		}
-		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
-		comboSpr.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
-		comboSpr.screenCenter();
-		comboSpr.x = coolText.x;
-		comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
-		comboSpr.velocity.y -= FlxG.random.int(140, 160) * playbackRate;
-		comboSpr.visible = (!ClientPrefs.hideHud && showCombo);
-		comboSpr.x += ClientPrefs.comboOffset[0];
-		comboSpr.y -= ClientPrefs.comboOffset[1];
-		comboSpr.y += 60;
-		comboSpr.color = rating.color;
-		comboSpr.velocity.x += FlxG.random.int(1, 10) * playbackRate;
-		if (ClientPrefs.comboPopup && !cpuControlled)
-		{
-			insert(members.indexOf(strumLineNotes), comboSpr);
-		}
-		if (!ClientPrefs.comboStacking)
-		{
-			if (lastCombo != null) lastCombo.kill();
-			lastCombo = comboSpr;
-		}
-		
-		if (!ClientPrefs.comboStacking)
-		{
-			if (lastRating != null) lastRating.kill();
-			lastRating = rating;
+			switch (Std.string(daRating)) //This is so stupid, but it works
+			{
+			case 'marv': msTxt.color = FlxColor.YELLOW;
+			case 'sick':  msTxt.color = FlxColor.CYAN;
+			case 'good': msTxt.color = FlxColor.LIME;
+			case 'bad': msTxt.color = FlxColor.ORANGE;
+			case 'shit': msTxt.color = FlxColor.RED;
+			default: msTxt.color = FlxColor.WHITE;
+			}
 		}
 
 		if (!PlayState.isPixelStage)
 		{
 			rating.setGraphicSize(Std.int(rating.width * 0.7));
 			rating.antialiasing = ClientPrefs.globalAntialiasing;
-			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
-			comboSpr.antialiasing = ClientPrefs.globalAntialiasing;
 		}
 		else
 		{
 			rating.setGraphicSize(Std.int(rating.width * daPixelZoom * 0.85));
-			comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.85));
 		}
 
-		comboSpr.updateHitbox();
 		rating.updateHitbox();
 
-		var seperatedScore:Array<Int> = [];
-		//much faster combo popup stuff
-		for (i in 0...Std.string(combo).length) {
+		final seperatedScore:Array<Int> = [];
+		for (i in 0...Std.string(Std.int(combo)).length) {
 			seperatedScore.push(Std.parseInt(Std.string(combo).split("")[i]));
 		}
 
-
-
 		var daLoop:Int = 0;
-		var xThing:Float = 0;
-		if (ClientPrefs.comboPopup && !cpuControlled)
-		{
-			insert(members.indexOf(strumLineNotes), comboSpr);
-		}
 		if (!ClientPrefs.comboStacking)
 		{
-			if (lastCombo != null) lastCombo.kill();
-			lastCombo = comboSpr;
+			if (lastRating != null) 
+			{
+				FlxTween.cancelTweensOf(lastRating);
+				remove(lastRating, true);
+				lastRating.destroy();
+			}
+				lastRating = rating;
 		}
 		if (lastScore != null)
 		{
 			while (lastScore.length > 0)
 			{
-				lastScore[0].kill();
+				FlxTween.cancelTweensOf(lastScore[0]);
+				remove(lastScore[0], true);
+				lastScore[0].destroy();
 				lastScore.remove(lastScore[0]);
 			}
 		}
@@ -7521,7 +7439,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			numScore.velocity.x = FlxG.random.float(-5, 5) * playbackRate;
 			numScore.visible = !ClientPrefs.hideHud;
 
-			//if (combo >= 10 || combo == 0)
 			if(showComboNum)
 				insert(members.indexOf(strumLineNotes), numScore);
 
@@ -7529,6 +7446,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				onComplete: function(tween:FlxTween)
 				{
 					numScore.destroy();
+					coolText.destroy();
 				},
 				startDelay: Conductor.crochet * 0.002 / playbackRate
 			});
@@ -7536,29 +7454,65 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			daLoop++;
 			if(numScore.x > xThing) xThing = numScore.x;
 		}
-		comboSpr.x = xThing + 50;
-		/*
-			trace(combo);
-			trace(seperatedScore);
-		 */
+
+		if (ClientPrefs.comboPopup)
+		{
+			var comboSpr = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
+			comboSpr.cameras = (ClientPrefs.wrongCameras ? [camGame] : [camHUD]);
+			comboSpr.screenCenter();
+			comboSpr.x = coolText.x;
+			comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
+			comboSpr.velocity.y -= FlxG.random.int(140, 160) * playbackRate;
+			comboSpr.visible = (!ClientPrefs.hideHud && showCombo);
+			comboSpr.x += ClientPrefs.comboOffset[0];
+			comboSpr.y -= ClientPrefs.comboOffset[1];
+			comboSpr.y += 60;
+			comboSpr.color = rating.color;
+			comboSpr.velocity.x += FlxG.random.int(1, 10) * playbackRate;
+			if (ClientPrefs.comboPopup && !cpuControlled)
+			{
+				insert(members.indexOf(strumLineNotes), comboSpr);
+			}
+			comboSpr.x = xThing + 50;
+			if (!ClientPrefs.comboStacking)
+			{
+				if (lastCombo != null) 
+				{
+					FlxTween.cancelTweensOf(lastCombo);
+					remove(lastCombo, true);
+					lastCombo.destroy();
+				}
+					lastCombo = comboSpr;
+			}
+			if (!PlayState.isPixelStage)
+			{
+				comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
+				comboSpr.antialiasing = ClientPrefs.globalAntialiasing;
+			}
+			else
+			{
+				comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.85));
+			}
+				comboSpr.updateHitbox();
+			FlxTween.tween(comboSpr, {alpha: 0}, 0.2 / playbackRate, {
+				onComplete: function(tween:FlxTween)
+				{
+					coolText.destroy();
+					comboSpr.destroy();
+				},
+				startDelay: Conductor.crochet * 0.002 / playbackRate
+			});
+		}
 
 		coolText.text = Std.string(seperatedScore);
-		// add(coolText);
 
-		FlxTween.tween(rating, {alpha: 0}, 0.2 / playbackRate, {
-			startDelay: Conductor.crochet * 0.001 / playbackRate
-		});
-
-		FlxTween.tween(comboSpr, {alpha: 0}, 0.2 / playbackRate, {
-			onComplete: function(tween:FlxTween)
-			{
-				coolText.destroy();
-				comboSpr.destroy();
-
-				rating.destroy();
-			},
-			startDelay: Conductor.crochet * 0.002 / playbackRate
-		});
+			FlxTween.tween(rating, {alpha: 0}, 0.2 / playbackRate, {
+				startDelay: Conductor.crochet * 0.001 / playbackRate,
+				onComplete: function(tween:FlxTween)
+				{
+					rating.destroy();
+				}
+			});
 		}
 	}
 
@@ -7936,16 +7890,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	}
 
 	var hitsound:FlxSound;
-	var hitsound2:FlxSound;
-	var hitsound3:FlxSound;
-	var hitsound4:FlxSound;
-	var hitsound5:FlxSound;
-	var hitsound6:FlxSound;
-	var hitsound7:FlxSound;
-	var hitsound8:FlxSound;
-	var hitsound9:FlxSound;
-	var hitsound10:FlxSound;
-	var hitsound11:FlxSound;
 
 	function goodNoteHit(note:Note):Void
 	{
@@ -8008,11 +7952,11 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				note.wasGoodHit = true;
 				if (!note.isSustainNote)
 				{
-				if (ClientPrefs.showNotes) notes.remove(note, true);
-				if (shouldKillNotes)
-				{
-					note.destroy();
-				}
+					if (ClientPrefs.showNotes) notes.remove(note, true);
+					if (shouldKillNotes)
+					{
+						note.destroy();
+					}
 				}
 				return;
 			}
@@ -8341,7 +8285,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 	}
 	function opponentNoteHit(daNote:Note):Void
 	{
-				if (!opponentChart) {
+			if (!opponentChart) {
 				if (Paths.formatToSongPath(SONG.song) != 'tutorial' && !camZooming)
 					camZooming = true;
 			}
@@ -8363,7 +8307,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				}
 
 				var char:Character = dad;
-				var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + altAnim;
+				final animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + altAnim;
 				if(daNote.gfNote && ClientPrefs.charsAndBG) {
 					char = gf;
 						if (ClientPrefs.doubleGhost)
@@ -8486,7 +8430,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			if (ClientPrefs.strumLitStyle == 'Full Anim') time += 0.15 / playbackRate;
 			if (ClientPrefs.strumLitStyle == 'BPM Based') time += (Conductor.stepCrochet * 1.5 / 1000) / playbackRate;
 			}
-					var spr:StrumNote = opponentStrums.members[daNote.noteData];
+					final spr:StrumNote = opponentStrums.members[daNote.noteData];
 
 					if(spr != null) {
 					if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
@@ -9250,24 +9194,33 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 	public function updateRatingCounter() {
 		judgeCountUpdateFrame++;
+
+		formattedSongMisses = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses;
+		formattedCombo = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo;
+		var formattedMaxCombo:String = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo;
+		formattedNPS = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS;
+		var formattedMaxNPS = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxNPS, false) : formatCompactNumber(maxNPS);
+		var formattedOppNPS = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(oppNPS, false) : formatCompactNumber(oppNPS);
+		var formattedMaxOppNPS = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxOppNPS, false) : formatCompactNumber(maxOppNPS);
+		var formattedEnemyHits = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(enemyHits, false) : formatCompactNumber(enemyHits);
 		if (!ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		judgementCounter.text = 'Combo (Max): ' + formattedCombo + ' (' + formattedMaxCombo + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nMarvelous!!!: ' + marvs + '\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + formattedSongMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + formattedCombo + ' (' + formattedMaxCombo + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nVery Doki: ' + marvs + '\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + formattedSongMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + formattedCombo + ' (' + formattedMaxCombo + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSO SUSSY: ' + marvs + '\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + formattedSongMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 		}
 		if (ClientPrefs.noMarvJudge)
 		{
-		judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		judgementCounter.text = 'Combo (Max): ' + formattedCombo + ' (' + formattedMaxCombo + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSicks!!: ' + sicks + '\nGoods!: ' + goods + '\nBads: ' + bads + '\nShits: ' + shits + '\nMisses: ' + formattedSongMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 
-		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'Doki Doki+') judgementCounter.text = 'Combo (Max): ' + formattedCombo + ' (' + formattedMaxCombo + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nDoki: ' + sicks + '\nGood: ' + goods + '\nOK: ' + bads + '\nNO: ' + shits + '\nMiss: ' + formattedSongMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 
-		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo) + ' (' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxCombo, false) : compactMaxCombo) + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + songMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
+		if (ClientPrefs.hudType == 'VS Impostor') judgementCounter.text = 'Combo (Max): ' + formattedCombo + ' (' + formattedMaxCombo + ')\nHits: ' + (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(totalNotesPlayed, false) : compactTotalPlays) + ' / ' + FlxStringUtil.formatMoney(totalNotes, false) + ' (' + FlxMath.roundDecimal((totalNotesPlayed/totalNotes) * 100, 2) + '%)\nSussy: ' + sicks + '\nSus: ' + goods + '\nSad: ' + bads + '\nAss: ' + shits + '\nMiss: ' + formattedSongMisses + (ClientPrefs.comboScoreEffect ? '\nScore Multiplier: ' + comboMultiplier + 'x' : '');
 		}
-		judgementCounter.text += (ClientPrefs.showNPS ? '\nNPS (Max): ' + FlxStringUtil.formatMoney(nps, false) + ' (' + FlxStringUtil.formatMoney(maxNPS, false) + ')' : '');
-		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Hits: ' + FlxStringUtil.formatMoney(enemyHits, false) + ' / ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' (' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%)' + (ClientPrefs.showNPS ? '\nOpponent NPS (Max): ' + FlxStringUtil.formatMoney(oppNPS, false) + ' (' + FlxStringUtil.formatMoney(maxOppNPS, false) + ')' : '');
+		judgementCounter.text += (ClientPrefs.showNPS ? '\nNPS (Max): ' + formattedNPS + ' (' + formattedMaxNPS + ')' : '');
+		if (ClientPrefs.opponentRateCount) judgementCounter.text += '\n\nOpponent Hits: ' + formattedEnemyHits + ' / ' + FlxStringUtil.formatMoney(opponentNoteTotal, false) + ' (' + FlxMath.roundDecimal((enemyHits / opponentNoteTotal) * 100, 2) + '%)' + (ClientPrefs.showNPS ? '\nOpponent NPS (Max): ' + formattedOppNPS + ' (' + formattedMaxOppNPS + ')' : '');
 	}
 
 	public var ratingName:String = '?';

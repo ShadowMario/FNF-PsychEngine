@@ -53,8 +53,9 @@ class Conductor
 		Conductor.timeScale = Conductor.safeZoneOffset / 180;
 	}
 
-	public static function judgeNote(note:Note, diff:Float=0):Rating // die
+	public static function judgeNote(note:Note, diff:Float=0, ?botplay:Bool = false):Rating // die
 	{
+		if (botplay) return PlayState.instance.ratingsData[0];
 		var data:Array<Rating> = PlayState.instance.ratingsData; //shortening cuz fuck u
 		for(i in 0...data.length-1) //skips last window (Shit)
 		{
