@@ -66,7 +66,7 @@ class NoteSplashDebugState extends MusicBeatState
 		var txtx = 60;
 		var txty = 640;
 
-		var imageName:FlxText = new FlxText(txtx, txty - 45, 'Image Name:', 16);
+		var imageName:FlxText = new FlxText(txtx, txty - 60, 'Image Name:', 16);
 		add(imageName);
 
 		imageInputText = new FlxInputText(txtx, txty - 25, 360, defaultTexture, 16);
@@ -124,16 +124,15 @@ class NoteSplashDebugState extends MusicBeatState
 
 		};
 		add(nameInputText);
-		
+
 		add(new FlxText(txtx, txty - 84, 0, 'Min/Max Framerate:', 16));
-		stepperMinFps = new FlxUINumericStepper(txtx, txty - 60, 1, 22, 1, 60, 0);
+		stepperMinFps = new FlxUINumericStepper(txtx, txty - 45, 1, 22, 1, 60, 0);
 		stepperMinFps.name = 'min_fps';
 		add(stepperMinFps);
 
-		stepperMaxFps = new FlxUINumericStepper(txtx + 60, txty - 60, 1, 26, 1, 60, 0);
+		stepperMaxFps = new FlxUINumericStepper(txtx + 60, txty - 45, 1, 26, 1, 60, 0);
 		stepperMaxFps.name = 'max_fps';
 		add(stepperMaxFps);
-
 
 		//
 		offsetsText = new FlxText(300, 150, 680, '', 16);
@@ -169,7 +168,7 @@ class NoteSplashDebugState extends MusicBeatState
 		missingTextBG.alpha = 0.6;
 		missingTextBG.visible = false;
 		add(missingTextBG);
-		
+
 		missingText = new FlxText(50, 0, FlxG.width - 100, '', 24);
 		missingText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		missingText.scrollFactor.set();
