@@ -2210,7 +2210,7 @@ class PlayState extends MusicBeatState
 		healthBar.visible = false;
 		iconP2.visible = iconP1.visible = false;
 		}
-		if (ClientPrefs.hideHud) {
+		if (ClientPrefs.hideHud && ClientPrefs.showcaseMode) {
 		scoreTxt.destroy();
 		botplayTxt.visible = false;
 		healthBarBG.visible = false;
@@ -7158,7 +7158,7 @@ if (ClientPrefs.showNPS) {
 				allSicks = false;
 
 		}
-		if (Std.string(daRating) == 'shit' && ClientPrefs.shitGivesMiss && ClientPrefs.ratingIntensity == 'Normal')
+		if (daRating.name == 'shit' && ClientPrefs.shitGivesMiss && ClientPrefs.ratingIntensity == 'Normal')
 		{	
 			noteMiss(note);
 		}
@@ -7173,7 +7173,7 @@ if (ClientPrefs.showNPS) {
 		switch (ClientPrefs.healthGainType)
 		{
 			case 'VS Impostor':
-				switch(Std.string(daRating))
+				switch(daRating.name)
 				{
 				case 'marv', 'sick': health += note.hitHealth * healthGain * polyphony;
 				case 'good': health += note.hitHealth * 0.5 * healthGain * polyphony;
@@ -7181,7 +7181,7 @@ if (ClientPrefs.showNPS) {
 				case 'shit': health += note.hitHealth * 0.1 * healthGain * polyphony;
 				}
 			case 'Leather Engine':
-				switch(Std.string(daRating))
+				switch(daRating.name)
 				{
 				case 'marv', 'sick': health += 0.012 * healthGain * polyphony;
 				case 'good': health += -0.008 * healthGain * polyphony;
@@ -7189,7 +7189,7 @@ if (ClientPrefs.showNPS) {
 				case 'shit': health += -0.023 * healthGain * polyphony;
 				}
 			case 'Kade (1.4.2 to 1.6)', 'Doki Doki+':
-				switch(Std.string(daRating))
+				switch(daRating.name)
 				{
 				case 'marv', 'sick': health += (ClientPrefs.healthGainType == 'Doki Doki+' ? 0.077 : 0.1) * healthGain * polyphony;
 				case 'good': health += 0.04 * healthGain * polyphony;
@@ -7197,7 +7197,7 @@ if (ClientPrefs.showNPS) {
 				case 'shit': health -= (ClientPrefs.healthGainType == 'Doki Doki+' ? 0.1 : 0.2) * healthGain * polyphony;
 				}
 			case 'Kade (1.6+)':
-				switch(Std.string(daRating))
+				switch(daRating.name)
 				{
 				case 'marv', 'sick': health += 0.017 * healthGain * polyphony;
 				case 'good': health += 0 * healthGain * polyphony;
@@ -7205,7 +7205,7 @@ if (ClientPrefs.showNPS) {
 				case 'shit': health += -0.06 * healthLoss;
 				}
 			case 'Kade (1.2)': 
-				switch(Std.string(daRating))
+				switch(daRating.name)
 				{
 				case 'marv', 'sick': health += 0.023 * healthGain * polyphony;
 				case 'good': health += 0.004 * healthGain * polyphony;
@@ -7294,9 +7294,8 @@ if (!allSicks && ClientPrefs.colorRatingFC && shits > 0 && noteDiff > ClientPref
 		}
 if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+') 
 		{
-			switch (Std.string(daRating)) //This is so stupid, but it works
+			switch (daRating.name) //This is so stupid, but it works
 			{
-			case 'marv': rating.color = FlxColor.YELLOW;
 			case 'sick':  rating.color = FlxColor.CYAN;
 			case 'good': rating.color = FlxColor.LIME;
 			case 'bad': rating.color = FlxColor.ORANGE;
@@ -7335,7 +7334,7 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 						});
 					}
 				});
-			switch (Std.string(daRating)) //This is so stupid, but it works
+			switch (daRating.name) //This is so stupid, but it works
 			{
 			case 'marv': msTxt.color = FlxColor.YELLOW;
 			case 'sick':  msTxt.color = FlxColor.CYAN;
