@@ -3,6 +3,8 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import NoteShader.ColoredNoteShader;
+import flixel.util.FlxColor;
 
 class NoteSplash extends FlxSprite
 {
@@ -20,7 +22,7 @@ class NoteSplash extends FlxSprite
 		
 		colorSwap = new ColorSwap();
 		shader = colorSwap.shader;
-			if (!ClientPrefs.colorQuants)
+			if (ClientPrefs.noteColorStyle == 'Normal')
 			{
 				colorSwap.hue = ClientPrefs.arrowHSV[note][0] / 360;
 				colorSwap.saturation = ClientPrefs.arrowHSV[note][1] / 100;
@@ -29,9 +31,10 @@ class NoteSplash extends FlxSprite
 
 		setupNoteSplash(x, y, note);
 		antialiasing = ClientPrefs.globalAntialiasing;
+        	if (ClientPrefs.noteColorStyle == 'Char-Based') shader = new ColoredNoteShader(255, 255, 255, false);
 	}
 
-	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) {
+	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0, color:FlxColor = null) {
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
 		alpha = 0.6;
 
@@ -57,35 +60,40 @@ class NoteSplash extends FlxSprite
 		if(textureLoaded != texture) {
 			loadAnims(texture);
 		}
-		if (!ClientPrefs.colorQuants)
+		if (ClientPrefs.noteColorStyle != 'Char-Based')
 		{
-		colorSwap.hue = hueColor;
-		colorSwap.saturation = satColor;
-		colorSwap.brightness = brtColor;
+			colorSwap.hue = hueColor;
+			colorSwap.saturation = satColor;
+			colorSwap.brightness = brtColor;
+		} else if (color != null && ClientPrefs.noteColorStyle == 'Char-Based') { //null check
+		        cast(shader, ColoredNoteShader).enabled.value = [true];
+       			cast(shader, ColoredNoteShader).setColors(color.red, color.green, color.blue);
 		}
 		if (ClientPrefs.splashType != 'Base Game') {
 		offset.set(10, 10);
 		} else {
 		offset.set(-10, 0);
 		}
-
+		var splashToPlay:Int = note;
+		if (ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.noteColorStyle == 'Char-Based' || ClientPrefs.rainbowNotes)
+			splashToPlay = (ClientPrefs.splashType != 'TGT V4' ? 3 : 1); //for tgt noteskin, the down note is the red splash
 		var animNum:Int = 0;
 		if (ClientPrefs.splashType != 'Doki Doki+' && ClientPrefs.splashType != 'Base Game')
 		{
 		animNum = FlxG.random.int(1, 2);
-		animation.play('note' + note + '-' + animNum, true);
+		animation.play('note' + splashToPlay + '-' + animNum, true);
 		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
 		}
 		if (ClientPrefs.splashType == 'Doki Doki+')
 		{
 		animNum = 1;
-		animation.play('note' + note, true);
+		animation.play('note' + splashToPlay, true);
 		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
 		}
 		if (ClientPrefs.splashType == 'Base Game')
 		{
 		animNum = FlxG.random.int(0, 1);
-		animation.play('note' + note + '-' + animNum, true);
+		animation.play('note' + splashToPlay + '-' + animNum, true);
 		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
 		}
 	}

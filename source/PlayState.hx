@@ -1786,6 +1786,8 @@ class PlayState extends MusicBeatState
 		trace ('Loading chart...');
 		generateSong(SONG.song);
 
+		if (SONG.event7 == null || SONG.event7 == '') SONG.event7 == 'None';
+
 		if (curSong.toLowerCase() == "guns") // added this to bring back the old 2021 fnf vibes, i wish the fnf fandom revives one day :(
 		{
 			var randomVar:Int = 0;
@@ -6751,9 +6753,9 @@ if (ClientPrefs.showNPS) {
 		persistentUpdate = false;
 		persistentDraw = true;
 		paused = true;
-		}
 		openSubState(new ResultsScreenSubState([marvs, sicks, goods, bads, shits], Std.int(songScore), songMisses, Highscore.floorDecimal(ratingPercent * 100, 2),
 						ratingName + (' [' + ratingFC + '] ')));
+		}
 		}
 		if (endedTheSong || !ClientPrefs.resultsScreen)
 		{
@@ -7144,10 +7146,13 @@ if (ClientPrefs.showNPS) {
 
 		if (Std.string(daRating) == 'sick' && ClientPrefs.noMarvJudge) maxScore -= 150 * Std.int(polyphony); //if you enable marvelous judges and hit a sick, lower the max score by 150 points. otherwise it won't make sense
 
-		if (!ClientPrefs.complexAccuracy) totalNotesHit += daRating.ratingMod;
-		if (ClientPrefs.complexAccuracy) totalNotesHit += wife;
-		note.ratingMod = daRating.ratingMod;
-		if(!note.ratingDisabled) daRating.increase();
+		if (ClientPrefs.communityGameBot || ClientPrefs.communityGameBot)
+		{
+			if (!ClientPrefs.complexAccuracy) totalNotesHit += daRating.ratingMod;
+			if (ClientPrefs.complexAccuracy) totalNotesHit += wife;
+			note.ratingMod = daRating.ratingMod;
+			if(!note.ratingDisabled) daRating.increase();
+		}
 		note.rating = daRating.name;
 		score = daRating.score;
 
@@ -7216,12 +7221,12 @@ if (ClientPrefs.showNPS) {
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
 		{
-			spawnNoteSplashOnNote(false, note);
+			spawnNoteSplashOnNote(false, note, note.gfNote);
 		}
 
 		if(!practiceMode) {
 			songScore += score * comboMultiplier * polyphony;
-			if(!note.ratingDisabled || cpuControlled && !ClientPrefs.lessBotLag && !note.ratingDisabled)
+			if(!note.ratingDisabled || cpuControlled && ClientPrefs.communityGameBot && !note.ratingDisabled)
 			{
 				songHits++;
 				totalPlayed++;
@@ -7372,15 +7377,13 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 				lastRating.destroy();
 			}
 				lastRating = rating;
-		}
-		if (lastScore != null)
-		{
-			while (lastScore.length > 0)
-			{
-				FlxTween.cancelTweensOf(lastScore[0]);
-				remove(lastScore[0], true);
-				lastScore[0].destroy();
-				lastScore.remove(lastScore[0]);
+			if (lastScore != null) {
+				for (sprite in lastScore) {
+					FlxTween.cancelTweensOf(sprite);
+					remove(sprite, true);
+					sprite.destroy();
+				}
+				lastScore = []; // Clear the array
 			}
 		}
 		for (i in seperatedScore)
@@ -7393,31 +7396,31 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 
 			numScore.x += ClientPrefs.comboOffset[2];
 			numScore.y -= ClientPrefs.comboOffset[3];
-if (ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && noteDiff >= ClientPrefs.marvWindow) numScore.color = rating.color;
-if (!allSicks && ClientPrefs.colorRatingFC && marvs > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
-		{
-		numScore.color = tgtJudgeColours.get('marv');
-		}
-if (!allSicks && ClientPrefs.colorRatingFC && sicks > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
-		{
-		numScore.color = tgtJudgeColours.get('sick');
-		}
-if (!allSicks && ClientPrefs.colorRatingFC && goods > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
-		{
-		numScore.color = tgtJudgeColours.get('good');
-		}
-if (!allSicks && ClientPrefs.colorRatingFC && bads > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
-		{
-		numScore.color = tgtJudgeColours.get('bad');
-		}
-if (!allSicks && ClientPrefs.colorRatingFC && shits > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
-		{
-		numScore.color = tgtJudgeColours.get('shit');
-		}
-if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
-		{
-		numScore.color = FlxColor.WHITE;
-		}
+			if (ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && noteDiff >= ClientPrefs.marvWindow) numScore.color = rating.color;
+			if (!allSicks && ClientPrefs.colorRatingFC && marvs > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
+					{
+					numScore.color = tgtJudgeColours.get('marv');
+					}
+			if (!allSicks && ClientPrefs.colorRatingFC && sicks > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
+					{
+					numScore.color = tgtJudgeColours.get('sick');
+					}
+			if (!allSicks && ClientPrefs.colorRatingFC && goods > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
+					{
+					numScore.color = tgtJudgeColours.get('good');
+					}
+			if (!allSicks && ClientPrefs.colorRatingFC && bads > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
+					{
+					numScore.color = tgtJudgeColours.get('bad');
+					}
+			if (!allSicks && ClientPrefs.colorRatingFC && shits > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
+					{
+					numScore.color = tgtJudgeColours.get('shit');
+					}
+			if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudType != 'Doki Doki+' && ClientPrefs.hudType == 'Tails Gets Trolled V4') 
+					{
+					numScore.color = FlxColor.WHITE;
+					}
 			
 			if (!ClientPrefs.comboStacking)
 				lastScore.push(numScore);
@@ -7934,7 +7937,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			if(note.hitCausesMiss) {
 				noteMiss(note);
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
-					spawnNoteSplashOnNote(false, note);
+					spawnNoteSplashOnNote(false, note, note.gfNote);
 				}
 
 				if(!note.noMissAnimation)
@@ -8020,7 +8023,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				notesHitDateArray.push(Date.now());
 				}
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
-					spawnNoteSplashOnNote(false, note);
+					spawnNoteSplashOnNote(false, note, note.gfNote);
 				}
 			}
 			if (!note.isSustainNote && cpuControlled && !ClientPrefs.lessBotLag && !ClientPrefs.communityGameBot)
@@ -8055,7 +8058,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				totalPlayed++;
 				if(daRating.noteSplash && !note.noteSplashDisabled)
 				{
-					spawnNoteSplashOnNote(false, note);
+					spawnNoteSplashOnNote(false, note, note.gfNote);
 				}
 				RecalculateRating();
 			}
@@ -8236,7 +8239,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				var spr:StrumNote = playerStrums.members[note.noteData];
 
 				if(spr != null) {
-				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
+				if (ClientPrefs.showNotes && ClientPrefs.enableColorShader) {
 				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
 				} else {
 				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', note.mustPress, note.gfNote);
@@ -8248,7 +8251,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 				var spr = playerStrums.members[note.noteData];
 				if(spr != null)
 				{
-				if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
+				if (ClientPrefs.showNotes && ClientPrefs.enableColorShader) {
 				spr.playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
 				} else {
 				spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', note.mustPress, note.gfNote);
@@ -8267,10 +8270,6 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 			if (!note.isSustainNote)
 			{
-				if (shouldKillNotes)
-				{
-					note.kill();
-				}
 				notes.remove(note, true);
 				if (shouldKillNotes)
 				{
@@ -8414,7 +8413,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 
 			if(ClientPrefs.oppNoteSplashes && !daNote.isSustainNote)
 			{
-				spawnNoteSplashOnNote(true, daNote);
+				spawnNoteSplashOnNote(true, daNote, daNote.gfNote);
 			}
 
 			if (SONG.needsVoices)
@@ -8432,7 +8431,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 					final spr:StrumNote = opponentStrums.members[daNote.noteData];
 
 					if(spr != null) {
-					if ((ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) && ClientPrefs.showNotes) {
+					if (ClientPrefs.showNotes && ClientPrefs.enableColorShader) {
 					spr.playAnim('confirm', true, daNote.colorSwap.hue, daNote.colorSwap.saturation, daNote.colorSwap.brightness);
 					} else {
 					spr.playAnim('confirm', true, 0, 0, 0, ClientPrefs.noteColorStyle == 'Char-Based', false, daNote.gfNote);
@@ -8471,7 +8470,7 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 		}
 
 
-	public function spawnNoteSplashOnNote(isDad:Bool, note:Note) {
+	public function spawnNoteSplashOnNote(isDad:Bool, note:Note, ?isGf:Bool = false) {
 		if(ClientPrefs.noteSplashes && note != null) {
 			var strum:StrumNote = playerStrums.members[note.noteData];
 			if (isDad) {
@@ -8480,26 +8479,24 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			strum = playerStrums.members[note.noteData];
 			}
 			if(strum != null) {
-				spawnNoteSplash(strum.x, strum.y, note.noteData);
+				spawnNoteSplash(strum.x, strum.y, note.noteData, null, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness, isGf, isDad);
 			}
 		}
 	}
 
-	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
+	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null, ?hue:Float = 0, ?sat:Float = 0, ?brt:Float = 0, ?isGfNote:Bool = false, ?isDadNote:Bool = true) {
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
-		//if (ClientPrefs.splashType == 'VS Impostor') PlayState.SONG.splashSkin = 'impostorNoteSplashes';
-		//if (ClientPrefs.splashType == 'Tails Gets Trolled V4') PlayState.SONG.splashSkin = 'tgtNoteSplashes';
 
-		var hue:Float = 0;
-		var sat:Float = 0;
-		var brt:Float = 0;
 		if (data > -1 && data < ClientPrefs.arrowHSV.length)
 		{
-			hue = ClientPrefs.arrowHSV[data][0] / 360;
-			sat = ClientPrefs.arrowHSV[data][1] / 100;
-			brt = ClientPrefs.arrowHSV[data][2] / 100;
-			if(note != null) {
+			if (ClientPrefs.noteColorStyle == 'Normal' && !ClientPrefs.rainbowNotes)
+			{
+				hue = ClientPrefs.arrowHSV[data][0] / 360;
+				sat = ClientPrefs.arrowHSV[data][1] / 100;
+				brt = ClientPrefs.arrowHSV[data][2] / 100;
+			}
+			if(note != null && ClientPrefs.noteColorStyle == 'Normal' && !ClientPrefs.rainbowNotes) {
 				skin = note.noteSplashTexture;
 				hue = note.noteSplashHue;
 				sat = note.noteSplashSat;
@@ -8507,8 +8504,16 @@ if (!allSicks && ClientPrefs.colorRatingFC && songMisses > 0 && ClientPrefs.hudT
 			}
 		}
 
+		var splashColor:FlxColor = FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
+
+		if (ClientPrefs.noteColorStyle == 'Char-Based')
+		{
+			if (!isDadNote) splashColor = FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]);
+			if (isGfNote) splashColor = FlxColor.fromRGB(gf.healthColorArray[0], gf.healthColorArray[1], gf.healthColorArray[2]);
+		}
+
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
+		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt, splashColor);
 		grpNoteSplashes.add(splash);
 	}
 

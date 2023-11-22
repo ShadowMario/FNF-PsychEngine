@@ -44,13 +44,6 @@ class OptimizationSubState extends BaseOptionsMenu
 			true); //Default value
 		addOption(option);
 
-		var option:Option = new Option('Optimize Note Hits',
-			'If checked, note hits are optimized further.',
-			'evenLessBotLag',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('Light Opponent Strums',
 			"If this is unchecked, the Opponent strums won't light up when the Opponent hits a note.",
 			'opponentLightStrum',
@@ -100,14 +93,6 @@ class OptimizationSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		/* //ok i was GOING to keep this but note types break if you turn it on
-		var option:Option = new Option('Optimized Chart Loading', //Name
-			'If checked, hopefully tries to get charts to load faster.', //Description
-			'fasterChartLoad', //Save data variable name
-			'bool', //Variable type
-			false); //Default value
-		addOption(option);
-		*/
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 		
 		super();

@@ -183,7 +183,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 		*/
 
-
 		var option:Option = new Option('Note Color Style: ',
 			"How would you like your notes colored?",
 			'noteColorStyle',

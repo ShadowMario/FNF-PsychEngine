@@ -68,7 +68,7 @@ class StrumNote extends FlxSprite
 				skin = 'NOTE_assets_' + ClientPrefs.noteStyleThing.toLowerCase();
 			}
 			if(ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) {
-				skin = 'RED_NOTE_assets';
+				skin = ClientPrefs.noteStyleThing == 'TGT V4' ? 'RED_TGTNOTE_assets' : 'RED_NOTE_assets';
 			}
 			if(ClientPrefs.noteColorStyle == 'Grayscale') {
 				skin = 'GRAY_NOTE_assets';
