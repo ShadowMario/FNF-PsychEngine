@@ -169,6 +169,8 @@ class FunkinLua {
 
 		set('shouldKillNotes', PlayState.instance.shouldKillNotes);
 
+		set('npsSpeedMult', PlayState.instance.npsSpeedMult);
+
 		// Gameplay settings
 		set('healthGainMult', PlayState.instance.healthGain);
 		set('healthLossMult', PlayState.instance.healthLoss);

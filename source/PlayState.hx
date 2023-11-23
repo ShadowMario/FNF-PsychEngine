@@ -87,9 +87,6 @@ import vlc.MP4Handler;
 #end
 #end
 
-import ColorSwap.ColorSwapShader; //for motion blur
-
-
 using StringTools;
 
 class PlayState extends MusicBeatState
@@ -156,6 +153,8 @@ class PlayState extends MusicBeatState
 	public var noteKillOffset:Float = 350;
 
 	public var playbackRate(default, set):Float = 1;
+
+	public var npsSpeedMult:Float = 1;
 
 	public var boyfriendGroup:FlxSpriteGroup;
 	public var dadGroup:FlxSpriteGroup;
@@ -246,6 +245,8 @@ class PlayState extends MusicBeatState
 	public var combo:Float = 0;
 	public var maxCombo:Float = 0;
 	public var missCombo:Int = 0;
+
+	public var timeThreshold:Float = 0;
 
     	public var notesAddedCount:Int = 0;
 
@@ -4297,7 +4298,8 @@ class PlayState extends MusicBeatState
 				}
 			}
 			sectionsLoaded += 1;
-			trace('loaded section ' + sectionsLoaded);
+			notesLoadedRN += section.sectionNotes.length;
+			trace('loaded section ' + sectionsLoaded + ', notes loaded now: ' + notesLoadedRN);
 		}
 		for (event in SONG.events) //Event Notes
 		{
@@ -4325,6 +4327,8 @@ class PlayState extends MusicBeatState
 		unspawnNotesCopy = unspawnNotes.copy();
 		generatedMusic = true;
 		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
+		sectionsLoaded = 0;
+		notesLoadedRN = 0;
         	var elapsedTime = endTime - startTime;
         	trace("Loaded chart in " + elapsedTime + " seconds");
 	}
@@ -4871,7 +4875,7 @@ class PlayState extends MusicBeatState
 		}
 if (ClientPrefs.showNPS) {
     var currentTime = Date.now().getTime();
-    var timeThreshold = ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000;
+    timeThreshold = (ClientPrefs.npsWithSpeed ? 1000 / playbackRate : 1000) * npsSpeedMult;
 
     // Track the count of items to remove for notesHitDateArray
     var notesToRemoveCount:Int = 0;
