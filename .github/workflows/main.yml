@@ -276,8 +276,8 @@ jobs:
         run: |
           haxelib --quiet setup /home/runner/haxelib
           haxelib --quiet install hxcpp 4.2.1 > /dev/null
-          haxelib --quiet install lime 7.9.0
-          haxelib --quiet install openfl 9.1.0
+          haxelib --quiet install lime 8.0.2
+          haxelib --quiet install openfl 9.2.1
           haxelib --quiet install flixel 5.2.2
           haxelib --quiet run lime setup flixel
           haxelib --quiet install flixel-tools 
