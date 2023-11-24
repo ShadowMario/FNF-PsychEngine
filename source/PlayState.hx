@@ -8483,7 +8483,7 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 			strum = playerStrums.members[note.noteData];
 			}
 			if(strum != null) {
-				spawnNoteSplash(strum.x, strum.y, note.noteData, null, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness, isGf, isDad);
+				ClientPrefs.showNotes && ClientPrefs.enableColorShader ? spawnNoteSplash(strum.x, strum.y, note.noteData, null, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness, isGf, isDad) : spawnNoteSplash(strum.x, strum.y, note.noteData, null, 0, 0, 0, isGf, isDad);
 			}
 		}
 	}
@@ -8717,7 +8717,7 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 		FlxG.sound.music.pitch = 1;
 		cpp.vm.Gc.enable(true);
 		KillNotes();
-		MusicBeatState.windowNamePrefix = "Friday Night Funkin': JS Engine";
+		MusicBeatState.windowNamePrefix = Assets.getText(Paths.txt("windowTitleBase", "preload"));
 		super.destroy();
 	}
 
