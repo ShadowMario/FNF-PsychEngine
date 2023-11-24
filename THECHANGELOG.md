@@ -1,4 +1,10 @@
-1.15.0;
+1.15.1;
+
+HOTFIX CHANGES:
+Fixed turning off "Show Notes" or "Enable Note Colors" crashing the game because of note splashes
+Fixed window name changing back to "Friday Night Funkin': JS Engine" instead of the name in windowTitleBase if you used a song-specific window name
+Fixed ratings not even being counted
+
 Removed Mobile Middlescroll
 fixed prompt not showing when crash the engine was selected in the debug menu
 removed resolution scaling for android players
