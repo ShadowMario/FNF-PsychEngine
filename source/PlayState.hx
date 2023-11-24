@@ -7150,7 +7150,7 @@ if (ClientPrefs.showNPS) {
 
 		if (Std.string(daRating) == 'sick' && ClientPrefs.noMarvJudge) maxScore -= 150 * Std.int(polyphony); //if you enable marvelous judges and hit a sick, lower the max score by 150 points. otherwise it won't make sense
 
-		if (ClientPrefs.communityGameBot || ClientPrefs.communityGameBot)
+		if (cpuControlled && ClientPrefs.communityGameBot || cpuControlled && !ClientPrefs.lessBotLag || !cpuControlled)
 		{
 			if (!ClientPrefs.complexAccuracy) totalNotesHit += daRating.ratingMod;
 			if (ClientPrefs.complexAccuracy) totalNotesHit += wife;
