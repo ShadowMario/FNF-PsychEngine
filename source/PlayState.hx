@@ -6679,7 +6679,7 @@ if (ClientPrefs.showNPS) {
 					unspawnNotes = unspawnNotesCopy.copy();
 						for (n in unspawnNotes)
 						{
-							if (n.strumTime >= Conductor.songPosition)
+							if (n.strumTime >= startPoint)
 							{
 							n.active = true;
 							n.visible = true;

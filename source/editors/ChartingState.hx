@@ -290,7 +290,7 @@ class ChartingState extends MusicBeatState
 		lilStage.scrollFactor.set();
 		add(lilStage);
 
-		lilBf = new FlxSprite(32, 432).loadGraphic(Paths.image(!(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) ? "chartEditor/lilBf" : "chartEditor/lilBfRed"), true, 300, 256);
+		lilBf = new FlxSprite(32, 432).loadGraphic(Paths.image(!ClientPrefs.colorQuants || !ClientPrefs.rainbowNotes ? "chartEditor/lilBf" : "chartEditor/lilBfRed"), true, 300, 256);
 		lilBf.animation.add("idle", [0, 1], 12, true);
 		lilBf.animation.add("0", [3, 4, 5], 12, false);
 		lilBf.animation.add("1", [6, 7, 8], 12, false);
@@ -308,7 +308,7 @@ class ChartingState extends MusicBeatState
 		lilBuddiesColorSwap = new ColorSwap();
 		lilBuddies2ColorSwap = new ColorSwap();
 		lilBf.shader = lilBuddiesColorSwap.shader;
-		lilOpp = new FlxSprite(32, 432).loadGraphic(Paths.image(!(ClientPrefs.colorQuants || ClientPrefs.rainbowNotes) ? "chartEditor/lilOpp" : "chartEditor/lilOppRed"), true, 300, 256);
+		lilOpp = new FlxSprite(32, 432).loadGraphic(Paths.image(!ClientPrefs.colorQuants || !ClientPrefs.rainbowNotes ? "chartEditor/lilOpp" : "chartEditor/lilOppRed"), true, 300, 256);
 		lilOpp.animation.add("idle", [0, 1], 12, true);
 		lilOpp.animation.add("0", [3, 4, 5], 12, false);
 		lilOpp.animation.add("1", [6, 7, 8], 12, false);

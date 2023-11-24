@@ -449,7 +449,7 @@ class Note extends FlxSprite
 			centerOrigin();
 		}
 		x += offsetX;
-		if (ClientPrefs.noteColorStyle == 'Quant-Based') quantCheck();
+		if (ClientPrefs.noteColorStyle == 'Quant-Based' && ClientPrefs.showNotes && ClientPrefs.enableColorShader) quantCheck();
 	}
 
 	var lastNoteOffsetXForPixelAutoAdjusting:Float = 0;

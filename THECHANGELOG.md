@@ -1,15 +1,30 @@
-1.14.0;
-Added 3 new noteskins: Chip, Future and Circle
-Health Display is no longer enabled by default.
-Strum Light Up Style - Customize how long the strum animations play for!
-7 Events! - An overdue addition to JS Engine! Now you can make pressing the Chart Editor key take you to another song or close the game!
-Windows builds now utilize DPI Awareness for higher fidelity visuals on resolutions higher than 1280x720 and speaking of resolutions...
-You can now change the game's resolution in the Graphics Options!
-Removed Chart Drawing in the Chart Editor - EZ Spam is just better in every way.
-EZ Spam can now use decimal numbers!
-You can now undo up to 100 of the most recent changes in the Chart Editor by pressing Ctrl+Z (PC) or V on the virtual pad (Android)!
-Song credits now display the title of the song, the composer of the song and are now colored according to the opponent's health bar color!
-EZ Spam now fully adapts to BPM changes!
-INGAME UPDATER!! - Now you'll never possibly have to head to GitHub to view the changelog and update there again! Now you can update the engine directly inside itself! (From CDEV Engine!!)
-Added Main Menu Tips (from SB Engine!!)
-Fixed a few crashes as well as full screen issues on Android builds
+1.15.0;
+Removed Mobile Middlescroll
+fixed prompt not showing when crash the engine was selected in the debug menu
+removed resolution scaling for android players
+Added the Denpa Engine Health Drain Bug as a feature (if Denpa devs request removal of this, i will do so)
+OG HP Colors RETURNS
+Sustain notes now render under normal notes and the strums
+Finally fixed an issue with sustain notes after the first Troll Mode loop
+Double Note Ghosts are no longer turned on by default
+Fixed a crash with Freeplay
+Fixed NPS sometimes being inaccurate or stuck at "1"
+Removed Randomized Hitsounds
+Smoothed Healthbar
+Optimized some code
+Added window name customizability per song
+Brought back Title Screen Bouncing
+Added Rainbow FPS
+Fixed FPS counter not updating properly when on 60 FPS
+improved the compact number code
+Fixed Double Note Ghosts returning a Null Object Reference in some occasions
+Improved performance with rating popups
+The Color Quants option was replaced with a multiple-choice option where you can now choose multiple ways to color the notes:
+Quant-Based: Just like before, colors notes based on their quantization.
+Char-Based: Colors notes based on the character's health bar color. Even works with character changes and GF notes!
+Grayscale: Self-explanatory.
+The HSB of the notes now actually affects the notes and also affects the color of the Lil Buddies
+Adding and deleting notes is now much faster and doesn't exponentially lag the more spam you have
+Added an even better multi-section copy tool. This one lets you chart at a much faster pace!
+Improved performance of the "Copy to the next.." button
+Color Quantization, Rainbow Notes and the new Char-Based notes now apply to note splashes!

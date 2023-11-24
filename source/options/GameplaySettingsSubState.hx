@@ -56,13 +56,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Mobile Middlescroll',
-			"If checked, your notes and the opponent's notes get centered.",
-			'mobileMidScroll',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('Opponent Notes',
 			'If unchecked, opponent notes get hidden.',
 			'opponentStrums',
