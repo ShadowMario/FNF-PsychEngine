@@ -79,6 +79,7 @@ class ChartingState extends MusicBeatState
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
 	public var ignoreWarnings = false;
+	public var showTheGrid = false;
 	public var undos = [];
 	public var redos = [];
 	var eventStuff:Array<Dynamic> =
@@ -537,6 +538,7 @@ class ChartingState extends MusicBeatState
 
 	var check_mute_inst:FlxUICheckBox = null;
 	var check_vortex:FlxUICheckBox = null;
+	var check_showGrid:FlxUICheckBox = null;
 	var check_warnings:FlxUICheckBox = null;
 	var playSoundBf:FlxUICheckBox = null;
 	var playSoundDad:FlxUICheckBox = null;
@@ -575,7 +577,8 @@ class ChartingState extends MusicBeatState
 
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
-			openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, function(){loadJson(_song.song.toLowerCase()); }, null,ignoreWarnings));
+			openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, function() 
+			{loadJson(_song.song.toLowerCase()); }, null,ignoreWarnings));
 		});
 
 		var loadAutosaveBtn:FlxButton = new FlxButton(reloadSongJson.x, reloadSongJson.y + 30, 'Load Autosave', function()
@@ -792,6 +795,10 @@ class ChartingState extends MusicBeatState
 
 		FlxG.camera.follow(camPos);
 	}
+
+		function songJsonPopup() { //you tried reloading the json, but it doesn't exist
+			CoolUtil.coolError("The engine failed to load the JSON! \nEither it doesn't exist, or the name doesn't match with the one you're putting?", "JS Engine Anti-Crash Tool");
+		}
 
 	var creditInputText:FlxUIInputText;
 	var winNameInputText:FlxUIInputText;
@@ -1669,6 +1676,17 @@ class ChartingState extends MusicBeatState
 			reloadGridLayer();
 		};
 
+		check_showGrid = new FlxUICheckBox(10, 220, null, null, "Show Grid", 100);
+		if (FlxG.save.data.showGrid == null) FlxG.save.data.showGrid = false;
+		check_showGrid.checked = FlxG.save.data.showGrid;
+
+		check_showGrid.callback = function()
+		{
+			FlxG.save.data.showGrid = check_showGrid.checked;
+			showTheGrid = FlxG.save.data.showGrid;
+			reloadGridLayer();
+		};
+
 		check_warnings = new FlxUICheckBox(10, 120, null, null, "Ignore Progress Warnings", 100);
 		if (FlxG.save.data.ignoreWarnings == null) FlxG.save.data.ignoreWarnings = false;
 		check_warnings.checked = FlxG.save.data.ignoreWarnings;
@@ -1773,6 +1791,7 @@ class ChartingState extends MusicBeatState
 		tab_group_chart.add(check_vortex);
 		tab_group_chart.add(mouseScrollingQuant);
 		tab_group_chart.add(check_warnings);
+		tab_group_chart.add(check_showGrid);
 		tab_group_chart.add(playSoundBf);
 		tab_group_chart.add(playSoundDad);
 		UI_box.addGroup(tab_group_chart);
@@ -2721,7 +2740,9 @@ class ChartingState extends MusicBeatState
 	var lastSecBeatsNext:Float = 0;
 	function reloadGridLayer() {
 		gridLayer.clear();
-		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, Std.int(GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]));
+		if (showTheGrid) 
+			gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, Std.int(GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]));
+		else gridBG = new FlxSprite().makeGraphic(Std.int(GRID_SIZE * 9), Std.int(GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]), 0xffe7e6e6);
 
 		#if desktop
 		if(FlxG.save.data.chart_waveformInst || FlxG.save.data.chart_waveformVoices) {
@@ -2733,11 +2754,15 @@ class ChartingState extends MusicBeatState
 		var foundNextSec:Bool = false;
 		if(sectionStartTime(1) <= FlxG.sound.music.length)
 		{
-			nextGridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, Std.int(GRID_SIZE * getSectionBeats(curSec + 1) * 4 * zoomList[curZoom]));
-			leHeight = Std.int(gridBG.height + nextGridBG.height);
-			foundNextSec = true;
+			if (showTheGrid) {
+				// If showTheGrid is enabled, create a grid overlay for the next section
+				nextGridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, Std.int(GRID_SIZE * getSectionBeats(curSec + 1) * 4 * zoomList[curZoom]));
+				leHeight = Std.int(gridBG.height + nextGridBG.height);
+				foundNextSec = true;
+			} else { // Else, make a simple gray graphic
+				nextGridBG = new FlxSprite().makeGraphic(1, 1, FlxColor.TRANSPARENT);
+			}
 		}
-		else nextGridBG = new FlxSprite().makeGraphic(1, 1, FlxColor.TRANSPARENT);
 		nextGridBG.y = gridBG.height;
 		
 		gridLayer.add(nextGridBG);
@@ -3704,6 +3729,8 @@ class ChartingState extends MusicBeatState
 	{
 		//shitty null fix, i fucking hate it when this happens
 		//make it look sexier if possible
+		if(sys.FileSystem.exists(Paths.json(song + '/' + song)) || sys.FileSystem.exists(Paths.modsJson(song + '/' + song)))
+		{
 		if (CoolUtil.difficulties[PlayState.storyDifficulty] != CoolUtil.defaultDifficulty) {
 			if(CoolUtil.difficulties[PlayState.storyDifficulty] == null){
 				PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
@@ -3714,6 +3741,12 @@ class ChartingState extends MusicBeatState
 		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
 		}
 		MusicBeatState.resetState();
+		}
+		else
+		{
+			trace (song + "'s JSON doesn't exist!");
+			songJsonPopup(); //HAH, IT AINT CRASHING NOW
+		}
 	}
 	
 	public function autosaveSong():Void

@@ -7100,7 +7100,7 @@ if (ClientPrefs.showNPS) {
 					case 'gf':
 						if (gfGhostTween != null)
 							gfGhostTween.cancel();
-						ghost.color = FlxColor.fromRGB(gf.healthColorArray[0] + 50, gf.healthColorArray[1] + 50, gf.healthColorArray[2] + 50);
+						if (gf != null) ghost.color = FlxColor.fromRGB(gf.healthColorArray[0] + 50, gf.healthColorArray[1] + 50, gf.healthColorArray[2] + 50);
 						gfGhostTween = FlxTween.tween(gfGhost, {alpha: 0}, 0.75, {
 							ease: FlxEase.linear,
 							onComplete: function(twn:FlxTween)
@@ -8312,7 +8312,7 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 				final animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + altAnim;
 				if(daNote.gfNote && ClientPrefs.charsAndBG) {
 					char = gf;
-						if (ClientPrefs.doubleGhost)
+						if (ClientPrefs.doubleGhost && gf != null)
 						{
 						if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
 							{
@@ -8513,7 +8513,7 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 		if (ClientPrefs.noteColorStyle == 'Char-Based')
 		{
 			if (!isDadNote) splashColor = FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]);
-			if (isGfNote) splashColor = FlxColor.fromRGB(gf.healthColorArray[0], gf.healthColorArray[1], gf.healthColorArray[2]);
+			if (isGfNote && gf != null) splashColor = FlxColor.fromRGB(gf.healthColorArray[0], gf.healthColorArray[1], gf.healthColorArray[2]);
 		}
 
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);

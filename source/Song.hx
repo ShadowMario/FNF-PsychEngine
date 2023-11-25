@@ -49,7 +49,7 @@ class Song
 	public var speed:Float = 1;
 	public var stage:String;
 	public var songCredit:String;
-	public var event7:String;
+	public var event7:String = 'None';
 	public var event7Value:String;
 	public var windowName:String;
 	public var validScore:Bool = true;

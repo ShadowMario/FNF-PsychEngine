@@ -245,7 +245,7 @@ class StrumNote extends FlxSprite
 			rgbShaderEnabled = true;
 	}
 	public function enableRGBGF() {
-        if (Std.isOfType(this.shader, ColoredNoteShader))
+        if (Std.isOfType(this.shader, ColoredNoteShader) && PlayState.instance.gf != null)
 	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.gf.healthColorArray[0], PlayState.instance.gf.healthColorArray[1], PlayState.instance.gf.healthColorArray[2]);
             cast(this.shader, ColoredNoteShader).enabled.value = [true];
 			rgbShaderEnabled = true;
