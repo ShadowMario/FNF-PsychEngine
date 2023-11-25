@@ -7257,17 +7257,14 @@ if (ClientPrefs.showNPS) {
 		if (allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.sickWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
 		{
 			pixelShitPart1 = 'goldstuff/';
-			pixelShitPart2 = '';
 		}
 		if (!allSicks && ClientPrefs.marvRateColor == 'Golden' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
 		{
 			pixelShitPart1 = 'goldstuff/';
-			pixelShitPart2 = '';
 		}
 		if (!allSicks && ClientPrefs.marvRateColor == 'Rainbow' && noteDiff < ClientPrefs.marvWindow && ClientPrefs.hudType != 'Tails Gets Trolled V4' && ClientPrefs.hudType != 'Doki Doki+' && !ClientPrefs.noMarvJudge)
 		{
 			pixelShitPart1 = '';
-			pixelShitPart2 = '';
 		}
 		if (ClientPrefs.ratesAndCombo) {
 		var rating = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));

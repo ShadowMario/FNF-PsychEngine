@@ -47,8 +47,6 @@ class StrumNote extends FlxSprite
 		var skin:String = 'NOTE_assets';
 		if(PlayState.instance != null && PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 			
-		if (!PlayState.isPixelStage)
-		{
 			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
 				skin = 'Nonsense_NOTE_assets';
 			}
@@ -76,7 +74,6 @@ class StrumNote extends FlxSprite
 			if(ClientPrefs.noteColorStyle == 'Char-Based') {
 				skin = 'NOTE_assets_colored';
 			}
-		}
 		texture = skin; //Load texture and anims
 
 		scrollFactor.set();

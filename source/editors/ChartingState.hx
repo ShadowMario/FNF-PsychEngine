@@ -1187,7 +1187,7 @@ class ChartingState extends MusicBeatState
 			if(value == 0) {
 			return;
 			} 
-			if(Math.isNaN(_song.notes[curSection].sectionNotes.length)) {
+			if(_song.notes[curSection].sectionNotes.length < 1 || Math.isNaN(_song.notes[curSection].sectionNotes.length)) {
 			trace ("HEY! your section doesn't have any notes! please place at least 1 note then try using this.");
 			return; //prevent a crash if the section doesn't have any notes
 			}
@@ -1657,9 +1657,11 @@ class ChartingState extends MusicBeatState
 		};
 
 			lilBuddiesBox = new FlxUICheckBox(mouseScrollingQuant.x + 150, mouseScrollingQuant.y, null, null, "Lil' Buddies", 100);
-			lilBuddiesBox.checked = true;
+			if (FlxG.save.data.lilBuddies == null) FlxG.save.data.lilBuddies = false;
+			lilBuddiesBox.checked = FlxG.save.data.lilBuddies;
 			lilBuddiesBox.callback = function()
 			{
+				FlxG.save.data.lilBuddies = lilBuddiesBox.checked;
 				lilBf.visible = lilBuddiesBox.checked;
 				lilOpp.visible = lilBuddiesBox.checked;
 				lilStage.visible = lilBuddiesBox.checked;
@@ -2628,7 +2630,7 @@ class ChartingState extends MusicBeatState
 					var data:Int = note.noteData % 4;
 					var noteDataToCheck:Int = note.noteData;
 					if(noteDataToCheck > -1 && note.mustPress != _song.notes[curSec].mustHitSection) noteDataToCheck += 4;
-					if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader)
+					if ((ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader) && vortex)
 						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true, note.colorSwap.hue, note.colorSwap.saturation, note.colorSwap.brightness);
 					else
 						strumLineNotes.members[noteDataToCheck].playAnim('confirm', true);
@@ -2646,7 +2648,7 @@ class ChartingState extends MusicBeatState
 						}
 
 						data = note.noteData;
-						if (note.mustPress) {
+						if (note.mustPress && lilBuddiesBox.checked) {
 						if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader) 
 						{
 						lilBuddiesColorSwap.hue = note.colorSwap.hue;
@@ -2655,7 +2657,7 @@ class ChartingState extends MusicBeatState
 						}
 						lilBf.animation.play("" + (data % 4), true);
 						}
-						if (!note.mustPress) 
+						if (!note.mustPress && lilBuddiesBox.checked) 
 						{
 							if (ClientPrefs.enableColorShader || ClientPrefs.showNotes && ClientPrefs.enableColorShader) 
 							{
