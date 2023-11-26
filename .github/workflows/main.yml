@@ -38,6 +38,7 @@ jobs:
           haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
           haxelib run hmm install
+          haxelib set flixel 5.2.2
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
