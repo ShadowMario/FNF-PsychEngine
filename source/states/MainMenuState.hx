@@ -153,6 +153,7 @@ class MainMenuState extends MusicBeatState {
 
 				if (FlxG.mouse.overlaps(item) && curSelected != itemIndex) {
 					curSelected = itemIndex;
+					FlxG.sound.play(Paths.sound('scrollMenu'));
 					changeItem();
 					break;
 				}
