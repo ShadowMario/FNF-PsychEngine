@@ -1632,12 +1632,7 @@ class PlayState extends MusicBeatState
 		iconP2.updateHitbox();
 
 		var iconOffset:Int = 26;
-		if (healthBar.bounds.max != null) {
-			if (health > healthBar.bounds.max) health = healthBar.bounds.max;
-		} else {
-			// Old system for safety?? idk
-			if (health > 2) health = 2;
-		}
+		health = FlxMath.bound(health, 0, (healthBar.bounds.max != null ? healthBar.bounds.max : 2));
 		iconP1.x = healthBar.barCenter + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
 		iconP2.x = healthBar.barCenter - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 		iconP1.animation.curAnim.curFrame = (healthBar.percent < 20) ? 1 : 0;
