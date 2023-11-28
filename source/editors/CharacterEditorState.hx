@@ -526,10 +526,15 @@ class CharacterEditorState extends MusicBeatState
 		imageInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		var reloadImage:FlxButton = new FlxButton(imageInputText.x + 210, imageInputText.y - 3, "Reload Image", function()
 		{
-			char.imageFile = imageInputText.text;
-			reloadCharacterImage();
-			if(char.animation.curAnim != null) {
-				char.playAnim(char.animation.curAnim.name, true);
+			if (Paths.fileExists('images/' + char.imageFile, IMAGE))
+			{ 
+				char.imageFile = imageInputText.text;
+				reloadCharacterImage();
+				if(char.animation.curAnim != null) {
+					char.playAnim(char.animation.curAnim.name, true);
+				}
+			} else {
+				CoolUtil.coolError("The image/XML you tried to load couldn't be found!\nEither it doesn't exist, or the name doesn't match with the one you're putting?", "JS Engine Anti-Crash Tool");
 			}
 		});
 
