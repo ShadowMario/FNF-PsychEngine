@@ -526,7 +526,7 @@ class CharacterEditorState extends MusicBeatState
 		imageInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		var reloadImage:FlxButton = new FlxButton(imageInputText.x + 210, imageInputText.y - 3, "Reload Image", function()
 		{
-			if (Paths.fileExists('images/' + char.imageFile, IMAGE))
+			if (sys.FileSystem.exists('mods/' + Paths.currentModDirectory + '/images/' + imageInputText.text + '.png') || sys.FileSystem.exists('assets/shared/images/' + imageInputText.text + '.png'))
 			{ 
 				char.imageFile = imageInputText.text;
 				reloadCharacterImage();
@@ -534,6 +534,7 @@ class CharacterEditorState extends MusicBeatState
 					char.playAnim(char.animation.curAnim.name, true);
 				}
 			} else {
+				trace ("mods/" + Paths.currentModDirectory + '/images/' + imageInputText.text + ".png or assets/shared/images/" + imageInputText.text + ".png couldn't be found!");
 				CoolUtil.coolError("The image/XML you tried to load couldn't be found!\nEither it doesn't exist, or the name doesn't match with the one you're putting?", "JS Engine Anti-Crash Tool");
 			}
 		});
