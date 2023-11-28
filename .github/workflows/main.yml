@@ -11,6 +11,13 @@ on:
   pull_request:
     branches: [ main, experimental ]
 
+  # For release builds
+  workflow_call:
+    inputs:
+      buildFlags:
+        required: false
+        type: string
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -40,7 +47,7 @@ jobs:
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}" -D ${{ inputs.buildFlags }}
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
@@ -66,7 +73,7 @@ jobs:
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id}}" -D ${{ inputs.buildFlags }}
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
@@ -91,7 +98,7 @@ jobs:
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id}}" -D ${{ inputs.buildFlags }}
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
