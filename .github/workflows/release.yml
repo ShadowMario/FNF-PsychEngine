@@ -21,9 +21,10 @@ jobs:
       with:
         path: build
         name: windowsBuild
-    - uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r build.zip . -i build/*
+    - name: Compress build
+      run: |
+        sudo apt-get install p7zip-full
+        7z a -tzip build.zip -w ./build/.
     - name: Upload windowsBuild to release
       uses: svenstaro/upload-release-action@2.5.0
       with:
@@ -43,16 +44,18 @@ jobs:
       with:
         path: build
         name: linuxBuild
-    - uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r build.zip . -i build/*
+    - name: Compress build
+      run: |
+        sudo apt-get install p7zip-full
+        7z a -y -ttar build.tar -w ./build/.
+        gzip build.tar
     - name: Upload linuxBuild to release
       uses: svenstaro/upload-release-action@2.5.0
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref_name }}
-        file: build.zip
-        asset_name: Linux64.zip
+        file: build.tar.gz
+        asset_name: Linux64.tar.gz
         overwrite: false
 
   release-mac:
@@ -65,9 +68,10 @@ jobs:
       with:
         path: build
         name: macBuild
-    - uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r build.zip . -i build/*
+    - name: Compress build
+      run: |
+        sudo apt-get install p7zip-full
+        7z a -tzip build.zip -w ./build/.
     - name: Upload macBuild to release
       uses: svenstaro/upload-release-action@2.5.0
       with:
