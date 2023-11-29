@@ -131,7 +131,9 @@ class CoolUtil
 
 	/**
 		Helper Function to Fix Save Files for Flixel 5
-		[november 29, 2023 EDIT]
+
+		-- EDIT: [November 29, 2023] --
+
 		this function is used to get the save path, period.
 		since newer flixel versions are being enforced anyways.
 		@crowplexus
