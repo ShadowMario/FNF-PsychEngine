@@ -129,15 +129,16 @@ class CoolUtil
 		#end
 	}
 
-	/** Quick Function to Fix Save Files for Flixel 5
-		if you are making a mod, you are gonna wanna change "ShadowMario" to something else
-		so Base Psych saves won't conflict with yours
-		@BeastlyGabi
+	/**
+		Helper Function to Fix Save Files for Flixel 5
+		[november 29, 2023 EDIT]
+		this function is used to get the save path, period.
+		since newer flixel versions are being enforced anyways.
+		@crowplexus
 	**/
-	inline public static function getSavePath(folder:String = 'ShadowMario'):String {
-		@:privateAccess
-		return #if (flixel < "5.0.0") folder #else FlxG.stage.application.meta.get('company')
-			+ '/'
-			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
+	inline public static function getSavePath():String {
+		final company:String = FlxG.stage.application.meta.get('company');
+		@:privateAccess final file:String = flixel.util.FlxSave.validate(FlxG.stage.application.meta.get('file'));
+		return '${company}/${file}';
 	}
 }
