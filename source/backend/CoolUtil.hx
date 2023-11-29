@@ -1,10 +1,7 @@
 package backend;
 
-import flixel.util.FlxSave;
-
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
-
 
 class CoolUtil
 {
@@ -129,7 +126,7 @@ class CoolUtil
 		#end
 	}
 
-	/**
+		/**
 		Helper Function to Fix Save Files for Flixel 5
 
 		-- EDIT: [November 29, 2023] --
@@ -140,7 +137,8 @@ class CoolUtil
 	**/
 	inline public static function getSavePath():String {
 		final company:String = FlxG.stage.application.meta.get('company');
-		@:privateAccess final file:String = flixel.util.FlxSave.validate(FlxG.stage.application.meta.get('file'));
-		return '${company}/${file}';
+		// #if (flixel < "5.0.0") return company; #else
+		return '${company}/${flixel.util.FlxSave.validate(FlxG.stage.application.meta.get('file'))}';
+		// #end
 	}
 }
