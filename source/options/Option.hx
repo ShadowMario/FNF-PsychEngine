@@ -52,26 +52,32 @@ class Option
 			}
 		}
 
-		if(getValue() == null) {
-			setValue(defaultValue);
+		if(type == 'percent')
+		{
+			displayFormat = '%v%';
+			changeValue = 0.01;
+			minValue = 0;
+			maxValue = 1;
+			scrollSpeed = 0.5;
+			decimals = 2;
 		}
 
-		switch(type)
+		try
 		{
-			case 'string':
-				var num:Int = options.indexOf(getValue());
-				if(num > -1) {
-					curOption = num;
-				}
+			if(getValue() == null) {
+				setValue(defaultValue);
+			}
 	
-			case 'percent':
-				displayFormat = '%v%';
-				changeValue = 0.01;
-				minValue = 0;
-				maxValue = 1;
-				scrollSpeed = 0.5;
-				decimals = 2;
+			switch(type)
+			{
+				case 'string':
+					var num:Int = options.indexOf(getValue());
+					if(num > -1) {
+						curOption = num;
+					}
+			}
 		}
+		catch(e) {}
 	}
 
 	public function change()
@@ -82,14 +88,11 @@ class Option
 		}
 	}
 
-	public function getValue():Dynamic
-	{
+	dynamic public function getValue():Dynamic
 		return Reflect.getProperty(ClientPrefs.data, variable);
-	}
-	public function setValue(value:Dynamic)
-	{
-		Reflect.setProperty(ClientPrefs.data, variable, value);
-	}
+
+	dynamic public function setValue(value:Dynamic)
+		return Reflect.setProperty(ClientPrefs.data, variable, value);
 
 	private function get_text()
 	{

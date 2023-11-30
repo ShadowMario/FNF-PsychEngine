@@ -2,10 +2,6 @@ package states.editors;
 
 import backend.WeekData;
 
-#if MODS_ALLOWED
-import sys.FileSystem;
-#end
-
 import objects.Character;
 
 import states.MainMenuState;
@@ -121,12 +117,10 @@ class MasterEditorMenu extends MusicBeatState
 				case 'Dialogue Portrait Editor':
 					LoadingState.loadAndSwitchState(new DialogueCharacterEditorState(), false);
 				case 'Note Splash Debug':
-					LoadingState.loadAndSwitchState(new NoteSplashDebugState());
+					MusicBeatState.switchState(new NoteSplashDebugState());
 			}
 			FlxG.sound.music.volume = 0;
-			#if PRELOAD_ALL
 			FreeplayState.destroyFreeplayVocals();
-			#end
 		}
 		
 		var bullShit:Int = 0;

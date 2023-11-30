@@ -208,6 +208,7 @@ class Alphabet extends FlxSpriteGroup
 					if (consecutiveSpaces > 0)
 					{
 						xPos += 28 * consecutiveSpaces * scaleX;
+						rowData[rows] = xPos;
 						if(!bold && xPos >= FlxG.width * 0.65)
 						{
 							xPos = 0;
@@ -219,6 +220,7 @@ class Alphabet extends FlxSpriteGroup
 					var letter:AlphaCharacter = cast recycle(AlphaCharacter, true);
 					letter.scale.x = scaleX;
 					letter.scale.y = scaleY;
+					letter.rowWidth = 0;
 
 					letter.setupAlphaCharacter(xPos, rows * Y_PER_ROW * scale.y, character, bold);
 					@:privateAccess letter.parent = this;

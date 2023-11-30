@@ -291,7 +291,6 @@ class TitleState extends MusicBeatState {
 					#else
 					createText(['ninjamuffin99', 'PhantomArcade', 'Kawai Sprite', 'evilsk8er']);
 					#end
-				// credTextShit.visible = true;
 				case 4:
 					#if PSYCH_WATERMARKS
 					addMoreText('Shadow Mario', 40);
@@ -321,17 +320,15 @@ class TitleState extends MusicBeatState {
 					deleteText();
 				case 14:
 					addMoreText('Friday');
-				// credTextShit.visible = true;
 				case 15:
 					addMoreText('Night');
-				// credTextShit.text += '\nNight';
 				case 16:
 					addMoreText('Funkin');
 				case 17:
 					skipIntro();
 			}
-	}
-	}
+	  }
+  }
 
 	function skipIntro() {
 		FlxG.camera.flash(FlxColor.WHITE, 2);

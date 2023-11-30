@@ -31,6 +31,11 @@ class FPS extends TextField
 	**/
 	public var currentFPS(default, null):Int;
 
+	/**
+		The current memory usage.
+	**/
+	public var memoryMegas:Float = 0;
+
 	@:noCompletion private var cacheCount:Int;
 	@:noCompletion private var currentTime:Float;
 	@:noCompletion private var times:Array<Float>;
@@ -63,17 +68,21 @@ class FPS extends TextField
 		#end
 	}
 
+	var deltaTimeout:Float = 0.0;
+
 	// Event Handlers
 	@:noCompletion
 	private #if !flash override #end function __enterFrame(deltaTime:Float):Void
 	{
+		if (deltaTimeout > 1000) {
+			// there's no need to update this every frame and it only causes performance losses.
+			deltaTimeout = 0.0;
+			return;
+		}
 		currentTime += deltaTime;
 		times.push(currentTime);
-
 		while (times[0] < currentTime - 1000)
-		{
 			times.shift();
-		}
 
 		var currentCount = times.length;
 		currentFPS = Math.round((currentCount + cacheCount) / 2);
@@ -81,19 +90,16 @@ class FPS extends TextField
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
-			text = "FPS: " + currentFPS;
-			var memoryMegas:Float = 0;
+			text = 'FPS: ${currentFPS}';
 			
 			#if openfl
-			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
-			text += "\nMemory: " + memoryMegas + " MB";
+			memoryMegas = cast(System.totalMemory, UInt);
+			text += '\nMemory: ${flixel.util.FlxStringUtil.formatBytes(memoryMegas)}';
 			#end
 
 			textColor = 0xFFFFFFFF;
-			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.data.framerate / 2)
-			{
+			if (currentFPS <= ClientPrefs.data.framerate / 2)
 				textColor = 0xFFFF0000;
-			}
 
 			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
 			text += "\ntotalDC: " + Context3DStats.totalDrawCalls();
@@ -105,5 +111,6 @@ class FPS extends TextField
 		}
 
 		cacheCount = currentCount;
+		deltaTimeout += deltaTime;
 	}
 }
