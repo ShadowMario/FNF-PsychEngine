@@ -73,6 +73,7 @@ class ChartingState extends MusicBeatState
 		'Alt Animation',
 		'Hey!',
 		'Hurt Note',
+		'Angel Note',
 		'GF Sing',
 		'No Animation'
 	];
@@ -2765,9 +2766,9 @@ class ChartingState extends MusicBeatState
 				nextGridBG = new FlxSprite().makeGraphic(1, 1, FlxColor.TRANSPARENT);
 			}
 		}
-		nextGridBG.y = gridBG.height;
+		if (foundNextSec) nextGridBG.y = gridBG.height;
 		
-		gridLayer.add(nextGridBG);
+		if (nextGridBG != null) gridLayer.add(nextGridBG);
 		gridLayer.add(gridBG);
 
 		if(foundNextSec)

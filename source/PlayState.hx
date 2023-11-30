@@ -172,6 +172,8 @@ class PlayState extends MusicBeatState
 	public var notesLoadedRN:Int = 0;
 	public var firstNoteStrumTime:Float = 0;
 
+	public static var angelNoteDamage:Array<Float> = [-2, -0.5, 0.5, 1, 1.25]; //the array of healths that the angel note should give when hit from worst to best
+
 	public var spawnTime:Float = 1800; //just enough for the notes to barely inch off the screen
 
 	public var vocals:FlxSound;
@@ -249,14 +251,17 @@ class PlayState extends MusicBeatState
 	public var timeThreshold:Float = 0;
 
     	public var notesAddedCount:Int = 0;
+	public var iconBopsThisFrame:Int = 0;
+	public var iconBopsTotal:Int = 0;
 
 	var endingTimeLimit:Int = 20;
 
 	var camBopInterval:Int = 4;
 	var camBopIntensity:Float = 1;
 
-	private var healthBarBG:AttachedSprite;
+	private var healthBarBG:AttachedSprite; //The image used for the health bar.
 	public var healthBar:FlxBar;
+	public var overhealthBar:FlxBar; //The health bar that's used when you exceed the normal max health.
 	var songPercent:Float = 0;
 	var songPercentThing:Float = 0;
 	var playbackRateDecimal:Float = 0;
@@ -293,6 +298,8 @@ class PlayState extends MusicBeatState
 	public static var changedDifficulty:Bool = false;
 	public static var chartingMode:Bool = false;
 	public static var playerIsCheating:Bool = false; //Whether the player is cheating. Enables if you change BOTPLAY or Practice Mode in the Pause menu
+
+	public static var hitsGiveHealth:Bool = true; //Whether note hits can give health. If you reach the normal max health, this will be disabled.
 
 	public var shownScore:Float = 0;
 
@@ -1856,64 +1863,31 @@ class PlayState extends MusicBeatState
 		insert(members.indexOf(strumLineNotes), msTxt);
 		if (ClientPrefs.hudType == 'Dave and Bambi') 
 		{
-		if (ClientPrefs.longHPBar)
-		{
-		healthBarBG = new AttachedSprite('longDnBHealthBar');
-		} else
-		{
-		healthBarBG = new AttachedSprite('DnBHealthBar');
-		}
-		healthBarBG.y = FlxG.height * 0.89;
-		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
-		healthBarBG.screenCenter(X);
-		healthBarBG.scrollFactor.set();
-		healthBarBG.xAdd = -4;
-		healthBarBG.yAdd = -4;
-		healthBarBG.visible = !ClientPrefs.hideHud || !ClientPrefs.showcaseMode;
-		add(healthBarBG);
-
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'displayedHealth', 0, maxHealth);
-		healthBar.scrollFactor.set();
-		// healthBar
-		healthBar.visible = !ClientPrefs.hideHud || !ClientPrefs.showcaseMode;
-		healthBar.alpha = ClientPrefs.healthBarAlpha;
-		healthBarBG.sprTracker = healthBar;
-		insert(members.indexOf(healthBarBG), healthBar);
+			if (ClientPrefs.longHPBar)
+			{
+				healthBarBG = new AttachedSprite('longDnBHealthBar');
+			} else
+			{
+				healthBarBG = new AttachedSprite('DnBHealthBar');
+			}
 		}
 		if (ClientPrefs.hudType == 'Doki Doki+') 
 		{
-		if (ClientPrefs.longHPBar)
-		{
-		healthBarBG = new AttachedSprite('longDokiHealthBar');
-		} else
-		{
-		healthBarBG = new AttachedSprite('dokiHealthBar');
-		}
-		healthBarBG.y = FlxG.height * 0.89;
-		healthBarBG.visible = !ClientPrefs.hideHud || !ClientPrefs.showcaseMode;
-		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
-		healthBarBG.screenCenter(X);
-		healthBarBG.scrollFactor.set();
-		healthBarBG.xAdd = -4;
-		healthBarBG.yAdd = -4;
-		add(healthBarBG);
-
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'displayedHealth', 0, maxHealth);
-		healthBar.scrollFactor.set();
-		// healthBar
-		healthBar.visible = !ClientPrefs.hideHud || !ClientPrefs.showcaseMode;
-		healthBar.alpha = ClientPrefs.healthBarAlpha;
-		healthBarBG.sprTracker = healthBar;
-		add(healthBar);
+			if (ClientPrefs.longHPBar)
+			{
+				healthBarBG = new AttachedSprite('longDokiHealthBar');
+			} else
+			{
+				healthBarBG = new AttachedSprite('dokiHealthBar');
+			}
 		} else if (ClientPrefs.hudType != 'Dave and Bambi' && ClientPrefs.hudType != 'Doki Doki+') {
-		if (ClientPrefs.longHPBar)
-		{
-		healthBarBG = new AttachedSprite('longHealthBar');
-		} else
-		{
-		healthBarBG = new AttachedSprite('healthBar');
+			if (ClientPrefs.longHPBar)
+			{
+				healthBarBG = new AttachedSprite('longHealthBar');
+			} else
+			{
+				healthBarBG = new AttachedSprite('healthBar');
+			}
 		}
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
@@ -1930,9 +1904,15 @@ class PlayState extends MusicBeatState
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud || !ClientPrefs.showcaseMode;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
-		add(healthBar);
+		insert(members.indexOf(healthBarBG), healthBar);
+
+		overhealthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, (opponentChart ? LEFT_TO_RIGHT : RIGHT_TO_LEFT), Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, 'health', maxHealth, maxHealth * 2);
+		overhealthBar.scrollFactor.set();
+		overhealthBar.visible = !ClientPrefs.hideHud || !ClientPrefs.showcaseMode;
+		overhealthBar.alpha = ClientPrefs.healthBarAlpha;
+		// healthBar
+		insert(members.indexOf(healthBarBG), overhealthBar);
 		healthBarBG.sprTracker = healthBar;
-		}
 		
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
@@ -2369,6 +2349,7 @@ class PlayState extends MusicBeatState
 		notes.cameras = [camHUD];
 		sustainNotes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
+		overhealthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
@@ -2729,13 +2710,29 @@ class PlayState extends MusicBeatState
 
 	public function reloadHealthBarColors() {
 		if (!ClientPrefs.ogHPColor) {
-		if (!opponentChart) healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
-			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
-		else healthBar.createFilledBar(FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]),
-			FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
-		} else {
-		if (!opponentChart) healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
-		else healthBar.createFilledBar(0xFF66FF33, 0xFFFF0000);
+			if (!opponentChart) 
+			{
+				healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
+				FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+				overhealthBar.createFilledBar(0x00000000, FlxColor.fromRGB(boyfriend.healthColorArray[0] + 30, boyfriend.healthColorArray[1] + 50, boyfriend.healthColorArray[2] + 30));
+			}
+			else 
+			{
+				healthBar.createFilledBar(FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]),
+				FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]));
+				overhealthBar.createFilledBar(0x00000000, FlxColor.fromRGB(dad.healthColorArray[0] + 30, dad.healthColorArray[1] + 50, dad.healthColorArray[2] + 30));
+			}
+		} else if (ClientPrefs.ogHPColor) {
+			if (!opponentChart) 
+			{
+				healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+				overhealthBar.createFilledBar(0x00000000, 0xFFFFFF00);
+			}
+			else 
+			{
+				healthBar.createFilledBar(0xFF66FF33, 0xFFFF0000);
+				overhealthBar.createFilledBar(0x00000000, 0xFF8B0000);
+			}
 		}
 
 		healthBar.updateBar();
@@ -4973,6 +4970,7 @@ if (ClientPrefs.showNPS) {
 		judgeCountUpdateFrame = 0;
 		compactUpdateFrame = 0;
 		scoreTxtUpdateFrame = 0;
+		iconBopsThisFrame = 0;
 
 		if (deathCounter < 0) botplayTxt.text = 'DEAR GOD YOU OVERFLOWED THE DEATH COUNTER';
 
@@ -5284,14 +5282,14 @@ if (ClientPrefs.showNPS) {
 		
 		if (ClientPrefs.smoothHealth && ClientPrefs.smoothHealthType != 'Golden Apple 1.5' || !ClientPrefs.smoothHealth) //checks if you're using smooth health. if you are, but are not using the indie cross one then you know what that means
 		{
-		iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
-		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		iconP1.x = (opponentChart ? (!ClientPrefs.longHPBar ? -593 : -889.5) : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
+		iconP2.x = (opponentChart ? (!ClientPrefs.longHPBar ? -593 : -889.5) : 0) + healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, (opponentChart ? -100 : 100), 100, 0) * 0.01)) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 		}
 		if (ClientPrefs.smoothHealth && ClientPrefs.smoothHealthType == 'Golden Apple 1.5') //really makes it feel like the gapple 1.5 build's health tween
 		{
-		var percent:Float = 1 - (opponentChart ? displayedHealth / maxHealth * -1 : displayedHealth / maxHealth); //checks if you're playing as the opponent. if so, uses the negative percent, otherwise uses the normal one
-		iconP1.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * percent) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
-		iconP2.x = (opponentChart ? -593 : 0) + healthBar.x + (healthBar.width * percent) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
+		var percent:Float = 1 - (opponentChart ? FlxMath.bound(displayedHealth, 0, maxHealth) / maxHealth * -1 : FlxMath.bound(displayedHealth, 0, maxHealth) / maxHealth); //checks if you're playing as the opponent. if so, uses the negative percent, otherwise uses the normal one
+		iconP1.x = (opponentChart ? (!ClientPrefs.longHPBar ? -593 : -889.5) : 0) + healthBar.x + (healthBar.width * percent) + (150 * iconP1.scale.x - 150) / 2 - iconOffset;
+		iconP2.x = (opponentChart ? (!ClientPrefs.longHPBar ? -593 : -889.5) : 0) + healthBar.x + (healthBar.width * percent) - (150 * iconP2.scale.x) / 2 - iconOffset * 2;
 		}
 
 		if (generatedMusic) {
@@ -5331,32 +5329,44 @@ if (ClientPrefs.showNPS) {
 					endSong();
 				}
 
-		if (health > maxHealth)
+		if (health > maxHealth * 2)
+			health = maxHealth * 2;
+
+
+		if (health > maxHealth && hitsGiveHealth)
+		{
 			health = maxHealth;
+			hitsGiveHealth = false;
+		}
+
+		if (health < maxHealth && !hitsGiveHealth)
+		{
+			hitsGiveHealth = true;
+		}
 
 		if ((opponentChart ? iconP2 : iconP1).animation.frames == 3) {
-			if (healthBar.percent < 20)
+			if (healthBar.percent < (ClientPrefs.longHPBar ? 15 : 20))
 				(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 1;
-			else if (healthBar.percent >80)
+			else if (healthBar.percent > (ClientPrefs.longHPBar ? 85 : 80))
 				(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 2;
 			else
 				(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 0;
 		} 
 		else {
-			if (healthBar.percent < 20)
+			if (healthBar.percent < (ClientPrefs.longHPBar ? 15 : 20))
 				(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 1;
 			else
 				(opponentChart ? iconP2 : iconP1).animation.curAnim.curFrame = 0;
 		}
 		if ((opponentChart ? iconP1 : iconP2).animation.frames == 3) {
-			if (healthBar.percent > 80)
+			if (healthBar.percent > (ClientPrefs.longHPBar ? 85 : 80))
 				(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 1;
-			else if (healthBar.percent < 20)
+			else if (healthBar.percent < (ClientPrefs.longHPBar ? 15 : 20))
 				(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 2;
 			else 
 				(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 0;
 		} else {
-			if (healthBar.percent > 80)
+			if (healthBar.percent > (ClientPrefs.longHPBar ? 85 : 80))
 				(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 1;
 			else 
 				(opponentChart ? iconP1 : iconP2).animation.curAnim.curFrame = 0;
@@ -6221,7 +6231,7 @@ if (ClientPrefs.showNPS) {
 							setOnLuas('gfName', gf.curCharacter);
 						}
 				}
-				reloadHealthBarColors();
+				if (!ClientPrefs.ogHPColor) reloadHealthBarColors();
 				if (ClientPrefs.noteColorStyle == 'Char-Based')
 				{
 				for (note in notes){
@@ -7179,49 +7189,50 @@ if (ClientPrefs.showNPS) {
 		{	
 			noteMiss(note);
 		}
-		switch (ClientPrefs.healthGainType)
-		{
-			case 'VS Impostor':
-				switch(daRating.name)
-				{
-				case 'marv', 'sick': health += note.hitHealth * healthGain * polyphony;
-				case 'good': health += note.hitHealth * 0.5 * healthGain * polyphony;
-				case 'bad': health += note.hitHealth * 0.25 * healthGain * polyphony;
-				case 'shit': health += note.hitHealth * 0.1 * healthGain * polyphony;
-				}
-			case 'Leather Engine':
-				switch(daRating.name)
-				{
-				case 'marv', 'sick': health += 0.012 * healthGain * polyphony;
-				case 'good': health += -0.008 * healthGain * polyphony;
-				case 'bad': health += -0.018 * healthGain * polyphony;
-				case 'shit': health += -0.023 * healthGain * polyphony;
-				}
-			case 'Kade (1.4.2 to 1.6)', 'Doki Doki+':
-				switch(daRating.name)
-				{
-				case 'marv', 'sick': health += (ClientPrefs.healthGainType == 'Doki Doki+' ? 0.077 : 0.1) * healthGain * polyphony;
-				case 'good': health += 0.04 * healthGain * polyphony;
-				case 'bad': health -= 0.06 * healthGain * polyphony;
-				case 'shit': health -= (ClientPrefs.healthGainType == 'Doki Doki+' ? 0.1 : 0.2) * healthGain * polyphony;
-				}
-			case 'Kade (1.6+)':
-				switch(daRating.name)
-				{
-				case 'marv', 'sick': health += 0.017 * healthGain * polyphony;
-				case 'good': health += 0 * healthGain * polyphony;
-				case 'bad': health += -0.03 * healthLoss;
-				case 'shit': health += -0.06 * healthLoss;
-				}
-			case 'Kade (1.2)': 
-				switch(daRating.name)
-				{
-				case 'marv', 'sick': health += 0.023 * healthGain * polyphony;
-				case 'good': health += 0.004 * healthGain * polyphony;
-				case 'bad': health += 0;
-				case 'shit': health += 0;
-				}
-		}
+		if (hitsGiveHealth || note.bypassHPGainLimit)
+			switch (ClientPrefs.healthGainType)
+			{
+				case 'VS Impostor':
+					switch(daRating.name)
+					{
+					case 'marv', 'sick': health += note.hitHealth * healthGain * polyphony;
+					case 'good': health += note.hitHealth * 0.5 * healthGain * polyphony;
+					case 'bad': health += note.hitHealth * 0.25 * healthGain * polyphony;
+					case 'shit': health += note.hitHealth * 0.1 * healthGain * polyphony;
+					}
+				case 'Leather Engine':
+					switch(daRating.name)
+					{
+					case 'marv', 'sick': health += 0.012 * healthGain * polyphony;
+					case 'good': health += -0.008 * healthGain * polyphony;
+					case 'bad': health += -0.018 * healthGain * polyphony;
+					case 'shit': health += -0.023 * healthGain * polyphony;
+					}
+				case 'Kade (1.4.2 to 1.6)', 'Doki Doki+':
+					switch(daRating.name)
+					{
+					case 'marv', 'sick': health += (ClientPrefs.healthGainType == 'Doki Doki+' ? 0.077 : 0.1) * healthGain * polyphony;
+					case 'good': health += 0.04 * healthGain * polyphony;
+					case 'bad': health -= 0.06 * healthGain * polyphony;
+					case 'shit': health -= (ClientPrefs.healthGainType == 'Doki Doki+' ? 0.1 : 0.2) * healthGain * polyphony;
+					}
+				case 'Kade (1.6+)':
+					switch(daRating.name)
+					{
+					case 'marv', 'sick': health += 0.017 * healthGain * polyphony;
+					case 'good': health += 0 * healthGain * polyphony;
+					case 'bad': health += -0.03 * healthLoss;
+					case 'shit': health += -0.06 * healthLoss;
+					}
+				case 'Kade (1.2)': 
+					switch(daRating.name)
+					{
+					case 'marv', 'sick': health += 0.023 * healthGain * polyphony;
+					case 'good': health += 0.004 * healthGain * polyphony;
+					case 'bad': health += 0;
+					case 'shit': health += 0;
+					}
+			}
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
 		{
@@ -8078,8 +8089,28 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 			if (combo > maxCombo)
 				maxCombo = combo;
 
+			if (note.noteType == 'Angel Note')
+			{
+				var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
+				var char:Character = boyfriend;
+				if(opponentChart) char = dad;
+				var daRating:Rating = Conductor.judgeNote(note, noteDiff / playbackRate);
+				switch(daRating.name)
+					{
+						case 'marv': health += angelNoteDamage[4] * healthGain * polyphony;
+						case 'sick': health += angelNoteDamage[3] * healthGain * polyphony;
+						case 'good': health += angelNoteDamage[2] * healthGain * polyphony;
+						case 'bad': 
+							char.playAnim('hurt', true);
+							health += angelNoteDamage[1] * healthGain * polyphony;
+						case 'shit': 
+							char.playAnim('hurt', true);
+							health += angelNoteDamage[0] * healthGain * polyphony;
+					}
+			}
+
 			if (ClientPrefs.healthGainType == 'Psych Engine' || ClientPrefs.healthGainType == 'Leather Engine' || ClientPrefs.healthGainType == 'Kade (1.2)' || ClientPrefs.healthGainType == 'Kade (1.6+)' || ClientPrefs.healthGainType == 'Doki Doki+' || ClientPrefs.healthGainType == 'VS Impostor') {
-			health += note.hitHealth * healthGain * polyphony;
+				if (hitsGiveHealth || note.bypassHPGainLimit) health += note.hitHealth * healthGain * polyphony;
 			}
 			if(!note.noAnimation && ClientPrefs.charsAndBG) {
 				var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
@@ -8280,6 +8311,7 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 			if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
 			if (!ClientPrefs.hideScore && scoreTxtUpdateFrame <= 4) updateScore();
            		if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
+			if (ClientPrefs.iconBopWhen == 'Every Note Hit' && iconBopsThisFrame <= 2 && !note.isSustainNote) bopIcons(!opponentChart);
 		}
 	}
 	function opponentNoteHit(daNote:Note):Void
@@ -8468,6 +8500,7 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 			if (ClientPrefs.denpaDrainBug) displayedHealth -= daNote.hitHealth * hpDrainLevel * polyphony;
 			if (ClientPrefs.ratingCounter && judgeCountUpdateFrame <= 4) updateRatingCounter();
            		if (ClientPrefs.compactNumbers && compactUpdateFrame <= 4) updateCompactNumbers();
+			if (ClientPrefs.iconBopWhen == 'Every Note Hit' && iconBopsThisFrame <= 2 && !daNote.isSustainNote) bopIcons(opponentChart);
 		}
 
 
@@ -8505,11 +8538,11 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 			}
 		}
 
-		var splashColor:FlxColor = FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
+		var splashColor:FlxColor = !opponentChart ? FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]) : FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]);
 
 		if (ClientPrefs.noteColorStyle == 'Char-Based')
 		{
-			if (!isDadNote) splashColor = FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]);
+			if (!isDadNote) splashColor = !opponentChart ? FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]) : FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
 			if (isGfNote && gf != null) splashColor = FlxColor.fromRGB(gf.healthColorArray[0], gf.healthColorArray[1], gf.healthColorArray[2]);
 		}
 
@@ -8884,6 +8917,123 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 			if (ClientPrefs.showNotes) sustainNotes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 
+		if (ClientPrefs.iconBopWhen == 'Every Beat') bopIcons();
+				
+		if (ClientPrefs.charsAndBG) {
+		if (gf != null && curBeat % Math.round(gfSpeed * gf.danceEveryNumBeats) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
+		{
+			gf.dance();
+		}
+		if (curBeat % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
+		{
+			boyfriend.dance();
+		}
+		if (curBeat % dad.danceEveryNumBeats == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
+		{
+			dad.dance();
+		}
+
+		switch (curStage)
+		{
+			case 'tank':
+				if(!ClientPrefs.lowQuality) tankWatchtower.dance();
+				foregroundSprites.forEach(function(spr:BGSprite)
+				{
+					spr.dance();
+				});
+
+			case 'school':
+				if(!ClientPrefs.lowQuality) {
+					bgGirls.dance();
+				}
+
+			case 'mall':
+				if(!ClientPrefs.lowQuality) {
+					upperBoppers.dance(true);
+				}
+
+				if(heyTimer <= 0) bottomBoppers.dance(true);
+				santa.dance(true);
+
+			case 'limo':
+				if(!ClientPrefs.lowQuality) {
+					grpLimoDancers.forEach(function(dancer:BackgroundDancer)
+					{
+						dancer.dance();
+					});
+				}
+
+				if (FlxG.random.bool(10) && fastCarCanDrive)
+					fastCarDrive();
+			case "philly":
+				if (!trainMoving)
+					trainCooldown += 1;
+
+				if (curBeat % 4 == 0)
+				{
+					curLight = FlxG.random.int(0, phillyLightsColors.length - 1, [curLight]);
+					phillyWindow.color = phillyLightsColors[curLight];
+					phillyWindow.alpha = 1;
+				}
+
+				if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
+				{
+					trainCooldown = FlxG.random.int(-4, 0);
+					trainStart();
+				}
+		}
+
+		if (curStage == 'spooky' && FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
+		{
+			lightningStrikeShit();
+		}
+		}
+		lastBeatHit = curBeat;
+
+		setOnLuas('curBeat', curBeat); //DAWGG?????
+		callOnLuas('onBeatHit', []);
+	}
+
+	override function sectionHit()
+	{
+		super.sectionHit();
+
+		if (SONG.notes[curSection] != null)
+		{
+			if (generatedMusic && !endingSong && !isCameraOnForcedPos)
+			{
+				moveCameraSection();
+			}
+
+			/*if (camZooming && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && camBopInterval == 0 && camBopIntensity == 0)
+			{
+				FlxG.camera.zoom += 0.015 * camZoomingMult;
+				camHUD.zoom += 0.03 * camZoomingMult;
+			}*/
+
+			if (ClientPrefs.hudType == 'Leather Engine') timeBar.color = SONG.notes[curSection].mustHitSection ? FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]) : FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
+
+			if (SONG.notes[curSection].changeBPM)
+			{
+				Conductor.changeBPM(SONG.notes[curSection].bpm);
+				setOnLuas('curBpm', Conductor.bpm);
+				setOnLuas('crochet', Conductor.crochet);
+				setOnLuas('stepCrochet', Conductor.stepCrochet);
+			}
+			setOnLuas('mustHitSection', SONG.notes[curSection].mustHitSection);
+			setOnLuas('altAnim', SONG.notes[curSection].altAnim);
+			setOnLuas('gfSection', SONG.notes[curSection].gfSection);
+		}
+		
+		setOnLuas('curSection', curSection);
+		callOnLuas('onSectionHit', []);
+	}
+
+	public function bopIcons(?bopBF:Bool = false)
+	{
+		iconBopsThisFrame++;
+		if (ClientPrefs.iconBopWhen == 'Every Beat')
+		{
 		if (ClientPrefs.iconBounceType == 'Dave and Bambi') {
 		var funny:Float = Math.max(Math.min(healthBar.value,(maxHealth/0.95)),0.1);
 
@@ -9011,115 +9161,145 @@ if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.hudType != 'Tails Get
 			iconP2.updateHitbox();
 		}
 		}
-		
-		if (ClientPrefs.charsAndBG) {
-		if (gf != null && curBeat % Math.round(gfSpeed * gf.danceEveryNumBeats) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
+		} 
+		else if (ClientPrefs.iconBopWhen == 'Every Note Hit')
 		{
-			gf.dance();
-		}
-		if (curBeat % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
-		{
-			boyfriend.dance();
-		}
-		if (curBeat % dad.danceEveryNumBeats == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
-		{
-			dad.dance();
-		}
+		iconBopsTotal++;
+		if (ClientPrefs.iconBounceType == 'Dave and Bambi') {
+		var funny:Float = Math.max(Math.min(healthBar.value,(maxHealth/0.95)),0.1);
 
-		switch (curStage)
+		//health icon bounce but epic
+		if (!opponentChart)
 		{
-			case 'tank':
-				if(!ClientPrefs.lowQuality) tankWatchtower.dance();
-				foregroundSprites.forEach(function(spr:BGSprite)
-				{
-					spr.dance();
-				});
+			if (bopBF) iconP1.setGraphicSize(Std.int(iconP1.width + (50 * (funny + 0.1))),Std.int(iconP1.height - (25 * funny)));
+			iconP2.setGraphicSize(Std.int(iconP2.width + (50 * ((2 - funny) + 0.1))),Std.int(iconP2.height - (25 * ((2 - funny) + 0.1))));
+		} else {
+			if (!bopBF) iconP2.setGraphicSize(Std.int(iconP2.width + (50 * funny)),Std.int(iconP2.height - (25 * funny)));
+			else iconP1.setGraphicSize(Std.int(iconP1.width + (50 * ((2 - funny) + 0.1))),Std.int(iconP1.height - (25 * ((2 - funny) + 0.1))));
+			}
+		}
+		if (ClientPrefs.iconBounceType == 'Old Psych') {
+		if (bopBF) iconP1.setGraphicSize(Std.int(iconP1.width + 30));
+		else iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+		}
+		if (ClientPrefs.iconBounceType == 'Strident Crisis') {
+		var funny:Float = (healthBar.percent * 0.01) + 0.01;
 
-			case 'school':
-				if(!ClientPrefs.lowQuality) {
-					bgGirls.dance();
+		//health icon bounce but epic
+		iconP1.setGraphicSize(Std.int(iconP1.width + (50 * (2 + funny))),Std.int(iconP2.height - (25 * (2 + funny))));
+		iconP1.scale.set(1.1, 0.8);
+		iconP2.setGraphicSize(Std.int(iconP2.width + (50 * (2 - funny))),Std.int(iconP2.height - (25 * (2 - funny))));
+
+		iconP2.scale.set(1.1, 0.8);
+
+		FlxTween.cancelTweensOf(iconP1);
+		FlxTween.cancelTweensOf(iconP2);
+
+		FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+		FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut}); 
+
+		FlxTween.tween(iconP1, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
+		FlxTween.tween(iconP2, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
+
+		iconP1.updateHitbox();
+		iconP2.updateHitbox();
+		}
+		if (ClientPrefs.iconBounceType == 'Plank Engine') {
+		iconP1.scale.x = 1.3;
+		iconP1.scale.y = 0.75;
+		FlxTween.cancelTweensOf(iconP1);
+		FlxTween.tween(iconP1, {"scale.x": 1, "scale.y": 1}, Conductor.crochet / 1000, {ease: FlxEase.backOut});
+		iconP2.scale.x = 1.3;
+		iconP2.scale.y = 0.75;
+		FlxTween.cancelTweensOf(iconP2);
+		FlxTween.tween(iconP2, {"scale.x": 1, "scale.y": 1}, Conductor.crochet / 1000, {ease: FlxEase.backOut});
+		if (iconBopsTotal % 4 == 0) {
+			iconP1.offset.x = 10;
+			iconP1.angle = -15;
+			FlxTween.tween(iconP1, {"offset.x": 0, angle: 0}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
+			iconP2.offset.x = -10;
+			iconP2.angle = 15;
+			FlxTween.tween(iconP2, {"offset.x": 0, angle: 0}, Conductor.crochet / 1000, {ease: FlxEase.expoOut});
+		}
+		}
+		if (ClientPrefs.iconBounceType == 'New Psych') {
+		if (bopBF) iconP1.scale.set(1.2, 1.2);
+		else iconP2.scale.set(1.2, 1.2);
+		}
+		//you're welcome Stefan2008 :)
+		if (ClientPrefs.iconBounceType == 'SB Engine') {
+			if (iconBopsTotal % 2 == 0) {
+				if (iconBopsTotal % 2 == 0) {
+					iconP1.scale.set(0.8, 0.8);
+					iconP2.scale.set(1.2, 1.3);
+					
+					iconP1.angle = -15;
+					iconP2.angle = 15;
+				} else {
+					iconP2.scale.set(0.8, 0.8);
+					iconP1.scale.set(1.2, 1.3);
+					
+					iconP2.angle = -15;
+					iconP1.angle = 15;
 				}
-
-			case 'mall':
-				if(!ClientPrefs.lowQuality) {
-					upperBoppers.dance(true);
-				}
-
-				if(heyTimer <= 0) bottomBoppers.dance(true);
-				santa.dance(true);
-
-			case 'limo':
-				if(!ClientPrefs.lowQuality) {
-					grpLimoDancers.forEach(function(dancer:BackgroundDancer)
-					{
-						dancer.dance();
-					});
-				}
-
-				if (FlxG.random.bool(10) && fastCarCanDrive)
-					fastCarDrive();
-			case "philly":
-				if (!trainMoving)
-					trainCooldown += 1;
-
-				if (curBeat % 4 == 0)
-				{
-					curLight = FlxG.random.int(0, phillyLightsColors.length - 1, [curLight]);
-					phillyWindow.color = phillyLightsColors[curLight];
-					phillyWindow.alpha = 1;
-				}
-
-				if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
-				{
-					trainCooldown = FlxG.random.int(-4, 0);
-					trainStart();
-				}
+			}
 		}
 
-		if (curStage == 'spooky' && FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
-		{
-			lightningStrikeShit();
+		iconP1.updateHitbox();
+		iconP2.updateHitbox();
+
+		if (ClientPrefs.iconBounceType == 'Golden Apple') {
+		FlxTween.cancelTweensOf(iconP1);
+		FlxTween.cancelTweensOf(iconP2);
+		iconBopsTotal % 2 == 0 * playbackRate ? {
+		iconP1.scale.set(1.1, 0.8);
+		iconP2.scale.set(1.1, 1.3);
+
+		FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 / playbackRate, {ease: FlxEase.quadOut});
+		FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 / playbackRate, {ease: FlxEase.quadOut});
+		} : {
+		iconP1.scale.set(1.1, 1.3);
+		iconP2.scale.set(1.1, 0.8);
+
+		FlxTween.angle(iconP2, -15, 0, Conductor.crochet / 1300 / playbackRate, {ease: FlxEase.quadOut});
+		FlxTween.angle(iconP1, 15, 0, Conductor.crochet / 1300 / playbackRate, {ease: FlxEase.quadOut});
 		}
-		}
-		lastBeatHit = curBeat;
 
-		setOnLuas('curBeat', curBeat); //DAWGG?????
-		callOnLuas('onBeatHit', []);
-	}
+		FlxTween.tween(iconP1, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 / playbackRate * gfSpeed, {ease: FlxEase.quadOut});
+		FlxTween.tween(iconP2, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 / playbackRate * gfSpeed, {ease: FlxEase.quadOut});
 
-	override function sectionHit()
-	{
-		super.sectionHit();
-
-		if (SONG.notes[curSection] != null)
-		{
-			if (generatedMusic && !endingSong && !isCameraOnForcedPos)
+		iconP1.updateHitbox();
+		iconP2.updateHitbox();
+		} 
+		if (ClientPrefs.iconBounceType == 'VS Steve') {
+		FlxTween.cancelTweensOf(iconP1);
+		FlxTween.cancelTweensOf(iconP2);
+		if (iconBopsTotal % 2 == 0) 
 			{
-				moveCameraSection();
+			iconBopsTotal % 2 == 0 ? 
+			{
+				iconP1.scale.set(1.1, 0.8);
+				iconP2.scale.set(1.1, 1.3);
+				//FlxTween.angle(iconP2, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+				//FlxTween.angle(iconP1, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+			} 
+			: 
+			{
+				iconP1.scale.set(1.1, 1.3);
+				iconP2.scale.set(1.1, 0.8);
+				FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+				FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+				
 			}
 
-			/*if (camZooming && FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && camBopInterval == 0 && camBopIntensity == 0)
-			{
-				FlxG.camera.zoom += 0.015 * camZoomingMult;
-				camHUD.zoom += 0.03 * camZoomingMult;
-			}*/
+			FlxTween.tween(iconP1, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
+			FlxTween.tween(iconP2, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
 
-			if (ClientPrefs.hudType == 'Leather Engine') timeBar.color = SONG.notes[curSection].mustHitSection ? FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]) : FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]);
-
-			if (SONG.notes[curSection].changeBPM)
-			{
-				Conductor.changeBPM(SONG.notes[curSection].bpm);
-				setOnLuas('curBpm', Conductor.bpm);
-				setOnLuas('crochet', Conductor.crochet);
-				setOnLuas('stepCrochet', Conductor.stepCrochet);
-			}
-			setOnLuas('mustHitSection', SONG.notes[curSection].mustHitSection);
-			setOnLuas('altAnim', SONG.notes[curSection].altAnim);
-			setOnLuas('gfSection', SONG.notes[curSection].gfSection);
+			iconP1.updateHitbox();
+			iconP2.updateHitbox();
 		}
-		
-		setOnLuas('curSection', curSection);
-		callOnLuas('onSectionHit', []);
+		}
+		}
 	}
 
 	#if LUA_ALLOWED

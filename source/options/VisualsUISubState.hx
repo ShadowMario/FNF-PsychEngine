@@ -198,6 +198,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Icon Bop Trigger:',
+			"When would you like the icons to bop?",
+			'iconBopWhen',
+			'string',
+			'Every Beat',
+			['Every Beat', 'Every Note Hit']);
+		addOption(option);
+
 		var option:Option = new Option('Camera Note Movement',
 			"If checked, note hits will move the camera depending on which note you hit.",
 			'cameraPanning',

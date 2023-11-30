@@ -67,6 +67,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var opponentLightStrum:Bool = true;
 	public static var complexAccuracy:Bool = false;
 	public static var resyncType:String = 'Psych';
+	public static var iconBopWhen:String = 'Psych';
 	public static var scoreTxtSize:Int = 0;
 	public static var botLightStrum:Bool = true;
 	public static var violence:Bool = true;
@@ -307,6 +308,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.voiidTrollMode = voiidTrollMode;
 		FlxG.save.data.complexAccuracy = complexAccuracy;
 		FlxG.save.data.resyncType = resyncType;
+		FlxG.save.data.iconBopWhen = iconBopWhen;
 		FlxG.save.data.compactNumbers = compactNumbers;
 		FlxG.save.data.colorQuants = colorQuants;
 		FlxG.save.data.noteSpawnTime = noteSpawnTime;
@@ -448,6 +450,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.noGunsRNG != null) {
 			noGunsRNG = FlxG.save.data.noGunsRNG;
+		}
+		if(FlxG.save.data.iconBopWhen != null) {
+			iconBopWhen = FlxG.save.data.iconBopWhen;
 		}
 		if(FlxG.save.data.denpaDrainBug != null) {
 			denpaDrainBug = FlxG.save.data.denpaDrainBug;
