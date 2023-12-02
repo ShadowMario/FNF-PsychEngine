@@ -64,10 +64,9 @@ class Note extends FlxSprite
 
 	public static var swagWidth:Float = 160 * 0.7;
 	
-	public static var colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
-	private var pixelInt:Array<Int> = [0, 1, 2, 3];
-	public static var beats:Array<Int> = [4, 8, 12, 16, 24, 32, 48, 64, 96, 128, 192,256,384,512,768,1024,1536,2048,3072,6144];
-	public var arrowAngles:Array<Int> = [180, 90, 270, 0]; //This is used for quantized note colors
+	public static final colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
+	private final pixelInt:Array<Int> = [0, 1, 2, 3];
+	public static final beats:Array<Int> = [4, 8, 12, 16, 24, 32, 48, 64, 96, 128, 192,256,384,512,768,1024,1536,2048,3072,6144];
 
 	// Lua shit
 	public var noteSplashDisabled:Bool = false;
@@ -396,7 +395,6 @@ class Note extends FlxSprite
 				animation.play(animToPlay + 'Scroll');
 			}
 		}
-		// trace(prevNote);
 
 		if(prevNote!=null)
 			prevNote.nextNote = this;

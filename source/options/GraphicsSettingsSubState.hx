@@ -94,12 +94,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.displayFormat = '%vX';
 		addOption(option);
 
-		var option:Option = new Option('Memory Leaks', //Name
-			"If checked, cache will no longer be cleared when entering a song. Improves performance a bit for higher-end computers, but I don't recommend turning it on if you're on a mid-end or even a low-end computer!", //Description
-			'memLeaks', //Save data variable name
-			'bool', //Variable type
-			false); //Default value
-		addOption(option);
+		// The "Memory Leaks" meme is dead...
 
 		#if !html5 
 		#if desktop
