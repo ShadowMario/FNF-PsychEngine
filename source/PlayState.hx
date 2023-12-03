@@ -92,7 +92,7 @@ using StringTools;
 class PlayState extends MusicBeatState
 {
 	var noteRows:Array<Array<Array<Note>>> = [[],[]];
-	private final singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
+	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
 	public static var instance:PlayState;
 	public static var STRUM_X = 48.5;
@@ -193,12 +193,15 @@ class PlayState extends MusicBeatState
 	public static var iconOffset:Int = 26;
 
 	var tankmanAscend:Bool = false; // funni (2021 nostalgia oh my god)
+	public var isEkSong:Bool = false; //we'll use this so that the game doesn't load all notes twice?
+	public var usingEkFile:Bool = false; //we'll also use this so that the game doesn't load all notes twice?
 
 	public var notes:FlxTypedGroup<Note>;
 	public var sustainNotes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
 	public var unspawnNotesCopy:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
+	public var eventNotesCopy:Array<EventNote> = [];
 
 	private var strumLine:FlxSprite;
 
@@ -1133,6 +1136,11 @@ class PlayState extends MusicBeatState
 					if(file.endsWith('.lua') && !filesPushed.contains(file))
 					{
 						luaArray.push(new FunkinLua(folder + file));
+						if (Std.string(file) == 'extra keys hscript.lua')
+						{
+						trace ('theres a lua extra keys file');
+						usingEkFile = true;
+						}
 						filesPushed.push(file);
 					}
 				}
@@ -1937,7 +1945,7 @@ class PlayState extends MusicBeatState
 		EngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		EngineWatermark.scrollFactor.set();
 		add(EngineWatermark);
-		EngineWatermark.text = SONG.song + " " + CoolUtil.difficultyString() + " | JSE " + MainMenuState.psychEngineJSVersion;
+		EngineWatermark.text = SONG.song + " " + CoolUtil.difficultyString() + " |  " + MainMenuState.psychEngineJSVersion;
 		}
 		if (ClientPrefs.hudType == 'JS Engine') {
 		// Add Engine watermark
@@ -4104,6 +4112,11 @@ class PlayState extends MusicBeatState
 		{
 			for (songNotes in section.sectionNotes)
 			{
+				if (usingEkFile && (songNotes[1] > 3) && !isEkSong)
+				{
+				trace ("one of the notes' note data exceeded the normal note count and there's a lua ek file, so im assuming this song is an ek song");
+				isEkSong = true;
+				}
 				var daStrumTime:Float = songNotes[0];
 				var daNoteData:Int = 0;
 				if (!randomMode && !flip && !stairs && !waves)
@@ -4161,7 +4174,7 @@ class PlayState extends MusicBeatState
 
 				var oldNote:Note = unspawnNotes.length > 0 ? unspawnNotes[Std.int(unspawnNotes.length - 1)] : null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, false, gottaHitNote, (section.gfSection && (songNotes[1]<4) || songNotes[3] == 'GF Sing'));
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, false, !isEkSong);
 				if (ClientPrefs.doubleGhost)
 					{
 					swagNote.row = Conductor.secsToRow(daStrumTime);
@@ -4184,7 +4197,7 @@ class PlayState extends MusicBeatState
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote), daNoteData, oldNote, true, false, swagNote.mustPress, swagNote.gfNote);
+						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote), daNoteData, oldNote, true, false, !isEkSong);
 						sustainNote.mustPress = gottaHitNote;
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
@@ -4193,7 +4206,7 @@ class PlayState extends MusicBeatState
 						sustainNote.parent = swagNote;
 						unspawnNotes.push(sustainNote);
 						sustainNote.correctionOffset = swagNote.height / 2;
-						if(!PlayState.isPixelStage)
+						if(!isPixelStage)
 						{
 							if(oldNote.isSustainNote)
 							{
@@ -4215,7 +4228,7 @@ class PlayState extends MusicBeatState
 				{
 					for (i in 0...Std.int(jackingtime))
 					{
-						jackNote = new Note(swagNote.strumTime + (15000/SONG.bpm) * (i + 1), swagNote.noteData, oldNote, false, false, swagNote.mustPress, swagNote.gfNote);
+						jackNote = new Note(swagNote.strumTime + (15000/SONG.bpm) * (i + 1), swagNote.noteData, oldNote, false, false, !isEkSong);
 						jackNote.scrollFactor.set();
 
 				jackNote.sustainLength = swagNote.sustainLength;
@@ -4269,6 +4282,26 @@ class PlayState extends MusicBeatState
 		}
 
        		var endTime = Sys.time();
+		eventNotesCopy = eventNotes.copy();
+
+		if (ClientPrefs.noteColorStyle == 'Char-Based')
+			{
+				for (note in unspawnNotes){
+				 	if (note == null) 
+						continue;
+					note.updateRGBColors();
+				}	
+				for (note in notes){
+				 	if (note == null) 
+						continue;
+					note.updateRGBColors();
+				}	
+				for (note in sustainNotes){
+				 	if (note == null) 
+						continue;
+					note.updateRGBColors();
+				}
+			}
 
         	var elapsedTime = endTime - startTime;
 		unspawnNotes.sort(sortByTime);
@@ -4580,7 +4613,6 @@ class PlayState extends MusicBeatState
 			{
 				while(Conductor.songPosition > 20 && FlxG.sound.music.time < 20)
 				{
-					trace("SONG POS: " + Conductor.songPosition + " | Music Pos: " + FlxG.sound.music.time + " / " + FlxG.sound.music.length);
 
 					FlxG.sound.music.time = Conductor.songPosition;
 					vocals.time = Conductor.songPosition;
@@ -5256,6 +5288,7 @@ if (ClientPrefs.showNPS) {
 					curSection = 0; 
 					curBeat = 0;
 					curStep = 0;
+					eventNotes = eventNotesCopy.copy();
 				}
 				if (ClientPrefs.songLoading && FlxG.sound.music.length - Conductor.songPosition <= endingTimeLimit && SONG.song.toLowerCase() == 'anti-cheat-song') { //stop crashes when playing normally
 					infiniteLoop();
@@ -5459,7 +5492,7 @@ if (ClientPrefs.showNPS) {
 	} else {
 		spawnTime = 1800 * ClientPrefs.noteSpawnTime;
 	}
-	if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= firstNoteStrumTime && ClientPrefs.showNotes || unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= firstNoteStrumTime && !ClientPrefs.showNotes && !cpuControlled)
+	if (unspawnNotes[0] != null && (Conductor.songPosition + 1800 / songSpeed) >= firstNoteStrumTime && ClientPrefs.showNotes || unspawnNotes[0] != null && !ClientPrefs.showNotes && !cpuControlled)
 	{
 		spawnTime /= unspawnNotes[0].multSpeed;
 
@@ -5491,7 +5524,7 @@ if (ClientPrefs.showNPS) {
 		notesAddedCount = 0;
 
 		for (i in 0...unspawnNotes.length) {
-			final daNote = unspawnNotes[i];
+			var daNote = unspawnNotes[i];
 			if(daNote.mustPress && cpuControlled) {
 				if (daNote.strumTime + (ClientPrefs.communityGameBot ? FlxG.random.float(ClientPrefs.minCGBMS, ClientPrefs.maxCGBMS) : 0) <= Conductor.songPosition || daNote.isSustainNote && daNote.strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * daNote.earlyHitMult /2)) 
 				{
@@ -6818,16 +6851,14 @@ if (ClientPrefs.showNPS) {
 
 					if (storyDifficulty == 2)
 					{
-						for (defaultSong in CoolUtil.defaultSongs) {
 						if (ClientPrefs.JSEngineRecharts && CoolUtil.defaultSongs.contains(PlayState.storyPlaylist[0].toLowerCase())) {
 							PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + '-jshard', PlayState.storyPlaylist[0]);
-							break;
 							}
 							else if (ClientPrefs.JSEngineRecharts && !CoolUtil.defaultSongs.contains(PlayState.storyPlaylist[0].toLowerCase())) 	{
 							PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
-							break;
 							}
-						}
+						else if (!ClientPrefs.JSEngineRecharts)
+							PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
 					} else {
 					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
 					}

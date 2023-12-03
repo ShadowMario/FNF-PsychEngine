@@ -306,7 +306,7 @@ class Note extends FlxSprite
 		return value;
 	}
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false, ?mustPressIt:Bool = false, ?isGfNote:Bool = false)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false, ?loadSprite:Bool = true)
 	{
 		super();
 
@@ -316,8 +316,6 @@ class Note extends FlxSprite
 		this.prevNote = prevNote;
 		isSustainNote = sustainNote;
 		this.inEditor = inEditor;
-		mustPress = mustPressIt;
-		gfNote = isGfNote;
 
 		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
@@ -330,9 +328,9 @@ class Note extends FlxSprite
 		if (!ClientPrefs.showNotes) loadNoteAnims();
 
 		if(noteData > -1) {
-			if (ClientPrefs.showNotes)
+			if (ClientPrefs.showNotes && loadSprite)
 			{
-			texture = '';
+			texture = ''; 
 			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
 				texture = 'Nonsense_NOTE_assets';
 			}
@@ -364,7 +362,7 @@ class Note extends FlxSprite
 			{
 					colorSwap = new ColorSwap();
 					shader = colorSwap.shader;
-					if (ClientPrefs.noteColorStyle == 'Normal' && !ClientPrefs.rainbowNotes)
+					if (ClientPrefs.noteColorStyle == 'Normal' && !ClientPrefs.rainbowNotes && noteData < ClientPrefs.arrowHSV.length) //the notedata check prevents a null object reference when loading ek lua charts
 					{
 						colorSwap.hue = ClientPrefs.arrowHSV[noteData][0] / 360;
 						colorSwap.saturation = ClientPrefs.arrowHSV[noteData][1] / 100;

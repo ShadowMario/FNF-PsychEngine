@@ -2287,6 +2287,26 @@ class ChartingState extends MusicBeatState
 				updateGrid();
 			}
 
+			if (FlxG.keys.pressed.C && !FlxG.keys.pressed.CONTROL)
+				if (!FlxG.mouse.overlaps(curRenderedNotes)) //lmao cant place notes when your cursor already overlaps one
+					if (FlxG.mouse.x > gridBG.x
+						&& FlxG.mouse.x < gridBG.x + gridBG.width
+						&& FlxG.mouse.y > gridBG.y
+						&& FlxG.mouse.y < gridBG.y + gridBG.height)
+							if (!FlxG.keys.pressed.CONTROL) //stop crashing
+								addNote(); //allows you to draw notes by holding C
+			if (FlxG.keys.pressed.C && FlxG.keys.pressed.CONTROL)
+				if (FlxG.mouse.overlaps(curRenderedNotes))
+					if (FlxG.mouse.x > gridBG.x
+						&& FlxG.mouse.x < gridBG.x + gridBG.width
+						&& FlxG.mouse.y > gridBG.y
+						&& FlxG.mouse.y < gridBG.y + gridBG.height)
+							curRenderedNotes.forEach(function(note:Note)
+							{
+								if (FlxG.mouse.overlaps(note))
+									deleteNote(note); //mass deletion of notes
+							});
+
 			if (FlxG.keys.justPressed.TAB)
 			{
 				if (FlxG.keys.pressed.SHIFT)
@@ -3608,6 +3628,7 @@ class ChartingState extends MusicBeatState
 		if (FlxG.keys.pressed.CONTROL && noteData > -1)
 		{
 			_song.notes[curSec].sectionNotes.push([noteStrum, (noteData + 4) % 8, noteSus, noteTypeIntMap.get(daType)]);
+			updateGrid();
 		}
 
 		//trace(noteData + ', ' + noteStrum + ', ' + curSec);

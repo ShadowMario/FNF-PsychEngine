@@ -12,6 +12,9 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import flixel.addons.display.FlxBackdrop;
+import openfl.display.BlendMode;
+import flixel.util.FlxAxes;
 
 class ResultsScreenSubState extends MusicBeatSubstate {
 	var background:FlxSprite;
@@ -24,6 +27,8 @@ class ResultsScreenSubState extends MusicBeatSubstate {
 	public var iconPlayer1:HealthIcon;
 	public var iconPlayer2:HealthIcon;
 
+	var checker:FlxBackdrop;
+
 	public function new(daResults:Array<Int>, campaignScore:Int, songMisses:Int, ratingPercent:Float, ratingName:String) {
 		super();
 
@@ -35,13 +40,34 @@ class ResultsScreenSubState extends MusicBeatSubstate {
 		}		
 		FlxG.sound.music.fadeIn(2, 0, 0.5);
 
-		background = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		background.color = 0xFF353535;
+		background = new FlxSprite(0, 0).loadGraphic(Paths.image('aboutMenu'));
+		background.scale.set(1.1, 1.1);
+		background.color = FlxColor.fromRGB(100, 100, 0);
+		if (daResults[1] > 0) background.color = FlxColor.CYAN;
+		if (daResults[2] > 0) background.color = FlxColor.GREEN;
+		if (songMisses > 0)
+		{
+			if (ratingPercent >= 90) background.color = FlxColor.CYAN;
+			if (ratingPercent >= 80) background.color = FlxColor.GREEN;
+			if (ratingPercent >= 70) background.color = FlxColor.YELLOW;
+			if (ratingPercent >= 50) background.color = FlxColor.RED;
+			if (ratingPercent >= 30) background.color = FlxColor.PURPLE;
+			if (ratingPercent < 30) background.color = FlxColor.BLACK;
+		}
 		background.scrollFactor.set();
 		background.updateHitbox();
 		background.screenCenter();
 		background.antialiasing = ClientPrefs.globalAntialiasing;
 		add(background);
+
+		checker = new FlxBackdrop(Paths.image('checker', 'preload'), FlxAxes.XY);
+		checker.scale.set(4, 4);
+		checker.color = 0xFFb8860b;
+		checker.blend = BlendMode.LAYER;
+		add(checker);
+		checker.scrollFactor.set(0, 0.07);
+		checker.alpha = 0.2;
+		checker.updateHitbox();
 
 		resultsText = new FlxText(5, 0, 0, 'RESULTS', 72);
 		resultsText.scrollFactor.set();
@@ -116,6 +142,8 @@ class ResultsScreenSubState extends MusicBeatSubstate {
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
+		checker.x += 0.45 / (ClientPrefs.framerate / 60);
+		checker.y += (0.16 / (ClientPrefs.framerate / 60));
 
 		#if android
 		var touchedScreen:Bool = false;
