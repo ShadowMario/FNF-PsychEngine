@@ -43,8 +43,8 @@ class ResultsScreenSubState extends MusicBeatSubstate {
 		background = new FlxSprite(0, 0).loadGraphic(Paths.image('aboutMenu'));
 		background.scale.set(1.1, 1.1);
 		background.color = FlxColor.fromRGB(100, 100, 0);
-		if (daResults[1] > 0) background.color = FlxColor.CYAN;
-		if (daResults[2] > 0) background.color = FlxColor.GREEN;
+		if (songMisses == 0 && daResults[1] > 0) background.color = FlxColor.CYAN;
+		if (songMisses == 0 && daResults[2] > 0) background.color = FlxColor.GREEN;
 		if (songMisses > 0)
 		{
 			if (ratingPercent >= 90) background.color = FlxColor.CYAN;

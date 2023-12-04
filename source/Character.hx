@@ -34,6 +34,7 @@ typedef CharacterFile = {
 	var flip_x:Bool;
 	var no_antialiasing:Bool;
 	var healthbar_colors:Array<Int>;
+	var noteskin:String;
 }
 
 typedef AnimArray = {
@@ -68,6 +69,7 @@ class Character extends FlxSprite
 
 	public var healthIcon:String = 'face';
 	public var animationsArray:Array<AnimArray> = [];
+	public var noteskin:String;
 
 	public var positionArray:Array<Float> = [0, 0];
 	public var cameraPosition:Array<Float> = [0, 0];
@@ -174,6 +176,7 @@ class Character extends FlxSprite
 						frames = AtlasFrameMaker.construct(json.image);
 				}
 				imageFile = json.image;
+				noteskin = json.noteskin;
 
 				if(json.scale != 1) {
 					jsonScale = json.scale;

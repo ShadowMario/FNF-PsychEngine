@@ -175,7 +175,7 @@ class CharacterEditorState extends MusicBeatState
 		UI_box = new FlxUITabMenu(null, tabs, true);
 		UI_box.cameras = [camMenu];
 
-		UI_box.resize(250, 120);
+		UI_box.resize(250, 160);
 		UI_box.x = FlxG.width - 275;
 		UI_box.y = 25;
 		UI_box.scrollFactor.set();
@@ -187,7 +187,7 @@ class CharacterEditorState extends MusicBeatState
 		UI_characterbox = new FlxUITabMenu(null, tabs, true);
 		UI_characterbox.cameras = [camMenu];
 
-		UI_characterbox.resize(350, 250);
+		UI_characterbox.resize(350, 290);
 		UI_characterbox.x = UI_box.x - 100;
 		UI_characterbox.y = UI_box.y + UI_box.height;
 		UI_characterbox.scrollFactor.set();
@@ -502,6 +502,7 @@ class CharacterEditorState extends MusicBeatState
 	}
 
 	var imageInputText:FlxUIInputText;
+	var noteskinText:FlxUIInputText;
 	var healthIconInputText:FlxUIInputText;
 
 	var singDurationStepper:FlxUINumericStepper;
@@ -526,7 +527,7 @@ class CharacterEditorState extends MusicBeatState
 		imageInputText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
 		var reloadImage:FlxButton = new FlxButton(imageInputText.x + 210, imageInputText.y - 3, "Reload Image", function()
 		{
-			if (sys.FileSystem.exists('mods/' + Paths.currentModDirectory + '/images/' + imageInputText.text + '.png') || sys.FileSystem.exists('assets/shared/images/' + imageInputText.text + '.png'))
+			if (sys.FileSystem.exists(Paths.modsImages(imageInputText.text)) || sys.FileSystem.exists('assets/images/' + imageInputText.text))
 			{ 
 				char.imageFile = imageInputText.text;
 				reloadCharacterImage();
@@ -598,6 +599,11 @@ class CharacterEditorState extends MusicBeatState
 		healthColorStepperR = new FlxUINumericStepper(singDurationStepper.x, saveCharacterButton.y, 20, char.healthColorArray[0], 0, 255, 0);
 		healthColorStepperG = new FlxUINumericStepper(singDurationStepper.x + 65, saveCharacterButton.y, 20, char.healthColorArray[1], 0, 255, 0);
 		healthColorStepperB = new FlxUINumericStepper(singDurationStepper.x + 130, saveCharacterButton.y, 20, char.healthColorArray[2], 0, 255, 0);
+
+		tab_group.add(new FlxText(15, saveCharacterButton.y + 20, 0, 'Noteskin:'));
+		noteskinText = new FlxUIInputText(15, saveCharacterButton.y + 48, 200, '', 8);
+		noteskinText.focusGained = () -> FlxG.stage.window.textInputEnabled = true;
+		tab_group.add(noteskinText);
 
 		tab_group.add(new FlxText(15, imageInputText.y - 18, 0, 'Image file name:'));
 		tab_group.add(new FlxText(15, healthIconInputText.y - 18, 0, 'Health icon name:'));
@@ -791,6 +797,9 @@ class CharacterEditorState extends MusicBeatState
 			}
 			else if(sender == imageInputText) {
 				char.imageFile = imageInputText.text;
+			}
+			else if(sender == noteskinText) {
+				char.noteskin = noteskinText.text;
 			}
 		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
 			if (sender == scaleStepper)
@@ -1007,6 +1016,7 @@ class CharacterEditorState extends MusicBeatState
 	function reloadCharacterOptions() {
 		if(UI_characterbox != null) {
 			imageInputText.text = char.imageFile;
+			noteskinText.text = char.noteskin;
 			healthIconInputText.text = char.healthIcon;
 			singDurationStepper.value = char.singDuration;
 			scaleStepper.value = char.jsonScale;
@@ -1125,7 +1135,7 @@ class CharacterEditorState extends MusicBeatState
 			textAnim.text = '';
 		}
 
-		var inputTexts:Array<FlxUIInputText> = [animationInputText, imageInputText, healthIconInputText, animationNameInputText, animationIndicesInputText];
+		var inputTexts:Array<FlxUIInputText> = [animationInputText, imageInputText, healthIconInputText, animationNameInputText, animationIndicesInputText, noteskinText];
 		for (i in 0...inputTexts.length) {
 			if(inputTexts[i].hasFocus) {
 				FlxG.sound.muteKeys = [];
@@ -1312,6 +1322,7 @@ class CharacterEditorState extends MusicBeatState
 			"scale": char.jsonScale,
 			"sing_duration": char.singDuration,
 			"healthicon": char.healthIcon,
+			"noteskin": char.noteskin,
 
 			"position":	char.positionArray,
 			"camera_position": char.cameraPosition,

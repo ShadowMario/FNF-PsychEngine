@@ -20,12 +20,12 @@ class StrumNote extends FlxSprite
 	public var noteShit = new Note(0, 0, null, false, false);
 	public var rgbShaderEnabled:Bool = false;
 	
-	private var player:Int;
+	public var player:Int;
 	
 	public var texture(default, set):String = null;
 	private function set_texture(value:String):String {
 		if(texture != value) {
-			texture = value;
+			texture = (value != null ? value : "NOTE_assets");
 			reloadNote();
 		}
 		return value;
@@ -246,6 +246,36 @@ class StrumNote extends FlxSprite
 	    cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.gf.healthColorArray[0], PlayState.instance.gf.healthColorArray[1], PlayState.instance.gf.healthColorArray[2]);
             cast(this.shader, ColoredNoteShader).enabled.value = [true];
 			rgbShaderEnabled = true;
+	}
+	public function updateNoteSkin(noteskin:String) {
+			if (noteskin != null && noteskin != '') texture = "noteskins/" + noteskin;
+			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
+				texture = 'Nonsense_NOTE_assets';
+			}
+			if(ClientPrefs.noteStyleThing == 'DNB 3D') {
+				texture = 'NOTE_assets_3D';
+			}
+			if(ClientPrefs.noteStyleThing == 'VS AGOTI') {
+				texture = 'AGOTINOTE_assets';
+			}
+			if(ClientPrefs.noteStyleThing == 'Doki Doki+') {
+				texture = 'NOTE_assets_doki';
+			}
+			if(ClientPrefs.noteStyleThing == 'TGT V4') {
+				texture = 'TGTNOTE_assets';
+			}
+			if (ClientPrefs.noteStyleThing != 'VS Nonsense V2' && ClientPrefs.noteStyleThing != 'DNB 3D' && ClientPrefs.noteStyleThing != 'VS AGOTI' && ClientPrefs.noteStyleThing != 'Doki Doki+' && ClientPrefs.noteStyleThing != 'TGT V4' && ClientPrefs.noteStyleThing != 'Default') {
+				texture = 'NOTE_assets_' + ClientPrefs.noteStyleThing.toLowerCase();
+			}
+			if(ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) {
+				texture = ClientPrefs.noteStyleThing == 'TGT V4' ? 'RED_TGTNOTE_assets' : 'RED_NOTE_assets';
+			}
+			if(ClientPrefs.noteColorStyle == 'Char-Based') {
+				texture = 'NOTE_assets_colored';
+			}
+			if(ClientPrefs.noteColorStyle == 'Grayscale') {
+				texture = 'GRAY_NOTE_assets';
+			}
 	}
 	public function updateRGBColors(?updateBF:Bool = false) {
         	if (Std.isOfType(this.shader, ColoredNoteShader))

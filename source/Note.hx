@@ -99,6 +99,9 @@ class Note extends FlxSprite
 	public var ratingMod:Float = 0; //9 = unknown, 0.25 = shit, 0.5 = bad, 0.75 = good, 1 = sick
 	public var ratingDisabled:Bool = false;
 
+	public var loadSprite:Bool = false;
+	public var inEkSong:Bool = false;
+
 	public var texture(default, set):String = null;
 
 	public var noAnimation:Bool = false;
@@ -306,12 +309,15 @@ class Note extends FlxSprite
 		return value;
 	}
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false, ?loadSprite:Bool = true)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?noteskin:String, ?sustainNote:Bool = false, ?inEditor:Bool = false, ?loadSprite:Bool = true)
 	{
 		super();
 
 		if (prevNote == null)
 			prevNote = this;
+
+		this.loadSprite = loadSprite;
+		if (PlayState.instance != null && PlayState.instance.isEkSong) inEkSong = true;
 
 		this.prevNote = prevNote;
 		isSustainNote = sustainNote;
@@ -331,6 +337,7 @@ class Note extends FlxSprite
 			if (ClientPrefs.showNotes && loadSprite)
 			{
 			texture = ''; 
+			if (noteskin != null && noteskin != '') texture = "noteskins/" + noteskin;
 			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
 				texture = 'Nonsense_NOTE_assets';
 			}
@@ -560,6 +567,37 @@ class Note extends FlxSprite
 		}
 	}
 
+	public function updateNoteSkin(noteskin:String) {
+			if (noteskin != null && noteskin != '') texture = "noteskins/" + noteskin;
+			if(ClientPrefs.noteStyleThing == 'VS Nonsense V2') {
+				texture = 'Nonsense_NOTE_assets';
+			}
+			if(ClientPrefs.noteStyleThing == 'DNB 3D') {
+				texture = 'NOTE_assets_3D';
+			}
+			if(ClientPrefs.noteStyleThing == 'VS AGOTI') {
+				texture = 'AGOTINOTE_assets';
+			}
+			if(ClientPrefs.noteStyleThing == 'Doki Doki+') {
+				texture = 'NOTE_assets_doki';
+			}
+			if(ClientPrefs.noteStyleThing == 'TGT V4') {
+				texture = 'TGTNOTE_assets';
+			}
+			if (ClientPrefs.noteStyleThing != 'VS Nonsense V2' && ClientPrefs.noteStyleThing != 'DNB 3D' && ClientPrefs.noteStyleThing != 'VS AGOTI' && ClientPrefs.noteStyleThing != 'Doki Doki+' && ClientPrefs.noteStyleThing != 'TGT V4' && ClientPrefs.noteStyleThing != 'Default') {
+				texture = 'NOTE_assets_' + ClientPrefs.noteStyleThing.toLowerCase();
+			}
+			if(ClientPrefs.noteColorStyle == 'Quant-Based' || ClientPrefs.rainbowNotes) {
+				texture = ClientPrefs.noteStyleThing == 'TGT V4' ? 'RED_TGTNOTE_assets' : 'RED_NOTE_assets';
+			}
+			if(ClientPrefs.noteColorStyle == 'Char-Based') {
+				texture = 'NOTE_assets_colored';
+			}
+			if(ClientPrefs.noteColorStyle == 'Grayscale') {
+				texture = 'GRAY_NOTE_assets';
+			}
+	}
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -677,7 +715,7 @@ class Note extends FlxSprite
 	    			!PlayState.opponentChart ? cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]) : cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
 	    		else if (!gfNote) 
 				!PlayState.opponentChart ? cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]) : cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
-	    		else if (gfNote) cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.gf.healthColorArray[0], PlayState.instance.gf.healthColorArray[1], PlayState.instance.gf.healthColorArray[2]);
+	    		else if (gfNote && PlayState.instance.gf != null) cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.gf.healthColorArray[0], PlayState.instance.gf.healthColorArray[1], PlayState.instance.gf.healthColorArray[2]);
 		}
 	}
 }

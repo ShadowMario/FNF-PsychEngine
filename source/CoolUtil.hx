@@ -32,6 +32,8 @@ class CoolUtil
 	];
 	public static var defaultDifficulty:String = 'Normal'; //The chart that has no suffix and starting difficulty on Freeplay/Story Mode
 
+	public static var defaultDifficultyThings:Array<String> = ['Normal', 'normal'];
+
 	public static var difficulties:Array<String> = [];
 
 	public static var defaultSongs:Array<String> = ['tutorial', 'bopeebo', 'fresh', 'dad battle', 'spookeez', 'south', 'monster', 'pico', 'philly nice', 'blammed', 'satin panties', 'high', 'milf', 'cocoa', 'eggnog', 'winter horrorland', 'senpai', 'roses', 'thorns', 'ugh', 'guns', 'stress'];
@@ -149,7 +151,7 @@ public static function updateTheEngine():Void {
 		if(num == null) num = PlayState.storyDifficulty;
 
 		var fileSuffix:String = difficulties[num];
-		if(fileSuffix != defaultDifficulty)
+		if(fileSuffix != defaultDifficulty || !defaultDifficultyThings.contains(fileSuffix)) //this is meant to fix a bug where putting the difficulty in all lowercase would treat normal as a custom difficulty
 		{
 			fileSuffix = '-' + fileSuffix;
 		}
@@ -264,7 +266,7 @@ public static function updateTheEngine():Void {
 		FlxG.state.add(text);
 
 		FlxTween.tween(text, {alpha: 0, y: 8}, 5, {
-			onComplete: function(_) {
+			onComplete:function(_) {
 				FlxG.state.remove(text);
 				text.destroy();
 			}

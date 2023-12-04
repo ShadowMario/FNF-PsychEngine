@@ -186,6 +186,8 @@ class PlayState extends MusicBeatState
 	public var dad:Character = null;
 	public var gf:Character = null;
 	public var boyfriend:Boyfriend = null;
+	public var bfNoteskin:String = null;
+	public var dadNoteskin:String = null;
 	public static var death:FlxSprite;
 	public static var deathanim:Bool = false;
 	public static var dead:Bool = false;
@@ -1325,11 +1327,13 @@ class PlayState extends MusicBeatState
 		startCharacterPos(dad, true);
 		dadGroup.add(dad);
 		startCharacterLua(dad.curCharacter);
+		dadNoteskin = dad.noteskin;
 
 		boyfriend = new Boyfriend(0, 0, SONG.player1);
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
 		startCharacterLua(boyfriend.curCharacter);
+		bfNoteskin = boyfriend.noteskin;
 		}
 		if (ClientPrefs.charsAndBG && ClientPrefs.doubleGhost)
 		{
@@ -4174,7 +4178,7 @@ class PlayState extends MusicBeatState
 
 				var oldNote:Note = unspawnNotes.length > 0 ? unspawnNotes[Std.int(unspawnNotes.length - 1)] : null;
 
-				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, false, false, !isEkSong);
+				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote, (gottaHitNote ? boyfriend.noteskin : dad.noteskin), false, false, !isEkSong);
 				if (ClientPrefs.doubleGhost)
 					{
 					swagNote.row = Conductor.secsToRow(daStrumTime);
@@ -4197,7 +4201,7 @@ class PlayState extends MusicBeatState
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote), daNoteData, oldNote, true, false, !isEkSong);
+						var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote), daNoteData, oldNote, (gottaHitNote ? boyfriend.noteskin : dad.noteskin), true, false, !isEkSong);
 						sustainNote.mustPress = gottaHitNote;
 						sustainNote.gfNote = (section.gfSection && (songNotes[1]<4));
 						sustainNote.noteType = swagNote.noteType;
@@ -4228,7 +4232,7 @@ class PlayState extends MusicBeatState
 				{
 					for (i in 0...Std.int(jackingtime))
 					{
-						jackNote = new Note(swagNote.strumTime + (15000/SONG.bpm) * (i + 1), swagNote.noteData, oldNote, false, false, !isEkSong);
+						jackNote = new Note(swagNote.strumTime + (15000/SONG.bpm) * (i + 1), swagNote.noteData, oldNote, (gottaHitNote ? boyfriend.noteskin : dad.noteskin), false, false, !isEkSong);
 						jackNote.scrollFactor.set();
 
 				jackNote.sustainLength = swagNote.sustainLength;
@@ -4427,8 +4431,11 @@ class PlayState extends MusicBeatState
 				else if(ClientPrefs.middleScroll) targetAlpha = ClientPrefs.oppNoteAlpha;
 			}
 
+			var noteSkinExists:Bool = FileSystem.exists('assets/images/' + "noteskins/" + (player == 0 ? dad.noteskin : boyfriend.noteskin));
+
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll || ClientPrefs.mobileMidScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
 			babyArrow.downScroll = ClientPrefs.downScroll;
+			if (noteSkinExists) babyArrow.texture = "noteskins/" + (player == 0 ? dad.noteskin : boyfriend.noteskin);
 			if (!isStoryMode && !skipArrowStartTween)
 			{
 				//babyArrow.y -= 10;
@@ -6201,6 +6208,25 @@ if (ClientPrefs.showNPS) {
 						}
 				}
 				if (!ClientPrefs.ogHPColor) reloadHealthBarColors();
+				final noteSkinExists:Bool = FileSystem.exists('assets/images/' + "noteskins/" + (!unspawnNotes[0].mustPress ? dad.noteskin : boyfriend.noteskin));
+				if (ClientPrefs.showNotes && noteSkinExists)
+				{
+					for (i in 0...unspawnNotes.length)
+					{
+						if (unspawnNotes[i].loadSprite) unspawnNotes[i].updateNoteSkin(unspawnNotes[i].mustPress ? boyfriend.noteskin : dad.noteskin);
+					}
+				
+					for (n in notes.members)
+					{
+						if (n.loadSprite) n.updateNoteSkin(n.mustPress ? boyfriend.noteskin : dad.noteskin);
+					}
+					for (s in sustainNotes.members)
+					{
+						if (s.loadSprite) s.updateNoteSkin(s.mustPress ? boyfriend.noteskin : dad.noteskin);
+					}
+					for (i in strumLineNotes.members)
+						i.updateNoteSkin(i.player == 0 ? dad.noteskin : boyfriend.noteskin);
+				}
 				if (ClientPrefs.noteColorStyle == 'Char-Based')
 				{
 				for (note in notes){
@@ -6712,34 +6738,25 @@ if (ClientPrefs.showNPS) {
 				return;
 			}
 		}
-		if (!endedTheSong)	
+
+		if (!endedTheSong && ClientPrefs.resultsScreen)	
 		{
-		Conductor.songPosition = 0; //so that it doesnt skip the results screen
-		if (!ClientPrefs.resultsScreen) {
-		#if android
-		androidControls.visible = false;
-		#end
-		endedTheSong = true;
-		timeBarBG.visible = false;
-		timeBar.visible = false;
-		timeTxt.visible = false;
-		canPause = false;
-		endingSong = true;
-		camZooming = false;
-		inCutscene = false;
-		updateTime = false;
-		}
-		if (ClientPrefs.resultsScreen && !isStoryMode) {
-		new FlxTimer().start(0.02, function(tmr:FlxTimer) {
+			Conductor.songPosition = 0; //so that it doesnt skip the results screen
+			if (!isStoryMode || isStoryMode && storyPlaylist.length <= 0)
+			{
+				new FlxTimer().start(0.02, function(tmr:FlxTimer) {
+					endedTheSong = true;
+				});
+				persistentUpdate = false;
+				persistentDraw = true;
+				paused = true;
+				openSubState(new ResultsScreenSubState([marvs, sicks, goods, bads, shits], Std.int(songScore), songMisses, Highscore.floorDecimal(ratingPercent * 100, 2),
+								ratingName + (' [' + ratingFC + '] ')));
+			} else {
 			endedTheSong = true;
-		});
-		persistentUpdate = false;
-		persistentDraw = true;
-		paused = true;
-		openSubState(new ResultsScreenSubState([marvs, sicks, goods, bads, shits], Std.int(songScore), songMisses, Highscore.floorDecimal(ratingPercent * 100, 2),
-						ratingName + (' [' + ratingFC + '] ')));
+			}
 		}
-		}
+		if (!ClientPrefs.resultsScreen) endedTheSong = true;
 		if (endedTheSong || !ClientPrefs.resultsScreen)
 		{
 		#if android
@@ -6800,28 +6817,28 @@ if (ClientPrefs.showNPS) {
 
 				if (storyPlaylist.length <= 0)
 				{
-					WeekData.loadTheFirstEnabledMod();
-					FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
+						WeekData.loadTheFirstEnabledMod();
+						FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 
-					cancelMusicFadeTween();
-					if(FlxTransitionableState.skipNextTransIn) {
-						CustomFadeTransition.nextCamera = null;
-					}
-					MusicBeatState.switchState(new StoryMenuState()); //removed results screen from story mode because for some reason it opens the screen after the first song even if the story playlist's length is greater than 0??
-
-					// if ()
-					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
-						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
-
-						if (SONG.validScore)
-						{
-							Highscore.saveWeekScore(WeekData.getWeekFileName(), Std.int(campaignScore), storyDifficulty);
+						cancelMusicFadeTween();
+						if(FlxTransitionableState.skipNextTransIn) {
+							CustomFadeTransition.nextCamera = null;
 						}
+						MusicBeatState.switchState(new StoryMenuState()); //removed results screen from story mode because for some reason it opens the screen after the first song even if the story playlist's length is greater than 0??
 
-						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
-						FlxG.save.flush();
-					}
-					changedDifficulty = false;
+						// if ()
+						if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
+							StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
+
+							if (SONG.validScore)
+							{
+								Highscore.saveWeekScore(WeekData.getWeekFileName(), Std.int(campaignScore), storyDifficulty);
+							}
+
+							FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
+							FlxG.save.flush();
+						}
+						changedDifficulty = false;
 				}
 				else
 				{
