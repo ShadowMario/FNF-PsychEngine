@@ -157,7 +157,7 @@ class CharacterEditorState extends MusicBeatState
 
 		for (i in 0...tipTextArray.length-1)
 		{
-			var tipText:FlxText = new FlxText(FlxG.width - 320, FlxG.height - 15 - 16 * (tipTextArray.length - i), 300, tipTextArray[i], 12);
+			var tipText:FlxText = new FlxText(FlxG.width - 320, FlxG.height - 10 - 14 * (tipTextArray.length - i), 300, tipTextArray[i], 12);
 			tipText.cameras = [camHUD];
 			tipText.setFormat(null, 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
 			tipText.scrollFactor.set();
