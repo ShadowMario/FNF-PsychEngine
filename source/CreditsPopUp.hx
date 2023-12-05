@@ -8,6 +8,8 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
+import flixel.util.FlxColor;
+import flixel.util.FlxStringUtil;
 
 typedef SongHeading = {
 	var path:String;
@@ -37,7 +39,7 @@ class CreditsPopUp extends FlxSpriteGroup
 			bg.antialiasing = headingPath.antiAliasing;
 			curHeading = headingPath;
 		}
-		createHeadingText(title + "\nComposed by" + ' ' + songCreator);
+		createHeadingText(title + "\nComposed by" + ' ' + songCreator + (!ClientPrefs.ratingCounter ? '\nNote Count: ${FlxStringUtil.formatMoney(PlayState.instance.totalNotes, false)} / ${FlxStringUtil.formatMoney(PlayState.instance.opponentNoteTotal, false)}' : ''));
 		if (PlayState.instance != null) bg.color = FlxColor.fromRGB(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
 
 		rescaleBG();

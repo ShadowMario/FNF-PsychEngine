@@ -266,7 +266,7 @@ public static function updateTheEngine():Void {
 		FlxG.state.add(text);
 
 		FlxTween.tween(text, {alpha: 0, y: 8}, 5, {
-			onComplete:function(_) {
+			onComplete: function(_) {
 				FlxG.state.remove(text);
 				text.destroy();
 			}
