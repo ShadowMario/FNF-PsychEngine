@@ -6,7 +6,6 @@
 haxelib install lime
 haxelib install openfl
 haxelib install flixel
-haxelib install tjson
 haxelib install flixel-addons
 haxelib install flixel-tools
 haxelib install SScript

@@ -1,6 +1,6 @@
 package cutscenes;
 
-import tjson.TJSON as Json;
+import haxe.Json;
 import lime.utils.Assets;
 
 typedef DialogueAnimArray = {

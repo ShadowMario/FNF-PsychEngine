@@ -1,6 +1,9 @@
 package objects;
 
+import backend.animation.PsychAnimationController;
+
 import shaders.RGBPalette;
+
 import flixel.system.FlxAssets.FlxShader;
 import flixel.graphics.frames.FlxFrame;
 
@@ -23,6 +26,8 @@ class NoteSplash extends FlxSprite
 
 	public function new(x:Float = 0, y:Float = 0) {
 		super(x, y);
+
+		animation = new PsychAnimationController(this);
 
 		var skin:String = null;
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
