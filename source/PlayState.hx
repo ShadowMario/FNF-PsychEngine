@@ -3882,7 +3882,8 @@ class PlayState extends MusicBeatState
 		formattedSongMisses = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses;
 		formattedCombo = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo;
 		formattedNPS = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS;
-		npsString = ClientPrefs.showNPS ? (ClientPrefs.hudType != 'Leather Engine' ? ' | ' : ' ~ ') + (cpuControlled ? 'Bot ' : '') + 'NPS: ' + formattedNPS : '';
+		final formattedMaxNPS = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxNPS, false) : formatCompactNumber(maxNPS);
+		npsString = ClientPrefs.showNPS ? (ClientPrefs.hudType != 'Leather Engine' ? ' | ' : ' ~ ') + (cpuControlled && !ClientPrefs.communityGameBot ? 'Bot ' : '') + 'NPS/Max: ' + formattedNPS + '/' + formattedMaxNPS : '';
 		accuracy = Highscore.floorDecimal(ratingPercent * 100, 2) + '%';
 		fcString = ratingFC;
 
@@ -6208,7 +6209,8 @@ if (ClientPrefs.showNPS) {
 						}
 				}
 				if (!ClientPrefs.ogHPColor) reloadHealthBarColors();
-				final noteSkinExists:Bool = FileSystem.exists('assets/images/' + "noteskins/" + (!unspawnNotes[0].mustPress ? dad.noteskin : boyfriend.noteskin));
+				var noteSkinExists:Bool = false;
+				if (unspawnNotes[0] != null) noteSkinExists = FileSystem.exists('assets/images/' + "noteskins/" + (!unspawnNotes[0].mustPress ? dad.noteskin : boyfriend.noteskin));
 				if (ClientPrefs.showNotes && noteSkinExists)
 				{
 					for (i in 0...unspawnNotes.length)
