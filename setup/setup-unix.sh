@@ -11,5 +11,6 @@ haxelib install flixel-addons
 haxelib install flixel-tools
 haxelib install SScript
 haxelib install hxCodec
+haxelib git flxanimate https://github.com/ShadowMario/flxanimate dev
 haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
 haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc

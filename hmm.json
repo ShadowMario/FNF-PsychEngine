@@ -63,6 +63,13 @@
       "url": "https://github.com/Aidan63/linc_discord-rpc"
     },
     {
+      "name": "flxanimate",
+      "type": "git",
+      "dir": null,
+      "ref": "dev",
+      "url": "https://github.com/ShadowMario/flxanimate"
+    },
+    {
       "name": "linc_luajit",
       "type": "git",
       "dir": null,
