@@ -830,7 +830,7 @@ class ModItem extends FlxSpriteGroup
 			try
 			{
 				//trace('trying to load settings: $folder');
-				settings = Json.parse(data);
+				settings = tjson.TJSON.parse(data);
 			}
 			catch(e:Dynamic)
 			{
