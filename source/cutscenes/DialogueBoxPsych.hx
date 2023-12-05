@@ -1,6 +1,6 @@
 package cutscenes;
 
-import tjson.TJSON as Json;
+import haxe.Json;
 import openfl.utils.Assets;
 
 import objects.TypedAlphabet;

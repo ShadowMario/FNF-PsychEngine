@@ -2,7 +2,7 @@ package backend;
 
 import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
-import tjson.TJSON as Json;
+import haxe.Json;
 
 typedef WeekFile =
 {
