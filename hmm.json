@@ -51,11 +51,16 @@
       "version": null
     },
     {
-      "name": "discord_rpc",
+      "name": "tjson",
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "hxdiscord_rpc",
       "type": "git",
       "dir": null,
-      "ref": "master",
-      "url": "https://github.com/Aidan63/linc_discord-rpc"
+      "ref": "main",
+      "url": "https://github.com/MAJigsaw77/hxdiscord_rpc"
     },
     {
       "name": "flxanimate",
