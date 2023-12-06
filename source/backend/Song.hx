@@ -1,6 +1,6 @@
 package backend;
 
-import tjson.TJSON as Json;
+import haxe.Json;
 import lime.utils.Assets;
 
 import backend.Section;

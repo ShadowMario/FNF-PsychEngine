@@ -17,7 +17,7 @@ import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
 import lime.system.Clipboard;
-import tjson.TJSON as Json;
+import haxe.Json;
 
 import objects.HealthIcon;
 import objects.MenuCharacter;

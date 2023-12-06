@@ -18,7 +18,7 @@ import openfl.geom.Rectangle;
 import lime.utils.Assets;
 import flash.media.Sound;
 
-import tjson.TJSON as Json;
+import haxe.Json;
 
 
 #if MODS_ALLOWED
