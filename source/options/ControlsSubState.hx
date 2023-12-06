@@ -68,7 +68,7 @@ class ControlsSubState extends MusicBeatSubstate
 		options.push([true]);
 		options.push([true, defaultKey]);
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite(Paths.image('menuDesat'));
 		bg.color = keyboardColor;
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.screenCenter();
@@ -461,10 +461,7 @@ class ControlsSubState extends MusicBeatSubstate
 		if(move != 0)
 		{
 			//var dir:Int = Math.round(move / Math.abs(move));
-			curSelected += move;
-
-			if(curSelected < 0) curSelected = curOptions.length - 1;
-			else if (curSelected >= curOptions.length) curSelected = 0;
+			curSelected = FlxMath.wrap(curSelected + move, 0, curOptions.length - 1);
 		}
 
 		var num:Int = curOptionsValid[curSelected];

@@ -772,7 +772,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic) {
 			var value1:String = arg1;
 			var value2:String = arg2;
-			game.triggerEvent(name, value1, value2, Conductor.songPosition);
+			game.triggerEvent(name, value1, value2);
 			//trace('Triggered event: ' + name + ', ' + value1 + ', ' + value2);
 			return true;
 		});
@@ -959,11 +959,11 @@ class FunkinLua {
 
 			return 0;
 		});
-		Lua_helper.add_callback(lua, "characterDance", function(character:String) {
+		Lua_helper.add_callback(lua, "characterDance", function(character:String, force:Bool = false) {
 			switch(character.toLowerCase()) {
-				case 'dad': game.dad.dance();
-				case 'gf' | 'girlfriend': if(game.gf != null) game.gf.dance();
-				default: game.boyfriend.dance();
+				case 'dad': game.dad.dance(force);
+				case 'gf' | 'girlfriend': if(game.gf != null) game.gf.dance(force);
+				default: game.boyfriend.dance(force);
 			}
 		});
 

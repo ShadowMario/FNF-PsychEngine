@@ -568,12 +568,10 @@ class DialogueCharacterEditorState extends MusicBeatState
 			}
 
 			if (FlxG.keys.pressed.Q && camGame.zoom > 0.1) {
-				camGame.zoom -= elapsed * camGame.zoom;
-				if(camGame.zoom < 0.1) camGame.zoom = 0.1;
+				camGame.zoom = Math.max(camGame.zoom - elapsed * camGame.zoom, 0.1);
 			}
 			if (FlxG.keys.pressed.E && camGame.zoom < 1) {
-				camGame.zoom += elapsed * camGame.zoom;
-				if(camGame.zoom > 1) camGame.zoom = 1;
+				camGame.zoom = Math.min(camGame.zoom + elapsed * camGame.zoom, 1);
 			}
 			if(FlxG.keys.justPressed.H) {
 				if(UI_mainbox.selected_tab_id == 'Animations') {

@@ -44,7 +44,7 @@ class AchievementsMenuState extends MusicBeatState
 		FlxG.camera.follow(camFollow, null, 0);
 		FlxG.camera.scroll.y = -FlxG.height;
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var menuBG:FlxSprite = new FlxSprite(Paths.image('menuBGBlue'));
 		menuBG.antialiasing = ClientPrefs.data.antialiasing;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
@@ -85,19 +85,17 @@ class AchievementsMenuState extends MusicBeatState
 		}
 		#if MODS_ALLOWED Mods.loadTopMod(); #end
 
-		var box:FlxSprite = new FlxSprite(0, -30).makeGraphic(1, 1, FlxColor.BLACK);
+		var box:FlxSprite = new FlxSprite(0, -30).makeGraphic(1, 1, 0x99000000);
 		box.scale.set(grpOptions.width + 60, grpOptions.height + 60);
 		box.updateHitbox();
-		box.alpha = 0.6;
 		box.scrollFactor.x = 0;
 		box.screenCenter(X);
 		add(box);
 		add(grpOptions);
 
-		var box:FlxSprite = new FlxSprite(0, 570).makeGraphic(1, 1, FlxColor.BLACK);
+		var box:FlxSprite = new FlxSprite(0, 570).makeGraphic(1, 1, 0x99000000);
 		box.scale.set(FlxG.width, FlxG.height - box.y);
 		box.updateHitbox();
-		box.alpha = 0.6;
 		box.scrollFactor.set();
 		add(box);
 		
@@ -205,7 +203,7 @@ class AchievementsMenuState extends MusicBeatState
 			}
 		}
 
-		FlxG.camera.followLerp = FlxMath.bound(elapsed * 9 / (FlxG.updateFramerate / 60), 0, 1);
+		FlxG.camera.followLerp = elapsed * 9 * (FlxG.updateFramerate / 60);
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
@@ -248,8 +246,7 @@ class AchievementsMenuState extends MusicBeatState
 		else camFollow.setPosition(0, grpOptions.members[curSelected].getGraphicMidpoint().y - 100);
 
 		grpOptions.forEach(function(spr:FlxSprite) {
-			spr.alpha = 0.6;
-			if(spr.ID == curSelected) spr.alpha = 1;
+			spr.alpha = (spr.ID == curSelected ? 1 : 0.6);
 		});
 	}
 }

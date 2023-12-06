@@ -929,18 +929,20 @@ class CharacterEditorState extends MusicBeatState
 	}
 
 	function updatePointerPos() {
-		var x:Float = char.getMidpoint().x;
-		var y:Float = char.getMidpoint().y;
-		if(!char.isPlayer) {
-			x += 150 + char.cameraPosition[0];
-		} else {
+		final mid:flixel.math.FlxPoint = char.getMidpoint();
+		var x:Float = mid.x;
+		var y:Float = mid.y;
+		if(char.isPlayer)
 			x -= 100 + char.cameraPosition[0];
-		}
+		else
+			x += 150 + char.cameraPosition[0];
+
 		y -= 100 - char.cameraPosition[1];
 
 		x -= cameraFollowPointer.width / 2;
 		y -= cameraFollowPointer.height / 2;
 		cameraFollowPointer.setPosition(x, y);
+		mid.put();
 	}
 
 	function findAnimationByName(name:String):AnimArray {

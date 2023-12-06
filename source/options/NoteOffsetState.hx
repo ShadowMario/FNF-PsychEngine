@@ -80,7 +80,7 @@ class NoteOffsetState extends MusicBeatState
 		rating = new FlxSprite().loadGraphic(Paths.image('sick'));
 		rating.cameras = [camHUD];
 		rating.antialiasing = ClientPrefs.data.antialiasing;
-		rating.setGraphicSize(Std.int(rating.width * 0.7));
+		rating.setGraphicSize(rating.width * 0.7);
 		rating.updateHitbox();
 		
 		add(rating);
@@ -89,22 +89,16 @@ class NoteOffsetState extends MusicBeatState
 		comboNums.cameras = [camHUD];
 		add(comboNums);
 
-		var seperatedScore:Array<Int> = [];
-		for (i in 0...3)
-		{
-			seperatedScore.push(FlxG.random.int(0, 9));
-		}
-
+		final seperatedScore:Array<Int> = [for (i in 0...3) FlxG.random.int(0, 9)];
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite(43 * daLoop).loadGraphic(Paths.image('num' + i));
+			var numScore:FlxSprite = new FlxSprite(43 * daLoop++).loadGraphic(Paths.image('num' + i));
 			numScore.cameras = [camHUD];
 			numScore.antialiasing = ClientPrefs.data.antialiasing;
-			numScore.setGraphicSize(Std.int(numScore.width * 0.5));
+			numScore.setGraphicSize(numScore.width * 0.5);
 			numScore.updateHitbox();
 			comboNums.add(numScore);
-			daLoop++;
 		}
 
 		dumbTexts = new FlxTypedGroup<FlxText>();

@@ -290,8 +290,9 @@ class PauseSubState extends MusicBeatSubstate
 					if(ClientPrefs.data.pauseMusic != 'None')
 					{
 						FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)), pauseMusic.volume);
-						FlxTween.tween(FlxG.sound.music, {volume: 1}, 0.8);
+						FlxG.sound.music.fadeIn(0.8, pauseMusic.volume, 1);
 						FlxG.sound.music.time = pauseMusic.time;
+						pauseMusic.stop();
 					}
 					OptionsState.onPlayState = true;
 				case "Exit to menu":
@@ -349,21 +350,16 @@ class PauseSubState extends MusicBeatSubstate
 
 	function changeSelection(change:Int = 0):Void
 	{
-		curSelected += change;
+		curSelected = FlxMath.wrap(curSelected + change, 0, menuItems.length - 1);
 
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-
-		if (curSelected < 0)
-			curSelected = menuItems.length - 1;
-		if (curSelected >= menuItems.length)
-			curSelected = 0;
 
 		var bullShit:Int = 0;
 
 		for (item in grpMenuShit.members)
 		{
-			item.targetY = bullShit - curSelected;
-			bullShit++;
+			// https://haxe.org/manual/expression-operators-unops.html 😱😱
+			item.targetY = bullShit++ - curSelected;
 
 			item.alpha = 0.6;
 			// item.setGraphicSize(Std.int(item.width * 0.8));

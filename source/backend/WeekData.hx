@@ -4,10 +4,12 @@ import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import haxe.Json;
 
+import haxe.extern.EitherType;
+
 typedef WeekFile =
 {
 	// JSON variables
-	var songs:Array<Dynamic>;
+	var songs:Array<Array<EitherType<String, Array<Int>>>>; // thx detective_baldi
 	var weekCharacters:Array<String>;
 	var weekBackground:String;
 	var weekBefore:String;
@@ -27,7 +29,7 @@ class WeekData {
 	public var folder:String = '';
 	
 	// JSON variables
-	public var songs:Array<Dynamic>;
+	public var songs:Array<Array<EitherType<String, Array<Int>>>>; // thx detective_baldi
 	public var weekCharacters:Array<String>;
 	public var weekBackground:String;
 	public var weekBefore:String;
@@ -42,23 +44,27 @@ class WeekData {
 
 	public var fileName:String;
 
-	public static function createWeekFile():WeekFile {
-		var weekFile:WeekFile = {
-			songs: [["Bopeebo", "dad", [146, 113, 253]], ["Fresh", "dad", [146, 113, 253]], ["Dad Battle", "dad", [146, 113, 253]]],
-			weekCharacters: ['dad', 'bf', 'gf'],
-			weekBackground: 'stage',
-			weekBefore: 'tutorial',
-			storyName: 'Your New Week',
-			weekName: 'Custom Week',
-			freeplayColor: [146, 113, 253],
-			startUnlocked: true,
-			hiddenUntilUnlocked: false,
-			hideStoryMode: false,
-			hideFreeplay: false,
-			difficulties: ''
-		};
-		return weekFile;
-	}
+	public static final DEFAULT_WEEK:WeekFile = {
+		songs: [
+			["Bopeebo",    "dad", [146, 113, 253]],
+			["Fresh",      "dad", [146, 113, 253]],
+			["Dad Battle", "dad", [146, 113, 253]]
+		],
+		weekCharacters: ['dad', 'bf', 'gf'],
+		weekBackground: 'stage',
+		weekBefore: 'tutorial',
+		storyName: 'Your New Week',
+		weekName: 'Custom Week',
+		freeplayColor: [146, 113, 253],
+		startUnlocked: true,
+		hiddenUntilUnlocked: false,
+		hideStoryMode: false,
+		hideFreeplay: false,
+		difficulties: ''
+	};
+
+	public static function createWeekFile():WeekFile
+		return DEFAULT_WEEK;
 
 	// HELP: Is there any way to convert a WeekFile to WeekData without having to put all variables there manually? I'm kind of a noob in haxe lmao
 	public function new(weekFile:WeekFile, fileName:String) {

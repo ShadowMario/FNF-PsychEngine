@@ -161,15 +161,15 @@ class TitleState extends MusicBeatState
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new FlashingState());
 		} else {
-			if (initialized)
+			//if (initialized)
 				startIntro();
-			else
+			/*else
 			{
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
 					startIntro();
 				});
-			}
+			}*/
 		}
 		#end
 	}
@@ -192,18 +192,14 @@ class TitleState extends MusicBeatState
 		Conductor.bpm = titleJSON.bpm;
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite();
-		bg.antialiasing = ClientPrefs.data.antialiasing;
-
-		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none"){
-			bg.loadGraphic(Paths.image(titleJSON.backgroundSprite));
-		}else{
-			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none")
+		{
+			final bg:FlxSprite = new FlxSprite(Paths.image(titleJSON.backgroundSprite));
+			bg.antialiasing = ClientPrefs.data.antialiasing;
+			// bg.setGraphicSize(Std.int(bg.width * 0.6));
+			// bg.updateHitbox();
+			add(bg);
 		}
-
-		// bg.setGraphicSize(Std.int(bg.width * 0.6));
-		// bg.updateHitbox();
-		add(bg);
 
 		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
