@@ -337,6 +337,7 @@ class TitleState extends MusicBeatState {
 		gf.alpha = 1;
 		logo.alpha = 1;
 		titleText.visible = true;
+		ngSpr.visible = false;
 
 		deleteText();
 	}
