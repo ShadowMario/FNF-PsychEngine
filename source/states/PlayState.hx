@@ -448,7 +448,7 @@ class PlayState extends MusicBeatState
 			if(SONG.gfVersion == null || SONG.gfVersion.length < 1) SONG.gfVersion = 'gf'; //Fix for the Chart Editor
 			gf = new Character(0, 0, SONG.gfVersion);
 			startCharacterPos(gf);
-			gf.scrollFactor.set(0.95, 0.95);
+			// gf.scrollFactor.set(0.95, 0.95);
 			gfGroup.add(gf);
 			startCharacterScripts(gf.curCharacter);
 		}
@@ -755,7 +755,7 @@ class PlayState extends MusicBeatState
 			case 2:
 				if(gf != null && !gfMap.exists(newCharacter)) {
 					var newGf:Character = new Character(0, 0, newCharacter);
-					newGf.scrollFactor.set(0.95, 0.95);
+					// newGf.scrollFactor.set(0.95, 0.95);
 					gfMap.set(newCharacter, newGf);
 					gfGroup.add(newGf);
 					startCharacterPos(newGf);
@@ -842,7 +842,7 @@ class PlayState extends MusicBeatState
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
 		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION
 			char.setPosition(GF_X, GF_Y);
-			char.scrollFactor.set(0.95, 0.95);
+			// char.scrollFactor.set(0.95, 0.95);
 			char.danceEveryNumBeats = 2;
 		}
 		char.x += char.positionArray[0];
@@ -946,14 +946,12 @@ class PlayState extends MusicBeatState
 
 	function cacheCountdown()
 	{
-		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-		var introImagesArray:Array<String> = switch(stageUI) {
-			case "pixel": ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
-			case "normal": ["ready", "set" ,"go"];
-			default: ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
-		}
-		introAssets.set(stageUI, introImagesArray);
-		var introAlts:Array<String> = introAssets.get(stageUI);
+		final introAlts:Array<String> = switch(stageUI)
+			{
+				case "pixel":  ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
+				case "normal": ["ready", "set" ,"go"];
+				default:       ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
+			};
 		for (asset in introAlts) Paths.image(asset);
 		
 		Paths.sound('intro3' + introSoundsSuffix);
@@ -1005,21 +1003,18 @@ class PlayState extends MusicBeatState
 			}
 			moveCameraSection();
 
+			final introAlts:Array<String> = switch(stageUI)
+				{
+					case "pixel":  ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
+					case "normal": ["ready", "set" ,"go"];
+					default:       ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
+				};
+			final antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage);
+			var tick:Countdown = THREE;
+
 			startTimer = new FlxTimer().start(Conductor.crochet / 1000 / playbackRate, function(tmr:FlxTimer)
 			{
 				characterBopper(tmr.loopsLeft);
-
-				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				var introImagesArray:Array<String> = switch(stageUI) {
-					case "pixel": ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
-					case "normal": ["ready", "set" ,"go"];
-					default: ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
-				}
-				introAssets.set(stageUI, introImagesArray);
-
-				var introAlts:Array<String> = introAssets.get(stageUI);
-				var antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage);
-				var tick:Countdown = THREE;
 
 				switch (swagCounter)
 				{
@@ -1056,7 +1051,7 @@ class PlayState extends MusicBeatState
 				callOnLuas('onCountdownTick', [swagCounter]);
 				callOnHScript('onCountdownTick', [tick, swagCounter]);
 
-				swagCounter += 1;
+				swagCounter++;
 			}, 5);
 		}
 		return true;
@@ -1064,13 +1059,15 @@ class PlayState extends MusicBeatState
 
 	inline private function createCountdownSprite(image:String, antialias:Bool):FlxSprite
 	{
-		var spr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(image));
+		final spr:FlxSprite = new FlxSprite(Paths.image(image));
 		spr.cameras = [camHUD];
 		spr.scrollFactor.set();
-		spr.updateHitbox();
 
 		if (PlayState.isPixelStage)
-			spr.setGraphicSize(Std.int(spr.width * daPixelZoom));
+		{
+			spr.setGraphicSize(spr.width * daPixelZoom);
+			spr.updateHitbox();
+		}
 
 		spr.screenCenter();
 		spr.antialiasing = antialias;
@@ -2423,14 +2420,12 @@ class PlayState extends MusicBeatState
 
 	private function popUpScore(?note:Note):Void
 	{
-		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.data.ratingOffset);
-		vocals.volume = 1;
-
+		final noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.data.ratingOffset);
 		final placement:Float = FlxG.width * 0.35;
 		var score:Int = 350;
 
 		//tryna do MS based judgment due to popular demand
-		var daRating:Rating = Conductor.judgeNote(ratingsData, noteDiff / playbackRate);
+		final daRating:Rating = Conductor.judgeNote(ratingsData, noteDiff / playbackRate);
 
 		totalNotesHit += daRating.ratingMod;
 		note.ratingMod = daRating.ratingMod;
@@ -2451,7 +2446,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (ClientPrefs.data.hideHud)
+		if (ClientPrefs.data.hideHud || (!showRating && !showCombo && !showComboNum))
 			return; // fuck it, skip shit
 
 		if (!ClientPrefs.data.comboStacking)
@@ -2472,88 +2467,108 @@ class PlayState extends MusicBeatState
 			antialias = !isPixelStage;
 		}
 
-		final rating:FlxSprite = comboGroup.remove(comboGroup.recycle(FlxSprite), true).loadGraphic(Paths.image(uiPrefix + daRating.image + uiSuffix));
-		rating.screenCenter(Y);
-		rating.x = placement - 40 + ClientPrefs.data.comboOffset[0];
-		rating.y -= 60 + ClientPrefs.data.comboOffset[1];
-
-		rating.velocity.set(-FlxG.random.int(0, 10) * playbackRate, -FlxG.random.int(140, 175) * playbackRate);
-		rating.acceleration.y = 550 * playbackRate * playbackRate;
-		rating.antialiasing = antialias;
-
-		rating.setGraphicSize(rating.width * mult);
-		rating.updateHitbox();
-		if (showRating) comboGroup.add(rating);
-
-		final comboSpr:FlxSprite = comboGroup.remove(comboGroup.recycle(FlxSprite), true).loadGraphic(Paths.image(uiPrefix + 'combo' + uiSuffix));
-		comboSpr.screenCenter(Y);
-		comboSpr.x = placement + ClientPrefs.data.comboOffset[0];
-		comboSpr.y -= ClientPrefs.data.comboOffset[1] - 60;
-
-		comboSpr.velocity.set(FlxG.random.int(1, 10) * playbackRate, -FlxG.random.int(140, 160) * playbackRate);
-		comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
-		comboSpr.antialiasing = antialias;
-
-		comboSpr.setGraphicSize(comboSpr.width * mult);
-		comboSpr.updateHitbox();
-		if (showCombo) comboGroup.add(comboSpr);
-
-		final seperatedScore:Array<Int> = [
-			for (i in 0...(combo >= 1000 ? 4 : 3))
-				Math.floor(combo / Math.pow(10, i)) % 10
-		];
-		seperatedScore.reverse();
-
-		var daLoop:Int = 0;
-		var xThing:Float = 0;
-		final numMult = (PlayState.isPixelStage ? daPixelZoom : 0.5);
-		
-		for (i in seperatedScore)
+		var rating:FlxSprite = null;
+		if (showRating)
 		{
-			final numScore:FlxSprite = comboGroup.remove(comboGroup.recycle(FlxSprite), true).loadGraphic(Paths.image(uiPrefix + 'num$i' + uiSuffix));
-			numScore.screenCenter(Y);
-			numScore.x = placement + (43 * daLoop++) - 90 + ClientPrefs.data.comboOffset[2];
-			numScore.y += 80 - ClientPrefs.data.comboOffset[3];
-			
-			numScore.setGraphicSize(numScore.width * numMult);
-			numScore.updateHitbox();
+			rating = comboGroup.recycle(FlxSprite).loadGraphic(Paths.image(uiPrefix + daRating.image + uiSuffix));
+			rating.screenCenter(Y).y -= 60 + ClientPrefs.data.comboOffset[1];
+			rating.x = placement - 40 + ClientPrefs.data.comboOffset[0];
 
-			numScore.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
-			numScore.velocity.set(FlxG.random.float(-5, 5) * playbackRate, -FlxG.random.int(140, 160) * playbackRate);
-			numScore.antialiasing = antialias;
+			rating.velocity.set(-FlxG.random.int(0, 10) * playbackRate, -FlxG.random.int(140, 175) * playbackRate);
+			rating.acceleration.y = 550 * playbackRate * playbackRate;
+			rating.antialiasing = antialias;
 
-			//if (combo >= 10 || combo == 0)
-			if (showComboNum) comboGroup.add(numScore);
+			rating.setGraphicSize(rating.width * mult);
+			rating.updateHitbox();
 
-			FlxTween.tween(numScore, {alpha: 0}, 0.2 / playbackRate, {
+			// (stupidly) fixes sprite layering
+			comboGroup.remove(rating, true);
+			comboGroup.add(rating);
+			FlxTween.tween(rating, {alpha: 0}, 0.2 / playbackRate, {
 				onComplete: function(_)
 				{
-					numScore.kill();
-					numScore.alpha = 1;
+					rating.kill();
+					rating.alpha = 1;
+				},
+				startDelay: Conductor.crochet * 0.001 / playbackRate
+			});
+		}
+
+		var comboSpr:FlxSprite = null;
+		if (showCombo)
+		{
+			comboSpr = comboGroup.recycle(FlxSprite).loadGraphic(Paths.image(uiPrefix + 'combo' + uiSuffix));
+			comboSpr.screenCenter(Y).y -= ClientPrefs.data.comboOffset[1] - 60;
+			comboSpr.x = placement + ClientPrefs.data.comboOffset[0];
+
+			comboSpr.velocity.set(FlxG.random.int(1, 10) * playbackRate, -FlxG.random.int(140, 160) * playbackRate);
+			comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
+			comboSpr.antialiasing = antialias;
+
+			comboSpr.setGraphicSize(comboSpr.width * mult);
+			comboSpr.updateHitbox();
+
+			comboGroup.remove(comboSpr, true);
+			comboGroup.add(comboSpr);
+			FlxTween.tween(comboSpr, {alpha: 0}, 0.2 / playbackRate, {
+				onComplete: function(_)
+				{
+					comboSpr.kill();
+					comboSpr.alpha = 1;
 				},
 				startDelay: Conductor.crochet * 0.002 / playbackRate
 			});
-
-			if(numScore.x > xThing) xThing = numScore.x;
 		}
-		comboSpr.x = xThing + 50;
-		FlxTween.tween(rating, {alpha: 0}, 0.2 / playbackRate, {
-			onComplete: function(_)
-			{
-				rating.kill();
-				rating.alpha = 1;
-			},
-			startDelay: Conductor.crochet * 0.001 / playbackRate
-		});
 
-		FlxTween.tween(comboSpr, {alpha: 0}, 0.2 / playbackRate, {
-			onComplete: function(_)
+		var xThing:Float = 0;
+		if (showComboNum)
+		{
+			final seperatedScore:Array<Int> = [
+				for (i in 0...(combo >= 1000 ? 4 : 3))
+					Math.floor(combo / Math.pow(10, i)) % 10
+			];
+			seperatedScore.reverse();
+
+			var daLoop:Int = 0;
+			final numMult = (PlayState.isPixelStage ? daPixelZoom : 0.5);
+			
+			for (i in seperatedScore)
 			{
-				comboSpr.kill();
-				comboSpr.alpha = 1;
-			},
-			startDelay: Conductor.crochet * 0.002 / playbackRate
-		});
+				var numScore:FlxSprite = comboGroup.recycle(FlxSprite).loadGraphic(Paths.image(uiPrefix + 'num$i' + uiSuffix));
+				numScore.screenCenter(Y).y += 80 - ClientPrefs.data.comboOffset[3];
+				numScore.x = placement + (43 * daLoop++) - 90 + ClientPrefs.data.comboOffset[2];
+				
+				numScore.setGraphicSize(numScore.width * numMult);
+				numScore.updateHitbox();
+
+				numScore.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
+				numScore.velocity.set(FlxG.random.float(-5, 5) * playbackRate, -FlxG.random.int(140, 160) * playbackRate);
+				numScore.antialiasing = antialias;
+
+				comboGroup.remove(numScore, true);
+				//if (combo >= 10 || combo == 0)
+				comboGroup.add(numScore);
+				FlxTween.tween(numScore, {alpha: 0}, 0.2 / playbackRate, {
+					onComplete: function(_)
+					{
+						numScore.kill();
+						numScore.alpha = 1;
+					},
+					startDelay: Conductor.crochet * 0.002 / playbackRate
+				});
+
+				if (numScore.x > xThing) xThing = numScore.x;
+			}
+		}
+		if (showCombo)
+		{
+			if (!showComboNum) // simulate generated combo nums
+			{
+				final fakeNumX = placement + (43 * 2) - 90 + ClientPrefs.data.comboOffset[2];
+				if (fakeNumX > xThing) xThing = fakeNumX;
+			}
+			comboSpr.x = xThing + 50;
+		}
 	}
 
 	public var strumsBlocked:Array<Bool> = [];
@@ -2809,7 +2824,6 @@ class PlayState extends MusicBeatState
 
 		if(instakillOnMiss)
 		{
-			vocals.volume = 0;
 			doDeathCheck(true);
 		}
 		combo = 0;
@@ -2947,8 +2961,7 @@ class PlayState extends MusicBeatState
 		vocals.volume = 1;
 
 		if (!note.isSustainNote) {
-			combo++;
-			if(combo > 9999) combo = 9999;
+			if(++combo > 9999) combo = 9999;
 			popUpScore(note);
 			var gainHealth:Bool = true; // prevent health gain, as sustains are threated as a singular note
 			if (guitarHeroSustains && note.isSustainNote) gainHealth = false;
@@ -2979,25 +2992,28 @@ class PlayState extends MusicBeatState
 
 	override function destroy() {
 		#if LUA_ALLOWED
-		for (i in 0...luaArray.length) {
-			var lua:FunkinLua = luaArray[0];
-			lua.call('onDestroy', []);
-			lua.stop();
+		var luaScript:FunkinLua = null;
+		while (luaArray.length > 0)
+		{
+			luaScript = luaArray.pop();
+			if (luaScript == null) continue;
+
+			luaScript.call('onDestroy', []);
+			luaScript.stop();
 		}
-		luaArray = [];
 		FunkinLua.customFunctions.clear();
 		#end
 
 		#if HSCRIPT_ALLOWED
-		for (script in hscriptArray)
-			if(script != null)
-			{
-				script.call('onDestroy');
-				script.destroy();
-			}
-
+		var hscript:HScript = null;
 		while (hscriptArray.length > 0)
-			hscriptArray.pop();
+		{
+			hscript = hscriptArray.pop();
+			if (hscript == null) continue;
+
+			hscript.call('onDestroy');
+			hscript.destroy();
+		}
 		#end
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
