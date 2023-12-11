@@ -320,6 +320,7 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.add(camOther, false);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
+		grpNoteSplashes.ID = 0;
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		CustomFadeTransition.nextCamera = camOther;
@@ -480,6 +481,7 @@ class PlayState extends MusicBeatState
 		stagesFunc(function(stage:BaseStage) stage.createPost());
 
 		comboGroup = new FlxSpriteGroup();
+		comboGroup.ID = 0;
 		add(comboGroup);
 		noteGroup = new FlxTypedGroup<FlxBasic>();
 		add(noteGroup);
@@ -2480,9 +2482,8 @@ class PlayState extends MusicBeatState
 
 			rating.setGraphicSize(rating.width * mult);
 			rating.updateHitbox();
+			rating.ID = comboGroup.ID++;
 
-			// (stupidly) fixes sprite layering
-			comboGroup.remove(rating, true);
 			comboGroup.add(rating);
 			FlxTween.tween(rating, {alpha: 0}, 0.2 / playbackRate, {
 				onComplete: function(_)
@@ -2499,7 +2500,7 @@ class PlayState extends MusicBeatState
 		{
 			comboSpr = comboGroup.recycle(FlxSprite).loadGraphic(Paths.image(uiPrefix + 'combo' + uiSuffix));
 			comboSpr.screenCenter(Y).y -= ClientPrefs.data.comboOffset[1] - 60;
-			comboSpr.x = placement + ClientPrefs.data.comboOffset[0];
+			//comboSpr.x = placement + ClientPrefs.data.comboOffset[0];
 
 			comboSpr.velocity.set(FlxG.random.int(1, 10) * playbackRate, -FlxG.random.int(140, 160) * playbackRate);
 			comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
@@ -2507,8 +2508,8 @@ class PlayState extends MusicBeatState
 
 			comboSpr.setGraphicSize(comboSpr.width * mult);
 			comboSpr.updateHitbox();
+			comboSpr.ID = comboGroup.ID++;
 
-			comboGroup.remove(comboSpr, true);
 			comboGroup.add(comboSpr);
 			FlxTween.tween(comboSpr, {alpha: 0}, 0.2 / playbackRate, {
 				onComplete: function(_)
@@ -2538,14 +2539,14 @@ class PlayState extends MusicBeatState
 				numScore.screenCenter(Y).y += 80 - ClientPrefs.data.comboOffset[3];
 				numScore.x = placement + (43 * daLoop++) - 90 + ClientPrefs.data.comboOffset[2];
 				
-				numScore.setGraphicSize(numScore.width * numMult);
-				numScore.updateHitbox();
-
 				numScore.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
 				numScore.velocity.set(FlxG.random.float(-5, 5) * playbackRate, -FlxG.random.int(140, 160) * playbackRate);
 				numScore.antialiasing = antialias;
 
-				comboGroup.remove(numScore, true);
+				numScore.setGraphicSize(numScore.width * numMult);
+				numScore.updateHitbox();
+				numScore.ID = comboGroup.ID++;
+
 				//if (combo >= 10 || combo == 0)
 				comboGroup.add(numScore);
 				FlxTween.tween(numScore, {alpha: 0}, 0.2 / playbackRate, {
@@ -2569,6 +2570,8 @@ class PlayState extends MusicBeatState
 			}
 			comboSpr.x = xThing + 50;
 		}
+		// a bit dirty, but idk, don't want to make another class
+		comboGroup.sort(CoolUtil.sortByID);
 	}
 
 	public var strumsBlocked:Array<Bool> = [];
@@ -2985,9 +2988,11 @@ class PlayState extends MusicBeatState
 	}
 
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note) {
-		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+		final splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 		splash.setupNoteSplash(x, y, data, note);
+		splash.ID = grpNoteSplashes.ID++;
 		grpNoteSplashes.add(splash);
+		grpNoteSplashes.sort(CoolUtil.sortByID);
 	}
 
 	override function destroy() {

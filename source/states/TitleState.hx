@@ -228,12 +228,12 @@ class TitleState extends MusicBeatState
 				gfDance.animation.addByPrefix('danceRight', 'Shadow Title Bump', 24);
 			case 'RIVER':
 				gfDance.frames = Paths.getSparrowAtlas('RiverBump');
-				gfDance.animation.addByIndices('danceLeft', 'River Title Bump', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'River Title Bump', [29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				gfDance.animation.addByIndices('danceLeft', 'River Title Bump', [for (i in 15...30) i], "", 24, false);
+				gfDance.animation.addByIndices('danceRight', 'River Title Bump', [29].concat([for (i in 0...15) i]), "", 24, false);
 			case 'BBPANZU':
 				gfDance.frames = Paths.getSparrowAtlas('BBBump');
-				gfDance.animation.addByIndices('danceLeft', 'BB Title Bump', [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'BB Title Bump', [27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "", 24, false);
+				gfDance.animation.addByIndices('danceLeft', 'BB Title Bump', [for (i in 14...28) i], "", 24, false);
+				gfDance.animation.addByIndices('danceRight', 'BB Title Bump', [27].concat([for (i in 0...14) i]), "", 24, false);
 			#end
 
 			default:
@@ -241,8 +241,8 @@ class TitleState extends MusicBeatState
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 				gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
-				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30].concat([for (i in 0...15) i]), "", 24, false);
+				gfDance.animation.addByIndices('danceRight', 'gfDance', [for (i in 15...30) i], "", 24, false);
 		}
 
 		add(gfDance);
