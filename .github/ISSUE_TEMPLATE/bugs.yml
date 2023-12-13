@@ -36,8 +36,8 @@ body:
       options:
         - Latest (main)
         - Unstable (experimental)
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: dropdown
     id: btarget
