@@ -1,5 +1,5 @@
 # Bot for closing GitHub issues automatically after a certain period of time
-# https://github.com/CrowPlexus-FNF/FNF-LegacyPsych/issues/1
+# https://github.com/actions/stale
 
 name: Close inactive issues
 on:
