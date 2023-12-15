@@ -1,0 +1,39 @@
+# Bot for closing GitHub issues automatically after a certain period of time
+# https://github.com/actions/stale
+
+name: Close inactive issues
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  close-issues:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/stale@v5
+        with:
+          # This is the amunt of days that a issue will be closed
+          # 10 days, the first 5 will be for marking the issue as stale
+          # the other 5 will be a countdown for closing it
+          days-before-issue-stale: 5
+          days-before-issue-close: 5
+
+          # Ditto, but for Pull Requests (-1 means never execute)
+          days-before-pr-stale: -1
+          days-before-pr-close: -1
+
+          # This is the label that the bot marks the issue as
+          stale-issue-label: "stale"
+
+          # Those are the messages the bot sends after the count of days of inactivity has been reached
+          # for when marking the label (first message) and for when closing the issue
+          stale-issue-message: "This issue is stale because it has been open for 5 days with no activity."
+          close-issue-message: "This issue was closed because it has been inactive for 5 days since being marked as stale."
+
+          # These are the types of labels that the boot looks for in order to ignroe the issue
+          exempt-issue-labels: "enhancement, need more information, special"
+
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
