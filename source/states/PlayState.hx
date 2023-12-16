@@ -57,8 +57,8 @@ import psychlua.LuaUtils;
 import psychlua.HScript;
 #end
 
-#if SScript
-import tea.SScript;
+#if HSCRIPT_ALLOWED
+import crowplexus.iris.Iris;
 #end
 
 /**
@@ -809,7 +809,7 @@ class PlayState extends MusicBeatState
 		
 		if(doPush)
 		{
-			if(SScript.global.exists(scriptFile))
+			if(Iris.instances.exists(scriptFile))
 				doPush = false;
 
 			if(doPush) initHScript(scriptFile);
@@ -3142,8 +3142,7 @@ class PlayState extends MusicBeatState
 		
 		if(FileSystem.exists(scriptToLoad))
 		{
-			if (SScript.global.exists(scriptToLoad)) return false;
-	
+			if (Iris.instances.exists(scriptToLoad)) return false;
 			initHScript(scriptToLoad);
 			return true;
 		}
@@ -3154,19 +3153,22 @@ class PlayState extends MusicBeatState
 	{
 		try
 		{
-			var newScript:HScript = new HScript(null, file);
-			if(newScript.parsingException != null)
-			{
-				addTextToDebug('ERROR ON LOADING: ${newScript.parsingException.message}', FlxColor.RED);
-				newScript.destroy();
-				return;
+			final newScript:HScript = new HScript(null, file);
+			@:privateAccess {
+				if(newScript.interp == null)
+				{
+					addTextToDebug('ERROR ON LOADING: ${newScript.origin}', FlxColor.RED);
+					newScript.destroy();
+					return;
+				}
 			}
 
 			hscriptArray.push(newScript);
 			if(newScript.exists('onCreate'))
 			{
-				var callValue = newScript.call('onCreate');
-				if(!callValue.succeeded)
+				final callValue = newScript.call('onCreate');
+				/* // I need to add a way to get error at runtime, this will be commented for now -Crow
+				if(callValue != 0)
 				{
 					for (e in callValue.exceptions)
 					{
@@ -3183,6 +3185,7 @@ class PlayState extends MusicBeatState
 					trace('failed to initialize tea interp!!! ($file)');
 				}
 				else trace('initialized tea interp successfully: $file');
+				*/
 			}
 			
 		}
@@ -3190,8 +3193,8 @@ class PlayState extends MusicBeatState
 		{
 			var len:Int = e.message.indexOf('\n') + 1;
 			if(len <= 0) len = e.message.length;
-			addTextToDebug('ERROR ($file) - ' + e.message.substr(0, len), FlxColor.RED);
-			var newScript:HScript = cast (SScript.global.get(file), HScript);
+			addTextToDebug('ERROR ($file) - ${e.message.substr(0, len)}', FlxColor.RED);
+			final newScript:HScript = cast(Iris.instances.get(file), HScript);
 			if(newScript != null)
 			{
 				newScript.destroy();
