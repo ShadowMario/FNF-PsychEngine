@@ -5,7 +5,6 @@ import animateatlas.AtlasFrameMaker;
 import flixel.graphics.frames.FlxFrame.FlxFrameAngle;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.FlxGraphic;
-import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 
 import openfl.display.BitmapData;

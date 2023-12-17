@@ -5,7 +5,6 @@ import backend.WeekData;
 import objects.Character;
 import flixel.FlxObject;
 import flixel.FlxSubState;
-import flixel.math.FlxPoint;
 
 import states.StoryMenuState;
 import states.FreeplayState;
@@ -14,7 +13,7 @@ class GameOverSubstate extends MusicBeatSubstate
 {
 	public var boyfriend:Character;
 	var camFollow:FlxObject;
-	var updateCamera:Bool = false;
+	var moveCamera:Bool = false;
 	var playingDeathSound:Bool = false;
 
 	var stageSuffix:String = "";
@@ -70,13 +69,12 @@ class GameOverSubstate extends MusicBeatSubstate
 		boyfriend.playAnim('firstDeath');
 
 		camFollow = new FlxObject(0, 0, 1, 1);
-		camFollow.setPosition(boyfriend.getGraphicMidpoint().x, boyfriend.getGraphicMidpoint().y);
+		camFollow.setPosition(boyfriend.getGraphicMidpoint().x + boyfriend.cameraPosition[0], boyfriend.getGraphicMidpoint().y + boyfriend.cameraPosition[1]);
 		FlxG.camera.focusOn(new FlxPoint(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2)));
 		add(camFollow);
 	}
 
 	public var startedDeath:Bool = false;
-	var isFollowingAlready:Bool = false;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -113,11 +111,10 @@ class GameOverSubstate extends MusicBeatSubstate
 
 			if(boyfriend.animation.curAnim.name == 'firstDeath')
 			{
-				if(boyfriend.animation.curAnim.curFrame >= 12 && !isFollowingAlready)
+				if(boyfriend.animation.curAnim.curFrame >= 12 && !moveCamera)
 				{
-					FlxG.camera.follow(camFollow, LOCKON, 0);
-					updateCamera = true;
-					isFollowingAlready = true;
+					FlxG.camera.follow(camFollow, LOCKON, 0.01);
+					moveCamera = true;
 				}
 
 				if (boyfriend.animation.curAnim.finished && !playingDeathSound)
@@ -143,9 +140,6 @@ class GameOverSubstate extends MusicBeatSubstate
 			}
 		}
 		
-		if(updateCamera) FlxG.camera.followLerp = FlxMath.bound(elapsed * 0.6 / (FlxG.updateFramerate / 60), 0, 1);
-		else FlxG.camera.followLerp = 0;
-
 		if (FlxG.sound.music.playing)
 		{
 			Conductor.songPosition = FlxG.sound.music.time;
