@@ -57,7 +57,7 @@ class FunkinLua {
 	#if SScript
 	public var hscript:HScript = null;
 	#end
-	
+
 	public var callbacks:Map<String, Dynamic> = new Map<String, Dynamic>();
 	public static var customFunctions:Map<String, Dynamic> = new Map<String, Dynamic>();
 
@@ -212,7 +212,7 @@ class FunkinLua {
 
 			return runningScripts;
 		});
-		
+
 		addLocalCallback("setOnScripts", function(varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null) {
 			if(exclusions == null) exclusions = [];
 			if(ignoreSelf && !exclusions.contains(scriptName)) exclusions.push(scriptName);
@@ -808,7 +808,7 @@ class FunkinLua {
 				MusicBeatState.switchState(new StoryMenuState());
 			else
 				MusicBeatState.switchState(new FreeplayState());
-			
+
 			#if desktop DiscordClient.resetClientID(); #end
 
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -1064,7 +1064,7 @@ class FunkinLua {
 			var mySprite:FlxSprite = null;
 			if(game.modchartSprites.exists(tag)) mySprite = game.modchartSprites.get(tag);
 			else if(game.variables.exists(tag)) mySprite = game.variables.get(tag);
-			
+
 			if(mySprite == null) return false;
 
 			if(front)
@@ -1348,7 +1348,7 @@ class FunkinLua {
 				if(game.modchartSounds.exists(tag)) {
 					game.modchartSounds.get(tag).stop();
 				}
-				game.modchartSounds.set(tag, FlxG.sound.play(Paths.sound(sound), volume, false, function() {
+				game.modchartSounds.set(tag, FlxG.sound.play(Paths.sound(sound), volume, false, null, true, function() {
 					game.modchartSounds.remove(tag);
 					game.callOnLuas('onSoundFinished', [tag]);
 				}));
@@ -1464,7 +1464,7 @@ class FunkinLua {
 				{
 					luaTrace('getModSetting: Argument #2 is null and script is not inside a packed Mod folder!', false, false, FlxColor.RED);
 					return null;
-				} 
+				}
 				modName = this.modFolder;
 			}
 
@@ -1518,7 +1518,7 @@ class FunkinLua {
 		//
 
 		Lua_helper.add_callback(lua, "debugPrint", function(text:Dynamic = '', color:String = 'WHITE') PlayState.instance.addTextToDebug(text, CoolUtil.colorFromString(color)));
-		
+
 		addLocalCallback("close", function() {
 			closed = true;
 			trace('Closing script $scriptName');
@@ -1535,7 +1535,7 @@ class FunkinLua {
 		CustomSubstate.implement(this);
 		ShaderFunctions.implement(this);
 		DeprecatedFunctions.implement(this);
-		
+
 		try{
 			var isString:Bool = !FileSystem.exists(scriptName);
 			var result:Dynamic = null;
@@ -1613,7 +1613,7 @@ class FunkinLua {
 		#end
 		return Function_Continue;
 	}
-	
+
 	public function set(variable:String, data:Dynamic) {
 		#if LUA_ALLOWED
 		if(lua == null) {
@@ -1627,7 +1627,6 @@ class FunkinLua {
 
 	public function stop() {
 		#if LUA_ALLOWED
-		PlayState.instance.luaArray.remove(this);
 		closed = true;
 
 		if(lua == null) {
@@ -1681,7 +1680,7 @@ class FunkinLua {
 		}
 		#end
 	}
-	
+
 	public static function luaTrace(text:String, ignoreCheck:Bool = false, deprecated:Bool = false, color:FlxColor = FlxColor.WHITE) {
 		#if LUA_ALLOWED
 		if(ignoreCheck || getBool('luaDebugMode')) {
@@ -1689,11 +1688,10 @@ class FunkinLua {
 				return;
 			}
 			PlayState.instance.addTextToDebug(text, color);
-			trace(text);
 		}
 		#end
 	}
-	
+
 	#if LUA_ALLOWED
 	public static function getBool(variable:String) {
 		if(lastCalledScript == null) return false;
@@ -1723,7 +1721,7 @@ class FunkinLua {
 			return scriptFile;
 		else if(FileSystem.exists(path))
 			return path;
-	
+
 		if(FileSystem.exists(preloadPath))
 		#else
 		if(Assets.exists(preloadPath))
@@ -1761,7 +1759,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, name, null); //just so that it gets called
 		#end
 	}
-	
+
 	#if (MODS_ALLOWED && !flash && sys)
 	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
 	#end
@@ -1782,7 +1780,7 @@ class FunkinLua {
 
 		for(mod in Mods.getGlobalMods())
 			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
-		
+
 		for (folder in foldersToCheck)
 		{
 			if(FileSystem.exists(folder))

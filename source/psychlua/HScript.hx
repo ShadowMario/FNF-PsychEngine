@@ -58,8 +58,7 @@ class HScript extends SScript
 	}
 
 	var varsToBring:Any = null;
-	override function preset()
-	{
+	override function preset() {
 		super.preset();
 
 		// Some very commonly used classes
@@ -67,6 +66,7 @@ class HScript extends SScript
 		set('FlxMath', flixel.math.FlxMath);
 		set('FlxSprite', flixel.FlxSprite);
 		set('FlxCamera', flixel.FlxCamera);
+		set('PsychCamera', backend.PsychCamera);
 		set('FlxTimer', flixel.util.FlxTimer);
 		set('FlxTween', flixel.tweens.FlxTween);
 		set('FlxEase', flixel.tweens.FlxEase);
@@ -88,12 +88,8 @@ class HScript extends SScript
 		set('StringTools', StringTools);
 
 		// Functions & Variables
-		set('setVar', function(name:String, value:Dynamic)
-		{
-			PlayState.instance.variables.set(name, value);
-		});
-		set('getVar', function(name:String)
-		{
+		set('setVar', function(name:String, value:Dynamic) PlayState.instance.variables.set);
+		set('getVar', function(name:String) {
 			var result:Dynamic = null;
 			if(PlayState.instance.variables.exists(name)) result = PlayState.instance.variables.get(name);
 			return result;
@@ -168,17 +164,15 @@ class HScript extends SScript
 		set('Function_StopHScript', FunkinLua.Function_StopHScript);
 		set('Function_StopAll', FunkinLua.Function_StopAll);
 		
-		set('add', function(obj:FlxBasic) PlayState.instance.add(obj));
-		set('addBehindGF', function(obj:FlxBasic) PlayState.instance.addBehindGF(obj));
-		set('addBehindDad', function(obj:FlxBasic) PlayState.instance.addBehindDad(obj));
-		set('addBehindBF', function(obj:FlxBasic) PlayState.instance.addBehindBF(obj));
-		set('insert', function(pos:Int, obj:FlxBasic) PlayState.instance.insert(pos, obj));
-		set('remove', function(obj:FlxBasic, splice:Bool = false) PlayState.instance.remove(obj, splice));
+		set('add', function(obj:FlxBasic) PlayState.instance.add);
+		set('addBehindGF', function(obj:FlxBasic) PlayState.instance.addBehindGF);
+		set('addBehindDad', function(obj:FlxBasic) PlayState.instance.addBehindDad);
+		set('addBehindBF', function(obj:FlxBasic) PlayState.instance.addBehindBF);
+		set('insert', function(pos:Int, obj:FlxBasic) PlayState.instance.insert);
+		set('remove', function(obj:FlxBasic, splice:Bool = false) PlayState.instance.remove);
 
-		if(varsToBring != null)
-		{
-			for (key in Reflect.fields(varsToBring))
-			{
+		if(varsToBring != null) {
+			for (key in Reflect.fields(varsToBring)) {
 				key = key.trim();
 				var value = Reflect.field(varsToBring, key);
 				//trace('Key $key: $value');
@@ -188,22 +182,19 @@ class HScript extends SScript
 		}
 	}
 
-	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):TeaCall
-	{
+	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):TeaCall {
 		if (funcToRun == null) return null;
 
-		if(!exists(funcToRun))
-		{
+		if(!exists(funcToRun)) {
 			FunkinLua.luaTrace(origin + ' - No HScript function named: $funcToRun', false, false, FlxColor.RED);
 			return null;
 		}
 
-		var callValue = call(funcToRun, funcArgs);
+		final callValue = call(funcToRun, funcArgs);
 		if (!callValue.succeeded)
 		{
-			var e = callValue.exceptions[0];
-			if (e != null)
-			{
+			final e = callValue.exceptions[0];
+			if (e != null) {
 				var msg:String = e.toString();
 				if(parentLua != null) msg = origin + ":" + parentLua.lastCalledFunction + " - " + msg;
 				else msg = '$origin - $msg';
@@ -214,28 +205,23 @@ class HScript extends SScript
 		return callValue;
 	}
 
-	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):TeaCall
-	{
-		if (funcToRun == null)
-			return null;
-
+	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):TeaCall {
+		if (funcToRun == null) return null;
 		return call(funcToRun, funcArgs);
 	}
 
-	public static function implement(funk:FunkinLua)
-	{
+	public static function implement(funk:FunkinLua) {
 		#if LUA_ALLOWED
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			#if SScript
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
-			var retVal:TeaCall = funk.hscript.executeCode(funcToRun, funcArgs);
-			if (retVal != null)
-			{
+			final retVal:TeaCall = funk.hscript.executeCode(funcToRun, funcArgs);
+			if (retVal != null) {
 				if(retVal.succeeded)
 					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
 
-				var e = retVal.exceptions[0];
-				var calledFunc:String = if(funk.hscript.origin == funk.lastCalledFunction) funcToRun else funk.lastCalledFunction;
+				final e = retVal.exceptions[0];
+				final calledFunc:String = if(funk.hscript.origin == funk.lastCalledFunction) funcToRun else funk.lastCalledFunction;
 				if (e != null)
 					FunkinLua.luaTrace(funk.hscript.origin + ":" + calledFunc + " - " + e, false, false, FlxColor.RED);
 				return null;
@@ -310,8 +296,7 @@ class HScript extends SScript
 	}
 }
 
-class CustomFlxColor
-{
+class CustomFlxColor {
 	public static var TRANSPARENT(default, null):Int = FlxColor.TRANSPARENT;
 	public static var BLACK(default, null):Int = FlxColor.BLACK;
 	public static var WHITE(default, null):Int = FlxColor.WHITE;
