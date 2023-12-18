@@ -692,7 +692,6 @@ class PlayState extends MusicBeatState
 	}
 
 	public function addTextToDebug(text:String, color:FlxColor) {
-		#if LUA_ALLOWED
 		var newText:DebugLuaText = luaDebugGroup.recycle(DebugLuaText);
 		newText.text = text;
 		newText.color = color;
@@ -704,7 +703,8 @@ class PlayState extends MusicBeatState
 			spr.y += newText.height + 2;
 		});
 		luaDebugGroup.add(newText);
-		#end
+
+		Sys.println(text);
 	}
 
 	public function reloadHealthBarColors() {
@@ -1806,8 +1806,7 @@ class PlayState extends MusicBeatState
 		callOnScripts('onUpdatePost', [elapsed]);
 	}
 
-	public dynamic function updateIcons(elapsed:Float)
-	{
+	public dynamic function updateIcons(elapsed:Float) {
 		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, FlxMath.bound(1 - (elapsed * 9 * playbackRate), 0, 1));
 		iconP1.scale.set(mult, mult);
 		iconP1.updateHitbox();
@@ -3213,7 +3212,7 @@ class PlayState extends MusicBeatState
 		{
 			var len:Int = e.message.indexOf('\n') + 1;
 			if(len <= 0) len = e.message.length;
-			addTextToDebug('ERROR ($file) - ' + e.message.substr(0, len), FlxColor.RED);
+			addTextToDebug('ERROR - ' + e.message.substr(0, len), FlxColor.RED);
 			var newScript:HScript = cast (SScript.global.get(file), HScript);
 			if(newScript != null)
 			{
@@ -3285,15 +3284,13 @@ class PlayState extends MusicBeatState
 		var len:Int = hscriptArray.length;
 		if (len < 1)
 			return returnVal;
-		for(i in 0...len)
-		{
+		for(i in 0...len) {
 			var script:HScript = hscriptArray[i];
 			if(script == null || !script.exists(funcToCall) || exclusions.contains(script.origin))
 				continue;
 
 			var myValue:Dynamic = null;
-			try
-			{
+			try {
 				var callValue = script.call(funcToCall, args);
 				if(!callValue.succeeded)
 				{
@@ -3302,7 +3299,7 @@ class PlayState extends MusicBeatState
 					{
 						var len:Int = e.message.indexOf('\n') + 1;
 						if(len <= 0) len = e.message.length;
-						FunkinLua.luaTrace('ERROR (${script.origin}: ${callValue.calledFunction}) - ' + e.message.substr(0, len), true, false, FlxColor.RED);
+						addTextToDebug('ERROR (${callValue.calledFunction}) - ' + e.message.substr(0, len), FlxColor.RED);
 					}
 				}
 				else
