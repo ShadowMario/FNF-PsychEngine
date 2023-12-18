@@ -3299,7 +3299,7 @@ class PlayState extends MusicBeatState
 					{
 						var len:Int = e.message.indexOf('\n') + 1;
 						if(len <= 0) len = e.message.length;
-						addTextToDebug('ERROR (${callValue.calledFunction}) - ' + e.message.substr(0, len), true, false, FlxColor.RED);
+						addTextToDebug('ERROR (${callValue.calledFunction}) - ' + e.message.substr(0, len), FlxColor.RED);
 					}
 				}
 				else
