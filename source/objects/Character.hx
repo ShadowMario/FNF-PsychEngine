@@ -368,7 +368,7 @@ class Character extends FlxSprite
 			var daOffset = animOffsets.get(AnimName);
 			offset.set(daOffset[0], daOffset[1]);
 		}
-		else offset.set(0, 0);
+		//else offset.set(0, 0);
 
 		if (curCharacter.startsWith('gf-') || curCharacter == 'gf')
 		{
