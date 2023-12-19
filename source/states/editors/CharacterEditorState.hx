@@ -23,6 +23,8 @@ class CharacterEditorState extends MusicBeatState
 {
 	var character:Character;
 	var ghost:FlxSprite;
+	var animateGhost:FlxAnimate;
+	var animateGhostImage:String;
 	var cameraFollowPointer:FlxSprite;
 	var isAnimateSprite:Bool = false;
 
@@ -284,20 +286,57 @@ class CharacterEditorState extends MusicBeatState
 			var anim = anims[curAnim];
 			if(!character.isAnimationNull())
 			{
-				if(character.isAnimateAtlas) return FlxG.log.warn("Ghosts aren't supported by Animate Atlas sprites yet, this is a WIP, duh!."); //insert slur
-
-				ghost.visible = true;
 				ghost.setPosition(character.x, character.y);
 				ghost.offset.set(character.offset.x, character.offset.y);
-				ghost.loadGraphic(character.graphic);
 				ghost.flipX = character.flipX;
+				
+				var myAnim = anims[curAnim];
+				if(!character.isAnimateAtlas)
+				{
+					if(ghost.visible && ghost.graphic != null)
+					{
+						ghost.graphic.bitmap.dispose();
+						ghost.graphic.bitmap.disposeImage();
+						ghost.graphic.persist = false;
+						ghost.graphic.destroyOnNoUse = true;
+						ghost.graphic.destroy();
+					}
+					@:privateAccess
+					ghost.loadGraphic(character._frame.paintRotatedAndFlipped(null, character._flashPointZero, 0, ghost.flipX, ghost.flipY, false, true));
+					if(animateGhost != null) animateGhost.visible = false;
+					ghost.visible = true;
+				}
+				else if(myAnim != null) //This is VERY unoptimized and bad, I hope to find a better replacement that loads only a specific frame as bitmap in the future.
+				{
+					if(animateGhost == null) //If I created the animateGhost on create() and you didn't load an atlas, it would crash the game on destroy, so we create it here
+					{
+						animateGhost = new FlxAnimate(ghost.x, ghost.y);
+						animateGhost.showPivot = false;
+						insert(members.indexOf(ghost), animateGhost);
+						animateGhost.active = false;
+					}
 
-				ghost.frames.frames = character.frames.frames;
-				ghost.animation.copyFrom(character.animation);
-				ghost.animation.play(character.getAnimationName(), true, false, character.animation.curAnim.curFrame);
-				ghost.animation.pause();
+					if(animateGhost == null || animateGhostImage != character.imageFile)
+						Paths.loadAnimateAtlas(animateGhost, character.imageFile);
+					
+					if(myAnim.indices != null && myAnim.indices.length > 0)
+						animateGhost.anim.addBySymbolIndices('anim', myAnim.name, myAnim.indices, 0, false);
+					else
+						animateGhost.anim.addBySymbol('anim', myAnim.name, 0, false);
+
+					animateGhost.anim.play('anim', true, false, character.atlas.anim.curFrame);
+					animateGhost.anim.pause();
+
+					animateGhost.offset.set(ghost.offset.x, ghost.offset.y);
+					animateGhost.flipX = ghost.flipX;
+					animateGhost.alpha = ghostAlpha;
+					animateGhost.visible = true;
+					animateGhostImage = character.imageFile;
+					ghost.visible = false;
+				}
 				/*hideGhostButton.active = true;
 				hideGhostButton.alpha = 1;*/
+				trace('created ghost image');
 			}
 		});
 
@@ -316,12 +355,21 @@ class CharacterEditorState extends MusicBeatState
 			ghost.colorTransform.redOffset = value;
 			ghost.colorTransform.greenOffset = value;
 			ghost.colorTransform.blueOffset = value;
+			if(animateGhost != null)
+			{
+				animateGhost.colorTransform.redOffset = value;
+				animateGhost.colorTransform.greenOffset = value;
+				animateGhost.colorTransform.blueOffset = value;
+			}
 		};
 
 		var ghostAlphaSlider:FlxUISlider = new FlxUISlider(this, 'ghostAlpha', 10, makeGhostButton.y + 25, 0, 1, 210, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		ghostAlphaSlider.nameLabel.text = 'Opacity:';
 		ghostAlphaSlider.decimals = 2;
-		ghostAlphaSlider.callback = function(relativePos:Float) ghost.alpha = ghostAlpha;
+		ghostAlphaSlider.callback = function(relativePos:Float) {
+			ghost.alpha = ghostAlpha;
+			if(animateGhost != null) animateGhost.alpha = ghostAlpha;
+		};
 		ghostAlphaSlider.value = ghostAlpha;
 
 		tab_group.add(makeGhostButton);
