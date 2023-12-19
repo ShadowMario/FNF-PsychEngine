@@ -37,6 +37,9 @@ import psychlua.HScript;
 import psychlua.DebugLuaText;
 import psychlua.ModchartSprite;
 
+import flixel.input.keyboard.FlxKey;
+import flixel.input.gamepad.FlxGamepadInputID;
+
 import haxe.Json;
 
 class FunkinLua {
@@ -1462,58 +1465,12 @@ class FunkinLua {
 			{
 				if(this.modFolder == null)
 				{
-					luaTrace('getModSetting: Argument #2 is null and script is not inside a packed Mod folder!', false, false, FlxColor.RED);
+					FunkinLua.luaTrace('getModSetting: Argument #2 is null and script is not inside a packed Mod folder!', false, false, FlxColor.RED);
 					return null;
 				}
 				modName = this.modFolder;
 			}
-
-			if(FlxG.save.data.modSettings == null) FlxG.save.data.modSettings = new Map<String, Dynamic>();
-
-			var settings:Map<String, Dynamic> = FlxG.save.data.modSettings.get(modName);
-			var path:String = Paths.mods('$modName/data/settings.json');
-			if(FileSystem.exists(path))
-			{
-				if(settings == null || !settings.exists(saveTag))
-				{
-					if(settings == null) settings = new Map<String, Dynamic>();
-					var data:String = File.getContent(path);
-					try
-					{
-						luaTrace('getModSetting: Trying to find default value for "$saveTag" in Mod: "$modName"');
-						var parsedJson:Dynamic = Json.parse(data);
-						for (i in 0...parsedJson.length)
-						{
-							var sub:Dynamic = parsedJson[i];
-							if(sub != null && sub.save != null && sub.value != null && !settings.exists(sub.save))
-							{
-								luaTrace('getModSetting: Found unsaved value "${sub.save}" in Mod: "$modName"');
-								settings.set(sub.save, sub.value);
-							}
-						}
-						FlxG.save.data.modSettings.set(modName, settings);
-					}
-					catch(e:Dynamic)
-					{
-						var errorTitle = 'Mod name: ' + Mods.currentModDirectory;
-						var errorMsg = 'An error occurred: $e';
-						#if windows
-						lime.app.Application.current.window.alert(errorMsg, errorTitle);
-						#end
-						trace('$errorTitle - $errorMsg');
-					}
-				}
-			}
-			else
-			{
-				FlxG.save.data.modSettings.remove(modName);
-				luaTrace('getModSetting: $path could not be found!', false, false, FlxColor.RED);
-				return null;
-			}
-
-			if(settings.exists(saveTag)) return settings.get(saveTag);
-			luaTrace('getModSetting: "$saveTag" could not be found inside $modName\'s settings!', false, false, FlxColor.RED);
-			return null;
+			return LuaUtils.getModSetting(saveTag, modName);
 		});
 		//
 
