@@ -1,7 +1,5 @@
 package states.stages;
 
-import animateatlas.AtlasFrameMaker;
-
 import states.stages.objects.*;
 import cutscenes.CutsceneHandler;
 import substates.GameOverSubstate;

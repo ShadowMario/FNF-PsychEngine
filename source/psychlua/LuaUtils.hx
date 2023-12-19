@@ -4,7 +4,6 @@ import backend.WeekData;
 import objects.Character;
 
 import openfl.display.BlendMode;
-import animateatlas.AtlasFrameMaker;
 import Type.ValueType;
 
 import substates.GameOverSubstate;
@@ -312,11 +311,11 @@ class LuaUtils
 	{
 		switch(spriteType.toLowerCase().trim())
 		{
-			case "texture" | "textureatlas" | "tex":
-				spr.frames = AtlasFrameMaker.construct(image);
+			//case "texture" | "textureatlas" | "tex":
+				//spr.frames = AtlasFrameMaker.construct(image);
 
-			case "texture_noaa" | "textureatlas_noaa" | "tex_noaa":
-				spr.frames = AtlasFrameMaker.construct(image, null, true);
+			//case "texture_noaa" | "textureatlas_noaa" | "tex_noaa":
+				//spr.frames = AtlasFrameMaker.construct(image, null, true);
 
 			case "packer" | "packeratlas" | "pac":
 				spr.frames = Paths.getPackerAtlas(image);
