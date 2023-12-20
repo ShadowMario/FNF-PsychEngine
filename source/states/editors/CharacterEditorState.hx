@@ -696,7 +696,10 @@ class CharacterEditorState extends MusicBeatState
 	}
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
-		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
+		if(id != FlxUIInputText.CHANGE_EVENT) return;
+
+		if(sender is FlxUIInputText)
+		{
 			if(sender == healthIconInputText) {
 				var lastIcon = healthIcon.getCharacter();
 				healthIcon.changeIcon(healthIconInputText.text, false);
@@ -706,7 +709,9 @@ class CharacterEditorState extends MusicBeatState
 			else if(sender == imageInputText) {
 				character.imageFile = imageInputText.text;
 			}
-		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
+		}
+		else if(sender is FlxUINumericStepper)
+		{
 			if (sender == scaleStepper)
 			{
 				reloadCharacterImage();
