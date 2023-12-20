@@ -5,7 +5,7 @@ body:
   - type: textarea
     id: description
     attributes:
-      label: "Describe your bug here."
+      label: "Describe your bug here.\n\nMind you, if you are modding, please try testing your bug in a clean version of the engine instead, this ensures the bug is actually caused by the engine itself."
     validations:
       required: true
 
@@ -24,6 +24,18 @@ body:
       options:
         - Lua
         - Source
+        - Lua and Source
+        - I am not modding
+    validations:
+      required: true
+
+  - type: dropdown
+    id: psychversion
+    attributes:
+      label: "Which branch of the engine are you using?"
+      options:
+        - Latest (main)
+        - Unstable (experimental)
     validations:
       required: true
 
@@ -35,9 +47,6 @@ body:
         - "Windows"
         - "Linux"
         - "Mac"
-        - "HTML5"
-        - "Flash/Air-based target"
-        - "Neko, HashLink, or other build system"
     validations:
       required: true
 
