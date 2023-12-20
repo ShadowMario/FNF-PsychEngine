@@ -1,7 +1,5 @@
 package states.stages;
 
-import flixel.math.FlxPoint;
-
 class Spooky extends BaseStage
 {
 	var halloweenBG:BGSprite;
