@@ -37,6 +37,9 @@ import psychlua.HScript;
 import psychlua.DebugLuaText;
 import psychlua.ModchartSprite;
 
+import flixel.input.keyboard.FlxKey;
+import flixel.input.gamepad.FlxGamepadInputID;
+
 import haxe.Json;
 
 class FunkinLua {
@@ -57,7 +60,7 @@ class FunkinLua {
 	#if SScript
 	public var hscript:HScript = null;
 	#end
-	
+
 	public var callbacks:Map<String, Dynamic> = new Map<String, Dynamic>();
 	public static var customFunctions:Map<String, Dynamic> = new Map<String, Dynamic>();
 
@@ -212,7 +215,7 @@ class FunkinLua {
 
 			return runningScripts;
 		});
-		
+
 		addLocalCallback("setOnScripts", function(varName:String, arg:Dynamic, ?ignoreSelf:Bool = false, ?exclusions:Array<String> = null) {
 			if(exclusions == null) exclusions = [];
 			if(ignoreSelf && !exclusions.contains(scriptName)) exclusions.push(scriptName);
@@ -808,7 +811,7 @@ class FunkinLua {
 				MusicBeatState.switchState(new StoryMenuState());
 			else
 				MusicBeatState.switchState(new FreeplayState());
-			
+
 			#if desktop DiscordClient.resetClientID(); #end
 
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -1064,7 +1067,7 @@ class FunkinLua {
 			var mySprite:FlxSprite = null;
 			if(game.modchartSprites.exists(tag)) mySprite = game.modchartSprites.get(tag);
 			else if(game.variables.exists(tag)) mySprite = game.variables.get(tag);
-			
+
 			if(mySprite == null) return false;
 
 			if(front)
@@ -1348,7 +1351,7 @@ class FunkinLua {
 				if(game.modchartSounds.exists(tag)) {
 					game.modchartSounds.get(tag).stop();
 				}
-				game.modchartSounds.set(tag, FlxG.sound.play(Paths.sound(sound), volume, false, function() {
+				game.modchartSounds.set(tag, FlxG.sound.play(Paths.sound(sound), volume, false, null, true, function() {
 					game.modchartSounds.remove(tag);
 					game.callOnLuas('onSoundFinished', [tag]);
 				}));
@@ -1462,63 +1465,17 @@ class FunkinLua {
 			{
 				if(this.modFolder == null)
 				{
-					luaTrace('getModSetting: Argument #2 is null and script is not inside a packed Mod folder!', false, false, FlxColor.RED);
+					FunkinLua.luaTrace('getModSetting: Argument #2 is null and script is not inside a packed Mod folder!', false, false, FlxColor.RED);
 					return null;
-				} 
+				}
 				modName = this.modFolder;
 			}
-
-			if(FlxG.save.data.modSettings == null) FlxG.save.data.modSettings = new Map<String, Dynamic>();
-
-			var settings:Map<String, Dynamic> = FlxG.save.data.modSettings.get(modName);
-			var path:String = Paths.mods('$modName/data/settings.json');
-			if(FileSystem.exists(path))
-			{
-				if(settings == null || !settings.exists(saveTag))
-				{
-					if(settings == null) settings = new Map<String, Dynamic>();
-					var data:String = File.getContent(path);
-					try
-					{
-						luaTrace('getModSetting: Trying to find default value for "$saveTag" in Mod: "$modName"');
-						var parsedJson:Dynamic = Json.parse(data);
-						for (i in 0...parsedJson.length)
-						{
-							var sub:Dynamic = parsedJson[i];
-							if(sub != null && sub.save != null && sub.value != null && !settings.exists(sub.save))
-							{
-								luaTrace('getModSetting: Found unsaved value "${sub.save}" in Mod: "$modName"');
-								settings.set(sub.save, sub.value);
-							}
-						}
-						FlxG.save.data.modSettings.set(modName, settings);
-					}
-					catch(e:Dynamic)
-					{
-						var errorTitle = 'Mod name: ' + Mods.currentModDirectory;
-						var errorMsg = 'An error occurred: $e';
-						#if windows
-						lime.app.Application.current.window.alert(errorMsg, errorTitle);
-						#end
-						trace('$errorTitle - $errorMsg');
-					}
-				}
-			}
-			else
-			{
-				FlxG.save.data.modSettings.remove(modName);
-				luaTrace('getModSetting: $path could not be found!', false, false, FlxColor.RED);
-				return null;
-			}
-
-			if(settings.exists(saveTag)) return settings.get(saveTag);
-			luaTrace('getModSetting: "$saveTag" could not be found inside $modName\'s settings!', false, false, FlxColor.RED);
-			return null;
+			return LuaUtils.getModSetting(saveTag, modName);
 		});
 		//
 
 		Lua_helper.add_callback(lua, "debugPrint", function(text:Dynamic = '', color:String = 'WHITE') PlayState.instance.addTextToDebug(text, CoolUtil.colorFromString(color)));
-		
+
 		addLocalCallback("close", function() {
 			closed = true;
 			trace('Closing script $scriptName');
@@ -1535,7 +1492,7 @@ class FunkinLua {
 		CustomSubstate.implement(this);
 		ShaderFunctions.implement(this);
 		DeprecatedFunctions.implement(this);
-		
+
 		try{
 			var isString:Bool = !FileSystem.exists(scriptName);
 			var result:Dynamic = null;
@@ -1613,7 +1570,7 @@ class FunkinLua {
 		#end
 		return Function_Continue;
 	}
-	
+
 	public function set(variable:String, data:Dynamic) {
 		#if LUA_ALLOWED
 		if(lua == null) {
@@ -1627,7 +1584,6 @@ class FunkinLua {
 
 	public function stop() {
 		#if LUA_ALLOWED
-		PlayState.instance.luaArray.remove(this);
 		closed = true;
 
 		if(lua == null) {
@@ -1681,7 +1637,7 @@ class FunkinLua {
 		}
 		#end
 	}
-	
+
 	public static function luaTrace(text:String, ignoreCheck:Bool = false, deprecated:Bool = false, color:FlxColor = FlxColor.WHITE) {
 		#if LUA_ALLOWED
 		if(ignoreCheck || getBool('luaDebugMode')) {
@@ -1689,11 +1645,10 @@ class FunkinLua {
 				return;
 			}
 			PlayState.instance.addTextToDebug(text, color);
-			trace(text);
 		}
 		#end
 	}
-	
+
 	#if LUA_ALLOWED
 	public static function getBool(variable:String) {
 		if(lastCalledScript == null) return false;
@@ -1723,7 +1678,7 @@ class FunkinLua {
 			return scriptFile;
 		else if(FileSystem.exists(path))
 			return path;
-	
+
 		if(FileSystem.exists(preloadPath))
 		#else
 		if(Assets.exists(preloadPath))
@@ -1761,7 +1716,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, name, null); //just so that it gets called
 		#end
 	}
-	
+
 	#if (MODS_ALLOWED && !flash && sys)
 	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
 	#end
@@ -1782,7 +1737,7 @@ class FunkinLua {
 
 		for(mod in Mods.getGlobalMods())
 			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
-		
+
 		for (folder in foldersToCheck)
 		{
 			if(FileSystem.exists(folder))

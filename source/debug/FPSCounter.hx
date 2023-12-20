@@ -56,7 +56,7 @@ class FPSCounter extends TextField
 		while (times[0] < now - 1000)
 			times.shift();
 
-		currentFPS = currentFPS < FlxG.drawFramerate ? times.length : FlxG.drawFramerate;		
+		currentFPS = currentFPS < FlxG.updateFramerate ? times.length : FlxG.updateFramerate;		
 		updateText();
 		deltaTimeout += deltaTime;
 	}

@@ -18,7 +18,6 @@ class MainMenuState extends MusicBeatState
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
-	private var camGame:FlxCamera;
 	
 	var optionShit:Array<String> = [
 		'story_mode',
@@ -103,8 +102,6 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 		}
 
-		FlxG.camera.follow(camFollow, null, 0);
-
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -130,6 +127,8 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		super.create();
+
+		FlxG.camera.follow(camFollow, null, 0.15);
 	}
 
 	var selectedSomethin:Bool = false;
@@ -141,7 +140,6 @@ class MainMenuState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * elapsed;
 			if(FreeplayState.vocals != null) FreeplayState.vocals.volume += 0.5 * elapsed;
 		}
-		FlxG.camera.followLerp = FlxMath.bound(elapsed * 9 / (FlxG.updateFramerate / 60), 0, 1);
 
 		if (!selectedSomethin)
 		{
