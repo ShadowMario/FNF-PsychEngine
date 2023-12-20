@@ -101,7 +101,10 @@ class HScript extends SScript
 		#end
 
 		// Functions & Variables
-		set('setVar', function(name:String, value:Dynamic) PlayState.instance.variables.set);
+		set('setVar', function(name:String, value:Dynamic) {
+			PlayState.instance.variables.set(name, value);
+			return value;
+		});
 		set('getVar', function(name:String) {
 			var result:Dynamic = null;
 			if(PlayState.instance.variables.exists(name)) result = PlayState.instance.variables.get(name);
