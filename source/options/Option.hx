@@ -39,36 +39,33 @@ class Option
 		this.description = description;
 		this.variable = variable;
 		this.type = type;
-		this.defaultValue = Reflect.getProperty(ClientPrefs.defaultData, variable);
 		this.options = options;
 
-		if(defaultValue == 'null variable value' || type == 'keybind')
+		if(this.type != 'keybind') this.defaultValue = Reflect.getProperty(ClientPrefs.defaultData, variable);
+		switch(type)
 		{
-			switch(type)
-			{
-				case 'bool':
-					defaultValue = false;
-				case 'int' | 'float':
-					defaultValue = 0;
-				case 'percent':
-					defaultValue = 1;
-					displayFormat = '%v%';
-					changeValue = 0.01;
-					minValue = 0;
-					maxValue = 1;
-					scrollSpeed = 0.5;
-					decimals = 2;
-				case 'string':
-					defaultValue = '';
-					if(options.length > 0) {
-						defaultValue = options[0];
-					}
+			case 'bool':
+				if(defaultValue == null) defaultValue = false;
+			case 'int' | 'float':
+				if(defaultValue == null) defaultValue = 0;
+			case 'percent':
+				if(defaultValue == null) defaultValue = 1;
+				displayFormat = '%v%';
+				changeValue = 0.01;
+				minValue = 0;
+				maxValue = 1;
+				scrollSpeed = 0.5;
+				decimals = 2;
+			case 'string':
+				if(defaultValue == null) defaultValue = '';
+				if(options.length > 0) {
+					defaultValue = options[0];
+				}
 
-				case 'keybind':
-					defaultValue = '';
-					defaultKeys = {gamepad: 'NONE', keyboard: 'NONE'};
-					keys = {gamepad: 'NONE', keyboard: 'NONE'};
-			}
+			case 'keybind':
+				defaultValue = '';
+				defaultKeys = {gamepad: 'NONE', keyboard: 'NONE'};
+				keys = {gamepad: 'NONE', keyboard: 'NONE'};
 		}
 
 		try
