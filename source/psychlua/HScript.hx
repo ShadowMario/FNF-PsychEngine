@@ -401,3 +401,4 @@ class HScript extends SScript
 		super.destroy();
 	}
 }
+#end
