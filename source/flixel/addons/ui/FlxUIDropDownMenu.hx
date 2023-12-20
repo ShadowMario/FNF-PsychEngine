@@ -447,23 +447,12 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				if(lastScroll != currentScroll) updateButtonPositions();
 			}
 
-			if (FlxG.mouse.justPressed && !mouseOverlapping())
+			if (FlxG.mouse.justPressed && !FlxG.mouse.overlaps(this,camera))
 			{
 				showList(false);
 			}
 		}
 		#end
-	}
-
-	function mouseOverlapping()
-	{
-		var objPoint = this.getScreenPosition(null, camera);
-		if(FlxG.mouse.screenX >= objPoint.x && FlxG.mouse.screenY >= objPoint.y &&
-			FlxG.mouse.screenX < objPoint.x + this.width && FlxG.mouse.screenY < objPoint.y + this.height)
-		{
-			return true;
-		}
-		return false;
 	}
 
 	override public function destroy():Void
