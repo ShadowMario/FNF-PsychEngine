@@ -2,29 +2,8 @@
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
-You must have [Haxe](https://haxe.org/download/), installed in order to move on to these next steps
 
-------------------
-
-Go into your `setup` folder located in the root directory of the source code, and execute the respective script for your operating system
-
-`setup-unix.sh` was designed for Linux and Mac, `setup-windows.bat` was designed for (duh) Windows
-
-for Windows users, double click the `setup-windows.bat` file, and wait until the process of installing the libraries is finished
-
-------------------
-
-for Linux and Mac users, often double clicking on `setup-unix.sh` is the solution, but if not, open up a terminal on the script's folder location, and execute the following command:
-
-`sh setup-unix.sh`
-
-------------------
-
-once finished, you should be ready to compile, you can open a terminal in the source code folder, and then type `lime test <target>`
-
-with `<target>` being either `windows`, `mac` or `linux`
-
-If the compiler gives an error saying that hxCodec cannot be found read this issue to fix it: ShadowMario/FNF-PsychEngine#12770
+Refer to [the Build Instructions](./BUILDING.md)
 
 ## Customization:
 
@@ -38,19 +17,19 @@ same goes for *Lua Scripts*, comment out or delete the line with `LUA_ALLOWED`, 
 
 ## Credits:
 * Shadow Mario - Programmer
-* RiverOaken - Artist
-* Yoshubs - Assistant Programmer
+* Riveren - Artist
 
 ### Special Thanks
 * bbpanzu - Ex-Programmer
-* Yoshubs - New Input System
+* Yoshubs - Ex-Programmer
 * SqirraRNG - Crash Handler and Base code for Chart Editor's Waveform
 * KadeDev - Fixed some cool stuff on Chart Editor and other PRs
 * iFlicky - Composer of Psync and Tea Time, also made the Dialogue Sounds
 * PolybiusProxy - .MP4 Video Loader Library (hxCodec)
 * Keoiki - Note Splash Animations
 * Smokey - Sprite Atlas Support
-* Nebula the Zorua - LUA JIT Fork and some Lua reworks
+* Nebula the Zorua - some Lua reworks
+* superpowers04 - LUA JIT Fork
 _____________________________________
 
 # Features

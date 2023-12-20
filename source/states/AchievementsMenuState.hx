@@ -37,12 +37,8 @@ class AchievementsMenuState extends MusicBeatState
 				options.push(makeAchievement(achievement, data, unlocked, data.mod));
 		}
 
-		// TO DO: check for mods
-
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
-		FlxG.camera.follow(camFollow, null, 0);
-		FlxG.camera.scroll.y = -FlxG.height;
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
 		menuBG.antialiasing = ClientPrefs.data.antialiasing;
@@ -126,6 +122,9 @@ class AchievementsMenuState extends MusicBeatState
 		
 		_changeSelection();
 		super.create();
+		
+		FlxG.camera.follow(camFollow, null, 0.15);
+		FlxG.camera.scroll.y = -FlxG.height;
 	}
 
 	function makeAchievement(achievement:String, data:Achievement, unlocked:Bool, mod:String = null)
@@ -204,8 +203,6 @@ class AchievementsMenuState extends MusicBeatState
 				openSubState(new ResetAchievementSubstate());
 			}
 		}
-
-		FlxG.camera.followLerp = FlxMath.bound(elapsed * 9 / (FlxG.updateFramerate / 60), 0, 1);
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));

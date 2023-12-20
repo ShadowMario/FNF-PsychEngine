@@ -1,7 +1,7 @@
 package states.editors;
 
 import flash.geom.Rectangle;
-import tjson.TJSON as Json;
+import haxe.Json;
 import haxe.format.JsonParser;
 import haxe.io.Bytes;
 
@@ -15,7 +15,6 @@ import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUISlider;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.group.FlxGroup;
-import flixel.math.FlxPoint;
 import flixel.ui.FlxButton;
 
 import flixel.util.FlxSort;
@@ -325,10 +324,12 @@ class ChartingState extends MusicBeatState
 		"W/S or Mouse Wheel - Change Conductor's strum time
 		\nA/D - Go to the previous/next section
 		\nLeft/Right - Change Snap
-		\nUp/Down - Change Conductor's Strum Time with Snapping
-		\nLeft Bracket / Right Bracket - Change Song Playback Rate (SHIFT to go Faster)
-		\nALT + Left Bracket / Right Bracket - Reset Song Playback Rate
-		\nHold Shift to move 4x faster
+		\nUp/Down - Change Conductor's Strum Time with Snapping" +
+		#if FLX_PITCH
+		"\nLeft Bracket / Right Bracket - Change Song Playback Rate (SHIFT to go Faster)
+		\nALT + Left Bracket / Right Bracket - Reset Song Playback Rate" +
+		#end
+		"\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
 		\n
@@ -385,7 +386,9 @@ class ChartingState extends MusicBeatState
 	var playSoundDad:FlxUICheckBox = null;
 	var UI_songTitle:FlxUIInputText;
 	var stageDropDown:FlxUIDropDownMenu;
+	#if FLX_PITCH
 	var sliderRate:FlxUISlider;
+	#end
 	function addSongUI():Void
 	{
 		UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
@@ -608,7 +611,7 @@ class ChartingState extends MusicBeatState
 
 		UI_box.addGroup(tab_group_song);
 
-		FlxG.camera.follow(camPos);
+		initPsychCamera().follow(camPos, LOCKON, 1);
 	}
 
 	var stepperBeats:FlxUINumericStepper;
@@ -1174,8 +1177,7 @@ class ChartingState extends MusicBeatState
 		check_mute_inst.checked = false;
 		check_mute_inst.callback = function()
 		{
-			var vol:Float = 1;
-
+			var vol:Float = instVolume.value;
 			if (check_mute_inst.checked)
 				vol = 0;
 
@@ -1217,8 +1219,7 @@ class ChartingState extends MusicBeatState
 		check_mute_vocals.callback = function()
 		{
 			if(vocals != null) {
-				var vol:Float = 1;
-
+				var vol:Float = voicesVolume.value;
 				if (check_mute_vocals.checked)
 					vol = 0;
 
@@ -1273,7 +1274,7 @@ class ChartingState extends MusicBeatState
 		voicesVolume.name = 'voices_volume';
 		blockPressWhileTypingOnStepper.push(voicesVolume);
 		
-		#if !html5
+		#if FLX_PITCH
 		sliderRate = new FlxUISlider(this, 'playbackSpeed', 120, 120, 0.5, 3, 150, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderRate.nameLabel.text = 'Playback Rate';
 		tab_group_chart.add(sliderRate);
@@ -1379,13 +1380,18 @@ class ChartingState extends MusicBeatState
 			// vocals.stop();
 		}
 
-		var file:Dynamic = Paths.voices(currentSongName);
 		vocals = new FlxSound();
-		if (Std.isOfType(file, Sound) || OpenFlAssets.exists(file)) {
-			vocals.loadEmbedded(file);
-			vocals.autoDestroy = false;
-			FlxG.sound.list.add(vocals);
+		try
+		{
+			var file:Dynamic = Paths.voices(currentSongName);
+			if ((Std.isOfType(file, Sound) || OpenFlAssets.exists(file)) && file != null)
+			{
+				vocals.loadEmbedded(file);
+				vocals.autoDestroy = false;
+				FlxG.sound.list.add(vocals);
+			}
 		}
+		catch(e:Dynamic) {}
 		generateSong();
 		FlxG.sound.music.pause();
 		Conductor.songPosition = sectionStartTime();
@@ -1580,7 +1586,7 @@ class ChartingState extends MusicBeatState
 			switch (sender)
 			{
 				case 'playbackSpeed':
-					playbackSpeed = Std.int(sliderRate.value);
+					playbackSpeed = #if FLX_PITCH Std.int(sliderRate.value) #else 1.0 #end;
 			}
 		}
 
@@ -2050,6 +2056,7 @@ class ChartingState extends MusicBeatState
 			strumLineNotes.members[i].alpha = FlxG.sound.music.playing ? 1 : 0.35;
 		}
 
+		#if FLX_PITCH
 		// PLAYBACK SPEED CONTROLS //
 		var holdingShift = FlxG.keys.pressed.SHIFT;
 		var holdingLB = FlxG.keys.pressed.LBRACKET;
@@ -2072,6 +2079,7 @@ class ChartingState extends MusicBeatState
 
 		FlxG.sound.music.pitch = playbackSpeed;
 		vocals.pitch = playbackSpeed;
+		#end
 
 		bpmTxt.text =
 		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +

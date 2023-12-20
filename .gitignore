@@ -20,3 +20,5 @@ vs_Community.exe
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+art/build_html.bat
+art/build_html-debug.bat
