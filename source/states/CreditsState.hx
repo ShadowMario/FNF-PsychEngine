@@ -53,7 +53,6 @@ class CreditsState extends MusicBeatState
 			['SqirraRNG',			'sqirra',			'Crash Handler and Base code for\nChart Editor\'s Waveform', 'https://twitter.com/gedehari',		 'E1843A'],
 			['EliteMasterEric',		'mastereric',		'Runtime Shaders support',									 'https://twitter.com/EliteMasterEric',	 'FFBD40'],
 			['PolybiusProxy',		'proxy',			'.MP4 Video Loader Library (hxCodec)',						 'https://twitter.com/polybiusproxy',	 'DCD294'],
-			['Tahir K.',			'face',				'Implementing and maintaining SScript on Psych',             'https://twitter.com/tahirk618',        'A1A1A1'],
 			['iFlicky',				'flicky',			'Composer of Psync and Tea Time\nMade the Dialogue Sounds',	 'https://twitter.com/flicky_i',		 '9E29CF'],
 			['KadeDev',				'kade',				'Fixed some cool stuff on Chart Editor\nand other PRs',		 'https://twitter.com/kade0912',		 '64A250'],
 			['superpowers04',		'superpowers04',	'LUA JIT Fork',												 'https://twitter.com/superpowers04',	 'B957ED'],
