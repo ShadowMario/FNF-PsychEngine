@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="noteSplashes-electric.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="splash electro red 10000" x="255" y="175" width="139" height="128" frameX="-57" frameY="-53" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro red 10001" x="248" y="1" width="199" height="173" frameX="-27" frameY="-31" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro red 10002" x="1" y="237" width="253" height="213" frameX="0" frameY="-11" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro red 10003" x="1" y="1" width="246" height="235" frameX="-3" frameY="0" frameWidth="253" frameHeight="235"/>
+	
+	<SubTexture name="splash electro blue 10000" x="255" y="175" width="139" height="128" frameX="-57" frameY="-53" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro blue 10001" x="248" y="1" width="199" height="173" frameX="-27" frameY="-31" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro blue 10002" x="1" y="237" width="253" height="213" frameX="0" frameY="-11" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro blue 10003" x="1" y="1" width="246" height="235" frameX="-3" frameY="0" frameWidth="253" frameHeight="235"/>
+	
+	<SubTexture name="splash electro green 10000" x="255" y="175" width="139" height="128" frameX="-57" frameY="-53" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro green 10001" x="248" y="1" width="199" height="173" frameX="-27" frameY="-31" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro green 10002" x="1" y="237" width="253" height="213" frameX="0" frameY="-11" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro green 10003" x="1" y="1" width="246" height="235" frameX="-3" frameY="0" frameWidth="253" frameHeight="235"/>
+	
+	<SubTexture name="splash electro purple 10000" x="255" y="175" width="139" height="128" frameX="-57" frameY="-53" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro purple 10001" x="248" y="1" width="199" height="173" frameX="-27" frameY="-31" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro purple 10002" x="1" y="237" width="253" height="213" frameX="0" frameY="-11" frameWidth="253" frameHeight="235"/>
+	<SubTexture name="splash electro purple 10003" x="1" y="1" width="246" height="235" frameX="-3" frameY="0" frameWidth="253" frameHeight="235"/>
+</TextureAtlas>
