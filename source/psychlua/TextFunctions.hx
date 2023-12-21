@@ -51,12 +51,11 @@ class TextFunctions
 			var obj:FlxText = LuaUtils.getTextObject(tag);
 			if(obj != null)
 			{
-				if(size > 0){
+				if(size > 0)
+				{
 					CoolUtil.setTextBorderFromString(obj, style);
-					if(obj.borderStyle != NONE)
-						obj.borderSize = size;
+					obj.borderSize = size;
 				}
-				
 				obj.borderColor = CoolUtil.colorFromString(color);
 				return true;
 			}
