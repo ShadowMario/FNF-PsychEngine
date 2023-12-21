@@ -435,8 +435,8 @@ class FunkinLua {
 							
 						if(script.origin == foundScript)
 						{
-							script.destroy();
 							trace('Closing script ' + script.origin);
+							script.destroy();
 							return true;
 						}
 			}
