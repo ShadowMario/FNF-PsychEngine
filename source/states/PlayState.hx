@@ -3426,7 +3426,7 @@ class PlayState extends MusicBeatState
 
 		for (name in achievesToCheck) {
 			var unlock:Bool = false;
-			if (name != WeekData.getWeekFileName() + '_nomiss') // common achievements
+			if (name != WeekData.getWeekFileName() + '_nomiss' && Achievements.exists(name)) // common achievements
 			{
 				switch(name)
 				{
