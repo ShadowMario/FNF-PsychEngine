@@ -558,7 +558,7 @@ class FreeplayState extends MusicBeatState
 	{
 		super.destroy();
 
-		FlxG.autoPause = false;
+		FlxG.autoPause = ClientPrefs.data.autoPause;
 		if (!FlxG.sound.music.playing)
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 	}	
