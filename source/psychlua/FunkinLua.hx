@@ -867,7 +867,7 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "cameraSetTarget", function(target:String) {
-			var isDad:Bool = target.toLowerCase() == 'dad' ? true : false;
+			var isDad:Bool = (target.toLowerCase() == 'dad');
 			if (target.toLowerCase() == 'gf' || target.toLowerCase() == 'girlfriend') {
 				game.camFollow.setPosition(game.gf.getMidpoint().x, game.gf.getMidpoint().y);
 				game.camFollow.x += game.gf.cameraPosition[0] + game.girlfriendCameraOffset[0];
