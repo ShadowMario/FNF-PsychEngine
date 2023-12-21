@@ -3,13 +3,12 @@ package states;
 import backend.WeekData;
 import backend.Mods;
 
-import flixel.math.FlxPoint;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
 import flixel.graphics.FlxGraphic;
 import flash.geom.Rectangle;
 import lime.utils.Assets;
-import tjson.TJSON as Json;
+import haxe.Json;
 
 import flixel.util.FlxSpriteUtil;
 import objects.AttachedSprite;
@@ -830,7 +829,7 @@ class ModItem extends FlxSpriteGroup
 			try
 			{
 				//trace('trying to load settings: $folder');
-				settings = Json.parse(data);
+				settings = tjson.TJSON.parse(data);
 			}
 			catch(e:Dynamic)
 			{

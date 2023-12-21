@@ -17,6 +17,7 @@ class NoteSplashDebugState extends MusicBeatState
 	var notes:FlxTypedGroup<StrumNote>;
 	var splashes:FlxTypedGroup<FlxSprite>;
 	
+	var imageInputText:FlxInputText;
 	var nameInputText:FlxInputText;
 	var stepperMinFps:FlxUINumericStepper;
 	var stepperMaxFps:FlxUINumericStepper;
@@ -26,6 +27,11 @@ class NoteSplashDebugState extends MusicBeatState
 	var curAnimText:FlxText;
 	var savedText:FlxText;
 	var selecArr:Array<Float> = null;
+
+	var missingTextBG:FlxSprite;
+	var missingText:FlxText;
+
+	public static final defaultTexture:String = 'noteSplashes';
 
 	override function create()
 	{
@@ -56,11 +62,49 @@ class NoteSplashDebugState extends MusicBeatState
 			splashes.add(splash);
 		}
 
-
 		//
 		var txtx = 60;
 		var txty = 640;
-		var animName:FlxText = new FlxText(txtx, txty, 'Animation name:', 16);
+
+		var imageName:FlxText = new FlxText(txtx, txty - 120, 'Image Name:', 16);
+		add(imageName);
+
+		imageInputText = new FlxInputText(txtx, txty - 100, 360, defaultTexture, 16);
+		imageInputText.callback = function(text:String, action:String)
+		{
+			switch(action)
+			{
+				case 'enter':
+					imageInputText.hasFocus = false;
+					textureName = text;
+					try {
+						loadFrames();
+					} catch(e:Dynamic) {
+						trace('ERROR! $e');
+						textureName = defaultTexture;
+						loadFrames();
+
+						missingText.text = 'ERROR WHILE LOADING IMAGE:\n$text';
+						missingText.screenCenter(Y);
+						missingText.visible = true;
+						missingTextBG.visible = true;
+						FlxG.sound.play(Paths.sound('cancelMenu'));
+
+						new FlxTimer().start(2.5, function(tmr:FlxTimer)
+						{
+							missingText.visible = false;
+							missingTextBG.visible = false;
+						});
+					}
+
+				default:
+					trace('changed image to $text');
+			}
+
+		};
+		add(imageInputText);
+
+		var animName:FlxText = new FlxText(txtx, txty, 'Animation Name:', 16);
 		add(animName);
 
 		nameInputText = new FlxInputText(txtx, txty + 20, 360, '', 16);
@@ -80,16 +124,15 @@ class NoteSplashDebugState extends MusicBeatState
 
 		};
 		add(nameInputText);
-		
-		add(new FlxText(txtx, txty - 84, 0, 'Min/Max Framerate:', 16));
-		stepperMinFps = new FlxUINumericStepper(txtx, txty - 60, 1, 22, 1, 60, 0);
+
+		add(new FlxText(txtx, txty - 50, 0, 'Min/Max Framerate:', 16));
+		stepperMinFps = new FlxUINumericStepper(txtx, txty - 30, 1, 22, 1, 60, 0);
 		stepperMinFps.name = 'min_fps';
 		add(stepperMinFps);
 
-		stepperMaxFps = new FlxUINumericStepper(txtx + 60, txty - 60, 1, 26, 1, 60, 0);
+		stepperMaxFps = new FlxUINumericStepper(txtx + 60, txty - 30, 1, 26, 1, 60, 0);
 		stepperMaxFps.name = 'max_fps';
 		add(stepperMaxFps);
-
 
 		//
 		offsetsText = new FlxText(300, 150, 680, '', 16);
@@ -121,6 +164,17 @@ class NoteSplashDebugState extends MusicBeatState
 		savedText.scrollFactor.set();
 		add(savedText);
 
+		missingTextBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		missingTextBG.alpha = 0.6;
+		missingTextBG.visible = false;
+		add(missingTextBG);
+
+		missingText = new FlxText(50, 0, FlxG.width - 100, '', 24);
+		missingText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		missingText.scrollFactor.set();
+		missingText.visible = false;
+		add(missingText);
+
 		loadFrames();
 		changeSelection();
 		super.create();
@@ -135,7 +189,7 @@ class NoteSplashDebugState extends MusicBeatState
 		@:privateAccess
 		cast(stepperMinFps.text_field, FlxInputText).hasFocus = cast(stepperMaxFps.text_field, FlxInputText).hasFocus = false;
 
-		var notTyping:Bool = !nameInputText.hasFocus;
+		var notTyping:Bool = !nameInputText.hasFocus && !imageInputText.hasFocus;
 		if(controls.BACK && notTyping)
 		{
 			MusicBeatState.switchState(new MasterEditorMenu());
@@ -254,11 +308,12 @@ class NoteSplashDebugState extends MusicBeatState
 		offsetsText.text = selecArr.toString();
 	}
 
+	var textureName:String = defaultTexture;
 	var texturePath:String = '';
 	var copiedArray:Array<Float> = null;
 	function loadFrames()
 	{
-		texturePath = NoteSplash.defaultNoteSplash + NoteSplash.getSplashSkinPostfix();
+		texturePath = 'noteSplashes/' + textureName;
 		splashes.forEachAlive(function(spr:FlxSprite) {
 			spr.frames = Paths.getSparrowAtlas(texturePath);
 		});
