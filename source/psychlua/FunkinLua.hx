@@ -427,7 +427,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "removeHScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) {
 			#if HSCRIPT_ALLOWED
-			var foundScript:String = findScript(luaFile);
+			var foundScript:String = findScript(luaFile, '.hx');
 			if(foundScript != null)
 			{
 				if(!ignoreAlreadyRunning)
