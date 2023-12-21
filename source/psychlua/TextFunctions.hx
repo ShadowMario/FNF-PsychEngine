@@ -47,13 +47,13 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextWidth: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Int, color:String) {
+		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Float, color:String, ?style:String = 'outline') {
 			var obj:FlxText = LuaUtils.getTextObject(tag);
 			if(obj != null)
 			{
-				if(size > 0)
+				if(size > 0 && style.toLowerCase() != 'none')
 				{
-					obj.borderStyle = OUTLINE;
+					CoolUtil.setTextBorderFromString(obj, style);
 					obj.borderSize = size;
 				}
 				else
