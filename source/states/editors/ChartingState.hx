@@ -1,7 +1,7 @@
 package states.editors;
 
 import flash.geom.Rectangle;
-import tjson.TJSON as Json;
+import haxe.Json;
 import haxe.format.JsonParser;
 import haxe.io.Bytes;
 
@@ -15,7 +15,6 @@ import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUISlider;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.group.FlxGroup;
-import flixel.math.FlxPoint;
 import flixel.ui.FlxButton;
 
 import flixel.util.FlxSort;
@@ -42,8 +41,6 @@ import substates.Prompt;
 
 #if sys
 import flash.media.Sound;
-import sys.FileSystem;
-import sys.io.File;
 #end
 
 @:access(flixel.sound.FlxSound._sound)
@@ -327,10 +324,12 @@ class ChartingState extends MusicBeatState
 		"W/S or Mouse Wheel - Change Conductor's strum time
 		\nA/D - Go to the previous/next section
 		\nLeft/Right - Change Snap
-		\nUp/Down - Change Conductor's Strum Time with Snapping
-		\nLeft Bracket / Right Bracket - Change Song Playback Rate (SHIFT to go Faster)
-		\nALT + Left Bracket / Right Bracket - Reset Song Playback Rate
-		\nHold Shift to move 4x faster
+		\nUp/Down - Change Conductor's Strum Time with Snapping" +
+		#if FLX_PITCH
+		"\nLeft Bracket / Right Bracket - Change Song Playback Rate (SHIFT to go Faster)
+		\nALT + Left Bracket / Right Bracket - Reset Song Playback Rate" +
+		#end
+		"\nHold Shift to move 4x faster
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
 		\n
@@ -387,7 +386,9 @@ class ChartingState extends MusicBeatState
 	var playSoundDad:FlxUICheckBox = null;
 	var UI_songTitle:FlxUIInputText;
 	var stageDropDown:FlxUIDropDownMenu;
+	#if FLX_PITCH
 	var sliderRate:FlxUISlider;
+	#end
 	function addSongUI():Void
 	{
 		UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
@@ -480,15 +481,15 @@ class ChartingState extends MusicBeatState
 		stepperSpeed.name = 'song_speed';
 		blockPressWhileTypingOnStepper.push(stepperSpeed);
 		#if MODS_ALLOWED
-		var directories:Array<String> = [Paths.mods('characters/'), Paths.mods(Mods.currentModDirectory + '/characters/'), Paths.getPreloadPath('characters/')];
+		var directories:Array<String> = [Paths.mods('characters/'), Paths.mods(Mods.currentModDirectory + '/characters/'), Paths.getSharedPath('characters/')];
 		for(mod in Mods.getGlobalMods())
 			directories.push(Paths.mods(mod + '/characters/'));
 		#else
-		var directories:Array<String> = [Paths.getPreloadPath('characters/')];
+		var directories:Array<String> = [Paths.getSharedPath('characters/')];
 		#end
 
 		var tempArray:Array<String> = [];
-		var characters:Array<String> = Mods.mergeAllTextsNamed('data/characterList.txt', Paths.getPreloadPath());
+		var characters:Array<String> = Mods.mergeAllTextsNamed('data/characterList.txt', Paths.getSharedPath());
 		for (character in characters)
 		{
 			if(character.trim().length > 0)
@@ -539,14 +540,14 @@ class ChartingState extends MusicBeatState
 		blockPressWhileScrolling.push(player2DropDown);
 
 		#if MODS_ALLOWED
-		var directories:Array<String> = [Paths.mods('stages/'), Paths.mods(Mods.currentModDirectory + '/stages/'), Paths.getPreloadPath('stages/')];
+		var directories:Array<String> = [Paths.mods('stages/'), Paths.mods(Mods.currentModDirectory + '/stages/'), Paths.getSharedPath('stages/')];
 		for(mod in Mods.getGlobalMods())
 			directories.push(Paths.mods(mod + '/stages/'));
 		#else
-		var directories:Array<String> = [Paths.getPreloadPath('stages/')];
+		var directories:Array<String> = [Paths.getSharedPath('stages/')];
 		#end
 
-		var stageFile:Array<String> = Mods.mergeAllTextsNamed('data/stageList.txt', Paths.getPreloadPath());
+		var stageFile:Array<String> = Mods.mergeAllTextsNamed('data/stageList.txt', Paths.getSharedPath());
 		var stages:Array<String> = [];
 		for (stage in stageFile) {
 			if(stage.trim().length > 0) {
@@ -610,7 +611,7 @@ class ChartingState extends MusicBeatState
 
 		UI_box.addGroup(tab_group_song);
 
-		FlxG.camera.follow(camPos);
+		initPsychCamera().follow(camPos, LOCKON, 999);
 	}
 
 	var stepperBeats:FlxUINumericStepper;
@@ -908,7 +909,7 @@ class ChartingState extends MusicBeatState
 		}
 
 		#if sys
-		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getPreloadPath(), 'custom_notetypes/');
+		var foldersToCheck:Array<String> = Mods.directoriesWithFile(Paths.getSharedPath(), 'custom_notetypes/');
 		for (folder in foldersToCheck)
 			for (file in FileSystem.readDirectory(folder))
 			{
@@ -1176,8 +1177,7 @@ class ChartingState extends MusicBeatState
 		check_mute_inst.checked = false;
 		check_mute_inst.callback = function()
 		{
-			var vol:Float = 1;
-
+			var vol:Float = instVolume.value;
 			if (check_mute_inst.checked)
 				vol = 0;
 
@@ -1219,8 +1219,7 @@ class ChartingState extends MusicBeatState
 		check_mute_vocals.callback = function()
 		{
 			if(vocals != null) {
-				var vol:Float = 1;
-
+				var vol:Float = voicesVolume.value;
 				if (check_mute_vocals.checked)
 					vol = 0;
 
@@ -1275,7 +1274,7 @@ class ChartingState extends MusicBeatState
 		voicesVolume.name = 'voices_volume';
 		blockPressWhileTypingOnStepper.push(voicesVolume);
 		
-		#if !html5
+		#if FLX_PITCH
 		sliderRate = new FlxUISlider(this, 'playbackSpeed', 120, 120, 0.5, 3, 150, null, 5, FlxColor.WHITE, FlxColor.BLACK);
 		sliderRate.nameLabel.text = 'Playback Rate';
 		tab_group_chart.add(sliderRate);
@@ -1381,13 +1380,18 @@ class ChartingState extends MusicBeatState
 			// vocals.stop();
 		}
 
-		var file:Dynamic = Paths.voices(currentSongName);
 		vocals = new FlxSound();
-		if (Std.isOfType(file, Sound) || OpenFlAssets.exists(file)) {
-			vocals.loadEmbedded(file);
-			vocals.autoDestroy = false;
-			FlxG.sound.list.add(vocals);
+		try
+		{
+			var file:Dynamic = Paths.voices(currentSongName);
+			if ((Std.isOfType(file, Sound) || OpenFlAssets.exists(file)) && file != null)
+			{
+				vocals.loadEmbedded(file);
+				vocals.autoDestroy = false;
+				FlxG.sound.list.add(vocals);
+			}
 		}
+		catch(e:Dynamic) {}
 		generateSong();
 		FlxG.sound.music.pause();
 		Conductor.songPosition = sectionStartTime();
@@ -1582,7 +1586,7 @@ class ChartingState extends MusicBeatState
 			switch (sender)
 			{
 				case 'playbackSpeed':
-					playbackSpeed = Std.int(sliderRate.value);
+					playbackSpeed = #if FLX_PITCH Std.int(sliderRate.value) #else 1.0 #end;
 			}
 		}
 
@@ -2052,6 +2056,7 @@ class ChartingState extends MusicBeatState
 			strumLineNotes.members[i].alpha = FlxG.sound.music.playing ? 1 : 0.35;
 		}
 
+		#if FLX_PITCH
 		// PLAYBACK SPEED CONTROLS //
 		var holdingShift = FlxG.keys.pressed.SHIFT;
 		var holdingLB = FlxG.keys.pressed.LBRACKET;
@@ -2074,6 +2079,7 @@ class ChartingState extends MusicBeatState
 
 		FlxG.sound.music.pitch = playbackSpeed;
 		vocals.pitch = playbackSpeed;
+		#end
 
 		bpmTxt.text =
 		Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2)) + " / " + Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2)) +
@@ -2244,8 +2250,8 @@ class ChartingState extends MusicBeatState
 		gridBlackLine.antialiasing = false;
 		gridLayer.add(gridBlackLine);
 
-		for (i in 1...4) {
-			var beatsep:FlxSprite = new FlxSprite(gridBG.x, (GRID_SIZE * (4 * curZoom)) * i).makeGraphic(1, 1, 0x44FF0000);
+		for (i in 1...Std.int(getSectionBeats())) {
+			var beatsep:FlxSprite = new FlxSprite(gridBG.x, (GRID_SIZE * (4 * zoomList[curZoom])) * i).makeGraphic(1, 1, 0x44FF0000);
 			beatsep.scale.x = gridBG.width;
 			beatsep.updateHitbox();
 			if(vortex) gridLayer.add(beatsep);
@@ -2626,16 +2632,16 @@ class ChartingState extends MusicBeatState
 		#if MODS_ALLOWED
 		var path:String = Paths.modFolders(characterPath);
 		if (!FileSystem.exists(path)) {
-			path = Paths.getPreloadPath(characterPath);
+			path = Paths.getSharedPath(characterPath);
 		}
 
 		if (!FileSystem.exists(path))
 		#else
-		var path:String = Paths.getPreloadPath(characterPath);
+		var path:String = Paths.getSharedPath(characterPath);
 		if (!OpenFlAssets.exists(path))
 		#end
 		{
-			path = Paths.getPreloadPath('characters/' + Character.DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
+			path = Paths.getSharedPath('characters/' + Character.DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
 		}
 
 		#if MODS_ALLOWED

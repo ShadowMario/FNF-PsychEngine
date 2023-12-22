@@ -1,14 +1,7 @@
 package backend;
 
-import flixel.util.FlxSave;
-
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
-
-#if sys
-import sys.io.File;
-import sys.FileSystem;
-#end
 
 class CoolUtil
 {
@@ -114,15 +107,54 @@ class CoolUtil
 		#end
 	}
 
-	/** Quick Function to Fix Save Files for Flixel 5
-		if you are making a mod, you are gonna wanna change "ShadowMario" to something else
-		so Base Psych saves won't conflict with yours
-		@BeastlyGabi
+	inline public static function openFolder(folder:String, absolute:Bool = false) {
+		#if sys
+			if(!absolute) folder =  Sys.getCwd() + '$folder';
+
+			folder = folder.replace('/', '\\');
+			if(folder.endsWith('/')) folder.substr(0, folder.length - 1);
+
+			#if linux
+			var command:String = 'explorer.exe';
+			#else
+			var command:String = '/usr/bin/xdg-open';
+			#end
+			Sys.command(command, [folder]);
+			trace('$command $folder');
+		#else
+			FlxG.error("Platform is not supported for CoolUtil.openFolder");
+		#end
+	}
+
+	/**
+		Helper Function to Fix Save Files for Flixel 5
+
+		-- EDIT: [November 29, 2023] --
+
+		this function is used to get the save path, period.
+		since newer flixel versions are being enforced anyways.
+		@crowplexus
 	**/
-	inline public static function getSavePath(folder:String = 'ShadowMario'):String {
-		@:privateAccess
-		return #if (flixel < "5.0.0") folder #else FlxG.stage.application.meta.get('company')
-			+ '/'
-			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
+	@:access(flixel.util.FlxSave.validate)
+	inline public static function getSavePath():String {
+		final company:String = FlxG.stage.application.meta.get('company');
+		// #if (flixel < "5.0.0") return company; #else
+		return '${company}/${flixel.util.FlxSave.validate(FlxG.stage.application.meta.get('file'))}';
+		// #end
+	}
+
+	public static function setTextBorderFromString(text:FlxText, border:String)
+	{
+		switch(border.toLowerCase().trim())
+		{
+			case 'shadow':
+				text.borderStyle = SHADOW;
+			case 'outline':
+				text.borderStyle = OUTLINE;
+			case 'outline_fast', 'outlinefast':
+				text.borderStyle = OUTLINE_FAST;
+			default:
+				text.borderStyle = NONE;
+		}
 	}
 }

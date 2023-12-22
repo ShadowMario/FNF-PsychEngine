@@ -1,10 +1,8 @@
 package options;
 
-import flixel.math.FlxPoint;
-
 import backend.StageData;
 import objects.Character;
-import objects.HealthBar;
+import objects.Bar;
 import flixel.addons.display.shapes.FlxShapeCircle;
 
 import states.stages.StageWeek1 as BackgroundStage;
@@ -27,7 +25,7 @@ class NoteOffsetState extends MusicBeatState
 	var barPercent:Float = 0;
 	var delayMin:Int = -500;
 	var delayMax:Int = 500;
-	var timeBar:HealthBar;
+	var timeBar:Bar;
 	var timeTxt:FlxText;
 	var beatText:Alphabet;
 	var beatTween:FlxTween;
@@ -40,17 +38,16 @@ class NoteOffsetState extends MusicBeatState
 	override public function create()
 	{
 		// Cameras
-		camGame = new FlxCamera();
-		camHUD = new FlxCamera();
-		camOther = new FlxCamera();
-		camHUD.bgColor.alpha = 0;
-		camOther.bgColor.alpha = 0;
+		camGame = initPsychCamera();
 
-		FlxG.cameras.reset(camGame);
+		camHUD = new FlxCamera();
+		camHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(camHUD, false);
+
+		camOther = new FlxCamera();
+		camOther.bgColor.alpha = 0;
 		FlxG.cameras.add(camOther, false);
 
-		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		CustomFadeTransition.nextCamera = camOther;
 		FlxG.camera.scroll.set(120, 130);
 
@@ -133,7 +130,7 @@ class NoteOffsetState extends MusicBeatState
 		barPercent = ClientPrefs.data.noteOffset;
 		updateNoteDelay();
 		
-		timeBar = new HealthBar(0, timeTxt.y + (timeTxt.height / 3), 'healthBar', function() return barPercent, delayMin, delayMax);
+		timeBar = new Bar(0, timeTxt.y + (timeTxt.height / 3), 'healthBar', function() return barPercent, delayMin, delayMax);
 		timeBar.scrollFactor.set();
 		timeBar.screenCenter(X);
 		timeBar.visible = false;

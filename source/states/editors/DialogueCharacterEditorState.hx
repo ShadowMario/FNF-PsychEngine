@@ -11,11 +11,8 @@ import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
-import tjson.TJSON as Json;
+import haxe.Json;
 import lime.system.Clipboard;
-#if sys
-import sys.io.File;
-#end
 
 import objects.TypedAlphabet;
 
@@ -62,14 +59,11 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 	override function create() {
 		persistentUpdate = persistentDraw = true;
-		camGame = new FlxCamera();
-		camHUD = new FlxCamera();
+		camGame = initPsychCamera();
 		camGame.bgColor = FlxColor.fromHSL(0, 0, 0.5);
+		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
-
-		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
-		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		
 		mainGroup = new FlxSpriteGroup();
 		mainGroup.cameras = [camGame];
@@ -481,7 +475,6 @@ class DialogueCharacterEditorState extends MusicBeatState
 	var lastTab:String = 'Character';
 	var transitioning:Bool = false;
 	override function update(elapsed:Float) {
-		MusicBeatState.camBeat = FlxG.camera;
 		if(transitioning) {
 			super.update(elapsed);
 			return;

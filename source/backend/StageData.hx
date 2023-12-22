@@ -1,12 +1,7 @@
 package backend;
 
-#if MODS_ALLOWED
-import sys.io.File;
-import sys.FileSystem;
-#else
 import openfl.utils.Assets;
-#end
-import tjson.TJSON as Json;
+import haxe.Json;
 import backend.Song;
 
 typedef StageFile = {
@@ -88,7 +83,7 @@ class StageData {
 
 	public static function getStageFile(stage:String):StageFile {
 		var rawJson:String = null;
-		var path:String = Paths.getPreloadPath('stages/' + stage + '.json');
+		var path:String = Paths.getSharedPath('stages/' + stage + '.json');
 
 		#if MODS_ALLOWED
 		var modPath:String = Paths.modFolders('stages/' + stage + '.json');

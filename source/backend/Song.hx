@@ -1,12 +1,7 @@
 package backend;
 
-import tjson.TJSON as Json;
+import haxe.Json;
 import lime.utils.Assets;
-
-#if sys
-import sys.io.File;
-import sys.FileSystem;
-#end
 
 import backend.Section;
 
@@ -109,11 +104,14 @@ class Song
 		#end
 
 		if(rawJson == null) {
+			var path:String = Paths.json(formattedFolder + '/' + formattedSong);
+
 			#if sys
-			rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
-			#else
-			rawJson = Assets.getText(Paths.json(formattedFolder + '/' + formattedSong)).trim();
+			if(FileSystem.exists(path))
+				rawJson = File.getContent(path).trim();
+			else
 			#end
+				rawJson = Assets.getText(Paths.json(formattedFolder + '/' + formattedSong)).trim();
 		}
 
 		while (!rawJson.endsWith("}"))

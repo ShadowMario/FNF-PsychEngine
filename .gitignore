@@ -10,6 +10,7 @@ export/*
 .vscode/*
 .haxelib/
 *.code-workspace
+vs_Community.exe
 # Local history which shouldn't be shared.
 .history
 .ionide
@@ -19,3 +20,5 @@ export/*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+art/build_html.bat
+art/build_html-debug.bat
