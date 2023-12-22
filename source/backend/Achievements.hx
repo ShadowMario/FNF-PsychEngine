@@ -39,7 +39,7 @@ class Achievements {
 		createAchievement('oversinging', 			{name: "Oversinging Much...?", description: "Hold down a note for 10 seconds."});
 		createAchievement('hype',					{name: "Hyperactive", description: "Finish a Song without going Idle."});
 		createAchievement('two_keys',				{name: "Just the Two of Us", description: "Finish a Song pressing only two keys."});
-		createAchievement('toastier',				{name: "Toaster Gamer", description: "Have you tried to run the game on a toaster?"});
+		createAchievement('toastie',				{name: "Toaster Gamer", description: "Have you tried to run the game on a toaster?"});
 		createAchievement('debugger',				{name: "Debugger", description: "Beat the \"Test\" Stage from the Chart Editor.", hidden: true});
 		
 		//dont delete this thing below
