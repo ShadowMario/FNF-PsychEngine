@@ -199,7 +199,7 @@ class MusicPlayer extends FlxGroup
 		}
 		updatePlaybackTxt();
 	
-		if (FlxG.keys.pressed.R)
+		if (instance.controls.RESET)
 		{
 			playbackRate = 1;
 			setPlaybackRate();

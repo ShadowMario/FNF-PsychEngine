@@ -331,6 +331,7 @@ class ModsMenuState extends MusicBeatState
 			else MusicBeatState.switchState(new MainMenuState());
 
 			persistentUpdate = false;
+			FlxG.autoPause = ClientPrefs.data.autoPause;
 			FlxG.mouse.visible = false;
 			return;
 		}
