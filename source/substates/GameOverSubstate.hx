@@ -143,7 +143,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			}
 		}
 		
-		if(updateCamera) FlxG.camera.followLerp = FlxMath.bound(elapsed * 0.6 / (FlxG.updateFramerate / 60), 0, 1);
+		if(updateCamera) FlxG.camera.followLerp = 1 - Math.exp(-elapsed * 0.6 / (FlxG.updateFramerate / 60));
 		else FlxG.camera.followLerp = 0;
 
 		if (FlxG.sound.music.playing)
