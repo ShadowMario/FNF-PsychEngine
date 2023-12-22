@@ -2912,6 +2912,7 @@ class PlayState extends MusicBeatState
 	{
 		if(note.wasGoodHit) return;
 		if(cpuControlled && note.ignoreNote) return;
+
 		var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
 		var leData:Int = Math.round(Math.abs(note.noteData));
 		var leType:String = note.noteType;
@@ -2980,10 +2981,10 @@ class PlayState extends MusicBeatState
 			combo++;
 			if(combo > 9999) combo = 9999;
 			popUpScore(note);
-			var gainHealth:Bool = true; // prevent health gain, as sustains are threated as a singular note
-			if (guitarHeroSustains && note.isSustainNote) gainHealth = false;
-			if (gainHealth) health += note.hitHealth * healthGain;
 		}
+		var gainHealth:Bool = true; // prevent health gain, *if* sustains are treated as a singular note
+		if (guitarHeroSustains && note.isSustainNote) gainHealth = false;
+		if (gainHealth) health += note.hitHealth * healthGain;
 
 		var result:Dynamic = callOnLuas('goodNoteHitPost', [notes.members.indexOf(note), leData, leType, isSus]);
 		if(result != FunkinLua.Function_Stop && result != FunkinLua.Function_StopHScript && result != FunkinLua.Function_StopAll) callOnHScript('goodNoteHitPost', [note]);
