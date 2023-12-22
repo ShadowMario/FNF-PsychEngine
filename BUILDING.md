@@ -16,9 +16,9 @@
 
 ### Windows & Mac
 
-For `git`, you are likely gonna want to go to [this website](https://git-scm.com/downloads),
+For `git`, you're likely gonna want [git-scm](https://git-scm.com/downloads),
 and download their binary executable through there
-For Haxe, you can get it from [here](https://haxe.org/download/)
+For Haxe, you can get it from [the Haxe website](https://haxe.org/download/)
 
 ---
 
@@ -56,7 +56,7 @@ mkdir ~/haxelib && haxelib setup ~/haxelib
 ```
 #### Arch based Distros:
 ```bash
-sudo pacman -Sy haxe git vlc --noconfirm
+sudo pacman -Syu haxe git vlc --noconfirm
 mkdir ~/haxelib;
 haxelib setup ~/haxelib
 ```
