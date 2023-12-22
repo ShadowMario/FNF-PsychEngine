@@ -1,12 +1,17 @@
 package;
 
-import flixel.graphics.FlxGraphic;
+#if android
+import android.content.Context;
+#end
 
+import debug.FPSCounter;
+
+import flixel.graphics.FlxGraphic;
 import flixel.FlxGame;
 import flixel.FlxState;
+import haxe.io.Path;
 import openfl.Assets;
 import openfl.Lib;
-import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
@@ -22,9 +27,13 @@ import lime.graphics.Image;
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
-import sys.FileSystem;
-import sys.io.File;
-import sys.io.Process;
+#end
+
+#if linux
+@:cppInclude('./external/gamemode_client.h')
+@:cppFileCode('
+	#define GAMEMODE_AUTO
+')
 #end
 
 class Main extends Sprite
@@ -39,7 +48,7 @@ class Main extends Sprite
 		startFullscreen: false // if the game should start at fullscreen mode
 	};
 
-	public static var fpsVar:FPS;
+	public static var fpsVar:FPSCounter;
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -51,6 +60,13 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+
+		// Credits to MAJigsaw77 (he's the og author for this code)
+		#if android
+		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
+		#elseif ios
+		Sys.setCwd(lime.system.System.applicationStorageDirectory);
+		#end
 
 		if (stage != null)
 		{
@@ -89,10 +105,11 @@ class Main extends Sprite
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
+		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
 		#if !mobile
-		fpsVar = new FPS(10, 3, 0xFFFFFF);
+		fpsVar = new FPSCounter(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -116,7 +133,7 @@ class Main extends Sprite
 		#end
 
 		#if desktop
-		DiscordClient.start();
+		DiscordClient.prepare();
 		#end
 
 		// shader coords fix

@@ -28,7 +28,7 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: latest
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
@@ -36,12 +36,15 @@ jobs:
           sudo apt-get install libvlccore-dev
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
-          haxelib install hmm --quiet
-          haxelib run hmm install
+          haxe -cp ./setup -D analyzer-optimize -main Main --interp
+      - name: Skip SScript setup mode
+        run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ~/settings.cocoa
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
+        run: |
+          haxelib fixrepo
+          haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
@@ -56,14 +59,16 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: latest
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
           haxelib install hxcpp > /dev/null --quiet
-          haxelib install hmm --quiet
-          haxelib run hmm install
+          haxe -cp ./setup -D analyzer-optimize -main Main --interp
+        shell: cmd
+      - name: Skip SScript setup mode
+        run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> %USERPROFILE%/settings.cocoa
         shell: cmd
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -89,8 +94,9 @@ jobs:
         run: |
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
-          haxelib install hmm --quiet
-          haxelib run hmm install
+          haxe -cp ./setup -D analyzer-optimize -main Main --interp
+      - name: Skip SScript setup mode
+        run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ~/settings.cocoa
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile

@@ -308,8 +308,7 @@ class StoryMenuState extends MusicBeatState
 			{
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 
-				grpWeekText.members[curWeek].startFlashing();
-
+				grpWeekText.members[curWeek].isFlashing = true;
 				for (char in grpWeekCharacters.members)
 				{
 					if (char.character != '' && char.hasConfirmAnimation)
@@ -326,7 +325,7 @@ class StoryMenuState extends MusicBeatState
 				FreeplayState.destroyFreeplayVocals();
 			});
 			
-			#if MODS_ALLOWED
+			#if (MODS_ALLOWED && cpp)
 			DiscordClient.loadModRPC();
 			#end
 		} else {
