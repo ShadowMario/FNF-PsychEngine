@@ -123,7 +123,7 @@ class AchievementsMenuState extends MusicBeatState
 		_changeSelection();
 		super.create();
 		
-		FlxG.camera.follow(camFollow, null, 0.15);
+		FlxG.camera.follow(camFollow, null, 9);
 		FlxG.camera.scroll.y = -FlxG.height;
 	}
 
