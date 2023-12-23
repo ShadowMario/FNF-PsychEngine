@@ -427,6 +427,26 @@ class FunkinLua {
 			luaTrace('removeLuaScript: Script $luaFile isn\'t running!', false, false, FlxColor.RED);
 			return false;
 		});
+		Lua_helper.add_callback(lua, "removeHScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) {
+			#if HSCRIPT_ALLOWED
+			var foundScript:String = findScript(luaFile, '.hx');
+			if(foundScript != null)
+			{
+				if(!ignoreAlreadyRunning)
+					for (script in game.hscriptArray)	
+						if(script.origin == foundScript)
+						{
+							trace('Closing script ' + (script.origin != null ? script.origin : luaFile));
+							script.destroy();
+							return true;
+						}
+			}
+			luaTrace('removeHScript: Script $luaFile isn\'t running!', false, false, FlxColor.RED);
+			return false;
+			#else
+			luaTrace("removeHScript: HScript is not supported on this platform!", false, false, FlxColor.RED);
+			#end
+		});
 
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
 			if(name == null || name.length < 1)
