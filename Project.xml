@@ -72,7 +72,7 @@
 		<assets path="assets/secrets" rename="assets/shared" exclude="*.mp3"  unless="web"/>
 	</section>
 
-	<library name="videos"        preload="true" />
+	<library name="videos"        preload="true" if="VIDEOS_ALLOWED"/>
 	<library name="songs"         preload="true" />
 	<library name="week_assets"   preload="true" />
 
