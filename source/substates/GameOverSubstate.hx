@@ -102,7 +102,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (controls.ACCEPT)
 			endBullshit();
 
-		if (controls.BACK)
+		if (controls.BACK && !isEnding)
 		{
 			#if desktop DiscordClient.resetClientID(); #end
 			FlxG.sound.music.stop();
@@ -122,7 +122,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (boyfriend.animation.curAnim != null && boyfriend.animation.curAnim.name == 'firstDeath' && boyfriend.animation.curAnim.curFrame >= 12 && !moveCamera)
 		{
-			FlxG.camera.follow(camFollow, LOCKON, 0.01);
+			FlxG.camera.follow(camFollow, LOCKON, 0.8);
 			moveCamera = true;
 		}
 
