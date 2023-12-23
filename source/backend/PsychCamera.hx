@@ -101,7 +101,7 @@ class PsychCamera extends FlxCamera
 			}
 		}
 
-		var mult:Float = followLerp / (1/60) * elapsed;
+		var mult:Float = 1 - Math.exp(-elapsed * followLerp);
 		if (mult >= 1)
 		{
 			scroll.copyFrom(_scrollTarget); // no easing
