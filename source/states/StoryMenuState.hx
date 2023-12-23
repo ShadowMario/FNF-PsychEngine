@@ -112,7 +112,7 @@ class StoryMenuState extends MusicBeatState
 					lock.ID = i;
 					grpLocks.add(lock);
 				}
-				num++;
+				++num;
 			}
 		}
 
@@ -399,7 +399,7 @@ class StoryMenuState extends MusicBeatState
 				item.alpha = 1;
 			else
 				item.alpha = 0.6;
-			bullShit++;
+			++bullShit;
 		}
 
 		bgSprite.visible = true;

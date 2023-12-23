@@ -198,7 +198,7 @@ class Alphabet extends FlxSpriteGroup
 			if(character != '\n')
 			{
 				var spaceChar:Bool = (character == " " || (bold && character == "_"));
-				if (spaceChar) consecutiveSpaces++;
+				if (spaceChar) ++consecutiveSpaces;
 
 				var isAlphabet:Bool = AlphaCharacter.isTypeAlphabet(character.toLowerCase());
 				if (AlphaCharacter.allLetters.exists(character.toLowerCase()) && (!bold || !spaceChar))
@@ -210,7 +210,7 @@ class Alphabet extends FlxSpriteGroup
 						if(!bold && xPos >= FlxG.width * 0.65)
 						{
 							xPos = 0;
-							rows++;
+							++rows;
 						}
 					}
 					consecutiveSpaces = 0;
@@ -236,7 +236,7 @@ class Alphabet extends FlxSpriteGroup
 			else
 			{
 				xPos = 0;
-				rows++;
+				++rows;
 			}
 		}
 
@@ -245,7 +245,7 @@ class Alphabet extends FlxSpriteGroup
 			letter.rowWidth = rowData[letter.row];
 		}
 
-		if(letters.length > 0) rows++;
+		if(letters.length > 0) ++rows;
 	}
 }
 

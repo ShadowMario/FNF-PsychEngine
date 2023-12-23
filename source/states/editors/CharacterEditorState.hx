@@ -865,8 +865,8 @@ class CharacterEditorState extends MusicBeatState
 		var changedAnim:Bool = false;
 		if(anims.length > 1)
 		{
-			if(FlxG.keys.justPressed.W && (changedAnim = true)) curAnim--;
-			else if(FlxG.keys.justPressed.S && (changedAnim = true)) curAnim++;
+			if(FlxG.keys.justPressed.W && (changedAnim = true)) --curAnim;
+			else if(FlxG.keys.justPressed.S && (changedAnim = true)) ++curAnim;
 
 			if(changedAnim)
 			{
@@ -1110,7 +1110,7 @@ class CharacterEditorState extends MusicBeatState
 			text.borderSize = 1;
 			animsTxtGroup.add(text);
 
-			daLoop++;
+			++daLoop;
 		}
 		updateTextColors();
 		if(animationDropDown != null) reloadAnimationDropDown();
@@ -1123,7 +1123,7 @@ class CharacterEditorState extends MusicBeatState
 		{
 			text.color = FlxColor.WHITE;
 			if(daLoop == curAnim) text.color = FlxColor.LIME;
-			daLoop++;
+			++daLoop;
 		}
 	}
 

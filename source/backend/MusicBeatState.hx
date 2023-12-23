@@ -86,7 +86,7 @@ class MusicBeatState extends FlxUIState
 		if(stepsToDo < 1) stepsToDo = Math.round(getBeatsOnSection() * 4);
 		while(curStep >= stepsToDo)
 		{
-			curSection++;
+			++curSection;
 			var beats:Float = getBeatsOnSection();
 			stepsToDo += Math.round(beats * 4);
 			sectionHit();
@@ -107,7 +107,7 @@ class MusicBeatState extends FlxUIState
 				stepsToDo += Math.round(getBeatsOnSection() * 4);
 				if(stepsToDo > curStep) break;
 				
-				curSection++;
+				++curSection;
 			}
 		}
 

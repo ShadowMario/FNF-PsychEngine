@@ -395,7 +395,7 @@ class FlxInputText extends FlxText
 			{
 				if (caretIndex > 0)
 				{
-					caretIndex--;
+					--caretIndex;
 					text = text; // forces scroll update
 				}
 			}
@@ -404,7 +404,7 @@ class FlxInputText extends FlxText
 			{
 				if (caretIndex < text.length)
 				{
-					caretIndex++;
+					++caretIndex;
 					text = text; // forces scroll update
 				}
 			}
@@ -425,7 +425,7 @@ class FlxInputText extends FlxText
 			{
 				if (caretIndex > 0)
 				{
-					caretIndex--;
+					--caretIndex;
 					text = text.substring(0, caretIndex) + text.substring(caretIndex + 1);
 					onChange(BACKSPACE_ACTION);
 				}
@@ -456,7 +456,7 @@ class FlxInputText extends FlxText
 				if (newText.length > 0 && (maxLength == 0 || (text.length + newText.length) < maxLength))
 				{
 					text = insertSubstring(text, newText, caretIndex);
-					caretIndex++;
+					++caretIndex;
 					onChange(INPUT_ACTION);
 				}
 			}
@@ -606,7 +606,7 @@ class FlxInputText extends FlxText
 				{
 					return i;
 				}
-				i++;
+				++i;
 			}
 		}
 

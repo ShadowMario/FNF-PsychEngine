@@ -84,7 +84,7 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				}
 				return str;
 			}
-			i++;
+			++i;
 		}
 		return str;
 	}
@@ -110,7 +110,7 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				header.text.text = str;
 				return str;
 			}
-			i++;
+			++i;
 		}
 		return str;
 	}
@@ -321,7 +321,7 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 					add(t);
 					t.visible = false;
 				}
-				i++;
+				++i;
 			}
 
 			// Remove excess buttons:
@@ -440,7 +440,7 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 				}
 				else if (FlxG.mouse.wheel < 0 || FlxG.keys.justPressed.DOWN) {
 					// Go down
-					currentScroll++;
+					++currentScroll;
 					if(currentScroll >= list.length) currentScroll = list.length-1;
 				}
 

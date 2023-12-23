@@ -40,7 +40,7 @@ class TypedAlphabet extends Alphabet
 				}
 				playedSound = true;
 
-				_curLetter++;
+				++_curLetter;
 				if(_curLetter >= letters.length - 1)
 				{
 					finishedText = true;

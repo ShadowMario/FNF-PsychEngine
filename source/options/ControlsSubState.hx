@@ -155,7 +155,7 @@ class ControlsSubState extends MusicBeatSubstate
 					text.snapToPosition();
 					text.y += FlxG.height * 2;
 				}
-				myID++;
+				++myID;
 			}
 		}
 		updateText();

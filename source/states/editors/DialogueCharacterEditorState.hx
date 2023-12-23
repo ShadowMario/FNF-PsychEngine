@@ -573,7 +573,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			}
 			if(FlxG.keys.justPressed.H) {
 				if(UI_mainbox.selected_tab_id == 'Animations') {
-					currentGhosts++;
+					++currentGhosts;
 					if(currentGhosts > 2) currentGhosts = 0;
 
 					ghostLoop.visible = (currentGhosts != 1);

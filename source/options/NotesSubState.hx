@@ -251,9 +251,9 @@ class NotesSubState extends MusicBeatSubstate
 			hexTypeVisibleTimer += elapsed;
 			var changed:Bool = false;
 			if(changed = FlxG.keys.justPressed.LEFT)
-				hexTypeNum--;
+				--hexTypeNum;
 			else if(changed = FlxG.keys.justPressed.RIGHT)
-				hexTypeNum++;
+				++hexTypeNum;
 			else if(allowedTypeKeys.exists(keyPressed))
 			{
 				//trace('keyPressed: $keyPressed, lil str: ' + allowedTypeKeys.get(keyPressed));
@@ -266,7 +266,7 @@ class NotesSubState extends MusicBeatSubstate
 				updateColors();
 				
 				// move you to next letter
-				hexTypeNum++;
+				++hexTypeNum;
 				changed = true;
 			}
 			else if(FlxG.keys.justPressed.ENTER)

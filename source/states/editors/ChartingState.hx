@@ -905,7 +905,7 @@ class ChartingState extends MusicBeatState
 		var key:Int = 0;
 		while (key < noteTypeList.length) {
 			curNoteTypes.push(noteTypeList[key]);
-			key++;
+			++key;
 		}
 
 		#if sys
@@ -923,7 +923,7 @@ class ChartingState extends MusicBeatState
 					if(!curNoteTypes.contains(fileToCheck))
 					{
 						curNoteTypes.push(fileToCheck);
-						key++;
+						++key;
 					}
 				}
 			}
@@ -1800,7 +1800,7 @@ class ChartingState extends MusicBeatState
 				updateZoom();
 			}
 			if(FlxG.keys.justPressed.X && curZoom < zoomList.length-1) {
-				curZoom++;
+				++curZoom;
 				updateZoom();
 			}
 
@@ -1932,7 +1932,7 @@ class ChartingState extends MusicBeatState
 
 			if(!blockInput){
 				if(FlxG.keys.justPressed.RIGHT){
-					curQuant++;
+					++curQuant;
 					if(curQuant>quantizations.length-1)
 						curQuant = 0;
 
@@ -1940,7 +1940,7 @@ class ChartingState extends MusicBeatState
 				}
 
 				if(FlxG.keys.justPressed.LEFT){
-					curQuant--;
+					--curQuant;
 					if(curQuant<0)
 						curQuant = quantizations.length-1;
 
@@ -2447,7 +2447,7 @@ class ChartingState extends MusicBeatState
 				v1 = false;
 				rows -= samplesPerRow;
 
-				gotIndex++;
+				++gotIndex;
 
 				var lRMin:Float = Math.abs(lmin) * multiply;
 				var lRMax:Float = lmax * multiply;
@@ -2483,8 +2483,8 @@ class ChartingState extends MusicBeatState
 				rmax = 0;
 			}
 
-			index++;
-			rows++;
+			++index;
+			++rows;
 			if(gotIndex > steps) break;
 		}
 
@@ -2982,7 +2982,7 @@ class ChartingState extends MusicBeatState
 
 	private function addNote(strum:Null<Float> = null, data:Null<Int> = null, type:Null<Int> = null):Void
 	{
-		//curUndoIndex++;
+		//++curUndoIndex;
 		//var newsong = _song.notes;
 		//	undos.push(newsong);
 		var noteStrum = getStrumTime(dummyArrow.y * (getSectionBeats() / 4), false) + sectionStartTime();

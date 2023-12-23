@@ -502,7 +502,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 		totalNotesHit += daRating.ratingMod;
 		note.ratingMod = daRating.ratingMod;
-		if(!note.ratingDisabled) daRating.hits++;
+		if(!note.ratingDisabled) ++daRating.hits;
 		note.rating = daRating.name;
 		score = daRating.score;
 
@@ -511,8 +511,8 @@ class EditorPlayState extends MusicBeatSubstate
 
 		if(!note.ratingDisabled)
 		{
-			songHits++;
-			totalPlayed++;
+			++songHits;
+			++totalPlayed;
 			RecalculateRating(false);
 		}
 
@@ -612,7 +612,7 @@ class EditorPlayState extends MusicBeatSubstate
 				startDelay: Conductor.crochet * 0.002 / playbackRate
 			});
 
-			daLoop++;
+			++daLoop;
 			if(numScore.x > xThing) xThing = numScore.x;
 		}
 		comboSpr.x = xThing + 50;
@@ -811,7 +811,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 		if (!note.isSustainNote)
 		{
-			combo++;
+			++combo;
 			if(combo > 9999) combo = 9999;
 			popUpScore(note);
 		}
@@ -865,8 +865,8 @@ class EditorPlayState extends MusicBeatSubstate
 		}
 
 		// score and data
-		songMisses++;
-		totalPlayed++;
+		++songMisses;
+		++totalPlayed;
 		RecalculateRating(true);
 		vocals.volume = 0;
 		combo = 0;

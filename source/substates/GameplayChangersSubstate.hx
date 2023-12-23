@@ -200,7 +200,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 								case 'string':
 									var num:Int = curOption.curOption; //lol
 									if(controls.UI_LEFT_P) --num;
-									else num++;
+									else ++num;
 
 									if(num < 0) {
 										num = curOption.options.length - 1;
@@ -326,7 +326,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		for (item in grpOptions.members) {
 			item.targetY = bullShit - curSelected;
-			bullShit++;
+			++bullShit;
 
 			item.alpha = 0.6;
 			if (item.targetY == 0) {

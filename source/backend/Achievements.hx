@@ -186,7 +186,7 @@ class Achievements {
 		data.ID = _sortID;
 		data.mod = mod;
 		achievements.set(name, data);
-		_sortID++;
+		++_sortID;
 	}
 
 	#if MODS_ALLOWED

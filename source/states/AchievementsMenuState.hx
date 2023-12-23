@@ -161,7 +161,7 @@ class AchievementsMenuState extends MusicBeatState
 				
 				curSelected += add;
 				var curRow:Int = Math.floor(curSelected / MAX_PER_ROW);
-				if(curSelected >= options.length) curRow++;
+				if(curSelected >= options.length) ++curRow;
 
 				if(curRow != oldRow)
 				{

@@ -363,7 +363,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 				char.animation.curAnim.frameRate = rate;
 			}
 		}
-		currentText++;
+		++currentText;
 
 		if(nextDialogueThing != null) {
 			nextDialogueThing();

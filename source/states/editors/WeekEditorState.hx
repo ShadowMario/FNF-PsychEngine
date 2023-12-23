@@ -754,7 +754,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 		for (item in grpSongs.members)
 		{
 			item.targetY = bullShit - curSelected;
-			bullShit++;
+			++bullShit;
 
 			item.alpha = 0.6;
 			// item.setGraphicSize(Std.int(item.width * 0.8));

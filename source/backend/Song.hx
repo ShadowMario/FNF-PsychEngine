@@ -77,7 +77,7 @@ class Song
 						notes.remove(note);
 						len = notes.length;
 					}
-					else i++;
+					else ++i;
 				}
 			}
 		}

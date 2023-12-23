@@ -200,7 +200,7 @@ class FlxSlider extends FlxSpriteGroup
 			decimals = FlxMath.getDecimals(MaxValue);
 		}
 
-		decimals++;
+		++decimals;
 
 		// Assign all those constructor vars
 		minValue = MinValue;

@@ -377,7 +377,7 @@ class Tank extends BaseStage
 		FlxG.camera.zoom = 0.8;
 		game.cameraSpeed = 1;
 
-		calledTimes++;
+		++calledTimes;
 		if (calledTimes > 1)
 		{
 			foregroundSprites.forEach(function(spr:BGSprite)

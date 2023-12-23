@@ -1200,7 +1200,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public function startNextDialogue() {
-		dialogueCount++;
+		++dialogueCount;
 		callOnScripts('onNextDialogue', [dialogueCount]);
 	}
 
@@ -1907,7 +1907,7 @@ class PlayState extends MusicBeatState
 			if(ret != FunkinLua.Function_Stop) {
 				FlxG.animationTimeScale = 1;
 				boyfriend.stunned = true;
-				deathCounter++;
+				++deathCounter;
 
 				paused = true;
 
@@ -2452,7 +2452,7 @@ class PlayState extends MusicBeatState
 
 		totalNotesHit += daRating.ratingMod;
 		note.ratingMod = daRating.ratingMod;
-		if(!note.ratingDisabled) daRating.hits++;
+		if(!note.ratingDisabled) ++daRating.hits;
 		note.rating = daRating.name;
 		score = daRating.score;
 
@@ -2463,8 +2463,8 @@ class PlayState extends MusicBeatState
 			songScore += score;
 			if(!note.ratingDisabled)
 			{
-				songHits++;
-				totalPlayed++;
+				++songHits;
+				++totalPlayed;
 				RecalculateRating(false);
 			}
 		}
@@ -2562,7 +2562,7 @@ class PlayState extends MusicBeatState
 				startDelay: Conductor.crochet * 0.002 / playbackRate
 			});
 
-			daLoop++;
+			++daLoop;
 			if(numScore.x > xThing) xThing = numScore.x;
 		}
 		comboSpr.x = xThing + 50;
@@ -2842,8 +2842,8 @@ class PlayState extends MusicBeatState
 
 		health -= subtract * healthLoss;
 		if(!practiceMode) songScore -= 10;
-		if(!endingSong) songMisses++;
-		totalPlayed++;
+		if(!endingSong) ++songMisses;
+		++totalPlayed;
 		RecalculateRating(true);
 
 		// play character anims
@@ -2977,7 +2977,7 @@ class PlayState extends MusicBeatState
 
 		if (!note.isSustainNote)
 		{
-			combo++;
+			++combo;
 			if(combo > 9999) combo = 9999;
 			popUpScore(note);
 			var gainHealth:Bool = true; // prevent health gain, as sustains are threated as a singular note

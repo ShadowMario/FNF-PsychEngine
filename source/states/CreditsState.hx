@@ -238,7 +238,7 @@ class CreditsState extends MusicBeatState
 		for (item in grpOptions.members)
 		{
 			item.targetY = bullShit - curSelected;
-			bullShit++;
+			++bullShit;
 
 			if(!unselectableCheck(bullShit-1)) {
 				item.alpha = 0.6;

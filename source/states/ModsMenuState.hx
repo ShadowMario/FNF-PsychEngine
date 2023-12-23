@@ -443,8 +443,8 @@ class ModsMenuState extends MusicBeatState
 										{
 											holdingElapsed = 0;
 											var newPos = curSelectedMod;
-											if(FlxG.mouse.y < bgList.y) newPos--;
-											else newPos++;
+											if(FlxG.mouse.y < bgList.y) --newPos;
+											else ++newPos;
 											moveModToPosition(Std.int(Math.max(0, Math.min(modsGroup.length - 1, newPos))));
 										}
 									}
@@ -748,7 +748,7 @@ class ModsMenuState extends MusicBeatState
 
 		modsGroup.remove(curMod, true);
 		modsList.all.remove(mod);
-		//if(position > id) position--;
+		//if(position > id) --position;
 		modsGroup.insert(position, curMod);
 		modsList.all.insert(position, mod);
 

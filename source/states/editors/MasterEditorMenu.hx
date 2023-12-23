@@ -127,7 +127,7 @@ class MasterEditorMenu extends MusicBeatState
 		for (item in grpTexts.members)
 		{
 			item.targetY = bullShit - curSelected;
-			bullShit++;
+			++bullShit;
 
 			item.alpha = 0.6;
 			// item.setGraphicSize(Std.int(item.width * 0.8));

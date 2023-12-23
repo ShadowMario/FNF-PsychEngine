@@ -540,7 +540,7 @@ class TitleState extends MusicBeatState
 		}
 
 		if(!closedState) {
-			sickBeats++;
+			++sickBeats;
 			switch (sickBeats)
 			{
 				case 1:

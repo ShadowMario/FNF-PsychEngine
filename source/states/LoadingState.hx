@@ -279,8 +279,8 @@ class MultiCallback
 	public function add(id = "untitled")
 	{
 		id = '$length:$id';
-		length++;
-		numRemaining++;
+		++length;
+		++numRemaining;
 		var func:Void->Void = null;
 		func = function ()
 		{
@@ -288,7 +288,7 @@ class MultiCallback
 			{
 				unfired.remove(id);
 				fired.push(id);
-				numRemaining--;
+				--numRemaining;
 				
 				if (logId != null)
 					log('fired $id, $numRemaining remaining');

@@ -285,8 +285,8 @@ class NoteSplashDebugState extends MusicBeatState
 
 		// Force frame
 		var updatedFrame:Bool = false;
-		if(updatedFrame = FlxG.keys.justPressed.Q) forceFrame--;
-		else if(updatedFrame = FlxG.keys.justPressed.E) forceFrame++;
+		if(updatedFrame = FlxG.keys.justPressed.Q) --forceFrame;
+		else if(updatedFrame = FlxG.keys.justPressed.E) ++forceFrame;
 
 		if(updatedFrame)
 		{
@@ -400,7 +400,7 @@ class NoteSplashDebugState extends MusicBeatState
 					spr.animation.play(animName, true);
 				}
 			});
-			if(loopContinue) maxAnims++;
+			if(loopContinue) ++maxAnims;
 		}
 		trace('maxAnims: $maxAnims');
 		changeAnim();

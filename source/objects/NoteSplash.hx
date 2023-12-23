@@ -149,7 +149,7 @@ class NoteSplash extends FlxSprite
 					return config;
 				}
 			}
-			maxAnims++;
+			++maxAnims;
 			//trace('currently: $maxAnims');
 		}
 	}

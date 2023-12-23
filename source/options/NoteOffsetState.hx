@@ -101,7 +101,7 @@ class NoteOffsetState extends MusicBeatState
 			numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			numScore.updateHitbox();
 			comboNums.add(numScore);
-			daLoop++;
+			++daLoop;
 		}
 
 		dumbTexts = new FlxTypedGroup<FlxText>();
