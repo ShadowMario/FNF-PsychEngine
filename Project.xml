@@ -106,9 +106,6 @@
 
 	<haxelib name="flxanimate" />
 
-	<!--Disable Discord IO Thread-->
-	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
-
 	<!--Enables a terminal log prompt on debug builds-->
 	<haxelib name="hxcpp-debug-server" if="debug" />
 
@@ -132,6 +129,12 @@
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_TRACE" if="CRASH_HANDLER" />
+
+	<!--Disable Discord IO Thread-->
+	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
+
+	<!--Disables the use of precompiled headers but can cause issues with build times and memory usage-->
+	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
 
 	<!--Disable deprecated warnings-->
 	<haxedef name="no-deprecation-warnings" />
