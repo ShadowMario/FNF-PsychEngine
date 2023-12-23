@@ -101,16 +101,9 @@ class PsychCamera extends FlxCamera
 			}
 		}
 
-		var mult:Float = followLerp / (1/60) * elapsed;
-		if (mult >= 1)
-		{
-			scroll.copyFrom(_scrollTarget); // no easing
-		}
-		else
-		{
-			scroll.x += (_scrollTarget.x - scroll.x) * mult;
-			scroll.y += (_scrollTarget.y - scroll.y) * mult;
-		}
+		var mult:Float = 1 - Math.exp(-elapsed * followLerp);
+		scroll.x += (_scrollTarget.x - scroll.x) * mult;
+		scroll.y += (_scrollTarget.y - scroll.y) * mult;
 		//trace('lerp on this frame: $mult');
 	}
 

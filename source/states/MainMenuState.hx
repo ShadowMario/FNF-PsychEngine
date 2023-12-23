@@ -110,7 +110,7 @@ class MainMenuState extends MusicBeatState
 
 		super.create();
 
-		FlxG.camera.follow(camFollow, null, 0.15);
+		FlxG.camera.follow(camFollow, null, 9);
 	}
 
 	var selectedSomethin:Bool = false;

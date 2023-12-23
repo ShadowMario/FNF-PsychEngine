@@ -157,7 +157,7 @@ class Limo extends BaseStage
 					dancersParenting();
 
 				case STOPPING:
-					bgLimo.x = FlxMath.lerp(bgLimo.x, -150, FlxMath.bound(elapsed * 9, 0, 1));
+					bgLimo.x = FlxMath.lerp(-150, bgLimo.x, Math.exp(-elapsed * 9));
 					if(Math.round(bgLimo.x) == -150) {
 						bgLimo.x = -150;
 						limoKillingState = WAIT;
