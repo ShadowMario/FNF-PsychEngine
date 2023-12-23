@@ -128,12 +128,12 @@
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
 
-	<!--Used for Izzy Engine's crash handler -->
+	<!--Used for Izzy Engine's crash handler-->
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_TRACE" if="CRASH_HANDLER" />
 
-	<!--Disable deprecated warnings -->
+	<!--Disable deprecated warnings-->
 	<haxedef name="no-deprecation-warnings" />
 
 	<!--Macro fixes -->
