@@ -14,7 +14,6 @@ class GameOverSubstate extends MusicBeatSubstate
 	public var boyfriend:Character;
 	var camFollow:FlxObject;
 	var moveCamera:Bool = false;
-	var playingDeathSound:Bool = false;
 
 	var stageSuffix:String = "";
 
@@ -67,6 +66,26 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.camera.target = null;
 
 		boyfriend.playAnim('firstDeath');
+		boyfriend.animation.finishCallback = function(name:String)
+		{
+			boyfriend.animation.finishCallback = null;
+
+			if (boyfriend.animation.curAnim.name == 'firstDeath')
+			{
+				if (PlayState.SONG.stage == 'tank')
+				{
+					coolStartDeath(0.2);
+
+					var exclude:Array<Int> = [];
+					//if(!ClientPrefs.cursing) exclude = [1, 3, 8, 13, 17, 21];
+
+					FlxG.sound.play(Paths.sound('jeffGameover/jeffGameover-' + FlxG.random.int(1, 25, exclude)), 1, false, null, true, function() {
+						if(!isEnding) FlxG.sound.music.fadeIn(4, 0.2, 1);
+					});
+				}
+				else coolStartDeath();
+			}
+		}
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollow.setPosition(boyfriend.getGraphicMidpoint().x + boyfriend.cameraPosition[0], boyfriend.getGraphicMidpoint().y + boyfriend.cameraPosition[1]);
@@ -74,7 +93,6 @@ class GameOverSubstate extends MusicBeatSubstate
 		add(camFollow);
 	}
 
-	public var startedDeath:Bool = false;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -82,9 +100,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		PlayState.instance.callOnScripts('onUpdate', [elapsed]);
 
 		if (controls.ACCEPT)
-		{
 			endBullshit();
-		}
 
 		if (controls.BACK)
 		{
@@ -103,47 +119,16 @@ class GameOverSubstate extends MusicBeatSubstate
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			PlayState.instance.callOnScripts('onGameOverConfirm', [false]);
 		}
-		
-		if (boyfriend.animation.curAnim != null)
+
+		if (boyfriend.animation.curAnim != null && boyfriend.animation.curAnim.name == 'firstDeath' && boyfriend.animation.curAnim.curFrame >= 12 && !moveCamera)
 		{
-			if (boyfriend.animation.curAnim.name == 'firstDeath' && boyfriend.animation.curAnim.finished && startedDeath)
-				boyfriend.playAnim('deathLoop');
-
-			if(boyfriend.animation.curAnim.name == 'firstDeath')
-			{
-				if(boyfriend.animation.curAnim.curFrame >= 12 && !moveCamera)
-				{
-					FlxG.camera.follow(camFollow, LOCKON, 0.6);
-					moveCamera = true;
-				}
-
-				if (boyfriend.animation.curAnim.finished && !playingDeathSound)
-				{
-					startedDeath = true;
-					if (PlayState.SONG.stage == 'tank')
-					{
-						playingDeathSound = true;
-						coolStartDeath(0.2);
-						
-						var exclude:Array<Int> = [];
-						//if(!ClientPrefs.cursing) exclude = [1, 3, 8, 13, 17, 21];
-
-						FlxG.sound.play(Paths.sound('jeffGameover/jeffGameover-' + FlxG.random.int(1, 25, exclude)), 1, false, null, true, function() {
-							if(!isEnding)
-							{
-								FlxG.sound.music.fadeIn(0.2, 1, 4);
-							}
-						});
-					}
-					else coolStartDeath();
-				}
-			}
+			FlxG.camera.follow(camFollow, LOCKON, 0.01);
+			moveCamera = true;
 		}
-		
+
 		if (FlxG.sound.music.playing)
-		{
 			Conductor.songPosition = FlxG.sound.music.time;
-		}
+
 		PlayState.instance.callOnScripts('onUpdatePost', [elapsed]);
 	}
 
@@ -151,6 +136,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	function coolStartDeath(?volume:Float = 1):Void
 	{
+		boyfriend.playAnim('deathLoop');
 		FlxG.sound.playMusic(Paths.music(loopSoundName), volume);
 	}
 
@@ -161,10 +147,12 @@ class GameOverSubstate extends MusicBeatSubstate
 			isEnding = true;
 			boyfriend.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
-			FlxG.sound.play(Paths.music(endSoundName));
+			var sound = FlxG.sound.play(Paths.music(endSoundName));
+			var soundLength:Float = sound.length / 1000;
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
-				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+				FlxG.camera.fade(FlxColor.BLACK, 2, false);
+				new FlxTimer().start(soundLength - 0.7, function(tmr:FlxTimer)
 				{
 					MusicBeatState.resetState();
 				});
