@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<project>
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xmlns="http://lime.openfl.org/project/1.0.4"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
+
 	<!-- _________________________ Application Settings _________________________ -->
 
 	<app title="Friday Night Funkin': Psych Engine" file="PsychEngine" packageName="com.shadowmario.psychengine" package="com.shadowmario.psychengine" main="Main" version="0.2.8" company="ShadowMario" />
@@ -7,40 +11,37 @@
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
 
-	<!-- NOTE TO SELF: DISABLE THIS IF ISSUES ARE FOUND -->
-	<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB"/> <!-- stable luas PUT AFTER FIRST LINE WITH APP NAME AND ETC -->
-
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
-	<!-- <app preloader="Preloader" resizable="true" /> -->
 	<app preloader="flixel.system.FlxPreloader" />
 
-	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
-	<set name="SWF_VERSION" value="11.8" />
-	
 	<!-- ______________________ PSYCH ENGINE CUSTOMIZATION ______________________ -->
 
 	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="HSCRIPT_ALLOWED" if="desktop" />
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="VIDEOS_ALLOWED" if="windows || linux || android" unless="32bits"/>
-	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
-	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild"/> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
+	<define name="VIDEOS_ALLOWED" if="desktop || android" unless="32bits" />
+
+	<!--DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN-->
+	<define name="PSYCH_WATERMARKS" />
+
+	<!--DELETE THE if="officialBuild" for enabling this on an unofficial build-->
+	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild" />
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
-	<window width="1280" height="720" fps="" background="#000000" hardware="true" vsync="false" />
+	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false" />
 
 	<!--HTML5-specific-->
 	<window if="html5" resizable="true" />
 
 	<!--Desktop-specific-->
-	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
+	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false" />
 
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
+	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false" />
 
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
@@ -51,37 +52,41 @@
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
 	<set name="BUILD_DIR" value="export/32bit" if="32bits" />
 
-	<classpath name="source" />
+	<source name="source" />
 
 	<!-- __________________________ Game Assets & Etc. __________________________ -->
-	
-	<!-- Turn on Crash Handler -->
+
+	<!--Turn on Crash Handler-->
 	<define name="CRASH_HANDLER" if="desktop release" />
 
-	<!-- Assets -->
+	<!--Assets-->
 	<assets path="assets/fonts" />
-	<assets path="assets/shared"        exclude="*.ogg" if="web"/>
-	<assets path="assets/shared"        exclude="*.mp3" unless="web"/>
-	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.mp3" unless="web"/>
+	<assets path="assets/shared" exclude="*.ogg" if="web" />
+	<assets path="assets/shared" exclude="*.mp3" unless="web" />
+	<assets path="assets/videos" library="videos" if="VIDEOS_ALLOWED" />
+	<assets path="assets/songs" library="songs" exclude="*.ogg" if="web" />
+	<assets path="assets/songs" library="songs" exclude="*.mp3" unless="web" />
+	<assets path="assets/week_assets" library="week_assets" rename="assets" exclude="*.ogg" if="web" />
+	<assets path="assets/week_assets" library="week_assets" rename="assets" exclude="*.mp3" unless="web" />
+
 	<section if="TITLE_SCREEN_EASTER_EGG">
-		<assets path="assets/secrets" rename="assets/shared" exclude="*.ogg" if="web"/>
-		<assets path="assets/secrets" rename="assets/shared" exclude="*.mp3"  unless="web"/>
+		<assets path="assets/secrets" rename="assets/shared" exclude="*.ogg" if="web" />
+		<assets path="assets/secrets" rename="assets/shared" exclude="*.mp3" unless="web" />
 	</section>
 
-	<library name="videos"        preload="true" />
-	<library name="songs"         preload="true" />
-	<library name="week_assets"   preload="true" />
+	<library name="videos" preload="true" />
+	<library name="songs" preload="true" />
+	<library name="week_assets" preload="true" />
 
-	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
+	<section unless="web">
+		<define name="CHECK_FOR_UPDATES" if="officialBuild" />
+	</section>
 
 	<section if="MODS_ALLOWED">
-		<assets path='example_mods' rename='mods' embed='false'/>
+		<assets path="example_mods" rename="mods" embed="false" />
 	</section>
-	<assets path='art/readme.txt' rename='do NOT readme.txt' />
+
+	<assets path="art/readme.txt" rename="do NOT readme.txt" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -91,75 +96,56 @@
 	<haxelib name="tjson" />
 
 	<!--Psych stuff needed-->
-	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
-	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
-	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
-	<haxelib name="hxdiscord_rpc" if="cpp"/>
-	<haxelib name="flxanimate"/>
+	<haxelib name="linc_luajit" if="LUA_ALLOWED" />
+	<haxelib name="SScript" if="HSCRIPT_ALLOWED" />
+	<haxelib name="hxCodec" if="VIDEOS_ALLOWED" />
 
-	<!-- Disable Discord IO Thread -->
+	<section if="cpp">
+		<haxelib name="hxdiscord_rpc" if="desktop" />
+	</section>
+
+	<haxelib name="flxanimate" />
+
+	<!--Disable Discord IO Thread-->
 	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
-	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
 
-	<!-- Enables a terminal log prompt on debug builds -->
-	<haxelib name="hxcpp-debug-server" if="debug"/>
-	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
-	
-	<!-- ______________________________ Haxedefines _____________________________ -->
+	<!--Enables a terminal log prompt on debug builds-->
+	<haxelib name="hxcpp-debug-server" if="debug" />
 
-	<!--Enable the Flixel core recording system-->
-	<!--<haxedef name="FLX_RECORD" />-->
-
-	<!--Disable the right and middle mouse buttons-->
-	<!-- <haxedef name="FLX_NO_MOUSE_ADVANCED" /> -->
-
-	<!--Disable the native cursor API on Flash-->
-	<!--<haxedef name="FLX_NO_NATIVE_CURSOR" />-->
-
-	<!--Optimise inputs, be careful you will get null errors if you don't use conditionals in your game-->
-	<!-- <haxedef name="FLX_NO_MOUSE" if="mobile" /> -->
-	<!-- <haxedef name="FLX_NO_KEYBOARD" if="mobile" /> -->
-	<!-- <haxedef name="FLX_NO_TOUCH" if="desktop" /> -->
-	<!--<haxedef name="FLX_NO_GAMEPAD" />-->
-
-	<!--Disable the Flixel core sound tray-->
-	<!--<haxedef name="FLX_NO_SOUND_TRAY" />-->
-
-	<!--Disable the Flixel sound management code-->
-	<!--<haxedef name="FLX_NO_SOUND_SYSTEM" />-->
+	<!-- ______________________________ Haxe Defines _____________________________ -->
 
 	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
-	
-	<!-- Show debug traces for hxCodec -->
-	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
-	
+
+	<!--Show debug traces for hxCodec-->
+	<section if="VIDEOS_ALLOWED">
+		<haxedef name="HXC_LIBVLC_LOGGING" if="debug" />
+	</section>
+
 	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
-	
-	<!--Used for Izzy Engine's crash handler-->
+
+	<!--Used for Izzy Engine's crash handler -->
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_TRACE" if="CRASH_HANDLER" />
-	
-	<!--Disable deprecated warnings-->
-	<haxedef name='no-deprecation-warnings' />
 
-	<!--Macro fixes-->
+	<!--Disable deprecated warnings -->
+	<haxedef name="no-deprecation-warnings" />
+
+	<!--Macro fixes -->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
-	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+	<assets path="art/iconOG.png" rename="icon.png" if="linux" />
 
-	<assets path='art/iconOG.png' rename='icon.png' if="linux" />
-	
-	<icon path="art/icon16.png" size='16'/>
-	<icon path="art/icon32.png" size='32'/>
-	<icon path="art/icon64.png" size='64'/>
+	<icon path="art/icon16.png" size="16" />
+	<icon path="art/icon32.png" size="32" />
+	<icon path="art/icon64.png" size="64" />
 	<icon path="art/iconOG.png" />
 </project>
