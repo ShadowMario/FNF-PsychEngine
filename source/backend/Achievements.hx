@@ -263,6 +263,7 @@ class Achievements {
 		}
 		return retVal;
 	}
+	#end
 
 	#if LUA_ALLOWED
 	public static function addLuaCallbacks(lua:State)
@@ -314,7 +315,6 @@ class Achievements {
 		});
 		Lua_helper.add_callback(lua, "achievementExists", function(name:String) return achievements.exists(name));
 	}
-	#end
 	#end
 }
 #end
