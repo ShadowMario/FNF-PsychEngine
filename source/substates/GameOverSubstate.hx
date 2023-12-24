@@ -68,8 +68,6 @@ class GameOverSubstate extends MusicBeatSubstate
 		boyfriend.playAnim('firstDeath');
 		boyfriend.animation.finishCallback = function(name:String)
 		{
-			boyfriend.animation.finishCallback = null;
-
 			if (boyfriend.animation.curAnim.name == 'firstDeath')
 			{
 				if (PlayState.SONG.stage == 'tank')
@@ -85,6 +83,8 @@ class GameOverSubstate extends MusicBeatSubstate
 				}
 				else coolStartDeath();
 			}
+
+			boyfriend.animation.finishCallback = null;
 		}
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -102,7 +102,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (controls.ACCEPT)
 			endBullshit();
 
-		if (controls.BACK && !isEnding)
+		if (controls.BACK)
 		{
 			#if desktop DiscordClient.resetClientID(); #end
 			FlxG.sound.music.stop();
