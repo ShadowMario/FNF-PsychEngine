@@ -15,6 +15,8 @@ import objects.AttachedSprite;
 import options.ModSettingsSubState;
 import flixel.addons.transition.FlxTransitionableState;
 
+import backend.StageData; // Custom
+
 class ModsMenuState extends MusicBeatState
 {
 	var bg:FlxSprite;
@@ -48,6 +50,8 @@ class ModsMenuState extends MusicBeatState
 
 	var _lastControllerMode:Bool = false;
 	var startMod:String = null;
+
+	public static var onPlayState:Bool = false; // Custom
 	public function new(startMod:String = null)
 	{
 		this.startMod = startMod;
@@ -132,7 +136,7 @@ class ModsMenuState extends MusicBeatState
 		});
 		buttonEnableAll.bg.color = FlxColor.GREEN;
 		buttonEnableAll.focusChangeCallback = function(focus:Bool) if(!focus) buttonEnableAll.bg.color = FlxColor.GREEN;
-		add(buttonEnableAll);
+		if(!onPlayState) add(buttonEnableAll);
 
 		buttonDisableAll = new MenuButton(buttonX, myY, buttonWidth, buttonHeight, "DISABLE ALL", function() {
 			buttonDisableAll.ignoreCheck = false;
@@ -152,7 +156,7 @@ class ModsMenuState extends MusicBeatState
 		});
 		buttonDisableAll.bg.color = 0xFFFF6666;
 		buttonDisableAll.focusChangeCallback = function(focus:Bool) if(!focus) buttonDisableAll.bg.color = 0xFFFF6666;
-		add(buttonDisableAll);
+		if(!onPlayState) add(buttonDisableAll); // Custom
 		checkToggleButtons();
 
 		if(modsList.all.length < 1)
@@ -211,19 +215,19 @@ class ModsMenuState extends MusicBeatState
 		var buttonsX = bgButtons.x + 320;
 		var buttonsY = bgButtons.y + 10;
 
-		var button = new MenuButton(buttonsX, buttonsY, 80, 80, Paths.image('modsMenuButtons'), function() moveModToPosition(0), 54, 54); //Move to the top
+		var button = new MenuButton(/*Custom*/onPlayState ? buttonsX + 100 : buttonsX, buttonsY, 80, 80, Paths.image('modsMenuButtons'), function() moveModToPosition(0), 54, 54); //Move to the top
 		button.icon.animation.add('icon', [0]);
 		button.icon.animation.play('icon', true);
 		add(button);
 		buttons.push(button);
 
-		var button = new MenuButton(buttonsX + 100, buttonsY, 80, 80, Paths.image('modsMenuButtons'), function() moveModToPosition(curSelectedMod - 1), 54, 54); //Move up
+		var button = new MenuButton(/*Custom*/onPlayState ? buttonsX + 200 : buttonsX + 100, buttonsY, 80, 80, Paths.image('modsMenuButtons'), function() moveModToPosition(curSelectedMod - 1), 54, 54); //Move up
 		button.icon.animation.add('icon', [1]);
 		button.icon.animation.play('icon', true);
 		add(button);
 		buttons.push(button);
 
-		var button = new MenuButton(buttonsX + 200, buttonsY, 80, 80, Paths.image('modsMenuButtons'), function() moveModToPosition(curSelectedMod + 1), 54, 54); //Move down
+		var button = new MenuButton(/*Custom*/onPlayState ? buttonsX + 300 : buttonsX + 200, buttonsY, 80, 80, Paths.image('modsMenuButtons'), function() moveModToPosition(curSelectedMod + 1), 54, 54); //Move down
 		button.icon.animation.add('icon', [2]);
 		button.icon.animation.play('icon', true);
 		add(button);
@@ -235,7 +239,7 @@ class ModsMenuState extends MusicBeatState
 				button.enabled = false;
 		}
 
-		settingsButton = new MenuButton(buttonsX + 300, buttonsY, 80, 80, Paths.image('modsMenuButtons'), function() //Settings
+		settingsButton = new MenuButton(/*Custom*/onPlayState ? buttonsX + 400 : buttonsX + 300, buttonsY, 80, 80, Paths.image('modsMenuButtons'), function() //Settings
 		{
 			var curMod:ModItem = modsGroup.members[curSelectedMod];
 			if(curMod != null && curMod.settings != null && curMod.settings.length > 0)
@@ -276,7 +280,7 @@ class ModsMenuState extends MusicBeatState
 		}, 54, 54);
 		button.icon.animation.add('icon', [4]);
 		button.icon.animation.play('icon', true);
-		add(button);
+		if(!onPlayState) add(button); // Custom
 		buttons.push(button);
 		button.focusChangeCallback = function(focus:Bool) {
 			if(!focus)
@@ -327,7 +331,17 @@ class ModsMenuState extends MusicBeatState
 					FreeplayState.vocals = null;
 				}
 				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
+				
 			}
+			else MusicBeatState.switchState(new MainMenuState());
+
+			if(onPlayState) // Custom
+				{
+					StageData.loadDirectory(PlayState.SONG);
+					MusicBeatState.switchState(new PlayState());
+					FlxG.sound.music.volume = 0;
+					onPlayState = false;
+				}
 			else MusicBeatState.switchState(new MainMenuState());
 
 			persistentUpdate = false;
