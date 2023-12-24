@@ -388,9 +388,9 @@ class FunkinLua {
 			}
 			luaTrace("addLuaScript: Script doesn't exist!", false, false, FlxColor.RED);
 		});
-		Lua_helper.add_callback(lua, "addHScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) {
+		Lua_helper.add_callback(lua, "addHScript", function(hscriptFile:String, ?ignoreAlreadyRunning:Bool = false) {
 			#if HSCRIPT_ALLOWED
-			var foundScript:String = findScript(luaFile, '.hx');
+			var foundScript:String = findScript(hscriptFile, '.hx');
 			if(foundScript != null)
 			{
 				if(!ignoreAlreadyRunning)
@@ -423,6 +423,31 @@ class FunkinLua {
 						}
 			}
 			luaTrace('removeLuaScript: Script $luaFile isn\'t running!', false, false, FlxColor.RED);
+			return false;
+		});
+		Lua_helper.add_callback(lua, "removeHScript", function(hscriptFile:String, ?ignoreAlreadyRunning:Bool = false)
+		{
+			#if HSCRIPT_ALLOWED
+			var foundScript:String = findScript(hscriptFile, '.hx');
+			
+			if (foundScript != null)
+			{
+				if (!ignoreAlreadyRunning)
+					for (script in game.hscriptArray)
+						if (script.origin == foundScript)
+						{
+							trace('Closing script: ' + script.origin);
+							game.hscriptArray.remove(script);
+							script.destroy();
+							return true;
+						}
+			}
+			
+			luaTrace('removeHScript: Script $hscriptFile isn\'t running!', false, false, FlxColor.RED);
+			#else
+			luaTrace('removeHScript: HScript is not supported on this platform!', false, false, FlxColor.RED);
+			#end
+			
 			return false;
 		});
 
