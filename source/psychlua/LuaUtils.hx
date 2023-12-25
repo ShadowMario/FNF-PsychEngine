@@ -113,6 +113,7 @@ class LuaUtils
 
 	public static function getModSetting(saveTag:String, ?modName:String = null)
 	{
+		#if MODS_ALLOWED
 		if(FlxG.save.data.modSettings == null) FlxG.save.data.modSettings = new Map<String, Dynamic>();
 
 		var settings:Map<String, Dynamic> = FlxG.save.data.modSettings.get(modName);
@@ -163,12 +164,21 @@ class LuaUtils
 		else
 		{
 			FlxG.save.data.modSettings.remove(modName);
+			#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
 			PlayState.instance.addTextToDebug('getModSetting: $path could not be found!', FlxColor.RED);
+			#else
+			FlxG.log.warn('getModSetting: $path could not be found!');
+			#end
 			return null;
 		}
 
 		if(settings.exists(saveTag)) return settings.get(saveTag);
+		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
 		PlayState.instance.addTextToDebug('getModSetting: "$saveTag" could not be found inside $modName\'s settings!', FlxColor.RED);
+		#else
+		FlxG.log.warn('getModSetting: "$saveTag" could not be found inside $modName\'s settings!');
+		#end
+		#end
 		return null;
 	}
 	

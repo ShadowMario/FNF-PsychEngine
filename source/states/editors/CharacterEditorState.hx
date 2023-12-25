@@ -13,6 +13,7 @@ import flixel.util.FlxDestroyUtil;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
+import openfl.utils.Assets;
 import lime.system.Clipboard;
 
 import objects.Character;
@@ -830,7 +831,12 @@ class CharacterEditorState extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		if(animationInputText.hasFocus || animationNameInputText.hasFocus || animationIndicesInputText.hasFocus || imageInputText.hasFocus || healthIconInputText.hasFocus) return;
+		if(animationInputText.hasFocus || animationNameInputText.hasFocus || animationIndicesInputText.hasFocus || imageInputText.hasFocus || healthIconInputText.hasFocus)
+		{
+			ClientPrefs.toggleVolumeKeys(false);
+			return;
+		}
+		ClientPrefs.toggleVolumeKeys(true);
 
 		var shiftMult:Float = 1;
 		var ctrlMult:Float = 1;

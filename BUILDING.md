@@ -16,9 +16,9 @@
 
 ### Windows & Mac
 
-For `git`, you are likely gonna want to go to [this website](https://git-scm.com/downloads),
+For `git`, you're likely gonna want [git-scm](https://git-scm.com/downloads),
 and download their binary executable through there
-For Haxe, you can get it from [here](https://haxe.org/download/)
+For Haxe, you can get it from [the Haxe website](https://haxe.org/download/)
 
 ---
 
@@ -39,26 +39,33 @@ to Download the binary for Microsoft Visual Studio with the specific package you
  and running `setup-msvc-win.bat`)
 
 ---
-
-## Linux Distributions
+### Linux Distributions
 
 For getting all the packages you need, distros often have similar or near identical names
 
 for pretty much every distro, install the `git`, `haxe`, and `vlc` packages
 
 Commands will vary depending on your distro, refer to your package manager's install command syntax.
-
----
-
-**Oh, and just a note for Gentoo Linux users**
-
-**Your packages get installed like this**
-
+### Installation for common Linux distros
+#### Ubuntu/Debian based Distros:
+```bash
+sudo add-apt-repository ppa:haxe/releases -y
+sudo apt update
+sudo apt install haxe libvlc-dev libvlccore-dev -y
+mkdir ~/haxelib && haxelib setup ~/haxelib
+```
+#### Arch based Distros:
+```bash
+sudo pacman -Syu haxe git vlc --noconfirm
+mkdir ~/haxelib;
+haxelib setup ~/haxelib
+```
+#### Gentoo:
 ```
 sudo emerge --ask dev-vcs/git-sh dev-lang/haxe media-video/vlc
 ```
 
-Some packages may be "masked", so please refer to [this page](https://wiki.gentoo.org/wiki/Knowledge_Base:Unmasking_a_package) in the Gentoo Wiki.
+* Some packages may be "masked", so please refer to [this page](https://wiki.gentoo.org/wiki/Knowledge_Base:Unmasking_a_package) in the Gentoo Wiki.
 
 ---
 
