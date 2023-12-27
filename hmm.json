@@ -41,9 +41,11 @@
       "version": null
     },
     {
-      "name": "SScript",
-      "type": "haxelib",
-      "version": null
+      "name": "SScript618",
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": "https://github.com/TheWorldMachinima/SScript618"
     },
     {
       "name": "hxcpp-debug-server",

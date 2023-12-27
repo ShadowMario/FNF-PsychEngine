@@ -92,7 +92,7 @@
 
 	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
-	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
+	<haxelib name="SScript618" if="HSCRIPT_ALLOWED"/>
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="hxdiscord_rpc" if="cpp"/>
 	<haxelib name="flxanimate"/>
@@ -147,6 +147,9 @@
 	
 	<!--Disable deprecated warnings-->
 	<haxedef name='no-deprecation-warnings' />
+
+	<!--Avoid memory leaks with for loops in HScript-->
+	<haxedef name="loop_unroll_max_cost" value="25" />
 
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />

@@ -6,8 +6,8 @@ import psychlua.FunkinLua;
 import psychlua.CustomSubstate;
 
 #if HSCRIPT_ALLOWED
-import tea.SScript;
-class HScript extends SScript
+import tea.SScript618;
+class HScript extends SScript618
 {
 	public var parentLua:FunkinLua;
 	public var modFolder:String;
@@ -323,7 +323,7 @@ class HScript extends SScript
 	public static function implement(funk:FunkinLua) {
 		#if LUA_ALLOWED
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
-			#if SScript
+			#if SScript618
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
 			final retVal:TeaCall = funk.hscript.executeCode(funcToRun, funcArgs);
 			if (retVal != null) {
@@ -347,7 +347,7 @@ class HScript extends SScript
 		});
 		
 		funk.addLocalCallback("runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic> = null) {
-			#if SScript
+			#if SScript618
 			var callValue = funk.hscript.executeFunction(funcToRun, funcArgs);
 			if (!callValue.succeeded)
 			{
@@ -362,7 +362,7 @@ class HScript extends SScript
 			FunkinLua.luaTrace("runHaxeFunction: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 		});
-		// This function is unnecessary because import already exists in SScript as a native feature
+		// This function is unnecessary because import already exists in SScript618 as a native feature
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
 			var str:String = '';
 			if(libPackage.length > 0)
@@ -374,12 +374,12 @@ class HScript extends SScript
 			if (c == null)
 				c = Type.resolveEnum(str + libName);
 
-			#if SScript
+			#if SScript618
 			if (c != null)
-				SScript.globalVariables[libName] = c;
+				SScript618.strictGlobalVariables[libName] = c;
 			#end
 
-			#if SScript
+			#if SScript618
 			if (funk.hscript != null)
 			{
 				try {
