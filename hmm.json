@@ -29,8 +29,8 @@
       "name": "flxanimate",
       "type": "git",
       "dir": null,
-      "ref": "09fd5fda88659e930a4931820454224df712eaa1",
-      "url": "https://github.com/Dot-Stuff/flxanimate/"
+      "ref": "6d11b11f65f822a2a2ad01018fa8bcea0437bf5a",
+      "url": "https://github.com/ShadowMario/flxanimate/"
     },
     {
       "name": "hxCodec",
@@ -65,7 +65,7 @@
       "name": "linc_luajit",
       "type": "git",
       "dir": null,
-      "ref": "master",
+      "ref": "8c20c7adcb7ce9d7ebc83de10208bff96e3cb5d0",
       "url": "https://github.com/superpowers04/linc_luajit"
     },
     {
