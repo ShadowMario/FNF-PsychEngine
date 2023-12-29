@@ -103,6 +103,10 @@ class HScript extends SScript
 		#if flxanimate
 		set('FlxAnimate', FlxAnimate);
 		#end
+		#if VIDEOS_ALLOWED
+		set('VideoSpriteManager', backend.VideoSpriteManager);
+		set('VideoManager', backend.VideoManager);
+		#end
 
 		// Functions & Variables
 		set('setVar', function(name:String, value:Dynamic) {
