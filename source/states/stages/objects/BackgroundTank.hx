@@ -8,7 +8,7 @@ class BackgroundTank extends BGSprite
 	public var tankAngle:Float = 0;
 	public function new()
 	{
-		super('tankRolling', 0, 0, 0.5, 0.5, ['BG tank w lighting'], true);
+		super('stages/tank/tankRolling', 0, 0, 0.5, 0.5, ['BG tank w lighting'], true);
 		tankSpeed = FlxG.random.float(5, 7);
 		tankAngle = FlxG.random.int(-90, 45);
 		antialiasing = ClientPrefs.data.antialiasing;

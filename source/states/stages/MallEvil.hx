@@ -6,15 +6,15 @@ class MallEvil extends BaseStage
 {
 	override function create()
 	{
-		var bg:BGSprite = new BGSprite('christmas/evilBG', -400, -500, 0.2, 0.2);
+		var bg:BGSprite = new BGSprite('stages/mall/evilBG', -400, -500, 0.2, 0.2);
 		bg.setGraphicSize(Std.int(bg.width * 0.8));
 		bg.updateHitbox();
 		add(bg);
 
-		var evilTree:BGSprite = new BGSprite('christmas/evilTree', 300, -300, 0.2, 0.2);
+		var evilTree:BGSprite = new BGSprite('stages/mall/evilTree', 300, -300, 0.2, 0.2);
 		add(evilTree);
 
-		var evilSnow:BGSprite = new BGSprite('christmas/evilSnow', -200, 700);
+		var evilSnow:BGSprite = new BGSprite('stages/mall/evilSnow', -200, 700);
 		add(evilSnow);
 		setDefaultGF('gf-christmas');
 		
@@ -34,7 +34,7 @@ class MallEvil extends BaseStage
 		camHUD.visible = false;
 		inCutscene = true;
 
-		FlxG.sound.play(Paths.sound('Lights_Turn_On'));
+		FlxG.sound.play(Paths.sound('cutscenes/week5/Lights_Turn_On'));
 		FlxG.camera.zoom = 1.5;
 		FlxG.camera.focusOn(new FlxPoint(400, -2050));
 

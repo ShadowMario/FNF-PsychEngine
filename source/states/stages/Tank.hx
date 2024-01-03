@@ -2,7 +2,6 @@ package states.stages;
 
 import states.stages.objects.*;
 import cutscenes.CutsceneHandler;
-import substates.GameOverSubstate;
 import objects.Character;
 
 class Tank extends BaseStage
@@ -14,40 +13,40 @@ class Tank extends BaseStage
 
 	override function create()
 	{
-		var sky:BGSprite = new BGSprite('tankSky', -400, -400, 0, 0);
+		var sky:BGSprite = new BGSprite('stages/tank/tankSky', -400, -400, 0, 0);
 		add(sky);
 
 		if(!ClientPrefs.data.lowQuality)
 		{
-			var clouds:BGSprite = new BGSprite('tankClouds', FlxG.random.int(-700, -100), FlxG.random.int(-20, 20), 0.1, 0.1);
+			var clouds:BGSprite = new BGSprite('stages/tank/tankClouds', FlxG.random.int(-700, -100), FlxG.random.int(-20, 20), 0.1, 0.1);
 			clouds.active = true;
 			clouds.velocity.x = FlxG.random.float(5, 15);
 			add(clouds);
 
-			var mountains:BGSprite = new BGSprite('tankMountains', -300, -20, 0.2, 0.2);
+			var mountains:BGSprite = new BGSprite('stages/tank/tankMountains', -300, -20, 0.2, 0.2);
 			mountains.setGraphicSize(Std.int(1.2 * mountains.width));
 			mountains.updateHitbox();
 			add(mountains);
 
-			var buildings:BGSprite = new BGSprite('tankBuildings', -200, 0, 0.3, 0.3);
+			var buildings:BGSprite = new BGSprite('stages/tank/tankBuildings', -200, 0, 0.3, 0.3);
 			buildings.setGraphicSize(Std.int(1.1 * buildings.width));
 			buildings.updateHitbox();
 			add(buildings);
 		}
 
-		var ruins:BGSprite = new BGSprite('tankRuins',-200,0,.35,.35);
+		var ruins:BGSprite = new BGSprite('stages/tank/tankRuins',-200,0,.35,.35);
 		ruins.setGraphicSize(Std.int(1.1 * ruins.width));
 		ruins.updateHitbox();
 		add(ruins);
 
 		if(!ClientPrefs.data.lowQuality)
 		{
-			var smokeLeft:BGSprite = new BGSprite('smokeLeft', -200, -100, 0.4, 0.4, ['SmokeBlurLeft'], true);
+			var smokeLeft:BGSprite = new BGSprite('stages/tank/smokeLeft', -200, -100, 0.4, 0.4, ['SmokeBlurLeft'], true);
 			add(smokeLeft);
-			var smokeRight:BGSprite = new BGSprite('smokeRight', 1100, -100, 0.4, 0.4, ['SmokeRight'], true);
+			var smokeRight:BGSprite = new BGSprite('stages/tank/smokeRight', 1100, -100, 0.4, 0.4, ['SmokeRight'], true);
 			add(smokeRight);
 
-			tankWatchtower = new BGSprite('tankWatchtower', 100, 50, 0.5, 0.5, ['watchtower gradient color']);
+			tankWatchtower = new BGSprite('stages/tank/tankWatchtower', 100, 50, 0.5, 0.5, ['watchtower gradient color']);
 			add(tankWatchtower);
 		}
 
@@ -57,18 +56,18 @@ class Tank extends BaseStage
 		tankmanRun = new FlxTypedGroup<TankmenBG>();
 		add(tankmanRun);
 
-		var ground:BGSprite = new BGSprite('tankGround', -420, -150);
+		var ground:BGSprite = new BGSprite('stages/tank/tankGround', -420, -150);
 		ground.setGraphicSize(Std.int(1.15 * ground.width));
 		ground.updateHitbox();
 		add(ground);
 
 		foregroundSprites = new FlxTypedGroup<BGSprite>();
-		foregroundSprites.add(new BGSprite('tank0', -500, 650, 1.7, 1.5, ['fg']));
-		if(!ClientPrefs.data.lowQuality) foregroundSprites.add(new BGSprite('tank1', -300, 750, 2, 0.2, ['fg']));
-		foregroundSprites.add(new BGSprite('tank2', 450, 940, 1.5, 1.5, ['foreground']));
-		if(!ClientPrefs.data.lowQuality) foregroundSprites.add(new BGSprite('tank4', 1300, 900, 1.5, 1.5, ['fg']));
-		foregroundSprites.add(new BGSprite('tank5', 1620, 700, 1.5, 1.5, ['fg']));
-		if(!ClientPrefs.data.lowQuality) foregroundSprites.add(new BGSprite('tank3', 1300, 1200, 3.5, 2.5, ['fg']));
+		foregroundSprites.add(new BGSprite('stages/tank/tank0', -500, 650, 1.7, 1.5, ['fg']));
+		if(!ClientPrefs.data.lowQuality) foregroundSprites.add(new BGSprite('stages/tank/tank1', -300, 750, 2, 0.2, ['fg']));
+		foregroundSprites.add(new BGSprite('stages/tank/tank2', 450, 940, 1.5, 1.5, ['foreground']));
+		if(!ClientPrefs.data.lowQuality) foregroundSprites.add(new BGSprite('stages/tank/tank4', 1300, 900, 1.5, 1.5, ['fg']));
+		foregroundSprites.add(new BGSprite('stages/tank/tank5', 1620, 700, 1.5, 1.5, ['fg']));
+		if(!ClientPrefs.data.lowQuality) foregroundSprites.add(new BGSprite('stages/tank/tank3', 1300, 1200, 3.5, 2.5, ['fg']));
 
 		// Default GFs
 		if(songName == 'stress') setDefaultGF('pico-speaker');
@@ -145,7 +144,7 @@ class Tank extends BaseStage
 
 		tankman = new FlxAnimate(dad.x + 419, dad.y + 225);
 		tankman.showPivot = false;
-		Paths.loadAnimateAtlas(tankman, 'cutscenes/tankman');
+		Paths.loadAnimateAtlas(tankman, 'cutscenes/week7/tankman');
 		tankman.antialiasing = ClientPrefs.data.antialiasing;
 		addBehindDad(tankman);
 		cutsceneHandler.push(tankman);
@@ -170,12 +169,12 @@ class Tank extends BaseStage
 	{
 		prepareCutscene();
 		cutsceneHandler.endTime = 12;
-		cutsceneHandler.music = 'DISTORTO';
-		precacheSound('wellWellWell');
-		precacheSound('killYou');
-		precacheSound('bfBeep');
+		cutsceneHandler.music = 'cutscenes/DISTORTO';
+		precacheSound('cutscenes/week7/wellWellWell');
+		precacheSound('cutscenes/week7/killYou');
+		precacheSound('cutscenes/week7/bfBeep');
 
-		var wellWellWell:FlxSound = new FlxSound().loadEmbedded(Paths.sound('wellWellWell'));
+		var wellWellWell:FlxSound = new FlxSound().loadEmbedded(Paths.sound('cutscenes/week7/wellWellWell'));
 		FlxG.sound.list.add(wellWellWell);
 
 		tankman.anim.addBySymbol('wellWell', 'TANK TALK 1 P1', 24, false);
@@ -201,7 +200,7 @@ class Tank extends BaseStage
 		{
 			boyfriend.playAnim('singUP', true);
 			boyfriend.specialAnim = true;
-			FlxG.sound.play(Paths.sound('bfBeep'));
+			FlxG.sound.play(Paths.sound('cutscenes/week7/bfBeep'));
 		});
 
 		// Move camera to Tankman
@@ -212,17 +211,17 @@ class Tank extends BaseStage
 
 			// We should just kill you but... what the hell, it's been a boring day... let's see what you've got!
 			tankman.anim.play('killYou', true);
-			FlxG.sound.play(Paths.sound('killYou'));
+			FlxG.sound.play(Paths.sound('cutscenes/week7/killYou'));
 		});
 	}
 	function gunsIntro()
 	{
 		prepareCutscene();
 		cutsceneHandler.endTime = 11.5;
-		cutsceneHandler.music = 'DISTORTO';
-		precacheSound('tankSong2');
+		cutsceneHandler.music = 'cutscenes/DISTORTO';
+		precacheSound('cutscenes/week7/tankSong2');
 
-		var tightBars:FlxSound = new FlxSound().loadEmbedded(Paths.sound('tankSong2'));
+		var tightBars:FlxSound = new FlxSound().loadEmbedded(Paths.sound('cutscenes/week7/tankSong2'));
 		FlxG.sound.list.add(tightBars);
 
 		tankman.anim.addBySymbol('tightBars', 'TANK TALK 2', 24, false);
@@ -260,11 +259,11 @@ class Tank extends BaseStage
 		{
 			spr.y += 100;
 		});
-		precacheSound('stressCutscene');
+		precacheSound('cutscenes/week7/stressCutscene');
 
 		pico = new FlxAnimate(gf.x + 150, gf.y + 450);
 		pico.showPivot = false;
-		Paths.loadAnimateAtlas(pico, 'cutscenes/picoAppears');
+		Paths.loadAnimateAtlas(pico, 'cutscenes/week7/picoAppears');
 		pico.antialiasing = ClientPrefs.data.antialiasing;
 		pico.anim.addBySymbol('dance', 'GF Dancing at Gunpoint', 24, true);
 		pico.anim.addBySymbol('dieBitch', 'GF Time to Die sequence', 24, false);
@@ -283,7 +282,7 @@ class Tank extends BaseStage
 		addBehindBF(boyfriendCutscene);
 		cutsceneHandler.push(boyfriendCutscene);
 
-		var cutsceneSnd:FlxSound = new FlxSound().loadEmbedded(Paths.sound('stressCutscene'));
+		var cutsceneSnd:FlxSound = new FlxSound().loadEmbedded(Paths.sound('cutscenes/week7/stressCutscene'));
 		FlxG.sound.list.add(cutsceneSnd);
 
 		tankman.anim.addBySymbol('godEffingDamnIt', 'TANK TALK 3 P1 UNCUT', 24, false);

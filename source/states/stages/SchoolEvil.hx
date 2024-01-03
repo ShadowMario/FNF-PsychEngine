@@ -21,16 +21,16 @@ class SchoolEvil extends BaseStage
 
 		var bg:BGSprite;
 		if(!ClientPrefs.data.lowQuality)
-			bg = new BGSprite('weeb/animatedEvilSchool', posX, posY, 0.8, 0.9, ['background 2'], true);
+			bg = new BGSprite('stages/school/animatedEvilSchool', posX, posY, 0.8, 0.9, ['background 2'], true);
 		else
-			bg = new BGSprite('weeb/animatedEvilSchool_low', posX, posY, 0.8, 0.9);
+			bg = new BGSprite('stages/school/animatedEvilSchool_low', posX, posY, 0.8, 0.9);
 
 		bg.scale.set(PlayState.daPixelZoom, PlayState.daPixelZoom);
 		bg.antialiasing = false;
 		add(bg);
 		setDefaultGF('gf-pixel');
 
-		FlxG.sound.playMusic(Paths.music('LunchboxScary'), 0);
+		FlxG.sound.playMusic(Paths.music('cutscenes/LunchboxScary'), 0);
 		FlxG.sound.music.fadeIn(1, 0, 0.8);
 		if(isStoryMode && !seenCutscene)
 		{
@@ -66,7 +66,7 @@ class SchoolEvil extends BaseStage
 			case "Trigger BG Ghouls":
 				if(!ClientPrefs.data.lowQuality)
 				{
-					bgGhouls = new BGSprite('weeb/bgGhouls', -100, 190, 0.9, 0.9, ['BG freaks glitch instance'], false);
+					bgGhouls = new BGSprite('stages/school/bgGhouls', -100, 190, 0.9, 0.9, ['BG freaks glitch instance'], false);
 					bgGhouls.setGraphicSize(Std.int(bgGhouls.width * PlayState.daPixelZoom));
 					bgGhouls.updateHitbox();
 					bgGhouls.visible = false;
@@ -111,7 +111,7 @@ class SchoolEvil extends BaseStage
 		add(red);
 
 		var senpaiEvil:FlxSprite = new FlxSprite();
-		senpaiEvil.frames = Paths.getSparrowAtlas('weeb/senpaiCrazy');
+		senpaiEvil.frames = Paths.getSparrowAtlas('cutscenes/week6/senpaiCrazy');
 		senpaiEvil.animation.addByPrefix('idle', 'Senpai Pre Explosion', 24, false);
 		senpaiEvil.setGraphicSize(Std.int(senpaiEvil.width * 6));
 		senpaiEvil.scrollFactor.set();
@@ -136,7 +136,7 @@ class SchoolEvil extends BaseStage
 					else
 					{
 						senpaiEvil.animation.play('idle');
-						FlxG.sound.play(Paths.sound('Senpai_Dies'), 1, false, null, true, function()
+						FlxG.sound.play(Paths.sound('cutscenes/week6/Senpai_Dies'), 1, false, null, true, function()
 						{
 							remove(senpaiEvil);
 							senpaiEvil.destroy();

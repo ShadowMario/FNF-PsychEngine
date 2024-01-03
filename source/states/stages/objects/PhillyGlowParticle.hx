@@ -10,7 +10,7 @@ class PhillyGlowParticle extends FlxSprite
 		super(x, y);
 		this.color = color;
 
-		loadGraphic(Paths.image('philly/particle'));
+		loadGraphic(Paths.image('stages/philly/particle'));
 		lifeTime = FlxG.random.float(0.6, 0.9);
 		decay = FlxG.random.float(0.8, 1);
 		if(!ClientPrefs.data.flashing)

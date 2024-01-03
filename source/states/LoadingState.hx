@@ -68,9 +68,6 @@ class LoadingState extends MusicBeatState
 					if (PlayState.SONG.needsVoices)
 						checkLoadSong(getVocalPath());
 				}
-				if(directory != null && directory.length > 0 && directory != 'shared') {
-					checkLibrary('week_assets');
-				}
 
 				var fadeTime = 0.5;
 				FlxG.camera.fade(FlxG.camera.bgColor, fadeTime, true);
@@ -149,14 +146,8 @@ class LoadingState extends MusicBeatState
 	
 	static function getNextState(target:FlxState, stopMusic = false):FlxState
 	{
-		var directory:String = 'shared';
 		var weekDir:String = StageData.forceNextDirectory;
 		StageData.forceNextDirectory = null;
-
-		if(weekDir != null && weekDir.length > 0 && weekDir != '') directory = weekDir;
-
-		Paths.setCurrentLevel(directory);
-		trace('Setting asset folder to ' + directory);
 
 		/*#if NO_PRELOAD_ALL
 		var loaded:Bool = false;
