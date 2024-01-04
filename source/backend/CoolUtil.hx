@@ -62,7 +62,7 @@ class CoolUtil
 		var newValue:Float = Math.floor(value * tempMult);
 		return newValue / tempMult;
 	}
-	
+
 	inline public static function dominantColor(sprite:flixel.FlxSprite):Int
 	{
 		var countByColor:Map<Int, Int> = [];
@@ -115,9 +115,9 @@ class CoolUtil
 			if(folder.endsWith('/')) folder.substr(0, folder.length - 1);
 
 			#if linux
-			var command:String = 'explorer.exe';
-			#else
 			var command:String = '/usr/bin/xdg-open';
+			#else
+			var command:String = 'explorer.exe';
 			#end
 			Sys.command(command, [folder]);
 			trace('$command $folder');
