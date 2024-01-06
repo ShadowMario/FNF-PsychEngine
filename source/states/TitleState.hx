@@ -99,17 +99,20 @@ class TitleState extends MusicBeatState
 		titleData = TJSON.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
 
 		#if TITLE_SCREEN_EASTER_EGG
-		switch (FlxG.save.data.psychDevsEasterEgg.toUpperCase())
+		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
+		if (easterEgg == null)
+			easterEgg = '';
+		switch (easterEgg.toUpperCase())
 		{
 			case 'SHADOW':
-				titleJSON.gf[0] += 210;
-				titleJSON.gf[1] += 40;
+				titleData.gf[0] += 210;
+				titleData.gf[1] += 40;
 			case 'RIVER':
-				titleJSON.gf[0] += 180;
-				titleJSON.gf[1] += 40;
+				titleData.gf[0] += 180;
+				titleData.gf[1] += 40;
 			case 'BBPANZU':
-				titleJSON.gf[0] += 45;
-				titleJSON.gf[1] += 100;
+				titleData.gf[0] += 45;
+				titleData.gf[1] += 100;
 		}
 		#end
 
@@ -222,11 +225,14 @@ class TitleState extends MusicBeatState
 
 							FlxG.sound.play(Paths.sound('ToggleJingle'));
 
+							var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+							black.alpha = 0;
+							add(black);
+
 							FlxTween.tween(black, {alpha: 1}, 1, {
 								onComplete: function(twn:FlxTween)
 								{
-									FlxTransitionableState.skipNextTransIn = true;
-									FlxTransitionableState.skipNextTransOut = true;
+									FlxTransitionableState.skipNextTransIn = FlxTransitionableState.skipNextTransOut = true;
 									MusicBeatState.switchState(new TitleState());
 								}
 							});
@@ -326,15 +332,6 @@ class TitleState extends MusicBeatState
 			add(bg);
 		}
 
-		logo = new FlxSprite(titleData.title[0], titleData.title[1]);
-		logo.frames = Paths.getSparrowAtlas('logoBumpin');
-		logo.antialiasing = ClientPrefs.data.antialiasing;
-		logo.animation.addByPrefix('bump', 'logo bumpin', 24, false);
-		logo.animation.play('bump');
-		logo.updateHitbox();
-		logo.visible = false;
-		add(logo);
-
 		gf = new FlxSprite(titleData.gf[0], titleData.gf[1]);
 		gf.antialiasing = ClientPrefs.data.antialiasing;
 
@@ -346,17 +343,17 @@ class TitleState extends MusicBeatState
 		{
 			#if TITLE_SCREEN_EASTER_EGG
 			case 'SHADOW':
-				gfDance.frames = Paths.getSparrowAtlas('ShadowBump');
-				gfDance.animation.addByPrefix('danceLeft', 'Shadow Title Bump', 24);
-				gfDance.animation.addByPrefix('danceRight', 'Shadow Title Bump', 24);
+				gf.frames = Paths.getSparrowAtlas('ShadowBump');
+				gf.animation.addByPrefix('danceLeft', 'Shadow Title Bump', 24);
+				gf.animation.addByPrefix('danceRight', 'Shadow Title Bump', 24);
 			case 'RIVER':
-				gfDance.frames = Paths.getSparrowAtlas('RiverBump');
-				gfDance.animation.addByIndices('danceLeft', 'River Title Bump', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'River Title Bump', [29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				gf.frames = Paths.getSparrowAtlas('RiverBump');
+				gf.animation.addByIndices('danceLeft', 'River Title Bump', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+				gf.animation.addByIndices('danceRight', 'River Title Bump', [29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 			case 'BBPANZU':
-				gfDance.frames = Paths.getSparrowAtlas('BBBump');
-				gfDance.animation.addByIndices('danceLeft', 'BB Title Bump', [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'BB Title Bump', [27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "", 24, false);
+				gf.frames = Paths.getSparrowAtlas('BBBump');
+				gf.animation.addByIndices('danceLeft', 'BB Title Bump', [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 24, false);
+				gf.animation.addByIndices('danceRight', 'BB Title Bump', [27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "", 24, false);
 			#end
 
 			default: // Edit if you're making a source code mod.
@@ -369,6 +366,15 @@ class TitleState extends MusicBeatState
 		gf.updateHitbox();
 		gf.visible = false;
 		add(gf);
+
+		logo = new FlxSprite(titleData.title[0], titleData.title[1]);
+		logo.frames = Paths.getSparrowAtlas('logoBumpin');
+		logo.antialiasing = ClientPrefs.data.antialiasing;
+		logo.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+		logo.animation.play('bump');
+		logo.updateHitbox();
+		logo.visible = false;
+		add(logo);
 
 		if (ClientPrefs.data.shaders)
 		{
@@ -456,12 +462,16 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
-		logo.animation.play('bump', true);
+		if (logo != null)
+			logo.animation.play('bump', true);
 
-		if (curBeat % 2 == 0)
-			gf.animation.play('danceLeft');
-		else
-			gf.animation.play('danceRight');
+		if (gf != null)
+		{
+			if (curBeat % 2 == 0)
+				gf.animation.play('danceLeft');
+			else
+				gf.animation.play('danceRight');
+		}
 
 		if (!closedState)
 		{
@@ -549,18 +559,21 @@ class TitleState extends MusicBeatState
 
 						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
+						gf.visible = logo.visible = titleText.visible = true;
 						return;
 				}
 
 				transitioning = true;
 				if (easteregg == 'SHADOW')
 				{
+					gf.visible = logo.visible = titleText.visible = false;
 					new FlxTimer().start(3.2, function(tmr:FlxTimer)
 					{
 						deleteTexts();
 						deleteImages();
 						FlxG.camera.flash(FlxColor.WHITE, 0.6);
 						transitioning = false;
+						gf.visible = logo.visible = titleText.visible = true;
 					});
 				}
 				else
@@ -574,6 +587,7 @@ class TitleState extends MusicBeatState
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						transitioning = false;
 					};
+					gf.visible = logo.visible = titleText.visible = true;
 				}
 				playJingle = false;
 			}
@@ -596,9 +610,10 @@ class TitleState extends MusicBeatState
 						FreeplayState.vocals.fadeOut();
 					}
 				}
+				gf.visible = logo.visible = titleText.visible = true;
 				#end
 			}
-			gf.visible = logo.visible = titleText.visible = skippedIntro = true;
+			skippedIntro = true;
 		}
 	}
 }
