@@ -33,10 +33,6 @@ typedef TitleData =
 
 class TitleState extends MusicBeatState
 {
-	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
-	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
-	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
-
 	public static var initialized:Bool = false;
 	public static var closedState:Bool = false;
 	public static var latestVersion:String = '';
@@ -613,8 +609,8 @@ class TitleState extends MusicBeatState
 						FreeplayState.vocals.fadeOut();
 					}
 				}
-				gf.visible = logo.visible = titleText.visible = true;
 				#end
+				gf.visible = logo.visible = titleText.visible = true;
 			}
 			skippedIntro = true;
 		}
