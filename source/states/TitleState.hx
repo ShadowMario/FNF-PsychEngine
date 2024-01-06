@@ -21,9 +21,12 @@ import states.MainMenuState;
 
 typedef TitleData =
 {
-	title:Array<Float>,
-	start:Array<Float>,
-	gf:Array<Float>,
+	titlex:Float,
+	titley:Float,
+	startx:Float,
+	starty:Float,
+	gfx:Float,
+	gfy:Float,
 	backgroundSprite:String,
 	bpm:Float
 }
@@ -105,14 +108,14 @@ class TitleState extends MusicBeatState
 		switch (easterEgg.toUpperCase())
 		{
 			case 'SHADOW':
-				titleData.gf[0] += 210;
-				titleData.gf[1] += 40;
+				titleData.gfx += 210;
+				titleData.gfy += 40;
 			case 'RIVER':
-				titleData.gf[0] += 180;
-				titleData.gf[1] += 40;
+				titleData.gfx += 180;
+				titleData.gfy += 40;
 			case 'BBPANZU':
-				titleData.gf[0] += 45;
-				titleData.gf[1] += 100;
+				titleData.gfx += 45;
+				titleData.gfy += 100;
 		}
 		#end
 
@@ -332,7 +335,7 @@ class TitleState extends MusicBeatState
 			add(bg);
 		}
 
-		gf = new FlxSprite(titleData.gf[0], titleData.gf[1]);
+		gf = new FlxSprite(titleData.gfx, titleData.gfy);
 		gf.antialiasing = ClientPrefs.data.antialiasing;
 
 		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
@@ -367,7 +370,7 @@ class TitleState extends MusicBeatState
 		gf.visible = false;
 		add(gf);
 
-		logo = new FlxSprite(titleData.title[0], titleData.title[1]);
+		logo = new FlxSprite(titleData.titlex, titleData.titley);
 		logo.frames = Paths.getSparrowAtlas('logoBumpin');
 		logo.antialiasing = ClientPrefs.data.antialiasing;
 		logo.animation.addByPrefix('bump', 'logo bumpin', 24, false);
@@ -382,7 +385,7 @@ class TitleState extends MusicBeatState
 			gf.shader = logo.shader = swagShader.shader;
 		}
 
-		titleText = new FlxSprite(titleData.start[0], titleData.start[1]);
+		titleText = new FlxSprite(titleData.startx, titleData.starty);
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
 		var animFrames:Array<FlxFrame> = [];
 		@:privateAccess {
