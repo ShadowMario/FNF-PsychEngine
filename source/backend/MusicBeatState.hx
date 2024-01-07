@@ -57,7 +57,12 @@ class MusicBeatState extends FlxUIState
 
 		updateCurStep();
 		updateBeat();
-
+		
+                if (controls.justPressed('full_screen'))
+		{
+		    FlxG.fullscreen = !FlxG.fullscreen;
+		}
+		
 		if (oldStep != curStep)
 		{
 			if(curStep > 0)
