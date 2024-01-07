@@ -2,16 +2,21 @@ package psychlua;
 
 import flixel.FlxBasic;
 import objects.Character;
-import psychlua.FunkinLua;
+import psychlua.LuaUtils;
 import psychlua.CustomSubstate;
+
+#if LUA_ALLOWED
+import psychlua.FunkinLua;
+#end
 
 #if HSCRIPT_ALLOWED
 import tea.SScript;
 class HScript extends SScript
 {
-	public var parentLua:FunkinLua;
 	public var modFolder:String;
-	
+
+	#if LUA_ALLOWED
+	public var parentLua:FunkinLua;
 	public static function initHaxeModule(parent:FunkinLua)
 	{
 		if(parent.hscript == null)
@@ -39,9 +44,10 @@ class HScript extends SScript
 			}
 		}
 	}
+	#end
 
 	public var origin:String;
-	override public function new(?parent:FunkinLua, ?file:String, ?varsToBring:Any = null)
+	override public function new(?parent:Dynamic, ?file:String, ?varsToBring:Any = null)
 	{
 		if (file == null)
 			file = '';
@@ -49,12 +55,16 @@ class HScript extends SScript
 		this.varsToBring = varsToBring;
 	
 		super(file, false, false);
+
+		#if LUA_ALLOWED
 		parentLua = parent;
 		if (parent != null)
 		{
 			this.origin = parent.scriptName;
 			this.modFolder = parent.modFolder;
 		}
+		#end
+
 		if (scriptFile != null && scriptFile.length > 0)
 		{
 			this.origin = scriptFile;
@@ -221,13 +231,13 @@ class HScript extends SScript
 
 		// For adding your own callbacks
 		// not very tested but should work
+		#if LUA_ALLOWED
 		set('createGlobalCallback', function(name:String, func:Dynamic)
 		{
-			#if LUA_ALLOWED
 			for (script in PlayState.instance.luaArray)
 				if(script != null && script.lua != null && !script.closed)
 					Lua_helper.add_callback(script.lua, name, func);
-			#end
+
 			FunkinLua.customFunctions.set(name, func);
 		});
 
@@ -239,6 +249,7 @@ class HScript extends SScript
 			if(parentLua != null) funk.addLocalCallback(name, func);
 			else FunkinLua.luaTrace('createCallback ($name): 3rd argument is null', false, false, FlxColor.RED);
 		});
+		#end
 
 		set('addHaxeLibrary', function(libName:String, ?libPackage:String = '') {
 			try {
@@ -250,29 +261,36 @@ class HScript extends SScript
 			}
 			catch (e:Dynamic) {
 				var msg:String = e.message.substr(0, e.message.indexOf('\n'));
+				#if LUA_ALLOWED
 				if(parentLua != null)
 				{
 					FunkinLua.lastCalledScript = parentLua;
-					msg = origin + ":" + parentLua.lastCalledFunction + " - " + msg;
+					FunkinLua.luaTrace('$origin: ${parentLua.lastCalledFunction} - $msg', false, false, FlxColor.RED);
+					return;
 				}
-				else msg = '$origin - $msg';
-				FunkinLua.luaTrace(msg, parentLua == null, false, FlxColor.RED);
+				#end
+				PlayState.instance.addTextToDebug('$origin - $msg', FlxColor.RED);
 			}
 		});
+		#if LUA_ALLOWED
 		set('parentLua', parentLua);
+		#else
+		set('parentLua', null);
+		#end
 		set('this', this);
 		set('game', PlayState.instance);
 		if (PlayState.instance != null)
 			setSpecialObject(PlayState.instance, false, PlayState.instance.instancesExclude);
-		set('buildTarget', FunkinLua.getBuildTarget());
+
+		set('buildTarget', LuaUtils.getBuildTarget());
 		set('customSubstate', CustomSubstate.instance);
 		set('customSubstateName', CustomSubstate.name);
 
-		set('Function_Stop', FunkinLua.Function_Stop);
-		set('Function_Continue', FunkinLua.Function_Continue);
-		set('Function_StopLua', FunkinLua.Function_StopLua); //doesnt do much cuz HScript has a lower priority than Lua
-		set('Function_StopHScript', FunkinLua.Function_StopHScript);
-		set('Function_StopAll', FunkinLua.Function_StopAll);
+		set('Function_Stop', LuaUtils.Function_Stop);
+		set('Function_Continue', LuaUtils.Function_Continue);
+		set('Function_StopLua', LuaUtils.Function_StopLua); //doesnt do much cuz HScript has a lower priority than Lua
+		set('Function_StopHScript', LuaUtils.Function_StopHScript);
+		set('Function_StopAll', LuaUtils.Function_StopAll);
 		
 		set('add', function(obj:FlxBasic) PlayState.instance.add(obj));
 		set('addBehindGF', function(obj:FlxBasic) PlayState.instance.addBehindGF(obj));
@@ -296,7 +314,11 @@ class HScript extends SScript
 		if (funcToRun == null) return null;
 
 		if(!exists(funcToRun)) {
+			#if LUA_ALLOWED
 			FunkinLua.luaTrace(origin + ' - No HScript function named: $funcToRun', false, false, FlxColor.RED);
+			#else
+			PlayState.instance.addTextToDebug(origin + ' - No HScript function named: $funcToRun', FlxColor.RED);
+			#end
 			return null;
 		}
 
@@ -306,9 +328,14 @@ class HScript extends SScript
 			final e = callValue.exceptions[0];
 			if (e != null) {
 				var msg:String = e.toString();
-				if(parentLua != null) msg = origin + ":" + parentLua.lastCalledFunction + " - " + msg;
-				else msg = '$origin - $msg';
-				FunkinLua.luaTrace(msg, parentLua == null, false, FlxColor.RED);
+				#if LUA_ALLOWED
+				if(parentLua != null)
+				{
+					FunkinLua.luaTrace('$origin: ${parentLua.lastCalledFunction} - $msg', false, false, FlxColor.RED);
+					return null;
+				}
+				#end
+				PlayState.instance.addTextToDebug('$origin - $msg', FlxColor.RED);
 			}
 			return null;
 		}
@@ -320,8 +347,8 @@ class HScript extends SScript
 		return call(funcToRun, funcArgs);
 	}
 
+	#if LUA_ALLOWED
 	public static function implement(funk:FunkinLua) {
-		#if LUA_ALLOWED
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			#if SScript
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
@@ -394,13 +421,13 @@ class HScript extends SScript
 			FunkinLua.luaTrace("addHaxeLibrary: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 		});
-		#end
 	}
+	#end
 
 	override public function destroy()
 	{
 		origin = null;
-		parentLua = null;
+		#if LUA_ALLOWED parentLua = null; #end
 
 		super.destroy();
 	}
