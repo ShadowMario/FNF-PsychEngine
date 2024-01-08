@@ -32,9 +32,8 @@ class PauseSubState extends MusicBeatSubstate
 
 	public static var songName:String = null;
 
-	public function new(x:Float, y:Float)
+	override function create()
 	{
-		super();
 		if(Difficulty.list.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
 		if(PlayState.chartingMode)
@@ -152,6 +151,8 @@ class PauseSubState extends MusicBeatSubstate
 
 		regenMenu();
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
+		super.create();
 	}
 
 	var holdTime:Float = 0;

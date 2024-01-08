@@ -41,25 +41,17 @@ class GameOverSubstate extends MusicBeatSubstate
 		}
 	}
 
+	var charX:Float = 0;
+	var charY:Float = 0;
 	override function create()
 	{
 		instance = this;
-		PlayState.instance.callOnScripts('onGameOverStart', []);
-
-		super.create();
-	}
-
-	public function new(x:Float, y:Float, camX:Float, camY:Float)
-	{
-		super();
-
-		PlayState.instance.setOnScripts('inGameOver', true);
 
 		Conductor.songPosition = 0;
 
-		boyfriend = new Character(x, y, characterName, true);
-		boyfriend.x += boyfriend.positionArray[0];
-		boyfriend.y += boyfriend.positionArray[1];
+		boyfriend = new Character(PlayState.instance.boyfriend.getScreenPosition().x, PlayState.instance.boyfriend.getScreenPosition().y, characterName, true);
+		boyfriend.x += boyfriend.positionArray[0] - PlayState.instance.boyfriend.positionArray[0];
+		boyfriend.y += boyfriend.positionArray[1] - PlayState.instance.boyfriend.positionArray[1];
 		add(boyfriend);
 
 		FlxG.sound.play(Paths.sound(deathSoundName));
@@ -72,6 +64,11 @@ class GameOverSubstate extends MusicBeatSubstate
 		camFollow.setPosition(boyfriend.getGraphicMidpoint().x + boyfriend.cameraPosition[0], boyfriend.getGraphicMidpoint().y + boyfriend.cameraPosition[1]);
 		FlxG.camera.focusOn(new FlxPoint(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2)));
 		add(camFollow);
+		
+		PlayState.instance.setOnScripts('inGameOver', true);
+		PlayState.instance.callOnScripts('onGameOverStart', []);
+
+		super.create();
 	}
 
 	public var startedDeath:Bool = false;

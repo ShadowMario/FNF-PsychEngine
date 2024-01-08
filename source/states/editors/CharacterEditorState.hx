@@ -68,6 +68,7 @@ class CharacterEditorState extends MusicBeatState
 	{
 		if(ClientPrefs.data.cacheOnGPU) Paths.clearStoredMemory();
 
+		FlxG.sound.music.stop();
 		camEditor = initPsychCamera();
 
 		camHUD = new FlxCamera();
@@ -260,7 +261,7 @@ class CharacterEditorState extends MusicBeatState
 		UI_characterbox = new FlxUITabMenu(null, tabs, true);
 		UI_characterbox.cameras = [camHUD];
 
-		UI_characterbox.resize(350, 250);
+		UI_characterbox.resize(350, 280);
 		UI_characterbox.x = UI_box.x - 100;
 		UI_characterbox.y = UI_box.y + UI_box.height;
 		UI_characterbox.scrollFactor.set();
@@ -426,10 +427,13 @@ class CharacterEditorState extends MusicBeatState
 				scale: 1,
 				healthbar_colors: [161, 161, 161],
 				camera_position: [0, 0],
-				position: [0, 0]
+				position: [0, 0],
+				vocals_file: null
 			};
 
 			character.loadCharacterFile(_template);
+			character.color = FlxColor.WHITE;
+			character.alpha = 1;
 			reloadAnimList();
 			reloadCharacterOptions();
 			updateCharacterPositions();
@@ -508,7 +512,7 @@ class CharacterEditorState extends MusicBeatState
 			animationIndicesInputText.text = indicesStr.substr(1, indicesStr.length - 2);
 		});
 
-		var addUpdateButton:FlxButton = new FlxButton(70, animationIndicesInputText.y + 30, "Add/Update", function() {
+		var addUpdateButton:FlxButton = new FlxButton(70, animationIndicesInputText.y + 60, "Add/Update", function() {
 			var indices:Array<Int> = [];
 			var indicesStr:Array<String> = animationIndicesInputText.text.trim().split(',');
 			if(indicesStr.length > 1) {
@@ -547,7 +551,7 @@ class CharacterEditorState extends MusicBeatState
 			trace('Added/Updated animation: ' + animationInputText.text);
 		});
 
-		var removeButton:FlxButton = new FlxButton(180, animationIndicesInputText.y + 30, "Remove", function() {
+		var removeButton:FlxButton = new FlxButton(180, animationIndicesInputText.y + 60, "Remove", function() {
 			for (anim in character.animationsArray)
 				if(animationInputText.text == anim.anim)
 				{
@@ -593,6 +597,7 @@ class CharacterEditorState extends MusicBeatState
 
 	var imageInputText:FlxUIInputText;
 	var healthIconInputText:FlxUIInputText;
+	var vocalsInputText:FlxUIInputText;
 
 	var singDurationStepper:FlxUINumericStepper;
 	var scaleStepper:FlxUINumericStepper;
@@ -634,7 +639,9 @@ class CharacterEditorState extends MusicBeatState
 
 		healthIconInputText = new FlxUIInputText(15, imageInputText.y + 35, 75, healthIcon.getCharacter(), 8);
 
-		singDurationStepper = new FlxUINumericStepper(15, healthIconInputText.y + 45, 0.1, 4, 0, 999, 1);
+		vocalsInputText = new FlxUIInputText(15, healthIconInputText.y + 35, 75, character.vocalsFile ?? '', 8);
+
+		singDurationStepper = new FlxUINumericStepper(15, vocalsInputText.y + 45, 0.1, 4, 0, 999, 1);
 
 		scaleStepper = new FlxUINumericStepper(15, singDurationStepper.y + 40, 0.1, 1, 0.05, 10, 1);
 
@@ -672,6 +679,7 @@ class CharacterEditorState extends MusicBeatState
 
 		tab_group.add(new FlxText(15, imageInputText.y - 18, 0, 'Image file name:'));
 		tab_group.add(new FlxText(15, healthIconInputText.y - 18, 0, 'Health icon name:'));
+		tab_group.add(new FlxText(15, vocalsInputText.y - 18, 0, 'Vocals File Postfix:'));
 		tab_group.add(new FlxText(15, singDurationStepper.y - 18, 0, 'Sing Animation length:'));
 		tab_group.add(new FlxText(15, scaleStepper.y - 18, 0, 'Scale:'));
 		tab_group.add(new FlxText(positionXStepper.x, positionXStepper.y - 18, 0, 'Character X/Y:'));
@@ -681,6 +689,7 @@ class CharacterEditorState extends MusicBeatState
 		tab_group.add(reloadImage);
 		tab_group.add(decideIconColor);
 		tab_group.add(healthIconInputText);
+		tab_group.add(vocalsInputText);
 		tab_group.add(singDurationStepper);
 		tab_group.add(scaleStepper);
 		tab_group.add(flipXCheckBox);
@@ -707,9 +716,10 @@ class CharacterEditorState extends MusicBeatState
 				character.healthIcon = healthIconInputText.text;
 				if(lastIcon != healthIcon.getCharacter()) updatePresence();
 			}
-			else if(sender == imageInputText) {
+			else if(sender == vocalsInputText)
+				character.vocalsFile = vocalsInputText.text;
+			else if(sender == imageInputText)
 				character.imageFile = imageInputText.text;
-			}
 		}
 		else if(sender is FlxUINumericStepper)
 		{
@@ -770,6 +780,8 @@ class CharacterEditorState extends MusicBeatState
 
 		character.destroyAtlas();
 		character.isAnimateAtlas = false;
+		character.color = FlxColor.WHITE;
+		character.alpha = 1;
 
 		if(Paths.fileExists('images/' + character.imageFile + '/Animation.json', TEXT))
 		{
@@ -810,6 +822,7 @@ class CharacterEditorState extends MusicBeatState
 		check_player.checked = character.isPlayer;
 		imageInputText.text = character.imageFile;
 		healthIconInputText.text = character.healthIcon;
+		vocalsInputText.text = character.vocalsFile ?? '';
 		singDurationStepper.value = character.singDuration;
 		scaleStepper.value = character.jsonScale;
 		flipXCheckBox.checked = character.originalFlipX;
@@ -831,7 +844,7 @@ class CharacterEditorState extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		if(animationInputText.hasFocus || animationNameInputText.hasFocus || animationIndicesInputText.hasFocus || imageInputText.hasFocus || healthIconInputText.hasFocus)
+		if(animationInputText.hasFocus || animationNameInputText.hasFocus || animationIndicesInputText.hasFocus || imageInputText.hasFocus || healthIconInputText.hasFocus || vocalsInputText.hasFocus)
 		{
 			ClientPrefs.toggleVolumeKeys(false);
 			return;
@@ -1247,7 +1260,7 @@ class CharacterEditorState extends MusicBeatState
 	function saveCharacter() {
 		if(_file != null) return;
 
-		var json = {
+		var json:Dynamic = {
 			"animations": character.animationsArray,
 			"image": character.imageFile,
 			"scale": character.jsonScale,
@@ -1260,6 +1273,7 @@ class CharacterEditorState extends MusicBeatState
 			"flip_x": character.originalFlipX,
 			"no_antialiasing": character.noAntialiasing,
 			"healthbar_colors": character.healthColorArray,
+			"vocals_file": character.vocalsFile,
 			"_editor_isPlayer": character.isPlayer
 		};
 

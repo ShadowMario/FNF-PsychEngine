@@ -52,7 +52,6 @@ class NoteOffsetState extends MusicBeatState
 		camOther.bgColor.alpha = 0;
 		FlxG.cameras.add(camOther, false);
 
-		CustomFadeTransition.nextCamera = camOther;
 		FlxG.camera.scroll.set(120, 130);
 
 		persistentUpdate = true;
@@ -406,7 +405,6 @@ class NoteOffsetState extends MusicBeatState
 			if(beatTween != null) beatTween.cancel();
 
 			persistentUpdate = false;
-			CustomFadeTransition.nextCamera = camOther;
 			MusicBeatState.switchState(new options.OptionsState());
 			if(OptionsState.onPlayState)
 			{
