@@ -6,8 +6,8 @@ import psychlua.FunkinLua;
 import psychlua.CustomSubstate;
 
 #if HSCRIPT_ALLOWED
-import tea.SScript618;
-class HScript extends SScript618
+import toprak.ToprakScript;
+class HScript extends ToprakScript
 {
 	public var parentLua:FunkinLua;
 	public var modFolder:String;
@@ -292,7 +292,7 @@ class HScript extends SScript618
 		}
 	}
 
-	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):TeaCall {
+	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Toprak {
 		if (funcToRun == null) return null;
 
 		if(!exists(funcToRun)) {
@@ -315,7 +315,7 @@ class HScript extends SScript618
 		return callValue;
 	}
 
-	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):TeaCall {
+	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):Toprak {
 		if (funcToRun == null) return null;
 		return call(funcToRun, funcArgs);
 	}
@@ -325,7 +325,7 @@ class HScript extends SScript618
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			#if SScript618
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
-			final retVal:TeaCall = funk.hscript.executeCode(funcToRun, funcArgs);
+			final retVal:Toprak = funk.hscript.executeCode(funcToRun, funcArgs);
 			if (retVal != null) {
 				if(retVal.succeeded)
 					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;

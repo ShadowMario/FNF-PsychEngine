@@ -31,7 +31,7 @@ import substates.GameOverSubstate;
 
 import psychlua.LuaUtils;
 import psychlua.LuaUtils.LuaTweenOptions;
-#if SScript618
+#if ToprakScript
 import psychlua.HScript;
 #end
 import psychlua.DebugLuaText;
@@ -57,7 +57,7 @@ class FunkinLua {
 	public var modFolder:String = null;
 	public var closed:Bool = false;
 
-	#if SScript618
+	#if ToprakScript
 	public var hscript:HScript = null;
 	#end
 
@@ -1507,7 +1507,7 @@ class FunkinLua {
 		});
 
 		#if desktop DiscordClient.addLuaCallbacks(lua); #end
-		#if SScript618 HScript.implement(this); #end
+		#if ToprakScript HScript.implement(this); #end
 		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(lua); #end
 		#if flxanimate FlxAnimateFunctions.implement(this); #end
 		ReflectionFunctions.implement(this);

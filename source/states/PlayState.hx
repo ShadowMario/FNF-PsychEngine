@@ -56,8 +56,8 @@ import psychlua.LuaUtils;
 import psychlua.HScript;
 #end
 
-#if SScript618
-import tea.SScript618;
+#if ToprakScript
+import toprak.ToprakScript;
 #end
 
 /**
@@ -808,7 +808,7 @@ class PlayState extends MusicBeatState
 
 		if(doPush)
 		{
-			if(SScript618.global.exists(scriptFile))
+			if(ToprakScript.global.exists(scriptFile))
 				doPush = false;
 
 			if(doPush) initHScript(scriptFile);
@@ -3195,7 +3195,7 @@ class PlayState extends MusicBeatState
 
 		if(FileSystem.exists(scriptToLoad))
 		{
-			if (SScript618.global.exists(scriptToLoad)) return false;
+			if (ToprakScript.global.exists(scriptToLoad)) return false;
 
 			initHScript(scriptToLoad);
 			return true;
@@ -3244,7 +3244,7 @@ class PlayState extends MusicBeatState
 			var len:Int = e.message.indexOf('\n') + 1;
 			if(len <= 0) len = e.message.length;
 			addTextToDebug('ERROR - ' + e.message.substr(0, len), FlxColor.RED);
-			var newScript:HScript = cast (SScript618.global.get(file), HScript);
+			var newScript:HScript = cast (ToprakScript.global.get(file), HScript);
 			if(newScript != null)
 			{
 				newScript.destroy();

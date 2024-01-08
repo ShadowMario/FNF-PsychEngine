@@ -41,11 +41,11 @@
       "version": null
     },
     {
-      "name": "SScript618",
+      "name": "ToprakScript",
       "type": "git",
       "dir": null,
-      "ref": "main",
-      "url": "https://github.com/TheWorldMachinima/SScript618"
+      "ref": "testing",
+      "url": "https://github.com/TheWorldMachinima/ToprakScript"
     },
     {
       "name": "hxcpp-debug-server",
