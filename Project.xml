@@ -92,7 +92,7 @@
 
 	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
-	<haxelib name="SScript618" if="HSCRIPT_ALLOWED"/>
+	<haxelib name="ToprakScript" if="HSCRIPT_ALLOWED"/>
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="hxdiscord_rpc" if="cpp"/>
 	<haxelib name="flxanimate"/>
