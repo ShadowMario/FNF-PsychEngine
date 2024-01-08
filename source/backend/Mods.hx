@@ -1,12 +1,6 @@
 package backend;
 
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#else
-import lime.utils.Assets;
-#end
-import tjson.TJSON as Json;
+import haxe.Json;
 
 typedef ModsList = {
 	enabled:Array<String>,
@@ -60,7 +54,7 @@ class Mods
 			for (folder in FileSystem.readDirectory(modsFolder))
 			{
 				var path = haxe.io.Path.join([modsFolder, folder]);
-				if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder.toLowerCase()) && !list.contains(folder))
+				if (FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder.toLowerCase()) && !list.contains(folder))
 					list.push(folder);
 			}
 		}
@@ -70,7 +64,7 @@ class Mods
 	
 	inline public static function mergeAllTextsNamed(path:String, defaultDirectory:String = null, allowDuplicates:Bool = false)
 	{
-		if(defaultDirectory == null) defaultDirectory = Paths.getPreloadPath();
+		if(defaultDirectory == null) defaultDirectory = Paths.getSharedPath();
 		defaultDirectory = defaultDirectory.trim();
 		if(!defaultDirectory.endsWith('/')) defaultDirectory += '/';
 		if(!defaultDirectory.startsWith('assets/')) defaultDirectory = 'assets/$defaultDirectory';
@@ -110,18 +104,18 @@ class Mods
 			for(mod in Mods.getGlobalMods())
 			{
 				var folder:String = Paths.mods(mod + '/' + fileToFind);
-				if(FileSystem.exists(folder)) foldersToCheck.push(folder);
+				if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(folder);
 			}
 
 			// Then "PsychEngine/mods/" main folder
 			var folder:String = Paths.mods(fileToFind);
-			if(FileSystem.exists(folder)) foldersToCheck.push(Paths.mods(fileToFind));
+			if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(Paths.mods(fileToFind));
 
 			// And lastly, the loaded mod's folder
 			if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
 			{
 				var folder:String = Paths.mods(Mods.currentModDirectory + '/' + fileToFind);
-				if(FileSystem.exists(folder)) foldersToCheck.push(folder);
+				if(FileSystem.exists(folder) && !foldersToCheck.contains(folder)) foldersToCheck.push(folder);
 			}
 		}
 		#end
@@ -141,7 +135,7 @@ class Mods
 				#else
 				var rawJson:String = Assets.getText(path);
 				#end
-				if(rawJson != null && rawJson.length > 0) return Json.parse(rawJson);
+				if(rawJson != null && rawJson.length > 0) return tjson.TJSON.parse(rawJson);
 			} catch(e:Dynamic) {
 				trace(e);
 			}

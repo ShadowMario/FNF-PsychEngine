@@ -1,10 +1,5 @@
 package psychlua;
 
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#end
-
 import flixel.util.FlxSave;
 import openfl.utils.Assets;
 
@@ -19,75 +14,47 @@ class ExtraFunctions
 		var lua:State = funk.lua;
 		
 		// Keyboard & Gamepads
-		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
-		{
-			return Reflect.getProperty(FlxG.keys.justPressed, name);
-		});
-		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
-		{
-			return Reflect.getProperty(FlxG.keys.pressed, name);
-		});
-		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
-		{
-			return Reflect.getProperty(FlxG.keys.justReleased, name);
-		});
+		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String) return Reflect.getProperty(FlxG.keys.justPressed, name));
+		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String) return Reflect.getProperty(FlxG.keys.pressed, name));
+		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String) return Reflect.getProperty(FlxG.keys.justReleased, name));
 
-		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String)
-		{
-			return FlxG.gamepads.anyJustPressed(name);
-		});
-		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String)
-		{
-			return FlxG.gamepads.anyPressed(name);
-		});
-		Lua_helper.add_callback(lua, "anyGamepadReleased", function(name:String)
-		{
-			return FlxG.gamepads.anyJustReleased(name);
-		});
+		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String) return FlxG.gamepads.anyJustPressed(name));
+		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String) FlxG.gamepads.anyPressed(name));
+		Lua_helper.add_callback(lua, "anyGamepadReleased", function(name:String) return FlxG.gamepads.anyJustReleased(name));
 
 		Lua_helper.add_callback(lua, "gamepadAnalogX", function(id:Int, ?leftStick:Bool = true)
 		{
 			var controller = FlxG.gamepads.getByID(id);
-			if (controller == null)
-			{
-				return 0.0;
-			}
+			if (controller == null) return 0.0;
+
 			return controller.getXAxis(leftStick ? LEFT_ANALOG_STICK : RIGHT_ANALOG_STICK);
 		});
 		Lua_helper.add_callback(lua, "gamepadAnalogY", function(id:Int, ?leftStick:Bool = true)
 		{
 			var controller = FlxG.gamepads.getByID(id);
-			if (controller == null)
-			{
-				return 0.0;
-			}
+			if (controller == null) return 0.0;
+
 			return controller.getYAxis(leftStick ? LEFT_ANALOG_STICK : RIGHT_ANALOG_STICK);
 		});
 		Lua_helper.add_callback(lua, "gamepadJustPressed", function(id:Int, name:String)
 		{
 			var controller = FlxG.gamepads.getByID(id);
-			if (controller == null)
-			{
-				return false;
-			}
+			if (controller == null) return false;
+
 			return Reflect.getProperty(controller.justPressed, name) == true;
 		});
 		Lua_helper.add_callback(lua, "gamepadPressed", function(id:Int, name:String)
 		{
 			var controller = FlxG.gamepads.getByID(id);
-			if (controller == null)
-			{
-				return false;
-			}
+			if (controller == null) return false;
+
 			return Reflect.getProperty(controller.pressed, name) == true;
 		});
 		Lua_helper.add_callback(lua, "gamepadReleased", function(id:Int, name:String)
 		{
 			var controller = FlxG.gamepads.getByID(id);
-			if (controller == null)
-			{
-				return false;
-			}
+			if (controller == null) return false;
+
 			return Reflect.getProperty(controller.justReleased, name) == true;
 		});
 
@@ -164,6 +131,15 @@ class ExtraFunctions
 				return;
 			}
 			FunkinLua.luaTrace('setDataFromSave: Save file not initialized: ' + name, false, false, FlxColor.RED);
+		});
+		Lua_helper.add_callback(lua, "eraseSaveData", function(name:String)
+		{
+			if (PlayState.instance.modchartSaves.exists(name))
+			{
+				PlayState.instance.modchartSaves.get(name).erase();
+				return;
+			}
+			FunkinLua.luaTrace('eraseSaveData: Save file not initialized: ' + name, false, false, FlxColor.RED);
 		});
 
 		// File management

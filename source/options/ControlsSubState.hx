@@ -64,6 +64,10 @@ class ControlsSubState extends MusicBeatSubstate
 	{
 		super();
 
+		#if DISCORD_ALLOWED
+		DiscordClient.changePresence("Controls Menu", null);
+		#end
+
 		options.push([true]);
 		options.push([true]);
 		options.push([true, defaultKey]);
@@ -288,7 +292,9 @@ class ControlsSubState extends MusicBeatSubstate
 			{
 				if(options[curOptions[curSelected]][1] != defaultKey)
 				{
-					bindingBlack = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, /*FlxColor.BLACK*/ FlxColor.WHITE);
+					bindingBlack = new FlxSprite().makeGraphic(1, 1, /*FlxColor.BLACK*/ FlxColor.WHITE);
+					bindingBlack.scale.set(FlxG.width, FlxG.height);
+					bindingBlack.updateHitbox();
 					bindingBlack.alpha = 0;
 					FlxTween.tween(bindingBlack, {alpha: 0.6}, 0.35, {ease: FlxEase.linear});
 					add(bindingBlack);

@@ -25,10 +25,6 @@ class Conductor
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
-	public function new()
-	{
-	}
-
 	public static function judgeNote(arr:Array<Rating>, diff:Float=0):Rating // die
 	{
 		var data:Array<Rating> = arr;

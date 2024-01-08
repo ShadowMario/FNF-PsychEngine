@@ -1,7 +1,5 @@
 package objects;
 
-import flixel.math.FlxPoint;
-
 enum Alignment
 {
 	LEFT;
@@ -165,11 +163,11 @@ class Alphabet extends FlxSpriteGroup
 	{
 		if (isMenuItem)
 		{
-			var lerpVal:Float = FlxMath.bound(elapsed * 9.6, 0, 1);
+			var lerpVal:Float = Math.exp(-elapsed * 9.6);
 			if(changeX)
-				x = FlxMath.lerp(x, (targetY * distancePerItem.x) + startPosition.x, lerpVal);
+				x = FlxMath.lerp((targetY * distancePerItem.x) + startPosition.x, x, lerpVal);
 			if(changeY)
-				y = FlxMath.lerp(y, (targetY * 1.3 * distancePerItem.y) + startPosition.y, lerpVal);
+				y = FlxMath.lerp((targetY * 1.3 * distancePerItem.y) + startPosition.y, y, lerpVal);
 		}
 		super.update(elapsed);
 	}
@@ -208,6 +206,7 @@ class Alphabet extends FlxSpriteGroup
 					if (consecutiveSpaces > 0)
 					{
 						xPos += 28 * consecutiveSpaces * scaleX;
+						rowData[rows] = xPos;
 						if(!bold && xPos >= FlxG.width * 0.65)
 						{
 							xPos = 0;
@@ -219,6 +218,7 @@ class Alphabet extends FlxSpriteGroup
 					var letter:AlphaCharacter = cast recycle(AlphaCharacter, true);
 					letter.scale.x = scaleX;
 					letter.scale.y = scaleY;
+					letter.rowWidth = 0;
 
 					letter.setupAlphaCharacter(xPos, rows * Y_PER_ROW * scale.y, character, bold);
 					@:privateAccess letter.parent = this;
