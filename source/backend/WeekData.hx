@@ -63,9 +63,9 @@ class WeekData {
 	// HELP: Is there any way to convert a WeekFile to WeekData without having to put all variables there manually? I'm kind of a noob in haxe lmao
 	public function new(weekFile:WeekFile, fileName:String) {
 		// here ya go - MiguelItsOut
-		for (field in Reflect.fields(weekFile)) {
-			Reflect.setProperty(this, field, Reflect.getProperty(weekFile, field));
-		}
+		for (field in Reflect.fields(weekFile))
+			if(Reflect.fields(this).contains(field)) // Reflect.hasField() won't fucking work :/
+				Reflect.setProperty(this, field, Reflect.getProperty(weekFile, field));
 
 		this.fileName = fileName;
 	}
