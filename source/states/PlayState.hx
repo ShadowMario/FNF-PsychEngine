@@ -1593,7 +1593,7 @@ class PlayState extends MusicBeatState
 
 	override public function onFocusLost():Void
 	{
-    callOnScripts('onFocusLost');
+		callOnScripts('onFocusLost');
 		#if DISCORD_ALLOWED
 		if (health > 0 && !paused && autoUpdateRPC) DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
