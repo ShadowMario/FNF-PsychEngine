@@ -350,7 +350,7 @@ class HScript extends ToprakScript
 	#if LUA_ALLOWED
 	public static function implement(funk:FunkinLua) {
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
-			#if SScript618
+			#if ToprakScript
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
 			final retVal:Toprak = funk.hscript.executeCode(funcToRun, funcArgs);
 			if (retVal != null) {
@@ -374,7 +374,7 @@ class HScript extends ToprakScript
 		});
 		
 		funk.addLocalCallback("runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic> = null) {
-			#if SScript618
+			#if ToprakScript
 			var callValue = funk.hscript.executeFunction(funcToRun, funcArgs);
 			if (!callValue.succeeded)
 			{
@@ -389,7 +389,7 @@ class HScript extends ToprakScript
 			FunkinLua.luaTrace("runHaxeFunction: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 		});
-		// This function is unnecessary because import already exists in SScript618 as a native feature
+		// This function is unnecessary because import already exists in ToprakScript as a native feature
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
 			var str:String = '';
 			if(libPackage.length > 0)
@@ -401,12 +401,12 @@ class HScript extends ToprakScript
 			if (c == null)
 				c = Type.resolveEnum(str + libName);
 
-			#if SScript618
+			#if ToprakScript
 			if (c != null)
-				SScript618.strictGlobalVariables[libName] = c;
+				ToprakScript.strictGlobalVariables[libName] = c;
 			#end
 
-			#if SScript618
+			#if ToprakScript
 			if (funk.hscript != null)
 			{
 				try {
