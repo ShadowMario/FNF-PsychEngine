@@ -116,7 +116,7 @@ end
 
 
 -- Note miss/hit
-function goodNoteHit(id, direction, noteType, isSustainNote)
+function goodNoteHitPre(id, direction, noteType, isSustainNote)
 	-- Function called when you hit a note (***before*** note hit calculations)
 	-- id: The note member id, you can get whatever variable you want from this note, example: "getPropertyFromGroup('notes', id, 'strumTime')"
 	-- noteData: 0 = Left, 1 = Down, 2 = Up, 3 = Right
@@ -125,16 +125,16 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 end
 function opponentNoteHit(id, direction, noteType, isSustainNote)
 	-- Works the same as goodNoteHit, but for Opponent's notes being hit
-	-- Values work the same as goodNoteHit
+	-- Values work the same as goodNoteHitPre
 end
 
-function goodNoteHitPost(id, direction, noteType, isSustainNote)
+function goodNoteHit(id, direction, noteType, isSustainNote)
 	-- Function called when you hit a note (***after*** note hit calculations)
-	-- Values work the same as goodNoteHit
+	-- Values work the same as goodNoteHitPre
 end
-function opponentNoteHitPost(id, direction, noteType, isSustainNote)
+function opponentNoteHit(id, direction, noteType, isSustainNote)
 	-- Works the same as goodNoteHitPost, but for Opponent's notes being hit
-	-- Values work the same as goodNoteHit
+	-- Values work the same as goodNoteHitPre
 end
 
 function noteMissPress(direction)
@@ -226,6 +226,6 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	-- loopsLeft = how many are remaining
 end
 
-function onSoundCompleted(tag)
+function onSoundFinished(tag)
 	-- Only called if you use playSound() with a tag
 end
