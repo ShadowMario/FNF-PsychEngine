@@ -16,6 +16,7 @@ import openfl.events.KeyboardEvent;
 
 import haxe.Json;
 import objects.Character;
+import openfl.utils.Assets as OpenFlAssets;
 
 class EditorPlayState extends MusicBeatSubstate
 {
@@ -322,7 +323,7 @@ class EditorPlayState extends MusicBeatSubstate
 			if (songData.needsVoices)
 			{
 				var playerVocals = Paths.voices(songData.song, (boyfriendVocals == null || boyfriendVocals.length < 1) ? 'Player' : boyfriendVocals);
-				vocals.loadEmbedded(playerVocals ?? Paths.voices(songData.song));
+				vocals.loadEmbedded(playerVocals != null ? playerVocals : Paths.voices(songData.song));
 				
 				var oppVocals = Paths.voices(songData.song, (dadVocals == null || dadVocals.length < 1) ? 'Opponent' : dadVocals);
 				if(oppVocals != null) opponentVocals.loadEmbedded(oppVocals);
@@ -814,7 +815,7 @@ class EditorPlayState extends MusicBeatSubstate
 	function opponentNoteHit(note:Note):Void
 	{
 		if (PlayState.SONG.needsVoices && opponentVocals.length <= 0)
-			opponentVocals.volume = 1;
+			vocals.volume = 1;
 
 		var strum:StrumNote = opponentStrums.members[Std.int(Math.abs(note.noteData))];
 		if(strum != null) {

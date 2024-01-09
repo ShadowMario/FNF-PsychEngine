@@ -286,7 +286,9 @@ class PlayState extends MusicBeatState
 			'note_up',
 			'note_right'
 		];
-		FlxG.sound.music?.stop();
+
+		if(FlxG.sound.music != null)
+			FlxG.sound.music.stop();
 
 		// Gameplay settings
 		healthGain = ClientPrefs.getGameplaySetting('healthgain');
@@ -1288,7 +1290,7 @@ class PlayState extends MusicBeatState
 			if (songData.needsVoices)
 			{
 				var playerVocals = Paths.voices(songData.song, (boyfriend.vocalsFile == null || boyfriend.vocalsFile.length < 1) ? 'Player' : boyfriend.vocalsFile);
-				vocals.loadEmbedded(playerVocals ?? Paths.voices(songData.song));
+				vocals.loadEmbedded(playerVocals != null ? playerVocals : Paths.voices(songData.song));
 				
 				var oppVocals = Paths.voices(songData.song, (dad.vocalsFile == null || dad.vocalsFile.length < 1) ? 'Opponent' : dad.vocalsFile);
 				if(oppVocals != null) opponentVocals.loadEmbedded(oppVocals);
@@ -1900,8 +1902,8 @@ class PlayState extends MusicBeatState
 		FlxG.camera.followLerp = 0;
 		persistentUpdate = false;
 		paused = true;
-		FlxG.sound.music?.stop();
-		cancelMusicFadeTween();
+		if(FlxG.sound.music != null)
+			FlxG.sound.music.stop();
 		chartingMode = true;
 
 		#if DISCORD_ALLOWED
@@ -1917,8 +1919,8 @@ class PlayState extends MusicBeatState
 		FlxG.camera.followLerp = 0;
 		persistentUpdate = false;
 		paused = true;
-		FlxG.sound.music?.stop();
-		cancelMusicFadeTween();
+		if(FlxG.sound.music != null)
+			FlxG.sound.music.stop();
 		#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 		MusicBeatState.switchState(new CharacterEditorState(SONG.player2));
 	}
@@ -2369,7 +2371,6 @@ class PlayState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
-					cancelMusicFadeTween();
 					MusicBeatState.switchState(new StoryMenuState());
 
 					// if ()
@@ -2396,7 +2397,6 @@ class PlayState extends MusicBeatState
 					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
 					FlxG.sound.music.stop();
 
-					cancelMusicFadeTween();
 					LoadingState.loadAndSwitchState(new PlayState());
 				}
 			}
@@ -2406,7 +2406,6 @@ class PlayState extends MusicBeatState
 				Mods.loadTopMod();
 				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
-				cancelMusicFadeTween();
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
@@ -3067,12 +3066,6 @@ class PlayState extends MusicBeatState
 		backend.NoteTypesConfig.clearNoteTypesData();
 		instance = null;
 		super.destroy();
-	}
-
-	public static function cancelMusicFadeTween()
-	{
-		FlxG.sound.music.fadeTween?.cancel();
-		FlxG.sound.music.fadeTween = null;
 	}
 
 	var lastStepHit:Int = -1;

@@ -822,7 +822,6 @@ class FunkinLua {
 				FlxTransitionableState.skipNextTransOut = true;
 			}
 
-			PlayState.cancelMusicFadeTween();
 			if(PlayState.isStoryMode)
 				MusicBeatState.switchState(new StoryMenuState());
 			else

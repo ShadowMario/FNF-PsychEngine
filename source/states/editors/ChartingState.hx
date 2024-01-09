@@ -1253,7 +1253,7 @@ class ChartingState extends MusicBeatState
 		check_mute_vocals_opponent.checked = false;
 		check_mute_vocals_opponent.callback = function()
 		{
-			var vol:Float = voicesVolume.value;
+			var vol:Float = voicesOppVolume.value;
 			if (check_mute_vocals_opponent.checked)
 				vol = 0;
 
@@ -1416,19 +1416,26 @@ class ChartingState extends MusicBeatState
 
 	function loadSong():Void
 	{
-		FlxG.sound.music?.stop();
+		if(FlxG.sound.music != null)
+			FlxG.sound.music.stop();
 
-		vocals?.stop();
-		vocals?.destroy();
-		opponentVocals?.stop();
-		opponentVocals?.destroy();
+		if(vocals != null)
+		{
+			vocals.stop();
+			vocals.destroy();
+		}
+		if(opponentVocals != null)
+		{
+			opponentVocals.stop();
+			opponentVocals.destroy();
+		}
 
 		vocals = new FlxSound();
 		opponentVocals = new FlxSound();
 		try
 		{
 			var playerVocals = Paths.voices(currentSongName, (characterData.vocalsP1 == null || characterData.vocalsP1.length < 1) ? 'Player' : characterData.vocalsP1);
-			vocals.loadEmbedded(playerVocals ?? Paths.voices(currentSongName));
+			vocals.loadEmbedded(playerVocals != null ? playerVocals : Paths.voices(currentSongName));
 		}
 		vocals.autoDestroy = false;
 		FlxG.sound.list.add(vocals);
@@ -1519,8 +1526,8 @@ class ChartingState extends MusicBeatState
 			curSec = 0;
 			updateGrid();
 			updateSectionUI();
-			vocals?.play();
-			opponentVocals?.play();
+			if(vocals != null) vocals.play();
+			if(opponentVocals != null) opponentVocals.play();
 		};
 	}
 
@@ -1816,7 +1823,9 @@ class ChartingState extends MusicBeatState
 		{
 			if (FlxG.keys.justPressed.ESCAPE)
 			{
-				FlxG.sound.music?.pause();
+				if(FlxG.sound.music != null)
+					FlxG.sound.music.stop();
+
 				if(vocals != null)
 				{
 					vocals.pause();
@@ -1834,14 +1843,14 @@ class ChartingState extends MusicBeatState
 				playtestingOnComplete = FlxG.sound.music.onComplete;
 				openSubState(new states.editors.EditorPlayState(playbackSpeed));
 			}
-			if (FlxG.keys.justPressed.ENTER)
+			else if (FlxG.keys.justPressed.ENTER)
 			{
 				autosaveSong();
 				FlxG.mouse.visible = false;
 				PlayState.SONG = _song;
 				FlxG.sound.music.stop();
-				vocals?.stop();
-				opponentVocals?.stop();
+				if(vocals != null) vocals.stop();
+				if(opponentVocals != null) opponentVocals.stop();
 
 				//if(_song.stage == null) _song.stage = stageDropDown.selectedLabel;
 				StageData.loadDirectory(_song);
@@ -1901,16 +1910,16 @@ class ChartingState extends MusicBeatState
 
 			if (FlxG.keys.justPressed.SPACE)
 			{
-				vocals?.play();
-				opponentVocals?.play();
+				if(vocals != null) vocals.play();
+				if(opponentVocals != null) opponentVocals.play();
 				pauseAndSetVocalsTime();
 				if (!FlxG.sound.music.playing)
 				{
-					FlxG.sound.music?.play();
-					vocals?.play();
-					opponentVocals?.play();
+					FlxG.sound.music.play();
+					if(vocals != null) vocals.play();
+					if(opponentVocals != null) opponentVocals.play();
 				}
-				else FlxG.sound.music?.pause();
+				else FlxG.sound.music.pause();
 			}
 
 			if (!FlxG.keys.pressed.ALT && FlxG.keys.justPressed.R)
@@ -2621,10 +2630,8 @@ class ChartingState extends MusicBeatState
 		{
 			var data:CharacterFile = loadCharacterFile(Reflect.field(_song, 'player$i'));
 			Reflect.setField(characterData, 'iconP$i', !characterFailed ? data.healthicon : 'face');
-			Reflect.setField(characterData, 'vocalsP$i', data.vocals_file ?? '');
+			Reflect.setField(characterData, 'vocalsP$i', data.vocals_file != null ? data.vocals_file : '');
 		}
-		var p1:CharacterFile = loadCharacterFile(_song.player1);
-		var p2:CharacterFile = loadCharacterFile(_song.player2);
 	}
 
 	function updateHeads():Void
