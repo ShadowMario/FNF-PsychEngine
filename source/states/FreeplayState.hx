@@ -291,6 +291,9 @@ class FreeplayState extends MusicBeatState
 
 				player.playingMusic = false;
 				player.switchPlayMusic();
+
+				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				FlxTween.tween(FlxG.sound.music, {volume: 1}, 1);
 			}
 			else 
 			{
@@ -314,29 +317,30 @@ class FreeplayState extends MusicBeatState
 			{
 				destroyFreeplayVocals();
 				FlxG.sound.music.volume = 0;
+
 				Mods.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				if (PlayState.SONG.needsVoices)
+				{
 					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-				else
-				{
-					if (vocals != null) {
-						vocals.stop();
-						vocals.destroy();
-					}
-					vocals = null;
-				}
-				if (PlayState.SONG.needsVoices)
-				{
 					FlxG.sound.list.add(vocals);
-					vocals.play();
 					vocals.persist = true;
 					vocals.looped = true;
-					vocals.volume = 0.7;
 				}
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
-				
+				else if (vocals != null)
+				{
+					vocals.stop();
+					vocals.destroy();
+					vocals = null;
+				}
+
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.8);
+				if(vocals != null) //Sync vocals to Inst
+				{
+					vocals.play();
+					vocals.volume = 0.8;
+				}
 				instPlaying = curSelected;
 
 				player.playingMusic = true;
@@ -558,7 +562,7 @@ class FreeplayState extends MusicBeatState
 	{
 		super.destroy();
 
-		FlxG.autoPause = false;
+		FlxG.autoPause = ClientPrefs.data.autoPause;
 		if (!FlxG.sound.music.playing)
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 	}	
