@@ -486,7 +486,7 @@ class CharacterEditorState extends MusicBeatState
 	var animationInputText:FlxUIInputText;
 	var animationNameInputText:FlxUIInputText;
 	var animationIndicesInputText:FlxUIInputText;
-	var animationNameFramerate:FlxUINumericStepper;
+	var animationFramerate:FlxUINumericStepper;
 	var animationLoopCheckBox:FlxUICheckBox;
 	function addAnimationsUI()
 	{
@@ -497,7 +497,7 @@ class CharacterEditorState extends MusicBeatState
 		animationInputText = new FlxUIInputText(15, 85, 80, '', 8);
 		animationNameInputText = new FlxUIInputText(animationInputText.x, animationInputText.y + 35, 150, '', 8);
 		animationIndicesInputText = new FlxUIInputText(animationNameInputText.x, animationNameInputText.y + 40, 250, '', 8);
-		animationNameFramerate = new FlxUINumericStepper(animationInputText.x + 170, animationInputText.y, 1, 24, 0, 240, 0);
+		animationFramerate = new FlxUINumericStepper(animationInputText.x + 170, animationInputText.y, 1, 24, 0, 240, 0);
 		animationLoopCheckBox = new FlxUICheckBox(animationNameInputText.x + 170, animationNameInputText.y - 1, null, null, "Should it Loop?", 100);
 
 		animationDropDown = new FlxUIDropDownMenu(15, animationInputText.y - 55, FlxUIDropDownMenu.makeStrIdLabelArray([''], true), function(pressed:String) {
@@ -506,7 +506,7 @@ class CharacterEditorState extends MusicBeatState
 			animationInputText.text = anim.anim;
 			animationNameInputText.text = anim.name;
 			animationLoopCheckBox.checked = anim.loop;
-			animationNameFramerate.value = anim.fps;
+			animationFramerate.value = anim.fps;
 
 			var indicesStr:String = anim.indices.toString();
 			animationIndicesInputText.text = indicesStr.substr(1, indicesStr.length - 2);
@@ -538,7 +538,7 @@ class CharacterEditorState extends MusicBeatState
 				}
 
 			var addedAnim:AnimArray = newAnim(animationInputText.text, animationNameInputText.text);
-			addedAnim.fps = Math.round(animationNameFramerate.value);
+			addedAnim.fps = Math.round(animationFramerate.value);
 			addedAnim.loop = animationLoopCheckBox.checked;
 			addedAnim.indices = indices;
 			addedAnim.offsets = lastOffsets;
@@ -580,14 +580,14 @@ class CharacterEditorState extends MusicBeatState
 
 		tab_group.add(new FlxText(animationDropDown.x, animationDropDown.y - 18, 0, 'Animations:'));
 		tab_group.add(new FlxText(animationInputText.x, animationInputText.y - 18, 0, 'Animation name:'));
-		tab_group.add(new FlxText(animationNameFramerate.x, animationNameFramerate.y - 18, 0, 'Framerate:'));
-		tab_group.add(new FlxText(animationNameInputText.x, animationNameInputText.y - 18, 0, 'Animation on .XML/.TXT file:'));
+		tab_group.add(new FlxText(animationFramerate.x, animationFramerate.y - 18, 0, 'Framerate:'));
+		tab_group.add(new FlxText(animationNameInputText.x, animationNameInputText.y - 18, 0, 'Animation Symbol Name/Tag:'));
 		tab_group.add(new FlxText(animationIndicesInputText.x, animationIndicesInputText.y - 18, 0, 'ADVANCED - Animation Indices:'));
 
 		tab_group.add(animationInputText);
 		tab_group.add(animationNameInputText);
 		tab_group.add(animationIndicesInputText);
-		tab_group.add(animationNameFramerate);
+		tab_group.add(animationFramerate);
 		tab_group.add(animationLoopCheckBox);
 		tab_group.add(addUpdateButton);
 		tab_group.add(removeButton);
@@ -798,6 +798,7 @@ class CharacterEditorState extends MusicBeatState
 			character.isAnimateAtlas = true;
 		}
 		else if(Paths.fileExists('images/' + character.imageFile + '.txt', TEXT)) character.frames = Paths.getPackerAtlas(character.imageFile);
+		else if(Paths.fileExists('images/' + character.imageFile + '.json', TEXT)) character.frames = Paths.getAsepriteAtlas(character.imageFile);
 		else character.frames = Paths.getSparrowAtlas(character.imageFile);
 
 		for (anim in anims) {

@@ -354,6 +354,7 @@ class Paths
 	{
 		var useMod = false;
 		var imageLoaded:FlxGraphic = image(key, library, allowGPU);
+
 		var myXml:Dynamic = getPath('images/$key.xml', TEXT, library, true);
 		if(OpenFlAssets.exists(myXml) #if MODS_ALLOWED || (FileSystem.exists(myXml) && (useMod = true)) #end )
 		{
@@ -362,6 +363,18 @@ class Paths
 			#else
 			return FlxAtlasFrames.fromSparrow(imageLoaded, myXml);
 			#end
+		}
+		else
+		{
+			var myJson:Dynamic = getPath('images/$key.json', TEXT, library, true);
+			if(OpenFlAssets.exists(myJson) #if MODS_ALLOWED || (FileSystem.exists(myJson) && (useMod = true)) #end )
+			{
+				#if MODS_ALLOWED
+				return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, (useMod ? File.getContent(myJson) : myJson));
+				#else
+				return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, myJson);
+				#end
+			}
 		}
 		return getPackerAtlas(key, library);
 	}
@@ -393,6 +406,21 @@ class Paths
 		return FlxAtlasFrames.fromSpriteSheetPacker(imageLoaded, (txtExists ? File.getContent(txt) : getPath('images/$key.txt', library)));
 		#else
 		return FlxAtlasFrames.fromSpriteSheetPacker(imageLoaded, getPath('images/$key.txt', library));
+		#end
+	}
+
+	inline static public function getAsepriteAtlas(key:String, ?library:String = null, ?allowGPU:Bool = true):FlxAtlasFrames
+	{
+		var imageLoaded:FlxGraphic = image(key, library, allowGPU);
+		#if MODS_ALLOWED
+		var jsonExists:Bool = false;
+
+		var json:String = modsImagesJson(key);
+		if(FileSystem.exists(json)) jsonExists = true;
+
+		return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, (jsonExists ? File.getContent(json) : getPath('images/$key.json', library)));
+		#else
+		return FlxAtlasFrames.fromTexturePackerJson(imageLoaded, getPath('images/$key.json', library));
 		#end
 	}
 
@@ -469,6 +497,10 @@ class Paths
 
 	inline static public function modsTxt(key:String) {
 		return modFolders('images/' + key + '.txt');
+	}
+
+	inline static public function modsImagesJson(key:String) {
+		return modFolders('images/' + key + '.json');
 	}
 
 	/* Goes unused for now
