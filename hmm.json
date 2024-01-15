@@ -41,9 +41,11 @@
       "version": null
     },
     {
-      "name": "SScript",
-      "type": "haxelib",
-      "version": null
+      "name": "ToprakScript",
+      "type": "git",
+      "dir": null,
+      "ref": "testing",
+      "url": "https://github.com/TheWorldMachinima/ToprakScript"
     },
     {
       "name": "hxcpp-debug-server",

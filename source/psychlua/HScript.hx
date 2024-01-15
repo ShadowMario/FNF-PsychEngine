@@ -10,8 +10,8 @@ import psychlua.FunkinLua;
 #end
 
 #if HSCRIPT_ALLOWED
-import tea.SScript;
-class HScript extends SScript
+import toprak.ToprakScript;
+class HScript extends ToprakScript
 {
 	public var modFolder:String;
 
@@ -314,7 +314,7 @@ class HScript extends SScript
 		}
 	}
 
-	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):TeaCall {
+	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Toprak {
 		if (funcToRun == null) return null;
 
 		if(!exists(funcToRun)) {
@@ -346,7 +346,7 @@ class HScript extends SScript
 		return callValue;
 	}
 
-	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):TeaCall {
+	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):Toprak {
 		if (funcToRun == null) return null;
 		return call(funcToRun, funcArgs);
 	}
@@ -354,9 +354,9 @@ class HScript extends SScript
 	#if LUA_ALLOWED
 	public static function implement(funk:FunkinLua) {
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
-			#if SScript
+			#if ToprakScript
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
-			final retVal:TeaCall = funk.hscript.executeCode(funcToRun, funcArgs);
+			final retVal:Toprak = funk.hscript.executeCode(funcToRun, funcArgs);
 			if (retVal != null) {
 				if(retVal.succeeded)
 					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
@@ -378,7 +378,7 @@ class HScript extends SScript
 		});
 		
 		funk.addLocalCallback("runHaxeFunction", function(funcToRun:String, ?funcArgs:Array<Dynamic> = null) {
-			#if SScript
+			#if ToprakScript
 			var callValue = funk.hscript.executeFunction(funcToRun, funcArgs);
 			if (!callValue.succeeded)
 			{
@@ -393,7 +393,7 @@ class HScript extends SScript
 			FunkinLua.luaTrace("runHaxeFunction: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end
 		});
-		// This function is unnecessary because import already exists in SScript as a native feature
+		// This function is unnecessary because import already exists in ToprakScript as a native feature
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
 			var str:String = '';
 			if(libPackage.length > 0)
@@ -405,12 +405,12 @@ class HScript extends SScript
 			if (c == null)
 				c = Type.resolveEnum(str + libName);
 
-			#if SScript
+			#if ToprakScript
 			if (c != null)
-				SScript.globalVariables[libName] = c;
+				ToprakScript.strictGlobalVariables[libName] = c;
 			#end
 
-			#if SScript
+			#if ToprakScript
 			if (funk.hscript != null)
 			{
 				try {

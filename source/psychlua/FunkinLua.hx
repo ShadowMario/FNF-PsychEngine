@@ -32,7 +32,7 @@ import substates.GameOverSubstate;
 
 import psychlua.LuaUtils;
 import psychlua.LuaUtils.LuaTweenOptions;
-#if SScript
+#if ToprakScript
 import psychlua.HScript;
 #end
 import psychlua.DebugLuaText;
