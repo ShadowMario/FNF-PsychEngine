@@ -198,33 +198,33 @@ class HScript extends SScript
 		set('keyJustPressed', function(name:String = '') {
 			name = name.toLowerCase();
 			switch(name) {
-				case 'left': return PlayState.instance.controls.NOTE_LEFT_P;
-				case 'down': return PlayState.instance.controls.NOTE_DOWN_P;
-				case 'up': return PlayState.instance.controls.NOTE_UP_P;
-				case 'right': return PlayState.instance.controls.NOTE_RIGHT_P;
-				default: return PlayState.instance.controls.justPressed(name);
+				case 'left': return Controls.instance.NOTE_LEFT_P;
+				case 'down': return Controls.instance.NOTE_DOWN_P;
+				case 'up': return Controls.instance.NOTE_UP_P;
+				case 'right': return Controls.instance.NOTE_RIGHT_P;
+				default: return Controls.instance.justPressed(name);
 			}
 			return false;
 		});
 		set('keyPressed', function(name:String = '') {
 			name = name.toLowerCase();
 			switch(name) {
-				case 'left': return PlayState.instance.controls.NOTE_LEFT;
-				case 'down': return PlayState.instance.controls.NOTE_DOWN;
-				case 'up': return PlayState.instance.controls.NOTE_UP;
-				case 'right': return PlayState.instance.controls.NOTE_RIGHT;
-				default: return PlayState.instance.controls.pressed(name);
+				case 'left': return Controls.instance.NOTE_LEFT;
+				case 'down': return Controls.instance.NOTE_DOWN;
+				case 'up': return Controls.instance.NOTE_UP;
+				case 'right': return Controls.instance.NOTE_RIGHT;
+				default: return Controls.instance.pressed(name);
 			}
 			return false;
 		});
 		set('keyReleased', function(name:String = '') {
 			name = name.toLowerCase();
 			switch(name) {
-				case 'left': return PlayState.instance.controls.NOTE_LEFT_R;
-				case 'down': return PlayState.instance.controls.NOTE_DOWN_R;
-				case 'up': return PlayState.instance.controls.NOTE_UP_R;
-				case 'right': return PlayState.instance.controls.NOTE_RIGHT_R;
-				default: return PlayState.instance.controls.justReleased(name);
+				case 'left': return Controls.instance.NOTE_LEFT_R;
+				case 'down': return Controls.instance.NOTE_DOWN_R;
+				case 'up': return Controls.instance.NOTE_UP_R;
+				case 'right': return Controls.instance.NOTE_RIGHT_R;
+				default: return Controls.instance.justReleased(name);
 			}
 			return false;
 		});
@@ -269,7 +269,8 @@ class HScript extends SScript
 					return;
 				}
 				#end
-				PlayState.instance.addTextToDebug('$origin - $msg', FlxColor.RED);
+				if(PlayState.instance != null) PlayState.instance.addTextToDebug('$origin - $msg', FlxColor.RED);
+				else trace('$origin - $msg');
 			}
 		});
 		#if LUA_ALLOWED
@@ -278,9 +279,7 @@ class HScript extends SScript
 		set('parentLua', null);
 		#end
 		set('this', this);
-		set('game', PlayState.instance);
-		if (PlayState.instance != null)
-			setSpecialObject(PlayState.instance, false, PlayState.instance.instancesExclude);
+		set('game', FlxG.state);
 
 		set('buildTarget', LuaUtils.getBuildTarget());
 		set('customSubstate', CustomSubstate.instance);
@@ -292,12 +291,17 @@ class HScript extends SScript
 		set('Function_StopHScript', LuaUtils.Function_StopHScript);
 		set('Function_StopAll', LuaUtils.Function_StopAll);
 		
-		set('add', function(obj:FlxBasic) PlayState.instance.add(obj));
-		set('addBehindGF', function(obj:FlxBasic) PlayState.instance.addBehindGF(obj));
-		set('addBehindDad', function(obj:FlxBasic) PlayState.instance.addBehindDad(obj));
-		set('addBehindBF', function(obj:FlxBasic) PlayState.instance.addBehindBF(obj));
-		set('insert', function(pos:Int, obj:FlxBasic) PlayState.instance.insert(pos, obj));
-		set('remove', function(obj:FlxBasic, ?splice:Bool = false) PlayState.instance.remove(obj, splice));
+		set('add', FlxG.state.add);
+		set('insert', FlxG.state.insert);
+		set('remove', FlxG.state.remove);
+
+		if(PlayState.instance == FlxG.state)
+		{
+			set('addBehindGF', PlayState.instance.addBehindGF);
+			set('addBehindDad', PlayState.instance.addBehindDad);
+			set('addBehindBF', PlayState.instance.addBehindBF);
+			setSpecialObject(PlayState.instance, false, PlayState.instance.instancesExclude);
+		}
 
 		if(varsToBring != null) {
 			for (key in Reflect.fields(varsToBring)) {

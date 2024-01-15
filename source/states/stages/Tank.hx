@@ -171,9 +171,9 @@ class Tank extends BaseStage
 		prepareCutscene();
 		cutsceneHandler.endTime = 12;
 		cutsceneHandler.music = 'DISTORTO';
-		precacheSound('wellWellWell');
-		precacheSound('killYou');
-		precacheSound('bfBeep');
+		Paths.sound('wellWellWell');
+		Paths.sound('killYou');
+		Paths.sound('bfBeep');
 
 		var wellWellWell:FlxSound = new FlxSound().loadEmbedded(Paths.sound('wellWellWell'));
 		FlxG.sound.list.add(wellWellWell);
@@ -220,7 +220,7 @@ class Tank extends BaseStage
 		prepareCutscene();
 		cutsceneHandler.endTime = 11.5;
 		cutsceneHandler.music = 'DISTORTO';
-		precacheSound('tankSong2');
+		Paths.sound('tankSong2');
 
 		var tightBars:FlxSound = new FlxSound().loadEmbedded(Paths.sound('tankSong2'));
 		FlxG.sound.list.add(tightBars);
@@ -260,7 +260,7 @@ class Tank extends BaseStage
 		{
 			spr.y += 100;
 		});
-		precacheSound('stressCutscene');
+		Paths.sound('stressCutscene');
 
 		pico = new FlxAnimate(gf.x + 150, gf.y + 450);
 		pico.showPivot = false;

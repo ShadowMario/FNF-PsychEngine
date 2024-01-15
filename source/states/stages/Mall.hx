@@ -38,7 +38,7 @@ class Mall extends BaseStage
 
 		santa = new BGSprite('christmas/santa', -840, 150, 1, 1, ['santa idle in fear']);
 		add(santa);
-		precacheSound('Lights_Shut_off');
+		Paths.sound('Lights_Shut_off');
 		setDefaultGF('gf-christmas');
 
 		if(isStoryMode && !seenCutscene)
