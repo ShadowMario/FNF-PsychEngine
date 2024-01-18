@@ -144,7 +144,7 @@ class ChartingState extends MusicBeatState
 	var value2InputText:FlxUIInputText;
 	var currentSongName:String;
 
-	var zoomTxt:FlxText;
+	var zoomFactorTxt:String = "1 / 1";
 
 	var zoomList:Array<Float> = [
 		0.25,
@@ -371,10 +371,6 @@ class ChartingState extends MusicBeatState
 			changeSection();
 		}
 		lastSong = currentSongName;
-
-		zoomTxt = new FlxText(10, 10, 0, "Zoom: 1 / 1", 16);
-		zoomTxt.scrollFactor.set();
-		add(zoomTxt);
 
 		updateGrid();
 		super.create();
@@ -2154,7 +2150,8 @@ class ChartingState extends MusicBeatState
 		"\nSection: " + curSec +
 		"\n\nBeat: " + Std.string(curDecBeat).substring(0,4) +
 		"\n\nStep: " + curStep +
-		"\n\nBeat Snap: " + quantization + "th";
+		"\n\nBeat Snap: " + quantization + "th" +
+		"\n\nZoom: " + zoomFactorTxt;
 
 		var playedSound:Array<Bool> = [false, false, false, false]; //Prevents ouchy GF sex sounds
 		curRenderedNotes.forEachAlive(function(note:Note) {
@@ -2230,9 +2227,8 @@ class ChartingState extends MusicBeatState
 
 	function updateZoom() {
 		var daZoom:Float = zoomList[curZoom];
-		var zoomThing:String = '1 / ' + daZoom;
-		if(daZoom < 1) zoomThing = Math.round(1 / daZoom) + ' / 1';
-		zoomTxt.text = 'Zoom: ' + zoomThing;
+		zoomFactorTxt = '1 / ' + daZoom;
+		if(daZoom < 1) zoomFactorTxt = Math.round(1 / daZoom) + ' / 1';
 		reloadGridLayer();
 	}
 
