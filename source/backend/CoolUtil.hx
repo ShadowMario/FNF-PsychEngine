@@ -39,14 +39,29 @@ class CoolUtil
 		return colorNum != null ? colorNum : FlxColor.WHITE;
 	}
 
+	/**
+	 * Returns a `FlxColor` with an array in RGB format,
+	 * autmatically fixes the array if fields are missing,
+	 * format: [Red, Green, Blue, Alpha].
+	 * @param colors 			Your base color array.
+	 * @param defColors			The default colors that should be used in the event of an error.
+	**/
+	inline public static function colorFromArray(colors: Array<Int>, ?defColors: Array<Int>) {
+		colors = fixRGBColorArray(colors, defColors);
+		return FlxColor.fromRGB(colors[0], colors[1], colors[2], colors[3]);
+	}
+
+	inline public static function fixRGBColorArray(colors: Array<Int>, ?defColors: Array<Int>) {
+		// helper function used on characters n such
+		final endResult: Array<Int> = (defColors != null && defColors.length > 2) ? defColors : [255, 255, 255, 255]; // Red, Green, Blue, Alpha
+		for (i in 0...endResult.length) if (colors[i] > -1) endResult[i] = colors[i];
+		return endResult;
+	}
+
 	inline public static function listFromString(string:String):Array<String>
 	{
-		var daList:Array<String> = [];
-		daList = string.trim().split('\n');
-
-		for (i in 0...daList.length)
-			daList[i] = daList[i].trim();
-
+		var daList:Array<String> = string.trim().split('\n');
+		for (i in 0...daList.length) daList[i] = daList[i].trim();
 		return daList;
 	}
 
@@ -99,7 +114,7 @@ class CoolUtil
 		return dumbArray;
 	}
 
-	inline public static function browserLoad(site:String) {
+	public static function browserLoad(site:String) {
 		#if linux
 		Sys.command('/usr/bin/xdg-open', [site]);
 		#else
@@ -110,15 +125,10 @@ class CoolUtil
 	inline public static function openFolder(folder:String, absolute:Bool = false) {
 		#if sys
 			if(!absolute) folder =  Sys.getCwd() + '$folder';
-
 			folder = folder.replace('/', '\\');
 			if(folder.endsWith('/')) folder.substr(0, folder.length - 1);
 
-			#if linux
-			var command:String = '/usr/bin/xdg-open';
-			#else
-			var command:String = 'explorer.exe';
-			#end
+			final command:String = #if linux '/usr/bin/xdg-open' #else 'explorer.exe' #end;
 			Sys.command(command, [folder]);
 			trace('$command $folder');
 		#else
@@ -145,16 +155,12 @@ class CoolUtil
 
 	public static function setTextBorderFromString(text:FlxText, border:String)
 	{
-		switch(border.toLowerCase().trim())
+		text.borderStyle = switch(border.toLowerCase().trim())
 		{
-			case 'shadow':
-				text.borderStyle = SHADOW;
-			case 'outline':
-				text.borderStyle = OUTLINE;
-			case 'outline_fast', 'outlinefast':
-				text.borderStyle = OUTLINE_FAST;
-			default:
-				text.borderStyle = NONE;
+			case 'shadow': SHADOW;
+			case 'outline': OUTLINE;
+			case 'outline_fast', 'outlinefast': OUTLINE_FAST;
+			default: NONE;
 		}
 	}
 }

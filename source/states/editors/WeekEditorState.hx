@@ -111,7 +111,7 @@ class WeekEditorState extends MusicBeatState
 	var UI_box:FlxUITabMenu;
 	var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
 	function addEditorBox() {
-		var tabs = [
+		final tabs = [
 			{name: 'Week', label: 'Week'},
 			{name: 'Other', label: 'Other'},
 		];
@@ -157,44 +157,48 @@ class WeekEditorState extends MusicBeatState
 	var opponentInputText:FlxUIInputText;
 	var boyfriendInputText:FlxUIInputText;
 	var girlfriendInputText:FlxUIInputText;
-
+	var flashColSteppers:Array<FlxUINumericStepper> = [null, null, null];
 	var hideCheckbox:FlxUICheckBox;
 
 	public static var weekFileName:String = 'week1';
 	
 	function addWeekUI() {
-		var tab_group = new FlxUI(null, UI_box);
+		final tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Week";
 		
+		// had to squish those next to eachother so i'd have space for the new steppers,
+		// hope u don't mind shadowmario @crowplexus
 		songsInputText = new FlxUIInputText(10, 30, 200, '', 8);
-		blockPressWhileTypingOn.push(songsInputText);
 
 		opponentInputText = new FlxUIInputText(10, songsInputText.y + 40, 70, '', 8);
-		blockPressWhileTypingOn.push(opponentInputText);
 		boyfriendInputText = new FlxUIInputText(opponentInputText.x + 75, opponentInputText.y, 70, '', 8);
-		blockPressWhileTypingOn.push(boyfriendInputText);
 		girlfriendInputText = new FlxUIInputText(boyfriendInputText.x + 75, opponentInputText.y, 70, '', 8);
-		blockPressWhileTypingOn.push(girlfriendInputText);
 
 		backgroundInputText = new FlxUIInputText(10, opponentInputText.y + 40, 120, '', 8);
-		blockPressWhileTypingOn.push(backgroundInputText);
-		
-
-		displayNameInputText = new FlxUIInputText(10, backgroundInputText.y + 60, 200, '', 8);
-		blockPressWhileTypingOn.push(backgroundInputText);
-
-		weekNameInputText = new FlxUIInputText(10, displayNameInputText.y + 60, 150, '', 8);
-		blockPressWhileTypingOn.push(weekNameInputText);
-
+		displayNameInputText = new FlxUIInputText(10, backgroundInputText.y + 40, 200, '', 8);
+		weekNameInputText = new FlxUIInputText(10, displayNameInputText.y + 40, 150, '', 8);
 		weekFileInputText = new FlxUIInputText(10, weekNameInputText.y + 40, 100, '', 8);
+
+		blockPressWhileTypingOn.push(songsInputText);
+	
+		blockPressWhileTypingOn.push(opponentInputText);
+		blockPressWhileTypingOn.push(boyfriendInputText);
+		blockPressWhileTypingOn.push(girlfriendInputText);
+
+		blockPressWhileTypingOn.push(backgroundInputText);
+		blockPressWhileTypingOn.push(backgroundInputText);
+		blockPressWhileTypingOn.push(weekNameInputText);
 		blockPressWhileTypingOn.push(weekFileInputText);
+
 		reloadWeekThing();
 
 		hideCheckbox = new FlxUICheckBox(10, weekFileInputText.y + 40, null, null, "Hide Week from Story Mode?", 100);
-		hideCheckbox.callback = function()
-		{
-			weekFile.hideStoryMode = hideCheckbox.checked;
-		};
+		hideCheckbox.callback = function() weekFile.hideStoryMode = hideCheckbox.checked;
+
+		for (i in 0...flashColSteppers.length) {
+			final defaultColors: Array<Int> = [51, 255, 255];
+			flashColSteppers[i] = new FlxUINumericStepper(10 + (70 * i), hideCheckbox.y + 40, 20, defaultColors[i], 0, 255, 0);
+		}
 
 		tab_group.add(new FlxText(songsInputText.x, songsInputText.y - 18, 0, 'Songs:'));
 		tab_group.add(new FlxText(opponentInputText.x, opponentInputText.y - 18, 0, 'Characters:'));
@@ -202,6 +206,7 @@ class WeekEditorState extends MusicBeatState
 		tab_group.add(new FlxText(displayNameInputText.x, displayNameInputText.y - 18, 0, 'Display Name:'));
 		tab_group.add(new FlxText(weekNameInputText.x, weekNameInputText.y - 18, 0, 'Week Name (for Reset Score Menu):'));
 		tab_group.add(new FlxText(weekFileInputText.x, weekFileInputText.y - 18, 0, 'Week File:'));
+		tab_group.add(new FlxText(flashColSteppers[0].x, flashColSteppers[0].y - 18, 0, 'Flash Color R/G/B (Press ENTER to Preview):'));
 
 		tab_group.add(songsInputText);
 		tab_group.add(opponentInputText);
@@ -212,8 +217,19 @@ class WeekEditorState extends MusicBeatState
 		tab_group.add(displayNameInputText);
 		tab_group.add(weekNameInputText);
 		tab_group.add(weekFileInputText);
+		for (i in 0...flashColSteppers.length) tab_group.add(flashColSteppers[i]);
 		tab_group.add(hideCheckbox);
 		UI_box.addGroup(tab_group);
+	}
+
+	var _currentWeekColor(get, never): FlxColor;
+
+	function get__currentWeekColor() {
+		return CoolUtil.colorFromArray([
+			Math.floor(flashColSteppers[0].value),
+			Math.floor(flashColSteppers[1].value),
+			Math.floor(flashColSteppers[2].value)
+		]);
 	}
 
 	var weekBeforeInputText:FlxUIInputText;
@@ -222,7 +238,7 @@ class WeekEditorState extends MusicBeatState
 	var hiddenUntilUnlockCheckbox:FlxUICheckBox;
 
 	function addOtherUI() {
-		var tab_group = new FlxUI(null, UI_box);
+		final tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Other";
 
 		lockedCheckbox = new FlxUICheckBox(10, 30, null, null, "Week starts Locked", 100);
@@ -273,7 +289,6 @@ class WeekEditorState extends MusicBeatState
 		girlfriendInputText.text = weekFile.weekCharacters[2];
 
 		hideCheckbox.checked = weekFile.hideStoryMode;
-
 		weekBeforeInputText.text = weekFile.weekBefore;
 
 		difficultiesInputText.text = '';
@@ -362,32 +377,41 @@ class WeekEditorState extends MusicBeatState
 	}
 	
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
-		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
-			if(sender == weekFileInputText) {
-				weekFileName = weekFileInputText.text.trim();
-				reloadWeekThing();
-			} else if(sender == opponentInputText || sender == boyfriendInputText || sender == girlfriendInputText) {
+		if(id == FlxUINumericStepper.CHANGE_EVENT && sender != FlxUINumericStepper) {
+			if (sender == flashColSteppers[0] || sender == flashColSteppers[1] || sender == flashColSteppers[2]) {
+				weekFile.flashingColor = [
+					Math.floor(flashColSteppers[0].value),
+					Math.floor(flashColSteppers[1].value),
+					Math.floor(flashColSteppers[2].value)
+				];
+				// trace('new week flash color: ${weekFile.flashingColor}');
+			}
+		}
+		else if(id == FlxUIInputText.CHANGE_EVENT && sender != FlxUIInputText) {
+			if (sender == opponentInputText || sender == boyfriendInputText || sender == girlfriendInputText) {
 				weekFile.weekCharacters[0] = opponentInputText.text.trim();
 				weekFile.weekCharacters[1] = boyfriendInputText.text.trim();
 				weekFile.weekCharacters[2] = girlfriendInputText.text.trim();
 				updateText();
-			} else if(sender == backgroundInputText) {
+			}
+			else if (sender == weekFileInputText) {
+				weekFileName = weekFileInputText.text.trim();
+				reloadWeekThing();
+			}
+			else if (sender == backgroundInputText) {
 				weekFile.weekBackground = backgroundInputText.text.trim();
 				reloadBG();
-			} else if(sender == displayNameInputText) {
+			}
+			else if (sender == displayNameInputText) {
 				weekFile.storyName = displayNameInputText.text.trim();
 				updateText();
-			} else if(sender == weekNameInputText) {
-				weekFile.weekName = weekNameInputText.text.trim();
-			} else if(sender == songsInputText) {
-				var splittedText:Array<String> = songsInputText.text.trim().split(',');
-				for (i in 0...splittedText.length) {
-					splittedText[i] = splittedText[i].trim();
-				}
+			}
+			else if (sender == weekNameInputText) weekFile.weekName = weekNameInputText.text.trim();
+			else if (sender == songsInputText) {
+				final splittedText:Array<String> = songsInputText.text.trim().split(',');
 
-				while(splittedText.length < weekFile.songs.length) {
-					weekFile.songs.pop();
-				}
+				for (i in 0...splittedText.length) splittedText[i] = splittedText[i].trim();
+				while(splittedText.length < weekFile.songs.length) weekFile.songs.pop();
 
 				for (i in 0...splittedText.length) {
 					if(i >= weekFile.songs.length) { //Add new song
@@ -401,21 +425,24 @@ class WeekEditorState extends MusicBeatState
 					}
 				}
 				updateText();
-			} else if(sender == weekBeforeInputText) {
-				weekFile.weekBefore = weekBeforeInputText.text.trim();
-			} else if(sender == difficultiesInputText) {
-				weekFile.difficulties = difficultiesInputText.text.trim();
 			}
+			else if (sender == weekBeforeInputText) weekFile.weekBefore = weekBeforeInputText.text.trim();
+			else if (sender == difficultiesInputText) weekFile.difficulties = difficultiesInputText.text.trim();
 		}
 	}
-	
+
 	override function update(elapsed:Float)
 	{
 		if(loadedWeek != null) {
 			weekFile = loadedWeek;
 			loadedWeek = null;
-
 			reloadAllShit();
+		}
+
+		if (FlxG.keys.justPressed.ENTER && !weekThing.isFlashing) {
+			FlxG.sound.play(Paths.sound("confirmMenu"));
+			weekThing.startFlashing(_currentWeekColor);
+			weekThing._flashCooldown = 1.5;
 		}
 
 		var blockInput:Bool = false;
@@ -673,7 +700,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 	var bgColorStepperB:FlxUINumericStepper;
 	var iconInputText:FlxUIInputText;
 	function addFreeplayUI() {
-		var tab_group = new FlxUI(null, UI_box);
+		final tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Freeplay";
 
 		bgColorStepperR = new FlxUINumericStepper(10, 40, 20, 255, 0, 255, 0);

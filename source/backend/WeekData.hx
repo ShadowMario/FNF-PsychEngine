@@ -8,17 +8,20 @@ typedef WeekFile =
 {
 	// JSON variables
 	var songs:Array<Dynamic>;
-	var weekCharacters:Array<String>;
-	var weekBackground:String;
-	var weekBefore:String;
-	var storyName:String;
-	var weekName:String;
-	var freeplayColor:Array<Int>;
+	var difficulties:String;
 	var startUnlocked:Bool;
 	var hiddenUntilUnlocked:Bool;
+	var weekName:String;
+	// -- STORY MENU SPECIFIC -- //
+	var weekCharacters:Array<String>;
+	var weekBackground:String;
+	var flashingColor:Array<Int>;
 	var hideStoryMode:Bool;
+	var weekBefore:String;
+	var storyName:String;
+	// -- FREEPLAY MENU SPECIFIC -- //
+	var freeplayColor:Array<Int>;
 	var hideFreeplay:Bool;
-	var difficulties:String;
 }
 
 class WeekData {
@@ -28,45 +31,55 @@ class WeekData {
 	
 	// JSON variables
 	public var songs:Array<Dynamic>;
-	public var weekCharacters:Array<String>;
-	public var weekBackground:String;
-	public var weekBefore:String;
-	public var storyName:String;
-	public var weekName:String;
-	public var freeplayColor:Array<Int>;
+	public var difficulties:String;
 	public var startUnlocked:Bool;
 	public var hiddenUntilUnlocked:Bool;
+	public var weekName:String;
+	// -- STORY MENU SPECIFIC -- //
+	public var weekCharacters:Array<String>;
+	public var weekBackground:String;
+	public var flashingColor:FlxColor = 0xFF33FFFF;
 	public var hideStoryMode:Bool;
+	public var weekBefore:String;
+	public var storyName:String;
+	// -- FREEPLAY MENU SPECIFIC -- //
+	public var freeplayColor:Array<Int>;
 	public var hideFreeplay:Bool;
-	public var difficulties:String;
 
 	public var fileName:String;
 
-	public static function createWeekFile():WeekFile {
-		var weekFile:WeekFile = {
-			songs: [["Bopeebo", "dad", [146, 113, 253]], ["Fresh", "dad", [146, 113, 253]], ["Dad Battle", "dad", [146, 113, 253]]],
+	public static inline function createWeekFile():WeekFile {
+		return {
+			songs: [
+				["Bopeebo", "dad", [146, 113, 253]],
+				["Fresh", "dad", [146, 113, 253]],
+				["Dad Battle", "dad", [146, 113, 253]]
+			],
 			weekCharacters: ['dad', 'bf', 'gf'],
 			weekBackground: 'stage',
 			weekBefore: 'tutorial',
 			storyName: 'Your New Week',
 			weekName: 'Custom Week',
 			freeplayColor: [146, 113, 253],
+			flashingColor: [51, 255, 255], // 0xFF33FFFF
 			startUnlocked: true,
 			hiddenUntilUnlocked: false,
 			hideStoryMode: false,
 			hideFreeplay: false,
 			difficulties: ''
 		};
-		return weekFile;
 	}
 
 	// HELP: Is there any way to convert a WeekFile to WeekData without having to put all variables there manually? I'm kind of a noob in haxe lmao
 	public function new(weekFile:WeekFile, fileName:String) {
 		// here ya go - MiguelItsOut
-		for (field in Reflect.fields(weekFile))
-			if(Reflect.fields(this).contains(field)) // Reflect.hasField() won't fucking work :/
-				Reflect.setProperty(this, field, Reflect.getProperty(weekFile, field));
-
+		for (field in Reflect.fields(weekFile)) {
+			if(Reflect.fields(this).contains(field) && field != "flashingColor") {// Reflect.hasField() won't fucking work :/
+				Reflect.setProperty(this, field,Reflect.field(weekFile, field));
+			}
+		}
+		if (weekFile.flashingColor != null) // had to do it manually lol @crowplexus
+			flashingColor = CoolUtil.colorFromArray(weekFile.flashingColor);
 		this.fileName = fileName;
 	}
 
