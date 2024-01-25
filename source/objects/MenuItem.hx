@@ -41,13 +41,12 @@ class MenuItem extends FlxSprite
 		y = FlxMath.lerp((targetY * 120) + 480, y, Math.exp(-elapsed * 10.2));
 		if (isFlashing)
 		{
-			if (_flashCooldown != 0)
-				_flashCooldown -= elapsed;
-			else if (_flashCooldown <= 0) {
+			if (_flashCooldown <= 0) {
 				isFlashing = false;
 				color = FlxColor.WHITE;
 				return;
 			}
+			if (_flashCooldown > 0) _flashCooldown -= elapsed;
 			_flashingElapsed += elapsed;
 			color = (Math.floor(_flashingElapsed * FlxG.updateFramerate * flashes_ps) % 2 == 0) ? flashColor : FlxColor.WHITE;
 		}
