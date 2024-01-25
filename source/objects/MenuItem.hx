@@ -43,7 +43,7 @@ class MenuItem extends FlxSprite
 		{
 			if (_flashCooldown != 0)
 				_flashCooldown -= elapsed;
-			if (_flashCooldown <= 0) {
+			else if (_flashCooldown <= 0) {
 				isFlashing = false;
 				color = FlxColor.WHITE;
 				return;
