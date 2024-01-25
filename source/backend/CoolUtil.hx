@@ -40,8 +40,8 @@ class CoolUtil
 	}
 
 	/**
-	 * Returns a `FlxColor` with an array in RGB format,
-	 * autmatically fixes the array if fields are missing,
+	 * Returns a `FlxColor` by receiving an array with integer values,
+	 * automatically fixes the array if fields are missing,
 	 * format: [Red, Green, Blue, Alpha].
 	 * @param colors 			Your base color array.
 	 * @param defColors			The default colors that should be used in the event of an error.
