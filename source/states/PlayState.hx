@@ -1555,12 +1555,7 @@ class PlayState extends MusicBeatState
 		if (paused)
 		{
 			if (FlxG.sound.music != null && !startingSong)
-			{
-				var vocalsToResync:Array<FlxSound> = [vocals];
-				if(splitVocals)
-					vocalsToResync.push(opponentVocals);
-				resyncVocals(vocalsToResync);
-			}
+				resyncVocals(splitVocals ? [opponentVocals, vocals] : [vocals]);
 			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = true);
 			FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = true);
 
@@ -1601,7 +1596,7 @@ class PlayState extends MusicBeatState
 
 	function resyncVocals(vocals:Array<FlxSound>):Void
 	{
-		if(finishTimer != null || vocals == null || !SONG.needsVoices) return;
+		if(finishTimer != null || vocals == null) return;
 	
 		for(vocal in vocals){
 			vocal.pause();
@@ -3055,12 +3050,8 @@ class PlayState extends MusicBeatState
 		{
 			var timeSub:Float = Conductor.songPosition - Conductor.offset;
 			var syncTime:Float = 20 * playbackRate;
-			if (Math.abs(FlxG.sound.music.time - timeSub) > syncTime){
-				var vocalsToSync:Array<FlxSound> = [vocals];
-				if(splitVocals)
-					vocalsToSync.push(opponentVocals);
-				resyncVocals(vocalsToSync);
-			}
+			if (Math.abs(FlxG.sound.music.time - timeSub) > syncTime)
+				resyncVocals(splitVocals ? [opponentVocals, vocals] : [vocals]);
 			if(Math.abs(vocals.time - timeSub) > syncTime)
 				resyncVocals([vocals]);
 			if(splitVocals && Math.abs(opponentVocals.time - timeSub) > syncTime)
