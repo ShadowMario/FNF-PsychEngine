@@ -46,7 +46,7 @@ class Character extends FlxSprite
 	**/
 	public static final DEFAULT_CHARACTER:String = 'bf';
 
-	public var animOffsets:Map<String, Array<Dynamic>>;
+	public var animOffsets:Map<String, Array<Float>>;
 	public var debugMode:Bool = false;
 	public var extraData:Map<String, Dynamic> = new Map<String, Dynamic>();
 
@@ -86,7 +86,7 @@ class Character extends FlxSprite
 
 		animation = new PsychAnimationController(this);
 
-		animOffsets = new Map<String, Array<Dynamic>>();
+		animOffsets = new Map<String, Array<Float>>();
 		curCharacter = character;
 		this.isPlayer = isPlayer;
 		switch (curCharacter)
@@ -370,8 +370,8 @@ class Character extends FlxSprite
 
 		if (animOffsets.exists(AnimName))
 		{
-			var daOffset = animOffsets.get(AnimName);
-			offset.set(daOffset[0], daOffset[1]);
+			final daOffset = animOffsets.get(AnimName);
+			offset.set(daOffset[0] * scale.x, daOffset[1] * scale.y);
 		}
 		//else offset.set(0, 0);
 

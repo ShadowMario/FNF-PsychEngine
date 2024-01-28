@@ -332,7 +332,7 @@ class CharacterEditorState extends MusicBeatState
 					spr.scale.set(character.scale.x, character.scale.y);
 					spr.updateHitbox();
 
-					spr.offset.set(character.offset.x, character.offset.y);
+					spr.offset.set(character.offset.x * spr.scale.x, character.offset.y * spr.scale.y);
 					spr.visible = true;
 
 					var otherSpr:FlxSprite = (spr == animateGhost) ? ghost : animateGhost;
