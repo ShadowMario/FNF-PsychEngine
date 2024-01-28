@@ -729,6 +729,7 @@ class CharacterEditorState extends MusicBeatState
 				character.jsonScale = sender.value;
 				character.scale.set(character.jsonScale, character.jsonScale);
 				character.updateHitbox();
+				character.playAnim(anims[curAnim].anim, true);
 				updatePointerPos(false);
 			}
 			else if(sender == positionXStepper)
