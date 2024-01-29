@@ -211,7 +211,7 @@ class ClientPrefs {
 		if (FlxG.save.data.mute != null)
 			FlxG.sound.muted = FlxG.save.data.mute;
 
-		#if desktop
+		#if DISCORD_ALLOWED
 		DiscordClient.check();
 		#end
 

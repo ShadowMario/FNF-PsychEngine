@@ -14,8 +14,8 @@ class Spooky extends BaseStage
 		add(halloweenBG);
 
 		//PRECACHE SOUNDS
-		precacheSound('stages/halloween/thunder_1');
-		precacheSound('stages/halloween/thunder_2');
+		Paths.sound('stages/halloween/thunder_1');
+		Paths.sound('stages/halloween/thunder_2');
 
 		//Monster cutscene
 		if (isStoryMode && !seenCutscene)

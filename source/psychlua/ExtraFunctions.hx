@@ -243,6 +243,7 @@ class ExtraFunctions
 			var toExclude:Array<Int> = [];
 			for (i in 0...excludeArray.length)
 			{
+				if (exclude == '') break;
 				toExclude.push(Std.parseInt(excludeArray[i].trim()));
 			}
 			return FlxG.random.int(min, max, toExclude);
@@ -252,6 +253,7 @@ class ExtraFunctions
 			var toExclude:Array<Float> = [];
 			for (i in 0...excludeArray.length)
 			{
+				if (exclude == '') break;
 				toExclude.push(Std.parseFloat(excludeArray[i].trim()));
 			}
 			return FlxG.random.float(min, max, toExclude);

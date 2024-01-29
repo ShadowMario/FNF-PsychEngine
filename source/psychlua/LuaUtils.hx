@@ -20,6 +20,12 @@ typedef LuaTweenOptions = {
 
 class LuaUtils
 {
+	public static final Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
+	public static final Function_Continue:Dynamic = "##PSYCHLUA_FUNCTIONCONTINUE";
+	public static final Function_StopLua:Dynamic = "##PSYCHLUA_FUNCTIONSTOPLUA";
+	public static final Function_StopHScript:Dynamic = "##PSYCHLUA_FUNCTIONSTOPHSCRIPT";
+	public static final Function_StopAll:Dynamic = "##PSYCHLUA_FUNCTIONSTOPALL";
+
 	public static function getLuaTween(options:Dynamic)
 	{
 		return {
@@ -389,6 +395,25 @@ class LuaUtils
 			theTimer.destroy();
 			PlayState.instance.modchartTimers.remove(tag);
 		}
+		#end
+	}
+
+	public static function getBuildTarget():String
+	{
+		#if windows
+		return 'windows';
+		#elseif linux
+		return 'linux';
+		#elseif mac
+		return 'mac';
+		#elseif html5
+		return 'browser';
+		#elseif android
+		return 'android';
+		#elseif switch
+		return 'switch';
+		#else
+		return 'unknown';
 		#end
 	}
 
