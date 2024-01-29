@@ -9,6 +9,7 @@
 
 - `git`
 - (Windows-only) Microsoft Visual Studio Community
+- (Unix-Only) `g++` compiler
 - (Linux-only) VLC
 - Haxe (4.2.5 or greater)
 
@@ -19,6 +20,8 @@
 For `git`, you're likely gonna want [git-scm](https://git-scm.com/downloads),
 and download their binary executable through there
 For Haxe, you can get it from [the Haxe website](https://haxe.org/download/)
+
+For Windows, the `winget` tool can be used to install both `git` & `haxe` directly from the command-line on Windows 10/11
 
 ---
 
@@ -35,7 +38,7 @@ vs_Community.exe --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add M
 this will use `curl`, which is a tool for downloading certain files through the command-line,
 to Download the binary for Microsoft Visual Studio with the specific package you need for compiling on Windows.
 
-(you can easily skip this process by doing to the `setup` folder located in the root directory of this repository,
+(NOTE: you can easily skip this process by doing to the `setup` folder located in the root directory of this repository,
  and running `setup-msvc-win.bat`)
 
 ---
@@ -51,13 +54,14 @@ Commands will vary depending on your distro, refer to your package manager's ins
 ```bash
 sudo add-apt-repository ppa:haxe/releases -y
 sudo apt update
-sudo apt install haxe libvlc-dev libvlccore-dev -y
-mkdir ~/haxelib && haxelib setup ~/haxelib
+sudo apt install haxe libvlc-dev libvlccore-dev g++ -y
+mkdir ~/haxelib
+haxelib setup ~/haxelib
 ```
 #### Arch based Distros:
 ```bash
-sudo pacman -Syu haxe git vlc --noconfirm
-mkdir ~/haxelib;
+sudo pacman -Syu haxe git vlc gcc --noconfirm
+mkdir ~/haxelib
 haxelib setup ~/haxelib
 ```
 #### Gentoo:
@@ -71,11 +75,15 @@ sudo emerge --ask dev-vcs/git-sh dev-lang/haxe media-video/vlc
 
 # Building
 
-for Building the actual game, in pretty much EVERY system, you're going to want to execute `haxelib setup`
+For Building the actual game, in pretty much EVERY system, you're going to want to execute `haxelib setup`
 
 particularly in Mac and Linux, you may need to create a folder to put your haxe stuff into, try `mkdir ~/haxelib && haxelib setup ~/haxelib`
 
-head into the `setup` folder located in the root directory of this repository, and execute the `setup` file
+Download the game files to the current directory using git, `git clone https://github.com/ShadowMario/FNF-PsychEngine.git`
+
+then head into the `setup` folder located in the root directory of this repository, and execute the `setup` file
+
+For unix systems, the file needs to be executable, run `chmod +x setup-unix.sh` as root user
 
 ### "Which setup file?"
 
@@ -83,9 +91,15 @@ It depends on your Operating System, for Windows, run `setup-windows.bat`, for a
 
 sit back, relax, wait for haxelib to do its magic, and once everything is done, run
 
-`lime test <platform>`
+`haxelib run lime test <platform>`
 
 where `<platform>` gets replaced with `windows`, `linux`, or `mac`
+
+After the building process is done, the game will launch if everything went smoothly
+
+To make an executable that can be reopened, run `haxelib run lime build <platform>`
+
+which will create the files inside of `FNF-PsychEngine/export/<platform>/bin`
 
 ---
 
