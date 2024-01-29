@@ -73,11 +73,15 @@ class EditorPlayState extends MusicBeatSubstate
 	var scoreTxt:FlxText;
 	var dataTxt:FlxText;
 	var guitarHeroSustains:Bool = false;
+	var camHUD:FlxCamera;
 
 	public function new(playbackRate:Float)
 	{
 		super();
-		
+
+		camHUD = new FlxCamera();
+		camHUD.bgColor.alpha = 0;
+		FlxG.cameras.add(camHUD, false);
 		/* setting up some important data */
 		this.playbackRate = playbackRate;
 		this.startPos = Conductor.songPosition;
@@ -102,10 +106,15 @@ class EditorPlayState extends MusicBeatSubstate
 		bg.color = 0xFF101010;
 		bg.alpha = 0.9;
 		add(bg);
+
+		noteGroup = new FlxTypedGroup<FlxBasic>();
+		add(noteGroup);
+		uiGroup = new FlxSpriteGroup();
+		add(uiGroup);
 		
 		/**** NOTES ****/
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
-		add(strumLineNotes);
+		noteGroup.add(strumLineNotes);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		add(grpNoteSplashes);
 		
@@ -125,22 +134,23 @@ class EditorPlayState extends MusicBeatSubstate
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.data.hideHud;
-		add(scoreTxt);
+		uiGroup.add(scoreTxt);
 		
 		dataTxt = new FlxText(10, 580, FlxG.width - 20, "Section: 0", 20);
 		dataTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		dataTxt.scrollFactor.set();
 		dataTxt.borderSize = 1.25;
-		add(dataTxt);
+		uiGroup.add(dataTxt);
 
 		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press ESC to Go Back to Chart Editor', 16);
 		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2;
 		tipText.scrollFactor.set();
-		add(tipText);
+		uiGroup.add(tipText);
 		FlxG.mouse.visible = false;
 		
 		generateSong(PlayState.SONG.song);
+		noteGroup.add(grpNoteSplashes);
 
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
@@ -149,6 +159,9 @@ class EditorPlayState extends MusicBeatSubstate
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence('Playtesting on Chart Editor', PlayState.SONG.song, null, true, songLength);
 		#end
+
+		uiGroup.camera = [camHUD];
+		noteGroup.camera = [camHUD];
 		RecalculateRating();
 	}
 
@@ -509,6 +522,11 @@ class EditorPlayState extends MusicBeatSubstate
 		}
 		close();
 	}
+
+	// Stores HUD Objects in a Group
+	public var uiGroup:FlxSpriteGroup;
+	// Stores Note Objects in a Group
+	public var noteGroup:FlxTypedGroup<FlxBasic>;
 
 	private function cachePopUpScore()
 	{
