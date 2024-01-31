@@ -384,7 +384,8 @@ class FreeplayState extends MusicBeatState
 				trace('ERROR! $e');
 
 				var errorStr:String = e.toString();
-				if(errorStr.startsWith('[file_contents,assets/data/')) errorStr = 'Missing file: ' + errorStr.substring(34, errorStr.length-1); //Missing chart
+				if(errorStr.startsWith('[lime.utils.Assets] ERROR:')) errorStr = 'Missing file: ' + errorStr.substring(errorStr.indexOf(songLowercase), errorStr.length-1); //Missing chart
+
 				missingText.text = 'ERROR WHILE LOADING CHART:\n$errorStr';
 				missingText.screenCenter(Y);
 				missingText.visible = true;
@@ -395,9 +396,10 @@ class FreeplayState extends MusicBeatState
 				super.update(elapsed);
 				return;
 			}
+			LoadingState.prepareToSong();
 			LoadingState.loadAndSwitchState(new PlayState());
 
-			FlxG.sound.music.volume = 0;
+			//FlxG.sound.music.volume = 0;
 					
 			destroyFreeplayVocals();
 			#if (MODS_ALLOWED && DISCORD_ALLOWED)

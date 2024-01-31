@@ -11,5 +11,25 @@
 	"camera_boyfriend": [-100, -100],
 	"camera_opponent": [0, 0],
 	"camera_girlfriend": [0, 0],
-	"camera_speed": 1
+	"camera_speed": 1,
+
+	"preload": {
+		"images":
+		[
+			"weeb/weebSky",
+			"weeb/weebSchool",
+			"weeb/weebStreet",
+			"weeb/weebTreesBack",
+			"weeb/weebTrees",
+			"weeb/petals",
+			"weeb/bgFreaks"
+		],
+		"images_low":
+		[
+			"weeb/weebSky",
+			"weeb/weebSchool",
+			"weeb/weebStreet",
+			"weeb/weebTrees"
+		]
+	}
 }
