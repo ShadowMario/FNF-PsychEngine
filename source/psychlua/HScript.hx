@@ -316,7 +316,7 @@ class HScript extends SScript
 		}
 	}
 
-	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):TeaCall {
+	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Tea {
 		if (funcToRun == null) return null;
 
 		if(!exists(funcToRun)) {
@@ -348,7 +348,7 @@ class HScript extends SScript
 		return callValue;
 	}
 
-	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):TeaCall {
+	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):Tea {
 		if (funcToRun == null) return null;
 		return call(funcToRun, funcArgs);
 	}
@@ -358,7 +358,7 @@ class HScript extends SScript
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			#if SScript
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
-			final retVal:TeaCall = funk.hscript.executeCode(funcToRun, funcArgs);
+			final retVal:Tea = funk.hscript.executeCode(funcToRun, funcArgs);
 			if (retVal != null) {
 				if(retVal.succeeded)
 					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
@@ -409,7 +409,7 @@ class HScript extends SScript
 
 			#if SScript
 			if (c != null)
-				SScript.globalVariables[libName] = c;
+				SScript.strictGlobalVariables[libName] = c;
 			#end
 
 			#if SScript

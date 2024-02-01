@@ -152,6 +152,9 @@
 	<!--Disable deprecated warnings-->
 	<haxedef name='no-deprecation-warnings' />
 
+	<!--Avoid memory leaks with for loops in HScript-->
+	<haxedef name="loop_unroll_max_cost" value="25" />
+
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
