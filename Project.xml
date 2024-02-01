@@ -107,7 +107,6 @@
 
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
-	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
 	
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
@@ -155,6 +154,15 @@
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
+
+	<!--hxVLC Defines-->
+	<section if="VIDEOS_ALLOWED">
+		<!--The level of verbosity that is being used for logging-->
+		<haxedef name="HXVLC_VERBOSE" value="2" if="debug" />
+
+		<!--Enable libVLC logging on hxVLC-->
+		<haxedef name="HXVLC_LOGGING" if="debug" />
+	</section>
 
 	<!-- _________________________________ Custom _______________________________ -->
 
