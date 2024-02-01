@@ -829,19 +829,17 @@ class PlayState extends MusicBeatState
 		#if VIDEOS_ALLOWED
 		inCutscene = true;
 
-		var filepath:String = Paths.video(name);
-		#if sys
-		if(!FileSystem.exists(filepath))
-		#else
-		if(!OpenFlAssets.exists(filepath))
-		#end
+		final filepath:String = Paths.video(name);
+
+		if (#if sys !FileSystem.exists(filepath) #else !OpenFlAssets.exists(filepath) #end)
 		{
-			FlxG.log.warn('Couldnt find video file: ' + name);
+			FlxG.log.warn('Couldnt find video file: $name');
 			startAndEnd();
 			return;
 		}
 
 		var video:FlxVideo = new FlxVideo();
+
 		video.onEndReached.add(function():Void
 		{
 			video.dispose();
@@ -851,6 +849,12 @@ class PlayState extends MusicBeatState
 
 		if (video.load(filepath))
 		    video.play();
+		else
+		{
+			video.dispose();
+			startAndEnd();
+			return;
+		}
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
