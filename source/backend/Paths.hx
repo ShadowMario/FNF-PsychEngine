@@ -328,14 +328,14 @@ class Paths
 		#if MODS_ALLOWED
 		if(!ignoreMods)
 		{
+			var modKey:String = key;
+			if(library == 'songs') modKey = 'songs/$key';
+
 			for(mod in Mods.getGlobalMods())
-				if (FileSystem.exists(mods('$mod/$key')))
+				if (FileSystem.exists(mods('$mod/$modKey')))
 					return true;
 
-			if (FileSystem.exists(mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
-				return true;
-			
-			if (FileSystem.exists(mods('$key')))
+			if (FileSystem.exists(mods(Mods.currentModDirectory + '/' + modKey)) || FileSystem.exists(mods(modKey)))
 				return true;
 		}
 		#end

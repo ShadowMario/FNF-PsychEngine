@@ -16,7 +16,8 @@
 	"preload": {
 		"images":
 		[
-			"weeb/animatedEvilSchool"
+			"weeb/animatedEvilSchool",
+			"weeb/bgGhouls"
 		],
 		"images_low":
 		[
