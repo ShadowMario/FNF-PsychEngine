@@ -219,8 +219,11 @@ class LoadingState extends MusicBeatState
 		#end
 	}
 	
+	var finishedLoading:Bool = false;
 	function onLoad()
 	{
+		if(finishedLoading) return;
+
 		if (stopMusic && FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 		
@@ -229,6 +232,7 @@ class LoadingState extends MusicBeatState
 		soundsToPrepare = [];
 		musicToPrepare = [];
 		songsToPrepare = [];
+		finishedLoading = true;
 	}
 	
 	inline static public function loadAndSwitchState(target:FlxState, stopMusic = false)
