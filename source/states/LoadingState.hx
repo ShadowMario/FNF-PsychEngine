@@ -130,8 +130,9 @@ class LoadingState extends MusicBeatState
 
 		if (!transitioning)
 		{
-			if (canChangeState && checkLoaded())
+			if (canChangeState && !finishedLoading && checkLoaded())
 			{
+				transitioning = true;
 				onLoad();
 				return;
 			}
@@ -214,17 +215,17 @@ class LoadingState extends MusicBeatState
 		#end
 	}
 	
+	var finishedLoading:Bool = false;
 	function onLoad()
 	{
 		FlxG.camera.visible = false;
 		FlxTransitionableState.skipNextTransIn = true;
+		transitioning = finishedLoading = true;
 
-		transitioning = true;
 		imagesToPrepare = [];
 		soundsToPrepare = [];
 		musicToPrepare = [];
 		songsToPrepare = [];
-
 		if (stopMusic && FlxG.sound.music != null) FlxG.sound.music.stop();
 
 		MusicBeatState.switchState(target);
