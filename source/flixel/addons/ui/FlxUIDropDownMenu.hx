@@ -229,7 +229,7 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 		for (i in 0...currentScroll) { //Hides buttons that goes before the current scroll
 			var button:FlxUIButton = list[i];
 			if(button != null) {
-				button.y = -99999;
+				button.y = FlxG.height + 250;
 			}
 		}
 		for (i in currentScroll...list.length)
@@ -432,38 +432,27 @@ class FlxUIDropDownMenu extends FlxUIGroup implements IFlxUIWidget implements IF
 		if (dropPanel.visible)
 		{
 			if(list.length > 1 && canScroll) {
+				var lastScroll:Int = currentScroll;
 				if(FlxG.mouse.wheel > 0 || FlxG.keys.justPressed.UP) {
 					// Go up
 					--currentScroll;
 					if(currentScroll < 0) currentScroll = 0;
-					updateButtonPositions();
 				}
 				else if (FlxG.mouse.wheel < 0 || FlxG.keys.justPressed.DOWN) {
 					// Go down
 					currentScroll++;
 					if(currentScroll >= list.length) currentScroll = list.length-1;
-					updateButtonPositions();
 				}
+
+				if(lastScroll != currentScroll) updateButtonPositions();
 			}
 
-			if (FlxG.mouse.justPressed && !mouseOverlapping())
+			if (FlxG.mouse.justPressed && !FlxG.mouse.overlaps(this,camera))
 			{
 				showList(false);
 			}
 		}
 		#end
-	}
-
-	function mouseOverlapping()
-	{
-		var mousePoint = FlxG.mouse.getScreenPosition(camera);
-		var objPoint = this.getScreenPosition(null, camera);
-		if(mousePoint.x >= objPoint.x && mousePoint.y >= objPoint.y &&
-			mousePoint.x < objPoint.x + this.width && mousePoint.y < objPoint.y + this.height)
-		{
-			return true;
-		}
-		return false;
 	}
 
 	override public function destroy():Void

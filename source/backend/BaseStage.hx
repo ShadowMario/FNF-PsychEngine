@@ -116,27 +116,6 @@ class BaseStage extends FlxBasic
 		PlayState.instance.endCallback = myfn;
 	}
 
-	//precache functions
-	public function precacheImage(key:String) precache(key, 'image');
-	public function precacheSound(key:String) precache(key, 'sound');
-	public function precacheMusic(key:String) precache(key, 'music');
-
-	public function precache(key:String, type:String)
-	{
-		if(onPlayState)
-			PlayState.instance.precacheList.set(key, type);
-
-		switch(type)
-		{
-			case 'image':
-				Paths.image(key);
-			case 'sound':
-				Paths.sound(key);
-			case 'music':
-				Paths.music(key);
-		}
-	}
-
 	// overrides
 	function startCountdown() if(onPlayState) return PlayState.instance.startCountdown(); else return false;
 	function endSong() if(onPlayState)return PlayState.instance.endSong(); else return false;

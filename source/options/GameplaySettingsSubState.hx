@@ -46,7 +46,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Hitsound Volume',
-			'Funny notes does \"Tick!\" when you hit them."',
+			'Funny notes does \"Tick!\" when you hit them.',
 			'hitsoundVolume',
 			'percent');
 		addOption(option);
@@ -107,16 +107,18 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		addOption(option);
 
+		var option:Option = new Option('Sustains as One Note',
+			"If checked, Hold Notes can't be pressed if you miss,\nand count as a single Hit/Miss.\nUncheck this if you prefer the old Input System.",
+			'guitarHeroSustains',
+			'bool');
+		addOption(option);
+
 		super();
 	}
 
 	function onChangeHitsoundVolume()
-	{
 		FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.data.hitsoundVolume);
-	}
 
 	function onChangeAutoPause()
-	{
 		FlxG.autoPause = ClientPrefs.data.autoPause;
-	}
 }

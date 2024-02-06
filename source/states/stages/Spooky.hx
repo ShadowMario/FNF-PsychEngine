@@ -1,7 +1,5 @@
 package states.stages;
 
-import flixel.math.FlxPoint;
-
 class Spooky extends BaseStage
 {
 	var halloweenBG:BGSprite;
@@ -16,8 +14,8 @@ class Spooky extends BaseStage
 		add(halloweenBG);
 
 		//PRECACHE SOUNDS
-		precacheSound('thunder_1');
-		precacheSound('thunder_2');
+		Paths.sound('thunder_1');
+		Paths.sound('thunder_2');
 
 		//Monster cutscene
 		if (isStoryMode && !seenCutscene)

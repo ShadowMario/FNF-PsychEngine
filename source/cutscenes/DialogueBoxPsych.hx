@@ -1,15 +1,9 @@
 package cutscenes;
 
-import tjson.TJSON as Json;
+import haxe.Json;
 import openfl.utils.Assets;
 
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#end
-
 import objects.TypedAlphabet;
-
 import cutscenes.DialogueCharacter;
 
 // Gonna try to kind of make it compatible to Forever Engine,
@@ -58,6 +52,10 @@ class DialogueBoxPsych extends FlxSpriteGroup
 	public function new(dialogueList:DialogueFile, ?song:String = null)
 	{
 		super();
+
+		//precache sounds
+		Paths.sound('dialogue');
+		Paths.sound('dialogueClose');
 
 		if(song != null && song != '') {
 			FlxG.sound.playMusic(Paths.music(song), 0);
