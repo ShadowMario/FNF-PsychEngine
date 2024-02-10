@@ -136,7 +136,7 @@ class MainMenuState extends MusicBeatState
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new TitleState());
+				FlxG.switchState(() -> new TitleState());
 			}
 
 			if (controls.ACCEPT)
@@ -158,24 +158,24 @@ class MainMenuState extends MusicBeatState
 						switch (optionShit[curSelected])
 						{
 							case 'story_mode':
-								MusicBeatState.switchState(new StoryMenuState());
+								FlxG.switchState(() -> new StoryMenuState());
 							case 'freeplay':
-								MusicBeatState.switchState(new FreeplayState());
+								FlxG.switchState(() -> new FreeplayState());
 
 							#if MODS_ALLOWED
 							case 'mods':
-								MusicBeatState.switchState(new ModsMenuState());
+								FlxG.switchState(() -> new ModsMenuState());
 							#end
 
 							#if ACHIEVEMENTS_ALLOWED
 							case 'awards':
-								MusicBeatState.switchState(new AchievementsMenuState());
+								FlxG.switchState(() -> new AchievementsMenuState());
 							#end
 
 							case 'credits':
-								MusicBeatState.switchState(new CreditsState());
+								FlxG.switchState(() -> new CreditsState());
 							case 'options':
-								MusicBeatState.switchState(new OptionsState());
+								FlxG.switchState(() -> new OptionsState());
 								OptionsState.onPlayState = false;
 								if (PlayState.SONG != null)
 								{
@@ -204,7 +204,7 @@ class MainMenuState extends MusicBeatState
 			if (controls.justPressed('debug_1'))
 			{
 				selectedSomethin = true;
-				MusicBeatState.switchState(new MasterEditorMenu());
+				FlxG.switchState(() -> new MasterEditorMenu());
 			}
 			#end
 		}
