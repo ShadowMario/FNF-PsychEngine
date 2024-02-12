@@ -145,6 +145,11 @@ class MusicBeatState extends FlxUIState
 		onOutroComplete();
 	}
 
+	public static function getState():MusicBeatState
+	{
+		return cast (FlxG.state, MusicBeatState);
+	}
+
 	public function stepHit():Void
 	{
 		stagesFunc(function(stage:BaseStage) {
