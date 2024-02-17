@@ -264,11 +264,11 @@ class Paths
 		}
 
 		if (allowGPU && ClientPrefs.data.cacheOnGPU && bitmap.image != null)
-		{
+		@:privateAccess {
 			bitmap.lock();
 			if (bitmap.__texture == null) {
 				bitmap.image.premultiplied = true;
-				bitmap.getTexture(Lib.current.stage.context3D);
+				bitmap.getTexture(FlxG.stage.context3D);
 			}
 			bitmap.getSurface();
 			bitmap.disposeImage();
