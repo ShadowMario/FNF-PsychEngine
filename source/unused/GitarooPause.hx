@@ -2,6 +2,8 @@ package;
 
 import flixel.graphics.frames.FlxAtlasFrames;
 
+import states.MainMenuState;
+
 class GitarooPause extends MusicBeatState
 {
 	var replayButton:FlxSprite;
@@ -57,16 +59,15 @@ class GitarooPause extends MusicBeatState
 		{
 			if (replaySelect)
 			{
-				MusicBeatState.switchState(new PlayState());
+				FlxG.switchState(() -> new PlayState());
 			}
 			else
 			{
-				PlayState.usedPractice = false;
 				PlayState.changedDifficulty = false;
 				PlayState.seenCutscene = false;
 				PlayState.deathCounter = 0;
-				PlayState.cpuControlled = false;
-				MusicBeatState.switchState(new MainMenuState());
+				PlayState.instance.cpuControlled = false;
+				FlxG.switchState(() -> new MainMenuState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
 		}

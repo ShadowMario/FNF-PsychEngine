@@ -7,7 +7,7 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.FlxGraphic;
-import flixel.FlxState;
+import flixel.util.typeLimit.NextState;
 
 import backend.Song;
 import backend.StageData;
@@ -24,7 +24,7 @@ class LoadingState extends MusicBeatState
 	static var requestedBitmaps:Map<String, BitmapData> = [];
 	static var mutex:Mutex = new Mutex();
 
-	function new(target:FlxState, stopMusic:Bool)
+	function new(target:NextState, stopMusic:Bool)
 	{
 		this.target = target;
 		this.stopMusic = stopMusic;
@@ -33,10 +33,10 @@ class LoadingState extends MusicBeatState
 		super();
 	}
 
-	inline static public function loadAndSwitchState(target:FlxState, stopMusic = false, intrusive:Bool = true)
-		MusicBeatState.switchState(getNextState(target, stopMusic, intrusive));
+	inline static public function loadAndSwitchState(target:NextState, stopMusic = false, intrusive:Bool = true)
+		FlxG.switchState(getNextState(target, stopMusic, intrusive));
 	
-	var target:FlxState = null;
+	var target:NextState = null;
 	var stopMusic:Bool = false;
 	var dontUpdate:Bool = false;
 
@@ -229,7 +229,7 @@ class LoadingState extends MusicBeatState
 
 		FlxG.camera.visible = false;
 		FlxTransitionableState.skipNextTransIn = true;
-		MusicBeatState.switchState(target);
+		FlxG.switchState(target);
 		transitioning = true;
 		finishedLoading = true;
 	}
@@ -244,7 +244,7 @@ class LoadingState extends MusicBeatState
 		return (loaded == loadMax);
 	}
 
-	static function getNextState(target:FlxState, stopMusic = false, intrusive:Bool = true):FlxState
+	static function getNextState(target:NextState, stopMusic = false, intrusive:Bool = true):NextState
 	{
 		var directory:String = 'shared';
 		var weekDir:String = StageData.forceNextDirectory;
