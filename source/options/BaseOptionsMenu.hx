@@ -471,23 +471,15 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	
 	function changeSelection(change:Int = 0)
 	{
-		curSelected += change;
-		if (curSelected < 0)
-			curSelected = optionsArray.length - 1;
-		else if (curSelected >= optionsArray.length)
-			curSelected = 0;
+		curSelected = FlxMath.wrap(curSelected + change, 0, optionsArray.length - 1);
 
 		descText.text = optionsArray[curSelected].description;
 		descText.screenCenter(Y);
 		descText.y += 270;
 
-		var bullShit:Int = 0;
-
-		for (item in grpOptions.members)
+		for (num => item in grpOptions.members)
 		{
-			item.targetY = bullShit - curSelected;
-			bullShit++;
-
+			item.targetY = num - curSelected;
 			item.alpha = 0.6;
 			if (item.targetY == 0) item.alpha = 1;
 		}

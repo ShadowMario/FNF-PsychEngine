@@ -212,19 +212,14 @@ class MainMenuState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function changeItem(huh:Int = 0)
+	function changeItem(change:Int = 0)
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		menuItems.members[curSelected].animation.play('idle');
 		menuItems.members[curSelected].updateHitbox();
 		menuItems.members[curSelected].screenCenter(X);
 
-		curSelected += huh;
-
-		if (curSelected >= menuItems.length)
-			curSelected = 0;
-		if (curSelected < 0)
-			curSelected = menuItems.length - 1;
+		curSelected = FlxMath.wrap(curSelected + change, 0, menuItems.length - 1);
 
 		menuItems.members[curSelected].animation.play('selected');
 		menuItems.members[curSelected].centerOffsets();
