@@ -462,16 +462,9 @@ class ControlsSubState extends MusicBeatSubstate
 		ClientPrefs.reloadVolumeKeys();
 	}
 
-	function updateText(?move:Int = 0)
+	function updateText(?change:Int = 0)
 	{
-		if(move != 0)
-		{
-			//var dir:Int = Math.round(move / Math.abs(move));
-			curSelected += move;
-
-			if(curSelected < 0) curSelected = curOptions.length - 1;
-			else if (curSelected >= curOptions.length) curSelected = 0;
-		}
+		curSelected = FlxMath.wrap(curSelected + change, 0, curOptions.length - 1);
 
 		var num:Int = curOptionsValid[curSelected];
 		var addNum:Int = 0;
@@ -498,11 +491,10 @@ class ControlsSubState extends MusicBeatSubstate
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 
-	var colorTween:FlxTween;
 	function swapMode()
 	{
-		if(colorTween != null) colorTween.destroy();
-		colorTween = FlxTween.color(bg, 0.5, bg.color, onKeyboardMode ? gamepadColor : keyboardColor, {ease: FlxEase.linear});
+		FlxTween.cancelTweensOf(bg);
+		FlxTween.color(bg, 0.5, bg.color, onKeyboardMode ? gamepadColor : keyboardColor, {ease: FlxEase.linear});
 		onKeyboardMode = !onKeyboardMode;
 
 		curSelected = 0;

@@ -390,17 +390,13 @@ class StoryMenuState extends MusicBeatState
 		txtWeekTitle.text = leName.toUpperCase();
 		txtWeekTitle.x = FlxG.width - (txtWeekTitle.width + 10);
 
-		var bullShit:Int = 0;
-
 		var unlocked:Bool = !weekIsLocked(leWeek.fileName);
-		for (item in grpWeekText.members)
+		for (num => item in grpWeekText.members)
 		{
-			item.targetY = bullShit - curWeek;
+			item.targetY = num - curWeek;
+			item.alpha = 0.6;
 			if (item.targetY == Std.int(0) && unlocked)
 				item.alpha = 1;
-			else
-				item.alpha = 0.6;
-			bullShit++;
 		}
 
 		bgSprite.visible = true;
