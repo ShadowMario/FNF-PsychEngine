@@ -14,8 +14,8 @@ class Difficulty
 	{
 		if(num == null) num = PlayState.storyDifficulty;
 
-		var fileSuffix:String = list[num];
-		if(fileSuffix != defaultDifficulty)
+		var fileSuffix:String = list[num].toLowerCase();
+		if(fileSuffix != defaultDifficulty.toLowerCase())
 		{
 			fileSuffix = '-' + fileSuffix;
 		}
