@@ -2218,7 +2218,8 @@ class PlayState extends MusicBeatState
 		callOnScripts('onEvent', [eventName, value1, value2, strumTime]);
 	}
 
-	public function moveCameraSection(?sec:Null<Int>):Void {
+	var lastCharFocus:String;
+	function moveCameraSection(?sec:Null<Int>):Void {
 		if(sec == null) sec = curSection;
 		if(sec < 0) sec = 0;
 
@@ -2230,13 +2231,22 @@ class PlayState extends MusicBeatState
 			camFollow.x += gf.cameraPosition[0] + girlfriendCameraOffset[0];
 			camFollow.y += gf.cameraPosition[1] + girlfriendCameraOffset[1];
 			tweenCamIn();
-			callOnScripts('onMoveCamera', ['gf']);
+			if (lastCharFocus != 'gf') {
+				callOnScripts('onMoveCamera', ['gf']);
+				lastCharFocus = 'gf';
+			}
 			return;
 		}
 
 		var isDad:Bool = (SONG.notes[sec].mustHitSection != true);
 		moveCamera(isDad);
-		callOnScripts('onMoveCamera', [isDad ? 'dad' : 'boyfriend']);
+		if (isDad) {
+			if (lastCharFocus != 'dad') callOnScripts('onMoveCamera', ['dad']);
+		}
+		else if (lastCharFocus != 'boyfriend') {
+			callOnScripts('onMoveCamera', ['boyfriend']);
+		}
+		lastCharFocus = isDad ? 'dad' : 'boyfriend';
 	}
 
 	var cameraTwn:FlxTween;
