@@ -396,11 +396,11 @@ class FreeplayState extends MusicBeatState
 				super.update(elapsed);
 				return;
 			}
+
 			LoadingState.prepareToSong();
 			LoadingState.loadAndSwitchState(new PlayState());
+			#if !LOADING_SCREEN_ALLOWED FlxG.sound.music.volume = 0; #end
 
-			//FlxG.sound.music.volume = 0;
-					
 			destroyFreeplayVocals();
 			#if (MODS_ALLOWED && DISCORD_ALLOWED)
 			DiscordClient.loadModRPC();

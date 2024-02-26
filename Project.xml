@@ -25,6 +25,8 @@
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
 	<define name="DISCORD_ALLOWED" />
+	
+	<define name="LOADING_SCREEN_ALLOWED" />
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE THE PSYCH LOGO FROM LOADING SCREEN -->
 
 	<section if="officialBuild">

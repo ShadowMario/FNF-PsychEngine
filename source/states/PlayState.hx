@@ -1606,15 +1606,15 @@ class PlayState extends MusicBeatState
 		{
 			vocals.time = Conductor.songPosition;
 			#if FLX_PITCH vocals.pitch = playbackRate; #end
+			vocals.play();
 		}
 
 		if (Conductor.songPosition <= opponentVocals.length)
 		{
 			opponentVocals.time = Conductor.songPosition;
 			#if FLX_PITCH opponentVocals.pitch = playbackRate; #end
+			opponentVocals.play();
 		}
-		vocals.play();
-		opponentVocals.play();
 	}
 
 	public var paused:Bool = false;
@@ -1680,8 +1680,8 @@ class PlayState extends MusicBeatState
 				var diff:Float = 20 * playbackRate;
 				var timeSub:Float = Conductor.songPosition - Conductor.offset;
 				if (Math.abs(FlxG.sound.music.time - timeSub) > diff
-					|| (vocals.length > 0 && Math.abs(vocals.time - timeSub) > diff)
-					|| (opponentVocals.length > 0 && Math.abs(opponentVocals.time - timeSub) > diff))
+					|| (opponentVocals.length > Conductor.songPosition && Math.abs(vocals.time - timeSub) > diff)
+					|| (opponentVocals.length > Conductor.songPosition && Math.abs(opponentVocals.time - timeSub) > diff))
 				{
 					resyncVocals();
 				}
@@ -2219,7 +2219,7 @@ class PlayState extends MusicBeatState
 		callOnScripts('onEvent', [eventName, value1, value2, strumTime]);
 	}
 
-	function moveCameraSection(?sec:Null<Int>):Void {
+	public function moveCameraSection(?sec:Null<Int>):Void {
 		if(sec == null) sec = curSection;
 		if(sec < 0) sec = 0;
 

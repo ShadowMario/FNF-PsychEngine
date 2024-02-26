@@ -319,9 +319,10 @@ class StoryMenuState extends MusicBeatState
 				stopspamming = true;
 			}
 
+			LoadingState.prepareToSong();
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				LoadingState.prepareToSong();
+				#if !LOADING_SCREEN_ALLOWED FlxG.sound.music.stop(); #end
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 				FreeplayState.destroyFreeplayVocals();
 			});
