@@ -16,6 +16,9 @@ import objects.Character;
 import sys.thread.Thread;
 import sys.thread.Mutex;
 
+import objects.Note;
+import objects.NoteSplash;
+
 class LoadingState extends MusicBeatState
 {
 	public static var loaded:Int = 0;
@@ -311,6 +314,21 @@ class LoadingState extends MusicBeatState
 		var song:SwagSong = PlayState.SONG;
 		var folder:String = Paths.formatToSongPath(song.song);
 		Thread.create(() -> {
+			// LOAD NOTE IMAGE
+			var noteSkin:String = Note.defaultNoteSkin;
+			if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) noteSkin = PlayState.SONG.arrowSkin;
+	
+			var customSkin:String = noteSkin + Note.getNoteSkinPostfix();
+			if(Paths.fileExists('images/$customSkin.png', IMAGE)) noteSkin = customSkin;
+			imagesToPrepare.push(noteSkin);
+			//
+
+			// LOAD NOTE SPLASH IMAGE
+			var noteSplash:String = NoteSplash.defaultNoteSplash;
+			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) noteSplash = PlayState.SONG.splashSkin;
+			else noteSplash += NoteSplash.getSplashSkinPostfix();
+			imagesToPrepare.push(noteSplash);
+
 			try
 			{
 				var path:String = Paths.json('$folder/preload');
@@ -351,7 +369,6 @@ class LoadingState extends MusicBeatState
 			preloadCharacter(player1, prefixVocals);
 			if (!dontPreloadDefaultVoices && prefixVocals != null)
 			{
-				trace(prefixVocals);
 				if(Paths.fileExists('$prefixVocals-Player.${Paths.SOUND_EXT}', SOUND, false, 'songs') && Paths.fileExists('$prefixVocals-Opponent.${Paths.SOUND_EXT}', SOUND, false, 'songs'))
 				{
 					songsToPrepare.push('$prefixVocals-Player');

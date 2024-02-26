@@ -63,11 +63,14 @@ class CustomFadeTransition extends MusicBeatSubstate {
 			close();
 		}
 	}
+
+	// Don't delete this
 	override function close():Void
 	{
 		super.close();
 
-		if(finishCallback != null) {
+		if(finishCallback != null)
+		{
 			finishCallback();
 			finishCallback = null;
 		}

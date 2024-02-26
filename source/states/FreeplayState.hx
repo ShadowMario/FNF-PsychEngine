@@ -11,6 +11,8 @@ import substates.GameplayChangersSubstate;
 import substates.ResetScoreSubState;
 
 import flixel.math.FlxMath;
+import flixel.util.FlxDestroyUtil;
+import haxe.Json;
 
 class FreeplayState extends MusicBeatState
 {
@@ -194,6 +196,7 @@ class FreeplayState extends MusicBeatState
 
 	var instPlaying:Int = -1;
 	public static var vocals:FlxSound = null;
+	public static var opponentVocals:FlxSound = null;
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
@@ -323,33 +326,67 @@ class FreeplayState extends MusicBeatState
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				if (PlayState.SONG.needsVoices)
 				{
-					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-					FlxG.sound.list.add(vocals);
-					vocals.persist = true;
-					vocals.looped = true;
-				}
-				else if (vocals != null)
-				{
-					vocals.stop();
-					vocals.destroy();
-					vocals = null;
+					vocals = new FlxSound();
+					try
+					{
+						var playerVocals:String = getVocalFromCharacter(PlayState.SONG.player1);
+						var loadedVocals = Paths.voices(PlayState.SONG.song, (playerVocals != null && playerVocals.length > 0) ? playerVocals : 'Player');
+						if(loadedVocals == null) loadedVocals = Paths.voices(PlayState.SONG.song);
+						
+						if(loadedVocals != null && loadedVocals.length > 0)
+						{
+							vocals.loadEmbedded(loadedVocals);
+							FlxG.sound.list.add(vocals);
+							vocals.persist = vocals.looped = true;
+							vocals.volume = 0.8;
+							vocals.play();
+							vocals.pause();
+						}
+						else vocals = FlxDestroyUtil.destroy(vocals);
+					}
+					catch(e:Dynamic)
+					{
+						vocals = FlxDestroyUtil.destroy(vocals);
+					}
+					
+					opponentVocals = new FlxSound();
+					try
+					{
+						//trace('please work...');
+						var oppVocals:String = getVocalFromCharacter(PlayState.SONG.player2);
+						var loadedVocals = Paths.voices(PlayState.SONG.song, (oppVocals != null && oppVocals.length > 0) ? oppVocals : 'Opponent');
+						
+						if(loadedVocals != null && loadedVocals.length > 0)
+						{
+							opponentVocals.loadEmbedded(loadedVocals);
+							FlxG.sound.list.add(opponentVocals);
+							opponentVocals.persist = opponentVocals.looped = true;
+							opponentVocals.volume = 0.8;
+							opponentVocals.play();
+							opponentVocals.pause();
+							//trace('yaaay!!');
+						}
+						else opponentVocals = FlxDestroyUtil.destroy(opponentVocals);
+					}
+					catch(e:Dynamic)
+					{
+						//trace('FUUUCK');
+						opponentVocals = FlxDestroyUtil.destroy(opponentVocals);
+					}
 				}
 
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.8);
-				if(vocals != null) //Sync vocals to Inst
-				{
-					vocals.play();
-					vocals.volume = 0.8;
-				}
+				FlxG.sound.music.pause();
 				instPlaying = curSelected;
 
 				player.playingMusic = true;
 				player.curTime = 0;
 				player.switchPlayMusic();
+				player.pauseOrResume(true);
 			}
 			else if (instPlaying == curSelected && player.playingMusic)
 			{
-				player.pauseOrResume(player.paused);
+				player.pauseOrResume(!player.playing);
 			}
 		}
 		else if (controls.ACCEPT && !player.playingMusic)
@@ -416,13 +453,28 @@ class FreeplayState extends MusicBeatState
 		updateTexts(elapsed);
 		super.update(elapsed);
 	}
+	
+	function getVocalFromCharacter(char:String)
+	{
+		try
+		{
+			var path:String = Paths.getPath('characters/$char.json', TEXT, null, true);
+			#if MODS_ALLOWED
+			var character:Dynamic = Json.parse(File.getContent(path));
+			#else
+			var character:Dynamic = Json.parse(Assets.getText(path));
+			#end
+			return character.vocals_file;
+		}
+		return null;
+	}
 
 	public static function destroyFreeplayVocals() {
-		if(vocals != null) {
-			vocals.stop();
-			vocals.destroy();
-		}
-		vocals = null;
+		if(vocals != null) vocals.stop();
+		vocals = FlxDestroyUtil.destroy(vocals);
+
+		if(opponentVocals != null) opponentVocals.stop();
+		opponentVocals = FlxDestroyUtil.destroy(opponentVocals);
 	}
 
 	function changeDiff(change:Int = 0)
