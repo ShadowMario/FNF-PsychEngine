@@ -2219,7 +2219,7 @@ class PlayState extends MusicBeatState
 	}
 
 	var lastCharFocus:String;
-	function moveCameraSection(?sec:Null<Int>):Void {
+	public function moveCameraSection(?sec:Null<Int>):Void {
 		if(sec == null) sec = curSection;
 		if(sec < 0) sec = 0;
 
