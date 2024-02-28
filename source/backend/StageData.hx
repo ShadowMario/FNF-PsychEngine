@@ -59,23 +59,22 @@ class StageData {
 	}
 
 	public static function getStageFile(stage:String):StageFile {
-		var rawJson:String = null;
-		var path:String = Paths.getSharedPath('stages/' + stage + '.json');
-
-		#if MODS_ALLOWED
-		var modPath:String = Paths.modFolders('stages/' + stage + '.json');
-		if(FileSystem.exists(modPath))
-			rawJson = File.getContent(modPath);
-		else if(FileSystem.exists(path))
-			rawJson = File.getContent(path);
-
-		#else
-		if(Assets.exists(path))
-			rawJson = Assets.getText(path);
-		#end
-		else return null;
-
-		return cast tjson.TJSON.parse(rawJson);
+		try
+		{
+			var path:String = Paths.getSharedPath('stages/' + stage + '.json');
+			#if MODS_ALLOWED
+			var modPath:String = Paths.modFolders('stages/' + stage + '.json');
+			if(FileSystem.exists(modPath))
+				return cast tjson.TJSON.parse(File.getContent(modPath));
+			else if(FileSystem.exists(path))
+				return cast tjson.TJSON.parse(File.getContent(path));
+	
+			#else
+			if(Assets.exists(path))
+				return cast tjson.TJSON.parse(Assets.getText(path));
+			#end
+		}
+		return dummy();
 	}
 
 	public static function vanillaSongStage(songName):String
