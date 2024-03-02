@@ -19,7 +19,6 @@ class Keep
             if(pack.endsWith('.'))
                 pack = pack.substr(0, pack.length-1);
             packagesArray.push(pack);
-            trace(pack);
         }
         for(pack in packagesArray)
             Compiler.include(pack);
