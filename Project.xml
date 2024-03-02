@@ -157,6 +157,7 @@
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
+	<haxeflag name="--macro" value="macros.Keep.keepClasses()" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
