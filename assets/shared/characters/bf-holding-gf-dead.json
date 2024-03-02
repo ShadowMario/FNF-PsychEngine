@@ -1,44 +1,44 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
-				37,
-				-3
+				0,
+				0
 			],
-			"indices": [],
-			"fps": 24,
-			"anim": "deathLoop",
-			"loop": true,
-			"name": "BF Dead with GF Loop"
-		},
-		{
-			"offsets": [
-				37,
-				14
-			],
-			"indices": [],
-			"fps": 24,
 			"anim": "firstDeath",
-			"loop": false,
-			"name": "BF Dies with GF"
+			"fps": 24,
+			"name": "BF Dies with GF",
+			"indices": []
 		},
 		{
+			"loop": true,
 			"offsets": [
-				37,
-				28
+				0,
+				-18
 			],
-			"indices": [],
+			"anim": "deathLoop",
 			"fps": 24,
-			"anim": "deathConfirm",
+			"name": "BF Dead with GF Loop",
+			"indices": []
+		},
+		{
 			"loop": false,
-			"name": "RETRY confirm holding gf"
+			"offsets": [
+				0,
+				15
+			],
+			"anim": "deathConfirm",
+			"fps": 24,
+			"name": "RETRY confirm holding gf",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/bfHoldingGF-DEAD",
 	"position": [
-		0,
-		350
+		-20,
+		310
 	],
 	"healthicon": "bf",
 	"flip_x": true,
