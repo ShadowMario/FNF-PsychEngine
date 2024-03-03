@@ -376,9 +376,7 @@ class DialogueEditorState extends MusicBeatState
 	}
 
 	function changeText(add:Int = 0) {
-		curSelected += add;
-		if(curSelected < 0) curSelected = dialogueFile.dialogue.length - 1;
-		else if(curSelected >= dialogueFile.dialogue.length) curSelected = 0;
+		curSelected = FlxMath.wrap(curSelected + add, 0, dialogueFile.dialogue.length - 1);
 
 		var curDialogue:DialogueLine = dialogueFile.dialogue[curSelected];
 		characterInputText.text = curDialogue.portrait;
@@ -399,20 +397,22 @@ class DialogueEditorState extends MusicBeatState
 		reloadText(false);
 		updateTextBox();
 
-		var leLength:Int = character.jsonFile.animations.length;
-		if(leLength > 0) {
-			for (i in 0...leLength) {
-				var leAnim:DialogueAnimArray = character.jsonFile.animations[i];
-				if(leAnim != null && leAnim.anim == curDialogue.expression) {
-					curAnim = i;
+		if(character.jsonFile.animations.length > 0)
+		{
+			for (num => animData in character.jsonFile.animations)
+			{
+				if(animData != null && animData.anim == curDialogue.expression)
+				{
+					curAnim = num;
 					break;
 				}
 			}
-			character.playAnim(character.jsonFile.animations[curAnim].anim, daText.finishedText);
-			animText.text = 'Animation: ' + character.jsonFile.animations[curAnim].anim + ' (' + (curAnim + 1) +' / ' + leLength + ') - Press W or S to scroll';
-		} else {
-			animText.text = 'ERROR! NO ANIMATIONS FOUND';
+
+			var selectedAnim:String = character.jsonFile.animations[curAnim].anim;
+			character.playAnim(selectedAnim, daText.finishedText);
+			animText.text = 'Animation: $selectedAnim (${curAnim + 1} / ${character.jsonFile.animations.length} ) - Press W or S to scroll';
 		}
+		else animText.text = 'ERROR! NO ANIMATIONS FOUND';
 		characterAnimSpeed();
 
 		selectedText.text = 'Line: (' + (curSelected + 1) + ' / ' + dialogueFile.dialogue.length + ') - Press A or D to scroll';
