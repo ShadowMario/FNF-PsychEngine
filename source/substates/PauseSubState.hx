@@ -218,7 +218,6 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			if (menuItems == difficultyChoices)
 			{
-<<<<<<< HEAD:source/substates/PauseSubState.hx
 				try{
 					if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
 
@@ -244,17 +243,6 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.sound.play(Paths.sound('cancelMenu'));
 
 					super.update(elapsed);
-=======
-				if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
-					var name:String = PlayState.SONG.song;
-					var poop = Highscore.formatSong(name, curSelected);
-					PlayState.SONG = Song.loadFromJson(poop, name);
-					PlayState.storyDifficulty = curSelected;
-					MusicBeatState.resetState();
-					FlxG.sound.music.volume = 0;
-					PlayState.changedDifficulty = true;
-					PlayState.chartingMode = false;
->>>>>>> cd86117a548067cc69999b49ba30a038a3cee8b4:source/PauseSubState.hx
 					return;
 				}
 
@@ -321,21 +309,11 @@ class PauseSubState extends MusicBeatSubstate
 					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
-<<<<<<< HEAD:source/substates/PauseSubState.hx
-
 					Mods.loadTopMod();
 					if(PlayState.isStoryMode)
-=======
-					if(PlayState.isStoryMode) {
->>>>>>> cd86117a548067cc69999b49ba30a038a3cee8b4:source/PauseSubState.hx
 						MusicBeatState.switchState(new StoryMenuState());
 					else 
 						MusicBeatState.switchState(new FreeplayState());
-<<<<<<< HEAD:source/substates/PauseSubState.hx
-
-=======
-					}
->>>>>>> cd86117a548067cc69999b49ba30a038a3cee8b4:source/PauseSubState.hx
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					PlayState.changedDifficulty = false;
 					PlayState.chartingMode = false;
