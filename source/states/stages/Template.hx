@@ -74,8 +74,13 @@ class Template extends BaseStage
 	}
 
 	// For events
-	override function eventCalled(eventName:String, value1:String, value2:String, flValue1:Null<Float>, flValue2:Null<Float>, strumTime:Float)
+	override function eventCalled(eventName:String, value1:String, value2:String, strumTime:Float)
 	{
+		var flValue1:Null<Float> = Std.parseFloat(value1);
+		var flValue2:Null<Float> = Std.parseFloat(value2);
+		if (Math.isNan(flValue1)) flValue1 = null;
+		if (Math.isNan(flValue2)) flValue2 = null;
+
 		switch(eventName)
 		{
 			case "My Event":
