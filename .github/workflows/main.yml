@@ -28,7 +28,7 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: latest
+          haxe-version: 4.2.5
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
@@ -41,7 +41,6 @@ jobs:
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
         run: |
-          haxelib fixrepo
           haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
@@ -57,7 +56,7 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: latest
+          haxe-version: 4.2.5
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
