@@ -75,6 +75,16 @@ import states.TitleState;
 	public var safeFrames:Float = 10;
 	public var guitarHeroSustains:Bool = true;
 	public var discordRPC:Bool = true;
+
+	// HBot settings
+	public var cpuSilent:Bool = false;
+	public var cpuAllowInput:Bool = false;
+	public var cpuAllowMiss:Bool = false;
+	public var cpuLuaSpoof:Bool = false;
+	public var cpuAllowAchivements:Bool = false;
+	public var cpuMinVariance:Float = 0.0;
+	public var cpuMaxVariance:Float = 0.0;
+	public var cpuSeedGenType:Bool = false;
 }
 
 class ClientPrefs {
@@ -170,7 +180,6 @@ class ClientPrefs {
 
 	public static function loadPrefs() {
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
-
 		for (key in Reflect.fields(data))
 			if (key != 'gameplaySettings' && Reflect.hasField(FlxG.save.data, key))
 				Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));

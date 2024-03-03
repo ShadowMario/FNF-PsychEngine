@@ -14,6 +14,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.util.FlxSave;
+import flixel.math.FlxRandom;
 import flixel.input.keyboard.FlxKey;
 import flixel.animation.FlxAnimationController;
 import lime.utils.Assets;
@@ -197,6 +198,27 @@ class PlayState extends MusicBeatState
 	public var guitarHeroSustains:Bool = false;
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
+	
+	// EXTRA STUFF ADDED BY HBOT
+	public var cpuSilent:Bool = false;
+	public var cpuAllowInput:Bool = false;
+	public var cpuAllowMiss:Bool = false;
+	public var cpuLuaSpoof:Bool = false;
+	public var cpuAllowAchivements:Bool = false;
+	public var cpuMinVariance:Float = 0.0;
+	public var cpuMaxVariance:Float = 0.0;
+	public var cpuNextVariance:Float = 0.0;
+	public var cpuSeedGenType:Bool = false;
+	public var cpuSeed:FlxRandom = new FlxRandom();
+
+	// Couldn't find a good spot to put this func in
+	private function genCpuVariance(min:Float, max:Float) 
+	{
+		var ret = cpuSeed.float(min, max);
+		trace("Next variance: " + Std.string(ret));
+		return ret;
+	}
+
 	public var practiceMode:Bool = false;
 
 	public var botplaySine:Float = 0;
@@ -295,6 +317,16 @@ class PlayState extends MusicBeatState
 		practiceMode = ClientPrefs.getGameplaySetting('practice');
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay');
 		guitarHeroSustains = ClientPrefs.data.guitarHeroSustains;
+
+		// HBot shit
+		cpuSilent = ClientPrefs.data.cpuSilent;
+		cpuAllowInput = ClientPrefs.data.cpuAllowInput;
+		cpuAllowMiss = ClientPrefs.data.cpuAllowMiss;
+		cpuLuaSpoof = ClientPrefs.data.cpuLuaSpoof;
+		cpuAllowAchivements = ClientPrefs.data.cpuAllowAchivements;
+		cpuMinVariance = ClientPrefs.data.cpuMinVariance;
+		cpuMaxVariance = ClientPrefs.data.cpuMaxVariance;
+		cpuNextVariance = genCpuVariance(cpuMinVariance, cpuMaxVariance);
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = initPsychCamera();
@@ -562,7 +594,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled;
+		botplayTxt.visible = cpuSilent ? false : cpuControlled;
 		uiGroup.add(botplayTxt);
 		if(ClientPrefs.data.downScroll)
 			botplayTxt.y = timeBar.y - 78;
@@ -1131,7 +1163,7 @@ class PlayState extends MusicBeatState
 		// "\n" here prevents the text from being cut off by beat zooms
 		scoreTxt.text = '${tempScore}\n';
 
-		if (!miss && !cpuControlled)
+		if (!miss && (!cpuControlled || cpuSilent))
 			doScoreBop();
 
 		callOnScripts('onUpdateScore', [miss]);
@@ -1739,7 +1771,7 @@ class PlayState extends MusicBeatState
 		{
 			if(!inCutscene)
 			{
-				if(!cpuControlled)
+				if(!cpuControlled || cpuAllowInput)
 					keysCheck();
 				else
 					playerDance();
@@ -1759,7 +1791,7 @@ class PlayState extends MusicBeatState
 
 							if(daNote.mustPress)
 							{
-								if(cpuControlled && !daNote.blockHit && daNote.canBeHit && (daNote.isSustainNote || daNote.strumTime <= Conductor.songPosition))
+								if(cpuControlled && !daNote.blockHit && daNote.canBeHit && (daNote.isSustainNote || daNote.strumTime + cpuNextVariance <= Conductor.songPosition))
 									goodNoteHit(daNote);
 							}
 							else if (daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote)
@@ -1770,7 +1802,7 @@ class PlayState extends MusicBeatState
 							// Kill extremely late notes and cause misses
 							if (Conductor.songPosition - daNote.strumTime > noteKillOffset)
 							{
-								if (daNote.mustPress && !cpuControlled && !daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit))
+								if (daNote.mustPress && ((cpuControlled && cpuAllowMiss) || !cpuControlled) && !daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit))
 									noteMiss(daNote);
 
 								daNote.active = daNote.visible = false;
@@ -1806,7 +1838,7 @@ class PlayState extends MusicBeatState
 
 		setOnScripts('cameraX', camFollow.x);
 		setOnScripts('cameraY', camFollow.y);
-		setOnScripts('botPlay', cpuControlled);
+		setOnScripts('botPlay', cpuControlled && cpuLuaSpoof);
 		callOnScripts('onUpdatePost', [elapsed]);
 	}
 
@@ -1860,7 +1892,7 @@ class PlayState extends MusicBeatState
 			vocals.pause();
 			opponentVocals.pause();
 		}
-		if(!cpuControlled)
+		if(!cpuControlled && !cpuSilent)
 		{
 			for (note in playerStrums)
 				if(note.animation.curAnim != null && note.animation.curAnim.name != 'static')
@@ -2463,7 +2495,7 @@ class PlayState extends MusicBeatState
 		if(daRating.noteSplash && !note.noteSplashData.disabled)
 			spawnNoteSplashOnNote(note);
 
-		if(!practiceMode && !cpuControlled) {
+		if(!practiceMode) {
 			songScore += score;
 			if(!note.ratingDisabled)
 			{
@@ -2604,7 +2636,7 @@ class PlayState extends MusicBeatState
 
 	private function keyPressed(key:Int)
 	{
-		if(cpuControlled || paused || inCutscene || key < 0 || key >= playerStrums.length || !generatedMusic || endingSong || boyfriend.stunned) return;
+		if((cpuControlled && !cpuAllowInput) || paused || inCutscene || key < 0 || key >= playerStrums.length || !generatedMusic || endingSong || boyfriend.stunned) return;
 
 		var ret:Dynamic = callOnScripts('onKeyPressPre', [key]);
 		if(ret == LuaUtils.Function_Stop) return;
@@ -2682,7 +2714,7 @@ class PlayState extends MusicBeatState
 
 	private function keyReleased(key:Int)
 	{
-		if(cpuControlled || !startedCountdown || paused || key < 0 || key >= playerStrums.length) return;
+		if((cpuControlled && !cpuAllowInput) || !startedCountdown || paused || key < 0 || key >= playerStrums.length) return;
 
 		var ret:Dynamic = callOnScripts('onKeyReleasePre', [key]);
 		if(ret == LuaUtils.Function_Stop) return;
@@ -2912,8 +2944,17 @@ class PlayState extends MusicBeatState
 
 	public function goodNoteHit(note:Note):Void
 	{
+		if (cpuControlled && !note.isSustainNote) 
+		{
+			if (cpuSeedGenType) // true = on note hit
+			{
+				cpuSeed.resetInitialSeed();
+			}
+			cpuNextVariance = genCpuVariance(cpuMinVariance, cpuMaxVariance);
+		}
+
 		if(note.wasGoodHit) return;
-		if(cpuControlled && note.ignoreNote) return;
+		if((cpuControlled && !cpuSilent) && note.ignoreNote) return;
 
 		var isSus:Bool = note.isSustainNote; //GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
 		var leData:Int = Math.round(Math.abs(note.noteData));
@@ -2924,7 +2965,7 @@ class PlayState extends MusicBeatState
 
 		note.wasGoodHit = true;
 
-		if (ClientPrefs.data.hitsoundVolume > 0 && !note.hitsoundDisabled)
+		if (ClientPrefs.data.hitsoundVolume > 0 && !note.hitsoundDisabled && (!cpuControlled || cpuSilent))
 			FlxG.sound.play(Paths.sound(note.hitsound), ClientPrefs.data.hitsoundVolume);
 
 		if(note.hitCausesMiss) {
@@ -2970,6 +3011,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		//TODO: Legit-looking strum glow
 		if(!cpuControlled)
 		{
 			var spr = playerStrums.members[note.noteData];
@@ -3429,8 +3471,8 @@ class PlayState extends MusicBeatState
 	{
 		if(chartingMode) return;
 
-		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice') || ClientPrefs.getGameplaySetting('botplay'));
-		if(cpuControlled) return;
+		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice') || (ClientPrefs.getGameplaySetting('botplay') && !cpuAllowAchivements));
+		if(cpuControlled && !cpuAllowAchivements) return;
 
 		for (name in achievesToCheck) {
 			if(!Achievements.exists(name)) continue;
