@@ -41,6 +41,8 @@ class LuaUtils
 
 	public static function setVarInArray(instance:Dynamic, variable:String, value:Dynamic, allowMaps:Bool = false):Any
 	{
+		if (value == "true") value = true;
+		
 		var splitProps:Array<String> = variable.split('[');
 		if(splitProps.length > 1)
 		{
