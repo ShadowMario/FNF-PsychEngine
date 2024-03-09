@@ -11,8 +11,8 @@ import psychlua.FunkinLua;
 
 #if HSCRIPT_ALLOWED
 import tea.SScript;
-
-typedef TeaCall = Dynamic;
+// tea call abstract
+import tea.SScript.Tea as TeaCall;
 
 class HScript extends SScript
 {
