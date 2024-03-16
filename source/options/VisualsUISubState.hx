@@ -144,6 +144,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'discordRPC',
 			'bool');
 		addOption(option);
+		option.onChange = onChangediscord;
 		#end
 
 		var option:Option = new Option('Combo Stacking',
@@ -182,6 +183,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)));
 
 		changedMusic = true;
+	}
+
+	function onChangediscord() {
+		if (ClientPrefs.data.discordRPC)
+			DiscordClient.initialize();
+		else
+			DiscordClient.shutdown();
 	}
 
 	function onChangeNoteSkin()
