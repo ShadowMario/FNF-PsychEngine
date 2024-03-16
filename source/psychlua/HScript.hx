@@ -409,7 +409,7 @@ class HScript extends SScript
 
 			#if SScript
 			if (c != null)
-				SScript.strictGlobalVariables[libName] = c;
+				SScript.globalVariables[libName] = c;
 			#end
 
 			#if SScript
