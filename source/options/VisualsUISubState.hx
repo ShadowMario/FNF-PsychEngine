@@ -136,6 +136,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'checkForUpdates',
 			'bool');
 		addOption(option);
+		option.onChange = onChangediscord;
 		#end
 
 		#if DISCORD_ALLOWED
@@ -171,6 +172,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			else
 				notesTween[i] = FlxTween.tween(note, {y: -200}, Math.abs(note.y / (200 + noteY)) / 3, {ease: FlxEase.quadInOut});
 		}
+	}
+
+	function onChangediscord() {
+		if (ClientPrefs.data.discordRPC)
+			DiscordClient.initialize();
+		else
+			DiscordClient.shutdown();
 	}
 
 	var changedMusic:Bool = false;
