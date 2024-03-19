@@ -410,6 +410,7 @@ class ChartingState extends MusicBeatState
 
 		var reloadSong:FlxButton = new FlxButton(saveButton.x + 90, saveButton.y, "Reload Audio", function()
 		{
+			updateJsonData();
 			loadSong();
 			updateWaveform();
 		});
