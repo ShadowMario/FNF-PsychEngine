@@ -8,7 +8,7 @@ class CoolUtil
 	inline public static function quantize(f:Float, snap:Float){
 		// changed so this actually works lol
 		var m:Float = Math.fround(f * snap);
-		trace(snap);
+		//trace(snap);
 		return (m / snap);
 	}
 
@@ -62,7 +62,7 @@ class CoolUtil
 		var newValue:Float = Math.floor(value * tempMult);
 		return newValue / tempMult;
 	}
-	
+
 	inline public static function dominantColor(sprite:flixel.FlxSprite):Int
 	{
 		var countByColor:Map<Int, Int> = [];
@@ -115,9 +115,9 @@ class CoolUtil
 			if(folder.endsWith('/')) folder.substr(0, folder.length - 1);
 
 			#if linux
-			var command:String = 'explorer.exe';
-			#else
 			var command:String = '/usr/bin/xdg-open';
+			#else
+			var command:String = 'explorer.exe';
 			#end
 			Sys.command(command, [folder]);
 			trace('$command $folder');

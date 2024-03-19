@@ -75,6 +75,7 @@ import states.TitleState;
 	public var safeFrames:Float = 10;
 	public var guitarHeroSustains:Bool = true;
 	public var discordRPC:Bool = true;
+	public var loadingScreen:Bool = true;
 }
 
 class ClientPrefs {
@@ -180,6 +181,11 @@ class ClientPrefs {
 
 		#if (!html5 && !switch)
 		FlxG.autoPause = ClientPrefs.data.autoPause;
+
+		if(FlxG.save.data.framerate == null) {
+			final refreshRate:Int = FlxG.stage.application.window.displayMode.refreshRate;
+			data.framerate = Std.int(FlxMath.bound(refreshRate, 60, 240));
+		}
 		#end
 
 		if(data.framerate > FlxG.drawFramerate)
@@ -206,7 +212,7 @@ class ClientPrefs {
 		if (FlxG.save.data.mute != null)
 			FlxG.sound.muted = FlxG.save.data.mute;
 
-		#if desktop
+		#if DISCORD_ALLOWED
 		DiscordClient.check();
 		#end
 

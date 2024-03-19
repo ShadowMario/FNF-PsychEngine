@@ -11,5 +11,17 @@
 	"camera_boyfriend": [-100, -100],
 	"camera_opponent": [0, 0],
 	"camera_girlfriend": [0, 0],
-	"camera_speed": 1
+	"camera_speed": 1,
+
+	"preload": {
+		"images":
+		[
+			"weeb/animatedEvilSchool",
+			"weeb/bgGhouls"
+		],
+		"images_low":
+		[
+			"weeb/animatedEvilSchool_low"
+		]
+	}
 }

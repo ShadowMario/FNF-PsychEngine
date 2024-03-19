@@ -11,5 +11,26 @@
 	"camera_boyfriend": [0, -100],
 	"camera_opponent": [0, 0],
 	"camera_girlfriend": [0, 0],
-	"camera_speed": 1
+	"camera_speed": 1,
+
+	"preload": {
+		"images":
+		[
+			"christmas/bgWalls",
+			"christmas/upperBop",
+			"christmas/bottomBop",
+			"christmas/bgEscalator",
+			"christmas/christmasTree",
+			"christmas/fgSnow",
+			"christmas/santa"
+		],
+		"images_low":
+		[
+			"christmas/bgWalls",
+			"christmas/bottomBop",
+			"christmas/christmasTree",
+			"christmas/fgSnow",
+			"christmas/santa"
+		]
+	}
 }
