@@ -35,7 +35,7 @@ body:
       options:
         - "Latest Release (GameBanana/GitHub)"
         - "Latest Experimental"
-        - "Other"
+        - "Other (specified on issue)"
     validations:
       required: true
 
