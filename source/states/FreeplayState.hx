@@ -7,7 +7,7 @@ import backend.Song;
 import objects.HealthIcon;
 import objects.MusicPlayer;
 
-import substates.GameplayChangersSubstate;
+import options.GameplayChangersSubstate;
 import substates.ResetScoreSubState;
 
 import flixel.math.FlxMath;
@@ -162,7 +162,7 @@ class FreeplayState extends MusicBeatState
 		bottomBG.alpha = 0.6;
 		add(bottomBG);
 
-		var leText:String = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
+		var leText:String = Language.getPhrase("freeplay_tip", "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.");
 		bottomString = leText;
 		var size:Int = 16;
 		bottomText = new FlxText(bottomBG.x, bottomBG.y + 4, FlxG.width, leText, size);
@@ -227,7 +227,7 @@ class FreeplayState extends MusicBeatState
 
 		if (!player.playingMusic)
 		{
-			scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
+			scoreText.text = Language.getPhrase('personal_best', 'PERSONAL BEST: {0} ({1}%)', [lerpScore, ratingSplit.join('.')]);
 			positionHighscore();
 			
 			if(songs.length > 1)
@@ -421,7 +421,7 @@ class FreeplayState extends MusicBeatState
 
 			LoadingState.prepareToSong();
 			LoadingState.loadAndSwitchState(new PlayState());
-			#if !LOADING_SCREEN_ALLOWED FlxG.sound.music.stop(); #end
+			#if !SHOW_LOADING_SCREEN FlxG.sound.music.stop(); #end
 			stopMusicPlay = true;
 
 			destroyFreeplayVocals();
@@ -444,7 +444,7 @@ class FreeplayState extends MusicBeatState
 	{
 		try
 		{
-			var path:String = Paths.getPath('characters/$char.json', TEXT, null, true);
+			var path:String = Paths.getPath('characters/$char.json', TEXT);
 			#if MODS_ALLOWED
 			var character:Dynamic = Json.parse(File.getContent(path));
 			#else
@@ -474,11 +474,12 @@ class FreeplayState extends MusicBeatState
 		intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
 		#end
 
-		lastDifficultyName = Difficulty.getString(curDifficulty);
+		lastDifficultyName = Difficulty.getString(curDifficulty, false);
+		var displayDiff:String = Difficulty.getString(curDifficulty);
 		if (Difficulty.list.length > 1)
-			diffText.text = '< ' + lastDifficultyName.toUpperCase() + ' >';
+			diffText.text = '< ' + displayDiff.toUpperCase() + ' >';
 		else
-			diffText.text = lastDifficultyName.toUpperCase();
+			diffText.text = displayDiff.toUpperCase();
 
 		positionHighscore();
 		missingText.visible = false;
@@ -534,7 +535,7 @@ class FreeplayState extends MusicBeatState
 	}
 
 	inline private function _updateSongLastDifficulty()
-		songs[curSelected].lastDifficulty = Difficulty.getString(curDifficulty);
+		songs[curSelected].lastDifficulty = Difficulty.getString(curDifficulty, false);
 
 	private function positionHighscore()
 	{

@@ -554,7 +554,7 @@ class PlayState extends MusicBeatState
 		updateScore(false);
 		uiGroup.add(scoreTxt);
 
-		botplayTxt = new FlxText(400, timeBar.y + 55, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt = new FlxText(400, timeBar.y + 55, FlxG.width - 800, Language.getPhrase("Botplay").toUpperCase(), 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
@@ -1113,19 +1113,17 @@ class PlayState extends MusicBeatState
 		if (ret == LuaUtils.Function_Stop)
 			return;
 
-		var str:String = ratingName;
+		var str:String = Language.getPhrase('rating_$ratingName', ratingName);
 		if(totalPlayed != 0)
 		{
 			var percent:Float = CoolUtil.floorDecimal(ratingPercent * 100, 2);
-			str += ' (${percent}%) - ${ratingFC}';
+			str += ' (${percent}%) - ' + Language.getPhrase(ratingFC);
 		}
 
-		var tempScore:String = 'Score: ${songScore}'
-		+ (!instakillOnMiss ? ' | Misses: ${songMisses}' : "")
-		+ ' | Rating: ${str}';
-		// "tempScore" variable is used to prevent another memory leak, just in case
-		// "\n" here prevents the text from being cut off by beat zooms
-		scoreTxt.text = '${tempScore}\n';
+		var tempScore:String;
+		if(!instakillOnMiss) tempScore = Language.getPhrase('score_text', 'Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
+		else tempScore = Language.getPhrase('score_text_instakill', 'Score: {1} | Rating: {2}', [songScore, str]);
+		scoreTxt.text = tempScore;
 
 		if (!miss && !cpuControlled)
 			doScoreBop();

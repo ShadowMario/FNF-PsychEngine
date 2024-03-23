@@ -96,7 +96,7 @@ class Character extends FlxSprite
 			default:
 				var characterPath:String = 'characters/$curCharacter.json';
 
-				var path:String = Paths.getPath(characterPath, TEXT, null, true);
+				var path:String = Paths.getPath(characterPath, TEXT);
 				#if MODS_ALLOWED
 				if (!FileSystem.exists(path))
 				#else
@@ -140,7 +140,7 @@ class Character extends FlxSprite
 		isAnimateAtlas = false;
 
 		#if flxanimate
-		var animToFind:String = Paths.getPath('images/' + json.image + '/Animation.json', TEXT, null, true);
+		var animToFind:String = Paths.getPath('images/' + json.image + '/Animation.json', TEXT);
 		if (#if MODS_ALLOWED FileSystem.exists(animToFind) || #end Assets.exists(animToFind))
 			isAnimateAtlas = true;
 		#end

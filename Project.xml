@@ -19,14 +19,17 @@
 	<set name="SWF_VERSION" value="11.8" />
 	
 	<!-- ______________________ PSYCH ENGINE CUSTOMIZATION ______________________ -->
+	
+	<define name="BASE_GAME_FILES" /> <!-- DELETE THIS TO REMOVE MOST BASE GAME FILES AND REDUCE FILE SIZE -->
 
 	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="HSCRIPT_ALLOWED" if="desktop" />
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
 	<define name="DISCORD_ALLOWED" />
+	<define name="TRANSLATIONS_ALLOWED" />
 	
-	<define name="LOADING_SCREEN_ALLOWED" />
+	<define name="SHOW_LOADING_SCREEN" />
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE THE PSYCH LOGO FROM LOADING SCREEN -->
 
 	<section if="officialBuild">
@@ -68,19 +71,25 @@
 	<assets path="assets/fonts" />
 	<assets path="assets/shared"        exclude="*.ogg" if="web"/>
 	<assets path="assets/shared"        exclude="*.mp3" unless="web"/>
-	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
-	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.mp3" unless="web"/>
+	<assets path="assets/videos"        if="VIDEOS_ALLOWED"/>
+	<assets path="assets/songs"         exclude="*.ogg" if="web"/>
+	<assets path="assets/songs"         exclude="*.mp3" unless="web"/>
+	<assets path="assets/week_assets"   rename="assets" exclude="*.ogg" if="web"/>
+	<assets path="assets/week_assets"   rename="assets" exclude="*.mp3" unless="web"/>
 	<section if="TITLE_SCREEN_EASTER_EGG">
 		<assets path="assets/secrets" rename="assets/shared" exclude="*.ogg" if="web"/>
 		<assets path="assets/secrets" rename="assets/shared" exclude="*.mp3"  unless="web"/>
 	</section>
 
-	<library name="videos"        preload="true" if="VIDEOS_ALLOWED"/>
-	<library name="songs"         preload="true" />
-	<library name="week_assets"   preload="true" />
+	<section if="TRANSLATIONS_ALLOWED">
+		<assets path="assets/translations" rename="assets" exclude="*.ogg" if="web"/>
+		<assets path="assets/translations" rename="assets" exclude="*.mp3"  unless="web"/>
+	</section>
+
+	<section if="BASE_GAME_FILES">
+		<assets path="assets/base_game" rename="assets" exclude="*.ogg" if="web"/>
+		<assets path="assets/base_game" rename="assets" exclude="*.mp3"  unless="web"/>
+	</section>
 
 	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
 
