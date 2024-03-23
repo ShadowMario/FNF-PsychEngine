@@ -29,6 +29,17 @@ body:
       required: true
 
   - type: dropdown
+    id: ebranch
+    attributes:
+      label: "What branch/version of the engine are you using?"
+      options:
+        - "Latest Release (GameBanana/GitHub)"
+        - "Latest Experimental"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
     id: btarget
     attributes:
       label: "What is your build target?"
