@@ -201,12 +201,6 @@ class FunkinLua {
 		// build target (windows, mac, linux, etc.)
 		set('buildTarget', LuaUtils.getBuildTarget());
 
-		for (name => func in customFunctions)
-		{
-			if(func != null)
-				Lua_helper.add_callback(lua, name, func);
-		}
-
 		//
 		Lua_helper.add_callback(lua, "getRunningScripts", function(){
 			var runningScripts:Array<String> = [];
@@ -1523,6 +1517,12 @@ class FunkinLua {
 		CustomSubstate.implement(this);
 		ShaderFunctions.implement(this);
 		DeprecatedFunctions.implement(this);
+
+		for (name => func in customFunctions)
+		{
+			if(func != null)
+				Lua_helper.add_callback(lua, name, func);
+		}
 
 		try{
 			var isString:Bool = !FileSystem.exists(scriptName);

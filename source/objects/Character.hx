@@ -70,6 +70,8 @@ class Character extends FlxSprite
 	public var cameraPosition:Array<Float> = [0, 0];
 	public var healthColorArray:Array<Int> = [255, 0, 0];
 
+	public var missingCharacter:Bool = false;
+	public var missingText:FlxText;
 	public var hasMissAnimations:Bool = false;
 	public var vocalsFile:String = '';
 
@@ -104,8 +106,9 @@ class Character extends FlxSprite
 				#end
 				{
 					path = Paths.getSharedPath('characters/' + DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
-					color = FlxColor.BLACK;
-					alpha = 0.6;
+					missingCharacter = true;
+					missingText = new FlxText(0, 0, 300, 'ERROR:\n$curCharacter.json', 16);
+					missingText.alignment = CENTER;
 				}
 
 				try
@@ -449,13 +452,38 @@ class Character extends FlxSprite
 	public var atlas:FlxAnimate;
 	public override function draw()
 	{
+		var lastAlpha:Float = alpha;
+		var lastColor:FlxColor = color;
+		if(missingCharacter)
+		{
+			alpha *= 0.6;
+			color = FlxColor.BLACK;
+		}
+
 		if(isAnimateAtlas)
 		{
 			copyAtlasValues();
 			atlas.draw();
+			if(missingCharacter)
+			{
+				alpha = lastAlpha;
+				color = lastColor;
+
+				missingText.x = getMidpoint().x - 150;
+				missingText.y = getMidpoint().y - 10;
+				missingText.draw();
+			}
 			return;
 		}
 		super.draw();
+		if(missingCharacter)
+		{
+			alpha = lastAlpha;
+			color = lastColor;
+			missingText.x = getMidpoint().x - 150;
+			missingText.y = getMidpoint().y - 10;
+			missingText.draw();
+		}
 	}
 
 	public function copyAtlasValues()
