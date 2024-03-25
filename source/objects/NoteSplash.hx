@@ -38,7 +38,7 @@ class NoteSplash extends FlxSprite
 		precacheConfig(skin);
 		_configLoaded = skin;
 		scrollFactor.set();
-		//setupNoteSplash(x, y, 0);
+		setupNoteSplash(x, y, 0);
 	}
 
 	override function destroy()
