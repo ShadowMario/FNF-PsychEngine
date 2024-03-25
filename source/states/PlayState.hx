@@ -2903,6 +2903,11 @@ class PlayState extends MusicBeatState
 
 			if(char != null)
 			{
+				if(note.isSustainNote)
+				{
+					var holdAnim:String = animToPlay + '-hold';
+					if(char.animation.exists(holdAnim)) animToPlay = holdAnim;
+				}
 				char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
 			}
@@ -2953,7 +2958,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if(!note.noAnimation) {
-			var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, note.noteData)))];
+			var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, note.noteData)))] + note.animSuffix;
 
 			var char:Character = boyfriend;
 			var animCheck:String = 'hey';
@@ -2965,7 +2970,12 @@ class PlayState extends MusicBeatState
 
 			if(char != null)
 			{
-				char.playAnim(animToPlay + note.animSuffix, true);
+				if(note.isSustainNote)
+				{
+					var holdAnim:String = animToPlay + '-hold';
+					if(char.animation.exists(holdAnim)) animToPlay = holdAnim;
+				}
+				char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
 
 				if(note.noteType == 'Hey!') {
