@@ -389,6 +389,7 @@ class ChartingState extends MusicBeatState
 	var playSoundDad:FlxUICheckBox = null;
 	var UI_songTitle:FlxUIInputText;
 	var stageDropDown:FlxUIDropDownMenu;
+	var diffDrop:FlxUIDropDownMenu;
 	#if FLX_PITCH
 	var sliderRate:FlxUISlider;
 	#end
@@ -581,13 +582,30 @@ class ChartingState extends MusicBeatState
 		#end
 
 		if(stages.length < 1) stages.push('stage');
+		
+		stageDropDown = new FlxUIDropDownMenu(player1DropDown.x + 140, player1DropDown.y, FlxUIDropDownMenu.makeStrIdLabelArray(stages, true),
+			function(character:String)
+			{
+				_song.stage = stages[Std.parseInt(character)];
+			});
 
-		stageDropDown = new FlxUIDropDownMenu(player1DropDown.x + 140, player1DropDown.y, FlxUIDropDownMenu.makeStrIdLabelArray(stages, true), function(character:String)
-		{
-			_song.stage = stages[Std.parseInt(character)];
-		});
-		stageDropDown.selectedLabel = _song.stage;
-		blockPressWhileScrolling.push(stageDropDown);
+		// haxen made this
+			diffDrop = new FlxUIDropDownMenu(stageDropDown.x, gfVersionDropDown.y, FlxUIDropDownMenu.makeStrIdLabelArray(Difficulty.defaultList, true),
+				function(character:String)
+				{
+					var songne:String = _song.song /*+ '-' + Difficulty.defaultList[Std.parseInt(character)]*/;
+
+					PlayState.storyDifficulty = Std.parseInt(character);
+
+					trace(songne);
+					loadJson(songne);
+					//loadSong();
+				});
+				stageDropDown.selectedLabel = _song.stage;
+				blockPressWhileScrolling.push(stageDropDown);
+				diffDrop.selectedLabel = 'Normal';
+				try{diffDrop.selectedLabel = Difficulty.defaultList[PlayState.storyDifficulty];}catch(e:Dynamic){trace('fuck: $e');}
+				blockPressWhileScrolling.push(diffDrop);
 
 		var tab_group_song = new FlxUI(null, UI_box);
 		tab_group_song.name = "Song";
@@ -611,10 +629,13 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(new FlxText(gfVersionDropDown.x, gfVersionDropDown.y - 15, 0, 'Girlfriend:'));
 		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
 		tab_group_song.add(new FlxText(stageDropDown.x, stageDropDown.y - 15, 0, 'Stage:'));
+		tab_group_song.add(new FlxText(diffDrop.x, diffDrop.y - 15, 0, 'Difficulty:'));
 		tab_group_song.add(player2DropDown);
 		tab_group_song.add(gfVersionDropDown);
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(stageDropDown);
+		tab_group_song.add(diffDrop);
+
 
 		UI_box.addGroup(tab_group_song);
 
