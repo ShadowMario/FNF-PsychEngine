@@ -83,7 +83,7 @@ class MenuCharacter extends FlxSprite
 					scale.set(charFile.scale, charFile.scale);
 					updateHitbox();
 				}
-				offset.set(charFile.position[0], charFile.position[1]);
+				offset.set(charFile.position[0] * scale.x, charFile.position[1] * scale.y);
 				animation.play('idle');
 		}
 	}

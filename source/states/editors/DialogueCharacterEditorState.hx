@@ -558,8 +558,8 @@ class DialogueCharacterEditorState extends MusicBeatState
 				if(moved) {
 					offsetLoopText.text = 'Loop: ' + animShit.loop_offsets;
 					offsetIdleText.text = 'Idle: ' + animShit.idle_offsets;
-					ghostLoop.offset.set(animShit.loop_offsets[0], animShit.loop_offsets[1]);
-					ghostIdle.offset.set(animShit.idle_offsets[0], animShit.idle_offsets[1]);
+					ghostLoop.offset.set(animShit.loop_offsets[0] * ghostLoop.scale.x, animShit.loop_offsets[1] * ghostLoop.scale.x);
+					ghostIdle.offset.set(animShit.idle_offsets[0] * ghostLoop.scale.y, animShit.idle_offsets[1] * ghostLoop.scale.y);
 				}
 			}
 
