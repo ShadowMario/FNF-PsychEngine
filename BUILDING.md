@@ -92,11 +92,11 @@ where `<platform>` gets replaced with `windows`, `linux`, or `mac`
 ### "It's taking a while, should I be worried?"
 
 No, that is normal, when you compile flixel games for the first time, it usually takes around 5 to 10 minutes,
-it really depends on how powerful your hrdware is
+it really depends on how powerful your hardware is.
 
 ### "I had an error saying that 'hxCodec' could not be found!"
 
-Refer to Issue ShadowMario/FNF-PsychEngine#12770.
+Refer to issue ShadowMario/FNF-PsychEngine#12770.
 
 ### "I had an error relating to g++ on Linux!"
 
