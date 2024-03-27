@@ -20,10 +20,22 @@ body:
   - type: dropdown
     id: modding
     attributes:
-      label: "Are you modding a build from source or with Lua?"
+      label: "Are you modding a build from source or with Scripts?"
       options:
-        - Lua
-        - Source
+        - Scripts (Lua, HScript)
+        - Source Code
+        - Scripts and Source Code
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ebranch
+    attributes:
+      label: "What branch/version of the engine are you using?"
+      options:
+        - "Latest Release (GameBanana/GitHub)"
+        - "Latest Experimental"
+        - "Other (specified on issue)"
     validations:
       required: true
 
@@ -35,9 +47,7 @@ body:
         - "Windows"
         - "Linux"
         - "Mac"
-        - "HTML5"
-        - "Flash/Air-based target"
-        - "Neko, HashLink, or other build system"
+        - "HTML5/Web Browser"
     validations:
       required: true
 
