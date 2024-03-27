@@ -8,7 +8,6 @@ import debug.FPSCounter;
 
 import flixel.graphics.FlxGraphic;
 import flixel.FlxGame;
-import flixel.FlxState;
 import haxe.io.Path;
 import openfl.Assets;
 import openfl.Lib;
@@ -41,7 +40,7 @@ class Main extends Sprite
 	var game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
-		initialState: TitleState, // initial game state
+		initialState: () -> new TitleState(), // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 60, // default framerate
 		skipSplash: true, // if the default flixel splash screen should be skipped
