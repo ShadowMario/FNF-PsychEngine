@@ -669,6 +669,7 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		bigNote.animation.play('note$curSelectedNote', true);
 		updateColors();
+		fixColors(); // fixes your gosh dang note colors    - DM-kun
 	}
 
 	function updateColors(specific:Null<FlxColor> = null)
@@ -701,6 +702,28 @@ class NotesSubState extends MusicBeatSubstate
 			case 2:
 				getShader().b = strumRGB.b = color;
 		}
+	}
+
+	function fixColors()
+	{
+		for (i in 0...3)
+		{
+			var strumRGB:RGBShaderReference = myNotes.members[curSelectedNote].rgbShader;
+			var color:FlxColor = !onPixel ? ClientPrefs.data.arrowRGB[curSelectedNote][i] :
+											ClientPrefs.data.arrowRGBPixel[curSelectedNote][i];
+			switch(i)
+			{
+				case 0:
+					getShader().r = strumRGB.r = color;
+				case 1:
+					getShader().g = strumRGB.g = color;
+				case 2:
+					getShader().b = strumRGB.b = color;
+			}
+			dataArray[curSelectedNote][i] = color;
+		}
+		setShaderColor(!onPixel ? ClientPrefs.data.arrowRGB[curSelectedNote][curSelectedMode] : ClientPrefs.data.arrowRGBPixel[curSelectedNote][curSelectedMode]);
+		updateColors();
 	}
 
 	function setShaderColor(value:FlxColor) dataArray[curSelectedNote][curSelectedMode] = value;
