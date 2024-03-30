@@ -1319,6 +1319,8 @@ class PlayState extends MusicBeatState
 			for (i in 0...section.sectionNotes.length)
 			{
 				final songNotes: Array<Dynamic> = section.sectionNotes[i];
+				if (songNotes[1] == -1)
+					continue;
 
 				var gottaHitNote:Bool = section.mustHitSection;
 				if (songNotes[1] > 3)
