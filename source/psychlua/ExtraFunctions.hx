@@ -143,6 +143,19 @@ class ExtraFunctions
 		});
 
 		// File management
+		Lua_helper.add_callback(lua, "parseJson", function(location:String):{}
+		{
+			var parsed:{} = {};
+
+			if (FileSystem.exists(Paths.getPath('data/$location', TEXT)))
+			{
+				parsed = tjson.TJSON.parse(File.getContent(Paths.getPath('data/$location', TEXT)));
+			}
+			else
+				parsed = tjson.TJSON.parse(location);
+
+			return parsed;
+		});
 		Lua_helper.add_callback(lua, "checkFileExists", function(filename:String, ?absolute:Bool = false) {
 			#if MODS_ALLOWED
 			if(absolute) return FileSystem.exists(filename);
