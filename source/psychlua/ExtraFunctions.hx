@@ -26,7 +26,7 @@ class ExtraFunctions
 			var result:String = cast (FlxG.keys.firstJustPressed(), FlxKey).toString();
 
 			if (result == null || result.length < 1)
-				result = "NONE";
+				result = "NONE"; // "Why?" `FlxKey.toStringMap` does not contain `FlxKey.NONE`.
 
 			return result;
 		});
