@@ -32,6 +32,7 @@ import backend.Conductor;
 import backend.BaseStage;
 import backend.Difficulty;
 import backend.Mods;
+import backend.Language;
 
 import objects.Alphabet;
 import objects.BGSprite;

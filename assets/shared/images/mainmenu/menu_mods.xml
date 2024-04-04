@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas imagePath="menu_mods.png">
-	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="mods basic0000" x="0" y="0" width="355" height="139" frameX="0" frameY="-1" frameWidth="355" frameHeight="140"/>
-	<SubTexture name="mods basic0001" x="0" y="0" width="355" height="139" frameX="0" frameY="-1" frameWidth="355" frameHeight="140"/>
-	<SubTexture name="mods basic0002" x="0" y="0" width="355" height="139" frameX="0" frameY="-1" frameWidth="355" frameHeight="140"/>
-	<SubTexture name="mods basic0003" x="356" y="0" width="355" height="140"/>
-	<SubTexture name="mods basic0004" x="356" y="0" width="355" height="140"/>
-	<SubTexture name="mods basic0005" x="356" y="0" width="355" height="140"/>
-	<SubTexture name="mods basic0006" x="0" y="141" width="353" height="139" frameX="-1" frameY="-1" frameWidth="355" frameHeight="140"/>
-	<SubTexture name="mods basic0007" x="0" y="141" width="353" height="139" frameX="-1" frameY="-1" frameWidth="355" frameHeight="140"/>
-	<SubTexture name="mods basic0008" x="0" y="141" width="353" height="139" frameX="-1" frameY="-1" frameWidth="355" frameHeight="140"/>
-	<SubTexture name="mods white0000" x="354" y="141" width="395" height="192" frameX="0" frameY="-1" frameWidth="401" frameHeight="193"/>
-	<SubTexture name="mods white0001" x="0" y="334" width="401" height="189" frameX="0" frameY="0" frameWidth="401" frameHeight="193"/>
-	<SubTexture name="mods white0002" x="402" y="334" width="400" height="189" frameX="0" frameY="-1" frameWidth="401" frameHeight="193"/>
+	<SubTexture name="mods idle0000" x="1" y="715" width="355" height="139" frameX="0" frameY="-1" frameWidth="355" frameHeight="140"/>
+	<SubTexture name="mods idle0001" x="1" y="715" width="355" height="139" frameX="0" frameY="-1" frameWidth="355" frameHeight="140"/>
+	<SubTexture name="mods idle0002" x="1" y="715" width="355" height="139" frameX="0" frameY="-1" frameWidth="355" frameHeight="140"/>
+	<SubTexture name="mods idle0003" x="1" y="574" width="355" height="140"/>
+	<SubTexture name="mods idle0004" x="1" y="574" width="355" height="140"/>
+	<SubTexture name="mods idle0005" x="1" y="574" width="355" height="140"/>
+	<SubTexture name="mods idle0006" x="1" y="855" width="353" height="139" frameX="-1" frameY="-1" frameWidth="355" frameHeight="140"/>
+	<SubTexture name="mods idle0007" x="1" y="855" width="353" height="139" frameX="-1" frameY="-1" frameWidth="355" frameHeight="140"/>
+	<SubTexture name="mods idle0008" x="1" y="855" width="353" height="139" frameX="-1" frameY="-1" frameWidth="355" frameHeight="140"/>
+	<SubTexture name="mods selected0000" x="1" y="1" width="395" height="192" frameX="0" frameY="-1" frameWidth="401" frameHeight="193"/>
+	<SubTexture name="mods selected0001" x="1" y="194" width="401" height="189" frameX="0" frameY="0" frameWidth="401" frameHeight="193"/>
+	<SubTexture name="mods selected0002" x="1" y="384" width="400" height="189" frameX="0" frameY="-1" frameWidth="401" frameHeight="193"/>
 </TextureAtlas>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="menu_achievements.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="achievements idle0000" x="485" y="481" width="188" height="189"/>
+	<SubTexture name="achievements idle0001" x="485" y="481" width="188" height="189"/>
+	<SubTexture name="achievements idle0002" x="485" y="481" width="188" height="189"/>
+	<SubTexture name="achievements idle0003" x="1" y="484" width="188" height="188" frameX="0" frameY="0" frameWidth="188" frameHeight="189"/>
+	<SubTexture name="achievements idle0004" x="1" y="484" width="188" height="188" frameX="0" frameY="0" frameWidth="188" frameHeight="189"/>
+	<SubTexture name="achievements idle0005" x="1" y="484" width="188" height="188" frameX="0" frameY="0" frameWidth="188" frameHeight="189"/>
+	<SubTexture name="achievements idle0006" x="674" y="481" width="188" height="189"/>
+	<SubTexture name="achievements idle0007" x="674" y="481" width="188" height="189"/>
+	<SubTexture name="achievements idle0008" x="674" y="481" width="188" height="189"/>
+	<SubTexture name="achievements selected0000" x="1" y="1" width="269" height="240" frameX="0" frameY="-20" frameWidth="269" frameHeight="260"/>
+	<SubTexture name="achievements selected0001" x="271" y="1" width="256" height="247" frameX="-13" frameY="-13" frameWidth="269" frameHeight="260"/>
+	<SubTexture name="achievements selected0002" x="1" y="242" width="243" height="241" frameX="-19" frameY="-13" frameWidth="269" frameHeight="260"/>
+	<SubTexture name="achievements selected0003" x="528" y="1" width="243" height="254" frameX="-19" frameY="0" frameWidth="269" frameHeight="260"/>
+	<SubTexture name="achievements selected0004" x="245" y="249" width="239" height="224" frameX="-21" frameY="-28" frameWidth="269" frameHeight="260"/>
+	<SubTexture name="achievements selected0005" x="245" y="249" width="239" height="224" frameX="-21" frameY="-28" frameWidth="269" frameHeight="260"/>
+	<SubTexture name="achievements selected0006" x="485" y="256" width="239" height="224" frameX="-21" frameY="-28" frameWidth="269" frameHeight="260"/>
+	<SubTexture name="achievements selected0007" x="485" y="256" width="239" height="224" frameX="-21" frameY="-28" frameWidth="269" frameHeight="260"/>
+	<SubTexture name="achievements selected0008" x="245" y="474" width="239" height="223" frameX="-21" frameY="-28" frameWidth="269" frameHeight="260"/>
+	<SubTexture name="achievements selected0009" x="245" y="474" width="239" height="223" frameX="-21" frameY="-28" frameWidth="269" frameHeight="260"/>
+</TextureAtlas>

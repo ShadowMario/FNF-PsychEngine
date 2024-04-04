@@ -4,7 +4,7 @@ import objects.Note;
 import objects.StrumNote;
 import objects.Alphabet;
 
-class VisualsUISubState extends BaseOptionsMenu
+class VisualsSettingsSubState extends BaseOptionsMenu
 {
 	var noteOptionID:Int = -1;
 	var notes:FlxTypedGroup<StrumNote>;
@@ -12,8 +12,8 @@ class VisualsUISubState extends BaseOptionsMenu
 	var noteY:Float = 90;
 	public function new()
 	{
-		title = 'Visuals and UI';
-		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
+		title = Language.getPhrase('visuals_menu', 'Visuals Settings');
+		rpcTitle = 'Visuals Settings Menu'; //for Discord Rich Presence
 
 		// for note skins
 		notes = new FlxTypedGroup<StrumNote>();
@@ -38,7 +38,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			var option:Option = new Option('Note Skins:',
 				"Select your prefered Note skin.",
 				'noteSkin',
-				'string',
+				STRING,
 				noteSkins);
 			addOption(option);
 			option.onChange = onChangeNoteSkin;
@@ -55,7 +55,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			var option:Option = new Option('Note Splashes:',
 				"Select your prefered Note Splash variation or turn it off.",
 				'splashSkin',
-				'string',
+				STRING,
 				noteSplashes);
 			addOption(option);
 		}
@@ -63,7 +63,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Note Splash Opacity',
 			'How much transparent should the Note Splashes be.',
 			'splashAlpha',
-			'percent');
+			PERCENT);
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.0;
 		option.maxValue = 1;
@@ -74,38 +74,38 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
 			'hideHud',
-			'bool');
+			BOOL);
 		addOption(option);
 		
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",
 			'timeBarType',
-			'string',
+			STRING,
 			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',
 			"Uncheck this if you're sensitive to flashing lights!",
 			'flashing',
-			'bool');
+			BOOL);
 		addOption(option);
 
 		var option:Option = new Option('Camera Zooms',
 			"If unchecked, the camera won't zoom in on a beat hit.",
 			'camZooms',
-			'bool');
+			BOOL);
 		addOption(option);
 
-		var option:Option = new Option('Score Text Zoom on Hit',
-			"If unchecked, disables the Score text zooming\neverytime you hit a note.",
+		var option:Option = new Option('Score Text Grow on Hit',
+			"If unchecked, disables the Score text growing\neverytime you hit a note.",
 			'scoreZoom',
-			'bool');
+			BOOL);
 		addOption(option);
 
 		var option:Option = new Option('Health Bar Opacity',
 			'How much transparent should the health bar and icons be.',
 			'healthBarAlpha',
-			'percent');
+			PERCENT);
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.0;
 		option.maxValue = 1;
@@ -117,7 +117,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('FPS Counter',
 			'If unchecked, hides FPS Counter.',
 			'showFPS',
-			'bool');
+			BOOL);
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
 		#end
@@ -125,7 +125,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",
 			'pauseMusic',
-			'string',
+			STRING,
 			['None', 'Breakfast', 'Tea Time']);
 		addOption(option);
 		option.onChange = onChangePauseMusic;
@@ -134,7 +134,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Check for Updates',
 			'On Release builds, turn this on to check for updates when you start the game.',
 			'checkForUpdates',
-			'bool');
+			BOOL);
 		addOption(option);
 		#end
 
@@ -142,14 +142,14 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Discord Rich Presence',
 			"Uncheck this to prevent accidental leaks, it will hide the Application from your \"Playing\" box on Discord",
 			'discordRPC',
-			'bool');
+			BOOL);
 		addOption(option);
 		#end
 
 		var option:Option = new Option('Combo Stacking',
 			"If unchecked, Ratings and Combo won't stack, saving on System Memory and making them easier to read",
 			'comboStacking',
-			'bool');
+			BOOL);
 		addOption(option);
 
 		super();
