@@ -168,10 +168,10 @@ class CharacterEditorState extends MusicBeatState
 		\nR - Reset Camera Zoom
 		\n
 		\nCHARACTER
-		\nCtrl + R - Reset Current Offset
-		\nCtrl + C - Copy Current Offset
-		\nCtrl + V - Paste Copied Offset on Current Animation
-		\nCtrl + Z - Undo Last Paste or Reset
+		\n"+Main.modifier_keys[0]+" + R - Reset Current Offset
+		\n"+Main.modifier_keys[0]+" + C - Copy Current Offset
+		\n"+Main.modifier_keys[0]+" + V - Paste Copied Offset on Current Animation
+		\n"+Main.modifier_keys[0]+" + Z - Undo Last Paste or Reset
 		\nW/S - Previous/Next Animation
 		\nSpace - Replay Animation
 		\nArrow Keys/Mouse & Right Click - Move Offset
