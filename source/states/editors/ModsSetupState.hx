@@ -1,4 +1,4 @@
-package states;
+package states.editors;
 
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUIButton;
