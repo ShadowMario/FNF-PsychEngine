@@ -180,7 +180,7 @@ class CharacterEditorState extends MusicBeatState
 		\nOTHER
 		\nF12 - Toggle Silhouettes
 		\nHold Shift - Move Offsets 10x faster and Camera 4x faster
-		\nHold Control - Move camera 4x slower";
+		\nHold "+Main.modifier_keys[0]+" - Move camera 4x slower";
 
 		helpBg = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
 		helpBg.scale.set(FlxG.width, FlxG.height);
@@ -860,7 +860,7 @@ class CharacterEditorState extends MusicBeatState
 			shiftMult = 4;
 			shiftMultBig = 10;
 		}
-		if(FlxG.keys.pressed.CONTROL) ctrlMult = 0.25;
+		if(#if !mac FlxG.keys.pressed.CONTROL #else FlxG.keys.pressed.WINDOWS #end) ctrlMult = 0.25;
 
 		// CAMERA CONTROLS
 		if (FlxG.keys.pressed.J) FlxG.camera.scroll.x -= elapsed * 500 * shiftMult * ctrlMult;
@@ -869,7 +869,7 @@ class CharacterEditorState extends MusicBeatState
 		if (FlxG.keys.pressed.I) FlxG.camera.scroll.y -= elapsed * 500 * shiftMult * ctrlMult;
 
 		var lastZoom = FlxG.camera.zoom;
-		if(FlxG.keys.justPressed.R && !FlxG.keys.pressed.CONTROL) FlxG.camera.zoom = 1;
+		if(FlxG.keys.justPressed.R && !#if !mac FlxG.keys.pressed.CONTROL #else FlxG.keys.pressed.WINDOWS #end) FlxG.camera.zoom = 1;
 		else if (FlxG.keys.pressed.E && FlxG.camera.zoom < 3) {
 			FlxG.camera.zoom += elapsed * FlxG.camera.zoom * shiftMult * ctrlMult;
 			if(FlxG.camera.zoom > 3) FlxG.camera.zoom = 3;
@@ -931,7 +931,7 @@ class CharacterEditorState extends MusicBeatState
 			changedOffset = true;
 		}
 
-		if(FlxG.keys.pressed.CONTROL)
+		if(#if !mac FlxG.keys.pressed.CONTROL #else FlxG.keys.pressed.WINDOWS #end)
 		{
 			if(FlxG.keys.justPressed.C)
 			{

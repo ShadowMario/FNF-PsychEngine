@@ -88,6 +88,10 @@ class InputFormatter {
 				return "'";
 			case PRINTSCREEN:
 				return "PrtScrn";
+			#if mac
+			case WINDOWS:
+				return 'Command';
+			#end
 			case NONE:
 				return '---';
 			default:

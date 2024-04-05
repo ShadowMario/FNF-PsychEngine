@@ -231,7 +231,7 @@ class NoteSplashDebugState extends MusicBeatState
 		}
 
 		// Copy & Paste
-		if(FlxG.keys.pressed.CONTROL)
+		if(#if !mac FlxG.keys.pressed.CONTROL #else FlxG.keys.pressed.WINDOWS #end)
 		{
 			if(FlxG.keys.justPressed.C)
 			{

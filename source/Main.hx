@@ -49,7 +49,7 @@ class Main extends Sprite
 	};
 
 	// changes how modifier keys are shown in UI.
-	// small heads-up Control is mapped to WINDOWS in Haxeflixel, Option is curiously mapped to ALT still though.
+	// small heads-up Command is mapped to WINDOWS in Haxeflixel, Option is curiously mapped to ALT still though.
 	public static var modifier_keys:Array<String> = #if !mac ['Control', 'Alt']; #else['Command', 'Option']; #end
 	public static var fpsVar:FPSCounter;
 
