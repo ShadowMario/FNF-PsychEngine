@@ -307,7 +307,7 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 
-		if(#if !mac FlxG.keys.pressed.CONTROL #else FlxG.keys.pressed.WINDOWS #end && !player.playingMusic)
+		if(#if !mac FlxG.keys.justPressed.CONTROL #else FlxG.keys.justPressed.WINDOWS #end && !player.playingMusic)
 		{
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
