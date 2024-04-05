@@ -14,8 +14,8 @@ class Difficulty
 	{
 		if(num == null) num = PlayState.storyDifficulty;
 
-		var filePostfix:String = list[num];
-		if(Paths.formatToSongPath(filePostfix) != Paths.formatToSongPath(defaultDifficulty))
+		var filePostfix:String = list[num].toLowerCase();
+		if(Paths.formatToSongPath(filePostfix) != Paths.formatToSongPath(defaultDifficulty).toLowerCase())
 		{
 			filePostfix = '-' + filePostfix;
 		}
