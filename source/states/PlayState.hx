@@ -2471,7 +2471,15 @@ class PlayState extends MusicBeatState
 		//tryna do MS based judgment due to popular demand
 		var daRating:Rating = Conductor.judgeNote(ratingsData, noteDiff / playbackRate);
 
-		totalNotesHit += daRating.ratingMod;
+		switch (ClientPrefs.data.accuracyType) {
+			case 'Note':
+				totalNotesHit += 1;
+			case 'Millisecond': // Much like Kade's "Complex" but less broken
+				totalNotesHit += (daRating.name == 'sick' ? 1 : ratingsData[0].hitWindow / (noteDiff/playbackRate));
+			default:
+				totalNotesHit += daRating.ratingMod;
+		}
+			
 		note.ratingMod = daRating.ratingMod;
 		if(!note.ratingDisabled) daRating.hits++;
 		note.rating = daRating.name;
