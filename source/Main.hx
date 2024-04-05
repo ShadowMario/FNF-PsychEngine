@@ -4,6 +4,7 @@ package;
 import android.content.Context;
 #end
 
+import backend.ColorBlindness;
 import debug.FPSCounter;
 
 import flixel.graphics.FlxGraphic;
@@ -49,6 +50,8 @@ class Main extends Sprite
 	};
 
 	public static var fpsVar:FPSCounter;
+
+	public static var colorFilter:ColorBlindness;
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 

@@ -1,5 +1,6 @@
 package states;
 
+import backend.ColorBlindness;
 import backend.WeekData;
 import backend.Highscore;
 
@@ -89,6 +90,7 @@ class TitleState extends MusicBeatState
 
 		ClientPrefs.loadPrefs();
 		Language.reloadPhrases();
+		ColorBlindness.setFilter();
 
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.data.checkForUpdates && !closedState) {
