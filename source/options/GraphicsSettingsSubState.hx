@@ -8,8 +8,8 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 	var boyfriend:Character = null;
 	public function new()
 	{
-		title = Language.getPhrase('graphics_menu', 'Graphics Settings');
-		rpcTitle = 'Graphics Settings Menu'; //for Discord Rich Presence
+		title = Language.getPhrase('graphics_menu', 'Graphics and Audio Settings');
+		rpcTitle = 'Graphics And Audio Settings Menu'; //for Discord Rich Presence
 
 		boyfriend = new Character(840, 170, 'bf', true);
 		boyfriend.setGraphicSize(Std.int(boyfriend.width * 0.75));
@@ -17,6 +17,24 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		boyfriend.dance();
 		boyfriend.animation.finishCallback = function (name:String) boyfriend.dance();
 		boyfriend.visible = false;
+
+		var option:Option = new Option('Music Volume',
+		"Pretty self explanatory, isn't it? Sets in-game music volume (This does not apply to menus)",
+		'musicVolume',
+		INT);
+		addOption(option);
+		option.minValue = 0;
+		option.maxValue = 100;
+		option.displayFormat = '%v%';
+
+		var option:Option = new Option('Sound Effect Volume',
+		"Pretty self explanatory, isn't it? Sets in-game SFX volume (This does not apply to menus)",
+		'sfxVolume',
+		INT);
+		addOption(option);
+		option.minValue = 0;
+		option.maxValue = 100;
+		option.displayFormat = '%v%';
 
 		//I'd suggest using "Low Quality" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Low Quality', //Name
