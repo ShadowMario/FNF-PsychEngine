@@ -48,6 +48,9 @@ class Main extends Sprite
 		startFullscreen: false // if the game should start at fullscreen mode
 	};
 
+	// changes how modifier keys are shown in UI.
+	// small heads-up Control is mapped to WINDOWS in Haxeflixel, Option is curiously mapped to ALT still though.
+	public static var modifier_keys:Array<String> = #if !mac ['Control', 'Alt']; #else['Command', 'Option']; #end
 	public static var fpsVar:FPSCounter;
 
 	// You can pretty much ignore everything from here on - your code should go in your states.

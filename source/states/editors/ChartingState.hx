@@ -329,10 +329,10 @@ class ChartingState extends MusicBeatState
 		\nUp/Down - Change Conductor's Strum Time with Snapping" +
 		#if FLX_PITCH
 		"\nLeft Bracket / Right Bracket - Change Song Playback Rate (SHIFT to go Faster)
-		\nALT + Left Bracket / Right Bracket - Reset Song Playback Rate" +
+		\n" + Main.modifier_keys[1] + " + Left Bracket / Right Bracket - Reset Song Playback Rate" +
 		#end
 		"\nHold Shift to move 4x faster
-		\nHold Control and click on an arrow to select it
+		\nHold "+Main.modifier_keys[0]+" and click on an arrow to select it
 		\nZ/X - Zoom in/out
 		\n
 		\nEsc - Test your chart inside Chart Editor
@@ -1757,7 +1757,7 @@ class ChartingState extends MusicBeatState
 				{
 					if (FlxG.mouse.overlaps(note))
 					{
-						if (FlxG.keys.pressed.CONTROL)
+						if (#if !mac FlxG.keys.pressed.CONTROL #else FlxG.keys.pressed.WINDOWS #end) // WINDOWS is the command key in Mac OS
 						{
 							selectNote(note);
 						}
@@ -1879,11 +1879,11 @@ class ChartingState extends MusicBeatState
 				return;
 			}
 
-			if(FlxG.keys.justPressed.Z && FlxG.keys.pressed.CONTROL) {
+			if(FlxG.keys.justPressed.Z && #if !mac FlxG.keys.pressed.CONTROL #else FlxG.keys.pressed.WINDOWS #end) {
 				undo();
 			}
 
-			if(FlxG.keys.justPressed.Z && curZoom > 0 && !FlxG.keys.pressed.CONTROL) {
+			if(FlxG.keys.justPressed.Z && curZoom > 0 && #if !mac !FlxG.keys.pressed.CONTROL #else !FlxG.keys.pressed.WINDOWS #end) {
 				--curZoom;
 				updateZoom();
 			}
@@ -1960,7 +1960,7 @@ class ChartingState extends MusicBeatState
 				FlxG.sound.music.pause();
 
 				var holdingShift:Float = 1;
-				if (FlxG.keys.pressed.CONTROL) holdingShift = 0.25;
+				if (#if !mac FlxG.keys.pressed.CONTROL #else FlxG.keys.pressed.WINDOWS #end) holdingShift = 0.25;
 				else if (FlxG.keys.pressed.SHIFT) holdingShift = 4;
 
 				var daTime:Float = 700 * FlxG.elapsed * holdingShift;
