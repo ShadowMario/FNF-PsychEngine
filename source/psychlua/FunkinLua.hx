@@ -98,6 +98,9 @@ class FunkinLua {
 		set('startedCountdown', false);
 		set('curStage', PlayState.SONG.stage);
 
+		set('primaryModifier', Main.modifier_keys[0]); // Control or Command
+		set('secondaryModifier', Main.modifier_keys[1]); // Alt or Option
+
 		set('isStoryMode', PlayState.isStoryMode);
 		set('difficulty', PlayState.storyDifficulty);
 
