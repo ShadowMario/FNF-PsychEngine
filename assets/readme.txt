@@ -16,3 +16,7 @@ You can safely delete the "assets/base_game/" folder after that if you want to, 
 Q: What's the "translations" folder for?
 A: This is where I've put the Portuguese translation in, you can also set up other languages inside it easily,
 You can turn off languages by deleting the line with "TRANSLATIONS_ALLOWED" inside Project.xml
+
+NOTE:
+
+In "translations" there are two phrases that get replaced, being "MODIFIER1" and "MODIFIER2", replaced by "Control" & "Alt" if you use Mac OS, "Command" & "Option".

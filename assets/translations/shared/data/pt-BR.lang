@@ -46,7 +46,7 @@ storyname_week6: "simulador de confronto ft. moawling"
 
 // Freeplay
 personal_best: "MELHOR PONTUAÇÃO: {1} ({2}%)"
-freeplay_tip: "Aperte SPACE para ouvir a Música / Aperte CTRL para abrir o Menu de Modificadores / Aperte RESET para limpar sua pontuação."
+freeplay_tip: "Aperte SPACE para ouvir a Música / Aperte MODIFIER1 para abrir o Menu de Modificadores / Aperte RESET para limpar sua pontuação."
 
 musicplayer_playing: "MÚSICA: {1}"
 musicplayer_paused: "MÚSICA: {1} (PAUSADO)"

@@ -63,6 +63,11 @@ class Language
 			for (num => value in values)
 				str = str.replace('{${num+1}}', value);
 
+
+		// Multiplatform keys
+		str = str.replace('MODIFIER1', Main.modifier_keys[0]);
+		str = str.replace('MODIFIER2', Main.modifier_keys[1]);
+		
 		return str;
 	}
 
