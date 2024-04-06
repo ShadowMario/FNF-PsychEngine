@@ -1210,8 +1210,11 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "setObjectCamera", function(obj:String, camera:String = '') {
 			var real = game.getLuaObject(obj);
-			if(real!=null){
-				real.cameras = [LuaUtils.cameraFromString(camera)];
+			var realCamera:FlxCamera = LuaUtils.getObjectDirectly(camera);
+			if(realCamera == null) realCamera = LuaUtils.cameraFromString(camera);
+
+			if(real != null){
+				real.cameras = [realCamera];
 				return true;
 			}
 
@@ -1222,7 +1225,7 @@ class FunkinLua {
 			}
 
 			if(object != null) {
-				object.cameras = [LuaUtils.cameraFromString(camera)];
+				object.cameras = [realCamera];
 				return true;
 			}
 			luaTrace("setObjectCamera: Object " + obj + " doesn't exist!", false, false, FlxColor.RED);
