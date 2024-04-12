@@ -289,7 +289,7 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill');
 		practiceMode = ClientPrefs.getGameplaySetting('practice');
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay');
-		guitarHeroSustains = ClientPrefs.data.guitarHeroSustains;
+		guitarHeroSustains = ClientPrefs.data.newSustainBehavior;
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = initPsychCamera();
@@ -1782,7 +1782,7 @@ class PlayState extends MusicBeatState
 				else
 					playerDance();
 
-				if(notes.length > 0)
+				if(notes.length != 0)
 				{
 					if(startedCountdown)
 					{
@@ -2759,19 +2759,18 @@ class PlayState extends MusicBeatState
 
 		if (startedCountdown && !inCutscene && !boyfriend.stunned && generatedMusic)
 		{
-			if (notes.length > 0) {
-				for (n in notes) { // I can't do a filter here, that's kinda awesome
-					var canHit:Bool = (n != null && !strumsBlocked[n.noteData] && n.canBeHit
-						&& n.mustPress && !n.tooLate && !n.wasGoodHit && !n.blockHit);
-
+			if (notes.length != 0) {
+				final sustains: Array<Note> = notes.members.filter((n: Note) -> {
+					return !strumsBlocked[n.noteData] && n.canBeHit
+						&& n.mustPress && !n.tooLate && !n.blockHit;
+				});
+				for (sustainNote in sustains) {
+					var hit: Bool = true;
 					if (guitarHeroSustains)
-						canHit = canHit && n.parent != null && n.parent.wasGoodHit;
-
-					if (canHit && n.isSustainNote) {
-						var released:Bool = !holdArray[n.noteData];
-
-						if (!released)
-							goodNoteHit(n);
+						hit = sustainNote.parent != null && sustainNote.parent.wasGoodHit;
+					if (hit) {
+						final released:Bool = !holdArray[sustainNote.noteData];
+						if (!released) goodNoteHit(sustainNote);
 					}
 				}
 			}
@@ -2792,12 +2791,6 @@ class PlayState extends MusicBeatState
 	}
 
 	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
-		//Dupe note remove
-		notes.forEachAlive(function(note:Note) {
-			if (daNote != note && daNote.mustPress && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 1)
-				invalidateNote(note);
-		});
-
 		noteMissCommon(daNote.noteData, daNote);
 		var result:Dynamic = callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
 		if(result != LuaUtils.Function_Stop && result != LuaUtils.Function_StopHScript && result != LuaUtils.Function_StopAll) callOnHScript('noteMiss', [daNote]);
@@ -2821,7 +2814,7 @@ class PlayState extends MusicBeatState
 		// GUITAR HERO SUSTAIN CHECK LOL!!!!
 		if (note != null && guitarHeroSustains && note.parent == null) {
 			if(note.tail.length != 0) {
-				note.alpha = 0.35;
+				note.alpha = 0.3;
 				for(childNote in note.tail) {
 					childNote.alpha = note.alpha;
 					childNote.missed = true;
@@ -2833,7 +2826,7 @@ class PlayState extends MusicBeatState
 				note.canBeHit = false;
 
 				//subtract += 0.385; // you take more damage if playing with this gameplay changer enabled.
-				// i mean its fair :p -Crow
+				// i mean its fair :p -crow
 				subtract *= note.tail.length + 1;
 				// i think it would be fair if damage multiplied based on how long the sustain is -Tahir
 			}
