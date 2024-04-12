@@ -787,8 +787,7 @@ class EditorPlayState extends MusicBeatSubstate
 		// rewritten inputs??? // yeah!
 		if (notes.length != 0) {
 			final sustains: Array<Note> = notes.members.filter((n: Note) -> {
-				return !strumsBlocked[n.noteData] && n.canBeHit
-					&& n.mustPress && !n.tooLate && !n.blockHit;
+				return n.canBeHit && n.mustPress && !n.tooLate && !n.blockHit;
 			});
 			for (sustainNote in sustains) {
 				var hit: Bool = true;
