@@ -92,7 +92,7 @@ class EditorPlayState extends MusicBeatSubstate
 			FlxG.sound.music.stop();
 
 		cachePopUpScore();
-		guitarHeroSustains = ClientPrefs.data.guitarHeroSustains;
+		guitarHeroSustains = ClientPrefs.data.newSustainBehavior;
 		if(ClientPrefs.data.hitsoundVolume > 0) Paths.sound('hitsound');
 
 		/* setting up Editor PlayState stuff */
@@ -784,20 +784,19 @@ class EditorPlayState extends MusicBeatSubstate
 				if(pressArray[i])
 					keyPressed(i);
 
-		// rewritten inputs???
-		if (notes.length > 0) {
-			for (n in notes) { // I can't do a filter here, that's kinda awesome
-				var canHit:Bool = (n != null && n.canBeHit && n.mustPress &&
-					!n.tooLate && !n.wasGoodHit && !n.blockHit);
-
+		// rewritten inputs??? // yeah!
+		if (notes.length != 0) {
+			final sustains: Array<Note> = notes.members.filter((n: Note) -> {
+				return !strumsBlocked[n.noteData] && n.canBeHit
+					&& n.mustPress && !n.tooLate && !n.blockHit;
+			});
+			for (sustainNote in sustains) {
+				var hit: Bool = true;
 				if (guitarHeroSustains)
-					canHit = canHit && n.parent != null && n.parent.wasGoodHit;
-
-				if (canHit && n.isSustainNote) {
-					var released:Bool = !holdArray[n.noteData];
-					
-					if (!released)
-						goodNoteHit(n);
+					hit = sustainNote.parent != null && sustainNote.parent.wasGoodHit;
+				if (hit) {
+					final released:Bool = !holdArray[sustainNote.noteData];
+					if (!released) goodNoteHit(sustainNote);
 				}
 			}
 		}
