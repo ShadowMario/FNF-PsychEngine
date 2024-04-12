@@ -2791,6 +2791,7 @@ class PlayState extends MusicBeatState
 	}
 
 	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
+		if (daNote.animation.curAnim.name.endsWith("end")) return;
 		noteMissCommon(daNote.noteData, daNote);
 		var result:Dynamic = callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
 		if(result != LuaUtils.Function_Stop && result != LuaUtils.Function_StopHScript && result != LuaUtils.Function_StopAll) callOnHScript('noteMiss', [daNote]);
@@ -2816,7 +2817,7 @@ class PlayState extends MusicBeatState
 			if(note.tail.length != 0) {
 				note.alpha = 0.3;
 				for(childNote in note.tail) {
-					childNote.alpha = note.alpha;
+					childNote.alpha = 0.3;
 					childNote.missed = true;
 					childNote.canBeHit = false;
 					childNote.ignoreNote = true;
