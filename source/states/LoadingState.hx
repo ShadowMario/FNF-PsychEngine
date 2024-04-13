@@ -24,6 +24,7 @@ class LoadingState extends MusicBeatState
 	public static var loaded:Int = 0;
 	public static var loadMax:Int = 0;
 
+	static var originalBitmapKeys:Map<String, String> = [];
 	static var requestedBitmaps:Map<String, BitmapData> = [];
 	static var mutex:Mutex = new Mutex();
 
@@ -241,13 +242,15 @@ class LoadingState extends MusicBeatState
 		finishedLoading = true;
 	}
 
-	public static function checkLoaded():Bool {
+	public static function checkLoaded():Bool
+	{
 		for (key => bitmap in requestedBitmaps)
 		{
-			if (bitmap != null && Paths.cacheBitmap(key, bitmap) != null) trace('finished preloading image $key');
+			if (bitmap != null && Paths.cacheBitmap(originalBitmapKeys.get(key), bitmap) != null) trace('finished preloading image $key');
 			else trace('failed to cache image $key');
 		}
 		requestedBitmaps.clear();
+		originalBitmapKeys.clear();
 		return (loaded == loadMax && initialThreadCompleted);
 	}
 
@@ -466,8 +469,12 @@ class LoadingState extends MusicBeatState
 			Thread.create(() -> {
 				mutex.acquire();
 				try {
+					var requestKey:String = 'images/$image';
+					#if TRANSLATIONS_ALLOWED requestKey = Language.getFileTranslation(requestKey); #end
+					if(requestKey.lastIndexOf('.') < 0) requestKey += '.png';
+
 					var bitmap:BitmapData;
-					var file:String = Paths.getPath('images/$image.png', IMAGE);
+					var file:String = Paths.getPath(requestKey, IMAGE);
 					if (Paths.currentTrackedAssets.exists(file)) {
 						mutex.release();
 						loaded++;
@@ -483,7 +490,11 @@ class LoadingState extends MusicBeatState
 					else bitmap = OpenFlAssets.getBitmapData(file);
 					mutex.release();
 
-					if (bitmap != null) requestedBitmaps.set(file, bitmap);
+					if (bitmap != null)
+					{
+						requestedBitmaps.set(file, bitmap);
+						originalBitmapKeys.set(file, requestKey);
+					}
 					else trace('oh no the image is null NOOOO ($image)');
 				}
 				catch(e:Dynamic) {
