@@ -1894,6 +1894,7 @@ class PlayState extends MusicBeatState
 
 	function openChartEditor()
 	{
+		FlxG.timeScale = 1;
 		FlxG.camera.followLerp = 0;
 		persistentUpdate = false;
 		paused = true;
@@ -1911,6 +1912,7 @@ class PlayState extends MusicBeatState
 
 	function openCharacterEditor()
 	{
+		FlxG.timeScale = 1;
 		FlxG.camera.followLerp = 0;
 		persistentUpdate = false;
 		paused = true;
