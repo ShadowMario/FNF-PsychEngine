@@ -35,7 +35,7 @@
 		}
 	],
 	"no_antialiasing": true,
-	"image": "characters/bfPixelsDEAD",
+	"image": "characters/dead/bfPixelsDEAD",
 	"position": [
 		0,
 		350
