@@ -1,0 +1,1 @@
+Characters go here or you can make a subfolder for them, be sure if you do to include the folder in the character editor
