@@ -1552,6 +1552,7 @@ class PlayState extends MusicBeatState
 		stagesFunc(function(stage:BaseStage) stage.closeSubState());
 		if (paused)
 		{
+			FlxG.timeScale = playbackRate;
 			if (FlxG.sound.music != null && !startingSong)
 			{
 				resyncVocals();
