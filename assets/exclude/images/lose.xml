@@ -2,31 +2,31 @@
 <TextureAtlas imagePath="lose.png">
 	<!-- Created with Adobe Animate version 20.0.0.17400 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="lose... instance 10000" x="707" y="0" width="778" height="206" frameX="-21" frameY="-68" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10001" x="707" y="0" width="778" height="206" frameX="-21" frameY="-68" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10002" x="0" y="462" width="763" height="282" frameX="-24" frameY="-37" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10003" x="0" y="0" width="702" height="457" frameX="-48" frameY="0" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10004" x="707" y="211" width="783" height="199" frameX="0" frameY="-314" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10005" x="707" y="211" width="783" height="199" frameX="0" frameY="-314" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10006" x="0" y="946" width="782" height="172" frameX="0" frameY="-311" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10007" x="0" y="946" width="782" height="172" frameX="0" frameY="-311" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10008" x="787" y="970" width="782" height="170" frameX="0" frameY="-318" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10009" x="0" y="749" width="783" height="192" frameX="0" frameY="-315" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10010" x="0" y="749" width="783" height="192" frameX="0" frameY="-315" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10011" x="788" y="789" width="783" height="176" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10012" x="788" y="789" width="783" height="176" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10013" x="768" y="415" width="783" height="185" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10014" x="768" y="415" width="783" height="185" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10015" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10016" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10017" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10018" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10019" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10020" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10021" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10022" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10023" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10024" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10025" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
-	<SubTexture name="lose... instance 10026" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0000" x="707" y="0" width="778" height="206" frameX="-21" frameY="-68" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0001" x="707" y="0" width="778" height="206" frameX="-21" frameY="-68" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0002" x="0" y="462" width="763" height="282" frameX="-24" frameY="-37" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0003" x="0" y="0" width="702" height="457" frameX="-48" frameY="0" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0004" x="707" y="211" width="783" height="199" frameX="0" frameY="-314" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0005" x="707" y="211" width="783" height="199" frameX="0" frameY="-314" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0006" x="0" y="946" width="782" height="172" frameX="0" frameY="-311" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0007" x="0" y="946" width="782" height="172" frameX="0" frameY="-311" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0008" x="787" y="970" width="782" height="170" frameX="0" frameY="-318" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0009" x="0" y="749" width="783" height="192" frameX="0" frameY="-315" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0010" x="0" y="749" width="783" height="192" frameX="0" frameY="-315" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0011" x="788" y="789" width="783" height="176" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0012" x="788" y="789" width="783" height="176" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0013" x="768" y="415" width="783" height="185" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0014" x="768" y="415" width="783" height="185" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0015" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0016" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0017" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0018" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0019" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0020" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0021" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0022" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0023" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0024" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0025" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
+	<SubTexture name="lose0026" x="788" y="605" width="783" height="179" frameX="0" frameY="-316" frameWidth="799" frameHeight="513"/>
 </TextureAtlas>
