@@ -2,6 +2,7 @@ package states;
 
 import backend.WeekData;
 import backend.Highscore;
+import backend.IncludeAll;
 
 import flixel.input.keyboard.FlxKey;
 import flixel.addons.transition.FlxTransitionableState;
@@ -70,6 +71,7 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		IncludeAll.init();
 		Paths.clearStoredMemory();
 
 		#if LUA_ALLOWED
