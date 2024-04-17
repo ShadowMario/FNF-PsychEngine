@@ -10,7 +10,7 @@
 * Lime - `haxelib install lime`
 * HaxeFlixel Addons - `haxelib install flixel-addons`
 * HaxeFlixel UI - `haxelib install flixel-ui`
-* SScript - `haxelib install SScript 17`
+* SScript - `haxelib install SScript`
 * hxvlc - `haxelib install hxvlc`
 * hxcpp - `haxelib install hxcpp`
 
