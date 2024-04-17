@@ -133,11 +133,9 @@ class ReflectionFunctions
 		});
 		
 		Lua_helper.add_callback(lua, "callMethod", function(funcToRun:String, ?args:Array<Dynamic> = null) {
-			if (args == null) args = [];
 			return callMethodFromObject(PlayState.instance, funcToRun, parseInstances(args));
 		});
 		Lua_helper.add_callback(lua, "callMethodFromClass", function(className:String, funcToRun:String, ?args:Array<Dynamic> = null) {
-			if (args == null) args = [];
 			return callMethodFromObject(Type.resolveClass(className), funcToRun, parseInstances(args));
 		});
 
@@ -190,6 +188,7 @@ class ReflectionFunctions
 
 	static function parseInstances(args:Array<Dynamic>)
 	{
+		if (args == null) args = [];
 		for (i in 0...args.length)
 		{
 			var myArg:String = cast args[i];
