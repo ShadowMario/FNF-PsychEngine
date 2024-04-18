@@ -23,7 +23,7 @@ import objects.Bar;
 typedef PointerGraphic = flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 #else
 // flixel 5.7.x fix
-@:bitmap("assets/shared/images/editors/cursorCross.png")
+@:bitmap("assets/images/debugger/cursorCross.png")
 class PointerGraphic extends openfl.display.BitmapData {}
 #end
 
