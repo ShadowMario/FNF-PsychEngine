@@ -19,10 +19,10 @@ import objects.Character;
 import objects.HealthIcon;
 import objects.Bar;
 
-#if FLX_DEBUG
+// flixel 5.7.x fix
+#if (FLX_DEBUG || flixel < version("5.7.0"))
 typedef PointerGraphic = flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 #else
-// flixel 5.7.x fix
 @:bitmap("assets/images/debugger/cursorCross.png")
 class PointerGraphic extends openfl.display.BitmapData {}
 #end
