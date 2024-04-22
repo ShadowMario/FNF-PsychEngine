@@ -2,8 +2,15 @@ package backend;
 
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.FlxState;
 import backend.PsychCamera;
+
+#if (flixel < version("5.6.0"))
+typedef NextState = flixel.FlxState;
+#else
+import flixel.util.typeLimit.NextState;
+
+@:access(flixel.FlxState._constructor)
+#end
 
 class MusicBeatState extends FlxUIState
 {
@@ -129,40 +136,66 @@ class MusicBeatState extends FlxUIState
 		curStep = lastChange.stepTime + Math.floor(shit);
 	}
 
-	public static function switchState(nextState:FlxState = null) {
-		if(nextState == null) nextState = FlxG.state;
-		if(nextState == FlxG.state)
+	/**
+		Switches to the desired state.
+		
+		NOTE: If you are using flixel 5.6.0 and higher - pass a constructor function:
+		```haxe
+		MusicBeatState.switchState(() -> new MyState());
+		// or
+		MusicBeatState.switchState(function() return new MyState());
+		// or
+		MusicBeatState.switchState(MyState.new);
+		```
+		Otherwise use the old method:
+		```haxe
+		MusicBeatState.switchState(new MyState());
+		```
+	**/
+	public static function switchState(?nextState:NextState)
+	{
+		if (resetStateCheck(nextState))
 		{
 			resetState();
 			return;
 		}
 
-		if(FlxTransitionableState.skipNextTransIn) FlxG.switchState(nextState);
-		else startTransition(nextState);
+		if (FlxTransitionableState.skipNextTransIn)
+			FlxG.switchState(nextState);
+		else
+			startTransition(nextState);
+
 		FlxTransitionableState.skipNextTransIn = false;
 	}
 
-	public static function resetState() {
-		if(FlxTransitionableState.skipNextTransIn) FlxG.resetState();
-		else startTransition();
+	public static function resetState()
+	{
+		if (FlxTransitionableState.skipNextTransIn)
+			FlxG.resetState();
+		else
+			startTransition();
+
 		FlxTransitionableState.skipNextTransIn = false;
 	}
 
 	// Custom made Trans in
-	public static function startTransition(nextState:FlxState = null)
+	public static function startTransition(?nextState:NextState)
 	{
-		if(nextState == null)
-			nextState = FlxG.state;
-
 		FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
-		if(nextState == FlxG.state)
+		if (resetStateCheck(nextState))
 			CustomFadeTransition.finishCallback = function() FlxG.resetState();
 		else
 			CustomFadeTransition.finishCallback = function() FlxG.switchState(nextState);
 	}
 
-	public static function getState():MusicBeatState {
-		return cast (FlxG.state, MusicBeatState);
+	inline static function resetStateCheck(nextState:NextState):Bool
+	{
+		final isNull = (nextState == null);
+		#if (flixel < version("5.6.0"))
+		return (isNull || nextState == FlxG.state);
+		#else
+		return (isNull || nextState == FlxG.state._constructor);
+		#end
 	}
 
 	public function stepHit():Void

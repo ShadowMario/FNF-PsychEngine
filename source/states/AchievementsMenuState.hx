@@ -206,7 +206,7 @@ class AchievementsMenuState extends MusicBeatState
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new MainMenuState());
 			goingBack = true;
 		}
 		super.update(elapsed);

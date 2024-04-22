@@ -3,7 +3,6 @@ package states;
 import lime.app.Promise;
 import lime.app.Future;
 
-import flixel.FlxState;
 
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
@@ -13,6 +12,12 @@ import lime.utils.AssetManifest;
 import backend.StageData;
 
 import haxe.io.Path;
+
+#if (flixel < version("5.6.0"))
+typedef NextState = flixel.FlxState;
+#else
+import flixel.util.typeLimit.NextState;
+#end
 
 class LoadingState extends MusicBeatState
 {
@@ -24,13 +29,13 @@ class LoadingState extends MusicBeatState
 	
 	// TO DO: Make this easier
 	
-	var target:FlxState;
+	var target:NextState;
 	var stopMusic = false;
 	var directory:String;
 	var callbacks:MultiCallback;
 	var targetShit:Float = 0;
 
-	function new(target:FlxState, stopMusic:Bool, directory:String)
+	function new(target:NextState, stopMusic:Bool, directory:String)
 	{
 		super();
 		this.target = target;
@@ -142,12 +147,12 @@ class LoadingState extends MusicBeatState
 		return Paths.voices(PlayState.SONG.song);
 	}
 	
-	inline static public function loadAndSwitchState(target:FlxState, stopMusic = false)
+	inline static public function loadAndSwitchState(target:NextState, stopMusic = false)
 	{
 		MusicBeatState.switchState(getNextState(target, stopMusic));
 	}
 	
-	static function getNextState(target:FlxState, stopMusic = false):FlxState
+	static function getNextState(target:NextState, stopMusic = false):NextState
 	{
 		var directory:String = 'shared';
 		var weekDir:String = StageData.forceNextDirectory;

@@ -19,7 +19,7 @@ enum Countdown
 
 class BaseStage extends FlxBasic
 {
-	private var game(default, set):Dynamic = PlayState.instance;
+	private var game(default, set):Dynamic;
 	public var onPlayState:Bool = false;
 
 	// some variables for convenience
@@ -47,17 +47,17 @@ class BaseStage extends FlxBasic
 
 	public function new()
 	{
-		this.game = MusicBeatState.getState();
-		if(this.game == null)
+		if (FlxG.state is MusicBeatState)
 		{
-			FlxG.log.warn('Invalid state for the stage added!');
-			destroy();
-		}
-		else 
-		{
+			this.game = cast (FlxG.state, MusicBeatState);
 			this.game.stages.push(this);
 			super();
 			create();
+		}
+		else 
+		{
+			FlxG.log.warn('Invalid state for the stage added!');
+			destroy();
 		}
 	}
 

@@ -152,14 +152,14 @@ class TitleState extends MusicBeatState
 
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
-		MusicBeatState.switchState(new FreeplayState());
+		MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new FreeplayState());
 		#elseif CHARTING
-		MusicBeatState.switchState(new ChartingState());
+		MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new ChartingState());
 		#else
 		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
-			MusicBeatState.switchState(new FlashingState());
+			MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new FlashingState());
 		} else {
 			if (initialized)
 				startIntro();
@@ -414,9 +414,9 @@ class TitleState extends MusicBeatState
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
 					if (mustUpdate) {
-						MusicBeatState.switchState(new OutdatedState());
+						MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new OutdatedState());
 					} else {
-						MusicBeatState.switchState(new MainMenuState());
+						MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new MainMenuState());
 					}
 					closedState = true;
 				});
@@ -454,7 +454,7 @@ class TitleState extends MusicBeatState
 								function(twn:FlxTween) {
 									FlxTransitionableState.skipNextTransIn = true;
 									FlxTransitionableState.skipNextTransOut = true;
-									MusicBeatState.switchState(new TitleState());
+									MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new TitleState());
 								}
 							});
 							FlxG.sound.music.fadeOut();

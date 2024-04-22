@@ -255,7 +255,7 @@ class StoryMenuState extends MusicBeatState
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new MainMenuState());
 		}
 
 		super.update(elapsed);
@@ -321,7 +321,7 @@ class StoryMenuState extends MusicBeatState
 
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				LoadingState.loadAndSwitchState(new PlayState(), true);
+				LoadingState.loadAndSwitchState(#if (flixel >= version("5.6.0")) () -> #end new PlayState(), true);
 				FreeplayState.destroyFreeplayVocals();
 			});
 			

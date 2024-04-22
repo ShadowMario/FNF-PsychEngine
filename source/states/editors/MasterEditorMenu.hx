@@ -98,26 +98,26 @@ class MasterEditorMenu extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new MainMenuState());
 		}
 
 		if (controls.ACCEPT)
 		{
 			switch(options[curSelected]) {
 				case 'Chart Editor'://felt it would be cool maybe
-					LoadingState.loadAndSwitchState(new ChartingState(), false);
+					LoadingState.loadAndSwitchState(#if (flixel >= version("5.6.0")) () -> #end new ChartingState(), false);
 				case 'Character Editor':
-					LoadingState.loadAndSwitchState(new CharacterEditorState(Character.DEFAULT_CHARACTER, false));
+					LoadingState.loadAndSwitchState(#if (flixel >= version("5.6.0")) () -> #end new CharacterEditorState(Character.DEFAULT_CHARACTER, false));
 				case 'Week Editor':
-					MusicBeatState.switchState(new WeekEditorState());
+					MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new WeekEditorState());
 				case 'Menu Character Editor':
-					MusicBeatState.switchState(new MenuCharacterEditorState());
+					MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new MenuCharacterEditorState());
 				case 'Dialogue Editor':
-					LoadingState.loadAndSwitchState(new DialogueEditorState(), false);
+					LoadingState.loadAndSwitchState(#if (flixel >= version("5.6.0")) () -> #end new DialogueEditorState(), false);
 				case 'Dialogue Portrait Editor':
-					LoadingState.loadAndSwitchState(new DialogueCharacterEditorState(), false);
+					LoadingState.loadAndSwitchState(#if (flixel >= version("5.6.0")) () -> #end new DialogueCharacterEditorState(), false);
 				case 'Note Splash Debug':
-					MusicBeatState.switchState(new NoteSplashDebugState());
+					MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new NoteSplashDebugState());
 			}
 			FlxG.sound.music.volume = 0;
 			FreeplayState.destroyFreeplayVocals();

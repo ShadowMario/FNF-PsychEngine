@@ -136,7 +136,7 @@ class MainMenuState extends MusicBeatState
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new TitleState());
+				MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new TitleState());
 			}
 
 			if (controls.ACCEPT)
@@ -158,24 +158,24 @@ class MainMenuState extends MusicBeatState
 						switch (optionShit[curSelected])
 						{
 							case 'story_mode':
-								MusicBeatState.switchState(new StoryMenuState());
+								MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new StoryMenuState());
 							case 'freeplay':
-								MusicBeatState.switchState(new FreeplayState());
+								MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new FreeplayState());
 
 							#if MODS_ALLOWED
 							case 'mods':
-								MusicBeatState.switchState(new ModsMenuState());
+								MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new ModsMenuState());
 							#end
 
 							#if ACHIEVEMENTS_ALLOWED
 							case 'awards':
-								MusicBeatState.switchState(new AchievementsMenuState());
+								MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new AchievementsMenuState());
 							#end
 
 							case 'credits':
-								MusicBeatState.switchState(new CreditsState());
+								MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new CreditsState());
 							case 'options':
-								MusicBeatState.switchState(new OptionsState());
+								MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new OptionsState());
 								OptionsState.onPlayState = false;
 								if (PlayState.SONG != null)
 								{
@@ -204,7 +204,7 @@ class MainMenuState extends MusicBeatState
 			if (controls.justPressed('debug_1'))
 			{
 				selectedSomethin = true;
-				MusicBeatState.switchState(new MasterEditorMenu());
+				MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new MasterEditorMenu());
 			}
 			#end
 		}

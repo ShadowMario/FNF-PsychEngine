@@ -1034,10 +1034,10 @@ class CharacterEditorState extends MusicBeatState
 			FlxG.mouse.visible = false;
 			if(!_goToPlayState)
 			{
-				MusicBeatState.switchState(new states.editors.MasterEditorMenu());
+				MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new states.editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
-			else MusicBeatState.switchState(new PlayState());
+			else MusicBeatState.switchState(#if (flixel >= version("5.6.0")) () -> #end new PlayState());
 			return;
 		}
 	}
