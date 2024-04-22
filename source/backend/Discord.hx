@@ -4,13 +4,16 @@ import Sys.sleep;
 import lime.app.Application;
 import hxdiscord_rpc.Discord;
 import hxdiscord_rpc.Types;
+import sys.thread.Thread;
 
 class DiscordClient
 {
 	public static var isInitialized:Bool = false;
-	private static final _defaultID:String = "863222024192262205";
+	private inline static final _defaultID:String = "863222024192262205";
 	public static var clientID(default, set):String = _defaultID;
 	private static var presence:DiscordRichPresence = DiscordRichPresence.create();
+	// hides this field from scripts and reflection in general
+	@:unreflective private static var __thread:Thread;
 
 	public static function check()
 	{
@@ -29,18 +32,21 @@ class DiscordClient
 	}
 
 	public dynamic static function shutdown() {
-		Discord.Shutdown();
 		isInitialized = false;
+		Discord.Shutdown();
 	}
 	
 	private static function onReady(request:cpp.RawConstPointer<DiscordUser>):Void {
-		var requestPtr:cpp.Star<DiscordUser> = cpp.ConstPointer.fromRaw(request).ptr;
+		final user = cast (request[0].username, String);
+		final discriminator = cast (request[0].discriminator, String);
 
-		if (Std.parseInt(cast(requestPtr.discriminator, String)) != 0) //New Discord IDs/Discriminator system
-			trace('(Discord) Connected to User (${cast(requestPtr.username, String)}#${cast(requestPtr.discriminator, String)})');
-		else //Old discriminators
-			trace('(Discord) Connected to User (${cast(requestPtr.username, String)})');
+		var message = '(Discord) Connected to User ';
+		if (discriminator != '0') //Old discriminators
+			message += '($user#$discriminator)';
+		else //New Discord IDs/Discriminator system
+			message += '($user)';
 
+		trace(message);
 		changePresence();
 	}
 
@@ -62,24 +68,29 @@ class DiscordClient
 
 		if(!isInitialized) trace("Discord Client initialized");
 
-		sys.thread.Thread.create(() ->
+		if (__thread == null)
 		{
-			var localID:String = clientID;
-			while (localID == clientID)
+			__thread = Thread.create(() ->
 			{
-				#if DISCORD_DISABLE_IO_THREAD
-				Discord.UpdateConnection();
-				#end
-				Discord.RunCallbacks();
+				while (true)
+				{
+					if (isInitialized)
+					{
+						#if DISCORD_DISABLE_IO_THREAD
+						Discord.UpdateConnection();
+						#end
+						Discord.RunCallbacks();
+					}
 
-				// Wait 0.5 seconds until the next loop...
-				Sys.sleep(0.5);
-			}
-		});
+					// Wait 1 second until the next loop...
+					Sys.sleep(1.0);
+				}
+			});
+		}
 		isInitialized = true;
 	}
 
-	public static function changePresence(?details:String = 'In the Menus', ?state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
+	public static function changePresence(details:String = 'In the Menus', ?state:String, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float, largeImageKey:String = 'icon')
 	{
 		var startTimestamp:Float = 0;
 		if (hasStartTimestamp) startTimestamp = Date.now().getTime();
@@ -87,7 +98,7 @@ class DiscordClient
 
 		presence.details = details;
 		presence.state = state;
-		presence.largeImageKey = 'icon';
+		presence.largeImageKey = largeImageKey;
 		presence.largeImageText = "Engine Version: " + states.MainMenuState.psychEngineVersion;
 		presence.smallImageKey = smallImageKey;
 		// Obtained times are in milliseconds so they are divided so Discord can use it
@@ -132,11 +143,9 @@ class DiscordClient
 
 	#if LUA_ALLOWED
 	public static function addLuaCallbacks(lua:State) {
-		Lua_helper.add_callback(lua, "changeDiscordPresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
-			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
-		});
+		Lua_helper.add_callback(lua, "changeDiscordPresence", changePresence);
 
-		Lua_helper.add_callback(lua, "changeDiscordClientID", function(?newID:String = null) {
+		Lua_helper.add_callback(lua, "changeDiscordClientID", function(?newID:String) {
 			if(newID == null) newID = _defaultID;
 			clientID = newID;
 		});
