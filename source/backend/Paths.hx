@@ -23,6 +23,7 @@ import haxe.Json;
 import backend.Mods;
 #end
 
+@:access(openfl.display.BitmapData)
 class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
@@ -43,7 +44,7 @@ class Paths
 			// if it is not currently contained within the used local assets
 			if (!localTrackedAssets.contains(key) && !dumpExclusions.contains(key))
 			{
-				FlxG.bitmap.remove(currentTrackedAssets.get(key)); // get rid of the graphic
+				destroyGraphic(currentTrackedAssets.get(key)); // get rid of the graphic
 				currentTrackedAssets.remove(key); // and remove the key from local cache map
 			}
 		}
@@ -62,7 +63,7 @@ class Paths
 		for (key in FlxG.bitmap._cache.keys())
 		{
 			if (!currentTrackedAssets.exists(key))
-				FlxG.bitmap.remove(FlxG.bitmap.get(key));
+				destroyGraphic(FlxG.bitmap.get(key));
 		}
 
 		// clear all sounds that are cached
@@ -77,6 +78,14 @@ class Paths
 		// flags everything to be cleared out next unused memory clear
 		localTrackedAssets = [];
 		#if !html5 openfl.Assets.cache.clear("songs"); #end
+	}
+
+	inline static function destroyGraphic(graphic:FlxGraphic)
+	{
+		// free some gpu memory
+		if (graphic != null && graphic.bitmap != null && graphic.bitmap.__texture != null)
+			graphic.bitmap.__texture.dispose();
+		FlxG.bitmap.remove(graphic);
 	}
 
 	static public var currentLevel:String;
@@ -197,7 +206,7 @@ class Paths
 		}
 
 		if (allowGPU && ClientPrefs.data.cacheOnGPU && bitmap.image != null)
-		@:privateAccess {
+		{
 			bitmap.lock();
 			if (bitmap.__texture == null)
 			{
