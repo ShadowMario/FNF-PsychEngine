@@ -26,6 +26,19 @@ class LuaUtils
 	public static final Function_StopHScript:Dynamic = "##PSYCHLUA_FUNCTIONSTOPHSCRIPT";
 	public static final Function_StopAll:Dynamic = "##PSYCHLUA_FUNCTIONSTOPALL";
 
+
+	public static function resolveClass(classVar:String):String{
+		var n:String = '';
+		switch(classVar){
+			case('Achievements'||'ClientPrefs'||'Conductor'||'Controls'||'CoolUtil'||'Difficulty'||'Highscore'||'Song'||'Discord'||): n='.'+classVar;
+			case('PlayState'||'MainMenuState'): n='states.'+classVar;
+			case('PauseSubState'): n='substates.'+classVar;
+
+			default: n = classVar;
+		}
+		return n;
+	}
+
 	public static function getLuaTween(options:Dynamic)
 	{
 		return {
