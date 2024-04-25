@@ -36,7 +36,7 @@ class ReflectionFunctions
 			var myClass:Dynamic = Type.resolveClass(className);
 			if(myClass == null)
 			{
-				FunkinLua.luaTrace('getPropertyFromClass: Class $classVar not found', false, false, FlxColor.RED);
+				FunkinLua.luaTrace('getPropertyFromClass: Class $className not found', false, false, FlxColor.RED);
 				return null;
 			}
 
