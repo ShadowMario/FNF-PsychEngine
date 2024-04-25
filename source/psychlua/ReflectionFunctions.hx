@@ -32,7 +32,8 @@ class ReflectionFunctions
 			return true;
 		});
 		Lua_helper.add_callback(lua, "getPropertyFromClass", function(classVar:String, variable:String, ?allowMaps:Bool = false) {
-			var myClass:Dynamic = Type.resolveClass(classVar);
+			var className:String = Lua_Helper.resolveClass(classVar);
+			var myClass:Dynamic = Type.resolveClass(className);
 			if(myClass == null)
 			{
 				FunkinLua.luaTrace('getPropertyFromClass: Class $classVar not found', false, false, FlxColor.RED);
@@ -50,10 +51,11 @@ class ReflectionFunctions
 			return LuaUtils.getVarInArray(myClass, variable, allowMaps);
 		});
 		Lua_helper.add_callback(lua, "setPropertyFromClass", function(classVar:String, variable:String, value:Dynamic, ?allowMaps:Bool = false) {
-			var myClass:Dynamic = Type.resolveClass(classVar);
+			var className:String = Lua_Helper.resolveClass(classVar);
+			var myClass:Dynamic = Type.resolveClass(className);
 			if(myClass == null)
 			{
-				FunkinLua.luaTrace('getPropertyFromClass: Class $classVar not found', false, false, FlxColor.RED);
+				FunkinLua.luaTrace('getPropertyFromClass: Class $className not found', false, false, FlxColor.RED);
 				return null;
 			}
 
