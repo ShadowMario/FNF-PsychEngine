@@ -127,10 +127,8 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
 		blueballedTxt.x = FlxG.width - (blueballedTxt.width + 20);
 
-		// todo: replace warning with language phrase; can't find the file for english so it's just a string for now
-		// outline might look weird but it's for visibility. might be useful to add something like "pause menu flavor text"
-		// for random text but also situations like this where you need to forward info (could also replace missingText) - subpurr
-		optionsText = new FlxText(20, 15 + 101, 0, "WARNING: Not all options are supported!\nSome options may not update until you restart.", 32);
+		// thank you crowplexus for the portuguese translation!! - subpurr
+		optionsText = new FlxText(20, 15 + 101, 0, Language.getPhrase("options_in_pause_warning", "WARNING: Not all options are supported!\nSome options may not update until you restart."), 32);
 		optionsText.scrollFactor.set();
 		optionsText.setFormat(Paths.font('vcr.ttf'), 32, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		optionsText.borderSize = 4;
