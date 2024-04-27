@@ -26,6 +26,15 @@ class LuaUtils
 	public static final Function_StopHScript:Dynamic = "##PSYCHLUA_FUNCTIONSTOPHSCRIPT";
 	public static final Function_StopAll:Dynamic = "##PSYCHLUA_FUNCTIONSTOPALL";
 
+
+	public static function resolveClass(classVar:String):String{
+		//the classes map is WAY at the bottom, didn't want it cluttering the top :bleh:
+		//also i now added every single class (at least, everything in the source folder), instead of just a select few
+		if (classes.exists(classVar))
+			return classes.get(classVar)+'.'+classVar
+		return classVar
+	}
+
 	public static function getLuaTween(options:Dynamic)
 	{
 		return {
@@ -512,4 +521,114 @@ class LuaUtils
 		}
 		return PlayState.instance.camGame;
 	}
+
+	classes:Map<String,String> = [
+		'Achievements' => 'backend',
+		'BaseStage' => 'backend',
+		'ClientPrefs' => 'backend',
+		'Conductor' => 'backend',
+		'Controls' => 'backend',
+		'Controls' => 'backend',
+		'CoolUtil' => 'backend',
+		'CustomFadeTransition' => 'backend',
+		'Difficulty' => 'backend',
+		'Discord' => 'backend',
+		'Highscore' => 'backend',
+		'InputFormatter' => 'backend',
+		'Mods' => 'backend',
+		'MusicBeatState' => 'backend',
+		'MusicBeatSubstate' => 'backend',
+		'NoteTypesConfig' => 'backend',
+		'Paths' => 'backend',
+		'PsychCamera' => 'backend',
+		'Rating' => 'backend',
+		'Section' => 'backend',
+		'Song' => 'backend',
+		'StageData' => 'backend',
+		'WeekData' => 'backend',
+
+		'CutsceneHandler' => 'cutscenes',
+		'DialogueBox' => 'cutscenes',
+		'DialogueBoxPsych' => 'cutscenes',
+		'DialogueCharacter' => 'cutscenes',
+
+		'FPSCounter' => 'debug',
+
+		'AchievementPopup' => 'objects',
+		'Alphabet' => 'objects',
+		'AttachedSprite' => 'objects',
+		'AttachedText' => 'objects',
+		'Bar' => 'objects',
+		'BGSprite' => 'objects',
+		'Character' => 'objects',
+		'CheckboxThingie' => 'objects',
+		'HealthIcon' => 'objects',
+		'MenuCharacter' => 'objects',
+		'MenuItem' => 'objects',
+		'MusicPlayer' => 'objects',
+		'Note' => 'objects',
+		'NoteSplash' => 'objects',
+		'StrumNote' => 'objects',
+		'TypedAlphabet' => 'objects',
+
+		'BaseOptionsMenu' => 'options',
+		'ControlsSubState' => 'options',
+		'GameplaySettingsSubState' => 'options',
+		'GraphicsSettingsSubState' => 'options',
+		'ModSettingsSubState' => 'options',
+		'NoteOffsetState' => 'options',
+		'NotesSubState' => 'options',
+		'Option' => 'options',
+		'OptionsState' => 'options',
+		'VisualsUISubState' => 'options',
+
+		'CallbackHandler' => 'psychlua',
+		'CustomSubstate' => 'psychlua',
+		'DebugLuaText' => 'psychlua',
+		'DeprecatedFunctions' => 'psychlua',
+		'ExtraFunctions' => 'psychlua',
+		'FlxAnimateFunctions' => 'psychlua',
+		'FunkinLua' => 'psychlua',
+		'HScript' => 'psychlua',
+		'LuaUtils' => 'psychlua',
+		'ModchartAnimateSprite' => 'psychlua',
+		'ModchartSprite' => 'psychlua',
+		'ReflectionFunctions' => 'psychlua',
+		'ShaderFunctions' => 'psychlua',
+		'TextFunctions' => 'psychlua',
+
+		'BlendModeEffect' => 'shaders',
+		'ColorSwap' => 'shaders',
+		'OverlayShader' => 'shaders',
+		'RGBPalette' => 'shaders',
+		'WiggleEffect' => 'shaders',
+
+		'AchievementsMenuState' => 'states',
+		'CreditsState' => 'states',
+		'FlashingState' => 'states',
+		'FreeplayState' => 'states',
+		'LoadingState' => 'states',
+		'MainMenuState' => 'states',
+		'ModsMenuState' => 'states',
+		'OutdatedState' => 'states',
+		'PlayState' => 'states',
+		'StoryMenuState' => 'states',
+		'TitleState' => 'states',
+
+		'CharacterEditorState' => 'states.editors',
+		'ChartingState' => 'states.editors',
+		'DialogueCharacterEditorState' => 'states.editors',
+		'DialogueEditorState' => 'states.editors',
+		'EditorPlayState' => 'states.editors',
+		'MasterEditorMenu' => 'states.editors',
+		'MenuCharacterEditorState' => 'states.editors',
+		'NoteSplashDebugState' => 'states.editors',
+		'WeekEditorState' => 'states.editors',
+
+		'GameOverSubstate' => 'substates',
+		'GameplayChangersSubstate' => 'substates',
+		'PauseSubState' => 'substates',
+		'Prompt' => 'substates',
+		'ResetScoreSubState' => 'substates',
+	]
 }
