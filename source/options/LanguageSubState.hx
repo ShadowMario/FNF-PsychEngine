@@ -1,7 +1,5 @@
 package options;
 
-import flixel.addons.transition.FlxTransitionableState;
-
 class LanguageSubState extends MusicBeatSubstate
 {
 	#if TRANSLATIONS_ALLOWED

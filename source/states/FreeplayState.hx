@@ -63,6 +63,16 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
+		if(WeekData.weeksList.length < 1)
+			{
+				FlxTransitionableState.skipNextTransIn = true;
+				persistentUpdate = false;
+				MusicBeatState.switchState(new states.ErrorState("NO WEEKS ADDED FOR FREEPLAY\n\nPress ACCEPT to go to the Week Editor Menu.\nPress BACK to return to Main Menu.",
+					function() MusicBeatState.switchState(new states.editors.WeekEditorState()),
+					function() MusicBeatState.switchState(new states.MainMenuState())));
+				return;
+			}
+
 		for (i in 0...WeekData.weeksList.length)
 		{
 			if(weekIsLocked(WeekData.weeksList[i])) continue;
@@ -204,6 +214,9 @@ class FreeplayState extends MusicBeatState
 	var stopMusicPlay:Bool = false;
 	override function update(elapsed:Float)
 	{
+		if(WeekData.weeksList.length < 1)
+			return;
+
 		if (FlxG.sound.music.volume < 0.7)
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 

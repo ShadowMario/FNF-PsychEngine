@@ -12,7 +12,6 @@ import haxe.Json;
 import flixel.util.FlxSpriteUtil;
 import objects.AttachedSprite;
 import options.ModSettingsSubState;
-import flixel.addons.transition.FlxTransitionableState;
 
 import openfl.display.BitmapData;
 import lime.utils.Assets;
