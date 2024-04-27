@@ -32,7 +32,7 @@ class ReflectionFunctions
 			return true;
 		});
 		Lua_helper.add_callback(lua, "getPropertyFromClass", function(classVar:String, variable:String, ?allowMaps:Bool = false) {
-			var className:String = Lua_Helper.resolveClass(classVar);
+			var className:String = LuaUtils.resolveClass(classVar);
 			var myClass:Dynamic = Type.resolveClass(className);
 			if(myClass == null)
 			{
@@ -51,7 +51,7 @@ class ReflectionFunctions
 			return LuaUtils.getVarInArray(myClass, variable, allowMaps);
 		});
 		Lua_helper.add_callback(lua, "setPropertyFromClass", function(classVar:String, variable:String, value:Dynamic, ?allowMaps:Bool = false) {
-			var className:String = Lua_Helper.resolveClass(classVar);
+			var className:String = LuaUtils.resolveClass(classVar);
 			var myClass:Dynamic = Type.resolveClass(className);
 			if(myClass == null)
 			{
@@ -139,7 +139,7 @@ class ReflectionFunctions
 			
 		});
 		Lua_helper.add_callback(lua, "callMethodFromClass", function(className:String, funcToRun:String, ?args:Array<Dynamic> = null) {
-			return callMethodFromObject(Type.resolveClass(className), funcToRun, parseInstances(args));
+			return callMethodFromObject(Type.resolveClass(LuaUtils.resolveClass(className)), funcToRun, parseInstances(args));
 		});
 
 		Lua_helper.add_callback(lua, "createInstance", function(variableToSave:String, className:String, ?args:Array<Dynamic> = null) {
@@ -147,7 +147,7 @@ class ReflectionFunctions
 			if(!PlayState.instance.variables.exists(variableToSave))
 			{
 				if(args == null) args = [];
-				var myType:Dynamic = Type.resolveClass(className);
+				var myType:Dynamic = Type.resolveClass(LuaUtils.resolveClass(className));
 		
 				if(myType == null)
 				{
@@ -204,6 +204,7 @@ class ReflectionFunctions
 					var lastIndex:Int = myArg.lastIndexOf('::');
 
 					var split:Array<String> = myArg.split('.');
+					//uhh i cannot figure out how this is supposed to work so i'm just gonna leave it be lmao
 					args[i] = (lastIndex > -1) ? Type.resolveClass(myArg.substring(0, lastIndex)) : PlayState.instance;
 					for (j in 0...split.length)
 					{
