@@ -1,3 +1,12 @@
+/*
+	The reason for all my changes here is so that icons can be more configurable out of the box, without having to change a thing from base source.
+	Yes, users can already make winning icons, but this supports a built in override, which I think is neat.
+
+	This also just seems like a good practice for icons anyway. As it provides a way to create really wacky icons by abusing the height value.
+
+	-- saturn-volv
+*/
+
 package objects;
 
 class HealthIcon extends FlxSprite
@@ -32,12 +41,15 @@ class HealthIcon extends FlxSprite
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
 			
 			var graphic = Paths.image(name, allowGPU);
-			loadGraphic(graphic, true, Math.floor(graphic.width / 2), Math.floor(graphic.height));
-			iconOffsets[0] = (width - 150) / 2;
-			iconOffsets[1] = (height - 150) / 2;
+			var iconSize:Int = Math.floor(graphic.width / graphic.height); // Creates a stepper for how many icons based from the height.
+			loadGraphic(graphic, true, Math.floor(graphic.width / iconSize), Math.floor(graphic.height));
+			iconOffsets[0] = (width - 150) / iconSize;
+			iconOffsets[1] = (height - 150) / iconSize;
 			updateHitbox();
 
-			animation.add(char, [0, 1], 0, false, isPlayer);
+			animation.add(char, 
+				      [for(i in 0...iconSize-1) i], // Creates an array from 0 of iconSize in length;
+				      0, false, isPlayer);
 			animation.play(char);
 			this.char = char;
 
