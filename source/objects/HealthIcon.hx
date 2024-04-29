@@ -34,6 +34,17 @@ class HealthIcon extends FlxSprite
 	}
 
 	private var iconSize:Int = 0;
+	/**
+	 * An index which decides which frame of the icon to use.
+	 */
+	@:isVar public var iconIndex(get, set):Int;
+	public function get_iconIndex() {
+		return iconIndex = animation?.curAnim.curFrame ?? 0;
+	}
+	public function set_iconIndex(i:Int):Int {
+		return iconIndex = animation.curAnim.curFrame = (i % iconSize);
+	}
+
 	private var iconOffsets:Array<Float> = [0, 0];
 	public function changeIcon(char:String, ?allowGPU:Bool = true) {
 		if(this.char != char) {
