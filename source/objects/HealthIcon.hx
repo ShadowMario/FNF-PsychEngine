@@ -33,6 +33,7 @@ class HealthIcon extends FlxSprite
 			setPosition(sprTracker.x + sprTracker.width + 12, sprTracker.y - 30);
 	}
 
+	private var iconSize:Int = 0;
 	private var iconOffsets:Array<Float> = [0, 0];
 	public function changeIcon(char:String, ?allowGPU:Bool = true) {
 		if(this.char != char) {
@@ -41,14 +42,14 @@ class HealthIcon extends FlxSprite
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
 			
 			var graphic = Paths.image(name, allowGPU);
-			var iconSize:Int = Math.floor(graphic.width / graphic.height); // Creates a stepper for how many icons based from the height.
+			iconSize = Math.floor(graphic.width / graphic.height);
 			loadGraphic(graphic, true, Math.floor(graphic.width / iconSize), Math.floor(graphic.height));
 			iconOffsets[0] = (width - 150) / iconSize;
 			iconOffsets[1] = (height - 150) / iconSize;
 			updateHitbox();
 
 			animation.add(char, 
-				      [for(i in 0...iconSize-1) i], // Creates an array from 0 of iconSize in length;
+				      [for(i in 0...iconSize) i], // Creates an array from 0 of iconSize in length;
 				      0, false, isPlayer);
 			animation.play(char);
 			this.char = char;
