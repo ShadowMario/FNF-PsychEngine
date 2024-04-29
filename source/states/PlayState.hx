@@ -1221,7 +1221,7 @@ class PlayState extends MusicBeatState
 		vocals.play();
 		opponentVocals.play();
 
-		if(startOnTime > 0) setSongTime(startOnTime - 500);
+		setSongTime(Math.max(0, startOnTime - 500));
 		startOnTime = 0;
 
 		if(paused) {
@@ -1603,18 +1603,16 @@ class PlayState extends MusicBeatState
 		#if FLX_PITCH FlxG.sound.music.pitch = playbackRate; #end
 		Conductor.songPosition = FlxG.sound.music.time;
 
-		if (Conductor.songPosition <= vocals.length)
+		var checkVocals = [vocals, opponentVocals];
+		for (voc in checkVocals)
 		{
-			vocals.time = Conductor.songPosition;
-			#if FLX_PITCH vocals.pitch = playbackRate; #end
-			vocals.play();
-		}
-
-		if (Conductor.songPosition <= opponentVocals.length)
-		{
-			opponentVocals.time = Conductor.songPosition;
-			#if FLX_PITCH opponentVocals.pitch = playbackRate; #end
-			opponentVocals.play();
+			if (Conductor.songPosition <= vocals.length)
+			{
+				voc.time = Conductor.songPosition;
+				#if FLX_PITCH voc.pitch = playbackRate; #end
+				voc.play();
+			}
+	
 		}
 	}
 
@@ -1676,17 +1674,12 @@ class PlayState extends MusicBeatState
 		if (startedCountdown && !paused)
 		{
 			Conductor.songPosition += elapsed * 1000 * playbackRate;
-			if(checkIfDesynced)
+			if (Conductor.songPosition >= 0)
 			{
-				var diff:Float = 20 * playbackRate;
-				var timeSub:Float = Conductor.songPosition - Conductor.offset;
-				if (Math.abs(FlxG.sound.music.time - timeSub) > diff
-					|| (opponentVocals.length > Conductor.songPosition && Math.abs(vocals.time - timeSub) > diff)
-					|| (opponentVocals.length > Conductor.songPosition && Math.abs(opponentVocals.time - timeSub) > diff))
-				{
-					resyncVocals();
-				}
-				checkIfDesynced = false;
+				var timeDiff:Float = Math.abs(FlxG.sound.music.time - Conductor.songPosition - Conductor.offset);
+				Conductor.songPosition = FlxMath.lerp(Conductor.songPosition, FlxG.sound.music.time, FlxMath.bound(elapsed * 2.5, 0, 1));
+				if (timeDiff > 1000 * playbackRate)
+					Conductor.songPosition = Conductor.songPosition + 1000 * FlxMath.signOf(timeDiff);
 			}
 		}
 
@@ -3073,13 +3066,9 @@ class PlayState extends MusicBeatState
 		super.destroy();
 	}
 
-	var checkIfDesynced:Bool = false;
 	var lastStepHit:Int = -1;
 	override function stepHit()
 	{
-		if (SONG.needsVoices && FlxG.sound.music.time >= -ClientPrefs.data.noteOffset)
-			checkIfDesynced = true;
-
 		super.stepHit();
 
 		if(curStep == lastStepHit) {
