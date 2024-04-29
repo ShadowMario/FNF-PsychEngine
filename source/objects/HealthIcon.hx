@@ -1,3 +1,12 @@
+/*
+	The reason for all my changes here is so that icons can be more configurable out of the box, without having to change a thing from base source.
+	Yes, users can already make winning icons, but this supports a built in override, which I think is neat.
+
+	This also just seems like a good practice for icons anyway. As it provides a way to create really wacky icons by abusing the height value.
+
+	-- saturn-volv
+*/
+
 package objects;
 
 class HealthIcon extends FlxSprite
@@ -24,6 +33,18 @@ class HealthIcon extends FlxSprite
 			setPosition(sprTracker.x + sprTracker.width + 12, sprTracker.y - 30);
 	}
 
+	private var iconSize:Int = 0;
+	/**
+	 * An index which decides which frame of the icon to use.
+	 */
+	@:isVar public var iconIndex(get, set):Int;
+	public function get_iconIndex() {
+		return iconIndex = animation?.curAnim.curFrame ?? 0;
+	}
+	public function set_iconIndex(i:Int):Int {
+		return iconIndex = animation.curAnim.curFrame = (i % iconSize);
+	}
+
 	private var iconOffsets:Array<Float> = [0, 0];
 	public function changeIcon(char:String, ?allowGPU:Bool = true) {
 		if(this.char != char) {
@@ -32,12 +53,15 @@ class HealthIcon extends FlxSprite
 			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/icon-face'; //Prevents crash from missing icon
 			
 			var graphic = Paths.image(name, allowGPU);
-			loadGraphic(graphic, true, Math.floor(graphic.width / 2), Math.floor(graphic.height));
-			iconOffsets[0] = (width - 150) / 2;
-			iconOffsets[1] = (height - 150) / 2;
+			iconSize = Math.floor(graphic.width / graphic.height);
+			loadGraphic(graphic, true, Math.floor(graphic.width / iconSize), Math.floor(graphic.height));
+			iconOffsets[0] = (width - 150) / iconSize;
+			iconOffsets[1] = (height - 150) / iconSize;
 			updateHitbox();
 
-			animation.add(char, [0, 1], 0, false, isPlayer);
+			animation.add(char, 
+				      [for(i in 0...iconSize) i], // Creates an array from 0 of iconSize in length;
+				      0, false, isPlayer);
 			animation.play(char);
 			this.char = char;
 
