@@ -186,7 +186,17 @@ class Main extends Sprite
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nUncaught Error: " + e.error;
+		/*
+		 * remove if you're modding and want the crash log message to contain the link
+		 * please remember to actually modify the link for the github page to report the issues to.
+		*/
+		// 
+		#if officialBuild
+		errMsg += "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+		#else
+		trace("[Main.hx:198]: If you plan on open sourcing your mod, you MIGHT wanna check this out and change the link two lines above this one.");
+		#end
 
 		if (!FileSystem.exists("./crash/"))
 			FileSystem.createDirectory("./crash/");
