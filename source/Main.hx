@@ -36,6 +36,15 @@ import haxe.io.Path;
 ')
 #end
 
+#if windows
+@:cppFileCode('
+	#include <windows.h>
+	#include <dwmapi.h>
+
+	#pragma comment(lib, "Dwmapi")
+')
+#end
+
 class Main extends Sprite
 {
 	var game = {
@@ -91,6 +100,13 @@ class Main extends Sprite
 		setupGame();
 	}
 
+	#if windows
+	@:functionCode('
+		HWND hwnd = GetActiveWindow();
+		const DWM_WINDOW_CORNER_PREFERENCE corner_preference = DWMWCP_DONOTROUND;
+		DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, &corner_preference, sizeof(corner_preference));
+	')
+	#end
 	private function setupGame():Void
 	{
 		var stageWidth:Int = Lib.current.stage.stageWidth;
