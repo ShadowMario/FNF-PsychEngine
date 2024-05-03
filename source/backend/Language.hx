@@ -43,6 +43,14 @@ class Language
 		}
 
 		if(!hasPhrases) ClientPrefs.data.language = ClientPrefs.defaultData.language;
+		
+		var alphaPath:String = getFileTranslation('images/alphabet');
+		if(alphaPath.startsWith('images/')) alphaPath = alphaPath.substr('images/'.length);
+		var pngPos:Int = alphaPath.indexOf('.png');
+		if(pngPos > -1) alphaPath = alphaPath.substring(0, pngPos);
+		AlphaCharacter.loadAlphabetData(alphaPath);
+		#else
+		AlphaCharacter.loadAlphabetData();
 		#end
 	}
 

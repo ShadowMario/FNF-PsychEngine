@@ -1,7 +1,6 @@
 package states;
 
 import backend.WeekData;
-import backend.Highscore;
 
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -70,24 +69,12 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		Paths.clearStoredMemory();
-
-		#if LUA_ALLOWED
-		Mods.pushGlobalMods();
-		#end
-		Mods.loadTopMod();
-
-		FlxG.fixedTimestep = false;
-		FlxG.game.focusLostFramerate = 60;
-		FlxG.keys.preventDefaultKeys = [TAB];
-
-		curWacky = FlxG.random.getObject(getIntroTextShit());
-
-		super.create();
-
-		FlxG.save.bind('funkin', CoolUtil.getSavePath());
-
 		ClientPrefs.loadPrefs();
 		Language.reloadPhrases();
+
+		super.create();
+		
+		curWacky = FlxG.random.getObject(getIntroTextShit());
 
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.data.checkForUpdates && !closedState) {
@@ -113,7 +100,6 @@ class TitleState extends MusicBeatState
 		}
 		#end
 
-		Highscore.load();
 
 		// IGNORE THIS!!!
 		titleJSON = tjson.TJSON.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));

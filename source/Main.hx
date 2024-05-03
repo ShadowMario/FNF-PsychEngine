@@ -29,6 +29,8 @@ import haxe.CallStack;
 import haxe.io.Path;
 #end
 
+import backend.Highscore;
+
 #if linux
 @:cppInclude('./external/gamemode_client.h')
 @:cppFileCode('
@@ -104,7 +106,16 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
-	
+
+		#if LUA_ALLOWED
+		Mods.pushGlobalMods();
+		#end
+		Mods.loadTopMod();
+
+		FlxG.save.bind('funkin', CoolUtil.getSavePath());
+
+		Highscore.load();
+
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
@@ -130,6 +141,10 @@ class Main extends Sprite
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
+
+		FlxG.fixedTimestep = false;
+		FlxG.game.focusLostFramerate = 60;
+		FlxG.keys.preventDefaultKeys = [TAB];
 		
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
