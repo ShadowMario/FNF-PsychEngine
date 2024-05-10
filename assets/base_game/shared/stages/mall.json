@@ -32,5 +32,11 @@
 			"christmas/fgSnow",
 			"christmas/santa"
 		]
+	},
+
+	"_editorMeta": {
+		"dad": "parents-christmas",
+		"boyfriend": "bf-christmas",
+		"gf": "gf-christmas"
 	}
 }

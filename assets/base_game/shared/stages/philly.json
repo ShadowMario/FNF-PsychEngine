@@ -30,5 +30,11 @@
 			"philly/train",
 			"philly/window"
 		]
+	},
+
+	"_editorMeta": {
+		"dad": "pico",
+		"boyfriend": "bf",
+		"gf": "gf"
 	}
 }

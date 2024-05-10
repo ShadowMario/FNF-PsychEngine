@@ -22,5 +22,11 @@
 		[
 			"halloween_bg_low"
 		]
+	},
+
+	"_editorMeta": {
+		"dad": "spooky",
+		"boyfriend": "bf",
+		"gf": "gf"
 	}
 }

@@ -29,5 +29,11 @@
 			"limo/limoSunset",
 			"limo/bgLimo"
 		]
+	},
+
+	"_editorMeta": {
+		"dad": "mom-car",
+		"boyfriend": "bf-car",
+		"gf": "gf-car"
 	}
 }

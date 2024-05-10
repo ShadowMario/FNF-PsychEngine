@@ -26,5 +26,11 @@
 			"stageback",
 			"stagefront"
 		]
+	},
+
+	"_editorMeta": {
+		"dad": "dad",
+		"boyfriend": "bf",
+		"gf": "gf"
 	}
 }

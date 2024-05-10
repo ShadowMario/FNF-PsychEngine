@@ -34,6 +34,8 @@ class WeekEditorState extends MusicBeatState
 	var weekThing:MenuItem;
 	var missingFileText:FlxText;
 
+	public static var unsavedProgress:Bool = false;
+
 	var weekFile:WeekFile = null;
 	public function new(weekFile:WeekFile = null)
 	{
@@ -125,23 +127,16 @@ class WeekEditorState extends MusicBeatState
 		UI_box.selected_tab_id = 'Week';
 		add(UI_box);
 
-		var loadWeekButton:FlxButton = new FlxButton(0, 650, "Load Week", function() {
-			loadWeek();
-		});
+		var loadWeekButton:FlxButton = new FlxButton(0, 650, "Load Week", function() loadWeek());
 		loadWeekButton.screenCenter(X);
 		loadWeekButton.x -= 120;
 		add(loadWeekButton);
 		
-		var freeplayButton:FlxButton = new FlxButton(0, 650, "Freeplay", function() {
-			MusicBeatState.switchState(new WeekEditorFreeplayState(weekFile));
-			
-		});
+		var freeplayButton:FlxButton = new FlxButton(0, 650, "Freeplay", function() MusicBeatState.switchState(new WeekEditorFreeplayState(weekFile)));
 		freeplayButton.screenCenter(X);
 		add(freeplayButton);
 	
-		var saveWeekButton:FlxButton = new FlxButton(0, 650, "Save Week", function() {
-			saveWeek(weekFile);
-		});
+		var saveWeekButton:FlxButton = new FlxButton(0, 650, "Save Week", function() saveWeek(weekFile));
 		saveWeekButton.screenCenter(X);
 		saveWeekButton.x += 120;
 		add(saveWeekButton);
@@ -193,6 +188,7 @@ class WeekEditorState extends MusicBeatState
 		hideCheckbox.callback = function()
 		{
 			weekFile.hideStoryMode = hideCheckbox.checked;
+			unsavedProgress = true;
 		};
 
 		tab_group.add(new FlxText(songsInputText.x, songsInputText.y - 18, 0, 'Songs:'));
@@ -230,12 +226,14 @@ class WeekEditorState extends MusicBeatState
 			weekFile.startUnlocked = !lockedCheckbox.checked;
 			lock.visible = lockedCheckbox.checked;
 			hiddenUntilUnlockCheckbox.alpha = 0.4 + 0.6 * (lockedCheckbox.checked ? 1 : 0);
+			unsavedProgress = true;
 		};
 
 		hiddenUntilUnlockCheckbox = new FlxUICheckBox(10, lockedCheckbox.y + 25, null, null, "Hidden until Unlocked", 110);
 		hiddenUntilUnlockCheckbox.callback = function()
 		{
 			weekFile.hiddenUntilUnlocked = hiddenUntilUnlockCheckbox.checked;
+			unsavedProgress = true;
 		};
 		hiddenUntilUnlockCheckbox.alpha = 0.4;
 
@@ -361,23 +359,31 @@ class WeekEditorState extends MusicBeatState
 	}
 	
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
+		if(id == FlxUICheckBox.CLICK_EVENT)
+			unsavedProgress = true;
+
 		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
 			if(sender == weekFileInputText) {
 				weekFileName = weekFileInputText.text.trim();
+				unsavedProgress = true;
 				reloadWeekThing();
 			} else if(sender == opponentInputText || sender == boyfriendInputText || sender == girlfriendInputText) {
 				weekFile.weekCharacters[0] = opponentInputText.text.trim();
 				weekFile.weekCharacters[1] = boyfriendInputText.text.trim();
 				weekFile.weekCharacters[2] = girlfriendInputText.text.trim();
+				unsavedProgress = true;
 				updateText();
 			} else if(sender == backgroundInputText) {
 				weekFile.weekBackground = backgroundInputText.text.trim();
+				unsavedProgress = true;
 				reloadBG();
 			} else if(sender == displayNameInputText) {
 				weekFile.storyName = displayNameInputText.text.trim();
+				unsavedProgress = true;
 				updateText();
 			} else if(sender == weekNameInputText) {
 				weekFile.weekName = weekNameInputText.text.trim();
+				unsavedProgress = true;
 			} else if(sender == songsInputText) {
 				var splittedText:Array<String> = songsInputText.text.trim().split(',');
 				for (i in 0...splittedText.length) {
@@ -400,10 +406,13 @@ class WeekEditorState extends MusicBeatState
 					}
 				}
 				updateText();
+				unsavedProgress = true;
 			} else if(sender == weekBeforeInputText) {
 				weekFile.weekBefore = weekBeforeInputText.text.trim();
+				unsavedProgress = true;
 			} else if(sender == difficultiesInputText) {
 				weekFile.difficulties = difficultiesInputText.text.trim();
+				unsavedProgress = true;
 			}
 		}
 	}
@@ -430,9 +439,14 @@ class WeekEditorState extends MusicBeatState
 
 		if(!blockInput) {
 			ClientPrefs.toggleVolumeKeys(true);
-			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			if(FlxG.keys.justPressed.ESCAPE)
+			{
+				if(!unsavedProgress)
+				{
+					MusicBeatState.switchState(new MasterEditorMenu());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				}
+				else openSubState(new ConfirmationPopupSubstate(function() unsavedProgress = false));
 			}
 		}
 
@@ -482,6 +496,7 @@ class WeekEditorState extends MusicBeatState
 
 					weekFileName = cutName;
 					_file = null;
+					unsavedProgress = false;
 					return;
 				}
 			}
@@ -537,6 +552,7 @@ class WeekEditorState extends MusicBeatState
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
 		FlxG.log.notice("Successfully saved file.");
+		unsavedProgress = false;
 	}
 
 	/**
@@ -658,6 +674,9 @@ class WeekEditorFreeplayState extends MusicBeatState
 	
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>)
 	{
+		if(id == FlxUICheckBox.CLICK_EVENT)
+			WeekEditorState.unsavedProgress = true;
+
 		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText))
 		{
 			weekFile.songs[curSelected][1] = iconInputText.text;
@@ -718,6 +737,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 		hideFreeplayCheckbox.callback = function()
 		{
 			weekFile.hideFreeplay = hideFreeplayCheckbox.checked;
+			WeekEditorState.unsavedProgress = true;
 		};
 		
 		tab_group.add(new FlxText(10, bgColorStepperR.y - 18, 0, 'Selected background Color R/G/B:'));
@@ -783,8 +803,12 @@ class WeekEditorFreeplayState extends MusicBeatState
 		} else {
 			ClientPrefs.toggleVolumeKeys(true);
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				if(!WeekEditorState.unsavedProgress)
+				{
+					MusicBeatState.switchState(new MasterEditorMenu());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				}
+				else openSubState(new ConfirmationPopupSubstate());
 			}
 
 			if(controls.UI_UP_P) changeSelection(-1);

@@ -54,6 +54,8 @@ class CharacterEditorState extends MusicBeatState
 	var UI_box:FlxUITabMenu;
 	var UI_characterbox:FlxUITabMenu;
 
+	var unsavedProgress:Bool = false;
+
 	public function new(char:String = null, goToPlayState:Bool = true)
 	{
 		this._char = char;
@@ -119,7 +121,7 @@ class CharacterEditorState extends MusicBeatState
 		animsTxtGroup.cameras = [camHUD];
 		add(animsTxtGroup);
 
-		var tipText:FlxText = new FlxText(FlxG.width - 300, FlxG.height - 24, 300, "Press F1 for Help", 16);
+		var tipText:FlxText = new FlxText(FlxG.width - 300, FlxG.height - 24, 300, "Press F1 for Help", 20);
 		tipText.cameras = [camHUD];
 		tipText.setFormat(null, 16, FlxColor.WHITE, RIGHT, OUTLINE_FAST, FlxColor.BLACK);
 		tipText.borderColor = FlxColor.BLACK;
@@ -705,6 +707,9 @@ class CharacterEditorState extends MusicBeatState
 	}
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
+		if(id == FlxUICheckBox.CLICK_EVENT)
+			unsavedProgress = true;
+
 		if(id != FlxUIInputText.CHANGE_EVENT && id != FlxUINumericStepper.CHANGE_EVENT) return;
 
 		if(sender is FlxUIInputText)
@@ -714,11 +719,18 @@ class CharacterEditorState extends MusicBeatState
 				healthIcon.changeIcon(healthIconInputText.text, false);
 				character.healthIcon = healthIconInputText.text;
 				if(lastIcon != healthIcon.getCharacter()) updatePresence();
+				unsavedProgress = true;
 			}
 			else if(sender == vocalsInputText)
+			{
 				character.vocalsFile = vocalsInputText.text;
+				unsavedProgress = true;
+			}
 			else if(sender == imageInputText)
+			{
 				character.imageFile = imageInputText.text;
+				unsavedProgress = true;
+			}
 		}
 		else if(sender is FlxUINumericStepper)
 		{
@@ -729,45 +741,54 @@ class CharacterEditorState extends MusicBeatState
 				character.scale.set(character.jsonScale, character.jsonScale);
 				character.updateHitbox();
 				updatePointerPos(false);
+				unsavedProgress = true;
 			}
 			else if(sender == positionXStepper)
 			{
 				character.positionArray[0] = positionXStepper.value;
 				updateCharacterPositions();
+				unsavedProgress = true;
 			}
 			else if(sender == positionYStepper)
 			{
 				character.positionArray[1] = positionYStepper.value;
 				updateCharacterPositions();
+				unsavedProgress = true;
 			}
 			else if(sender == singDurationStepper)
 			{
 				character.singDuration = singDurationStepper.value;
+				unsavedProgress = true;
 			}
 			else if(sender == positionCameraXStepper)
 			{
 				character.cameraPosition[0] = positionCameraXStepper.value;
 				updatePointerPos();
+				unsavedProgress = true;
 			}
 			else if(sender == positionCameraYStepper)
 			{
 				character.cameraPosition[1] = positionCameraYStepper.value;
 				updatePointerPos();
+				unsavedProgress = true;
 			}
 			else if(sender == healthColorStepperR)
 			{
 				character.healthColorArray[0] = Math.round(healthColorStepperR.value);
 				updateHealthBar();
+				unsavedProgress = true;
 			}
 			else if(sender == healthColorStepperG)
 			{
 				character.healthColorArray[1] = Math.round(healthColorStepperG.value);
 				updateHealthBar();
+				unsavedProgress = true;
 			}
 			else if(sender == healthColorStepperB)
 			{
 				character.healthColorArray[2] = Math.round(healthColorStepperB.value);
 				updateHealthBar();
+				unsavedProgress = true;
 			}
 		}
 	}
@@ -1033,8 +1054,12 @@ class CharacterEditorState extends MusicBeatState
 			FlxG.mouse.visible = false;
 			if(!_goToPlayState)
 			{
-				MusicBeatState.switchState(new states.editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				if(!unsavedProgress)
+				{
+					MusicBeatState.switchState(new states.editors.MasterEditorMenu());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				}
+				else openSubState(new ConfirmationPopupSubstate());
 			}
 			else MusicBeatState.switchState(new PlayState());
 			return;

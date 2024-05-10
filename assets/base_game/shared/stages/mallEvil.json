@@ -20,5 +20,11 @@
 			"christmas/evilSnow",
 			"christmas/evilTree"
 		]
+	},
+
+	"_editorMeta": {
+		"dad": "monster-christmas",
+		"boyfriend": "bf-christmas",
+		"gf": "gf-christmas"
 	}
 }

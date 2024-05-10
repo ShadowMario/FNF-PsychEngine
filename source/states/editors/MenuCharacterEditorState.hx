@@ -20,6 +20,7 @@ class MenuCharacterEditorState extends MusicBeatState
 	var characterFile:MenuCharacterFile = null;
 	var txtOffsets:FlxText;
 	var defaultCharacters:Array<String> = ['dad', 'bf', 'gf'];
+	var unsavedProgress:Bool = false;
 
 	override function create() {
 		characterFile = {
@@ -233,18 +234,25 @@ class MenuCharacterEditorState extends MusicBeatState
 	}
 
 	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
+		if(id == FlxUICheckBox.CLICK_EVENT)
+			unsavedProgress = true;
+
 		if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
 			if(sender == imageInputText) {
 				characterFile.image = imageInputText.text;
+				unsavedProgress = true;
 			} else if(sender == idleInputText) {
 				characterFile.idle_anim = idleInputText.text;
+				unsavedProgress = true;
 			} else if(sender == confirmInputText) {
 				characterFile.confirm_anim = confirmInputText.text;
+				unsavedProgress = true;
 			}
 		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
 			if (sender == scaleStepper) {
 				characterFile.scale = scaleStepper.value;
 				reloadSelectedCharacter();
+				unsavedProgress = true;
 			}
 		}
 	}
@@ -264,8 +272,12 @@ class MenuCharacterEditorState extends MusicBeatState
 		if(!blockInput) {
 			ClientPrefs.toggleVolumeKeys(true);
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new states.editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				if(!unsavedProgress)
+				{
+					MusicBeatState.switchState(new states.editors.MasterEditorMenu());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				}
+				else openSubState(new ConfirmationPopupSubstate());
 			}
 
 			var shiftMult:Int = 1;
