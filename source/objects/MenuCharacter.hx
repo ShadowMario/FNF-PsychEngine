@@ -10,7 +10,7 @@ typedef MenuCharacterFile = {
 	var idle_anim:String;
 	var confirm_anim:String;
 	var flipX:Bool;
-	var antialiasing:Bool;
+	var antialiasing:Null<Bool>;
 }
 
 class MenuCharacter extends FlxSprite
@@ -94,7 +94,7 @@ class MenuCharacter extends FlxSprite
 				offset.set(charFile.position[0], charFile.position[1]);
 				animation.play('idle');
 
-				antialiasing = charFile.antialiasing;
+				antialiasing = (charFile.antialiasing != false && ClientPrefs.data.antialiasing);
 		}
 	}
 }
