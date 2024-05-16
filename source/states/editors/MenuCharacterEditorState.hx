@@ -23,14 +23,17 @@ class MenuCharacterEditorState extends MusicBeatState
 	var unsavedProgress:Bool = false;
 
 	override function create() {
-		characterFile = {
+		characterFile =
+		{
 			image: 'Menu_Dad',
 			scale: 1,
 			position: [0, 0],
 			idle_anim: 'M Dad Idle',
 			confirm_anim: 'M Dad Idle',
-			flipX: false
+			flipX: false,
+			antialiasing: true
 		};
+		
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Menu Character Editor", "Editting: " + characterFile.image);
@@ -86,7 +89,7 @@ class MenuCharacterEditorState extends MusicBeatState
 			{name: 'Character', label: 'Character'},
 		];
 		UI_mainbox = new FlxUITabMenu(null, tabs, true);
-		UI_mainbox.resize(240, 180);
+		UI_mainbox.resize(240, 215);
 		UI_mainbox.x = FlxG.width - UI_mainbox.width - 100;
 		UI_mainbox.y = FlxG.height - UI_mainbox.height - 50;
 		UI_mainbox.scrollFactor.set();
@@ -148,6 +151,7 @@ class MenuCharacterEditorState extends MusicBeatState
 	var confirmInputText:FlxUIInputText;
 	var scaleStepper:FlxUINumericStepper;
 	var flipXCheckbox:FlxUICheckBox;
+	var antialiasingCheckbox:FlxUICheckBox;
 	function addCharacterUI() {
 		var tab_group = new FlxUI(null, UI_mainbox);
 		tab_group.name = "Character";
@@ -166,6 +170,14 @@ class MenuCharacterEditorState extends MusicBeatState
 			characterFile.flipX = flipXCheckbox.checked;
 		};
 
+		antialiasingCheckbox = new FlxUICheckBox(10, flipXCheckbox.y + 30, null, null, "Antialiasing", 100);
+		antialiasingCheckbox.checked = grpWeekCharacters.members[curTypeSelected].antialiasing;
+		antialiasingCheckbox.callback = function()
+		{
+			grpWeekCharacters.members[curTypeSelected].antialiasing = antialiasingCheckbox.checked;
+			characterFile.antialiasing = antialiasingCheckbox.checked;
+		};
+
 		var reloadImageButton:FlxButton = new FlxButton(140, confirmInputText.y + 30, "Reload Char", function() {
 			reloadSelectedCharacter();
 		});
@@ -177,6 +189,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		tab_group.add(new FlxText(10, idleInputText.y - 18, 0, 'Idle animation on the .XML:'));
 		tab_group.add(new FlxText(scaleStepper.x, scaleStepper.y - 18, 0, 'Scale:'));
 		tab_group.add(flipXCheckbox);
+		tab_group.add(antialiasingCheckbox);
 		tab_group.add(reloadImageButton);
 		tab_group.add(confirmDescText);
 		tab_group.add(imageInputText);
