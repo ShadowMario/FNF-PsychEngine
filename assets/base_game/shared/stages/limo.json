@@ -14,21 +14,12 @@
 	"camera_speed": 1,
 
 	"preload": {
-		"images":
-		[
-			"limo/limoDancer",
-			"limo/limoDrive",
-			"limo/fastCarLol",
-			"limo/limoSunset",
-			"limo/bgLimo",
-			"gore/"
-		],
-		"images_low":
-		[
-			"limo/fastCarLol",
-			"limo/limoSunset",
-			"limo/bgLimo"
-		]
+		"images/limo/limoDancer": 2,
+		"images/limo/limoDrive": 2,
+		"images/gore/": 2,
+		"images/limo/fastCarLol": 3,
+		"images/limo/limoSunset": 3,
+		"images/limo/bgLimo": 3
 	},
 
 	"_editorMeta": {

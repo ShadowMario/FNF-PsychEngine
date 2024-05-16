@@ -33,7 +33,6 @@ enum abstract LoadFilters(Int) from Int from UInt to Int to UInt
 
 	var STORY_MODE:Int = (1 << 2);
 	var FREEPLAY:Int = (1 << 3);
-	var CUTSCENE_ASSET:Int = (1 << 4);
 }
 
 class StageData {
@@ -217,7 +216,12 @@ class StageData {
 
 	public static function validateVisibility(filters:LoadFilters)
 	{
-		return ((ClientPrefs.data.lowQuality && (filters & LoadFilters.LOW_QUALITY) == LoadFilters.LOW_QUALITY) ||
-			(!ClientPrefs.data.lowQuality && (filters & LoadFilters.HIGH_QUALITY) == LoadFilters.HIGH_QUALITY));
+		if((filters & STORY_MODE) == STORY_MODE)
+			if(!PlayState.isStoryMode) return false;
+		else if((filters & FREEPLAY) == FREEPLAY)
+			if(PlayState.isStoryMode) return false;
+
+		return ((ClientPrefs.data.lowQuality && (filters & LOW_QUALITY) == LOW_QUALITY) ||
+			(!ClientPrefs.data.lowQuality && (filters & HIGH_QUALITY) == HIGH_QUALITY));
 	}
 }

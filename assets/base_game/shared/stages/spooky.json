@@ -14,14 +14,8 @@
 	"camera_speed": 1,
 
 	"preload": {
-		"images":
-		[
-			"halloween_bg"
-		],
-		"images_low":
-		[
-			"halloween_bg_low"
-		]
+		"images/halloween_bg": 2,
+		"images/halloween_bg_low": 1
 	},
 
 	"_editorMeta": {

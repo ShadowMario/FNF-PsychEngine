@@ -8,35 +8,22 @@
 	"opponent": [20, 100],
 
 	"preload": {
-		"images":
-		[
-			"tank0",
-			"tank1",
-			"tank2",
-			"tank3",
-			"tank4",
-			"tank5",
-			"tankClouds",
-			"tankMountains",
-			"tankBuildings",
-			"smokeLeft",
-			"smokeRight",
-			"tankWatchtower",
-			"tankGround",
-			"tankRolling",
-			"tankRuins",
-			"tankSky"
-		],
-		"images_low":
-		[
-			"tank0",
-			"tank2",
-			"tank5",
-			"tankGround",
-			"tankRolling",
-			"tankRuins",
-			"tankSky"
-		]
+		"images/tank0": 3,
+		"images/tank1": 2,
+		"images/tank2": 3,
+		"images/tank3": 2,
+		"images/tank4": 2,
+		"images/tank5": 3,
+		"images/tankClouds": 2,
+		"images/tankMountains": 2,
+		"images/tankBuildings": 2,
+		"images/smokeLeft": 2,
+		"images/smokeRight": 2,
+		"images/tankWatchtower": 2,
+		"images/tankGround": 3,
+		"images/tankRolling": 3,
+		"images/tankRuins": 3,
+		"images/tankSky": 3
 	},
 
 	"_editorMeta": {

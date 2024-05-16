@@ -14,22 +14,12 @@
 	"camera_speed": 1,
 
 	"preload": {
-		"images":
-		[
-			"philly/city",
-			"philly/street",
-			"philly/train",
-			"philly/window",
-			"philly/behindTrain",
-			"philly/sky"
-		],
-		"images_low":
-		[
-			"philly/city",
-			"philly/street",
-			"philly/train",
-			"philly/window"
-		]
+		"images/philly/city": 3,
+		"images/philly/street": 3,
+		"images/philly/train": 3,
+		"images/philly/window": 3,
+		"images/philly/behindTrain": 2,
+		"images/philly/sky": 2
 	},
 
 	"_editorMeta": {

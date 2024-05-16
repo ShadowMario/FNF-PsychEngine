@@ -14,12 +14,9 @@
 	"camera_speed": 1,
 
 	"preload": {
-		"images":
-		[
-			"christmas/evilBG",
-			"christmas/evilSnow",
-			"christmas/evilTree"
-		]
+		"images/christmas/evilBG": 3,
+		"images/christmas/evilSnow": 3,
+		"images/christmas/evilTree": 3
 	},
 
 	"_editorMeta": {
