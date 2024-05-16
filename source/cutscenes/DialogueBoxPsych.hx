@@ -189,7 +189,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 						daText.destroy();
 					}
 					updateBoxOffsets(box);
-					FlxG.sound.music.fadeOut(1, 0);
+					FlxG.sound.music.fadeOut(1, 0, (_) -> FlxG.sound.music.stop());
 				} else {
 					startNextDialog();
 				}

@@ -166,7 +166,7 @@ class DialogueBox extends FlxSpriteGroup
 						FlxG.sound.play(Paths.sound('clickText'), 0.8);	
 
 						if (songName == 'senpai' || songName == 'thorns')
-							FlxG.sound.music.fadeOut(1.5, 0);
+							FlxG.sound.music.fadeOut(1.5, 0, (_) -> FlxG.sound.music.stop());
 
 						new FlxTimer().start(0.2, function(tmr:FlxTimer)
 						{
