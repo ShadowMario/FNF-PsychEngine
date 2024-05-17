@@ -1,7 +1,10 @@
 package psychlua;
 
-import flixel.util.FlxSave;
 import openfl.utils.Assets;
+
+import flixel.input.keyboard.FlxKey;
+
+import flixel.util.FlxSave;
 
 //
 // Things to trivialize some dumb stuff like splitting strings on older Lua
@@ -14,9 +17,39 @@ class ExtraFunctions
 		var lua:State = funk.lua;
 		
 		// Keyboard & Gamepads
-		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String) return Reflect.getProperty(FlxG.keys.justPressed, name));
-		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String) return Reflect.getProperty(FlxG.keys.pressed, name));
-		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String) return Reflect.getProperty(FlxG.keys.justReleased, name));
+		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String) return Reflect.getProperty(FlxG.keys.justPressed, name.toUpperCase()));
+		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String) return Reflect.getProperty(FlxG.keys.pressed, name.toUpperCase()));
+		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String) return Reflect.getProperty(FlxG.keys.justReleased, name.toUpperCase()));
+
+		Lua_helper.add_callback(lua, "firstKeyJustPressed", function():String
+		{
+			var result:String = cast (FlxG.keys.firstJustPressed(), FlxKey).toString();
+
+			if (result == null || result.length < 1)
+				result = "NONE"; // "Why?" `FlxKey.toStringMap` does not contain `FlxKey.NONE`, so we need to have a check for it.
+
+			return result;
+		});
+
+		Lua_helper.add_callback(lua, "firstKeyPressed", function():String
+		{
+			var result:String = cast (FlxG.keys.firstPressed(), FlxKey).toString();
+
+			if (result == null || result.length < 1)
+				result = "NONE";
+
+			return result;
+		});
+
+		Lua_helper.add_callback(lua, "firstKeyJustReleased", function():String
+		{
+			var result:String = cast (FlxG.keys.firstJustReleased(), FlxKey).toString();
+
+			if (result == null || result.length < 1)
+				result = "NONE";
+
+			return result;
+		});
 
 		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String) return FlxG.gamepads.anyJustPressed(name));
 		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String) FlxG.gamepads.anyPressed(name));
