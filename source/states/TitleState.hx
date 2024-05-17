@@ -1,10 +1,8 @@
 package states;
 
 import backend.WeekData;
-import backend.Highscore;
 
 import flixel.input.keyboard.FlxKey;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
 import flixel.group.FlxGroup;
@@ -56,7 +54,7 @@ class TitleState extends MusicBeatState
 
 	#if TITLE_SCREEN_EASTER_EGG
 	var easterEggKeys:Array<String> = [
-		'SHADOW', 'RIVER', 'BBPANZU'
+		'SHADOW', 'RIVEREN', 'BBPANZU'
 	];
 	var allowedKeys:String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	var easterEggKeysBuffer:String = '';
@@ -71,23 +69,12 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		Paths.clearStoredMemory();
-
-		#if LUA_ALLOWED
-		Mods.pushGlobalMods();
-		#end
-		Mods.loadTopMod();
-
-		FlxG.fixedTimestep = false;
-		FlxG.game.focusLostFramerate = 60;
-		FlxG.keys.preventDefaultKeys = [TAB];
-
-		curWacky = FlxG.random.getObject(getIntroTextShit());
+		ClientPrefs.loadPrefs();
+		Language.reloadPhrases();
 
 		super.create();
-
-		FlxG.save.bind('funkin', CoolUtil.getSavePath());
-
-		ClientPrefs.loadPrefs();
+		
+		curWacky = FlxG.random.getObject(getIntroTextShit());
 
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.data.checkForUpdates && !closedState) {
@@ -113,7 +100,6 @@ class TitleState extends MusicBeatState
 		}
 		#end
 
-		Highscore.load();
 
 		// IGNORE THIS!!!
 		titleJSON = tjson.TJSON.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
@@ -125,7 +111,7 @@ class TitleState extends MusicBeatState
 			case 'SHADOW':
 				titleJSON.gfx += 210;
 				titleJSON.gfy += 40;
-			case 'RIVER':
+			case 'RIVEREN':
 				titleJSON.gfx += 180;
 				titleJSON.gfy += 40;
 			case 'BBPANZU':
@@ -182,12 +168,8 @@ class TitleState extends MusicBeatState
 
 	function startIntro()
 	{
-		if (!initialized)
-		{
-			if(FlxG.sound.music == null) {
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-			}
-		}
+		if (!initialized && FlxG.sound.music == null)
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 
 		Conductor.bpm = titleJSON.bpm;
 		persistentUpdate = true;
@@ -230,7 +212,7 @@ class TitleState extends MusicBeatState
 				gfDance.frames = Paths.getSparrowAtlas('ShadowBump');
 				gfDance.animation.addByPrefix('danceLeft', 'Shadow Title Bump', 24);
 				gfDance.animation.addByPrefix('danceRight', 'Shadow Title Bump', 24);
-			case 'RIVER':
+			case 'RIVEREN':
 				gfDance.frames = Paths.getSparrowAtlas('RiverBump');
 				gfDance.animation.addByIndices('danceLeft', 'River Title Bump', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'River Title Bump', [29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
@@ -325,7 +307,7 @@ class TitleState extends MusicBeatState
 	function getIntroTextShit():Array<Array<String>>
 	{
 		#if MODS_ALLOWED
-		var firstArray:Array<String> = Mods.mergeAllTextsNamed('data/introText.txt', Paths.getSharedPath());
+		var firstArray:Array<String> = Mods.mergeAllTextsNamed('data/introText.txt');
 		#else
 		var fullText:String = Assets.getText(Paths.txt('introText'));
 		var firstArray:Array<String> = fullText.split('\n');
@@ -444,7 +426,7 @@ class TitleState extends MusicBeatState
 								FlxG.save.data.psychDevsEasterEgg = word;
 							FlxG.save.flush();
 
-							FlxG.sound.play(Paths.sound('ToggleJingle'));
+							FlxG.sound.play(Paths.sound('secret'));
 
 							var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 							black.alpha = 0;
@@ -548,26 +530,14 @@ class TitleState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					#if PSYCH_WATERMARKS
 					createCoolText(['Psych Engine by'], 40);
-					#else
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-					#end
 				case 4:
-					#if PSYCH_WATERMARKS
 					addMoreText('Shadow Mario', 40);
 					addMoreText('Riveren', 40);
-					#else
-					addMoreText('present');
-					#end
 				case 5:
 					deleteCoolText();
 				case 6:
-					#if PSYCH_WATERMARKS
 					createCoolText(['Not associated', 'with'], -40);
-					#else
-					createCoolText(['In association', 'with'], -40);
-					#end
 				case 8:
 					addMoreText('newgrounds', -40);
 					ngSpr.visible = true;
@@ -599,6 +569,7 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
+			#if TITLE_SCREEN_EASTER_EGG
 			if (playJingle) //Ignore deez
 			{
 				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
@@ -608,7 +579,7 @@ class TitleState extends MusicBeatState
 				var sound:FlxSound = null;
 				switch(easteregg)
 				{
-					case 'RIVER':
+					case 'RIVEREN':
 						sound = FlxG.sound.play(Paths.sound('JingleRiver'));
 					case 'SHADOW':
 						FlxG.sound.play(Paths.sound('JingleShadow'));
@@ -651,7 +622,7 @@ class TitleState extends MusicBeatState
 				}
 				playJingle = false;
 			}
-			else //Default! Edit this one!!
+			else #end //Default! Edit this one!!
 			{
 				remove(ngSpr);
 				remove(credGroup);

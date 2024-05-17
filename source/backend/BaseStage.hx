@@ -19,8 +19,8 @@ enum Countdown
 
 class BaseStage extends FlxBasic
 {
-	private var game(default, set):Dynamic = PlayState.instance;
-	public var onPlayState:Bool = false;
+	private var game(get, never):Dynamic;
+	public var onPlayState(get, never):Bool;
 
 	// some variables for convenience
 	public var paused(get, never):Bool;
@@ -47,15 +47,14 @@ class BaseStage extends FlxBasic
 
 	public function new()
 	{
-		this.game = MusicBeatState.getState();
-		if(this.game == null)
+		if(game == null)
 		{
-			FlxG.log.warn('Invalid state for the stage added!');
+			FlxG.log.error('Invalid state for the stage added!');
 			destroy();
 		}
 		else 
 		{
-			this.game.stages.push(this);
+			game.stages.push(this);
 			super();
 			create();
 		}
@@ -87,13 +86,13 @@ class BaseStage extends FlxBasic
 	public function eventPushedUnique(event:EventNote) {}
 
 	// Things to replace FlxGroup stuff and inject sprites directly into the state
-	function add(object:FlxBasic) game.add(object);
-	function remove(object:FlxBasic) game.remove(object);
-	function insert(position:Int, object:FlxBasic) game.insert(position, object);
+	function add(object:FlxBasic) return FlxG.state.add(object);
+	function remove(object:FlxBasic) return FlxG.state.remove(object);
+	function insert(position:Int, object:FlxBasic) return FlxG.state.insert(position, object);
 	
-	public function addBehindGF(obj:FlxBasic) insert(members.indexOf(game.gfGroup), obj);
-	public function addBehindBF(obj:FlxBasic) insert(members.indexOf(game.boyfriendGroup), obj);
-	public function addBehindDad(obj:FlxBasic) insert(members.indexOf(game.dadGroup), obj);
+	public function addBehindGF(obj:FlxBasic) return insert(members.indexOf(game.gfGroup), obj);
+	public function addBehindBF(obj:FlxBasic) return insert(members.indexOf(game.boyfriendGroup), obj);
+	public function addBehindDad(obj:FlxBasic) return insert(members.indexOf(game.dadGroup), obj);
 	public function setDefaultGF(name:String) //Fix for the Chart Editor on Base Game stages
 	{
 		var gfVersion:String = PlayState.SONG.gfVersion;
@@ -119,8 +118,8 @@ class BaseStage extends FlxBasic
 	// overrides
 	function startCountdown() if(onPlayState) return PlayState.instance.startCountdown(); else return false;
 	function endSong() if(onPlayState)return PlayState.instance.endSong(); else return false;
-	function moveCameraSection() if(onPlayState) moveCameraSection();
-	function moveCamera(isDad:Bool) if(onPlayState) moveCamera(isDad);
+	function moveCameraSection() if(onPlayState) PlayState.instance.moveCameraSection();
+	function moveCamera(isDad:Bool) if(onPlayState) PlayState.instance.moveCamera(isDad);
 	inline private function get_paused() return game.paused;
 	inline private function get_songName() return game.songName;
 	inline private function get_isStoryMode() return PlayState.isStoryMode;
@@ -138,12 +137,9 @@ class BaseStage extends FlxBasic
 		return value;
 	}
 	inline private function get_members() return game.members;
-	inline private function set_game(value:MusicBeatState)
-	{
-		onPlayState = (Std.isOfType(value, states.PlayState));
-		game = value;
-		return value;
-	}
+
+	inline private function get_game() return cast FlxG.state;
+	inline private function get_onPlayState() return (Std.isOfType(FlxG.state, states.PlayState));
 
 	inline private function get_boyfriend():Character return game.boyfriend;
 	inline private function get_dad():Character return game.dad;

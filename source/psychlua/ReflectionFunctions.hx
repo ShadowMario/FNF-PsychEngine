@@ -19,13 +19,13 @@ class ReflectionFunctions
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String, ?allowMaps:Bool = false) {
 			var split:Array<String> = variable.split('.');
 			if(split.length > 1)
-				return LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split, true, true, allowMaps), split[split.length-1], allowMaps);
+				return LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split, true, allowMaps), split[split.length-1], allowMaps);
 			return LuaUtils.getVarInArray(LuaUtils.getTargetInstance(), variable, allowMaps);
 		});
-		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic, allowMaps:Bool = false) {
+		Lua_helper.add_callback(lua, "setProperty", function(variable:String, value:Dynamic, ?allowMaps:Bool = false) {
 			var split:Array<String> = variable.split('.');
 			if(split.length > 1) {
-				LuaUtils.setVarInArray(LuaUtils.getPropertyLoop(split, true, true, allowMaps), split[split.length-1], value, allowMaps);
+				LuaUtils.setVarInArray(LuaUtils.getPropertyLoop(split, true, allowMaps), split[split.length-1], value, allowMaps);
 				return true;
 			}
 			LuaUtils.setVarInArray(LuaUtils.getTargetInstance(), variable, value, allowMaps);
@@ -73,7 +73,7 @@ class ReflectionFunctions
 			var split:Array<String> = obj.split('.');
 			var realObject:Dynamic = null;
 			if(split.length > 1)
-				realObject = LuaUtils.getPropertyLoop(split, true, false, allowMaps);
+				realObject = LuaUtils.getPropertyLoop(split, false, allowMaps);
 			else
 				realObject = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
 
@@ -99,7 +99,7 @@ class ReflectionFunctions
 			var split:Array<String> = obj.split('.');
 			var realObject:Dynamic = null;
 			if(split.length > 1)
-				realObject = LuaUtils.getPropertyLoop(split, true, false, allowMaps);
+				realObject = LuaUtils.getPropertyLoop(split, false, allowMaps);
 			else
 				realObject = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
 
@@ -142,7 +142,7 @@ class ReflectionFunctions
 
 		Lua_helper.add_callback(lua, "createInstance", function(variableToSave:String, className:String, ?args:Array<Dynamic> = null) {
 			variableToSave = variableToSave.trim().replace('.', '');
-			if(!PlayState.instance.variables.exists(variableToSave))
+			if(!MusicBeatState.getVariables().exists(variableToSave))
 			{
 				if(args == null) args = [];
 				var myType:Dynamic = Type.resolveClass(className);
@@ -155,7 +155,7 @@ class ReflectionFunctions
 
 				var obj:Dynamic = Type.createInstance(myType, args);
 				if(obj != null)
-					PlayState.instance.variables.set(variableToSave, obj);
+					MusicBeatState.getVariables().set(variableToSave, obj);
 				else
 					FunkinLua.luaTrace('createInstance: Failed to create $variableToSave, arguments are possibly wrong.', false, false, FlxColor.RED);
 
@@ -165,9 +165,9 @@ class ReflectionFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "addInstance", function(objectName:String, ?inFront:Bool = false) {
-			if(PlayState.instance.variables.exists(objectName))
+			if(MusicBeatState.getVariables().exists(objectName))
 			{
-				var obj:Dynamic = PlayState.instance.variables.get(objectName);
+				var obj:Dynamic = MusicBeatState.getVariables().get(objectName);
 				if (inFront)
 					LuaUtils.getTargetInstance().add(obj);
 				else

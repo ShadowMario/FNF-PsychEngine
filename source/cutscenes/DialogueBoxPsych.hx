@@ -18,7 +18,7 @@ typedef DialogueLine = {
 	var text:Null<String>;
 	var boxState:Null<String>;
 	var speed:Null<Float>;
-	var sound:Null<String>;
+	@:optional var sound:Null<String>;
 }
 
 // TO DO: Clean code? Maybe? idk
@@ -189,7 +189,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 						daText.destroy();
 					}
 					updateBoxOffsets(box);
-					FlxG.sound.music.fadeOut(1, 0);
+					FlxG.sound.music.fadeOut(1, 0, (_) -> FlxG.sound.music.stop());
 				} else {
 					startNextDialog();
 				}
@@ -374,14 +374,25 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		}
 	}
 
-	public static function parseDialogue(path:String):DialogueFile {
+	inline public static function parseDialogue(path:String):DialogueFile {
 		#if MODS_ALLOWED
-		if(FileSystem.exists(path))
-		{
-			return cast Json.parse(File.getContent(path));
-		}
+		return cast (FileSystem.exists(path)) ? Json.parse(File.getContent(path)) : dummy();
+		#else
+		return cast (Assets.exists(path, TEXT)) ? Json.parse(Assets.getText(path)) : dummy();
 		#end
-		return cast Json.parse(Assets.getText(path));
+	}
+
+	inline public static function dummy():DialogueFile
+	{
+		return { dialogue: [
+			{
+				expression: "talk",
+				text: "DIALOGUE NOT FOUND",
+				boxState: "normal",
+				speed: 0.05,
+				portrait: "bf"
+			}
+		]};
 	}
 
 	public static function updateBoxOffsets(box:FlxSprite) { //Had to make it static because of the editors

@@ -4,8 +4,6 @@ import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
 
-import flixel.addons.transition.FlxTransitionableState;
-
 import flixel.util.FlxStringUtil;
 
 import states.StoryMenuState;
@@ -90,13 +88,13 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.updateHitbox();
 		add(levelDifficulty);
 
-		var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, "Blueballed: " + PlayState.deathCounter, 32);
+		var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, Language.getPhrase("blueballed", "Blueballed: {1}", [PlayState.deathCounter]), 32);
 		blueballedTxt.scrollFactor.set();
 		blueballedTxt.setFormat(Paths.font('vcr.ttf'), 32);
 		blueballedTxt.updateHitbox();
 		add(blueballedTxt);
 
-		practiceText = new FlxText(20, 15 + 101, 0, "PRACTICE MODE", 32);
+		practiceText = new FlxText(20, 15 + 101, 0, Language.getPhrase("Practice Mode").toUpperCase(), 32);
 		practiceText.scrollFactor.set();
 		practiceText.setFormat(Paths.font('vcr.ttf'), 32);
 		practiceText.x = FlxG.width - (practiceText.width + 20);
@@ -104,7 +102,7 @@ class PauseSubState extends MusicBeatSubstate
 		practiceText.visible = PlayState.instance.practiceMode;
 		add(practiceText);
 
-		var chartingText:FlxText = new FlxText(20, 15 + 101, 0, "CHARTING MODE", 32);
+		var chartingText:FlxText = new FlxText(20, 15 + 101, 0, Language.getPhrase("Charting Mode").toUpperCase(), 32);
 		chartingText.scrollFactor.set();
 		chartingText.setFormat(Paths.font('vcr.ttf'), 32);
 		chartingText.x = FlxG.width - (chartingText.width + 20);
@@ -353,36 +351,19 @@ class PauseSubState extends MusicBeatSubstate
 	override function destroy()
 	{
 		pauseMusic.destroy();
-
 		super.destroy();
 	}
 
 	function changeSelection(change:Int = 0):Void
 	{
-		curSelected += change;
-
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
-
-		if (curSelected < 0)
-			curSelected = menuItems.length - 1;
-		if (curSelected >= menuItems.length)
-			curSelected = 0;
-
-		var bullShit:Int = 0;
-
-		for (item in grpMenuShit.members)
+		curSelected = FlxMath.wrap(curSelected + change, 0, menuItems.length - 1);
+		for (num => item in grpMenuShit.members)
 		{
-			item.targetY = bullShit - curSelected;
-			bullShit++;
-
+			item.targetY = num - curSelected;
 			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
-
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
-
 				if(item == skipTimeTracker)
 				{
 					curTime = Math.max(0, Conductor.songPosition);
@@ -392,23 +373,25 @@ class PauseSubState extends MusicBeatSubstate
 		}
 		missingText.visible = false;
 		missingTextBG.visible = false;
+		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 	}
 
 	function regenMenu():Void {
-		for (i in 0...grpMenuShit.members.length) {
-			var obj = grpMenuShit.members[0];
+		for (i in 0...grpMenuShit.members.length)
+		{
+			var obj:Alphabet = grpMenuShit.members[0];
 			obj.kill();
 			grpMenuShit.remove(obj, true);
 			obj.destroy();
 		}
 
-		for (i in 0...menuItems.length) {
-			var item = new Alphabet(90, 320, menuItems[i], true);
+		for (num => str in menuItems) {
+			var item = new Alphabet(90, 320, Language.getPhrase('pause_$str', str), true);
 			item.isMenuItem = true;
-			item.targetY = i;
+			item.targetY = num;
 			grpMenuShit.add(item);
 
-			if(menuItems[i] == 'Skip Time')
+			if(str == 'Skip Time')
 			{
 				skipTimeText = new FlxText(0, 0, 0, '', 64);
 				skipTimeText.setFormat(Paths.font("vcr.ttf"), 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -435,7 +418,5 @@ class PauseSubState extends MusicBeatSubstate
 	}
 
 	function updateSkipTimeText()
-	{
 		skipTimeText.text = FlxStringUtil.formatTime(Math.max(0, Math.floor(curTime / 1000)), false) + ' / ' + FlxStringUtil.formatTime(Math.max(0, Math.floor(FlxG.sound.music.length / 1000)), false);
-	}
 }

@@ -1,0 +1,105 @@
+{
+	"allowed": "abcdefghijklmnopqrstuvwxyz0123456789áéíóúàèìòùâêîôûãëïõüäöåøæñçšžýÿß&()[]*+-<>'\"!?.❝❞_#$%:;@^,\\/|~¡¿{}•",
+	
+	"characters":
+	{
+		"ç": {
+			"bold": [0, -11]
+		},
+		"&": {
+			"bold": [0, 2]
+		},
+		"]": {
+			"bold": [0, -1]
+		},
+		"*": {
+			"normal": [0, 28],
+			"bold": [0, 40]
+		},
+		"+": {
+			"normal": [0, 7],
+			"bold": [0, 12]
+		},
+		"-": {
+			"normal": [0, 16],
+			"bold": [0, 16]
+		},
+		"<": {
+			"bold": [0, -2]
+		},
+		">": {
+			"bold": [0, -2]
+		},
+		"'": {
+			"animation": "apostrophe",
+			"normal": [0, 32],
+			"bold": [0, 40]
+		},
+		"\"": {
+			"animation": "quote",
+			"normal": [0, 32],
+			"bold": [0, 40]
+		},
+		"!": {
+			"animation": "exclamation"
+		},
+		"?": {
+			"animation": "question"
+		},
+		".": {
+			"animation": "period"
+		},
+		"❝": {
+			"animation": "start quote",
+			"normal": [0, 24],
+			"bold": [0, 40]
+		},
+		"❞": {
+			"animation": "end quote",
+			"normal": [0, 24],
+			"bold": [0, 40]
+		},
+		":": {
+			"normal": [0, 2],
+			"bold": [0, 8]
+		},
+		";": {
+			"normal": [0, -2],
+			"bold": [0, 4]
+		},
+		"^": {
+			"normal": [0, 28],
+			"bold": [0, 38]
+		},
+		",": {
+			"animation": "comma",
+			"normal": [0, -6],
+			"bold": [0, -4]
+		},
+		"\\": {
+			"animation": "back slash"
+		},
+		"/": {
+			"animation": "forward slash"
+		},
+		"~": {
+			"normal": [0, 16],
+			"bold": [0, 20]
+		},
+		"¡": {
+			"animation": "inverted exclamation",
+			"normal": [0, -20],
+			"bold": [0, -20]
+		},
+		"¿": {
+			"animation": "inverted question",
+			"normal": [0, -20],
+			"bold": [0, -20]
+		},
+		"•": {
+			"animation": "bullet",
+			"normal": [0, 18],
+			"bold": [0, 20]
+		}
+	}
+}

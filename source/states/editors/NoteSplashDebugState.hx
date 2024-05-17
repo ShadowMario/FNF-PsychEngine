@@ -444,9 +444,7 @@ class NoteSplashDebugState extends MusicBeatState
 	function changeSelection(change:Int = 0)
 	{
 		var max:Int = Note.colArray.length;
-		curSelected += change;
-		if(curSelected < 0) curSelected = max - 1;
-		else if(curSelected >= max) curSelected = 0;
+		curSelected = FlxMath.wrap(curSelected + change, 0, max - 1);
 
 		selection.x = curSelected * 220 + 220;
 		updateOffsetText();

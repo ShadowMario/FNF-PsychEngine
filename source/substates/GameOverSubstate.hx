@@ -16,7 +16,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	var moveCamera:Bool = false;
 	var playingDeathSound:Bool = false;
 
-	var stageSuffix:String = "";
+	var stagePostfix:String = "";
 
 	public static var characterName:String = 'bf-dead';
 	public static var deathSoundName:String = 'fnf_loss_sfx';
@@ -110,7 +110,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			{
 				if(boyfriend.animation.curAnim.curFrame >= 12 && !moveCamera)
 				{
-					FlxG.camera.follow(camFollow, LOCKON, 0.6);
+					FlxG.camera.follow(camFollow, LOCKON, 0.01);
 					moveCamera = true;
 				}
 
