@@ -181,13 +181,13 @@ class ReflectionFunctions
 			else FunkinLua.luaTrace('addInstance: Can\'t add what doesn\'t exist~ ($objectName)', false, false, FlxColor.RED);
 		});
 		Lua_helper.add_callback(lua, "removeInstance", function(objectName:String, destroy:Bool = true) {
-			if(PlayState.instance.variables.exists(objectName)) {
-				var obj:Dynamic = PlayState.instance.variables.get(objectName);
+			if(MusicBeatState.getVariables().exists(objectName)) {
+				var obj:Dynamic = MusicBeatState.getVariables().get(objectName);
 				LuaUtils.getTargetInstance().remove(obj, true);
 				if(destroy) {
 					obj.kill();
 					obj.destroy();
-					PlayState.instance.variables.remove(objectName);
+					MusicBeatState.getVariables().remove(objectName);
 				}
 			}
 			else FunkinLua.luaTrace('removeInstance: Variable $objectName does not exist and cannot be removed!');
