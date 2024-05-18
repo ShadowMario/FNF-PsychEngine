@@ -213,6 +213,7 @@ class WeekEditorState extends MusicBeatState
 
 	var weekBeforeInputText:FlxUIInputText;
 	var difficultiesInputText:FlxUIInputText;
+	var defDifficultyInputText:FlxUIInputText;
 	var lockedCheckbox:FlxUICheckBox;
 	var hiddenUntilUnlockCheckbox:FlxUICheckBox;
 
@@ -242,12 +243,18 @@ class WeekEditorState extends MusicBeatState
 
 		difficultiesInputText = new FlxUIInputText(10, weekBeforeInputText.y + 60, 200, '', 8);
 		blockPressWhileTypingOn.push(difficultiesInputText);
+
+		defDifficultyInputText = new FlxUIInputText(10, difficultiesInputText.y + 90, 200, '', 8);
+		blockPressWhileTypingOn.push(defDifficultyInputText);
 		
 		tab_group.add(new FlxText(weekBeforeInputText.x, weekBeforeInputText.y - 28, 0, 'Week File name of the Week you have\nto finish for Unlocking:'));
-		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y - 20, 0, 'Difficulties:'));
-		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y + 20, 0, 'Default difficulties are "Easy, Normal, Hard"\nwithout quotes.'));
+		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y - 20, 0, 'Difficulty List:'));
+		tab_group.add(new FlxText(difficultiesInputText.x, difficultiesInputText.y + 20, 0, 'Default list is "Easy, Normal, Hard" without\nquotes.'));
+		tab_group.add(new FlxText(defDifficultyInputText.x, defDifficultyInputText.y - 20, 0, 'Default Difficulty:'));
+		tab_group.add(new FlxText(defDifficultyInputText.x, defDifficultyInputText.y + 20, 0, 'Default difficulty is "Normal" without quotes.'));
 		tab_group.add(weekBeforeInputText);
 		tab_group.add(difficultiesInputText);
+		tab_group.add(defDifficultyInputText);
 		tab_group.add(hiddenUntilUnlockCheckbox);
 		tab_group.add(lockedCheckbox);
 		UI_box.addGroup(tab_group);
@@ -275,6 +282,9 @@ class WeekEditorState extends MusicBeatState
 
 		difficultiesInputText.text = '';
 		if(weekFile.difficulties != null) difficultiesInputText.text = weekFile.difficulties;
+
+		defDifficultyInputText.text = '';
+		if(weekFile.defaultDifficulty != null) defDifficultyInputText.text = weekFile.defaultDifficulty;
 
 		lockedCheckbox.checked = !weekFile.startUnlocked;
 		lock.visible = lockedCheckbox.checked;
@@ -412,6 +422,9 @@ class WeekEditorState extends MusicBeatState
 				unsavedProgress = true;
 			} else if(sender == difficultiesInputText) {
 				weekFile.difficulties = difficultiesInputText.text.trim();
+				unsavedProgress = true;
+			} else if(sender == defDifficultyInputText) {
+				weekFile.defaultDifficulty = defDifficultyInputText.text.trim();
 				unsavedProgress = true;
 			}
 		}

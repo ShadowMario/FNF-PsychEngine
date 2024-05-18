@@ -78,7 +78,11 @@ class Highscore
 
 	public static function formatSong(song:String, diff:Int):String
 	{
-		return Paths.formatToSongPath(song) + Difficulty.getFilePath(diff);
+		var diff:String = Difficulty.getFilePath(diff);
+		song = Paths.formatToSongPath(song);
+
+		if (Paths.fileExists('data/$song/' + song + diff + '.json', TEXT)) return song + diff;
+		return song;
 	}
 
 	public static function getScore(song:String, diff:Int):Int
