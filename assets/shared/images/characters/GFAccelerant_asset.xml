@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="GFAccelerant_asset.png">
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="GF Dancing Beat0000" x="5561" y="4482" width="703" height="638" frameX="0" frameY="-12" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0001" x="1415" y="4670" width="707" height="638" frameX="2" frameY="-12" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0002" x="2122" y="4670" width="703" height="636" frameX="0" frameY="-14" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0003" x="5561" y="3205" width="703" height="639" frameX="0" frameY="-11" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0004" x="5561" y="1924" width="703" height="641" frameX="0" frameY="-9" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0005" x="4854" y="3761" width="703" height="652" frameX="0" frameY="2" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0006" x="4854" y="3761" width="703" height="652" frameX="0" frameY="2" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0007" x="4854" y="2457" width="703" height="652" frameX="0" frameY="2" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0008" x="4854" y="2457" width="703" height="652" frameX="0" frameY="2" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0009" x="4854" y="2457" width="703" height="652" frameX="0" frameY="2" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0010" x="4854" y="3109" width="703" height="652" frameX="0" frameY="2" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0011" x="4854" y="3109" width="703" height="652" frameX="0" frameY="2" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0012" x="5561" y="2565" width="703" height="640" frameX="0" frameY="-10" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0013" x="0" y="4670" width="707" height="640" frameX="2" frameY="-10" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0014" x="3667" y="3810" width="707" height="640" frameX="2" frameY="-10" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0015" x="5561" y="642" width="703" height="641" frameX="0" frameY="-9" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0016" x="5561" y="1283" width="703" height="641" frameX="0" frameY="-9" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0017" x="5561" y="0" width="703" height="642" frameX="0" frameY="-8" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0018" x="1558" y="3810" width="703" height="647" frameX="0" frameY="-3" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0019" x="1558" y="3810" width="703" height="647" frameX="0" frameY="-3" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0020" x="1558" y="3810" width="703" height="647" frameX="0" frameY="-3" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0021" x="2964" y="3810" width="703" height="646" frameX="0" frameY="-4" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0022" x="2964" y="3810" width="703" height="646" frameX="0" frameY="-4" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="GF Dancing Beat0023" x="2261" y="3810" width="703" height="646" frameX="0" frameY="-4" frameWidth="703" frameHeight="648"/>
+	<SubTexture name="dies0000" x="2721" y="1046" width="1172" height="1005" frameX="-102" frameY="-102" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0001" x="1320" y="1219" width="1206" height="976" frameX="-102" frameY="-131" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0002" x="0" y="1219" width="1320" height="977" frameX="-24" frameY="-130" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0003" x="0" y="2196" width="1230" height="832" frameX="-18" frameY="-314" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0004" x="2721" y="0" width="1199" height="1046" frameX="-18" frameY="-314" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0005" x="0" y="0" width="1199" height="1219" frameX="-18" frameY="-310" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0006" x="1230" y="2196" width="1199" height="797" frameX="-18" frameY="-310" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0007" x="4854" y="885" width="706" height="789" frameX="-497" frameY="-318" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0008" x="4854" y="885" width="706" height="789" frameX="-497" frameY="-318" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0009" x="4854" y="1674" width="702" height="783" frameX="-497" frameY="-324" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="dies0010" x="3920" y="2531" width="702" height="356" frameX="-497" frameY="-751" frameWidth="1342" frameHeight="1527"/>
+	<SubTexture name="idle0000" x="3268" y="3028" width="821" height="767" frameX="0" frameY="-30" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="idle0001" x="739" y="3810" width="819" height="760" frameX="0" frameY="-37" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="idle0002" x="1630" y="3028" width="819" height="776" frameX="0" frameY="-21" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="idle0003" x="2449" y="3028" width="819" height="776" frameX="0" frameY="-21" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="idle0004" x="2429" y="2196" width="817" height="781" frameX="0" frameY="-16" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="idle0005" x="3920" y="1750" width="817" height="781" frameX="0" frameY="-16" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="idle0006" x="0" y="3028" width="815" height="782" frameX="0" frameY="-15" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="idle0007" x="815" y="3028" width="815" height="782" frameX="0" frameY="-15" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="idle0008" x="3920" y="951" width="814" height="799" frameX="0" frameY="2" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="idle0009" x="3920" y="951" width="814" height="799" frameX="0" frameY="2" frameWidth="819" frameHeight="795"/>
+	<SubTexture name="land0000" x="3920" y="0" width="934" height="951" frameX="2" frameY="-356" frameWidth="1526" frameHeight="1305"/>
+	<SubTexture name="land0001" x="1199" y="0" width="1522" height="901" frameX="2" frameY="-406" frameWidth="1526" frameHeight="1305"/>
+	<SubTexture name="land0002" x="0" y="3810" width="739" height="860" frameX="2" frameY="-447" frameWidth="1526" frameHeight="1305"/>
+	<SubTexture name="shesback0000" x="4854" y="0" width="707" height="885" frameX="2" frameY="-168" frameWidth="704" frameHeight="1051"/>
+	<SubTexture name="shesback0001" x="5561" y="3844" width="703" height="638" frameX="0" frameY="-414" frameWidth="704" frameHeight="1051"/>
+	<SubTexture name="shesback0002" x="707" y="4670" width="708" height="638" frameX="2" frameY="-414" frameWidth="704" frameHeight="1051"/>
+	<SubTexture name="shesback0003" x="3528" y="4670" width="703" height="610" frameX="0" frameY="-442" frameWidth="704" frameHeight="1051"/>
+	<SubTexture name="shesback0004" x="4231" y="4670" width="703" height="610" frameX="0" frameY="-442" frameWidth="704" frameHeight="1051"/>
+	<SubTexture name="shesback0005" x="2825" y="4670" width="703" height="630" frameX="0" frameY="-422" frameWidth="704" frameHeight="1051"/>
+	<SubTexture name="shesback0006" x="4089" y="3028" width="703" height="651" frameX="0" frameY="-401" frameWidth="704" frameHeight="1051"/>
+	<SubTexture name="shesback0007" x="4089" y="3028" width="703" height="651" frameX="0" frameY="-401" frameWidth="704" frameHeight="1051"/>
+	<SubTexture name="shesback0008" x="4089" y="3028" width="703" height="651" frameX="0" frameY="-401" frameWidth="704" frameHeight="1051"/>
+	<SubTexture name="speakrs0000" x="3246" y="2196" width="484" height="596" frameX="2" frameY="2" frameWidth="485" frameHeight="593"/>
+	<SubTexture name="speakrs0001" x="3246" y="2196" width="484" height="596" frameX="2" frameY="2" frameWidth="485" frameHeight="593"/>
+	<SubTexture name="speakrs0002" x="4374" y="3810" width="479" height="596" frameX="-3" frameY="2" frameWidth="485" frameHeight="593"/>
+	<SubTexture name="speakrs0003" x="4374" y="3810" width="479" height="596" frameX="-3" frameY="2" frameWidth="485" frameHeight="593"/>
+	<SubTexture name="speakrs0004" x="4934" y="4670" width="478" height="597" frameX="-7" frameY="2" frameWidth="485" frameHeight="593"/>
+	<SubTexture name="speakrs0005" x="952" y="5310" width="476" height="597" frameX="-11" frameY="2" frameWidth="485" frameHeight="593"/>
+	<SubTexture name="speakrs0006" x="476" y="5310" width="476" height="597" frameX="-11" frameY="2" frameWidth="485" frameHeight="593"/>
+	<SubTexture name="speakrs0007" x="476" y="5310" width="476" height="597" frameX="-11" frameY="2" frameWidth="485" frameHeight="593"/>
+	<SubTexture name="speakrs0008" x="0" y="5310" width="476" height="597" frameX="-11" frameY="2" frameWidth="485" frameHeight="593"/>
+	<SubTexture name="speakrs0009" x="0" y="5310" width="476" height="597" frameX="-11" frameY="2" frameWidth="485" frameHeight="593"/>
+</TextureAtlas>
