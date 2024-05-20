@@ -19,23 +19,34 @@ jobs:
   # This workflow contains a single job called "build"
   buildLinux:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
 
       - uses: krdlab/setup-haxe@master
         with:
           haxe-version: latest
-      # Runs a set of commands using the runners shell
+      - name: Restore Cache
+        uses: actions/cache@main
+        with:
+          key: cache-build-linux
+          path: |
+            .haxelib/
+            export/release/linux/haxe/
+            export/release/linux/obj/
+          restore-keys: |
+            cache-build-linux
       - name: Install Haxelib
         run: |
+          sudo apt-get update
+          sudo apt-get install gcc-multilib g++-multilib haxe -y
           sudo apt-get install libvlc-dev
           sudo apt-get install libvlccore-dev
-          haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null --quiet
+          sudo apt-get install vlc-bin
+          sudo apt-get -y install libidn12
           haxe -cp ./setup -D analyzer-optimize -main Main --interp
       - name: Skip SScript setup mode
         run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ~/settings.cocoa
@@ -44,27 +55,46 @@ jobs:
       - name: Compile
         run: |
           haxelib fixrepo
-          haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
+          haxelib run lime build linux
+      - name: Tar files
+        run: tar -zcvf PsychEngine.tar.gz export/release/linux/bin
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@main
         with:
           name: linuxBuild
-          path: 'export/release/linux/bin'
+          path: PsychEngine.tar.gz
+      - name: Uploading new cache
+        uses: actions/cache@main
+        with:
+          key: cache-build-linux
+          path: |
+            .haxelib/
+            export/release/linux/haxe/
+            export/release/linux/obj/
+          restore-keys: |
+            cache-build-linux
   buildWindows:
     runs-on: windows-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2.3.0
+      - uses: actions/checkout@main
 
       - uses: krdlab/setup-haxe@master
         with:
           haxe-version: latest
-      # Runs a set of commands using the runners shell
+      - name: Restore Cache
+        uses: actions/cache@main
+        with:
+          key: cache-build-windows
+          path: |
+            .haxelib/
+            export/release/windows/haxe/
+            export/release/windows/obj/
+          restore-keys: |
+            cache-build-windows
       - name: Install Haxelib
         run: |
-          haxelib setup C:/haxelib
-          haxelib install hxcpp > /dev/null --quiet
           haxe -cp ./setup -D analyzer-optimize -main Main --interp
         shell: cmd
       - name: Skip SScript setup mode
@@ -73,18 +103,28 @@ jobs:
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build windows
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@main
         with:
           name: windowsBuild
           path: export/release/windows/bin
+      - name: Uploading new cache
+        uses: actions/cache@main
+        with:
+          key: cache-build-windows
+          path: |
+            .haxelib/
+            export/release/windows/haxe/
+            export/release/windows/obj/
+          restore-keys: |
+            cache-build-windows
   buildMac:
     runs-on: macos-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
 
       - uses: krdlab/setup-haxe@master
         with:
@@ -92,17 +132,27 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
-          haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null --quiet
           haxe -cp ./setup -D analyzer-optimize -main Main --interp
       - name: Skip SScript setup mode
         run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ~/settings.cocoa
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build mac
+      - name: Tar files
+        run: tar -zcvf PsychEngine.tar.gz export/release/macos/bin
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@main
         with:
           name: macBuild
-          path: export/release/macos/bin
+          path: PsychEngine.tar.gz
+      - name: Uploading new cache
+        uses: actions/cache@main
+        with:
+          key: cache-build-mac
+          path: |
+            .haxelib/
+            export/release/macos/haxe/
+            export/release/macos/obj/
+          restore-keys: |
+            cache-build-mac
