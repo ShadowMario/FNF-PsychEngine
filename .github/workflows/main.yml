@@ -120,7 +120,7 @@ jobs:
           restore-keys: |
             cache-build-windows
   buildMac:
-    runs-on: macos-latest
+    runs-on: macos-12
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
