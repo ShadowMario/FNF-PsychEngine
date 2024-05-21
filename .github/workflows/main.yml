@@ -126,9 +126,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@main
 
-      - uses: krdlab/setup-haxe@latest
+      - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: latest
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
