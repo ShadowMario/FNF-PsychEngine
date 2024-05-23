@@ -1342,7 +1342,7 @@ class PlayState extends MusicBeatState
 					for (evilNoteData in noteDatas) {
 						if (evilNoteData.id == leNoteData.id // does its direction match?
 							&& evilNoteData.strumLine == leNoteData.strumLine // does it strumline match?
-							&& Math.abs(evilNoteData.time - leNoteData.time) < 1.0) { // is it in the same step?
+							&& Math.abs(evilNoteData.time - leNoteData.time) == 0.0) { // is it in the same step?
 								evilNoteData.dispose();
 								noteDatas.remove(evilNoteData);
 								ghostNotesCleared++;
