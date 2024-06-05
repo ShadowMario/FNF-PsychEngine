@@ -304,7 +304,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			{name: "Data", label: 'Data'},
 		];
 
-		UI_box = new PsychUIBox(640 + GRID_SIZE / 2, 25, 300, 400, ['Charting', 'Data', 'Note', 'Events', 'Section', 'Song']);
+		UI_box = new PsychUIBox(640 + GRID_SIZE / 2, 25, 300, 400, ['Charting', 'Data', 'Events', 'Note', 'Section', 'Song']);
 		UI_box.selectedName = 'Song';
 		UI_box.scrollFactor.set();
 		
@@ -346,7 +346,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		{
 			if(arr[i].length < 2) continue;
 
-			var helpText:FlxText = new FlxText(0, 0, 700, arr[i], 16);
+			var helpText:FlxText = new FlxText(0, 0, 720, arr[i], 16);
 			helpText.setFormat(null, 16, FlxColor.WHITE, CENTER, OUTLINE_FAST, FlxColor.BLACK);
 			helpText.borderColor = FlxColor.BLACK;
 			helpText.scrollFactor.set();
@@ -588,6 +588,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		stageDropDown.selectedLabel = _song.stage;
 
 		var tab_group_song = UI_box.getTab('Song').menu;
+		tab_group_song.add(UI_songTitle);
 
 		tab_group_song.add(check_voices);
 		tab_group_song.add(clear_events);
@@ -822,8 +823,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			}
 			updateGrid();
 		});
-		copyLastButton.setGraphicSize(80, 30);
-		copyLastButton.updateHitbox();
+		copyLastButton.resize(80, 30);
 		
 		stepperCopy = new PsychUINumericStepper(copyLastButton.x + 100, copyLastButton.y, 1, 1, -999, 999, 0);
 
@@ -2025,6 +2025,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		FlxG.sound.music.pitch = playbackSpeed;
 		vocals.pitch = playbackSpeed;
 		opponentVocals.pitch = playbackSpeed;
+		sliderRate.value = playbackSpeed;
 		#end
 
 		bpmTxt.text =

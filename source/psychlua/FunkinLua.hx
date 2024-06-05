@@ -1092,16 +1092,19 @@ class FunkinLua {
 			Reflect.getProperty(LuaUtils.getTargetInstance(), group)[index].updateHitbox();
 		});
 
-		Lua_helper.add_callback(lua, "removeLuaSprite", function(tag:String, destroy:Bool = true) {
-			var variables = MusicBeatState.getVariables();
-			var obj:FlxSprite = variables.get(tag);
+		Lua_helper.add_callback(lua, "removeLuaSprite", function(tag:String, destroy:Bool = true, ?group:String = null) {
+			var obj:FlxSprite = LuaUtils.getObjectDirectly(tag);
 			if(obj == null || obj.destroy == null)
 				return;
+			
+			var groupObj:Dynamic = null;
+			if(group == null) groupObj = LuaUtils.getTargetInstance();
+			else groupObj = LuaUtils.getObjectDirectly(group);
 
-			LuaUtils.getTargetInstance().remove(obj, true);
+			groupObj.remove(obj, true);
 			if(destroy)
 			{
-				variables.remove(tag);
+				MusicBeatState.getVariables().remove(tag);
 				obj.destroy();
 			}
 		});

@@ -15,7 +15,7 @@ class PsychUISlider extends FlxSpriteGroup
 	public var onChange:Float->Void;
 	public var min(default, set):Float = -999;
 	public var max(default, set):Float = 999;
-	public var decimals(default, set):Int = 0;
+	public var decimals(default, set):Int = 2;
 	public function new(x:Float = 0, y:Float = 0, callback:Float->Void, def:Float = 0, min:Float = -999, max:Float = 999, wid:Float = 200, mainColor:FlxColor = FlxColor.WHITE, handleColor:FlxColor = 0xFFAAAAAA)
 	{
 		super(x, y);
@@ -66,7 +66,7 @@ class PsychUISlider extends FlxSpriteGroup
 		if(FlxG.mouse.justMoved || FlxG.mouse.justPressed || forceNextUpdate)
 		{
 			forceNextUpdate = false;
-			if(FlxG.mouse.justPressed && FlxG.mouse.overlaps(this, camera))
+			if(FlxG.mouse.justPressed && FlxG.mouse.overlaps(bar, camera) && FlxG.mouse.overlaps(handle, camera))
 				movingHandle = true;
 			
 			if(movingHandle)
