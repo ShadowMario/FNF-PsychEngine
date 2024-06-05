@@ -66,7 +66,7 @@ class PsychUISlider extends FlxSpriteGroup
 		if(FlxG.mouse.justMoved || FlxG.mouse.justPressed || forceNextUpdate)
 		{
 			forceNextUpdate = false;
-			if(FlxG.mouse.justPressed && FlxG.mouse.overlaps(bar, camera) && FlxG.mouse.overlaps(handle, camera))
+			if(FlxG.mouse.justPressed && (FlxG.mouse.overlaps(bar, camera) || FlxG.mouse.overlaps(handle, camera)))
 				movingHandle = true;
 			
 			if(movingHandle)
