@@ -26,11 +26,6 @@
       "version": null
     },
     {
-      "name": "flixel-ui",
-      "type": "haxelib",
-      "version": null
-    },
-    {
       "name": "hxcpp",
       "type": "haxelib",
       "version": null
