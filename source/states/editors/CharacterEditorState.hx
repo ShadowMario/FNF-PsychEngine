@@ -43,7 +43,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 	var _goToPlayState:Bool = true;
 
 	var anims = null;
-	var animsTxtGroup:FlxTypedGroup<FlxText>;
+	var animsTxt:FlxText;
 	var curAnim = 0;
 
 	private var camEditor:FlxCamera;
@@ -53,6 +53,8 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 	var UI_characterbox:PsychUIBox;
 
 	var unsavedProgress:Bool = false;
+
+	var selectedFormat:FlxTextFormat = new FlxTextFormat(FlxColor.LIME);
 
 	public function new(char:String = null, goToPlayState:Bool = true)
 	{
@@ -76,7 +78,6 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 
 		loadBG();
 
-		animsTxtGroup = new FlxTypedGroup<FlxText>();
 		silhouettes = new FlxSpriteGroup();
 		add(silhouettes);
 
@@ -98,26 +99,31 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		ghost.visible = false;
 		ghost.alpha = ghostAlpha;
 		add(ghost);
+		
+		animsTxt = new FlxText(10, 32, 400, '');
+		animsTxt.setFormat(null, 16, FlxColor.WHITE, LEFT, OUTLINE_FAST, FlxColor.BLACK);
+		animsTxt.scrollFactor.set();
+		animsTxt.borderSize = 1;
+		animsTxt.cameras = [camHUD];
 
 		addCharacter();
 
 		cameraFollowPointer = new FlxSprite().loadGraphic(FlxGraphic.fromClass(GraphicCursorCross));
 		cameraFollowPointer.setGraphicSize(40, 40);
 		cameraFollowPointer.updateHitbox();
-		add(cameraFollowPointer);
 
 		healthBar = new Bar(30, FlxG.height - 75);
 		healthBar.scrollFactor.set();
-		add(healthBar);
 		healthBar.cameras = [camHUD];
 
 		healthIcon = new HealthIcon(character.healthIcon, false, false);
 		healthIcon.y = FlxG.height - 150;
-		add(healthIcon);
 		healthIcon.cameras = [camHUD];
 
-		animsTxtGroup.cameras = [camHUD];
-		add(animsTxtGroup);
+		add(cameraFollowPointer);
+		add(healthBar);
+		add(healthIcon);
+		add(animsTxt);
 
 		var tipText:FlxText = new FlxText(FlxG.width - 300, FlxG.height - 24, 300, "Press F1 for Help", 20);
 		tipText.cameras = [camHUD];
@@ -161,25 +167,25 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 
 	function addHelpScreen()
 	{
-		var str:String = "CAMERA
-		\nE/Q - Camera Zoom In/Out
-		\nJ/K/L/I - Move Camera
-		\nR - Reset Camera Zoom
-		\n
-		\nCHARACTER
-		\nCtrl + R - Reset Current Offset
-		\nCtrl + C - Copy Current Offset
-		\nCtrl + V - Paste Copied Offset on Current Animation
-		\nCtrl + Z - Undo Last Paste or Reset
-		\nW/S - Previous/Next Animation
-		\nSpace - Replay Animation
-		\nArrow Keys/Mouse & Right Click - Move Offset
-		\nA/D - Frame Advance (Back/Forward)
-		\n
-		\nOTHER
-		\nF12 - Toggle Silhouettes
-		\nHold Shift - Move Offsets 10x faster and Camera 4x faster
-		\nHold Control - Move camera 4x slower";
+		var str:Array<String> = ["CAMERA",
+		"E/Q - Camera Zoom In/Out",
+		"J/K/L/I - Move Camera",
+		"R - Reset Camera Zoom",
+		"",
+		"CHARACTER",
+		"Ctrl + R - Reset Current Offset",
+		"Ctrl + C - Copy Current Offset",
+		"Ctrl + V - Paste Copied Offset on Current Animation",
+		"Ctrl + Z - Undo Last Paste or Reset",
+		"W/S - Previous/Next Animation",
+		"Space - Replay Animation",
+		"Arrow Keys/Mouse & Right Click - Move Offset",
+		"A/D - Frame Advance (Back/Forward)",
+		"",
+		"OTHER",
+		"F12 - Toggle Silhouettes",
+		"Hold Shift - Move Offsets 10x faster and Camera 4x faster",
+		"Hold Control - Move camera 4x slower"];
 
 		helpBg = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
 		helpBg.scale.set(FlxG.width, FlxG.height);
@@ -189,21 +195,20 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		helpBg.active = helpBg.visible = false;
 		add(helpBg);
 
-		var arr = str.split('\n');
 		helpTexts = new FlxSpriteGroup();
 		helpTexts.cameras = [camHUD];
-		for (i in 0...arr.length)
+		for (i => txt in str)
 		{
-			if(arr[i].length < 2) continue;
+			if(txt.length < 1) continue;
 
-			var helpText:FlxText = new FlxText(0, 0, 600, arr[i], 16);
+			var helpText:FlxText = new FlxText(0, 0, 600, txt, 16);
 			helpText.setFormat(null, 16, FlxColor.WHITE, CENTER, OUTLINE_FAST, FlxColor.BLACK);
 			helpText.borderColor = FlxColor.BLACK;
 			helpText.scrollFactor.set();
 			helpText.borderSize = 1;
 			helpText.screenCenter();
 			add(helpText);
-			helpText.y += ((i - arr.length/2) * 16);
+			helpText.y += ((i - str.length/2) * 32) + 16;
 			helpText.active = false;
 			helpTexts.add(helpText);
 		}
@@ -542,7 +547,6 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 					if(resetAnim && character.animationsArray.length > 0) {
 						curAnim = FlxMath.wrap(curAnim, 0, anims.length-1);
 						character.playAnim(anims[curAnim].anim, true);
-						updateTextColors();
 					}
 					reloadAnimList();
 					trace('Removed animation: ' + animationInputText.text);
@@ -882,7 +886,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 				undoOffsets = null;
 				curAnim = FlxMath.wrap(curAnim, 0, anims.length-1);
 				character.playAnim(anims[curAnim].anim, true);
-				updateTextColors();
+				updateText();
 			}
 		}
 
@@ -955,10 +959,8 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 			anim.offsets[0] = Std.int(character.offset.x);
 			anim.offsets[1] = Std.int(character.offset.y);
 
-			var myText:FlxText = animsTxtGroup.members[curAnim];
-			var intendText:String = anim.anim + ": " + anim.offsets;
-			if(intendText != myText.text) myText.text = anim.anim + ": " + anim.offsets;
 			character.addOffset(anim.anim, character.offset.x, character.offset.y);
+			updateText();
 		}
 
 		var txt = 'ERROR: No Animation Found';
@@ -1110,38 +1112,28 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 		if(anims.length > 0) character.playAnim(anims[0].anim, true);
 		curAnim = 0;
 
-		for (text in animsTxtGroup)
-			text.kill();
-
-		var daLoop = 0;
-		for (anim in anims)
-		{
-			var text:FlxText = animsTxtGroup.recycle(FlxText);
-			text.x = 10;
-			text.y = 32 + (20 * daLoop);
-			text.fieldWidth = 400;
-			text.fieldHeight = 20;
-			text.text = anim.anim + ": " + anim.offsets;
-			text.setFormat(null, 16, FlxColor.WHITE, LEFT, OUTLINE_FAST, FlxColor.BLACK);
-			text.scrollFactor.set();
-			text.borderSize = 1;
-			animsTxtGroup.add(text);
-
-			daLoop++;
-		}
-		updateTextColors();
+		updateText();
 		if(animationDropDown != null) reloadAnimationDropDown();
 	}
 
-	inline function updateTextColors()
+	inline function updateText()
 	{
-		var daLoop = 0;
-		for (text in animsTxtGroup)
+		animsTxt.removeFormat(selectedFormat);
+
+		var intendText:String = '';
+		for (num => anim in anims)
 		{
-			text.color = FlxColor.WHITE;
-			if(daLoop == curAnim) text.color = FlxColor.LIME;
-			daLoop++;
+			if(num > 0) intendText += '\n';
+
+			if(num == curAnim)
+			{
+				var n:Int = intendText.length;
+				intendText += anim.anim + ": " + anim.offsets;
+				animsTxt.addFormat(selectedFormat, n, intendText.length);
+			}
+			else intendText += anim.anim + ": " + anim.offsets;
 		}
+		animsTxt.text = intendText;
 	}
 
 	inline function updateCharacterPositions()

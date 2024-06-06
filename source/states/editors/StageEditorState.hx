@@ -125,16 +125,16 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		var btn = 'F2';
 		#end
 
-		var str:String = '
-		E/Q - Camera Zoom In/Out
-		\nJ/K/L/I - Move Camera
-		\nR - Reset Camera Zoom
-		\nArrow Keys/Mouse & Right Click - Move Object
-		\n
-		\n ' + btn + ' - Toggle HUD
-		\nF12 - Toggle Selection Rectangle
-		\nHold Shift - Move Objects and Camera 4x faster
-		\nHold Control - Move Objects pixel-by-pixel and Camera 4x slower';
+		var str:Array<String> = ["E/Q - Camera Zoom In/Out",
+			"J/K/L/I - Move Camera",
+			"R - Reset Camera Zoom",
+			"Arrow Keys/Mouse & Right Click - Move Object",
+			"",
+			'$btn - Toggle HUD',
+			"F12 - Toggle Selection Rectangle",
+			"Hold Shift - Move Objects and Camera 4x faster",
+			"Hold Control - Move Objects pixel-by-pixel and Camera 4x slower"
+		];
 
 		helpBg = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
 		helpBg.scale.set(FlxG.width, FlxG.height);
@@ -144,21 +144,20 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		helpBg.active = helpBg.visible = false;
 		add(helpBg);
 
-		var arr = str.split('\n');
 		helpTexts = new FlxSpriteGroup();
 		helpTexts.cameras = [camHUD];
-		for (i in 0...arr.length)
+		for (i => txt in str)
 		{
-			if(arr[i].length < 2) continue;
+			if(txt.length < 1) continue;
 
-			var helpText:FlxText = new FlxText(0, 0, 640, arr[i], 16);
+			var helpText:FlxText = new FlxText(0, 0, 680, txt, 16);
 			helpText.setFormat(null, 16, FlxColor.WHITE, CENTER, OUTLINE_FAST, FlxColor.BLACK);
 			helpText.borderColor = FlxColor.BLACK;
 			helpText.scrollFactor.set();
 			helpText.borderSize = 1;
 			helpText.screenCenter();
 			add(helpText);
-			helpText.y += ((i - arr.length/2) * 16);
+			helpText.y += ((i - str.length/2) * 32) + 16;
 			helpText.active = false;
 			helpTexts.add(helpText);
 		}

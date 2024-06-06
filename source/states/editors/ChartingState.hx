@@ -321,39 +321,41 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		helpBg.alpha = 0.6;
 		helpBg.active = helpBg.visible = false;
 
-		var arr:Array<String> = (
-			"W/S or Mouse Wheel - Change Conductor's strum time
-			\nA/D - Go to the previous/next section
-			\nLeft/Right - Change Snap
-			\nUp/Down - Change Conductor's Strum Time with Snapping" +
+		var str:Array<String> = [
+			"W/S or Mouse Wheel - Change Conductor's strum time",
+			"A/D - Go to the previous/next section",
+			"Left/Right - Change Snap",
+			"Up/Down - Change Conductor's Strum Time with Snapping",
 			#if FLX_PITCH
-			"\nLeft Bracket / Right Bracket - Change Song Playback Rate (SHIFT to go Faster)
-			\nALT + Left Bracket / Right Bracket - Reset Song Playback Rate" +
+			"",
+			"Left Bracket / Right Bracket - Change Song Playback Rate (SHIFT to go Faster)",
+			"ALT + Left Bracket / Right Bracket - Reset Song Playback Rate",
 			#end
-			"\nHold Shift to move 4x faster
-			\nHold Control and click on an arrow to select it
-			\nZ/X - Zoom in/out
-			\n
-			\nEsc - Test your chart inside Chart Editor
-			\nEnter - Play your chart
-			\nQ/E - Decrease/Increase Note Sustain Length
-			\nSpace - Stop/Resume song"
-		).split('\n');
+			"",
+			"Hold Shift to move 4x faster",
+			"Hold Control and click on an arrow to select it",
+			"Z/X - Zoom in/out",
+			"",
+			"Esc - Test your chart inside Chart Editor",
+			"Enter - Play your chart",
+			"Q/E - Decrease/Increase Note Sustain Length",
+			"Space - Stop/Resume song"
+		];
 
 		helpTexts = new FlxSpriteGroup();
 		helpTexts.scrollFactor.set();
-		for (i in 0...arr.length)
+		for (i => txt in str)
 		{
-			if(arr[i].length < 2) continue;
+			if(txt.length < 1) continue;
 
-			var helpText:FlxText = new FlxText(0, 0, 720, arr[i], 16);
+			var helpText:FlxText = new FlxText(0, 0, 720, txt, 16);
 			helpText.setFormat(null, 16, FlxColor.WHITE, CENTER, OUTLINE_FAST, FlxColor.BLACK);
 			helpText.borderColor = FlxColor.BLACK;
 			helpText.scrollFactor.set();
 			helpText.borderSize = 1;
 			helpText.screenCenter();
 			add(helpText);
-			helpText.y += ((i - arr.length/2) * 16);
+			helpText.y += ((i - str.length/2) * 32) + 16;
 			helpText.active = false;
 			helpTexts.add(helpText);
 		}
