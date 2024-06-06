@@ -3321,7 +3321,11 @@ class PlayState extends MusicBeatState
 				else
 				{
 					myValue = callValue.returnValue;
-					if((myValue == LuaUtils.Function_StopHScript || myValue == LuaUtils.Function_StopAll) && !excludeValues.contains(myValue) && !ignoreStops)
+
+					// compiler fuckup fix
+					final stopHscript = myValue == LuaUtils.Function_StopHScript;
+					final stopAll = myValue == LuaUtils.Function_StopAll;
+					if((stopHscript || stopAll) && !excludeValues.contains(myValue) && !ignoreStops)
 					{
 						returnVal = myValue;
 						break;
