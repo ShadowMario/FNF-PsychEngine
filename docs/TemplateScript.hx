@@ -15,6 +15,26 @@ function onDestroy()
 	// triggered when the haxe file is ended (Song fade out finished)
 }
 
+function onFocus()
+{
+	// triggered when the game's window gains focus, some variables weren't updated yet
+}
+
+function onFocusPost()
+{
+	// end of "onFocus"
+}
+
+function onFocusLost()
+{
+	// triggered when the game's window looses focus, some variables weren't updated yet
+}
+
+function onFocusLostPost()
+{
+	// end of "onFocusLost"
+}
+
 
 // Gameplay/Song interactions
 function onSectionHit()
