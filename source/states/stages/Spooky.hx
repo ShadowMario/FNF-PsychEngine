@@ -48,7 +48,7 @@ class Spooky extends BaseStage
 
 	function lightningStrikeShit():Void
 	{
-		FlxG.sound.play(Paths.soundRandom('thunder_', 1, 2));
+		FlxG.sound.play(Paths.soundRandom('thunder_', 1, 2), game.sfxVolume);
 		if(!ClientPrefs.data.lowQuality) halloweenBG.animation.play('halloweem bg lightning strike');
 
 		lightningStrikeBeat = curBeat;

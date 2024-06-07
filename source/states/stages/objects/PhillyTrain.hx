@@ -75,6 +75,7 @@ class PhillyTrain extends BGSprite
 	{
 		moving = true;
 		if (!sound.playing)
+			sound.volume = ClientPrefs.data.sfxVolume/100;
 			sound.play(true);
 	}
 
