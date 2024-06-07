@@ -148,7 +148,7 @@ class StoryMenuState extends MusicBeatState
 		{
 			lastDifficultyName = Difficulty.getDefault();
 		}
-		curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(lastDifficultyName)));
+		curDifficulty = Math.round(Math.max(0, Difficulty.list.indexOf(lastDifficultyName)));
 		
 		sprDifficulty = new FlxSprite(0, leftArrow.y);
 		sprDifficulty.antialiasing = ClientPrefs.data.antialiasing;
@@ -424,7 +424,7 @@ class StoryMenuState extends MusicBeatState
 		difficultySelectors.visible = unlocked;
 
 		if(Difficulty.list.contains(Difficulty.getDefault()))
-			curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(Difficulty.getDefault())));
+			curDifficulty = Math.round(Math.max(0, Difficulty.list.indexOf(Difficulty.getDefault())));
 		else
 			curDifficulty = 0;
 

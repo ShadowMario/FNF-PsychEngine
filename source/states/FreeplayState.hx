@@ -166,7 +166,7 @@ class FreeplayState extends MusicBeatState
 		intendedColor = bg.color;
 		lerpSelected = curSelected;
 
-		curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(lastDifficultyName)));
+		curDifficulty = Math.round(Math.max(0, Difficulty.list.indexOf(lastDifficultyName)));
 
 		bottomBG = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		bottomBG.alpha = 0.6;
@@ -539,7 +539,7 @@ class FreeplayState extends MusicBeatState
 		else if(lastDiff > -1)
 			curDifficulty = lastDiff;
 		else if(Difficulty.list.contains(Difficulty.getDefault()))
-			curDifficulty = Math.round(Math.max(0, Difficulty.defaultList.indexOf(Difficulty.getDefault())));
+			curDifficulty = Math.round(Math.max(0, Difficulty.list.indexOf(Difficulty.getDefault())));
 		else
 			curDifficulty = 0;
 

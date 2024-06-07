@@ -8,7 +8,7 @@ class Difficulty
 		'Hard'
 	];
 	public static var list:Array<String> = [];
-	private static var defaultDifficulty(default, never):String = 'Normal'; //The chart that has no postfix and starting difficulty on Freeplay/Story Mode
+	public static var defaultDifficulty:String = 'Normal'; //The chart that has no postfix and starting difficulty on Freeplay/Story Mode
 
 	inline public static function getFilePath(num:Null<Int> = null)
 	{
@@ -49,6 +49,11 @@ class Difficulty
 				list = diffs;
 		}
 		else resetList();
+
+		if(week.defaultDifficulty != null && list.contains(week.defaultDifficulty))
+			defaultDifficulty = week.defaultDifficulty;
+		else
+			defaultDifficulty = 'Normal';
 	}
 
 	inline public static function resetList()
