@@ -2560,6 +2560,7 @@ class PlayState extends MusicBeatState
 				onComplete: function(tween:FlxTween)
 				{
 					numScore.destroy();
+					comboGroup.remove(numScore);
 				},
 				startDelay: Conductor.crochet * 0.002 / playbackRate
 			});
@@ -2577,6 +2578,8 @@ class PlayState extends MusicBeatState
 			{
 				comboSpr.destroy();
 				rating.destroy();
+				comboGroup.remove(comboSpr);
+				comboGroup.remove(rating);
 			},
 			startDelay: Conductor.crochet * 0.002 / playbackRate
 		});
