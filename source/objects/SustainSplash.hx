@@ -15,7 +15,7 @@ class SustainSplash extends FlxSprite {
     animation.curAnim.looped = true;
   }
 
-  public function setupSusSplash(strum:StrumNote, daNote:Note, playbackRate:Float = 1):Void {
+  public function setupSusSplash(strum:StrumNote, daNote:Note, ?playbackRate:Float = 1):Void {
 
     final lengthToGet:Int = !daNote.isSustainNote ? daNote.tail.length : daNote.parent.tail.length;
     final timeToGet:Float = !daNote.isSustainNote ? daNote.strumTime : daNote.parent.strumTime;
