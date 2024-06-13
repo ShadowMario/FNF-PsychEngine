@@ -1684,19 +1684,25 @@ class PlayState extends MusicBeatState
 				Conductor.songPosition = -Conductor.crochet * 5;
 		}
 		else if (!paused && updateTime)
-		{
-			var curTime:Float = Math.max(0, Conductor.songPosition - ClientPrefs.data.noteOffset);
-			songPercent = (curTime / songLength);
-
-			var songCalc:Float = (songLength - curTime);
-			if(ClientPrefs.data.timeBarType == 'Time Elapsed') songCalc = curTime;
-
-			var secondsTotal:Int = Math.floor(songCalc / 1000);
-			if(secondsTotal < 0) secondsTotal = 0;
-
-			if(ClientPrefs.data.timeBarType != 'Song Name')
-				timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
-		}
+			{
+				var curTime:Float = Math.max(0, Conductor.songPosition - ClientPrefs.data.noteOffset);
+				songPercent = (curTime / songLength);
+	
+				var songCalc:Float = (songLength - curTime) / playbackRate; // time fix
+	
+				if (ClientPrefs.data.timeBarType == 'Time Elapsed') songCalc = curTime; // amount of time passed is ok
+	
+				var secondsTotal:Int = Math.floor(songCalc / 1000);
+				if(secondsTotal < 0) secondsTotal = 0;
+	
+				if(ClientPrefs.data.timeBarType != 'Song Name')
+					timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+				else { // this is what was fucked up, hopefully this fixes it.
+					var secondsTotal:Int = Math.floor(songCalc/1000);
+					if(secondsTotal < 0) secondsTotal = 0;
+					timeTxt.text = FlxStringUtil.formatTime(secondsTotal,false);
+				}
+			}
 
 		if (camZooming)
 		{
