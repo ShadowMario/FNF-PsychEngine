@@ -497,7 +497,7 @@ class PlayState extends MusicBeatState
 
 		SustainSplash.startCrochet = Conductor.stepCrochet;
 		SustainSplash.frameRate = Math.floor(24 / 100 * SONG.bpm);
-		var splash:SustainSplash = new SustainSplash(playbackRate);
+		var splash:SustainSplash = new SustainSplash();
 		grpHoldSplashes.add(splash);
 		splash.alpha = 0.0001;
 
