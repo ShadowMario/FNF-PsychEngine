@@ -790,10 +790,6 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "precacheMusic", function(name:String) {
 			Paths.music(name);
 		});
-		Lua_helper.add_callback(lua, "precacheVideo", function(name:String) {
-			Paths.video(name);
-			trace(name + ' has been precached');
-		});
 
 		// others
 		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic) {
