@@ -859,6 +859,7 @@ class PlayState extends MusicBeatState
 			video.playVideo(filepath);
 			video.finishCallback = function()
 			{
+				callOnLuas('onVideoCompleted', [name]);
 				startAndEnd();
 				return;
 			}
