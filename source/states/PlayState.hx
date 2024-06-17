@@ -455,11 +455,11 @@ class PlayState extends MusicBeatState
 		#end
 
 		comboGroup = new FlxSpriteGroup();
-		add(comboGroup);
 		noteGroup = new FlxTypedGroup<FlxBasic>();
-		add(noteGroup);
 		uiGroup = new FlxSpriteGroup();
+		add(comboGroup);
 		add(uiGroup);
+		add(noteGroup);
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
