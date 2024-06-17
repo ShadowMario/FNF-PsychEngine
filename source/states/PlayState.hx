@@ -36,14 +36,20 @@ import substates.GameOverSubstate;
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
 #end
-
+/*
 #if VIDEOS_ALLOWED
 #if (hxCodec >= "3.0.0") import hxcodec.flixel.FlxVideo as VideoHandler;
 #elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
 #elseif (hxCodec == "2.6.0") import VideoHandler;
 #else import vlc.MP4Handler as VideoHandler; #end
 #end
+*/
+#if VIDEOS_ALLOWED
+import hxvlc.flixel.FlxVideo;
+import hxvlc.flixel.FlxVideoSprite;
+import hxvlc.util.Handle;
 
+#end
 import objects.Note.EventNote;
 import objects.*;
 import states.stages.objects.*;
@@ -827,24 +833,47 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String)
+	public function startVideo(name:String, inCutsceneSetter:Bool)
 	{
 		#if VIDEOS_ALLOWED
-		inCutscene = true;
+			inCutscene = inCutsceneSetter;
 
-		var filepath:String = Paths.video(name);
-		#if sys
-		if(!FileSystem.exists(filepath))
+			var filepath:String = Paths.video(name);
+			#if sys
+				if(!FileSystem.exists(filepath))
+			#else
+				if(!OpenFlAssets.exists(filepath))
+			#end
+			{
+				FlxG.log.warn('Couldnt find video file: ' + name);
+				startAndEnd();
+				return;
+			}
+
+			//var video:VideoHandler = new VideoHandler();
+			var video = new FlxVideoSprite(0, 0);
+			video.bitmap.onFormatSetup.add(function():Void
+			{
+				video.setGraphicSize(FlxG.width, FlxG.height);
+				video.updateHitbox();
+				video.screenCenter();
+			});
+			video.bitmap.onEndReached.add(video.destroy);
+			video.load(filepath);
+			video.antialiasing = ClientPrefs.data.antialiasing;
+			add(video);
+			video.bitmap.onEndReached.add(callOnLuas('onVideoCompleted', [name]));
+			video.bitmap.onEndReached.add(()->{startAndEnd(); return;});
+			trace('video code ran ' + name);
+			video.play();
 		#else
-		if(!OpenFlAssets.exists(filepath))
-		#end
-		{
-			FlxG.log.warn('Couldnt find video file: ' + name);
+			FlxG.log.warn('Platform not supported!');
 			startAndEnd();
 			return;
-		}
+		#end
 
-		var video:VideoHandler = new VideoHandler();
+		/*
+		#if VIDEOS_ALLOWED
 			#if (hxCodec >= "3.0.0")
 			// Recent versions
 			video.play(filepath);
@@ -864,11 +893,8 @@ class PlayState extends MusicBeatState
 				return;
 			}
 			#end
-		#else
-		FlxG.log.warn('Platform not supported!');
-		startAndEnd();
-		return;
-		#end
+		*/
+		
 	}
 
 	function startAndEnd()
