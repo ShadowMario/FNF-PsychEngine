@@ -2,7 +2,6 @@ package objects;
 
 class SustainSplash extends FlxSprite {
 
-  public static var curSplash:Int = 0;
   public static var startCrochet:Float;
   public static var frameRate:Int;
   public var destroyTimer:FlxTimer;
