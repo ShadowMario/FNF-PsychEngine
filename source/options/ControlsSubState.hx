@@ -345,7 +345,10 @@ class ControlsSubState extends MusicBeatSubstate
 				holdingEsc += elapsed;
 				if(holdingEsc > 0.5)
 				{
-					ClientPrefs.keyBinds.get(curOption[2])[altNum] = NONE;
+					if (onKeyboardMode)
+						ClientPrefs.keyBinds.get(curOption[2])[altNum] = NONE;
+					else
+						ClientPrefs.gamepadBinds.get(curOption[2])[altNum] = NONE;
 					ClientPrefs.clearInvalidKeys(curOption[2]);
 					updateBind(Math.floor(curSelected * 2) + altNum, onKeyboardMode ? InputFormatter.getKeyName(NONE) : InputFormatter.getGamepadName(NONE));
 					FlxG.sound.play(Paths.sound('cancelMenu'));
