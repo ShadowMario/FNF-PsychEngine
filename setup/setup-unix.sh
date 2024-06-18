@@ -5,7 +5,7 @@
 # https://haxe.org/download/version/4.2.5/
 haxelib install lime
 haxelib install openfl
-haxelib install flixel
+haxelib install flixel 5.5.0
 haxelib install flixel-addons
 haxelib install flixel-tools
 haxelib install SScript
