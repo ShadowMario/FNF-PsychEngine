@@ -13,7 +13,7 @@
     {
       "name": "flixel",
       "type": "haxelib",
-      "version": null
+      "version": 5.5.0
     },
     {
       "name": "flixel-addons",
