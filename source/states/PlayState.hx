@@ -2774,7 +2774,7 @@ class PlayState extends MusicBeatState
 		});
 
 		var result:Dynamic = callOnLuas('noteMissPre', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
-		var result2:Dynamic = callOnHScript('noteMiss', [daNote]);
+		var result2:Dynamic = callOnHScript('noteMissPre', [daNote]);
 		if (result == LuaUtils.Function_Stop || result2 == LuaUtils.Function_Stop) return;
 		noteMissCommon(daNote.noteData, daNote);
 		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
