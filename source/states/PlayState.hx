@@ -2773,9 +2773,12 @@ class PlayState extends MusicBeatState
 				invalidateNote(note);
 		});
 
+		var result:Dynamic = callOnLuas('noteMissPre', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
+		var result2:Dynamic = callOnHScript('noteMiss', [daNote]);
+		if (result == LuaUtils.Function_Stop || result2 == LuaUtils.Function_Stop) return;
 		noteMissCommon(daNote.noteData, daNote);
-		var result:Dynamic = callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
-		if(result != LuaUtils.Function_Stop && result != LuaUtils.Function_StopHScript && result != LuaUtils.Function_StopAll) callOnHScript('noteMiss', [daNote]);
+		callOnLuas('noteMiss', [notes.members.indexOf(daNote), daNote.noteData, daNote.noteType, daNote.isSustainNote]);
+		callOnHScript('noteMiss', [daNote]);
 	}
 
 	function noteMissPress(direction:Int = 1):Void //You pressed a key when there was no notes to press for this key
@@ -2871,7 +2874,8 @@ class PlayState extends MusicBeatState
 	function opponentNoteHit(note:Note):Void
 	{
 		var result:Dynamic = callOnLuas('opponentNoteHitPre', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
-		if(result != LuaUtils.Function_Stop && result != LuaUtils.Function_StopHScript && result != LuaUtils.Function_StopAll) callOnHScript('opponentNoteHitPre', [note]);
+		var result2:Dynamic = callOnHScript('opponentNoteHitPre', [note]);
+		if (result == LuaUtils.Function_Stop || result2 == LuaUtils.Function_Stop) return;
 
 		if (songName != 'tutorial')
 			camZooming = true;
@@ -2907,8 +2911,8 @@ class PlayState extends MusicBeatState
 		strumPlayAnim(true, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
 		note.hitByOpponent = true;
 		
-		var result:Dynamic = callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
-		if(result != LuaUtils.Function_Stop && result != LuaUtils.Function_StopHScript && result != LuaUtils.Function_StopAll) callOnHScript('opponentNoteHit', [note]);
+		callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
+		callOnHScript('opponentNoteHit', [note]);
 
 		if (!note.isSustainNote) invalidateNote(note);
 	}
@@ -2923,7 +2927,8 @@ class PlayState extends MusicBeatState
 		var leType:String = note.noteType;
 
 		var result:Dynamic = callOnLuas('goodNoteHitPre', [notes.members.indexOf(note), leData, leType, isSus]);
-		if(result != LuaUtils.Function_Stop && result != LuaUtils.Function_StopHScript && result != LuaUtils.Function_StopAll) callOnHScript('goodNoteHitPre', [note]);
+		var result2:Dynamic = callOnHScript('goodNoteHitPre', [note]);
+		if (result == LuaUtils.Function_Stop || result2 == LuaUtils.Function_Stop) return;
 
 		note.wasGoodHit = true;
 
@@ -2996,8 +3001,8 @@ class PlayState extends MusicBeatState
 		if (guitarHeroSustains && note.isSustainNote) gainHealth = false;
 		if (gainHealth) health += note.hitHealth * healthGain;
 
-		var result:Dynamic = callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
-		if(result != LuaUtils.Function_Stop && result != LuaUtils.Function_StopHScript && result != LuaUtils.Function_StopAll) callOnHScript('goodNoteHit', [note]);
+		callOnLuas('goodNoteHit', [notes.members.indexOf(note), leData, leType, isSus]);
+		callOnHScript('goodNoteHit', [note]);
 
 		if(!note.isSustainNote) invalidateNote(note);
 	}
