@@ -477,10 +477,13 @@ class Note extends FlxSprite
 			alpha = strumAlpha * multAlpha;
 
 		if(copyX)
+		{
+			@:privateAccess
 			x = strumX + offsetX + myStrum._dirCos * distance;
-
+		}
 		if(copyY)
 		{
+			@:privateAccess
 			y = strumY + offsetY + correctionOffset + myStrum._dirSin * distance;
 			if(myStrum.downScroll && isSustainNote)
 			{
