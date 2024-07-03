@@ -10,20 +10,20 @@ rating_shit: "Mierda"
 rating_bad: "Mal"
 rating_bruh: "Bruh"
 rating_meh: "Meh"
-rating_nice: "Bien"
-rating_good: "Genial"
-rating_great: "Excelente"
-rating_sick: "¡Magnífico!"
+rating_nice: "Meh"
+rating_good: "Bien"
+rating_great: "Genial"
+rating_sick: "¡Excelente!"
 rating_perfect: "¡¡Perfecto!!"
 
 // Pause Menu
 pause_resume: "Reanudar"
 pause_restart_song: "Reiniciar canción"
 pause_leave_charting_mode: "Salir del modo composición"
-pause_skip_time: "Tiempo de la canción"
+pause_skip_time: "Ajustar tiempo"
 pause_end_song: "Terminar canción"
 pause_change_difficulty: "Dificultad"
-pause_toggle_practice_mode: "Cambiar a modo práctica"
+pause_toggle_practice_mode: "Alternar modo práctica"
 pause_toggle_botplay: "Alternar botplay"
 pause_options: "Ajustes"
 pause_exit_to_menu: "Volver al menú"
@@ -56,7 +56,7 @@ musicplayer_tip: "Presiona ESPACIO para pausar / Presiona ESC para salir / Presi
 // Mods Menu
 no_mods_installed: "NO HAY MODS INSTALADOS\nPRESIONA VOLVER PARA SALIR O INSTALA ALGÚN MOD"
 no_mods_found: "No se encontraron mods."
-mod_restart: "* Este mod requiere de un reinicio cuando se activa o se mueve."
+mod_restart: "* Este mod requiere de un reinicio cuando se activado/desactivado o se mueve."
 reload_button: "RECARGAR"
 enable_all_button: "ACTIVAR TODO"
 disable_all_button: "DESACTIVAR TODO"
@@ -230,7 +230,7 @@ description_combo_stacking: "Si no activado, las clasificaciónes y el combo no 
 // Gameplay Settings
 setting_downscroll: "Downscroll"
 description_downscroll: "Si activado, las notas bajan y no suben, simple."
-setting_middlescroll: "Centrado"
+setting_middlescroll: "Notas centrada"
 description_middlescroll: "Si activado, las notas se centran."
 setting_opponent_notes: "Notas del adversario"
 description_opponent_notes: "Si no activado, mostra las notas del adversario."
@@ -243,9 +243,9 @@ description_disable_reset_button: "Si activado, el botón por reinicio esta no a
 setting_hitsound_volume: "Volumen de sonido de notas"
 description_hitsound_volume: "Las notas hacen un "¡tic!" cuando son presionadas."
 setting_rating_offset: "Offset de valuación"
-description_rating_offset: "Cambia qué tan tarde/temprano tienes presionar para "¡Magnífico!"\nCuanto más alto, más tarde le tienes que dar. 
-setting_sick_hit_window: "Sincronización para "¡Magnífico!""
-description_sick_hit_window: "Ajusta los milisegundos máximos para conseguir un "¡Magnífico!"."
+description_rating_offset: "Cambia qué tan tarde/temprano tienes presionar para un "¡Excelente!"\nCuanto más alto, más tarde le tienes que dar. 
+setting_sick_hit_window: "Sincronización para "¡Excelente!""
+description_sick_hit_window: "Ajusta los milisegundos máximos para conseguir un "¡Excelente!"."
 setting_good_hit_window: "Sincronización para "Genial""
 description_good_hit_window: "Ajusta los milisegundos máximos para conseguir un "Genial"."
 setting_bad_hit_window: "Sincronización para "Mal"."
@@ -256,7 +256,7 @@ setting_sustains_as_one_note: "Notas sostenidas como una nota"
 description_sustains_as_one_note: "Si activado, las notas sostenidas no pueden volver a ser presionadas si se omiten,\ny cuentan como un fallo."
 
 // Loading Screen
-now_loading: Cargando "{1}"
+now_loading: "Cargando {1}"
 
 // Difficulties
 difficulty_easy: "Fácil"
