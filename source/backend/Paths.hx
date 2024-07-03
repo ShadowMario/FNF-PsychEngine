@@ -193,10 +193,8 @@ class Paths
 			#if MODS_ALLOWED
 			if (FileSystem.exists(file))
 				bitmap = BitmapData.fromFile(file);
-			#else
-			if (OpenFlAssets.exists(file, IMAGE))
+			else #end if (OpenFlAssets.exists(file, IMAGE))
 				bitmap = OpenFlAssets.getBitmapData(file);
-			#end
 
 			if (bitmap == null)
 			{

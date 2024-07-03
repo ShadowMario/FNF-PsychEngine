@@ -89,46 +89,9 @@ class Character extends FlxSprite
 		animation = new PsychAnimationController(this);
 
 		animOffsets = new Map<String, Array<Dynamic>>();
-		curCharacter = character;
 		this.isPlayer = isPlayer;
-		switch (curCharacter)
-		{
-			//case 'your character name in case you want to hardcode them instead':
-
-			default:
-				var characterPath:String = 'characters/$curCharacter.json';
-
-				var path:String = Paths.getPath(characterPath, TEXT);
-				#if MODS_ALLOWED
-				if (!FileSystem.exists(path))
-				#else
-				if (!Assets.exists(path))
-				#end
-				{
-					path = Paths.getSharedPath('characters/' + DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
-					missingCharacter = true;
-					missingText = new FlxText(0, 0, 300, 'ERROR:\n$curCharacter.json', 16);
-					missingText.alignment = CENTER;
-				}
-
-				try
-				{
-					#if MODS_ALLOWED
-					loadCharacterFile(Json.parse(File.getContent(path)));
-					#else
-					loadCharacterFile(Json.parse(Assets.getText(path)));
-					#end
-				}
-				catch(e:Dynamic)
-				{
-					trace('Error loading character file of "$character": $e');
-				}
-		}
-
-		if(animOffsets.exists('singLEFTmiss') || animOffsets.exists('singDOWNmiss') || animOffsets.exists('singUPmiss') || animOffsets.exists('singRIGHTmiss')) hasMissAnimations = true;
-		recalculateDanceIdle();
-		dance();
-
+		changeCharacter(character);
+		
 		switch(curCharacter)
 		{
 			case 'pico-speaker':
@@ -136,6 +99,45 @@ class Character extends FlxSprite
 				loadMappedAnims();
 				playAnim("shoot1");
 		}
+	}
+
+	public function changeCharacter(character:String)
+	{
+		animationsArray = [];
+		animOffsets = [];
+		curCharacter = character;
+		var characterPath:String = 'characters/$character.json';
+
+		var path:String = Paths.getPath(characterPath, TEXT);
+		#if MODS_ALLOWED
+		if (!FileSystem.exists(path))
+		#else
+		if (!Assets.exists(path))
+		#end
+		{
+			path = Paths.getSharedPath('characters/' + DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
+			missingCharacter = true;
+			missingText = new FlxText(0, 0, 300, 'ERROR:\n$character.json', 16);
+			missingText.alignment = CENTER;
+		}
+
+		try
+		{
+			#if MODS_ALLOWED
+			loadCharacterFile(Json.parse(File.getContent(path)));
+			#else
+			loadCharacterFile(Json.parse(Assets.getText(path)));
+			#end
+		}
+		catch(e:Dynamic)
+		{
+			trace('Error loading character file of "$character": $e');
+		}
+
+		skipDance = false;
+		hasMissAnimations = animOffsets.exists('singLEFTmiss') || animOffsets.exists('singDOWNmiss') || animOffsets.exists('singUPmiss') || animOffsets.exists('singRIGHTmiss');
+		recalculateDanceIdle();
+		dance();
 	}
 
 	public function loadCharacterFile(json:Dynamic)

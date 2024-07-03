@@ -101,20 +101,20 @@ class GameOverSubstate extends MusicBeatSubstate
 			PlayState.instance.callOnScripts('onGameOverConfirm', [false]);
 		}
 		
-		if (boyfriend.animation.curAnim != null)
+		if (!boyfriend.isAnimationNull())
 		{
-			if (boyfriend.animation.curAnim.name == 'firstDeath' && boyfriend.animation.curAnim.finished && startedDeath)
+			if (boyfriend.getAnimationName() == 'firstDeath' && boyfriend.isAnimationFinished() && startedDeath)
 				boyfriend.playAnim('deathLoop');
 
-			if(boyfriend.animation.curAnim.name == 'firstDeath')
+			if(boyfriend.getAnimationName() == 'firstDeath')
 			{
-				if(boyfriend.animation.curAnim.curFrame >= 12 && !moveCamera)
+				if((!boyfriend.isAnimateAtlas && boyfriend.animation.curAnim.curFrame >= 12 || boyfriend.isAnimateAtlas && boyfriend.atlas.anim.curFrame >= 12) && !moveCamera)
 				{
-					FlxG.camera.follow(camFollow, LOCKON, 0.6);
+					FlxG.camera.follow(camFollow, LOCKON, 0.01);
 					moveCamera = true;
 				}
 
-				if (boyfriend.animation.curAnim.finished && !playingDeathSound)
+				if (boyfriend.isAnimationFinished() && !playingDeathSound)
 				{
 					startedDeath = true;
 					if (PlayState.SONG.stage == 'tank')

@@ -117,19 +117,19 @@ class HScript extends SScript
 
 		// Functions & Variables
 		set('setVar', function(name:String, value:Dynamic) {
-			PlayState.instance.variables.set(name, value);
+			MusicBeatState.getVariables().set(name, value);
 			return value;
 		});
 		set('getVar', function(name:String) {
 			var result:Dynamic = null;
-			if(PlayState.instance.variables.exists(name)) result = PlayState.instance.variables.get(name);
+			if(MusicBeatState.getVariables().exists(name)) result = MusicBeatState.getVariables().get(name);
 			return result;
 		});
 		set('removeVar', function(name:String)
 		{
-			if(PlayState.instance.variables.exists(name))
+			if(MusicBeatState.getVariables().exists(name))
 			{
-				PlayState.instance.variables.remove(name);
+				MusicBeatState.getVariables().remove(name);
 				return true;
 			}
 			return false;

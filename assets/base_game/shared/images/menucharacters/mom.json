@@ -6,5 +6,5 @@
 		10
 	],
 	"scale": 1,
-	"confirm_anim": "M Dad Idle"
+	"antialiasing": true
 }
