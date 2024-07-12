@@ -1521,7 +1521,7 @@ class PlayState extends MusicBeatState
 		super.openSubState(SubState);
 	}
 
-	var canResync:Bool = true;
+	public var canResync:Bool = true;
 	override function closeSubState()
 	{
 		super.closeSubState();
