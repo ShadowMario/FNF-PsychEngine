@@ -842,7 +842,7 @@ class FunkinLua {
 					game.camFollow.x += game.gf.cameraPosition[0] + game.girlfriendCameraOffset[0];
 					game.camFollow.y += game.gf.cameraPosition[1] + game.girlfriendCameraOffset[1];
 					game.tweenCamIn();
-					return;
+					return false;
 				case 'dad' | 'opponent':
 				isDad = true;
 			}
