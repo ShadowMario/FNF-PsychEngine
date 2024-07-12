@@ -74,6 +74,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	];
 	var curQuant:Int = 16;
 
+	var sectionFirstNoteID:Int = 0;
+	var sectionFirstEventID:Int = 0;
 	var curSec:Int = 0;
 
 	var chartEditorSave:FlxSave;
@@ -83,8 +85,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	var infoBoxPosition:FlxPoint = FlxPoint.get(1020, 360);
 	var upperBox:PsychUIBox;
 	
-
-	var camHUD:FlxCamera;
+	var camUI:FlxCamera;
 
 	var prevGridBg:ChartingGridSprite;
 	var gridBg:ChartingGridSprite;
@@ -151,9 +152,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		opponentVocals.looped = true;
 
 		initPsychCamera();
-		camHUD = new FlxCamera();
-		camHUD.bgColor.alpha = 0;
-		FlxG.cameras.add(camHUD, false);
+		camUI = new FlxCamera();
+		camUI.bgColor.alpha = 0;
+		FlxG.cameras.add(camUI, false);
 
 		chartEditorSave = new FlxSave();
 		chartEditorSave.bind('chart_editor_data', CoolUtil.getSavePath());
@@ -180,7 +181,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		add(bg);
 
 		var tipText:FlxText = new FlxText(FlxG.width - 210, FlxG.height - 30, 200, 'Press F1 for Help', 20);
-		tipText.cameras = [camHUD];
+		tipText.cameras = [camUI];
 		tipText.setFormat(null, 16, FlxColor.WHITE, RIGHT);
 		tipText.borderColor = FlxColor.BLACK;
 		tipText.scrollFactor.set();
@@ -270,7 +271,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		infoBox = new PsychUIBox(infoBoxPosition.x, infoBoxPosition.y, 200, 220, ['Information']);
 		infoBox.scrollFactor.set();
-		infoBox.cameras = [camHUD];
+		infoBox.cameras = [camUI];
 		infoText = new FlxText(15, 15, 230, '', 16);
 		infoText.scrollFactor.set();
 		infoBox.getTab('Information').menu.add(infoText);
@@ -279,7 +280,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		mainBox = new PsychUIBox(mainBoxPosition.x, mainBoxPosition.y, 300, 280, ['Charting', 'Data', 'Events', 'Note', 'Section', 'Song']);
 		mainBox.selectedName = 'Song';
 		mainBox.scrollFactor.set();
-		mainBox.cameras = [camHUD];
+		mainBox.cameras = [camUI];
 		add(mainBox);
 
 		// save data positions for the UI boxes
@@ -293,7 +294,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		upperBox.isMinimized = true;
 		upperBox.minimizeOnFocusLost = true;
 		upperBox.canMove = false;
-		upperBox.cameras = [camHUD];
+		upperBox.cameras = [camUI];
 		upperBox.bg.visible = false;
 		add(upperBox);
 
@@ -301,7 +302,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		outputTxt.borderSize = 2;
 		outputTxt.borderStyle = OUTLINE_FAST;
 		outputTxt.scrollFactor.set();
-		outputTxt.cameras = [camHUD];
+		outputTxt.cameras = [camUI];
 		outputTxt.alpha = 0;
 		add(outputTxt);
 
@@ -625,14 +626,14 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				if(!FlxG.keys.pressed.SHIFT && !FlxG.keys.pressed.CONTROL)
 					resetSelectedNotes();
 
-				var selectionBounds = selectionBox.getScreenBounds(null, camHUD);
+				var selectionBounds = selectionBox.getScreenBounds(null, camUI);
 				for (note in curRenderedNotes)
 				{
 					if(note == null) continue;
 
 					if(!selectedNotes.contains(note) || FlxG.keys.pressed.CONTROL /*&& FlxG.overlap(selectionBox, note)*/) //overlap doesnt work here
 					{
-						var noteBounds = note.getScreenBounds(null, camHUD);
+						var noteBounds = note.getScreenBounds(null, camUI);
 						noteBounds.top -= scrollY;
 						noteBounds.bottom -= scrollY;
 
@@ -752,8 +753,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 								noteSetupData.push(typeSelected);
 
 							var noteAdded:MetaNote = createNote(noteSetupData);
-							for (num => note in notes) //TO DO: Find out if this is more laggy than just directly adding the note and then sorting on big charts
+							for (num in sectionFirstNoteID...notes.length)
 							{
+								var note = notes[num];
 								if(note.strumTime >= strumTime)
 								{
 									notes.insert(num, noteAdded);
@@ -774,8 +776,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 							var didAdd:Bool = false;
 
 							var eventAdded:EventMetaNote = createEvent([strumTime, [[eventsList[Std.int(Math.max(eventDropDown.selectedIndex, 0))][0], value1InputText.text, value2InputText.text]]]);
-							for (num => event in events) //TO DO: Ditto
+							for (num in sectionFirstEventID...events.length)
 							{
+								var event = events[num];
 								if(event.strumTime >= strumTime)
 								{
 									events.insert(num, eventAdded);
@@ -1220,6 +1223,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		notes.sort(PlayState.sortByTime);
 		events.sort(PlayState.sortByTime);
+		trace('Note count: ${notes.length}');
+		trace('Events count: ${events.length}');
 		loadSection();
 	}
 
@@ -1450,19 +1455,31 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			return (note.strumTime >= minTime && note.strumTime < maxTime);
 		}
 
-		for(note in notes.filter(curSecFilter))
+		var firstNote:Bool = false;
+		var firstEvent:Bool = false;
+		sectionFirstNoteID = 0;
+		sectionFirstEventID = 0;
+		for (num => note in notes)
 		{
-			curRenderedNotes.add(note);
-			note.alpha = (note.strumTime >= Conductor.songPosition) ? 1 : 0.6;
+			if(note != null && curSecFilter(note))
+			{
+				if(!firstNote) sectionFirstNoteID = num;
+				curRenderedNotes.add(note);
+				note.alpha = (note.strumTime >= Conductor.songPosition) ? 1 : 0.6;
+			}
 		}
 
 		if(SHOW_EVENT_COLUMN)
 		{
-			for(event in events.filter(curSecFilter))
+			for (num => event in events)
 			{
-				curRenderedNotes.add(event);
-				event.alpha = (event.strumTime >= Conductor.songPosition) ? 1 : 0.6;
-				event.eventText.visible = true;
+				if(event != null && curSecFilter(event))
+				{
+					if(!firstEvent) sectionFirstEventID = num;
+					curRenderedNotes.add(event);
+					event.alpha = (event.strumTime >= Conductor.songPosition) ? 1 : 0.6;
+					event.eventText.visible = true;
+				}
 			}
 		}
 
