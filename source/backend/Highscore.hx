@@ -21,6 +21,7 @@ class Highscore
 
 	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0, ?rating:Float = -1):Void
 	{
+		if(song == null) return;
 		var daSong:String = formatSong(song, diff);
 
 		if (songScores.exists(daSong))

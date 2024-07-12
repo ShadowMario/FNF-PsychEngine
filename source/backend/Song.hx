@@ -110,28 +110,35 @@ class Song
 	}
 
 	public static var chartPath:String;
+	public static var loadedSongName:String;
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
+		if(folder == null) folder = jsonInput;
+		PlayState.SONG = getChart(jsonInput, folder);
+		StageData.loadDirectory(PlayState.SONG);
+		loadedSongName = folder;
+		chartPath = _lastPath.replace('/', '\\');
+		return PlayState.SONG;
+	}
+
+	static var _lastPath:String;
+	public static function getChart(jsonInput:String, ?folder:String):SwagSong
+	{
+		if(folder == null) folder = jsonInput;
 		var rawData:String = null;
 		
 		var formattedFolder:String = Paths.formatToSongPath(folder);
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
-		var path:String = Paths.json('$formattedFolder/$formattedSong');
+		_lastPath = Paths.json('$formattedFolder/$formattedSong');
 
 		#if MODS_ALLOWED
-		if(FileSystem.exists(path))
-			rawData = File.getContent(path);
+		if(FileSystem.exists(_lastPath))
+			rawData = File.getContent(_lastPath);
 		else
 		#end
-			rawData = Assets.getText(path);
+			rawData = Assets.getText(_lastPath);
 
-		var songJson:SwagSong = parseJSON(rawData, jsonInput);
-		if(jsonInput != 'events')
-		{
-			StageData.loadDirectory(songJson);
-			chartPath = path.replace('/', '\\');
-		}
-		return songJson;
+		return parseJSON(rawData, jsonInput);
 	}
 
 	public static function parseJSON(rawData:String, ?nameForError:String = null, ?convertTo:String = 'psych_v1'):SwagSong

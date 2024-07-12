@@ -136,7 +136,7 @@ class EditorPlayState extends MusicBeatSubstate
 		add(tipText);
 		FlxG.mouse.visible = false;
 		
-		generateSong(PlayState.SONG.song);
+		generateSong();
 		_noteList = null;
 
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
@@ -282,7 +282,7 @@ class EditorPlayState extends MusicBeatSubstate
 	}
 
 	// Borrowed from PlayState
-	function generateSong(dataPath:String)
+	function generateSong()
 	{
 		// FlxG.log.add(ChartParser.parse());
 		songSpeed = PlayState.SONG.speed;
