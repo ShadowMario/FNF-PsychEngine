@@ -2,13 +2,14 @@ package backend;
 
 class Difficulty
 {
-	public static var defaultList(default, never):Array<String> = [
+	public static final defaultList:Array<String> = [
 		'Easy',
 		'Normal',
 		'Hard'
 	];
+	private static final defaultDifficulty:String = 'Normal'; //The chart that has no postfix and starting difficulty on Freeplay/Story Mode
+
 	public static var list:Array<String> = [];
-	private static var defaultDifficulty(default, never):String = 'Normal'; //The chart that has no postfix and starting difficulty on Freeplay/Story Mode
 
 	inline public static function getFilePath(num:Null<Int> = null)
 	{

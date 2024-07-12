@@ -414,12 +414,13 @@ class FreeplayState extends MusicBeatState
 
 				trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
 			}
-			catch(e:Dynamic)
+			catch(e:haxe.Exception)
 			{
-				trace('ERROR! $e');
+				trace('ERROR! ${e.message}');
 
-				var errorStr:String = e.toString();
+				var errorStr:String = e.message;
 				if(errorStr.startsWith('[lime.utils.Assets] ERROR:')) errorStr = 'Missing file: ' + errorStr.substring(errorStr.indexOf(songLowercase), errorStr.length-1); //Missing chart
+				else errorStr += '\n\n' + e.stack;
 
 				missingText.text = 'ERROR WHILE LOADING CHART:\n$errorStr';
 				missingText.screenCenter(Y);

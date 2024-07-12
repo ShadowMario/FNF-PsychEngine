@@ -1,9 +1,5 @@
 {
 	"song": {
-		"speed": 2.3,
-		"stage": "stage",
-		"player1": "bf",
-		"player2": "dad",
 		"events": [
 			[
 				32000,
@@ -236,13 +232,6 @@
 				]
 			]
 		],
-		"notes": [],
-		"splashSkin": null,
-		"validScore": false,
-		"gfVersion": "gf",
-		"bpm": 180,
-		"arrowSkin": null,
-		"needsVoices": true,
-		"song": "Dad Battle"
+		"format": "psych_v1_convert"
 	}
 }

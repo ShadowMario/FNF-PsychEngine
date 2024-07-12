@@ -30,7 +30,7 @@ class PsychUIButton extends FlxSpriteGroup
 		bgAlpha: 1
 	};
 
-	public function new(x:Float = 0, y:Float = 0, label:String = '', onClick:Void->Void = null, ?wid:Int = 80, ?hei:Int = 20)
+	public function new(x:Float = 0, y:Float = 0, label:String = '', ?onClick:Void->Void = null, ?wid:Int = 80, ?hei:Int = 20)
 	{
 		super(x, y);
 		bg = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
@@ -51,9 +51,18 @@ class PsychUIButton extends FlxSpriteGroup
 	public var isClicked:Bool = false;
 	public var forceCheckNext:Bool = false;
 	public var broadcastButtonEvent:Bool = true;
+	var _firstFrame:Bool = true;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		if(_firstFrame)
+		{
+			bg.color = normalStyle.bgColor;
+			bg.alpha = normalStyle.bgAlpha;
+			text.color = normalStyle.textColor;
+			_firstFrame = false;
+		}
 		
 		if(isClicked && FlxG.mouse.released)
 		{

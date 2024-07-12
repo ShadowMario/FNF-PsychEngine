@@ -1,10 +1,5 @@
 {
 	"song": {
-		"speed": 2.3,
-		"stage": "philly",
-		"player1": "bf",
-		"player2": "pico",
-		"player3": null,
 		"events": [
 			[
 				46545.4545454546,
@@ -964,13 +959,6 @@
 				]
 			]
 		],
-		"notes": [],
-		"splashSkin": null,
-		"validScore": false,
-		"gfVersion": "gf",
-		"bpm": 165,
-		"arrowSkin": null,
-		"needsVoices": true,
-		"song": "Blammed"
+		"format": "psych_v1_convert"
 	}
 }

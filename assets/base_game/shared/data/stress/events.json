@@ -1,10 +1,5 @@
 {
 	"song": {
-		"speed": 2.6,
-		"stage": "tank",
-		"player1": "bf-holding-gf",
-		"player2": "tankman",
-		"player3": null,
 		"events": [
 			[
 				62022.4719101124,
@@ -42,13 +37,6 @@
 				]
 			]
 		],
-		"notes": [],
-		"splashSkin": null,
-		"validScore": false,
-		"gfVersion": "pico-speaker",
-		"bpm": 178,
-		"arrowSkin": null,
-		"needsVoices": true,
-		"song": "Stress"
+		"format": "psych_v1_convert"
 	}
 }
