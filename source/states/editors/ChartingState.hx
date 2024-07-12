@@ -3092,7 +3092,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		var fileList:Array<String> = [];
 		if(optionalList != null)
 		{
-			for (file in Mods.mergeAllTextsNamed('data/characterList.txt'))
+			for (file in Mods.mergeAllTextsNamed(optionalList))
 			{
 				file = file.trim();
 				if(file.length > 0 && !fileList.contains(file))
