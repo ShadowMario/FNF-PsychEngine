@@ -1763,6 +1763,7 @@ class StageEditorMetaSprite
 					sprite.frames = Paths.getAtlas(v);
 			}
 		}
+		catch (e:Dynamic) {}
 		sprite.updateHitbox();
 		return (image = v);
 	}

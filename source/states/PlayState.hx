@@ -1267,6 +1267,7 @@ class PlayState extends MusicBeatState
 				if(oppVocals != null && oppVocals.length > 0) opponentVocals.loadEmbedded(oppVocals);
 			}
 		}
+		catch (e:Dynamic) {}
 
 		#if FLX_PITCH
 		vocals.pitch = playbackRate;
@@ -1280,6 +1281,7 @@ class PlayState extends MusicBeatState
 		{
 			inst.loadEmbedded(Paths.inst(songData.song));
 		}
+		catch (e:Dynamic) {}
 		FlxG.sound.list.add(inst);
 
 		notes = new FlxTypedGroup<Note>();
@@ -1287,11 +1289,13 @@ class PlayState extends MusicBeatState
 
 		try
 		{
-			var eventsData:Array<Dynamic> = Song.getChart('events', songName).events;
-			for (event in eventsData) //Event Notes
-				for (i in 0...event[1].length)
-					makeEvent(event, i);
+			var eventsChart:SwagSong = Song.getChart('events', songName);
+			if(eventsChart != null)
+				for (event in eventsChart.events) //Event Notes
+					for (i in 0...event[1].length)
+						makeEvent(event, i);
 		}
+		catch(e:Dynamic) {}
 
 		var oldNote:Note = null;
 		var sectionsData:Array<SwagSection> = PlayState.SONG.notes;
@@ -3324,6 +3328,7 @@ class PlayState extends MusicBeatState
 						returnVal = myValue;
 				}
 			}
+			catch (e:Dynamic) {}
 		}
 		#end
 

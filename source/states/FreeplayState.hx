@@ -466,6 +466,7 @@ class FreeplayState extends MusicBeatState
 			#end
 			return character.vocals_file;
 		}
+		catch (e:Dynamic) {}
 		return null;
 	}
 

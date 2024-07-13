@@ -1148,6 +1148,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				FlxG.sound.list.add(opponentVocals);
 			}
 		}
+		catch (e:Dynamic) {}
 
 		updateAudioVolume();
 		setPitch(playbackRate);
@@ -3138,6 +3139,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				#end
 				return cast Json.parse(unparsedJson);
 			}
+			catch (e:Dynamic) {}
 		}
 		return null;
 	}

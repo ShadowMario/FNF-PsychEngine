@@ -115,9 +115,9 @@ class Song
 	{
 		if(folder == null) folder = jsonInput;
 		PlayState.SONG = getChart(jsonInput, folder);
-		StageData.loadDirectory(PlayState.SONG);
 		loadedSongName = folder;
 		chartPath = _lastPath.replace('/', '\\');
+		StageData.loadDirectory(PlayState.SONG);
 		return PlayState.SONG;
 	}
 
@@ -138,7 +138,7 @@ class Song
 		#end
 			rawData = Assets.getText(_lastPath);
 
-		return parseJSON(rawData, jsonInput);
+		return rawData != null ? parseJSON(rawData, jsonInput) : null;
 	}
 
 	public static function parseJSON(rawData:String, ?nameForError:String = null, ?convertTo:String = 'psych_v1'):SwagSong

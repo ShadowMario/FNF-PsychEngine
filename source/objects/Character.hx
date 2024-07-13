@@ -397,14 +397,16 @@ class Character extends FlxSprite
 	{
 		try
 		{
-			var noteData:Array<SwagSection> = Song.getChart('picospeaker', Paths.formatToSongPath(Song.loadedSongName)).notes;
-			for (section in noteData)
-				for (songNotes in section.sectionNotes)
-					animationNotes.push(songNotes);
+			var songData:SwagSong = Song.getChart('picospeaker', Paths.formatToSongPath(Song.loadedSongName));
+			if(songData != null)
+				for (section in songData.notes)
+					for (songNotes in section.sectionNotes)
+						animationNotes.push(songNotes);
 
 			TankmenBG.animationNotes = animationNotes;
 			animationNotes.sort(sortAnims);
 		}
+		catch(e:Dynamic) {}
 	}
 
 	function sortAnims(Obj1:Array<Dynamic>, Obj2:Array<Dynamic>):Int
