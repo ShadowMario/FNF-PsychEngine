@@ -2193,6 +2193,10 @@ class PlayState extends MusicBeatState
 			case 'Play Sound':
 				if(flValue2 == null) flValue2 = 1;
 				FlxG.sound.play(Paths.sound(value1), flValue2);
+			case 'Move Camera To':
+				moveCameraTo(value1);
+				if (value2 == 'true')
+					FlxG.camera.snapToTarget();
 		}
 
 		stagesFunc(function(stage:BaseStage) stage.eventCalled(eventName, value1, value2, flValue1, flValue2, strumTime));
@@ -2207,17 +2211,38 @@ class PlayState extends MusicBeatState
 
 		if (gf != null && SONG.notes[sec].gfSection)
 		{
-			camFollow.setPosition(gf.getMidpoint().x, gf.getMidpoint().y);
-			camFollow.x += gf.cameraPosition[0] + girlfriendCameraOffset[0];
-			camFollow.y += gf.cameraPosition[1] + girlfriendCameraOffset[1];
-			tweenCamIn();
-			callOnScripts('onMoveCamera', ['gf']);
+			moveCameraTo('gf');
 			return;
 		}
 
 		var isDad:Bool = (SONG.notes[sec].mustHitSection != true);
 		moveCamera(isDad);
-		callOnScripts('onMoveCamera', [isDad ? 'dad' : 'boyfriend']);
+	}
+
+	public var lastCameraTarget(default, null):String = '';
+	public function moveCameraScriptCall(char:String):Void {
+		if (lastCameraTarget != char) {
+			callOnScripts('onMoveCamera', [char]);
+			lastCameraTarget = char;
+		}
+	}
+
+	public function moveCameraTo(char:String):Void {
+		switch (char.toLowerCase()) {
+			case 'gf':
+				if (gf != null) {
+					camFollow.setPosition(gf.getMidpoint().x, gf.getMidpoint().y);
+					camFollow.x += gf.cameraPosition[0] + girlfriendCameraOffset[0];
+					camFollow.y += gf.cameraPosition[1] + girlfriendCameraOffset[1];
+					tweenCamIn();
+					moveCameraScriptCall('gf');
+				} else if (dad.curCharacter.startsWith('gf-') || dad.curCharacter == 'gf')
+					moveCamera(true);
+			case 'dad':
+				moveCamera(true);
+			default: // case 'boyfriend':
+				moveCamera(false);
+		}
 	}
 
 	var cameraTwn:FlxTween;
@@ -2246,6 +2271,7 @@ class PlayState extends MusicBeatState
 				});
 			}
 		}
+		moveCameraScriptCall(isDad ? 'dad' : 'boyfriend');
 	}
 
 	public function tweenCamIn() {
