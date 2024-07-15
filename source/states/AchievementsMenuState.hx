@@ -129,7 +129,6 @@ class AchievementsMenuState extends MusicBeatState
 
 	function makeAchievement(achievement:String, data:Achievement, unlocked:Bool, mod:String = null)
 	{
-		var unlocked:Bool = Achievements.isUnlocked(achievement);
 		return {
 			name: achievement,
 			displayName: unlocked ? Language.getPhrase('achievement_$achievement', data.name) : '???',

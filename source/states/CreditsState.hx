@@ -58,10 +58,13 @@ class CreditsState extends MusicBeatState
 			['CheemsAndFriends',	'face',	'Creator of FlxAnimate\n(Icon will be added later, merry christmas!)',	 'https://twitter.com/CheemsnFriendos',	'A1A1A1'],
 			[''],
 			["Funkin' Crew"],
-			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",						 'https://twitter.com/ninja_muffin99',	'CF2D2D'],
-			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",							 'https://twitter.com/PhantomArcade3K',	'FADC45'],
-			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",							 'https://twitter.com/evilsk8r',		'5ABD4B'],
-			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",							 'https://twitter.com/kawaisprite',		'378FC7']
+			["ninjamuffin99",		"ninjamuffin99",	"Programmer of Friday Night Funkin'",						"https://twitter.com/ninja_muffin99",	"CF2D2D"],
+			["PhantomArcade",		"phantomarcade",	"Animator of Friday Night Funkin'",							"https://twitter.com/PhantomArcade3K",	"FADC45"],
+			["evilsk8r",			"evilsk8r",			"Artist of Friday Night Funkin'",							"https://twitter.com/evilsk8r",			"5ABD4B"],
+			["kawaisprite",			"kawaisprite",		"Composer of Friday Night Funkin'",							"https://twitter.com/kawaisprite",		"378FC7"],
+			[""],
+			["Psych Engine Discord"],
+			["Join the Psych Ward!", "discord", "", "https://discord.gg/2ka77eMXDv", "5165F6"]
 		];
 		
 		for(i in defaultList) {
@@ -233,13 +236,18 @@ class CreditsState extends MusicBeatState
 		}
 
 		descText.text = creditsStuff[curSelected][2];
-		descText.y = FlxG.height - descText.height + offsetThing - 60;
-
-		if(moveTween != null) moveTween.cancel();
-		moveTween = FlxTween.tween(descText, {y : descText.y + 75}, 0.25, {ease: FlxEase.sineOut});
-
-		descBox.setGraphicSize(Std.int(descText.width + 20), Std.int(descText.height + 25));
-		descBox.updateHitbox();
+		if(descText.text.trim().length > 0)
+		{
+			descText.visible = descBox.visible = true;
+			descText.y = FlxG.height - descText.height + offsetThing - 60;
+	
+			if(moveTween != null) moveTween.cancel();
+			moveTween = FlxTween.tween(descText, {y : descText.y + 75}, 0.25, {ease: FlxEase.sineOut});
+	
+			descBox.setGraphicSize(Std.int(descText.width + 20), Std.int(descText.height + 25));
+			descBox.updateHitbox();
+		}
+		else descText.visible = descBox.visible = false;
 	}
 
 	#if MODS_ALLOWED

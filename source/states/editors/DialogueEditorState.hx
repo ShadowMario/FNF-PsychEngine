@@ -10,6 +10,7 @@ import objects.TypedAlphabet;
 
 import cutscenes.DialogueBoxPsych;
 import cutscenes.DialogueCharacter;
+import states.editors.content.Prompt;
 
 class DialogueEditorState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
 {
@@ -317,7 +318,7 @@ class DialogueEditorState extends MusicBeatState implements PsychUIEventHandler.
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					transitioning = true;
 				}
-				else openSubState(new ConfirmationPopupSubstate(function() transitioning = true));
+				else openSubState(new ExitConfirmationPrompt(function() transitioning = true));
 				return;
 			}
 			var negaMult:Array<Int> = [1, -1];

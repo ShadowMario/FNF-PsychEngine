@@ -320,7 +320,7 @@ class LoadingState extends MusicBeatState
 		}
 
 		var song:SwagSong = PlayState.SONG;
-		var folder:String = Paths.formatToSongPath(song.song);
+		var folder:String = Paths.formatToSongPath(Song.loadedSongName);
 		Thread.create(() -> {
 			// LOAD NOTE IMAGE
 			var noteSkin:String = Note.defaultNoteSkin;

@@ -334,7 +334,7 @@ class FreeplayState extends MusicBeatState
 
 				Mods.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+				Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				if (PlayState.SONG.needsVoices)
 				{
 					vocals = new FlxSound();
@@ -408,18 +408,19 @@ class FreeplayState extends MusicBeatState
 
 			try
 			{
-				PlayState.SONG = Song.loadFromJson(poop, songLowercase);
+				Song.loadFromJson(poop, songLowercase);
 				PlayState.isStoryMode = false;
 				PlayState.storyDifficulty = curDifficulty;
 
 				trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
 			}
-			catch(e:Dynamic)
+			catch(e:haxe.Exception)
 			{
-				trace('ERROR! $e');
+				trace('ERROR! ${e.message}');
 
-				var errorStr:String = e.toString();
+				var errorStr:String = e.message;
 				if(errorStr.startsWith('[lime.utils.Assets] ERROR:')) errorStr = 'Missing file: ' + errorStr.substring(errorStr.indexOf(songLowercase), errorStr.length-1); //Missing chart
+				else errorStr += '\n\n' + e.stack;
 
 				missingText.text = 'ERROR WHILE LOADING CHART:\n$errorStr';
 				missingText.screenCenter(Y);
@@ -465,6 +466,7 @@ class FreeplayState extends MusicBeatState
 			#end
 			return character.vocals_file;
 		}
+		catch (e:Dynamic) {}
 		return null;
 	}
 

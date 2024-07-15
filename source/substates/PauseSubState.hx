@@ -216,24 +216,29 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			if (menuItems == difficultyChoices)
 			{
-				try{
-					if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
-
-						var name:String = PlayState.SONG.song;
-						var poop = Highscore.formatSong(name, curSelected);
-						PlayState.SONG = Song.loadFromJson(poop, name);
+				var songLowercase:String = Paths.formatToSongPath(PlayState.SONG.song);
+				var poop:String = Highscore.formatSong(songLowercase, curSelected);
+				try
+				{
+					if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected))
+					{
+						Song.loadFromJson(poop, songLowercase);
 						PlayState.storyDifficulty = curSelected;
 						MusicBeatState.resetState();
 						FlxG.sound.music.volume = 0;
 						PlayState.changedDifficulty = true;
 						PlayState.chartingMode = false;
 						return;
-					}					
-				}catch(e:Dynamic){
-					trace('ERROR! $e');
+					}
+				}
+				catch(e:haxe.Exception)
+				{
+					trace('ERROR! ${e.message}');
+	
+					var errorStr:String = e.message;
+					if(errorStr.startsWith('[lime.utils.Assets] ERROR:')) errorStr = 'Missing file: ' + errorStr.substring(errorStr.indexOf(songLowercase), errorStr.length-1); //Missing chart
+					else errorStr += '\n\n' + e.stack;
 
-					var errorStr:String = e.toString();
-					if(errorStr.startsWith('[file_contents,assets/data/')) errorStr = 'Missing file: ' + errorStr.substring(27, errorStr.length-1); //Missing chart
 					missingText.text = 'ERROR WHILE LOADING CHART:\n$errorStr';
 					missingText.screenCenter(Y);
 					missingText.visible = true;
@@ -295,6 +300,7 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Options':
 					PlayState.instance.paused = true; // For lua
 					PlayState.instance.vocals.volume = 0;
+					PlayState.instance.canResync = false;
 					MusicBeatState.switchState(new OptionsState());
 					if(ClientPrefs.data.pauseMusic != 'None')
 					{
@@ -308,6 +314,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 
+					PlayState.instance.canResync = false;
 					Mods.loadTopMod();
 					if(PlayState.isStoryMode)
 						MusicBeatState.switchState(new StoryMenuState());

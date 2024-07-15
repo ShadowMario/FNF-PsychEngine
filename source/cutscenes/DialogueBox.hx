@@ -1,6 +1,7 @@
 package cutscenes;
 
 import flixel.addons.text.FlxTypeText;
+import backend.Song;
 
 class DialogueBox extends FlxSpriteGroup
 {
@@ -25,7 +26,7 @@ class DialogueBox extends FlxSpriteGroup
 	var handSelect:FlxSprite;
 	var bgFade:FlxSprite;
 
-	var songName:String = Paths.formatToSongPath(PlayState.SONG.song);
+	var songName:String = Paths.formatToSongPath(Song.loadedSongName);
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
 		super();

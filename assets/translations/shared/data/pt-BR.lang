@@ -43,6 +43,7 @@ week_score: "PONTUAÇÃO: {1}"
 
 storyname_week5: "NEVASCA VERMELHA"
 storyname_week6: "simulador de confronto ft. moawling"
+storyname_weekend1: "Dívidas Fora do Prazo"
 
 // Freeplay
 personal_best: "MELHOR PONTUAÇÃO: {1} ({2}%)"
