@@ -46,7 +46,7 @@ class CreditsState extends MusicBeatState
 			["bb-panzu",			"bb",				"Ex-Programmer of Psych Engine",							"https://twitter.com/bbsub3",			"3E813A"],
 			[""],
 			["Engine Contributors"],
-			["CrowPlexus",			"crowplexus",		"Input System v3, Major Help and Other PRs",				"https://twitter.com/crowplexus",		"A1A1A1"],
+			["crowplexus",			"crowplexus",		"Input System v3, Major Help and Other PRs",				"https://twitter.com/crowplexus",		"A1A1A1"],
 			["Kamizeta",			"face",				"Creator of Pessy, Psych Engine's mascot.",					"https://twitter.com/LittleCewwy",		"A1A1A1"],
 			["MaxNeton",			"face",				"Loading Screen Easter Egg Artist/Animator.",				"https://twitter.com/MaxNeton",			"A1A1A1"],
 			["Keoiki",				"keoiki",			"Note Splash Animations and Latin Alphabet",				"https://twitter.com/Keoiki_",			"D2D2D2"],
