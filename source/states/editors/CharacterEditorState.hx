@@ -4,9 +4,12 @@ import flixel.FlxObject;
 import flixel.graphics.FlxGraphic;
 
 import flixel.animation.FlxAnimation;
+#if FLX_DEBUG
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
+#else
+import openfl.display.BitmapData;
+#end
 import flixel.util.FlxDestroyUtil;
-
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
@@ -19,6 +22,11 @@ import objects.Bar;
 
 import states.editors.content.Prompt;
 import states.editors.content.PsychJsonPrinter;
+
+#if !FLX_DEBUG
+@:bitmap("assets/images/debugger/cursorCross.png")
+private class GraphicCursorCross extends BitmapData {}
+#end
 
 class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
 {
