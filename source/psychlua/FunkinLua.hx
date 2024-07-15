@@ -838,13 +838,15 @@ class FunkinLua {
 			var isDad:Bool = false;
 			switch(target.toLowerCase()) {
 				case 'gf' | 'girlfriend':
-					game.camFollow.setPosition(game.gf.getMidpoint().x, game.gf.getMidpoint().y);
-					game.camFollow.x += game.gf.cameraPosition[0] + game.girlfriendCameraOffset[0];
-					game.camFollow.y += game.gf.cameraPosition[1] + game.girlfriendCameraOffset[1];
-					game.tweenCamIn();
-					return false;
+					if (game.gf != null) {
+						game.camFollow.setPosition(game.gf.getMidpoint().x, game.gf.getMidpoint().y);
+						game.camFollow.x += game.gf.cameraPosition[0] + game.girlfriendCameraOffset[0];
+						game.camFollow.y += game.gf.cameraPosition[1] + game.girlfriendCameraOffset[1];
+						game.tweenCamIn();
+						return false;
+					}
 				case 'dad' | 'opponent':
-				isDad = true;
+					isDad = true;
 			}
 			game.moveCamera(isDad);
 			return isDad;
