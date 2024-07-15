@@ -466,7 +466,7 @@ class Character extends FlxSprite
 		{
 			copyAtlasValues();
 			atlas.draw();
-			if(missingCharacter)
+			if(missingCharacter && visible)
 			{
 				alpha = lastAlpha;
 				color = lastColor;
@@ -478,7 +478,7 @@ class Character extends FlxSprite
 			return;
 		}
 		super.draw();
-		if(missingCharacter)
+		if(missingCharacter && visible)
 		{
 			alpha = lastAlpha;
 			color = lastColor;

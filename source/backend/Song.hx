@@ -143,7 +143,14 @@ class Song
 
 	public static function parseJSON(rawData:String, ?nameForError:String = null, ?convertTo:String = 'psych_v1'):SwagSong
 	{
-		var songJson:SwagSong = cast Json.parse(rawData).song;
+		var songJson:SwagSong = cast Json.parse(rawData);
+		if(Reflect.hasField(songJson, 'song'))
+		{
+			var subSong:SwagSong = Reflect.field(songJson, 'song');
+			if(subSong != null && Type.typeof(subSong) == TObject)
+				songJson = subSong;
+		}
+
 		if(convertTo != null && convertTo.length > 0)
 		{
 			var fmt:String = songJson.format;

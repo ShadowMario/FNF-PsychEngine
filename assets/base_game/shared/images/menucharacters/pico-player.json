@@ -1,0 +1,9 @@
+{
+	"confirm_anim": "confirm",
+	"antialiasing": true,
+	"idle_anim": "idle",
+	"position": [20, 0],
+	"scale": 1,
+	"image": "pico-player",
+	"flipX": false
+}

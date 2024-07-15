@@ -18,6 +18,8 @@ import openfl.events.IOErrorEvent;
 import psychlua.ModchartSprite;
 import flash.net.FileFilter;
 
+import states.editors.content.Prompt;
+
 class StageEditorState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
 {
 	final minZoom = 0.1;
@@ -1285,7 +1287,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 				MusicBeatState.switchState(new states.editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
-			else openSubState(new ConfirmationPopupSubstate());
+			else openSubState(new ExitConfirmationPrompt());
 			return;
 		}
 
