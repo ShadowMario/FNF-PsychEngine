@@ -2249,6 +2249,7 @@ class PlayState extends MusicBeatState
 				return 'boyfriend';
 			// default: // custom char support?
 		}
+		return null;
 	}
 
 	var cameraTwn:FlxTween;
