@@ -167,8 +167,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		bg.scrollFactor.set();
 		add(bg);
 		
-		if(chartEditorSave.data.theme != null)
-			changeTheme(chartEditorSave.data.theme, false);
+		changeTheme(chartEditorSave.data.theme != null ? chartEditorSave.data.theme : DEFAULT, false);
 
 		var tipText:FlxText = new FlxText(FlxG.width - 210, FlxG.height - 30, 200, 'Press F1 for Help', 20);
 		tipText.cameras = [camUI];
