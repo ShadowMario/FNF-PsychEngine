@@ -2227,7 +2227,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	public function moveCameraTo(char:String):Void {
+	public function moveCameraTo(char:String):String {
 		switch (char.toLowerCase()) {
 			case 'gf':
 				if (gf != null) {
@@ -2236,12 +2236,18 @@ class PlayState extends MusicBeatState
 					camFollow.y += gf.cameraPosition[1] + girlfriendCameraOffset[1];
 					tweenCamIn();
 					moveCameraScriptCall('gf');
-				} else if (dad.curCharacter.startsWith('gf-') || dad.curCharacter == 'gf')
+					return 'gf';
+				} else if (dad.curCharacter.startsWith('gf-') || dad.curCharacter == 'gf') {
 					moveCamera(true);
+					return 'dad';
+				}
 			case 'dad':
 				moveCamera(true);
+				return 'dad';
 			default: // case 'boyfriend':
 				moveCamera(false);
+				return 'boyfriend';
+			// default: // custom char support?
 		}
 	}
 
