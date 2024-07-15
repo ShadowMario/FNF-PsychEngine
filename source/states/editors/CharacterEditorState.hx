@@ -1031,12 +1031,12 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 			{
 				if(!unsavedProgress)
 				{
-					MusicBeatState.switchState(new states.editors.MasterEditorMenu());
+					FlxG.switchState(() -> new states.editors.MasterEditorMenu());
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				}
 				else openSubState(new ExitConfirmationPrompt());
 			}
-			else MusicBeatState.switchState(new PlayState());
+			else FlxG.switchState(() -> new PlayState());
 			return;
 		}
 	}

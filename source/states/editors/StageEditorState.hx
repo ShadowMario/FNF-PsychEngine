@@ -617,7 +617,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			stageJson.directory = selected;
 			saveObjectsToJson();
 			FlxTransitionableState.skipNextTransIn = FlxTransitionableState.skipNextTransOut = true;
-			MusicBeatState.switchState(new StageEditorState(lastLoadedStage, stageJson));
+			FlxG.switchState(() -> new StageEditorState(lastLoadedStage, stageJson));
 		});
 		directoryDropDown.selectedLabel = stageJson.directory;
 
@@ -1284,7 +1284,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		{
 			if(!unsavedProgress)
 			{
-				MusicBeatState.switchState(new states.editors.MasterEditorMenu());
+				FlxG.switchState(() -> new states.editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
 			else openSubState(new ExitConfirmationPrompt());

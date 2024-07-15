@@ -21,7 +21,7 @@ class SchoolEvil extends BaseStage
 
 		var bg:BGSprite;
 		if(!ClientPrefs.data.lowQuality)
-			bg = new BGSprite('weeb/animatedEvilSchool', posX, posY, 0.8, 0.9, ['background 2'], true);
+			bg = new BGSprite('weeb/animatedEvilSchool', posX, posY, 0.8, 0.9, ['background 2 instance 1'], true);
 		else
 			bg = new BGSprite('weeb/animatedEvilSchool_low', posX, posY, 0.8, 0.9);
 

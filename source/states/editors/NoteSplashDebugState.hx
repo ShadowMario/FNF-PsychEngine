@@ -1,8 +1,10 @@
 package states.editors;
 
+import flixel.graphics.frames.FlxFrame;
+
 import objects.Note;
-import objects.StrumNote;
 import objects.NoteSplash;
+import objects.StrumNote;
 
 class NoteSplashDebugState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
 {
@@ -175,7 +177,7 @@ class NoteSplashDebugState extends MusicBeatState implements PsychUIEventHandler
 		var notTyping:Bool = (PsychUIInputText.focusOn == null);
 		if(controls.BACK && notTyping)
 		{
-			MusicBeatState.switchState(new MasterEditorMenu());
+			FlxG.switchState(() -> new MasterEditorMenu());
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			FlxG.mouse.visible = false;
 		}
@@ -447,8 +449,21 @@ class NoteSplashDebugState extends MusicBeatState implements PsychUIEventHandler
 
 	function addAnimAndCheck(spr:FlxSprite, name:String, anim:String, ?framerate:Int = 24, ?loop:Bool = false)
 	{
+		var frames:Array<FlxFrame> = [];
+
+		@:privateAccess
+		{
+			spr.animation.findByPrefix(frames, anim, true);
+		}
+
+		if (frames.length < 1)
+		{
+			return false;
+		}
+
 		spr.animation.addByPrefix(name, anim, framerate, loop);
-		return spr.animation.getByName(name) != null;
+
+		return true;
 	}
 
 	override function destroy()

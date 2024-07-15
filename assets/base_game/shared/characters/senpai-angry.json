@@ -8,7 +8,7 @@
 			"loop": false,
 			"anim": "idle",
 			"fps": 24,
-			"name": "Angry Senpai Idle",
+			"name": "Angry Senpai Idle instance 1",
 			"indices": []
 		},
 		{
@@ -19,7 +19,7 @@
 			"loop": false,
 			"anim": "singUP",
 			"fps": 24,
-			"name": "Angry Senpai UP NOTE",
+			"name": "Angry Senpai UP NOTE instance 1",
 			"indices": []
 		},
 		{
@@ -30,7 +30,7 @@
 			"loop": false,
 			"anim": "singLEFT",
 			"fps": 24,
-			"name": "Angry Senpai LEFT NOTE",
+			"name": "Angry Senpai LEFT NOTE instance 1",
 			"indices": []
 		},
 		{
@@ -41,7 +41,7 @@
 			"loop": false,
 			"anim": "singRIGHT",
 			"fps": 24,
-			"name": "Angry Senpai RIGHT NOTE",
+			"name": "Angry Senpai RIGHT NOTE instance 1",
 			"indices": []
 		},
 		{
@@ -52,7 +52,7 @@
 			"loop": false,
 			"anim": "singDOWN",
 			"fps": 24,
-			"name": "Angry Senpai DOWN NOTE",
+			"name": "Angry Senpai DOWN NOTE instance 1",
 			"indices": []
 		}
 	],
