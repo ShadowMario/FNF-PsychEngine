@@ -353,7 +353,7 @@ class FunkinLua {
 			}
 		});*/
 		Lua_helper.add_callback(lua, "isRunning", function(file:String, ?checkForHaxe:Bool = false) {
-			var foundScript:String = findScript(file, (checkForHaxe ? '.hx' : 'lua'));
+			var foundScript:String = findScript(file, (checkForHaxe ? '.hx' : '.lua'));
 			if (foundScript != null) {
 				if (checkForHaxe) {
 					for (hscriptInstance in game.hscriptArray)
