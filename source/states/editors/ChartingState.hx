@@ -855,7 +855,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			var hitSoundOpp:Bool = (hitsoundOpponentStepper.value > 0);
 			for (note in curRenderedNotes)
 			{
-				if(note == null) continue;
+				if(note == null || note.isEvent) continue;
 
 				note.alpha = (note.strumTime >= Conductor.songPosition) ? 1 : 0.6;
 				if(canPlayHitSound && Conductor.songPosition > note.strumTime && lastTime <= note.strumTime)
