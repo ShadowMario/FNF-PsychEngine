@@ -1,0 +1,24 @@
+{
+	"directory": "weekend1",
+	"defaultZoom": 0.77,
+	"stageUI": "",
+
+	"boyfriend": [1930, 450],
+	"girlfriend": [1175, 200],
+	"opponent": [620, 445],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [-180, 25],
+	"camera_opponent": [450, -110],
+	"camera_girlfriend": [0, 0],
+	"camera_speed": 1,
+
+	"preload": {
+	},
+
+	"_editorMeta": {
+		"dad": "darnell",
+		"boyfriend": "pico-playable",
+		"gf": "nene"
+	}
+}

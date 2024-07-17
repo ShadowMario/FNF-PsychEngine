@@ -49,11 +49,12 @@ class MetaNote extends Note
 		this.strumTime = v;
 	}
 
-	public function setSustainLength(v:Float, stepCrochet:Float)
+	var _lastZoom:Float = -1;
+	public function setSustainLength(v:Float, stepCrochet:Float, zoom:Float = 1)
 	{
+		_lastZoom = zoom;
 		v = Math.round(v / (stepCrochet / 2)) * (stepCrochet / 2);
-		sustainLength = Math.max(Math.min(v, stepCrochet * 128), 0);
-		songData[2] = v;
+		songData[2] = sustainLength = Math.max(Math.min(v, stepCrochet * 128), 0);
 
 		if(sustainLength > 0)
 		{
@@ -62,9 +63,18 @@ class MetaNote extends Note
 				sustainSprite = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 				sustainSprite.scrollFactor.x = 0;
 			}
-			sustainSprite.setGraphicSize(8, Math.max(0, (v * ChartingState.GRID_SIZE / stepCrochet) + ChartingState.GRID_SIZE/2));
+			sustainSprite.setGraphicSize(8, Math.max(0, (v * ChartingState.GRID_SIZE / stepCrochet * zoom) + ChartingState.GRID_SIZE/2));
 			sustainSprite.updateHitbox();
 		}
+	}
+
+	public var hasSustain(get, never):Bool;
+	function get_hasSustain() return (!isEvent && sustainLength > 0);
+
+	public function updateSustainToZoom(stepCrochet:Float, zoom:Float = 1)
+	{
+		if(_lastZoom == zoom) return;
+		setSustainLength(sustainLength, stepCrochet, zoom);
 	}
 	
 	var _noteTypeText:FlxText;
@@ -147,7 +157,7 @@ class EventMetaNote extends MetaNote
 		super.draw();
 	}
 
-	override function setSustainLength(v:Float, stepCrochet:Float) {}
+	override function setSustainLength(v:Float, stepCrochet:Float, zoom:Float = 1) {}
 
 	public var events:Array<Array<String>>;
 	public function updateEventText()
