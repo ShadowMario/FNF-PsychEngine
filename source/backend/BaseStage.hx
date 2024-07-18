@@ -103,6 +103,9 @@ class BaseStage extends FlxBasic
 		}
 	}
 
+	public function getStageObject(name:String) //Objects can only be accessed *after* create(), use createPost() if you want to mess with them on init
+		return game.variables.get(name);
+
 	//start/end callback functions
 	public function setStartCallback(myfn:Void->Void)
 	{
