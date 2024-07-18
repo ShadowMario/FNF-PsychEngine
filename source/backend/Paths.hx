@@ -92,6 +92,15 @@ class Paths
 	static public function setCurrentLevel(name:String)
 		currentLevel = name.toLowerCase();
 
+	public static function exists(file:String, ?type:AssetType = TEXT, ?parentFolder:String, ?modsAllowed:Bool = true):Bool 
+	{
+		#if MODS_ALLOWED
+		return FileSystem.exists(getPath(file, type, parentFolder, modsAllowed));
+		#else 
+		return Assets.exists(getPath(file, type, parentFolder, modsAllowed));
+		#end
+	}
+
 	public static function getPath(file:String, ?type:AssetType = TEXT, ?parentfolder:String, ?modsAllowed:Bool = true):String
 	{
 		#if MODS_ALLOWED

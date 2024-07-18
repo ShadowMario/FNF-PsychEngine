@@ -1,4 +1,4 @@
-package states.editors;
+package unused;
 
 import objects.Note;
 import objects.StrumNote;

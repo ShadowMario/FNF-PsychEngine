@@ -1,0 +1,57 @@
+{
+	"animations": {
+		"blue": {
+			"noteData": 1,
+			"offsets": [
+				82,
+				62
+			],
+			"maxFps": 26,
+			"prefix": "splash electro blue 10",
+			"minFps": 22,
+			"name": "blue",
+			"indices": []
+		},
+		"purple": {
+			"noteData": 0,
+			"offsets": [
+				82,
+				62
+			],
+			"maxFps": 26,
+			"prefix": "splash electro purple 10",
+			"minFps": 22,
+			"name": "purple",
+			"indices": []
+		},
+		"green": {
+			"noteData": 2,
+			"offsets": [
+				82,
+				62
+			],
+			"maxFps": 26,
+			"prefix": "splash electro green 10",
+			"minFps": 22,
+			"name": "green",
+			"indices": []
+		},
+		"red": {
+			"noteData": 3,
+			"offsets": [
+				82,
+				62
+			],
+			"maxFps": 26,
+			"prefix": "splash electro red 10",
+			"minFps": 22,
+			"name": "red",
+			"indices": []
+		}
+	},
+	"affectedByShader": true,
+	"scale": [
+		1,
+		1
+	]
+}

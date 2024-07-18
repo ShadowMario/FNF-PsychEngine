@@ -162,6 +162,10 @@ class Note extends FlxSprite
 
 	public function defaultRGB()
 	{
+		var noteData:Int = noteData;
+		if (noteData > 3)
+			noteData = noteData % 4;
+		
 		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[noteData];
 		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[noteData];
 
@@ -199,7 +203,7 @@ class Note extends FlxSprite
 					// splash data and colors
 					noteSplashData.r = 0xFFFF0000;
 					noteSplashData.g = 0xFF101010;
-					noteSplashData.texture = 'noteSplashes/noteSplashes-electric';
+					noteSplashData.texture = 'noteSplashes-electric';
 
 					// gameplay data
 					lowPriority = true;
@@ -320,8 +324,6 @@ class Note extends FlxSprite
 		if(globalRgbShaders[noteData] == null)
 		{
 			var newRGB:RGBPalette = new RGBPalette();
-			globalRgbShaders[noteData] = newRGB;
-
 			var arr:Array<FlxColor> = (!PlayState.isPixelStage) ? ClientPrefs.data.arrowRGB[noteData] : ClientPrefs.data.arrowRGBPixel[noteData];
 			if (arr != null && noteData > -1 && noteData <= arr.length)
 			{
@@ -335,6 +337,7 @@ class Note extends FlxSprite
 				newRGB.g = 0xFF00FF00;
 				newRGB.b = 0xFF0000FF;
 			}
+			globalRgbShaders[noteData] = newRGB;
 		}
 		return globalRgbShaders[noteData];
 	}
@@ -419,6 +422,9 @@ class Note extends FlxSprite
 	}
 
 	function loadNoteAnims() {
+		if (colArray[noteData] == null)
+			return;
+
 		if (isSustainNote)
 		{
 			attemptToAddAnimationByPrefix('purpleholdend', 'pruple end hold', 24, true); // this fixes some retarded typo from the original note .FLA
@@ -432,6 +438,9 @@ class Note extends FlxSprite
 	}
 
 	function loadPixelNoteAnims() {
+		if (colArray[noteData] == null)
+			return;
+
 		if(isSustainNote)
 		{
 			animation.add(colArray[noteData] + 'holdend', [noteData + 4], 24, true);
