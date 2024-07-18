@@ -810,7 +810,7 @@ class PlayState extends MusicBeatState
 	public function startVideo(name:String, forMidSong:Bool = false, canSkip:Bool = true, loop:Bool = false, playOnLoad:Bool = true)
 	{
 		#if VIDEOS_ALLOWED
-		inCutscene = true;
+		if (!forMidSong) inCutscene = true;
 
 		var foundFile:Bool = false;
 		var fileName:String = Paths.video(name);
@@ -845,10 +845,12 @@ class PlayState extends MusicBeatState
 					startAndEnd();
 				};
 			}
+
 			add(cutscene);
 
 			if (playOnLoad)
-				cutscene.videoSprite.play();
+				cutscene.play();
+
 			return cutscene;
 		}
 		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
@@ -1515,6 +1517,13 @@ class PlayState extends MusicBeatState
 			}
 			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = false);
 			FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = false);
+
+			#if VIDEOS_ALLOWED
+			for(vid in VideoSprite._videos)
+			{
+				if(vid.isPlaying) vid.pause();
+			}
+			#end
 		}
 
 		super.openSubState(SubState);
@@ -1534,6 +1543,13 @@ class PlayState extends MusicBeatState
 			}
 			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = true);
 			FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = true);
+
+			#if VIDEOS_ALLOWED
+			for(vid in VideoSprite._videos)
+			{
+				if(vid.isPlaying) vid.resume();
+			}
+			#end
 
 			paused = false;
 			callOnScripts('onResume');
@@ -1922,6 +1938,14 @@ class PlayState extends MusicBeatState
 				persistentDraw = false;
 				FlxTimer.globalManager.clear();
 				FlxTween.globalManager.clear();
+
+				#if VIDEOS_ALLOWED
+				for(vid in VideoSprite._videos)
+				{
+					vid.destroy();
+				}
+				VideoSprite._videos = [];
+				#end
 
 				openSubState(new GameOverSubstate());
 

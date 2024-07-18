@@ -8,6 +8,8 @@ import hxvlc.flixel.FlxVideoSprite;
 
 class VideoSprite extends FlxSpriteGroup {
 	#if VIDEOS_ALLOWED
+	public static var _videos:Array<VideoSprite> = [];
+
 	public var finishCallback:Void->Void = null;
 	public var onSkip:Void->Void = null;
 
@@ -21,6 +23,7 @@ class VideoSprite extends FlxSpriteGroup {
 	private var videoName:String;
 
 	public var waiting:Bool = false;
+	public var isPlaying:Bool = false;
 	public var didPlay:Bool = false;
 
 	public function new(videoName:String, isWaiting:Bool, canSkip:Bool = false, shouldLoop:Dynamic = false) {
@@ -44,7 +47,7 @@ class VideoSprite extends FlxSpriteGroup {
 		videoSprite = new FlxVideoSprite();
 		videoSprite.antialiasing = ClientPrefs.data.antialiasing;
 		add(videoSprite);
-		if(canSkip) this.canSkip = true;
+		this.canSkip = canSkip;
 
 		// callbacks
 		if(!shouldLoop)
@@ -58,8 +61,8 @@ class VideoSprite extends FlxSpriteGroup {
 					remove(cover);
 					cover.destroy();
 				}
-		
-				PlayState.instance.remove(this);
+
+				psychlua.LuaUtils.getTargetInstance().remove(this);
 				destroy();
 				alreadyDestroyed = true;
 			});
@@ -82,6 +85,7 @@ class VideoSprite extends FlxSpriteGroup {
 
 		// start video and adjust resolution to screen size
 		videoSprite.load(videoName, shouldLoop ? ['input-repeat=65545'] : null);
+		_videos.push(this);
 	}
 
 	var alreadyDestroyed:Bool = false;
@@ -102,9 +106,11 @@ class VideoSprite extends FlxSpriteGroup {
 
 		if(finishCallback != null)
 			finishCallback();
+
 		onSkip = null;
 
-		PlayState.instance.remove(this);
+		_videos.remove(this);
+		psychlua.LuaUtils.getTargetInstance().remove(this);
 		super.destroy();
 	}
 
@@ -127,7 +133,7 @@ class VideoSprite extends FlxSpriteGroup {
 				if(onSkip != null) onSkip();
 				finishCallback = null;
 				videoSprite.bitmap.onEndReached.dispatch();
-				PlayState.instance.remove(this);
+				psychlua.LuaUtils.getTargetInstance().remove(this);
 				trace('Skipped video');
 				return;
 			}
@@ -165,6 +171,12 @@ class VideoSprite extends FlxSpriteGroup {
 
 		skipSprite.amount = Math.min(1, Math.max(0, (holdingTime / _timeToSkip) * 1.025));
 		skipSprite.alpha = FlxMath.remapToRange(skipSprite.amount, 0.025, 1, 0, 1);
+	}
+
+	public function play()
+	{
+		isPlaying = true;
+		videoSprite?.play();
 	}
 
 	public function resume() videoSprite?.resume();

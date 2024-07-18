@@ -1144,6 +1144,28 @@ class FunkinLua {
 			game.timeBar.setColors(left_color, right_color);
 		});
 
+		Lua_helper.add_callback(lua, "setPosition", function(obj:String, ?x:Float = null, ?y:Float = null) {
+			var real = game.getLuaObject(obj);
+			if(real != null) {
+				if(x != null) real.x = x;
+				if(y != null) real.y = y;
+				return true;
+			}
+
+			var split:Array<String> = obj.split('.');
+			var object:FlxSprite = LuaUtils.getObjectDirectly(split[0]);
+			if(split.length > 1) {
+				object = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split), split[split.length-1]);
+			}
+
+			if(object != null) {
+				if(x != null) object.x = x;
+				if(y != null) object.y = y;
+				return true;
+			}
+			luaTrace("setPosition: Couldnt find object " + obj, false, false, FlxColor.RED);
+			return false;
+		});
 		Lua_helper.add_callback(lua, "setObjectCamera", function(obj:String, camera:String = '') {
 			var real = game.getLuaObject(obj);
 			if(real!=null){
@@ -1542,6 +1564,7 @@ class FunkinLua {
 		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(lua); #end
 		#if TRANSLATIONS_ALLOWED Language.addLuaCallbacks(lua); #end
 		#if HSCRIPT_ALLOWED HScript.implement(this); #end
+		#if VIDEOS_ALLOWED VideoFunctions.implement(this); #end
 		#if flxanimate FlxAnimateFunctions.implement(this); #end
 		ReflectionFunctions.implement(this);
 		TextFunctions.implement(this);
