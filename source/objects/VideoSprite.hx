@@ -25,8 +25,9 @@ class VideoSprite extends FlxSpriteGroup {
 	public var waiting:Bool = false;
 	public var isPlaying:Bool = false;
 	public var didPlay:Bool = false;
+	public var isPaused:Bool = false;
 
-	public function new(videoName:String, isWaiting:Bool, canSkip:Bool = false, shouldLoop:Dynamic = false) {
+	public function new(videoName:String, isWaiting:Bool, canSkip:Bool = false, shouldLoop:Dynamic = false, adjustSize:Bool = true) {
 		super();
 
 		this.videoName = videoName;
@@ -68,20 +69,23 @@ class VideoSprite extends FlxSpriteGroup {
 			});
 		}
 
-		videoSprite.bitmap.onFormatSetup.add(function()
+		if(adjustSize)
 		{
-			/*
-			#if hxvlc
-			var wd:Int = videoSprite.bitmap.formatWidth;
-			var hg:Int = videoSprite.bitmap.formatHeight;
-			trace('Video Resolution: ${wd}x${hg}');
-			videoSprite.scale.set(FlxG.width / wd, FlxG.height / hg);
-			#end
-			*/
-			videoSprite.setGraphicSize(FlxG.width);
-			videoSprite.updateHitbox();
-			videoSprite.screenCenter();
-		});
+			videoSprite.bitmap.onFormatSetup.add(function()
+			{
+				/*
+				#if hxvlc
+				var wd:Int = videoSprite.bitmap.formatWidth;
+				var hg:Int = videoSprite.bitmap.formatHeight;
+				trace('Video Resolution: ${wd}x${hg}');
+				videoSprite.scale.set(FlxG.width / wd, FlxG.height / hg);
+				#end
+				*/
+				videoSprite.setGraphicSize(FlxG.width, FlxG.height);
+				videoSprite.updateHitbox();
+				videoSprite.screenCenter();
+			});
+		}
 
 		// start video and adjust resolution to screen size
 		videoSprite.load(videoName, shouldLoop ? ['input-repeat=65545'] : null);
@@ -178,8 +182,15 @@ class VideoSprite extends FlxSpriteGroup {
 		isPlaying = true;
 		videoSprite?.play();
 	}
-
-	public function resume() videoSprite?.resume();
-	public function pause() videoSprite?.pause();
+	public function resume()
+	{
+		isPaused = false;
+		videoSprite?.resume();
+	}
+	public function pause()
+	{
+		isPaused = true;
+		videoSprite?.pause();
+	}
 	#end
 }

@@ -804,7 +804,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public var videoCutscene:VideoSprite = null;
-	public function startVideo(name:String, forMidSong:Bool = false, canSkip:Bool = true, loop:Bool = false, playOnLoad:Bool = true)
+	public function startVideo(name:String, forMidSong:Bool = false, canSkip:Bool = true, loop:Bool = false, autoAdjust:Bool = true, playOnLoad:Bool = true)
 	{
 		#if VIDEOS_ALLOWED
 		if (!forMidSong) inCutscene = true;
@@ -821,7 +821,7 @@ class PlayState extends MusicBeatState
 
 		if (foundFile)
 		{
-			var cutscene:VideoSprite = new VideoSprite(fileName, forMidSong, canSkip, loop);
+			var cutscene:VideoSprite = new VideoSprite(fileName, forMidSong, canSkip, loop, autoAdjust);
 
 			// Finish callback
 			if (!forMidSong)
