@@ -20,6 +20,14 @@ import objects.Character;
 import objects.HealthIcon;
 import objects.Bar;
 
+// flixel 5.7.0+ fix
+#if (FLX_DEBUG || flixel < version("5.7.0")) = flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
+typedef PointerGraphic
+#else
+@:bitmap("assets/images/debugger/cursorCross.png")
+class PointerGraphic extends openfl.display.BitmapData {}
+#end
+
 class CharacterEditorState extends MusicBeatState
 {
 	var character:Character;
@@ -48,6 +56,8 @@ class CharacterEditorState extends MusicBeatState
 	var anims = null;
 	var animsTxtGroup:FlxTypedGroup<FlxText>;
 	var curAnim = 0;
+
+
 
 	private var camEditor:FlxCamera;
 	private var camHUD:FlxCamera;
@@ -102,10 +112,10 @@ class CharacterEditorState extends MusicBeatState
 
 		addCharacter();
 
-		cameraFollowPointer = new FlxSprite().loadGraphic(FlxGraphic.fromClass(GraphicCursorCross));
-		cameraFollowPointer.setGraphicSize(40, 40);
-		cameraFollowPointer.updateHitbox();
-		add(cameraFollowPointer);
+cameraFollowPointer = new FlxSprite (FlxGraphic.fromClass (PointerGraphic)); 
+cameraFollowPointer.setGraphicSize(40, 40);
+cameraFollowPointer.updateHitbox();
+add(cameraFollowPointer);
 
 		healthBar = new Bar(30, FlxG.height - 75);
 		healthBar.scrollFactor.set();
