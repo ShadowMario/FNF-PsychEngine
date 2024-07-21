@@ -13,7 +13,7 @@
     {
       "name": "flixel",
       "type": "haxelib",
-      "version": "5.3.1"
+      "version": "5.6.1"
     },
     {
       "name": "flixel-addons",
@@ -68,4 +68,3 @@
     }
   ]
 }
-'+
