@@ -115,7 +115,7 @@
 	],
 	"vocals_file": "",
 	"no_antialiasing": false,
-	"image": "characters/darnell,characters/BOYFRIEND",
+	"image": "characters/darnell",
 	"position": [0, 200],
 	"healthicon": "darnell",
 	"flip_x": false,
