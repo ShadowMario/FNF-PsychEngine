@@ -5,7 +5,7 @@ cd ..
 echo Installing dependencies.
 haxelib install lime
 haxelib install openfl
-haxelib install flixel
+haxelib install flixel 5.5.0
 haxelib install flixel-addons
 haxelib install flixel-tools
 haxelib install SScript
