@@ -512,34 +512,28 @@ class LoadingState extends MusicBeatState
 					#if TRANSLATIONS_ALLOWED requestKey = Language.getFileTranslation(requestKey); #end
 					if(requestKey.lastIndexOf('.') < 0) requestKey += '.png';
 
-					var bitmap:BitmapData;
-					var file:String = Paths.getPath(requestKey, IMAGE);
-					if (Paths.currentTrackedAssets.exists(file)) {
-						mutex.release();
-						loaded++;
-						return;
-					}
-					else if (!OpenFlAssets.exists(file, IMAGE))
+					if (!Paths.currentTrackedAssets.exists(requestKey))
 					{
-						trace('no such image $image exists');
-						mutex.release();
-						loaded++;
-						return;
+						var bitmap:BitmapData = null;
+						var file:String = Paths.getPath(requestKey, IMAGE);
+						if (#if sys FileSystem.exists(file) || #end OpenFlAssets.exists(file, IMAGE))
+						{
+							#if sys 
+							bitmap = BitmapData.fromFile(file);
+							#else
+							bitmap = OpenFlAssets.getBitmapData(file);
+							#end
+							requestedBitmaps.set(file, bitmap);
+							originalBitmapKeys.set(file, requestKey);
+						}
+						else trace('no such image $image exists');
 					}
-					else bitmap = OpenFlAssets.getBitmapData(file);
-					mutex.release();
-
-					if (bitmap != null)
-					{
-						requestedBitmaps.set(file, bitmap);
-						originalBitmapKeys.set(file, requestKey);
-					}
-					else trace('oh no the image is null NOOOO ($image)');
 				}
-				catch(e:Dynamic) {
-					mutex.release();
+				catch(e:haxe.Exception)
+				{
 					trace('ERROR! fail on preloading image $image');
 				}
+				mutex.release();
 				loaded++;
 			});
 	}
@@ -573,14 +567,51 @@ class LoadingState extends MusicBeatState
 			#else
 			var character:Dynamic = Json.parse(Assets.getText(path));
 			#end
-			
-			imagesToPrepare.push(character.image);
-			if (prefixVocals != null && character.vocals_file != null)
+
+			var isAnimateAtlas:Bool = false;
+			var img:String = character.image;
+			img = img.trim();
+			#if flxanimate
+			var animToFind:String = Paths.getPath('images/$img/Animation.json', TEXT);
+			if (#if MODS_ALLOWED FileSystem.exists(animToFind) || #end Assets.exists(animToFind))
+				isAnimateAtlas = true;
+			#end
+
+			if(!isAnimateAtlas)
+			{
+				var split:Array<String> = img.split(',');
+				for (file in split)
+				{
+					imagesToPrepare.push(file.trim());
+				}
+			}
+			#if flxanimate
+			else
+			{
+				for (i in 0...10)
+				{
+					var st:String = '$i';
+					if(i == 0) st = '';
+	
+					if(Paths.fileExists('images/$img/spritemap$st.png', IMAGE))
+					{
+						//trace('found Sprite PNG');
+						imagesToPrepare.push('$img/spritemap$st');
+						break;
+					}
+				}
+			}
+			#end
+	
+			if (prefixVocals != null && character.vocals_file != null && character.vocals_file.length > 0)
 			{
 				songsToPrepare.push(prefixVocals + "-" + character.vocals_file);
 				if(char == PlayState.SONG.player1) dontPreloadDefaultVoices = true;
 			}
 		}
-		catch(e:Dynamic) {}
+		catch(e:haxe.Exception)
+		{
+			trace(e.details());
+		}
 	}
 }

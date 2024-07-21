@@ -1,0 +1,985 @@
+{
+	"song": {
+		"generatedBy": "Psych Engine v1.0b - Chart Editor V-Slice Importer",
+		"charter": "fabs + PhantomArcade",
+		"artist": "Kawai Sprite",
+		"speed": 3.2,
+		"stage": "phillyBlazin",
+		"player1": "pico-blazin",
+		"player2": "darnell-blazin",
+		"events": [],
+		"notes": [
+			{
+				"sectionNotes": [
+					[0, 1, 0, "weekend-1-blockhigh"],
+					[333.333333333333, 3, 0, "weekend-1-punchhighblocked"],
+					[500, 1, 0, "weekend-1-blockhigh"],
+					[666.666666666667, 3, 0, "weekend-1-punchlowdodged"],
+					[833.333333333333, 2, 0, "weekend-1-blockhigh"],
+					[1333.33333333333, 1, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[1666.66666666667, 2, 0, "weekend-1-blockhigh"],
+					[2000, 3, 0, "weekend-1-dodgelow"],
+					[2166.66666666667, 1, 0, "weekend-1-punchhighblocked"],
+					[2333.33333333333, 0, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[2666.66666666667, 1, 0, "weekend-1-blockspin"],
+					[3000, 3, 0, "weekend-1-punchlowdodged"],
+					[3166.66666666667, 0, 0, "weekend-1-dodgelow"],
+					[3333.33333333333, 3, 0, "weekend-1-punchhigh"],
+					[3500, 2, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[4000, 1, 0, "weekend-1-punchlowdodged"],
+					[4333.33333333333, 2, 0, "weekend-1-blockhigh"],
+					[4666.66666666667, 7, 0, "weekend-1-hithigh"],
+					[4833.33333333333, 1, 0, "weekend-1-punchhighblocked"],
+					[5000, 0, 0, "weekend-1-blockhigh"],
+					[5166.66666666667, 0, 0, "weekend-1-blockhigh"],
+					[5333.33333333333, 1, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[5666.66666666667, 3, 0, "weekend-1-dodgelow"],
+					[5833.33333333333, 1, 0, "weekend-1-punchhighblocked"],
+					[6000, 3, 0, "weekend-1-dodgelow"],
+					[6166.66666666667, 2, 0, "weekend-1-punchhighblocked"],
+					[6666.66666666666, 1, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[6833.33333333333, 1, 0, "weekend-1-blockhigh"],
+					[7000, 2, 0, "weekend-1-punchhighblocked"],
+					[7333.33333333333, 3, 0, "weekend-1-punchlowdodged"],
+					[7500, 1, 0, "weekend-1-dodgelow"],
+					[7666.66666666667, 0, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[8000, 1, 0, "weekend-1-punchhighblocked"],
+					[8333.33333333333, 3, 0, "weekend-1-dodgelow"],
+					[8500, 0, 0, "weekend-1-punchlowdodged"],
+					[8666.66666666667, 7, 0, "weekend-1-hithigh"],
+					[8833.33333333333, 2, 0, "weekend-1-blockhigh"],
+					[9333.33333333333, 1, 0, "weekend-1-dodgehigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[9666.66666666666, 2, 0, "weekend-1-punchlowdodged"],
+					[10000, 0, 0, "weekend-1-punchhigh"],
+					[10166.6666666667, 1, 0, "weekend-1-blockhigh"],
+					[10333.3333333333, 5, 0, "weekend-1-darnelluppercutprep"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[10666.6666666667, 7, 0, "weekend-1-darnelluppercut"],
+					[11000, 3, 0, "weekend-1-punchhighblocked"],
+					[11166.6666666667, 1, 0, "weekend-1-blockhigh"],
+					[11500, 0, 0, "weekend-1-punchhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[12000, 1, 0, "weekend-1-blockhigh"],
+					[12333.3333333333, 2, 0, "weekend-1-punchhighblocked"],
+					[12833.3333333333, 1, 0, "weekend-1-blockhigh"],
+					[13000, 3, 0, "weekend-1-dodgelow"],
+					[13333.3333333333, 0, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[13666.6666666667, 3, 0, "weekend-1-blockhigh"],
+					[13833.3333333333, 1, 0, "weekend-1-punchhighblocked"],
+					[14166.6666666667, 3, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[14666.6666666667, 1, 0, "weekend-1-punchhighblocked"],
+					[15000, 7, 0, "weekend-1-hithigh"],
+					[15041.6666666667, 6, 0, "weekend-1-hitlow"],
+					[15083.3333333333, 7, 0, "weekend-1-hithigh"],
+					[15500, 3, 0, "weekend-1-punchhighblocked"],
+					[15666.6666666667, 1, 0, "weekend-1-picouppercutprep"],
+					[16000, 2, 0, "weekend-1-picouppercut"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[16333.3333333333, 3, 0, "weekend-1-blockhigh"],
+					[16500, 0, 0, "weekend-1-punchlowdodged"],
+					[16833.3333333333, 2, 0, "weekend-1-punchhigh"],
+					[17333.3333333333, 1, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[17500, 1, 0, "weekend-1-blocklow"],
+					[17666.6666666667, 0, 0, "weekend-1-punchlowdodged"],
+					[18166.6666666667, 3, 0, "weekend-1-blockhigh"],
+					[18333.3333333333, 7, 0, "weekend-1-hitlow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[18666.6666666667, 1, 0, "weekend-1-punchlowdodged"],
+					[19000, 0, 0, "weekend-1-blockhigh"],
+					[19166.6666666667, 3, 0, "weekend-1-punchlowdodged"],
+					[19500, 2, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[20000, 3, 0, "weekend-1-blockhigh"],
+					[20333.3333333333, 0, 0, "weekend-1-punchhighblocked"],
+					[20500, 1, 0, "weekend-1-dodgelow"],
+					[20666.6666666667, 0, 0, "weekend-1-punchlow"],
+					[20833.3333333333, 2, 0, "weekend-1-blockhigh"],
+					[21000, 0, 0, "weekend-1-punchlowdodged"],
+					[21166.6666666667, 5, 0, "weekend-1-darnelluppercutprep"],
+					[21333.3333333333, 7, 0, "weekend-1-darnelluppercut"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[21666.6666666667, 3, 0, "weekend-1-punchhigh"],
+					[21833.3333333333, 0, 0, "weekend-1-blockhigh"],
+					[22166.6666666667, 1, 0, "weekend-1-punchlowdodged"],
+					[22333.3333333333, 3, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[22666.6666666667, 0, 0, "weekend-1-dodgelow"],
+					[23000, 2, 0, "weekend-1-punchlowspin"],
+					[23500, 1, 0, "weekend-1-punchhigh"],
+					[23666.6666666667, 2, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[24000, 0, 0, "weekend-1-punchhighblocked"],
+					[24333.3333333333, 3, 0, "weekend-1-blockhigh"],
+					[24500, 2, 0, "weekend-1-punchhighblocked"],
+					[24833.3333333333, 0, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[25333.3333333334, 1, 0, "weekend-1-punchlowdodged"],
+					[25666.6666666667, 2, 0, "weekend-1-blockhigh"],
+					[26166.6666666667, 0, 0, "weekend-1-punchhighblocked"],
+					[26333.3333333333, 2, 0, "weekend-1-dodgelow"],
+					[26500, 3, 0, "weekend-1-picouppercutprep"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[26666.6666666667, 2, 0, "weekend-1-picouppercut"],
+					[27000.0000000001, 3, 0, "weekend-1-blockhigh"],
+					[27166.6666666667, 0, 0, "weekend-1-punchhighblocked"],
+					[27500.0000000001, 1, 0, "weekend-1-dodgelow"],
+					[27666.6666666667, 3, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[28000, 0, 0, "weekend-1-punchlowdodged"],
+					[28333.3333333334, 2, 0, "weekend-1-dodgelow"],
+					[28833.3333333333, 1, 0, "weekend-1-punchhighblocked"],
+					[29000, 3, 0, "weekend-1-blockhigh"],
+					[29125, 0, 0, "weekend-1-punchhigh"],
+					[29250, 3, 0, "weekend-1-dodgelow"],
+					[29333.3333333333, 1, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[29500, 7, 0, "weekend-1-hithigh"],
+					[29666.6666666667, 0, 0, "weekend-1-punchhighblocked"],
+					[29833.3333333333, 3, 0, "weekend-1-dodgelow"],
+					[30166.6666666667, 2, 0, "weekend-1-punchhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[30666.6666666667, 3, 0, "weekend-1-blockhigh"],
+					[31166.6666666667, 1, 0, "weekend-1-fakeout"],
+					[31666.6666666667, 0, 0, "weekend-1-taunt"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[32000, 7, 0, "weekend-1-hithigh"],
+					[32333.3333333333, 3, 0, "weekend-1-blockhigh"],
+					[32500, 1, 0, "weekend-1-punchhighblocked"],
+					[32666.6666666667, 3, 0, "weekend-1-dodgelow"],
+					[32833.3333333333, 2, 0, "weekend-1-punchhighblocked"],
+					[33333.3333333333, 1, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[33500, 1, 0, "weekend-1-blockhigh"],
+					[33666.6666666667, 2, 0, "weekend-1-punchhighblocked"],
+					[34000, 3, 0, "weekend-1-punchlowdodged"],
+					[34166.6666666667, 1, 0, "weekend-1-dodgelow"],
+					[34333.3333333333, 0, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[34666.6666666667, 1, 0, "weekend-1-punchhighblocked"],
+					[35000, 3, 0, "weekend-1-dodgelow"],
+					[35166.6666666667, 0, 0, "weekend-1-punchlowdodged"],
+					[35333.3333333333, 7, 0, "weekend-1-hithigh"],
+					[35500, 2, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[36000, 1, 0, "weekend-1-blockhigh"],
+					[36333.3333333333, 2, 0, "weekend-1-punchhighblocked"],
+					[36666.6666666667, 0, 0, "weekend-1-punchhigh"],
+					[36833.3333333334, 1, 0, "weekend-1-blockhigh"],
+					[37000, 0, 0, "weekend-1-blockhigh"],
+					[37083.3333333333, 3, 0, "weekend-1-punchhighblocked"],
+					[37166.6666666667, 2, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[37666.6666666667, 4, 0, "weekend-1-idle"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[42666.6666666667, 1, 0, "weekend-1-punchhighblocked"],
+					[43000, 3, 0, "weekend-1-blockhigh"],
+					[43166.6666666667, 1, 0, "weekend-1-punchlowdodged"],
+					[43500, 2, 0, "weekend-1-punchhighblocked"],
+					[44000, 1, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[44166.6666666667, 1, 0, "weekend-1-blockhigh"],
+					[44333.3333333333, 2, 0, "weekend-1-punchlowdodged"],
+					[44833.3333333333, 1, 0, "weekend-1-dodgelow"],
+					[45000, 0, 0, "weekend-1-blockhigh"],
+					[45333.3333333333, 1, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[45666.6666666667, 3, 0, "weekend-1-dodgelow"],
+					[45833.3333333333, 0, 0, "weekend-1-punchlowdodged"],
+					[46166.6666666667, 2, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[46666.6666666667, 1, 0, "weekend-1-blockhigh"],
+					[47000, 2, 0, "weekend-1-punchhighblocked"],
+					[47500, 1, 0, "weekend-1-blockhigh"],
+					[47666.6666666666, 0, 0, "weekend-1-punchhigh"],
+					[47750, 3, 0, "weekend-1-punchlow"],
+					[47833.3333333333, 2, 0, "weekend-1-punchhigh"],
+					[48000, 1, 0, "weekend-1-punchlowblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[48333.3333333333, 3, 0, "weekend-1-blockhigh"],
+					[48500, 0, 0, "weekend-1-punchhighblocked"],
+					[48583.3333333333, 1, 0, "weekend-1-punchlow"],
+					[48833.3333333333, 3, 0, "weekend-1-dodgelow"],
+					[49000, 0, 0, "weekend-1-punchhigh"],
+					[49333.3333333333, 6, 0, "weekend-1-hithigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[49666.6666666667, 2, 0, "weekend-1-blockhigh"],
+					[50166.6666666667, 2, 0, "weekend-1-blockhigh"],
+					[50333.3333333333, 6, 0, "weekend-1-hitlow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[50666.6666666667, 0, 0, "weekend-1-punchhighblocked"],
+					[51000, 1, 0, "weekend-1-punchlowdodged"],
+					[51166.6666666667, 3, 0, "weekend-1-dodgehigh"],
+					[51500, 2, 0, "weekend-1-dodgelow"],
+					[52000, 0, 0, "weekend-1-punchlow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[52333.3333333333, 2, 0, "weekend-1-punchhighblocked"],
+					[52833.3333333333, 1, 0, "weekend-1-dodgelow"],
+					[53000, 3, 0, "weekend-1-punchhigh"],
+					[53166.6666666667, 7, 0, "weekend-1-hitlow"],
+					[53333.3333333333, 6, 0, "weekend-1-hithigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[53375, 7, 0, "weekend-1-hitlow"],
+					[53416.6666666667, 6, 0, "weekend-1-hithigh"],
+					[53458.3333333333, 7, 0, "weekend-1-hitlow"],
+					[53666.6666666667, 2, 0, "weekend-1-blockhigh"],
+					[53833.3333333333, 1, 0, "weekend-1-dodgelow"],
+					[54166.6666666667, 0, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[54666.6666666667, 1, 0, "weekend-1-dodgelow"],
+					[54833.3333333333, 2, 0, "weekend-1-blockhigh"],
+					[55000, 0, 0, "weekend-1-punchhigh"],
+					[55250, 1, 0, "weekend-1-punchlow"],
+					[55500, 3, 0, "weekend-1-blockhigh"],
+					[55666.6666666667, 0, 0, "weekend-1-punchlowspin"],
+					[56000, 1, 0, "weekend-1-punchlow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[56333.3333333333, 3, 0, "weekend-1-punchhighblocked"],
+					[56500, 1, 0, "weekend-1-blockhigh"],
+					[56833.3333333333, 3, 0, "weekend-1-dodgelow"],
+					[57083.3333333333, 2, 0, "weekend-1-blockhigh"],
+					[57333.3333333333, 0, 0, "weekend-1-punchlowdodged"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[57583.3333333333, 0, 0, "weekend-1-punchlowdodged"],
+					[57666.6666666667, 7, 0, "weekend-1-hithigh"],
+					[58166.6666666667, 3, 0, "weekend-1-blockhigh"],
+					[58333.3333333333, 0, 0, "weekend-1-punchhigh"],
+					[58416.6666666667, 3, 0, "weekend-1-punchlow"],
+					[58500, 2, 0, "weekend-1-punchhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[58666.6666666667, 0, 0, "weekend-1-blockhigh"],
+					[58750, 1, 0, "weekend-1-dodgelow"],
+					[58833.3333333333, 3, 0, "weekend-1-hithigh"],
+					[58916.6666666667, 2, 0, "weekend-1-hitlow"],
+					[59000, 0, 0, "weekend-1-punchhigh"],
+					[59083.3333333333, 3, 0, "weekend-1-blockhigh"],
+					[59166.6666666667, 1, 0, "weekend-1-punchlow"],
+					[59250, 2, 0, "weekend-1-punchhigh"],
+					[59333.3333333333, 3, 0, "weekend-1-dodgelow"],
+					[59500, 0, 0, "weekend-1-punchhighblocked"],
+					[59666.6666666667, 3, 0, "weekend-1-blockhigh"],
+					[60000, 2, 0, "weekend-1-fakeout"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[60333.3333333333, 3, 0, "weekend-1-taunt"],
+					[60833.3333333333, 7, 0, "weekend-1-hithigh"],
+					[61000, 5, 0, "weekend-1-hitlow"],
+					[61333.3333333333, 0, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[61666.6666666667, 3, 0, "weekend-1-dodgelow"],
+					[61833.3333333333, 0, 0, "weekend-1-punchhighblocked"],
+					[62166.6666666667, 2, 0, "weekend-1-blockhigh"],
+					[62666.6666666667, 0, 0, "weekend-1-punchlowdodged"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[63000, 7, 0, "weekend-1-hithigh"],
+					[63500, 3, 0, "weekend-1-blockhigh"],
+					[63666.6666666667, 5, 0, "weekend-1-hitlow"],
+					[63833.3333333333, 2, 0, "weekend-1-blockhigh"],
+					[64000, 0, 0, "weekend-1-punchhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[64041.6666666667, 1, 0, "weekend-1-punchlow"],
+					[64083.3333333333, 0, 0, "weekend-1-punchhigh"],
+					[64333.3333333333, 7, 0, "weekend-1-hithigh"],
+					[64500, 2, 0, "weekend-1-dodgelow"],
+					[64833.3333333333, 0, 0, "weekend-1-punchhighblocked"],
+					[65333.3333333333, 1, 0, "weekend-1-punchlow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[65500, 7, 0, "weekend-1-hithigh"],
+					[65666.6666666667, 0, 0, "weekend-1-punchhighblocked"],
+					[65916.6666666667, 3, 0, "weekend-1-dodgehigh"],
+					[66166.6666666667, 1, 0, "weekend-1-picouppercutprep"],
+					[66333.3333333333, 2, 0, "weekend-1-picouppercut"],
+					[66666.6666666667, 7, 0, "weekend-1-hithigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[67000, 0, 0, "weekend-1-punchhighblocked"],
+					[67166.6666666667, 1, 0, "weekend-1-punchlowdodged"],
+					[67500, 3, 0, "weekend-1-blockhigh"],
+					[67750, 3, 0, "weekend-1-blockhigh"],
+					[68000, 0, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[68250, 1, 0, "weekend-1-dodgelow"],
+					[68333.3333333333, 0, 0, "weekend-1-punchhighspin"],
+					[68666.6666666667, 3, 0, "weekend-1-punchlow"],
+					[68833.3333333333, 2, 0, "weekend-1-blockhigh"],
+					[69000, 0, 0, "weekend-1-blockhigh"],
+					[69083.3333333333, 3, 0, "weekend-1-punchhighblocked"],
+					[69166.6666666667, 2, 0, "weekend-1-dodgehigh"],
+					[69333.3333333333, 1, 0, "weekend-1-punchlowblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[69666.6666666666, 3, 0, "weekend-1-blockhigh"],
+					[69833.3333333333, 0, 0, "weekend-1-punchhighblocked"],
+					[69916.6666666666, 1, 0, "weekend-1-punchlow"],
+					[70166.6666666666, 3, 0, "weekend-1-dodgelow"],
+					[70333.3333333333, 0, 0, "weekend-1-punchhigh"],
+					[70666.6666666666, 6, 0, "weekend-1-hithigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[71000, 2, 0, "weekend-1-blockhigh"],
+					[71500, 2, 0, "weekend-1-blockhigh"],
+					[71666.6666666666, 6, 0, "weekend-1-hitlow"],
+					[72000, 0, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[72333.3333333333, 1, 0, "weekend-1-punchlowdodged"],
+					[72500, 3, 0, "weekend-1-dodgehigh"],
+					[72833.3333333333, 2, 0, "weekend-1-dodgelow"],
+					[73333.3333333333, 0, 0, "weekend-1-punchlow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[73666.6666666666, 2, 0, "weekend-1-punchhighblocked"],
+					[74166.6666666666, 1, 0, "weekend-1-dodgelow"],
+					[74333.3333333333, 3, 0, "weekend-1-punchhigh"],
+					[74500, 7, 0, "weekend-1-hitlow"],
+					[74666.6666666666, 6, 0, "weekend-1-hithigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[74708.3333333333, 7, 0, "weekend-1-hitlow"],
+					[74750, 6, 0, "weekend-1-hithigh"],
+					[74791.6666666666, 7, 0, "weekend-1-hitlow"],
+					[75000, 2, 0, "weekend-1-blockhigh"],
+					[75166.6666666666, 1, 0, "weekend-1-dodgelow"],
+					[75500, 0, 0, "weekend-1-punchhighblocked"],
+					[76000, 1, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[76166.6666666666, 2, 0, "weekend-1-blockhigh"],
+					[76333.3333333333, 0, 0, "weekend-1-punchhigh"],
+					[76583.3333333333, 1, 0, "weekend-1-punchlow"],
+					[76833.3333333333, 3, 0, "weekend-1-blockhigh"],
+					[77000, 0, 0, "weekend-1-punchlowspin"],
+					[77333.3333333333, 1, 0, "weekend-1-punchlow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[77666.6666666666, 3, 0, "weekend-1-punchhighblocked"],
+					[77833.3333333333, 1, 0, "weekend-1-blockhigh"],
+					[78166.6666666666, 3, 0, "weekend-1-dodgelow"],
+					[78416.6666666666, 2, 0, "weekend-1-blockhigh"],
+					[78666.6666666666, 0, 0, "weekend-1-punchlowdodged"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[78916.6666666666, 0, 0, "weekend-1-punchlowdodged"],
+					[79000, 7, 0, "weekend-1-hithigh"],
+					[79500, 3, 0, "weekend-1-blockhigh"],
+					[79666.6666666666, 0, 0, "weekend-1-punchhigh"],
+					[79750, 3, 0, "weekend-1-punchlow"],
+					[79833.3333333333, 2, 0, "weekend-1-punchhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[80000, 0, 0, "weekend-1-blockhigh"],
+					[80083.3333333333, 1, 0, "weekend-1-dodgelow"],
+					[80166.6666666666, 3, 0, "weekend-1-hithigh"],
+					[80250, 2, 0, "weekend-1-hitlow"],
+					[80333.3333333333, 0, 0, "weekend-1-punchhigh"],
+					[80416.6666666666, 3, 0, "weekend-1-blockhigh"],
+					[80500, 1, 0, "weekend-1-punchlow"],
+					[80583.3333333333, 2, 0, "weekend-1-punchhigh"],
+					[80666.6666666666, 3, 0, "weekend-1-dodgelow"],
+					[80833.3333333333, 0, 0, "weekend-1-punchhighblocked"],
+					[81000, 3, 0, "weekend-1-blockhigh"],
+					[81333.3333333333, 2, 0, "weekend-1-fakeout"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[81666.6666666666, 3, 0, "weekend-1-taunt"],
+					[82166.6666666666, 7, 0, "weekend-1-hithigh"],
+					[82333.3333333333, 5, 0, "weekend-1-hitlow"],
+					[82666.6666666666, 0, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[83000, 3, 0, "weekend-1-dodgelow"],
+					[83166.6666666666, 0, 0, "weekend-1-punchhighblocked"],
+					[83500, 2, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[84000, 0, 0, "weekend-1-punchlowdodged"],
+					[84333.3333333333, 7, 0, "weekend-1-hithigh"],
+					[84833.3333333333, 3, 0, "weekend-1-blockhigh"],
+					[85000, 5, 0, "weekend-1-hitlow"],
+					[85166.6666666666, 2, 0, "weekend-1-blockhigh"],
+					[85333.3333333333, 0, 0, "weekend-1-punchhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[85375, 1, 0, "weekend-1-punchlow"],
+					[85416.6666666666, 0, 0, "weekend-1-punchhigh"],
+					[85666.6666666666, 7, 0, "weekend-1-hithigh"],
+					[85833.3333333333, 2, 0, "weekend-1-dodgelow"],
+					[86166.6666666666, 0, 0, "weekend-1-punchhighblocked"],
+					[86666.6666666666, 1, 0, "weekend-1-punchlow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[86833.3333333333, 7, 0, "weekend-1-hithigh"],
+					[87000, 0, 0, "weekend-1-punchhighblocked"],
+					[87250, 3, 0, "weekend-1-dodgehigh"],
+					[87500, 1, 0, "weekend-1-picouppercutprep"],
+					[87666.6666666666, 2, 0, "weekend-1-picouppercut"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[88000, 7, 0, "weekend-1-hithigh"],
+					[88333.3333333333, 0, 0, "weekend-1-punchhighblocked"],
+					[88500, 1, 0, "weekend-1-punchlowdodged"],
+					[88833.3333333333, 3, 0, "weekend-1-blockhigh"],
+					[89083.3333333333, 3, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[89333.3333333333, 0, 0, "weekend-1-punchhighblocked"],
+					[89583.3333333333, 1, 0, "weekend-1-dodgelow"],
+					[89666.6666666666, 0, 0, "weekend-1-punchhighspin"],
+					[90000, 3, 0, "weekend-1-punchlow"],
+					[90166.6666666666, 2, 0, "weekend-1-blockhigh"],
+					[90333.3333333333, 0, 0, "weekend-1-blockhigh"],
+					[90416.6666666666, 3, 0, "weekend-1-punchhighblocked"],
+					[90500, 5, 0, "weekend-1-darnelluppercutprep"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[90666.6666666667, 7, 0, "weekend-1-darnelluppercut"],
+					[91000, 3, 0, "weekend-1-punchlowdodged"],
+					[91166.6666666667, 1, 0, "weekend-1-blockhigh"],
+					[91500, 0, 0, "weekend-1-punchhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[92000, 1, 0, "weekend-1-blockhigh"],
+					[92333.3333333333, 2, 0, "weekend-1-punchhighblocked"],
+					[92833.3333333333, 1, 0, "weekend-1-blockhigh"],
+					[93000, 3, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[93333.3333333333, 0, 0, "weekend-1-punchhighblocked"],
+					[93666.6666666667, 3, 0, "weekend-1-blockhigh"],
+					[93833.3333333333, 1, 0, "weekend-1-punchhighblocked"],
+					[94166.6666666667, 3, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[94666.6666666667, 1, 0, "weekend-1-punchlowdodged"],
+					[95000, 7, 0, "weekend-1-hithigh"],
+					[95041.6666666667, 6, 0, "weekend-1-hitlow"],
+					[95083.3333333333, 7, 0, "weekend-1-hithigh"],
+					[95500, 3, 0, "weekend-1-punchhighblocked"],
+					[95666.6666666667, 1, 0, "weekend-1-picouppercutprep"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[96000, 2, 0, "weekend-1-picouppercut"],
+					[96333.3333333333, 3, 0, "weekend-1-blockhigh"],
+					[96500, 0, 0, "weekend-1-punchhighblocked"],
+					[96833.3333333333, 2, 0, "weekend-1-punchhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[97333.3333333333, 1, 0, "weekend-1-punchhighblocked"],
+					[97500, 1, 0, "weekend-1-blockhigh"],
+					[97666.6666666667, 0, 0, "weekend-1-punchlowdodged"],
+					[98166.6666666667, 3, 0, "weekend-1-blockhigh"],
+					[98333.3333333333, 7, 0, "weekend-1-hitlow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[98666.6666666667, 1, 0, "weekend-1-punchhighblocked"],
+					[99000, 0, 0, "weekend-1-blockhigh"],
+					[99166.6666666667, 3, 0, "weekend-1-punchhighblocked"],
+					[99500, 2, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[100000, 3, 0, "weekend-1-blockhigh"],
+					[100333.333333333, 0, 0, "weekend-1-punchhighblocked"],
+					[100500, 1, 0, "weekend-1-blockhigh"],
+					[100666.666666667, 0, 0, "weekend-1-punchlow"],
+					[100833.333333333, 2, 0, "weekend-1-blockhigh"],
+					[101000, 0, 0, "weekend-1-punchlowdodged"],
+					[101166.666666667, 5, 0, "weekend-1-darnelluppercutprep"],
+					[101333.333333333, 7, 0, "weekend-1-darnelluppercut"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[101666.666666667, 3, 0, "weekend-1-punchhigh"],
+					[101833.333333333, 0, 0, "weekend-1-blockhigh"],
+					[102166.666666667, 1, 0, "weekend-1-punchlowdodged"],
+					[102333.333333333, 3, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[102666.666666667, 0, 0, "weekend-1-dodgelow"],
+					[103000, 2, 0, "weekend-1-punchlowspin"],
+					[103500, 1, 0, "weekend-1-punchhigh"],
+					[103666.666666667, 2, 0, "weekend-1-dodgelow"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[104000, 0, 0, "weekend-1-punchhighblocked"],
+					[104333.333333333, 3, 0, "weekend-1-blockhigh"],
+					[104500, 2, 0, "weekend-1-punchhighblocked"],
+					[104833.333333333, 0, 0, "weekend-1-hithigh"],
+					[105333.333333333, 1, 0, "weekend-1-punchlowdodged"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[105666.666666667, 2, 0, "weekend-1-blockhigh"],
+					[106166.666666667, 0, 0, "weekend-1-punchhighblocked"],
+					[106333.333333333, 2, 0, "weekend-1-dodgelow"],
+					[106500, 3, 0, "weekend-1-picouppercutprep"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[106666.666666667, 2, 0, "weekend-1-picouppercut"],
+					[107000, 3, 0, "weekend-1-blockhigh"],
+					[107166.666666667, 0, 0, "weekend-1-punchhighblocked"],
+					[107500, 1, 0, "weekend-1-dodgelow"],
+					[107666.666666667, 3, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[108000, 0, 0, "weekend-1-punchlowdodged"],
+					[108333.333333333, 2, 0, "weekend-1-dodgelow"],
+					[108833.333333333, 1, 0, "weekend-1-punchhighblocked"],
+					[109000, 3, 0, "weekend-1-blockhigh"],
+					[109125, 0, 0, "weekend-1-punchhigh"],
+					[109250, 3, 0, "weekend-1-dodgelow"],
+					[109333.333333333, 1, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[109500, 7, 0, "weekend-1-hithigh"],
+					[109666.666666667, 0, 0, "weekend-1-punchhighblocked"],
+					[109833.333333333, 3, 0, "weekend-1-dodgelow"],
+					[110166.666666667, 2, 0, "weekend-1-punchhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[110666.666666667, 3, 0, "weekend-1-blockhigh"],
+					[111166.666666667, 1, 0, "weekend-1-fakeout"],
+					[111666.666666667, 0, 0, "weekend-1-taunt"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[112000, 6, 0, "weekend-1-hithigh"],
+					[112333.333333333, 3, 0, "weekend-1-punchhighblocked"],
+					[112500, 1, 0, "weekend-1-blockhigh"],
+					[112666.666666667, 3, 0, "weekend-1-punchlowdodged"],
+					[112833.333333333, 2, 0, "weekend-1-blockhigh"],
+					[113333.333333333, 1, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[113666.666666667, 2, 0, "weekend-1-blockhigh"],
+					[114000, 3, 0, "weekend-1-dodgelow"],
+					[114166.666666667, 1, 0, "weekend-1-punchhighblocked"],
+					[114333.333333333, 0, 0, "weekend-1-punchhighblocked"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[114666.666666667, 1, 0, "weekend-1-blockspin"],
+					[115000, 3, 0, "weekend-1-punchlowdodged"],
+					[115166.666666667, 0, 0, "weekend-1-dodgelow"],
+					[115333.333333333, 3, 0, "weekend-1-punchhigh"],
+					[115500, 2, 0, "weekend-1-blockhigh"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			},
+			{
+				"sectionNotes": [
+					[116000, 0, 0, "weekend-1-punchhighblocked"],
+					[116500, 3, 0, "weekend-1-dodgelow"],
+					[117000, 1, 0, "weekend-1-picouppercutprep"],
+					[117333.333333333, 2, 0, "weekend-1-picouppercut"]
+				],
+				"sectionBeats": 4,
+				"mustHitSection": false
+			}
+		],
+		"gfVersion": "nene",
+		"format": "psych_v1_convert",
+		"bpm": 180,
+		"needsVoices": false,
+		"song": "Blazin'",
+		"offset": 0
+	}
+}

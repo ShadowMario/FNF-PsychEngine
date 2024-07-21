@@ -3,9 +3,9 @@ package backend;
 import flixel.FlxBasic;
 import flixel.FlxObject;
 import flixel.FlxSubState;
-import backend.MusicBeatState;
+import flixel.group.FlxGroup;
 
-import objects.Note.EventNote;
+import objects.Note;
 import objects.Character;
 
 enum Countdown
@@ -29,7 +29,7 @@ class BaseStage extends FlxBasic
 	public var seenCutscene(get, never):Bool;
 	public var inCutscene(get, set):Bool;
 	public var canPause(get, set):Bool;
-	public var members(get, never):Dynamic;
+	public var members(get, never):Array<FlxBasic>;
 
 	public var boyfriend(get, never):Character;
 	public var dad(get, never):Character;
@@ -37,6 +37,8 @@ class BaseStage extends FlxBasic
 	public var boyfriendGroup(get, never):FlxSpriteGroup;
 	public var dadGroup(get, never):FlxSpriteGroup;
 	public var gfGroup(get, never):FlxSpriteGroup;
+
+	public var unspawnNotes(get, never):Array<Note>;
 	
 	public var camGame(get, never):FlxCamera;
 	public var camHUD(get, never):FlxCamera;
@@ -65,6 +67,7 @@ class BaseStage extends FlxBasic
 	public function createPost() {}
 	//public function update(elapsed:Float) {}
 	public function countdownTick(count:Countdown, num:Int) {}
+	public function startSong() {}
 
 	// FNF steps, beats and sections
 	public var curBeat:Int = 0;
@@ -85,9 +88,15 @@ class BaseStage extends FlxBasic
 	public function eventPushed(event:EventNote) {}
 	public function eventPushedUnique(event:EventNote) {}
 
+	// Note Hit/Miss
+	public function goodNoteHit(note:Note) {}
+	public function opponentNoteHit(note:Note) {}
+	public function noteMiss(note:Note) {}
+	public function noteMissPress(direction:Int) {}
+
 	// Things to replace FlxGroup stuff and inject sprites directly into the state
 	function add(object:FlxBasic) return FlxG.state.add(object);
-	function remove(object:FlxBasic) return FlxG.state.remove(object);
+	function remove(object:FlxBasic, splice:Bool = false) return FlxG.state.remove(object, splice);
 	function insert(position:Int, object:FlxBasic) return FlxG.state.insert(position, object);
 	
 	public function addBehindGF(obj:FlxBasic) return insert(members.indexOf(game.gfGroup), obj);
@@ -151,6 +160,11 @@ class BaseStage extends FlxBasic
 	inline private function get_boyfriendGroup():FlxSpriteGroup return game.boyfriendGroup;
 	inline private function get_dadGroup():FlxSpriteGroup return game.dadGroup;
 	inline private function get_gfGroup():FlxSpriteGroup return game.gfGroup;
+
+	inline private function get_unspawnNotes():Array<Note>
+	{
+		return cast game.unspawnNotes;
+	}
 	
 	inline private function get_camGame():FlxCamera return game.camGame;
 	inline private function get_camHUD():FlxCamera return game.camHUD;

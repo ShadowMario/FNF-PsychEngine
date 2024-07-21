@@ -90,6 +90,8 @@
 	<section if="BASE_GAME_FILES">
 		<assets path="assets/base_game" rename="assets" exclude="*.ogg" if="web"/>
 		<assets path="assets/base_game" rename="assets" exclude="*.mp3"  unless="web"/>
+		<haxelib name="grig.audio" if="BASE_GAME_FILES"/>
+		<haxelib name="funkin.vis" if="BASE_GAME_FILES"/>
 	</section>
 
 	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
@@ -119,6 +121,7 @@
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
 	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
+
 	
 	<!-- ______________________________ Haxedefines _____________________________ -->
 

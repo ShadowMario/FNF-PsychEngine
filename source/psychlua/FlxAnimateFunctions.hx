@@ -31,22 +31,23 @@ class FlxAnimateFunctions
 		
 		Lua_helper.add_callback(lua, "addAnimationBySymbol", function(tag:String, name:String, symbol:String, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0)
 		{
-			var obj:Dynamic = MusicBeatState.getVariables().get(tag);
-			if(cast (obj, FlxAnimate) == null) return false;
+			var obj:FlxAnimate = cast MusicBeatState.getVariables().get(tag);
+			if(obj == null) return false;
 
 			obj.anim.addBySymbol(name, symbol, framerate, loop, matX, matY);
-			if(obj.anim.lastPlayedAnim == null)
+			if(obj.anim.curSymbol == null)
 			{
-				if(obj.playAnim != null) obj.playAnim(name, true); //is ModchartAnimateSprite
-				else obj.animation.play(name, true);
+				var obj2:ModchartAnimateSprite = cast (obj, ModchartAnimateSprite);
+				if(obj2 != null) obj2.playAnim(name, true); //is ModchartAnimateSprite
+				else obj.anim.play(name, true);
 			}
 			return true;
 		});
 
 		Lua_helper.add_callback(lua, "addAnimationBySymbolIndices", function(tag:String, name:String, symbol:String, ?indices:Any = null, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0)
 		{
-			var obj:Dynamic = MusicBeatState.getVariables().get(tag);
-			if(cast (obj, FlxAnimate) == null) return false;
+			var obj:FlxAnimate = cast MusicBeatState.getVariables().get(tag);
+			if(obj == null) return false;
 
 			if(indices == null)
 				indices = [0];
@@ -61,10 +62,11 @@ class FlxAnimateFunctions
 			}
 
 			obj.anim.addBySymbolIndices(name, symbol, indices, framerate, loop, matX, matY);
-			if(obj.anim.lastPlayedAnim == null)
+			if(obj.anim.curSymbol == null)
 			{
-				if(obj.playAnim != null) obj.playAnim(name, true); //is ModchartAnimateSprite
-				else obj.animation.play(name, true);
+				var obj2:ModchartAnimateSprite = cast (obj, ModchartAnimateSprite);
+				if(obj2 != null) obj2.playAnim(name, true); //is ModchartAnimateSprite
+				else obj.anim.play(name, true);
 			}
 			return true;
 		});

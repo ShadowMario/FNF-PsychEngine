@@ -2,6 +2,8 @@ package objects;
 
 import backend.animation.PsychAnimationController;
 
+import flixel.graphics.frames.FlxAtlasFrames;
+
 import flixel.util.FlxSort;
 import flixel.util.FlxDestroyUtil;
 
@@ -98,6 +100,8 @@ class Character extends FlxSprite
 				skipDance = true;
 				loadMappedAnims();
 				playAnim("shoot1");
+			case 'pico-blazin', 'darnell-blazin':
+				skipDance = true;
 		}
 	}
 
@@ -154,7 +158,23 @@ class Character extends FlxSprite
 		updateHitbox();
 
 		if(!isAnimateAtlas)
-			frames = Paths.getAtlas(json.image);
+		{
+			var split:Array<String> = json.image.split(',');
+			var charFrames:FlxAtlasFrames = Paths.getAtlas(split[0].trim());
+			if(split.length > 1)
+			{
+				var original:FlxAtlasFrames = charFrames;
+				charFrames = new FlxAtlasFrames(charFrames.parent);
+				charFrames.addAtlas(original, true);
+				for (i in 1...split.length)
+				{
+					var extraFrames:FlxAtlasFrames = Paths.getAtlas(split[i].trim());
+					if(extraFrames != null)
+						charFrames.addAtlas(extraFrames, true);
+				}
+			}
+			frames = charFrames;
+		}
 		#if flxanimate
 		else
 		{
@@ -164,9 +184,10 @@ class Character extends FlxSprite
 			{
 				Paths.loadAnimateAtlas(atlas, json.image);
 			}
-			catch(e:Dynamic)
+			catch(e:haxe.Exception)
 			{
 				FlxG.log.warn('Could not load atlas ${json.image}: $e');
+				trace(e.stack);
 			}
 		}
 		#end
@@ -236,7 +257,7 @@ class Character extends FlxSprite
 	{
 		if(isAnimateAtlas) atlas.update(elapsed);
 
-		if(debugMode || (!isAnimateAtlas && animation.curAnim == null) || (isAnimateAtlas && atlas.anim.curSymbol == null))
+		if(debugMode || (!isAnimateAtlas && animation.curAnim == null) || (isAnimateAtlas && (atlas.anim.curInstance == null || atlas.anim.curSymbol == null)))
 		{
 			super.update(elapsed);
 			return;
@@ -300,14 +321,14 @@ class Character extends FlxSprite
 	}
 
 	inline public function isAnimationNull():Bool
-		return !isAnimateAtlas ? (animation.curAnim == null) : (atlas.anim.curSymbol == null);
+	{
+		return !isAnimateAtlas ? (animation.curAnim == null) : (atlas.anim.curInstance == null || atlas.anim.curSymbol == null);
+	}
 
+	var _lastPlayedAnimation:String;
 	inline public function getAnimationName():String
 	{
-		var name:String = '';
-		@:privateAccess
-		if(!isAnimationNull()) name = !isAnimateAtlas ? animation.curAnim.name : atlas.anim.lastPlayedAnim;
-		return (name != null) ? name : '';
+		return _lastPlayedAnimation;
 	}
 
 	public function isAnimationFinished():Bool
@@ -336,9 +357,9 @@ class Character extends FlxSprite
 		if(!isAnimateAtlas) animation.curAnim.paused = value;
 		else
 		{
-			if(value) atlas.anim.pause();
-			else atlas.anim.resume();
-		} 
+			if(value) atlas.pauseAnimation();
+			else atlas.resumeAnimation();
+		}
 
 		return value;
 	}
@@ -372,6 +393,7 @@ class Character extends FlxSprite
 		specialAnim = false;
 		if(!isAnimateAtlas) animation.play(AnimName, Force, Reversed, Frame);
 		else atlas.anim.play(AnimName, Force, Reversed, Frame);
+		_lastPlayedAnimation = AnimName;
 
 		if (animOffsets.exists(AnimName))
 		{
@@ -449,7 +471,8 @@ class Character extends FlxSprite
 
 	// Atlas support
 	// special thanks ne_eo for the references, you're the goat!!
-	public var isAnimateAtlas:Bool = false;
+	@:allow(states.editors.CharacterEditorState)
+	public var isAnimateAtlas(default, null):Bool = false;
 	#if flxanimate
 	public var atlas:FlxAnimate;
 	public override function draw()
@@ -464,16 +487,19 @@ class Character extends FlxSprite
 
 		if(isAnimateAtlas)
 		{
-			copyAtlasValues();
-			atlas.draw();
-			if(missingCharacter && visible)
+			if(atlas.anim.curInstance != null)
 			{
-				alpha = lastAlpha;
-				color = lastColor;
-
-				missingText.x = getMidpoint().x - 150;
-				missingText.y = getMidpoint().y - 10;
-				missingText.draw();
+				copyAtlasValues();
+				atlas.draw();
+				if(missingCharacter && visible)
+				{
+					alpha = lastAlpha;
+					color = lastColor;
+	
+					missingText.x = getMidpoint().x - 150;
+					missingText.y = getMidpoint().y - 10;
+					missingText.draw();
+				}
 			}
 			return;
 		}
@@ -513,14 +539,8 @@ class Character extends FlxSprite
 
 	public override function destroy()
 	{
+		atlas = FlxDestroyUtil.destroy(atlas);
 		super.destroy();
-		destroyAtlas();
-	}
-
-	public function destroyAtlas()
-	{
-		if (atlas != null)
-			atlas = FlxDestroyUtil.destroy(atlas);
 	}
 	#end
 }
