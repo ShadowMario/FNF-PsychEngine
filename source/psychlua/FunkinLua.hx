@@ -1189,7 +1189,7 @@ class FunkinLua {
 			}
 
 			var split:Array<String> = obj.split('.');
-			var object:FlxObject = LuaUtils.getObjectDirectly(split[0]);
+			var object:FlxBasic = LuaUtils.getObjectDirectly(split[0]);
 			if(split.length > 1) {
 				object = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split), split[split.length-1]);
 			}
