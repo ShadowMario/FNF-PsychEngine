@@ -37,7 +37,7 @@ class PhillyBlazin extends BaseStage
 		if(!ClientPrefs.data.lowQuality)
 		{
 			var skyImage = Paths.image('phillyBlazin/skyBlur');
-			scrollingSky = new FlxTiledSprite(Paths.image('phillyBlazin/skyBlur'), Std.int(skyImage.width * 1.1) + 475, Std.int(skyImage.height / 1.1), true, false);
+			scrollingSky = new FlxTiledSprite(skyImage, Std.int(skyImage.width * 1.1) + 475, Std.int(skyImage.height / 1.1), true, false);
 			scrollingSky.antialiasing = ClientPrefs.data.antialiasing;
 			scrollingSky.setPosition(-500, -120);
 			scrollingSky.scrollFactor.set();
