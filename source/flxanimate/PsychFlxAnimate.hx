@@ -83,7 +83,8 @@ class PsychFlxAnimate extends OriginalFlxAnimate
 		{
 			anim.curInstance = FlxDestroyUtil.destroy(anim.curInstance);
 			anim.stageInstance = FlxDestroyUtil.destroy(anim.stageInstance);
-			anim.metadata = FlxDestroyUtil.destroy(anim.metadata);
+			//anim.metadata = FlxDestroyUtil.destroy(anim.metadata);
+			anim.metadata.destroy();
 			anim.symbolDictionary = null;
 		}
 	}
