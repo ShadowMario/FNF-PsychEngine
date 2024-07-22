@@ -209,8 +209,6 @@ class Main extends Sprite
 		// 
 		#if officialBuild
 		errMsg += "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
-		#else
-		trace("[Main.hx:198]: If you plan on open sourcing your mod, you MIGHT wanna check this out and change the link two lines above this one.");
 		#end
 
 		if (!FileSystem.exists("./crash/"))

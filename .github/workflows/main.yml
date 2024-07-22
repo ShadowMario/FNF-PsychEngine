@@ -36,13 +36,14 @@ jobs:
           sudo apt-get install libvlccore-dev
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
-          haxe -cp ./setup -D analyzer-optimize -main Main --interp
+          chmod +x ./setup/unix.sh
+          sh ./setup/unix.sh
       - name: Skip SScript setup mode
         run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ~/settings.cocoa
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}" -D officialBuild
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
@@ -63,7 +64,7 @@ jobs:
         run: |
           haxelib setup C:/haxelib
           haxelib install hxcpp > /dev/null --quiet
-          haxe -cp ./setup -D analyzer-optimize -main Main --interp
+          .\"setup/windows.bat"
         shell: cmd
       - name: Skip SScript setup mode
         run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> %USERPROFILE%/settings.cocoa
@@ -71,7 +72,7 @@ jobs:
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build windows --app-version="4.0.0-${{ github.run_id}}"  -D officialBuild
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
@@ -92,13 +93,14 @@ jobs:
         run: |
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
-          haxe -cp ./setup -D analyzer-optimize -main Main --interp
+          chmod +x ./setup/unix.sh
+          sh ./setup/unix.sh
       - name: Skip SScript setup mode
         run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ~/settings.cocoa
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
-        run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build mac --app-version="4.0.0-${{ github.run_id}}"  -D officialBuild
       - name: Publish Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
