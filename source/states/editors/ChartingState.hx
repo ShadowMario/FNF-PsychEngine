@@ -1,6 +1,6 @@
 package states.editors;
 
-import flash.media.Sound;
+import openfl.media.Sound;
 import flixel.FlxSubState;
 import flixel.util.FlxSave;
 import flixel.util.FlxSpriteUtil;

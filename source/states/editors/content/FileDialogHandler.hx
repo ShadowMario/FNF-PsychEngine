@@ -3,7 +3,7 @@ package states.editors.content;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
-import flash.net.FileFilter;
+import openfl.net.FileFilter;
 
 import haxe.Exception;
 import sys.io.File;
