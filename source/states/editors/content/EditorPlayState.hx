@@ -1,7 +1,6 @@
 package states.editors.content;
 
 import backend.Song;
-import backend.Section;
 import backend.Rating;
 
 import objects.Note;

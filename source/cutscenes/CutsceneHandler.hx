@@ -3,9 +3,14 @@ package cutscenes;
 import flixel.FlxBasic;
 import flixel.util.FlxSort;
 
+typedef CutsceneEvent = {
+	var time:Float;
+	var func:Void->Void;
+}
+
 class CutsceneHandler extends FlxBasic
 {
-	public var timedEvents:Array<Dynamic> = [];
+	public var timedEvents:Array<CutsceneEvent> = [];
 	public var finishCallback:Void->Void = null;
 	public var finishCallback2:Void->Void = null;
 	public var onStart:Void->Void = null;
@@ -25,7 +30,7 @@ class CutsceneHandler extends FlxBasic
 			}
 			if(onStart != null) onStart();
 		});
-		PlayState.instance.add(this);
+		FlxG.state.add(this);
 	}
 
 	private var cutsceneTime:Float = 0;
@@ -41,6 +46,12 @@ class CutsceneHandler extends FlxBasic
 		}
 
 		cutsceneTime += elapsed;
+		while(timedEvents.length > 0 && timedEvents[0].time <= cutsceneTime)
+		{
+			timedEvents[0].func();
+			timedEvents.shift();
+		}
+
 		if(endTime <= cutsceneTime)
 		{
 			finishCallback();
@@ -57,12 +68,6 @@ class CutsceneHandler extends FlxBasic
 			destroy();
 			PlayState.instance.remove(this);
 		}
-		
-		while(timedEvents.length > 0 && timedEvents[0][0] <= cutsceneTime)
-		{
-			timedEvents[0][1]();
-			timedEvents.splice(0, 1);
-		}
 	}
 
 	public function push(spr:FlxSprite)
@@ -72,12 +77,12 @@ class CutsceneHandler extends FlxBasic
 
 	public function timer(time:Float, func:Void->Void)
 	{
-		timedEvents.push([time, func]);
+		timedEvents.push({time: time, func: func});
 		timedEvents.sort(sortByTime);
 	}
 
-	function sortByTime(Obj1:Array<Dynamic>, Obj2:Array<Dynamic>):Int
+	function sortByTime(Obj1:CutsceneEvent, Obj2:CutsceneEvent):Int
 	{
-		return FlxSort.byValues(FlxSort.ASCENDING, Obj1[0], Obj2[0]);
+		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.time, Obj2.time);
 	}
 }
