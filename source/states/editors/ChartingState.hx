@@ -544,7 +544,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			}
 
 			if(!songFinished) Conductor.songPosition = FlxMath.bound(FlxG.sound.music.time + Conductor.offset, 0, FlxG.sound.music.length - 1);
-			scrollY = (Conductor.songPosition / Conductor.crochet * GRID_SIZE * 4) * curZoom - FlxG.height/2;
+			updateScrollY();
 		}
 
 		super.update(elapsed);
@@ -646,7 +646,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				}
 				loadSection();
 				showOutput('Zoom: ${Math.round(curZoom * 100)}%');
-				scrollY = (Conductor.songPosition / Conductor.crochet * GRID_SIZE * 4) * curZoom - FlxG.height/2;
+				updateScrollY();
 			}
 		}
 
@@ -923,6 +923,16 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		outputTxt.alpha = outputAlpha;
 		outputTxt.visible = (outputAlpha > 0);
 		FlxG.camera.scroll.y = scrollY;
+	}
+
+	function updateScrollY()
+	{
+		var secStartTime:Null<Float> = cast cachedSectionTimes[curSec];
+		var secCrochet:Null<Float> = cast cachedSectionCrochets[curSec];
+		var secRows:Null<Float> = cast cachedSectionRow[curSec];
+		if(secStartTime == null || secCrochet == null || secRows == null) return;
+
+		scrollY = (((Conductor.songPosition - secStartTime) / secCrochet * GRID_SIZE * 4) + (secRows * GRID_SIZE)) * curZoom - FlxG.height/2;
 	}
 
 	function updateSelectionBox()
@@ -1397,6 +1407,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		}
 		cachedSectionRow.push(row);
 		cachedSectionTimes.push(time);
+		trace(cachedSectionTimes);
 	}
 
 	var showPreviousSection:Bool = true;
@@ -2225,6 +2236,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			{
 				var oldTimes:Array<Float> = cachedSectionTimes.copy();
 				sec.changeBPM = changeBpmCheckBox.checked;
+				if(!Reflect.hasField(sec, 'bpm')) sec.bpm = changeBpmStepper.value;
 				adaptNotesToNewTimes(oldTimes);
 			}
 		});
