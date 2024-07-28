@@ -12,8 +12,6 @@ class MetaNote extends Note
 	public var sustainSprite:FlxSprite;
 	public var chartY:Float = 0;
 
-	//public var __estimatedStep:Float; //Only used during some calculations
-
 	public function new(time:Float, data:Int, songData:Array<Dynamic>)
 	{
 		super(time, data, null, false, true);
@@ -35,6 +33,7 @@ class MetaNote extends Note
 			rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(noteData));
 
 		animation.play(Note.colArray[this.noteData % Note.colArray.length] + 'Scroll');
+		updateHitbox();
 		if(width > height)
 			setGraphicSize(ChartingState.GRID_SIZE);
 		else

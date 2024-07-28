@@ -148,8 +148,10 @@ class MainMenuState extends MusicBeatState
 			if (controls.UI_DOWN_P)
 				changeItem(1);
 
-			if (allowMouse && FlxG.mouse.deltaScreenX != 0 && FlxG.mouse.deltaScreenY != 0) //more accurate than FlxG.mouse.justMoved
+			var allowMouse:Bool = allowMouse;
+			if (allowMouse && ((FlxG.mouse.deltaScreenX != 0 && FlxG.mouse.deltaScreenY != 0) || FlxG.mouse.justPressed)) //FlxG.mouse.deltaScreenX/Y checks is more accurate than FlxG.mouse.justMoved
 			{
+				allowMouse = false;
 				FlxG.mouse.visible = true;
 				timeNotMoving = 0;
 
@@ -166,6 +168,7 @@ class MainMenuState extends MusicBeatState
 
 				if(leftItem != null && FlxG.mouse.overlaps(leftItem))
 				{
+					allowMouse = true;
 					if(selectedItem != leftItem)
 					{
 						curColumn = LEFT;
@@ -174,6 +177,7 @@ class MainMenuState extends MusicBeatState
 				}
 				else if(rightItem != null && FlxG.mouse.overlaps(rightItem))
 				{
+					allowMouse = true;
 					if(selectedItem != rightItem)
 					{
 						curColumn = RIGHT;
@@ -194,6 +198,7 @@ class MainMenuState extends MusicBeatState
 							{
 								dist = distance;
 								distItem = i;
+								allowMouse = true;
 							}
 						}
 					}
@@ -209,7 +214,7 @@ class MainMenuState extends MusicBeatState
 			else
 			{
 				timeNotMoving += elapsed;
-				if(timeNotMoving > 1) FlxG.mouse.visible = false;
+				if(timeNotMoving > 2) FlxG.mouse.visible = false;
 			}
 
 			switch(curColumn)
