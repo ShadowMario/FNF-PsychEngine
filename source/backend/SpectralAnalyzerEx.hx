@@ -1,5 +1,5 @@
 package backend;
-
+#if funkin.vis 
 import funkin.vis._internal.html5.AnalyzerNode;
 import funkin.vis.audioclip.frontends.LimeAudioClip;
 import funkin.vis.dsp.SpectralAnalyzer;
@@ -9,9 +9,11 @@ import grig.audio.FFTVisualization;
 import lime.media.AudioSource;
 
 using grig.audio.lime.UInt8ArrayTools;
+#end
 
-class SpectralAnalyzerEx extends SpectralAnalyzer
+class SpectralAnalyzerEx #if funkin.vis extends SpectralAnalyzer #end
 {
+	#if funkin.vis
 	var _levels:Array<Bar> = [];
 	public function recycledLevels():Array<Bar>
 	{
@@ -147,4 +149,13 @@ class SpectralAnalyzerEx extends SpectralAnalyzer
 	{
 		return val <= min ? min : val >= max ? max : val;
 	}
+	#else
+	//Just to avoid errors until they review my PR
+	public var fftN:Int = 0;
+	public function new(?v1:Dynamic, ?v2:Dynamic, ?v3:Dynamic, ?v4:Dynamic) {}
+	public function recycledLevels():Array<Dynamic>
+	{
+		return [{value: 0, peak: 0}];
+	}
+	#end
 }

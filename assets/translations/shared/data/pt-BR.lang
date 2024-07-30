@@ -16,6 +16,9 @@ rating_great: "Ótimo"
 rating_sick: "Manda Ver!"
 rating_perfect: "Perfeito!!"
 
+// Dialogues
+dialogue_skip: "Aperte BACK para Pular"
+
 // Pause Menu
 pause_resume: "Resumir"
 pause_restart_song: "Reiniciar Música"

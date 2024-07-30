@@ -231,12 +231,7 @@ class PhillyStreets extends BaseStage
 		neneLaugh.volume = 0.6;
 		FlxG.sound.list.add(neneLaugh);
 
-		cutsceneHandler.onStart = function()
-		{
-			camHUD.alpha = 0;
-			trace('start called!');
-		}
-
+		camHUD.alpha = 0;
 		gf.animation.finishCallback = function(name:String)
 		{
 			switch(name)
@@ -307,9 +302,6 @@ class PhillyStreets extends BaseStage
 				darkenStageProps();
 			});
 		});
-		cutsceneHandler.timer(cutsceneDelay + 5.9, function() //darnell laughs
-		{
-		});
 		// darnell laughs
 		cutsceneHandler.timer(cutsceneDelay + 5.9, function()
 		{
@@ -326,22 +318,36 @@ class PhillyStreets extends BaseStage
 			neneLaugh.play(true);
 		});
 
-		// camera returns to normal, cutscene flags set and countdown starts.
-		cutsceneHandler.timer(cutsceneDelay + 8, function()
+		// cutscene ended, camera returns to normal, cutscene flags set and countdown starts.
+		cutsceneHandler.finishCallback = function()
 		{
+			cutsceneMusic.stop(); // stop the music!!!!!!
+
 			game.cameraSpeed = 0;
 			FlxTween.tween(FlxG.camera, {zoom: 0.77}, 2, {ease: FlxEase.sineInOut});
 			FlxTween.tween(FlxG.camera.scroll, {x: camFollow.x + 180 - FlxG.width/2}, 2, {ease: FlxEase.sineInOut, onComplete: function(_) game.cameraSpeed = 1});
-			PlayState.instance.inCutscene = false;
-			PlayState.instance.startCountdown();
-			cutsceneMusic.stop(); // stop the music!!!!!!
-		});
-	
-		cutsceneHandler.finishCallback = function()
-		{
-			startCountdown();
-			spraycan.cutscene = false;
+			game.inCutscene = false;
+
+			spraycan.visible = spraycan.active = spraycan.cutscene = false;
 			camHUD.alpha = 1;
+			startCountdown();
+		};
+		cutsceneHandler.skipCallback = function()
+		{
+			cutsceneHandler.finishCallback();
+
+			dad.dance();
+			gf.dance();
+			boyfriend.dance();
+			dad.animation.finishCallback = null;
+			gf.animation.finishCallback = null;
+			
+			game.moveCameraSection();
+			game.cameraSpeed = 1;
+			FlxTween.cancelTweensOf(FlxG.camera);
+			FlxTween.cancelTweensOf(FlxG.camera.scroll);
+			FlxG.camera.scroll.set(camFollow.x - FlxG.width/2, camFollow.y - FlxG.height/2);
+			FlxG.camera.zoom = defaultCamZoom;
 		};
 		FlxG.camera.fade(FlxColor.BLACK, 2, true, null, true);
 	}

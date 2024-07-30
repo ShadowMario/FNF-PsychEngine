@@ -1,7 +1,6 @@
 package states.stages.objects;
 
 import backend.SpectralAnalyzerEx;
-import funkin.vis.dsp.SpectralAnalyzer;
 
 class ABotSpeaker extends FlxSpriteGroup
 {
