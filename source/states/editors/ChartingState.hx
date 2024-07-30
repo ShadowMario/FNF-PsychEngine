@@ -480,6 +480,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	var autoSaveTime:Float = 0;
 	var autoSaveCap:Int = 2; //in minutes
 	var backupLimit:Int = 10;
+
+	var lastBeatHit:Int = 0;
 	override function update(elapsed:Float)
 	{
 		if(!fileDialog.completed)
@@ -1080,6 +1082,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				}
 			}
 			forceDataUpdate = false;
+			
+			// moved from beatHit()
+			if(metronomeStepper.value > 0 && lastBeatHit != curBeat)
+				FlxG.sound.play(Paths.sound('Metronome_Tick'), metronomeStepper.value);
+
+			lastBeatHit = curBeat;
 		}
 
 		if(selectedNotes.length > 0)
@@ -1834,6 +1842,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	var ignoreProgressCheckBox:PsychUICheckBox;
 	var hitsoundPlayerStepper:PsychUINumericStepper;
 	var hitsoundOpponentStepper:PsychUINumericStepper;
+	var metronomeStepper:PsychUINumericStepper;
 
 	var instVolumeStepper:PsychUINumericStepper;
 	var instMuteCheckBox:PsychUICheckBox;
@@ -1865,6 +1874,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		objY += 50;
 		hitsoundPlayerStepper = new PsychUINumericStepper(objX, objY, 0.2, 0, 0, 1, 1);
 		hitsoundOpponentStepper = new PsychUINumericStepper(objX + 100, objY, 0.2, 0, 0, 1, 1);
+		metronomeStepper = new PsychUINumericStepper(objX + 200, objY, 0.2, 0, 0, 1, 1);
 
 		objY += 50;
 		instVolumeStepper = new PsychUINumericStepper(objX, objY, 0.1, 0.6, 0, 1, 1);
@@ -1885,8 +1895,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		tab_group.add(new FlxText(hitsoundPlayerStepper.x, hitsoundPlayerStepper.y - 15, 100, 'Hitsound (Player):'));
 		tab_group.add(new FlxText(hitsoundOpponentStepper.x, hitsoundOpponentStepper.y - 15, 100, 'Hitsound (Opp.):'));
+		tab_group.add(new FlxText(metronomeStepper.x, metronomeStepper.y - 15, 100, 'Metronome:'));
 		tab_group.add(hitsoundPlayerStepper);
 		tab_group.add(hitsoundOpponentStepper);
+		tab_group.add(metronomeStepper);
 		
 		tab_group.add(new FlxText(instVolumeStepper.x, instVolumeStepper.y - 15, 100, 'Inst. Volume:'));
 		tab_group.add(new FlxText(playerVolumeStepper.x, playerVolumeStepper.y - 15, 100, 'Main Vocals:'));
@@ -2785,6 +2797,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		btnY += 20;
 		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Open Autosave...', function()
 		{
+			if(!fileDialog.completed) return;
+			upperBox.isMinimized = true;
+			upperBox.bg.visible = false;
+
 			if(!FileSystem.exists('backups/'))
 			{
 				showOutput('The "backups" folder does not exist.', true);
@@ -2806,6 +2822,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			var hei:Float = radioGrp.height + 160;
 			openSubState(new BasePrompt(420, hei, 'Choose an Autosave',
 				function(state:BasePrompt) {
+					upperBox.isMinimized = true;
+					upperBox.bg.visible = false;
+
 					var btn:PsychUIButton = new PsychUIButton(state.bg.x + state.bg.width - 40, state.bg.y, 'X', state.close, 40);
 					btn.cameras = state.cameras;
 					state.add(btn);
@@ -3482,6 +3501,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Autosave Settings...', btnWid);
 		btn.onClick = function()
 		{
+			upperBox.isMinimized = true;
+			upperBox.bg.visible = false;
 			openSubState(new BasePrompt(400, 160, 'Autosave Settings',
 				function(state:BasePrompt)
 				{
@@ -3631,12 +3652,6 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		
 		btnY++;
 		btnY += 20;
-		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Metronome...', function() showOutput('Feature not implemented yet!', true), btnWid); //TO DO: Add functionality
-		btn.text.alignment = LEFT;
-		tab_group.add(btn);
-		
-		btnY++;
-		btnY += 20;
 		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Waveform...', function() showOutput('Feature not implemented yet!', true), btnWid); //TO DO: Add functionality
 		btn.text.alignment = LEFT;
 		tab_group.add(btn);
@@ -3653,7 +3668,81 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		tab_group.add(btn);
 
 		btnY += 20;
-		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Go to...', function() showOutput('Feature not implemented yet!', true), btnWid); //TO DO: Add functionality
+		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Go to...', function()
+		{
+			upperBox.isMinimized = true;
+			upperBox.bg.visible = false;
+			openSubState(new BasePrompt(420, 200, 'Go to Time/Section:',
+				function(state:BasePrompt)
+				{
+					var curTime:Float = Conductor.songPosition;
+					var currentSec:Int = curSec;
+
+					var timeStepper:PsychUINumericStepper = new PsychUINumericStepper(state.bg.x + 100, state.bg.y + 90, 1, Math.floor(curTime)/1000, 0, FlxG.sound.music.length/1000 - 0.01, 2, 80);
+					timeStepper.cameras = state.cameras;
+					var sectionStepper:PsychUINumericStepper = new PsychUINumericStepper(timeStepper.x + 160, timeStepper.y, 1, currentSec, 0, PlayState.SONG.notes.length - 1, 0);
+					sectionStepper.cameras = state.cameras;
+
+					var txt1:FlxText = new FlxText(timeStepper.x, timeStepper.y - 15, 100, 'Time (in seconds):');
+					var txt2:FlxText = new FlxText(sectionStepper.x, sectionStepper.y - 15, 100, 'Section:');
+					txt1.cameras = state.cameras;
+					txt2.cameras = state.cameras;
+					state.add(txt1);
+					state.add(txt2);
+					state.add(timeStepper);
+					state.add(sectionStepper);
+
+					var timeTxt:FlxText = new FlxText(15, state.bg.y + state.bg.height - 75, 230, '', 16);
+					timeTxt.alignment = CENTER;
+					timeTxt.screenCenter(X);
+					timeTxt.cameras = state.cameras;
+					state.add(timeTxt);
+					function updateTime()
+					{
+						var tm:String = FlxStringUtil.formatTime(curTime / 1000, true);
+						var ln:String = FlxStringUtil.formatTime(FlxG.sound.music.length / 1000, true);
+						timeTxt.text = '$tm / $ln';
+					}
+					updateTime();
+
+					timeStepper.onValueChange = function()
+					{
+						curTime = timeStepper.value * 1000;
+						for (i => time in cachedSectionTimes)
+						{
+							if(time <= curTime)
+								currentSec = i;
+							else break;
+						}
+						updateTime();
+					};
+					sectionStepper.onValueChange = function()
+					{
+						currentSec = Std.int(sectionStepper.value);
+						curTime = cachedSectionTimes[currentSec] + 0.000001;
+						updateTime();
+					};
+
+					var btn:PsychUIButton = new PsychUIButton(0, timeTxt.y + 30, 'Go To', function()
+					{
+						curSec = currentSec;
+						FlxG.sound.music.time = FlxMath.bound(curTime, 0, FlxG.sound.music.length - 1);
+						loadSection();
+						state.close();
+					});
+					btn.cameras = state.cameras;
+					btn.screenCenter(X);
+					btn.x -= 60;
+					state.add(btn);
+
+					var btn:PsychUIButton = new PsychUIButton(0, btn.y, 'Cancel', state.close);
+					btn.cameras = state.cameras;
+					btn.screenCenter(X);
+					btn.x += 60;
+					state.add(btn);
+				}
+			));
+		}, btnWid);
 		btn.text.alignment = LEFT;
 		tab_group.add(btn);
 
