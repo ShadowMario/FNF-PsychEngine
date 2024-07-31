@@ -3,9 +3,11 @@ package states.editors;
 import flash.media.Sound;
 import flixel.FlxSubState;
 import flixel.util.FlxSave;
+import flixel.util.FlxSort;
 import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxStringUtil;
 import flixel.util.FlxDestroyUtil;
+import flixel.input.keyboard.FlxKey;
 import lime.utils.Assets;
 
 import states.editors.content.MetaNote;
@@ -21,6 +23,7 @@ import backend.Difficulty;
 import objects.Character;
 import objects.HealthIcon;
 import objects.Note;
+import objects.StrumNote;
 import haxe.Json;
 import haxe.Exception;
 
@@ -55,12 +58,13 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		['Set Property', "Value 1: Variable name\nValue 2: New value"],
 		['Play Sound', "Value 1: Sound file name\nValue 2: Volume (Default: 1), ranges from 0 to 1"]
 	];
-
+	
+	public static var keysArray:Array<String> = [ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT]; //Used for Vortex Editor
 	public static var SHOW_EVENT_COLUMN = true;
 	public static var GRID_COLUMNS_PER_PLAYER = 4;
 	public static var GRID_PLAYERS = 2;
 	public static var GRID_SIZE = 40;
-	final BACKUP_EXTENSION = '.bkp';
+	final BACKUP_EXT = '.bkp';
 
 	public var quantizations:Array<Int> = [
 		4,
@@ -75,7 +79,28 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		96,
 		192
 	];
-	var curQuant:Int = 16;
+	public var quantColors:Array<FlxColor> = [
+		0xFFDF0000,
+		0xFF4040CF,
+		0xFFAF00AF,
+		0xFFFFAF00,
+		0xFFFFFFFF,
+		0xFFFFA0FF,
+		0xFFFF6030,
+		0xFF00CFCF,
+		0xFF00CF00,
+		0xFF9F9F9F,
+		0xFF3F3F3F,
+	];
+	var curQuant(default, set):Int = 16;
+	function set_curQuant(v:Int)
+	{
+		curQuant = v;
+		updateVortexColor();
+		return curQuant;
+	}
+	function updateVortexColor()
+		vortexIndicator.color = quantColors[Std.int(FlxMath.bound(quantizations.indexOf(curQuant), 0, quantColors.length - 1))];
 
 	var sectionFirstNoteID:Int = 0;
 	var sectionFirstEventID:Int = 0;
@@ -121,6 +146,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	var curRenderedNotes:FlxTypedGroup<MetaNote> = new FlxTypedGroup<MetaNote>();
 	var movingNotes:FlxTypedGroup<MetaNote> = new FlxTypedGroup<MetaNote>();
 	var eventLockOverlay:FlxSprite;
+	var vortexIndicator:FlxSprite;
+	var strumLineNotes:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
 	var dummyArrow:FlxSprite;
 	var isMovingNotes:Bool = false;
 	var movingNotesLastData:Int = 0;
@@ -150,9 +177,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 	var copiedNotes:Array<Dynamic> = [];
 	var copiedEvents:Array<Dynamic> = [];
+	
+	var _keysPressedBuffer:Array<Bool> = [];
 	override function create()
 	{
 		if(Difficulty.list.length < 1) Difficulty.resetList();
+		_keysPressedBuffer.resize(keysArray.length);
 
 		if(_shouldReset) Conductor.songPosition = 0;
 		persistentUpdate = false;
@@ -180,6 +210,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		if(chartEditorSave.data.autoSave != null) autoSaveCap = chartEditorSave.data.autoSave;
 		if(chartEditorSave.data.backupLimit != null) backupLimit = chartEditorSave.data.backupLimit;
+		if(chartEditorSave.data.vortex != null) vortexEnabled = chartEditorSave.data.vortex;
 		
 		changeTheme(chartEditorSave.data.theme != null ? chartEditorSave.data.theme : DEFAULT, false);
 
@@ -192,8 +223,6 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		tipText.active = false;
 		add(tipText);
 
-		var gridStripes:Array<Int> = [];
-
 		recreateGrids();
 
 		dummyArrow = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
@@ -201,6 +230,15 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		dummyArrow.updateHitbox();
 		dummyArrow.scrollFactor.x = 0;
 		add(dummyArrow);
+
+		vortexIndicator = new FlxSprite(gridBg.x - GRID_SIZE, FlxG.height/2).loadGraphic(Paths.image('editors/vortex_indicator'));
+		vortexIndicator.setGraphicSize(GRID_SIZE);
+		vortexIndicator.updateHitbox();
+		vortexIndicator.scrollFactor.set();
+		vortexIndicator.active = false;
+		updateVortexColor();
+		add(vortexIndicator);
+		add(strumLineNotes);
 
 		add(behindRenderedNotes);
 		add(curRenderedNotes);
@@ -220,6 +258,29 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		timeLine.screenCenter(Y);
 		timeLine.scrollFactor.set();
 		add(timeLine);
+		
+		var startX:Float = gridBg.x;
+		var startY:Float = FlxG.height/2;
+		vortexIndicator.visible = strumLineNotes.visible = strumLineNotes.active = vortexEnabled;
+		if(SHOW_EVENT_COLUMN) startX += GRID_SIZE;
+
+		for (i in 0...Std.int(GRID_PLAYERS * GRID_COLUMNS_PER_PLAYER))
+		{
+			var note:StrumNote = new StrumNote(startX + (GRID_SIZE * i), startY, i % GRID_COLUMNS_PER_PLAYER, 0);
+			note.scrollFactor.set();
+			note.playAnim('static');
+			note.alpha = 0.4;
+			note.updateHitbox();
+			if(note.width > note.height)
+				note.setGraphicSize(GRID_SIZE);
+			else
+				note.setGraphicSize(0, GRID_SIZE);
+	
+			note.updateHitbox();
+			note.x += GRID_SIZE/2 - note.width/2;
+			note.y += GRID_SIZE/2 - note.height/2;
+			strumLineNotes.add(note);
+		}
 
 		var columns:Int = 0;
 		var iconX:Float = gridBg.x;
@@ -245,9 +306,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		mustHitIndicator.offset.x += mustHitIndicator.width/2;
 		add(mustHitIndicator);
 
+		var gridStripes:Array<Int> = [];
 		for (i in 0...GRID_PLAYERS)
 		{
-			gridStripes.push(columns);
+			if(columns > 0) gridStripes.push(columns);
 			columns += GRID_COLUMNS_PER_PLAYER;
 
 			var icon:HealthIcon = new HealthIcon();
@@ -490,6 +552,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			return;
 		}
 
+		for (num => key in keysArray)
+			_keysPressedBuffer[num] = FlxG.keys.checkStatus(key, JUST_PRESSED);
+
 		if(autoSaveCap > 0)
 		{
 			autoSaveTime += elapsed / 60.0;
@@ -513,11 +578,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				var dataToSave:String = haxe.Json.stringify(songCopy);
 				//trace(chartName, dataToSave);
 				if(!FileSystem.isDirectory('backups')) FileSystem.createDirectory('backups');
-				File.saveContent('backups/$chartName' + BACKUP_EXTENSION, dataToSave);
+				File.saveContent('backups/$chartName.$BACKUP_EXT', dataToSave);
 
 				if(backupLimit > 0)
 				{
-					var files:Array<String> = FileSystem.readDirectory('backups/').filter((file:String) -> file.endsWith(BACKUP_EXTENSION));
+					var files:Array<String> = FileSystem.readDirectory('backups/').filter((file:String) -> file.endsWith('.$BACKUP_EXT'));
 					if(files.length > backupLimit)
 					{
 						var incorrect:Array<String> = [];
@@ -584,7 +649,69 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					return;
 				}
 
-				if(FlxG.keys.justPressed.A != FlxG.keys.justPressed.D && !holdingAlt)
+				if(vortexEnabled && _keysPressedBuffer.contains(true))
+				{
+					var typeSelected:String = noteTypes[noteTypeDropDown.selectedIndex];
+					if(typeSelected != null)
+					{
+						typeSelected = typeSelected.trim();
+						if(typeSelected.length < 1) typeSelected = null;
+					}
+
+					var sectionStart:Float = cachedSectionTimes[curSec];
+					var strumTime:Float = Conductor.songPosition - sectionStart;
+					strumTime -= strumTime % (Conductor.stepCrochet * 16 / curQuant);
+					strumTime += sectionStart;
+
+					trace('Vortex editor press at time: $strumTime');
+					for (num => press in _keysPressedBuffer)
+					{
+						if(!press) continue;
+
+						// Try to find a note to delete first
+						var didDelete:Bool = false;
+						for (note in curRenderedNotes)
+						{
+							if(note == null || note.isEvent) continue;
+
+							if(note.songData[1] == num && Math.abs(strumTime - note.strumTime) < 1)
+							{
+								if(selectedNotes.contains(note))
+								{
+									selectedNotes.remove(note);
+									onSelectNote();
+								}
+								notes.remove(note);
+								curRenderedNotes.remove(note, true);
+								note.destroy();
+								didDelete = true;
+								break;
+							}
+						}
+
+						if(didDelete) continue;
+
+						// If no notes were found, add a new in its place
+						var didAdd:Bool = false;
+						var noteSetupData:Array<Dynamic> = [strumTime, num, 0];
+						if(typeSelected != null) noteSetupData.push(typeSelected);
+	
+						var noteAdded:MetaNote = createNote(noteSetupData);
+						for (num in sectionFirstNoteID...notes.length)
+						{
+							var note = notes[num];
+							if(note.strumTime >= strumTime)
+							{
+								notes.insert(num, noteAdded);
+								didAdd = true;
+								break;
+							}
+						}
+						if(!didAdd) notes.push(noteAdded);
+					}
+					softReloadNotes(true);
+				}
+				else if(FlxG.keys.justPressed.A != FlxG.keys.justPressed.D && !holdingAlt)
 				{
 					if(FlxG.sound.music.playing)
 						setSongPlaying(false);
@@ -675,18 +802,75 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				goToPlayState();
 				return;
 			}
-			else if(FlxG.keys.pressed.CONTROL && !isMovingNotes && (FlxG.keys.justPressed.A || FlxG.keys.justPressed.S))
+			else if(FlxG.keys.pressed.CONTROL && !isMovingNotes && (FlxG.keys.justPressed.C || FlxG.keys.justPressed.V || FlxG.keys.justPressed.A || FlxG.keys.justPressed.S))
 			{
-				if(FlxG.keys.justPressed.A)  // Select All
+				if(FlxG.keys.justPressed.C) // Copy (Ctrl + C)
+				{
+					if(selectedNotes.length > 0)
+					{
+						copiedNotes = [];
+						copiedEvents = [];
+						var pushedNotes:Array<Array<Dynamic>> = [];
+
+						for (note in selectedNotes)
+						{
+							if(note == null) continue;
+
+							var copied:Array<Dynamic> = makeNoteDataCopy(note.songData, note.isEvent);
+							pushedNotes.push(copied);
+							if(note.isEvent) copiedEvents.push(copied);
+							else copiedNotes.push(copied);
+						}
+						pushedNotes.sort((a:Array<Dynamic>, b:Array<Dynamic>) -> FlxSort.byValues(FlxSort.ASCENDING, a[0], b[0]));
+						
+						var minTime:Float = pushedNotes[0][0];
+						for (note in pushedNotes)
+							note[0] -= minTime;
+					}
+				}
+				else if(FlxG.keys.justPressed.V) // Paste (Ctrl + V)
+				{
+					if(copiedNotes.length > 0 || copiedEvents.length > 0)
+					{
+						selectionBox.visible = false;
+						stopMovingNotes();
+						resetSelectedNotes();
+						selectedNotes = pasteCopiedNotesToSection();
+						selectedNotes.sort(PlayState.sortByTime);
+
+						var didFind:Bool = false;
+						var minNoteData:Float = Math.POSITIVE_INFINITY;
+						for (note in selectedNotes)
+						{
+							if(note == null || note.isEvent) continue;
+
+							if(minNoteData > note.songData[1]) minNoteData = note.songData[1];
+							didFind = true;
+						}
+						if(!didFind) minNoteData = 0;
+						
+						for (note in selectedNotes)
+						{
+							if(note == null || note.isEvent) continue;
+							note.changeNoteData(Std.int(note.songData[1] - minNoteData));
+						}
+
+						trace(minNoteData);
+						/*var noteData:Int = Math.floor(FlxMath.bound(FlxG.mouse.x - gridBg.x, 0, gridBg.width) / GRID_SIZE);
+						if(SHOW_EVENT_COLUMN) noteData--;*/
+						moveSelectedNotes(Std.int(minNoteData), selectedNotes[0].y);
+					}
+				}
+				else if(FlxG.keys.justPressed.A) // Select All (Ctrl + A)
 				{
 					selectedNotes = curRenderedNotes.members.copy();
 					onSelectNote();
 					trace('Notes selected: ' + selectedNotes.length);
 				}
-				else if(FlxG.keys.justPressed.S) // Save
+				else if(FlxG.keys.justPressed.S) // Save (Ctrl + S)
 					saveChart();
 			}
-			else if(FlxG.keys.justPressed.DELETE || FlxG.keys.justPressed.BACKSPACE) // Delete button
+			else if(FlxG.keys.justPressed.DELETE || FlxG.keys.justPressed.BACKSPACE || (isMovingNotes && (FlxG.mouse.justPressedRight || FlxG.keys.justPressed.ESCAPE))) // Delete button
 			{
 				while(selectedNotes.length > 0)
 				{
@@ -808,17 +992,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		var minX:Float = gridBg.x;
 		if(SHOW_EVENT_COLUMN && lockedEvents) minX += GRID_SIZE;
 
-		if(isMovingNotes && FlxG.mouse.released)
-		{
-			movingNotes.forEachAlive(function(note:MetaNote)
-			{
-				notes.push(note);
-			});
-			notes.sort(PlayState.sortByTime);
-			movingNotes.clear();
-			isMovingNotes = false;
-			softReloadNotes();
-		}
+		if(isMovingNotes && FlxG.mouse.justReleased)
+			stopMovingNotes();
 
 		if(FlxG.mouse.x >= minX && FlxG.mouse.x < gridBg.x + gridBg.width)
 		{
@@ -878,13 +1053,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 					for (note in movingNotes)
 					{
-						if(note == null) continue;
+						if(note == null || note.isEvent) continue; //Events shouldn't change note data as they don't have one
 
-						if(!note.isEvent) //Events shouldn't change note data as they don't have one
-						{
-							note.changeNoteData(note.songData[1] + diff);
-							positionNoteXByData(note);
-						}
+						note.changeNoteData(note.songData[1] + diff);
+						positionNoteXByData(note);
 					}
 				}
 				movingNotesLastData = nData;
@@ -894,7 +1066,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				{
 					var diff:Float = dummyArrow.y - movingNotesLastY;
 					var curSecRow:Int = 0;
-					for (note in movingNotes) //Try to figure out new strum time for the notes, INACCURATE WITH BPM CHANGING
+					for (note in movingNotes) //Try to figure out new strum time for the notes, DEFINITELY INACCURATE WITH BPM CHANGING, ALTHOUGH UNTESTED
 					{
 						if(note == null) continue;
 
@@ -907,6 +1079,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 						note.setStrumTime(Math.max(-5000, note.strumTime + (diff * cachedSectionCrochets[curSecRow] / 4) / GRID_SIZE * curZoom));
 						positionNoteYOnTime(note, curSecRow);
+						if(note.isEvent) cast (note, EventMetaNote).updateEventText();
 					}
 					movingNotesLastY = dummyArrow.y;
 				}
@@ -916,23 +1089,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				if(FlxG.keys.pressed.CONTROL && FlxG.mouse.justPressed)
 				{
 					if(selectedNotes.length > 0)
-					{
-						for (note in selectedNotes)
-						{
-							if(note == null) continue;
-
-							notes.remove(note);
-							movingNotes.add(note);
-						}
-						isMovingNotes = true;
-						movingNotesLastData = noteData;
-						movingNotesLastY = dummyArrow.y;
-						softReloadNotes();
-						movingNotes.sort(cast PlayState.sortByTime);
-					}
-					else showOutput('You must select notes to move them!', true);
+						moveSelectedNotes(noteData, dummyArrow.y);
+					else
+						showOutput('You must select notes to move them!', true);
 				}
-				else if(FlxG.mouse.x >= gridBg.x && FlxG.mouse.y >= gridBg.y && FlxG.mouse.x < gridBg.x + gridBg.width && FlxG.mouse.y < gridBg.y + gridBg.height)
+				else if(FlxG.mouse.x >= gridBg.x && FlxG.mouse.x < gridBg.x + gridBg.width)
 				{
 					var closeNotes:Array<MetaNote> = curRenderedNotes.members.filter(function(note:MetaNote)
 					{
@@ -973,7 +1134,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 						if(selectedNotes.length == 1) onSelectNote();
 						forceDataUpdate = true;
 					}
-					else if(!holdingAlt) // Add note
+					else if(!holdingAlt && FlxG.mouse.y >= gridBg.y && FlxG.mouse.y < gridBg.y + gridBg.height) // Add note
 					{
 						var strumTime:Float = (diffY / GRID_SIZE * Conductor.stepCrochet / curZoom) + cachedSectionTimes[curSec];
 						if(noteData >= 0)
@@ -1059,6 +1220,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				if(infoText.autoSize) infoText.autoSize = false;
 			}
 
+			var vortexPlaying:Bool = (vortexEnabled && FlxG.sound.music != null && FlxG.sound.music.playing);
 			var canPlayHitSound:Bool = (FlxG.sound.music != null && FlxG.sound.music.playing && lastTime < Conductor.songPosition);
 			var hitSoundPlayer:Bool = (hitsoundPlayerStepper.value > 0);
 			var hitSoundOpp:Bool = (hitsoundOpponentStepper.value > 0);
@@ -1067,17 +1229,30 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				if(note == null || note.isEvent) continue;
 
 				note.alpha = (note.strumTime >= Conductor.songPosition) ? 1 : 0.6;
-				if(canPlayHitSound && Conductor.songPosition > note.strumTime && lastTime <= note.strumTime)
+				if(Conductor.songPosition > note.strumTime && lastTime <= note.strumTime)
 				{
-					if(hitSoundPlayer && note.mustPress)
+					if(canPlayHitSound)
 					{
-						FlxG.sound.play(Paths.sound('hitsound'), hitsoundPlayerStepper.value);
-						hitSoundPlayer = false;
+						if(hitSoundPlayer && note.mustPress)
+						{
+							FlxG.sound.play(Paths.sound('hitsound'), hitsoundPlayerStepper.value);
+							hitSoundPlayer = false;
+						}
+						else if(hitSoundOpp && !note.mustPress)
+						{
+							FlxG.sound.play(Paths.sound('hitsound'), hitsoundOpponentStepper.value);
+							hitSoundOpp = false;
+						}
 					}
-					else if(hitSoundOpp && !note.mustPress)
+
+					if(vortexPlaying)
 					{
-						FlxG.sound.play(Paths.sound('hitsound'), hitsoundOpponentStepper.value);
-						hitSoundOpp = false;
+						var strumNote:StrumNote = strumLineNotes.members[note.songData[1]];
+						if(strumNote != null)
+						{
+							strumNote.playAnim('confirm', true);
+							strumNote.resetAnim = Math.max(200, note.sustainLength) / 1000.0;
+						}
 					}
 				}
 			}
@@ -1127,6 +1302,48 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		outputTxt.visible = (outputAlpha > 0);
 		FlxG.camera.scroll.y = scrollY;
 		lastFocus = PsychUIInputText.focusOn;
+	}
+
+	function moveSelectedNotes(noteData:Int = 0, lastY:Float) //This turns selected notes into moving notes
+	{
+		for (note in selectedNotes)
+		{
+			if(note == null) continue;
+
+			notes.remove(note);
+			movingNotes.add(note);
+		}
+		isMovingNotes = true;
+		movingNotesLastY = lastY;
+		movingNotesLastData = noteData;
+		softReloadNotes();
+		movingNotes.sort(cast PlayState.sortByTime);
+	}
+
+	function stopMovingNotes() //This turns moving notes into saved notes
+	{
+		movingNotes.forEachAlive(function(note:MetaNote)
+		{
+			notes.push(note);
+		});
+		notes.sort(PlayState.sortByTime);
+		movingNotes.clear();
+		isMovingNotes = false;
+		softReloadNotes();
+	}
+
+	function makeNoteDataCopy(originalData:Array<Dynamic>, isEvent:Bool)
+	{
+		var dataCopy:Array<Dynamic> = originalData.copy();
+		if(isEvent)
+		{
+			var eventGrp:Array<Array<Dynamic>> = cast dataCopy[1].copy();
+			for (num => subEvent in eventGrp)
+				eventGrp[num] = subEvent.copy();
+
+			dataCopy[1] = eventGrp;
+		}
+		return dataCopy;
 	}
 
 	function updateScrollY()
@@ -1426,6 +1643,16 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			FlxG.sound.music.pause();
 			vocals.pause();
 			opponentVocals.pause();
+		}
+
+		for (note in strumLineNotes)
+		{
+			note.alpha = doPlay ? 1 : 0.4;
+			if(!doPlay)
+			{
+				note.playAnim('static');
+				note.resetAnim = 0;
+			}
 		}
 	}
 
@@ -2319,7 +2546,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				{
 					if(note.strumTime >= curSectionTime && note.strumTime < nextSectionTime)
 					{
-						var dataCopy:Array<Dynamic> = note.songData.copy();
+						var dataCopy:Array<Dynamic> = makeNoteDataCopy(note.songData, false);
 						dataCopy[0] = note.strumTime - curSectionTime;
 						copiedNotes.push(dataCopy);
 						notesCopyNum++;
@@ -2335,14 +2562,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				{
 					if(event.strumTime >= curSectionTime && event.strumTime < nextSectionTime)
 					{
-						var dataCopy:Array<Dynamic> = event.songData.copy();
+						var dataCopy:Array<Dynamic> = makeNoteDataCopy(event.songData, true);
 						dataCopy[0] = event.strumTime - curSectionTime;
-
-						var eventGrp:Array<Array<Dynamic>> = cast dataCopy[1].copy();
-						for (num => subEvent in eventGrp)
-							eventGrp[num] = subEvent.copy();
-
-						dataCopy[1] = eventGrp;
 						copiedEvents.push(dataCopy);
 						eventsCopyNum++;
 					}
@@ -2363,68 +2584,6 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				{
 					if(str.length > 0) str += '\n';
 					str += 'Events Copied: $eventsCopyNum';
-				}
-	
-				if(str.length > 0) showOutput(str);
-			}
-		}
-
-		function pasteCopiedNotesToSection(?showMessage:Bool = true) //Used on "Paste Section" and "Copy Last Section" buttons
-		{
-			var curSectionTime:Null<Float> = cachedSectionTimes[curSec];
-			if(curSectionTime == null)
-			{
-				showOutput('ERROR: Unknown section??', true);
-				return;
-			}
-
-			var notesAddNum:Int = 0;
-			if(affectNotes.checked && copiedNotes.length > 0)
-			{
-				for (note in copiedNotes)
-				{
-					var dataCopy:Array<Dynamic> = note.copy();
-					dataCopy[0] += curSectionTime;
-					notes.push(createNote(dataCopy, curSec));
-					notesAddNum++;
-				}
-				notes.sort(PlayState.sortByTime);
-			}
-
-			var eventsAddNum:Int = 0;
-			if(affectEvents.checked && copiedEvents.length > 0)
-			{
-				for (event in copiedEvents)
-				{
-					var dataCopy:Array<Dynamic> = event.copy();
-					dataCopy[0] += curSectionTime;
-
-					var eventGrp:Array<Array<Dynamic>> = cast dataCopy[1].copy();
-					for (num => subEvent in eventGrp)
-						eventGrp[num] = subEvent.copy();
-
-					dataCopy[1] = eventGrp;
-					events.push(createEvent(dataCopy));
-					eventsAddNum++;
-				}
-				events.sort(PlayState.sortByTime);
-			}
-			loadSection();
-			
-			if(showMessage)
-			{
-				if(notesAddNum == 0 && eventsAddNum == 0)
-				{
-					showOutput('Nothing to paste!', true);
-					return;
-				}
-
-				var str:String = '';
-				if(notesAddNum > 0) str += 'Notes Added: $notesAddNum';
-				if(eventsAddNum > 0)
-				{
-					if(str.length > 0) str += '\n';
-					str += 'Events Added: $eventsAddNum';
 				}
 	
 				if(str.length > 0) showOutput(str);
@@ -2491,7 +2650,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		objY += 40;
 		var copyButton:PsychUIButton = new PsychUIButton(objX, objY, 'Copy Section', copyNotesOnSection.bind());
-		var pasteButton:PsychUIButton = new PsychUIButton(objX + 100, objY, 'Paste Section', pasteCopiedNotesToSection.bind());
+		var pasteButton:PsychUIButton = new PsychUIButton(objX + 100, objY, 'Paste Section', function()
+		{
+			pasteCopiedNotesToSection(affectNotes.checked, affectEvents.checked);
+		});
 		var clearButton:PsychUIButton = new PsychUIButton(objX + 200, objY, 'Clear', function()
 		{
 			if(affectNotes.checked)
@@ -2530,7 +2692,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			var lastCopiedNotes = copiedNotes;
 			var lastCopiedEvents = copiedEvents;
 			copyNotesOnSection(Std.int(copyLastSecStepper.value), false);
-			pasteCopiedNotesToSection();
+			pasteCopiedNotesToSection(affectNotes.checked, affectEvents.checked);
 			copiedNotes = lastCopiedNotes;
 			copiedEvents = lastCopiedEvents;
 		});
@@ -2623,6 +2785,73 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		tab_group.add(swapSectionButton);
 		tab_group.add(duetSectionButton);
 		tab_group.add(mirrorNotesButton);
+	}
+	
+
+	function pasteCopiedNotesToSection(?canCopyNotes:Bool = true, ?canCopyEvents:Bool = true, ?showMessage:Bool = true) //Used on "Paste Section" and "Copy Last Section" buttons
+	{
+		var curSectionTime:Null<Float> = cachedSectionTimes[curSec];
+		if(curSectionTime == null)
+		{
+			showOutput('ERROR: Unknown section??', true);
+			return [];
+		}
+
+		var pushedNotes:Array<MetaNote> = [];
+		var notesAddNum:Int = 0;
+		if(canCopyNotes && copiedNotes.length > 0)
+		{
+			for (note in copiedNotes)
+			{
+				if(note == null) continue;
+				var dataCopy:Array<Dynamic> = makeNoteDataCopy(note, false);
+				dataCopy[0] += curSectionTime;
+
+				var createdNote = createNote(dataCopy, curSec);
+				notes.push(createdNote);
+				pushedNotes.push(createdNote);
+				notesAddNum++;
+			}
+			notes.sort(PlayState.sortByTime);
+		}
+
+		var eventsAddNum:Int = 0;
+		if(canCopyEvents && copiedEvents.length > 0)
+		{
+			for (event in copiedEvents)
+			{
+				if(event == null) continue;
+				var dataCopy:Array<Dynamic> = makeNoteDataCopy(event, true);
+				dataCopy[0] += curSectionTime;
+
+				var createdEvent = createEvent(dataCopy);
+				events.push(createdEvent);
+				pushedNotes.push(createdEvent);
+				eventsAddNum++;
+			}
+			events.sort(PlayState.sortByTime);
+		}
+		loadSection();
+		
+		if(showMessage)
+		{
+			if(notesAddNum == 0 && eventsAddNum == 0)
+			{
+				showOutput('Nothing to paste!', true);
+				return [];
+			}
+
+			var str:String = '';
+			if(notesAddNum > 0) str += 'Notes Added: $notesAddNum';
+			if(eventsAddNum > 0)
+			{
+				if(str.length > 0) str += '\n';
+				str += 'Events Added: $eventsAddNum';
+			}
+
+			if(str.length > 0) showOutput(str);
+		}
+		return pushedNotes;
 	}
 
 	var songNameInputText:PsychUIInputText;
@@ -2807,7 +3036,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				return;
 			}
 			
-			var fileList:Array<String> = FileSystem.readDirectory('backups/').filter((file:String) -> file.endsWith(BACKUP_EXTENSION));
+			var fileList:Array<String> = FileSystem.readDirectory('backups/').filter((file:String) -> file.endsWith('.$BACKUP_EXT'));
 			if(fileList.length < 1)
 			{
 				showOutput('No autosave files found.', true);
@@ -2884,92 +3113,95 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		btn.text.alignment = LEFT;
 		tab_group.add(btn);
 
-		btnY += 20;
-		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Open Events...', function()
+		if(SHOW_EVENT_COLUMN)
 		{
-			if(!fileDialog.completed) return;
-			upperBox.isMinimized = true;
-			upperBox.bg.visible = false;
-
-			fileDialog.open(function()
+			btnY += 20;
+			var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Open Events...', function()
 			{
-				try
+				if(!fileDialog.completed) return;
+				upperBox.isMinimized = true;
+				upperBox.bg.visible = false;
+	
+				fileDialog.open(function()
 				{
-					var filePath:String = fileDialog.path.replace('/', '\\');
-					var eventsFile:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('\\')));
-					if(eventsFile == null || Reflect.hasField(eventsFile, 'scrollSpeed') || eventsFile.events == null)
+					try
 					{
-						showOutput('Error: File loaded is not a Psych Engine chart/events file.', true);
-						return;
-					}
-
-					var loadedEvents:Array<Dynamic> = eventsFile.events;
-					if(loadedEvents.length < 1)
-					{
-						showOutput('Events file loaded is empty.', true);
-						return;
-					}
-
-					openSubState(new BasePrompt('Events Found! Choose an action.',
-						function(state:BasePrompt)
+						var filePath:String = fileDialog.path.replace('/', '\\');
+						var eventsFile:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('\\')));
+						if(eventsFile == null || Reflect.hasField(eventsFile, 'scrollSpeed') || eventsFile.events == null)
 						{
-							var btnY = 390;
-							var btn:PsychUIButton = new PsychUIButton(0, btnY, 'Replace All', function()
-							{
-								for (event in events)
-								{
-									if(event != null)
-									{
-										event.destroy();
-										selectedNotes.remove(event);
-									}
-								}
-								events = [];
-
-								for (event in loadedEvents)
-									events.push(createEvent(event));
-
-								softReloadNotes();
-								state.close();
-								showOutput('Events loaded successfully!');
-							});
-							btn.normalStyle.bgColor = FlxColor.RED;
-							btn.normalStyle.textColor = FlxColor.WHITE;
-							btn.screenCenter(X);
-							btn.x -= 125;
-							btn.cameras = state.cameras;
-							state.add(btn);
-							
-							var btn:PsychUIButton = new PsychUIButton(0, btnY, 'Add', function()
-							{
-								for (event in loadedEvents)
-									events.push(createEvent(event));
-
-								softReloadNotes();
-								state.close();
-								showOutput('Events added successfully!');
-							});
-							btn.screenCenter(X);
-							btn.cameras = state.cameras;
-							state.add(btn);
-					
-							var btn:PsychUIButton = new PsychUIButton(0, btnY, 'Cancel', state.close);
-							btn.screenCenter(X);
-							btn.x += 125;
-							btn.cameras = state.cameras;
-							state.add(btn);
+							showOutput('Error: File loaded is not a Psych Engine chart/events file.', true);
+							return;
 						}
-					));
-				}
-				catch(e:Exception)
-				{
-					showOutput('Error: ${e.message}', true);
-					trace(e.stack);
-				}
-			});
-		}, btnWid);
-		btn.text.alignment = LEFT;
-		tab_group.add(btn);
+	
+						var loadedEvents:Array<Dynamic> = eventsFile.events;
+						if(loadedEvents.length < 1)
+						{
+							showOutput('Events file loaded is empty.', true);
+							return;
+						}
+	
+						openSubState(new BasePrompt('Events Found! Choose an action.',
+							function(state:BasePrompt)
+							{
+								var btnY = 390;
+								var btn:PsychUIButton = new PsychUIButton(0, btnY, 'Replace All', function()
+								{
+									for (event in events)
+									{
+										if(event != null)
+										{
+											event.destroy();
+											selectedNotes.remove(event);
+										}
+									}
+									events = [];
+	
+									for (event in loadedEvents)
+										events.push(createEvent(event));
+	
+									softReloadNotes();
+									state.close();
+									showOutput('Events loaded successfully!');
+								});
+								btn.normalStyle.bgColor = FlxColor.RED;
+								btn.normalStyle.textColor = FlxColor.WHITE;
+								btn.screenCenter(X);
+								btn.x -= 125;
+								btn.cameras = state.cameras;
+								state.add(btn);
+								
+								var btn:PsychUIButton = new PsychUIButton(0, btnY, 'Add', function()
+								{
+									for (event in loadedEvents)
+										events.push(createEvent(event));
+	
+									softReloadNotes();
+									state.close();
+									showOutput('Events added successfully!');
+								});
+								btn.screenCenter(X);
+								btn.cameras = state.cameras;
+								state.add(btn);
+						
+								var btn:PsychUIButton = new PsychUIButton(0, btnY, 'Cancel', state.close);
+								btn.screenCenter(X);
+								btn.x += 125;
+								btn.cameras = state.cameras;
+								state.add(btn);
+							}
+						));
+					}
+					catch(e:Exception)
+					{
+						showOutput('Error: ${e.message}', true);
+						trace(e.stack);
+					}
+				});
+			}, btnWid);
+			btn.text.alignment = LEFT;
+			tab_group.add(btn);
+		}
 
 		btnY++;
 		btnY += 20;
@@ -2996,19 +3228,22 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		btn.text.alignment = LEFT;
 		tab_group.add(btn);
 
-		btnY += 20;
-		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Save Events...', function()
+		if(SHOW_EVENT_COLUMN)
 		{
-			if(!fileDialog.completed) return;
-			upperBox.isMinimized = true;
-
-			updateChartData();
-			fileDialog.save('events.json', PsychJsonPrinter.print({events: PlayState.SONG.events, format: 'psych_v1'}, ['events']),
-				function() showOutput('Events saved successfully to: ${fileDialog.path}'), null,
-				function() showOutput('Error on saving events!', true));
-		}, btnWid);
-		btn.text.alignment = LEFT;
-		tab_group.add(btn);
+			btnY += 20;
+			var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Save Events...', function()
+			{
+				if(!fileDialog.completed) return;
+				upperBox.isMinimized = true;
+	
+				updateChartData();
+				fileDialog.save('events.json', PsychJsonPrinter.print({events: PlayState.SONG.events, format: 'psych_v1'}, ['events']),
+					function() showOutput('Events saved successfully to: ${fileDialog.path}'), null,
+					function() showOutput('Error on saving events!', true));
+			}, btnWid);
+			btn.text.alignment = LEFT;
+			tab_group.add(btn);
+		}
 
 		btnY++;
 		btnY += 20;
@@ -3474,27 +3709,30 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		btn.text.alignment = LEFT;
 		tab_group.add(btn);
 
-		btnY++;
-		btnY += 20;
-		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Lock Events', btnWid);
-		btn.onClick = function()
+		if(SHOW_EVENT_COLUMN)
 		{
-			lockedEvents = !lockedEvents;
-			if(lockedEvents) btn.text.text = '  Unlock Events';
-			else btn.text.text = '  Lock Events';
-			eventLockOverlay.visible = lockedEvents;
-
-			if(selectedNotes.length >= 1)
+			btnY++;
+			btnY += 20;
+			var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Lock Events', btnWid);
+			btn.onClick = function()
 			{
-				var onlyNotes = selectedNotes.filter((note:MetaNote) -> !note.isEvent);
-				resetSelectedNotes();
-				selectedNotes = onlyNotes;
-				if(selectedNotes.length == 1) onSelectNote();
-			}
-			softReloadNotes(true);
-		};
-		btn.text.alignment = LEFT;
-		tab_group.add(btn);
+				lockedEvents = !lockedEvents;
+				if(lockedEvents) btn.text.text = '  Unlock Events';
+				else btn.text.text = '  Lock Events';
+				eventLockOverlay.visible = lockedEvents;
+	
+				if(selectedNotes.length >= 1)
+				{
+					var onlyNotes = selectedNotes.filter((note:MetaNote) -> !note.isEvent);
+					resetSelectedNotes();
+					selectedNotes = onlyNotes;
+					if(selectedNotes.length == 1) onSelectNote();
+				}
+				softReloadNotes(true);
+			};
+			btn.text.alignment = LEFT;
+			tab_group.add(btn);
+		}
 		
 		btnY++;
 		btnY += 20;
@@ -3576,27 +3814,30 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		btn.text.alignment = LEFT;
 		tab_group.add(btn);
 
-		btnY += 20;
-		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Clear All Events', function()
+		if(SHOW_EVENT_COLUMN)
 		{
-			var func:Void->Void = function()
+			btnY += 20;
+			var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Clear All Events', function()
 			{
-				resetSelectedNotes();
-				for (event in events)
-					if(event != null)
-						event.destroy();
-
-				events = [];
-				loadSection();
-			}
-
-			if(!ignoreProgressCheckBox.checked) openSubState(new Prompt('Delete all Events in the song?', func));
-			else func();
-		}, btnWid);
-		btn.normalStyle.bgColor = FlxColor.RED;
-		btn.normalStyle.textColor = FlxColor.WHITE;
-		btn.text.alignment = LEFT;
-		tab_group.add(btn);
+				var func:Void->Void = function()
+				{
+					resetSelectedNotes();
+					for (event in events)
+						if(event != null)
+							event.destroy();
+	
+					events = [];
+					loadSection();
+				}
+	
+				if(!ignoreProgressCheckBox.checked) openSubState(new Prompt('Delete all Events in the song?', func));
+				else func();
+			}, btnWid);
+			btn.normalStyle.bgColor = FlxColor.RED;
+			btn.normalStyle.textColor = FlxColor.WHITE;
+			btn.text.alignment = LEFT;
+			tab_group.add(btn);
+		}
 	}
 
 	var showLastGridButton:PsychUIButton;
@@ -3641,11 +3882,18 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		btnY++;
 		btnY += 20;
-		vortexEditorButton = new PsychUIButton(btnX, btnY, vortexEnabled ? '  Vortex Editor ON' : '  Vortex Editor OFF', function() //TO DO: Add functionality
+		vortexEditorButton = new PsychUIButton(btnX, btnY, vortexEnabled ? '  Vortex Editor ON' : '  Vortex Editor OFF', function()
 		{
 			vortexEnabled = !vortexEnabled;
+			chartEditorSave.data.vortex = vortexEnabled;
+			vortexIndicator.visible = strumLineNotes.visible = strumLineNotes.active = vortexEnabled;
 			vortexEditorButton.text.text = vortexEnabled ? '  Vortex Editor ON' : '  Vortex Editor OFF';
-			showOutput('Feature not implemented yet!', true);
+
+			for (note in strumLineNotes)
+			{
+				note.playAnim('static');
+				note.resetAnim = 0;
+			}
 		}, btnWid);
 		vortexEditorButton.text.alignment = LEFT;
 		tab_group.add(vortexEditorButton);
@@ -3653,17 +3901,6 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		btnY++;
 		btnY += 20;
 		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Waveform...', function() showOutput('Feature not implemented yet!', true), btnWid); //TO DO: Add functionality
-		btn.text.alignment = LEFT;
-		tab_group.add(btn);
-		
-		btnY++;
-		btnY += 20;
-		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Search Note...', function() showOutput('Feature not implemented yet!', true), btnWid); //TO DO: Add functionality
-		btn.text.alignment = LEFT;
-		tab_group.add(btn);
-
-		btnY += 20;
-		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Search Event...', function() showOutput('Feature not implemented yet!', true), btnWid); //TO DO: Add functionality
 		btn.text.alignment = LEFT;
 		tab_group.add(btn);
 
@@ -3891,6 +4128,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				}
 			}
 		}
+
+		for (note in strumLineNotes)
+			note.rgbShader.enabled = !noRGBCheckBox.checked;
 	}
 
 	function updateGridVisibility()
