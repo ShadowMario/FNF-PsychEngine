@@ -140,7 +140,7 @@ class Note extends FlxSprite
 	**/
 	public var hitsoundForce:Bool = false;
 	public var hitsoundVolume(get, default):Float = 1.0;
-	function get_hitsoundVolume():Void {
+	function get_hitsoundVolume():Float {
 		if(ClientPrefs.data.hitsoundVolume > 0)
 			return ClientPrefs.data.hitsoundVolume;
 		return hitsoundForce ? hitsoundVolume : 0.0;
