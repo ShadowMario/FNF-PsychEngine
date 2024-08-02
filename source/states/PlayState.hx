@@ -445,12 +445,12 @@ class PlayState extends MusicBeatState
 		startCharacterScripts(boyfriend.curCharacter);
 		#end
 
-		comboGroup = new FlxSpriteGroup();
-		add(comboGroup);
-		noteGroup = new FlxTypedGroup<FlxBasic>();
-		add(noteGroup);
 		uiGroup = new FlxSpriteGroup();
+		comboGroup = new FlxSpriteGroup();
+		noteGroup = new FlxTypedGroup<FlxBasic>();
+		add(comboGroup);
 		add(uiGroup);
+		add(noteGroup);
 
 		Conductor.songPosition = -Conductor.crochet * 5 + Conductor.offset;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
