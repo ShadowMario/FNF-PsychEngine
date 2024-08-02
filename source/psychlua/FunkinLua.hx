@@ -516,7 +516,7 @@ class FunkinLua {
 
 			if(leObj != null) {
 				leObj.zIndex = position;
-				LuaUtils.getTargetInstance().refresh();
+				cast(LuaUtils.getTargetInstance(), MusicBeatState).refresh();
 				return;
 			}
 			
