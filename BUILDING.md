@@ -75,7 +75,7 @@ sudo emerge --ask dev-vcs/git-sh dev-lang/haxe media-video/vlc
 
 Open a terminal or command prompt window in the root directory of this repository.
 
-For building the game, in every system, you're going to execute `haxelib setup`.
+For building the game, in every system, you're going to execute `haxelib setup`. If you are asked to enter the name of the haxelib repository, type `.haxelib`.
 
 In Mac and Linux, you need to create a folder to put your Haxe libraries in, do `mkdir ~/haxelib && haxelib setup ~/haxelib`.
 
@@ -87,7 +87,7 @@ It depends on your operating system. For Windows, run `windows.bat`, for anythin
 
 Sit back, relax, and wait for haxelib to do its magic. You will be done when you see the word "**Finished!**"
 
-To build the game, run `lime test <platform>`, where `<platform>` gets replaced with `windows`, `linux`, or `mac` respectively.
+To build the game, run `lime test cpp`.
 
 ---
 
@@ -103,6 +103,6 @@ e.g: Fedora is `gcc-c++`, Gentoo is `sys-devel/gcc`, and so on.
 
 ### "I have an error saying ApplicationMain.exe : fatal error LNK1120: 1 unresolved externals!"
 
-Run `lime test <platform> -clean` again, or delete the export folder and compile again.
+Run `lime test cpp -clean` again, or delete the export folder and compile again.
 
 ---
