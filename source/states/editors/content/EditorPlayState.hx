@@ -303,13 +303,23 @@ class EditorPlayState extends MusicBeatSubstate
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
 
-		var noteData:Array<SwagSection>;
-
-		
 		var oldNote:Note = null;
 		for (note in _noteList)
 		{
 			if(note == null || note.strumTime < startPos) continue;
+
+			var idx: Int = _noteList.indexOf(note);
+			if (idx != 0) {
+				// CLEAR ANY POSSIBLE GHOST NOTES
+				for (evilNote in unspawnNotes) {
+					var matches: Bool = note.noteData == evilNote.noteData && note.mustPress == evilNote.mustPress;
+					if (matches && Math.abs(note.strumTime - evilNote.strumTime) == 0.0) {
+						evilNote.destroy();
+						unspawnNotes.remove(evilNote);
+						//continue;
+					}
+				}
+			}
 
 			var swagNote:Note = new Note(note.strumTime, note.noteData, oldNote, false, this);
 			swagNote.mustPress = note.mustPress;
