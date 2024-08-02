@@ -135,6 +135,10 @@ class Note extends FlxSprite
 
 	public var hitsoundDisabled:Bool = false;
 	public var hitsoundChartEditor:Bool = true;
+	/**
+	 * Forces the hitsound to be played even if the user's hitsound volume is set to 0
+	**/
+	public var hitsoundForce:Bool = false;
 	public var hitsound:String = 'hitsound';
 
 	private function set_multSpeed(value:Float):Float {
@@ -216,7 +220,8 @@ class Note extends FlxSprite
 					gfNote = true;
 			}
 			if (value != null && value.length > 1) NoteTypesConfig.applyNoteTypeData(this, value);
-			if (hitsound != 'hitsound' && ClientPrefs.data.hitsoundVolume > 0) Paths.sound(hitsound); //precache new sound for being idiot-proof
+			if (hitsound != 'hitsound' && (ClientPrefs.data.hitsoundVolume > 0 || hitsoundForce))
+					Paths.sound(hitsound); //precache new sound for being idiot-proof
 			noteType = value;
 		}
 		return value;
