@@ -349,8 +349,11 @@ class PlayState extends MusicBeatState
 			girlfriendCameraOffset = [0, 0];
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
+		boyfriendGroup.zIndex = 300;
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
+		dadGroup.zIndex = 200;
 		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
+		gfGroup.zIndex = 100;
 
 		switch (curStage)
 		{
@@ -621,6 +624,8 @@ class PlayState extends MusicBeatState
 		cachePopUpScore();
 
 		if(eventNotes.length < 1) checkEventNote();
+
+		refresh();
 	}
 
 	function set_songSpeed(value:Float):Float
