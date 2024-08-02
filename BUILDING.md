@@ -75,7 +75,9 @@ sudo emerge --ask dev-vcs/git-sh dev-lang/haxe media-video/vlc
 
 Open a terminal or command prompt window in the root directory of this repository.
 
-For building the game, in every system, you're going to execute `haxelib newrepo`.
+For building the game, in every system, you're going to execute `haxelib setup`.
+
+In Mac and Linux, you need to create a folder to put your Haxe libraries in, do `mkdir ~/haxelib && haxelib setup ~/haxelib`.
 
 Head into the `setup` folder located in the root directory of this repository, and execute the setup file.
 
