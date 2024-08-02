@@ -82,14 +82,14 @@ class NoteSplash extends FlxSprite
 		if(note != null) alpha = note.noteSplashData.a;
 		rgbShader.copyValues(tempShader);
 
-		if(note != null) antialiasing = note.noteSplashData.antialiasing;
-		if(PlayState.isPixelStage || !ClientPrefs.data.antialiasing) antialiasing = false;
+		antialiasing = (ClientPrefs.data.antialiasing && !PlayState.isPixelStage);
+		if(note != null && note.noteSplashData.antialiasing == false) antialiasing = false;
 
 		_textureLoaded = texture;
 		offset.set(10, 10);
 
 		var animNum:Int = FlxG.random.int(1, maxAnims);
-		animation.play('note' + direction + '-' + animNum, true);
+		animation.play('note$direction-$animNum', true);
 		
 		var minFps:Int = 22;
 		var maxFps:Int = 26;

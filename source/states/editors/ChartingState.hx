@@ -487,6 +487,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			"",
 			"Ctrl + Z - Undo",
 			"Ctrl + Y - Redo",
+			"Ctrl + X - Cut Selected Notes",
 			"Ctrl + C - Copy Selected Notes",
 			"Ctrl + V - Paste Copied Notes",
 			"Ctrl + A - Select all in current Section",
@@ -879,19 +880,22 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		if(PsychUIInputText.focusOn == null && lastFocus == null)
 		{
+			var doCut:Bool = false;
+			var canContinue:Bool = true;
 			if(FlxG.keys.justPressed.ENTER)
 			{
 				goToPlayState();
 				return;
 			}
-			else if(FlxG.keys.pressed.CONTROL && !isMovingNotes && (FlxG.keys.justPressed.Z || FlxG.keys.justPressed.Y ||
+			else if(FlxG.keys.pressed.CONTROL && !isMovingNotes && (FlxG.keys.justPressed.Z || FlxG.keys.justPressed.Y || FlxG.keys.justPressed.X ||
 				FlxG.keys.justPressed.C || FlxG.keys.justPressed.V || FlxG.keys.justPressed.A || FlxG.keys.justPressed.S))
 			{
+				canContinue = false;
 				if(FlxG.keys.justPressed.Z)
 					undo();
 				else if(FlxG.keys.justPressed.Y)
 					redo();
-				else if(FlxG.keys.justPressed.C) // Copy (Ctrl + C)
+				else if((doCut = FlxG.keys.justPressed.X) || FlxG.keys.justPressed.C) // Cut (Ctrl + X) and Copy (Ctrl + C)
 				{
 					if(selectedNotes.length > 0)
 					{
@@ -964,7 +968,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				else if(FlxG.keys.justPressed.S) // Save (Ctrl + S)
 					saveChart();
 			}
-			else if(FlxG.keys.justPressed.DELETE || FlxG.keys.justPressed.BACKSPACE || (isMovingNotes && (FlxG.mouse.justPressedRight || FlxG.keys.justPressed.ESCAPE))) // Delete button
+			
+			if(doCut || FlxG.keys.justPressed.DELETE || FlxG.keys.justPressed.BACKSPACE || (isMovingNotes && (FlxG.mouse.justPressedRight || FlxG.keys.justPressed.ESCAPE))) // Delete button
 			{
 				if(selectedNotes.length > 0)
 				{
@@ -997,51 +1002,54 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					addUndoAction(DELETE_NOTE, {notes: removedNotes, events: removedEvents});
 				}
 			}
-			else if(FlxG.keys.justPressed.LEFT != FlxG.keys.justPressed.RIGHT) //Lower/Higher quant
+			else if(canContinue)
 			{
-				if(FlxG.keys.justPressed.LEFT)
-					curQuant = quantizations[Std.int(Math.max(quantizations.indexOf(curQuant) - 1, 0))];
-				else
-					curQuant = quantizations[Std.int(Math.min(quantizations.indexOf(curQuant) + 1, quantizations.length - 1))];
-				forceDataUpdate = true;
-			}
-			else if(FlxG.keys.justPressed.Z != FlxG.keys.justPressed.X) //Decrease/Increase Zoom
-			{
-				if(FlxG.keys.justPressed.Z)
-					curZoom = zoomList[Std.int(Math.max(zoomList.indexOf(curZoom) - 1, 0))];
-				else
-					curZoom = zoomList[Std.int(Math.min(zoomList.indexOf(curZoom) + 1, zoomList.length - 1))];
-
-				notes.sort(PlayState.sortByTime);
-				var noteSec:Int = 0;
-				var nextSectionTime:Float = cachedSectionTimes[noteSec + 1];
-				var curSectionTime:Float = cachedSectionTimes[noteSec];
-				for (num => note in notes)
+				if(FlxG.keys.justPressed.LEFT != FlxG.keys.justPressed.RIGHT) //Lower/Higher quant
 				{
-					if(note == null) continue;
-		
-					while(cachedSectionTimes[noteSec + 1] <= note.strumTime)
-					{
-						noteSec++;
-						nextSectionTime = cachedSectionTimes[noteSec + 1];
-						curSectionTime = cachedSectionTimes[noteSec];
-					}
-					positionNoteYOnTime(note, noteSec);
+					if(FlxG.keys.justPressed.LEFT)
+						curQuant = quantizations[Std.int(Math.max(quantizations.indexOf(curQuant) - 1, 0))];
+					else
+						curQuant = quantizations[Std.int(Math.min(quantizations.indexOf(curQuant) + 1, quantizations.length - 1))];
+					forceDataUpdate = true;
 				}
-
-				for (event in events)
+				else if(FlxG.keys.justPressed.Z != FlxG.keys.justPressed.X) //Decrease/Increase Zoom
 				{
-					var secNum:Int = 0;
-					for (time in cachedSectionTimes)
+					if(FlxG.keys.justPressed.Z)
+						curZoom = zoomList[Std.int(Math.max(zoomList.indexOf(curZoom) - 1, 0))];
+					else
+						curZoom = zoomList[Std.int(Math.min(zoomList.indexOf(curZoom) + 1, zoomList.length - 1))];
+	
+					notes.sort(PlayState.sortByTime);
+					var noteSec:Int = 0;
+					var nextSectionTime:Float = cachedSectionTimes[noteSec + 1];
+					var curSectionTime:Float = cachedSectionTimes[noteSec];
+					for (num => note in notes)
 					{
-						if(time > event.strumTime) break;
-						secNum++;
+						if(note == null) continue;
+			
+						while(cachedSectionTimes[noteSec + 1] <= note.strumTime)
+						{
+							noteSec++;
+							nextSectionTime = cachedSectionTimes[noteSec + 1];
+							curSectionTime = cachedSectionTimes[noteSec];
+						}
+						positionNoteYOnTime(note, noteSec);
 					}
-					positionNoteYOnTime(event, secNum);
+	
+					for (event in events)
+					{
+						var secNum:Int = 0;
+						for (time in cachedSectionTimes)
+						{
+							if(time > event.strumTime) break;
+							secNum++;
+						}
+						positionNoteYOnTime(event, secNum);
+					}
+					loadSection();
+					showOutput('Zoom: ${Math.round(curZoom * 100)}%');
+					updateScrollY();
 				}
-				loadSection();
-				showOutput('Zoom: ${Math.round(curZoom * 100)}%');
-				updateScrollY();
 			}
 		}
 
