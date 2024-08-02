@@ -53,15 +53,12 @@ Commands will vary depending on your distro, refer to your package manager's ins
 sudo add-apt-repository ppa:haxe/releases -y
 sudo apt update
 sudo apt install haxe libvlc-dev libvlccore-dev -y
-mkdir ~/haxelib && haxelib setup ~/haxelib
 ```
 
 #### Arch based Distros:
 
 ```bash
 sudo pacman -Syu haxe git vlc --noconfirm
-mkdir ~/haxelib;
-haxelib setup ~/haxelib
 ```
 
 #### Gentoo:
