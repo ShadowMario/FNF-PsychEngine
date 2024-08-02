@@ -203,7 +203,7 @@ class MainMenuState extends MusicBeatState
 						}
 					}
 
-					if(distItem != -1 && curSelected != distItem)
+					if(distItem != -1 && selectedItem != menuItems.members[distItem])
 					{
 						curColumn = CENTER;
 						curSelected = distItem;

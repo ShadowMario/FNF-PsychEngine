@@ -68,30 +68,28 @@ class CreditsState extends MusicBeatState
 			["Join the Psych Ward!", "discord", "", "https://discord.gg/2ka77eMXDv", "5165F6"]
 		];
 		
-		for(i in defaultList) {
+		for(i in defaultList)
 			creditsStuff.push(i);
-		}
 	
-		for (i in 0...creditsStuff.length)
+		for (i => credit in creditsStuff)
 		{
 			var isSelectable:Bool = !unselectableCheck(i);
-			var optionText:Alphabet = new Alphabet(FlxG.width / 2, 300, creditsStuff[i][0], !isSelectable);
+			var optionText:Alphabet = new Alphabet(FlxG.width / 2, 300, credit[0], !isSelectable);
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
 			optionText.changeX = false;
 			optionText.snapToPosition();
 			grpOptions.add(optionText);
 
-			if(isSelectable) {
-				if(creditsStuff[i][5] != null)
-				{
-					Mods.currentModDirectory = creditsStuff[i][5];
-				}
+			if(isSelectable)
+			{
+				if(credit[5] != null)
+					Mods.currentModDirectory = credit[5];
 
 				var str:String = 'credits/missing_icon';
-				if(creditsStuff[i][1] != null && creditsStuff[i][1].length > 0)
+				if(credit[1] != null && credit[1].length > 0)
 				{
-					var fileName = 'credits/' + creditsStuff[i][1];
+					var fileName = 'credits/' + credit[1];
 					if (Paths.fileExists('images/$fileName.png', IMAGE)) str = fileName;
 					else if (Paths.fileExists('images/$fileName-pixel.png', IMAGE)) str = fileName + '-pixel';
 				}
@@ -254,11 +252,14 @@ class CreditsState extends MusicBeatState
 	#if MODS_ALLOWED
 	function pushModCreditsToList(folder:String)
 	{
-		var creditsFile:String = null;
-		if(folder != null && folder.trim().length > 0) creditsFile = Paths.mods(folder + '/data/credits.txt');
-		else creditsFile = Paths.mods('data/credits.txt');
+		var creditsFile:String = Paths.mods(folder + '/data/credits.txt');
+		
+		#if TRANSLATIONS_ALLOWED
+		//trace('/data/credits-${ClientPrefs.data.language}.txt');
+		var translatedCredits:String = Paths.mods(folder + '/data/credits-${ClientPrefs.data.language}.txt');
+		#end
 
-		if (FileSystem.exists(creditsFile))
+		if (#if TRANSLATIONS_ALLOWED (FileSystem.exists(translatedCredits) && (creditsFile = translatedCredits) == translatedCredits) || #end FileSystem.exists(creditsFile))
 		{
 			var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
 			for(i in firstarray)
