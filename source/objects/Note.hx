@@ -139,7 +139,7 @@ class Note extends FlxSprite
 	 * Forces the hitsound to be played even if the user's hitsound volume is set to 0
 	**/
 	public var hitsoundForce:Bool = false;
-	public var hitsoundVolume(get, default):Float = 0.0;
+	public var hitsoundVolume(get, default):Float = 1.0;
 	function get_hitsoundVolume():Void {
 		if(ClientPrefs.data.hitsoundVolume > 0)
 			return ClientPrefs.data.hitsoundVolume;
