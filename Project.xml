@@ -165,17 +165,17 @@
 	<!--Disable deprecated warnings-->
 	<haxedef name='no-deprecation-warnings' />
 
-	<!-- HScript relies heavily on Reflection, which means we can't use DCE. -->
+	<!-- To allow for more classes, DCE must be turned off -->
 	<haxeflag name="-dce no" />
+
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
-	<!-- This macro allows addition of new functionality to existing Flixel. -->
+
+	<!-- zIndex field -->
 	<haxeflag name="--macro" value="addMetadata('@:build(macro.FlxMacro.buildFlxBasic())', 'flixel.FlxBasic')" />
-	<!--
-		Ensure additional class packages are available at runtime (some only really used by scripts).
-		Ignore packages we can't include.
-	-->
+	
+	<!-- Additional Classes -->
 	<haxeflag name="--macro" value="include('flixel', true, [ 'flixel.addons.editors.spine.*', 'flixel.addons.nape.*', 'flixel.system.macros.*' ])" />
 
 	<!-- _________________________________ Custom _______________________________ -->
