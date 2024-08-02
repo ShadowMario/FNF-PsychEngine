@@ -1,11 +1,9 @@
 package backend;
 
-import flixel.addons.ui.FlxUIState;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxState;
 import backend.PsychCamera;
 
-class MusicBeatState extends FlxUIState
+class MusicBeatState extends FlxState
 {
 	private var curSection:Int = 0;
 	private var stepsToDo:Int = 0;
@@ -22,6 +20,10 @@ class MusicBeatState extends FlxUIState
 	}
 
 	var _psychCameraInitialized:Bool = false;
+
+	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
+	public static function getVariables()
+		return getState().variables;
 
 	override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;

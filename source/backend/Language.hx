@@ -43,6 +43,14 @@ class Language
 		}
 
 		if(!hasPhrases) ClientPrefs.data.language = ClientPrefs.defaultData.language;
+		
+		var alphaPath:String = getFileTranslation('images/alphabet');
+		if(alphaPath.startsWith('images/')) alphaPath = alphaPath.substr('images/'.length);
+		var pngPos:Int = alphaPath.indexOf('.png');
+		if(pngPos > -1) alphaPath = alphaPath.substring(0, pngPos);
+		AlphaCharacter.loadAlphabetData(alphaPath);
+		#else
+		AlphaCharacter.loadAlphabetData();
 		#end
 	}
 
@@ -77,12 +85,8 @@ class Language
 	#if TRANSLATIONS_ALLOWED
 	inline static private function formatKey(key:String)
 	{
-		var invalidChars = ~/[~&\\;:<>#]/;
-		var hideChars = ~/[.,'"%?!]/;
-
-		var key = invalidChars.split(key.replace(' ', '_')).join('');
-		key = hideChars.split(key).join("").toLowerCase().trim().replace(':', '');
-		return key;
+		final hideChars = ~/[~&\\\/;:<>#.,'"%?!]/g;
+		return hideChars.replace(key.replace(' ', '_'), '').toLowerCase().trim();
 	}
 	#end
 

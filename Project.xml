@@ -70,6 +70,8 @@
 	<assets path="assets/fonts" />
 	<assets path="assets/shared"        exclude="*.ogg" if="web"/>
 	<assets path="assets/shared"        exclude="*.mp3" unless="web"/>
+	<assets path="assets/embed"         exclude="*.ogg" if="web" embed="true"/>
+	<assets path="assets/embed"         exclude="*.mp3" unless="web" embed="true"/>
 	<assets path="assets/videos"        if="VIDEOS_ALLOWED"/>
 	<assets path="assets/songs"         exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"         exclude="*.mp3" unless="web"/>
@@ -88,6 +90,8 @@
 	<section if="BASE_GAME_FILES">
 		<assets path="assets/base_game" rename="assets" exclude="*.ogg" if="web"/>
 		<assets path="assets/base_game" rename="assets" exclude="*.mp3"  unless="web"/>
+		<haxelib name="grig.audio" if="BASE_GAME_FILES"/>
+		<haxelib name="funkin.vis" if="BASE_GAME_FILES"/>
 	</section>
 
 	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
@@ -99,14 +103,13 @@
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
-	<haxelib name="flixel" />
-	<haxelib name="flixel-ui" />
-	<haxelib name="flixel-addons" />
-	<haxelib name="tjson" />
+	<haxelib name="flixel" version="5.6.1"/>
+	<haxelib name="flixel-addons" version="3.2.2"/>
+	<haxelib name="tjson" version="1.4.0"/>
 
 	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
-	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
+	<haxelib name="SScript" if="HSCRIPT_ALLOWED" version="17.1.618"/>
 	<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/>
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate"/>
@@ -167,8 +170,6 @@
 	<haxeflag name="--macro" value="include('my.pack')" />
 
 	<!-- _________________________________ Custom _______________________________ -->
-
-	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 
 	<assets path='art/iconOG.png' rename='icon.png' if="linux" />
 	

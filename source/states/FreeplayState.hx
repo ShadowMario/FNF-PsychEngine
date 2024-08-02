@@ -63,6 +63,16 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
+		if(WeekData.weeksList.length < 1)
+			{
+				FlxTransitionableState.skipNextTransIn = true;
+				persistentUpdate = false;
+				MusicBeatState.switchState(new states.ErrorState("NO WEEKS ADDED FOR FREEPLAY\n\nPress ACCEPT to go to the Week Editor Menu.\nPress BACK to return to Main Menu.",
+					function() MusicBeatState.switchState(new states.editors.WeekEditorState()),
+					function() MusicBeatState.switchState(new states.MainMenuState())));
+				return;
+			}
+
 		for (i in 0...WeekData.weeksList.length)
 		{
 			if(weekIsLocked(WeekData.weeksList[i])) continue;
@@ -204,6 +214,9 @@ class FreeplayState extends MusicBeatState
 	var stopMusicPlay:Bool = false;
 	override function update(elapsed:Float)
 	{
+		if(WeekData.weeksList.length < 1)
+			return;
+
 		if (FlxG.sound.music.volume < 0.7)
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 
@@ -227,7 +240,7 @@ class FreeplayState extends MusicBeatState
 
 		if (!player.playingMusic)
 		{
-			scoreText.text = Language.getPhrase('personal_best', 'PERSONAL BEST: {0} ({1}%)', [lerpScore, ratingSplit.join('.')]);
+			scoreText.text = Language.getPhrase('personal_best', 'PERSONAL BEST: {1} ({2}%)', [lerpScore, ratingSplit.join('.')]);
 			positionHighscore();
 			
 			if(songs.length > 1)
@@ -321,7 +334,7 @@ class FreeplayState extends MusicBeatState
 
 				Mods.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+				Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				if (PlayState.SONG.needsVoices)
 				{
 					vocals = new FlxSound();
@@ -395,18 +408,19 @@ class FreeplayState extends MusicBeatState
 
 			try
 			{
-				PlayState.SONG = Song.loadFromJson(poop, songLowercase);
+				Song.loadFromJson(poop, songLowercase);
 				PlayState.isStoryMode = false;
 				PlayState.storyDifficulty = curDifficulty;
 
 				trace('CURRENT WEEK: ' + WeekData.getWeekFileName());
 			}
-			catch(e:Dynamic)
+			catch(e:haxe.Exception)
 			{
-				trace('ERROR! $e');
+				trace('ERROR! ${e.message}');
 
-				var errorStr:String = e.toString();
-				if(errorStr.startsWith('[lime.utils.Assets] ERROR:')) errorStr = 'Missing file: ' + errorStr.substring(errorStr.indexOf(songLowercase), errorStr.length-1); //Missing chart
+				var errorStr:String = e.message;
+				if(errorStr.contains('There is no TEXT asset with an ID of')) errorStr = 'Missing file: ' + errorStr.substring(errorStr.indexOf(songLowercase), errorStr.length-1); //Missing chart
+				else errorStr += '\n\n' + e.stack;
 
 				missingText.text = 'ERROR WHILE LOADING CHART:\n$errorStr';
 				missingText.screenCenter(Y);
@@ -452,6 +466,7 @@ class FreeplayState extends MusicBeatState
 			#end
 			return character.vocals_file;
 		}
+		catch (e:Dynamic) {}
 		return null;
 	}
 
