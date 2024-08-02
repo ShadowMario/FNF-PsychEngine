@@ -759,7 +759,7 @@ class EditorPlayState extends MusicBeatSubstate
 		if(note.wasGoodHit) return;
 
 		note.wasGoodHit = true;
-		if (ClientPrefs.data.hitsoundVolume > 0 && !note.hitsoundDisabled)
+		if ((ClientPrefs.data.hitsoundVolume > 0 || note.hitsoundForce) && !note.hitsoundDisabled)
 			FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.data.hitsoundVolume);
 
 		if(note.hitCausesMiss) {
