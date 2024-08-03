@@ -30,11 +30,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 	var boyfriend:Character;
 	var stageJson:StageFile;
 
-	#if FLX_DEBUG
 	var camGame:FlxCamera;
-	#else
-	var camGame:DebugCamera;
-	#end
 	public var camHUD:FlxCamera;
 
 	var UI_stagebox:PsychUIBox;
@@ -58,20 +54,14 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 
 	var animationEditor:StageEditorAnimationSubstate;
 	var unsavedProgress:Bool = false;
+	
+	var selectionSprites:FlxSpriteGroup = new FlxSpriteGroup();
 	override function create()
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		#if FLX_DEBUG
 		camGame = initPsychCamera();
-		#else
-		camGame = new DebugCamera();
-		FlxG.cameras.reset(camGame);
-		FlxG.cameras.setDefaultDrawTarget(camGame, true);
-		_psychCameraInitialized = true;
-		#end
-
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(camHUD, false);
@@ -85,6 +75,13 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		gf.scrollFactor.set(0.95, 0.95);
 		dad = new Character(0, 0, stageJson._editorMeta != null ? stageJson._editorMeta.dad : 'dad');
 		boyfriend = new Character(0, 0, stageJson._editorMeta != null ? stageJson._editorMeta.boyfriend : 'bf', true);
+
+		for (i in 0...4)
+		{
+			var spr:FlxSprite = new FlxSprite().makeGraphic(1, 1, FlxColor.LIME);
+			spr.alpha = 0.8;
+			selectionSprites.add(spr);
+		}
 
 		FlxG.camera.zoom = stageJson.defaultZoom;
 		repositionGirlfriend();
@@ -1412,10 +1409,6 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 	var curFilters:LoadFilters = (LOW_QUALITY)|(HIGH_QUALITY);
 	override function draw()
 	{
-		#if !FLX_DEBUG
-		camGame.debugLayer.graphics.clear();
-		#end
-
 		if(persistentDraw || subState == null)
 		{
 
@@ -1486,7 +1479,6 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		boyfriend.y += boyfriend.positionArray[1];
 	}
 	
-	// borrowing from flixel
 	public function drawDebugOnCamera(spr:FlxSprite):Void
 	{
 		if (spr == null || !spr.isOnScreen(FlxG.camera))
@@ -1494,10 +1486,28 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 
 		@:privateAccess
 		var rect = spr.getBoundingBox(FlxG.camera);
-		var gfx = camGame.debugLayer.graphics;
-		gfx.lineStyle(3, FlxColor.LIME, 0.8);
-		gfx.drawRect(rect.x, rect.y, rect.width, rect.height);
-		gfx.endFill();
+		var lineSize:Int = Math.round(3 / FlxG.camera.zoom);
+		for (num => sel in selectionSprites.members)
+		{
+			sel.x = spr.x;
+			sel.y = spr.y;
+			switch(num)
+			{
+				case 0: //Top
+					sel.setGraphicSize(Std.int(rect.width), lineSize);
+				case 1: //Bottom
+					sel.setGraphicSize(Std.int(rect.width), lineSize);
+					sel.y += rect.height - lineSize;
+				case 2: //Left
+					sel.setGraphicSize(lineSize, Std.int(rect.height));
+				case 3: //Right
+					sel.setGraphicSize(lineSize, Std.int(rect.height));
+					sel.x += rect.width - lineSize;
+			}
+			sel.updateHitbox();
+			sel.scrollFactor.set(spr.scrollFactor.x, spr.scrollFactor.y);
+		}
+		selectionSprites.draw();
 	}
 
 	// save
@@ -1683,42 +1693,6 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		super.destroy();
 	}
 }
-
-#if !FLX_DEBUG
-class DebugCamera extends PsychCamera
-{
-	public var debugLayer:Sprite;
-	public function new()
-	{
-		super();
-
-		debugLayer = new Sprite();
-		_scrollRect.addChild(debugLayer);
-		updateInternalSpritePositions();
-	}
-
-	override function updateInternalSpritePositions()
-	{
-		super.updateInternalSpritePositions();
-		
-		if (canvas != null && debugLayer != null)
-		{
-			debugLayer.x = canvas.x;
-			debugLayer.y = canvas.y;
-
-			debugLayer.scaleX = totalScaleX;
-			debugLayer.scaleY = totalScaleY;
-		}
-	}
-	
-	override function destroy()
-	{
-		FlxDestroyUtil.removeChild(_scrollRect, debugLayer);
-		debugLayer = null;
-		super.destroy();
-	}
-}
-#end
 
 class StageEditorMetaSprite
 {
@@ -2282,10 +2256,5 @@ class StageEditorAnimationSubstate extends MusicBeatSubstate {
 			persistentDraw = true;
 			close();
 		}
-	}
-
-	override function draw()
-	{
-		super.draw();
 	}
 }
