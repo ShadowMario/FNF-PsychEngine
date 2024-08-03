@@ -1821,6 +1821,7 @@ class PlayState extends MusicBeatState
 	var iconsAnimations:Bool = true;
 	function set_health(value:Float):Float // You can alter how icon animations work here
 	{
+		value = FlxMath.roundDecimal(value, 5); //Fix Float imprecision
 		if(!iconsAnimations || healthBar == null || !healthBar.enabled || healthBar.valueFunction == null)
 		{
 			health = value;
@@ -1907,8 +1908,9 @@ class PlayState extends MusicBeatState
 	}
 
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
+	public var gameOverTimer:FlxTimer;
 	function doDeathCheck(?skipHealthCheck:Bool = false) {
-		if (((skipHealthCheck && instakillOnMiss) || health <= 0) && !practiceMode && !isDead)
+		if (((skipHealthCheck && instakillOnMiss) || health <= 0) && !practiceMode && !isDead && gameOverTimer == null)
 		{
 			var ret:Dynamic = callOnScripts('onGameOver', null, true);
 			if(ret != LuaUtils.Function_Stop)
@@ -1918,10 +1920,8 @@ class PlayState extends MusicBeatState
 				deathCounter++;
 
 				paused = true;
-
-				vocals.stop();
-				opponentVocals.stop();
-				FlxG.sound.music.stop();
+				canResync = false;
+				canPause = false;
 
 				persistentUpdate = false;
 				persistentDraw = false;
@@ -1929,7 +1929,24 @@ class PlayState extends MusicBeatState
 				FlxTween.globalManager.clear();
 				FlxG.camera.setFilters([]);
 
-				openSubState(new GameOverSubstate(boyfriend));
+				if(GameOverSubstate.deathDelay > 0)
+				{
+					gameOverTimer = new FlxTimer().start(GameOverSubstate.deathDelay, function(_)
+					{
+						vocals.stop();
+						opponentVocals.stop();
+						FlxG.sound.music.stop();
+						openSubState(new GameOverSubstate(boyfriend));
+						gameOverTimer = null;
+					});
+				}
+				else
+				{
+					vocals.stop();
+					opponentVocals.stop();
+					FlxG.sound.music.stop();
+					openSubState(new GameOverSubstate(boyfriend));
+				}
 
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
@@ -2288,16 +2305,17 @@ class PlayState extends MusicBeatState
 	public function endSong()
 	{
 		//Should kill you if you tried to cheat
-		if(!startingSong) {
-			notes.forEach(function(daNote:Note) {
-				if(daNote.strumTime < songLength - Conductor.safeZoneOffset) {
+		if(!startingSong)
+		{
+			notes.forEachAlive(function(daNote:Note)
+			{
+				if(daNote.strumTime < songLength - Conductor.safeZoneOffset)
 					health -= 0.05 * healthLoss;
-				}
 			});
-			for (daNote in unspawnNotes) {
-				if(daNote.strumTime < songLength - Conductor.safeZoneOffset) {
+			for (daNote in unspawnNotes)
+			{
+				if(daNote != null && daNote.strumTime < songLength - Conductor.safeZoneOffset)
 					health -= 0.05 * healthLoss;
-				}
 			}
 
 			if(doDeathCheck()) {
@@ -2863,7 +2881,7 @@ class PlayState extends MusicBeatState
 			var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, direction)))] + 'miss' + postfix;
 			char.playAnim(animToPlay, true);
 
-			if(char != gf && lastCombo > 5 && gf != null && gf.animOffsets.exists('sad'))
+			if(char != gf && lastCombo > 5 && gf != null && gf.hasAnimation('sad'))
 			{
 				gf.playAnim('sad');
 				gf.specialAnim = true;
@@ -2880,7 +2898,7 @@ class PlayState extends MusicBeatState
 		if (songName != 'tutorial')
 			camZooming = true;
 
-		if(note.noteType == 'Hey!' && dad.animOffsets.exists('hey'))
+		if(note.noteType == 'Hey!' && dad.hasAnimation('hey'))
 		{
 			dad.playAnim('hey', true);
 			dad.specialAnim = true;
@@ -2964,7 +2982,7 @@ class PlayState extends MusicBeatState
 
 					if(note.noteType == 'Hey!')
 					{
-						if(char.animOffsets.exists(animCheck))
+						if(char.hasAnimation(animCheck))
 						{
 							char.playAnim(animCheck, true);
 							char.specialAnim = true;
@@ -3000,7 +3018,7 @@ class PlayState extends MusicBeatState
 				switch(note.noteType)
 				{
 					case 'Hurt Note':
-						if(boyfriend.animOffsets.exists('hurt'))
+						if(boyfriend.hasAnimation('hurt'))
 						{
 							boyfriend.playAnim('hurt', true);
 							boyfriend.specialAnim = true;
