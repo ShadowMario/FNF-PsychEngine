@@ -501,11 +501,10 @@ class Character extends FlxSprite
 			{
 				copyAtlasValues();
 				atlas.draw();
+				alpha = lastAlpha;
+				color = lastColor;
 				if(missingCharacter && visible)
 				{
-					alpha = lastAlpha;
-					color = lastColor;
-	
 					missingText.x = getMidpoint().x - 150;
 					missingText.y = getMidpoint().y - 10;
 					missingText.draw();
