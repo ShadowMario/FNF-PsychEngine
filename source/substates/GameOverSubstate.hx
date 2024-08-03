@@ -102,7 +102,6 @@ class GameOverSubstate extends MusicBeatSubstate
 				switch(name)
 				{
 					case 'firstDeath':
-						trace(frameNumber, frameIndex);
 						if(frameNumber >= 36 - 1)
 						{
 							overlay.visible = true;
