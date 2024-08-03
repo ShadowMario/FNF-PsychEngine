@@ -13,8 +13,22 @@ import objects.Note;
 
 import cutscenes.CutsceneHandler;
 
+enum NeneState
+{
+	STATE_DEFAULT;
+	STATE_PRE_RAISE;
+	STATE_RAISE;
+	STATE_READY;
+	STATE_LOWER;
+}
+
 class PhillyStreets extends BaseStage
 {
+	final MIN_BLINK_DELAY:Int = 3;
+	final MAX_BLINK_DELAY:Int = 7;
+	final VULTURE_THRESHOLD:Float = 0.5;
+	var blinkCountdown:Int = 3;
+
 	var rainShader:RainShader;
 	var rainShaderStartIntensity:Float = 0;
 	var rainShaderEndIntensity:Float = 0;
@@ -125,10 +139,10 @@ class PhillyStreets extends BaseStage
 			setupRainShader();
 
 		var _song = PlayState.SONG;
-		if(_song.gameOverSound == null || _song.gameOverSound.trim().length < 1) GameOverSubstate.deathSoundName = 'gameplay/gameover/fnf_loss_sfx-pico-explode';
-		if(_song.gameOverLoop == null || _song.gameOverLoop.trim().length < 1) GameOverSubstate.loopSoundName = 'gameplay/gameover/gameOverStart-pico-explode';
-		//if(_song.gameOverEnd == null || _song.gameOverEnd.trim().length < 1) GameOverSubstate.endSoundName = 'gameplay/gameover/gameOverEnd';
-		//if(_song.gameOverChar == null || _song.gameOverChar.trim().length < 1) GameOverSubstate.characterName = 'pico-dead';
+		if(_song.gameOverSound == null || _song.gameOverSound.trim().length < 1) GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pico';
+		if(_song.gameOverLoop == null || _song.gameOverLoop.trim().length < 1) GameOverSubstate.loopSoundName = 'gameOver-pico';
+		if(_song.gameOverEnd == null || _song.gameOverEnd.trim().length < 1) GameOverSubstate.endSoundName = 'gameOverEnd-pico';
+		if(_song.gameOverChar == null || _song.gameOverChar.trim().length < 1) GameOverSubstate.characterName = 'pico-dead';
 		setDefaultGF('nene');
 		
 		if (isStoryMode)
@@ -173,6 +187,24 @@ class PhillyStreets extends BaseStage
 		precache();
 		add(spraycanPile);
 		darkenable.push(spraycanPile);
+
+		if(gf != null)
+		{
+			gf.animation.callback = function(name:String, frameNumber:Int, frameIndex:Int)
+			{
+				switch(currentNeneState)
+				{
+					case STATE_PRE_RAISE:
+						if (name == 'danceLeft' && frameNumber >= 14)
+						{
+							animationFinished = true;
+							transitionState();
+						}
+					default:
+						// Ignore.
+				}
+			}
+		}
 	}
 
 	#if VIDEOS_ALLOWED
@@ -219,7 +251,7 @@ class PhillyStreets extends BaseStage
 		cutsceneHandler = new CutsceneHandler();
 		cutsceneHandler.endTime = 10;
 
-		var cutsceneMusic:FlxSound = new FlxSound().loadEmbedded(Paths.music('darnellCanCutscene/darnellCanCutscene'));
+		var cutsceneMusic:FlxSound = new FlxSound().loadEmbedded(Paths.music('darnellCanCutscene'));
 		cutsceneMusic.looped = true;
 		FlxG.sound.list.add(cutsceneMusic);
 
@@ -365,6 +397,25 @@ class PhillyStreets extends BaseStage
 	override function startSong()
 	{
 		abot.snd = FlxG.sound.music;
+		gf.animation.finishCallback = onNeneAnimationFinished;
+	}
+	
+	function onNeneAnimationFinished(name:String)
+	{
+		if(!game.startedCountdown) return;
+
+		switch(currentNeneState)
+		{
+			case STATE_RAISE, STATE_LOWER:
+				if (name == 'raiseKnife' || name == 'lowerKnife')
+				{
+					animationFinished = true;
+					transitionState();
+				}
+
+			default:
+				// Ignore.
+		}
 	}
 	
 	var casingGroup:FlxSpriteGroup;
@@ -463,6 +514,8 @@ class PhillyStreets extends BaseStage
 		FlxG.camera.setFilters([new ShaderFilter(rainShader)]);
 	}
 	
+	var currentNeneState:NeneState = STATE_DEFAULT;
+	var animationFinished:Bool = false;
 	override function update(elapsed:Float)
 	{
 		if(scrollingSky != null) scrollingSky.scrollX -= elapsed * 22;
@@ -473,6 +526,61 @@ class PhillyStreets extends BaseStage
 			rainShader.intensity = remappedIntensityValue;
 			rainShader.updateViewInfo(FlxG.width, FlxG.height, FlxG.camera);
 			rainShader.update(elapsed);
+		}
+		
+		if(gf == null || !game.startedCountdown) return;
+
+		animationFinished = gf.isAnimationFinished();
+		transitionState();
+	}
+
+	function transitionState()
+	{
+		switch (currentNeneState)
+		{
+			case STATE_DEFAULT:
+				if (game.health <= VULTURE_THRESHOLD)
+				{
+					currentNeneState = STATE_PRE_RAISE;
+					gf.skipDance = true;
+				}
+
+			case STATE_PRE_RAISE:
+				if (game.health > VULTURE_THRESHOLD)
+				{
+					currentNeneState = STATE_DEFAULT;
+					gf.skipDance = false;
+				}
+				else if (animationFinished)
+				{
+					currentNeneState = STATE_RAISE;
+					gf.playAnim('raiseKnife');
+					gf.skipDance = true;
+					gf.danced = true;
+					animationFinished = false;
+				}
+
+			case STATE_RAISE:
+				if (animationFinished)
+				{
+					currentNeneState = STATE_READY;
+					animationFinished = false;
+				}
+
+			case STATE_READY:
+				if (game.health > VULTURE_THRESHOLD)
+				{
+					currentNeneState = STATE_LOWER;
+					gf.playAnim('lowerKnife');
+				}
+
+			case STATE_LOWER:
+				if (animationFinished)
+				{
+					currentNeneState = STATE_DEFAULT;
+					animationFinished = false;
+					gf.skipDance = false;
+				}
 		}
 	}
 
@@ -492,6 +600,18 @@ class PhillyStreets extends BaseStage
 	override function beatHit()
 	{
 		//if(curBeat % 2 == 0) abot.beatHit();
+		switch(currentNeneState) {
+			case STATE_READY:
+				if (blinkCountdown == 0)
+				{
+					gf.playAnim('idleKnife', false);
+					blinkCountdown = FlxG.random.int(MIN_BLINK_DELAY, MAX_BLINK_DELAY);
+				}
+				else blinkCountdown--;
+
+			default:
+				// In other states, don't interrupt the existing animation.
+		}
 
 		if(ClientPrefs.data.lowQuality) return;
 
@@ -800,6 +920,7 @@ class PhillyStreets extends BaseStage
 		}
 	}
 	
+	var picoFlicker:FlxTimer = null;
 	override function noteMiss(note:Note)
 	{
 		switch(note.noteType)
@@ -808,6 +929,48 @@ class PhillyStreets extends BaseStage
 				boyfriend.playAnim('shootMISS', true);
 				boyfriend.specialAnim = true;
 				bonkSnd.play();
+				
+				if(picoFlicker != null)
+				{
+					picoFlicker.cancel();
+					picoFlicker.destroy();
+				}
+				picoFlicker = null;
+
+				boyfriend.animation.finishCallback = function(name:String)
+				{
+					if (name == 'shootMISS' && game.health > 0.0 && !game.practiceMode && game.gameOverTimer == null)
+					{
+						//FlxFlicker was crashing so fuck it, FlxTimer all the way
+						picoFlicker = new FlxTimer().start(1 / 30, function(tmr:FlxTimer)
+						{
+							boyfriend.visible = !boyfriend.visible;
+							if(tmr.loopsLeft == 0)
+							{
+								boyfriend.visible = true;
+								picoFlicker = new FlxTimer().start(1 / 60, function(tmr2:FlxTimer)
+								{
+									boyfriend.visible = !boyfriend.visible;
+									if(tmr2.loopsLeft == 0)
+									{
+										boyfriend.visible = true;
+										//trace('test 2');
+									}
+								}, 30);
+							}
+						}, 30);
+						//trace('test');
+					}
+					boyfriend.animation.finishCallback = null;
+				}
+				
+				game.health -= 0.4;
+				if(game.health <= 0.0 && !game.practiceMode)
+				{
+					GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pico-explode';
+					GameOverSubstate.loopSoundName = 'gameOverStart-pico-explode';
+					GameOverSubstate.characterName = 'pico-explosion-dead';
+				}
 		}
 	}
 

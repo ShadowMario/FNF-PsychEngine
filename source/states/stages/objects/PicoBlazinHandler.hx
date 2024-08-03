@@ -98,7 +98,7 @@ class PicoBlazinHandler
 			return;
 		}
 
-		if (willMissBeLethal(note.missHealth))
+		if (willMissBeLethal())
 		{
 			playHitLowAnim();
 			return;
@@ -184,7 +184,7 @@ class PicoBlazinHandler
 	
 	public function noteMissPress(direction:Int)
 	{
-		if (willMissBeLethal(PlayState.instance.pressMissDamage))
+		if (willMissBeLethal())
 			playHitLowAnim(); // Darnell throws a punch so that Pico dies.
 		else 
 			playPunchHighAnim(); // Pico wildly throws punches but Darnell dodges.
@@ -315,9 +315,9 @@ class PicoBlazinHandler
 		moveToBack();
 	}
 
-	function willMissBeLethal(damage:Float)
+	function willMissBeLethal()
 	{
-		return (PlayState.instance.health - damage) <= 0.0;
+		return PlayState.instance.health <= 0.0 && !PlayState.instance.practiceMode;
 	}
 	
 	function isDarnellPreppingUppercut()
