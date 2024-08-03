@@ -219,6 +219,8 @@ class GameOverSubstate extends MusicBeatSubstate
 			isEnding = true;
 			if(boyfriend.hasAnimation('deathConfirm'))
 				boyfriend.playAnim('deathConfirm', true);
+			else if(boyfriend.hasAnimation('deathLoop'))
+				boyfriend.playAnim('deathLoop', true);
 
 			if(overlay != null && overlay.animation.exists('deathConfirm'))
 			{

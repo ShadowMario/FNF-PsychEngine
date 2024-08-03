@@ -363,7 +363,7 @@ class PlayState extends MusicBeatState
 			case 'school': new School();				//Week 6 - Senpai, Roses
 			case 'schoolEvil': new SchoolEvil();		//Week 6 - Thorns
 			case 'tank': new Tank();					//Week 7 - Ugh, Guns, Stress
-			case 'phillyStreets': new PhillyStreets(); 	//Weekend 1 - Darnell, Lit-Up, 2Hot
+			case 'phillyStreets': new PhillyStreets(); 	//Weekend 1 - Darnell, Lit Up, 2Hot
 			case 'phillyBlazin': new PhillyBlazin();	//Weekend 1 - Blazin
 		}
 		if(isPixelStage) introSoundsSuffix = '-pixel';

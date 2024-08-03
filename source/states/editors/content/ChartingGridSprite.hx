@@ -11,6 +11,10 @@ class ChartingGridSprite extends FlxSprite
 	public var stripe:FlxSprite;
 	public var stripes:Array<Int>;
 
+	var vortexLine:FlxSprite;
+	public var vortexLineEnabled:Bool = false;
+	public var vortexLineSpace:Float = 0;
+
 	public function new(columns:Int, ?color1:FlxColor = 0xFFE6E6E6, ?color2:FlxColor = 0xFFD8D8D8)
 	{
 		super();
@@ -22,6 +26,12 @@ class ChartingGridSprite extends FlxSprite
 		loadGrid(color1, color2);
 		updateHitbox();
 		recalcHeight();
+
+		vortexLine = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
+		vortexLine.scale.x = this.width;
+		vortexLine.scrollFactor.x = 0;
+		vortexLine.color = 0xFF660000;
+		vortexLine.updateHitbox();
 
 		stripe = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 		stripe.scrollFactor.x = 0;
@@ -35,6 +45,7 @@ class ChartingGridSprite extends FlxSprite
 		animation.add('odd', [0], false);
 		animation.add('even', [1], false);
 		animation.play('even', true);
+		recalcHeight();
 	}
 
 	override function draw()
@@ -59,6 +70,19 @@ class ChartingGridSprite extends FlxSprite
 		y = initialY;
 
 		_drawStripes();
+
+		if(vortexLineEnabled)
+		{
+			vortexLine.x = this.x;
+			vortexLine.y = this.y - 1;
+			while (true)
+			{
+				vortexLine.y += vortexLineSpace;
+				if(vortexLine.y >= this.y + this.height) break;
+
+				vortexLine.draw();
+			}
+		}
 	}
 
 	function _drawStripes()
