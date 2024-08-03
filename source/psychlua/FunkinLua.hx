@@ -470,12 +470,12 @@ class FunkinLua {
 			FlxG.sound.music.pause();
 			FlxG.sound.music.volume = 0;
 			if(game != null) {
-				if (game.vocals != null) (
+				if (game.vocals != null) {
 					game.vocals.pause();
 					game.vocals.volume = 0;
 				}
 
-				if (game.opponentVocals != null) (
+				if (game.opponentVocals != null) {
 					game.opponentVocals.pause();
 					game.opponentVocals.volume = 0;
 				}
