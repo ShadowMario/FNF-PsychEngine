@@ -411,6 +411,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		//
 
 		loadMusic();
+		reloadNotesDropdowns();
 		if(!_shouldReset)
 		{
 			vocals.time = opponentVocals.time = FlxG.sound.music.time = Conductor.songPosition - Conductor.offset;
@@ -2419,27 +2420,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		var objX = 10;
 		var objY = 25;
 
-		eventsList = [];
-		var eventFiles:Array<String> = loadFileList('custom_events/', ['.txt']);
-		for (file in eventFiles)
-		{
-			var desc:String = Paths.getTextFromFile('custom_events/$file.txt');
-			eventsList.push([file, desc]);
-		}
-
-		for (id => event in defaultEvents)
-			if(!eventsList.contains(event))
-				eventsList.insert(id, event);
-		
-		var displayEventsList:Array<String> = [];
-		for (id => data in eventsList)
-		{
-			if(id > 0)
-				displayEventsList[id] = '$id. ${data[0]}';
-			else
-				displayEventsList.push('');
-		}
-		eventDropDown = new PsychUIDropDownMenu(objX, objY, displayEventsList, function(id:Int, character:String)
+		eventDropDown = new PsychUIDropDownMenu(objX, objY, [], function(id:Int, character:String)
 		{
 			var eventSelected:Array<String> = eventsList[id];
 			var eventName:String = eventSelected[0];
@@ -2557,7 +2538,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		value2InputText.onChange = function(old:String, cur:String) changeEventsValue(cur, 2);
 
 		objY += 40;
-		eventDescriptionText = new FlxText(objX, objY, 280, eventsList[0][1]);
+		eventDescriptionText = new FlxText(objX, objY, 280, defaultEvents[0][1]);
 
 		tab_group.add(new FlxText(eventDropDown.x, eventDropDown.y - 15, 80, 'Event:'));
 		tab_group.add(new FlxText(value1InputText.x, value1InputText.y - 15, 80, 'Value 1:'));
@@ -2626,23 +2607,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			softReloadNotes();
 		};
 		
-		var exts:Array<String> = ['.txt'];
-		#if LUA_ALLOWED exts.push('.lua'); #end
-		#if HSCRIPT_ALLOWED exts.push('.hx'); #end
-		noteTypes = loadFileList('custom_notetypes/', exts);
-		for (id => noteType in Note.defaultNoteTypes)
-			if(!noteTypes.contains(noteType))
-				noteTypes.insert(id, noteType);
-		
-		var displayNoteTypes:Array<String> = noteTypes.copy();
-		for (id => key in displayNoteTypes)
-		{
-			if(id == 0) continue;
-			displayNoteTypes[id] = '$id. $key';
-		}
-		
 		objY += 40;
-		noteTypeDropDown = new PsychUIDropDownMenu(objX, objY, displayNoteTypes, function(id:Int, changeToType:String)
+		noteTypeDropDown = new PsychUIDropDownMenu(objX, objY, [], function(id:Int, changeToType:String)
 		{
 			var newSelected:Array<MetaNote> = [];
 			var typeSelected:String = noteTypes[id].trim();
@@ -2666,7 +2632,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			}
 			selectedNotes = newSelected;
 			softReloadNotes();
-		});
+		}, 150);
 		
 		tab_group.add(new FlxText(susLengthStepper.x, susLengthStepper.y - 15, 80, 'Sustain length:'));
 		tab_group.add(new FlxText(strumTimeStepper.x, strumTimeStepper.y - 15, 100, 'Note Hit time (ms):'));
@@ -2957,7 +2923,77 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		tab_group.add(duetSectionButton);
 		tab_group.add(mirrorNotesButton);
 	}
-	
+
+	function reloadNotesDropdowns()
+	{
+		// Event drop down
+		if(eventDropDown != null)
+		{
+			eventsList = [];
+			var eventFiles:Array<String> = loadFileList('custom_events/', ['.txt']);
+			for (file in eventFiles)
+			{
+				var desc:String = Paths.getTextFromFile('custom_events/$file.txt');
+				eventsList.push([file, desc]);
+			}
+
+			for (id => event in defaultEvents)
+				if(!eventsList.contains(event))
+					eventsList.insert(id, event);
+			
+			var displayEventsList:Array<String> = [];
+			for (id => data in eventsList)
+			{
+				if(id > 0)
+					displayEventsList[id] = '$id. ${data[0]}';
+				else
+					displayEventsList.push('');
+			}
+
+			var lastSelected:String = eventDropDown.selectedLabel;
+			eventDropDown.list = displayEventsList;
+			eventDropDown.selectedLabel = lastSelected;
+		}
+
+		// Note type drop down
+		if(noteTypeDropDown != null)
+		{
+			var exts:Array<String> = ['.txt'];
+			#if LUA_ALLOWED exts.push('.lua'); #end
+			#if HSCRIPT_ALLOWED exts.push('.hx'); #end
+			noteTypes = loadFileList('custom_notetypes/', exts);
+			for (id => noteType in Note.defaultNoteTypes)
+				if(!noteTypes.contains(noteType))
+					noteTypes.insert(id, noteType);
+
+			if(Song.chartPath != null && Song.chartPath.length > 0)
+			{
+				var parentFolder:String = Song.chartPath.replace('/', '\\');
+				parentFolder = parentFolder.substr(0, Song.chartPath.lastIndexOf('\\')+1);
+				var notetypeFile:Array<String> = CoolUtil.coolTextFile(parentFolder + 'notetypes.txt');
+				if(notetypeFile.length > 0)
+				{
+					for (ntTyp in notetypeFile)
+					{
+						var name:String = ntTyp.trim();
+						if(!noteTypes.contains(name))
+							noteTypes.push(name);
+					}
+				}
+			}
+			
+			var displayNoteTypes:Array<String> = noteTypes.copy();
+			for (id => key in displayNoteTypes)
+			{
+				if(id == 0) continue;
+				displayNoteTypes[id] = '$id. $key';
+			}
+			
+			var lastSelected:String = noteTypeDropDown.selectedLabel;
+			noteTypeDropDown.list = displayNoteTypes;
+			noteTypeDropDown.selectedLabel = lastSelected;
+		}
+	}
 
 	function pasteCopiedNotesToSection(?canCopyNotes:Bool = true, ?canCopyEvents:Bool = true, ?showMessage:Bool = true) //Used on "Paste Section" and "Copy Last Section" buttons
 	{
@@ -3145,6 +3181,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			var func:Void->Void = function()
 			{
 				openNewChart();
+				reloadNotesDropdowns();
 				prepareReload();
 			}
 
@@ -3177,8 +3214,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					var func:Void->Void = function()
 					{
 						loadChart(loadedChart);
-						prepareReload();
 						Song.chartPath = fileDialog.path;
+						reloadNotesDropdowns();
+						prepareReload();
 						showOutput('Opened chart "${Song.chartPath}" successfully!');
 					}
 					
@@ -3256,11 +3294,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	
 								var originalPath:String = Reflect.field(loadedChart, '__original_path');
 								Reflect.deleteField(loadedChart, '__original_path');
-								Song.chartPath = FileSystem.exists(originalPath) ? originalPath : null;
 	
 								var func:Void->Void = function()
 								{
+									Song.chartPath = FileSystem.exists(originalPath) ? originalPath : null;
 									loadChart(loadedChart);
+									reloadNotesDropdowns();
 									prepareReload();
 	
 									showOutput('Opened autosave "$autosaveName" successfully!');
@@ -3436,6 +3475,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					{
 						var reloadedChart:SwagSong = Song.parseJSON(File.getContent(Song.chartPath));
 						loadChart(reloadedChart);
+						reloadNotesDropdowns();
 						prepareReload();
 						showOutput('Chart reloaded successfully!');
 					}
@@ -4254,6 +4294,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				{
 					var newPath:String = fileDialog.path;
 					Song.chartPath = newPath.replace('/', '\\');
+					reloadNotesDropdowns();
 					showOutput('Chart saved successfully to: $newPath');
 
 				}, null, function() showOutput('Error on saving chart!', true));
