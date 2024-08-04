@@ -39,7 +39,7 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
-	<window width="1280" height="720" fps="" background="#000000" hardware="true" vsync="false" />
+	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false" />
 
 	<!--HTML5-specific-->
 	<window if="html5" resizable="true" />
@@ -164,6 +164,10 @@
 	
 	<!--Disable deprecated warnings-->
 	<haxedef name='no-deprecation-warnings' />
+
+	<!-- Haxe 4.3.0+: Enable pretty syntax errors and stuff. -->
+	<!-- pretty (haxeflixel default), indent, classic (haxe compiler default) -->
+	<haxedef name="message.reporting" value="pretty" />
 
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
