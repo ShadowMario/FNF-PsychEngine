@@ -730,6 +730,25 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					tipBg.visible = tipBg.active = fullTipText.visible = fullTipText.active = vis;
 				}
 
+				var goingBack:Bool = false;
+				if(FlxG.keys.pressed.RBRACKET || (FlxG.keys.pressed.LBRACKET && (goingBack = true)))
+				{
+					if(holdingAlt)
+					{
+						if(playbackRate != 1)
+						{
+							playbackRate = 1;
+							setPitch();
+						}
+					}
+					else
+					{
+						playbackRate = FlxMath.bound(playbackRate + elapsed * (!goingBack ? 1 : -1), playbackSlider.min, playbackSlider.max);
+						setPitch();
+					}
+					playbackSlider.value = playbackRate;
+				}
+
 				if(vortexEnabled && _keysPressedBuffer.contains(true))
 				{
 					var typeSelected:String = noteTypes[noteTypeDropDown.selectedIndex];
@@ -1754,7 +1773,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		}
 
 		updateAudioVolume();
-		setPitch(playbackRate);
+		setPitch();
 		_cacheSections();
 	}
 
@@ -1782,9 +1801,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	{
 		#if FLX_PITCH
 		if(value == null) value = playbackRate;
-		FlxG.sound.music.pitch = playbackRate;
-		vocals.pitch = playbackRate;
-		opponentVocals.pitch = playbackRate;
+		FlxG.sound.music.pitch = value;
+		vocals.pitch = value;
+		opponentVocals.pitch = value;
 		#end
 	}
 
