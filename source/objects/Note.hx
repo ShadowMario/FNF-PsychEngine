@@ -22,12 +22,9 @@ typedef EventNote = {
 typedef NoteSplashData = {
 	disabled:Bool,
 	texture:String,
-	useGlobalShader:Bool, //breaks r/g/b/a but makes it copy default colors for your custom note
+	useGlobalShader:Bool, //breaks r/g/b but makes it copy default colors for your custom note
 	useRGBShader:Bool,
 	antialiasing:Bool,
-	r:FlxColor,
-	g:FlxColor,
-	b:FlxColor,
 	a:Float
 }
 
@@ -71,6 +68,7 @@ class Note extends FlxSprite
 
 	public var tail:Array<Note> = []; // for sustains
 	public var parent:Note;
+	
 	public var blockHit:Bool = false; // only works for player
 
 	public var sustainLength:Float = 0;
@@ -103,9 +101,6 @@ class Note extends FlxSprite
 		antialiasing: !PlayState.isPixelStage,
 		useGlobalShader: false,
 		useRGBShader: (PlayState.SONG != null) ? !(PlayState.SONG.disableNoteRGB == true) : true,
-		r: -1,
-		g: -1,
-		b: -1,
 		a: ClientPrefs.data.splashAlpha
 	};
 
@@ -207,9 +202,9 @@ class Note extends FlxSprite
 					rgbShader.b = 0xFF990022;
 
 					// splash data and colors
-					noteSplashData.r = 0xFFFF0000;
-					noteSplashData.g = 0xFF101010;
-					noteSplashData.texture = 'noteSplashes/noteSplashes-electric';
+					//noteSplashData.r = 0xFFFF0000;
+					//noteSplashData.g = 0xFF101010;
+					noteSplashData.texture = 'noteSplashes-electric';
 
 					// gameplay data
 					lowPriority = true;
@@ -330,9 +325,8 @@ class Note extends FlxSprite
 		if(globalRgbShaders[noteData] == null)
 		{
 			var newRGB:RGBPalette = new RGBPalette();
-			globalRgbShaders[noteData] = newRGB;
-
 			var arr:Array<FlxColor> = (!PlayState.isPixelStage) ? ClientPrefs.data.arrowRGB[noteData] : ClientPrefs.data.arrowRGBPixel[noteData];
+			
 			if (arr != null && noteData > -1 && noteData <= arr.length)
 			{
 				newRGB.r = arr[0];
@@ -345,6 +339,8 @@ class Note extends FlxSprite
 				newRGB.g = 0xFF00FF00;
 				newRGB.b = 0xFF0000FF;
 			}
+			
+			globalRgbShaders[noteData] = newRGB;
 		}
 		return globalRgbShaders[noteData];
 	}
@@ -429,6 +425,9 @@ class Note extends FlxSprite
 	}
 
 	function loadNoteAnims() {
+		if (colArray[noteData] == null)
+			return;
+
 		if (isSustainNote)
 		{
 			attemptToAddAnimationByPrefix('purpleholdend', 'pruple end hold', 24, true); // this fixes some retarded typo from the original note .FLA
@@ -442,6 +441,9 @@ class Note extends FlxSprite
 	}
 
 	function loadPixelNoteAnims() {
+		if (colArray[noteData] == null)
+			return;
+
 		if(isSustainNote)
 		{
 			animation.add(colArray[noteData] + 'holdend', [noteData + 4], 24, true);
