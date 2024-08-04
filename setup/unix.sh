@@ -2,6 +2,7 @@
 # SETUP FOR MAC AND LINUX SYSTEMS!!!
 # REMINDER THAT YOU NEED HAXE INSTALLED PRIOR TO USING THIS
 # https://haxe.org/download
+cd ..
 echo Installing dependencies...
 echo This might take a few moments depending on your internet speed.
 haxelib install lime 8.1.2
