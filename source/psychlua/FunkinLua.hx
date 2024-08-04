@@ -815,12 +815,16 @@ class FunkinLua {
 			}
 		});
 		Lua_helper.add_callback(lua, "cameraSetTarget", function(target:String) {
-			var isDad:Bool = false;
-			if(target == 'dad') {
-				isDad = true;
+			switch (target.toLowerCase()) {
+				case 'girlfriend':
+					game.moveCameraTo('gf');
+					return false;
+				case 'opponent':
+					game.moveCameraTo('dad');
+					return true;
 			}
-			game.moveCamera(isDad);
-			return isDad;
+			var name:String = game.moveCameraTo(target);
+			return name == 'dad';
 		});
 		Lua_helper.add_callback(lua, "cameraShake", function(camera:String, intensity:Float, duration:Float) {
 			LuaUtils.cameraFromString(camera).shake(intensity, duration);
