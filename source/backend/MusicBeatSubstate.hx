@@ -1,6 +1,7 @@
 package backend;
 
 import flixel.FlxSubState;
+import backend.CoolUtil;
 
 class MusicBeatSubstate extends FlxSubState
 {
@@ -113,6 +114,14 @@ class MusicBeatSubstate extends FlxSubState
 	public function sectionHit():Void
 	{
 		//yep, you guessed it, nothing again, dumbass
+	}
+
+	/**
+	 * Refreshes the stage, by redoing the render order of all props.
+	 * It does this based on the `zIndex` of each prop.
+	 */
+	public function refresh() {
+		sort(CoolUtil.byZIndex, FlxSort.ASCENDING);
 	}
 	
 	function getBeatsOnSection()

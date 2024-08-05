@@ -1,5 +1,7 @@
 package backend;
 
+import flixel.FlxBasic;
+import flixel.util.FlxSort;
 import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
 
@@ -154,5 +156,15 @@ class CoolUtil
 			default:
 				text.borderStyle = NONE;
 		}
+	}
+
+	/**
+	 * Utility functions related to sorting.
+	*/
+
+	public static inline function byZIndex(order:Int, a:FlxBasic, b:FlxBasic):Int
+	{
+		if (a == null || b == null) return 0;
+		return FlxSort.byValues(order, a.zIndex, b.zIndex);
 	}
 }

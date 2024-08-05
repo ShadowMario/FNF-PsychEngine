@@ -169,18 +169,12 @@
 	<!-- pretty (haxeflixel default), indent, classic (haxe compiler default) -->
 	<haxedef name="message.reporting" value="pretty" />
 
-  <!-- To allow for more classes, DCE must be turned off -->
-	<haxeflag name="-dce no" />
-
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
 
 	<!-- zIndex field -->
 	<haxeflag name="--macro" value="addMetadata('@:build(macro.FlxMacro.buildFlxBasic())', 'flixel.FlxBasic')" />
-	
-	<!-- Additional Classes -->
-	<haxeflag name="--macro" value="include('flixel', true, [ 'flixel.addons.editors.spine.*', 'flixel.addons.nape.*', 'flixel.system.macros.*' ])" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
