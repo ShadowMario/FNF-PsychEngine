@@ -10,11 +10,12 @@ class Tank extends BaseStage
 	var tankWatchtower:BGSprite;
 	var tankGround:BackgroundTank;
 	var tankmanRun:FlxTypedGroup<TankmenBG>;
-	var foregroundSprites:FlxTypedGroup<BGSprite>;
+	var boppers:FlxTypedGroup<BGSprite>;
 
 	override function create()
 	{
 		var sky:BGSprite = new BGSprite('tankSky', -400, -400, 0, 0);
+		sky.zIndex = 10;
 		add(sky);
 
 		if(!ClientPrefs.data.lowQuality)
@@ -22,53 +23,65 @@ class Tank extends BaseStage
 			var clouds:BGSprite = new BGSprite('tankClouds', FlxG.random.int(-700, -100), FlxG.random.int(-20, 20), 0.1, 0.1);
 			clouds.active = true;
 			clouds.velocity.x = FlxG.random.float(5, 15);
+			clouds.zIndex = 11;
 			add(clouds);
 
 			var mountains:BGSprite = new BGSprite('tankMountains', -300, -20, 0.2, 0.2);
 			mountains.setGraphicSize(Std.int(1.2 * mountains.width));
 			mountains.updateHitbox();
+			mountains.zIndex = 11;
 			add(mountains);
 
 			var buildings:BGSprite = new BGSprite('tankBuildings', -200, 0, 0.3, 0.3);
 			buildings.setGraphicSize(Std.int(1.1 * buildings.width));
 			buildings.updateHitbox();
+			buildings.zIndex = 13;
 			add(buildings);
 		}
 
 		var ruins:BGSprite = new BGSprite('tankRuins',-200,0,.35,.35);
 		ruins.setGraphicSize(Std.int(1.1 * ruins.width));
 		ruins.updateHitbox();
+		ruins.zIndex = 13;
 		add(ruins);
 
 		if(!ClientPrefs.data.lowQuality)
 		{
 			var smokeLeft:BGSprite = new BGSprite('smokeLeft', -200, -100, 0.4, 0.4, ['SmokeBlurLeft'], true);
+			smokeLeft.zIndex = 14;
 			add(smokeLeft);
 			var smokeRight:BGSprite = new BGSprite('smokeRight', 1100, -100, 0.4, 0.4, ['SmokeRight'], true);
+			smokeLeft.zIndex = 15;
 			add(smokeRight);
 
 			tankWatchtower = new BGSprite('tankWatchtower', 100, 50, 0.5, 0.5, ['watchtower gradient color']);
+			tankWatchtower.zIndex = 21;
 			add(tankWatchtower);
 		}
 
 		tankGround = new BackgroundTank();
+		tankGround.zIndex = 22;
 		add(tankGround);
 
 		tankmanRun = new FlxTypedGroup<TankmenBG>();
+		tankmanRun.zIndex = 30;
 		add(tankmanRun);
 
 		var ground:BGSprite = new BGSprite('tankGround', -420, -150);
 		ground.setGraphicSize(Std.int(1.15 * ground.width));
 		ground.updateHitbox();
+		ground.zIndex = 40;
 		add(ground);
 
-		foregroundSprites = new FlxTypedGroup<BGSprite>();
-		foregroundSprites.add(new BGSprite('tank0', -500, 650, 1.7, 1.5, ['fg']));
-		if(!ClientPrefs.data.lowQuality) foregroundSprites.add(new BGSprite('tank1', -300, 750, 2, 0.2, ['fg']));
-		foregroundSprites.add(new BGSprite('tank2', 450, 940, 1.5, 1.5, ['foreground']));
-		if(!ClientPrefs.data.lowQuality) foregroundSprites.add(new BGSprite('tank4', 1300, 900, 1.5, 1.5, ['fg']));
-		foregroundSprites.add(new BGSprite('tank5', 1620, 700, 1.5, 1.5, ['fg']));
-		if(!ClientPrefs.data.lowQuality) foregroundSprites.add(new BGSprite('tank3', 1300, 1200, 3.5, 2.5, ['fg']));
+		boppers = new FlxTypedGroup<BGSprite>();
+		boppers.zIndex = 1000;
+		boppers.add(new BGSprite('tank0', -500, 650, 1.7, 1.5, ['fg']));
+		if(!ClientPrefs.data.lowQuality) boppers.add(new BGSprite('tank1', -300, 750, 2, 0.2, ['fg']));
+		boppers.add(new BGSprite('tank2', 450, 940, 1.5, 1.5, ['foreground']));
+		if(!ClientPrefs.data.lowQuality) boppers.add(new BGSprite('tank4', 1300, 900, 1.5, 1.5, ['fg']));
+		boppers.add(new BGSprite('tank5', 1620, 700, 1.5, 1.5, ['fg']));
+		if(!ClientPrefs.data.lowQuality) boppers.add(new BGSprite('tank3', 1300, 1200, 3.5, 2.5, ['fg']));
+		add(boppers);
 
 		// Default GFs
 		if(songName == 'stress') setDefaultGF('pico-speaker');
@@ -89,8 +102,6 @@ class Tank extends BaseStage
 	}
 	override function createPost()
 	{
-		add(foregroundSprites);
-
 		if(!ClientPrefs.data.lowQuality)
 		{
 			for (daGf in gfGroup)
@@ -124,7 +135,7 @@ class Tank extends BaseStage
 	function everyoneDance()
 	{
 		if(!ClientPrefs.data.lowQuality) tankWatchtower.dance();
-		foregroundSprites.forEach(function(spr:BGSprite)
+		boppers.forEach(function(spr:BGSprite)
 		{
 			spr.dance();
 		});
@@ -286,7 +297,7 @@ class Tank extends BaseStage
 		boyfriendGroup.alpha = 0.00001;
 		camFollow.setPosition(dad.x + 400, dad.y + 170);
 		FlxTween.tween(FlxG.camera, {zoom: 0.9 * 1.2}, 1, {ease: FlxEase.quadInOut});
-		foregroundSprites.forEach(function(spr:BGSprite)
+		boppers.forEach(function(spr:BGSprite)
 		{
 			spr.y += 100;
 		});
@@ -410,7 +421,7 @@ class Tank extends BaseStage
 		calledTimes++;
 		if (calledTimes > 1)
 		{
-			foregroundSprites.forEach(function(spr:BGSprite)
+			boppers.forEach(function(spr:BGSprite)
 			{
 				spr.y -= 100;
 			});
