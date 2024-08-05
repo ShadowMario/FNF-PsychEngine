@@ -1,7 +1,7 @@
 package backend;
 
 import flixel.FlxSubState;
-import flixel.sort.FlxSort;
+import flixel.util.FlxSort;
 import backend.CoolUtil;
 
 class MusicBeatSubstate extends FlxSubState

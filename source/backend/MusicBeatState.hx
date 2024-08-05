@@ -1,7 +1,7 @@
 package backend;
 
 import flixel.FlxState;
-import flixel.sort.FlxSort;
+import flixel.util.FlxSort;
 import backend.PsychCamera;
 import backend.CoolUtil;
 
