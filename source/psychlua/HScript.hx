@@ -36,7 +36,7 @@ class HScript extends SScript
 		}
 		else
 		{
-			this.varsToBring = varsToBring;
+			hs.varsToBring = varsToBring;
 			hs.doString(code);
 			@:privateAccess
 			if(hs.parsingException != null)
