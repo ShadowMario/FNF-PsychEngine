@@ -91,7 +91,7 @@ class TitleState extends MusicBeatState
 		{
 			if (FlxG.save.data != null && FlxG.save.data.fullscreen)
 				FlxG.fullscreen = FlxG.save.data.fullscreen;
-			persistentUpdate = persistentDraw = true;
+			persistentUpdate = true;
 		}
 
 		if (FlxG.save.data.weekCompleted != null)
@@ -117,6 +117,102 @@ class TitleState extends MusicBeatState
 				new FlxTimer().start(1, timer -> startIntro());
 		}
 		#end
+	}
+
+	function startIntro():Void
+	{
+		if (!initialized && FlxG.sound.music == null)
+			FlxG.sound.playMusic(Paths.music("freakyMenu"), 0);
+
+		Conductor.bpm = titleJSON.bpm;
+
+		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none")
+		{
+			var bg = new FlxSprite();
+			bg.antialiasing = true;
+			bg.loadGraphic(Paths.image(titleJSON.backgroundSprite));
+			add(bg);
+		}
+
+		logo = new FlxSprite(titleJSON.titlex, titleJSON.titley);
+		logo.frames = Paths.getSparrowAtlas('logoBumpin');
+		logo.antialiasing = ClientPrefs.data.antialiasing;
+
+		logo.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+		logo.animation.play('bump');
+		logo.updateHitbox();
+
+		if (ClientPrefs.data.shaders)
+			swagShader = new ColorSwap();
+
+		titleGF = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
+		titleGF.antialiasing = ClientPrefs.data.antialiasing;
+
+		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
+		if (easterEgg == null)
+			easterEgg == '';
+
+		switch (easterEgg.toUpperCase())
+		{
+			#if TITLE_SCREEN_EASTER_EGG
+			case 'SHADOW':
+				gfDance.frames = Paths.getSparrowAtlas('ShadowBump');
+				gfDance.animation.addByPrefix('danceLeft', 'Shadow Title Bump', 24);
+				gfDance.animation.addByPrefix('danceRight', 'Shadow Title Bump', 24);
+			case 'RIVEREN':
+				gfDance.frames = Paths.getSparrowAtlas('RiverBump');
+				gfDance.animation.addByIndices('danceLeft', 'River Title Bump', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+				gfDance.animation.addByIndices('danceRight', 'River Title Bump', [29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+			case 'BBPANZU':
+				gfDance.frames = Paths.getSparrowAtlas('BBBump');
+				gfDance.animation.addByIndices('danceLeft', 'BB Title Bump', [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 24, false);
+				gfDance.animation.addByIndices('danceRight', 'BB Title Bump', [27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "", 24, false);
+			#end
+
+			// Default GF - Edit this if you're making a source code mod
+			default:
+				titleGF.frames = Paths.getSparrowAtlas('gfDanceTitle');
+				titleGF.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				titleGF.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+		}
+
+		add(titleGF);
+		add(logo);
+
+		if (swagShader != null)
+		{
+			titleGF.shader = swagShader.shader;
+			logo.shader = swagShader.shader;
+		}
+
+		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
+		titleText.frames = Paths.getSparrowAtlas('titleEnter');
+		// No idea what this does
+		var animFrames:Array<FlxFrame> = [];
+		@:privateAccess {
+			titleText.animation.findByPrefix(animFrames, "ENTER IDLE");
+			titleText.animation.findByPrefix(animFrames, "ENTER FREEZE");
+		}
+
+		if (animFrames.length > 0)
+		{
+			newTitle = true;
+
+			titleText.animation.addByPrefix('idle', "ENTER IDLE", 24);
+			titleText.animation.addByPrefix('press', ClientPrefs.data.flashing ? "ENTER PRESSED" : "ENTER FREEZE", 24);
+		}
+		else
+		{
+			newTitle = false;
+
+			titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
+			titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
+		}
+
+		titleText.animation.play('idle');
+		titleText.updateHitbox();
+		add(titleText);
+
 	}
 
 	function getIntroTexts():Array<Array<String>>
@@ -164,114 +260,6 @@ class TitleState extends MusicBeatState
 	}
 	#end
 	/*
-
-	function startIntro()
-	{
-		if (!initialized && FlxG.sound.music == null)
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-
-		Conductor.bpm = titleJSON.bpm;
-		persistentUpdate = true;
-
-		var bg:FlxSprite = new FlxSprite();
-		bg.antialiasing = ClientPrefs.data.antialiasing;
-
-		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none"){
-			bg.loadGraphic(Paths.image(titleJSON.backgroundSprite));
-		}else{
-			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		}
-
-		// bg.setGraphicSize(Std.int(bg.width * 0.6));
-		// bg.updateHitbox();
-		add(bg);
-
-		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-		logoBl.antialiasing = ClientPrefs.data.antialiasing;
-
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
-		logoBl.animation.play('bump');
-		logoBl.updateHitbox();
-		// logoBl.screenCenter();
-		// logoBl.color = FlxColor.BLACK;
-
-		if(ClientPrefs.data.shaders) swagShader = new ColorSwap();
-		gfDance = new FlxSprite(titleJSON.gfx, titleJSON.gfy);
-		gfDance.antialiasing = ClientPrefs.data.antialiasing;
-
-		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
-		if(easterEgg == null) easterEgg = ''; //html5 fix
-
-		switch(easterEgg.toUpperCase())
-		{
-			// IGNORE THESE, GO DOWN A BIT
-			#if TITLE_SCREEN_EASTER_EGG
-			case 'SHADOW':
-				gfDance.frames = Paths.getSparrowAtlas('ShadowBump');
-				gfDance.animation.addByPrefix('danceLeft', 'Shadow Title Bump', 24);
-				gfDance.animation.addByPrefix('danceRight', 'Shadow Title Bump', 24);
-			case 'RIVEREN':
-				gfDance.frames = Paths.getSparrowAtlas('RiverBump');
-				gfDance.animation.addByIndices('danceLeft', 'River Title Bump', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'River Title Bump', [29, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-			case 'BBPANZU':
-				gfDance.frames = Paths.getSparrowAtlas('BBBump');
-				gfDance.animation.addByIndices('danceLeft', 'BB Title Bump', [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'BB Title Bump', [27, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "", 24, false);
-			#end
-
-			default:
-			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
-			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
-			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
-				gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
-				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		}
-
-		add(gfDance);
-		add(logoBl);
-		if(swagShader != null)
-		{
-			gfDance.shader = swagShader.shader;
-			logoBl.shader = swagShader.shader;
-		}
-
-		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
-		titleText.frames = Paths.getSparrowAtlas('titleEnter');
-		var animFrames:Array<FlxFrame> = [];
-		@:privateAccess {
-			titleText.animation.findByPrefix(animFrames, "ENTER IDLE");
-			titleText.animation.findByPrefix(animFrames, "ENTER FREEZE");
-		}
-		
-		if (animFrames.length > 0) {
-			newTitle = true;
-			
-			titleText.animation.addByPrefix('idle', "ENTER IDLE", 24);
-			titleText.animation.addByPrefix('press', ClientPrefs.data.flashing ? "ENTER PRESSED" : "ENTER FREEZE", 24);
-		}
-		else {
-			newTitle = false;
-			
-			titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
-			titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
-		}
-		
-		titleText.animation.play('idle');
-		titleText.updateHitbox();
-		// titleText.screenCenter(X);
-		add(titleText);
-
-		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
-		logo.antialiasing = ClientPrefs.data.antialiasing;
-		logo.screenCenter();
-		// add(logo);
-
-		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
-		// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
-
 		credGroup = new FlxGroup();
 		add(credGroup);
 		textGroup = new FlxGroup();
