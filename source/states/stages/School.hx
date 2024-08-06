@@ -18,16 +18,19 @@ class School extends BaseStage
 		if(_song.gameOverChar == null || _song.gameOverChar.trim().length < 1) GameOverSubstate.characterName = 'bf-pixel-dead';
 
 		var bgSky:BGSprite = new BGSprite('weeb/weebSky', 0, 0, 0.1, 0.1);
+		bgSky.zIndex = 10;
 		add(bgSky);
 		bgSky.antialiasing = false;
 
 		var repositionShit = -200;
 
 		var bgSchool:BGSprite = new BGSprite('weeb/weebSchool', repositionShit, 0, 0.6, 0.90);
+		bgSchool.zIndex = 20;
 		add(bgSchool);
 		bgSchool.antialiasing = false;
 
 		var bgStreet:BGSprite = new BGSprite('weeb/weebStreet', repositionShit, 0, 0.95, 0.95);
+		bgStreet.zIndex = 30;
 		add(bgStreet);
 		bgStreet.antialiasing = false;
 
@@ -36,6 +39,7 @@ class School extends BaseStage
 			var fgTrees:BGSprite = new BGSprite('weeb/weebTreesBack', repositionShit + 170, 130, 0.9, 0.9);
 			fgTrees.setGraphicSize(Std.int(widShit * 0.8));
 			fgTrees.updateHitbox();
+			fgTrees.zIndex = 40;
 			add(fgTrees);
 			fgTrees.antialiasing = false;
 		}
@@ -45,6 +49,7 @@ class School extends BaseStage
 		bgTrees.animation.add('treeLoop', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 12);
 		bgTrees.animation.play('treeLoop');
 		bgTrees.scrollFactor.set(0.85, 0.85);
+		bgTrees.zIndex = 60;
 		add(bgTrees);
 		bgTrees.antialiasing = false;
 
@@ -52,6 +57,7 @@ class School extends BaseStage
 			var treeLeaves:BGSprite = new BGSprite('weeb/petals', repositionShit, -40, 0.85, 0.85, ['PETALS ALL'], true);
 			treeLeaves.setGraphicSize(widShit);
 			treeLeaves.updateHitbox();
+			treeLeaves.zIndex = 70;
 			add(treeLeaves);
 			treeLeaves.antialiasing = false;
 		}
@@ -69,6 +75,7 @@ class School extends BaseStage
 		if(!ClientPrefs.data.lowQuality) {
 			bgGirls = new BackgroundGirls(-100, 190);
 			bgGirls.scrollFactor.set(0.9, 0.9);
+			bgGirls.zIndex = 80;
 			add(bgGirls);
 		}
 		setDefaultGF('gf-pixel');
@@ -140,6 +147,7 @@ class School extends BaseStage
 		inCutscene = true;
 		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
 		black.scrollFactor.set();
+		black.zIndex = 1000;
 		if(songName == 'senpai') add(black);
 
 		new FlxTimer().start(0.3, function(tmr:FlxTimer)
