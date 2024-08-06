@@ -200,6 +200,7 @@ class TitleState extends MusicBeatState
 
 			titleText.animation.addByPrefix('idle', "ENTER IDLE", 24);
 			titleText.animation.addByPrefix('press', ClientPrefs.data.flashing ? "ENTER PRESSED" : "ENTER FREEZE", 24);
+			FlxTween.num(0, 1, 2, {type: PINGPONG, ease: FlxEase.quadInOut}, num -> titleTimer = num);
 		}
 		else
 		{
@@ -212,8 +213,152 @@ class TitleState extends MusicBeatState
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
 		add(titleText);
+		add(introTextGroup = new FlxGroup());
 
+		ngSpr = new FlxSprite(0, FlxG.height * .52).loadGraphic(Paths.image('newgrounds_logo'));
+		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
+		ngSpr.updateHitbox();
+		ngSpr.screenCenter(X);
+		ngSpr.antialiasing = ClientPrefs.data.antialiasing;
+
+		if (initialized)
+			skipIntro();
+		else
+			initialized = true;
+
+		Paths.clearUnusedMemory();
 	}
+
+	override function update(elapsed:Float):Void
+	{
+		if (FlxG.sound.music != null)
+			Conductor.songPosition = FlxG.sound.music.time;
+
+		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
+
+		#if mobile
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				pressedEnter = true;
+			}
+		}
+		#end
+
+		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+
+		if (gamepad != null)
+		{
+			if (gamepad.justPressed.START)
+				pressedEnter = true;
+
+			#if switch
+			if (gamepad.justPressed.B)
+				pressedEnter = true;
+			#end
+		}
+
+		if (initialized && !transitioning && skippedIntro)
+		{
+			if (newTitle && !pressedEnter)
+			{
+				titleText.color = FlxColor.interpolate(titleTextColors[0], titleTextColors[1], titleTimer);
+				titleText.alpha = FlxMath.lerp(titleTextAlphas[0], titleTextAlphas[1], titleTimer);
+			}
+
+			if (pressedEnter)
+			{
+				titleText.color = FlxColor.WHITE;
+				titleText.alpha = 1;
+				titleText.animation.play('press');
+
+				FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
+				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+
+				transitioning = true;
+
+				new FlxTimer().start(1, timer ->
+				{
+					if (mustUpdate)
+						MusicBeatState.switchState(new OutdatedState());
+					else
+						MusicBeatState.switchState(new MainMenuState());
+					closedState = true;
+				});
+			}
+			#if TITLE_SCREEN_EASTER_EGG
+			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
+			{
+				var keyName = Std.string(FlxG.keys.firstJustPressed());
+				if (allowedKeys.match(keyName))
+				{
+					easterEggKeysBuffer += keyName;
+					if (easterEggKeysBuffer.length >= 32)
+						easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
+
+					for (wordRaw in easterEggKeys)
+					{
+						var word:String = wordRaw.toUpperCase();
+						if (easterEggKeysBuffer.contains(word))
+						{
+							if (FlxG.save.data.psychDevsEasterEgg == word)
+								FlxG.save.data.psychDevsEasterEgg = '';
+							else
+								FlxG.save.data.psychDevsEasterEgg = word;
+							FlxG.save.flush();
+
+							FlxG.sound.play(Paths.sound('secret'));
+
+							var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+							black.alpha = 0;
+							add(black);
+
+							FlxTween.tween(black, {alpha: 1}, 1, {
+								onComplete: function(twn:FlxTween)
+								{
+									FlxTransitionableState.skipNextTransIn = true;
+									FlxTransitionableState.skipNextTransOut = true;
+									MusicBeatState.switchState(new TitleState());
+								}
+							});
+							FlxG.sound.music.fadeOut();
+							if (FreeplayState.vocals != null)
+								FreeplayState.vocals.fadeOut();
+							closedState = transitioning = playJingle = true;
+							easterEggKeysBuffer = '';
+							break;
+						}
+					}
+				}
+			}
+			#end
+		}
+
+		if (initialized && pressedEnter && !skippedIntro)
+			skipIntro();
+
+		if (swagShader != null)
+		{
+			if (controls.UI_LEFT)
+				swagShader.hue -= elapsed * 0.1;
+			if (controls.UI_RIGHT)
+				swagShader.hue += elapsed * 0.1;
+		}
+
+		super.update(elapsed);
+	}
+
+	function createText(textArray:Array<String>, ?offset:Float = 0):Void
+		for (i in 0...textArray.length)
+		{
+			var alphabet = new Alphabet(0, 0, textArray[i], true);
+			alphabet.screenCenter(X);
+			alphabet.y += (i * 60) + 200 + offset;
+			if (introTextGroup != null)
+				introTextGroup.add(alphabet);
+		}
+	
 
 	function getIntroTexts():Array<Array<String>>
 	{
@@ -260,193 +405,6 @@ class TitleState extends MusicBeatState
 	}
 	#end
 	/*
-		credGroup = new FlxGroup();
-		add(credGroup);
-		textGroup = new FlxGroup();
-
-		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		credGroup.add(blackScreen);
-
-		credTextShit = new Alphabet(0, 0, "", true);
-		credTextShit.screenCenter();
-
-		// credTextShit.alignment = CENTER;
-
-		credTextShit.visible = false;
-
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
-		add(ngSpr);
-		ngSpr.visible = false;
-		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
-		ngSpr.updateHitbox();
-		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = ClientPrefs.data.antialiasing;
-
-		if (initialized)
-			skipIntro();
-		else
-			initialized = true;
-
-		Paths.clearUnusedMemory();
-		// credGroup.add(credTextShit);
-	}
-
-	override function update(elapsed:Float)
-	{
-		if (FlxG.sound.music != null)
-			Conductor.songPosition = FlxG.sound.music.time;
-		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
-
-		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
-
-		#if mobile
-		for (touch in FlxG.touches.list)
-		{
-			if (touch.justPressed)
-			{
-				pressedEnter = true;
-			}
-		}
-		#end
-
-		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
-
-		if (gamepad != null)
-		{
-			if (gamepad.justPressed.START)
-				pressedEnter = true;
-
-			#if switch
-			if (gamepad.justPressed.B)
-				pressedEnter = true;
-			#end
-		}
-		
-		if (newTitle) {
-			titleTimer += FlxMath.bound(elapsed, 0, 1);
-			if (titleTimer > 2) titleTimer -= 2;
-		}
-
-		// EASTER EGG
-
-		if (initialized && !transitioning && skippedIntro)
-		{
-			if (newTitle && !pressedEnter)
-			{
-				var timer:Float = titleTimer;
-				if (timer >= 1)
-					timer = (-timer) + 2;
-				
-				timer = FlxEase.quadInOut(timer);
-				
-				titleText.color = FlxColor.interpolate(titleTextColors[0], titleTextColors[1], timer);
-				titleText.alpha = FlxMath.lerp(titleTextAlphas[0], titleTextAlphas[1], timer);
-			}
-			
-			if(pressedEnter)
-			{
-				titleText.color = FlxColor.WHITE;
-				titleText.alpha = 1;
-				
-				if(titleText != null) titleText.animation.play('press');
-
-				FlxG.camera.flash(ClientPrefs.data.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
-				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-
-				transitioning = true;
-				// FlxG.sound.music.stop();
-
-				new FlxTimer().start(1, function(tmr:FlxTimer)
-				{
-					if (mustUpdate) {
-						MusicBeatState.switchState(new OutdatedState());
-					} else {
-						MusicBeatState.switchState(new MainMenuState());
-					}
-					closedState = true;
-				});
-				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
-			}
-			#if TITLE_SCREEN_EASTER_EGG
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
-			{
-				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
-				var keyName:String = Std.string(keyPressed);
-				if(allowedKeys.contains(keyName)) {
-					easterEggKeysBuffer += keyName;
-					if(easterEggKeysBuffer.length >= 32) easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
-					//trace('Test! Allowed Key pressed!!! Buffer: ' + easterEggKeysBuffer);
-
-					for (wordRaw in easterEggKeys)
-					{
-						var word:String = wordRaw.toUpperCase(); //just for being sure you're doing it right
-						if (easterEggKeysBuffer.contains(word))
-						{
-							//trace('YOOO! ' + word);
-							if (FlxG.save.data.psychDevsEasterEgg == word)
-								FlxG.save.data.psychDevsEasterEgg = '';
-							else
-								FlxG.save.data.psychDevsEasterEgg = word;
-							FlxG.save.flush();
-
-							FlxG.sound.play(Paths.sound('secret'));
-
-							var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-							black.alpha = 0;
-							add(black);
-
-							FlxTween.tween(black, {alpha: 1}, 1, {onComplete:
-								function(twn:FlxTween) {
-									FlxTransitionableState.skipNextTransIn = true;
-									FlxTransitionableState.skipNextTransOut = true;
-									MusicBeatState.switchState(new TitleState());
-								}
-							});
-							FlxG.sound.music.fadeOut();
-							if(FreeplayState.vocals != null)
-							{
-								FreeplayState.vocals.fadeOut();
-							}
-							closedState = true;
-							transitioning = true;
-							playJingle = true;
-							easterEggKeysBuffer = '';
-							break;
-						}
-					}
-				}
-			}
-			#end
-		}
-
-		if (initialized && pressedEnter && !skippedIntro)
-		{
-			skipIntro();
-		}
-
-		if(swagShader != null)
-		{
-			if(controls.UI_LEFT) swagShader.hue -= elapsed * 0.1;
-			if(controls.UI_RIGHT) swagShader.hue += elapsed * 0.1;
-		}
-
-		super.update(elapsed);
-	}
-
-	function createCoolText(textArray:Array<String>, ?offset:Float = 0)
-	{
-		for (i in 0...textArray.length)
-		{
-			var money:Alphabet = new Alphabet(0, 0, textArray[i], true);
-			money.screenCenter(X);
-			money.y += (i * 60) + 200 + offset;
-			if(credGroup != null && textGroup != null) {
-				credGroup.add(money);
-				textGroup.add(money);
-			}
-		}
-	}
-
 	function addMoreText(text:String, ?offset:Float = 0)
 	{
 		if(textGroup != null && credGroup != null) {
