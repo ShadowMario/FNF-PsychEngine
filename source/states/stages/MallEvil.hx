@@ -9,12 +9,15 @@ class MallEvil extends BaseStage
 		var bg:BGSprite = new BGSprite('christmas/evilBG', -400, -500, 0.2, 0.2);
 		bg.setGraphicSize(Std.int(bg.width * 0.8));
 		bg.updateHitbox();
+		bg.zIndex = 10;
 		add(bg);
 
 		var evilTree:BGSprite = new BGSprite('christmas/evilTree', 300, -300, 0.2, 0.2);
+		evilTree.zIndex = 20;
 		add(evilTree);
 
 		var evilSnow:BGSprite = new BGSprite('christmas/evilSnow', -200, 700);
+		evilSnow.zIndex = 20;
 		add(evilSnow);
 		setDefaultGF('gf-christmas');
 		
@@ -41,6 +44,7 @@ class MallEvil extends BaseStage
 		// blackout at the start
 		var blackScreen:FlxSprite = new FlxSprite().makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
 		blackScreen.scrollFactor.set();
+		blackScreen.zIndex = 1000;
 		add(blackScreen);
 
 		FlxTween.tween(blackScreen, {alpha: 0}, 0.7, {
