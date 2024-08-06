@@ -57,6 +57,7 @@
 			"name": "red"
 		}
 	},
-	"affectedByShader": true,
+	"allowRGB": true,
+	"allowPixel": true,
 	"scale": 1
 }

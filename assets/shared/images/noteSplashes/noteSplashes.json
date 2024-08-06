@@ -113,6 +113,7 @@
 			"noteData": 6
 		}
 	},
-	"affectedByShader": true,
+	"allowRGB": true,
+	"allowPixel": true,
 	"scale": 1
 }

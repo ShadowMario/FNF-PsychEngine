@@ -34,7 +34,7 @@ class NoteSplashEditorState extends MusicBeatState
     {
         if (imageSkin == null)
             imageSkin =  NoteSplash.DEFAULT_SKIN + NoteSplash.getSplashSkinPostfix();
-        
+
         FlxG.mouse.visible = true;
 
         FlxG.sound.volumeUpKeys = [];
@@ -85,7 +85,7 @@ class NoteSplashEditorState extends MusicBeatState
             babyArrow.ID = i;
             strums.add(babyArrow);
         }
-        
+
         add(strums);
         add(splashes);
 
@@ -357,23 +357,37 @@ class NoteSplashEditorState extends MusicBeatState
         var loadButton:PsychUIButton = new PsychUIButton(180, 155, "Convert TXT", loadTxt);
         ui.add(loadButton);
 
-        var getsAffectedByShader:PsychUICheckBox = new PsychUICheckBox(20, 105, "", 1);
+        var allowRGBCheck:PsychUICheckBox = new PsychUICheckBox(20, 105, "", 1);
         function check()
         {
             if (config != null)
-            {
-                config.affectedByShader = getsAffectedByShader.checked;
-            }
+                config.allowRGB = allowRGBCheck.checked;
         }
-        getsAffectedByShader.onClick = check;
-        getsAffectedByShader.checked = config != null && cast(config.affectedByShader, Null<Bool>) != null ? config.affectedByShader : false;
+        allowRGBCheck.onClick = check;
+        allowRGBCheck.checked = config != null && cast(config.allowRGB, Null<Bool>) != null ? config.allowRGB : false;
 
-        var text = new FlxText(getsAffectedByShader.x + 20, 0);
-        text.text = "Affected by Shader?";
-		text.y = getsAffectedByShader.y + 2.5;
-		ui.add(text);
+        var rgbText = new FlxText(allowRGBCheck.x + 20, 0);
+        rgbText.text = "Allow RGB?";
+		rgbText.y = allowRGBCheck.y + 2.5;
+		ui.add(rgbText);
 
-        ui.add(getsAffectedByShader);
+        ui.add(allowRGBCheck);
+
+        var allowPixelCheck:PsychUICheckBox = new PsychUICheckBox(allowRGBCheck.x + 150, allowRGBCheck.y, "", 1);
+        function check()
+        {
+            if (config != null)
+                config.allowPixel = allowPixelCheck.checked;
+        }
+        allowPixelCheck.onClick = check;
+        allowPixelCheck.checked = config != null && cast(config.allowPixel, Null<Bool>) != null ? config.allowPixel : false;
+
+        var pixelText = new FlxText(allowPixelCheck.x + 20, 0);
+        pixelText.text = "Allow Pixel?";
+		pixelText.y = allowPixelCheck.y + 2.5;
+		ui.add(pixelText);
+
+        ui.add(allowPixelCheck);
     }
 
     var redEnabled:Bool = true;

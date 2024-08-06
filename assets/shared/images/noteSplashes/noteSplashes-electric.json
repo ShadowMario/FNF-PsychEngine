@@ -57,7 +57,8 @@
 			"name": "green"
 		}
 	},
-	"affectedByShader": true,
+	"allowRGB": true,
+	"allowPixel": true,
 	"rgb": [
 		{
 			"b": 0,

@@ -113,6 +113,7 @@
 			"indices": []
 		}
 	},
-	"affectedByShader": true,
+	"allowRGB": true,
+	"allowPixel": true,
 	"scale": 1
 }

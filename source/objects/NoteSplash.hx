@@ -26,7 +26,8 @@ private typedef NoteSplashAnim = {
 typedef NoteSplashConfig = {
 	animations:Map<String, NoteSplashAnim>,
 	scale:Float,
-	affectedByShader:Bool,
+	allowRGB:Bool,
+	allowPixel:Bool,
 	rgb:Array<Null<RGB>>
 }
 
@@ -86,7 +87,8 @@ class NoteSplash extends FlxSprite
 				var tempConfig:NoteSplashConfig = {
 					animations: new Map(),
 					scale: config.scale,
-					affectedByShader: config.affectedByShader,
+					allowRGB: config.allowRGB,
+					allowPixel: config.allowPixel,
 					rgb: config.rgb
 				}
 
@@ -161,7 +163,7 @@ class NoteSplash extends FlxSprite
 		playDefaultAnim();
 
 		var tempShader:RGBPalette = null;
-		if (config.affectedByShader)
+		if (config.allowRGB)
 		{
 			if (note == null)
 				note = new Note(0, noteData);
@@ -217,8 +219,9 @@ class NoteSplash extends FlxSprite
 				else useDefault();
 			}
 		}
-		else tempShader = new RGBPalette();
 		rgbShader.copyValues(tempShader);
+
+		if(!config.allowPixel) rgbShader.pixelAmount = 1;
 
 		var conf = config.animations.get(anim);
 		var offsets:Array<Float> = [0, 0];
@@ -279,7 +282,8 @@ class NoteSplash extends FlxSprite
 		return {
 			animations: new Map(),
 			scale: 1,
-			affectedByShader: true,
+			allowRGB: true,
+			allowPixel: true,
 			rgb: null
 		}
 	}
@@ -336,7 +340,7 @@ class PixelSplashShaderRef
 			}
 			shader.mult.value[0] = tempShader.shader.mult.value[0];
 		}
-		else shader.mult.value[0] = 0.0;
+		else enabled = false;
 	}
 
 	public function set_enabled(value:Bool)
