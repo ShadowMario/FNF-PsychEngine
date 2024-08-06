@@ -373,7 +373,7 @@ class NoteSplashEditorState extends MusicBeatState
 
         ui.add(allowRGBCheck);
 
-        var allowPixelCheck:PsychUICheckBox = new PsychUICheckBox(allowRGBCheck.x + 150, allowRGBCheck.y, "", 1);
+        var allowPixelCheck:PsychUICheckBox = new PsychUICheckBox(allowRGBCheck.x + 110, allowRGBCheck.y, "", 1);
         function check()
         {
             if (config != null)
