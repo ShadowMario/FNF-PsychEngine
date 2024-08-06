@@ -519,7 +519,7 @@ class FunkinLua {
 			}
 
 			if(leObj != null) {
-				var groupObj:FlxGroup = LuaUtils.getObjectDirectly(group);
+				var groupObj:FlxTypedGroup = LuaUtils.getObjectDirectly(group);
 				if (groupObj == null) groupObj = LuaUtils.getTargetInstance();
 
 				return groupObj.members.indexOf(leObj);
@@ -535,7 +535,7 @@ class FunkinLua {
 			}
 
 			if(leObj != null) {
-				var groupObj:FlxGroup = LuaUtils.getObjectDirectly(group);
+				var groupObj:FlxTypedGroup = LuaUtils.getObjectDirectly(group);
 				if (groupObj == null) groupObj = LuaUtils.getTargetInstance();
 
 				groupObj.remove(leObj, true);
