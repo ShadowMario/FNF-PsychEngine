@@ -7,7 +7,6 @@ import backend.animation.PsychAnimationController;
 import shaders.RGBPalette;
 
 import flixel.system.FlxAssets.FlxShader;
-import flixel.util.FlxColor;
 
 private typedef RGB = {
 	r:Null<Int>,
@@ -17,17 +16,16 @@ private typedef RGB = {
 
 private typedef NoteSplashAnim = {
 	name:String,
-	prefix:String,
-	maxFps:Int,
-	minFps:Int,
 	noteData:Int,
-	offsets:Array<Int>,
+	prefix:String,
 	indices:Array<Int>,
+	offsets:Array<Float>,
+	fps:Array<Int>
 }
 
 typedef NoteSplashConfig = {
 	animations:Map<String, NoteSplashAnim>,
-	scale:Array<Float>,
+	scale:Float,
 	affectedByShader:Bool,
 	rgb:Array<Null<RGB>>
 }
@@ -36,7 +34,7 @@ class NoteSplash extends FlxSprite
 {
 	public var skin:String;
 	public var config(default, set):NoteSplashConfig;
-	public static var DEFAULT_SKIN:String = "noteSplashes";
+	public static var DEFAULT_SKIN:String = "noteSplashes/noteSplashes";
 	public static var configs:Map<String, NoteSplashConfig> = new Map();
 
 	public var babyArrow:StrumNote;
@@ -69,15 +67,15 @@ class NoteSplash extends FlxSprite
 		
 		this.skin = skin;
 
-		try frames = Paths.getSparrowAtlas("noteSplashes/" + skin) catch (e) {
+		try frames = Paths.getSparrowAtlas(skin) catch (e) {
 			skin = DEFAULT_SKIN; // The splash skin was not found, return to the default
 			this.skin = skin;
-			try frames = Paths.getSparrowAtlas("noteSplashes/" + skin) catch (e) {
+			try frames = Paths.getSparrowAtlas(skin) catch (e) {
 				active = visible = false;
 			}
 		}
 
-		var path:String = 'images/noteSplashes/$skin.json';
+		var path:String = 'images/$skin.json';
 		if (configs.exists(path))
 			this.config = configs.get(path);
 		else if (Paths.fileExists(path, TEXT))
@@ -219,13 +217,9 @@ class NoteSplash extends FlxSprite
 							tempShader.b = color;
 					} 
 				}
-				else
-					useDefault();
+				else useDefault();
 			}
-			else 
-			{	
-				useDefault();
-			}
+			else useDefault();
 		}
 
 		if (config.affectedByShader)
@@ -234,7 +228,7 @@ class NoteSplash extends FlxSprite
 			rgbShader.reset();
 
 		var conf = config.animations.get(anim);
-		var offsets = [0, 0];
+		var offsets:Array<Float> = [0, 0];
 		if (conf != null)
 			offsets = conf.offsets;
 		if (offsets != null)
@@ -255,10 +249,10 @@ class NoteSplash extends FlxSprite
 
 		if(animation.curAnim != null && conf != null)
 		{
-			var minFps = conf.minFps;
+			var minFps = conf.fps[0];
 			if (minFps < 0)
 				minFps = 0;
-			var maxFps = conf.maxFps;
+			var maxFps = conf.fps[1];
 			if (maxFps < 0)
 				maxFps = 0;
 			animation.curAnim.frameRate = FlxG.random.int(minFps, maxFps);
@@ -288,18 +282,18 @@ class NoteSplash extends FlxSprite
 	{
 		return {
 			animations: new Map(),
-			scale: [1, 1],
+			scale: 1,
 			affectedByShader: true,
 			rgb: null
 		}
 	}
 
-	public static function addAnimationToConfig(scale:Array<Float>, config:NoteSplashConfig, name:String, prefix:String, minFps:Int, maxFps:Int, offsets:Array<Int>, indices:Array<Int>, noteData:Int):NoteSplashConfig
+	public static function addAnimationToConfig(config:NoteSplashConfig, scale:Float, name:String, prefix:String, fps:Array<Int>, offsets:Array<Float>, indices:Array<Int>, noteData:Int):NoteSplashConfig
 	{
 		if (config == null)
 			config = createConfig();
 
-		config.animations.set(name, {name: name, prefix: prefix, indices: indices, minFps: minFps, maxFps: maxFps, offsets: offsets, noteData: noteData});
+		config.animations.set(name, {name: name, noteData: noteData, prefix: prefix, indices: indices, offsets: offsets, fps: fps});
 		config.scale = scale;
 		return config;
 	}
@@ -317,13 +311,13 @@ class NoteSplash extends FlxSprite
 			if (i.prefix.length > 0 && key != null && key.length > 0)
 			{
 				if (i.indices != null && i.indices.length > 0 && key != null && key.length > 0)
-					animation.addByIndices(key, i.prefix, i.indices, "", i.maxFps, false);
+					animation.addByIndices(key, i.prefix, i.indices, "", i.fps[1], false);
 				else
-					animation.addByPrefix(key, i.prefix, i.maxFps, false);
+					animation.addByPrefix(key, i.prefix, i.fps[1], false);
 				noteDataMap.set(i.noteData, key);
 			}
 		}
-		scale.set(value.scale[0], value.scale[1]);
+		scale.set(value.scale, value.scale);
 		return config = value;
 	}
 }
