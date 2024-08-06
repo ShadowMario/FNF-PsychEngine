@@ -1,17 +1,8 @@
 package states;
 
-import backend.WeekData;
-
-import flixel.input.keyboard.FlxKey;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
-import haxe.Json;
-
-import openfl.Assets;
-import openfl.display.Bitmap;
-import openfl.display.BitmapData;
 
 import shaders.ColorSwap;
 
@@ -33,80 +24,56 @@ typedef TitleData =
 
 class TitleState extends MusicBeatState
 {
-	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
-	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
-	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
-
 	public static var initialized:Bool = false;
+	public static var updateVersion:String = '';
+	public static var closedState:Bool = false;
 
-	var blackScreen:FlxSprite;
-	var credGroup:FlxGroup;
-	var credTextShit:Alphabet;
-	var textGroup:FlxGroup;
-	var ngSpr:FlxSprite;
-	
-	var titleTextColors:Array<FlxColor> = [0xFF33FFFF, 0xFF3333CC];
-	var titleTextAlphas:Array<Float> = [1, .64];
+	static var playJingle:Bool = false;
 
-	var curWacky:Array<String> = [];
-
-	var wackyImage:FlxSprite;
-
-	#if TITLE_SCREEN_EASTER_EGG
-	var easterEggKeys:Array<String> = [
-		'SHADOW', 'RIVEREN', 'BBPANZU'
-	];
-	var allowedKeys:String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	var easterEggKeysBuffer:String = '';
-	#end
-
+	var introTextGroup:FlxGroup;
+	var wackyTexts:Array<String> = [];
 	var mustUpdate:Bool = false;
+	var ngSpr:FlxSprite;
 
 	var titleJSON:TitleData;
 
-	public static var updateVersion:String = '';
+	var titleTextColors:Array<FlxColor> = [0xFF33FFFF, 0xFF3333CC];
+	var titleTextAlphas:Array<Float> = [1, .64];
 
-	override public function create():Void
+	#if TITLE_SCREEN_EASTER_EGG
+	var easterEggKeys:Array<String> = ['SHADOW', 'RIVEREN', 'BBPANZU'];
+	var allowedKeys = ~/[A-Z]/;
+	var easterEggKeysBuffer:String = '';
+	#end
+
+	var logo:FlxSprite;
+	var titleGF:FlxSprite;
+	var titleText:FlxSprite;
+	var swagShader:ColorSwap = null;
+
+	var transitioning:Bool = false;
+	var newTitle:Bool = false;
+	var titleTimer:Float = 0;
+
+	var sickBeats:Int = 0; // Basically curBeat but won't be skipped if you hold the tab or resize the screen
+	var skippedIntro:Bool = false;
+
+	public override function create():Void
 	{
 		Paths.clearStoredMemory();
 		ClientPrefs.loadPrefs();
 		Language.reloadPhrases();
-
 		super.create();
-		
-		curWacky = FlxG.random.getObject(getIntroTextShit());
+		wackyTexts = FlxG.random.getObject(getIntroTexts());
 
-		#if CHECK_FOR_UPDATES
-		if(ClientPrefs.data.checkForUpdates && !closedState) {
-			trace('checking for update');
-			var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
+		#if CHECK_FOR_UPDATES checkUpdate(); #end
 
-			http.onData = function (data:String)
-			{
-				updateVersion = data.split('\n')[0].trim();
-				var curVersion:String = MainMenuState.psychEngineVersion.trim();
-				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
-				if(updateVersion != curVersion) {
-					trace('versions arent matching!');
-					mustUpdate = true;
-				}
-			}
-
-			http.onError = function (error) {
-				trace('error: $error');
-			}
-
-			http.request();
-		}
-		#end
-
-
-		// IGNORE THIS!!!
 		titleJSON = tjson.TJSON.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
 
 		#if TITLE_SCREEN_EASTER_EGG
-		if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
-		switch(FlxG.save.data.psychDevsEasterEgg.toUpperCase())
+		if (FlxG.save.data.psychDevsEasterEgg == null)
+			FlxG.save.data.psychDevsEasterEgg = ''; // Crash prevention
+		switch (FlxG.save.data.psychDevsEasterEgg.toUpperCase())
 		{
 			case 'SHADOW':
 				titleJSON.gfx += 210;
@@ -120,21 +87,15 @@ class TitleState extends MusicBeatState
 		}
 		#end
 
-		if(!initialized)
+		if (!initialized)
 		{
-			if(FlxG.save.data != null && FlxG.save.data.fullscreen)
-			{
+			if (FlxG.save.data != null && FlxG.save.data.fullscreen)
 				FlxG.fullscreen = FlxG.save.data.fullscreen;
-				//trace('LOADED FULLSCREEN SETTING!!');
-			}
-			persistentUpdate = true;
-			persistentDraw = true;
+			persistentUpdate = persistentDraw = true;
 		}
 
 		if (FlxG.save.data.weekCompleted != null)
-		{
 			StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
-		}
 
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
@@ -142,29 +103,67 @@ class TitleState extends MusicBeatState
 		#elseif CHARTING
 		MusicBeatState.switchState(new ChartingState());
 		#else
-		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
+		if (FlxG.save.data.flashing == null && !FlashingState.leftState)
+		{
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new FlashingState());
-		} else {
+		}
+		else
+		{
 			if (initialized)
 				startIntro();
 			else
-			{
-				new FlxTimer().start(1, function(tmr:FlxTimer)
-				{
-					startIntro();
-				});
-			}
+				new FlxTimer().start(1, timer -> startIntro());
 		}
 		#end
 	}
 
-	var logoBl:FlxSprite;
-	var gfDance:FlxSprite;
-	var danceLeft:Bool = false;
-	var titleText:FlxSprite;
-	var swagShader:ColorSwap = null;
+	inline function getIntroTexts():Array<Array<String>>
+	{
+		#if MODS_ALLOWED
+		var firstArray:Array<String> = Mods.mergeAllTextsNamed('data/introText.txt');
+		#else
+		var fullText:String = Assets.getText(Paths.txt('introText'));
+		var firstArray:Array<String> = fullText.split('\n');
+		#end
+		var swagGoodArray:Array<Array<String>> = [];
+
+		for (i in firstArray)
+			swagGoodArray.push(i.split('--'));
+
+		return swagGoodArray;
+	}
+
+	#if CHECK_FOR_UPDATES
+	inline function checkUpdate():Void
+	{
+		if (ClientPrefs.data.checkForUpdates && !closedState)
+		{
+			trace('checking for update');
+			var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
+
+			http.onData = function(data:String)
+			{
+				updateVersion = data.split('\n')[0].trim();
+				var curVersion:String = MainMenuState.psychEngineVersion.trim();
+				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
+				if (updateVersion != curVersion)
+				{
+					trace('versions arent matching!');
+					mustUpdate = true;
+				}
+			}
+			http.onError = function(error)
+			{
+				trace('error: $error');
+			}
+
+			http.request();
+		}
+	}
+	#end
+	/*
 
 	function startIntro()
 	{
@@ -303,30 +302,6 @@ class TitleState extends MusicBeatState
 		Paths.clearUnusedMemory();
 		// credGroup.add(credTextShit);
 	}
-
-	function getIntroTextShit():Array<Array<String>>
-	{
-		#if MODS_ALLOWED
-		var firstArray:Array<String> = Mods.mergeAllTextsNamed('data/introText.txt');
-		#else
-		var fullText:String = Assets.getText(Paths.txt('introText'));
-		var firstArray:Array<String> = fullText.split('\n');
-		#end
-		var swagGoodArray:Array<Array<String>> = [];
-
-		for (i in firstArray)
-		{
-			swagGoodArray.push(i.split('--'));
-		}
-
-		return swagGoodArray;
-	}
-
-	var transitioning:Bool = false;
-	private static var playJingle:Bool = false;
-	
-	var newTitle:Bool = false;
-	var titleTimer:Float = 0;
 
 	override function update(elapsed:Float)
 	{
@@ -504,8 +479,6 @@ class TitleState extends MusicBeatState
 		}
 	}
 
-	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
-	public static var closedState:Bool = false;
 	override function beatHit()
 	{
 		super.beatHit();
@@ -563,8 +536,7 @@ class TitleState extends MusicBeatState
 		}
 	}
 
-	var skippedIntro:Bool = false;
-	var increaseVolume:Bool = false;
+
 	function skipIntro():Void
 	{
 		if (!skippedIntro)
@@ -644,5 +616,5 @@ class TitleState extends MusicBeatState
 			}
 			skippedIntro = true;
 		}
-	}
+	}*/
 }
