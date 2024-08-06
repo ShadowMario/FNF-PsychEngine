@@ -119,7 +119,7 @@ class TitleState extends MusicBeatState
 		#end
 	}
 
-	inline function getIntroTexts():Array<Array<String>>
+	function getIntroTexts():Array<Array<String>>
 	{
 		#if MODS_ALLOWED
 		var firstArray:Array<String> = Mods.mergeAllTextsNamed('data/introText.txt');
@@ -136,7 +136,7 @@ class TitleState extends MusicBeatState
 	}
 
 	#if CHECK_FOR_UPDATES
-	inline function checkUpdate():Void
+	function checkUpdate():Void
 	{
 		if (ClientPrefs.data.checkForUpdates && !closedState)
 		{
