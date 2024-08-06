@@ -519,8 +519,8 @@ class FunkinLua {
 			}
 
 			if(leObj != null) {
-				var groupObj:FlxTypedGroup = LuaUtils.getObjectDirectly(group);
-				if (groupObj == null) groupObj = LuaUtils.getTargetInstance();
+				var groupObj:Dynamic = LuaUtils.getObjectDirectly(group);
+				if (groupObj == null || !Std.isOfType(groupObj, FlxTypedGroup)) groupObj = LuaUtils.getTargetInstance();
 
 				return groupObj.members.indexOf(leObj);
 			}
@@ -535,8 +535,8 @@ class FunkinLua {
 			}
 
 			if(leObj != null) {
-				var groupObj:FlxTypedGroup = LuaUtils.getObjectDirectly(group);
-				if (groupObj == null) groupObj = LuaUtils.getTargetInstance();
+				var groupObj:Dynamic = LuaUtils.getObjectDirectly(group);
+				if (groupObj == null || !Std.isOfType(groupObj, FlxTypedGroup)) groupObj = LuaUtils.getTargetInstance();
 
 				groupObj.remove(leObj, true);
 				groupObj.insert(position, leObj);
