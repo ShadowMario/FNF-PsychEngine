@@ -2673,8 +2673,6 @@ class PlayState extends MusicBeatState
 		});
 		plrInputNotes.sort(sortHitNotes);
 
-		var shouldMiss:Bool = !ClientPrefs.data.ghostTapping;
-
 		if (plrInputNotes.length != 0) { // slightly faster than doing `> 0` lol
 			var funnyNote:Note = plrInputNotes[0]; // front note
 
@@ -2694,10 +2692,11 @@ class PlayState extends MusicBeatState
 			}
 			goodNoteHit(funnyNote);
 		}
-		else if(shouldMiss)
+		else
 		{
 			callOnScripts('onGhostTap', [key]);
-			noteMissPress(key);
+			if (!ClientPrefs.data.ghostTapping)
+				noteMissPress(key);
 		}
 
 		// Needed for the  "Just the Two of Us" achievement.
