@@ -13,30 +13,37 @@ class Mall extends BaseStage
 		var bg:BGSprite = new BGSprite('christmas/bgWalls', -1000, -500, 0.2, 0.2);
 		bg.setGraphicSize(Std.int(bg.width * 0.8));
 		bg.updateHitbox();
+		bg.zIndex = 10;
 		add(bg);
 
 		if(!ClientPrefs.data.lowQuality) {
 			upperBoppers = new BGSprite('christmas/upperBop', -240, -90, 0.33, 0.33, ['Upper Crowd Bob']);
 			upperBoppers.setGraphicSize(Std.int(upperBoppers.width * 0.85));
 			upperBoppers.updateHitbox();
+			upperBoppers.zIndex = 20;
 			add(upperBoppers);
 
 			var bgEscalator:BGSprite = new BGSprite('christmas/bgEscalator', -1100, -600, 0.3, 0.3);
 			bgEscalator.setGraphicSize(Std.int(bgEscalator.width * 0.9));
 			bgEscalator.updateHitbox();
+			bgEscalator.zIndex = 30;
 			add(bgEscalator);
 		}
 
 		var tree:BGSprite = new BGSprite('christmas/christmasTree', 370, -250, 0.40, 0.40);
+		tree.zIndex = 40;
 		add(tree);
 
 		bottomBoppers = new MallCrowd(-300, 140);
+		bottomBoppers.zIndex = 50;
 		add(bottomBoppers);
 
 		var fgSnow:BGSprite = new BGSprite('christmas/fgSnow', -600, 700);
+		fgSnow.zIndex = 60;
 		add(fgSnow);
 
 		santa = new BGSprite('christmas/santa', -840, 150, 1, 1, ['santa idle in fear']);
+		santa.zIndex = 210;
 		add(santa);
 		Paths.sound('Lights_Shut_off');
 		setDefaultGF('gf-christmas');
@@ -87,6 +94,7 @@ class Mall extends BaseStage
 			var blackShit:FlxSprite = new FlxSprite(-FlxG.width * FlxG.camera.zoom,
 				-FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
 			blackShit.scrollFactor.set();
+			blackShit.zIndex = 1000;
 			add(blackShit);
 			camHUD.visible = false;
 

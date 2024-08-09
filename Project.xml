@@ -173,6 +173,9 @@
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
 
+	<!-- zIndex field -->
+	<haxeflag name="--macro" value="addMetadata('@:build(macro.FlxMacro.buildFlxBasic())', 'flixel.FlxBasic')" />
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<assets path='art/iconOG.png' rename='icon.png' if="linux" />
