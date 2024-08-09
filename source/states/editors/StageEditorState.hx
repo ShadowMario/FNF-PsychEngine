@@ -16,7 +16,7 @@ import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import psychlua.ModchartSprite;
-import flash.net.FileFilter;
+import openfl.net.FileFilter;
 
 import states.editors.content.Prompt;
 

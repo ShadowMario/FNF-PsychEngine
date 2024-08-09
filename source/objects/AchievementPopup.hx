@@ -3,7 +3,7 @@ package objects;
 #if ACHIEVEMENTS_ALLOWED
 import openfl.events.Event;
 import openfl.geom.Matrix;
-import flash.display.BitmapData;
+import openfl.display.BitmapData;
 import openfl.Lib;
 
 class AchievementPopup extends openfl.display.Sprite {
