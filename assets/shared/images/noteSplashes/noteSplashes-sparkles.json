@@ -6,11 +6,13 @@
 				68
 			],
 			"noteData": 1,
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "splash sparkles blue 10",
 			"indices": [],
-			"name": "blue",
-			"minFps": 22
+			"name": "blue"
 		},
 		"purple": {
 			"offsets": [
@@ -18,23 +20,27 @@
 				68
 			],
 			"noteData": 0,
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "splash sparkles purple 10",
 			"indices": [],
-			"name": "purple",
-			"minFps": 22
+			"name": "purple"
 		},
 		"green": {
 			"prefix": "splash sparkles green 10",
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"offsets": [
 				70,
 				70
 			],
 			"indices": [],
 			"name": "green",
-			"noteData": 2,
-			"minFps": 22
+			"noteData": 2
 		},
 		"red": {
 			"offsets": [
@@ -42,16 +48,16 @@
 				68
 			],
 			"noteData": 3,
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "splash sparkles red 10",
 			"indices": [],
-			"name": "red",
-			"minFps": 22
+			"name": "red"
 		}
 	},
-	"affectedByShader": true,
-	"scale": [
-		1,
-		1
-	]
+	"allowRGB": true,
+	"allowPixel": true,
+	"scale": 1
 }

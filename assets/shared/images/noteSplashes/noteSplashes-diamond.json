@@ -6,9 +6,11 @@
 				95,
 				68
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "note splash diamond purple 10",
-			"minFps": 22,
 			"name": "purple",
 			"indices": []
 		},
@@ -18,9 +20,11 @@
 				106,
 				60
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "note splash diamond blue 20",
-			"minFps": 22,
 			"name": "blue2",
 			"indices": []
 		},
@@ -30,9 +34,11 @@
 				106,
 				60
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "note splash diamond red 20",
-			"minFps": 22,
 			"name": "red2",
 			"indices": []
 		},
@@ -42,9 +48,11 @@
 				95,
 				68
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "note splash diamond red 10",
-			"minFps": 22,
 			"name": "red",
 			"indices": []
 		},
@@ -54,9 +62,11 @@
 				106,
 				60
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "note splash diamond purple 20",
-			"minFps": 22,
 			"name": "purple2",
 			"indices": []
 		},
@@ -66,9 +76,11 @@
 				95,
 				68
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "note splash diamond blue 10",
-			"minFps": 22,
 			"name": "blue",
 			"indices": []
 		},
@@ -78,9 +90,11 @@
 				106,
 				60
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "note splash diamond green 20",
-			"minFps": 22,
 			"name": "green2",
 			"indices": []
 		},
@@ -90,16 +104,16 @@
 				95,
 				68
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "note splash diamond green 10",
-			"minFps": 22,
 			"name": "green",
 			"indices": []
 		}
 	},
-	"affectedByShader": true,
-	"scale": [
-		1,
-		1
-	]
+	"allowRGB": true,
+	"allowPixel": true,
+	"scale": 1
 }
