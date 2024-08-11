@@ -92,6 +92,7 @@ class StoryMenuState extends MusicBeatState
 		add(grpLocks);
 
 		var num:Int = 0;
+		var itemTargetY:Float = 0;
 		for (i in 0...WeekData.weeksList.length)
 		{
 			var weekFile:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
@@ -102,7 +103,9 @@ class StoryMenuState extends MusicBeatState
 				WeekData.setDirectoryFromWeek(weekFile);
 				var weekThing:MenuItem = new MenuItem(0, bgSprite.y + 396, WeekData.weeksList[i]);
 				weekThing.y += ((weekThing.height + 20) * num);
-				weekThing.targetY = num;
+				weekThing.ID = num;
+				weekThing.targetY = itemTargetY;
+				itemTargetY += Math.max(weekThing.height, 110) + 10;
 				grpWeekText.add(weekThing);
 
 				weekThing.screenCenter(X);
@@ -135,7 +138,7 @@ class StoryMenuState extends MusicBeatState
 		difficultySelectors = new FlxGroup();
 		add(difficultySelectors);
 
-		leftArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width + 10, grpWeekText.members[0].y + 10);
+		leftArrow = new FlxSprite(850, grpWeekText.members[0].y + 10);
 		leftArrow.antialiasing = ClientPrefs.data.antialiasing;
 		leftArrow.frames = ui_tex;
 		leftArrow.animation.addByPrefix('idle', "arrow left");
@@ -193,8 +196,17 @@ class StoryMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if(WeekData.weeksList.length < 1)
+		if(grpWeekText.length < 1)
+		{
+			if (controls.BACK && !movedBack && !selectedWeek)
+			{
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				movedBack = true;
+				MusicBeatState.switchState(new MainMenuState());
+			}
+			super.update(elapsed);
 			return;
+		}
 
 		// scoreText.setFormat('VCR OSD Mono', 32);
 		if(intendedScore != lerpScore)
@@ -271,12 +283,13 @@ class StoryMenuState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+		
+		var offY:Float = grpWeekText.members[curWeek].targetY;
+		for (num => item in grpWeekText.members)
+			item.y = FlxMath.lerp(item.targetY - offY + 480, item.y, Math.exp(-elapsed * 10.2));
 
-		grpLocks.forEach(function(lock:FlxSprite)
-		{
-			lock.y = grpWeekText.members[lock.ID].y;
-			lock.visible = (lock.y > FlxG.height / 2);
-		});
+		for (num => lock in grpLocks.members)
+			lock.y = grpWeekText.members[lock.ID].y + grpWeekText.members[lock.ID].height/2 - lock.height/2;
 	}
 
 	var movedBack:Bool = false;
@@ -306,7 +319,7 @@ class StoryMenuState extends MusicBeatState
 	
 				PlayState.storyDifficulty = curDifficulty;
 	
-				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
+				Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
 				PlayState.campaignScore = 0;
 				PlayState.campaignMisses = 0;
 			}
@@ -405,9 +418,8 @@ class StoryMenuState extends MusicBeatState
 		var unlocked:Bool = !weekIsLocked(leWeek.fileName);
 		for (num => item in grpWeekText.members)
 		{
-			item.targetY = num - curWeek;
 			item.alpha = 0.6;
-			if (item.targetY == Std.int(0) && unlocked)
+			if (num - curWeek == 0 && unlocked)
 				item.alpha = 1;
 		}
 

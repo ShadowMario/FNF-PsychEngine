@@ -8,6 +8,9 @@ import haxe.Json;
 
 import objects.MenuCharacter;
 
+import states.editors.content.Prompt;
+import states.editors.content.PsychJsonPrinter;
+
 class MenuCharacterEditorState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
 {
 	var grpWeekCharacters:FlxTypedGroup<MenuCharacter>;
@@ -215,7 +218,7 @@ class MenuCharacterEditorState extends MusicBeatState implements PsychUIEventHan
 					MusicBeatState.switchState(new states.editors.MasterEditorMenu());
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				}
-				else openSubState(new ConfirmationPopupSubstate());
+				else openSubState(new ExitConfirmationPrompt());
 			}
 
 			var shiftMult:Int = 1;
@@ -330,7 +333,7 @@ class MenuCharacterEditorState extends MusicBeatState implements PsychUIEventHan
 	}
 
 	function saveCharacter() {
-		var data:String = haxe.Json.stringify(characterFile, "\t");
+		var data:String = PsychJsonPrinter.print(characterFile, ['position']);
 		if (data.length > 0)
 		{
 			var splittedImage:Array<String> = imageInputText.text.trim().split('_');

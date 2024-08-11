@@ -5,7 +5,7 @@ class PhillyGlowParticle extends FlxSprite
 	var lifeTime:Float = 0;
 	var decay:Float = 0;
 	var originalScale:Float = 1;
-	public function new(x:Float, y:Float, color:FlxColor)
+	public function new(x:Float = 0, y:Float = 0, color:FlxColor = FlxColor.WHITE)
 	{
 		super(x, y);
 		this.color = color;

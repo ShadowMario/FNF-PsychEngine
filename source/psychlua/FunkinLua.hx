@@ -94,6 +94,9 @@ class FunkinLua {
 		set('songLength', FlxG.sound.music.length);
 		set('songName', PlayState.SONG.song);
 		set('songPath', Paths.formatToSongPath(PlayState.SONG.song));
+		set('loadedSongName', Song.loadedSongName);
+		set('loadedSongPath', Paths.formatToSongPath(Song.loadedSongName));
+		set('chartPath', Song.chartPath);
 		set('startedCountdown', false);
 		set('curStage', PlayState.SONG.stage);
 
@@ -457,12 +460,12 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
 			if(name == null || name.length < 1)
-				name = PlayState.SONG.song;
+				name = Song.loadedSongName;
 			if (difficultyNum == -1)
 				difficultyNum = PlayState.storyDifficulty;
 
 			var poop = Highscore.formatSong(name, difficultyNum);
-			PlayState.SONG = Song.loadFromJson(poop, name);
+			Song.loadFromJson(poop, name);
 			PlayState.storyDifficulty = difficultyNum;
 			FlxG.state.persistentUpdate = false;
 			LoadingState.loadAndSwitchState(new PlayState());
@@ -721,7 +724,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "getMisses", function() return game.songMisses);
 		Lua_helper.add_callback(lua, "getHits", function() return game.songHits);
 
-		Lua_helper.add_callback(lua, "setHealth", function(value:Float = 0) return game.health = value);
+		Lua_helper.add_callback(lua, "setHealth", function(value:Float = 1) return game.health = value);
 		Lua_helper.add_callback(lua, "addHealth", function(value:Float = 0) game.health += value);
 		Lua_helper.add_callback(lua, "getHealth", function() return game.health);
 
@@ -876,11 +879,11 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setRatingFC", function(value:String) {
 			return game.ratingFC = value;
 		});
-		Lua_helper.add_callback(lua, "getMouseX", function(camera:String) {
+		Lua_helper.add_callback(lua, "getMouseX", function(camera:String = 'game') {
 			var cam:FlxCamera = LuaUtils.cameraFromString(camera);
 			return FlxG.mouse.getScreenPosition(cam).x;
 		});
-		Lua_helper.add_callback(lua, "getMouseY", function(camera:String) {
+		Lua_helper.add_callback(lua, "getMouseY", function(camera:String = 'game') {
 			var cam:FlxCamera = LuaUtils.cameraFromString(camera);
 			return FlxG.mouse.getScreenPosition(cam).y;
 		});
@@ -925,7 +928,7 @@ class FunkinLua {
 
 			return 0;
 		});
-		Lua_helper.add_callback(lua, "getScreenPositionX", function(variable:String, ?camera:String) {
+		Lua_helper.add_callback(lua, "getScreenPositionX", function(variable:String, ?camera:String = 'game') {
 			var split:Array<String> = variable.split('.');
 			var obj:FlxObject = LuaUtils.getObjectDirectly(split[0]);
 			var cam:FlxCamera = LuaUtils.cameraFromString(camera);
@@ -936,7 +939,7 @@ class FunkinLua {
 
 			return 0;
 		});
-		Lua_helper.add_callback(lua, "getScreenPositionY", function(variable:String, ?camera:String) {
+		Lua_helper.add_callback(lua, "getScreenPositionY", function(variable:String, ?camera:String = 'game') {
 			var split:Array<String> = variable.split('.');
 			var obj:FlxObject = LuaUtils.getObjectDirectly(split[0]);
 			var cam:FlxCamera = LuaUtils.cameraFromString(camera);
@@ -1187,7 +1190,7 @@ class FunkinLua {
 			game.timeBar.setColors(left_color, right_color);
 		});
 
-		Lua_helper.add_callback(lua, "setObjectCamera", function(obj:String, camera:String = '') {
+		Lua_helper.add_callback(lua, "setObjectCamera", function(obj:String, camera:String = 'game') {
 			var real = game.getLuaObject(obj);
 			if(real!=null){
 				real.cameras = [LuaUtils.cameraFromString(camera)];
@@ -1286,7 +1289,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "startDialogue", function(dialogueFile:String, music:String = null) {
 			var path:String;
-			var songPath:String = Paths.formatToSongPath(PlayState.SONG.song);
+			var songPath:String = Paths.formatToSongPath(Song.loadedSongName);
 			#if TRANSLATIONS_ALLOWED
 			path = Paths.getPath('data/$songPath/${dialogueFile}_${ClientPrefs.data.language}.json', TEXT);
 			#if MODS_ALLOWED

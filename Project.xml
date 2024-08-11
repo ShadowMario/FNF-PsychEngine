@@ -39,7 +39,7 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
-	<window width="1280" height="720" fps="" background="#000000" hardware="true" vsync="false" />
+	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false" />
 
 	<!--HTML5-specific-->
 	<window if="html5" resizable="true" />
@@ -90,6 +90,8 @@
 	<section if="BASE_GAME_FILES">
 		<assets path="assets/base_game" rename="assets" exclude="*.ogg" if="web"/>
 		<assets path="assets/base_game" rename="assets" exclude="*.mp3"  unless="web"/>
+		<haxelib name="grig.audio" if="BASE_GAME_FILES"/>
+		<haxelib name="funkin.vis" if="BASE_GAME_FILES"/>
 	</section>
 
 	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
@@ -101,13 +103,13 @@
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
-	<haxelib name="flixel" />
-	<haxelib name="flixel-addons" />
-	<haxelib name="tjson" />
+	<haxelib name="flixel" version="5.6.1"/>
+	<haxelib name="flixel-addons" version="3.2.2"/>
+	<haxelib name="tjson" version="1.4.0"/>
 
 	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
-	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
+	<haxelib name="SScript" if="HSCRIPT_ALLOWED" version="17.1.618"/>
 	<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/>
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate"/>
@@ -163,13 +165,15 @@
 	<!--Disable deprecated warnings-->
 	<haxedef name='no-deprecation-warnings' />
 
+	<!-- Haxe 4.3.0+: Enable pretty syntax errors and stuff. -->
+	<!-- pretty (haxeflixel default), indent, classic (haxe compiler default) -->
+	<haxedef name="message.reporting" value="pretty" />
+
 	<!--Macro fixes-->
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
 
 	<!-- _________________________________ Custom _______________________________ -->
-
-	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 
 	<assets path='art/iconOG.png' rename='icon.png' if="linux" />
 	

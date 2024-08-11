@@ -175,21 +175,23 @@ class ControlsSubState extends MusicBeatSubstate
 	}
 	function addKeyText(text:Alphabet, option:Array<Dynamic>, id:Int)
 	{
+		var keys:Array<Null<FlxKey>> = ClientPrefs.keyBinds.get(option[2]);
+		if(keys == null && onKeyboardMode)
+			keys = ClientPrefs.defaultKeys.get(option[2]).copy();
+
+		var gmpds:Array<Null<FlxGamepadInputID>> = ClientPrefs.gamepadBinds.get(option[2]);
+		if(gmpds == null && !onKeyboardMode)
+			gmpds = ClientPrefs.defaultButtons.get(option[2]).copy();
+
 		for (n in 0...2)
 		{
 			var textX:Float = 350 + n * 300;
 
 			var key:String = null;
 			if(onKeyboardMode)
-			{
-				var savKey:Array<Null<FlxKey>> = ClientPrefs.keyBinds.get(option[2]);
-				key = InputFormatter.getKeyName((savKey[n] != null) ? savKey[n] : NONE);
-			}
+				key = InputFormatter.getKeyName((keys[n] != null) ? keys[n] : NONE);
 			else
-			{
-				var savKey:Array<Null<FlxGamepadInputID>> = ClientPrefs.gamepadBinds.get(option[2]);
-				key = InputFormatter.getGamepadName((savKey[n] != null) ? savKey[n] : NONE);
-			}
+				key = InputFormatter.getGamepadName((gmpds[n] != null) ? gmpds[n] : NONE);
 
 			var attach:Alphabet = new Alphabet(textX + 210, 248, key, false);
 			attach.isMenuItem = true;
@@ -345,7 +347,10 @@ class ControlsSubState extends MusicBeatSubstate
 				holdingEsc += elapsed;
 				if(holdingEsc > 0.5)
 				{
-					ClientPrefs.keyBinds.get(curOption[2])[altNum] = NONE;
+					if (onKeyboardMode)
+						ClientPrefs.keyBinds.get(curOption[2])[altNum] = NONE;
+					else
+						ClientPrefs.gamepadBinds.get(curOption[2])[altNum] = NONE;
 					ClientPrefs.clearInvalidKeys(curOption[2]);
 					updateBind(Math.floor(curSelected * 2) + altNum, onKeyboardMode ? InputFormatter.getKeyName(NONE) : InputFormatter.getGamepadName(NONE));
 					FlxG.sound.play(Paths.sound('cancelMenu'));

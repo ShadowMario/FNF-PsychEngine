@@ -63,7 +63,6 @@ class Philly extends BaseStage
 				phillyWindowEvent.visible = false;
 				insert(members.indexOf(blammedLightsBlack) + 1, phillyWindowEvent);
 
-
 				phillyGlowGradient = new PhillyGlowGradient(-400, 225); //This shit was refusing to properly load FlxGradient so fuck it
 				phillyGlowGradient.visible = false;
 				insert(members.indexOf(blammedLightsBlack) + 1, phillyGlowGradient);
@@ -81,18 +80,11 @@ class Philly extends BaseStage
 		phillyWindow.alpha -= (Conductor.crochet / 1000) * FlxG.elapsed * 1.5;
 		if(phillyGlowParticles != null)
 		{
-			var i:Int = phillyGlowParticles.members.length-1;
-			while (i > 0)
+			phillyGlowParticles.forEachAlive(function(particle:PhillyGlowParticle)
 			{
-				var particle = phillyGlowParticles.members[i];
 				if(particle.alpha <= 0)
-				{
 					particle.kill();
-					phillyGlowParticles.remove(particle, true);
-					particle.destroy();
-				}
-				--i;
-			}
+			});
 		}
 	}
 
@@ -195,7 +187,10 @@ class Philly extends BaseStage
 							{
 								for (i in 0...particlesNum)
 								{
-									var particle:PhillyGlowParticle = new PhillyGlowParticle(-400 + width * i + FlxG.random.float(-width / 5, width / 5), phillyGlowGradient.originalY + 200 + (FlxG.random.float(0, 125) + j * 40), color);
+									var particle:PhillyGlowParticle = phillyGlowParticles.recycle(PhillyGlowParticle);
+									particle.x = -400 + width * i + FlxG.random.float(-width / 5, width / 5);
+									particle.y = phillyGlowGradient.originalY + 200 + (FlxG.random.float(0, 125) + j * 40);
+									particle.color = color;
 									phillyGlowParticles.add(particle);
 								}
 							}

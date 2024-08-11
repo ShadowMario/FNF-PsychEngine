@@ -46,18 +46,18 @@ class CreditsState extends MusicBeatState
 			["bb-panzu",			"bb",				"Ex-Programmer of Psych Engine",							"https://twitter.com/bbsub3",			"3E813A"],
 			[""],
 			["Engine Contributors"],
-			["CrowPlexus",			"crowplexus",		"Input System v3, Major Help and Other PRs",				"https://twitter.com/crowplexus",		"A1A1A1"],
-			["Kamizeta",			"face",				"Creator of Pessy, Psych Engine's mascot.",					"https://twitter.com/LittleCewwy",		"A1A1A1"],
-			["MaxNeton",			"face",				"Loading Screen Easter Egg Artist/Animator.",				"https://twitter.com/MaxNeton",			"A1A1A1"],
+			["crowplexus",			"crowplexus",		"Input System v3, Major Help and Other PRs",				"https://twitter.com/crowplexus",		"A1A1A1"],
+			["Kamizeta",			"kamizeta",			"Creator of Pessy, Psych Engine's mascot.",					"https://twitter.com/LittleCewwy",		"D21C11"],
+			["MaxNeton",			"maxneton",			"Loading Screen Easter Egg Artist/Animator.",				"https://twitter.com/MaxNeton",			"3C2E4E"],
 			["Keoiki",				"keoiki",			"Note Splash Animations and Latin Alphabet",				"https://twitter.com/Keoiki_",			"D2D2D2"],
 			["SqirraRNG",			"sqirra",			"Crash Handler and Base code for\nChart Editor's Waveform",	"https://twitter.com/gedehari",			"E1843A"],
 			["EliteMasterEric",		"mastereric",		"Runtime Shaders support and Other PRs",					"https://twitter.com/EliteMasterEric",	"FFBD40"],
 			["MAJigsaw77",			"majigsaw",			".MP4 Video Loader Library (hxvlc)",						"https://twitter.com/MAJigsaw77",		"A1A1A1"],
-			["Tahir",				"tahir",			"Implementing & Maintaining SScript and Other PRs",			"https://twitter.com/tahirk618",		"A04397"],
+			["Tahir Toprak Karabekiroglu",	"tahir",	"Implementing & Maintaining SScript and Other PRs",			"https://twitter.com/TahirKarabekir",	"A04397"],
 			["iFlicky",				"flicky",			"Composer of Psync and Tea Time\nMade the Dialogue Sounds",	"https://twitter.com/flicky_i",			"9E29CF"],
 			["KadeDev",				"kade",				"Fixed some issues on Chart Editor and Other PRs",			"https://twitter.com/kade0912",			"64A250"],
 			["superpowers04",		"superpowers04",	"LUA JIT Fork",												"https://twitter.com/superpowers04",	"B957ED"],
-			["CheemsAndFriends",	"face",				"Creator of FlxAnimate",									"https://twitter.com/CheemsnFriendos",	"A1A1A1"],
+			["CheemsAndFriends",	"cheems",			"Creator of FlxAnimate",									"https://twitter.com/CheemsnFriendos",	"E1E1E1"],
 			[""],
 			["Funkin' Crew"],
 			["ninjamuffin99",		"ninjamuffin99",	"Programmer of Friday Night Funkin'",						"https://twitter.com/ninja_muffin99",	"CF2D2D"],
@@ -69,30 +69,28 @@ class CreditsState extends MusicBeatState
 			["Join the Psych Ward!", "discord", "", "https://discord.gg/2ka77eMXDv", "5165F6"]
 		];
 		
-		for(i in defaultList) {
+		for(i in defaultList)
 			creditsStuff.push(i);
-		}
 	
-		for (i in 0...creditsStuff.length)
+		for (i => credit in creditsStuff)
 		{
 			var isSelectable:Bool = !unselectableCheck(i);
-			var optionText:Alphabet = new Alphabet(FlxG.width / 2, 300, creditsStuff[i][0], !isSelectable);
+			var optionText:Alphabet = new Alphabet(FlxG.width / 2, 300, credit[0], !isSelectable);
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
 			optionText.changeX = false;
 			optionText.snapToPosition();
 			grpOptions.add(optionText);
 
-			if(isSelectable) {
-				if(creditsStuff[i][5] != null)
-				{
-					Mods.currentModDirectory = creditsStuff[i][5];
-				}
+			if(isSelectable)
+			{
+				if(credit[5] != null)
+					Mods.currentModDirectory = credit[5];
 
 				var str:String = 'credits/missing_icon';
-				if(creditsStuff[i][1] != null && creditsStuff[i][1].length > 0)
+				if(credit[1] != null && credit[1].length > 0)
 				{
-					var fileName = 'credits/' + creditsStuff[i][1];
+					var fileName = 'credits/' + credit[1];
 					if (Paths.fileExists('images/$fileName.png', IMAGE)) str = fileName;
 					else if (Paths.fileExists('images/$fileName-pixel.png', IMAGE)) str = fileName + '-pixel';
 				}
@@ -255,11 +253,14 @@ class CreditsState extends MusicBeatState
 	#if MODS_ALLOWED
 	function pushModCreditsToList(folder:String)
 	{
-		var creditsFile:String = null;
-		if(folder != null && folder.trim().length > 0) creditsFile = Paths.mods(folder + '/data/credits.txt');
-		else creditsFile = Paths.mods('data/credits.txt');
+		var creditsFile:String = Paths.mods(folder + '/data/credits.txt');
+		
+		#if TRANSLATIONS_ALLOWED
+		//trace('/data/credits-${ClientPrefs.data.language}.txt');
+		var translatedCredits:String = Paths.mods(folder + '/data/credits-${ClientPrefs.data.language}.txt');
+		#end
 
-		if (FileSystem.exists(creditsFile))
+		if (#if TRANSLATIONS_ALLOWED (FileSystem.exists(translatedCredits) && (creditsFile = translatedCredits) == translatedCredits) || #end FileSystem.exists(creditsFile))
 		{
 			var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
 			for(i in firstarray)

@@ -66,8 +66,8 @@ class StageData {
 		var stage:String = '';
 		if(SONG.stage != null)
 			stage = SONG.stage;
-		else if(SONG.song != null)
-			stage = vanillaSongStage(Paths.formatToSongPath(SONG.song));
+		else if(Song.loadedSongName != null)
+			stage = vanillaSongStage(Paths.formatToSongPath(Song.loadedSongName));
 		else
 			stage = 'stage';
 

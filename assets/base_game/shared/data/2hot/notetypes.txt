@@ -1,0 +1,5 @@
+weekend-1-lightcan
+weekend-1-kickcan
+weekend-1-kneecan
+weekend-1-cockgun
+weekend-1-firegun

@@ -4,7 +4,6 @@ import haxe.Json;
 import lime.utils.Assets;
 
 import objects.Note;
-import backend.Section;
 
 typedef SwagSong =
 {
@@ -31,6 +30,17 @@ typedef SwagSong =
 
 	@:optional var arrowSkin:String;
 	@:optional var splashSkin:String;
+}
+
+typedef SwagSection =
+{
+	var sectionNotes:Array<Dynamic>;
+	var sectionBeats:Float;
+	var mustHitSection:Bool;
+	@:optional var altAnim:Bool;
+	@:optional var gfSection:Bool;
+	@:optional var bpm:Float;
+	@:optional var changeBPM:Bool;
 }
 
 class Song
@@ -110,33 +120,47 @@ class Song
 	}
 
 	public static var chartPath:String;
+	public static var loadedSongName:String;
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
+		if(folder == null) folder = jsonInput;
+		PlayState.SONG = getChart(jsonInput, folder);
+		loadedSongName = folder;
+		chartPath = _lastPath.replace('/', '\\');
+		StageData.loadDirectory(PlayState.SONG);
+		return PlayState.SONG;
+	}
+
+	static var _lastPath:String;
+	public static function getChart(jsonInput:String, ?folder:String):SwagSong
+	{
+		if(folder == null) folder = jsonInput;
 		var rawData:String = null;
 		
 		var formattedFolder:String = Paths.formatToSongPath(folder);
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
-		var path:String = Paths.json('$formattedFolder/$formattedSong');
+		_lastPath = Paths.json('$formattedFolder/$formattedSong');
 
 		#if MODS_ALLOWED
-		if(FileSystem.exists(path))
-			rawData = File.getContent(path);
+		if(FileSystem.exists(_lastPath))
+			rawData = File.getContent(_lastPath);
 		else
 		#end
-			rawData = Assets.getText(path);
+			rawData = Assets.getText(_lastPath);
 
-		var songJson:SwagSong = parseJSON(rawData, jsonInput);
-		if(jsonInput != 'events')
-		{
-			StageData.loadDirectory(songJson);
-			chartPath = path.replace('/', '\\');
-		}
-		return songJson;
+		return rawData != null ? parseJSON(rawData, jsonInput) : null;
 	}
 
 	public static function parseJSON(rawData:String, ?nameForError:String = null, ?convertTo:String = 'psych_v1'):SwagSong
 	{
-		var songJson:SwagSong = cast Json.parse(rawData).song;
+		var songJson:SwagSong = cast Json.parse(rawData);
+		if(Reflect.hasField(songJson, 'song'))
+		{
+			var subSong:SwagSong = Reflect.field(songJson, 'song');
+			if(subSong != null && Type.typeof(subSong) == TObject)
+				songJson = subSong;
+		}
+
 		if(convertTo != null && convertTo.length > 0)
 		{
 			var fmt:String = songJson.format;
