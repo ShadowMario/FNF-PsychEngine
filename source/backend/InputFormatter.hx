@@ -9,17 +9,61 @@ class InputFormatter {
 	public static function getKeyName(key:FlxKey):String {
 		switch (key) {
 			case BACKSPACE:
-				return "BckSpc";
+				return Language.getPhrase('flxkey_backspace', 'BckSpc');
 			case CONTROL:
-				return "Ctrl";
+				return Language.getPhrase('flxkey_control', 'Ctrl');
 			case ALT:
-				return "Alt";
+				return Language.getPhrase('flxkey_alt', 'Alt');
 			case CAPSLOCK:
-				return "Caps";
+				return Language.getPhrase('flxkey_capslock', 'Caps');
 			case PAGEUP:
-				return "PgUp";
+				return Language.getPhrase('flxkey_pageup', 'PgUp');
 			case PAGEDOWN:
-				return "PgDown";
+				return Language.getPhrase('flxkey_pagedown', 'PgDown');
+			case BREAK:
+				return Language.getPhrase('flxkey_break', 'Pause Brk');
+			case SCROLL_LOCK:
+				return Language.getPhrase('flxkey_scroll_lock', 'ScrLk');
+			case HOME:
+				return Language.getPhrase('flxkey_home', 'Home');
+			case END:
+				return Language.getPhrase('flxkey_end', 'End');
+			case INSERT:
+				return Language.getPhrase('flxkey_insert', 'Ins');
+			case ESCAPE:
+				return Language.getPhrase('flxkey_escape', 'Esc');
+			case DELETE:
+				return Language.getPhrase('flxkey_delete', 'Delete');
+			case BACKSLASH:
+				return Language.getPhrase('flxkey_backslash', 'Backslash');
+			case SLASH:
+				return Language.getPhrase('flxkey_slash', 'Slash');
+			case PRINTSCREEN:
+				return Language.getPhrase('flxkey_printscreen', 'PrtSrcn');
+			case GRAVEACCENT:
+				return Language.getPhrase('flxkey_graveaccent', 'Backtick');
+			case LEFT:
+				return Language.getPhrase('flxkey_left', 'Left');
+			case DOWN:
+				return Language.getPhrase('flxkey_down', 'Down');
+			case UP:
+				return Language.getPhrase('flxkey_up', 'Up');
+			case RIGHT:
+				return Language.getPhrase('flxkey_right', 'Right');
+			case SPACE:
+				return Language.getPhrase('flxkey_space', 'Space');
+			case MENU:
+				return Language.getPhrase('flxkey_menu', 'Menu');
+			case TAB:
+				return Language.getPhrase('flxkey_tab', 'Tab');
+			case SHIFT:
+				return Language.getPhrase('flxkey_shift', 'Shift');
+			case ENTER:
+				return Language.getPhrase('flxkey_enter', 'Enter');
+			case NUMLOCK:
+				return Language.getPhrase('flxkey_numlock', 'NumLk');
+			
+			// keys which dont need translation
 			case ZERO:
 				return "0";
 			case ONE:
@@ -68,26 +112,24 @@ class InputFormatter {
 				return "#-";
 			case NUMPADPERIOD:
 				return "#.";
+			case NUMPADSLASH:
+				return "#/";
+			case MINUS:
+				return "-";
+			case PLUS:
+				return "+";
 			case SEMICOLON:
 				return ";";
 			case COMMA:
 				return ",";
 			case PERIOD:
 				return ".";
-			//case SLASH:
-			//	return "/";
-			case GRAVEACCENT:
-				return "`";
 			case LBRACKET:
 				return "[";
-			//case BACKSLASH:
-			//	return "\\";
 			case RBRACKET:
 				return "]";
 			case QUOTE:
 				return "'";
-			case PRINTSCREEN:
-				return "PrtScrn";
 			case NONE:
 				return '---';
 			default:
