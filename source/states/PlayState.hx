@@ -1677,8 +1677,8 @@ class PlayState extends MusicBeatState
 			Conductor.songPosition += elapsed * 1000 * playbackRate;
 			if (Conductor.songPosition >= Conductor.offset)
 			{
+				Conductor.songPosition = FlxMath.lerp(FlxG.sound.music.time + Conductor.offset, Conductor.songPosition, Math.exp(-elapsed * 5));
 				var timeDiff:Float = Math.abs((FlxG.sound.music.time + Conductor.offset) - Conductor.songPosition);
-				Conductor.songPosition = FlxMath.lerp(FlxG.sound.music.time + Conductor.offset, Conductor.songPosition, Math.exp(-elapsed * 2.5));
 				if (timeDiff > 1000 * playbackRate)
 					Conductor.songPosition = Conductor.songPosition + 1000 * FlxMath.signOf(timeDiff);
 			}
