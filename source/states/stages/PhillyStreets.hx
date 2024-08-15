@@ -491,7 +491,7 @@ class PhillyStreets extends BaseStage
 		}
 
 		for (i in 1...5)
-			Paths.sound('shot$i');
+			Paths.sound('shots/shot$i');
 	}
 
 	function setupRainShader()
@@ -833,7 +833,7 @@ class PhillyStreets extends BaseStage
 				boyfriend.holdTimer = 0;
 				boyfriend.playAnim('shoot', true);
 				boyfriend.specialAnim = true;
-				FlxG.sound.play(Paths.soundRandom('shot', 1, 4));
+				FlxG.sound.play(Paths.soundRandom('shots/shot', 1, 4));
 				spraycan.playCanShot();
 
 				new FlxTimer().start(1/24, function(tmr)

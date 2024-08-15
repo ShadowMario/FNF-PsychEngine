@@ -92,10 +92,15 @@ class Mods
 	inline public static function directoriesWithFile(path:String, fileToFind:String, mods:Bool = true)
 	{
 		var foldersToCheck:Array<String> = [];
-		#if sys
 		if(FileSystem.exists(path + fileToFind))
-		#end
 			foldersToCheck.push(path + fileToFind);
+
+		if(Paths.currentLevel != null && Paths.currentLevel != path)
+		{
+			var pth:String = Paths.getFolderPath(fileToFind, Paths.currentLevel);
+			if(FileSystem.exists(pth))
+				foldersToCheck.push(pth);
+		}
 
 		#if MODS_ALLOWED
 		if(mods)

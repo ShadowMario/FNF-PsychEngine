@@ -20,7 +20,9 @@
 
 		"images/phillyBlazin/streetBlur": 3,
 		"images/phillyBlazin/skyBlur": 2,
-		"images/phillyBlazin/lightning": 2
+		"images/phillyBlazin/lightning": 2,
+
+		"sounds/lightning/": 3
 	},
 
 	"_editorMeta": {
