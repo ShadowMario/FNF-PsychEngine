@@ -660,7 +660,7 @@ class PsychUIInputText extends FlxSpriteGroup
 
 		var letter:String = String.fromCharCode(charCode);
 		letter = filter(letter);
-		if(letter.length > 0 && (maxLength == 0 || (text.length + letter.length) < maxLength))
+		if(letter.length > 0 && (maxLength == 0 || (text.length + letter.length) <= maxLength))
 		{
 			var lastText = text;
 			//trace('Drawing character: $letter');
