@@ -6,11 +6,13 @@
 				62
 			],
 			"noteData": 0,
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "splash electro purple 10",
 			"indices": [],
-			"name": "purple",
-			"minFps": 22
+			"name": "purple"
 		},
 		"blue": {
 			"offsets": [
@@ -18,11 +20,13 @@
 				62
 			],
 			"noteData": 1,
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "splash electro blue 10",
 			"indices": [],
-			"name": "blue",
-			"minFps": 22
+			"name": "blue"
 		},
 		"red": {
 			"offsets": [
@@ -30,11 +34,13 @@
 				62
 			],
 			"noteData": 3,
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "splash electro red 10",
 			"indices": [],
-			"name": "red",
-			"minFps": 22
+			"name": "red"
 		},
 		"green": {
 			"offsets": [
@@ -42,14 +48,17 @@
 				62
 			],
 			"noteData": 2,
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "splash electro green 10",
 			"indices": [],
-			"name": "green",
-			"minFps": 22
+			"name": "green"
 		}
 	},
-	"affectedByShader": true,
+	"allowRGB": true,
+	"allowPixel": true,
 	"rgb": [
 		{
 			"b": 0,
@@ -63,8 +72,5 @@
 		},
 		null
 	],
-	"scale": [
-		1,
-		1
-	]
+	"scale": 1
 }
