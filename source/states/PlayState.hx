@@ -1318,7 +1318,7 @@ class PlayState extends MusicBeatState
 				if (i != 0) {
 					// CLEAR ANY POSSIBLE GHOST NOTES
 					for (evilNote in unspawnNotes) {
-						var matches: Bool = noteColumn == evilNote.noteData && gottaHitNote == evilNote.mustPress;
+						var matches: Bool = (noteColumn == evilNote.noteData && gottaHitNote == evilNote.mustPress && evilNote.noteTyp == noteType);
 						if (matches && Math.abs(spawnTime - evilNote.strumTime) == 0.0) {
 							evilNote.destroy();
 							unspawnNotes.remove(evilNote);
