@@ -2243,7 +2243,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	var _lastGfSection:Null<Bool> = null;
 	function updateHeads(ignoreCheck:Bool = false):Void
 	{
-		var isGfSection:Bool = (PlayState.SONG.notes[curSec].gfSection == true);
+		var curSecData:SwagSection = PlayState.SONG.notes[curSec];
+		var isGfSection:Bool = (curSecData != null && curSecData.gfSection == true);
 		if(_lastGfSection == isGfSection && _lastSec == curSec && !ignoreCheck) return; //optimization
 
 		for (i in 0...GRID_PLAYERS)
@@ -2258,7 +2259,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		{
 			var iconP1:HealthIcon = icons[0];
 			var iconP2:HealthIcon = icons[1];
-			var mustHitSection:Bool = (PlayState.SONG.notes[curSec].mustHitSection == true);
+			var mustHitSection:Bool = (curSecData != null && curSecData.mustHitSection == true);
 			if (isGfSection)
 			{
 				if (mustHitSection)
