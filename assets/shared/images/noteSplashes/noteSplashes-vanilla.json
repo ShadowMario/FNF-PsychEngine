@@ -6,9 +6,11 @@
 				95,
 				105
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "vanilla splash purple 10",
-			"minFps": 22,
 			"name": "purple",
 			"indices": []
 		},
@@ -18,9 +20,11 @@
 				105,
 				90
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "vanilla splash blue 20",
-			"minFps": 22,
 			"name": "blue2",
 			"indices": []
 		},
@@ -30,9 +34,11 @@
 				95,
 				100
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "vanilla splash red 20",
-			"minFps": 22,
 			"name": "red2",
 			"indices": []
 		},
@@ -42,9 +48,11 @@
 				80,
 				100
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "vanilla splash red 10",
-			"minFps": 22,
 			"name": "red",
 			"indices": []
 		},
@@ -54,9 +62,11 @@
 				105,
 				90
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "vanilla splash purple 20",
-			"minFps": 22,
 			"name": "purple2",
 			"indices": []
 		},
@@ -66,9 +76,11 @@
 				87,
 				103
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "vanilla splash blue 10",
-			"minFps": 22,
 			"name": "blue",
 			"indices": []
 		},
@@ -78,9 +90,11 @@
 				94,
 				100
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "vanilla splash green 20",
-			"minFps": 22,
 			"name": "green2",
 			"indices": []
 		},
@@ -90,16 +104,16 @@
 				90,
 				100
 			],
-			"maxFps": 26,
+			"fps": [
+				22,
+				26
+			],
 			"prefix": "vanilla splash green 10",
-			"minFps": 22,
 			"name": "green",
 			"indices": []
 		}
 	},
-	"affectedByShader": true,
-	"scale": [
-		1,
-		1
-	]
+	"allowRGB": true,
+	"allowPixel": true,
+	"scale": 1
 }
