@@ -1668,9 +1668,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		{
 			fullPath = fullPath.replace('\\', '/');
 			var exePath = Sys.getCwd().replace('\\', '/');
-			if(fullPath.startsWith(exePath + 'assets/images/') #if MODS_ALLOWED || (fullPath.startsWith(exePath + 'mods/') && fullPath.contains('/images/')) #end)
+			if((fullPath.startsWith(exePath + 'assets/') #if MODS_ALLOWED || fullPath.startsWith(exePath + 'mods/') #end) && fullPath.contains('/images/'))
 			{
-
 				var imageToLoad:String = fullPath.substring(fullPath.indexOf('/images/') + '/images/'.length, fullPath.indexOf('.'));
 				if(_makeNewSprite != null)
 				{
@@ -1703,7 +1702,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		}
 		_file = null;
 		#else
-		trace('File couldn't be loaded! You aren't on Desktop, are you?');
+		trace('File couldn\'t be loaded! You aren\'t on Desktop, are you?');
 		#end
 	}
 
