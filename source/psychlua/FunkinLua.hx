@@ -31,7 +31,7 @@ import substates.GameOverSubstate;
 
 import psychlua.LuaUtils;
 import psychlua.LuaUtils.LuaTweenOptions;
-#if SScript
+#if HSCRIPT_ALLOWED
 import psychlua.HScript;
 #end
 import psychlua.DebugLuaText;
