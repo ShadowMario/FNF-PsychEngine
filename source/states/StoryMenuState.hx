@@ -48,6 +48,7 @@ class StoryMenuState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		persistentUpdate = persistentDraw = true;
 		PlayState.isStoryMode = true;
 		WeekData.reloadWeekFiles(true);
 
@@ -67,7 +68,6 @@ class StoryMenuState extends MusicBeatState
 		}
 
 		if(curWeek >= WeekData.weeksList.length) curWeek = 0;
-		persistentUpdate = persistentDraw = true;
 
 		scoreText = new FlxText(10, 10, 0, Language.getPhrase('week_score', 'WEEK SCORE: {1}', [lerpScore]), 36);
 		scoreText.setFormat("VCR OSD Mono", 32);
