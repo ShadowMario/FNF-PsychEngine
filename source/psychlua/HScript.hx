@@ -431,6 +431,11 @@ class HScript extends Iris
 	}
 	#end
 
+	override public function set(name:String, value:Dynamic, allowOverride:Bool = false):Void {
+		// should always override by default
+		super.set(name, value, true);
+	}
+
 	/*override function irisPrint(v):Void
 	{
 		FunkinLua.luaTrace('ERROR (${this.origin}:${interp.posInfos().lineNumber}): ${v}');
