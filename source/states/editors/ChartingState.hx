@@ -502,6 +502,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			"Shift + Click - Select/Unselect Note(s)",
 			"Right Click - Selection Box",
 			"",
+			"R - Reset Section",
 			"Z/X - Zoom in/out",
 			"Left/Right - Change Snap",
 			#if FLX_PITCH
@@ -876,6 +877,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 							Conductor.songPosition = FlxG.sound.music.time = cachedSectionTimes[curSec] + 0.000001;
 						}
 					}
+				}
+				else if(FlxG.keys.justPressed.R)
+				{
+					Conductor.songPosition = FlxG.sound.music.time = cachedSectionTimes[curSec] + (curSec > 0 ? 0.000001 : 0);
 				}
 				else if(FlxG.keys.pressed.W != FlxG.keys.pressed.S || FlxG.mouse.wheel != 0)
 				{
