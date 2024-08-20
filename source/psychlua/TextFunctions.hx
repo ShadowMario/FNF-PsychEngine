@@ -18,7 +18,7 @@ class TextFunctions
 		});
 
 		Lua_helper.add_callback(lua, "setTextString", function(tag:String, text:String) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				obj.text = text;
@@ -28,7 +28,7 @@ class TextFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "setTextSize", function(tag:String, size:Int) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				obj.size = size;
@@ -38,7 +38,7 @@ class TextFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "setTextWidth", function(tag:String, width:Float) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				obj.fieldWidth = width;
@@ -48,7 +48,7 @@ class TextFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "setTextHeight", function(tag:String, height:Float) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				obj.fieldHeight = height;
@@ -58,7 +58,7 @@ class TextFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "setTextAutoSize", function(tag:String, value:Bool) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				obj.autoSize = value;
@@ -68,7 +68,7 @@ class TextFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Float, color:String, ?style:String = 'outline') {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				CoolUtil.setTextBorderFromString(obj, (size > 0 ? style : 'none'));
@@ -82,7 +82,7 @@ class TextFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "setTextColor", function(tag:String, color:String) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				obj.color = CoolUtil.colorFromString(color);
@@ -92,7 +92,7 @@ class TextFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "setTextFont", function(tag:String, newFont:String) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				obj.font = Paths.font(newFont);
@@ -102,7 +102,7 @@ class TextFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "setTextItalic", function(tag:String, italic:Bool) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				obj.italic = italic;
@@ -112,7 +112,7 @@ class TextFunctions
 			return false;
 		});
 		Lua_helper.add_callback(lua, "setTextAlignment", function(tag:String, alignment:String = 'left') {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				obj.alignment = LEFT;
@@ -130,7 +130,7 @@ class TextFunctions
 		});
 
 		Lua_helper.add_callback(lua, "getTextString", function(tag:String) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null && obj.text != null)
 			{
 				return obj.text;
@@ -139,7 +139,7 @@ class TextFunctions
 			return null;
 		});
 		Lua_helper.add_callback(lua, "getTextSize", function(tag:String) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				return obj.size;
@@ -148,7 +148,7 @@ class TextFunctions
 			return -1;
 		});
 		Lua_helper.add_callback(lua, "getTextFont", function(tag:String) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				return obj.font;
@@ -157,7 +157,7 @@ class TextFunctions
 			return null;
 		});
 		Lua_helper.add_callback(lua, "getTextWidth", function(tag:String) {
-			var obj:FlxText = MusicBeatState.getVariables().get(tag);
+			var obj:FlxText = LuaUtils.getObjectDirectly(tag);
 			if(obj != null)
 			{
 				return obj.fieldWidth;
