@@ -7,8 +7,7 @@ class FlxAnimateFunctions
 {
 	public static function implement(funk:FunkinLua)
 	{
-		var lua:State = funk.lua;
-		Lua_helper.add_callback(lua, "makeFlxAnimateSprite", function(tag:String, ?x:Float = 0, ?y:Float = 0, ?loadFolder:String = null) {
+		funk.set("makeFlxAnimateSprite", function(tag:String, ?x:Float = 0, ?y:Float = 0, ?loadFolder:String = null) {
 			tag = tag.replace('.', '');
 			var lastSprite = MusicBeatState.getVariables().get(tag);
 			if(lastSprite != null)
@@ -24,12 +23,12 @@ class FlxAnimateFunctions
 			mySprite.active = true;
 		});
 
-		Lua_helper.add_callback(lua, "loadAnimateAtlas", function(tag:String, folderOrImg:Dynamic, ?spriteJson:Dynamic = null, ?animationJson:Dynamic = null) {
+		funk.set("loadAnimateAtlas", function(tag:String, folderOrImg:Dynamic, ?spriteJson:Dynamic = null, ?animationJson:Dynamic = null) {
 			var spr:FlxAnimate = MusicBeatState.getVariables().get(tag);
 			if(spr != null) Paths.loadAnimateAtlas(spr, folderOrImg, spriteJson, animationJson);
 		});
 		
-		Lua_helper.add_callback(lua, "addAnimationBySymbol", function(tag:String, name:String, symbol:String, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0)
+		funk.set("addAnimationBySymbol", function(tag:String, name:String, symbol:String, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0)
 		{
 			var obj:FlxAnimate = cast MusicBeatState.getVariables().get(tag);
 			if(obj == null) return false;
@@ -44,7 +43,7 @@ class FlxAnimateFunctions
 			return true;
 		});
 
-		Lua_helper.add_callback(lua, "addAnimationBySymbolIndices", function(tag:String, name:String, symbol:String, ?indices:Any = null, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0)
+		funk.set("addAnimationBySymbolIndices", function(tag:String, name:String, symbol:String, ?indices:Any = null, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0)
 		{
 			var obj:FlxAnimate = cast MusicBeatState.getVariables().get(tag);
 			if(obj == null) return false;

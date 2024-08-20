@@ -4,8 +4,7 @@ class TextFunctions
 {
 	public static function implement(funk:FunkinLua)
 	{
-		var lua = funk.lua;
-		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
+		funk.set("makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
 			tag = tag.replace('.', '');
 
 			LuaUtils.destroyObject(tag);
@@ -17,7 +16,7 @@ class TextFunctions
 			MusicBeatState.getVariables().set(tag, leText);
 		});
 
-		Lua_helper.add_callback(lua, "setTextString", function(tag:String, text:String) {
+		funk.set("setTextString", function(tag:String, text:String) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -27,7 +26,7 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextString: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextSize", function(tag:String, size:Int) {
+		funk.set("setTextSize", function(tag:String, size:Int) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -37,7 +36,7 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextSize: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextWidth", function(tag:String, width:Float) {
+		funk.set("setTextWidth", function(tag:String, width:Float) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -47,7 +46,7 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextWidth: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextHeight", function(tag:String, height:Float) {
+		funk.set("setTextHeight", function(tag:String, height:Float) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -57,7 +56,7 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextHeight: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextAutoSize", function(tag:String, value:Bool) {
+		funk.set("setTextAutoSize", function(tag:String, value:Bool) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -67,7 +66,7 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextAutoSize: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextBorder", function(tag:String, size:Float, color:String, ?style:String = 'outline') {
+		funk.set("setTextBorder", function(tag:String, size:Float, color:String, ?style:String = 'outline') {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -81,7 +80,7 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextBorder: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextColor", function(tag:String, color:String) {
+		funk.set("setTextColor", function(tag:String, color:String) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -91,7 +90,7 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextColor: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextFont", function(tag:String, newFont:String) {
+		funk.set("setTextFont", function(tag:String, newFont:String) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -101,7 +100,7 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextFont: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextItalic", function(tag:String, italic:Bool) {
+		funk.set("setTextItalic", function(tag:String, italic:Bool) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -111,7 +110,7 @@ class TextFunctions
 			FunkinLua.luaTrace("setTextItalic: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "setTextAlignment", function(tag:String, alignment:String = 'left') {
+		funk.set("setTextAlignment", function(tag:String, alignment:String = 'left') {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -129,7 +128,7 @@ class TextFunctions
 			return false;
 		});
 
-		Lua_helper.add_callback(lua, "getTextString", function(tag:String) {
+		funk.set("getTextString", function(tag:String) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null && obj.text != null)
 			{
@@ -138,7 +137,7 @@ class TextFunctions
 			FunkinLua.luaTrace("getTextString: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return null;
 		});
-		Lua_helper.add_callback(lua, "getTextSize", function(tag:String) {
+		funk.set("getTextSize", function(tag:String) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -147,7 +146,7 @@ class TextFunctions
 			FunkinLua.luaTrace("getTextSize: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return -1;
 		});
-		Lua_helper.add_callback(lua, "getTextFont", function(tag:String) {
+		funk.set("getTextFont", function(tag:String) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -156,7 +155,7 @@ class TextFunctions
 			FunkinLua.luaTrace("getTextFont: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
 			return null;
 		});
-		Lua_helper.add_callback(lua, "getTextWidth", function(tag:String) {
+		funk.set("getTextWidth", function(tag:String) {
 			var obj:FlxText = MusicBeatState.getVariables().get(tag);
 			if(obj != null)
 			{
@@ -166,11 +165,11 @@ class TextFunctions
 			return 0;
 		});
 
-		Lua_helper.add_callback(lua, "addLuaText", function(tag:String) {
+		funk.set("addLuaText", function(tag:String) {
 			var text:FlxText = MusicBeatState.getVariables().get(tag);
 			if(text != null) LuaUtils.getTargetInstance().add(text);
 		});
-		Lua_helper.add_callback(lua, "removeLuaText", function(tag:String, destroy:Bool = true) {
+		funk.set("removeLuaText", function(tag:String, destroy:Bool = true) {
 			var variables = MusicBeatState.getVariables();
 			var text:FlxText = variables.get(tag);
 			if(text == null) return;
