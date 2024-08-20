@@ -92,11 +92,11 @@ class Language
 
 	#if LUA_ALLOWED
 	public static function addLuaCallbacks(funk:psychlua.FunkinLua) {
-		"getTranslationPhrase", function(key:String, ?defaultPhrase:String, ?values:Array<Dynamic> = null) {
+		funk.set("getTranslationPhrase", function(key:String, ?defaultPhrase:String, ?values:Array<Dynamic> = null) {
 			return getPhrase(key, defaultPhrase, values);
 		});
 
-		"getFileTranslation", function(key:String) {
+		funk.set("getFileTranslation", function(key:String) {
 			return getFileTranslation(key);
 		});
 	}
