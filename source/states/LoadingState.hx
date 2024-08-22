@@ -6,7 +6,10 @@ import openfl.display.BitmapData;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import flixel.graphics.FlxGraphic;
+import flixel.system.FlxAssets;
 import flixel.FlxState;
+
+import flash.media.Sound;
 
 import backend.Song;
 import backend.StageData;
@@ -519,14 +522,13 @@ class LoadingState extends MusicBeatState
 		loaded = 0;
 
 		//then start threads
-		for (sound in soundsToPrepare) initThread(() -> Paths.sound(sound), 'sound $sound');
-		for (music in musicToPrepare) initThread(() -> Paths.music(music), 'music $music');
-		for (song in songsToPrepare) initThread(() -> Paths.returnSound(song, 'songs', true, false), 'song $song');
+		for (sound in soundsToPrepare) initThread(() -> preloadSound('sounds/$sound'), 'sound $sound');
+		for (music in musicToPrepare) initThread(() -> preloadSound('music/$music'), 'music $music');
+		for (song in songsToPrepare) initThread(() -> preloadSound(song, 'songs', true, false), 'song $song');
 
 		// for images, they get to have their own thread
 		for (image in imagesToPrepare)
 			Thread.create(() -> {
-				mutex.acquire();
 				try {
 					var requestKey:String = 'images/$image';
 					#if TRANSLATIONS_ALLOWED requestKey = Language.getFileTranslation(requestKey); #end
@@ -541,10 +543,31 @@ class LoadingState extends MusicBeatState
 							#if sys 
 							bitmap = BitmapData.fromFile(file);
 							#else
-							bitmap = OpenFlAssets.getBitmapData(file);
+							if (OpenFlAssets.cache.enabled && OpenFlAssets.cache.hasBitmapData(file)) 
+							{
+								bitmap = OpenFlAssets.cache.getBitmapData(file);
+								if (!OpenFlAssets.isValidBitmapData(bitmap))
+								{
+									bitmap = null;
+								}
+							}
+
+							if (bitmap == null) 
+							{
+								bitmap = OpenFlAssets.getBitmapData(file, false);
+							}
+							#end
+
+							mutex.acquire();
+							#if !sys 
+							if (OpenFlAssets.cache.enabled) 
+							{
+								OpenFlAssets.cache.setBitmapData(file, bitmap);
+							}
 							#end
 							requestedBitmaps.set(file, bitmap);
 							originalBitmapKeys.set(file, requestKey);
+							mutex.release();
 						}
 						else trace('no such image $image exists');
 					}
@@ -553,15 +576,15 @@ class LoadingState extends MusicBeatState
 				{
 					trace('ERROR! fail on preloading image $image');
 				}
-				mutex.release();
+				mutex.acquire();
 				loaded++;
+				mutex.release();
 			});
 	}
 
 	static function initThread(func:Void->Dynamic, traceData:String)
 	{
 		Thread.create(() -> {
-			mutex.acquire();
 			try {
 				if (func() != null) trace('finished preloading $traceData');
 				else trace('ERROR! fail on preloading $traceData');
@@ -569,8 +592,9 @@ class LoadingState extends MusicBeatState
 			catch(e:Dynamic) {
 				trace('ERROR! fail on preloading $traceData');
 			}
-			mutex.release();
+			mutex.acquire();
 			loaded++;
+			mutex.release();
 		});
 	}
 
@@ -630,5 +654,63 @@ class LoadingState extends MusicBeatState
 		{
 			trace(e.details());
 		}
+	}
+
+	// thread safe sound loader
+	static function preloadSound(key:String, ?path:String, ?modsAllowed:Bool = true, ?beepOnNull:Bool = true) 
+	{
+		var file:String = Paths.getPath(Language.getFileTranslation(key) + '.${Paths.SOUND_EXT}', SOUND, path, modsAllowed);
+
+		//trace('precaching sound: $file');
+		if(!Paths.currentTrackedSounds.exists(file))
+		{
+			#if sys
+			if(FileSystem.exists(file)) 
+			{
+				var sound = Sound.fromFile(file);
+				mutex.acquire();
+				Paths.currentTrackedSounds.set(file, sound);
+				mutex.release();
+			}
+			#else
+			if(OpenFlAssets.exists(file, SOUND)) 
+			{
+				var sound = null;
+
+				// useCache is set to false because of thread safety
+				if (OpenFlAssets.cache.enabled && OpenFlAssets.cache.hasSound(file)) 
+				{
+					sound = OpenFlAssets.cache.getSound(file);
+					if (!OpenFlAssets.isValidSound(sound)) {
+						sound = null;
+					}
+				}
+
+				if (sound == null) 
+				{
+					sound = OpenFlAssets.getSound(file, false);
+				}
+
+				mutex.acquire();
+				if (OpenFlAssets.cache.enabled) 
+				{
+					OpenFlAssets.cache.setSound(file, sound);
+				}
+				Paths.currentTrackedSounds.set(file, sound);
+				mutex.release();
+			}
+			#end
+			else if (beepOnNull)
+			{
+				trace('SOUND NOT FOUND: $key, PATH: $path');
+				FlxG.log.error('SOUND NOT FOUND: $key, PATH: $path');
+				return FlxAssets.getSound('flixel/sounds/beep');
+			}
+		}
+		mutex.acquire();
+		Paths.localTrackedAssets.push(file);
+		mutex.release();
+
+		return Paths.currentTrackedSounds.get(file);
 	}
 }
