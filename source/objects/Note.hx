@@ -446,9 +446,9 @@ class Note extends FlxSprite
 
 		if(isSustainNote)
 		{
-			animation.add(colArray[noteData] + 'holdend', [noteData + 4], 24, true);
-			animation.add(colArray[noteData] + 'hold', [noteData], 24, true);
-		} else animation.add(colArray[noteData] + 'Scroll', [noteData + 4], 24, true);
+			animation.add(colArray[noteData] + 'holdend', [noteData + 4], 12, true);
+			animation.add(colArray[noteData] + 'hold', [noteData], 12, true);
+		} else animation.add(colArray[noteData] + 'Scroll', [noteData + 4], 12, true);
 	}
 
 	function attemptToAddAnimationByPrefix(name:String, prefix:String, framerate:Float = 24, doLoop:Bool = true)
