@@ -187,7 +187,6 @@ class ReflectionFunctions
 
 	static function parseInstances(args:Array<Dynamic>)
 	{
-		if (args == null) return [];
 		for (i in 0...args.length)
 		{
 			var myArg:String = cast args[i];
@@ -200,8 +199,8 @@ class ReflectionFunctions
 					//trace('Op1: $myArg');
 					var lastIndex:Int = myArg.lastIndexOf('::');
 
-					var split:Array<String> = lastIndex > -1 ? myArg.substring(0, lastIndex).split('.') : myArg.split('.');
-					args[i] = (lastIndex > -1) ? Type.resolveClass(myArg.substring(lastIndex+2)) : PlayState.instance;
+					var split:Array<String> = myArg.split('.');
+					args[i] = (lastIndex > -1) ? Type.resolveClass(myArg.substring(0, lastIndex)) : PlayState.instance;
 					for (j in 0...split.length)
 					{
 						//trace('Op2: ${Type.getClass(args[i])}, ${split[j]}');
