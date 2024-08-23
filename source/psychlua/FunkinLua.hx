@@ -95,7 +95,7 @@ class FunkinLua {
 		set('songName', PlayState.SONG.song);
 		set('songPath', Paths.formatToSongPath(PlayState.SONG.song));
 		set('loadedSongName', Song.loadedSongName);
-		set('loadedSongName', Paths.formatToSongPath(Song.loadedSongName));
+		set('loadedSongPath', Paths.formatToSongPath(Song.loadedSongName));
 		set('chartPath', Song.chartPath);
 		set('startedCountdown', false);
 		set('curStage', PlayState.SONG.stage);
