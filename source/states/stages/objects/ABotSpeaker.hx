@@ -1,6 +1,6 @@
 package states.stages.objects;
 
-import backend.SpectralAnalyzerEx;
+import funkin.vis.dsp.SpectralAnalyzer;
 
 class ABotSpeaker extends FlxSpriteGroup
 {
@@ -14,7 +14,7 @@ class ABotSpeaker extends FlxSpriteGroup
 	public var eyes:FlxAnimate;
 	public var speaker:FlxAnimate;
 
-	var analyzer:SpectralAnalyzerEx;
+	var analyzer:SpectralAnalyzer;
 	var volumes:Array<Float> = [];
 
 	public var snd(default, set):FlxSound;
@@ -77,6 +77,7 @@ class ABotSpeaker extends FlxSpriteGroup
 		add(speaker);
 	}
 
+	var levels:Array<Bar>;
 	var levelMax:Int = 0;
 	override function update(elapsed:Float):Void
 	{
@@ -84,7 +85,7 @@ class ABotSpeaker extends FlxSpriteGroup
 		if(analyzer == null) return;
 
 		//var levels = analyzer.getLevels(); //this has a memory leak, so i made my own function for it
-		var levels = analyzer.recycledLevels();
+		levels = analyzer.getLevels(levels);
 		var oldLevelMax = levelMax;
 		levelMax = 0;
 		for (i in 0...Std.int(Math.min(vizSprites.length, levels.length)))
@@ -112,7 +113,7 @@ class ABotSpeaker extends FlxSpriteGroup
 	public function initAnalyzer()
 	{
 		@:privateAccess
-		analyzer = new SpectralAnalyzerEx(snd._channel.__audioSource, 7, 0.1, 40);
+		analyzer = new SpectralAnalyzer(snd._channel.__audioSource, 7, 0.1, 40);
 	
 		#if desktop
 		// On desktop it uses FFT stuff that isn't as optimized as the direct browser stuff we use on HTML5
