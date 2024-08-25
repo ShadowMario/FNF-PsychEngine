@@ -320,7 +320,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 					spr.scale.set(character.scale.x, character.scale.y);
 					spr.updateHitbox();
 
-					spr.offset.set(character.offset.x, character.offset.y);
+					spr.offset.set(character.offset.x * spr.scale.x, character.offset.y * spr.scale.y);
 					spr.visible = true;
 
 					var otherSpr:FlxSprite = (spr == animateGhost) ? ghost : animateGhost;
@@ -736,6 +736,7 @@ class CharacterEditorState extends MusicBeatState implements PsychUIEventHandler
 				character.jsonScale = sender.value;
 				character.scale.set(character.jsonScale, character.jsonScale);
 				character.updateHitbox();
+				character.playAnim(anims[curAnim].anim, true);
 				updatePointerPos(false);
 				unsavedProgress = true;
 			}

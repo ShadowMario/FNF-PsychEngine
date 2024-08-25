@@ -408,7 +408,7 @@ class Character extends FlxSprite
 		if (hasAnimation(AnimName))
 		{
 			var daOffset = animOffsets.get(AnimName);
-			offset.set(daOffset[0], daOffset[1]);
+			offset.set(daOffset[0] * scale.x, daOffset[1] * scale.y);
 		}
 		//else offset.set(0, 0);
 
