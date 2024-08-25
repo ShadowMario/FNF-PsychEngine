@@ -63,7 +63,11 @@ class StoryMenuState extends MusicBeatState
 			persistentUpdate = false;
 			MusicBeatState.switchState(new states.ErrorState("NO WEEKS ADDED FOR STORY MODE\n\nPress ACCEPT to go to the Week Editor Menu.\nPress BACK to return to Main Menu.",
 				function() MusicBeatState.switchState(new states.editors.WeekEditorState()),
-				function() MusicBeatState.switchState(new states.MainMenuState())));
+				function() {
+					FlxG.sound.play(Paths.sound('cancelMenu'));
+					movedBack = true;
+					MusicBeatState.switchState(new states.MainMenuState());
+				}));
 			return;
 		}
 
@@ -196,14 +200,8 @@ class StoryMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if(grpWeekText.length < 1)
+		if(WeekData.weeksList.length < 1)
 		{
-			if (controls.BACK && !movedBack && !selectedWeek)
-			{
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-				movedBack = true;
-				MusicBeatState.switchState(new MainMenuState());
-			}
 			super.update(elapsed);
 			return;
 		}
@@ -326,6 +324,9 @@ class StoryMenuState extends MusicBeatState
 			catch(e:Dynamic)
 			{
 				trace('ERROR! $e');
+				
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				selectedWeek = false;
 				return;
 			}
 			
