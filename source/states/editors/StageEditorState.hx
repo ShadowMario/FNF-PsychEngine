@@ -1,5 +1,6 @@
 package states.editors;
 
+import openfl.Assets;
 import backend.StageData;
 import backend.PsychCamera;
 import objects.Character;

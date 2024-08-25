@@ -1,5 +1,6 @@
 package states.editors;
 
+import openfl.Assets as OpenFlAssets;
 import flixel.FlxSubState;
 import flixel.util.FlxSave;
 import flixel.util.FlxSort;

@@ -1,5 +1,6 @@
 package states;
 
+import openfl.Assets;
 import backend.WeekData;
 import backend.Highscore;
 import backend.Song;
