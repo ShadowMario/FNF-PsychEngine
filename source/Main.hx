@@ -132,6 +132,16 @@ class Main extends Sprite
 		}
 		#end
 
+		#if !MODS_ALLOWED
+		final path:String = 'mods';
+		if (sys.FileSystem.exists(path) && sys.FileSystem.isDirectory(path))
+		{
+			var entries = sys.FileSystem.readDirectory(path);
+		  	for (entry in entries) sys.FileSystem.deleteFile(path + '/' + entry);
+			FileSystem.deleteDirectory(path);
+		}
+		#end
+
 		#if linux
 		var icon = Image.fromFile("icon.png");
 		Lib.current.stage.window.setIcon(icon);
