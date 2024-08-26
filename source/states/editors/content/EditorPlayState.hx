@@ -458,6 +458,7 @@ class EditorPlayState extends MusicBeatSubstate
 			finishTimer.destroy();
 
 		Conductor.songPosition = FlxG.sound.music.time = vocals.time = opponentVocals.time = startPos - Conductor.offset;
+		DiscordClient.changePresence('Chart Editor', 'Song: ' + PlayState.SONG.song);
 		close();
 	}
 	
