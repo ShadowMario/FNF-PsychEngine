@@ -789,6 +789,7 @@ class EditorPlayState extends MusicBeatSubstate
 			combo++;
 			if(combo > 9999) combo = 9999;
 			popUpScore(note);
+			updateScore();
 		}
 
 		var spr:StrumNote = playerStrums.members[note.noteData];
