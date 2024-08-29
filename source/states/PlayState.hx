@@ -356,7 +356,7 @@ class PlayState extends MusicBeatState
 			var sndi: Int = introSoundNames.indexOf(sndName);
 			introSoundNames[sndi] = sndName.trim();
 		}
-		trace(introSoundNames);
+		//trace(introSoundNames);
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
