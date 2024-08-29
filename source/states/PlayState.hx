@@ -238,6 +238,7 @@ class PlayState extends MusicBeatState
 	private var luaDebugGroup:FlxTypedGroup<psychlua.DebugLuaText>;
 	#end
 	public var introSoundsSuffix:String = '';
+	public var introSoundNames:Array<String> = [];
 
 	// Less laggy controls
 	private var keysArray:Array<String>;
@@ -345,6 +346,17 @@ class PlayState extends MusicBeatState
 		girlfriendCameraOffset = stageData.camera_girlfriend;
 		if(girlfriendCameraOffset == null)
 			girlfriendCameraOffset = [0, 0];
+
+		introSoundNames = stageData.introSounds;
+		if(introSoundNames == null || introSoundNames.length < 3)
+			introSoundNames = getCountdownSoundNames(stageUI); // safety measure
+		for(sndName in introSoundNames) {
+			if(sndName == null) continue;
+			// trim trailing spaces in the sound, just in case, JUST in case.
+			var sndi: Int = introSoundNames.indexOf(sndName);
+			introSoundNames[sndi] = sndName.trim();
+		}
+		trace(introSoundNames);
 
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
@@ -907,10 +919,8 @@ class PlayState extends MusicBeatState
 	function cacheCountdown()
 	{
 		var introSprites:Array<String> = getCountdownSpriteNames(stageUI);
-		var introSounds:Array<String> = getCountdownSoundNames(stageUI);
-		if(introSounds.length < 3) introSounds.resize(3);
 		for (asset in introSprites) Paths.image(asset);
-		for (sound in introSounds) Paths.sound(sound + introSoundsSuffix, true, false); // this should cover backwards compat
+		for (sound in introSoundNames) Paths.sound(sound + introSoundsSuffix, true, false); // this should cover backwards compat
 	}
 
 	function getCountdownSpriteNames(?givenUI: Null<String>):Array<String> {
@@ -924,11 +934,9 @@ class PlayState extends MusicBeatState
 
 	function getCountdownSoundNames(?givenUI: Null<String>):Array<String> {
 		if(givenUI == null) givenUI = stageUI;
-		var stageData:StageFile = StageData.getStageFile(curStage);
-		var introSounds:Array<String> = ["intro3", "intro2", "intro1", "introGo"];
-		if(stageData.introSounds != null) introSounds = stageData.introSounds;
-		return switch(givenUI) { // add custom ones here if you need to
-			default: introSounds;
+		var sounds: Array<String> = ["intro3", "intro2", "intro1", "introGo"];
+		return switch(givenUI) { // add custom ones here if you need to hardcode or something
+			default: sounds;
 		}
 	}
 
@@ -981,8 +989,6 @@ class PlayState extends MusicBeatState
 				characterBopper(tmr.loopsLeft);
 
 				var introSprites:Array<String> = getCountdownSpriteNames(stageUI);
-				var introSounds: Array<String> = getCountdownSoundNames(stageUI);
-				if(introSounds.length < 3) introSounds.resize(3); // safety measure
 				var antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage);
 				var tick:Countdown = THREE;
 
@@ -990,19 +996,19 @@ class PlayState extends MusicBeatState
 				{
 					case 0:
 						countdownPrepare = createCountdownSprite(introSprites[0], antialias);
-						CoolUtil.playSoundSafe(Paths.sound(introSounds[0] + introSoundsSuffix, true, false), 0.6);
+						CoolUtil.playSoundSafe(Paths.sound(introSoundNames[0] + introSoundsSuffix, true, false), 0.6);
 						tick = THREE;
 					case 1:
 						countdownReady = createCountdownSprite(introSprites[1], antialias);
-						CoolUtil.playSoundSafe(Paths.sound(introSounds[1] + introSoundsSuffix, true, false), 0.6);
+						CoolUtil.playSoundSafe(Paths.sound(introSoundNames[1] + introSoundsSuffix, true, false), 0.6);
 						tick = TWO;
 					case 2:
 						countdownSet = createCountdownSprite(introSprites[2], antialias);
-						CoolUtil.playSoundSafe(Paths.sound(introSounds[2] + introSoundsSuffix, true, false), 0.6);
+						CoolUtil.playSoundSafe(Paths.sound(introSoundNames[2] + introSoundsSuffix, true, false), 0.6);
 						tick = ONE;
 					case 3:
 						countdownGo = createCountdownSprite(introSprites[3], antialias);
-						CoolUtil.playSoundSafe(Paths.sound(introSounds[3] + introSoundsSuffix, true, false), 0.6);
+						CoolUtil.playSoundSafe(Paths.sound(introSoundNames[3] + introSoundsSuffix, true, false), 0.6);
 						tick = GO;
 					case 4:
 						tick = START;
