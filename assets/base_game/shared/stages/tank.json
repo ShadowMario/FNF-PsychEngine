@@ -2,7 +2,7 @@
 	"directory": "week7",
 	"defaultZoom": 0.9,
 	"stageUI": "",
-	"introSounds": ["intro3-pixel", "intro2-pixel", "intro1-pixel", "introGo-pixel"],
+	"introSounds": ["intro3", "intro2", "intro1", "introGo"],
 
 	"boyfriend": [810, 100],
 	"girlfriend": [200, 65],
