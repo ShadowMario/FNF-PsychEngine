@@ -2,6 +2,7 @@
 	"directory": "week6",
 	"defaultZoom": 1.05,
 	"stageUI": "pixel",
+	"introSounds": ["intro3-pixel", "intro2-pixel", "intro1-pixel", "introGo-pixel"],
 
 	"boyfriend": [970, 320],
 	"girlfriend": [580, 430],

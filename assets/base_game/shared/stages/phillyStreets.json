@@ -2,6 +2,7 @@
 	"directory": "weekend1",
 	"defaultZoom": 0.77,
 	"stageUI": "",
+	"introSounds": ["intro3", "intro2", "intro1", "introGo"],
 
 	"boyfriend": [1930, 450],
 	"girlfriend": [1175, 200],
