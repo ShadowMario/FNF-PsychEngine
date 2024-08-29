@@ -348,7 +348,7 @@ class PlayState extends MusicBeatState
 			girlfriendCameraOffset = [0, 0];
 
 		introSoundNames = stageData.introSounds;
-		if(introSoundNames == null || introSoundNames.length < 3)
+		if(introSoundNames == null || introSoundNames.length < 4)
 			introSoundNames = getCountdownSoundNames(stageUI); // safety measure
 		for(sndName in introSoundNames) {
 			if(sndName == null) continue;
