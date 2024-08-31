@@ -1007,8 +1007,8 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "setScrollFactor", function(obj:String, scrollX:Float, scrollY:Float) {
-			if(game.getLuaObject(obj,false)!=null) {
-				game.getLuaObject(obj,false).scrollFactor.set(scrollX, scrollY);
+			if(game.getLuaObject(obj) != null) {
+				game.getLuaObject(obj).scrollFactor.set(scrollX, scrollY);
 				return;
 			}
 
