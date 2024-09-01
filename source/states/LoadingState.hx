@@ -194,21 +194,23 @@ class LoadingState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('secret'));
 
 				pessy = new FlxSprite(700, 140);
+				pessy.frames = Paths.getSparrowAtlas('loading_screen/pessy');
+				pessy.animation.addByPrefix('run', 'run', 24, true);
+				pessy.animation.addByPrefix('spin', 'spin', 24, true);
+				pessy.antialiasing = ClientPrefs.data.antialiasing;
+				pessy.flipX = (logo.offset.x > 0);
+				pessy.x = FlxG.width + 200;
+				pessy.velocity.x = -1100;
+
 				new FlxTimer().start(0.01, function(tmr:FlxTimer) {
-					pessy.frames = Paths.getSparrowAtlas('loading_screen/pessy');
-					pessy.antialiasing = ClientPrefs.data.antialiasing;
-					pessy.flipX = (logo.offset.x > 0);
-					pessy.x = FlxG.width + 200;
-					pessy.velocity.x = -1100;
 					if(pessy.flipX)
 					{
 						pessy.x = -pessy.width - 200;
-						pessy.velocity.x = 1100;
+						pessy.velocity.x *= -1;
 					}
 		
-					pessy.animation.addByPrefix('run', 'run', 24, true);
-					pessy.animation.addByPrefix('spin', 'spin', 24, true);
 					pessy.animation.play('run', true);
+					Achievements.unlock('pessy_easter_egg');
 					
 					insert(members.indexOf(loadingText), pessy);
 					new FlxTimer().start(5, function(tmr:FlxTimer) canChangeState = true);
