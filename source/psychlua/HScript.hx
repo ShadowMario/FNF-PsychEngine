@@ -97,9 +97,9 @@ class HScript extends Iris
 		}
 		this.scriptStr = scriptThing;
 
+		this.varsToBring = varsToBring;
 		preset();
 		execute();
-		this.varsToBring = varsToBring;
 	}
 
 	var varsToBring(default, set):Any = null;
