@@ -20,11 +20,11 @@ typedef LuaTweenOptions = {
 
 class LuaUtils
 {
-	public static final Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
-	public static final Function_Continue:Dynamic = "##PSYCHLUA_FUNCTIONCONTINUE";
-	public static final Function_StopLua:Dynamic = "##PSYCHLUA_FUNCTIONSTOPLUA";
-	public static final Function_StopHScript:Dynamic = "##PSYCHLUA_FUNCTIONSTOPHSCRIPT";
-	public static final Function_StopAll:Dynamic = "##PSYCHLUA_FUNCTIONSTOPALL";
+	public static final Function_Stop:String = "##PSYCHLUA_FUNCTIONSTOP";
+	public static final Function_Continue:String = "##PSYCHLUA_FUNCTIONCONTINUE";
+	public static final Function_StopLua:String = "##PSYCHLUA_FUNCTIONSTOPLUA";
+	public static final Function_StopHScript:String = "##PSYCHLUA_FUNCTIONSTOPHSCRIPT";
+	public static final Function_StopAll:String = "##PSYCHLUA_FUNCTIONSTOPALL";
 
 	public static function getLuaTween(options:Dynamic)
 	{
