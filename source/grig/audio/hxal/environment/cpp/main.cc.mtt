@@ -1,0 +1,9 @@
+$$ include('cpp/hxal.h.mtt', {environment: environment}) $$
+class $$environment.descriptor.className$$
+{
+    private:
+    $$for (hvar in environment.descriptor.vars)$$
+    $$environment.CppEnvironment.cppTypeFromVarType(hvar.type)$$ $$hvar.name$$;
+    $$end$$
+    public:
+};
