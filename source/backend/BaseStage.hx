@@ -66,7 +66,7 @@ class BaseStage extends FlxBasic
 	public function create() {}
 	public function createPost() {}
 	//public function update(elapsed:Float) {}
-	public function countdownTick(count:BaseStage.Countdown, num:Int) {}
+	public function countdownTick(count:Countdown, num:Int) {}
 	public function startSong() {}
 
 	// FNF steps, beats and sections
