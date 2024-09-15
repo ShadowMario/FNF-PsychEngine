@@ -3345,7 +3345,7 @@ class PlayState extends MusicBeatState
 			try
 			{
 				var callValue = script.call(funcToCall, args);
-				var myValue:Dynamic = callValue.methodVal;
+				var myValue:Dynamic = callValue.signature;
 
 				// compiler fuckup fix
 				final stopHscript = myValue == LuaUtils.Function_StopHScript;
