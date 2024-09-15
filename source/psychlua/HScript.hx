@@ -346,7 +346,7 @@ class HScript extends Iris
 		return null;
 	}
 
-	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):IrisCall {
+	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic> = null):IrisCall {
 		if (funcToRun == null || !exists(funcToRun)) return null;
 		return call(funcToRun, funcArgs);
 	}
