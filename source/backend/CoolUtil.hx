@@ -12,6 +12,12 @@ class CoolUtil
 		return (m / snap);
 	}
 
+	public static function coolLerp(base:Float, target:Float, ratio:Float):Float
+		return base + cameraLerp(ratio) * (target - base);
+
+	public static function cameraLerp(lerp:Float):Float
+		return lerp * (FlxG.elapsed / (1 / 60));
+
 	inline public static function capitalize(text:String)
 		return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
 
