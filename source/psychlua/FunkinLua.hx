@@ -1344,7 +1344,7 @@ class FunkinLua {
 			{
 				if(FlxG.sound.music != null)
 					FlxG.sound.music.stop();
-			{
+			}
 			else
 			{
 				tag = LuaUtils.formatVariable('sound_$tag');
