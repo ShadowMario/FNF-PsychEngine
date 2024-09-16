@@ -11,6 +11,8 @@ import flixel.input.keyboard.FlxKey;
 import lime.utils.Assets;
 import lime.media.AudioBuffer;
 
+import openfl.utils.Assets as OpenFlAssets;
+
 import flash.media.Sound;
 import flash.geom.Rectangle;
 

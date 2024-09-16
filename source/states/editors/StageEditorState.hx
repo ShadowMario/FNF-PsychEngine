@@ -12,6 +12,7 @@ import flixel.math.FlxRect;
 import flixel.util.FlxDestroyUtil;
 import openfl.display.Sprite;
 
+import openfl.utils.Assets;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;

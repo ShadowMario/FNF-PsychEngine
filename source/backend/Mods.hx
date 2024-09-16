@@ -1,5 +1,6 @@
 package backend;
 
+import lime.utils.Assets;
 import haxe.Json;
 
 typedef ModsList = {

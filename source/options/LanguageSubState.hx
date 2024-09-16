@@ -1,5 +1,7 @@
 package options;
 
+import lime.utils.Assets;
+
 class LanguageSubState extends MusicBeatSubstate
 {
 	#if TRANSLATIONS_ALLOWED
