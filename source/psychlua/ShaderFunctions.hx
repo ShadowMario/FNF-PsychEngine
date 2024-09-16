@@ -9,11 +9,11 @@ class ShaderFunctions
 	public static function implement(funk:FunkinLua)
 	{
 		// shader shit
-		funk.addLocalCallback("initLuaShader", function(name:String) {
+		funk.addLocalCallback("initLuaShader", function(name:String, ?glslVersion:Int = 120) {
 			if(!ClientPrefs.data.shaders) return false;
 
 			#if (!flash && sys)
-			return funk.initLuaShader(name);
+			return funk.initLuaShader(name, glslVersion);
 			#else
 			FunkinLua.luaTrace("initLuaShader: Platform unsupported for Runtime Shaders!", false, false, FlxColor.RED);
 			#end
