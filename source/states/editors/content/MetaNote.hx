@@ -23,6 +23,7 @@ class MetaNote extends Note
 	{
 		this.songData[1] = v;
 		this.noteData = v % ChartingState.GRID_COLUMNS_PER_PLAYER;
+		this.mustPress = (v < ChartingState.GRID_COLUMNS_PER_PLAYER);
 		
 		if(!PlayState.isPixelStage)
 			loadNoteAnims();
