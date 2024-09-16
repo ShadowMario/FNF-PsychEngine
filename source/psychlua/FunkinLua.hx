@@ -1341,7 +1341,10 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "stopSound", function(tag:String) {
 			if(tag == null || tag.length < 1)
-				if(FlxG.sound.music != null) FlxG.sound.music.stop();
+			{
+				if(FlxG.sound.music != null)
+					FlxG.sound.music.stop();
+			}
 			else
 			{
 				tag = LuaUtils.formatVariable('sound_$tag');
@@ -1356,7 +1359,10 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "pauseSound", function(tag:String) {
 			if(tag == null || tag.length < 1)
-				if(FlxG.sound.music != null) FlxG.sound.music.pause();
+			{
+				if(FlxG.sound.music != null)
+					FlxG.sound.music.pause();
+			}
 			else
 			{
 				tag = LuaUtils.formatVariable('sound_$tag');
@@ -1366,7 +1372,10 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "resumeSound", function(tag:String) {
 			if(tag == null || tag.length < 1)
-				if(FlxG.sound.music != null) FlxG.sound.music.play();
+			{
+				if(FlxG.sound.music != null)
+					FlxG.sound.music.play();
+			}
 			else
 			{
 				tag = LuaUtils.formatVariable('sound_$tag');
