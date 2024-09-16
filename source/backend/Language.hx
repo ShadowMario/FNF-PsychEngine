@@ -77,8 +77,10 @@ class Language
 	// More optimized for file loading
 	inline public static function getFileTranslation(key:String)
 	{
+		#if TRANSLATIONS_ALLOWED
 		var str:String = phrases.get(key.trim().toLowerCase());
 		if(str != null) key = str;
+		#end
 		return key;
 	}
 	
