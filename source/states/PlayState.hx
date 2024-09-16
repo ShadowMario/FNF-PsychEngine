@@ -349,7 +349,7 @@ class PlayState extends MusicBeatState
 
 		introSoundNames = stageData.introSounds;
 		if(introSoundNames == null || introSoundNames.length < 4)
-			introSoundNames = getCountdownSoundNames(stageUI); // safety measure
+			introSoundNames = getDefaultCountdownSounds(stageUI); // in case stageData doesn't have any sounds
 		for(sndName in introSoundNames) {
 			if(sndName == null) continue;
 			// trim trailing spaces in the sound, just in case, JUST in case.
@@ -909,11 +909,14 @@ class PlayState extends MusicBeatState
 	var startTimer:FlxTimer;
 	var finishTimer:FlxTimer = null;
 
+	// I would make a countdown class to handle this better but honestly this works fine
+	// it's a BIT cluttered due to everything being in playstate, but it works @crowplexus
 	// For being able to mess with the sprites on Lua
 	public var countdownPrepare:FlxSprite; // new additional sprite, for "three" sound during countdown
-	public var countdownReady:FlxSprite;
-	public var countdownSet:FlxSprite;
-	public var countdownGo:FlxSprite;
+	public var countdownReady:FlxSprite; // two
+	public var countdownSet:FlxSprite; // one
+	public var countdownGo:FlxSprite; // go
+
 	public static var startOnTime:Float = 0;
 
 	function cacheCountdown()
@@ -932,11 +935,12 @@ class PlayState extends MusicBeatState
 		};
 	}
 
-	function getCountdownSoundNames(?givenUI: Null<String>):Array<String> {
+	function getDefaultCountdownSounds(?givenUI: Null<String>):Array<String> {
+		// function to prevent null strings for countdown sounds, if you need to hardcode anything
+		// this is your place to do it
 		if(givenUI == null) givenUI = stageUI;
-		var sounds: Array<String> = ["intro3", "intro2", "intro1", "introGo"];
 		return switch(givenUI) { // add custom ones here if you need to hardcode or something
-			default: sounds;
+			default: ["intro3", "intro2", "intro1", "introGo"];
 		}
 	}
 
