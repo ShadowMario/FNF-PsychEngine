@@ -15,6 +15,6 @@ haxelib install tjson
 haxelib git flxanimate https://github.com/ShadowMario/flxanimate dev
 haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
 haxelib git hxdiscord_rpc https://github.com/MAJigsaw77/hxdiscord_rpc
-haxelib git SScript https://github.com/Oren-LuckyJackpots/SScript-For-Psych 21.0.0
+haxelib git SScript https://github.com/Oren-LuckyJackpots/SScript-For-Psych 8.1.6
 echo Finished!
 pause
