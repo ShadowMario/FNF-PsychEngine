@@ -10,7 +10,7 @@ haxelib set flixel 5.6.2
 haxelib install flixel-addons
 haxelib install flixel-ui
 haxelib install flixel-tools
-haxelib install hxCodec
+haxelib install hxvlc
 haxelib install tjson
 haxelib git flxanimate https://github.com/ShadowMario/flxanimate dev
 haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
