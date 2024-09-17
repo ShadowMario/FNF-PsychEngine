@@ -29,6 +29,10 @@ import haxe.CallStack;
 import haxe.io.Path;
 #end
 
+#if VIDEOS_ALLOWED
+import hxvlc.util.Handle;
+#end
+
 #if linux
 @:cppInclude('./external/gamemode_client.h')
 @:cppFileCode('
@@ -134,6 +138,10 @@ class Main extends Sprite
 
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();
+		#end
+
+		#if VIDEOS_ALLOWED
+		Handle.init();
 		#end
 
 		// shader coords fix
