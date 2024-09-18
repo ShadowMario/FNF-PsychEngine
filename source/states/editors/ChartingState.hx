@@ -343,7 +343,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			if(columns > 0) gridStripes.push(columns);
 			columns += GRID_COLUMNS_PER_PLAYER;
 
-			var icon:HealthIcon = new HealthIcon();
+			var icon:HealthIcon = new HealthIcon('face', false, false); // 'face' because this is default face so no conflicts with it -Rom
 			icon.autoAdjustOffset = false;
 			icon.y = iconY;
 			icon.alpha = 0.6;
