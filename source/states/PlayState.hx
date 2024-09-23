@@ -3107,12 +3107,11 @@ class PlayState extends MusicBeatState
 		#end
 		stagesFunc(function(stage:BaseStage) stage.destroy());
 
-		if (CustomSubstate.instance != null)
+		if (subState != null)
 		{
-			closeSubstate();
-			CustomSubstate.instance.destroy();
-			CustomSubstate.instance = null;
-			subState = null;
+			closeSubState();
+			resetSubState();
+			if (CustomSubstate.instance != null) CustomSubstate.instance = null;
 		}
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
