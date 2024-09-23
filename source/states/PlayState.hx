@@ -46,6 +46,7 @@ import psychlua.*;
 #else
 import psychlua.LuaUtils;
 import psychlua.HScript;
+import psychlua.CustomSubstate;
 #end
 
 #if HSCRIPT_ALLOWED
@@ -3106,10 +3107,11 @@ class PlayState extends MusicBeatState
 		#end
 		stagesFunc(function(stage:BaseStage) stage.destroy());
 
-		if (subState != null)
+		if (CustomSubstate.instance != null)
 		{
 			closeSubState();
-			resetSubState();
+			CustomSubstate.instance.destroy();
+			subState = null;
 		}
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
