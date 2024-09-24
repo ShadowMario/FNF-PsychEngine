@@ -334,7 +334,7 @@ class EditorPlayState extends MusicBeatSubstate
 			swagNote.scrollFactor.set();
 			unspawnNotes.push(swagNote);
 
-			var roundSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
+			final roundSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
 			if(roundSus > 0)
 			{
 				for (susNote in 0...roundSus + 1)
