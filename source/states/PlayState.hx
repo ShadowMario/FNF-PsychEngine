@@ -252,7 +252,11 @@ class PlayState extends MusicBeatState
 	{
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
-		if(nextReloadAll) Paths.clearUnusedMemory();
+		if(nextReloadAll)
+		{
+			Paths.clearUnusedMemory();
+			Language.reloadPhrases();
+		}
 		nextReloadAll = false;
 
 		startCallback = startCountdown;

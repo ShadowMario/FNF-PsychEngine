@@ -34,7 +34,7 @@ class MusicBeatState extends FlxState
 		super.create();
 
 		if(!skip) {
-			openSubState(new CustomFadeTransition(0.6, true));
+			openSubState(new CustomFadeTransition(0.5, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 		timePassedOnState = 0;
@@ -156,7 +156,7 @@ class MusicBeatState extends FlxState
 		if(nextState == null)
 			nextState = FlxG.state;
 
-		FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
+		FlxG.state.openSubState(new CustomFadeTransition(0.5, false));
 		if(nextState == FlxG.state)
 			CustomFadeTransition.finishCallback = function() FlxG.resetState();
 		else
