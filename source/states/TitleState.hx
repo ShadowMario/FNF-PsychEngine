@@ -656,6 +656,8 @@ class TitleState extends MusicBeatState
 						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						transitioning = false;
+						if(easteregg == 'PESSY')
+							Achievements.unlock('pessy_easter_egg');
 					};
 				}
 			}
