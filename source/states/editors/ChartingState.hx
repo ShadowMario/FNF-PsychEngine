@@ -669,8 +669,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				var chartName:String = 'unknown';
 				if(Song.chartPath != null)
 				{
-					chartName = Song.chartPath.replace('/', '\\');
-					chartName = chartName.substring(chartName.lastIndexOf('\\')+1, chartName.lastIndexOf('.'));
+					chartName = Song.chartPath.replace('\\', '/');
+					chartName = chartName.substring(chartName.lastIndexOf('/')+1, chartName.lastIndexOf('.'));
 				}
 				chartName += DateTools.format(Date.now(), '_%Y-%m-%d_%H-%M-%S');
 				var songCopy:SwagSong = Reflect.copy(PlayState.SONG);
@@ -3025,8 +3025,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 			if(Song.chartPath != null && Song.chartPath.length > 0)
 			{
-				var parentFolder:String = Song.chartPath.replace('/', '\\');
-				parentFolder = parentFolder.substr(0, Song.chartPath.lastIndexOf('\\')+1);
+				var parentFolder:String = Song.chartPath.replace('\\', '/');
+				parentFolder = parentFolder.substr(0, Song.chartPath.lastIndexOf('/')+1);
 				var notetypeFile:Array<String> = CoolUtil.coolTextFile(parentFolder + 'notetypes.txt');
 				if(notetypeFile.length > 0)
 				{
@@ -3261,8 +3261,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			{
 				try
 				{
-					var filePath:String = fileDialog.path.replace('/', '\\');
-					var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('\\')));
+					var filePath:String = fileDialog.path.replace('\\', '/');
+					var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('/')));
 					if(loadedChart == null || !Reflect.hasField(loadedChart, 'song')) //Check if chart is ACTUALLY a chart and valid
 					{
 						showOutput('Error: File loaded is not a Psych Engine/FNF 0.2.x.x chart.', true);
@@ -3394,8 +3394,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				{
 					try
 					{
-						var filePath:String = fileDialog.path.replace('/', '\\');
-						var eventsFile:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('\\')));
+						var filePath:String = fileDialog.path.replace('\\', '/');
+						var eventsFile:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('/')));
 						if(eventsFile == null || Reflect.hasField(eventsFile, 'scrollSpeed') || eventsFile.events == null)
 						{
 							showOutput('Error: File loaded is not a Psych Engine chart/events file.', true);
@@ -3563,13 +3563,13 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			{
 				try
 				{
-					var path:String = fileDialog.path.replace('/', '\\');
+					var path:String = fileDialog.path.replace('\\', '/');
 
 					var chartName:String = Paths.formatToSongPath(PlayState.SONG.song) + '.json';
-					chartName = chartName.substring(chartName.lastIndexOf('\\')+1, chartName.lastIndexOf('.'));
+					chartName = chartName.substring(chartName.lastIndexOf('/')+1, chartName.lastIndexOf('.'));
 
-					var chartFile:String = '$path\\$chartName-chart.json';
-					var metadataFile:String = '$path\\$chartName-metadata.json';
+					var chartFile:String = '$path/$chartName-chart.json';
+					var metadataFile:String = '$path/$chartName-metadata.json';
 
 					updateChartData();
 					var pack:VSlicePackage = VSlice.export(PlayState.SONG);
@@ -3646,8 +3646,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 			fileDialog.open('song.json', 'Open a Psych Engine Chart JSON', function()
 			{
-				var filePath:String = fileDialog.path.replace('/', '\\');
-				var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('\\')));
+				var filePath:String = fileDialog.path.replace('\\', '/');
+				var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('/')));
 				if(loadedChart == null || !Reflect.hasField(loadedChart, 'song')) //Check if chart is ACTUALLY a chart and valid
 				{
 					showOutput('Error: File loaded is not a Psych Engine 0.x.x/FNF 0.2.x.x chart.', true);
@@ -3666,7 +3666,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					function(state:BasePrompt)
 					{
 						var songName:String = Paths.formatToSongPath(pack.metadata.songName);
-						var parentFolder:String = filePath.substring(0, filePath.lastIndexOf('\\')+1);
+						var parentFolder:String = filePath.substring(0, filePath.lastIndexOf('/')+1);
 						var artistInput, charterInput, difficultiesInput:PsychUIInputText = null;
 
 						var btnX = 640;
@@ -3725,8 +3725,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 									fileDialog.openDirectory('Save V-Slice Chart/Metadata JSONs', function()
 									{
 										overwriteSavedSomething = false;
-										var path:String = fileDialog.path.replace('/', '\\');
-										if(path.endsWith('\\')) path = path.substr(0, path.length-1);
+										var path:String = fileDialog.path.replace('\\', '/');
+										if(path.endsWith('/')) path = path.substr(0, path.length-1);
 										overwriteCheck('$path/$songName-chart.json', '$songName-chart.json', PsychJsonPrinter.print(pack.chart, ['events', 'notes', 'scrollSpeed']), function()
 										{
 											overwriteCheck('$path/$songName-metadata.json', '$songName-metadata.json', PsychJsonPrinter.print(pack.metadata, ['characters', 'difficulties', 'timeChanges']), function()
@@ -3834,8 +3834,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 						{
 							fileDialog.openDirectory('Save Converted Psych JSONs', function()
 							{
-								var path:String = fileDialog.path.replace('/', '\\');
-								if(!path.endsWith('\\')) path += '\\';
+								var path:String = fileDialog.path.replace('\\', '/');
+								if(!path.endsWith('/')) path += '/';
 
 								var diffs:Array<String> = metadata.playData.difficulties.copy();
 								var defaultDiff:String = Paths.formatToSongPath(Difficulty.getDefault());
@@ -3895,8 +3895,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				var oldSong = PlayState.SONG;
 				try
 				{
-					var filePath:String = fileDialog.path.replace('/', '\\');
-					filePath = filePath.substring(filePath.lastIndexOf('\\')+1, filePath.lastIndexOf('.'));
+					var filePath:String = fileDialog.path.replace('\\', '/');
+					filePath = filePath.substring(filePath.lastIndexOf('/')+1, filePath.lastIndexOf('.'));
 
 					var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath, '');
 					if(loadedChart == null || !Reflect.hasField(loadedChart, 'song')) //Check if chart is ACTUALLY a chart and valid
@@ -4407,12 +4407,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		else
 		{
 			var chartName:String = Paths.formatToSongPath(PlayState.SONG.song) + '.json';
-			if(Song.chartPath != null) chartName = Song.chartPath.substr(Song.chartPath.lastIndexOf('\\')).trim();
+			if(Song.chartPath != null) chartName = Song.chartPath.substr(Song.chartPath.lastIndexOf('/')).trim();
 			fileDialog.save(chartName, chartData,
 				function()
 				{
 					var newPath:String = fileDialog.path;
-					Song.chartPath = newPath.replace('/', '\\');
+					Song.chartPath = newPath.replace('\\', '/');
 					reloadNotesDropdowns();
 					showOutput('Chart saved successfully to: $newPath');
 
