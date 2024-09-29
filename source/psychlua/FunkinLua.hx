@@ -130,6 +130,7 @@ class FunkinLua {
 			set('misses', 0);
 			set('hits', 0);
 			set('combo', 0);
+			set('deaths', PlayState.deathCounter);
 	
 			set('rating', 0);
 			set('ratingName', '');
