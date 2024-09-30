@@ -317,7 +317,7 @@ class EditorPlayState extends MusicBeatSubstate
 			if (idx != 0) {
 				// CLEAR ANY POSSIBLE GHOST NOTES
 				for (evilNote in unspawnNotes) {
-					var matches: Bool = note.noteData == evilNote.noteData && note.mustPress == evilNote.mustPress;
+					var matches: Bool = note.noteData == evilNote.noteData && note.mustPress == evilNote.mustPress && note.noteType == evilNote.noteType;
 					if (matches && Math.abs(note.strumTime - evilNote.strumTime) == 0.0) {
 						evilNote.destroy();
 						unspawnNotes.remove(evilNote);
@@ -334,7 +334,7 @@ class EditorPlayState extends MusicBeatSubstate
 			swagNote.scrollFactor.set();
 			unspawnNotes.push(swagNote);
 
-			var roundSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
+			final roundSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
 			if(roundSus > 0)
 			{
 				for (susNote in 0...roundSus + 1)

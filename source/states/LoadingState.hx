@@ -6,7 +6,10 @@ import openfl.display.BitmapData;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import flixel.graphics.FlxGraphic;
+import flixel.system.FlxAssets;
 import flixel.FlxState;
+
+import flash.media.Sound;
 
 import backend.Song;
 import backend.StageData;
@@ -25,7 +28,7 @@ class LoadingState extends MusicBeatState
 
 	static var originalBitmapKeys:Map<String, String> = [];
 	static var requestedBitmaps:Map<String, BitmapData> = [];
-	static var mutex:Mutex = new Mutex();
+	static var mutex:Mutex;
 
 	function new(target:FlxState, stopMusic:Bool)
 	{
@@ -194,21 +197,23 @@ class LoadingState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('secret'));
 
 				pessy = new FlxSprite(700, 140);
+				pessy.frames = Paths.getSparrowAtlas('loading_screen/pessy');
+				pessy.animation.addByPrefix('run', 'run', 24, true);
+				pessy.animation.addByPrefix('spin', 'spin', 24, true);
+				pessy.antialiasing = ClientPrefs.data.antialiasing;
+				pessy.flipX = (logo.offset.x > 0);
+				pessy.x = FlxG.width + 200;
+				pessy.velocity.x = -1100;
+
 				new FlxTimer().start(0.01, function(tmr:FlxTimer) {
-					pessy.frames = Paths.getSparrowAtlas('loading_screen/pessy');
-					pessy.antialiasing = ClientPrefs.data.antialiasing;
-					pessy.flipX = (logo.offset.x > 0);
-					pessy.x = FlxG.width + 200;
-					pessy.velocity.x = -1100;
 					if(pessy.flipX)
 					{
 						pessy.x = -pessy.width - 200;
-						pessy.velocity.x = 1100;
+						pessy.velocity.x *= -1;
 					}
 		
-					pessy.animation.addByPrefix('run', 'run', 24, true);
-					pessy.animation.addByPrefix('spin', 'spin', 24, true);
 					pessy.animation.play('run', true);
+					Achievements.unlock('pessy_easter_egg');
 					
 					insert(members.indexOf(loadingText), pessy);
 					new FlxTimer().start(5, function(tmr:FlxTimer) canChangeState = true);
@@ -239,6 +244,7 @@ class LoadingState extends MusicBeatState
 		MusicBeatState.switchState(target);
 		transitioning = true;
 		finishedLoading = true;
+		mutex = null;
 	}
 
 	public static function checkLoaded():Bool
@@ -335,7 +341,7 @@ class LoadingState extends MusicBeatState
 			var noteSplash:String = NoteSplash.DEFAULT_SKIN;
 			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) noteSplash = PlayState.SONG.splashSkin;
 			else noteSplash += NoteSplash.getSplashSkinPostfix();
-			imagesToPrepare.push("noteSplashes/" + noteSplash);
+			imagesToPrepare.push(noteSplash);
 
 			try
 			{
@@ -382,24 +388,37 @@ class LoadingState extends MusicBeatState
 				song.stage = StageData.vanillaSongStage(folder);
 
 			var stageData:StageFile = StageData.getStageFile(song.stage);
-			if (stageData != null && stageData.preload != null)
+			if (stageData != null)
 			{
 				var imgs:Array<String> = [];
 				var snds:Array<String> = [];
 				var mscs:Array<String> = [];
-				for (asset in Reflect.fields(stageData.preload))
+				if(stageData.preload != null)
 				{
-					var filters:Int = Reflect.field(stageData.preload, asset);
-					var asset:String = asset.trim();
-
-					if(filters < 0 || StageData.validateVisibility(filters))
+					for (asset in Reflect.fields(stageData.preload))
 					{
-						if(asset.startsWith('images/'))
-							imgs.push(asset.substr('images/'.length));
-						else if(asset.startsWith('sounds/'))
-							snds.push(asset.substr('sounds/'.length));
-						else if(asset.startsWith('music/'))
-							mscs.push(asset.substr('music/'.length));
+						var filters:Int = Reflect.field(stageData.preload, asset);
+						var asset:String = asset.trim();
+
+						if(filters < 0 || StageData.validateVisibility(filters))
+						{
+							if(asset.startsWith('images/'))
+								imgs.push(asset.substr('images/'.length));
+							else if(asset.startsWith('sounds/'))
+								snds.push(asset.substr('sounds/'.length));
+							else if(asset.startsWith('music/'))
+								mscs.push(asset.substr('music/'.length));
+						}
+					}
+				}
+				
+				if (stageData.objects != null)
+				{
+					for (sprite in stageData.objects)
+					{
+						if(sprite.type == 'sprite' || sprite.type == 'animatedSprite')
+							if((sprite.filters < 0 || StageData.validateVisibility(sprite.filters)) && !imgs.contains(sprite.image))
+								imgs.push(sprite.image);
 					}
 				}
 				prepare(imgs, snds, mscs);
@@ -460,15 +479,22 @@ class LoadingState extends MusicBeatState
 
 	static function clearInvalidFrom(arr:Array<String>, prefix:String, ext:String, type:AssetType, ?parentFolder:String = null)
 	{
-		for (i in 0...arr.length)
+		for (folder in arr.copy())
 		{
-			var folder:String = arr[i];
-			if(folder.trim().endsWith('/'))
+			var nam:String = folder.trim();
+			if(nam.endsWith('/'))
 			{
-				for (subfolder in Mods.directoriesWithFile(Paths.getSharedPath(), '$prefix/$folder'))
+				for (subfolder in Mods.directoriesWithFile(Paths.getSharedPath(), '$prefix/$nam'))
+				{
 					for (file in FileSystem.readDirectory(subfolder))
+					{
 						if(file.endsWith(ext))
-							arr.push(folder + file.substr(0, file.length - ext.length));
+						{
+							var toAdd:String = nam + haxe.io.Path.withoutExtension(file);
+							if(!arr.contains(toAdd)) arr.push(toAdd);
+						}
+					}
+				}
 
 				//trace('Folder detected! ' + folder);
 			}
@@ -495,53 +521,22 @@ class LoadingState extends MusicBeatState
 
 	public static function startThreads()
 	{
+		mutex = new Mutex();
 		loadMax = imagesToPrepare.length + soundsToPrepare.length + musicToPrepare.length + songsToPrepare.length;
 		loaded = 0;
 
 		//then start threads
-		for (sound in soundsToPrepare) initThread(() -> Paths.sound(sound), 'sound $sound');
-		for (music in musicToPrepare) initThread(() -> Paths.music(music), 'music $music');
-		for (song in songsToPrepare) initThread(() -> Paths.returnSound(song, 'songs', true, false), 'song $song');
+		for (sound in soundsToPrepare) initThread(() -> preloadSound('sounds/$sound'), 'sound $sound');
+		for (music in musicToPrepare) initThread(() -> preloadSound('music/$music'), 'music $music');
+		for (song in songsToPrepare) initThread(() -> preloadSound(song, 'songs', true, false), 'song $song');
 
 		// for images, they get to have their own thread
-		for (image in imagesToPrepare)
-			Thread.create(() -> {
-				mutex.acquire();
-				try {
-					var requestKey:String = 'images/$image';
-					#if TRANSLATIONS_ALLOWED requestKey = Language.getFileTranslation(requestKey); #end
-					if(requestKey.lastIndexOf('.') < 0) requestKey += '.png';
-
-					if (!Paths.currentTrackedAssets.exists(requestKey))
-					{
-						var bitmap:BitmapData = null;
-						var file:String = Paths.getPath(requestKey, IMAGE);
-						if (#if sys FileSystem.exists(file) || #end OpenFlAssets.exists(file, IMAGE))
-						{
-							#if sys 
-							bitmap = BitmapData.fromFile(file);
-							#else
-							bitmap = OpenFlAssets.getBitmapData(file);
-							#end
-							requestedBitmaps.set(file, bitmap);
-							originalBitmapKeys.set(file, requestKey);
-						}
-						else trace('no such image $image exists');
-					}
-				}
-				catch(e:haxe.Exception)
-				{
-					trace('ERROR! fail on preloading image $image');
-				}
-				mutex.release();
-				loaded++;
-			});
+		for (image in imagesToPrepare) initThread(() -> preloadGraphic(image), 'image $image');
 	}
 
 	static function initThread(func:Void->Dynamic, traceData:String)
 	{
 		Thread.create(() -> {
-			mutex.acquire();
 			try {
 				if (func() != null) trace('finished preloading $traceData');
 				else trace('ERROR! fail on preloading $traceData');
@@ -549,8 +544,9 @@ class LoadingState extends MusicBeatState
 			catch(e:Dynamic) {
 				trace('ERROR! fail on preloading $traceData');
 			}
-			mutex.release();
+			mutex.acquire();
 			loaded++;
+			mutex.release();
 		});
 	}
 
@@ -610,5 +606,71 @@ class LoadingState extends MusicBeatState
 		{
 			trace(e.details());
 		}
+	}
+
+	// thread safe sound loader
+	static function preloadSound(key:String, ?path:String, ?modsAllowed:Bool = true, ?beepOnNull:Bool = true):Null<Sound>
+	{
+		var file:String = Paths.getPath(Language.getFileTranslation(key) + '.${Paths.SOUND_EXT}', SOUND, path, modsAllowed);
+
+		//trace('precaching sound: $file');
+		if(!Paths.currentTrackedSounds.exists(file))
+		{
+			if (#if sys FileSystem.exists(file) || #end OpenFlAssets.exists(file, SOUND))
+			{
+				var sound:Sound = OpenFlAssets.getSound(file, false);
+				mutex.acquire();
+				Paths.currentTrackedSounds.set(file, sound);
+				mutex.release();
+			}
+			else if (beepOnNull)
+			{
+				trace('SOUND NOT FOUND: $key, PATH: $path');
+				FlxG.log.error('SOUND NOT FOUND: $key, PATH: $path');
+				return FlxAssets.getSound('flixel/sounds/beep');
+			}
+		}
+		mutex.acquire();
+		Paths.localTrackedAssets.push(file);
+		mutex.release();
+
+		return Paths.currentTrackedSounds.get(file);
+	}
+
+	// thread safe sound loader
+	static function preloadGraphic(key:String):Null<BitmapData>
+	{
+		try {
+			var requestKey:String = 'images/$key';
+			#if TRANSLATIONS_ALLOWED requestKey = Language.getFileTranslation(requestKey); #end
+			if(requestKey.lastIndexOf('.') < 0) requestKey += '.png';
+
+			if (!Paths.currentTrackedAssets.exists(requestKey))
+			{
+				var file:String = Paths.getPath(requestKey, IMAGE);
+				if (#if sys FileSystem.exists(file) || #end OpenFlAssets.exists(file, IMAGE))
+				{
+					#if sys
+					var bitmap:BitmapData = BitmapData.fromFile(file);
+					#else
+					var bitmap:BitmapData = OpenFlAssets.getBitmapData(file, false);
+					#end
+					mutex.acquire();
+					requestedBitmaps.set(file, bitmap);
+					originalBitmapKeys.set(file, requestKey);
+					mutex.release();
+					return bitmap;
+				}
+				else trace('no such image $key exists');
+			}
+
+			return Paths.currentTrackedAssets.get(requestKey).bitmap;
+		}
+		catch(e:haxe.Exception)
+		{
+			trace('ERROR! fail on preloading image $key');
+		}
+
+		return null;
 	}
 }

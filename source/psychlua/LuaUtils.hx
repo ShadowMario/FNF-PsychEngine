@@ -20,11 +20,11 @@ typedef LuaTweenOptions = {
 
 class LuaUtils
 {
-	public static final Function_Stop:Dynamic = "##PSYCHLUA_FUNCTIONSTOP";
-	public static final Function_Continue:Dynamic = "##PSYCHLUA_FUNCTIONCONTINUE";
-	public static final Function_StopLua:Dynamic = "##PSYCHLUA_FUNCTIONSTOPLUA";
-	public static final Function_StopHScript:Dynamic = "##PSYCHLUA_FUNCTIONSTOPHSCRIPT";
-	public static final Function_StopAll:Dynamic = "##PSYCHLUA_FUNCTIONSTOPALL";
+	public static final Function_Stop:String = "##PSYCHLUA_FUNCTIONSTOP";
+	public static final Function_Continue:String = "##PSYCHLUA_FUNCTIONCONTINUE";
+	public static final Function_StopLua:String = "##PSYCHLUA_FUNCTIONSTOPLUA";
+	public static final Function_StopHScript:String = "##PSYCHLUA_FUNCTIONSTOPHSCRIPT";
+	public static final Function_StopAll:String = "##PSYCHLUA_FUNCTIONSTOPALL";
 
 	public static function getLuaTween(options:Dynamic)
 	{
@@ -497,9 +497,12 @@ class LuaUtils
 
 	public static function cameraFromString(cam:String):FlxCamera {
 		switch(cam.toLowerCase()) {
+			case 'camgame' | 'game': return PlayState.instance.camGame;
 			case 'camhud' | 'hud': return PlayState.instance.camHUD;
 			case 'camother' | 'other': return PlayState.instance.camOther;
 		}
-		return PlayState.instance.camGame;
+		var camera:FlxCamera = MusicBeatState.getVariables().get(cam);
+		if (camera == null || !Std.isOfType(camera, FlxCamera)) camera = PlayState.instance.camGame;
+		return camera;
 	}
 }

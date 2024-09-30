@@ -26,6 +26,7 @@
 	<define name="ACHIEVEMENTS_ALLOWED" />
 	<define name="DISCORD_ALLOWED" />
 	<define name="TRANSLATIONS_ALLOWED" />
+	<define name="IRIS_DEBUG"/>
 	
 	<define name="SHOW_LOADING_SCREEN" />
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE THE PSYCH LOGO FROM LOADING SCREEN -->
@@ -109,9 +110,9 @@
 
 	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
-	<haxelib name="SScript" if="HSCRIPT_ALLOWED" version="17.1.618"/>
-	<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/>
-	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
+	<haxelib name="hscript-iris" if="HSCRIPT_ALLOWED" version="1.1.0"/>
+	<haxelib name="hxvlc" if="VIDEOS_ALLOWED" version="1.8.2"/>
+	<haxelib name="hxdiscord_rpc" version="1.2.4" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate"/>
 
 	<!-- Disable Discord IO Thread -->
@@ -121,6 +122,7 @@
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
 	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
+	<haxedef name="HXVLC_NO_SHARE_DIRECTORY" if="VIDEOS_ALLOWED" />
 	
 	<!-- ______________________________ Haxedefines _____________________________ -->
 

@@ -167,8 +167,7 @@ class PhillyBlazin extends BaseStage
 	{
 		for (i in 1...4)
 		{
-			//trace('Lightning$i');
-			Paths.sound('Lightning$i');
+			Paths.sound('lightning/Lightning$i');
 		}
 	}
 
@@ -231,7 +230,7 @@ class PhillyBlazin extends BaseStage
 		FlxTween.color(abot, LIGHTNING_FADE_DURATION, 0xFF606060, 0xFF888888);
 
 		// Sound
-		FlxG.sound.play(Paths.soundRandom('Lightning', 1, 3));
+		FlxG.sound.play(Paths.soundRandom('lightning/Lightning', 1, 3));
 	}
 
 	// Note functions
