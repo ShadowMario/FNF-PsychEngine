@@ -254,110 +254,21 @@ class FunkinLua {
 				args = [];
 			}
 
-			var foundScript:String = findScript(luaFile);
-			if(foundScript != null)
-				for (luaInstance in game.luaArray)
-					if(luaInstance.scriptName == foundScript)
-					{
-						luaInstance.call(funcName, args);
-						return;
-					}
+			for (luaInstance in game.luaArray)
+				if(luaInstance.scriptName == luaFile)
+					return luaInstance.call(funcName, args);
+
+			return null;
 		});
+		Lua_helper.add_callback(lua, "isRunning", function(scriptFile:String) {
+			for (luaInstance in game.luaArray)
+				if(luaInstance.scriptName == scriptFile)
+					return true;
 
-		Lua_helper.add_callback(lua, "getGlobalFromScript", function(luaFile:String, global:String) { // returns the global from a script
-			var foundScript:String = findScript(luaFile);
-			if(foundScript != null)
-				for (luaInstance in game.luaArray)
-					if(luaInstance.scriptName == foundScript)
-					{
-						Lua.getglobal(luaInstance.lua, global);
-						if(Lua.isnumber(luaInstance.lua,-1))
-							Lua.pushnumber(lua, Lua.tonumber(luaInstance.lua, -1));
-						else if(Lua.isstring(luaInstance.lua,-1))
-							Lua.pushstring(lua, Lua.tostring(luaInstance.lua, -1));
-						else if(Lua.isboolean(luaInstance.lua,-1))
-							Lua.pushboolean(lua, Lua.toboolean(luaInstance.lua, -1));
-						else
-							Lua.pushnil(lua);
+			for (hscriptInstance in game.hscriptArray)
+				if(hscriptInstance.origin == scriptFile)
+					return true;
 
-						// TODO: table
-
-						Lua.pop(luaInstance.lua,1); // remove the global
-
-						return;
-					}
-		});
-		Lua_helper.add_callback(lua, "setGlobalFromScript", function(luaFile:String, global:String, val:Dynamic) { // returns the global from a script
-			var foundScript:String = findScript(luaFile);
-			if(foundScript != null)
-				for (luaInstance in game.luaArray)
-					if(luaInstance.scriptName == foundScript)
-						luaInstance.set(global, val);
-		});
-		/*Lua_helper.add_callback(lua, "getGlobals", function(luaFile:String) { // returns a copy of the specified file's globals
-			var foundScript:String = findScript(luaFile);
-			if(foundScript != null)
-			{
-				for (luaInstance in game.luaArray)
-				{
-					if(luaInstance.scriptName == foundScript)
-					{
-						Lua.newtable(lua);
-						var tableIdx = Lua.gettop(lua);
-
-						Lua.pushvalue(luaInstance.lua, Lua.LUA_GLOBALSINDEX);
-						while(Lua.next(luaInstance.lua, -2) != 0) {
-							// key = -2
-							// value = -1
-
-							var pop:Int = 0;
-
-							// Manual conversion
-							// first we convert the key
-							if(Lua.isnumber(luaInstance.lua,-2)){
-								Lua.pushnumber(lua, Lua.tonumber(luaInstance.lua, -2));
-								pop++;
-							}else if(Lua.isstring(luaInstance.lua,-2)){
-								Lua.pushstring(lua, Lua.tostring(luaInstance.lua, -2));
-								pop++;
-							}else if(Lua.isboolean(luaInstance.lua,-2)){
-								Lua.pushboolean(lua, Lua.toboolean(luaInstance.lua, -2));
-								pop++;
-							}
-							// TODO: table
-
-
-							// then the value
-							if(Lua.isnumber(luaInstance.lua,-1)){
-								Lua.pushnumber(lua, Lua.tonumber(luaInstance.lua, -1));
-								pop++;
-							}else if(Lua.isstring(luaInstance.lua,-1)){
-								Lua.pushstring(lua, Lua.tostring(luaInstance.lua, -1));
-								pop++;
-							}else if(Lua.isboolean(luaInstance.lua,-1)){
-								Lua.pushboolean(lua, Lua.toboolean(luaInstance.lua, -1));
-								pop++;
-							}
-							// TODO: table
-
-							if(pop==2)Lua.rawset(lua, tableIdx); // then set it
-							Lua.pop(luaInstance.lua, 1); // for the loop
-						}
-						Lua.pop(luaInstance.lua,1); // end the loop entirely
-						Lua.pushvalue(lua, tableIdx); // push the table onto the stack so it gets returned
-
-						return;
-					}
-
-				}
-			}
-		});*/
-		Lua_helper.add_callback(lua, "isRunning", function(luaFile:String) {
-			var foundScript:String = findScript(luaFile);
-			if(foundScript != null)
-				for (luaInstance in game.luaArray)
-					if(luaInstance.scriptName == foundScript)
-						return true;
 			return false;
 		});
 
@@ -369,37 +280,43 @@ class FunkinLua {
 			return MusicBeatState.getVariables().get(varName);
 		});
 
-		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) { //would be dope asf.
-			var foundScript:String = findScript(luaFile);
-			if(foundScript != null)
+		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) {
+			#if sys
+			if(FileSystem.exists(luaFile))
+			#else
+			if(Assets.exists(luaFile, TEXT))
+			#end
 			{
 				if(!ignoreAlreadyRunning)
 					for (luaInstance in game.luaArray)
-						if(luaInstance.scriptName == foundScript)
+						if(luaInstance.scriptName == luaFile)
 						{
-							luaTrace('addLuaScript: The script "' + foundScript + '" is already running!');
+							luaTrace('addLuaScript: The script "' + luaFile + '" is already running!');
 							return;
 						}
 
-				new FunkinLua(foundScript);
+				new FunkinLua(luaFile);
 				return;
 			}
 			luaTrace("addLuaScript: Script doesn't exist!", false, false, FlxColor.RED);
 		});
-		Lua_helper.add_callback(lua, "addHScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) {
+		Lua_helper.add_callback(lua, "addHScript", function(scriptFile:String, ?ignoreAlreadyRunning:Bool = false) {
 			#if HSCRIPT_ALLOWED
-			var foundScript:String = findScript(luaFile, '.hx');
-			if(foundScript != null)
+			#if sys
+			if(FileSystem.exists(scriptFile))
+			#else
+			if(Assets.exists(scriptFile, TEXT))
+			#end
 			{
 				if(!ignoreAlreadyRunning)
 					for (script in game.hscriptArray)
-						if(script.origin == foundScript)
+						if(script.origin == scriptFile)
 						{
-							luaTrace('addHScript: The script "' + foundScript + '" is already running!');
+							luaTrace('addHScript: The script "' + scriptFile + '" is already running!');
 							return;
 						}
 
-				PlayState.instance.initHScript(foundScript);
+				PlayState.instance.initHScript(scriptFile);
 				return;
 			}
 			luaTrace("addHScript: Script doesn't exist!", false, false, FlxColor.RED);
@@ -407,37 +324,37 @@ class FunkinLua {
 			luaTrace("addHScript: HScript is not supported on this platform!", false, false, FlxColor.RED);
 			#end
 		});
-		Lua_helper.add_callback(lua, "removeLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) {
-			var foundScript:String = findScript(luaFile);
-			if(foundScript != null)
+		Lua_helper.add_callback(lua, "removeLuaScript", function(luaFile:String) {
+			var foundAny:Bool = false;
+			for (luaInstance in game.luaArray)
 			{
-				if(!ignoreAlreadyRunning)
-					for (luaInstance in game.luaArray)
-						if(luaInstance.scriptName == foundScript)
-						{
-							luaInstance.stop();
-							trace('Closing script ' + luaInstance.scriptName);
-							return true;
-						}
+				if(luaInstance.scriptName == luaFile)
+				{
+					trace('Closing lua script $luaFile');
+					luaInstance.stop();
+					foundAny = true;
+				}
 			}
+			if(foundAny) return true;
+
 			luaTrace('removeLuaScript: Script $luaFile isn\'t running!', false, false, FlxColor.RED);
 			return false;
 		});
-		Lua_helper.add_callback(lua, "removeHScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) {
+		Lua_helper.add_callback(lua, "removeHScript", function(scriptFile:String) {
 			#if HSCRIPT_ALLOWED
-			var foundScript:String = findScript(luaFile, '.hx');
-			if(foundScript != null)
+			var foundAny:Bool = false;
+			for (script in game.hscriptArray)
 			{
-				if(!ignoreAlreadyRunning)
-					for (script in game.hscriptArray)	
-						if(script.origin == foundScript)
-						{
-							trace('Closing script ' + (script.origin != null ? script.origin : luaFile));
-							script.destroy();
-							return true;
-						}
+				if(script.origin == scriptFile)
+				{
+					trace('Closing hscript $scriptFile');
+					script.destroy();
+					foundAny = true;
+				}
 			}
-			luaTrace('removeHScript: Script $luaFile isn\'t running!', false, false, FlxColor.RED);
+			if(foundAny) return true;
+
+			luaTrace('removeHScript: Script $scriptFile isn\'t running!', false, false, FlxColor.RED);
 			return false;
 			#else
 			luaTrace("removeHScript: HScript is not supported on this platform!", false, false, FlxColor.RED);
@@ -615,7 +532,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "noteTweenDirection", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			noteTweenFunction(tag, note, {direction: value}, duration, ease);
 		});
-		Lua_helper.add_callback(lua, "mouseClicked", function(button:String) {
+		Lua_helper.add_callback(lua, "mouseClicked", function(?button:String = 'left') {
 			var click:Bool = FlxG.mouse.justPressed;
 			switch(button.trim().toLowerCase())
 			{
@@ -626,7 +543,7 @@ class FunkinLua {
 			}
 			return click;
 		});
-		Lua_helper.add_callback(lua, "mousePressed", function(button:String) {
+		Lua_helper.add_callback(lua, "mousePressed", function(?button:String = 'left') {
 			var press:Bool = FlxG.mouse.pressed;
 			switch(button.trim().toLowerCase())
 			{
@@ -637,7 +554,7 @@ class FunkinLua {
 			}
 			return press;
 		});
-		Lua_helper.add_callback(lua, "mouseReleased", function(button:String) {
+		Lua_helper.add_callback(lua, "mouseReleased", function(?button:String = 'left') {
 			var released:Bool = FlxG.mouse.justReleased;
 			switch(button.trim().toLowerCase())
 			{
@@ -854,11 +771,11 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setRatingFC", function(value:String) {
 			game.ratingFC = value;
 		});
-		Lua_helper.add_callback(lua, "getMouseX", function(camera:String = 'game') {
+		Lua_helper.add_callback(lua, "getMouseX", function(?camera:String = 'game') {
 			var cam:FlxCamera = LuaUtils.cameraFromString(camera);
 			return FlxG.mouse.getScreenPosition(cam).x;
 		});
-		Lua_helper.add_callback(lua, "getMouseY", function(camera:String = 'game') {
+		Lua_helper.add_callback(lua, "getMouseY", function(?camera:String = 'game') {
 			var cam:FlxCamera = LuaUtils.cameraFromString(camera);
 			return FlxG.mouse.getScreenPosition(cam).y;
 		});
@@ -1751,27 +1668,6 @@ class FunkinLua {
 			return false;
 		}
 		return (result == 'true');
-	}
-
-	function findScript(scriptFile:String, ext:String = '.lua')
-	{
-		if(!scriptFile.endsWith(ext)) scriptFile += ext;
-		var preloadPath:String = Paths.getSharedPath(scriptFile);
-		#if MODS_ALLOWED
-		var path:String = Paths.modFolders(scriptFile);
-		if(FileSystem.exists(scriptFile))
-			return scriptFile;
-		else if(FileSystem.exists(path))
-			return path;
-
-		if(FileSystem.exists(preloadPath))
-		#else
-		if(Assets.exists(preloadPath))
-		#end
-		{
-			return preloadPath;
-		}
-		return null;
 	}
 
 	public function getErrorMessage(status:Int):String {
