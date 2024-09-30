@@ -87,6 +87,8 @@ sit back, relax, wait for haxelib to do its magic, and once everything is done, 
 
 where `<platform>` gets replaced with `windows`, `linux`, or `mac`
 
+If `lime test <platform>` doesn't work on Unix then use, `haxelib run lime test <platform>`
+
 ---
 
 ### "It's taking a while, should I be worried?"
