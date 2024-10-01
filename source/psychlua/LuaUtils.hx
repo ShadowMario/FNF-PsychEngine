@@ -292,7 +292,7 @@ class LuaUtils
 		return group;
 	}
 	
-	public static function addAnimByIndices(obj:String, name:String, prefix:String, indices:Any = null, framerate:Int = 24, loop:Bool = false)
+	public static function addAnimByIndices(obj:String, name:String, prefix:String, indices:Any = null, framerate:Float = 24, loop:Bool = false)
 	{
 		var obj:FlxSprite = cast LuaUtils.getObjectDirectly(obj);
 		if(obj != null && obj.animation != null)
@@ -309,7 +309,9 @@ class LuaUtils
 				indices = myIndices;
 			}
 
-			obj.animation.addByIndices(name, prefix, indices, '', framerate, loop);
+			if(prefix != null) obj.animation.addByIndices(name, prefix, indices, '', framerate, loop);
+			else obj.animation.addByIndices(name, prefix, indices, '', framerate, loop);
+
 			if(obj.animation.curAnim == null)
 			{
 				var dyn:Dynamic = cast obj;
@@ -323,7 +325,7 @@ class LuaUtils
 	
 	public static function loadFrames(spr:FlxSprite, image:String, spriteType:String)
 	{
-		switch(spriteType.toLowerCase().trim())
+		switch(spriteType.toLowerCase().replace(' ', ''))
 		{
 			//case "texture" | "textureatlas" | "tex":
 				//spr.frames = AtlasFrameMaker.construct(image);
@@ -331,14 +333,17 @@ class LuaUtils
 			//case "texture_noaa" | "textureatlas_noaa" | "tex_noaa":
 				//spr.frames = AtlasFrameMaker.construct(image, null, true);
 
-			case 'aseprite' | 'jsoni8':
+			case 'aseprite', 'ase', 'json', 'jsoni8':
 				spr.frames = Paths.getAsepriteAtlas(image);
 
-			case "packer" | "packeratlas" | "pac":
+			case "packer", 'packeratlas', 'pac':
 				spr.frames = Paths.getPackerAtlas(image);
 
-			default:
+			case 'sparrow', 'sparrowatlas', 'sparrowv2':
 				spr.frames = Paths.getSparrowAtlas(image);
+
+			default:
+				spr.frames = Paths.getAtlas(image);
 		}
 	}
 
