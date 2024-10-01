@@ -80,7 +80,7 @@ class NoteSplashEditorState extends MusicBeatState
         for (i in 0...4)
         {
             var babyArrow:StrumNote = new StrumNote(-273, 50, i % 4, 1);
-            babyArrow.postAddedToGroup();
+            babyArrow.playerPosition();
             babyArrow.screenCenter(Y);
             babyArrow.ID = i;
             strums.add(babyArrow);

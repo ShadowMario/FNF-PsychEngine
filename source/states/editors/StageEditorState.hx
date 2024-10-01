@@ -1668,42 +1668,46 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		{
 			fullPath = fullPath.replace('\\', '/');
 			var exePath = Sys.getCwd().replace('\\', '/');
-			if(fullPath.startsWith(exePath + 'assets/images/') #if MODS_ALLOWED || (fullPath.startsWith(exePath + 'mods/') && fullPath.contains('/images/')) #end)
+			if(fullPath.startsWith(exePath))
 			{
-
-				var imageToLoad:String = fullPath.substring(fullPath.indexOf('/images/') + '/images/'.length, fullPath.indexOf('.'));
-				if(_makeNewSprite != null)
+				fullPath = fullPath.substr(exePath.length);
+				if((fullPath.startsWith('assets/') #if MODS_ALLOWED || fullPath.startsWith('mods/') #end) && fullPath.contains('/images/'))
 				{
-					if(_makeNewSprite == 'animatedSprite' && !Paths.fileExists('images/$imageToLoad.xml', TEXT) &&
-						!Paths.fileExists('images/$imageToLoad.json', TEXT) && !Paths.fileExists('images/$imageToLoad.txt', TEXT))
+					var imageToLoad:String = fullPath.substring(fullPath.indexOf('/images/') + '/images/'.length, fullPath.lastIndexOf('.'));
+					if(_makeNewSprite != null)
 					{
-						showOutput('No Animation file found with the same name of the image!', true);
-						_makeNewSprite = null;
-						_file = null;
-						return;
+						if(_makeNewSprite == 'animatedSprite' && !Paths.fileExists('images/$imageToLoad.xml', TEXT) &&
+							!Paths.fileExists('images/$imageToLoad.json', TEXT) && !Paths.fileExists('images/$imageToLoad.txt', TEXT))
+						{
+							showOutput('No Animation file found with the same name of the image!', true);
+							_makeNewSprite = null;
+							_file = null;
+							return;
+						}
+						insertMeta(new StageEditorMetaSprite({type: _makeNewSprite, name: findUnoccupiedName()}, new ModchartSprite()));
 					}
-					insertMeta(new StageEditorMetaSprite({type: _makeNewSprite, name: findUnoccupiedName()}, new ModchartSprite()));
+					var selected = getSelected();
+					tryLoadImage(selected, imageToLoad);
+					
+					if(_makeNewSprite != null)
+					{
+						selected.sprite.x = Math.round(FlxG.camera.scroll.x + FlxG.width/2 - selected.sprite.width/2);
+						selected.sprite.y = Math.round(FlxG.camera.scroll.y + FlxG.height/2 - selected.sprite.height/2);
+						posTxt.visible = true;
+						posTxt.text = 'X: ${selected.sprite.x}\nY: ${selected.sprite.y}';
+					}
+					_makeNewSprite = null;
+					//trace('Inside Psych Engine Folder');
 				}
-				var selected = getSelected();
-				tryLoadImage(selected, imageToLoad);
-				
-				if(_makeNewSprite != null)
-				{
-					selected.sprite.x = Math.round(FlxG.camera.scroll.x + FlxG.width/2 - selected.sprite.width/2);
-					selected.sprite.y = Math.round(FlxG.camera.scroll.y + FlxG.height/2 - selected.sprite.height/2);
-					posTxt.visible = true;
-					posTxt.text = 'X: ${selected.sprite.x}\nY: ${selected.sprite.y}';
-				}
-				_makeNewSprite = null;
-				//trace('Inside Psych Engine Folder');
+				else showOutput('Can\'t load files outside of "images/" folder', true);
 			}
-			else showOutput('Can\'t load files outside of "images/" folder', true);
+			else showOutput('Can\'t load files outside of Psych Engine\'s folder', true);
 			//TO DO: Maybe make copy of loaded file to an usable folder automatically? That would be very practical
 			//TO DO: Bring this to Character Editor too
 		}
 		_file = null;
 		#else
-		trace('File couldn't be loaded! You aren't on Desktop, are you?');
+		trace('File couldn\'t be loaded! You aren\'t on Desktop, are you?');
 		#end
 	}
 
