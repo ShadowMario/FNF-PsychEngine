@@ -433,23 +433,21 @@ class FunkinLua {
 		});
 
 		//shitass stuff for epic coders like me B)  *image of obama giving himself a medal*
-		Lua_helper.add_callback(lua, "getObjectOrder", function(obj:String, ?group:String = null) {
+		Lua_helper.add_callback(lua, "getObjectOrder", function(obj:String) {
 			var split:Array<String> = obj.split('.');
 			var leObj:FlxBasic = LuaUtils.getObjectDirectly(split[0]);
 			if(split.length > 1) {
 				leObj = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split), split[split.length-1]);
 			}
 
-			if(leObj != null) {
-				var groupObj:Dynamic = LuaUtils.getObjectDirectly(group);
-				if (groupObj == null || !Std.isOfType(groupObj, FlxTypedGroup)) groupObj = LuaUtils.getTargetInstance();
-
-				return groupObj.members.indexOf(leObj);
+			if(leObj != null)
+			{
+				return LuaUtils.getTargetInstance().members.indexOf(leObj);
 			}
 			luaTrace("getObjectOrder: Object " + obj + " doesn't exist!", false, false, FlxColor.RED);
 			return -1;
 		});
-		Lua_helper.add_callback(lua, "setObjectOrder", function(obj:String, position:Int, ?group:String = null) {
+		Lua_helper.add_callback(lua, "setObjectOrder", function(obj:String, position:Int) {
 			var split:Array<String> = obj.split('.');
 			var leObj:FlxBasic = LuaUtils.getObjectDirectly(split[0]);
 			if(split.length > 1) {
@@ -457,11 +455,8 @@ class FunkinLua {
 			}
 
 			if(leObj != null) {
-				var groupObj:Dynamic = LuaUtils.getObjectDirectly(group);
-				if (groupObj == null || !Std.isOfType(groupObj, FlxTypedGroup)) groupObj = LuaUtils.getTargetInstance();
-
-				groupObj.remove(leObj, true);
-				groupObj.insert(position, leObj);
+				LuaUtils.getTargetInstance().remove(leObj, true);
+				LuaUtils.getTargetInstance().insert(position, leObj);
 				return;
 			}
 			luaTrace("setObjectOrder: Object " + obj + " doesn't exist!", false, false, FlxColor.RED);
