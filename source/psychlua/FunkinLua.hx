@@ -634,17 +634,14 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setScore", function(value:Int = 0) {
 			game.songScore = value;
 			game.RecalculateRating();
-			return value;
 		});
 		Lua_helper.add_callback(lua, "setMisses", function(value:Int = 0) {
 			game.songMisses = value;
 			game.RecalculateRating();
-			return value;
 		});
 		Lua_helper.add_callback(lua, "setHits", function(value:Int = 0) {
 			game.songHits = value;
 			game.RecalculateRating();
-			return value;
 		});
 		Lua_helper.add_callback(lua, "setHealth", function(value:Float = 1) game.health = value);
 		Lua_helper.add_callback(lua, "addHealth", function(value:Float = 0) game.health += value);
@@ -736,11 +733,11 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setCharacterX", function(type:String, value:Float) {
 			switch(type.toLowerCase()) {
 				case 'dad' | 'opponent':
-					return game.dadGroup.x = value;
+					game.dadGroup.x = value;
 				case 'gf' | 'girlfriend':
-					return game.gfGroup.x = value;
+					game.gfGroup.x = value;
 				default:
-					return game.boyfriendGroup.x = value;
+					game.boyfriendGroup.x = value;
 			}
 		});
 		Lua_helper.add_callback(lua, "getCharacterY", function(type:String) {
@@ -756,11 +753,11 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "setCharacterY", function(type:String, value:Float) {
 			switch(type.toLowerCase()) {
 				case 'dad' | 'opponent':
-					return game.dadGroup.y = value;
+					game.dadGroup.y = value;
 				case 'gf' | 'girlfriend':
-					return game.gfGroup.y = value;
+					game.gfGroup.y = value;
 				default:
-					return game.boyfriendGroup.y = value;
+					game.boyfriendGroup.y = value;
 			}
 		});
 		Lua_helper.add_callback(lua, "cameraSetTarget", function(target:String) {
