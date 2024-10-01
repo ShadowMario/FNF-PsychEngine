@@ -85,7 +85,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		['Play Sound', "Value 1: Sound file name\nValue 2: Volume (Default: 1), ranges from 0 to 1"]
 	];
 	
-	public static var keysArray:Array<String> = [ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT]; //Used for Vortex Editor
+	public static var keysArray:Array<FlxKey> = [ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT]; //Used for Vortex Editor
 	public static var SHOW_EVENT_COLUMN = true;
 	public static var GRID_COLUMNS_PER_PLAYER = 4;
 	public static var GRID_PLAYERS = 2;
@@ -502,6 +502,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			"Shift + Click - Select/Unselect Note(s)",
 			"Right Click - Selection Box",
 			"",
+			"R - Reset Section",
 			"Z/X - Zoom in/out",
 			"Left/Right - Change Snap",
 			#if FLX_PITCH
@@ -594,11 +595,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	function prepareReload()
 	{
 		updateJsonData();
-		updateHeads(true);
 		loadMusic();
 		reloadNotes();
 		onChartLoaded();
-
+		updateHeads(true);
+		
 		autoSaveTime = 0;
 		Conductor.songPosition = 0;
 		if(FlxG.sound.music != null) FlxG.sound.music.time = 0;
@@ -668,8 +669,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				var chartName:String = 'unknown';
 				if(Song.chartPath != null)
 				{
-					chartName = Song.chartPath.replace('/', '\\');
-					chartName = chartName.substring(chartName.lastIndexOf('\\')+1, chartName.lastIndexOf('.'));
+					chartName = Song.chartPath.replace('\\', '/');
+					chartName = chartName.substring(chartName.lastIndexOf('/')+1, chartName.lastIndexOf('.'));
 				}
 				chartName += DateTools.format(Date.now(), '_%Y-%m-%d_%H-%M-%S');
 				var songCopy:SwagSong = Reflect.copy(PlayState.SONG);
@@ -877,6 +878,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 						}
 					}
 				}
+				else if(FlxG.keys.justPressed.R)
+				{
+					Conductor.songPosition = FlxG.sound.music.time = cachedSectionTimes[curSec] + (curSec > 0 ? 0.000001 : 0);
+				}
 				else if(FlxG.keys.pressed.W != FlxG.keys.pressed.S || FlxG.mouse.wheel != 0)
 				{
 					if(FlxG.sound.music.playing)
@@ -1036,7 +1041,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 						selectedNotes.shift();
 						if(note == null) continue;
 		
-						trace('Removed ${!note.isEvent ? 'note' : 'event'} at time: ${note.strumTime}');
+						var kind:String = !note.isEvent ? 'note' : 'event';
+						trace('Removed $kind at time: ${note.strumTime}');
 						if(!note.isEvent)
 						{
 							notes.remove(note);
@@ -1267,7 +1273,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					var closeNotes:Array<MetaNote> = curRenderedNotes.members.filter(function(note:MetaNote)
 					{
 						var chartY:Float = FlxG.mouse.y - note.chartY;
-						return ((note.isEvent && noteData < 0) || note.songData[1] == noteData) && chartY >= 0 && chartY < GRID_SIZE;
+						return ((note.isEvent && noteData < 0) || (!note.isEvent && note.songData[1] == noteData)) && chartY >= 0 && chartY < GRID_SIZE;
 					});
 					closeNotes.sort(function(a:MetaNote, b:MetaNote) return Math.abs(a.strumTime - FlxG.mouse.y) < Math.abs(b.strumTime - FlxG.mouse.y) ? 1 : -1);
 
@@ -1285,16 +1291,15 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 							else if(!holdingAlt)
 							{
 								resetSelectedNotes();
-								selectedNotes = sel.copy();
 								selectedNotes.remove(closest);
 								addUndoAction(SELECT_NOTE, {old: sel, current: selectedNotes.copy()});
 							}
-
 							trace('Notes selected: ' + selectedNotes.length);
 						}
 						else if(!FlxG.keys.pressed.CONTROL) // Remove Note/Event
 						{
-							trace('Removed ${!closest.isEvent ? 'note' : 'event'} at time: ${closest.strumTime}');
+							var kind:String = !closest.isEvent ? 'note' : 'event';
+							trace('Removed $kind at time: ${closest.strumTime}');
 							if(!closest.isEvent)
 								notes.remove(closest);
 							else
@@ -1527,11 +1532,19 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		var pushedEvents:Array<EventMetaNote> = [];
 		movingNotes.forEachAlive(function(note:MetaNote)
 		{
-			notes.push(note);
-			if(!note.isEvent) pushedNotes.push(note);
-			else pushedEvents.push(cast (note, EventMetaNote));
+			if(!note.isEvent)
+			{
+				notes.push(note);
+				pushedNotes.push(note);
+			}
+			else
+			{
+				events.push(cast (note, EventMetaNote));
+				pushedEvents.push(cast (note, EventMetaNote));
+			}
 		});
 		notes.sort(PlayState.sortByTime);
+		events.sort(PlayState.sortByTime);
 		movingNotes.clear();
 		isMovingNotes = false;
 		softReloadNotes();
@@ -2651,6 +2664,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 				note.setStrumTime(Math.max(-5000, strumTimeStepper.value + (note.strumTime - firstTime)));
 				positionNoteYOnTime(note, curSec);
+
+				if(note.isEvent)
+				{
+					cast (note, EventMetaNote).updateEventText();
+				}
 			}
 			softReloadNotes();
 		};
@@ -2836,25 +2854,16 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		});
 		var clearButton:PsychUIButton = new PsychUIButton(objX + 200, objY, 'Clear', function()
 		{
-			if(affectNotes.checked)
+			for (note in curRenderedNotes)
 			{
-				for (note in curRenderedNotes)
-				{
-					if(note == null || note.isEvent) continue;
+				if(note == null) continue;
 
-					selectedNotes.remove(note);
+				if(!note.isEvent && affectNotes.checked)
 					notes.remove(note);
-				}
-			}
-			if(affectEvents.checked)
-			{
-				for (event in curRenderedNotes)
-				{
-					if(event == null || !event.isEvent) continue;
+				if(note.isEvent && affectEvents.checked)
+					events.remove(cast (note, EventMetaNote));
 
-					selectedNotes.remove(event);
-					events.remove(cast (event, EventMetaNote));
-				}
+				selectedNotes.remove(note);
 			}
 			softReloadNotes(true);
 		});
@@ -3016,8 +3025,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 			if(Song.chartPath != null && Song.chartPath.length > 0)
 			{
-				var parentFolder:String = Song.chartPath.replace('/', '\\');
-				parentFolder = parentFolder.substr(0, Song.chartPath.lastIndexOf('\\')+1);
+				var parentFolder:String = Song.chartPath.replace('\\', '/');
+				parentFolder = parentFolder.substr(0, Song.chartPath.lastIndexOf('/')+1);
 				var notetypeFile:Array<String> = CoolUtil.coolTextFile(parentFolder + 'notetypes.txt');
 				if(notetypeFile.length > 0)
 				{
@@ -3252,8 +3261,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			{
 				try
 				{
-					var filePath:String = fileDialog.path.replace('/', '\\');
-					var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('\\')));
+					var filePath:String = fileDialog.path.replace('\\', '/');
+					var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('/')));
 					if(loadedChart == null || !Reflect.hasField(loadedChart, 'song')) //Check if chart is ACTUALLY a chart and valid
 					{
 						showOutput('Error: File loaded is not a Psych Engine/FNF 0.2.x.x chart.', true);
@@ -3385,8 +3394,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				{
 					try
 					{
-						var filePath:String = fileDialog.path.replace('/', '\\');
-						var eventsFile:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('\\')));
+						var filePath:String = fileDialog.path.replace('\\', '/');
+						var eventsFile:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('/')));
 						if(eventsFile == null || Reflect.hasField(eventsFile, 'scrollSpeed') || eventsFile.events == null)
 						{
 							showOutput('Error: File loaded is not a Psych Engine chart/events file.', true);
@@ -3554,13 +3563,13 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			{
 				try
 				{
-					var path:String = fileDialog.path.replace('/', '\\');
+					var path:String = fileDialog.path.replace('\\', '/');
 
 					var chartName:String = Paths.formatToSongPath(PlayState.SONG.song) + '.json';
-					chartName = chartName.substring(chartName.lastIndexOf('\\')+1, chartName.lastIndexOf('.'));
+					chartName = chartName.substring(chartName.lastIndexOf('/')+1, chartName.lastIndexOf('.'));
 
-					var chartFile:String = '$path\\$chartName-chart.json';
-					var metadataFile:String = '$path\\$chartName-metadata.json';
+					var chartFile:String = '$path/$chartName-chart.json';
+					var metadataFile:String = '$path/$chartName-metadata.json';
 
 					updateChartData();
 					var pack:VSlicePackage = VSlice.export(PlayState.SONG);
@@ -3637,8 +3646,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 			fileDialog.open('song.json', 'Open a Psych Engine Chart JSON', function()
 			{
-				var filePath:String = fileDialog.path.replace('/', '\\');
-				var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('\\')));
+				var filePath:String = fileDialog.path.replace('\\', '/');
+				var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath.substr(filePath.lastIndexOf('/')));
 				if(loadedChart == null || !Reflect.hasField(loadedChart, 'song')) //Check if chart is ACTUALLY a chart and valid
 				{
 					showOutput('Error: File loaded is not a Psych Engine 0.x.x/FNF 0.2.x.x chart.', true);
@@ -3657,7 +3666,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					function(state:BasePrompt)
 					{
 						var songName:String = Paths.formatToSongPath(pack.metadata.songName);
-						var parentFolder:String = filePath.substring(0, filePath.lastIndexOf('\\')+1);
+						var parentFolder:String = filePath.substring(0, filePath.lastIndexOf('/')+1);
 						var artistInput, charterInput, difficultiesInput:PsychUIInputText = null;
 
 						var btnX = 640;
@@ -3716,8 +3725,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 									fileDialog.openDirectory('Save V-Slice Chart/Metadata JSONs', function()
 									{
 										overwriteSavedSomething = false;
-										var path:String = fileDialog.path.replace('/', '\\');
-										if(path.endsWith('\\')) path = path.substr(0, path.length-1);
+										var path:String = fileDialog.path.replace('\\', '/');
+										if(path.endsWith('/')) path = path.substr(0, path.length-1);
 										overwriteCheck('$path/$songName-chart.json', '$songName-chart.json', PsychJsonPrinter.print(pack.chart, ['events', 'notes', 'scrollSpeed']), function()
 										{
 											overwriteCheck('$path/$songName-metadata.json', '$songName-metadata.json', PsychJsonPrinter.print(pack.metadata, ['characters', 'difficulties', 'timeChanges']), function()
@@ -3825,8 +3834,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 						{
 							fileDialog.openDirectory('Save Converted Psych JSONs', function()
 							{
-								var path:String = fileDialog.path.replace('/', '\\');
-								if(!path.endsWith('\\')) path += '\\';
+								var path:String = fileDialog.path.replace('\\', '/');
+								if(!path.endsWith('/')) path += '/';
 
 								var diffs:Array<String> = metadata.playData.difficulties.copy();
 								var defaultDiff:String = Paths.formatToSongPath(Difficulty.getDefault());
@@ -3886,8 +3895,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				var oldSong = PlayState.SONG;
 				try
 				{
-					var filePath:String = fileDialog.path.replace('/', '\\');
-					filePath = filePath.substring(filePath.lastIndexOf('\\')+1, filePath.lastIndexOf('.'));
+					var filePath:String = fileDialog.path.replace('\\', '/');
+					filePath = filePath.substring(filePath.lastIndexOf('/')+1, filePath.lastIndexOf('.'));
 
 					var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath, '');
 					if(loadedChart == null || !Reflect.hasField(loadedChart, 'song')) //Check if chart is ACTUALLY a chart and valid
@@ -4398,12 +4407,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		else
 		{
 			var chartName:String = Paths.formatToSongPath(PlayState.SONG.song) + '.json';
-			if(Song.chartPath != null) chartName = Song.chartPath.substr(Song.chartPath.lastIndexOf('\\')).trim();
+			if(Song.chartPath != null) chartName = Song.chartPath.substr(Song.chartPath.lastIndexOf('/')).trim();
 			fileDialog.save(chartName, chartData,
 				function()
 				{
 					var newPath:String = fileDialog.path;
-					Song.chartPath = newPath.replace('/', '\\');
+					Song.chartPath = newPath.replace('\\', '/');
 					reloadNotesDropdowns();
 					showOutput('Chart saved successfully to: $newPath');
 
@@ -4773,10 +4782,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			case MOVE_NOTE:
 				actionRemoveNotes(action.data.movedNotes, action.data.movedEvents);
 				actionPushNotes(action.data.originalNotes, action.data.originalEvents);
+				onSelectNote();
 
 			case SELECT_NOTE:
 				resetSelectedNotes();
 				selectedNotes = action.data.old;
+				if(lockedEvents) selectedNotes = selectedNotes.filter((note:MetaNote) -> !note.isEvent);
 				onSelectNote();
 		}
 		showOutput('Undo #${currentUndo+1}: ${action.action}');
@@ -4804,10 +4815,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			case MOVE_NOTE:
 				actionRemoveNotes(action.data.originalNotes, action.data.originalEvents);
 				actionPushNotes(action.data.movedNotes, action.data.movedEvents);
+				onSelectNote();
 
 			case SELECT_NOTE:
 				resetSelectedNotes();
 				selectedNotes = action.data.current;
+				if(lockedEvents) selectedNotes = selectedNotes.filter((note:MetaNote) -> !note.isEvent);
 				onSelectNote();
 		}
 		showOutput('Redo #${currentUndo+1}: ${action.action}');
@@ -4825,6 +4838,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				{
 					notes.push(note);
 					selectedNotes.push(note);
+					note.songData[0] = note.strumTime;
+					note.songData[1] = note.chartNoteData;
 				}
 			}
 			notes.sort(PlayState.sortByTime);
@@ -4837,6 +4852,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				{
 					events.push(event);
 					selectedNotes.push(event);
+					event.songData[0] = event.strumTime;
 				}
 			}
 			events.sort(PlayState.sortByTime);
@@ -4847,21 +4863,40 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	function actionRemoveNotes(dataNotes:Array<MetaNote>, dataEvents:Array<EventMetaNote>)
 	{
 		if(dataNotes != null && dataNotes.length > 0)
+		{
 			for (note in dataNotes)
+			{
 				if(note != null)
 				{
 					notes.remove(note);
 					selectedNotes.remove(note);
+
+					if(note.exists)
+					{
+						note.colorTransform.redMultiplier = note.colorTransform.greenMultiplier = note.colorTransform.blueMultiplier = 1;
+						if(note.animation.curAnim != null) note.animation.curAnim.curFrame = 0;
+					}
 				}
 
+			}
+		}
 		if(dataEvents != null && dataEvents.length > 0)
+		{
 			for (event in dataEvents)
+			{
 				if(event != null)
 				{
-					events.remove(event);
+					trace(events.remove(event));
 					selectedNotes.remove(event);
-				}
 
+					if(event.exists)
+					{
+						event.colorTransform.redMultiplier = event.colorTransform.greenMultiplier = event.colorTransform.blueMultiplier = 1;
+						if(event.animation.curAnim != null) event.animation.curAnim.curFrame = 0;
+					}
+				}
+			}
+		}
 		softReloadNotes();
 	}
 

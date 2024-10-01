@@ -149,5 +149,13 @@ class DeprecatedFunctions
 			FlxG.sound.music.fadeOut(duration, toValue);
 			FunkinLua.luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
+		Lua_helper.add_callback(lua, "updateHitboxFromGroup", function(group:String, index:Int) {
+			if(Std.isOfType(Reflect.getProperty(LuaUtils.getTargetInstance(), group), FlxTypedGroup)) {
+				Reflect.getProperty(LuaUtils.getTargetInstance(), group).members[index].updateHitbox();
+				return;
+			}
+			Reflect.getProperty(LuaUtils.getTargetInstance(), group)[index].updateHitbox();
+			FunkinLua.luaTrace('updateHitboxFromGroup is deprecated! Use updateHitbox instead.', false, true);
+		});
 	}
 }

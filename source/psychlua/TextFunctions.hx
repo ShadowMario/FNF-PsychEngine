@@ -5,7 +5,7 @@ class TextFunctions
 	public static function implement(funk:FunkinLua)
 	{
 		var lua = funk.lua;
-		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
+		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, ?text:String = '', ?width:Int = 0, ?x:Float = 0, ?y:Float = 0) {
 			tag = tag.replace('.', '');
 
 			LuaUtils.destroyObject(tag);
