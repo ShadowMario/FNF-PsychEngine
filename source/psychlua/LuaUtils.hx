@@ -395,7 +395,11 @@ class LuaUtils
 	public static function getBuildTarget():String
 	{
 		#if windows
+		#if x86_BUILD
+		return 'windows_x86';
+		#else
 		return 'windows';
+		#end
 		#elseif linux
 		return 'linux';
 		#elseif mac
