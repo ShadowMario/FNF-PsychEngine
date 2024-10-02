@@ -337,7 +337,7 @@ class HScript extends Iris
 		try
 		{
 			final callValue:IrisCall = call(funcToRun, funcArgs);
-			return callValue.signature;
+			return callValue.returnValue;
 		}
 		catch(e:Dynamic)
 		{
@@ -361,7 +361,7 @@ class HScript extends Iris
 				final retVal:IrisCall = funk.hscript.executeCode(funcToRun, funcArgs);
 				if (retVal != null)
 				{
-					return (retVal.signature == null || LuaUtils.isOfTypes(retVal.signature, [Bool, Int, Float, String, Array])) ? retVal.signature : null;
+					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
 				}
 			}
 			catch(e:Dynamic)
@@ -382,7 +382,7 @@ class HScript extends Iris
 				final retVal:IrisCall = funk.hscript.executeFunction(funcToRun, funcArgs);
 				if (retVal != null)
 				{
-					return (retVal.signature == null || LuaUtils.isOfTypes(retVal.signature, [Bool, Int, Float, String, Array])) ? retVal.signature : null;
+					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
 				}
 			}
 			catch(e:Dynamic)
