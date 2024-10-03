@@ -16,6 +16,7 @@ class HScript extends Iris
 {
 	public var filePath:String;
 	public var modFolder:String;
+	public var returnValue:Dynamic = null;
 
 	#if LUA_ALLOWED
 	public var parentLua:FunkinLua;
@@ -35,18 +36,24 @@ class HScript extends Iris
 		{
 			trace('initializing haxe interp for: ${parent.scriptName}');
 			parent.hscript = new HScript(parent, code, varsToBring);
+			return parent.hscript.returnValue;
 		}
 		else
 		{
 			hs.varsToBring = varsToBring;
 			try
 			{
-				hs.scriptCode = code;
-				return hs.execute();
+				if (hs.scriptCode != code) {
+					hs.scriptCode = code;
+					hs.parse(true);
+				}
+				hs.returnValue = hs.execute();
+				return hs.returnValue;
 			}
 			catch(e:Dynamic)
 			{
 				FunkinLua.luaTrace('ERROR (${hs.origin}) - $e', false, false, FlxColor.RED);
+				hs.returnValue = null;
 			}
 		}
 		return null;
@@ -90,11 +97,19 @@ class HScript extends Iris
 				scriptThing = File.getContent(f);
 			}
 		}
-		this.scriptCode = scriptThing;
-
 		preset();
-		execute();
+		this.scriptCode = scriptThing;
 		this.varsToBring = varsToBring;
+		try {
+			this.returnValue = execute();
+		} catch (e:Dynamic) {
+			#if LUA_ALLOWED
+			FunkinLua.luaTrace('ERROR (${hs.origin}) - $e', false, false, FlxColor.RED);
+			#else
+			PlayState.instance.addTextToDebug('ERROR (${hs.origin}) - $e', FlxColor.RED);
+			#end
+			this.returnValue = null;
+		}
 	}
 
 	var varsToBring(default, set):Any = null;
