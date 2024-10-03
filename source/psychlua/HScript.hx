@@ -101,6 +101,12 @@ class HScript extends Iris
 		super.preset();
 
 		// Some very commonly used classes
+		set('Type', Type);
+		set('Reflect', Reflect);
+		#if sys
+		set('File', sys.io.File);
+		set('FileSystem', sys.FileSystem);
+		#end
 		set('FlxG', flixel.FlxG);
 		set('FlxMath', flixel.math.FlxMath);
 		set('FlxSprite', flixel.FlxSprite);
@@ -323,9 +329,7 @@ class HScript extends Iris
 	}
 
 	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):IrisCall {
-		if (funcToRun == null) return null;
-
-		if(!exists(funcToRun)) {
+		if (funcToRun != null && !exists(funcToRun)) {
 			#if LUA_ALLOWED
 			FunkinLua.luaTrace(origin + ' - No function named: $funcToRun', false, false, FlxColor.RED);
 			#else
@@ -336,8 +340,12 @@ class HScript extends Iris
 
 		try
 		{
-			final callValue:IrisCall = call(funcToRun, funcArgs);
-			return callValue.returnValue;
+			if (funcToRun == null) {
+				var retVal:Dynamic = execute();
+				return {signature: null, funName: '', returnValue: retVal};
+			} else {
+				return call(funcToRun, funcArgs);
+			}
 		}
 		catch(e:Dynamic)
 		{
@@ -353,15 +361,14 @@ class HScript extends Iris
 
 	#if LUA_ALLOWED
 	public static function implement(funk:FunkinLua) {
-		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):IrisCall {
+		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			#if HSCRIPT_ALLOWED
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
 			try
 			{
 				final retVal:IrisCall = funk.hscript.executeCode(funcToRun, funcArgs);
-				if (retVal != null)
-				{
-					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
+				if (retVal != null) {
+					return (LuaUtils.typeSupported(retVal.returnValue)) ? retVal.returnValue : null;
 				}
 			}
 			catch(e:Dynamic)
@@ -380,9 +387,8 @@ class HScript extends Iris
 			try
 			{
 				final retVal:IrisCall = funk.hscript.executeFunction(funcToRun, funcArgs);
-				if (retVal != null)
-				{
-					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
+				if (retVal != null) {
+					return (LuaUtils.typeSupported(retVal.returnValue)) ? retVal.returnValue : null;
 				}
 			}
 			catch(e:Dynamic)
