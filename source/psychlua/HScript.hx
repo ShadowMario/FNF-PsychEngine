@@ -104,9 +104,9 @@ class HScript extends Iris
 			this.returnValue = execute();
 		} catch (e:Dynamic) {
 			#if LUA_ALLOWED
-			FunkinLua.luaTrace('ERROR (${hs.origin}) - $e', false, false, FlxColor.RED);
+			FunkinLua.luaTrace('ERROR (${this.origin}) - $e', false, false, FlxColor.RED);
 			#else
-			PlayState.instance.addTextToDebug('ERROR (${hs.origin}) - $e', FlxColor.RED);
+			PlayState.instance.addTextToDebug('ERROR (${this.origin}) - $e', FlxColor.RED);
 			#end
 			this.returnValue = null;
 		}
