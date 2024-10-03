@@ -42,13 +42,14 @@ class HScript extends Iris
 			try
 			{
 				hs.scriptCode = code;
-				hs.execute();
+				return hs.execute();
 			}
 			catch(e:Dynamic)
 			{
 				FunkinLua.luaTrace('ERROR (${hs.origin}) - $e', false, false, FlxColor.RED);
 			}
 		}
+		return null;
 	}
 	#end
 
@@ -329,7 +330,8 @@ class HScript extends Iris
 	}
 
 	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):IrisCall {
-		if (funcToRun != null && !exists(funcToRun)) {
+		if (funcToRun == null) return null;
+		if (!exists(funcToRun)) {
 			#if LUA_ALLOWED
 			FunkinLua.luaTrace(origin + ' - No function named: $funcToRun', false, false, FlxColor.RED);
 			#else
@@ -340,12 +342,7 @@ class HScript extends Iris
 
 		try
 		{
-			if (funcToRun == null) {
-				var retVal:Dynamic = execute();
-				return {signature: null, funName: '', returnValue: retVal};
-			} else {
-				return call(funcToRun, funcArgs);
-			}
+			return call(funcToRun, funcArgs);
 		}
 		catch(e:Dynamic)
 		{
@@ -363,12 +360,16 @@ class HScript extends Iris
 	public static function implement(funk:FunkinLua) {
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			#if HSCRIPT_ALLOWED
-			initHaxeModuleCode(funk, codeToRun, varsToBring);
+			final retVal:Dynamic = initHaxeModuleCode(funk, codeToRun, varsToBring);
+			if (funcToRun == null) {
+				return (LuaUtils.typeSupported(retVal)) ? retVal : null;
+			}
+			
 			try
 			{
-				final retVal:IrisCall = funk.hscript.executeCode(funcToRun, funcArgs);
-				if (retVal != null) {
-					return (LuaUtils.typeSupported(retVal.returnValue)) ? retVal.returnValue : null;
+				final retCall:IrisCall = funk.hscript.executeCode(funcToRun, funcArgs);
+				if (retCall != null) {
+					return (LuaUtils.typeSupported(retCall.returnValue)) ? retCall.returnValue : null;
 				}
 			}
 			catch(e:Dynamic)
