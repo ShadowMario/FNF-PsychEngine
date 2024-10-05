@@ -1053,7 +1053,12 @@ class FunkinLua {
 				return;
 			}
 
-			var poop:FlxSprite = Reflect.getProperty(LuaUtils.getTargetInstance(), obj);
+			var split:Array<String> = obj.split('.');
+			var poop:FlxSprite = LuaUtils.getObjectDirectly(split[0]);
+			if(split.length > 1) {
+				poop = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(split), split[split.length-1]);
+			}
+
 			if(poop != null) {
 				poop.updateHitbox();
 				return;
