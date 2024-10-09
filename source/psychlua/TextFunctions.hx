@@ -122,6 +122,8 @@ class TextFunctions
 						obj.alignment = RIGHT;
 					case 'center':
 						obj.alignment = CENTER;
+					case 'justify':
+						obj.alignment = JUSTIFY;
 				}
 				return true;
 			}
