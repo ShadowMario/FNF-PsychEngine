@@ -10,11 +10,16 @@ import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.math.FlxRect;
 import flixel.util.FlxDestroyUtil;
+
+import openfl.utils.Assets;
+
 import openfl.display.Sprite;
 
 import openfl.net.FileReference;
+
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
+
 import psychlua.ModchartSprite;
 import flash.net.FileFilter;
 

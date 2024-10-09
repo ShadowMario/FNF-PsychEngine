@@ -12,6 +12,9 @@ import substates.ResetScoreSubState;
 
 import flixel.math.FlxMath;
 import flixel.util.FlxDestroyUtil;
+
+import openfl.utils.Assets;
+
 import haxe.Json;
 
 class FreeplayState extends MusicBeatState
