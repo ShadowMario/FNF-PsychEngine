@@ -28,7 +28,7 @@ class LuaUtils
 
 	public static function getLuaTween(options:Dynamic)
 	{
-		return {
+		return (options != null) ? {
 			type: getTweenTypeByString(options.type),
 			startDelay: options.startDelay,
 			onUpdate: options.onUpdate,
@@ -36,7 +36,7 @@ class LuaUtils
 			onComplete: options.onComplete,
 			loopDelay: options.loopDelay,
 			ease: getTweenEaseByString(options.ease)
-		};
+		} : null;
 	}
 
 	public static function setVarInArray(instance:Dynamic, variable:String, value:Dynamic, allowMaps:Bool = false):Any
@@ -395,7 +395,11 @@ class LuaUtils
 	public static function getBuildTarget():String
 	{
 		#if windows
+		#if x86_BUILD
+		return 'windows_x86';
+		#else
 		return 'windows';
+		#end
 		#elseif linux
 		return 'linux';
 		#elseif mac
