@@ -1310,10 +1310,14 @@ class PlayState extends MusicBeatState
 
 		var oldNote:Note = null;
 		var sectionsData:Array<SwagSection> = PlayState.SONG.notes;
-		var ghostNotesCaught: Int = 0;
+		var ghostNotesCaught:Int = 0;
+		var daBpm:Float = Conductor.bpm;
 	
 		for (section in sectionsData)
 		{
+			if (section.changeBPM != null && section.changeBPM && section.bpm != null && daBpm != section.bpm)
+				daBpm = section.bpm;
+
 			for (i in 0...section.sectionNotes.length)
 			{
 				final songNotes: Array<Dynamic> = section.sectionNotes[i];
@@ -1350,14 +1354,15 @@ class PlayState extends MusicBeatState
 				swagNote.scrollFactor.set();
 				unspawnNotes.push(swagNote);
 
-				final roundSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
+				var curStepCrochet:Float = 60 / daBpm * 1000 * .25;
+				var roundSus:Int = Math.round((swagNote.sustainLength - curStepCrochet * .25) / curStepCrochet);
 				if(roundSus > 0)
 				{
 					for (susNote in 0...roundSus + 1)
 					{
 						oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-						var sustainNote:Note = new Note(spawnTime + (Conductor.stepCrochet * susNote), noteColumn, oldNote, true);
+						var sustainNote:Note = new Note(spawnTime + (curStepCrochet * susNote), noteColumn, oldNote, true);
 						sustainNote.animSuffix = swagNote.animSuffix;
 						sustainNote.mustPress = swagNote.mustPress;
 						sustainNote.gfNote = swagNote.gfNote;
@@ -1374,7 +1379,7 @@ class PlayState extends MusicBeatState
 							{
 								oldNote.scale.y *= Note.SUSTAIN_SIZE / oldNote.frameHeight;
 								oldNote.scale.y /= playbackRate;
-								oldNote.updateHitbox();
+								oldNote.resizeByRatio(curStepCrochet / Conductor.stepCrochet);
 							}
 
 							if(ClientPrefs.data.downScroll)
@@ -1383,7 +1388,7 @@ class PlayState extends MusicBeatState
 						else if(oldNote.isSustainNote)
 						{
 							oldNote.scale.y /= playbackRate;
-							oldNote.updateHitbox();
+							oldNote.resizeByRatio(curStepCrochet / Conductor.stepCrochet);
 						}
 
 						if (sustainNote.mustPress) sustainNote.x += FlxG.width / 2; // general offset
