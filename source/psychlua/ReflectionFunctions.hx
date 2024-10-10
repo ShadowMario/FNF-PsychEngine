@@ -289,8 +289,8 @@ class ReflectionFunctions
 				//trace('Op1: $argStr');
 				var lastIndex:Int = argStr.lastIndexOf('::');
 
-				var split:Array<String> = argStr.split('.');
-				arg = (lastIndex > -1) ? Type.resolveClass(arg.substring(0, lastIndex)) : PlayState.instance;
+				var split:Array<String> = (lastIndex > -1) ? argStr.substring(0, lastIndex).split('.') : argStr.split('.');
+				arg = (lastIndex > -1) ? Type.resolveClass(argStr.substring(lastIndex+2)) : PlayState.instance;
 				for (j in 0...split.length)
 				{
 					//trace('Op2: ${Type.getClass(args[i])}, ${split[j]}');
