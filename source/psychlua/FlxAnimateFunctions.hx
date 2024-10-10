@@ -23,7 +23,7 @@ class FlxAnimateFunctions
 			mySprite.active = true;
 		});
 
-		funk.set("loadAnimateAtlas", function(tag:String, folderOrImg:Dynamic, ?spriteJson:Dynamic = null, ?animationJson:Dynamic = null) {
+		funk.set("loadAnimateAtlas", function(tag:String, folderOrImg:String, ?spriteJson:String = null, ?animationJson:String = null) {
 			var spr:FlxAnimate = MusicBeatState.getVariables().get(tag);
 			if(spr != null) Paths.loadAnimateAtlas(spr, folderOrImg, spriteJson, animationJson);
 		});
