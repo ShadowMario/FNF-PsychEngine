@@ -24,7 +24,7 @@ class Option
 	public var type:OptionType = BOOL;
 
 	public var scrollSpeed:Float = 50; //Only works on int/float, defines how fast it scrolls per second while holding left/right
-	private var variable:String = null; //Variable from ClientPrefs.hx
+	public var variable(default, null):String = null; //Variable from ClientPrefs.hx
 	public var defaultValue:Dynamic = null;
 
 	public var curOption:Int = 0; //Don't change this
