@@ -11,6 +11,8 @@ import psychlua.FunkinLua;
 
 #if HSCRIPT_ALLOWED
 import crowplexus.iris.Iris;
+import crowplexus.hscript.Printer;
+import crowplexus.hscript.Expr.Error as IrisError;
 
 class HScript extends Iris
 {
@@ -28,6 +30,15 @@ class HScript extends Iris
 			parent.hscript = new HScript(parent);
 		}
 	}
+	
+	public function errorCaught(e:IrisError, ?funcName:String) {
+		var header:String = (funcName != null ? '$origin: $funcName' : origin);
+		#if LUA_ALLOWED
+		FunkinLua.luaTrace('ERROR ($header) - ${e.toString()}', false, false, FlxColor.RED);
+		#else
+		PlayState.instance.addTextToDebug('ERROR ($header) - ${e.toString()}', FlxColor.RED);
+		#end
+	}
 
 	public static function initHaxeModuleCode(parent:FunkinLua, code:String, ?varsToBring:Any = null)
 	{
@@ -35,12 +46,13 @@ class HScript extends Iris
 		if(hs == null)
 		{
 			trace('initializing haxe interp for: ${parent.scriptName}');
-			parent.hscript = new HScript(parent, code, varsToBring);
+			parent.hscript = new HScript(parent, '', varsToBring);
 			return parent.hscript.returnValue;
 		}
 		else
 		{
 			hs.varsToBring = varsToBring;
+			var prevCode:String = hs.scriptCode;
 			try
 			{
 				if (hs.scriptCode != code) {
@@ -50,10 +62,12 @@ class HScript extends Iris
 				hs.returnValue = hs.execute();
 				return hs.returnValue;
 			}
-			catch(e:Dynamic)
+			catch(e:IrisError)
 			{
-				FunkinLua.luaTrace('ERROR (${hs.origin}) - $e', false, false, FlxColor.RED);
+				hs.errorCaught(e);
 				hs.returnValue = null;
+				hs.scriptCode = prevCode;
+				return e;
 			}
 		}
 		return null;
@@ -78,7 +92,7 @@ class HScript extends Iris
 		#end
 
 		filePath = file;
-		if (filePath != null && filePath.length > 0)
+		if (filePath != null && filePath.length > 0 && parent == null)
 		{
 			this.origin = filePath;
 			#if MODS_ALLOWED
@@ -102,12 +116,8 @@ class HScript extends Iris
 		this.varsToBring = varsToBring;
 		try {
 			this.returnValue = execute();
-		} catch (e:Dynamic) {
-			#if LUA_ALLOWED
-			FunkinLua.luaTrace('ERROR (${this.origin}) - $e', false, false, FlxColor.RED);
-			#else
-			PlayState.instance.addTextToDebug('ERROR (${this.origin}) - $e', FlxColor.RED);
-			#end
+		} catch (e:IrisError) {
+			this.errorCaught(e);
 			this.returnValue = null;
 		}
 	}
@@ -359,9 +369,9 @@ class HScript extends Iris
 		{
 			return call(funcToRun, funcArgs);
 		}
-		catch(e:Dynamic)
+		catch(e:IrisError)
 		{
-			trace('ERROR ${funcToRun}: $e');
+			errorCaught(e, funcToRun);
 		}
 		return null;
 	}
@@ -376,6 +386,7 @@ class HScript extends Iris
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			#if HSCRIPT_ALLOWED
 			final retVal:Dynamic = initHaxeModuleCode(funk, codeToRun, varsToBring);
+			if (Std.isOfType(retVal, IrisError)) return null;
 			if (funcToRun == null) {
 				return (LuaUtils.typeSupported(retVal)) ? retVal : null;
 			}
@@ -387,9 +398,9 @@ class HScript extends Iris
 					return (LuaUtils.typeSupported(retCall.returnValue)) ? retCall.returnValue : null;
 				}
 			}
-			catch(e:Dynamic)
+			catch(e:IrisError)
 			{
-				FunkinLua.luaTrace('ERROR (${funk.hscript.origin}: $funcToRun) - $e', false, false, FlxColor.RED);
+				funk.hscript.errorCaught(e, funcToRun);
 			}
 
 			#else
@@ -407,9 +418,9 @@ class HScript extends Iris
 					return (LuaUtils.typeSupported(retVal.returnValue)) ? retVal.returnValue : null;
 				}
 			}
-			catch(e:Dynamic)
+			catch(e:IrisError)
 			{
-				FunkinLua.luaTrace('ERROR (${funk.hscript.origin}: $funcToRun) - $e', false, false, FlxColor.RED);
+				funk.hscript.errorCaught(e, funcToRun);
 			}
 			return null;
 			#else
@@ -452,12 +463,6 @@ class HScript extends Iris
 		// should always override by default
 		super.set(name, value, true);
 	}
-
-	/*override function irisPrint(v):Void
-	{
-		FunkinLua.luaTrace('ERROR (${this.origin}:${interp.posInfos().lineNumber}): ${v}');
-		trace('[${ruleSet.name}:${interp.posInfos().lineNumber}]: ${v}\n');
-	}*/
 
 	override public function destroy()
 	{
