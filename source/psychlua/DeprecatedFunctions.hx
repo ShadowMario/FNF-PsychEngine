@@ -148,7 +148,7 @@ class DeprecatedFunctions
 			FlxG.sound.music.fadeOut(duration, toValue);
 			FunkinLua.luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
-		Lua_helper.add_callback(lua, "updateHitboxFromGroup", function(group:String, index:Int) {
+		funk.set("updateHitboxFromGroup", function(group:String, index:Int) {
 			if(Std.isOfType(Reflect.getProperty(LuaUtils.getTargetInstance(), group), FlxTypedGroup)) {
 				Reflect.getProperty(LuaUtils.getTargetInstance(), group).members[index].updateHitbox();
 				return;
