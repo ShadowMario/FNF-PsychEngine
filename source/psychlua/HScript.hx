@@ -11,7 +11,6 @@ import psychlua.FunkinLua;
 
 #if HSCRIPT_ALLOWED
 import crowplexus.iris.Iris;
-import crowplexus.hscript.Printer;
 import crowplexus.hscript.Expr.Error as IrisError;
 
 class HScript extends Iris
@@ -46,7 +45,7 @@ class HScript extends Iris
 		if(hs == null)
 		{
 			trace('initializing haxe interp for: ${parent.scriptName}');
-			parent.hscript = new HScript(parent, '', varsToBring);
+			parent.hscript = new HScript(parent, code, varsToBring);
 			return parent.hscript.returnValue;
 		}
 		else
@@ -118,7 +117,7 @@ class HScript extends Iris
 			this.returnValue = execute();
 		} catch (e:IrisError) {
 			this.errorCaught(e);
-			this.returnValue = null;
+			this.returnValue = e;
 		}
 	}
 
