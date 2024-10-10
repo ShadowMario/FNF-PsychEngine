@@ -3103,6 +3103,12 @@ class PlayState extends MusicBeatState
 	}
 
 	override function destroy() {
+		if (psychlua.CustomSubstate.instance != null)
+		{
+			closeSubState();
+			resetSubState();
+		}
+
 		#if LUA_ALLOWED
 		for (lua in luaArray)
 		{
