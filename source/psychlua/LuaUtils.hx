@@ -255,6 +255,10 @@ class LuaUtils
 		}
 	}
 	
+	public static function typeSupported(value:Dynamic) {
+		return (value == null || isOfTypes(value, [Bool, Int, Float, String, Array]) || Type.typeof(value) == Type.ValueType.TObject);
+	}
+	
 	public static function isOfTypes(value:Any, types:Array<Dynamic>)
 	{
 		for (type in types)
