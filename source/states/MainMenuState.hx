@@ -314,7 +314,7 @@ class MainMenuState extends MusicBeatState
 								}
 						}
 					});
-					
+
 					for (memb in menuItems)
 					{
 						if(memb == item)
