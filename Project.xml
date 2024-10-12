@@ -124,6 +124,9 @@
 	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
 	<haxedef name="HXVLC_NO_SHARE_DIRECTORY" if="VIDEOS_ALLOWED" />
 	<define name="x86_BUILD" if="32bits" />
+
+	<!-- Iris error debugging -->
+	<haxedef name="hscriptPos" if="HSCRIPT_ALLOWED"/>
 	
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
