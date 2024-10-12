@@ -107,9 +107,11 @@ class Character extends FlxSprite
 
 	inline function set_hotflipX(value:Bool):Bool
 	{
+		var ew:Bool = flipX == value;
 		flipX = value;
-		if (hotflipX == value) return value;
 		hotflipX = value;
+		if (ew) return value;
+		//trace('dirty!');
 
 		var currentAnimation:String = getAnimationName();
 		var currentFrame:Int = isAnimateAtlas ? atlas.anim.curFrame : animation.curAnim.curFrame;
@@ -134,9 +136,11 @@ class Character extends FlxSprite
 
 	inline function set_hotflipY(value:Bool):Bool
 	{
+		var ew:Bool = flipY == value;
 		flipY = value;
-		if (hotflipY == value) return value;
 		hotflipY = value;
+		if (ew) return value;
+		//trace('dirty!');
 
 		var currentAnimation:String = getAnimationName();
 		var currentFrame:Int = isAnimateAtlas ? atlas.anim.curFrame : animation.curAnim.curFrame;
