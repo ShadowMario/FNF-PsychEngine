@@ -113,23 +113,7 @@ class Character extends FlxSprite
 		if (ew) return value;
 		//trace('dirty!');
 
-		var currentAnimation:String = getAnimationName();
-		var currentFrame:Int = isAnimateAtlas ? atlas.anim.curFrame : animation.curAnim.curFrame;
-
-		for (animName in animOffsets.keys())
-		{
-			playAnim(animName, true);
-			var animOffsets:Array<Dynamic> = animOffsets[animName];
-			animOffsets[0] *= -1;
-			animOffsets[0] += (frameWidth - width) * jsonScale;
-		}
-		playAnim(currentAnimation, true, false, currentFrame);
-	
-		var difference:Float = (frameWidth - width) * jsonScale;
-		if (!value) difference *= -1;
-		cameraPosition[0] -= difference;
-		x += difference;
-
+		adjustOffsets(0, value);
 		swapAnimations('LEFT', 'RIGHT');
 		return value;
 	}
@@ -142,25 +126,30 @@ class Character extends FlxSprite
 		if (ew) return value;
 		//trace('dirty!');
 
+		adjustOffsets(1, value);
+		swapAnimations('DOWN', 'UP');
+		return value;
+	}
+
+	function adjustOffsets(i:Int, flipped:Bool)
+	{
 		var currentAnimation:String = getAnimationName();
+		var wasReversed:Bool = isAnimateAtlas ? atlas.anim.reversed : animation.curAnim.reversed;
 		var currentFrame:Int = isAnimateAtlas ? atlas.anim.curFrame : animation.curAnim.curFrame;
 
 		for (animName in animOffsets.keys())
 		{
 			playAnim(animName, true);
 			var animOffsets:Array<Dynamic> = animOffsets[animName];
-			animOffsets[1] *= -1;
-			animOffsets[1] += (frameHeight - height) * jsonScale;
+			animOffsets[i] *= -1;
+			animOffsets[i] += (i == 0 ? frameWidth - height : frameHeight - height) * jsonScale;
 		}
-		playAnim(currentAnimation, true, false, currentFrame);
-	
-		var difference:Float = (frameHeight - height) * jsonScale;
-		if (!value) difference *= -1;
-		cameraPosition[1] -= difference;
-		y += difference;
+		playAnim(currentAnimation, true, wasReversed, currentFrame);
 
-		swapAnimations('DOWN', 'UP');
-		return value;
+		var difference:Float = (i == 0 ? frameWidth - height : frameHeight - height) * jsonScale;
+		if (!flipped) difference *= -1;
+		cameraPosition[i] -= difference;
+		if (i == 0) x += difference; else y += difference;
 	}
 
 	public function swapAnimations(animation1:String, animation2:String)
