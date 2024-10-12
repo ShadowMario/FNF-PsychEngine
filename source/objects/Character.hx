@@ -81,6 +81,9 @@ class Character extends FlxSprite
 	public var originalFlipX:Bool = false;
 	public var editorIsPlayer:Null<Bool> = null;
 
+	public var hotflipX(default, set):Bool = false;
+	public var hotflipY(default, set):Bool = false;
+
 	public function new(x:Float, y:Float, ?character:String = 'bf', ?isPlayer:Bool = false)
 	{
 		super(x, y);
@@ -99,6 +102,100 @@ class Character extends FlxSprite
 				playAnim("shoot1");
 			case 'pico-blazin', 'darnell-blazin':
 				skipDance = true;
+		}
+	}
+
+	inline function set_hotflipX(value:Bool):Bool
+	{
+		flipX = value;
+		if (hotflipX == value) return value;
+		hotflipX = value;
+
+		var currentAnimation:String = getAnimationName();
+		var currentFrame:Int = isAnimateAtlas ? atlas.anim.curFrame : animation.curAnim.curFrame;
+
+		for (animName in animOffsets.keys())
+		{
+			playAnim(animName, true);
+			var animOffsets:Array<Dynamic> = animOffsets[animName];
+			animOffsets[0] *= -1;
+			animOffsets[0] += (frameWidth - width) * jsonScale;
+		}
+		playAnim(currentAnimation, true, false, currentFrame);
+	
+		var difference:Float = (frameWidth - width) * jsonScale;
+		if (!value) difference *= -1;
+		cameraPosition[0] -= difference;
+		x += difference;
+
+		swapAnimations('LEFT', 'RIGHT');
+		return value;
+	}
+
+	inline function set_hotflipY(value:Bool):Bool
+	{
+		flipY = value;
+		if (hotflipY == value) return value;
+		hotflipY = value;
+
+		var currentAnimation:String = getAnimationName();
+		var currentFrame:Int = isAnimateAtlas ? atlas.anim.curFrame : animation.curAnim.curFrame;
+
+		for (animName in animOffsets.keys())
+		{
+			playAnim(animName, true);
+			var animOffsets:Array<Dynamic> = animOffsets[animName];
+			animOffsets[1] *= -1;
+			animOffsets[1] += (frameHeight - height) * jsonScale;
+		}
+		playAnim(currentAnimation, true, false, currentFrame);
+	
+		var difference:Float = (frameHeight - height) * jsonScale;
+		if (!value) difference *= -1;
+		cameraPosition[1] -= difference;
+		y += difference;
+
+		swapAnimations('DOWN', 'UP');
+		return value;
+	}
+
+	public function swapAnimations(animation1:String, animation2:String)
+	{
+		if (animation1 == animation2) return; //dude
+
+		var trackedKeys:Array<String> = [];
+		@:privateAccess
+		for (animName in animation._animations.keys()) {
+			if (trackedKeys.contains(animName)) continue;
+	
+			var newAnimName:String;
+			if (animName.contains(animation1))
+				newAnimName = animName.replace(animation1, animation2);
+			else if (animName.contains(animation2))
+				newAnimName = animName.replace(animation2, animation1);
+			else
+				continue;
+	
+			var swapped:Bool = false;
+			var animObj:flixel.animation.FlxAnimation = animation._animations.get(animName);
+			var offset:Array<Dynamic> = animOffsets.get(animName);
+	
+			if (animation._animations.exists(newAnimName))
+			{
+				animation._animations.set(animName, animation._animations.get(newAnimName));
+				animOffsets.set(animName, animOffsets.get(newAnimName));
+				swapped = true;
+				trackedKeys.push(animName);
+			}
+	
+			animation._animations.set(newAnimName, animObj);
+			animOffsets.set(newAnimName, offset);
+			trackedKeys.push(newAnimName);
+			if (!swapped)
+			{
+				animation._animations.remove(animName);
+				animOffsets.remove(animName);
+			}
 		}
 	}
 
