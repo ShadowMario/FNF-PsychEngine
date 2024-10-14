@@ -1432,8 +1432,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 						if(strumNote != null)
 						{
 							strumNote.playAnim('confirm', true);
-							var stepOnMyCroch:Float = Conductor.stepCrochet * 1.25;
-							strumNote.resetAnim = Math.max(stepOnMyCroch, note.sustainLength + stepOnMyCroch) / 1000 / playbackRate;
+							strumNote.resetAnim = Math.max(Conductor.stepCrochet * 1.25, note.sustainLength) / 1000 / playbackRate;
 						}
 					}
 				}
