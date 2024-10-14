@@ -183,17 +183,17 @@ class ReflectionFunctions
 			switch(Type.typeof(groupOrArray))
 			{
 				case TClass(Array): //Is Array
-					if(obj == null) obj = groupOrArray.members[index];
-					groupOrArray.remove(obj, true);
-					if(destroy) obj.destroy();
-
-				default: //Is Group
 					if(obj != null)
 					{
 						groupOrArray.remove(obj);
 						if(destroy) obj.destroy();
 					}
 					else groupOrArray.remove(groupOrArray[index]);
+
+				default: //Is Group
+					if(obj == null) obj = groupOrArray.members[index];
+					groupOrArray.remove(obj, true);
+					if(destroy) obj.destroy();
 			}
 		});
 		
@@ -227,7 +227,7 @@ class ReflectionFunctions
 		
 				if(myType == null)
 				{
-					FunkinLua.luaTrace('createInstance: Variable $variableToSave is already being used and cannot be replaced!', false, false, FlxColor.RED);
+					FunkinLua.luaTrace('createInstance: Class $className not found', false, false, FlxColor.RED);
 					return false;
 				}
 
