@@ -66,7 +66,7 @@ class MetaNote extends Note
 				sustainSprite = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 				sustainSprite.scrollFactor.x = 0;
 			}
-			sustainSprite.setGraphicSize(8, Math.max(0, (v * ChartingState.GRID_SIZE / stepCrochet * zoom) + ChartingState.GRID_SIZE/2));
+			sustainSprite.setGraphicSize(8, Math.max(ChartingState.GRID_SIZE/4, (Math.round((v * ChartingState.GRID_SIZE + ChartingState.GRID_SIZE) / stepCrochet) * zoom) - ChartingState.GRID_SIZE/2));
 			sustainSprite.updateHitbox();
 		}
 	}

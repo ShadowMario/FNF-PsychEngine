@@ -308,10 +308,38 @@ class EditorPlayState extends MusicBeatSubstate
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
 
+		var daBpm:Float = (PlayState.SONG.notes[0].changeBPM == true) ? PlayState.SONG.notes[0].bpm : PlayState.SONG.bpm;
 		var oldNote:Note = null;
+
+		// Section Time/Crochet
+		var noteSec:Int = 0;
+		var secTime:Float = 0;
+		var cachedSectionTimes:Array<Float> = [];
+		var cachedSectionCrochets:Array<Float> = [];
+		if(PlayState.SONG != null)
+		{
+			var tempBpm:Float = daBpm;
+			for (secNum => section in PlayState.SONG.notes)
+			{
+				if(PlayState.SONG.notes[noteSec].changeBPM == true)
+					tempBpm = PlayState.SONG.notes[noteSec].bpm;
+
+				secTime += Conductor.calculateCrochet(tempBpm) * (Math.round(4 * section.sectionBeats) / 4);
+				cachedSectionTimes.push(secTime);
+			}
+		}
+
+		// Load Notes
 		for (note in _noteList)
 		{
 			if(note == null || note.strumTime < startPos) continue;
+			
+			while(cachedSectionTimes.length > noteSec + 1 && cachedSectionTimes[noteSec + 1] <= note.strumTime)
+			{
+				noteSec++;
+				if(PlayState.SONG.notes[noteSec].changeBPM == true)
+					daBpm = PlayState.SONG.notes[noteSec].bpm;
+			}
 
 			var idx: Int = _noteList.indexOf(note);
 			if (idx != 0) {
@@ -331,17 +359,19 @@ class EditorPlayState extends MusicBeatSubstate
 			swagNote.sustainLength = note.sustainLength;
 			swagNote.gfNote = note.gfNote;
 			swagNote.noteType = note.noteType;
+
 			swagNote.scrollFactor.set();
 			unspawnNotes.push(swagNote);
 
-			final roundSus:Int = Math.floor(swagNote.sustainLength / Conductor.stepCrochet);
+			var curStepCrochet:Float = 60 / daBpm * 1000 / 4.0;
+			final roundSus:Int = Math.round(swagNote.sustainLength / Conductor.stepCrochet);
 			if(roundSus > 0)
 			{
-				for (susNote in 0...roundSus + 1)
+				for (susNote in 0...roundSus)
 				{
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-					var sustainNote:Note = new Note(swagNote.strumTime + (Conductor.stepCrochet * susNote), note.noteData, oldNote, true, this);
+					var sustainNote:Note = new Note(swagNote.strumTime + (curStepCrochet * susNote), note.noteData, oldNote, true, this);
 					sustainNote.mustPress = swagNote.mustPress;
 					sustainNote.gfNote = swagNote.gfNote;
 					sustainNote.noteType = swagNote.noteType;
@@ -357,7 +387,7 @@ class EditorPlayState extends MusicBeatSubstate
 						{
 							oldNote.scale.y *= Note.SUSTAIN_SIZE / oldNote.frameHeight;
 							oldNote.scale.y /= playbackRate;
-							oldNote.updateHitbox();
+							oldNote.resizeByRatio(curStepCrochet / Conductor.stepCrochet);
 						}
 
 						if(ClientPrefs.data.downScroll)
@@ -366,7 +396,7 @@ class EditorPlayState extends MusicBeatSubstate
 					else if(oldNote.isSustainNote)
 					{
 						oldNote.scale.y /= playbackRate;
-						oldNote.updateHitbox();
+						oldNote.resizeByRatio(curStepCrochet / Conductor.stepCrochet);
 					}
 
 					if (sustainNote.mustPress) sustainNote.x += FlxG.width / 2; // general offset

@@ -2241,7 +2241,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		var noteY:Float = (time / cachedSectionCrochets[section]) * GRID_SIZE * 4 * curZoom;
 		noteY += cachedSectionRow[section] * GRID_SIZE * curZoom;
 		noteY = Math.max(noteY, -150);
-		note.y = noteY + (GRID_SIZE/2 - note.height/2) * curZoom;
+		note.y = noteY + (GRID_SIZE/2 - note.height/2);
 		note.chartY = noteY;
 		//trace(gridBg.y, noteY);
 	}
