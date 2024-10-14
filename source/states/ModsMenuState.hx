@@ -60,7 +60,7 @@ class ModsMenuState extends MusicBeatState
 		persistentUpdate = false;
 
 		modsList = Mods.parseList();
-		Mods.currentModDirectory = modsList.all[0] != null ? modsList.all[0] : '';
+		Mods.loadTopMod();
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
