@@ -213,7 +213,7 @@ class LoadingState extends MusicBeatState
 					}
 		
 					pessy.animation.play('run', true);
-					Achievements.unlock('pessy_easter_egg');
+					#if ACHIEVEMENTS_ALLOWED Achievements.unlock('pessy_easter_egg'); #end
 					
 					insert(members.indexOf(loadingText), pessy);
 					new FlxTimer().start(5, function(tmr:FlxTimer) canChangeState = true);

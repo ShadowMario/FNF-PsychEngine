@@ -1720,6 +1720,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			}
 
 			createPopup.visible = createPopup.active = false;
+			#if MODS_ALLOWED
 			var modFolder:String = (Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) ? Paths.mods('${Mods.currentModDirectory}/images/') : Paths.mods('images/');
 			openSubState(new BasePrompt(480, 160, 'This file is not inside Psych Engine.', function(state:BasePrompt)
 			{
@@ -1767,6 +1768,9 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 				btn.cameras = state.cameras;
 				state.add(btn);
 			}));
+			#else
+			showOutput('ERROR! File cannot be used, move it to "assets" and recompile.', true);
+			#end
 		}
 		_file = null;
 		#else
