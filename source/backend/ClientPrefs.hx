@@ -75,6 +75,8 @@ import states.TitleState;
 	public var safeFrames:Float = 10;
 	public var guitarHeroSustains:Bool = true;
 	public var discordRPC:Bool = true;
+	public var loadingScreen:Bool = true;
+	public var language:String = 'en-US';
 }
 
 class ClientPrefs {
@@ -211,9 +213,7 @@ class ClientPrefs {
 		if (FlxG.save.data.mute != null)
 			FlxG.sound.muted = FlxG.save.data.mute;
 
-		#if DISCORD_ALLOWED
-		DiscordClient.check();
-		#end
+		#if DISCORD_ALLOWED DiscordClient.check(); #end
 
 		// controls on a separate save file
 		var save:FlxSave = new FlxSave();
@@ -251,8 +251,9 @@ class ClientPrefs {
 	}
 	public static function toggleVolumeKeys(?turnOn:Bool = true)
 	{
-		FlxG.sound.muteKeys = turnOn ? TitleState.muteKeys : [];
-		FlxG.sound.volumeDownKeys = turnOn ? TitleState.volumeDownKeys : [];
-		FlxG.sound.volumeUpKeys = turnOn ? TitleState.volumeUpKeys : [];
+		final emptyArray = [];
+		FlxG.sound.muteKeys = turnOn ? TitleState.muteKeys : emptyArray;
+		FlxG.sound.volumeDownKeys = turnOn ? TitleState.volumeDownKeys : emptyArray;
+		FlxG.sound.volumeUpKeys = turnOn ? TitleState.volumeUpKeys : emptyArray;
 	}
 }

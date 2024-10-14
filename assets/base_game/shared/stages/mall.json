@@ -1,0 +1,31 @@
+{
+	"directory": "week5",
+	"defaultZoom": 0.8,
+	"stageUI": "",
+
+	"boyfriend": [970, 100],
+	"girlfriend": [400, 130],
+	"opponent": [100, 100],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [0, -100],
+	"camera_opponent": [0, 0],
+	"camera_girlfriend": [0, 0],
+	"camera_speed": 1,
+
+	"preload": {
+		"images/christmas/bgWalls": 3,
+		"images/christmas/bottomBop": 3,
+		"images/christmas/christmasTree": 3,
+		"images/christmas/fgSnow": 3,
+		"images/christmas/santa": 3,
+		"images/christmas/upperBop": 2,
+		"images/christmas/bgEscalator": 2
+	},
+
+	"_editorMeta": {
+		"dad": "parents-christmas",
+		"boyfriend": "bf-christmas",
+		"gf": "gf-christmas"
+	}
+}

@@ -1,0 +1,150 @@
+{
+	"animations": [
+		{
+			"offsets": [0, 0],
+			"loop": true,
+			"anim": "idle",
+			"name": "Darnell Fighting ALL ANIMS",
+			"indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [14, 15, 16, 17, 18],
+			"fps": 0,
+			"anim": "uppercutPrep",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [19, 20, 21, 22, 23],
+			"fps": 0,
+			"anim": "uppercut",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [24, 25, 26, 27, 28],
+			"fps": 0,
+			"anim": "fakeout",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [29, 30, 31, 32],
+			"fps": 0,
+			"anim": "block",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [33, 34, 35, 36, 37],
+			"fps": 0,
+			"anim": "punchHigh1",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [48, 49, 50, 51, 52],
+			"fps": 0,
+			"anim": "punchLow1",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [53, 54, 55, 56, 57],
+			"fps": 0,
+			"anim": "dodge",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [58, 59, 60, 61, 62],
+			"fps": 0,
+			"anim": "hitHigh",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [63, 64, 65, 66],
+			"fps": 0,
+			"anim": "hitLow",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [67, 68, 69, 70],
+			"fps": 0,
+			"anim": "cringe",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [74, 75, 76, 77, 78],
+			"fps": 0,
+			"anim": "pissed",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [79, 80, 81, 82, 83, 84, 85, 86, 87, 88],
+			"fps": 0,
+			"anim": "uppercutHit",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [21, 22, 23],
+			"fps": 0,
+			"anim": "uppercut-loop",
+			"loop": true,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [71, 72, 73],
+			"fps": 0,
+			"anim": "hitSpin",
+			"loop": true,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [38, 39, 40, 41, 42],
+			"fps": 0,
+			"anim": "punchHigh2",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [43, 44, 45, 46, 47],
+			"fps": 0,
+			"anim": "punchLow2",
+			"loop": false,
+			"name": "Darnell Fighting ALL ANIMS"
+		}
+	],
+	"vocals_file": "",
+	"no_antialiasing": false,
+	"image": "characters/darnellBlazin",
+	"position": [400, 650],
+	"healthicon": "darnell",
+	"flip_x": false,
+	"healthbar_colors": [115, 94, 176],
+	"camera_position": [-150, 100],
+	"sing_duration": 6.1,
+	"scale": 1.75,
+	"_editor_isPlayer": false
+}

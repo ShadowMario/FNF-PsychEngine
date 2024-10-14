@@ -23,7 +23,7 @@ typedef DialogueCharacterFile = {
 
 class DialogueCharacter extends FlxSprite
 {
-	private static var IDLE_SUFFIX:String = '-IDLE';
+	private static var IDLE_POSTFIX:String = '-IDLE';
 	public static var DEFAULT_CHARACTER:String = 'bf';
 	public static var DEFAULT_SCALE:Float = 0.7;
 
@@ -78,7 +78,7 @@ class DialogueCharacter extends FlxSprite
 		if(jsonFile.animations != null && jsonFile.animations.length > 0) {
 			for (anim in jsonFile.animations) {
 				animation.addByPrefix(anim.anim, anim.loop_name, 24, isGhost);
-				animation.addByPrefix(anim.anim + IDLE_SUFFIX, anim.idle_name, 24, true);
+				animation.addByPrefix(anim.anim + IDLE_POSTFIX, anim.idle_name, 24, true);
 				dialogueAnimations.set(anim.anim, anim);
 			}
 		}
@@ -102,7 +102,7 @@ class DialogueCharacter extends FlxSprite
 		dialogueAnimations.get(leAnim).loop_name == dialogueAnimations.get(leAnim).idle_name)) {
 			playIdle = true;
 		}
-		animation.play(playIdle ? leAnim + IDLE_SUFFIX : leAnim, false);
+		animation.play(playIdle ? leAnim + IDLE_POSTFIX : leAnim, false);
 
 		if(dialogueAnimations.exists(leAnim)) {
 			var anim:DialogueAnimArray = dialogueAnimations.get(leAnim);
@@ -121,6 +121,6 @@ class DialogueCharacter extends FlxSprite
 
 	public function animationIsLoop():Bool {
 		if(animation.curAnim == null) return false;
-		return !animation.curAnim.name.endsWith(IDLE_SUFFIX);
+		return !animation.curAnim.name.endsWith(IDLE_POSTFIX);
 	}
 }

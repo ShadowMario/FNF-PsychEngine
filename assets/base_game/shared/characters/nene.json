@@ -1,0 +1,79 @@
+{
+	"animations": [
+		{
+			"offsets": [0, 0],
+			"indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+			"fps": 24,
+			"anim": "danceLeft",
+			"loop": false,
+			"name": "Idle"
+		},
+		{
+			"offsets": [0, 0],
+			"indices": [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+			"fps": 24,
+			"anim": "danceRight",
+			"loop": false,
+			"name": "Idle"
+		},
+		{
+			"offsets": [-119, 55],
+			"indices": [],
+			"fps": 24,
+			"anim": "combo50",
+			"loop": false,
+			"name": "ComboCheer"
+		},
+		{
+			"offsets": [17, -5],
+			"indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 7, 8, 9, 10, 11, 7, 8, 9, 10, 11, 7, 8, 9, 10, 11, 7, 8, 9, 10, 11, 7, 8, 9, 10, 11],
+			"fps": 24,
+			"anim": "laughCutscene",
+			"loop": false,
+			"name": "Laugh0"
+		},
+		{
+			"offsets": [-41, -15],
+			"indices": [0, 1, 2, 3, 4, 5, 6, 4, 5, 6, 4, 5, 6, 4, 5, 6],
+			"fps": 24,
+			"anim": "combo100",
+			"loop": false,
+			"name": "ComboFawn0"
+		},
+		{
+			"offsets": [0, 52],
+			"indices": [],
+			"fps": 24,
+			"anim": "raiseKnife",
+			"loop": false,
+			"name": "KnifeRaise0"
+		},
+		{
+			"offsets": [-99, 52],
+			"indices": [],
+			"fps": 24,
+			"anim": "idleKnife",
+			"loop": false,
+			"name": "KnifeIdle0"
+		},
+		{
+			"offsets": [134, 52],
+			"indices": [],
+			"fps": 24,
+			"anim": "lowerKnife",
+			"loop": false,
+			"name": "KnifeLower0"
+		}
+	],
+	"vocals_file": "",
+	"no_antialiasing": false,
+	"image": "characters/Nene",
+	"position": [0, 200],
+	"healthicon": "face",
+	"flip_x": false,
+	"healthbar_colors": [161, 161, 161],
+	"camera_position": [-150, 100],
+	"sing_duration": 6.1,
+	"scale": 1,
+	"_editor_isPlayer": false
+}

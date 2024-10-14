@@ -1,0 +1,24 @@
+{
+	"songs": [
+		["Darnell", "darnell", [65, 60, 174]],
+		["Lit Up", "darnell", [65, 60, 174]],
+		["2Hot", "darnell", [65, 60, 174]],
+		["Blazin", "darnell", [65, 60, 174]]
+	],
+
+	"weekCharacters": [
+		"darnell",
+		"pico-player",
+		"nene"
+	],
+	"weekBackground": "phillystreets",
+
+	"storyName": "Due Debts",
+	"weekBefore": "",
+	"weekName": "Weekend 1",
+	"startUnlocked": true,
+
+	"hideStoryMode": false,
+	"hideFreeplay": false,
+	"difficulties": "Easy, Normal, Hard"
+}

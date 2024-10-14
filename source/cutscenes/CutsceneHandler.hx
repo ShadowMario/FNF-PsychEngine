@@ -2,17 +2,30 @@ package cutscenes;
 
 import flixel.FlxBasic;
 import flixel.util.FlxSort;
+import flixel.util.FlxDestroyUtil;
+import flixel.addons.display.FlxPieDial;
+
+typedef CutsceneEvent = {
+	var time:Float;
+	var func:Void->Void;
+}
 
 class CutsceneHandler extends FlxBasic
 {
-	public var timedEvents:Array<Dynamic> = [];
-	public var finishCallback:Void->Void = null;
-	public var finishCallback2:Void->Void = null;
+	public var timedEvents:Array<CutsceneEvent> = [];
+	public var skipCallback:Void->Void = null;
 	public var onStart:Void->Void = null;
 	public var endTime:Float = 0;
 	public var objects:Array<FlxSprite> = [];
 	public var music:String = null;
-	public function new()
+
+	final _timeToSkip:Float = 1;
+	var _canSkip:Bool = false;
+	public var holdingTime:Float = 0;
+	public var skipSprite:FlxPieDial;
+	public var finishCallback:Void->Void = null;
+
+	public function new(canSkip:Bool = true)
 	{
 		super();
 
@@ -25,7 +38,19 @@ class CutsceneHandler extends FlxBasic
 			}
 			if(onStart != null) onStart();
 		});
-		PlayState.instance.add(this);
+		FlxG.state.add(this);
+
+		this._canSkip = canSkip;
+		if(canSkip)
+		{
+			skipSprite = new FlxPieDial(0, 0, 40, FlxColor.WHITE, 40, true, 24);
+			skipSprite.replaceColor(FlxColor.BLACK, FlxColor.TRANSPARENT);
+			skipSprite.x = FlxG.width - (skipSprite.width + 80);
+			skipSprite.y = FlxG.height - (skipSprite.height + 72);
+			skipSprite.amount = 0;
+			skipSprite.cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+			FlxG.state.add(skipSprite);
+		}
 	}
 
 	private var cutsceneTime:Float = 0;
@@ -41,10 +66,31 @@ class CutsceneHandler extends FlxBasic
 		}
 
 		cutsceneTime += elapsed;
-		if(endTime <= cutsceneTime)
+		while(timedEvents.length > 0 && timedEvents[0].time <= cutsceneTime)
 		{
-			finishCallback();
-			if(finishCallback2 != null) finishCallback2();
+			timedEvents[0].func();
+			timedEvents.shift();
+		}
+		
+		if(_canSkip && cutsceneTime > 0.1)
+		{
+			if(Controls.instance.pressed('accept'))
+				holdingTime = Math.max(0, Math.min(_timeToSkip, holdingTime + elapsed));
+			else if (holdingTime > 0)
+				holdingTime = Math.max(0, FlxMath.lerp(holdingTime, -0.1, FlxMath.bound(elapsed * 3, 0, 1)));
+
+			updateSkipAlpha();
+		}
+
+		if(endTime <= cutsceneTime || holdingTime >= _timeToSkip)
+		{
+			if(holdingTime >= _timeToSkip)
+			{
+				trace('skipped cutscene');
+				if(skipCallback != null)
+					skipCallback();
+			}
+			else finishCallback();
 
 			for (spr in objects)
 			{
@@ -53,16 +99,18 @@ class CutsceneHandler extends FlxBasic
 				spr.destroy();
 			}
 			
-			kill();
+			skipSprite = FlxDestroyUtil.destroy(skipSprite);
 			destroy();
 			PlayState.instance.remove(this);
 		}
-		
-		while(timedEvents.length > 0 && timedEvents[0][0] <= cutsceneTime)
-		{
-			timedEvents[0][1]();
-			timedEvents.splice(0, 1);
-		}
+	}
+
+	function updateSkipAlpha()
+	{
+		if(skipSprite == null) return;
+
+		skipSprite.amount = Math.min(1, Math.max(0, (holdingTime / _timeToSkip) * 1.025));
+		skipSprite.alpha = FlxMath.remapToRange(skipSprite.amount, 0.025, 1, 0, 1);
 	}
 
 	public function push(spr:FlxSprite)
@@ -72,12 +120,12 @@ class CutsceneHandler extends FlxBasic
 
 	public function timer(time:Float, func:Void->Void)
 	{
-		timedEvents.push([time, func]);
+		timedEvents.push({time: time, func: func});
 		timedEvents.sort(sortByTime);
 	}
 
-	function sortByTime(Obj1:Array<Dynamic>, Obj2:Array<Dynamic>):Int
+	function sortByTime(Obj1:CutsceneEvent, Obj2:CutsceneEvent):Int
 	{
-		return FlxSort.byValues(FlxSort.ASCENDING, Obj1[0], Obj2[0]);
+		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.time, Obj2.time);
 	}
 }
