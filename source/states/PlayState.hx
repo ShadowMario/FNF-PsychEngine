@@ -1541,7 +1541,7 @@ class PlayState extends MusicBeatState
 	override function openSubState(SubState:FlxSubState)
 	{
 		if(videoCutscene != null)
-			videoCutscene.videoSprite.resume();
+			videoCutscene.videoSprite.pause();
 		
 		stagesFunc(function(stage:BaseStage) stage.openSubState(SubState));
 		if (paused)
@@ -1563,7 +1563,7 @@ class PlayState extends MusicBeatState
 	override function closeSubState()
 	{
 		if(videoCutscene != null)
-			videoCutscene.videoSprite.pause();
+			videoCutscene.videoSprite.resume();
 		
 		super.closeSubState();
 		
