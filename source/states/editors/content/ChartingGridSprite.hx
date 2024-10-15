@@ -45,6 +45,7 @@ class ChartingGridSprite extends FlxSprite
 		animation.add('odd', [0], false);
 		animation.add('even', [1], false);
 		animation.play('even', true);
+		updateHitbox();
 		recalcHeight();
 	}
 

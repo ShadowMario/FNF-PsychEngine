@@ -331,10 +331,10 @@ class VSlice
 		var notes:Array<VSliceNote> = [];
 		var generatedBy:String = 'Psych Engine v${MainMenuState.psychEngineVersion} - Chart Editor V-Slice Exporter';
 		var timeChanges:Array<VSliceTimeChange> = [];
-
+		
 		var time:Float = 0;
 		var bpm:Float = songData.bpm;
-
+		timeChanges.push({t: 0, bpm: bpm}); //so there was first bpm issue (if the song has multiplier bpm) 
 		var lastMustHit:Bool = false;
 		if(songData.notes != null)
 		{
@@ -376,9 +376,7 @@ class VSlice
 		}
 		events.sort(sortByTime);
 		notes.sort(sortByTime);
-
-		if(timeChanges.length < 1) timeChanges.push({t: 0, bpm: bpm}); //failsafe
-
+		
 		//try to find composer despite it not being a value on psych charts
 		var composer:String = 'Unknown';
 		if(Reflect.hasField(songData, 'artist')) composer = Reflect.field(songData, 'artist');
@@ -445,7 +443,7 @@ class VSlice
 				difficulties: diffs,
 				characters: {
 					player: songData.player1,
-					girlfriend: songData.gfVersion != null ? songData.gfVersion : 'gf',
+					girlfriend: songData.gfVersion != null ? songData.gfVersion : '', //there is no problem if gf don't exist with it 
 					opponent: songData.player2
 				},
 				noteStyle: !PlayState.isPixelStage ? 'funkin' : 'pixel',

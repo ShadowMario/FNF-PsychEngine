@@ -50,7 +50,7 @@ class FPSCounter extends TextField
 		times.push(now);
 		while (times[0] < now - 1000) times.shift();
 		// prevents the overlay from updating every frame, why would you need to anyways @crowplexus
-		if (deltaTimeout < 1000) {
+		if (deltaTimeout < 50) {
 			deltaTimeout += deltaTime;
 			return;
 		}
