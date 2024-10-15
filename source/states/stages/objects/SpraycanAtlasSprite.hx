@@ -37,6 +37,7 @@ class SpraycanAtlasSprite extends FlxSpriteGroup
 		add(explosion);
 	}
 
+	public var cutscene:Bool = false;
 	public function finishCanAnimation()
 	{
 		switch(playingAnim)
@@ -47,7 +48,7 @@ class SpraycanAtlasSprite extends FlxSpriteGroup
 				canAtlas.visible = canAtlas.active = false;
 				currentState = WAITING;
 			case 'Hit Pico':
-				playHitExplosion();
+				if(!cutscene) playHitExplosion();
 				canAtlas.visible = canAtlas.active = false;
 				currentState = WAITING;
 		}

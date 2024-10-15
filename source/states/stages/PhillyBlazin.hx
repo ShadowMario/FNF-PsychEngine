@@ -42,35 +42,38 @@ class PhillyBlazin extends BaseStage
 			scrollingSky.setPosition(-500, -120);
 			scrollingSky.scrollFactor.set();
 			add(scrollingSky);
-		}
 
-		skyAdditive = new BGSprite('phillyBlazin/skyBlur', -600, -175, 0.0, 0.0);
-		setupScale(skyAdditive);
-		skyAdditive.visible = false;
-		add(skyAdditive);
-		
-		lightning = new BGSprite('phillyBlazin/lightning', -50, -300, 0.0, 0.0, ['lightning0'], false);
-		setupScale(lightning);
-		lightning.visible = false;
-		add(lightning);
+			skyAdditive = new BGSprite('phillyBlazin/skyBlur', -600, -175, 0.0, 0.0);
+			setupScale(skyAdditive);
+			skyAdditive.visible = false;
+			add(skyAdditive);
+			
+			lightning = new BGSprite('phillyBlazin/lightning', -50, -300, 0.0, 0.0, ['lightning0'], false);
+			setupScale(lightning);
+			lightning.visible = false;
+			add(lightning);
+		}
 		
 		var phillyForegroundCity:BGSprite = new BGSprite('phillyBlazin/streetBlur', -600, -175, 0.0, 0.0);
 		setupScale(phillyForegroundCity);
 		add(phillyForegroundCity);
 		
-		foregroundMultiply = new BGSprite('phillyBlazin/streetBlur', -600, -175, 0.0, 0.0);
-		setupScale(foregroundMultiply);
-		foregroundMultiply.blend = MULTIPLY;
-		foregroundMultiply.visible = false;
-		add(foregroundMultiply);
-		
-		additionalLighten = new FlxSprite(-600, -175).makeGraphic(1, 1, FlxColor.WHITE);
-		additionalLighten.scrollFactor.set();
-		additionalLighten.scale.set(2500, 2500);
-		additionalLighten.updateHitbox();
-		additionalLighten.blend = ADD;
-		additionalLighten.visible = false;
-		add(additionalLighten);
+		if(!ClientPrefs.data.lowQuality)
+		{
+			foregroundMultiply = new BGSprite('phillyBlazin/streetBlur', -600, -175, 0.0, 0.0);
+			setupScale(foregroundMultiply);
+			foregroundMultiply.blend = MULTIPLY;
+			foregroundMultiply.visible = false;
+			add(foregroundMultiply);
+			
+			additionalLighten = new FlxSprite(-600, -175).makeGraphic(1, 1, FlxColor.WHITE);
+			additionalLighten.scrollFactor.set();
+			additionalLighten.scale.set(2500, 2500);
+			additionalLighten.updateHitbox();
+			additionalLighten.blend = ADD;
+			additionalLighten.visible = false;
+			add(additionalLighten);
+		}
 
 		abot = new ABotSpeaker(gfGroup.x, gfGroup.y + 550);
 		add(abot);
@@ -79,12 +82,32 @@ class PhillyBlazin extends BaseStage
 			setupRainShader();
 
 		var _song = PlayState.SONG;
-		if(_song.gameOverSound == null || _song.gameOverSound.trim().length < 1) GameOverSubstate.deathSoundName = 'gameplay/gameover/fnf_loss_sfx-pico-gutpunch';
-		if(_song.gameOverLoop == null || _song.gameOverLoop.trim().length < 1) GameOverSubstate.loopSoundName = 'gameplay/gameover/gameOverStart-pico-explode';
-		//if(_song.gameOverEnd == null || _song.gameOverEnd.trim().length < 1) GameOverSubstate.endSoundName = 'gameplay/gameover/gameOverEnd';
+		if(_song.gameOverSound == null || _song.gameOverSound.trim().length < 1) GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pico-gutpunch';
+		if(_song.gameOverLoop == null || _song.gameOverLoop.trim().length < 1) GameOverSubstate.loopSoundName = 'gameOver-pico';
+		if(_song.gameOverEnd == null || _song.gameOverEnd.trim().length < 1) GameOverSubstate.endSoundName = 'gameOverEnd-pico';
 		if(_song.gameOverChar == null || _song.gameOverChar.trim().length < 1) GameOverSubstate.characterName = 'pico-blazin';
+		GameOverSubstate.deathDelay = 0.15;
+
 		setDefaultGF('nene');
 		precache();
+		
+		if (isStoryMode)
+		{
+			switch (songName)
+			{
+				case 'blazin':
+					setEndCallback(function()
+					{
+						game.endingSong = true;
+						inCutscene = true;
+						canPause = false;
+						FlxTransitionableState.skipNextTransIn = true;
+						FlxG.camera.visible = false;
+						camHUD.visible = false;
+						game.startVideo('blazinCutscene');
+					});
+			}
+		}
 	}
 	
 	override function createPost()
@@ -144,8 +167,7 @@ class PhillyBlazin extends BaseStage
 	{
 		for (i in 1...4)
 		{
-			//trace('Lightning$i');
-			Paths.sound('Lightning$i');
+			Paths.sound('lightning/Lightning$i');
 		}
 	}
 
@@ -170,6 +192,8 @@ class PhillyBlazin extends BaseStage
 	
 	function applyLightning():Void
 	{
+		if(ClientPrefs.data.lowQuality || game.endingSong) return;
+
 		final LIGHTNING_FULL_DURATION = 1.5;
 		final LIGHTNING_FADE_DURATION = 0.3;
 
@@ -206,7 +230,7 @@ class PhillyBlazin extends BaseStage
 		FlxTween.color(abot, LIGHTNING_FADE_DURATION, 0xFF606060, 0xFF888888);
 
 		// Sound
-		FlxG.sound.play(Paths.soundRandom('Lightning', 1, 3));
+		FlxG.sound.play(Paths.soundRandom('lightning/Lightning', 1, 3));
 	}
 
 	// Note functions
