@@ -12,12 +12,6 @@ import psychlua.FunkinLua;
 #if HSCRIPT_ALLOWED
 import crowplexus.iris.Iris;
 
-typedef IrisCall = {
-	var methodName:String;
-	var methodReturn:Dynamic;
-	var methodVal:Dynamic;
-};
-
 class HScript extends Iris
 {
 	public var filePath:String;
@@ -44,10 +38,10 @@ class HScript extends Iris
 		}
 		else
 		{
-			hs.varsToBring = varsToBring;
 			try
 			{
-				hs.scriptStr = code;
+				hs.scriptCode = code;
+				hs.varsToBring = varsToBring;
 				hs.execute();
 			}
 			catch(e:Dynamic)
@@ -64,7 +58,7 @@ class HScript extends Iris
 		if (file == null)
 			file = '';
 	
-		super(null, {name: "hscript-iris", autoRun: false, preset: false});
+		super(null, {name: "hscript-iris", autoRun: false, autoPreset: false});
 
 		#if LUA_ALLOWED
 		parentLua = parent;
@@ -95,11 +89,12 @@ class HScript extends Iris
 				scriptThing = File.getContent(f);
 			}
 		}
-		this.scriptStr = scriptThing;
+		this.scriptCode = scriptThing;
 
 		preset();
-		execute();
 		this.varsToBring = varsToBring;
+
+		execute();
 	}
 
 	var varsToBring(default, set):Any = null;
@@ -270,7 +265,7 @@ class HScript extends Iris
 		{
 			if(funk == null) funk = parentLua;
 			
-			if(parentLua != null) funk.addLocalCallback(name, func);
+			if(funk != null) funk.addLocalCallback(name, func);
 			else FunkinLua.luaTrace('createCallback ($name): 3rd argument is null', false, false, FlxColor.RED);
 		});
 		#end
@@ -343,7 +338,7 @@ class HScript extends Iris
 		try
 		{
 			final callValue:IrisCall = call(funcToRun, funcArgs);
-			return callValue.methodVal;
+			return callValue.returnValue;
 		}
 		catch(e:Dynamic)
 		{
@@ -352,7 +347,7 @@ class HScript extends Iris
 		return null;
 	}
 
-	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic>):IrisCall {
+	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic> = null):IrisCall {
 		if (funcToRun == null || !exists(funcToRun)) return null;
 		return call(funcToRun, funcArgs);
 	}
@@ -367,7 +362,7 @@ class HScript extends Iris
 				final retVal:IrisCall = funk.hscript.executeCode(funcToRun, funcArgs);
 				if (retVal != null)
 				{
-					return (retVal.methodVal == null || LuaUtils.isOfTypes(retVal.methodVal, [Bool, Int, Float, String, Array])) ? retVal.methodVal : null;
+					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
 				}
 			}
 			catch(e:Dynamic)
@@ -388,7 +383,7 @@ class HScript extends Iris
 				final retVal:IrisCall = funk.hscript.executeFunction(funcToRun, funcArgs);
 				if (retVal != null)
 				{
-					return (retVal.methodVal == null || LuaUtils.isOfTypes(retVal.methodVal, [Bool, Int, Float, String, Array])) ? retVal.methodVal : null;
+					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
 				}
 			}
 			catch(e:Dynamic)
@@ -424,6 +419,7 @@ class HScript extends Iris
 					FunkinLua.luaTrace(funk.hscript.origin + ":" + funk.lastCalledFunction + " - " + e, false, false, FlxColor.RED);
 				}
 			}
+			FunkinLua.luaTrace("addHaxeLibrary is deprecated! Import classes through \"import\" in HScript!", false, true);
 			#else
 			FunkinLua.luaTrace("addHaxeLibrary: HScript isn't supported on this platform!", false, false, FlxColor.RED);
 			#end

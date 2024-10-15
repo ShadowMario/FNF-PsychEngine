@@ -55,7 +55,7 @@ class NoteSplash extends FlxSprite
 		loadSplash(splash);
 	}
 
-	function loadSplash(?splash:String)
+	public function loadSplash(?splash:String)
 	{
 		config = null; // Reset config to the default so when reloaded it can be set properly
 		skin = null;
@@ -103,7 +103,7 @@ class NoteSplash extends FlxSprite
 		}
 	}
 
-	public function spawnSplashNote(note:Note, ?noteData:Int, ?randomize:Bool = true)
+	public function spawnSplashNote(note:Note, ?noteData:Null<Int>, ?randomize:Bool = true)
 	{	
 		if (note != null && note.noteSplashData.texture != null)
 			loadSplash(note.noteSplashData.texture);
@@ -114,7 +114,6 @@ class NoteSplash extends FlxSprite
 		if (babyArrow != null)
 			setPosition(babyArrow.x, babyArrow.y); // To prevent it from being misplaced for one game tick
 
-		var noteData:Null<Int> = noteData;
 		if (noteData == null)
 			noteData = note != null ? note.noteData : 0;
 
@@ -126,7 +125,7 @@ class NoteSplash extends FlxSprite
 
 			while (true)
 			{
-				var data:Int = noteData % 4 + (datas * 4); 
+				var data:Int = noteData % Note.colArray.length + (datas * Note.colArray.length); 
 				if (!noteDataMap.exists(data) || !animation.exists(noteDataMap[data]))
 					break;
 
@@ -138,7 +137,7 @@ class NoteSplash extends FlxSprite
 			{
 				for (i in 0...anims)
 				{
-					var data = noteData % 4 + (i * 4);
+					var data = noteData % Note.colArray.length + (i * Note.colArray.length);
 					if (!animArray.contains(data))
 						animArray.push(data);
 				}
@@ -148,19 +147,8 @@ class NoteSplash extends FlxSprite
 				noteData = animArray[FlxG.random.bool() ? 0 : 1];
 		}
 
-		var anim:String = null;
-		function playDefaultAnim()
-		{
-			var animation:String = noteDataMap.get(noteData);
-			if (animation != null && this.animation.exists(animation))
-			{
-				this.animation.play(animation);
-				anim = animation;
-			}
-			else visible = false;
-		}
-
-		playDefaultAnim();
+		this.noteData = noteData;
+		var anim:String = playDefaultAnim();
 
 		var tempShader:RGBPalette = null;
 		if (config.allowRGB)
@@ -168,10 +156,10 @@ class NoteSplash extends FlxSprite
 			if (note == null)
 				note = new Note(0, noteData);
 
-			Note.initializeGlobalRGBShader(noteData % 4);
+			Note.initializeGlobalRGBShader(noteData % Note.colArray.length);
 			function useDefault()
 			{
-				tempShader = Note.globalRgbShaders[noteData % 4];
+				tempShader = Note.globalRgbShaders[noteData % Note.colArray.length];
 			}
 
 			if(((cast FlxG.state) is NoteSplashEditorState) || 
@@ -188,8 +176,8 @@ class NoteSplash extends FlxSprite
 						{
 							if (i > 2) break;
 
-							var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[noteData % 4];
-							if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[noteData % 4];
+							var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[noteData % Note.colArray.length];
+							if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[noteData % Note.colArray.length];
 
 							var rgb = colors[i];
 							if (rgb == null)
@@ -256,6 +244,17 @@ class NoteSplash extends FlxSprite
 
 			animation.curAnim.frameRate = FlxG.random.int(minFps, maxFps);
 		}
+	}
+	
+	public var noteData:Int = 0;
+	public function playDefaultAnim()
+	{
+		var animation:String = noteDataMap.get(noteData);
+		if (animation != null && this.animation.exists(animation))
+			this.animation.play(animation, true);
+		else
+			visible = false;
+		return animation;
 	}
 
 	override function update(elapsed:Float)
