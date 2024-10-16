@@ -1,7 +1,6 @@
 package states.stages;
 
 import states.stages.objects.*;
-import backend.BaseStage;
 
 class Template extends BaseStage
 {
