@@ -7,5 +7,6 @@
 	],
 	"scale": 1,
 	"idle_anim": "M GF Idle",
-	"confirm_anim": "M GF Idle"
+	"confirm_anim": "M GF Idle",
+	"antialiasing": true
 }

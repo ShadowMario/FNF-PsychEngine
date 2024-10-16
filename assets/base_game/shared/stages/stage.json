@@ -1,0 +1,28 @@
+{
+	"directory": "week1",
+	"defaultZoom": 0.9,
+	"stageUI": "",
+
+	"boyfriend": [770, 100],
+	"girlfriend": [400, 130],
+	"opponent": [100, 100],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [0, 0],
+	"camera_opponent": [0, 0],
+	"camera_girlfriend": [0, 0],
+	"camera_speed": 1,
+
+	"preload": {
+		"images/stageback": 3,
+		"images/stagefront": 3,
+		"images/stagecurtains": 2,
+		"images/stage_light": 2
+	},
+
+	"_editorMeta": {
+		"dad": "dad",
+		"boyfriend": "bf",
+		"gf": "gf"
+	}
+}

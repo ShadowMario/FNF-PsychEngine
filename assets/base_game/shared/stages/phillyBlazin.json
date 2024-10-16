@@ -1,0 +1,33 @@
+{
+	"directory": "weekend1",
+	"defaultZoom": 0.75,
+	"stageUI": "",
+
+	"boyfriend": [900, 800],
+	"girlfriend": [470, 595],
+	"opponent": [300, 800],
+	"hide_girlfriend": false,
+
+	"camera_opponent": [50, -455],
+	"camera_boyfriend": [0, 0],
+	"camera_girlfriend": [0, 0],
+	"camera_speed": 1,
+
+	"preload": {
+		"images/abot/": 3,
+		"images/abot/systemEyes/": 3,
+		"images/abot/abotSystem/": 3,
+
+		"images/phillyBlazin/streetBlur": 3,
+		"images/phillyBlazin/skyBlur": 2,
+		"images/phillyBlazin/lightning": 2,
+
+		"sounds/lightning/": 3
+	},
+
+	"_editorMeta": {
+		"dad": "darnell",
+		"boyfriend": "pico-playable",
+		"gf": "nene"
+	}
+}

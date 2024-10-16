@@ -1,0 +1,31 @@
+{
+	"directory": "week6",
+	"defaultZoom": 1.05,
+	"stageUI": "pixel",
+
+	"boyfriend": [970, 320],
+	"girlfriend": [580, 430],
+	"opponent": [100, 100],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [-100, -100],
+	"camera_opponent": [0, 0],
+	"camera_girlfriend": [0, 0],
+	"camera_speed": 1,
+
+	"preload": {
+		"images/weeb/weebSky": 3,
+		"images/weeb/weebSchool": 3,
+		"images/weeb/weebStreet": 3,
+		"images/weeb/weebTrees": 3,
+		"images/weeb/weebTreesBack": 2,
+		"images/weeb/petals": 2,
+		"images/weeb/bgFreaks": 2
+	},
+
+	"_editorMeta": {
+		"dad": "senpai",
+		"boyfriend": "bf-pixel",
+		"gf": "gf-pixel"
+	}
+}
