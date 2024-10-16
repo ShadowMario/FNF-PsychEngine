@@ -231,6 +231,12 @@ class LuaUtils
 		return Reflect.getProperty(leArray, variable);
 	}
 
+	public static function getObjectLoop(objectName:String, ?allowMaps:Bool = false):Dynamic
+	{
+		var split:Array<String> = objectName.split('.');
+		return split.length > 1 ? getVarInArray(getPropertyLoop(split, true, allowMaps), split[split.length-1], allowMaps) : getObjectDirectly(objectName);
+	}
+
 	public static function getPropertyLoop(split:Array<String>, ?getProperty:Bool=true, ?allowMaps:Bool = false):Dynamic
 	{
 		var obj:Dynamic = getObjectDirectly(split[0]);
@@ -386,10 +392,7 @@ class LuaUtils
 
 	public static function tweenPrepare(tag:String, vars:String) {
 		if(tag != null) cancelTween(tag);
-		var variables:Array<String> = vars.split('.');
-		var sexyProp:Dynamic = LuaUtils.getObjectDirectly(variables[0]);
-		if(variables.length > 1) sexyProp = LuaUtils.getVarInArray(LuaUtils.getPropertyLoop(variables), variables[variables.length-1]);
-		return sexyProp;
+		return getObjectLoop(vars);
 	}
 
 	public static function getBuildTarget():String
