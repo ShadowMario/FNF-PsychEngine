@@ -565,11 +565,13 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "doTweenColor", function(tag:String, vars:String, targetColor:String, duration:Float, ?ease:String = 'linear') {
 			var penisExam:Dynamic = LuaUtils.tweenPrepare(tag, vars);
 			if(penisExam != null) {
+				targetColor = targetColor.trim();
+				var newColor:FlxColor = CoolUtil.colorFromString(targetColor);
+				if(targetColor.startsWith('0x') && targetColor.length == 8 || !FlxColor.colorLookup.exists(targetColor.toUpperCase()) && targetColor.length == 6) newColor.alphaFloat = penisExam.alpha;
+
 				var curColor:FlxColor = penisExam.color;
 				curColor.alphaFloat = penisExam.alpha;
-				var newColor:FlxColor = CoolUtil.colorFromString(targetColor);
-				if(targetColor.length == 6) newColor.alphaFloat = penisExam.alpha;
-				
+
 				if(tag != null)
 				{
 					var originalTag:String = tag;
