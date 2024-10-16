@@ -492,7 +492,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		fullTipText.text = [
 			"W/S/Mouse Wheel - Move Conductor's Time",
 			"A/D - Change Sections",
-			"Q/E - Decrease/Increase Note Sustain Length",
+			"Q/E/CTRL + Mouse Wheel - Decrease/Increase Note Sustain Length",
 			"Hold Shift/Alt to Increase/Decrease move by 4x",
 			"",
 			"F12 - Preview Chart",
@@ -1457,8 +1457,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			var sineValue:Float = 0.75 + Math.cos(Math.PI * noteSelectionSine * (isMovingNotes ? 8 : 2)) / 4;
 			//trace(sineValue);
 
-			var qPress = FlxG.keys.justPressed.Q;
-			var ePress = FlxG.keys.justPressed.E;
+			var qPress = FlxG.keys.justPressed.Q || (FlxG.mouse.wheel == 0 && FlxG.keys.justPressed.CONTROL);
+			var ePress = FlxG.keys.justPressed.E || (FlxG.mouse.wheel == 1 && FlxG.keys.justPressed.CONTROL);
 			var addSus = (FlxG.keys.pressed.SHIFT ? 4 : 1) * (Conductor.stepCrochet / 2);
 			if(qPress) addSus *= -1;
 
