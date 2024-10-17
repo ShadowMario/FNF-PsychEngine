@@ -195,6 +195,7 @@ class StageData {
 					}
 					spr.scrollFactor.set(data.scroll[0], data.scroll[1]);
 					spr.color = CoolUtil.colorFromString(data.color);
+					spr.blend = CoolUtil.blendFromString(data.blend);
 					
 					for (varName in ['alpha', 'angle'])
 					{
