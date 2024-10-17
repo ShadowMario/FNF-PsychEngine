@@ -1118,8 +1118,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			#end
 
 			stageJson = StageData.getStageFile(lastLoadedStage);
-			updateSpriteList();
 			updateStageDataUI();
+			updateSpriteList();
 			reloadCharacters();
 			reloadStageDropDown();
 		});
@@ -1131,8 +1131,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			#end
 
 			stageJson = StageData.dummy();
-			updateSpriteList();
 			updateStageDataUI();
+			updateSpriteList();
 			reloadCharacters();
 		});
 		dummyStage.normalStyle.bgColor = FlxColor.RED;
@@ -1153,8 +1153,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 				#if DISCORD_ALLOWED
 				DiscordClient.changePresence('Stage Editor', 'Stage: ' + lastLoadedStage);
 				#end
-				updateSpriteList();
 				updateStageDataUI();
+				updateSpriteList();
 				reloadCharacters();
 				reloadStageDropDown();
 			}
