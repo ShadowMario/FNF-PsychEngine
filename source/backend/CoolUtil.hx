@@ -38,29 +38,6 @@ class CoolUtil
 		return colorNum != null ? colorNum : FlxColor.WHITE;
 	}
 
-	inline public static function blendFromString(blend:String):openfl.display.BlendMode
-	{
-		return switch(blend.toLowerCase().trim())
-		{
-			case 'add': ADD;
-			case 'alpha': ALPHA;
-			case 'darken': DARKEN;
-			case 'difference': DIFFERENCE;
-			case 'erase': ERASE;
-			case 'hardlight': HARDLIGHT;
-			case 'invert': INVERT;
-			case 'layer': LAYER;
-			case 'lighten': LIGHTEN;
-			case 'multiply': MULTIPLY;
-			case 'normal': NORMAL;
-			case 'overlay': OVERLAY;
-			case 'screen': SCREEN;
-			case 'shader': SHADER;
-			case 'subtract': SUBTRACT;
-			default: null;
-		}
-	}
-
 	inline public static function listFromString(string:String):Array<String>
 	{
 		var daList:Array<String> = [];

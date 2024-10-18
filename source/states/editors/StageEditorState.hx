@@ -935,8 +935,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		tab_group.add(angleStepper);
 
 		final blendList:Array<String> = [
-			'', 'add', 'alpha', 'darken', 'difference', 'erase', 'hardlight', 'invert', 'layer',
-			'lighten', 'multiply', 'normal', 'overlay', 'screen', 'shader', 'subtract'
+			'normal', 'add', 'alpha', 'darken', 'difference', 'erase', 'hardlight', 'invert',
+			'layer', 'lighten', 'multiply', 'overlay', 'screen', 'shader', 'subtract'
 		];
 		tab_group.add(new FlxText(objX + 90, objY - 18, 80, 'Blend Mode:'));
 		blendDropDown = new PsychUIDropDownMenu(objX + 90, objY, blendList, function(sel:Int, value:String) {
@@ -945,7 +945,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			if(selected != null)
 				selected.blend = value;
 		});
-		blendDropDown.selectedLabel = '';
+		blendDropDown.selectedLabel = blendList[0];
 
 		function updateFlip()
 		{
@@ -1872,10 +1872,10 @@ class StageEditorMetaSprite
 	function get_angle() return sprite.angle;
 	function set_angle(v:Float) return (sprite.angle = v);
 
-	public var blend(default, set):String = '';
+	public var blend(default, set):String = 'normal';
 	function set_blend(v:String)
 	{
-		sprite.blend = CoolUtil.blendFromString(v);
+		sprite.blend = LuaUtils.blendModeFromString(v);
 		return (blend = v);
 	}
 	public var color(default, set):String = 'FFFFFF';

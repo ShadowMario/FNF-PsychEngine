@@ -4,6 +4,7 @@ import openfl.utils.Assets;
 import haxe.Json;
 import backend.Song;
 import psychlua.ModchartSprite;
+import psychlua.LuaUtils;
 
 typedef StageFile = {
 	var directory:String;
@@ -195,7 +196,7 @@ class StageData {
 					}
 					spr.scrollFactor.set(data.scroll[0], data.scroll[1]);
 					spr.color = CoolUtil.colorFromString(data.color);
-					spr.blend = CoolUtil.blendFromString(data.blend);
+					spr.blend = LuaUtils.blendModeFromString(data.blend);
 					
 					for (varName in ['alpha', 'angle'])
 					{
