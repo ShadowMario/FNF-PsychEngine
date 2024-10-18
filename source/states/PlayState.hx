@@ -505,7 +505,14 @@ class PlayState extends MusicBeatState
 		FlxG.camera.snapToTarget();
 
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
-		//moveCameraSection();
+		if (SONG.notes[curSection] != null)
+		{
+			var leSec:SwagSection = SONG.notes[curSection];
+			if (gf != null && leSec.gfSection)
+				moveCameraToGirlfriend();
+			else
+				moveCamera(!leSec.mustHitSection);
+		}
 
 		healthBar = new Bar(0, FlxG.height * (!ClientPrefs.data.downScroll ? 0.89 : 0.11), 'healthBar', function() return health, 0, 2);
 		healthBar.screenCenter(X);
