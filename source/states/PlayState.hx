@@ -2260,7 +2260,7 @@ class PlayState extends MusicBeatState
 	var lastCharacterFocus:String = '';
 	public function moveCameraSection(?sec:Null<Int>):Void {
 		if (sec == null) sec = curSection;
-		sec = Math.max(0, sec);
+		sec = Std.int(Math.max(0, sec));
 
 		if (SONG.notes[sec] == null) return;
 
