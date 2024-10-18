@@ -2257,25 +2257,32 @@ class PlayState extends MusicBeatState
 		callOnScripts('onEvent', [eventName, value1, value2, strumTime]);
 	}
 
+	var lastCharacterFocus:String = '';
 	public function moveCameraSection(?sec:Null<Int>):Void {
-		if(sec == null) sec = curSection;
-		if(sec < 0) sec = 0;
+		if (sec == null) sec = curSection;
+		sec = Math.max(0, sec);
 
-		if(SONG.notes[sec] == null) return;
+		if (SONG.notes[sec] == null) return;
 
 		if (gf != null && SONG.notes[sec].gfSection)
 		{
 			moveCameraToGirlfriend();
-			callOnScripts('onMoveCamera', ['gf']);
+			if (lastCharacterFocus != 'gf')
+			{
+				callOnScripts('onMoveCamera', ['gf']);
+				lastCharacterFocus = 'gf';
+			}
 			return;
 		}
 
-		var isDad:Bool = (SONG.notes[sec].mustHitSection != true);
+		var isDad:Bool = SONG.notes[sec].mustHitSection != true;
+		var newFocus:String = isDad ? 'dad' : 'boyfriend';
 		moveCamera(isDad);
-		if (isDad)
-			callOnScripts('onMoveCamera', ['dad']);
-		else
-			callOnScripts('onMoveCamera', ['boyfriend']);
+		if (lastCharacterFocus != newFocus)
+		{
+			callOnScripts('onMoveCamera', [newFocus]);
+			lastCharacterFocus = newFocus;
+		}
 	}
 	
 	public function moveCameraToGirlfriend()
