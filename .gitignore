@@ -23,3 +23,5 @@ vs_Community.exe
 !.vscode/extensions.json
 art/build_html.bat
 art/build_html-debug.bat
+# macOS annoying file
+*.DS_Store
