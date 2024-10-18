@@ -505,7 +505,7 @@ class PlayState extends MusicBeatState
 		FlxG.camera.snapToTarget();
 
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
-		moveCameraSection();
+		//moveCameraSection();
 
 		healthBar = new Bar(0, FlxG.height * (!ClientPrefs.data.downScroll ? 0.89 : 0.11), 'healthBar', function() return health, 0, 2);
 		healthBar.screenCenter(X);
@@ -2257,14 +2257,12 @@ class PlayState extends MusicBeatState
 		callOnScripts('onEvent', [eventName, value1, value2, strumTime]);
 	}
 
-	var lastCharacterFocus:String = '';
-	public function moveCameraSection(?sec:Null<Int>):Void {
-		if (sec == null) sec = curSection;
-		sec = Std.int(Math.max(0, sec));
+	var lastCharacterFocus:String;
+	public function moveCameraSection():Void {
+		if (SONG.notes[curSection] == null)
+			return;
 
-		if (SONG.notes[sec] == null) return;
-
-		if (gf != null && SONG.notes[sec].gfSection)
+		if (gf != null && SONG.notes[curSection].gfSection)
 		{
 			moveCameraToGirlfriend();
 			if (lastCharacterFocus != 'gf')
@@ -2275,14 +2273,13 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
-		var isDad:Bool = SONG.notes[sec].mustHitSection != true;
+		var isDad:Bool = !SONG.notes[curSection].mustHitSection;
 		var newFocus:String = isDad ? 'dad' : 'boyfriend';
 		moveCamera(isDad);
-		if (lastCharacterFocus != newFocus)
-		{
+		if (newFocus != lastCharacterFocus)
 			callOnScripts('onMoveCamera', [newFocus]);
-			lastCharacterFocus = newFocus;
-		}
+
+		lastCharacterFocus = newFocus;
 	}
 	
 	public function moveCameraToGirlfriend()
