@@ -1946,7 +1946,7 @@ class StageEditorMetaSprite
 		switch(this.type)
 		{
 			case 'sprite', 'square', 'animatedSprite':
-				for (v in ['name', 'image', 'scale', 'scroll', 'color', 'filters', 'antialiasing'])
+				for (v in ['name', 'image', 'scale', 'scroll', 'color', 'blend', 'filters', 'antialiasing'])
 				{
 					var dat:Dynamic = Reflect.field(data, v);
 					if(dat != null) Reflect.setField(this, v, dat);
@@ -1974,6 +1974,7 @@ class StageEditorMetaSprite
 				obj.alpha = alpha;
 				obj.angle = angle;
 				obj.color = color;
+				obj.blend = blend;
 				obj.filters = filters;
 
 				if(type != 'square')
