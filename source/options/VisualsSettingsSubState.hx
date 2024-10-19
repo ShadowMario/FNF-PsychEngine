@@ -175,6 +175,12 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 	//	addOption(option);	
 		#end
 
+		//var option:Option = new Option('New Soundtray',
+		//	"If unchecked, brings back the legacy soundtray.",
+		//	'soundtray',
+		//	BOOL);
+		//addOption(option);
+
 		super();
 		add(notes);
 		add(splashes);

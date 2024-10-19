@@ -18,6 +18,7 @@ import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
 import backend.ClientPrefs;
+import objects.FunkinSoundTray;
 #if windows
 import backend.util.CppAPI;
 #end
@@ -74,6 +75,15 @@ class Main extends Sprite
 		Sys.setCwd(lime.system.System.applicationStorageDirectory);
 		#end
 
+		#if windows //DPI AWARENESS BABY
+		@:functionCode("
+		#include <Windows.h>
+		#include <winuser.h>
+		SetProcessDPIAware() // allows for more crisp visuals
+		DisableProcessWindowsGhosting() // lets you move the window and such if it's not responding
+		")
+		#end
+
 
 		if (stage != null)
 		{
@@ -125,7 +135,14 @@ class Main extends Sprite
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
-		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		
+		var game:FlxGame = new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.skipSplash, game.startFullscreen);
+		if(ClientPrefs.data.soundtray)
+		{
+		@:privateAccess
+		game._customSoundTray = objects.FunkinSoundTray;
+		}
+		addChild(game);
 
 		#if !mobile
 		fpsVar = new FPSCounter(10, 3, 0xFFFFFF);

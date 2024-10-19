@@ -97,7 +97,7 @@ class LoadingState extends MusicBeatState
 		loadingText.borderSize = 2;
 		add(loadingText);
 	
-		logo = new FlxSprite(0, 0).loadGraphic(Paths.image('loading_screen/icon'));
+		logo = new FlxSprite(0, 0).loadGraphic(Paths.image('loading_screen/psychicon'));
 		logo.scale.set(0.75, 0.75);
 		logo.updateHitbox();
 		logo.antialiasing = ClientPrefs.data.antialiasing;
