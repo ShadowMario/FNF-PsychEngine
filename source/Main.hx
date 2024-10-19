@@ -17,6 +17,10 @@ import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
 import states.TitleState;
+import backend.ClientPrefs;
+#if windows
+import backend.util.CppAPI;
+#end
 
 #if linux
 import lime.graphics.Image;
@@ -69,6 +73,7 @@ class Main extends Sprite
 		#elseif ios
 		Sys.setCwd(lime.system.System.applicationStorageDirectory);
 		#end
+
 
 		if (stage != null)
 		{
@@ -175,6 +180,23 @@ class Main extends Sprite
 		}
 	}
 
+	private function update():Void
+	{
+	if(ClientPrefs.data.darkWindow)
+	{
+	#if windows
+	CppAPI.darkMode();
+	#end
+	}
+		
+	if(!ClientPrefs.data.darkWindow)
+	{
+	#if windows
+	CppAPI.lightMode();
+	#end
+	}
+		}
+
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
 	// very cool person for real they don't get enough credit for their work
 	#if CRASH_HANDLER
@@ -208,7 +230,7 @@ class Main extends Sprite
 		*/
 		// 
 		#if officialBuild
-		errMsg += "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nPlease report this error to the GitHub page: https://github.com/Realmzer/FNF-PsychEngineLegacy\n\n> Crash Handler written by: sqirra-rng";
 		#end
 
 		if (!FileSystem.exists("./crash/"))

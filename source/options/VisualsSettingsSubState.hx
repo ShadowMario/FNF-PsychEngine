@@ -167,6 +167,14 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 			BOOL);
 		addOption(option);
 
+		#if windows
+	//	var option:Option = new Option('Dark Window',
+		//	"If checked, this will make the window dark.\nRequires a restart of the game.\nWindows Exclusive",
+	//		'darkWindow',
+	//		BOOL);
+	//	addOption(option);	
+		#end
+
 		super();
 		add(notes);
 		add(splashes);

@@ -114,6 +114,11 @@ class DiscordClient
 		presence.endTimestamp = Std.int(endTimestamp / 1000);
 		updatePresence();
 
+		final button:DiscordButton = DiscordButton.create();
+		button.label = "Download";
+		button.url = "https://github.com/Realmzer/FNF-PsychEngineLegacy";
+
+
 		//trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp, $largeImageKey');
 	}
 
