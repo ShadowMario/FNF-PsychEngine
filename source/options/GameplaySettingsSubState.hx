@@ -32,6 +32,12 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			BOOL);
 		addOption(option);
 		
+		//var option:Option = new Option('Ghost Notes',
+		//	"If checked, ghost notes will not be removed.",
+		//	'ghostNotes',
+		//	BOOL);
+		//addOption(option);
+		
 		var option:Option = new Option('Auto Pause',
 			"If checked, the game automatically pauses if the screen isn't on focus.",
 			'autoPause',

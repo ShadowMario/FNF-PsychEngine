@@ -4,6 +4,7 @@ import flixel.FlxBasic;
 import objects.Character;
 import psychlua.LuaUtils;
 import psychlua.CustomSubstate;
+import backend.util.CppAPI;
 
 #if LUA_ALLOWED
 import psychlua.FunkinLua;
@@ -117,6 +118,9 @@ class HScript extends Iris
 		set('Paths', Paths);
 		set('Conductor', Conductor);
 		set('ClientPrefs', ClientPrefs);
+		set('CoolUtil', CoolUtil);
+		set('CppAPI', CppAPI);
+		set('Discord', Discord);
 		#if ACHIEVEMENTS_ALLOWED
 		set('Achievements', Achievements);
 		#end

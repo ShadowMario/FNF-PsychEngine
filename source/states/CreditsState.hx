@@ -38,6 +38,13 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var defaultList:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			["Psych Engine Legacy Team"],
+			["Realmzer", 			"realmzer",  		"Head Developer, Programmer", 								"https://www.youtube.com/@Realmzer", "d14bff"],
+			["DarkMania", 			"darkmania",  		"Co-Owner, Contributor, Programmer, Artist, Charter", 		"https://x.com/DarkManiaYT", "d14bff"],
+			["PumpkinZ", 			"pumpkinz",  		"Contributor, Animator, Programmer, Charter", 				"https://www.youtube.com/@PumpkinZM", "d14bff"],
+			["Lux", 				"luxy",  			"Contributor, Artist", 										"https://www.youtube.com/channel/UC8yQe6TssX6alJhh9pY4sGw", "d14bff"],
+			["Frisky", 				"frisky",  			"Contributor", 												"hhttps://x.com/FriskyorSomesht", "d14bff"],
+			[""],
 			["Psych Engine Team"],
 			["Shadow Mario",		"shadowmario",		"Main Programmer and Head of Psych Engine",					"https://ko-fi.com/shadowmario",	"444444"],
 			["Riveren",				"riveren",			"Main Artist/Animator of Psych Engine",						"https://x.com/riverennn",			"14967B"],
@@ -67,7 +74,7 @@ class CreditsState extends MusicBeatState
 			[""],
 			["Psych Engine Discord"],
 			["Join the Psych Ward!", "discord", "", "https://discord.gg/2ka77eMXDv", "5165F6"],
-			["Join the Legacy Psych Ward!", "discord", "", "https://discord.gg/3a5sbGMwDu", "5165F6"]
+			["Join Psych Ward Legacy!", "discord", "", "https://discord.gg/3a5sbGMwDu", "5165F6"]
 		];
 		
 		for(i in defaultList)

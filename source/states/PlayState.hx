@@ -1330,6 +1330,8 @@ class PlayState extends MusicBeatState
 
 				var gottaHitNote:Bool = (songNotes[1] < totalColumns);
 
+				if(!ClientPrefs.data.ghostNotes)
+				{
 				if (i != 0) {
 					// CLEAR ANY POSSIBLE GHOST NOTES
 					for (evilNote in unspawnNotes) {
@@ -1342,6 +1344,7 @@ class PlayState extends MusicBeatState
 						}
 					}
 				}
+			}
 
 				var swagNote:Note = new Note(spawnTime, noteColumn, oldNote);
 				var isAlt: Bool = section.altAnim && !gottaHitNote;
@@ -1419,7 +1422,10 @@ class PlayState extends MusicBeatState
 				oldNote = swagNote;
 			}
 		}
+		if(!ClientPrefs.data.ghostNotes)
+		{
 		trace('["${SONG.song.toUpperCase()}" CHART INFO]: Ghost Notes Cleared: $ghostNotesCaught');
+		}
 		for (event in songData.events) //Event Notes
 			for (i in 0...event[1].length)
 				makeEvent(event, i);
