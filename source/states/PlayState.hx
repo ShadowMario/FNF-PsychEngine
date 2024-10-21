@@ -204,6 +204,16 @@ class PlayState extends MusicBeatState
 	public static var seenCutscene:Bool = false;
 	public static var deathCounter:Int = 0;
 
+	public var defaultCamZoom(get, set):Float;
+
+    @:noCompletion
+	function get_defaultCamZoom():Float 
+    	return camGame.targetZoom;
+
+    @:noCompletion 
+    function set_defaultCamZoom():Float
+        return camGame.targetZoom = defaultCamZoom;
+
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
 	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
