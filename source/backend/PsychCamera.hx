@@ -5,6 +5,8 @@ package backend;
 
 class PsychCamera extends FlxCamera
 {
+	public var targetZoom:Float = 1;
+	
 	override public function update(elapsed:Float):Void
 	{
 		// follow the target, if there is one
