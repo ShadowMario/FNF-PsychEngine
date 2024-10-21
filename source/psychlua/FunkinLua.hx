@@ -291,6 +291,9 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "getVar", function(varName:String) {
 			return MusicBeatState.getVariables().get(varName);
 		});
+		Lua_helper.add_callback(lua, "removeVar", function(varName:String) {
+			return MusicBeatState.getVariables().remove(varName);
+		});
 
 		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) {
 			var luaPath:String = findScript(luaFile);
