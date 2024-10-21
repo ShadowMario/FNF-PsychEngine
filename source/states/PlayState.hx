@@ -187,9 +187,9 @@ class PlayState extends MusicBeatState
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
-	public var camHUD:FlxCamera;
-	public var camGame:FlxCamera;
-	public var camOther:FlxCamera;
+	public var camHUD:PsychCamera;
+	public var camGame:PsychCamera;
+	public var camOther:PsychCamera;
 	public var cameraSpeed:Float = 1;
 
 	public var songScore:Int = 0;
