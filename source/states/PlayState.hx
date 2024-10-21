@@ -5,6 +5,7 @@ import backend.StageData;
 import backend.WeekData;
 import backend.Song;
 import backend.Rating;
+import backend.PsychCamera;
 
 import flixel.FlxBasic;
 import flixel.FlxObject;
