@@ -211,8 +211,8 @@ class PlayState extends MusicBeatState
     	return camGame.targetZoom;
 
     @:noCompletion 
-    function set_defaultCamZoom():Float
-        return camGame.targetZoom = defaultCamZoom;
+    function set_defaultCamZoom(value:Float):Float
+        return camGame.targetZoom = defaultCamZoom = value;
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
