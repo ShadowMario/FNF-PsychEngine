@@ -151,10 +151,18 @@ class PlayState extends MusicBeatState
 	public var playerStrums:FlxTypedGroup<StrumNote> = new FlxTypedGroup<StrumNote>();
 	public var grpNoteSplashes:FlxTypedGroup<NoteSplash> = new FlxTypedGroup<NoteSplash>();
 
-	public var camZooming:Bool = false;
+	public var camZooming(default, set):Bool = false;
 	public var camZoomingMult:Float = 1;
-	public var camZoomingDecay:Float = 1;
+	public var camZoomingDecay(default, set):Float = 1;
 	private var curSong:String = "";
+
+	@:noCompletion
+	function set_camZooming(value:Bool):Bool
+		return camGame.lerpZoom = camHUD.lerpZoom = camOther.lerpZoom = value;
+
+	@:noCompletion
+	function set_camZoomingDecay(value:Float):Float
+		return camGame.zoomDecay = camHUD.zoomDecay = camOther.zoomDecay = value * playbackRate;
 
 	public var gfSpeed:Int = 1;
 	public var health(default, set):Float = 1;
@@ -207,9 +215,9 @@ class PlayState extends MusicBeatState
 
 	public var defaultCamZoom(get, set):Float;
 
-    @:noCompletion
-	function get_defaultCamZoom():Float 
-    	return camGame.targetZoom;
+	@:noCompletion 
+    function get_defaultCamZoom():Float
+        return camGame.targetZoom;
 
     @:noCompletion 
     function set_defaultCamZoom(value:Float):Float
@@ -1725,12 +1733,6 @@ class PlayState extends MusicBeatState
 
 			if(ClientPrefs.data.timeBarType != 'Song Name')
 				timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
-		}
-
-		if (camZooming)
-		{
-			FlxG.camera.zoom = FlxMath.lerp(camGame.targetZoom, FlxG.camera.zoom, Math.exp(-elapsed * 3.125 * camZoomingDecay * playbackRate));
-			camHUD.zoom = FlxMath.lerp(camHUD.targetZoom, camHUD.zoom, Math.exp(-elapsed * 3.125 * camZoomingDecay * playbackRate));
 		}
 
 		FlxG.watch.addQuick("secShit", curSection);

@@ -6,6 +6,8 @@ package backend;
 class PsychCamera extends FlxCamera
 {
 	public var targetZoom:Float = 1;
+	public var zoomDecay:Float = 1;
+	public var lerpZoom:Bool = false;
 	
 	override public function update(elapsed:Float):Void
 	{
@@ -23,6 +25,12 @@ class PsychCamera extends FlxCamera
 
 		updateFlashSpritePosition();
 		updateShake(elapsed);
+
+		if (lerpZoom) updateLerpZoom(elapsed);
+	}
+
+	public dynamic function updateLerpZoom(elapsed:Float) {
+		zoom = FlxMath.lerp(targetZoom, zoom, Math.exp(-elapsed * 3.125 * zoomDecay));
 	}
 
 	public function updateFollowDelta(?elapsed:Float = 0):Void
