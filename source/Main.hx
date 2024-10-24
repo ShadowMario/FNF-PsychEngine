@@ -27,6 +27,10 @@ import backend.util.CppAPI;
 import lime.graphics.Image;
 #end
 
+#if desktop
+import backend.ALSoftConfig; // Just to make sure DCE doesn't remove this, since it's not directly referenced anywhere else.
+#end
+
 //crash handler stuff
 #if CRASH_HANDLER
 import openfl.events.UncaughtErrorEvent;
