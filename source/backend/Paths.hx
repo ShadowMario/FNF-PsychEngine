@@ -237,11 +237,12 @@ class Paths
 
 	inline static public function font(key:String)
 	{
+		var folderKey:String = Language.getFileTranslation('fonts/$key');
 		#if MODS_ALLOWED
-		var file:String = modsFont(key);
+		var file:String = modFolders(key);
 		if(FileSystem.exists(file)) return file;
 		#end
-		return 'assets/fonts/$key';
+		return 'assets/$folderKey';
 	}
 
 	public static function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?parentFolder:String = null)
@@ -393,9 +394,6 @@ class Paths
 	#if MODS_ALLOWED
 	inline static public function mods(key:String = '')
 		return 'mods/' + key;
-
-	inline static public function modsFont(key:String)
-		return modFolders('fonts/' + key);
 
 	inline static public function modsJson(key:String)
 		return modFolders('data/' + key + '.json');

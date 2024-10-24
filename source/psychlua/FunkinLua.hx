@@ -1121,12 +1121,7 @@ class FunkinLua {
 					objectsArray.push(obj);
 				}
 			}
-
-			if(!objectsArray.contains(null) && FlxG.overlap(objectsArray[0], objectsArray[1]))
-			{
-				return true;
-			}
-			return false;
+			return (!objectsArray.contains(null) && FlxG.overlap(objectsArray[0], objectsArray[1]));
 		});
 		Lua_helper.add_callback(lua, "getPixelColor", function(obj:String, x:Int, y:Int) {
 			var spr:FlxSprite = LuaUtils.getObjectLoop(obj);
