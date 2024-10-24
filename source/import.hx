@@ -24,6 +24,7 @@ import js.html.*;
 import backend.Paths;
 import backend.Controls;
 import backend.util.CoolUtil;
+import backend.Discord;
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.CustomFadeTransition;

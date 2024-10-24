@@ -18,5 +18,4 @@ haxelib git linc_luajit https://github.com/superpowers04/linc_luajit 1906c4a96f6
 haxelib git funkin.vis https://github.com/FunkinCrew/funkVis 22b1ce089dd924f15cdc4632397ef3504d464e90
 haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git cbf91e2180fd2e374924fe74844086aab7891666
 echo Finished!
-pause	public static function coolLerp(base:Float, target:Float, ratio:Float):Float
-		return base + cameraLerp(ratio) * (target - base);
+pause

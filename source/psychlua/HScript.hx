@@ -120,7 +120,7 @@ class HScript extends Iris
 		set('ClientPrefs', ClientPrefs);
 		set('CoolUtil', CoolUtil);
 		set('CppAPI', CppAPI);
-		set('Discord', Discord);
+		set('DiscordClient', DiscordClient);
 		#if ACHIEVEMENTS_ALLOWED
 		set('Achievements', Achievements);
 		#end
