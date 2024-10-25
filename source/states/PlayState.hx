@@ -3283,7 +3283,15 @@ class PlayState extends MusicBeatState
 
 	public function initHScript(file:String)
 	{
-		var newScript:HScript = new HScript(null, file);
+		var newScript:HScript = null;
+		try {
+			var newScript:HScript = new HScript(null, file);
+		} catch (e:Dynamic) {
+			addTextToDebug('ERROR ON LOADING ($file) - $e', FlxColor.RED);
+			var newScript:HScript = cast (Iris.instances.get(file), HScript);
+			if (newScript != null) newScript.destroy();
+			return;
+		}
 		
 		if (Std.isOfType(newScript.returnValue, crowplexus.hscript.Expr.Error)) {
 			newScript.destroy();
