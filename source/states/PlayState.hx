@@ -3292,7 +3292,8 @@ class PlayState extends MusicBeatState
 			if (newScript != null) newScript.destroy();
 			return;
 		}
-		
+
+		if (newScript == null) return;
 		if (Std.isOfType(newScript.returnValue, crowplexus.hscript.Expr.Error)) {
 			newScript.destroy();
 		} else {
