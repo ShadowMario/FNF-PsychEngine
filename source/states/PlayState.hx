@@ -115,10 +115,23 @@ class PlayState extends MusicBeatState
 	public var dadGroup:FlxSpriteGroup;
 	public var gfGroup:FlxSpriteGroup;
 	public static var curStage:String = '';
-	public static var stageUI:String = "normal";
-	public var uiPrefix:String = "";
-	public var uiPostfix:String = "";
+	public static var stageUI(default, set):String = "normal";
+	public static var uiPrefix:String = "";
+	public static var uiPostfix:String = "";
 	public static var isPixelStage(get, never):Bool;
+
+	@:noCompletion
+	static function set_stageUI(value:String):String
+	{
+		stageUI = value;
+		if (stageUI != "normal")
+		{
+			uiPrefix = stageUI.split("-pixel")[0].trim();
+			if (PlayState.isPixelStage) uiPostfix = "-pixel";
+		}
+		else uiPrefix = uiPostfix = "";
+		return stageUI;
+	}
 
 	@:noCompletion
 	static function get_isPixelStage():Bool
@@ -332,13 +345,6 @@ class PlayState extends MusicBeatState
 			stageUI = stageData.stageUI;
 		else if (stageData.isPixelStage == true) //Backward compatibility
 			stageUI = "pixel";
-
-		if (stageUI != "normal")
-		{
-			final uiShit:Array<String> = stageUI.split("-pixel");
-			uiPrefix = uiShit[0].trim();
-			if (PlayState.isPixelStage) uiPostfix = "-pixel";
-		}
 
 		BF_X = stageData.boyfriend[0];
 		BF_Y = stageData.boyfriend[1];
