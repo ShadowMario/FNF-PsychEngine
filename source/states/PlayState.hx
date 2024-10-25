@@ -127,7 +127,7 @@ class PlayState extends MusicBeatState
 		if (value != "normal")
 		{
 			uiPrefix = value.split("-pixel")[0].trim();
-			if (value.endsWith("-pixel")) uiPostfix = "-pixel";
+			if (value == "pixel" || value.endsWith("-pixel")) uiPostfix = "-pixel";
 		}
 		return stageUI = value;
 	}
