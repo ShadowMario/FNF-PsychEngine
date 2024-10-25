@@ -66,7 +66,7 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 
 			noteSplashes.insert(0, ClientPrefs.defaultData.splashSkin); //Default skin always comes first
 			var option:Option = new Option('Note Splashes:',
-				"Select your prefered Note Splash variation or turn it off.",
+				"Select your prefered Note Splash variation.",
 				'splashSkin',
 				STRING,
 				noteSplashes);

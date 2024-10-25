@@ -1717,6 +1717,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			}
 			_makeNewSprite = null;
 		}
+		_file = null;
 
 		if(fullPath != null)
 		{
