@@ -123,14 +123,13 @@ class PlayState extends MusicBeatState
 	@:noCompletion
 	static function set_stageUI(value:String):String
 	{
-		stageUI = value;
-		if (stageUI != "normal")
+		uiPrefix = uiPostfix = "";
+		if (value != "normal")
 		{
-			uiPrefix = stageUI.split("-pixel")[0].trim();
-			if (PlayState.isPixelStage) uiPostfix = "-pixel";
+			uiPrefix = value.split("-pixel")[0].trim();
+			if (value.endsWith("-pixel")) uiPostfix = "-pixel";
 		}
-		else uiPrefix = uiPostfix = "";
-		return stageUI;
+		return stageUI = value;
 	}
 
 	@:noCompletion
