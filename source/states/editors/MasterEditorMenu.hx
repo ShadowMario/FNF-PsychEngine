@@ -60,6 +60,11 @@ class MasterEditorMenu extends MusicBeatState
 		directoryTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
 		directoryTxt.scrollFactor.set();
 		add(directoryTxt);
+
+		var wikitext:FlxText = new FlxText(12, FlxG.height - 24, 0, "Press F to go to the Wiki", 12);
+		wikitext.scrollFactor.set();
+		wikitext.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(wikitext);
 		
 		for (folder in Mods.getModDirectories())
 		{
@@ -96,6 +101,9 @@ class MasterEditorMenu extends MusicBeatState
 			changeDirectory(1);
 		}
 		#end
+
+		if (FlxG.keys.pressed.F) 
+			CoolUtil.browserLoad('https://realmzer.github.io/psychenginelegacy.lua/');
 
 		if (controls.BACK)
 		{
