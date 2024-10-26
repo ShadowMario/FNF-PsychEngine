@@ -1463,6 +1463,13 @@ class FunkinLua {
 				if(snd != null) snd.time = value;
 			}
 		});
+
+		Lua_helper.add_callback(lua, "openURL", LuaUtils.openURL);
+
+		Lua_helper.add_callback(lua, "windowName", LuaUtils.windowName);
+
+		Lua_helper.add_callback(lua, "showAlertWindow", LuaUtils.showAlertWindow);
+
 		Lua_helper.add_callback(lua, "getSoundPitch", function(tag:String) {
 			#if FLX_PITCH
 			tag = LuaUtils.formatVariable('sound_$tag');

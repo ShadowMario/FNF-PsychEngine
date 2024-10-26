@@ -270,6 +270,24 @@ class LuaUtils
 		return MusicBeatState.getState();
 	}
 
+	public static function openURL(site:String):Void {
+		#if linux
+		Sys.command('/usr/bin/xdg-open', [site]);
+		#else
+		FlxG.openURL(site);
+		#end
+	}
+
+	public static function windowName(name:String) 
+	{
+		openfl.Lib.application.window.title = name;
+	
+	}
+	
+	public static function showAlertWindow(message:String, errTitle:String) {
+		lime.app.Application.current.window.alert(message, errTitle);
+	}
+
 	public static inline function getLowestCharacterGroup():FlxSpriteGroup
 	{
 		var group:FlxSpriteGroup = PlayState.instance.gfGroup;

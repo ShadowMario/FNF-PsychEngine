@@ -35,7 +35,7 @@ class FPSCounter extends TextField
 		currentFPS = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat("_sans", 14, color);
+		defaultTextFormat = new TextFormat("VCR OSD Mono", 16, color); // Replace VCR OSD Mono with your font
 		autoSize = LEFT;
 		multiline = true;
 		text = "FPS: ";
@@ -67,7 +67,11 @@ class FPSCounter extends TextField
 		text += '\nRAM: ${flixel.util.FlxStringUtil.formatBytes(memoryMegas)}';
 
 		textColor = 0xFFFFFFFF;
+		if (currentFPS < FlxG.drawFramerate * 0.75)
+			textColor = 0xFFFFFB00;
 		if (currentFPS < FlxG.drawFramerate * 0.5)
+			textColor = 0xFFFF9900;
+		if (currentFPS < FlxG.drawFramerate * 0.25)
 			textColor = 0xFFFF0000;
 	}
 
