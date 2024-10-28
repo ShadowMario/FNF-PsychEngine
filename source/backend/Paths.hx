@@ -150,11 +150,11 @@ class Paths
 		return 'assets/videos/$key.$VIDEO_EXT';
 	}
 
-	inline static public function sound(key:String, ?modsAllowed:Bool = true):Sound
-		return returnSound('sounds/$key', modsAllowed);
+	inline static public function sound(key:String, ?modsAllowed:Bool = true, ?playBeep: Bool = true):Sound
+		return returnSound('sounds/$key', null, modsAllowed, playBeep);
 
-	inline static public function music(key:String, ?modsAllowed:Bool = true):Sound
-		return returnSound('music/$key', modsAllowed);
+	inline static public function music(key:String, ?modsAllowed:Bool = true, ?playBeep: Bool = true):Sound
+		return returnSound('music/$key', null, modsAllowed, playBeep);
 
 	inline static public function inst(song:String, ?modsAllowed:Bool = true):Sound
 		return returnSound('${formatToSongPath(song)}/Inst', 'songs', modsAllowed);
@@ -196,7 +196,7 @@ class Paths
 
 			if (bitmap == null)
 			{
-				trace('oh no its returning null NOOOO ($file)');
+				trace('Tried loading bitmap, caught null at "$file"');
 				return null;
 			}
 		}
@@ -245,7 +245,7 @@ class Paths
 		return 'assets/$folderKey';
 	}
 
-	public static function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?parentFolder:String = null)
+	public static function fileExists(key:String, ?type:AssetType = TEXT, ?ignoreMods:Bool = false, ?parentFolder:String = null)
 	{
 		#if MODS_ALLOWED
 		if(!ignoreMods)
