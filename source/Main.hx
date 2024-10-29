@@ -20,7 +20,7 @@ import states.TitleState;
 import backend.ClientPrefs;
 import objects.FunkinSoundTray;
 #if windows
-import backend.util.CppAPI;
+import backend.util.sys.CppAPI;
 #end
 
 #if linux

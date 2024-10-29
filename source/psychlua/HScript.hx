@@ -4,7 +4,7 @@ import flixel.FlxBasic;
 import objects.Character;
 import psychlua.LuaUtils;
 import psychlua.CustomSubstate;
-import backend.util.CppAPI;
+import backend.util.sys.CppAPI;
 
 #if LUA_ALLOWED
 import psychlua.FunkinLua;

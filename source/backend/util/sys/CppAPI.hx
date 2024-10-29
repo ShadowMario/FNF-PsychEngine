@@ -1,14 +1,15 @@
-package backend.util;
+package backend.util.sys;
 
 import backend.util.sys.windows.Transparency;
 import backend.util.sys.windows.Wallpaper;
 import backend.util.sys.windows.WindowsData;
 import backend.util.sys.windows.WindowsSystem;
-
+import backend.util.sys.mac.MacData;
+import backend.util.sys.linux.LinuxData;
 class CppAPI
 {	
-	#if windows
 	#if cpp
+	#if windows
 	public static function obtainRAM():Int
 	{
 		return WindowsData.obtainRAM();
@@ -88,11 +89,21 @@ class CppAPI
 	{
 		Transparency.reset();
 	}
-	
-
 
 	public static function allowHighDPI() {
 		WindowsData.registerHighDpi();
+	}
+	#end
+	#if mac
+	public static function getTotalRam():Float
+	{
+		return MacData.getTotalRam();
+	}
+	#end
+	#if linux
+	public static function getTotalRam():Float
+	{
+		return LinuxData.getTotalRam();
 	}
 	#end
 	#end

@@ -64,5 +64,8 @@ import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.transition.FlxTransitionableState;
 
+//API
+import backend.util.sys.CppAPI; // Gives access to some of the C++ API
+
 using StringTools;
 #end
