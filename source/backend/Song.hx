@@ -41,6 +41,8 @@ typedef SwagSection =
 	@:optional var gfSection:Bool;
 	@:optional var bpm:Float;
 	@:optional var changeBPM:Bool;
+	@:optional @default(4)
+	var totalColumns: Int;
 }
 
 class Song
@@ -62,6 +64,7 @@ class Song
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
+	public var totalColumns:Int = 4;
 	public var format:String = 'psych_v1';
 
 	public static function convert(songJson:Dynamic) // Convert old charts to psych_v1 format
@@ -110,8 +113,11 @@ class Song
 
 			for (note in section.sectionNotes)
 			{
-				var gottaHitNote:Bool = (note[1] < 4) ? section.mustHitSection : !section.mustHitSection;
-				note[1] = (note[1] % 4) + (gottaHitNote ? 0 : 4);
+				// NOTE: Psych Engine does NOT have multikey out of the box, this is simply done in case you WANT to add it via scripting
+				// there's no UI element in the chart editor to modify the value of `totalColumns` so you might wanna change that manually yourself
+				// if you're forking the engine, you might wanna add that
+				var gottaHitNote:Bool = (note[1] < songJson.totalColumns) ? section.mustHitSection : !section.mustHitSection;
+				note[1] = (note[1] % songJson.totalColumns) + (gottaHitNote ? 0 : 4);
 
 				if(note[3] != null && !Std.isOfType(note[3], String))
 					note[3] = Note.defaultNoteTypes[note[3]]; //compatibility with Week 7 and 0.1-0.3 psych charts
@@ -132,6 +138,7 @@ class Song
 	}
 
 	static var _lastPath:String;
+
 	public static function getChart(jsonInput:String, ?folder:String):SwagSong
 	{
 		if(folder == null) folder = jsonInput;
