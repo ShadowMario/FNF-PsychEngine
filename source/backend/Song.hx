@@ -30,6 +30,8 @@ typedef SwagSong =
 
 	@:optional var arrowSkin:String;
 	@:optional var splashSkin:String;
+	@:optional @default(4)
+	var totalColumns: Int;
 }
 
 typedef SwagSection =
@@ -41,8 +43,6 @@ typedef SwagSection =
 	@:optional var gfSection:Bool;
 	@:optional var bpm:Float;
 	@:optional var changeBPM:Bool;
-	@:optional @default(4)
-	var totalColumns: Int;
 }
 
 class Song
