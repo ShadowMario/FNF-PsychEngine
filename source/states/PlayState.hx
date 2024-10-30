@@ -1245,7 +1245,6 @@ class PlayState extends MusicBeatState
 
 	private var noteTypes:Array<String> = [];
 	private var eventsPushed:Array<String> = [];
-	private var totalColumns: Int = 4;
 
 	private function generateSong():Void
 	{
@@ -1322,13 +1321,13 @@ class PlayState extends MusicBeatState
 			{
 				final songNotes: Array<Dynamic> = section.sectionNotes[i];
 				var spawnTime: Float = songNotes[0];
-				var noteColumn: Int = Std.int(songNotes[1] % totalColumns);
+				var noteColumn: Int = Std.int(songNotes[1]);
 				var holdLength: Float = songNotes[2];
 				var noteType: String = songNotes[3];
 				if (Math.isNaN(holdLength))
 					holdLength = 0.0;
 
-				var gottaHitNote:Bool = (songNotes[1] < totalColumns);
+				var gottaHitNote:Bool = (songNotes[1] < songData.totalColumns);
 
 				if (i != 0) {
 					// CLEAR ANY POSSIBLE GHOST NOTES
