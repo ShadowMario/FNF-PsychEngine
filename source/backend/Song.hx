@@ -116,8 +116,10 @@ class Song
 				// NOTE: Psych Engine does NOT have multikey out of the box, this is simply done in case you WANT to add it via scripting
 				// there's no UI element in the chart editor to modify the value of `totalColumns` so you might wanna change that manually yourself
 				// if you're forking the engine, you might wanna add that
-				var gottaHitNote:Bool = (note[1] < songJson.totalColumns) ? section.mustHitSection : !section.mustHitSection;
-				note[1] = (note[1] % songJson.totalColumns) + (gottaHitNote ? 0 : 4);
+				var totalColumns: Int = cast(songJson.totalColumns, Int);
+				if (totalColumns < 1) totalColumns = 4; // just in case
+				var gottaHitNote:Bool = (note[1] < totalColumns) ? section.mustHitSection : !section.mustHitSection;
+				note[1] = (note[1] % totalColumns) + (gottaHitNote ? 0 : 4);
 
 				if(note[3] != null && !Std.isOfType(note[3], String))
 					note[3] = Note.defaultNoteTypes[note[3]]; //compatibility with Week 7 and 0.1-0.3 psych charts
