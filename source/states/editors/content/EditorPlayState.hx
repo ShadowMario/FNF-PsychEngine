@@ -209,7 +209,7 @@ class EditorPlayState extends MusicBeatSubstate
 				var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
 				if(!daNote.mustPress) strumGroup = opponentStrums;
 
-				var strum:StrumNote = strumGroup.members[daNote.noteData];
+				var strum:StrumNote = strumGroup.members[daNote.noteData % strumGroup.members.length - 1];
 				daNote.followStrumNote(strum, fakeCrochet, songSpeed / playbackRate);
 
 				if(!daNote.mustPress && daNote.wasGoodHit && !daNote.hitByOpponent && !daNote.ignoreNote)
@@ -703,7 +703,7 @@ class EditorPlayState extends MusicBeatSubstate
 		//more accurate hit time for the ratings? part 2 (Now that the calculations are done, go back to the time it was before for not causing a note stutter)
 		Conductor.songPosition = lastTime;
 
-		var spr:StrumNote = playerStrums.members[key];
+		var spr:StrumNote = playerStrums.members[key % playerStrums.members.length - 1];
 		if(spr != null && spr.animation.curAnim.name != 'confirm')
 		{
 			spr.playAnim('pressed');
@@ -722,7 +722,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 	private function keyReleased(key:Int)
 	{
-		var spr:StrumNote = playerStrums.members[key];
+		var spr:StrumNote = playerStrums.members[key % playerStrums.members.length - 1];
 		if(spr != null)
 		{
 			spr.playAnim('static');
@@ -781,7 +781,7 @@ class EditorPlayState extends MusicBeatSubstate
 		if (PlayState.SONG.needsVoices && opponentVocals.length <= 0)
 			vocals.volume = 1;
 
-		var strum:StrumNote = opponentStrums.members[Std.int(Math.abs(note.noteData))];
+		var strum:StrumNote = opponentStrums.members[note.noteData % opponentStrums.members.length - 1];
 		if(strum != null) {
 			strum.playAnim('confirm', true);
 			strum.resetAnim = Conductor.stepCrochet * 1.25 / 1000 / playbackRate;
@@ -817,7 +817,7 @@ class EditorPlayState extends MusicBeatSubstate
 			popUpScore(note);
 		}
 
-		var spr:StrumNote = playerStrums.members[note.noteData];
+		var spr:StrumNote = playerStrums.members[note.noteData % playerStrums.members.length - 1];
 		if(spr != null) spr.playAnim('confirm', true);
 		vocals.volume = 1;
 
@@ -880,7 +880,7 @@ class EditorPlayState extends MusicBeatSubstate
 
 	function spawnNoteSplashOnNote(note:Note) {
 		if(note != null) {
-			var strum:StrumNote = playerStrums.members[note.noteData];
+			var strum:StrumNote = playerStrums.members[note.noteData % playerStrums.members.length - 1];
 			if(strum != null)
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note, strum);
 		}
