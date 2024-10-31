@@ -1774,7 +1774,7 @@ class PlayState extends MusicBeatState
 							var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
 							if(!daNote.mustPress) strumGroup = opponentStrums;
 
-							var strum:StrumNote = strumGroup.members[daNote.noteData];
+							var strum:StrumNote = strumGroup.members[daNote.noteData % strumGroup.members.length - 1];
 							daNote.followStrumNote(strum, fakeCrochet, songSpeed / playbackRate);
 
 							if(daNote.mustPress)
@@ -2716,7 +2716,7 @@ class PlayState extends MusicBeatState
 		//more accurate hit time for the ratings? part 2 (Now that the calculations are done, go back to the time it was before for not causing a note stutter)
 		Conductor.songPosition = lastTime;
 
-		var spr:StrumNote = playerStrums.members[key];
+		var spr:StrumNote = playerStrums.members[key % playerStrums.members.length - 1];
 		if(strumsBlocked[key] != true && spr != null && spr.animation.curAnim.name != 'confirm')
 		{
 			spr.playAnim('pressed');
@@ -2749,7 +2749,7 @@ class PlayState extends MusicBeatState
 		var ret:Dynamic = callOnScripts('onKeyReleasePre', [key]);
 		if(ret == LuaUtils.Function_Stop) return;
 
-		var spr:StrumNote = playerStrums.members[key];
+		var spr:StrumNote = playerStrums.members[key % playerStrums.members.length - 1];
 		if(spr != null)
 		{
 			spr.playAnim('static');
@@ -3039,7 +3039,7 @@ class PlayState extends MusicBeatState
 
 			if(!cpuControlled)
 			{
-				var spr = playerStrums.members[note.noteData];
+				var spr = playerStrums.members[note.noteData % playerStrums.members.length - 1];
 				if(spr != null) spr.playAnim('confirm', true);
 			}
 			else strumPlayAnim(false, Std.int(Math.abs(note.noteData)), Conductor.stepCrochet * 1.25 / 1000 / playbackRate);
@@ -3089,7 +3089,7 @@ class PlayState extends MusicBeatState
 
 	public function spawnNoteSplashOnNote(note:Note) {
 		if(note != null) {
-			var strum:StrumNote = playerStrums.members[note.noteData];
+			var strum:StrumNote = playerStrums.members[note.noteData % playerStrums.members.length - 1];
 			if(strum != null)
 				spawnNoteSplash(note, strum);
 		}
@@ -3425,9 +3425,9 @@ class PlayState extends MusicBeatState
 	function strumPlayAnim(isDad:Bool, id:Int, time:Float) {
 		var spr:StrumNote = null;
 		if(isDad) {
-			spr = opponentStrums.members[id];
+			spr = opponentStrums.members[id % opponentStrums.members.length - 1];
 		} else {
-			spr = playerStrums.members[id];
+			spr = playerStrums.members[id % playerStrums.members.length - 1];
 		}
 
 		if(spr != null) {
