@@ -2919,7 +2919,7 @@ class PlayState extends MusicBeatState
 			var postfix:String = '';
 			if(note != null) postfix = note.animSuffix;
 
-			var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, direction)))] + 'miss' + postfix;
+			var animToPlay:String = singAnimations[direction % singAnimations.length-1] + 'miss' + postfix;
 			char.playAnim(animToPlay, true);
 
 			if(char != gf && lastCombo > 5 && gf != null && gf.hasAnimation('sad'))
@@ -2950,7 +2950,7 @@ class PlayState extends MusicBeatState
 		else if(!note.noAnimation)
 		{
 			var char:Character = dad;
-			var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, note.noteData)))] + note.animSuffix;
+			var animToPlay:String = singAnimations[note.noteData & singAnimations.length-1] + note.animSuffix;
 			if(note.gfNote) char = gf;
 
 			if(char != null)
@@ -3002,7 +3002,7 @@ class PlayState extends MusicBeatState
 		{
 			if(!note.noAnimation)
 			{
-				var animToPlay:String = singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, note.noteData)))] + note.animSuffix;
+				var animToPlay:String = singAnimations[note.noteData % singAnimations.length-1] + note.animSuffix;
 
 				var char:Character = boyfriend;
 				var animCheck:String = 'hey';
