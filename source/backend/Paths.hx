@@ -239,7 +239,7 @@ class Paths
 	{
 		var folderKey:String = Language.getFileTranslation('fonts/$key');
 		#if MODS_ALLOWED
-		var file:String = modFolders(key);
+		var file:String = modFolders(folderKey);
 		if(FileSystem.exists(file)) return file;
 		#end
 		return 'assets/$folderKey';
