@@ -196,7 +196,7 @@ class Paths
 
 			if (bitmap == null)
 			{
-				trace('oh no its returning null NOOOO ($file)');
+				trace('File is returning null ($file)');
 				return null;
 			}
 		}
@@ -382,8 +382,8 @@ class Paths
 			#end
 			else if(beepOnNull)
 			{
-				trace('SOUND NOT FOUND: $key, PATH: $path');
-				FlxG.log.error('SOUND NOT FOUND: $key, PATH: $path');
+				trace('Sound not found: $key, PATH: $path');
+				FlxG.log.error('Sound not found: $key, PATH: $path');
 				return FlxAssets.getSound('flixel/sounds/beep');
 			}
 		}

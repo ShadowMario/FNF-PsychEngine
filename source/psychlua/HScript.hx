@@ -24,7 +24,7 @@ class HScript extends Iris
 	{
 		if(parent.hscript == null)
 		{
-			trace('initializing haxe interp for: ${parent.scriptName}');
+			trace('Initializing Haxe interp for: ${parent.scriptName}');
 			parent.hscript = new HScript(parent);
 		}
 	}
@@ -34,7 +34,7 @@ class HScript extends Iris
 		var hs:HScript = try parent.hscript catch (e) null;
 		if(hs == null)
 		{
-			trace('initializing haxe interp for: ${parent.scriptName}');
+			trace('Initializing Haxe interp for: ${parent.scriptName}');
 			parent.hscript = new HScript(parent, code, varsToBring);
 		}
 		else

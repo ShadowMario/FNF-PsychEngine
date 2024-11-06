@@ -827,7 +827,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		objY += 35;
 		imgTxt = new FlxText(objX, objY - 15, 200, 'Image: ', 8);
 		var imgButton:PsychUIButton = new PsychUIButton(objX, objY, 'Change Image', function() {
-			trace('attempt to load image');
+			trace('Attempt to load image');
 			loadImage();
 		});
 		tab_group.add(imgButton);

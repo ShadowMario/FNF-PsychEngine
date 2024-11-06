@@ -1833,7 +1833,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 	function onSongComplete()
 	{
-		trace('song completed');
+		trace('Song completed');
 		setSongPlaying(false);
 		Conductor.songPosition = FlxG.sound.music.time = vocals.time = opponentVocals.time = FlxG.sound.music.length - 1;
 		curSec = PlayState.SONG.notes.length - 1;
@@ -2023,13 +2023,13 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 						PlayState.SONG.notes.pop();
 					}
 	
-					trace('breaking at section $secNum');
+					trace('Breaking at section $secNum');
 					reachedLimit = true;
 					break;
 				}
 				else if(secNum == lastSectionNum)
 				{
-					trace('reached limit at section $secNum');
+					trace('Reached limit at section $secNum');
 					reachedLimit = true;
 				}
 			}
@@ -2069,7 +2069,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 				if(time >= FlxG.sound.music.length)
 				{
-					trace('created sections until ${PlayState.SONG.notes.length-1}');
+					trace('Created sections until ${PlayState.SONG.notes.length-1}');
 					reachedLimit = true;
 				}
 			}
@@ -2395,7 +2395,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		{
 			PlayState.SONG.gameOverChar = character;
 			if(character.length < 1) Reflect.deleteField(PlayState.SONG, 'gameOverChar');
-			trace('selected $character');
+			trace('Selected $character');
 		});
 
 		objY += 40;
@@ -3198,13 +3198,13 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			updateJsonData();
 			updateHeads(true);
 			loadMusic();
-			trace('selected $character');
+			trace('Selected $character');
 		});
 		stageDropDown = new PsychUIDropDownMenu(objX + 140, objY, [''], function(id:Int, stage:String)
 		{
 			PlayState.SONG.stage = stage;
 			StageData.loadDirectory(PlayState.SONG);
-			trace('selected $stage');
+			trace('Selected $stage');
 		});
 		
 		opponentDropDown = new PsychUIDropDownMenu(objX, objY + 40, [''], function(id:Int, character:String)
@@ -3213,13 +3213,13 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			updateJsonData();
 			updateHeads(true);
 			loadMusic();
-			trace('selected $character');
+			trace('Selected $character');
 		});
 		
 		girlfriendDropDown = new PsychUIDropDownMenu(objX, objY + 80, [''], function(id:Int, character:String)
 		{
 			PlayState.SONG.gfVersion = character;
-			trace('selected $character');
+			trace('Selected $character');
 		});
 		
 		tab_group.add(new FlxText(bpmStepper.x, bpmStepper.y - 15, 50, 'BPM:'));
@@ -4515,7 +4515,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 				if(noteSec + 1 >= cachedSectionTimes.length)
 				{
-					trace('failsafe, cancel early and delete notes after this');
+					trace('Fail-safe, cancel early and delete notes after this');
 					var changedSelected:Bool = false;
 					for(i in num...notes.length)
 					{

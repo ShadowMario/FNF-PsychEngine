@@ -74,7 +74,7 @@ class DiscordClient
 		discordHandlers.errored = cpp.Function.fromStaticFunction(onError);
 		Discord.Initialize(clientID, cpp.RawPointer.addressOf(discordHandlers), 1, null);
 
-		if(!isInitialized) trace("Discord Client initialized");
+		if(!isInitialized) trace("Discord client initialized");
 
 		if (__thread == null)
 		{
