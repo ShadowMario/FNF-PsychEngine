@@ -28,7 +28,6 @@ class HScript extends Iris {
 		PlayState.instance.addTextToDebug(errorToString(e, funcName, this), executed ? FlxColor.RED : 0xffb30000);
 	}
 	public static function hscriptLog(severity:ErrorSeverity, x:Dynamic, ?pos:haxe.PosInfos) {
-		trace('loggg $x');
 		var message:String = Std.string(x);
 		var origin:String = pos?.fileName ?? 'hscript';
 		#if hscriptPos
