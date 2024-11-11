@@ -3124,7 +3124,7 @@ class PlayState extends MusicBeatState
 		for (script in hscriptArray)
 			if(script != null)
 			{
-				script.executeFunction('onDestroy');
+				script.run('onDestroy');
 				script.destroy();
 			}
 
@@ -3283,23 +3283,16 @@ class PlayState extends MusicBeatState
 
 	public function initHScript(file:String)
 	{
-		var newScript:HScript = null;
+		var newScript:HScript = new HScript(null, file);
+		
 		try {
-			var newScript:HScript = new HScript(null, file);
-		} catch (e:Dynamic) {
-			addTextToDebug('ERROR ON LOADING ($file) - $e', FlxColor.RED);
-			var newScript:HScript = cast (Iris.instances.get(file), HScript);
-			if (newScript != null) newScript.destroy();
-			return;
-		}
-
-		if (newScript == null) return;
-		if (Std.isOfType(newScript.returnValue, crowplexus.hscript.Expr.Error)) {
-			newScript.destroy();
-		} else {
-			newScript.executeFunction('onCreate');
-			trace('initialized hscript interp successfully: $file');
+			newScript.parse(true);
+			newScript.run('onCreate');
 			hscriptArray.push(newScript);
+			trace('initialized hscript interp successfully: $file');
+		} catch (e:crowplexus.hscript.Expr.Error) {
+			newScript.errorCaught(e);
+			newScript.destroy();
 		}
 	}
 	#end
@@ -3366,34 +3359,17 @@ class PlayState extends MusicBeatState
 		if (len < 1)
 			return returnVal;
 
-		for(script in hscriptArray)
-		{
+		for(script in hscriptArray) {
 			@:privateAccess
 			if(script == null || !script.exists(funcToCall) || exclusions.contains(script.origin))
 				continue;
 
-			try
-			{
-				var callValue = script.call(funcToCall, args);
-				if (callValue == null) continue;
-				
-				var myValue:Dynamic = callValue.returnValue;
-
-				if((myValue == LuaUtils.Function_StopHScript || myValue == LuaUtils.Function_StopAll) && !excludeValues.contains(myValue) && !ignoreStops)
-				{
-					returnVal = myValue;
-					break;
-				}
-
-				if(myValue != null && !excludeValues.contains(myValue))
-					returnVal = myValue;
-			}
-			catch(e:Dynamic)
-			{
-				if (Std.isOfType(e, crowplexus.hscript.Expr.Error))
-					script.errorCaught(e, funcToCall);
-				else
-					addTextToDebug('ERROR (${script.origin}: $funcToCall) - $e', FlxColor.RED);
+			var callValue:Dynamic = script.run(funcToCall, args);
+			if (callValue == null) continue;
+			
+			if((callValue == LuaUtils.Function_StopHScript || callValue == LuaUtils.Function_StopAll) && !excludeValues.contains(callValue) && !ignoreStops) {
+				returnVal = callValue;
+				break;
 			}
 		}
 		#end
