@@ -3366,10 +3366,11 @@ class PlayState extends MusicBeatState
 
 			var callValue:Dynamic = script.run(funcToCall, args);
 			if (callValue == null) continue;
-			
-			if((callValue == LuaUtils.Function_StopHScript || callValue == LuaUtils.Function_StopAll) && !excludeValues.contains(callValue) && !ignoreStops) {
-				returnVal = callValue;
-				break;
+			if (!excludeValues.contains(callValue)) {
+				if ((callValue == LuaUtils.Function_StopHScript || callValue == LuaUtils.Function_StopAll) && !ignoreStops)
+					return callValue;
+				if (callValue != null && !excludeValues.contains(callValue))
+					returnVal = callValue;
 			}
 		}
 		#end
