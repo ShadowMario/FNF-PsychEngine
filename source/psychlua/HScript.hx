@@ -283,7 +283,7 @@ class HScript extends Iris {
 		set('createCallback', function(name:String, func:Dynamic, ?funk:FunkinLua = null) {
 			if(funk == null) funk = parentLua;
 			
-			if(parentLua != null) funk.addLocalCallback(name, func);
+			if(funk != null) funk.addLocalCallback(name, func);
 			else FunkinLua.luaTrace('createCallback ($name): 3rd argument is null', false, false, FlxColor.RED);
 		});
 		#end
@@ -414,6 +414,7 @@ class HScript extends Iris {
 			if (funk.hscript == null) funk.initHaxeModule();
 			
 			var cls:Dynamic = Type.resolveClass('$libPackage.$libName');
+			if (cls == null) cls = Type.resolveEnum('$libPackage.$libName');
 			if (cls == null) {
 				FunkinLua.luaTrace('addHaxeLibrary: Class "$libPackage.$libName" wasn\'t found!', false, false, FlxColor.RED);
 				return false;
