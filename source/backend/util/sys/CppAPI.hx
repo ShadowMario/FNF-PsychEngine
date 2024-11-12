@@ -94,17 +94,5 @@ class CppAPI
 		WindowsData.registerHighDpi();
 	}
 	#end
-	#if mac
-	public static function getTotalRam():Float
-	{
-		return MacData.getTotalRam();
-	}
-	#end
-	#if linux
-	public static function getTotalRam():Float
-	{
-		return LinuxData.getTotalRam();
-	}
-	#end
 	#end
 }
