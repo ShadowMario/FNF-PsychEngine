@@ -39,7 +39,7 @@ class HScript extends Iris {
 		var color:FlxColor;
 		switch (severity) {
 			case FATAL:
-				color = 0xff800000;
+				color = 0xffb30000;
 				fullTrace = 'FATAL ' + fullTrace;
 			case ERROR:
 				color = FlxColor.RED;
@@ -280,9 +280,9 @@ class HScript extends Iris {
 
 		// this one was tested
 		set('createCallback', function(name:String, func:Dynamic, ?funk:FunkinLua = null) {
-			if(funk == null) funk = parentLua;
+			if (funk == null) funk = parentLua;
 			
-			if(funk != null) funk.addLocalCallback(name, func);
+			if (funk != null) funk.addLocalCallback(name, func);
 			else FunkinLua.luaTrace('createCallback ($name): 3rd argument is null', false, false, FlxColor.RED);
 		});
 		#end
@@ -412,10 +412,13 @@ class HScript extends Iris {
 		funk.addLocalCallback("addHaxeLibrary", function(libName:String, ?libPackage:String = '') {
 			if (funk.hscript == null) funk.initHaxeModule();
 			
-			var cls:Dynamic = Type.resolveClass('$libPackage.$libName');
-			if (cls == null) cls = Type.resolveEnum('$libPackage.$libName');
+			libName = libName ?? '';
+			var str:String = libPackage.length > 0 ? '$libPackage.$libName' : libName;
+			var cls:Dynamic = Type.resolveClass(str);
+			if (cls == null) cls = Type.resolveEnum(str);
+			
 			if (cls == null) {
-				FunkinLua.luaTrace('addHaxeLibrary: Class "$libPackage.$libName" wasn\'t found!', false, false, FlxColor.RED);
+				FunkinLua.luaTrace('addHaxeLibrary: Class "$str" wasn\'t found!', false, false, FlxColor.RED);
 				return false;
 			} else {
 				funk.hscript.set(libName, cls);
@@ -424,9 +427,6 @@ class HScript extends Iris {
 		});
 	}
 	#end
-
-	override public function set(name:String, value:Dynamic, allowOverride:Bool = true):Void
-		super.set(name, value, allowOverride);
 
 	override public function destroy() {
 		origin = null;
