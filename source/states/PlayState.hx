@@ -503,16 +503,7 @@ class PlayState extends MusicBeatState
 		FlxG.camera.follow(camFollow, LOCKON, 0);
 		FlxG.camera.zoom = defaultCamZoom;
 		FlxG.camera.snapToTarget();
-
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
-		if (SONG.notes[curSection] != null)
-		{
-			var leSec:SwagSection = SONG.notes[curSection];
-			if (gf != null && leSec.gfSection)
-				moveCameraToGirlfriend();
-			else
-				moveCamera(!leSec.mustHitSection);
-		}
 
 		healthBar = new Bar(0, FlxG.height * (!ClientPrefs.data.downScroll ? 0.89 : 0.11), 'healthBar', function() return health, 0, 2);
 		healthBar.screenCenter(X);
@@ -968,6 +959,7 @@ class PlayState extends MusicBeatState
 			callOnScripts('onCountdownStarted');
 
 			var swagCounter:Int = 0;
+			moveCameraSection();
 			if (startOnTime > 0) {
 				clearNotesBefore(startOnTime);
 				setSongTime(startOnTime - 350);
@@ -978,7 +970,6 @@ class PlayState extends MusicBeatState
 				setSongTime(0);
 				return true;
 			}
-			moveCameraSection();
 
 			startTimer = new FlxTimer().start(Conductor.crochet / 1000 / playbackRate, function(tmr:FlxTimer)
 			{
