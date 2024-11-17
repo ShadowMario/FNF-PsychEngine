@@ -24,8 +24,16 @@ class HScript extends Iris {
 	#end
 	
 	public function errorCaught(e:IrisError, ?funcName:String) {
-		#if LUA_ALLOWED if (parentLua != null && FunkinLua.getBool('luaDebugMode')) #end
-		PlayState.instance.addTextToDebug(errorToString(e, funcName, this), executed ? FlxColor.RED : 0xffb30000);
+		var message:String = errorToString(e, funcName, this);
+		var color:FlxColor = (executed ? FlxColor.RED : 0xffb30000);
+		#if LUA_ALLOWED
+		if (parentLua == null)
+			PlayState.instance.addTextToDebug(message, color);
+		else
+			FunkinLua.luaTrace(message, false, false, color);
+		#else
+		PlayState.instance.addTextToDebug(message, color);
+		#end
 	}
 	public static function hscriptLog(severity:ErrorSeverity, x:Dynamic, ?pos:haxe.PosInfos) {
 		var message:String = Std.string(x);
@@ -50,7 +58,14 @@ class HScript extends Iris {
 			default:
 				color = FlxColor.CYAN;
 		}
+		#if LUA_ALLOWED
+		if (FunkinLua.lastCalledScript == null || severity == FATAL)
+			PlayState.instance.addTextToDebug(fullTrace, color);
+		else
+			FunkinLua.luaTrace(fullTrace, false, false, color);
+		#else
 		PlayState.instance.addTextToDebug(fullTrace, color);
+		#end
 	}
 	public static function errorToString(e:IrisError, ?funcName:String, ?instance:HScript) {
 		var message = switch (#if hscriptPos e.e #else e #end) {
@@ -66,15 +81,15 @@ class HScript extends Iris {
 			case ECustom(msg): msg;
 			default: "Unknown Error";
 		};
-		var mainHeader:String = 'ERROR';
-		if (instance != null && !instance.executed) mainHeader = 'ERROR ON LOADING';
-		var scriptHeader:String = #if hscriptPos e.origin #else (instance != null ? instance.origin : 'HScript') #end;
+		var errorHeader:String = 'ERROR';
+		if (instance != null && !instance.executed) errorHeader = 'ERROR ON LOADING';
+		var scriptHeader:String = (instance != null ? instance.origin : 'HScript');
 		if (funcName != null) scriptHeader += ':$funcName';
 		var lineHeader:String = #if hscriptPos ':${e.line}' #else '' #end;
 		if (instance == null #if LUA_ALLOWED || instance.parentLua == null #end)
-			return '$mainHeader ($scriptHeader$lineHeader) - $message';
+			return '$errorHeader ($scriptHeader$lineHeader) - $message';
 		else
-			return '$mainHeader ($scriptHeader) - HScript$lineHeader: $message';
+			return '$errorHeader ($scriptHeader) - HScript$lineHeader: $message';
 	}
 	public var origin:String;
 	override public function new(?parent:Dynamic, file:String = '', ?varsToBring:Any = null) {
@@ -340,15 +355,29 @@ class HScript extends Iris {
 		}
 	}
 	
-	public override function execute() {
+	public override function execute():Dynamic {
+		#if LUA_ALLOWED
+		var prevLua = FunkinLua.lastCalledScript;
+		FunkinLua.lastCalledScript = parentLua;
+		#end
 		var result = super.execute();
 		executed = true;
+		#if LUA_ALLOWED FunkinLua.lastCalledScript = prevLua; #end
 		return result;
 	}
 	public override function parse(force:Bool = false) {
 		executed = false;
 		return super.parse(force);
 	}
+	#if LUA_ALLOWED
+	public override function call(fun:String, ?args:Array<Dynamic>):IrisCall {
+		var prevLua = FunkinLua.lastCalledScript;
+		FunkinLua.lastCalledScript = parentLua;
+		final call:IrisCall = super.call(fun, args);
+		FunkinLua.lastCalledScript = prevLua;
+		return call;
+	}
+	#end
 	
 	#if LUA_ALLOWED
 	public static function initHaxeModuleCode(funk:FunkinLua, codeToRun:String, ?varsToBring:Any) funk.initHaxeModule(codeToRun, varsToBring);
