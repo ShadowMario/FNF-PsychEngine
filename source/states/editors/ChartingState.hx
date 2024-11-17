@@ -8,6 +8,8 @@ import flixel.util.FlxStringUtil;
 import flixel.util.FlxDestroyUtil;
 import flixel.input.keyboard.FlxKey;
 
+import openfl.events.KeyboardEvent;
+
 import lime.utils.Assets;
 import lime.media.AudioBuffer;
 
@@ -61,6 +63,7 @@ enum abstract WaveformTarget(String)
 	var INST = 'inst';
 	var PLAYER = 'voc';
 	var OPPONENT = 'opp';
+	var EVERYTHING = 'all';
 }
 
 class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
@@ -207,10 +210,12 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	var copiedEvents:Array<Dynamic> = [];
 	
 	var _keysPressedBuffer:Array<Bool> = [];
+	var _heldNotes:Array<MetaNote> = [];
 
 	var tipBg:FlxSprite;
 	var fullTipText:FlxText;
 	
+	var vortexInput:Bool = false;
 	var vortexEnabled:Bool = false;
 	var waveformEnabled:Bool = false;
 	var waveformTarget:WaveformTarget = INST;
@@ -219,6 +224,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	{
 		if(Difficulty.list.length < 1) Difficulty.resetList();
 		_keysPressedBuffer.resize(keysArray.length);
+		_heldNotes.resize(keysArray.length);
 
 		if(_shouldReset) Conductor.songPosition = 0;
 		persistentUpdate = false;
@@ -504,9 +510,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			"Right Click - Selection Box",
 			"",
 			"R - Reset Section",
-			"Shift + R - Go Back to the Start of the Song",
+			"Home / Shift + R - Jump to the Start of the Song",
+			"End - Jump to the End of the Song",
 			"Z/X - Zoom in/out",
-			"Left/Right - Change Snap",
+			"Left/Right - Change Snap (in Vortex Mode)",
+			"Page/Arrows Up/Down - Scroll (in Vortex Mode)",
 			#if FLX_PITCH
 			"Left Bracket / Right Bracket - Change Song Playback Rate",
 			"ALT + Left Bracket / Right Bracket - Reset Song Playback Rate",
@@ -522,7 +530,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		].join('\n');
 		fullTipText.screenCenter();
 		add(fullTipText);
+		
 		super.create();
+		
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDown);
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, keyUp);
 	}
 
 	var gridColors:Array<FlxColor>;
@@ -658,9 +670,6 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			return;
 		}
 
-		for (num => key in keysArray)
-			_keysPressedBuffer[num] = FlxG.keys.checkStatus(key, JUST_PRESSED);
-
 		if(autoSaveCap > 0)
 		{
 			autoSaveTime += elapsed / 60.0;
@@ -778,85 +787,20 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					}
 					playbackSlider.value = playbackRate;
 				}
-
-				if(vortexEnabled && _keysPressedBuffer.contains(true))
-				{
-					var typeSelected:String = noteTypes[noteTypeDropDown.selectedIndex];
-					if(typeSelected != null)
-					{
-						typeSelected = typeSelected.trim();
-						if(typeSelected.length < 1) typeSelected = null;
-					}
-
-					var sectionStart:Float = cachedSectionTimes[curSec];
-					var strumTime:Float = Conductor.songPosition - sectionStart;
-					strumTime -= strumTime % (Conductor.stepCrochet * 16 / curQuant);
-					strumTime += sectionStart;
-
-					trace('Vortex editor press at time: $strumTime');
-					var deletedNotes:Array<MetaNote> = [];
-					var addedNotes:Array<MetaNote> = [];
-					for (num => press in _keysPressedBuffer)
-					{
-						if(!press) continue;
-
-						// Try to find a note to delete first
-						var didDelete:Bool = false;
-						for (note in curRenderedNotes)
-						{
-							if(note == null || note.isEvent) continue;
-
-							if(note.songData[1] == num && Math.abs(strumTime - note.strumTime) < 1)
-							{
-								deletedNotes.push(note);
-								didDelete = true;
-								break;
-							}
+				
+				if (vortexEnabled) {
+					for (num => key in keysArray) {
+						if (_heldNotes[num] != null) {
+							var noteSec:Int = 0;
+							var note:MetaNote = _heldNotes[num];
+							while (cachedSectionTimes.length > noteSec + 1 && cachedSectionTimes[noteSec + 1] <= note.strumTime)
+								noteSec++;
+							note.sustainLength = FlxG.sound.music.time - note.strumTime;
+							note.setSustainLength(note.sustainLength, cachedSectionCrochets[noteSec] / 4, curZoom);
 						}
-
-						if(didDelete) continue;
-
-						// If no notes were found, add a new in its place
-						var didAdd:Bool = false;
-						var noteSetupData:Array<Dynamic> = [strumTime, num, 0];
-						if(typeSelected != null) noteSetupData.push(typeSelected);
-	
-						var noteAdded:MetaNote = createNote(noteSetupData);
-						for (num in sectionFirstNoteID...notes.length)
-						{
-							var note = notes[num];
-							if(note.strumTime >= strumTime)
-							{
-								notes.insert(num, noteAdded);
-								didAdd = true;
-								break;
-							}
-						}
-						if(!didAdd) notes.push(noteAdded);
-						addedNotes.push(noteAdded);
 					}
-
-					if(deletedNotes.length > 0)
-					{
-						var wasSelected:Bool = false;
-						for (note in deletedNotes)
-						{
-							if(selectedNotes.contains(note))
-							{
-								selectedNotes.remove(note);
-								wasSelected = true;
-							}
-							notes.remove(note);
-						}
-						if(wasSelected) onSelectNote();
-						addUndoAction(DELETE_NOTE, {notes: deletedNotes});
-					}
-					if(addedNotes.length > 0)
-						addUndoAction(ADD_NOTE, {notes: addedNotes});
-
-					softReloadNotes(true);
 				}
-				else if(FlxG.keys.justPressed.A != FlxG.keys.justPressed.D && !holdingAlt)
+				if(FlxG.keys.justPressed.A != FlxG.keys.justPressed.D && !holdingAlt)
 				{
 					if(FlxG.sound.music.playing)
 						setSongPlaying(false);
@@ -891,6 +835,16 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					else loadSection(0);
 					Conductor.songPosition = FlxG.sound.music.time = vocals.time = opponentVocals.time = timeToGoBack;
 				}
+				else if (FlxG.keys.justPressed.HOME)
+				{
+					loadSection(0);
+					Conductor.songPosition = FlxG.sound.music.time = vocals.time = opponentVocals.time = 0;
+				}
+				else if (FlxG.keys.justPressed.END)
+				{
+					loadSection(cachedSectionTimes.length - 1);
+					Conductor.songPosition = FlxG.sound.music.time = vocals.time = opponentVocals.time = FlxG.sound.music.length;
+				}
 				else if(FlxG.keys.pressed.W != FlxG.keys.pressed.S || FlxG.mouse.wheel != 0)
 				{
 					if(FlxG.sound.music.playing)
@@ -908,15 +862,15 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					{
 						var speedMult:Float = (FlxG.keys.pressed.SHIFT ? 4 : 1) * (FlxG.mouse.wheel != 0 ? 4 : 1) / (holdingAlt ? 4 : 1);
 						if(FlxG.keys.pressed.W || FlxG.mouse.wheel > 0)
-							FlxG.sound.music.time -= Conductor.crochet * speedMult * 1.5 * elapsed / curZoom;
+							FlxG.sound.music.time -= Conductor.crochet * speedMult * elapsed / curZoom;
 						else if(FlxG.keys.pressed.S || FlxG.mouse.wheel < 0)
-							FlxG.sound.music.time += Conductor.crochet * speedMult * 1.5 * elapsed / curZoom;
+							FlxG.sound.music.time += Conductor.crochet * speedMult * elapsed / curZoom;
 					}
 
 					FlxG.sound.music.time = FlxMath.bound(FlxG.sound.music.time, 0, FlxG.sound.music.length - 1);
 					if(FlxG.sound.music.playing) setSongPlaying(!FlxG.sound.music.playing);
 				}
-				else if(FlxG.keys.justPressed.SPACE)
+				if(FlxG.keys.justPressed.SPACE)
 				{
 					setSongPlaying(!FlxG.sound.music.playing);
 				}
@@ -1038,6 +992,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					saveChart();
 			}
 			
+			vortexInput = (canContinue && vortexEnabled);
 			if(doCut || FlxG.keys.justPressed.DELETE || FlxG.keys.justPressed.BACKSPACE || (isMovingNotes && (FlxG.mouse.justPressedRight || FlxG.keys.justPressed.ESCAPE))) // Delete button
 			{
 				if(selectedNotes.length > 0)
@@ -2329,7 +2284,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		tab_group.add(txt);
 
 		objY += 25;
-		playbackSlider = new PsychUISlider(50, objY, function(v:Float) setPitch(playbackRate = v), 1, 0.1, 5.0, 200);
+		playbackSlider = new PsychUISlider(50, objY, function(v:Float) setPitch(playbackRate = v), 1, 0.25, 3, 200);
 		playbackSlider.label = 'Playback Rate';
 		
 		objY += 60;
@@ -4142,6 +4097,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			waveformTarget = chartEditorSave.data.waveformTarget;
 		if(chartEditorSave.data.waveformColor != null)
 			waveformSprite.color = CoolUtil.colorFromString(chartEditorSave.data.waveformColor);
+		if(chartEditorSave.data.waveformAlpha != null)
+			waveformSprite.alpha = chartEditorSave.data.waveformAlpha;
 
 		showLastGridButton = new PsychUIButton(btnX, btnY, '', function()
 		{
@@ -4194,7 +4151,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		var btn:PsychUIButton = new PsychUIButton(btnX, btnY, '  Waveform...', function()
 		{
 			ClientPrefs.toggleVolumeKeys(false);
-			openSubState(new BasePrompt(320, 200, 'Waveform Settings',
+			openSubState(new BasePrompt(320, 215, 'Waveform Settings',
 				function(state:BasePrompt) {
 					upperBox.isMinimized = true;
 					upperBox.bg.visible = false;
@@ -4217,7 +4174,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					if(chartEditorSave.data.waveformColor != null)
 						waveformC = chartEditorSave.data.waveformColor;
 
-					var input:PsychUIInputText = new PsychUIInputText(check.x, check.y + 50, 60, waveformC, 10);
+					var input:PsychUIInputText = new PsychUIInputText(check.x, check.y + 42, 60, waveformC, 10);
 					input.onChange = function(old:String, cur:String)
 					{
 						chartEditorSave.data.waveformColor = cur;
@@ -4227,9 +4184,21 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					input.filterMode = ONLY_HEXADECIMAL;
 					input.cameras = state.cameras;
 					input.forceCase = UPPER_CASE;
+					
+					state.add(new FlxText(check.x, input.y + 25, 80, 'Opacity:'));
+					var alphaStepper:PsychUINumericStepper = new PsychUINumericStepper(check.x, input.y + 40, 0.1, 1, 0, 1, 2, true);
+					alphaStepper.onValueChange = function() {
+					trace('alpha');
+						var alpha:Float = alphaStepper.value;
+						chartEditorSave.data.waveformAlpha = alpha;
+						waveformSprite.alpha = alpha;
+					};
+					alphaStepper.value = waveformSprite.alpha;
+					alphaStepper.cameras = state.cameras;
+					state.add(alphaStepper);
 
-					var options:Array<WaveformTarget> = [INST, PLAYER, OPPONENT];
-					var radioGrp:PsychUIRadioGroup = new PsychUIRadioGroup(check.x + 120, check.y, ['Instrumental', 'Main Vocals', 'Opponent Vocals']);
+					var options:Array<WaveformTarget> = [INST, PLAYER, OPPONENT, EVERYTHING];
+					var radioGrp:PsychUIRadioGroup = new PsychUIRadioGroup(check.x + 120, check.y, ['Instrumental', 'Main Vocals', 'Opponent Vocals', 'Every Track']);
 					radioGrp.cameras = state.cameras;
 					radioGrp.onClick = function()
 					{
@@ -4666,6 +4635,156 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		MetaNote.noteTypeTexts = [];
 		fileDialog.destroy();
 		super.destroy();
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDown);
+		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, keyUp);
+	}
+	
+	function keyDown(event:KeyboardEvent) {
+		var eventKey:FlxKey = event.keyCode;
+		
+		if (!vortexInput) return;
+		
+		var num:Int = keysArray.indexOf(eventKey);
+		if (num != -1 && FlxG.keys.checkStatus(eventKey, JUST_PRESSED)) { // note placement
+			_keysPressedBuffer[num] = true;
+			
+			var typeSelected:String = noteTypes[noteTypeDropDown.selectedIndex];
+			if(typeSelected != null)
+			{
+				typeSelected = typeSelected.trim();
+				if(typeSelected.length < 1) typeSelected = null;
+			}
+			
+			var sectionStart:Float = cachedSectionTimes[curSec];
+			var snapCrochet:Float = Conductor.crochet * 4 / curQuant;
+			var strumTime:Float = Math.round((Conductor.songPosition - sectionStart) / snapCrochet) * snapCrochet + sectionStart;
+			
+			var deletedNotes:Array<MetaNote> = [];
+			var addedNotes:Array<MetaNote> = [];
+			
+			trace('Vortex editor press at time: $strumTime');
+
+			// Try to find a note to delete first
+			var didDelete:Bool = false;
+			for (note in curRenderedNotes) {
+				if(note == null || note.isEvent) continue;
+				
+				var roundTime:Float = Math.round((note.strumTime - sectionStart) / snapCrochet) * snapCrochet + sectionStart;
+				if (note.songData[1] == num && strumTime == roundTime) {
+					deletedNotes.push(note);
+					didDelete = true;
+					break;
+				}
+			}
+
+			// If no notes were found, add a new in its place
+			if (!didDelete) {
+				var didAdd:Bool = false;
+				var noteSetupData:Array<Dynamic> = [strumTime, num, 0];
+				var typeSelected:String = noteTypes[noteTypeDropDown.selectedIndex];
+				if (typeSelected != null) noteSetupData.push(typeSelected.trim());
+
+				var noteAdded:MetaNote = createNote(noteSetupData);
+				for (num in sectionFirstNoteID...notes.length)
+				{
+					var note = notes[num];
+					if(note.strumTime >= strumTime)
+					{
+						notes.insert(num, noteAdded);
+						didAdd = true;
+						break;
+					}
+				}
+				if(!didAdd) notes.push(noteAdded);
+				addedNotes.push(noteAdded);
+				_heldNotes[num] = noteAdded;
+			}
+
+			if (deletedNotes.length > 0) {
+				var wasSelected:Bool = false;
+				for (note in deletedNotes)
+				{
+					if(selectedNotes.contains(note))
+					{
+						selectedNotes.remove(note);
+						wasSelected = true;
+					}
+					notes.remove(note);
+				}
+				if(wasSelected) onSelectNote();
+				addUndoAction(DELETE_NOTE, {notes: deletedNotes});
+			}
+			if(addedNotes.length > 0)
+				addUndoAction(ADD_NOTE, {notes: addedNotes});
+
+			softReloadNotes(true);
+		}
+		
+		// quant scrolling
+		var page:Bool = (eventKey == FlxKey.PAGEUP || eventKey == FlxKey.PAGEDOWN);
+		if (eventKey == FlxKey.UP || eventKey == FlxKey.DOWN || page) {
+			var up:Bool = (eventKey == FlxKey.UP || eventKey == FlxKey.PAGEUP);
+			if (FlxG.sound.music.playing) setSongPlaying(false);
+			
+			var secStartTime:Null<Float> = cast cachedSectionTimes[curSec];
+			var secCrochet:Null<Float> = cast cachedSectionCrochets[curSec];
+			if (secStartTime == null || secCrochet == null) return;
+			
+			var snap:Float = (page ? 1 : (curQuant / 4));
+			var snapCrochet:Float = secCrochet / snap;
+			
+			var strumTime:Float = Math.round((Conductor.songPosition - secStartTime) / snapCrochet) * snapCrochet + secStartTime;
+			for (num => held in _keysPressedBuffer) {
+				if (held && _heldNotes[num] == null) {
+					var noteSetupData:Array<Dynamic> = [strumTime, num, 0];
+					var typeSelected:String = noteTypes[noteTypeDropDown.selectedIndex];
+					if (typeSelected != null) noteSetupData.push(typeSelected.trim());
+					
+					var didAdd:Bool = false;
+					var noteAdded:MetaNote = createNote(noteSetupData);
+					for (num in sectionFirstNoteID...notes.length) {
+						var note = notes[num];
+						if (note.strumTime >= strumTime) {
+							notes.insert(num, noteAdded);
+							didAdd = true;
+							break;
+						}
+					}
+					if (!didAdd) notes.push(noteAdded);
+					_heldNotes[num] = noteAdded;
+					softReloadNotes(true);
+				}
+			}
+			
+			var nextTime:Float = Conductor.songPosition - secStartTime;
+			var leniency:Float = .35;
+			if (up)
+				nextTime = Math.ceil(nextTime / snapCrochet - .002 - 1 - leniency);
+			else
+				nextTime = Math.floor(nextTime / snapCrochet + .002 + 1 + leniency);
+			nextTime *= snapCrochet;
+			if (nextTime < 0) {
+				loadSection(curSec = Std.int(Math.max(curSec - 1, 0)));
+				nextTime = secStartTime - cachedSectionCrochets[curSec] / snap;
+			} else {
+				nextTime += secStartTime;
+			}
+			Conductor.songPosition = FlxG.sound.music.time = Math.max(0, Math.min(nextTime + .0001, FlxG.sound.music.length));
+			if (curSec < cachedSectionTimes.length - 1 && Conductor.songPosition >= cachedSectionTimes[curSec + 1])
+				loadSection(curSec + 1);
+			forceDataUpdate = true;
+			updateScrollY();
+		}
+	}
+	
+	function keyUp(event:KeyboardEvent) {
+		var eventKey:FlxKey = event.keyCode;
+		
+		var num:Int = keysArray.indexOf(eventKey);
+		if (num != -1) {
+			_keysPressedBuffer[num] = false;
+			_heldNotes[num] = null;
+		}
 	}
 
 	function loadFileList(mainFolder:String, ?optionalList:String = null, ?fileTypes:Array<String> = null)
@@ -4959,13 +5078,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		}
 		waveformSprite.pixels.fillRect(new Rectangle(0, 0, width, height), 0x00FFFFFF);
 
-		wavData[0][0].resize(0);
-		wavData[0][1].resize(0);
-		wavData[1][0].resize(0);
-		wavData[1][1].resize(0);
-
-		var sound:FlxSound = switch(waveformTarget)
-		{
+		drawOnWaveform(switch(waveformTarget) {
 			case INST:
 				FlxG.sound.music;
 			case PLAYER:
@@ -4974,39 +5087,58 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				opponentVocals;
 			default:
 				null;
+		}, width, height);
+		
+		if (waveformTarget == EVERYTHING) {
+			drawOnWaveform(vocals, width, height, -.25, .75);
+			drawOnWaveform(opponentVocals, width, height, .25, .75);
+			drawOnWaveform(FlxG.sound.music, width, height, 0, .5);
 		}
 		
-		@:privateAccess
-		if (sound != null && sound._sound != null && sound._sound.__buffer != null)
-		{
-			var bytes:Bytes = sound._sound.__buffer.data.toBytes();
-			wavData = waveformData(sound._sound.__buffer, bytes, cachedSectionTimes[curSec] - Conductor.offset, cachedSectionTimes[curSec+1] - Conductor.offset, 1, wavData, height);
-		}
-
-		// Draws
-		var gSize:Int = Std.int(GRID_SIZE * 8);
-		var hSize:Int = Std.int(gSize / 2);
-		var size:Float = 1;
-
-		var leftLength:Int = (wavData[0][0].length > wavData[0][1].length ? wavData[0][0].length : wavData[0][1].length);
-		var rightLength:Int = (wavData[1][0].length > wavData[1][1].length ? wavData[1][0].length : wavData[1][1].length);
-
-		var length:Int = leftLength > rightLength ? leftLength : rightLength;
-
-		for (index in 0...length)
-		{
-			var lmin:Float = FlxMath.bound(((index < wavData[0][0].length && index >= 0) ? wavData[0][0][index] : 0) * (gSize / 1.12), -hSize, hSize) / 2;
-			var lmax:Float = FlxMath.bound(((index < wavData[0][1].length && index >= 0) ? wavData[0][1][index] : 0) * (gSize / 1.12), -hSize, hSize) / 2;
-
-			var rmin:Float = FlxMath.bound(((index < wavData[1][0].length && index >= 0) ? wavData[1][0][index] : 0) * (gSize / 1.12), -hSize, hSize) / 2;
-			var rmax:Float = FlxMath.bound(((index < wavData[1][1].length && index >= 0) ? wavData[1][1][index] : 0) * (gSize / 1.12), -hSize, hSize) / 2;
-
-			waveformSprite.pixels.fillRect(new Rectangle(hSize - (lmin + rmin), index * size, (lmin + rmin) + (lmax + rmax), size), FlxColor.WHITE);
-		}
 		#else
 		waveformSprite.visible = false;
 		#end
 	}
+	
+	#if (lime_cffi && !macro)
+	function drawOnWaveform(sound:FlxSound, width:Int, height:Int, offset:Float = 0, amp:Float = 1) {
+		@:privateAccess
+		if (sound == null || sound._sound == null || sound._sound.__buffer == null) return;
+
+		wavData[0][0].resize(0);
+		wavData[0][1].resize(0);
+		wavData[1][0].resize(0);
+		wavData[1][1].resize(0);
+		
+		@:privateAccess {
+		var bytes:Bytes = sound._sound.__buffer.data.toBytes();
+		wavData = waveformData(sound._sound.__buffer, bytes, cachedSectionTimes[curSec] - Conductor.offset, cachedSectionTimes[curSec+1] - Conductor.offset, 1, wavData, height);
+		}
+		
+		// Draws
+		var gSize:Int = Std.int(GRID_SIZE * 8);
+		var hSize:Int = Std.int(gSize / 2);
+		var size:Float = 1;
+		
+		var leftLength:Int = (wavData[0][0].length > wavData[0][1].length ? wavData[0][0].length : wavData[0][1].length);
+		var rightLength:Int = (wavData[1][0].length > wavData[1][1].length ? wavData[1][0].length : wavData[1][1].length);
+		
+		var length:Int = leftLength > rightLength ? leftLength : rightLength;
+		
+		for (index in 0...length)
+		{
+			var lmin:Float = FlxMath.bound(((index < wavData[0][0].length && index >= 0) ? wavData[0][0][index] : 0) * (gSize / 1.12), -hSize, hSize) / 2;
+			var lmax:Float = FlxMath.bound(((index < wavData[0][1].length && index >= 0) ? wavData[0][1][index] : 0) * (gSize / 1.12), -hSize, hSize) / 2;
+			
+			var rmin:Float = FlxMath.bound(((index < wavData[1][0].length && index >= 0) ? wavData[1][0][index] : 0) * (gSize / 1.12), -hSize, hSize) / 2;
+			var rmax:Float = FlxMath.bound(((index < wavData[1][1].length && index >= 0) ? wavData[1][1][index] : 0) * (gSize / 1.12), -hSize, hSize) / 2;
+			
+			var ww:Float = ((lmin + rmin) + (lmax + rmax)) * amp;
+			var xx:Float = /*Math.max(0, Math.min(gSize - ww, */hSize - ww * .5 + (gSize * offset);//));
+			waveformSprite.pixels.fillRect(new Rectangle(xx, index * size, ww, size), FlxColor.WHITE);
+		}
+	}
+	#end
 
 	function waveformData(buffer:AudioBuffer, bytes:Bytes, time:Float, endTime:Float, multiply:Float = 1, ?array:Array<Array<Array<Float>>>, ?steps:Float):Array<Array<Array<Float>>>
 	{
