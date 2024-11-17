@@ -214,7 +214,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 	var tipBg:FlxSprite;
 	var fullTipText:FlxText;
-	
+
+	var allowInput:Bool = false;
 	var vortexInput:Bool = false;
 	var vortexEnabled:Bool = false;
 	var waveformEnabled:Bool = false;
@@ -992,7 +993,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					saveChart();
 			}
 			
-			vortexInput = (canContinue && vortexEnabled);
+			vortexInput = (allowInput && canContinue && vortexEnabled);
 			if(doCut || FlxG.keys.justPressed.DELETE || FlxG.keys.justPressed.BACKSPACE || (isMovingNotes && (FlxG.mouse.justPressedRight || FlxG.keys.justPressed.ESCAPE))) // Delete button
 			{
 				if(selectedNotes.length > 0)
@@ -4785,6 +4786,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			_keysPressedBuffer[num] = false;
 			_heldNotes[num] = null;
 		}
+		allowInput = true;
 	}
 
 	function loadFileList(mainFolder:String, ?optionalList:String = null, ?fileTypes:Array<String> = null)
