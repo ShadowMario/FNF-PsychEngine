@@ -158,6 +158,7 @@ class EditorSustain extends Note {
 		animation.play(Note.colArray[noteData] + 'holdend');
 		scale.set(scale.x, scale.x);
 		updateHitbox();
+		flipY = false;
 	}
 	override function update(elapsed:Float) {
 		sustainTile.update(elapsed);
