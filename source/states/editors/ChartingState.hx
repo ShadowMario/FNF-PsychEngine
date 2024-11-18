@@ -4790,7 +4790,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				}
 			}
 			if (addedNotes.length > 0) {
-				selectedNotes.resize(0);
+				if (vortexMoved)
+					selectedNotes.resize(0);
 				for (note in addedNotes)
 					selectedNotes.push(note);
 			}
