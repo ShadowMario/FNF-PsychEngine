@@ -4216,7 +4216,6 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					state.add(new FlxText(check.x, input.y + 25, 80, 'Opacity:'));
 					var alphaStepper:PsychUINumericStepper = new PsychUINumericStepper(check.x, input.y + 40, 0.1, 1, 0, 1, 2, true);
 					alphaStepper.onValueChange = function() {
-					trace('alpha');
 						var alpha:Float = alphaStepper.value;
 						chartEditorSave.data.waveformAlpha = alpha;
 						waveformSprite.alpha = alpha;
