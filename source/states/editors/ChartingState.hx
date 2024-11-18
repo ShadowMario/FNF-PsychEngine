@@ -1599,7 +1599,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			note.colorTransform.redMultiplier = note.colorTransform.greenMultiplier = note.colorTransform.blueMultiplier = 1;
 			if(note.animation.curAnim != null) note.animation.curAnim.curFrame = 0;
 		}
-		selectedNotes = [];
+		selectedNotes.resize(0);
 		onSelectNote();
 		forceDataUpdate = true;
 	}
@@ -4726,7 +4726,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				addedNotes.push(noteAdded);
 				_heldNotes[num] = noteAdded;
 				if (vortexMoved)
-					selectedNotes.resize(0);
+					resetSelectedNotes();
 				selectedNotes.push(noteAdded);
 			}
 
@@ -4790,7 +4790,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			}
 			if (addedNotes.length > 0) {
 				if (vortexMoved)
-					selectedNotes.resize(0);
+					resetSelectedNotes();
 				for (note in addedNotes)
 					selectedNotes.push(note);
 			}
