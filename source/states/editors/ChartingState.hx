@@ -215,6 +215,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	var tipBg:FlxSprite;
 	var fullTipText:FlxText;
 
+	var vortexMoved:Bool = true;
 	var allowInput:Bool = false;
 	var vortexInput:Bool = false;
 	var vortexEnabled:Bool = false;
@@ -4723,9 +4724,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					}
 				}
 				if(!didAdd) notes.push(noteAdded);
-				selectedNotes = [noteAdded];
 				addedNotes.push(noteAdded);
 				_heldNotes[num] = noteAdded;
+				if (vortexMoved)
+					selectedNotes.resize(0);
+				selectedNotes.push(noteAdded);
 			}
 
 			if (deletedNotes.length > 0) {
@@ -4746,6 +4749,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				addUndoAction(ADD_NOTE, {notes: addedNotes});
 
 			softReloadNotes(true);
+			vortexMoved = false;
 		}
 		
 		// quant scrolling
@@ -4762,6 +4766,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			var snapCrochet:Float = secCrochet / snap;
 			
 			var strumTime:Float = Math.round((Conductor.songPosition - secStartTime) / snapCrochet) * snapCrochet + secStartTime;
+			var addedNotes:Array<MetaNote> = [];
 			for (num => held in _keysPressedBuffer) {
 				if (held && _heldNotes[num] == null) {
 					var noteSetupData:Array<Dynamic> = [strumTime, num, 0];
@@ -4779,10 +4784,15 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 						}
 					}
 					if (!didAdd) notes.push(noteAdded);
-					selectedNotes = [noteAdded];
 					_heldNotes[num] = noteAdded;
+					addedNotes.push(noteAdded);
 					softReloadNotes(true);
 				}
+			}
+			if (addedNotes.length > 0) {
+				selectedNotes.resize(0);
+				for (note in addedNotes)
+					selectedNotes.push(note);
 			}
 			
 			var nextTime:Float = Conductor.songPosition - secStartTime;
@@ -4803,6 +4813,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				loadSection(curSec + 1);
 			forceDataUpdate = true;
 			updateScrollY();
+			vortexMoved = true;
 		}
 	}
 	
