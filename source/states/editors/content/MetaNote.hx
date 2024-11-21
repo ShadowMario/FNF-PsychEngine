@@ -119,6 +119,7 @@ class MetaNote extends Note
 	{
 		if(sustainSprite != null && sustainSprite.exists && sustainSprite.visible && sustainLength > 0)
 		{
+			if (sustainSprite.shader != shader) sustainSprite.shader = shader;
 			sustainSprite.setColorTransform(colorTransform.redMultiplier, sustainSprite.colorTransform.blueMultiplier, colorTransform.redMultiplier);
 			sustainSprite.scale.copyFrom(this.scale);
 			sustainSprite.updateHitbox();
@@ -195,9 +196,6 @@ class EditorSustain extends Note {
 			loadNoteAnims();
 		else
 			loadPixelNoteAnims();
-		
-		if(Note.globalRgbShaders.contains(rgbShader.parent)) //Is using a default shader
-			rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(noteData));
 		
 		reloadSustainTile();
 		animation.play(Note.colArray[this.noteData % Note.colArray.length] + 'holdend');
