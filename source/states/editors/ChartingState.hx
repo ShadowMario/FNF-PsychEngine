@@ -792,18 +792,6 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					playbackSlider.value = playbackRate;
 				}
 				
-				if (vortexEnabled) {
-					for (num => key in keysArray) {
-						if (_heldNotes[num] != null) {
-							var noteSec:Int = 0;
-							var note:MetaNote = _heldNotes[num];
-							while (cachedSectionTimes.length > noteSec + 1 && cachedSectionTimes[noteSec + 1] <= note.strumTime)
-								noteSec++;
-							note.sustainLength = FlxG.sound.music.time - note.strumTime;
-							note.setSustainLength(note.sustainLength, cachedSectionCrochets[noteSec] / 4, curZoom);
-						}
-					}
-				}
 				if(FlxG.keys.justPressed.A != FlxG.keys.justPressed.D && !holdingAlt)
 				{
 					if(FlxG.sound.music.playing)
@@ -998,6 +986,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			
 			vortexInput = (allowInput && canContinue && vortexEnabled);
 			allowInput = true;
+			if (vortexInput && FlxG.sound.music != null && FlxG.sound.music.playing) {
+				updateVortexHolds();
+				vortexMoved = true;
+			}
 			if(doCut || FlxG.keys.justPressed.DELETE || FlxG.keys.justPressed.BACKSPACE || (isMovingNotes && (FlxG.mouse.justPressedRight || FlxG.keys.justPressed.ESCAPE))) // Delete button
 			{
 				if(selectedNotes.length > 0)
@@ -1371,11 +1363,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				infoText.text = str;
 				if(infoText.autoSize) infoText.autoSize = false;
 			}
-
-			var vortexPlaying:Bool = (vortexEnabled && FlxG.sound.music != null && FlxG.sound.music.playing);
-			var canPlayHitSound:Bool = (FlxG.sound.music != null && FlxG.sound.music.playing && lastTime < Conductor.songPosition);
-			var hitSoundPlayer:Bool = (hitsoundPlayerStepper.value > 0);
-			var hitSoundOpp:Bool = (hitsoundOpponentStepper.value > 0);
+			
 			for (note in curRenderedNotes)
 			{
 				if(note == null || note.isEvent) continue;
@@ -1383,32 +1371,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				var offsetTime:Float = note.strumTime + .001;
 				var hitAlpha:Float = (FlxG.sound.music.playing ? .4 : .6);
 				note.alpha = (offsetTime > Conductor.songPosition) ? 1 : hitAlpha;
-				if(Conductor.songPosition > offsetTime && lastTime <= offsetTime)
-				{
-					if(canPlayHitSound)
-					{
-						if(hitSoundPlayer && note.mustPress)
-						{
-							FlxG.sound.play(Paths.sound('hitsound'), hitsoundPlayerStepper.value);
-							hitSoundPlayer = false;
-						}
-						else if(hitSoundOpp && !note.mustPress)
-						{
-							FlxG.sound.play(Paths.sound('hitsound'), hitsoundOpponentStepper.value);
-							hitSoundOpp = false;
-						}
-					}
-
-					if(vortexPlaying)
-					{
-						var strumNote:StrumNote = strumLineNotes.members[note.songData[1]];
-						if(strumNote != null)
-						{
-							strumNote.playAnim('confirm', true);
-							strumNote.resetAnim = Math.max(Conductor.stepCrochet * 1.25, note.sustainLength) / 1000 / playbackRate;
-						}
-					}
-				}
+				if (Conductor.songPosition > offsetTime && lastTime <= offsetTime)
+					hitNote(note);
 			}
 			forceDataUpdate = false;
 			
@@ -1460,6 +1424,31 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		outputTxt.visible = (outputAlpha > 0);
 		FlxG.camera.scroll.y = scrollY;
 		lastFocus = PsychUIInputText.focusOn;
+	}
+	
+	function hitNote(note:MetaNote) {
+		var vortexPlaying:Bool = (vortexEnabled && FlxG.sound.music != null && FlxG.sound.music.playing);
+		var canPlayHitSound:Bool = (FlxG.sound.music != null && FlxG.sound.music.playing);
+		var hitSoundPlayer:Bool = (hitsoundPlayerStepper.value > 0);
+		var hitSoundOpp:Bool = (hitsoundOpponentStepper.value > 0);
+		
+		if (canPlayHitSound) {
+			if(hitSoundPlayer && note.mustPress) {
+				FlxG.sound.play(Paths.sound('hitsound'), hitsoundPlayerStepper.value);
+				hitSoundPlayer = false;
+			} else if(hitSoundOpp && !note.mustPress) {
+				FlxG.sound.play(Paths.sound('hitsound'), hitsoundOpponentStepper.value);
+				hitSoundOpp = false;
+			}
+		}
+
+		if (vortexPlaying) {
+			var strumNote:StrumNote = strumLineNotes.members[note.songData[1]];
+			if (strumNote != null) {
+				strumNote.playAnim('confirm', true);
+				strumNote.resetAnim = Math.max(Conductor.stepCrochet * 1.25, note.sustainLength) / 1000 / playbackRate;
+			}
+		}
 	}
 
 	function moveSelectedNotes(noteData:Int = 0, lastY:Float) //This turns selected notes into moving notes
@@ -2785,13 +2774,13 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			}
 		}
 
-		mustHitCheckBox = new PsychUICheckBox(objX, objY, 'Focus on Player', 80, function()
+		mustHitCheckBox = new PsychUICheckBox(objX, objY, 'Player Focus', 80, function()
 		{
 			var sec = getCurChartSection();
 			if(sec != null) sec.mustHitSection = mustHitCheckBox.checked;
 			updateHeads(true);
 		});
-		gfSectionCheckBox = new PsychUICheckBox(objX + 100, objY, 'Focus on GF', 80, function()
+		gfSectionCheckBox = new PsychUICheckBox(objX + 100, objY, 'GF Section', 80, function()
 		{
 			var sec = getCurChartSection();
 			if(sec != null) sec.gfSection = gfSectionCheckBox.checked;
@@ -4728,6 +4717,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				if (vortexMoved)
 					resetSelectedNotes();
 				selectedNotes.push(noteAdded);
+				
+				if (Conductor.songPosition > noteAdded.strumTime + .001 && FlxG.sound.music != null && FlxG.sound.music.playing)
+					hitNote(noteAdded);
 			}
 
 			if (deletedNotes.length > 0) {
@@ -4813,6 +4805,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				loadSection(curSec + 1);
 			forceDataUpdate = true;
 			updateScrollY();
+			updateVortexHolds();
 			vortexMoved = true;
 		}
 	}
@@ -4824,6 +4817,19 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		if (num != -1) {
 			_keysPressedBuffer[num] = false;
 			_heldNotes[num] = null;
+		}
+	}
+	
+	function updateVortexHolds() {
+		for (num => key in keysArray) {
+			if (_heldNotes[num] != null) {
+				var noteSec:Int = 0;
+				var note:MetaNote = _heldNotes[num];
+				while (cachedSectionTimes.length > noteSec + 1 && cachedSectionTimes[noteSec + 1] <= note.strumTime)
+					noteSec++;
+				note.sustainLength = FlxG.sound.music.time - note.strumTime;
+				note.setSustainLength(note.sustainLength, cachedSectionCrochets[noteSec] / 4, curZoom);
+			}
 		}
 	}
 
