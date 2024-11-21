@@ -167,6 +167,7 @@ class EditorSustain extends Note {
 	override function draw() {
 		if (!visible) return;
 		
+		if (sustainTile.shader != shader) sustainTile.shader = shader;
 		sustainTile.setColorTransform(colorTransform.redMultiplier, colorTransform.blueMultiplier, colorTransform.redMultiplier);
 		sustainTile.scale.x = this.scale.x;
 		sustainTile.scale.y = sustainHeight;
@@ -182,7 +183,6 @@ class EditorSustain extends Note {
 	
 	public function reloadSustainTile() {
 		sustainTile.frames = frames;
-		sustainTile.shader = shader;
 		sustainTile.antialiasing = antialiasing;
 		sustainTile.animation.copyFrom(animation);
 		sustainTile.animation.play(Note.colArray[this.noteData % Note.colArray.length] + 'hold');
