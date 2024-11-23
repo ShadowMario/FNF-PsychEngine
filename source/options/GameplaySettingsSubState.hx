@@ -75,8 +75,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.scrollSpeed = 15;
 		option.minValue = 15.0;
 		option.maxValue = 45.0;
-		option.changeValue = 0.1;
-		option.decimals = 2;
+		option.changeValue = 0.1
 		addOption(option);
 
 		var option:Option = new Option('Good Hit Window',
@@ -88,7 +87,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.minValue = 15.0;
 		option.maxValue = 90.0;
 		option.changeValue = 0.1;
-		option.decimals = 2;
 		addOption(option);
 
 		var option:Option = new Option('Bad Hit Window',
@@ -100,7 +98,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.minValue = 15.0;
 		option.maxValue = 135.0;
 		option.changeValue = 0.1;
-		option.decimals = 2;
 		addOption(option);
 
 		var option:Option = new Option('Safe Frames',
