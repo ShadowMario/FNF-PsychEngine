@@ -141,11 +141,9 @@ class Main extends Sprite
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 		
 		var game:FlxGame = new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.skipSplash, game.startFullscreen);
-		if(ClientPrefs.data.soundtray)
-		{
-		@:privateAccess
+		// You can comment out "@:privateAccess" and "game._customSoundTray = objects.FunkinSoundTray;" to remove the funkin sound tray
+		@:privateAccess 
 		game._customSoundTray = objects.FunkinSoundTray;
-		}
 		addChild(game);
 
 		#if !mobile
@@ -209,7 +207,6 @@ class Main extends Sprite
 	CppAPI.darkMode();
 	#end
 	}
-		
 	if(!ClientPrefs.data.darkWindow)
 	{
 	#if windows
