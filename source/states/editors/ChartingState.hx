@@ -4785,6 +4785,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					resetSelectedNotes();
 				for (note in addedNotes)
 					selectedNotes.push(note);
+				addUndoAction(ADD_NOTE, {notes: addedNotes});
 			}
 			
 			var nextTime:Float = Conductor.songPosition - secStartTime;
