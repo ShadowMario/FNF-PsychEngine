@@ -34,7 +34,9 @@ import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
 #end
 
-import objects.VideoSprite;
+#if VIDEOS_ALLOWED
+import objects.FunkinVideo;
+#end
 
 import objects.Note.EventNote;
 import objects.*;
@@ -818,6 +820,7 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
+	/*
 	public var videoCutscene:VideoSprite = null;
 	public function startVideo(name:String, forMidSong:Bool = false, canSkip:Bool = true, loop:Bool = false, playOnLoad:Bool = true)
 	{
@@ -873,6 +876,41 @@ class PlayState extends MusicBeatState
 		startAndEnd();
 		#end
 		return null;
+	}*/
+
+	public function startVideo(name:String, skippable:Bool = true, loop:Bool = false)
+	{
+		#if VIDEOS_ALLOWED
+		inCutscene = true;
+		canPause = false;
+		var filepath = Paths.video(name);
+		
+		if(#if sys !FileSystem.exists(filepath) #else !OpenFlAssets.exists(filepath) #end && !name.startsWith("https://")) {
+			#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
+			addTextToDebug('Video not found: $fileName', FlxColor.RED);
+			#else
+			FlxG.log.error('Video not found: $fileName');
+			#end
+			startAndEnd();
+			return;
+		}
+		
+		var videoCutscene:FunkinVideo = new FunkinVideo(filepath, skippable);
+		videoCutscene.onFinish = (skipped:Bool) -> {
+			callOnScripts('onVideoCompleted', [name, skipped]);
+			startAndEnd();
+			canPause = true;
+			return;
+		};
+		add(videoCutscene);
+		
+		if(videoCutscene.loadVideo(filepath, loop)) videoCutscene.playVideo();
+		else FlxG.log.warn('Video "$name" could not be properly loaded/played.');
+		#else
+		FlxG.log.warn('Platform not supported!');
+		startAndEnd();
+		return;
+		#end
 	}
 
 	function startAndEnd()
