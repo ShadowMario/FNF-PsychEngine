@@ -45,6 +45,12 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			BOOL);
 		addOption(option);
 
+		var option:Option = new Option('Sustains as One Note',
+			"If checked, Hold Notes can't be pressed if you miss,\nand count as a single Hit/Miss.\nUncheck this if you prefer the old Input System.",
+			'guitarHeroSustains',
+			BOOL);
+		addOption(option);
+
 		var option:Option = new Option('Hitsound Volume',
 			'Funny notes does \"Tick!\" when you hit them.',
 			'hitsoundVolume',
@@ -75,7 +81,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.scrollSpeed = 15;
 		option.minValue = 15.0;
 		option.maxValue = 45.0;
-		option.changeValue = 0.1
+		option.changeValue = 0.1;
 		addOption(option);
 
 		var option:Option = new Option('Good Hit Window',
@@ -108,12 +114,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.minValue = 2;
 		option.maxValue = 10;
 		option.changeValue = 0.1;
-		addOption(option);
-
-		var option:Option = new Option('Sustains as One Note',
-			"If checked, Hold Notes can't be pressed if you miss,\nand count as a single Hit/Miss.\nUncheck this if you prefer the old Input System.",
-			'guitarHeroSustains',
-			BOOL);
 		addOption(option);
 
 		super();
