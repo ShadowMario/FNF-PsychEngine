@@ -1,12 +1,12 @@
-package backend;
+package objects;
 
 import flixel.FlxG;
 #if VIDEOS_ALLOWED
 import hxvlc.flixel.FlxVideoSprite;
-import hxvlc.flixel.FlxVideo; //Just so it's compiled into the build for something like hscript
+import hxvlc.flixel.FlxVideo; //Just so it's compiled into the build for something like hscript-iris
 #end
 
-//Psych 1.0's VideoSprite class would end up crashing Psych so I made a new class that doesn't have this issue
+//VideoSprite.hx was broken when it reached the end of a video so I made a new class (Originally from My Psych fork) -TBar
 class FunkinVideo extends FlxVideoSprite {
 	public var onFinish:(skipped:Bool) -> Void;
 	
