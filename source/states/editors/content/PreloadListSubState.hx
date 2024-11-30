@@ -153,7 +153,7 @@ class PreloadListSubState extends MusicBeatSubstate implements PsychUIEvent
 		{
 			if(!fileDialog.completed) return;
 			
-			fileDialog.open(null, 'Load a .PNG/.OGG File...', [new FileFilter('Image/Audio', '*.png;*.ogg')], function()
+			fileDialog.open(null, 'Load a .PNG/.OGG File...', [#if !mac new FileFilter('Image/Audio', '*.png;*.ogg') #end], function()
 			{
 				var path:Path = new Path(fileDialog.path.replace('\\', '/'));
 	

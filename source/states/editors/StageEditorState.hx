@@ -1662,7 +1662,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		_file.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 
 		final filters = [new FileFilter('PNG (Image)', '*.png'), new FileFilter('XML (Sparrow)', '*.xml'), new FileFilter('JSON (Aseprite)', '*.json'), new FileFilter('TXT (Packer)', '*.txt')];
-		_file.browse(filters);
+		_file.browse(#if !mac filters #else [] #end);
 	}
 	
 	private function onLoadComplete(_):Void
@@ -1703,6 +1703,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			}
 			_makeNewSprite = null;
 		}
+		_file = null;
 
 		if(fullPath != null)
 		{

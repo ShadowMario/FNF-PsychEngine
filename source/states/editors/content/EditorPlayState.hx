@@ -493,18 +493,14 @@ class EditorPlayState extends MusicBeatSubstate
 	
 	private function cachePopUpScore()
 	{
-		var uiPrefix:String = '';
-		var uiPostfix:String = '';
+		var uiFolder:String = "";
 		if (PlayState.stageUI != "normal")
-		{
-			uiPrefix = '${PlayState.stageUI}UI/';
-			if (PlayState.isPixelStage) uiPostfix = '-pixel';
-		}
+			uiFolder = PlayState.uiPrefix + "UI/";
 
 		for (rating in ratingsData)
-			Paths.image(uiPrefix + rating.image + uiPostfix);
+			Paths.image(uiFolder + rating.image + PlayState.uiPostfix);
 		for (i in 0...10)
-			Paths.image(uiPrefix + 'num' + i + uiPostfix);
+			Paths.image(uiFolder + 'num' + i + PlayState.uiPostfix);
 	}
 
 	private function popUpScore(note:Note = null):Void
@@ -541,18 +537,15 @@ class EditorPlayState extends MusicBeatSubstate
 		if(!note.ratingDisabled)
 			songHits++;
 
-		var uiPrefix:String = "";
-		var uiPostfix:String = '';
+		var uiFolder:String = "";
 		var antialias:Bool = ClientPrefs.data.antialiasing;
-
 		if (PlayState.stageUI != "normal")
 		{
-			uiPrefix = '${PlayState.stageUI}UI/';
-			if (PlayState.isPixelStage) uiPostfix = '-pixel';
+			uiFolder = PlayState.uiPrefix + "UI/";
 			antialias = !PlayState.isPixelStage;
 		}
 
-		rating.loadGraphic(Paths.image(uiPrefix + daRating.image + uiPostfix));
+		rating.loadGraphic(Paths.image(uiFolder + daRating.image + PlayState.uiPostfix));
 		rating.screenCenter();
 		rating.x = placement - 40;
 		rating.y -= 60;
@@ -564,7 +557,7 @@ class EditorPlayState extends MusicBeatSubstate
 		rating.y -= ClientPrefs.data.comboOffset[1];
 		rating.antialiasing = antialias;
 
-		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(uiPrefix + 'combo' + uiPostfix));
+		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(uiFolder + 'combo' + PlayState.uiPostfix));
 		comboSpr.screenCenter();
 		comboSpr.x = placement;
 		comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
@@ -599,7 +592,7 @@ class EditorPlayState extends MusicBeatSubstate
 		var separatedScore:String = Std.string(combo).lpad('0', 3);
 		for (i in 0...separatedScore.length)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(uiPrefix + 'num' + Std.parseInt(separatedScore.charAt(i)) + uiPostfix));
+			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(uiFolder + 'num' + Std.parseInt(separatedScore.charAt(i)) + PlayState.uiPostfix));
 			numScore.screenCenter();
 			numScore.x = placement + (43 * daLoop) - 90 + ClientPrefs.data.comboOffset[2];
 			numScore.y += 80 - ClientPrefs.data.comboOffset[3];
