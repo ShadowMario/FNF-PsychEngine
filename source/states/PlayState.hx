@@ -227,7 +227,7 @@ class PlayState extends MusicBeatState
 	public static var seenCutscene:Bool = false;
 	public static var deathCounter:Int = 0;
 
-	public var defaultCamZoom(get, set):Float;
+	@:isVar public var defaultCamZoom(get, set):Float;
 
 	@:noCompletion 
     function get_defaultCamZoom():Float
