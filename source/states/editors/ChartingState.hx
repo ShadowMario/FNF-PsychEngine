@@ -28,8 +28,6 @@ import backend.StageData;
 import backend.Highscore;
 import backend.Difficulty;
 
-import openfl.utils.Assets as OpenFlAssets;
-
 import objects.Character;
 import objects.HealthIcon;
 import objects.Note;
