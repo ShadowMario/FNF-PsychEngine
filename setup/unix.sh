@@ -18,4 +18,3 @@ haxelib git hxdiscord_rpc https://github.com/MAJigsaw77/hxdiscord_rpc 3538a1c2bb
 haxelib git hxvlc https://github.com/MAJigsaw77/hxvlc 70e7f5f3e76d526ac6fb8f0e6665efe7dfda589d
 haxelib git funkin.vis https://github.com/FunkinCrew/funkVis d5361037efa3a02c4ab20b5bd14ca11e7d00f519
 haxelib git grig.audio https://gitlab.com/haxe-grig/grig.audio.git cbf91e2180fd2e374924fe74844086aab7891666
-echo Finished!
