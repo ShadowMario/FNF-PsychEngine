@@ -122,8 +122,10 @@ class Main extends Sprite
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 
 		var game:FlxGame = new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen);
+		#if BASE_GAME_FILES
 		@:privateAccess
 		game._customSoundTray = backend.FunkinSoundTray;
+		#end
 		addChild(game);
 
 		#if !mobile

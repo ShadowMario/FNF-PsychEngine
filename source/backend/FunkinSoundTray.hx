@@ -1,5 +1,6 @@
 package backend;
 
+#if BASE_GAME_FILES
 import haxe.io.Bytes;
 import openfl.utils.AssetType;
 import flixel.tweens.FlxTween;
@@ -16,8 +17,9 @@ import flixel.system.ui.FlxSoundTray;
 
 /**
  *  V-Slice SoundTray
- *  Wouldnt say this is the best way of implemeting this, but it works.
+ *  Wouldn't say this is the best way of implementing this, but it works. // oops spelling error!!!
  *  Also Supports The Mods Folders
+ *  only shows when you have base game assets enabled.
  */
 class FunkinSoundTray extends FlxSoundTray
 {
@@ -135,6 +137,17 @@ class FunkinSoundTray extends FlxSoundTray
 		}
 	}
 
+	// see the probl;em
+	function getSound(path):openfl.media.Sound
+	{
+		final key = 'soundtray/$path';
+		final thingy = Std.parseInt(states.MainMenuState.psychEngineVersion);
+		if (thingy < 1.0) // hopefully thats how it works :3
+			return Paths.returnSound('sounds', key);
+
+		return Paths.returnSound('sounds/$key');
+	}
+
 	/**
 	 * Makes the little volume tray slide out.
 	 *
@@ -157,13 +170,13 @@ class FunkinSoundTray extends FlxSoundTray
 		{
 			var sound = null;
 			#if MODS_ALLOWED
-			sound = Paths.returnSound('sounds/soundtray/${up ? volumeUpSound : volumeDownSound}');
-			#else 
+			sound = getSound((up ? volumeUpSound : volumeDownSound)); // Paths.returnSound('sounds', 'sounds/soundtray/${up ? volumeUpSound : volumeDownSound}');
+			#else
 			sound = FlxAssets.getSound(up ? volumeUpSound : volumeDownSound);
 			#end
-			
+
 			if (globalVolume == 10)
-				sound = Paths.returnSound('sounds/soundtray/$volumeMaxSound');
+				sound = getSound(volumeMaxSound); // Paths.returnSound('sounds/soundtray/$volumeMaxSound');
 
 			if (sound != null)
 				FlxG.sound.load(sound).play();
@@ -182,3 +195,4 @@ class FunkinSoundTray extends FlxSoundTray
 		}
 	}
 }
+#end
