@@ -47,9 +47,6 @@ import flxanimate.*;
 import flxanimate.PsychFlxAnimate as FlxAnimate;
 #end
 
-//Openfl
-import openfl.utils.Assets;
-
 //Flixel
 import flixel.sound.FlxSound;
 import flixel.FlxG;
