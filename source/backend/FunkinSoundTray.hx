@@ -36,7 +36,7 @@ class FunkinSoundTray extends FlxSoundTray
 		super();
 		removeChildren();
 
-		var bg:Bitmap = new Bitmap(getPath("images/soundtray/volumebox", IMAGE));
+		var bg:Bitmap = new Bitmap(getImage("images/soundtray/volumebox"));
 		bg.scaleX = graphicScale;
 		bg.scaleY = graphicScale;
 		addChild(bg);
@@ -45,7 +45,7 @@ class FunkinSoundTray extends FlxSoundTray
 		visible = false;
 
 		// makes an alpha'd version of all the bars (bar_10.png)
-		var backingBar:Bitmap = new Bitmap(getPath('images/soundtray/bars_10', IMAGE));
+		var backingBar:Bitmap = new Bitmap(getImage('images/soundtray/bars_10'));
 		backingBar.x = 9;
 		backingBar.y = 5;
 		backingBar.scaleX = graphicScale;
@@ -61,7 +61,7 @@ class FunkinSoundTray extends FlxSoundTray
 		// we are trying to get assets bars_1-10
 		for (i in 1...11)
 		{
-			var bar:Bitmap = new Bitmap(getPath('images/soundtray/bars_$i', IMAGE), false);
+			var bar:Bitmap = new Bitmap(getImage('images/soundtray/bars_$i'), false);
 			bar.x = 9;
 			bar.y = 5;
 			bar.scaleX = graphicScale;
@@ -78,29 +78,26 @@ class FunkinSoundTray extends FlxSoundTray
 		volumeMaxSound = 'VolMAX';
 	}
 
-	function getPath(path:String, ?TYPE:AssetType = IMAGE):Dynamic
+	function getImage(path:String):Dynamic
 	{
-		var ext = '';
-		switch (TYPE)
-		{
-			case IMAGE:
-				ext = 'png';
-				var file = Paths.getPath('$path.$ext', IMAGE);
-				#if MODS_ALLOWED
-				return BitmapData.fromFile(file);
-				#end
-				return Assets.getBitmapData(file);
-			case SOUND:
-				ext = Paths.SOUND_EXT;
-				var uhh = Paths.getPath('$path.$ext', TYPE);
-				#if MODS_ALLOWED
-				return uhh;
-				#end
-			default:
-				ext = '';
-		};
+		final imagePath = Paths.getPath('$path.png', IMAGE);
+		#if MODS_ALLOWED
+		return BitmapData.fromFile(imagePath);
+		#end
+		return Assets.getBitmapData(imagePath);
+	}
 
-		return null;
+	// see the probl;em
+	function getSound(path):openfl.media.Sound
+	{
+		final currentPsychEngineVersion:Int = Std.parseInt(states.MainMenuState.psychEngineVersion);
+
+		final key:String = 'soundtray/$path';
+		if (currentPsychEngineVersion < 1.0) // hopefully thats how it works :3  
+			return Paths.returnSound('sounds', key);
+		return Paths.returnSound('sounds/$key');
+
+		// make sure the engine version doesn't have any letters in it.
 	}
 
 	override public function update(MS:Float):Void
@@ -135,17 +132,6 @@ class FunkinSoundTray extends FlxSoundTray
 			}
 			#end
 		}
-	}
-
-	// see the probl;em
-	function getSound(path):openfl.media.Sound
-	{
-		final key = 'soundtray/$path';
-		final thingy = Std.parseInt(states.MainMenuState.psychEngineVersion);
-		if (thingy < 1.0) // hopefully thats how it works :3
-			return Paths.returnSound('sounds', key);
-
-		return Paths.returnSound('sounds/$key');
 	}
 
 	/**
