@@ -29,11 +29,12 @@ class FunkinSoundTray extends FlxSoundTray
 
 	public function new()
 	{
+		// calls super, then removes all children to add our own
+		// graphics
 		super();
-
 		removeChildren();
 
-		var bg:Bitmap = new Bitmap(getPathImage("soundtray/volumebox"));
+		var bg:Bitmap = new Bitmap(getPath("images/soundtray/volumebox", IMAGE));
 		bg.scaleX = graphicScale;
 		bg.scaleY = graphicScale;
 		addChild(bg);
@@ -41,7 +42,8 @@ class FunkinSoundTray extends FlxSoundTray
 		y = -height;
 		visible = false;
 
-		var backingBar:Bitmap = new Bitmap(getPathImage('soundtray/bars_10'));
+		// makes an alpha'd version of all the bars (bar_10.png)
+		var backingBar:Bitmap = new Bitmap(getPath('images/soundtray/bars_10', IMAGE));
 		backingBar.x = 9;
 		backingBar.y = 5;
 		backingBar.scaleX = graphicScale;
@@ -49,11 +51,15 @@ class FunkinSoundTray extends FlxSoundTray
 		addChild(backingBar);
 		backingBar.alpha = 0.4;
 
+		// clear the bars array entirely, it was initialized
+		// in the super class
 		_bars = [];
 
+		// 1...11 due to how block named the assets,
+		// we are trying to get assets bars_1-10
 		for (i in 1...11)
 		{
-			var bar:Bitmap = new Bitmap(getPathImage('soundtray/bars_$i'), false);
+			var bar:Bitmap = new Bitmap(getPath('images/soundtray/bars_$i', IMAGE), false);
 			bar.x = 9;
 			bar.y = 5;
 			bar.scaleX = graphicScale;
@@ -70,15 +76,29 @@ class FunkinSoundTray extends FlxSoundTray
 		volumeMaxSound = 'VolMAX';
 	}
 
-	function getPathImage(path:String):Dynamic
+	function getPath(path:String, ?TYPE:AssetType = IMAGE):Dynamic
 	{
-		final ext = 'png';
-		final file = Paths.getPath('images/$path.$ext');
+		var ext = '';
+		switch (TYPE)
+		{
+			case IMAGE:
+				ext = 'png';
+				var file = Paths.getPath('$path.$ext', IMAGE);
+				#if MODS_ALLOWED
+				return BitmapData.fromFile(file);
+				#end
+				return Assets.getBitmapData(file);
+			case SOUND:
+				ext = Paths.SOUND_EXT;
+				var uhh = Paths.getPath('$path.$ext', TYPE);
+				#if MODS_ALLOWED
+				return uhh;
+				#end
+			default:
+				ext = '';
+		};
 
-		#if MODS_ALLOWED
-		return BitmapData.fromFile(file);
-		#end
-		return Assets.getBitmapData(file);
+		return null;
 	}
 
 	override public function update(MS:Float):Void
@@ -86,6 +106,7 @@ class FunkinSoundTray extends FlxSoundTray
 		y = CoolUtil.coolLerp(y, lerpYPos, 0.1);
 		alpha = CoolUtil.coolLerp(alpha, alphaTarget, 0.25);
 
+		// Animate sound tray thing
 		if (_timer > 0)
 		{
 			_timer -= (MS / 1000);
@@ -103,6 +124,7 @@ class FunkinSoundTray extends FlxSoundTray
 			active = false;
 
 			#if FLX_SAVE
+			// Save sound preferences
 			if (FlxG.save.isBound)
 			{
 				FlxG.save.data.mute = FlxG.sound.muted;
@@ -113,6 +135,11 @@ class FunkinSoundTray extends FlxSoundTray
 		}
 	}
 
+	/**
+	 * Makes the little volume tray slide out.
+	 *
+	 * @param	up Whether the volume is increasing.
+	 */
 	override public function show(up:Bool = false):Void
 	{
 		_timer = 1;
@@ -132,16 +159,11 @@ class FunkinSoundTray extends FlxSoundTray
 			#if MODS_ALLOWED
 			sound = Paths.returnSound('sounds/soundtray/${up ? volumeUpSound : volumeDownSound}');
 			#else 
-			final path = 'assets/shared/sounds/soundtray/';
-			sound = FlxAssets.getSound(path + (up ? volumeUpSound : volumeDownSound));
+			sound = FlxAssets.getSound(up ? volumeUpSound : volumeDownSound);
 			#end
 			
 			if (globalVolume == 10)
-				#if MODS_ALLOWED
 				sound = Paths.returnSound('sounds/soundtray/$volumeMaxSound');
-				#else
-				sound = FlxAssets.getSound('assets/shared/sounds/soundtray/$volumeMaxSound');
-				#end
 
 			if (sound != null)
 				FlxG.sound.load(sound).play();
@@ -150,9 +172,13 @@ class FunkinSoundTray extends FlxSoundTray
 		for (i in 0..._bars.length)
 		{
 			if (i < globalVolume)
+			{
 				_bars[i].visible = true;
+			}
 			else
+			{
 				_bars[i].visible = false;
+			}
 		}
 	}
 }
