@@ -11,9 +11,3 @@ Upgrade to a more powerful version of the Psych Engine now!
   - GetArgs
   - BrainF*ck
   - UrlGen
-
-## Installation:
-Carefully follow the [Build Instructions](./BUILDING.md).
-
-## Customization:
-You can take control of your experience by disabling features such as *Lua Scripts* or *Video Cutscenes*. To make your desired changes, edit the `Project.xml` file. To disable videos, simply delete the line containing `"VIDEOS_ALLOWED"` or comment it out.
