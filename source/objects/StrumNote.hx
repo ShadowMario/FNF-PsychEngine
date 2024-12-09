@@ -1,5 +1,7 @@
 package objects;
 
+import backend.animation.PsychAnimationController;
+
 import shaders.RGBPalette;
 import shaders.RGBPalette.RGBShaderReference;
 
@@ -8,8 +10,8 @@ class StrumNote extends FlxSprite
 	public var rgbShader:RGBShaderReference;
 	public var resetAnim:Float = 0;
 	private var noteData:Int = 0;
-	public var direction:Float = 90;//plan on doing scroll directions soon -bb
-	public var downScroll:Bool = false;//plan on doing scroll directions soon -bb
+	public var direction:Float = 90;
+	public var downScroll:Bool = false;
 	public var sustainReduce:Bool = true;
 	private var player:Int;
 	
@@ -24,6 +26,8 @@ class StrumNote extends FlxSprite
 
 	public var useRGBShader:Bool = true;
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
+		animation = new PsychAnimationController(this);
+
 		rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(leData));
 		rgbShader.enabled = false;
 		if(PlayState.SONG != null && PlayState.SONG.disableNoteRGB) useRGBShader = false;
@@ -44,6 +48,7 @@ class StrumNote extends FlxSprite
 		noteData = leData;
 		this.player = player;
 		this.noteData = leData;
+		this.ID = noteData;
 		super(x, y);
 
 		var skin:String = null;
@@ -55,6 +60,7 @@ class StrumNote extends FlxSprite
 
 		texture = skin; //Load texture and anims
 		scrollFactor.set();
+		playAnim('static');
 	}
 
 	public function reloadNote()
@@ -135,12 +141,11 @@ class StrumNote extends FlxSprite
 		}
 	}
 
-	public function postAddedToGroup() {
-		playAnim('static');
+	public function playerPosition()
+	{
 		x += Note.swagWidth * noteData;
 		x += 50;
 		x += ((FlxG.width / 2) * player);
-		ID = noteData;
 	}
 
 	override function update(elapsed:Float) {

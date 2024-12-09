@@ -1,17 +1,30 @@
 package options;
 
+typedef Keybind = {
+	keyboard:String,
+	gamepad:String
+}
+
+enum OptionType {
+	// Bool will use checkboxes
+	// Everything else will use a text
+	BOOL;
+	INT;
+	FLOAT;
+	PERCENT;
+	STRING;
+	KEYBIND;
+}
+
 class Option
 {
 	public var child:Alphabet;
 	public var text(get, set):String;
 	public var onChange:Void->Void = null; //Pressed enter (on Bool type options) or pressed/held left/right (on other types)
-
-	public var type(get, default):String = 'bool'; //bool, int (or integer), float (or fl), percent, string (or str)
-	// Bool will use checkboxes
-	// Everything else will use a text
+	public var type:OptionType = BOOL;
 
 	public var scrollSpeed:Float = 50; //Only works on int/float, defines how fast it scrolls per second while holding left/right
-	private var variable:String = null; //Variable from ClientPrefs.hx
+	public var variable(default, null):String = null; //Variable from ClientPrefs.hx
 	public var defaultValue:Dynamic = null;
 
 	public var curOption:Int = 0; //Don't change this
@@ -25,98 +38,103 @@ class Option
 	public var description:String = '';
 	public var name:String = 'Unknown';
 
-	public function new(name:String, description:String = '', variable:String, type:String = 'bool', ?options:Array<String> = null)
+	public var defaultKeys:Keybind = null; //Only used in keybind type
+	public var keys:Keybind = null; //Only used in keybind type
+
+	public function new(name:String, description:String = '', variable:String, type:OptionType = BOOL, ?options:Array<String> = null, ?translation:String = null)
 	{
-		this.name = name;
-		this.description = description;
+		_name = name;
+		_translationKey = translation != null ? translation : _name;
+		this.name = Language.getPhrase('setting_$_translationKey', name);
+		this.description = Language.getPhrase('description_$_translationKey', description);
 		this.variable = variable;
 		this.type = type;
-		this.defaultValue = Reflect.getProperty(ClientPrefs.defaultData, variable);
 		this.options = options;
 
-		if(defaultValue == 'null variable value')
-		{
-			switch(type)
-			{
-				case 'bool':
-					defaultValue = false;
-				case 'int' | 'float':
-					defaultValue = 0;
-				case 'percent':
-					defaultValue = 1;
-				case 'string':
-					defaultValue = '';
-					if(options.length > 0) {
-						defaultValue = options[0];
-					}
-			}
-		}
-
-		if(getValue() == null) {
-			setValue(defaultValue);
-		}
-
+		if(this.type != KEYBIND) this.defaultValue = Reflect.getProperty(ClientPrefs.defaultData, variable);
 		switch(type)
 		{
-			case 'string':
-				var num:Int = options.indexOf(getValue());
-				if(num > -1) {
-					curOption = num;
-				}
-	
-			case 'percent':
+			case BOOL:
+				if(defaultValue == null) defaultValue = false;
+			case INT, FLOAT:
+				if(defaultValue == null) defaultValue = 0;
+			case PERCENT:
+				if(defaultValue == null) defaultValue = 1;
 				displayFormat = '%v%';
 				changeValue = 0.01;
 				minValue = 0;
 				maxValue = 1;
 				scrollSpeed = 0.5;
 				decimals = 2;
+			case STRING:
+				if(options.length > 0)
+					defaultValue = options[0];
+				if(defaultValue == null)
+					defaultValue = '';
+
+			case KEYBIND:
+				defaultValue = '';
+				defaultKeys = {gamepad: 'NONE', keyboard: 'NONE'};
+				keys = {gamepad: 'NONE', keyboard: 'NONE'};
 		}
+
+		try
+		{
+			if(getValue() == null)
+				setValue(defaultValue);
+	
+			switch(type)
+			{
+				case STRING:
+					var num:Int = options.indexOf(getValue());
+					if(num > -1) curOption = num;
+
+				default:
+			}
+		}
+		catch(e) {}
 	}
 
 	public function change()
 	{
 		//nothing lol
-		if(onChange != null) {
+		if(onChange != null)
 			onChange();
+	}
+
+	dynamic public function getValue():Dynamic
+	{
+		var value = Reflect.getProperty(ClientPrefs.data, variable);
+		if(type == KEYBIND) return !Controls.instance.controllerMode ? value.keyboard : value.gamepad;
+		return value;
+	}
+
+	dynamic public function setValue(value:Dynamic)
+	{
+		if(type == KEYBIND)
+		{
+			var keys = Reflect.getProperty(ClientPrefs.data, variable);
+			if(!Controls.instance.controllerMode) keys.keyboard = value;
+			else keys.gamepad = value;
+			return value;
 		}
+		return Reflect.setProperty(ClientPrefs.data, variable, value);
 	}
 
-	public function getValue():Dynamic
-	{
-		return Reflect.getProperty(ClientPrefs.data, variable);
-	}
-	public function setValue(value:Dynamic)
-	{
-		Reflect.setProperty(ClientPrefs.data, variable, value);
-	}
-
+	var _name:String = null;
+	var _text:String = null;
+	var _translationKey:String = null;
 	private function get_text()
-	{
-		if(child != null) {
-			return child.text;
-		}
-		return null;
-	}
+		return _text;
+
 	private function set_text(newValue:String = '')
 	{
-		if(child != null) {
-			child.text = newValue;
+		if(child != null)
+		{
+			_text = newValue;
+			child.text = Language.getPhrase('setting_$_translationKey-${getValue()}', _text);
+			return _text;
 		}
 		return null;
-	}
-
-	private function get_type()
-	{
-		var newValue:String = 'bool';
-		switch(type.toLowerCase().trim())
-		{
-			case 'int' | 'float' | 'percent' | 'string': newValue = type;
-			case 'integer': newValue = 'int';
-			case 'str': newValue = 'string';
-			case 'fl': newValue = 'float';
-		}
-		type = newValue;
-		return type;
 	}
 }

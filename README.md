@@ -2,13 +2,8 @@
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
-You must have [Haxe version 4.2.5](https://haxe.org/download/version/4.2.5/), seriously, stop using older or newer versions, it won't work!
 
-open up a Command Prompt/PowerShell or Terminal, type `haxelib install hmm`
-
-after it finishes, simply type `haxelib run hmm install` in order to install all the needed libraries for *Psych Engine!*
-
-If the compiler gives an error saying that hxCodec cannot be found read this issue to fix it: ShadowMario/FNF-PsychEngine#12770
+Refer to [the Build Instructions](./BUILDING.md)
 
 ## Customization:
 
@@ -21,20 +16,25 @@ to start you off, disabling Videos should be simple, simply Delete the line `"VI
 same goes for *Lua Scripts*, comment out or delete the line with `LUA_ALLOWED`, this and other customization options are all available within the `Project.xml` file
 
 ## Credits:
-* Shadow Mario - Programmer
-* RiverOaken - Artist
-* Yoshubs - Assistant Programmer
+* Shadow Mario - Head Developer, Programmer.
+* Riveren - Main Artist.
 
 ### Special Thanks
-* bbpanzu - Ex-Programmer
-* Yoshubs - New Input System
-* SqirraRNG - Crash Handler and Base code for Chart Editor's Waveform
-* KadeDev - Fixed some cool stuff on Chart Editor and other PRs
-* iFlicky - Composer of Psync and Tea Time, also made the Dialogue Sounds
-* PolybiusProxy - .MP4 Video Loader Library (hxCodec)
-* Keoiki - Note Splash Animations
-* Smokey - Sprite Atlas Support
-* Nebula the Zorua - LUA JIT Fork and some Lua reworks
+* bbpanzu - Ex-Team Member (Programmer).
+* crowplexus - HScript Iris, Input System v3, and Other PRs.
+* Kamizeta - Creator of Pessy, Psych Engine's mascot.
+* MaxNeton - Loading Screen Easter Egg Artist/Animator.
+* Keoiki - Note Splash Animations and Latin Alphabet.
+* SqirraRNG - Crash Handler and Base code for Chart Editor's Waveform.
+* EliteMasterEric - Runtime Shaders support and Other PRs.
+* MAJigsaw77 - .MP4 Video Loader Library (hxvlc).
+* Tahir Toprak Karabekiroglu - Note Splash Editor and Other PRs.
+* iFlicky - Composer of Psync, Tea Time and some sound effects.
+* KadeDev - Fixed some issues on Chart Editor and Other PRs.
+* superpowers04 - LUA JIT Fork.
+* CheemsAndFriends - Creator of FlxAnimate.
+* Ezhalt - Pessy's Easter Egg Jingle.
+* MaliciousBunny - Video for the Final Update.
 _____________________________________
 
 # Features

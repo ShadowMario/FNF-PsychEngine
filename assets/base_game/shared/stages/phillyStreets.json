@@ -1,0 +1,41 @@
+{
+	"directory": "weekend1",
+	"defaultZoom": 0.77,
+	"stageUI": "",
+
+	"boyfriend": [1930, 450],
+	"girlfriend": [1175, 200],
+	"opponent": [620, 445],
+	"hide_girlfriend": false,
+
+	"camera_boyfriend": [-220, -15],
+	"camera_opponent": [450, -110],
+	"camera_girlfriend": [0, 0],
+	"camera_speed": 1,
+
+	"preload": {
+		"images/abot/": 3,
+		"images/abot/systemEyes/": 3,
+		"images/abot/abotSystem/": 3,
+
+		"images/SpraycanPile": 3,
+		"images/phillyStreets/phillyConstruction": 3,
+		"images/phillyStreets/phillyHighwayLights": 3,
+		"images/phillyStreets/phillyHighway": 3,
+		"images/phillyStreets/phillyForeground": 3,
+		"images/phillyStreets/phillySkybox": 2,
+		"images/phillyStreets/phillySkyline": 2,
+		"images/phillyStreets/phillyHighwayLights_lightmap": 2,
+		"images/phillyStreets/phillySmog": 2,
+		"images/phillyStreets/phillyCars": 2,
+		"images/phillyStreets/phillyTraffic": 2,
+		"images/phillyStreets/phillyTraffic_lightmap": 2,
+		"images/phillyStreets/phillyForegroundCity": 2
+	},
+
+	"_editorMeta": {
+		"dad": "darnell",
+		"boyfriend": "pico-playable",
+		"gf": "nene"
+	}
+}

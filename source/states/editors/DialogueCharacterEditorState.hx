@@ -1,28 +1,20 @@
 package states.editors;
 
-import flixel.addons.ui.FlxUI;
-import flixel.addons.ui.FlxUICheckBox;
-import flixel.addons.ui.FlxUIInputText;
-import flixel.addons.ui.FlxUINumericStepper;
-import flixel.addons.ui.FlxUIDropDownMenu;
-import flixel.addons.ui.FlxUITabMenu;
-import flixel.ui.FlxButton;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
-import tjson.TJSON as Json;
+import haxe.Json;
 import lime.system.Clipboard;
-#if sys
-import sys.io.File;
-#end
 
 import objects.TypedAlphabet;
 
 import cutscenes.DialogueBoxPsych;
 import cutscenes.DialogueCharacter;
 
-class DialogueCharacterEditorState extends MusicBeatState
+import states.editors.content.Prompt;
+
+class DialogueCharacterEditorState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
 {
 	var box:FlxSprite;
 	var daText:TypedAlphabet = null;
@@ -59,17 +51,15 @@ class DialogueCharacterEditorState extends MusicBeatState
 	var ghostIdle:DialogueCharacter;
 
 	var curAnim:Int = 0;
+	var unsavedProgress:Bool = false;
 
 	override function create() {
 		persistentUpdate = persistentDraw = true;
-		camGame = new FlxCamera();
-		camHUD = new FlxCamera();
+		camGame = initPsychCamera();
 		camGame.bgColor = FlxColor.fromHSL(0, 0, 0.5);
+		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
-
-		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
-		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		
 		mainGroup = new FlxSpriteGroup();
 		mainGroup.cameras = [camGame];
@@ -88,7 +78,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		ghostLoop.isGhost = true;
 		ghostLoop.jsonFile = character.jsonFile;
 		ghostLoop.cameras = [camGame];
-		add(ghostLoop);
+		mainGroup.add(ghostLoop);
 		
 		ghostIdle = new DialogueCharacter();
 		ghostIdle.alpha = 0;
@@ -96,7 +86,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		ghostIdle.isGhost = true;
 		ghostIdle.jsonFile = character.jsonFile;
 		ghostIdle.cameras = [camGame];
-		add(ghostIdle);
+		mainGroup.add(ghostIdle);
 
 		box = new FlxSprite(70, 370);
 		box.antialiasing = ClientPrefs.data.antialiasing;
@@ -150,89 +140,61 @@ class DialogueCharacterEditorState extends MusicBeatState
 		super.create();
 	}
 
-	var UI_typebox:FlxUITabMenu;
-	var UI_mainbox:FlxUITabMenu;
+	var UI_typebox:PsychUIBox;
+	var UI_mainbox:PsychUIBox;
 	function addEditorBox() {
-		var tabs = [
-			{name: 'Character Type', label: 'Character Type'},
-		];
-		UI_typebox = new FlxUITabMenu(null, tabs, true);
-		UI_typebox.resize(120, 180);
-		UI_typebox.x = 900;
-		UI_typebox.y = FlxG.height - UI_typebox.height - 50;
+		UI_typebox = new PsychUIBox(900, FlxG.height - 230, 120, 180, ['Character Type']);
 		UI_typebox.scrollFactor.set();
-		UI_typebox.camera = camHUD;
+		UI_typebox.cameras = [camHUD];
 		addTypeUI();
 		add(UI_typebox);
 
-		var tabs = [
-			{name: 'Animations', label: 'Animations'},
-			{name: 'Character', label: 'Character'},
-		];
-		UI_mainbox = new FlxUITabMenu(null, tabs, true);
-		UI_mainbox.resize(200, 250);
-		UI_mainbox.x = UI_typebox.x + UI_typebox.width;
-		UI_mainbox.y = FlxG.height - UI_mainbox.height - 50;
+		UI_mainbox = new PsychUIBox(UI_typebox.x + UI_typebox.width + 10, FlxG.height - 300, 200, 250, ['Animations', 'Character']);
 		UI_mainbox.scrollFactor.set();
-		UI_mainbox.camera = camHUD;
+		UI_mainbox.cameras = [camHUD];
 		addAnimationsUI();
 		addCharacterUI();
 		add(UI_mainbox);
-		UI_mainbox.selected_tab_id = 'Character';
-		lastTab = UI_mainbox.selected_tab_id;
+		UI_mainbox.selectedName = 'Character';
+		lastTab = UI_mainbox.selectedName;
 	}
 
-	var leftCheckbox:FlxUICheckBox;
-	var centerCheckbox:FlxUICheckBox;
-	var rightCheckbox:FlxUICheckBox;
+	var characterTypeRadio:PsychUIRadioGroup;
 	function addTypeUI() {
-		var tab_group = new FlxUI(null, UI_typebox);
-		tab_group.name = "Character Type";
-
-		leftCheckbox = new FlxUICheckBox(10, 20, null, null, "Left", 100);
-		leftCheckbox.callback = function()
-		{
-			character.jsonFile.dialogue_pos = 'left';
+		var tab_group = UI_typebox.getTab('Character Type').menu;
+		
+		characterTypeRadio = new PsychUIRadioGroup(10, 20, ['Left', 'Center', 'Right'], 40);
+		characterTypeRadio.checked = 0;
+		characterTypeRadio.onClick = function() {
+			switch(characterTypeRadio.checked)
+			{
+				case 0:
+					character.jsonFile.dialogue_pos = 'left';
+				case 1:
+					character.jsonFile.dialogue_pos = 'center';
+				case 2:
+					character.jsonFile.dialogue_pos = 'right';
+			}
 			updateCharTypeBox();
-		};
-
-		centerCheckbox = new FlxUICheckBox(leftCheckbox.x, leftCheckbox.y + 40, null, null, "Center", 100);
-		centerCheckbox.callback = function()
-		{
-			character.jsonFile.dialogue_pos = 'center';
-			updateCharTypeBox();
-		};
-
-		rightCheckbox = new FlxUICheckBox(centerCheckbox.x, centerCheckbox.y + 40, null, null, "Right", 100);
-		rightCheckbox.callback = function()
-		{
-			character.jsonFile.dialogue_pos = 'right';
-			updateCharTypeBox();
-		};
-
-		tab_group.add(leftCheckbox);
-		tab_group.add(centerCheckbox);
-		tab_group.add(rightCheckbox);
-		UI_typebox.addGroup(tab_group);
+		}
+		tab_group.add(characterTypeRadio);
 	}
 
 	var curSelectedAnim:String;
 	var animationArray:Array<String> = [];
-	var animationDropDown:FlxUIDropDownMenu;
-	var animationInputText:FlxUIInputText;
-	var loopInputText:FlxUIInputText;
-	var idleInputText:FlxUIInputText;
+	var animationDropDown:PsychUIDropDownMenu;
+	var animationInputText:PsychUIInputText;
+	var loopInputText:PsychUIInputText;
+	var idleInputText:PsychUIInputText;
 	function addAnimationsUI() {
-		var tab_group = new FlxUI(null, UI_mainbox);
-		tab_group.name = "Animations";
+		var tab_group = UI_mainbox.getTab('Animations').menu;
 
-		animationDropDown = new FlxUIDropDownMenu(10, 30, FlxUIDropDownMenu.makeStrIdLabelArray([''], true), function(animation:String) {
-			var anim:String = animationArray[Std.parseInt(animation)];
-			if(character.dialogueAnimations.exists(anim)) {
-				ghostLoop.playAnim(anim);
-				ghostIdle.playAnim(anim, true);
+		animationDropDown = new PsychUIDropDownMenu(10, 30, [''], function(id:Int, animation:String) {
+			if(character.dialogueAnimations.exists(animation)) {
+				ghostLoop.playAnim(animation);
+				ghostIdle.playAnim(animation, true);
 
-				curSelectedAnim = anim;
+				curSelectedAnim = animation;
 				var animShit:DialogueAnimArray = character.dialogueAnimations.get(curSelectedAnim);
 				offsetLoopText.text = 'Loop: ' + animShit.loop_offsets;
 				offsetIdleText.text = 'Idle: ' + animShit.idle_offsets;
@@ -243,14 +205,11 @@ class DialogueCharacterEditorState extends MusicBeatState
 			}
 		});
 		
-		animationInputText = new FlxUIInputText(15, 85, 80, '', 8);
-		blockPressWhileTypingOn.push(animationInputText);
-		loopInputText = new FlxUIInputText(animationInputText.x, animationInputText.y + 35, 150, '', 8);
-		blockPressWhileTypingOn.push(loopInputText);
-		idleInputText = new FlxUIInputText(loopInputText.x, loopInputText.y + 40, 150, '', 8);
-		blockPressWhileTypingOn.push(idleInputText);
+		animationInputText = new PsychUIInputText(15, 85, 80, '', 8);
+		loopInputText = new PsychUIInputText(animationInputText.x, animationInputText.y + 35, 150, '', 8);
+		idleInputText = new PsychUIInputText(loopInputText.x, loopInputText.y + 40, 150, '', 8);
 		
-		var addUpdateButton:FlxButton = new FlxButton(10, idleInputText.y + 30, "Add/Update", function() {
+		var addUpdateButton:PsychUIButton = new PsychUIButton(10, idleInputText.y + 30, "Add/Update", function() {
 			var theAnim:String = animationInputText.text.trim();
 			if(character.dialogueAnimations.exists(theAnim)) //Update
 			{
@@ -291,7 +250,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			}
 		});
 		
-		var removeUpdateButton:FlxButton = new FlxButton(100, addUpdateButton.y, "Remove", function() {
+		var removeUpdateButton:PsychUIButton = new PsychUIButton(100, addUpdateButton.y, "Remove", function() {
 			for (i in 0...character.jsonFile.animations.length) {
 				var animArray:DialogueAnimArray = character.jsonFile.animations[i];
 				if(animArray != null && animArray.anim.trim() == animationInputText.text.trim()) {
@@ -325,7 +284,6 @@ class DialogueCharacterEditorState extends MusicBeatState
 		tab_group.add(addUpdateButton);
 		tab_group.add(removeUpdateButton);
 		tab_group.add(animationDropDown);
-		UI_mainbox.addGroup(tab_group);
 		reloadAnimationsDropDown();
 	}
 
@@ -336,27 +294,24 @@ class DialogueCharacterEditorState extends MusicBeatState
 		}
 
 		if(animationArray.length < 1) animationArray = [''];
-		animationDropDown.setData(FlxUIDropDownMenu.makeStrIdLabelArray(animationArray, true));
+		animationDropDown.list = animationArray;
 	}
 
-	var imageInputText:FlxUIInputText;
-	var scaleStepper:FlxUINumericStepper;
-	var xStepper:FlxUINumericStepper;
-	var yStepper:FlxUINumericStepper;
-	var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
+	var imageInputText:PsychUIInputText;
+	var scaleStepper:PsychUINumericStepper;
+	var xStepper:PsychUINumericStepper;
+	var yStepper:PsychUINumericStepper;
 	function addCharacterUI() {
-		var tab_group = new FlxUI(null, UI_mainbox);
-		tab_group.name = "Character";
+		var tab_group = UI_mainbox.getTab('Character').menu;
 
-		imageInputText = new FlxUIInputText(10, 30, 80, character.jsonFile.image, 8);
-		blockPressWhileTypingOn.push(imageInputText);
-		xStepper = new FlxUINumericStepper(imageInputText.x, imageInputText.y + 50, 10, character.jsonFile.position[0], -2000, 2000, 0);
-		yStepper = new FlxUINumericStepper(imageInputText.x + 80, xStepper.y, 10, character.jsonFile.position[1], -2000, 2000, 0);
-		scaleStepper = new FlxUINumericStepper(imageInputText.x, xStepper.y + 50, 0.05, character.jsonFile.scale, 0.1, 10, 2);
+		imageInputText = new PsychUIInputText(10, 30, 80, character.jsonFile.image, 8);
+		xStepper = new PsychUINumericStepper(imageInputText.x, imageInputText.y + 50, 10, character.jsonFile.position[0], -2000, 2000, 0);
+		yStepper = new PsychUINumericStepper(imageInputText.x + 80, xStepper.y, 10, character.jsonFile.position[1], -2000, 2000, 0);
+		scaleStepper = new PsychUINumericStepper(imageInputText.x, xStepper.y + 50, 0.05, character.jsonFile.scale, 0.1, 10, 2);
 
-		var noAntialiasingCheckbox:FlxUICheckBox = new FlxUICheckBox(scaleStepper.x + 80, scaleStepper.y, null, null, "No Antialiasing", 100);
+		var noAntialiasingCheckbox:PsychUICheckBox = new PsychUICheckBox(scaleStepper.x + 80, scaleStepper.y, "No Antialiasing", 100);
 		noAntialiasingCheckbox.checked = (character.jsonFile.no_antialiasing == true);
-		noAntialiasingCheckbox.callback = function()
+		noAntialiasingCheckbox.onClick = function()
 		{
 			character.jsonFile.no_antialiasing = noAntialiasingCheckbox.checked;
 			character.antialiasing = !character.jsonFile.no_antialiasing;
@@ -371,34 +326,31 @@ class DialogueCharacterEditorState extends MusicBeatState
 		tab_group.add(scaleStepper);
 		tab_group.add(noAntialiasingCheckbox);
 
-		var reloadImageButton:FlxButton = new FlxButton(10, scaleStepper.y + 60, "Reload Image", function() {
+		var reloadImageButton:PsychUIButton = new PsychUIButton(10, scaleStepper.y + 60, "Reload Image", function() {
 			reloadCharacter();
 		});
 		
-		var loadButton:FlxButton = new FlxButton(reloadImageButton.x + 100, reloadImageButton.y, "Load Character", function() {
+		var loadButton:PsychUIButton = new PsychUIButton(reloadImageButton.x + 100, reloadImageButton.y, "Load Character", function() {
 			loadCharacter();
 		});
-		var saveButton:FlxButton = new FlxButton(loadButton.x, reloadImageButton.y - 25, "Save Character", function() {
+		var saveButton:PsychUIButton = new PsychUIButton(loadButton.x, reloadImageButton.y - 25, "Save Character", function() {
 			saveCharacter();
 		});
 		tab_group.add(reloadImageButton);
 		tab_group.add(loadButton);
 		tab_group.add(saveButton);
-		UI_mainbox.addGroup(tab_group);
 	}
 	
-	function updateCharTypeBox() {
-		leftCheckbox.checked = false;
-		centerCheckbox.checked = false;
-		rightCheckbox.checked = false;
-
-		switch(character.jsonFile.dialogue_pos) {
+	function updateCharTypeBox()
+	{
+		switch(character.jsonFile.dialogue_pos)
+		{
 			case 'left':
-				leftCheckbox.checked = true;
+				characterTypeRadio.checked = 0;
 			case 'center':
-				centerCheckbox.checked = true;
-			case 'right':
-				rightCheckbox.checked = true;
+				characterTypeRadio.checked = 1;
+			default:
+				characterTypeRadio.checked = 2;
 		}
 		reloadCharacter();
 		updateTextBox();
@@ -441,7 +393,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		curAnim = 0;
 		animText.text = 'Animation: ' + character.jsonFile.animations[curAnim].anim + ' (' + (curAnim + 1) +' / ' + character.jsonFile.animations.length + ') - Press W or S to scroll';
 
-		#if desktop
+		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Dialogue Character Editor", "Editting: " + character.jsonFile.image);
 		#end
@@ -460,10 +412,15 @@ class DialogueCharacterEditorState extends MusicBeatState
 		DialogueBoxPsych.updateBoxOffsets(box);
 	}
 
-	override function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>) {
-		if(id == FlxUIInputText.CHANGE_EVENT && sender == imageInputText) {
+	public function UIEvent(id:String, sender:Dynamic) {
+		//trace(id, sender);
+		if(id == PsychUICheckBox.CLICK_EVENT)
+			unsavedProgress = true;
+
+		if(id == PsychUIInputText.CHANGE_EVENT && sender == imageInputText) {
 			character.jsonFile.image = imageInputText.text;
-		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper)) {
+			unsavedProgress = true;
+		} else if(id == PsychUINumericStepper.CHANGE_EVENT && (sender is PsychUINumericStepper)) {
 			if(sender == scaleStepper) {
 				character.jsonFile.scale = scaleStepper.value;
 				reloadCharacter();
@@ -474,6 +431,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 				character.jsonFile.position[1] = yStepper.value;
 				reloadCharacter();
 			}
+			unsavedProgress = true;
 		}
 	}
 
@@ -481,11 +439,9 @@ class DialogueCharacterEditorState extends MusicBeatState
 	var lastTab:String = 'Character';
 	var transitioning:Bool = false;
 	override function update(elapsed:Float) {
-		MusicBeatState.camBeat = FlxG.camera;
-		if(transitioning) {
-			super.update(elapsed);
+		super.update(elapsed);
+		if(transitioning)
 			return;
-		}
 
 		if(character.animation.curAnim != null) {
 			if(daText.finishedText) {
@@ -497,20 +453,10 @@ class DialogueCharacterEditorState extends MusicBeatState
 			}
 		}
 
-		var blockInput:Bool = false;
-		for (inputText in blockPressWhileTypingOn) {
-			if(inputText.hasFocus) {
-				ClientPrefs.toggleVolumeKeys(false);
-				blockInput = true;
-
-				if(FlxG.keys.justPressed.ENTER) inputText.hasFocus = false;
-				break;
-			}
-		}
-
-		if(!blockInput && !animationDropDown.dropPanel.visible) {
+		if(PsychUIInputText.focusOn == null)
+		{
 			ClientPrefs.toggleVolumeKeys(true);
-			if(FlxG.keys.justPressed.SPACE && UI_mainbox.selected_tab_id == 'Character') {
+			if(FlxG.keys.justPressed.SPACE && UI_mainbox.selectedName == 'Character') {
 				character.playAnim(character.jsonFile.animations[curAnim].anim);
 				daText.resetDialogue();
 				updateTextBox();
@@ -536,7 +482,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 				}
 			}
 
-			if(UI_mainbox.selected_tab_id == 'Animations' && curSelectedAnim != null && character.dialogueAnimations.exists(curSelectedAnim)) {
+			if(UI_mainbox.selectedName == 'Animations' && curSelectedAnim != null && character.dialogueAnimations.exists(curSelectedAnim)) {
 				var moved:Bool = false;
 				var animShit:DialogueAnimArray = character.dialogueAnimations.get(curSelectedAnim);
 				var controlArrayLoop:Array<Bool> = [FlxG.keys.justPressed.A, FlxG.keys.justPressed.W, FlxG.keys.justPressed.D, FlxG.keys.justPressed.S];
@@ -579,7 +525,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 				if(camGame.zoom > 1) camGame.zoom = 1;
 			}
 			if(FlxG.keys.justPressed.H) {
-				if(UI_mainbox.selected_tab_id == 'Animations') {
+				if(UI_mainbox.selectedName == 'Animations') {
 					currentGhosts++;
 					if(currentGhosts > 2) currentGhosts = 0;
 
@@ -597,8 +543,8 @@ class DialogueCharacterEditorState extends MusicBeatState
 				hudGroup.visible = true;
 			}
 
-			if(UI_mainbox.selected_tab_id != lastTab) {
-				if(UI_mainbox.selected_tab_id == 'Animations') {
+			if(UI_mainbox.selectedName != lastTab) {
+				if(UI_mainbox.selectedName == 'Animations') {
 					hudGroup.alpha = 0;
 					mainGroup.alpha = 0;
 					ghostLoop.alpha = 0.6;
@@ -626,11 +572,11 @@ class DialogueCharacterEditorState extends MusicBeatState
 					character.playAnim(character.jsonFile.animations[curAnim].anim);
 					animText.text = 'Animation: ' + character.jsonFile.animations[curAnim].anim + ' (' + (curAnim + 1) +' / ' + character.jsonFile.animations.length + ') - Press W or S to scroll';
 				}
-				lastTab = UI_mainbox.selected_tab_id;
+				lastTab = UI_mainbox.selectedName;
 				currentGhosts = 0;
 			}
 			
-			if(UI_mainbox.selected_tab_id == 'Character')
+			if(UI_mainbox.selectedName == 'Character')
 			{
 				var negaMult:Array<Int> = [1, -1];
 				var controlAnim:Array<Bool> = [FlxG.keys.justPressed.W, FlxG.keys.justPressed.S];
@@ -654,9 +600,13 @@ class DialogueCharacterEditorState extends MusicBeatState
 			}
 
 			if(FlxG.keys.justPressed.ESCAPE) {
-				MusicBeatState.switchState(new states.editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
-				transitioning = true;
+				if(!unsavedProgress)
+				{
+					MusicBeatState.switchState(new states.editors.MasterEditorMenu());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					transitioning = true;
+				}
+				else openSubState(new ExitConfirmationPrompt(function() transitioning = true));
 			}
 
 			ghostLoop.setPosition(character.x, character.y);
@@ -664,14 +614,14 @@ class DialogueCharacterEditorState extends MusicBeatState
 			hudGroup.x = mainGroup.x;
 			hudGroup.y = mainGroup.y;
 		}
-		super.update(elapsed);
+		else ClientPrefs.toggleVolumeKeys(false);
 	}
 	
 	var _file:FileReference = null;
 	function loadCharacter() {
 		var jsonFilter:FileFilter = new FileFilter('JSON', 'json');
 		_file = new FileReference();
-		_file.addEventListener(Event.SELECT, onLoadComplete);
+		_file.addEventListener(#if desktop Event.SELECT #else Event.COMPLETE #end, onLoadComplete);
 		_file.addEventListener(Event.CANCEL, onLoadCancel);
 		_file.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 		_file.browse([jsonFilter]);
@@ -679,7 +629,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 	function onLoadComplete(_):Void
 	{
-		_file.removeEventListener(Event.SELECT, onLoadComplete);
+		_file.removeEventListener(#if desktop Event.SELECT #else Event.COMPLETE #end, onLoadComplete);
 		_file.removeEventListener(Event.CANCEL, onLoadCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 
@@ -722,7 +672,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		*/
 	function onLoadCancel(_):Void
 	{
-		_file.removeEventListener(Event.SELECT, onLoadComplete);
+		_file.removeEventListener(#if desktop Event.SELECT #else Event.COMPLETE #end, onLoadComplete);
 		_file.removeEventListener(Event.CANCEL, onLoadCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 		_file = null;
@@ -734,7 +684,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		*/
 	function onLoadError(_):Void
 	{
-		_file.removeEventListener(Event.SELECT, onLoadComplete);
+		_file.removeEventListener(#if desktop Event.SELECT #else Event.COMPLETE #end, onLoadComplete);
 		_file.removeEventListener(Event.CANCEL, onLoadCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 		_file = null;
@@ -749,7 +699,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			var characterName:String = splittedImage[0].toLowerCase().replace(' ', '');
 
 			_file = new FileReference();
-			_file.addEventListener(Event.COMPLETE, onSaveComplete);
+			_file.addEventListener(#if desktop Event.SELECT #else Event.COMPLETE #end, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data, characterName + ".json");
@@ -758,7 +708,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 	function onSaveComplete(_):Void
 	{
-		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
+		_file.removeEventListener(#if desktop Event.SELECT #else Event.COMPLETE #end, onSaveComplete);
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
@@ -770,7 +720,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		*/
 	function onSaveCancel(_):Void
 	{
-		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
+		_file.removeEventListener(#if desktop Event.SELECT #else Event.COMPLETE #end, onSaveComplete);
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
@@ -781,7 +731,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		*/
 	function onSaveError(_):Void
 	{
-		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
+		_file.removeEventListener(#if desktop Event.SELECT #else Event.COMPLETE #end, onSaveComplete);
 		_file.removeEventListener(Event.CANCEL, onSaveCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;

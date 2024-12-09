@@ -1,0 +1,10 @@
+{
+	"idle_anim": "M Pico Idle",
+	"image": "Menu_Pico",
+	"position": [
+		0,
+		-120
+	],
+	"scale": 1,
+	"antialiasing": true
+}
