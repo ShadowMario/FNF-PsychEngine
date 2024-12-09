@@ -1,0 +1,12 @@
+{
+	"confirm_anim": "idle",
+	"antialiasing": true,
+	"idle_anim": "idle",
+	"position": [
+		-30,
+		-10
+	],
+	"scale": 1,
+	"image": "nene",
+	"flipX": false
+}

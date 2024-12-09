@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="menu_options.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="options idle0000" x="610" y="207" width="188" height="189"/>
+	<SubTexture name="options idle0001" x="610" y="207" width="188" height="189"/>
+	<SubTexture name="options idle0002" x="610" y="207" width="188" height="189"/>
+	<SubTexture name="options idle0003" x="1" y="228" width="188" height="188" frameX="0" frameY="0" frameWidth="188" frameHeight="189"/>
+	<SubTexture name="options idle0004" x="1" y="228" width="188" height="188" frameX="0" frameY="0" frameWidth="188" frameHeight="189"/>
+	<SubTexture name="options idle0005" x="1" y="228" width="188" height="188" frameX="0" frameY="0" frameWidth="188" frameHeight="189"/>
+	<SubTexture name="options idle0006" x="611" y="1" width="188" height="189"/>
+	<SubTexture name="options idle0007" x="611" y="1" width="188" height="189"/>
+	<SubTexture name="options idle0008" x="611" y="1" width="188" height="189"/>
+	<SubTexture name="options selected0000" x="1" y="1" width="211" height="226"/>
+	<SubTexture name="options selected0001" x="1" y="1" width="211" height="226"/>
+	<SubTexture name="options selected0002" x="213" y="1" width="198" height="210" frameX="-5" frameY="-8" frameWidth="211" frameHeight="226"/>
+	<SubTexture name="options selected0003" x="213" y="1" width="198" height="210" frameX="-5" frameY="-8" frameWidth="211" frameHeight="226"/>
+	<SubTexture name="options selected0004" x="412" y="1" width="198" height="205" frameX="-5" frameY="-12" frameWidth="211" frameHeight="226"/>
+	<SubTexture name="options selected0005" x="412" y="1" width="198" height="205" frameX="-5" frameY="-12" frameWidth="211" frameHeight="226"/>
+	<SubTexture name="options selected0006" x="412" y="207" width="197" height="205" frameX="-6" frameY="-12" frameWidth="211" frameHeight="226"/>
+	<SubTexture name="options selected0007" x="412" y="207" width="197" height="205" frameX="-6" frameY="-12" frameWidth="211" frameHeight="226"/>
+	<SubTexture name="options selected0008" x="213" y="212" width="197" height="205" frameX="-6" frameY="-12" frameWidth="211" frameHeight="226"/>
+	<SubTexture name="options selected0009" x="213" y="212" width="197" height="205" frameX="-6" frameY="-12" frameWidth="211" frameHeight="226"/>
+</TextureAtlas>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="FNF_main_menu_assets_pt-BR.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="credits idle0000" x="2" y="542" width="502" height="124"/>
+	<SubTexture name="credits idle0001" x="2" y="542" width="502" height="124"/>
+	<SubTexture name="credits idle0002" x="2" y="542" width="502" height="124"/>
+	<SubTexture name="credits idle0003" x="2" y="668" width="502" height="124"/>
+	<SubTexture name="credits idle0004" x="2" y="668" width="502" height="124"/>
+	<SubTexture name="credits idle0005" x="2" y="668" width="502" height="124"/>
+	<SubTexture name="credits idle0006" x="2" y="794" width="502" height="124"/>
+	<SubTexture name="credits idle0007" x="2" y="794" width="502" height="124"/>
+	<SubTexture name="credits idle0008" x="2" y="794" width="502" height="124"/>
+	<SubTexture name="credits selected0000" x="2" y="2" width="630" height="179" frameX="0" frameY="-1" frameWidth="631" frameHeight="180"/>
+	<SubTexture name="credits selected0001" x="2" y="183" width="631" height="178" frameX="0" frameY="-2" frameWidth="631" frameHeight="180"/>
+	<SubTexture name="credits selected0002" x="2" y="363" width="630" height="177" frameX="0" frameY="0" frameWidth="631" frameHeight="180"/>
+</TextureAtlas>

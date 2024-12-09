@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="FNF_main_menu_assets_pt-BR.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="story_mode idle0000" x="2" y="556" width="690" height="135"/>
+	<SubTexture name="story_mode idle0001" x="2" y="556" width="690" height="135"/>
+	<SubTexture name="story_mode idle0002" x="2" y="556" width="690" height="135"/>
+	<SubTexture name="story_mode idle0003" x="2" y="693" width="690" height="135"/>
+	<SubTexture name="story_mode idle0004" x="2" y="693" width="690" height="135"/>
+	<SubTexture name="story_mode idle0005" x="2" y="693" width="690" height="135"/>
+	<SubTexture name="story_mode idle0006" x="2" y="830" width="690" height="135"/>
+	<SubTexture name="story_mode idle0007" x="2" y="830" width="690" height="135"/>
+	<SubTexture name="story_mode idle0008" x="2" y="830" width="690" height="135"/>
+	<SubTexture name="story_mode selected0000" x="2" y="189" width="809" height="183" frameX="-5" frameY="0" frameWidth="816" frameHeight="188"/>
+	<SubTexture name="story_mode selected0001" x="2" y="374" width="811" height="180" frameX="0" frameY="0" frameWidth="816" frameHeight="188"/>
+	<SubTexture name="story_mode selected0002" x="2" y="2" width="811" height="185" frameX="-5" frameY="-3" frameWidth="816" frameHeight="188"/>
+</TextureAtlas>

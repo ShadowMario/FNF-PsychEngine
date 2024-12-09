@@ -1,0 +1,10 @@
+{
+	"idle_anim": "M Mom Idle",
+	"image": "Menu_Mom",
+	"position": [
+		0,
+		10
+	],
+	"scale": 1,
+	"antialiasing": true
+}

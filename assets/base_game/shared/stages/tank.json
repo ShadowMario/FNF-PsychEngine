@@ -1,0 +1,34 @@
+{
+	"directory": "week7",
+	"defaultZoom": 0.9,
+	"stageUI": "",
+
+	"boyfriend": [810, 100],
+	"girlfriend": [200, 65],
+	"opponent": [20, 100],
+
+	"preload": {
+		"images/tank0": 3,
+		"images/tank1": 2,
+		"images/tank2": 3,
+		"images/tank3": 2,
+		"images/tank4": 2,
+		"images/tank5": 3,
+		"images/tankClouds": 2,
+		"images/tankMountains": 2,
+		"images/tankBuildings": 2,
+		"images/smokeLeft": 2,
+		"images/smokeRight": 2,
+		"images/tankWatchtower": 2,
+		"images/tankGround": 3,
+		"images/tankRolling": 3,
+		"images/tankRuins": 3,
+		"images/tankSky": 3
+	},
+
+	"_editorMeta": {
+		"dad": "tankman",
+		"boyfriend": "bf",
+		"gf": "gf-tankmen"
+	}
+}

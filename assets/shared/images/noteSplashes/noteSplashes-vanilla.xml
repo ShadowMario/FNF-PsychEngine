@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="noteSplashes-vanilla.png">
+	<!-- Created with Adobe Animate version 23.0.2.103 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="vanilla splash red 10000" x="1" y="313" width="202" height="284" frameX="-35" frameY="-14" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash red 10001" x="779" y="272" width="226" height="280" frameX="-29" frameY="-23" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash red 10002" x="276" y="1" width="264" height="304" frameX="-7" frameY="-5" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash red 10003" x="1" y="1" width="274" height="311"/>
+	<SubTexture name="vanilla splash red 20000" x="820" y="1" width="183" height="215" frameX="-50" frameY="-40" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash red 20001" x="276" y="306" width="239" height="251" frameX="-23" frameY="-21" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash red 20002" x="541" y="1" width="278" height="270" frameX="0" frameY="-11" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash red 20003" x="541" y="272" width="237" height="271" frameX="-50" frameY="0" frameWidth="287" frameHeight="281"/>
+	
+	<SubTexture name="vanilla splash purple 10000" x="1" y="313" width="202" height="284" frameX="-35" frameY="-14" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash purple 10001" x="779" y="272" width="226" height="280" frameX="-29" frameY="-23" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash purple 10002" x="276" y="1" width="264" height="304" frameX="-7" frameY="-5" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash purple 10003" x="1" y="1" width="274" height="311"/>
+	<SubTexture name="vanilla splash purple 20000" x="820" y="1" width="183" height="215" frameX="-50" frameY="-40" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash purple 20001" x="276" y="306" width="239" height="251" frameX="-23" frameY="-21" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash purple 20002" x="541" y="1" width="278" height="270" frameX="0" frameY="-11" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash purple 20003" x="541" y="272" width="237" height="271" frameX="-50" frameY="0" frameWidth="287" frameHeight="281"/>
+	
+	<SubTexture name="vanilla splash blue 10000" x="1" y="313" width="202" height="284" frameX="-35" frameY="-14" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash blue 10001" x="779" y="272" width="226" height="280" frameX="-29" frameY="-23" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash blue 10002" x="276" y="1" width="264" height="304" frameX="-7" frameY="-5" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash blue 10003" x="1" y="1" width="274" height="311"/>
+	<SubTexture name="vanilla splash blue 20000" x="820" y="1" width="183" height="215" frameX="-50" frameY="-40" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash blue 20001" x="276" y="306" width="239" height="251" frameX="-23" frameY="-21" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash blue 20002" x="541" y="1" width="278" height="270" frameX="0" frameY="-11" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash blue 20003" x="541" y="272" width="237" height="271" frameX="-50" frameY="0" frameWidth="287" frameHeight="281"/>
+	
+	<SubTexture name="vanilla splash green 10000" x="1" y="313" width="202" height="284" frameX="-35" frameY="-14" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash green 10001" x="779" y="272" width="226" height="280" frameX="-29" frameY="-23" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash green 10002" x="276" y="1" width="264" height="304" frameX="-7" frameY="-5" frameWidth="274" frameHeight="311"/>
+	<SubTexture name="vanilla splash green 10003" x="1" y="1" width="274" height="311"/>
+	<SubTexture name="vanilla splash green 20000" x="820" y="1" width="183" height="215" frameX="-50" frameY="-40" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash green 20001" x="276" y="306" width="239" height="251" frameX="-23" frameY="-21" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash green 20002" x="541" y="1" width="278" height="270" frameX="0" frameY="-11" frameWidth="287" frameHeight="281"/>
+	<SubTexture name="vanilla splash green 20003" x="541" y="272" width="237" height="271" frameX="-50" frameY="0" frameWidth="287" frameHeight="281"/>
+</TextureAtlas>
