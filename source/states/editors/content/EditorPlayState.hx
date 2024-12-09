@@ -451,8 +451,8 @@ class EditorPlayState extends MusicBeatSubstate
 
 		if (ClientPrefs.data.middleScroll)
 		{
-			setStrumGroupX(opponentStrums, (FlxG.width / 2));
-			setStrumGroupX(playerStrums, (FlxG.width / 2));
+			PlayState.setStrumGroupX(opponentStrums, (FlxG.width / 2));
+			PlayState.setStrumGroupX(playerStrums, (FlxG.width / 2));
 			for (i => strum in opponentStrums)
 			{
 				strum.x -= FlxG.width / 4 * (i > 1 ? -1 : 1);
@@ -460,8 +460,8 @@ class EditorPlayState extends MusicBeatSubstate
 		}
 		else
 		{
-			setStrumGroupX(opponentStrums, (FlxG.width / 2) - (FlxG.width / 4));
-			setStrumGroupX(playerStrums, (FlxG.width / 2) + (FlxG.width / 4));
+			PlayState.setStrumGroupX(opponentStrums, (FlxG.width / 2) - (FlxG.width / 4));
+			PlayState.setStrumGroupX(playerStrums, (FlxG.width / 2) + (FlxG.width / 4));
 		}
 	}
 
