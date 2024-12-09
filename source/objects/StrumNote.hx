@@ -141,13 +141,6 @@ class StrumNote extends FlxSprite
 		}
 	}
 
-	public function playerPosition()
-	{
-		x += Note.swagWidth * noteData;
-		x += 50;
-		x += ((FlxG.width / 2) * player);
-	}
-
 	override function update(elapsed:Float) {
 		if(resetAnim > 0) {
 			resetAnim -= elapsed;

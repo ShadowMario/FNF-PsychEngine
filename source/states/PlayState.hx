@@ -1492,11 +1492,11 @@ class PlayState extends MusicBeatState
 		callOnScripts('onEventPushed', [subEvent.event, subEvent.value1 != null ? subEvent.value1 : '', subEvent.value2 != null ? subEvent.value2 : '', subEvent.strumTime]);
 	}
 
-	public function setStrumGroupX(strumGroup:FlxTypedGroup<StrumNote>, x:Float = 0):Void
+	public static function setStrumGroupX(strumGroup:FlxTypedGroup<StrumNote>, x:Float = 0):Void
 	{
-		for (strum in strumGroup) {
+		for (i => strum in strumGroup) {
 			strum.x = x - (Note.swagWidth / 2);
-			strum.x += Note.swagWidth * strum.noteData;
+			strum.x += Note.swagWidth * i;
 			strum.x -= (Note.swagWidth * ((strumGroup.length - 1) / 2));
 		}
 	}
@@ -1529,23 +1529,22 @@ class PlayState extends MusicBeatState
 			else opponentStrums.add(babyArrow);
 
 			strumLineNotes.add(babyArrow);
-			babyArrow.playerPosition();
 		}
 
-		// center groups
-		setStrumGroupX(playerStrums, FlxG.width / 2);
-		setStrumGroupX(opponentStrums, FlxG.width / 2);
-		if (player == 1)
+		if (ClientPrefs.data.middleScroll)
 		{
-			// setup player position
-			if (!ClientPrefs.data.middleScroll)
-				for (strum in playerStrums)
-					strum.x += FlxG.width / 4;
+			setStrumGroupX(opponentStrums, (FlxG.width / 2));
+			setStrumGroupX(playerStrums, (FlxG.width / 2));
+			for (i => strum in opponentStrums)
+			{
+				strum.x -= FlxG.width / 4 * (i > 1 ? -1 : 1);
+			}
 		}
 		else
-			// setup opponent position
-			for (i => strum in opponentStrums)
-				strum.x += (FlxG.width / 4) * (ClientPrefs.data.middleScroll ? (i > 1 ? 1 : -1) : -1);
+		{
+			setStrumGroupX(opponentStrums, (FlxG.width / 2) - (FlxG.width / 4));
+			setStrumGroupX(playerStrums, (FlxG.width / 2) + (FlxG.width / 4));
+		}
 	}
 
 	override function openSubState(SubState:FlxSubState)
