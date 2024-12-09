@@ -1,7 +1,5 @@
 package states.stages.objects;
 
-import flixel.system.FlxSound;
-
 class PhillyTrain extends BGSprite
 {
 	public var sound:FlxSound;
@@ -9,6 +7,7 @@ class PhillyTrain extends BGSprite
 	{
 		super(image, x, y);
 		active = true; //Allow update
+		antialiasing = ClientPrefs.data.antialiasing;
 
 		this.sound = new FlxSound().loadEmbedded(Paths.sound(sound));
 		FlxG.sound.list.add(this.sound);

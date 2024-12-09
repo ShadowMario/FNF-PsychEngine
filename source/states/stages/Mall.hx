@@ -38,16 +38,14 @@ class Mall extends BaseStage
 
 		santa = new BGSprite('christmas/santa', -840, 150, 1, 1, ['santa idle in fear']);
 		add(santa);
-		precacheSound('Lights_Shut_off');
+		Paths.sound('Lights_Shut_off');
 		setDefaultGF('gf-christmas');
 
 		if(isStoryMode && !seenCutscene)
-		{
 			setEndCallback(eggnogEndCutscene);
-		}
 	}
 
-	override function countdownTick(count:BaseStage.Countdown, num:Int) everyoneDance();
+	override function countdownTick(count:Countdown, num:Int) everyoneDance();
 	override function beatHit() everyoneDance();
 
 	override function eventCalled(eventName:String, value1:String, value2:String, flValue1:Null<Float>, flValue2:Null<Float>, strumTime:Float)

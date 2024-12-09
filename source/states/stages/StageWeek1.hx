@@ -52,6 +52,7 @@ class StageWeek1 extends BaseStage
 				add(dadbattleLight);
 
 				dadbattleFog = new DadBattleFog();
+				dadbattleFog.visible = false;
 				add(dadbattleFog);
 		}
 	}
@@ -83,15 +84,13 @@ class StageWeek1 extends BaseStage
 							dadbattleLight.alpha = 0.375;
 						});
 						dadbattleLight.setPosition(who.getGraphicMidpoint().x - dadbattleLight.width / 2, who.y + who.height - dadbattleLight.height + 50);
+						FlxTween.tween(dadbattleFog, {alpha: 0.7}, 1.5, {ease: FlxEase.quadInOut});
 
 					default:
 						dadbattleBlack.visible = false;
 						dadbattleLight.visible = false;
 						defaultCamZoom -= 0.12;
-						FlxTween.tween(dadbattleFog, {alpha: 0}, 1, {onComplete: function(twn:FlxTween)
-						{
-							dadbattleFog.visible = false;
-						}});
+						FlxTween.tween(dadbattleFog, {alpha: 0}, 0.7, {onComplete: function(twn:FlxTween) dadbattleFog.visible = false});
 				}
 		}
 	}
