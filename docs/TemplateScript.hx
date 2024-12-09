@@ -155,6 +155,15 @@ function opponentNoteHitPre(note:Note)
 	// Works the same as goodNoteHitPre, but for Opponent's notes being hit
 }
 
+function playerNoteHitPre(note:Note)
+{
+	// Works the same as goodNoteHitPre and opponentNoteHitPre, but for general player hits
+}
+function cpuNoteHitPre(note:Note)
+{
+	// Works the same as playerNoteHitPre, but for general opponent hits
+}
+
 function goodNoteHit(note:Note)
 {
 	// Function called when you hit a note (***after*** note hit calculations)
@@ -162,6 +171,15 @@ function goodNoteHit(note:Note)
 function opponentNoteHit(note:Note)
 {
 	// Works the same as goodNoteHit, but for Opponent's notes being hit
+}
+
+function playerNoteHit(note:Note)
+{
+	// Works the same as goodNoteHit and opponentNoteHit, but for general player hits
+}
+function cpuNoteHit(note:Note)
+{
+	// Works the same as playerNoteHit, but for general opponent hits
 }
 
 function noteMissPress(direction:Int)

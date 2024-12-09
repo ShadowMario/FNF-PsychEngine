@@ -93,6 +93,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	public static var GRID_SIZE = 40;
 	final BACKUP_EXT = '.bkp';
 
+	public static var opponentPlay:Bool = false;
+
 	public var quantizations:Array<Int> = [
 		4,
 		8,
@@ -495,7 +497,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			"Q/E - Decrease/Increase Note Sustain Length",
 			"Hold Shift/Alt to Increase/Decrease move by 4x",
 			"",
-			"F12 - Preview Chart",
+			"F12 - Preview Chart (Hold Shift for Opponent Play)",
 			"Enter - Playtest Chart",
 			"Space - Stop/Resume song",
 			"",
@@ -4617,7 +4619,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		setSongPlaying(false);
 		chartEditorSave.flush(); //just in case a random crash happens before loading
 
-		openSubState(new EditorPlayState(cast notes, [vocals, opponentVocals]));
+		openSubState(new EditorPlayState(cast notes, [vocals, opponentVocals], opponentPlay = FlxG.keys.pressed.SHIFT));
 		upperBox.isMinimized = true;
 		upperBox.visible = mainBox.visible = infoBox.visible = false;
 	}

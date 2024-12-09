@@ -132,6 +132,13 @@ function opponentNoteHitPre(id, direction, noteType, isSustainNote)
 	-- isSustainNote: If it's a hold note, can be either true or false
 end
 
+function litPlayerHitPre(id, direction, noteType, isSustainNote)
+	-- Works the same as goodNoteHitPre and opponentNoteHitPre, but for general player hits
+end
+function litOppoHitPre(id, direction, noteType, isSustainNote)
+	-- Works the same as litPlayerHitPre, but for general opponent hits
+end
+
 ---- POST
 function goodNoteHit(id, direction, noteType, isSustainNote)
 	-- Function called when you hit a note (***after*** note hit calculations)
@@ -151,7 +158,6 @@ end
 function litPlayerHit(id, direction, noteType, isSustainNote)
 	-- Works the same as goodNoteHit and opponentNoteHit, but for general player hits
 end
-
 function litOppoHit(id, direction, noteType, isSustainNote)
 	-- Works the same as litPlayerHit, but for general opponent hits
 end
@@ -162,19 +168,15 @@ function noteMissPress(direction)
 end
 
 function noteMiss(id, direction, noteType, isSustainNote)
-    -- Called after the note miss calculations
-    -- Player missed a note by letting it go offscreen
-end
-
-function opponentNoteMiss(id, direction, noteType, isSustainNote)
-	-- Works the same as noteMiss, but for when opponent play is enabled
+	-- Called after the note miss calculations
+	-- Player missed a note by letting it go offscreen
 end
 
 
 -- Other function hooks
 function onRecalculateRating()
 	-- return Function_Stop if you want to do your own rating calculation,
-	-- use setRatingPercent() to set the number on the calculation and setRatingName() to set the funny rating name
+	-- use setRatingPercent() to set the number on the calculation and setRatingString() to set the funny rating name
 	-- NOTE: THIS IS CALLED BEFORE THE CALCULATION!!!
 	return Function_Continue;
 end

@@ -184,6 +184,10 @@ class Note extends FlxSprite
 		}
 	}
 
+	var oppoPlay(get, never):Bool;
+	function get_oppoPlay():Bool
+		return PlayState.instance == null ? states.editors.ChartingState.opponentPlay : PlayState.instance.opponentPlay;
+
 	private function set_noteType(value:String):String {
 		noteSplashData.texture = PlayState.SONG != null ? PlayState.SONG.splashSkin : 'noteSplashes';
 		defaultRGB();
@@ -465,22 +469,23 @@ class Note extends FlxSprite
 	{
 		super.update(elapsed);
 
-		if (mustPress)
+		if (mustPress == !oppoPlay)
 		{
 			canBeHit = (strumTime > Conductor.songPosition - (Conductor.safeZoneOffset * lateHitMult) &&
 						strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * earlyHitMult));
 
-			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
+			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !(oppoPlay ? hitByOpponent : wasGoodHit))
 				tooLate = true;
 		}
 		else
 		{
 			canBeHit = false;
 
-			if (!wasGoodHit && strumTime <= Conductor.songPosition)
+			if (!(oppoPlay ? hitByOpponent : wasGoodHit) && strumTime <= Conductor.songPosition)
 			{
-				if(!isSustainNote || (prevNote.wasGoodHit && !ignoreNote))
-					wasGoodHit = true;
+				if(!isSustainNote || ((oppoPlay ? prevNote.hitByOpponent : prevNote.wasGoodHit) && !ignoreNote))
+					if (oppoPlay) hitByOpponent = true;
+					else wasGoodHit = true;
 			}
 		}
 
@@ -535,7 +540,7 @@ class Note extends FlxSprite
 	public function clipToStrumNote(myStrum:StrumNote)
 	{
 		var center:Float = myStrum.y + offsetY + Note.swagWidth / 2;
-		if((mustPress || !ignoreNote) && (wasGoodHit || (prevNote.wasGoodHit && !canBeHit)))
+		if((mustPress == !oppoPlay || !ignoreNote) && ((oppoPlay ? hitByOpponent : wasGoodHit) || ((oppoPlay ? prevNote.hitByOpponent : prevNote.wasGoodHit) && !canBeHit)))
 		{
 			var swagRect:FlxRect = clipRect;
 			if(swagRect == null) swagRect = new FlxRect(0, 0, frameWidth, frameHeight);

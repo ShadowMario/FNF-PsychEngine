@@ -63,9 +63,10 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if(boyfriend == null)
 		{
-			boyfriend = new Character(PlayState.instance.boyfriend.getScreenPosition().x, PlayState.instance.boyfriend.getScreenPosition().y, characterName, true);
-			boyfriend.x += boyfriend.positionArray[0] - PlayState.instance.boyfriend.positionArray[0];
-			boyfriend.y += boyfriend.positionArray[1] - PlayState.instance.boyfriend.positionArray[1];
+			var char:Character =  PlayState.instance.opponentPlay ? PlayState.instance.dad : PlayState.instance.boyfriend;
+			boyfriend = new Character(char.getScreenPosition().x, char.getScreenPosition().y, characterName, !PlayState.instance.opponentPlay);
+			boyfriend.x += boyfriend.positionArray[0] - char.positionArray[0];
+			boyfriend.y += boyfriend.positionArray[1] - char.positionArray[1];
 		}
 		boyfriend.skipDance = true;
 		add(boyfriend);
@@ -86,7 +87,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		PlayState.instance.callOnScripts('onGameOverStart', []);
 		FlxG.sound.music.loadEmbedded(Paths.music(loopSoundName), true);
 
-		if(characterName == 'pico-dead')
+		if(characterName == 'pico-dead' && !PlayState.instance.opponentPlay)
 		{
 			overlay = new FlxSprite(boyfriend.x + 205, boyfriend.y - 80);
 			overlay.frames = Paths.getSparrowAtlas('Pico_Death_Retry');
