@@ -428,7 +428,6 @@ class EditorPlayState extends MusicBeatSubstate
 	
 	private function generateStaticArrows(player:Int):Void
 	{
-		var strumLineX:Float = ClientPrefs.data.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X;
 		var strumLineY:Float = ClientPrefs.data.downScroll ? (FlxG.height - 150) : 50;
 		for (i in 0...4)
 		{
@@ -440,27 +439,31 @@ class EditorPlayState extends MusicBeatSubstate
 				else if(ClientPrefs.data.middleScroll) targetAlpha = 0.35;
 			}
 
-			var babyArrow:StrumNote = new StrumNote(strumLineX, strumLineY, i, player);
+			var babyArrow:StrumNote = new StrumNote(0, strumLineY, i, player);
 			babyArrow.downScroll = ClientPrefs.data.downScroll;
 			babyArrow.alpha = targetAlpha;
 
-			if (player == 1)
-				playerStrums.add(babyArrow);
-			else
-			{
-				if(ClientPrefs.data.middleScroll)
-				{
-					babyArrow.x += 310;
-					if(i > 1) { //Up and Right
-						babyArrow.x += FlxG.width / 2 + 25;
-					}
-				}
-				opponentStrums.add(babyArrow);
-			}
+			if (player == 1) playerStrums.add(babyArrow);
+			else opponentStrums.add(babyArrow);
 
 			strumLineNotes.add(babyArrow);
 			babyArrow.playerPosition();
 		}
+
+		// center groups
+		PlayState.setStrumGroupX(playerStrums, FlxG.width / 2);
+		PlayState.setStrumGroupX(opponentStrums, FlxG.width / 2);
+		if (player == 1)
+		{
+			// setup player position
+			if (!ClientPrefs.data.middleScroll)
+				for (strum in playerStrums)
+					strum.x += FlxG.width / 4;
+		}
+		else
+			// setup opponent position
+			for (i => strum in opponentStrums)
+				strum.x += (FlxG.width / 4) * (ClientPrefs.data.middleScroll ? (i > 1 ? 1 : -1) : -1);
 	}
 
 	public function finishSong():Void

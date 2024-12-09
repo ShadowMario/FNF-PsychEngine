@@ -70,9 +70,6 @@ import crowplexus.iris.Iris;
 **/
 class PlayState extends MusicBeatState
 {
-	public static var STRUM_X = 42;
-	public static var STRUM_X_MIDDLESCROLL = -278;
-
 	public static var ratingStuff:Array<Dynamic> = [
 		['You Suck!', 0.2], //From 0% to 19%
 		['Shit', 0.4], //From 20% to 39%
@@ -460,11 +457,12 @@ class PlayState extends MusicBeatState
 
 		Conductor.songPosition = -Conductor.crochet * 5 + Conductor.offset;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
-		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
+		timeTxt = new FlxText(0, 19, 400, "", 32);
 		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
+		timeTxt.screenCenter(X);
 		timeTxt.visible = updateTime = showTime;
 		if(ClientPrefs.data.downScroll) timeTxt.y = FlxG.height - 44;
 		if(ClientPrefs.data.timeBarType == 'Song Name') timeTxt.text = SONG.song;
@@ -1494,10 +1492,18 @@ class PlayState extends MusicBeatState
 		callOnScripts('onEventPushed', [subEvent.event, subEvent.value1 != null ? subEvent.value1 : '', subEvent.value2 != null ? subEvent.value2 : '', subEvent.strumTime]);
 	}
 
+	public function setStrumGroupX(strumGroup:FlxTypedGroup<StrumNote>, x:Float = 0):Void
+	{
+		for (strum in strumGroup) {
+			strum.x = x - (Note.swagWidth / 2);
+			strum.x += Note.swagWidth * strum.noteData;
+			strum.x -= (Note.swagWidth * ((strumGroup.length - 1) / 2));
+		}
+	}
+
 	public var skipArrowStartTween:Bool = false; //for lua
 	private function generateStaticArrows(player:Int):Void
 	{
-		var strumLineX:Float = ClientPrefs.data.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X;
 		var strumLineY:Float = ClientPrefs.data.downScroll ? (FlxG.height - 150) : 50;
 		for (i in 0...4)
 		{
@@ -1509,7 +1515,7 @@ class PlayState extends MusicBeatState
 				else if(ClientPrefs.data.middleScroll) targetAlpha = 0.35;
 			}
 
-			var babyArrow:StrumNote = new StrumNote(strumLineX, strumLineY, i, player);
+			var babyArrow:StrumNote = new StrumNote(0, strumLineY, i, player);
 			babyArrow.downScroll = ClientPrefs.data.downScroll;
 			if (!isStoryMode && !skipArrowStartTween)
 			{
@@ -1519,23 +1525,27 @@ class PlayState extends MusicBeatState
 			}
 			else babyArrow.alpha = targetAlpha;
 
-			if (player == 1)
-				playerStrums.add(babyArrow);
-			else
-			{
-				if(ClientPrefs.data.middleScroll)
-				{
-					babyArrow.x += 310;
-					if(i > 1) { //Up and Right
-						babyArrow.x += FlxG.width / 2 + 25;
-					}
-				}
-				opponentStrums.add(babyArrow);
-			}
+			if (player == 1) playerStrums.add(babyArrow);
+			else opponentStrums.add(babyArrow);
 
 			strumLineNotes.add(babyArrow);
 			babyArrow.playerPosition();
 		}
+
+		// center groups
+		setStrumGroupX(playerStrums, FlxG.width / 2);
+		setStrumGroupX(opponentStrums, FlxG.width / 2);
+		if (player == 1)
+		{
+			// setup player position
+			if (!ClientPrefs.data.middleScroll)
+				for (strum in playerStrums)
+					strum.x += FlxG.width / 4;
+		}
+		else
+			// setup opponent position
+			for (i => strum in opponentStrums)
+				strum.x += (FlxG.width / 4) * (ClientPrefs.data.middleScroll ? (i > 1 ? 1 : -1) : -1);
 	}
 
 	override function openSubState(SubState:FlxSubState)
