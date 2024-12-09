@@ -77,20 +77,18 @@ class Language
 	// More optimized for file loading
 	inline public static function getFileTranslation(key:String)
 	{
+		#if TRANSLATIONS_ALLOWED
 		var str:String = phrases.get(key.trim().toLowerCase());
 		if(str != null) key = str;
+		#end
 		return key;
 	}
 	
 	#if TRANSLATIONS_ALLOWED
 	inline static private function formatKey(key:String)
 	{
-		var invalidChars = ~/[~&\\;:<>#]/;
-		var hideChars = ~/[.,'"%?!]/;
-
-		var key = invalidChars.split(key.replace(' ', '_')).join('');
-		key = hideChars.split(key).join("").toLowerCase().trim().replace(':', '');
-		return key;
+		final hideChars = ~/[~&\\\/;:<>#.,'"%?!]/g;
+		return hideChars.replace(key.replace(' ', '_'), '').toLowerCase().trim();
 	}
 	#end
 

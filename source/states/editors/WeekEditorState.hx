@@ -15,6 +15,7 @@ import objects.MenuCharacter;
 import objects.MenuItem;
 
 import states.editors.MasterEditorMenu;
+import states.editors.content.Prompt;
 
 class WeekEditorState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
 {
@@ -39,7 +40,7 @@ class WeekEditorState extends MusicBeatState implements PsychUIEventHandler.Psyc
 
 	override function create() {
 		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
-		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
+		txtWeekTitle.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
 		txtWeekTitle.alpha = 0.7;
 		
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
@@ -404,7 +405,7 @@ class WeekEditorState extends MusicBeatState implements PsychUIEventHandler.Psyc
 					MusicBeatState.switchState(new MasterEditorMenu());
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				}
-				else openSubState(new ConfirmationPopupSubstate(function() unsavedProgress = false));
+				else openSubState(new ExitConfirmationPrompt(function() unsavedProgress = false));
 			}
 		}
 		else ClientPrefs.toggleVolumeKeys(false);
@@ -760,7 +761,7 @@ class WeekEditorFreeplayState extends MusicBeatState implements PsychUIEventHand
 					MusicBeatState.switchState(new MasterEditorMenu());
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				}
-				else openSubState(new ConfirmationPopupSubstate());
+				else openSubState(new ExitConfirmationPrompt());
 			}
 
 			if(controls.UI_UP_P) changeSelection(-1);

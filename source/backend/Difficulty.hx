@@ -16,14 +16,10 @@ class Difficulty
 		if(num == null) num = PlayState.storyDifficulty;
 
 		var filePostfix:String = list[num];
-		if(Paths.formatToSongPath(filePostfix) != Paths.formatToSongPath(defaultDifficulty))
-		{
+		if(filePostfix != null && Paths.formatToSongPath(filePostfix) != Paths.formatToSongPath(defaultDifficulty))
 			filePostfix = '-' + filePostfix;
-		}
 		else
-		{
 			filePostfix = '';
-		}
 		return Paths.formatToSongPath(filePostfix);
 	}
 
@@ -65,6 +61,7 @@ class Difficulty
 	inline public static function getString(?num:Null<Int> = null, ?canTranslate:Bool = true):String
 	{
 		var diffName:String = list[num == null ? PlayState.storyDifficulty : num];
+		if(diffName == null) diffName = defaultDifficulty;
 		return canTranslate ? Language.getPhrase('difficulty_$diffName', diffName) : diffName;
 	}
 

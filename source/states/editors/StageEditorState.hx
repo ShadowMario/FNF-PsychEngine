@@ -10,13 +10,21 @@ import flixel.addons.display.FlxBackdrop;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.math.FlxRect;
 import flixel.util.FlxDestroyUtil;
+
+import openfl.utils.Assets;
+
 import openfl.display.Sprite;
 
 import openfl.net.FileReference;
+
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
+
 import psychlua.ModchartSprite;
 import flash.net.FileFilter;
+
+import states.editors.content.Prompt;
+import states.editors.content.PreloadListSubState;
 
 class StageEditorState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
 {
@@ -28,11 +36,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 	var boyfriend:Character;
 	var stageJson:StageFile;
 
-	#if FLX_DEBUG
 	var camGame:FlxCamera;
-	#else
-	var camGame:DebugCamera;
-	#end
 	public var camHUD:FlxCamera;
 
 	var UI_stagebox:PsychUIBox;
@@ -52,27 +56,25 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 	var helpBg:FlxSprite;
 	var helpTexts:FlxSpriteGroup;
 	var posTxt:FlxText;
-	var errorTxt:FlxText;
+	var outputTxt:FlxText;
 
 	var animationEditor:StageEditorAnimationSubstate;
 	var unsavedProgress:Bool = false;
+	
+	var selectionSprites:FlxSpriteGroup = new FlxSpriteGroup();
 	override function create()
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
-		#if FLX_DEBUG
 		camGame = initPsychCamera();
-		#else
-		camGame = new DebugCamera();
-		FlxG.cameras.reset(camGame);
-		FlxG.cameras.setDefaultDrawTarget(camGame, true);
-		_psychCameraInitialized = true;
-		#end
-
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(camHUD, false);
+
+		#if DISCORD_ALLOWED
+		DiscordClient.changePresence('Stage Editor', 'Stage: ' + lastLoadedStage);
+		#end
 
 		if(stageJson == null) stageJson = StageData.getStageFile(lastLoadedStage);
 		FlxG.camera.follow(null, LOCKON, 0);
@@ -83,6 +85,13 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		gf.scrollFactor.set(0.95, 0.95);
 		dad = new Character(0, 0, stageJson._editorMeta != null ? stageJson._editorMeta.dad : 'dad');
 		boyfriend = new Character(0, 0, stageJson._editorMeta != null ? stageJson._editorMeta.boyfriend : 'bf', true);
+
+		for (i in 0...4)
+		{
+			var spr:FlxSprite = new FlxSprite().makeGraphic(1, 1, FlxColor.LIME);
+			spr.alpha = 0.8;
+			selectionSprites.add(spr);
+		}
 
 		FlxG.camera.zoom = stageJson.defaultZoom;
 		repositionGirlfriend();
@@ -100,7 +109,6 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 
 		addHelpScreen();
 		FlxG.mouse.visible = true;
-		destroySubStates = false;
 		animationEditor = new StageEditorAnimationSubstate();
 
 		super.create();
@@ -270,15 +278,14 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		posTxt.visible = false;
 		add(posTxt);
 
-		errorTxt = new FlxText(0, 0, 800, '', 24);
-		errorTxt.alignment = CENTER;
-		errorTxt.borderStyle = OUTLINE_FAST;
-		errorTxt.borderSize = 1;
-		errorTxt.color = FlxColor.RED;
-		errorTxt.cameras = [camHUD];
-		errorTxt.screenCenter();
-		errorTxt.alpha = 0;
-		add(errorTxt);
+		outputTxt = new FlxText(0, 0, 800, '', 24);
+		outputTxt.alignment = CENTER;
+		outputTxt.borderStyle = OUTLINE_FAST;
+		outputTxt.borderSize = 1;
+		outputTxt.cameras = [camHUD];
+		outputTxt.screenCenter();
+		outputTxt.alpha = 0;
+		add(outputTxt);
 	}
 
 	function addSpriteListBox()
@@ -390,20 +397,23 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 				}
 			}
 
-			for (num => anim in copiedMeta.animations)
+			if(copiedMeta.animations != null)
 			{
-				if(anim == null || anim.anim == null) continue;
-
-				if(anim.indices != null && anim.indices.length > 0)
-					copiedSpr.animation.addByIndices(anim.anim, anim.name, anim.indices, '', anim.fps, anim.loop);
-				else
-					copiedSpr.animation.addByPrefix(anim.anim, anim.name, anim.fps, anim.loop);
-
-				if(anim.offsets != null && anim.offsets.length > 1)
-					copiedSpr.addOffset(anim.anim, anim.offsets[0], anim.offsets[1]);
-
-				if(copiedSpr.animation.curAnim == null || copiedMeta.firstAnimation == anim.anim)
-					copiedSpr.playAnim(anim.anim, true);
+				for (num => anim in copiedMeta.animations)
+				{
+					if(anim == null || anim.anim == null) continue;
+	
+					if(anim.indices != null && anim.indices.length > 0)
+						copiedSpr.animation.addByIndices(anim.anim, anim.name, anim.indices, '', anim.fps, anim.loop);
+					else
+						copiedSpr.animation.addByPrefix(anim.anim, anim.name, anim.fps, anim.loop);
+	
+					if(anim.offsets != null && anim.offsets.length > 1)
+						copiedSpr.addOffset(anim.anim, anim.offsets[0], anim.offsets[1]);
+	
+					if(copiedSpr.animation.curAnim == null || copiedMeta.firstAnimation == anim.anim)
+						copiedSpr.playAnim(anim.anim, true);
+				}
 			}
 			copiedMeta.setScale(copiedMeta.scale[0], copiedMeta.scale[1]);
 			copiedMeta.setScrollFactor(copiedMeta.scroll[0], copiedMeta.scroll[1]);
@@ -435,10 +445,14 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		tab_group.add(buttonDelete);
 	}
 
-	function showError(txt:String)
+	function showOutput(txt:String, isError:Bool = false)
 	{
-		errorTxt.text = txt;
-		errorTime = 3;
+		outputTxt.color = isError ? FlxColor.RED : FlxColor.WHITE;
+		outputTxt.text = txt;
+		outputTime = 3;
+		
+		if(isError) FlxG.sound.play(Paths.sound('cancelMenu'), 0.4);
+		else FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 	}
 
 	var createPopup:FlxSpriteGroup;
@@ -783,13 +797,13 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 				var changedName:String = nameInputText.text;
 				if(changedName.length < 1)
 				{
-					showError('Sprite name cannot be empty!');
+					showOutput('Sprite name cannot be empty!', true);
 					return;
 				}
 				
 				if(StageData.reservedNames.contains(changedName))
 				{
-					showError('To avoid conflicts, this name cannot be used!');
+					showOutput('To avoid conflicts, this name cannot be used!', true);
 					return;
 				}
 
@@ -797,15 +811,15 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 				{
 					if (selected != basic && basic.name == changedName)
 					{
-						showError('Name "$changedName" is already in use!');
+						showOutput('Name "$changedName" is already in use!', true);
 						return;
 					}
 				}
 
 				selected.name = changedName;
 				spriteListRadioGroup.checkedRadio.label = selected.name;
-				errorTime = 0;
-				errorTxt.alpha = 0;
+				outputTime = 0;
+				outputTxt.alpha = 0;
 			}
 		};
 		tab_group.add(nameInputText);
@@ -826,10 +840,11 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 
 			if(selected.type != 'animatedSprite')
 			{
-				showError('Only Animated Sprites can hold Animation data.');
+				showOutput('Only Animated Sprites can hold Animation data.', true);
 				return;
 			}
 
+			destroySubStates = false;
 			persistentDraw = false;
 			animationEditor.target = selected;
 			unsavedProgress = true;
@@ -993,12 +1008,54 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		var objX = 10;
 		var objY = 20;
 
+		var openPreloadButton:PsychUIButton = new PsychUIButton(objX, objY, 'Preload List', function() {
+			var lockedList:Array<String> = [];
+			var currentMap:Map<String, LoadFilters> = [];
+			for (spr in stageSprites)
+			{
+				if(spr == null || StageData.reservedNames.contains(spr.type)) continue;
+
+				switch(spr.type)
+				{
+					case 'sprite', 'animatedSprite':
+						if(spr.image != null && spr.image.length > 0 && !lockedList.contains(spr.image))
+							lockedList.push(spr.image);
+				}
+			}
+
+			if(stageJson.preload != null)
+			{
+				for (field in Reflect.fields(stageJson.preload))
+				{
+					if(!currentMap.exists(field) && !lockedList.contains(field))
+						currentMap.set(field, Reflect.field(stageJson.preload, field));
+				}
+			}
+
+			destroySubStates = true;
+			openSubState(new PreloadListSubState(function(newSave:Map<String, LoadFilters>)
+			{
+				var len:Int = 0;
+				for (name in newSave.keys())
+					len++;
+
+				stageJson.preload = {};
+				for (key => value in newSave)
+				{
+					Reflect.setField(stageJson.preload, key, value);
+				}
+				unsavedProgress = true;
+				showOutput('Saved new Preload List with $len files/folders!');
+			}, lockedList, currentMap));
+		});
+
 		function setMetaData(data:String, char:String)
 		{
 			if(stageJson._editorMeta == null) stageJson._editorMeta = {dad: 'dad', gf: 'gf', boyfriend: 'bf'};
 			Reflect.setField(stageJson._editorMeta, data, char);
 		}
 
+		objY += 60;
 		oppDropdown = new PsychUIDropDownMenu(objX, objY, characterList, function(sel:Int, selected:String)
 		{
 			if(selected == null || selected.length < 1) return;
@@ -1008,7 +1065,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		});
 		oppDropdown.selectedLabel = dad.curCharacter;
 
-		objY += 80;
+		objY += 60;
 		gfDropdown = new PsychUIDropDownMenu(objX, objY, characterList, function(sel:Int, selected:String)
 		{
 			if(selected == null || selected.length < 1) return;
@@ -1018,7 +1075,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		});
 		gfDropdown.selectedLabel = gf.curCharacter;
 
-		objY += 80;
+		objY += 60;
 		plDropdown = new PsychUIDropDownMenu(objX, objY, characterList, function(sel:Int, selected:String)
 		{
 			if(selected == null || selected.length < 1) return;
@@ -1028,6 +1085,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		});
 		plDropdown.selectedLabel = boyfriend.curCharacter;
 
+		tab_group.add(openPreloadButton);
 		tab_group.add(new FlxText(plDropdown.x, plDropdown.y - 18, 100, 'Player:'));
 		tab_group.add(plDropdown);
 		tab_group.add(new FlxText(gfDropdown.x, gfDropdown.y - 18, 100, 'Girlfriend:'));
@@ -1042,6 +1100,10 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		var tab_group = UI_stagebox.getTab('Stage').menu;
 		var reloadStage:PsychUIButton = new PsychUIButton(140, 10, 'Reload', function()
 		{
+			#if DISCORD_ALLOWED
+			DiscordClient.changePresence('Stage Editor', 'Stage: ' + lastLoadedStage);
+			#end
+
 			stageJson = StageData.getStageFile(lastLoadedStage);
 			updateSpriteList();
 			updateStageDataUI();
@@ -1051,6 +1113,10 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 
 		var dummyStage:PsychUIButton = new PsychUIButton(140, 40, 'Load Template', function()
 		{
+			#if DISCORD_ALLOWED
+			DiscordClient.changePresence('Stage Editor', 'New Stage');
+			#end
+
 			stageJson = StageData.dummy();
 			updateSpriteList();
 			updateStageDataUI();
@@ -1071,6 +1137,9 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			{
 				stageJson = StageData.getStageFile(selected);
 				lastLoadedStage = selected;
+				#if DISCORD_ALLOWED
+				DiscordClient.changePresence('Stage Editor', 'Stage: ' + lastLoadedStage);
+				#end
 				updateSpriteList();
 				updateStageDataUI();
 				reloadCharacters();
@@ -1262,7 +1331,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		}
 	}
 
-	var errorTime:Float = 0;
+	var outputTime:Float = 0;
 	override function update(elapsed:Float)
 	{
 		if(createPopup.visible && (FlxG.mouse.justPressedRight || (FlxG.mouse.justPressed && !FlxG.mouse.overlaps(createPopup, camHUD))))
@@ -1273,8 +1342,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 
 		super.update(elapsed);
 		
-		errorTime = Math.max(0, errorTime - elapsed);
-		errorTxt.alpha = errorTime;
+		outputTime = Math.max(0, outputTime - elapsed);
+		outputTxt.alpha = outputTime;
 
 		if(PsychUIInputText.focusOn != null) return;
 
@@ -1285,19 +1354,21 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 				MusicBeatState.switchState(new states.editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			}
-			else openSubState(new ConfirmationPopupSubstate());
+			else openSubState(new ExitConfirmationPrompt());
 			return;
 		}
 
 		if(FlxG.keys.justPressed.W)
 		{
-			spriteListRadioGroup.checked--;
+			spriteListRadioGroup.checked = FlxMath.wrap(spriteListRadioGroup.checked - 1, 0, spriteListRadioGroup.labels.length-1);
+			trace(spriteListRadioGroup.checked);
 			checkUIOnObject();
 			updateSelectedUI();
 		}
 		else if(FlxG.keys.justPressed.S)
 		{
-			spriteListRadioGroup.checked++;
+			spriteListRadioGroup.checked = FlxMath.wrap(spriteListRadioGroup.checked + 1, 0, spriteListRadioGroup.labels.length-1);
+			trace(spriteListRadioGroup.checked);
 			checkUIOnObject();
 			updateSelectedUI();
 		}
@@ -1337,10 +1408,11 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		// CAMERA CONTROLS
 		var camX:Float = 0;
 		var camY:Float = 0;
-		if (FlxG.keys.pressed.J) camX -= elapsed * 500 * shiftMult * ctrlMult;
-		if (FlxG.keys.pressed.K) camY += elapsed * 500 * shiftMult * ctrlMult;
-		if (FlxG.keys.pressed.L) camX += elapsed * 500 * shiftMult * ctrlMult;
-		if (FlxG.keys.pressed.I) camY -= elapsed * 500 * shiftMult * ctrlMult;
+		var camMove:Float = elapsed * 500 * shiftMult * ctrlMult;
+		if (FlxG.keys.pressed.J) camX -= camMove;
+		if (FlxG.keys.pressed.K) camY += camMove;
+		if (FlxG.keys.pressed.L) camX += camMove;
+		if (FlxG.keys.pressed.I) camY -= camMove;
 
 		if(camX != 0 || camY != 0)
 		{
@@ -1410,10 +1482,6 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 	var curFilters:LoadFilters = (LOW_QUALITY)|(HIGH_QUALITY);
 	override function draw()
 	{
-		#if !FLX_DEBUG
-		camGame.debugLayer.graphics.clear();
-		#end
-
 		if(persistentDraw || subState == null)
 		{
 
@@ -1421,8 +1489,11 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 				if(basic.visible)
 					basic.draw(curFilters);
 	
-			if(showSelectionQuad && spriteListRadioGroup.checked > -1)
-				drawDebugOnCamera(stageSprites[spriteListRadioGroup.labels.length - spriteListRadioGroup.checked - 1].sprite);
+			if(showSelectionQuad && spriteListRadioGroup.checkedRadio != null)
+			{
+				var spr = stageSprites[spriteListRadioGroup.labels.length - spriteListRadioGroup.checked - 1];
+				if(spr != null) drawDebugOnCamera(spr.sprite);
+			}
 		}
 
 		super.draw();
@@ -1484,18 +1555,39 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		boyfriend.y += boyfriend.positionArray[1];
 	}
 	
-	// borrowing from flixel
 	public function drawDebugOnCamera(spr:FlxSprite):Void
 	{
 		if (spr == null || !spr.isOnScreen(FlxG.camera))
 			return;
 
 		@:privateAccess
-		var rect = spr.getBoundingBox(FlxG.camera);
-		var gfx = camGame.debugLayer.graphics;
-		gfx.lineStyle(3, FlxColor.LIME, 0.8);
-		gfx.drawRect(rect.x, rect.y, rect.width, rect.height);
-		gfx.endFill();
+		var lineSize:Int = Std.int(Math.max(2, Math.floor(3 / FlxG.camera.zoom)));
+
+		var sprX:Float = spr.x + spr.offset.x;
+		var sprY:Float = spr.y + spr.offset.y;
+		var sprWidth:Int = Std.int(spr.frameWidth * spr.scale.x);
+		var sprHeight:Int = Std.int(spr.frameHeight * spr.scale.y);
+		for (num => sel in selectionSprites.members)
+		{
+			sel.x = sprX;
+			sel.y = sprY;
+			switch(num)
+			{
+				case 0: //Top
+					sel.setGraphicSize(sprWidth, lineSize);
+				case 1: //Bottom
+					sel.setGraphicSize(sprWidth, lineSize);
+					sel.y += sprHeight - lineSize;
+				case 2: //Left
+					sel.setGraphicSize(lineSize, sprHeight);
+				case 3: //Right
+					sel.setGraphicSize(lineSize, sprHeight);
+					sel.x += sprWidth - lineSize;
+			}
+			sel.updateHitbox();
+			sel.scrollFactor.set(spr.scrollFactor.x, spr.scrollFactor.y);
+		}
+		selectionSprites.draw();
 	}
 
 	// save
@@ -1585,46 +1677,104 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		@:privateAccess
 		if(_file.__path != null) fullPath = _file.__path;
 
+		function loadSprite(imageToLoad:String)
+		{
+			if(_makeNewSprite != null)
+			{
+				if(_makeNewSprite == 'animatedSprite' && !Paths.fileExists('images/$imageToLoad.xml', TEXT) &&
+					!Paths.fileExists('images/$imageToLoad.json', TEXT) && !Paths.fileExists('images/$imageToLoad.txt', TEXT))
+				{
+					showOutput('No Animation file found with the same name of the image!', true);
+					_makeNewSprite = null;
+					_file = null;
+					return;
+				}
+				insertMeta(new StageEditorMetaSprite({type: _makeNewSprite, name: findUnoccupiedName()}, new ModchartSprite()));
+			}
+			var selected = getSelected();
+			tryLoadImage(selected, imageToLoad);
+			
+			if(_makeNewSprite != null)
+			{
+				selected.sprite.x = Math.round(FlxG.camera.scroll.x + FlxG.width/2 - selected.sprite.width/2);
+				selected.sprite.y = Math.round(FlxG.camera.scroll.y + FlxG.height/2 - selected.sprite.height/2);
+				posTxt.visible = true;
+				posTxt.text = 'X: ${selected.sprite.x}\nY: ${selected.sprite.y}';
+			}
+			_makeNewSprite = null;
+		}
+
 		if(fullPath != null)
 		{
 			fullPath = fullPath.replace('\\', '/');
 			var exePath = Sys.getCwd().replace('\\', '/');
-			if(fullPath.startsWith(exePath + 'assets/images/') #if MODS_ALLOWED || (fullPath.startsWith(exePath + 'mods/') && fullPath.contains('/images/')) #end)
+			if(fullPath.startsWith(exePath))
 			{
-
-				var imageToLoad:String = fullPath.substring(fullPath.indexOf('/images/') + '/images/'.length, fullPath.indexOf('.'));
-				if(_makeNewSprite != null)
+				fullPath = fullPath.substr(exePath.length);
+				if((fullPath.startsWith('assets/') #if MODS_ALLOWED || fullPath.startsWith('mods/') #end) && fullPath.contains('/images/'))
 				{
-					if(_makeNewSprite == 'animatedSprite' && !Paths.fileExists('images/$imageToLoad.xml', TEXT) &&
-						!Paths.fileExists('images/$imageToLoad.json', TEXT) && !Paths.fileExists('images/$imageToLoad.txt', TEXT))
-					{
-						showError('No Animation file found with the same name of the image!');
-						_makeNewSprite = null;
-						_file = null;
-						return;
-					}
-					insertMeta(new StageEditorMetaSprite({type: _makeNewSprite, name: findUnoccupiedName()}, new ModchartSprite()));
+					loadSprite(fullPath.substring(fullPath.indexOf('/images/') + '/images/'.length, fullPath.lastIndexOf('.')));
+					//trace('Inside Psych Engine Folder');
+					return;
 				}
-				var selected = getSelected();
-				tryLoadImage(selected, imageToLoad);
-				
-				if(_makeNewSprite != null)
-				{
-					selected.sprite.x = Math.round(FlxG.camera.scroll.x + FlxG.width/2 - selected.sprite.width/2);
-					selected.sprite.y = Math.round(FlxG.camera.scroll.y + FlxG.height/2 - selected.sprite.height/2);
-					posTxt.visible = true;
-					posTxt.text = 'X: ${selected.sprite.x}\nY: ${selected.sprite.y}';
-				}
-				_makeNewSprite = null;
-				//trace('Inside Psych Engine Folder');
 			}
-			else showError('Can\'t load files outside of "images/" folder');
-			//TO DO: Maybe make copy of loaded file to an usable folder automatically? That would be very practical
-			//TO DO: Bring this to Character Editor too
+
+			createPopup.visible = createPopup.active = false;
+			#if MODS_ALLOWED
+			var modFolder:String = (Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) ? Paths.mods('${Mods.currentModDirectory}/images/') : Paths.mods('images/');
+			openSubState(new BasePrompt(480, 160, 'This file is not inside Psych Engine.', function(state:BasePrompt)
+			{
+				var txt:FlxText = new FlxText(0, state.bg.y + 60, 460, 'Copy to: "$modFolder"?', 11);
+				txt.alignment = CENTER;
+				txt.screenCenter(X);
+				txt.cameras = state.cameras;
+				state.add(txt);
+				
+				var btnY = 390;
+				var btn:PsychUIButton = new PsychUIButton(0, btnY, 'OK', function() {
+					var fileName:String = fullPath.substring(fullPath.lastIndexOf('/') + 1, fullPath.lastIndexOf('.'));
+					var pathNoExt:String = fullPath.substring(0, fullPath.lastIndexOf('.'));
+					function saveFile(ext:String)
+					{
+						var p1:String = '$pathNoExt.$ext';
+						var p2:String = modFolder + '$fileName.$ext';
+						trace(p1, p2);
+						if(FileSystem.exists(p1))
+							File.saveBytes(p2, File.getBytes(p1));
+					}
+
+					FileSystem.createDirectory(modFolder);
+					saveFile('png');
+					saveFile('xml');
+					saveFile('txt');
+					saveFile('json');
+					loadSprite(fileName);
+					state.close();
+				});
+				btn.normalStyle.bgColor = FlxColor.GREEN;
+				btn.normalStyle.textColor = FlxColor.WHITE;
+				btn.screenCenter(X);
+				btn.x -= 100;
+				btn.cameras = state.cameras;
+				state.add(btn);
+
+				var btn:PsychUIButton = new PsychUIButton(0, btnY, 'Cancel', function()
+				{
+					_makeNewSprite = null;
+					state.close();
+				});
+				btn.screenCenter(X);
+				btn.x += 100;
+				btn.cameras = state.cameras;
+				state.add(btn);
+			}));
+			#else
+			showOutput('ERROR! File cannot be used, move it to "assets" and recompile.', true);
+			#end
 		}
 		_file = null;
 		#else
-		trace('File couldn't be loaded! You aren't on Desktop, are you?');
+		trace('File couldn\'t be loaded! You aren\'t on Desktop, are you?');
 		#end
 	}
 
@@ -1681,42 +1831,6 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		super.destroy();
 	}
 }
-
-#if !FLX_DEBUG
-class DebugCamera extends PsychCamera
-{
-	public var debugLayer:Sprite;
-	public function new()
-	{
-		super();
-
-		debugLayer = new Sprite();
-		_scrollRect.addChild(debugLayer);
-		updateInternalSpritePositions();
-	}
-
-	override function updateInternalSpritePositions()
-	{
-		super.updateInternalSpritePositions();
-		
-		if (canvas != null && debugLayer != null)
-		{
-			debugLayer.x = canvas.x;
-			debugLayer.y = canvas.y;
-
-			debugLayer.scaleX = totalScaleX;
-			debugLayer.scaleY = totalScaleY;
-		}
-	}
-	
-	override function destroy()
-	{
-		FlxDestroyUtil.removeChild(_scrollRect, debugLayer);
-		debugLayer = null;
-		super.destroy();
-	}
-}
-#end
 
 class StageEditorMetaSprite
 {
@@ -2256,10 +2370,11 @@ class StageEditorAnimationSubstate extends MusicBeatSubstate {
 		// CAMERA CONTROLS
 		var camX:Float = 0;
 		var camY:Float = 0;
-		if (FlxG.keys.pressed.J) camX -= elapsed * 500 * shiftMult * ctrlMult;
-		if (FlxG.keys.pressed.K) camY += elapsed * 500 * shiftMult * ctrlMult;
-		if (FlxG.keys.pressed.L) camX += elapsed * 500 * shiftMult * ctrlMult;
-		if (FlxG.keys.pressed.I) camY -= elapsed * 500 * shiftMult * ctrlMult;
+		var camMove:Float = elapsed * 500 * shiftMult * ctrlMult;
+		if (FlxG.keys.pressed.J) camX -= camMove;
+		if (FlxG.keys.pressed.K) camY += camMove;
+		if (FlxG.keys.pressed.L) camX += camMove;
+		if (FlxG.keys.pressed.I) camY -= camMove;
 
 		if(camX != 0 || camY != 0)
 		{
@@ -2280,10 +2395,5 @@ class StageEditorAnimationSubstate extends MusicBeatSubstate {
 			persistentDraw = true;
 			close();
 		}
-	}
-
-	override function draw()
-	{
-		super.draw();
 	}
 }

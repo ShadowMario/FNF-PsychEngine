@@ -4,7 +4,6 @@ import haxe.Json;
 import lime.utils.Assets;
 
 import objects.Note;
-import backend.Section;
 
 typedef SwagSong =
 {
@@ -31,6 +30,17 @@ typedef SwagSong =
 
 	@:optional var arrowSkin:String;
 	@:optional var splashSkin:String;
+}
+
+typedef SwagSection =
+{
+	var sectionNotes:Array<Dynamic>;
+	var sectionBeats:Float;
+	var mustHitSection:Bool;
+	@:optional var altAnim:Bool;
+	@:optional var gfSection:Bool;
+	@:optional var bpm:Float;
+	@:optional var changeBPM:Bool;
 }
 
 class Song
@@ -143,7 +153,14 @@ class Song
 
 	public static function parseJSON(rawData:String, ?nameForError:String = null, ?convertTo:String = 'psych_v1'):SwagSong
 	{
-		var songJson:SwagSong = cast Json.parse(rawData).song;
+		var songJson:SwagSong = cast Json.parse(rawData);
+		if(Reflect.hasField(songJson, 'song'))
+		{
+			var subSong:SwagSong = Reflect.field(songJson, 'song');
+			if(subSong != null && Type.typeof(subSong) == TObject)
+				songJson = subSong;
+		}
+
 		if(convertTo != null && convertTo.length > 0)
 		{
 			var fmt:String = songJson.format;
@@ -163,7 +180,3 @@ class Song
 		return songJson;
 	}
 }
-
-/**
- * TO DO: V-Slice Chart Data here.
- */

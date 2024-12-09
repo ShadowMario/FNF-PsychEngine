@@ -12,6 +12,8 @@ import objects.TypedAlphabet;
 import cutscenes.DialogueBoxPsych;
 import cutscenes.DialogueCharacter;
 
+import states.editors.content.Prompt;
+
 class DialogueCharacterEditorState extends MusicBeatState implements PsychUIEventHandler.PsychUIEvent
 {
 	var box:FlxSprite;
@@ -411,7 +413,7 @@ class DialogueCharacterEditorState extends MusicBeatState implements PsychUIEven
 	}
 
 	public function UIEvent(id:String, sender:Dynamic) {
-		trace(id, sender);
+		//trace(id, sender);
 		if(id == PsychUICheckBox.CLICK_EVENT)
 			unsavedProgress = true;
 
@@ -604,7 +606,7 @@ class DialogueCharacterEditorState extends MusicBeatState implements PsychUIEven
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					transitioning = true;
 				}
-				else openSubState(new ConfirmationPopupSubstate(function() transitioning = true));
+				else openSubState(new ExitConfirmationPrompt(function() transitioning = true));
 			}
 
 			ghostLoop.setPosition(character.x, character.y);
