@@ -375,14 +375,13 @@ class FunkinLua {
 			#end
 		});
 
-		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
-			if(name == null || name.length < 1)
-				name = Song.loadedSongName;
-			if (difficultyNum == -1)
-				difficultyNum = PlayState.storyDifficulty;
+		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1, ?difficultyArray:Array<String> = null) {
+			if (difficultyArray != null) Difficulty.list = difficultyArray; // 😎
+			if (name == null || name.length < 1) name = PlayState.SONG.song;
+			if (difficultyNum == -1) difficultyNum = PlayState.storyDifficulty;
 
-			var poop = Highscore.formatSong(name, difficultyNum);
-			Song.loadFromJson(poop, name);
+			var bigAssShit = Highscore.formatSong(name, difficultyNum);
+			PlayState.SONG = Song.loadFromJson(bigAssShit, name);
 			PlayState.storyDifficulty = difficultyNum;
 			FlxG.state.persistentUpdate = false;
 			LoadingState.loadAndSwitchState(new PlayState());
