@@ -139,10 +139,12 @@ class PhillyStreets extends BaseStage
 			setupRainShader();
 
 		var _song = PlayState.SONG;
-		if(_song.gameOverSound == null || _song.gameOverSound.trim().length < 1) GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pico';
+		if (!game.opponentPlay) {
+			if(_song.gameOverSound == null || _song.gameOverSound.trim().length < 1) GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pico';
+			if(_song.gameOverChar == null || _song.gameOverChar.trim().length < 1) GameOverSubstate.characterName = 'pico-dead';
+		}
 		if(_song.gameOverLoop == null || _song.gameOverLoop.trim().length < 1) GameOverSubstate.loopSoundName = 'gameOver-pico';
 		if(_song.gameOverEnd == null || _song.gameOverEnd.trim().length < 1) GameOverSubstate.endSoundName = 'gameOverEnd-pico';
-		if(_song.gameOverChar == null || _song.gameOverChar.trim().length < 1) GameOverSubstate.characterName = 'pico-dead';
 		setDefaultGF('nene');
 		
 		if (isStoryMode)
@@ -940,7 +942,7 @@ class PhillyStreets extends BaseStage
 
 				boyfriend.animation.finishCallback = function(name:String)
 				{
-					if (name == 'shootMISS' && game.health > 0.0 && !game.practiceMode && game.gameOverTimer == null)
+					if (name == 'shootMISS' && game.health > game.healthBar.bounds.min && !game.practiceMode && game.gameOverTimer == null)
 					{
 						//FlxFlicker was crashing so fuck it, FlxTimer all the way
 						picoFlicker = new FlxTimer().start(1 / 30, function(tmr:FlxTimer)
@@ -965,8 +967,8 @@ class PhillyStreets extends BaseStage
 					boyfriend.animation.finishCallback = null;
 				}
 				
-				game.health -= 0.4;
-				if(game.health <= 0.0 && !game.practiceMode)
+				game.health -= 0.4 * (game.opponentPlay ? -1 : 1);
+				if(game.health <= game.healthBar.bounds.min && !game.practiceMode)
 				{
 					GameOverSubstate.deathSoundName = 'fnf_loss_sfx-pico-explode';
 					GameOverSubstate.loopSoundName = 'gameOverStart-pico-explode';

@@ -87,7 +87,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		PlayState.instance.callOnScripts('onGameOverStart', []);
 		FlxG.sound.music.loadEmbedded(Paths.music(loopSoundName), true);
 
-		if(characterName == 'pico-dead' && !PlayState.instance.opponentPlay)
+		if(characterName == 'pico-dead')
 		{
 			overlay = new FlxSprite(boyfriend.x + 205, boyfriend.y - 80);
 			overlay.frames = Paths.getSparrowAtlas('Pico_Death_Retry');

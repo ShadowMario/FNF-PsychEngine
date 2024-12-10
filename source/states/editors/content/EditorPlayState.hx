@@ -119,6 +119,12 @@ class EditorPlayState extends MusicBeatSubstate
 		
 		generateStaticArrows(0);
 		generateStaticArrows(1);
+		if (ClientPrefs.data.middleScroll && opponentPlay) { // lol
+			var playerXs:Array<Float> = [for (strum in playerStrums) strum.x];
+			var opponentXs:Array<Float> = [for (strum in opponentStrums) strum.x];
+			for (i => strum in playerStrums) strum.x = opponentXs[i];
+			for (i => strum in opponentStrums) strum.x = playerXs[i];
+		}
 		/***************/
 		
 		scoreTxt = new FlxText(10, FlxG.height - 50, FlxG.width - 20, "", 20);
@@ -454,38 +460,18 @@ class EditorPlayState extends MusicBeatSubstate
 			babyArrow.downScroll = ClientPrefs.data.downScroll;
 			babyArrow.alpha = targetAlpha;
 
-			// lazy, this makes it so opponentStrums are on top when in opponent play
-			if (opponentPlay)
-			{
-				if (player == 0)
-					opponentStrums.add(babyArrow);
-				else
-				{
-					if(ClientPrefs.data.middleScroll)
-					{
-						babyArrow.x += 310;
-						if(i > 1) { //Up and Right
-							babyArrow.x += FlxG.width / 2 + 25;
-						}
-					}
-					playerStrums.add(babyArrow);
-				}
-			}
+			if (player == 1)
+				playerStrums.add(babyArrow);
 			else
 			{
-				if (player == 1)
-					playerStrums.add(babyArrow);
-				else
+				if(ClientPrefs.data.middleScroll)
 				{
-					if(ClientPrefs.data.middleScroll)
-					{
-						babyArrow.x += 310;
-						if(i > 1) { //Up and Right
-							babyArrow.x += FlxG.width / 2 + 25;
-						}
+					babyArrow.x += 310;
+					if(i > 1) { //Up and Right
+						babyArrow.x += FlxG.width / 2 + 25;
 					}
-					opponentStrums.add(babyArrow);
 				}
+				opponentStrums.add(babyArrow);
 			}
 
 			strumLineNotes.add(babyArrow);
@@ -816,8 +802,11 @@ class EditorPlayState extends MusicBeatSubstate
 
 	function opponentNoteHit(note:Note):Void
 	{
-		if (PlayState.SONG.needsVoices && opponentVocals.length <= 0)
-			vocals.volume = 1;
+		if (PlayState.SONG.needsVoices)
+			if (opponentVocals.length <= 0)
+				vocals.volume = 1;
+			else
+				opponentVocals.volume = 1;
 
 		if (opponentPlay) playerNoteHit(note);
 		else cpuNoteHit(note);

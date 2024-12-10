@@ -187,6 +187,9 @@ class PlayState extends MusicBeatState
 		setOnScripts('opponentPlay', value);
 		if (boyfriend != null) boyfriend.isPlayer = !value;
 		if (dad != null) dad.isPlayer = value;
+		for (i in 0...strumLineNotes.length)
+			strumLineNotes.members[i].playAnim('static', true);
+
 		return opponentPlay = value;
 	}
 
@@ -956,14 +959,19 @@ class PlayState extends MusicBeatState
 			canPause = true;
 			generateStaticArrows(0);
 			generateStaticArrows(1);
-			for (i in 0...playerStrums.length) {
-				setOnScripts('defaultPlayerStrumX' + i, playerStrums.members[i].x);
-				setOnScripts('defaultPlayerStrumY' + i, playerStrums.members[i].y);
+			if (ClientPrefs.data.middleScroll && opponentPlay) { // lol
+				var playerXs:Array<Float> = [for (strum in playerStrums) strum.x];
+				var opponentXs:Array<Float> = [for (strum in opponentStrums) strum.x];
+				for (i => strum in playerStrums) strum.x = opponentXs[i];
+				for (i => strum in opponentStrums) strum.x = playerXs[i];
 			}
-			for (i in 0...opponentStrums.length) {
-				setOnScripts('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
-				setOnScripts('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
-				//if(ClientPrefs.data.middleScroll) opponentStrums.members[i].visible = false;
+			for (i => strum in playerStrums) {
+				setOnScripts('defaultPlayerStrumX$i', strum.x);
+				setOnScripts('defaultPlayerStrumY$i', strum.y);
+			}
+			for (i => strum in opponentStrums) {
+				setOnScripts('defaultOpponentStrumX$i', strum.x);
+				setOnScripts('defaultOpponentStrumY$i', strum.y);
 			}
 
 			startedCountdown = true;
@@ -1536,38 +1544,18 @@ class PlayState extends MusicBeatState
 			}
 			else babyArrow.alpha = targetAlpha;
 
-			// lazy, this makes it so opponentStrums are on top when in opponent play
-			if (opponentPlay)
-			{
-				if (player == 0)
-					opponentStrums.add(babyArrow);
-				else
-				{
-					if(ClientPrefs.data.middleScroll)
-					{
-						babyArrow.x += 310;
-						if(i > 1) { //Up and Right
-							babyArrow.x += FlxG.width / 2 + 25;
-						}
-					}
-					playerStrums.add(babyArrow);
-				}
-			}
+			if (player == 1)
+				playerStrums.add(babyArrow);
 			else
 			{
-				if (player == 1)
-					playerStrums.add(babyArrow);
-				else
+				if(ClientPrefs.data.middleScroll)
 				{
-					if(ClientPrefs.data.middleScroll)
-					{
-						babyArrow.x += 310;
-						if(i > 1) { //Up and Right
-							babyArrow.x += FlxG.width / 2 + 25;
-						}
+					babyArrow.x += 310;
+					if(i > 1) { //Up and Right
+						babyArrow.x += FlxG.width / 2 + 25;
 					}
-					opponentStrums.add(babyArrow);
 				}
+				opponentStrums.add(babyArrow);
 			}
 
 			strumLineNotes.add(babyArrow);
@@ -3027,6 +3015,7 @@ class PlayState extends MusicBeatState
 		if (opponentPlay) playerNoteHit(note);
 		else cpuNoteHit(note);
 		if(opponentVocals.length <= 0) vocals.volume = 1;
+		else opponentVocals.volume = 1;
 		note.hitByOpponent = true;
 
 		// dad hit
