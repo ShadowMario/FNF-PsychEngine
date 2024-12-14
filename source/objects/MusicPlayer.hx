@@ -92,9 +92,9 @@ class MusicPlayer extends FlxGroup
 
 		var songName:String = instance.songs[FreeplayState.curSelected].songName;
 		if (playing && !wasPlaying)
-			songTxt.text = Language.getPhrase('musicplayer_playing', 'PLAYING: {1}', [songName]);
+			songTxt.text = Language.getPhrase('musicplayer_playing', 'Playing: {1}', [songName]);
 		else
-			songTxt.text = Language.getPhrase('musicplayer_paused', 'PLAYING: {1} (PAUSED)', [songName]);
+			songTxt.text = Language.getPhrase('musicplayer_paused', 'Playing: {1} (Paused)', [songName]);
 
 		//if(FlxG.keys.justPressed.K) trace('Time: ${FreeplayState.vocals.time}, Playing: ${FreeplayState.vocals.playing}');
 
@@ -161,13 +161,13 @@ class MusicPlayer extends FlxGroup
 		if (controls.UI_UP_P)
 		{
 			holdPitchTime = 0;
-			playbackRate += 0.05;
+			playbackRate += 0.01;
 			setPlaybackRate();
 		}
 		else if (controls.UI_DOWN_P)
 		{
 			holdPitchTime = 0;
-			playbackRate -= 0.05;
+			playbackRate -= 0.01;
 			setPlaybackRate();
 		}
 		if (controls.UI_DOWN || controls.UI_UP)
@@ -175,7 +175,7 @@ class MusicPlayer extends FlxGroup
 			holdPitchTime += elapsed;
 			if (holdPitchTime > 0.6)
 			{
-				playbackRate += 0.05 * (controls.UI_UP ? 1 : -1);
+				playbackRate += 0.01 * (controls.UI_UP ? 1 : -1);
 				setPlaybackRate();
 			}
 		}
@@ -259,7 +259,7 @@ class MusicPlayer extends FlxGroup
 
 		if (playingMusic)
 		{
-			instance.bottomText.text = Language.getPhrase('musicplayer_tip', 'Press SPACE to Pause / Press ESCAPE to Exit / Press R to Reset the Song');
+			instance.bottomText.text = Language.getPhrase('musicplayer_tip', 'Press SPACE to pause / Press ESCAPE to exit / Press R to reset the song');
 			positionSong();
 			
 			progressBar.setRange(0, FlxG.sound.music.length);
