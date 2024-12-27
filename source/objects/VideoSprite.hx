@@ -105,7 +105,6 @@ class VideoSprite extends FlxSpriteGroup {
 		onSkip = null;
 
 		PlayState.instance.remove(this);
-		super.destroy();
 	}
 
 	override function update(elapsed:Float)
@@ -129,6 +128,7 @@ class VideoSprite extends FlxSpriteGroup {
 				videoSprite.bitmap.onEndReached.dispatch();
 				PlayState.instance.remove(this);
 				trace('Skipped video');
+				super.destroy();
 				return;
 			}
 		}
