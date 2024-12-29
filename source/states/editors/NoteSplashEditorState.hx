@@ -46,9 +46,9 @@ class NoteSplashEditorState extends MusicBeatState
         #end
 
         var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.scrollFactor.set();
-		bg.color = 0xFF505050;
-		add(bg);      
+        bg.scrollFactor.set();
+        bg.color = 0xFF505050;
+        add(bg);      
 
         UI = new PsychUIBox(0, 0, 0, 0, ["Animation"]);
         UI.canMove = UI.canMinimize = false;
@@ -362,8 +362,8 @@ class NoteSplashEditorState extends MusicBeatState
 
         var rgbText = new FlxText(allowRGBCheck.x + 20, 0);
         rgbText.text = "Allow RGB?";
-		rgbText.y = allowRGBCheck.y + 2.5;
-		ui.add(rgbText);
+        rgbText.y = allowRGBCheck.y + 2.5;
+        ui.add(rgbText);
 
         ui.add(allowRGBCheck);
 
@@ -378,8 +378,8 @@ class NoteSplashEditorState extends MusicBeatState
 
         var pixelText = new FlxText(allowPixelCheck.x + 20, 0);
         pixelText.text = "Allow Pixel?";
-		pixelText.y = allowPixelCheck.y + 2.5;
-		ui.add(pixelText);
+        pixelText.y = allowPixelCheck.y + 2.5;
+        ui.add(pixelText);
 
         ui.add(allowPixelCheck);
     }
@@ -492,8 +492,8 @@ class NoteSplashEditorState extends MusicBeatState
         //
     }
 
-	var holdingArrowsTime:Float = 0;
-	var holdingArrowsElapsed:Float = 0;
+    var holdingArrowsTime:Float = 0;
+    var holdingArrowsElapsed:Float = 0;
     var copiedOffset:Array<Float> = [0, 0];
     override function update(elapsed:Float)
     { 
@@ -737,36 +737,36 @@ class NoteSplashEditorState extends MusicBeatState
 
     var _file:FileReference;
     function onSaveComplete(_):Void
-	{
-		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
-		_file.removeEventListener(Event.CANCEL, onSaveCancel);
-		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-		_file = null;
-		FlxG.log.notice("Successfully saved file.");
-	}
+    {
+        _file.removeEventListener(Event.COMPLETE, onSaveComplete);
+        _file.removeEventListener(Event.CANCEL, onSaveCancel);
+        _file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+        _file = null;
+        FlxG.log.notice("Successfully saved file.");
+    }
 
-	/**
-	 * Called when the save file dialog is cancelled.
-	 */
-	function onSaveCancel(_):Void
-	{
-		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
-		_file.removeEventListener(Event.CANCEL, onSaveCancel);
-		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-		_file = null;
-	}
+    /**
+     * Called when the save file dialog is cancelled.
+     */
+    function onSaveCancel(_):Void
+    {
+        _file.removeEventListener(Event.COMPLETE, onSaveComplete);
+        _file.removeEventListener(Event.CANCEL, onSaveCancel);
+        _file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+        _file = null;
+    }
 
-	/**
-	 * Called if there is an error while saving the gameplay recording.
-	 */
-	function onSaveError(_):Void
-	{
-		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
-		_file.removeEventListener(Event.CANCEL, onSaveCancel);
-		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-		_file = null;
-		FlxG.log.error("Problem saving file");
-	}
+    /**
+     * Called if there is an error while saving the gameplay recording.
+     */
+    function onSaveError(_):Void
+    {
+        _file.removeEventListener(Event.COMPLETE, onSaveComplete);
+        _file.removeEventListener(Event.CANCEL, onSaveCancel);
+        _file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+        _file = null;
+        FlxG.log.error("Problem saving file");
+    }
 
     function saveSplash()
     {
@@ -775,32 +775,32 @@ class NoteSplashEditorState extends MusicBeatState
         if (data.length > 0)
         {
             _file = new FileReference();
-			_file.addEventListener(Event.COMPLETE, onSaveComplete);
-			_file.addEventListener(Event.CANCEL, onSaveCancel);
-			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(data, imageSkin + ".json");
+            _file.addEventListener(Event.COMPLETE, onSaveComplete);
+            _file.addEventListener(Event.CANCEL, onSaveCancel);
+            _file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+            _file.save(data, imageSkin + ".json");
         }
     }
 
-	public function loadTxt()
-	{
-		var jsonFilter:FileFilter = new FileFilter('Select a note splash TXT', '*.txt');
-		_file = new FileReference();
-		_file.addEventListener(Event.SELECT, onLoadComplete);
-		_file.addEventListener(Event.CANCEL, onLoadCancel);
-		_file.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
-		_file.browse([#if !mac jsonFilter #end]);
-	}
+    public function loadTxt()
+    {
+        var jsonFilter:FileFilter = new FileFilter('Select a note splash TXT', '*.txt');
+        _file = new FileReference();
+        _file.addEventListener(Event.SELECT, onLoadComplete);
+        _file.addEventListener(Event.CANCEL, onLoadCancel);
+        _file.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+        _file.browse([#if !mac jsonFilter #end]);
+    }
 
-	function onLoadComplete(_):Void
-	{
-		_file.removeEventListener(Event.SELECT, onLoadComplete);
-		_file.removeEventListener(Event.CANCEL, onLoadCancel);
-		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+    function onLoadComplete(_):Void
+    {
+        _file.removeEventListener(Event.SELECT, onLoadComplete);
+        _file.removeEventListener(Event.CANCEL, onLoadCancel);
+        _file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 
-		try 
-		{
-			var txtLoaded:Dynamic = Json.parse(Json.stringify(_file));
+        try 
+        {
+            var txtLoaded:Dynamic = Json.parse(Json.stringify(_file));
             var txt:String = null;
             var file:String = "config.json";
             #if MODS_ALLOWED
@@ -813,41 +813,41 @@ class NoteSplashEditorState extends MusicBeatState
 
             var conf = parseTxt(txt);
             _file = new FileReference();
-			_file.addEventListener(Event.COMPLETE, onSaveComplete);
-			_file.addEventListener(Event.CANCEL, onSaveCancel);
-			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(Json.stringify(conf, "\t"), file);
+            _file.addEventListener(Event.COMPLETE, onSaveComplete);
+            _file.addEventListener(Event.CANCEL, onSaveCancel);
+            _file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+            _file.save(Json.stringify(conf, "\t"), file);
             #end
-		}
-		catch (e)
-		{
-			trace(e.stack);
-		}
-	}
+        }
+        catch (e)
+        {
+            trace(e.stack);
+        }
+    }
 
-	/**
-	 * Called when the save file dialog is cancelled.
-	 */
-	function onLoadCancel(_):Void
-	{
-		_file.removeEventListener(Event.SELECT, onLoadComplete);
-		_file.removeEventListener(Event.CANCEL, onLoadCancel);
-		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
-		_file = null;
-		trace("Cancelled file loading.");
-	}
+    /**
+     * Called when the save file dialog is cancelled.
+     */
+    function onLoadCancel(_):Void
+    {
+        _file.removeEventListener(Event.SELECT, onLoadComplete);
+        _file.removeEventListener(Event.CANCEL, onLoadCancel);
+        _file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+        _file = null;
+        trace("Cancelled file loading.");
+    }
 
-	/**
-	 * Called if there is an error while saving the gameplay recording.
-	 */
-	function onLoadError(_):Void
-	{
-		_file.removeEventListener(Event.SELECT, onLoadComplete);
-		_file.removeEventListener(Event.CANCEL, onLoadCancel);
-		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
-		_file = null;
-		trace("Problem loading file");
-	}
+    /**
+     * Called if there is an error while saving the gameplay recording.
+     */
+    function onLoadError(_):Void
+    {
+        _file.removeEventListener(Event.SELECT, onLoadComplete);
+        _file.removeEventListener(Event.CANCEL, onLoadCancel);
+        _file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+        _file = null;
+        trace("Problem loading file");
+    }
 
     override function destroy()
     {
@@ -856,72 +856,72 @@ class NoteSplashEditorState extends MusicBeatState
 
         FlxG.sound.music.volume = 1;
         FlxG.sound.muteKeys = [FlxKey.ZERO];
-	    FlxG.sound.volumeDownKeys = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
-	    FlxG.sound.volumeUpKeys = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
+        FlxG.sound.volumeDownKeys = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
+        FlxG.sound.volumeUpKeys = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
     }
 
     public static function parseTxt(content:String):NoteSplashConfig
-	{
-		var config = NoteSplash.createConfig();
-		if (content == null)
-			return config;
+    {
+        var config = NoteSplash.createConfig();
+        if (content == null)
+            return config;
 
-		var trim:String = content.trim();
-		if (trim.length < 1) // empty txt
-			return config;
+        var trim:String = content.trim();
+        if (trim.length < 1) // empty txt
+            return config;
 
-		var configs = content.split('\n');
-		// checks for empty txts
-		if (configs.length < 2 || configs[0].trim() == "")
-			return config;
+        var configs = content.split('\n');
+        // checks for empty txts
+        if (configs.length < 2 || configs[0].trim() == "")
+            return config;
 
-		var animation:String = configs[0].rtrim();
-		var fps:Array<Null<Int>> = [22, 26];
-		if (configs[1] != null && configs[1].trim() != "")
-		{
-			var newFps = configs[1].trim().split(" ");
-			fps = [Std.parseInt(newFps[0]), Std.parseInt(newFps[1])];
-			if (fps[0] == null) fps[0] = 22;
-			if (fps[1] == null) fps[1] = 26;
-		}
+        var animation:String = configs[0].rtrim();
+        var fps:Array<Null<Int>> = [22, 26];
+        if (configs[1] != null && configs[1].trim() != "")
+        {
+            var newFps = configs[1].trim().split(" ");
+            fps = [Std.parseInt(newFps[0]), Std.parseInt(newFps[1])];
+            if (fps[0] == null) fps[0] = 22;
+            if (fps[1] == null) fps[1] = 26;
+        }
 
-		var offsets:Array<Array<Null<Float>>> = [[0, 0]];
-		if (configs.length > 2)
-		{
-			offsets = [];
-			for (i in 2...configs.length)
-			{
-				var offset = configs[i].trim();
-				if (offset != "")
-				{
-					var offset:Array<String> = offset.split(" ");
-					var x:Float = Std.parseFloat(offset[0]);
-					var y:Float = Std.parseFloat(offset[1]);
-					if (Math.isNaN(x)) x = 0;
-					if (Math.isNaN(y)) y = 0;
-					offsets.push([x, y]);
-				}
-			}
-		}
+        var offsets:Array<Array<Null<Float>>> = [[0, 0]];
+        if (configs.length > 2)
+        {
+            offsets = [];
+            for (i in 2...configs.length)
+            {
+                var offset = configs[i].trim();
+                if (offset != "")
+                {
+                    var offset:Array<String> = offset.split(" ");
+                    var x:Float = Std.parseFloat(offset[0]);
+                    var y:Float = Std.parseFloat(offset[1]);
+                    if (Math.isNaN(x)) x = 0;
+                    if (Math.isNaN(y)) y = 0;
+                    offsets.push([x, y]);
+                }
+            }
+        }
 
-		var i = 0;
-		var k = 1;
-		while (true)
-		{
-			for (col in Note.colArray)
-			{
-				var anim = k <= 1 ? col : '$col' + k;
-				var offset = offsets[FlxMath.wrap(i, 0, Std.int(offsets.length - 1))];
+        var i = 0;
+        var k = 1;
+        while (true)
+        {
+            for (col in Note.colArray)
+            {
+                var anim = k <= 1 ? col : '$col' + k;
+                var offset = offsets[FlxMath.wrap(i, 0, Std.int(offsets.length - 1))];
 
-				config = NoteSplash.addAnimationToConfig(config, 1, anim, '$animation $col $k', fps, offset, [], i);
-				i++;
-			}
-			if (offsets[i] == null) break;
-			k++;
-		}
+                config = NoteSplash.addAnimationToConfig(config, 1, anim, '$animation $col $k', fps, offset, [], i);
+                i++;
+            }
+            if (offsets[i] == null) break;
+            k++;
+        }
 
-		return config;
-	}
+        return config;
+    }
 }
 
 
@@ -935,35 +935,35 @@ class NoteSplashEditorHelpSubState extends MusicBeatSubstate
         bg.alpha = 0.6;
         add(bg);
 
-		var str:Array<String> = ["Click on a Strum or Press Space",
-		"to spawn a Splash",
-		"",
-		"Arrow Keys - Move Offset",
-		"Hold Shift - Move Offsets 10x faster",
-		"",
-		"Ctrl + C - Copy Current Offset",
-		"Ctrl + V - Paste Copied Offset on Current Splash",
-		"Ctrl + R - Reset Current Offset",
-		"",
-		"On every 4 subsequent note datas",
-		"an extra set of animations will be added"];
+        var str:Array<String> = ["Click on a Strum or Press Space",
+        "to spawn a Splash",
+        "",
+        "Arrow Keys - Move Offset",
+        "Hold Shift - Move Offsets 10x faster",
+        "",
+        "Ctrl + C - Copy Current Offset",
+        "Ctrl + V - Paste Copied Offset on Current Splash",
+        "Ctrl + R - Reset Current Offset",
+        "",
+        "On every 4 subsequent note datas",
+        "an extra set of animations will be added"];
 
-		var helpTexts:FlxSpriteGroup = new FlxSpriteGroup();
-		for (i => txt in str)
-		{
-			if(txt.length < 1) continue;
+        var helpTexts:FlxSpriteGroup = new FlxSpriteGroup();
+        for (i => txt in str)
+        {
+            if(txt.length < 1) continue;
 
-			var helpText:FlxText = new FlxText(0, 0, 0, txt, 24);
-			helpText.setFormat(null, 24, FlxColor.WHITE, CENTER, OUTLINE_FAST, FlxColor.BLACK);
-			helpText.borderColor = FlxColor.BLACK;
-			helpText.scrollFactor.set();
-			helpText.borderSize = 1;
-			helpText.screenCenter();
-			add(helpText);
-			helpText.y += ((i - str.length/2) * 32) + 16;
-			helpTexts.add(helpText);
-		}
-		add(helpTexts);
+            var helpText:FlxText = new FlxText(0, 0, 0, txt, 24);
+            helpText.setFormat(null, 24, FlxColor.WHITE, CENTER, OUTLINE_FAST, FlxColor.BLACK);
+            helpText.borderColor = FlxColor.BLACK;
+            helpText.scrollFactor.set();
+            helpText.borderSize = 1;
+            helpText.screenCenter();
+            add(helpText);
+            helpText.y += ((i - str.length/2) * 32) + 16;
+            helpTexts.add(helpText);
+        }
+        add(helpTexts);
 
         var noteDataText:FlxText = new FlxText();
         noteDataText.setFormat(null, 24, FlxColor.WHITE, RIGHT, OUTLINE_FAST, FlxColor.BLACK);
