@@ -14,8 +14,10 @@ body:
     attributes:
       label: "Are you modding a build from source or with Lua?"
       options:
+        - None/Other
         - Lua
         - Source
+        - Lua & Source
     validations:
       required: true
 
