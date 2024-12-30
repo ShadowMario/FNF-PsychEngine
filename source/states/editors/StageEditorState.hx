@@ -127,11 +127,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 	var showSelectionQuad:Bool = true;
 	function addHelpScreen()
 	{
-		#if FLX_DEBUG
-		var btn = 'F3';
-		#else
-		var btn = 'F2';
-		#end
+		final btn = #if FLX_DEBUG 'F3' #else 'F2' #end;
 
 		var str:Array<String> = ["E/Q - Camera Zoom In/Out",
 			"J/K/L/I - Move Camera",
@@ -768,6 +764,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 	var lowQualityCheckbox:PsychUICheckBox;
 	var highQualityCheckbox:PsychUICheckBox;
 
+	var blendDropDown:PsychUIDropDownMenu;
+
 	function getSelected(blockReserved:Bool = true)
 	{
 		var selected:Int = spriteListRadioGroup.checked;
@@ -936,9 +934,22 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		};
 		tab_group.add(angleStepper);
 
+		final blendList:Array<String> = [
+			'normal', 'add', 'alpha', 'darken', 'difference', 'erase', 'hardlight', 'invert',
+			'layer', 'lighten', 'multiply', 'overlay', 'screen', 'shader', 'subtract'
+		];
+		tab_group.add(new FlxText(objX + 90, objY - 18, 80, 'Blend Mode:'));
+		blendDropDown = new PsychUIDropDownMenu(objX + 90, objY, blendList, function(sel:Int, value:String) {
+			// blend mode
+			var selected = getSelected();
+			if(selected != null)
+				selected.blend = value;
+		});
+		blendDropDown.selectedLabel = blendList[0];
+
 		function updateFlip()
 		{
-			//flip X and flip Y
+			// flip X and flip Y
 			var selected = getSelected();
 			if(selected != null)
 			{
@@ -983,6 +994,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		highQualityCheckbox.onClick = recalcFilter;
 		tab_group.add(lowQualityCheckbox);
 		tab_group.add(highQualityCheckbox);
+
+		tab_group.add(blendDropDown);
 	}
 
 	var oppDropdown:PsychUIDropDownMenu;
@@ -1105,8 +1118,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			#end
 
 			stageJson = StageData.getStageFile(lastLoadedStage);
-			updateSpriteList();
 			updateStageDataUI();
+			updateSpriteList();
 			reloadCharacters();
 			reloadStageDropDown();
 		});
@@ -1118,8 +1131,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 			#end
 
 			stageJson = StageData.dummy();
-			updateSpriteList();
 			updateStageDataUI();
+			updateSpriteList();
 			reloadCharacters();
 		});
 		dummyStage.normalStyle.bgColor = FlxColor.RED;
@@ -1140,8 +1153,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 				#if DISCORD_ALLOWED
 				DiscordClient.changePresence('Stage Editor', 'Stage: ' + lastLoadedStage);
 				#end
-				updateSpriteList();
 				updateStageDataUI();
+				updateSpriteList();
 				reloadCharacters();
 				reloadStageDropDown();
 			}
@@ -1250,6 +1263,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		scrollStepperY.value = selected.scroll[1];
 		angleStepper.value = selected.angle;
 		alphaStepper.value = selected.alpha;
+		blendDropDown.selectedLabel = selected.blend;
 
 		// Checkboxes
 		antialiasingCheckbox.checked = selected.antialiasing;
@@ -1859,6 +1873,12 @@ class StageEditorMetaSprite
 	function get_angle() return sprite.angle;
 	function set_angle(v:Float) return (sprite.angle = v);
 
+	public var blend(default, set):String = 'normal';
+	function set_blend(v:String)
+	{
+		sprite.blend = LuaUtils.blendModeFromString(v);
+		return (blend = v);
+	}
 	public var color(default, set):String = 'FFFFFF';
 	function set_color(v:String)
 	{
@@ -1927,7 +1947,7 @@ class StageEditorMetaSprite
 		switch(this.type)
 		{
 			case 'sprite', 'square', 'animatedSprite':
-				for (v in ['name', 'image', 'scale', 'scroll', 'color', 'filters', 'antialiasing'])
+				for (v in ['name', 'image', 'scale', 'scroll', 'color', 'blend', 'filters', 'antialiasing'])
 				{
 					var dat:Dynamic = Reflect.field(data, v);
 					if(dat != null) Reflect.setField(this, v, dat);
@@ -1955,6 +1975,7 @@ class StageEditorMetaSprite
 				obj.alpha = alpha;
 				obj.angle = angle;
 				obj.color = color;
+				obj.blend = blend;
 				obj.filters = filters;
 
 				if(type != 'square')
