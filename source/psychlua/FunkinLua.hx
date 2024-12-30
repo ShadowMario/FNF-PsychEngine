@@ -32,9 +32,7 @@ import substates.GameOverSubstate;
 
 import psychlua.LuaUtils;
 import psychlua.LuaUtils.LuaTweenOptions;
-#if HSCRIPT_ALLOWED
 import psychlua.HScript;
-#end
 import psychlua.DebugLuaText;
 import psychlua.ModchartSprite;
 
@@ -49,13 +47,34 @@ class FunkinLua {
 	public var scriptName:String = '';
 	public var modFolder:String = null;
 	public var closed:Bool = false;
-
-	#if HSCRIPT_ALLOWED
-	public var hscript:HScript = null;
-	#end
-
+	
 	public var callbacks:Map<String, Dynamic> = new Map<String, Dynamic>();
 	public static var customFunctions:Map<String, Dynamic> = new Map<String, Dynamic>();
+	
+	#if LUA_ALLOWED
+	public var parentLua:FunkinLua;
+	#end
+	
+	#if HSCRIPT_ALLOWED
+	public var hscript:HScript = null;
+	public function initHaxeModule(code:String = '', ?varsToBring:Dynamic) {
+		@:privateAccess {
+		if (hscript == null) {
+			trace('initializing haxe interp for: $scriptName');
+			hscript = new HScript(this);
+		}
+		try {
+			if (hscript.scriptCode != code) {
+				hscript.scriptCode = code;
+				hscript.parse(true);
+			}
+		} catch (e) {
+			throw e;
+		}
+		hscript.varsToBring = varsToBring;
+		}
+	}
+	#end
 
 	public function new(scriptName:String) {
 		lua = LuaL.newstate();
@@ -1539,10 +1558,10 @@ class FunkinLua {
 			return closed;
 		});
 
+		HScript.implement(this);
 		#if DISCORD_ALLOWED DiscordClient.addLuaCallbacks(lua); #end
 		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(lua); #end
 		#if TRANSLATIONS_ALLOWED Language.addLuaCallbacks(lua); #end
-		#if HSCRIPT_ALLOWED HScript.implement(this); #end
 		#if flxanimate FlxAnimateFunctions.implement(this); #end
 		ReflectionFunctions.implement(this);
 		TextFunctions.implement(this);
@@ -1567,12 +1586,7 @@ class FunkinLua {
 
 			var resultStr:String = Lua.tostring(lua, result);
 			if(resultStr != null && result != 0) {
-				trace(resultStr);
-				#if windows
-				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
-				#else
-				luaTrace('$scriptName\n$resultStr', true, false, FlxColor.RED);
-				#end
+				luaTrace('ERROR ON LOADING ($scriptName): $resultStr', true, false, 0xffb30000);
 				lua = null;
 				return;
 			}
