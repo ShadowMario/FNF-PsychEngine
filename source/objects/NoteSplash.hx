@@ -223,8 +223,7 @@ class NoteSplash extends FlxSprite
 				if ((note == null || !note.noteSplashData.useGlobalShader) || inEditor)
 				{
 					var colors = config.rgb;
-					if (note != null && note.noteSplashData.useNoteRGB) tempShader = note.rgbShader.parent;
-					else if (colors != null)
+					if (colors != null)
 					{
 						for (i in 0...colors.length)
 						{
@@ -256,7 +255,11 @@ class NoteSplash extends FlxSprite
 							else if (i == 2) tempShader.b = color;
 						}
 					}
-					else tempShader.copyValues(Note.globalRgbShaders[noteData % Note.colArray.length]);
+					else 
+					{
+						tempShader.copyValues(Note.globalRgbShaders[noteData % Note.colArray.length]);
+           					if (note != null && note.noteSplashData.useNoteRGB) tempShader = note.rgbShader.parent;
+					}
 
 					if (note != null)
 					{
