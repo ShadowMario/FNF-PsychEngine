@@ -82,7 +82,7 @@ class NoteSplash extends FlxSprite
 			this.config = configs.get(path);
 			for (anim in this.config.animations)
 			{
-				if (anim.noteData % 4 == 0)
+				if (anim.noteData % Note.colArray.length == 0)
 					maxAnims++;
 			}
 			return;
@@ -104,7 +104,7 @@ class NoteSplash extends FlxSprite
 				{
 					var anim:NoteSplashAnim = Reflect.field(config.animations, i);
 					tempConfig.animations.set(i, anim);
-					if (anim.noteData % 4 == 0)
+					if (anim.noteData % Note.colArray.length == 0)
 						maxAnims++;
 				}
 
