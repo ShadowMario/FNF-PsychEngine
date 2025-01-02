@@ -634,6 +634,15 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		StageData.loadDirectory(PlayState.SONG);
 
 		// DATA TAB
+		gameOverCharDropDown.selectedLabel = PlayState.SONG.gameOverChar;
+		gameOverSndInputText.text = PlayState.SONG.gameOverSound;
+		gameOverLoopInputText.text = PlayState.SONG.gameOverLoop;
+		gameOverRetryInputText.text = PlayState.SONG.gameOverEnd;
+
+		noRGBCheckBox.checked = (PlayState.SONG.disableNoteRGB == true);
+
+		noteTextureInputText.text = PlayState.SONG.arrowSkin;
+		noteSplashesInputText.text = PlayState.SONG.splashSkin;
 	}
 	
 	var noteSelectionSine:Float = 0;
