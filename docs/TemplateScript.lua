@@ -1,47 +1,49 @@
 -- Lua stuff
 
 function onCreate()
-	-- triggered when the lua file is started, some variables weren't created yet
+	-- Triggered when the lua file is started, some variables weren't created yet
 end
 
 function onCreatePost()
-	-- end of "create"
+	-- End of "create"
 end
 
 function onDestroy()
-	-- triggered when the lua file is ended (Song fade out finished)
+	-- Triggered when the lua file is ended
 end
 
 
 -- Gameplay/Song interactions
 function onSectionHit()
-	-- triggered after it goes to the next section
+	-- Triggered after it goes to the next section
 end
 
 function onBeatHit()
-	-- triggered 4 times per section
+	-- Triggered 4 times per section
 end
 
 function onStepHit()
-	-- triggered 16 times per section
+	-- Triggered 16 times per section
 end
 
 function onUpdate(elapsed)
-	-- start of "update", some variables weren't updated yet
+	-- Start of "update", some variables weren't updated yet
+	-- Also gets called while in the game over screen
 end
 
 function onUpdatePost(elapsed)
-	-- end of "update"
+	-- End of "update"
+	-- Also gets called while in the game over screen
 end
 
 function onStartCountdown()
-	-- countdown started, duh
+	-- Countdown started, duh
 	-- return Function_Stop if you want to stop the countdown from happening (Can be used to trigger dialogues and stuff! You can trigger the countdown with startCountdown())
 	return Function_Continue;
 end
 
 function onCountdownStarted()
-	-- called AFTER countdown started, if you want to stop it from starting, refer to the previous function (onStartCountdown)
+	-- Called AFTER countdown started, if you want to stop it from starting, refer to the previous function (onStartCountdown)
 end
 
 function onCountdownTick(counter)
@@ -62,7 +64,7 @@ function onSongStart()
 end
 
 function onEndSong()
-	-- song ended/starting transition (Will be delayed if you're unlocking an achievement)
+	-- Song ended/starting transition (Will be delayed if you're unlocking an achievement)
 	-- return Function_Stop to stop the song from ending for playing a cutscene or something.
 	return Function_Continue;
 end
@@ -85,6 +87,10 @@ function onGameOver()
 	return Function_Continue;
 end
 
+function onGameOverStart()
+	-- Called when you have entered the game over screen and "onGameOver" wasn't stopped
+end
+
 function onGameOverConfirm(retry)
 	-- Called when you Press Enter/Esc on Game Over
 	-- If you've pressed Esc, value "retry" will be false
@@ -93,38 +99,51 @@ end
 
 -- Dialogue (When a dialogue is finished, it calls startCountdown again)
 function onNextDialogue(line)
-	-- triggered when the next dialogue line starts, dialogue line starts with 1
+	-- triggered when the next dialogue line starts, dialogue line starts at 0 (first line), although it won't be triggered on line 0
 end
 
 function onSkipDialogue(line)
-	-- triggered when you press Enter and skip a dialogue line that was still being typed, dialogue line starts with 1
+	-- triggered when you press Enter and skip a dialogue line that was still being typed, dialogue line starts at 0 (first line)
 end
 
 
 -- Key Press/Release
+function onKeyPressPre(key)
+	-- Called before the note key press calculations
+	-- "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
+end
+
+function onKeyReleasePre(key)
+	-- Called before the note key release calculations
+	-- "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
+end
+
 function onKeyPress(key)
-	-- key can be: 0 - left, 1 - down, 2 - up, 3 - right
+	-- Called after the note key press calculations
+	-- "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
 end
 
 function onKeyRelease(key)
-	-- key can be: 0 - left, 1 - down, 2 - up, 3 - right
+	-- Called after the note key release calculations
+	-- "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
 end
 
 function onGhostTap(key)
-	-- key can be: 0 - left, 1 - down, 2 - up, 3 - right
+	-- Player pressed a button, but there was no note to hit and "Ghost Tapping" is enabled (ghost tap)
+	-- "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
 end
 
 
 -- Note miss/hit
 ---- PRE
-function goodNoteHitPre(id, direction, noteType, isSustainNote)
+function goodNoteHitPre(id, noteData, noteType, isSustainNote)
 	-- Function called when you hit a note (***before*** note hit calculations)
 	-- id: The note member id, you can get whatever variable you want from this note, example: "getPropertyFromGroup('notes', id, 'strumTime')"
 	-- noteData: 0 = Left, 1 = Down, 2 = Up, 3 = Right
 	-- noteType: The note type string
 	-- isSustainNote: If it's a hold note, can be either true or false
 end
-function opponentNoteHitPre(id, direction, noteType, isSustainNote)
+function opponentNoteHitPre(id, noteData, noteType, isSustainNote)
 	-- Function called when the opponent hits a note (***before*** note hit calculations)
 	-- id: The note member id, you can get whatever variable you want from this note, example: "getPropertyFromGroup('notes', id, 'strumTime')"
 	-- noteData: 0 = Left, 1 = Down, 2 = Up, 3 = Right
@@ -133,14 +152,14 @@ function opponentNoteHitPre(id, direction, noteType, isSustainNote)
 end
 
 ---- POST
-function goodNoteHit(id, direction, noteType, isSustainNote)
+function goodNoteHit(id, noteData, noteType, isSustainNote)
 	-- Function called when you hit a note (***after*** note hit calculations)
 	-- id: The note member id, you can get whatever variable you want from this note, example: "getPropertyFromGroup('notes', id, 'strumTime')"
 	-- noteData: 0 = Left, 1 = Down, 2 = Up, 3 = Right
 	-- noteType: The note type string
 	-- isSustainNote: If it's a hold note, can be either true or false
 end
-function opponentNoteHit(id, direction, noteType, isSustainNote)
+function opponentNoteHit(id, noteData, noteType, isSustainNote)
 	-- Function called when the opponent hits a note (***after*** note hit calculations)
 	-- id: The note member id, you can get whatever variable you want from this note, example: "getPropertyFromGroup('notes', id, 'strumTime')"
 	-- noteData: 0 = Left, 1 = Down, 2 = Up, 3 = Right
@@ -160,6 +179,18 @@ end
 
 
 -- Other function hooks
+function preUpdateScore(miss)
+	-- Called before the score text updates
+	-- "miss" will be true if you missed
+	-- return Function_Stop if you want to stop the score text from updating
+	return Function_Continue
+end
+
+function onUpdateScore(miss)
+	-- Called after the score text updates
+	-- "miss" will be true if you missed
+end
+
 function onRecalculateRating()
 	-- return Function_Stop if you want to do your own rating calculation,
 	-- use setRatingPercent() to set the number on the calculation and setRatingString() to set the funny rating name
@@ -168,18 +199,21 @@ function onRecalculateRating()
 end
 
 function onMoveCamera(focus)
+	--Called when the camera focuses to a character
+
 	if focus == 'boyfriend' then
-		-- called when the camera focus on boyfriend
+		-- Called when the camera focuses on boyfriend
 	elseif focus == 'dad' then
-		-- called when the camera focus on dad
+		-- Called when the camera focuses on dad
+	elseif focus == 'gf' then
+		-- Called when the camera focuses on girlfriend
 	end
 end
 
 
 -- Event notes hooks
 function onEvent(name, value1, value2, strumTime)
-	-- event note triggered
-	-- triggerEvent() does not call this function!!
+	-- Event note triggered
 
 	-- print('Event triggered: ', name, value1, value2, strumTime);
 end
@@ -188,7 +222,7 @@ function onEventPushed(name, value1, value2, strumTime)
 	-- Called for every event note, recommended to precache assets
 end
 
-function eventEarlyTrigger(name)
+function eventEarlyTrigger(name, value1, value2, strumTime)
 	--[[
 	Here's a port of the Kill Henchmen early trigger but on Lua instead of Haxe:
 
@@ -205,30 +239,31 @@ end
 
 -- Custom Substates
 function onCustomSubstateCreate(name)
-	-- name is defined on "openCustomSubstate(name)"
+	-- "name" is defined on "openCustomSubstate(name)"
 end
 
 function onCustomSubstateCreatePost(name)
-	-- name is defined on "openCustomSubstate(name)"
+	-- "name" is defined on "openCustomSubstate(name)"
 end
 
 function onCustomSubstateUpdate(name, elapsed)
-	-- name is defined on "openCustomSubstate(name)"
+	-- "name" is defined on "openCustomSubstate(name)"
 end
 
 function onCustomSubstateUpdatePost(name, elapsed)
-	-- name is defined on "openCustomSubstate(name)"
+	-- "name" is defined on "openCustomSubstate(name)"
 end
 
 function onCustomSubstateDestroy(name)
-	-- name is defined on "openCustomSubstate(name)"
-	-- called when you use "closeCustomSubstate()"
+	-- "name" is defined on "openCustomSubstate(name)"
+	-- Called when you use "closeCustomSubstate()"
 end
 
 
 -- Tween/Timer/Sound hooks
-function onTweenCompleted(tag)
+function onTweenCompleted(tag, vars)
 	-- A tween you called has been completed, value "tag" is it's tag
+	-- vars = the tag of the sprite that was tweened
 end
 
 function onTimerCompleted(tag, loops, loopsLeft)
