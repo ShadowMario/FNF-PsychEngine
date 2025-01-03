@@ -103,7 +103,7 @@ function onNextDialogue(line)
 end
 
 function onSkipDialogue(line)
-	-- triggered when you press Enter and skip a dialogue line that was still being typed, dialogue line starts at 0
+	-- triggered when you press Enter and skip a dialogue line that was still being typed, dialogue line starts at 0 (first line)
 end
 
 
