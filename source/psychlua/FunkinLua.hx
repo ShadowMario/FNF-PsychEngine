@@ -447,7 +447,8 @@ class FunkinLua {
 						return -1;
 					}
 				}
-				return LuaUtils.getTargetInstance().members.indexOf(leObj);
+				var groupOrArray:Dynamic = CustomSubstate.instance != null ? CustomSubstate.instance : LuaUtils.getTargetInstance();
+				return groupOrArray.members.indexOf(leObj);
 			}
 			luaTrace('getObjectOrder: Object $obj doesn\'t exist!', false, false, FlxColor.RED);
 			return -1;
@@ -475,7 +476,7 @@ class FunkinLua {
 				}
 				else
 				{
-					var groupOrArray:FlxState = LuaUtils.getTargetInstance();
+					var groupOrArray:Dynamic = CustomSubstate.instance != null ? CustomSubstate.instance : LuaUtils.getTargetInstance();
 					groupOrArray.remove(leObj, true);
 					groupOrArray.insert(position, leObj);
 				}
