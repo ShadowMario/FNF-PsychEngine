@@ -19,7 +19,6 @@ same goes for *Lua Scripts*, comment out or delete the line with `LUA_ALLOWED`, 
 
 ## Credits: 
 * Realmzer - Head Developer, Programmer.
-* DarkMania - Co-Owner, Contributor, Programmer, Artist, Charter.
 * PumpkinZ - Contributor, Animator, Programmer, Charter.
 * Lux - Contributor, Artist.
 * Frisky - Contributor.
