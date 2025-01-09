@@ -11,6 +11,8 @@ import psychlua.FunkinLua;
 
 #if HSCRIPT_ALLOWED
 import crowplexus.iris.Iris;
+import crowplexus.iris.IrisConfig;
+import crowplexus.iris.ErrorSeverity;
 
 class HScript extends Iris
 {
@@ -57,17 +59,6 @@ class HScript extends Iris
 	{
 		if (file == null)
 			file = '';
-	
-		super(null, {name: "hscript-iris", autoRun: false, autoPreset: false});
-
-		#if LUA_ALLOWED
-		parentLua = parent;
-		if (parent != null)
-		{
-			this.origin = parent.scriptName;
-			this.modFolder = parent.modFolder;
-		}
-		#end
 
 		filePath = file;
 		if (filePath != null && filePath.length > 0)
@@ -79,22 +70,44 @@ class HScript extends Iris
 				this.modFolder = myFolder[1];
 			#end
 		}
-
 		var scriptThing:String = file;
 		if(parent == null && file != null)
 		{
 			var f:String = file.replace('\\', '/');
 			if(f.contains('/') && !f.contains('\n'))
-			{
 				scriptThing = File.getContent(f);
-			}
 		}
 		this.scriptCode = scriptThing;
-
-		preset();
 		this.varsToBring = varsToBring;
-
-		execute();
+		super(null, new IrisConfig("hscript-iris", false, false));
+		#if LUA_ALLOWED
+		parentLua = parent;
+		if (parent != null)
+		{
+			this.origin = parent.scriptName;
+			this.modFolder = parent.modFolder;
+		}
+		#end
+		try {
+			preset();
+			execute();
+		} catch(e:haxe.Exception) {
+			this.destroy();
+			throw e;
+			return;
+		}
+		var ogLL = Iris.logLevel;
+		var logColor = switch (level) {
+			case WARN: FlxColor.LIME;
+			case ERROR: FlxColor.ORANGE;
+			case FATAL: FlxColor.RED;
+			default: FlxColor.WHITE;
+		}
+		Iris.logLevel = function(level:ErrorSeverity, x, ?pos:haxe.PosInfos):Void {
+			ogLL(level, x, pos);
+			if (PlayState.instance != null)
+				PlayState.instance.addTextToDebug('[$origin]: $x', logColor);
+		}
 	}
 
 	var varsToBring(default, set):Any = null;
@@ -484,35 +497,24 @@ class CustomFlxColor {
 	public static var CYAN(default, null):Int = FlxColor.CYAN;
 
 	public static function fromInt(Value:Int):Int 
-	{
 		return cast FlxColor.fromInt(Value);
-	}
 
 	public static function fromRGB(Red:Int, Green:Int, Blue:Int, Alpha:Int = 255):Int
-	{
 		return cast FlxColor.fromRGB(Red, Green, Blue, Alpha);
-	}
+
 	public static function fromRGBFloat(Red:Float, Green:Float, Blue:Float, Alpha:Float = 1):Int
-	{	
 		return cast FlxColor.fromRGBFloat(Red, Green, Blue, Alpha);
-	}
 
 	public static inline function fromCMYK(Cyan:Float, Magenta:Float, Yellow:Float, Black:Float, Alpha:Float = 1):Int
-	{
 		return cast FlxColor.fromCMYK(Cyan, Magenta, Yellow, Black, Alpha);
-	}
 
 	public static function fromHSB(Hue:Float, Sat:Float, Brt:Float, Alpha:Float = 1):Int
-	{	
 		return cast FlxColor.fromHSB(Hue, Sat, Brt, Alpha);
-	}
+
 	public static function fromHSL(Hue:Float, Sat:Float, Light:Float, Alpha:Float = 1):Int
-	{	
 		return cast FlxColor.fromHSL(Hue, Sat, Light, Alpha);
-	}
+
 	public static function fromString(str:String):Int
-	{
 		return cast FlxColor.fromString(str);
-	}
 }
 #end
