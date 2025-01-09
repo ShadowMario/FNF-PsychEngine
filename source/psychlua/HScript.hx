@@ -97,16 +97,17 @@ class HScript extends Iris
 			return;
 		}
 		var ogLL = Iris.logLevel;
-		var logColor = switch (level) {
-			case WARN: FlxColor.LIME;
-			case ERROR: FlxColor.ORANGE;
-			case FATAL: FlxColor.RED;
-			default: FlxColor.WHITE;
-		}
 		Iris.logLevel = function(level:ErrorSeverity, x, ?pos:haxe.PosInfos):Void {
 			ogLL(level, x, pos);
-			if (PlayState.instance != null)
+			if (PlayState.instance != null) {
+				var logColor = switch (level) {
+					case WARN: FlxColor.LIME;
+					case ERROR: FlxColor.ORANGE;
+					case FATAL: FlxColor.RED;
+					default: FlxColor.WHITE;
+				}
 				PlayState.instance.addTextToDebug('[$origin]: $x', logColor);
+			}
 		}
 	}
 
