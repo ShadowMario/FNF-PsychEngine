@@ -79,7 +79,7 @@ class HScript extends Iris
 		}
 		this.scriptCode = scriptThing;
 		this.varsToBring = varsToBring;
-		super(null, new IrisConfig("hscript-iris", false, false));
+		super(null, new IrisConfig(filePath, false, false));
 		#if LUA_ALLOWED
 		parentLua = parent;
 		if (parent != null)
