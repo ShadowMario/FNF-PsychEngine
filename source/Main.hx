@@ -4,7 +4,7 @@ package;
 import android.content.Context;
 #end
 
-import backend.FPSCounter;
+import debug.FPSCounter;
 
 import flixel.graphics.FlxGraphic;
 import flixel.FlxGame;
