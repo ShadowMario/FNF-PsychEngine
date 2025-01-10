@@ -184,6 +184,8 @@
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
 
+	<haxedef name="hscriptPos" if="HSCRIPT_ALLOWED" />
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<assets path='art/iconOG.png' rename='icon.png' if="linux" />
