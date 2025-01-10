@@ -102,18 +102,20 @@ class HScript extends Iris
 			throw e;
 			return;
 		}
-		var ogLL = Iris.logLevel;
-		Iris.logLevel = function(level:ErrorSeverity, x, ?pos:haxe.PosInfos):Void {
-			if (PlayState.instance != null) {
-				var logColor = switch (level) {
-					case WARN: FlxColor.LIME;
-					case ERROR: FlxColor.ORANGE;
-					case FATAL: FlxColor.RED;
-					default: FlxColor.WHITE;
-				}
-				PlayState.instance.addTextToDebug('[$origin]: $x', logColor);
-			}
-			ogLL(level, x, pos);
+		Iris.warn = function(x, ?pos:haxe.PosInfos) {
+			if (PlayState.instance != null)
+				PlayState.instance.addTextToDebug('[$origin]: $x', FlxColor.YELLOW);
+			Iris.logLevel(WARN, x, pos);
+		}
+		Iris.error = function(x, ?pos:haxe.PosInfos) {
+			if (PlayState.instance != null)
+				PlayState.instance.addTextToDebug('[$origin]: $x', FlxColor.ORANGE);
+			Iris.logLevel(ERROR, x, pos);
+		}
+		Iris.fatal = function(x, ?pos:haxe.PosInfos) {
+			if (PlayState.instance != null)
+				PlayState.instance.addTextToDebug('[$origin]: $x', FlxColor.RED);
+			Iris.logLevel(FATAL, x, pos);
 		}
 	}
 
