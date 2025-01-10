@@ -110,6 +110,7 @@ class HScript extends Iris
 		Iris.error = function(x, ?pos:haxe.PosInfos) {
 			if (PlayState.instance != null)
 				PlayState.instance.addTextToDebug('[$origin]: $x', FlxColor.ORANGE);
+<<<<<<< HEAD
 			Iris.logLevel(ERROR, x, pos);
 		}
 		Iris.fatal = function(x, ?pos:haxe.PosInfos) {
