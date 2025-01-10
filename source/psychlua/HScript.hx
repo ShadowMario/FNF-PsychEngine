@@ -71,15 +71,21 @@ class HScript extends Iris
 			#end
 		}
 		var scriptThing:String = file;
+		var scriptName:String = null;
 		if(parent == null && file != null)
 		{
 			var f:String = file.replace('\\', '/');
-			if(f.contains('/') && !f.contains('\n'))
+			if(f.contains('/') && !f.contains('\n')) {
 				scriptThing = File.getContent(f);
+				scriptName = f;
+			}
 		}
-		this.scriptCode = scriptThing;
+		#if LUA_ALLOWED
+		if (scriptName == null && parent != null)
+			scriptName = parent.scriptName;
+		#end
 		this.varsToBring = varsToBring;
-		super(null, new IrisConfig(filePath, false, false));
+		super(scriptThing, new IrisConfig(scriptName, false, false));
 		#if LUA_ALLOWED
 		parentLua = parent;
 		if (parent != null)
@@ -98,7 +104,6 @@ class HScript extends Iris
 		}
 		var ogLL = Iris.logLevel;
 		Iris.logLevel = function(level:ErrorSeverity, x, ?pos:haxe.PosInfos):Void {
-			ogLL(level, x, pos);
 			if (PlayState.instance != null) {
 				var logColor = switch (level) {
 					case WARN: FlxColor.LIME;
@@ -108,6 +113,7 @@ class HScript extends Iris
 				}
 				PlayState.instance.addTextToDebug('[$origin]: $x', logColor);
 			}
+			ogLL(level, x, pos);
 		}
 	}
 
@@ -361,11 +367,6 @@ class HScript extends Iris
 		return null;
 	}
 
-	public function executeFunction(funcToRun:String = null, funcArgs:Array<Dynamic> = null):IrisCall {
-		if (funcToRun == null || !exists(funcToRun)) return null;
-		return call(funcToRun, funcArgs);
-	}
-
 	#if LUA_ALLOWED
 	public static function implement(funk:FunkinLua) {
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):IrisCall {
@@ -394,7 +395,7 @@ class HScript extends Iris
 			#if HSCRIPT_ALLOWED
 			try
 			{
-				final retVal:IrisCall = funk.hscript.executeFunction(funcToRun, funcArgs);
+				final retVal:IrisCall = funk.hscript.call(funcToRun, funcArgs);
 				if (retVal != null)
 				{
 					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
@@ -441,11 +442,6 @@ class HScript extends Iris
 	}
 	#end
 
-	override public function set(name:String, value:Dynamic, allowOverride:Bool = false):Void {
-		// should always override by default
-		super.set(name, value, true);
-	}
-
 	/*override function irisPrint(v):Void
 	{
 		FunkinLua.luaTrace('ERROR (${this.origin}:${interp.posInfos().lineNumber}): ${v}');
@@ -456,7 +452,6 @@ class HScript extends Iris
 	{
 		origin = null;
 		#if LUA_ALLOWED parentLua = null; #end
-
 		super.destroy();
 	}
 
