@@ -323,7 +323,7 @@ class MainMenuState extends MusicBeatState
 						FlxTween.tween(memb, {alpha: 0}, 0.4, {ease: FlxEase.quadOut});
 					}
 				}
-				else CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+				else CoolUtil.browserLoad('https://www.newgrounds.com/portal/view/770371');
 			}
 			#if desktop
 			if (controls.justPressed('debug_1'))
