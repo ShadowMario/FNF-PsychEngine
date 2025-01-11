@@ -44,6 +44,7 @@ class HScript extends Iris
 			{
 				hs.scriptCode = code;
 				hs.varsToBring = varsToBring;
+				hs.parse(true);
 				hs.execute();
 			}
 			catch(e:Dynamic)
@@ -55,7 +56,7 @@ class HScript extends Iris
 	#end
 
 	public var origin:String;
-	override public function new(?parent:Dynamic, ?file:String, ?varsToBring:Any = null)
+	override public function new(?parent:Dynamic, ?file:String, ?varsToBring:Any = null, ?manualRun:Bool = false)
 	{
 		if (file == null)
 			file = '';
@@ -98,13 +99,10 @@ class HScript extends Iris
 			this.modFolder = parent.modFolder;
 		}
 		#end
-		try {
-			preset();
-			execute();
-		} catch(e:haxe.Exception) {
-			this.destroy();
-			throw e;
-			return;
+		if (!manualRun) {
+			var _active:Bool = tryRunning();
+			if (_active == false)
+				return;
 		}
 		Iris.warn = function(x, ?pos:haxe.PosInfos) {
 			if (PlayState.instance != null)
@@ -124,11 +122,29 @@ class HScript extends Iris
 		}
 	}
 
+	function tryRunning(destroyOnError:Bool = true):Bool {
+		try {
+			preset();
+			execute();
+			return true;
+		} catch(e:haxe.Exception) {
+			if(destroyOnError) this.destroy();
+			throw e;
+			return false;
+		}
+		return false;
+	}
+
 	var varsToBring(default, set):Any = null;
 	override function preset() {
 		super.preset();
 
 		// Some very commonly used classes
+		set('Type', Type);
+		#if sys
+		set('File', File);
+		set('FileSystem', FileSystem);
+		#end
 		set('FlxG', flixel.FlxG);
 		set('FlxMath', flixel.math.FlxMath);
 		set('FlxSprite', flixel.FlxSprite);
@@ -354,7 +370,7 @@ class HScript extends Iris
 		try
 		{
 			final callValue:IrisCall = call(funcToRun, funcArgs);
-			return callValue.returnValue;
+			return callValue;
 		}
 		catch(e:Dynamic)
 		{
@@ -365,7 +381,7 @@ class HScript extends Iris
 
 	#if LUA_ALLOWED
 	public static function implement(funk:FunkinLua) {
-		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):IrisCall {
+		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			#if HSCRIPT_ALLOWED
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
 			try
