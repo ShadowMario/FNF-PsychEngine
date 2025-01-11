@@ -44,6 +44,7 @@ class HScript extends Iris
 			{
 				hs.scriptCode = code;
 				hs.varsToBring = varsToBring;
+				hs.parse(true);
 				hs.execute();
 			}
 			catch(e:Dynamic)
@@ -354,7 +355,7 @@ class HScript extends Iris
 		try
 		{
 			final callValue:IrisCall = call(funcToRun, funcArgs);
-			return callValue.returnValue;
+			return callValue;
 		}
 		catch(e:Dynamic)
 		{
@@ -365,7 +366,7 @@ class HScript extends Iris
 
 	#if LUA_ALLOWED
 	public static function implement(funk:FunkinLua) {
-		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):IrisCall {
+		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			#if HSCRIPT_ALLOWED
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
 			try
