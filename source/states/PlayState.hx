@@ -673,6 +673,7 @@ class PlayState extends MusicBeatState
 		playbackRate = value;
 		FlxG.animationTimeScale = value;
 		Conductor.safeZoneOffset = (ClientPrefs.data.safeFrames / 60) * 1000 * value;
+		if(videoCutscene != null) videoCutscene.videoSprite.bitmap.rate = value;
 		setOnScripts('playbackRate', playbackRate);
 		#else
 		playbackRate = 1.0; // ensuring -Crow
@@ -837,7 +838,8 @@ class PlayState extends MusicBeatState
 
 		if (foundFile)
 		{
-			videoCutscene = new VideoSprite(fileName, forMidSong, canSkip, loop);
+			videoCutscene = new VideoSprite(fileName, forMidSong, canSkip, loop, false);
+			videoCutscene.videoSprite.bitmap.rate = playbackRate;
 
 			// Finish callback
 			if (!forMidSong)
