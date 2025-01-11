@@ -86,6 +86,10 @@ class HScript extends Iris
 		#end
 		this.varsToBring = varsToBring;
 		super(scriptThing, new IrisConfig(scriptName, false, false));
+		var customInterp:CustomInterp = new CustomInterp();
+		customInterp.parentInstance = FlxG.state;
+		customInterp.showPosOnLog = false;
+		this.interp = customInterp;
 		#if LUA_ALLOWED
 		parentLua = parent;
 		if (parent != null)
@@ -333,17 +337,6 @@ class HScript extends Iris
 		set('Function_StopLua', LuaUtils.Function_StopLua); //doesnt do much cuz HScript has a lower priority than Lua
 		set('Function_StopHScript', LuaUtils.Function_StopHScript);
 		set('Function_StopAll', LuaUtils.Function_StopAll);
-		
-		set('add', FlxG.state.add);
-		set('insert', FlxG.state.insert);
-		set('remove', FlxG.state.remove);
-
-		if(PlayState.instance == FlxG.state)
-		{
-			set('addBehindGF', PlayState.instance.addBehindGF);
-			set('addBehindDad', PlayState.instance.addBehindDad);
-			set('addBehindBF', PlayState.instance.addBehindBF);
-		}
 	}
 
 	public function executeCode(?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):IrisCall {
@@ -517,3 +510,38 @@ class CustomFlxColor {
 		return cast FlxColor.fromString(str);
 }
 #end
+
+class CustomInterp extends crowplexus.hscript.Interp
+{
+	public var parentInstance:Dynamic;
+	public function new()
+	{
+		super();
+	}
+
+	override function resolve(id: String): Dynamic {
+		if (locals.exists(id)) {
+			var l = locals.get(id);
+			return l.r;
+		}
+
+		if (variables.exists(id)) {
+			var v = variables.get(id);
+			return v;
+		}
+
+		if (imports.exists(id)) {
+			var v = imports.get(id);
+			return v;
+		}
+
+		if(parentInstance != null) {
+			var v = Reflect.getProperty(parentInstance, id);
+			return v;
+		}
+
+		error(EUnknownVariable(id));
+
+		return null;
+	}
+}

@@ -3132,7 +3132,8 @@ class PlayState extends MusicBeatState
 		for (script in hscriptArray)
 			if(script != null)
 			{
-				script.call('onDestroy');
+				var ny:Dynamic = script.get('onDestroy');
+				if(ny != null && Reflect.isFunction(ny)) ny();
 				script.destroy();
 			}
 
