@@ -45,7 +45,7 @@ class HScript extends Iris
 				hs.scriptCode = code;
 				hs.varsToBring = varsToBring;
 				hs.parse(true);
-				hs.tryRunning();
+				hs.tryRunning(false);
 			}
 			catch(e:Dynamic)
 			{
@@ -122,13 +122,13 @@ class HScript extends Iris
 		}
 	}
 
-	function tryRunning():Bool {
+	function tryRunning(destroyOnError:Bool = true):Bool {
 		try {
 			preset();
 			execute();
 			return true;
 		} catch(e:haxe.Exception) {
-			this.destroy();
+			if(destroyOnError) this.destroy();
 			throw e;
 			return false;
 		}
