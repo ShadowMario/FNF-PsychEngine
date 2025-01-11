@@ -140,6 +140,11 @@ class HScript extends Iris
 		super.preset();
 
 		// Some very commonly used classes
+		set('Type', Type);
+		#if sys
+		set('File', File);
+		set('FileSystem', FileSystem);
+		#end
 		set('FlxG', flixel.FlxG);
 		set('FlxMath', flixel.math.FlxMath);
 		set('FlxSprite', flixel.FlxSprite);
