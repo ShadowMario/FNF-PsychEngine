@@ -45,7 +45,7 @@ class HScript extends Iris
 				hs.scriptCode = code;
 				hs.varsToBring = varsToBring;
 				hs.parse(true);
-				hs.tryRunning(false);
+				hs.execute();
 			}
 			catch(e:Dynamic)
 			{
