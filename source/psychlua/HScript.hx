@@ -45,7 +45,7 @@ class HScript extends Iris
 				hs.scriptCode = code;
 				hs.varsToBring = varsToBring;
 				hs.parse(true);
-				hs.execute();
+				hs.tryRunning();
 			}
 			catch(e:Dynamic)
 			{
@@ -56,7 +56,7 @@ class HScript extends Iris
 	#end
 
 	public var origin:String;
-	override public function new(?parent:Dynamic, ?file:String, ?varsToBring:Any = null)
+	override public function new(?parent:Dynamic, ?file:String, ?varsToBring:Any = null, ?manualRun:Bool = false)
 	{
 		if (file == null)
 			file = '';
@@ -99,13 +99,10 @@ class HScript extends Iris
 			this.modFolder = parent.modFolder;
 		}
 		#end
-		try {
-			preset();
-			execute();
-		} catch(e:haxe.Exception) {
-			this.destroy();
-			throw e;
-			return;
+		if (!manualRun) {
+			var _active:Bool = tryRunning();
+			if (_active == false)
+				return;
 		}
 		Iris.warn = function(x, ?pos:haxe.PosInfos) {
 			if (PlayState.instance != null)
@@ -123,6 +120,19 @@ class HScript extends Iris
 				PlayState.instance.addTextToDebug('[$origin]: $x', FlxColor.RED);
 			Iris.logLevel(FATAL, x, pos);
 		}
+	}
+
+	function tryRunning():Bool {
+		try {
+			preset();
+			execute();
+			return true;
+		} catch(e:haxe.Exception) {
+			this.destroy();
+			throw e;
+			return false;
+		}
+		return false;
 	}
 
 	var varsToBring(default, set):Any = null;
