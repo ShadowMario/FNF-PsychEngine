@@ -309,7 +309,7 @@ class LuaUtils
 			}
 
 			if(prefix != null) obj.animation.addByIndices(name, prefix, indices, '', framerate, loop);
-			else obj.animation.addByIndices(name, prefix, indices, '', framerate, loop);
+			else obj.animation.add(name, indices, framerate, loop);
 
 			if(obj.animation.curAnim == null)
 			{
