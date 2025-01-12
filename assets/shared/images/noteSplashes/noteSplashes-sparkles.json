@@ -2,41 +2,41 @@
 	"animations": {
 		"blue": {
 			"offsets": [
-				69,
-				68
+				-48,
+				-48
 			],
 			"noteData": 1,
 			"fps": [
 				22,
 				26
 			],
-			"prefix": "splash sparkles blue 10",
+			"prefix": "splash sparkles blue 1",
 			"indices": [],
 			"name": "blue"
 		},
 		"purple": {
 			"offsets": [
-				76,
-				68
+				-48,
+				-48
 			],
 			"noteData": 0,
 			"fps": [
 				22,
 				26
 			],
-			"prefix": "splash sparkles purple 10",
+			"prefix": "splash sparkles purple 1",
 			"indices": [],
 			"name": "purple"
 		},
 		"green": {
-			"prefix": "splash sparkles green 10",
+			"prefix": "splash sparkles green 1",
 			"fps": [
 				22,
 				26
 			],
 			"offsets": [
-				70,
-				70
+				-48,
+				-48
 			],
 			"indices": [],
 			"name": "green",
@@ -44,15 +44,15 @@
 		},
 		"red": {
 			"offsets": [
-				66,
-				68
+				-48,
+				-48
 			],
 			"noteData": 3,
 			"fps": [
 				22,
 				26
 			],
-			"prefix": "splash sparkles red 10",
+			"prefix": "splash sparkles red 1",
 			"indices": [],
 			"name": "red"
 		}
