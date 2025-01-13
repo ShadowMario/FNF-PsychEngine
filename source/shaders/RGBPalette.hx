@@ -10,6 +10,21 @@ class RGBPalette {
 	public var b(default, set):FlxColor;
 	public var mult(default, set):Float;
 
+	public function copyValues(tempShader:RGBPalette)
+	{
+		if (tempShader != null)
+		{
+			for (i in 0...3)
+			{
+				shader.r.value[i] = tempShader.shader.r.value[i];
+				shader.g.value[i] = tempShader.shader.g.value[i];
+				shader.b.value[i] = tempShader.shader.b.value[i];
+			}
+			shader.mult.value[0] = tempShader.shader.mult.value[0];
+		}
+		else shader.mult.value[0] = 0.0;
+	}
+
 	private function set_r(color:FlxColor) {
 		r = color;
 		shader.r.value = [color.redFloat, color.greenFloat, color.blueFloat];

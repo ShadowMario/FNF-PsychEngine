@@ -1563,8 +1563,8 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		@:privateAccess
 		var lineSize:Int = Std.int(Math.max(2, Math.floor(3 / FlxG.camera.zoom)));
 
-		var sprX:Float = spr.x + spr.offset.x;
-		var sprY:Float = spr.y + spr.offset.y;
+		var sprX:Float = spr.x - spr.offset.x;
+		var sprY:Float = spr.y - spr.offset.y;
 		var sprWidth:Int = Std.int(spr.frameWidth * spr.scale.x);
 		var sprHeight:Int = Std.int(spr.frameHeight * spr.scale.y);
 		for (num => sel in selectionSprites.members)
@@ -1662,7 +1662,7 @@ class StageEditorState extends MusicBeatState implements PsychUIEventHandler.Psy
 		_file.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 
 		final filters = [new FileFilter('PNG (Image)', '*.png'), new FileFilter('XML (Sparrow)', '*.xml'), new FileFilter('JSON (Aseprite)', '*.json'), new FileFilter('TXT (Packer)', '*.txt')];
-		_file.browse(filters);
+		_file.browse(#if !mac filters #else [] #end);
 	}
 	
 	private function onLoadComplete(_):Void

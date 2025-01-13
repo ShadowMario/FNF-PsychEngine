@@ -338,7 +338,7 @@ class LoadingState extends MusicBeatState
 			//
 
 			// LOAD NOTE SPLASH IMAGE
-			var noteSplash:String = NoteSplash.DEFAULT_SKIN;
+			var noteSplash:String = NoteSplash.defaultNoteSplash;
 			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) noteSplash = PlayState.SONG.splashSkin;
 			else noteSplash += NoteSplash.getSplashSkinPostfix();
 			imagesToPrepare.push(noteSplash);
