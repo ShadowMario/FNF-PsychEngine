@@ -563,7 +563,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 				bg.color = 0xFF303030;
 				gridColors = [0xFFDFDFDF, 0xFFBFBFBF];
 				gridColorsOther = [0xFF5F5F5F, 0xFF4A4A4A];
-		}S
+		}
 
 		if(theme != oldTheme || theme == CUSTOM)
 		{
