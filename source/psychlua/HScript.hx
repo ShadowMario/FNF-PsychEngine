@@ -525,7 +525,6 @@ class CustomFlxColor {
 	public static function fromString(str:String):Int
 		return cast FlxColor.fromString(str);
 }
-#end
 
 class CustomInterp extends crowplexus.hscript.Interp
 {
@@ -561,3 +560,4 @@ class CustomInterp extends crowplexus.hscript.Interp
 		return null;
 	}
 }
+#end
