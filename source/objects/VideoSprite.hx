@@ -22,12 +22,12 @@ class VideoSprite extends FlxSpriteGroup {
 
 	public var waiting:Bool = false;
 
-	public function new(videoName:String, isWaiting:Bool, canSkip:Bool = false, shouldLoop:Dynamic = false, autoPause = true) {
+	public function new(videoName:String, isWaiting:Bool, canSkip:Bool = false, shouldLoop:Dynamic = false, autoPause = true, ?camera:Dynamic) {
 		super();
 
 		this.videoName = videoName;
 		scrollFactor.set();
-		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+                cameras = [camera ?? FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
 		waiting = isWaiting;
 		if(!waiting)
