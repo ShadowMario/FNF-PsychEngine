@@ -238,7 +238,7 @@ class LoadingState extends MusicBeatState
 	{
 		loaded = 0;
 		loadMax = 0;
-		initialThreadCompleted = false;
+		initialThreadCompleted = true;
 
 		if (stopMusic && FlxG.sound.music != null)
 			FlxG.sound.music.stop();
