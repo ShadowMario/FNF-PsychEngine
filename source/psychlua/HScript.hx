@@ -47,7 +47,14 @@ class HScript extends Iris
 		if(hs == null)
 		{
 			trace('initializing haxe interp for: ${parent.scriptName}');
-			parent.hscript = new HScript(parent, code, varsToBring);
+			try {
+				parent.hscript = new HScript(parent, code, varsToBring);
+			}
+			catch(e:IrisError) {
+				var pos:HScriptInfos = cast {fileName: parent.scriptName, showLine: false, isLua: true};
+				Iris.error(Printer.errorToString(e, false), pos);
+				parent.hscript = null;
+			}
 		}
 		else
 		{
