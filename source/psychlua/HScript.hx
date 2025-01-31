@@ -51,7 +51,8 @@ class HScript extends Iris
 				parent.hscript = new HScript(parent, code, varsToBring);
 			}
 			catch(e:IrisError) {
-				var pos:HScriptInfos = cast {fileName: parent.scriptName, showLine: false, isLua: true};
+				var pos:HScriptInfos = cast {fileName: parent.scriptName, isLua: true};
+				if(parent.lastCalledFunction != '') pos.funcName = parent.lastCalledFunction;
 				Iris.error(Printer.errorToString(e, false), pos);
 				parent.hscript = null;
 			}
@@ -70,6 +71,7 @@ class HScript extends Iris
 			{
 				var pos:HScriptInfos = cast hs.interp.posInfos();
 				pos.isLua = true;
+				if(parent.lastCalledFunction != '') pos.funcName = parent.lastCalledFunction;
 				Iris.error(Printer.errorToString(e, false), pos);
 				hs.returnValue = null;
 			}
