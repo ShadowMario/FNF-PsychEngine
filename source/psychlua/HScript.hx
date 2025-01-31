@@ -368,14 +368,17 @@ class HScript extends Iris
 	public static function implement(funk:FunkinLua) {
 		funk.addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):Dynamic {
 			initHaxeModuleCode(funk, codeToRun, varsToBring);
-			final retVal:IrisCall = funk.hscript.executeFunction(funcToRun, funcArgs);
-			if (retVal != null)
+			if (funk.hscript != null)
 			{
-				return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
-			}
-			else if (funk.hscript.returnValue != null)
-			{
-				return funk.hscript.returnValue;
+				final retVal:IrisCall = funk.hscript.executeFunction(funcToRun, funcArgs);
+				if (retVal != null)
+				{
+					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
+				}
+				else if (funk.hscript.returnValue != null)
+				{
+					return funk.hscript.returnValue;
+				}
 			}
 			return null;
 		});
