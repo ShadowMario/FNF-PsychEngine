@@ -679,7 +679,9 @@ class PlayState extends MusicBeatState
 		FlxG.animationTimeScale = value;
 		Conductor.offset = Reflect.hasField(PlayState.SONG, 'offset') ? (PlayState.SONG.offset / value) : 0;
 		Conductor.safeZoneOffset = (ClientPrefs.data.safeFrames / 60) * 1000 * value;
+		#if VIDEOS_ALLOWED
 		if(videoCutscene != null) videoCutscene.videoSprite.bitmap.rate = value;
+		#end
 		setOnScripts('playbackRate', playbackRate);
 		#else
 		playbackRate = 1.0; // ensuring -Crow
@@ -1574,7 +1576,9 @@ class PlayState extends MusicBeatState
 			}
 			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = false);
 			FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = false);
+			#if VIDEOS_ALLOWED
 			if(videoCutscene != null) videoCutscene.pause();
+			#end
 		}
 
 		super.openSubState(SubState);
@@ -1594,7 +1598,9 @@ class PlayState extends MusicBeatState
 			}
 			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = true);
 			FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = true);
+			#if VIDEOS_ALLOWED
 			if(videoCutscene != null) videoCutscene.resume();
+			#end
 
 			paused = false;
 			callOnScripts('onResume');
@@ -1607,7 +1613,9 @@ class PlayState extends MusicBeatState
 		if (!paused)
 		{
 			if (health > 0) resetRPC(Conductor.songPosition > 0.0);
+			#if VIDEOS_ALLOWED
 			if (videoCutscene != null) videoCutscene.resume();
+			#end
 		}
 		super.onFocus();
 	}
@@ -1619,7 +1627,10 @@ class PlayState extends MusicBeatState
 			#if DISCORD_ALLOWED
 			if (health > 0 && autoUpdateRPC) DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 			#end
+
+			#if VIDEOS_ALLOWED
 			if (videoCutscene != null) videoCutscene.pause();
+			#end
 		}
 		super.onFocusLost();
 	}
