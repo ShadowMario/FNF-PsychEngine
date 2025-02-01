@@ -49,7 +49,10 @@ import psychlua.HScript;
 #end
 
 #if HSCRIPT_ALLOWED
+import psychlua.HScript.HScriptInfos;
 import crowplexus.iris.Iris;
+import crowplexus.hscript.Expr.Error as IrisError;
+import crowplexus.hscript.Printer;
 #end
 
 /**
@@ -3152,8 +3155,7 @@ class PlayState extends MusicBeatState
 		for (script in hscriptArray)
 			if(script != null)
 			{
-				var ny:Dynamic = script.get('onDestroy');
-				if(ny != null && Reflect.isFunction(ny)) ny();
+				if(script.exists('onDestroy')) script.call('onDestroy');
 				script.destroy();
 			}
 
@@ -3326,9 +3328,10 @@ class PlayState extends MusicBeatState
 			trace('initialized hscript interp successfully: $file');
 			hscriptArray.push(newScript);
 		}
-		catch(e:Dynamic)
+		catch(e:IrisError)
 		{
-			addTextToDebug('ERROR ON LOADING ($file) - $e', FlxColor.RED);
+			var pos:HScriptInfos = cast {fileName: file, showLine: false};
+			Iris.error(Printer.errorToString(e, false), pos);
 			var newScript:HScript = cast (Iris.instances.get(file), HScript);
 			if(newScript != null)
 				newScript.destroy();
@@ -3404,9 +3407,9 @@ class PlayState extends MusicBeatState
 			if(script == null || !script.exists(funcToCall) || exclusions.contains(script.origin))
 				continue;
 
-			try
+			var callValue = script.call(funcToCall, args);
+			if(callValue != null)
 			{
-				var callValue = script.call(funcToCall, args);
 				var myValue:Dynamic = callValue.returnValue;
 
 				if((myValue == LuaUtils.Function_StopHScript || myValue == LuaUtils.Function_StopAll) && !excludeValues.contains(myValue) && !ignoreStops)
@@ -3417,10 +3420,6 @@ class PlayState extends MusicBeatState
 
 				if(myValue != null && !excludeValues.contains(myValue))
 					returnVal = myValue;
-			}
-			catch(e:Dynamic)
-			{
-				addTextToDebug('ERROR (${script.origin}: $funcToCall) - $e', FlxColor.RED);
 			}
 		}
 		#end
