@@ -1,7 +1,6 @@
 @echo off
 color 0a
-cd ..
-cd ..
+cd ../..
 echo BUILDING GAME
 haxelib run lime build windows -release
 echo.
