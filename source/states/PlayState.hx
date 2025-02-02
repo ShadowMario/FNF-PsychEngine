@@ -1996,11 +1996,13 @@ class PlayState extends MusicBeatState
 				paused = true;
 				canResync = false;
 				canPause = false;
+				#if VIDEOS_ALLOWED
 				if(videoCutscene != null)
 				{
 					videoCutscene.destroy();
 					videoCutscene = null;
 				}
+				#end
 
 				persistentUpdate = false;
 				persistentDraw = false;
@@ -3174,11 +3176,13 @@ class PlayState extends MusicBeatState
 		#end
 		stagesFunc(function(stage:BaseStage) stage.destroy());
 
+		#if VIDEOS_ALLOWED
 		if(videoCutscene != null)
 		{
 			videoCutscene.destroy();
 			videoCutscene = null;
 		}
+		#end
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
