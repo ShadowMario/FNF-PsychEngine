@@ -1,5 +1,6 @@
 package states;
 
+import sys.thread.FixedThreadPool;
 import haxe.Json;
 import lime.utils.Assets;
 import openfl.display.BitmapData;
@@ -29,6 +30,7 @@ class LoadingState extends MusicBeatState
 	static var originalBitmapKeys:Map<String, String> = [];
 	static var requestedBitmaps:Map<String, BitmapData> = [];
 	static var mutex:Mutex;
+	static var threadPool:FixedThreadPool;
 
 	function new(target:FlxState, stopMusic:Bool)
 	{
@@ -248,6 +250,8 @@ class LoadingState extends MusicBeatState
 		MusicBeatState.switchState(target);
 		transitioning = true;
 		finishedLoading = true;
+		threadPool.shutdown(); // kill all workers safely
+		// threadPool = null;
 		mutex = null;
 	}
 
@@ -260,6 +264,7 @@ class LoadingState extends MusicBeatState
 		}
 		requestedBitmaps.clear();
 		originalBitmapKeys.clear();
+		// trace('we checked if loaded');
 		return (loaded >= loadMax && initialThreadCompleted);
 	}
 
@@ -388,83 +393,85 @@ class LoadingState extends MusicBeatState
 		});
 
 		Thread.create(() -> {
-			if (song.stage == null || song.stage.length < 1)
-				song.stage = StageData.vanillaSongStage(folder);
+			try {
+				if (song.stage == null || song.stage.length < 1)
+					song.stage = StageData.vanillaSongStage(folder);
 
-			var stageData:StageFile = StageData.getStageFile(song.stage);
-			if (stageData != null)
-			{
-				var imgs:Array<String> = [];
-				var snds:Array<String> = [];
-				var mscs:Array<String> = [];
-				if(stageData.preload != null)
+				var stageData:StageFile = StageData.getStageFile(song.stage);
+				if (stageData != null)
 				{
-					for (asset in Reflect.fields(stageData.preload))
+					var imgs:Array<String> = [];
+					var snds:Array<String> = [];
+					var mscs:Array<String> = [];
+					if(stageData.preload != null)
 					{
-						var filters:Int = Reflect.field(stageData.preload, asset);
-						var asset:String = asset.trim();
-
-						if(filters < 0 || StageData.validateVisibility(filters))
+						for (asset in Reflect.fields(stageData.preload))
 						{
-							if(asset.startsWith('images/'))
-								imgs.push(asset.substr('images/'.length));
-							else if(asset.startsWith('sounds/'))
-								snds.push(asset.substr('sounds/'.length));
-							else if(asset.startsWith('music/'))
-								mscs.push(asset.substr('music/'.length));
+							var filters:Int = Reflect.field(stageData.preload, asset);
+							var asset:String = asset.trim();
+
+							if(filters < 0 || StageData.validateVisibility(filters))
+							{
+								if(asset.startsWith('images/'))
+									imgs.push(asset.substr('images/'.length));
+								else if(asset.startsWith('sounds/'))
+									snds.push(asset.substr('sounds/'.length));
+								else if(asset.startsWith('music/'))
+									mscs.push(asset.substr('music/'.length));
+							}
 						}
 					}
-				}
-				
-				if (stageData.objects != null)
-				{
-					for (sprite in stageData.objects)
+					
+					if (stageData.objects != null)
 					{
-						if(sprite.type == 'sprite' || sprite.type == 'animatedSprite')
-							if((sprite.filters < 0 || StageData.validateVisibility(sprite.filters)) && !imgs.contains(sprite.image))
-								imgs.push(sprite.image);
+						for (sprite in stageData.objects)
+						{
+							if(sprite.type == 'sprite' || sprite.type == 'animatedSprite')
+								if((sprite.filters < 0 || StageData.validateVisibility(sprite.filters)) && !imgs.contains(sprite.image))
+									imgs.push(sprite.image);
+						}
 					}
+					prepare(imgs, snds, mscs);
 				}
-				prepare(imgs, snds, mscs);
-			}
 
-			songsToPrepare.push('$folder/Inst');
+				songsToPrepare.push('$folder/Inst');
 
-			var player1:String = song.player1;
-			var player2:String = song.player2;
-			var gfVersion:String = song.gfVersion;
-			var prefixVocals:String = song.needsVoices ? '$folder/Voices' : null;
-			if (gfVersion == null) gfVersion = 'gf';
+				var player1:String = song.player1;
+				var player2:String = song.player2;
+				var gfVersion:String = song.gfVersion;
+				var prefixVocals:String = song.needsVoices ? '$folder/Voices' : null;
+				if (gfVersion == null) gfVersion = 'gf';
 
-			dontPreloadDefaultVoices = false;
-			preloadCharacter(player1, prefixVocals);
-			if (!dontPreloadDefaultVoices && prefixVocals != null)
-			{
-				if(Paths.fileExists('$prefixVocals-Player.${Paths.SOUND_EXT}', SOUND, false, 'songs') && Paths.fileExists('$prefixVocals-Opponent.${Paths.SOUND_EXT}', SOUND, false, 'songs'))
+				dontPreloadDefaultVoices = false;
+				preloadCharacter(player1, prefixVocals);
+				if (!dontPreloadDefaultVoices && prefixVocals != null)
 				{
-					songsToPrepare.push('$prefixVocals-Player');
-					songsToPrepare.push('$prefixVocals-Opponent');
+					if(Paths.fileExists('$prefixVocals-Player.${Paths.SOUND_EXT}', SOUND, false, 'songs') && Paths.fileExists('$prefixVocals-Opponent.${Paths.SOUND_EXT}', SOUND, false, 'songs'))
+					{
+						songsToPrepare.push('$prefixVocals-Player');
+						songsToPrepare.push('$prefixVocals-Opponent');
+					}
+					else if(Paths.fileExists('$prefixVocals.${Paths.SOUND_EXT}', SOUND, false, 'songs'))
+						songsToPrepare.push(prefixVocals);
 				}
-				else if(Paths.fileExists('$prefixVocals.${Paths.SOUND_EXT}', SOUND, false, 'songs'))
-					songsToPrepare.push(prefixVocals);
-			}
 
-			if (player2 != player1)
-			{
-				threadsMax++;
-				Thread.create(() -> {
-					preloadCharacter(player2, prefixVocals);
-					completedThread();
-				});
-			}
-			if (!stageData.hide_girlfriend && gfVersion != player2 && gfVersion != player1)
-			{
-				threadsMax++;
-				Thread.create(() -> {
-					preloadCharacter(gfVersion);
-					completedThread();
-				});
-			}
+				if (player2 != player1)
+				{
+					threadsMax++;
+					Thread.create(() -> {
+						try { preloadCharacter(player2, prefixVocals); } catch (e:Dynamic) {}
+						completedThread();
+					});
+				}
+				if (!stageData.hide_girlfriend && gfVersion != player2 && gfVersion != player1)
+				{
+					threadsMax++;
+					Thread.create(() -> {
+						try { preloadCharacter(gfVersion); } catch (e:Dynamic) {}
+						completedThread();
+					});
+				}
+			} catch (e:Dynamic) {}
 			completedThread();
 		});
 	}
@@ -526,16 +533,12 @@ class LoadingState extends MusicBeatState
 	public static function startThreads()
 	{
 		mutex = new Mutex();
+		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING 10 #else 1 #end); // 10 threads are enough
 		loadMax = imagesToPrepare.length + soundsToPrepare.length + musicToPrepare.length + songsToPrepare.length;
 		loaded = 0;
 
-		#if MULTITHREADED_LOADING
 		//then start threads
 		_threadFunc();
-		#else
-		//or a single thread if you have multithreading turned off
-		Thread.create(() -> _threadFunc());
-		#end
 	}
 
 	static function _threadFunc()
@@ -550,22 +553,22 @@ class LoadingState extends MusicBeatState
 
 	static function initThread(func:Void->Dynamic, traceData:String)
 	{
-		#if MULTITHREADED_LOADING
-		Thread.create(() -> {
-		#end
+		// trace('scheduled $func in threadPool');
+		threadPool.run(() -> {			
+			var threadStart = Sys.time();
 			try {
-				if (func() != null) trace('finished preloading $traceData');
-				else trace('ERROR! fail on preloading $traceData');
+				if (func() != null) {
+					var diff = Sys.time() - threadStart;
+					trace('finished preloading $traceData in ${diff}s');
+				} else trace('ERROR! fail on preloading $traceData ');
 			}
 			catch(e:Dynamic) {
-				trace('ERROR! fail on preloading $traceData');
+				trace('ERROR! fail on preloading $traceData: $e');
 			}
-			mutex.acquire();
+			// mutex.acquire();
 			loaded++;
-			mutex.release();
-		#if MULTITHREADED_LOADING
+			// mutex.release();
 		});
-		#end
 	}
 
 	inline private static function preloadCharacter(char:String, ?prefixVocals:String)
