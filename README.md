@@ -3,7 +3,7 @@ Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), 
 
 ## Installation:
 
-Refer to [the Build Instructions](./BUILDING.md)
+Refer to [the Build Instructions](/docs/BUILDING.md)
 
 ## Customization:
 
