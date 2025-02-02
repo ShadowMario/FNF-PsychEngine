@@ -88,7 +88,7 @@ class NoteSplash extends FlxSprite
 			this.config = configs.get(path);
 			for (anim in this.config.animations)
 			{
-				if (anim.noteData % 4 == 0)
+				if (anim.noteData % Note.colArray.length == 0)
 					maxAnims++;
 			}
 			return;
@@ -110,7 +110,7 @@ class NoteSplash extends FlxSprite
 				{
 					var anim:NoteSplashAnim = Reflect.field(config.animations, i);
 					tempConfig.animations.set(i, anim);
-					if (anim.noteData % 4 == 0)
+					if (anim.noteData % Note.colArray.length == 0)
 						maxAnims++;
 				}
 
@@ -261,7 +261,11 @@ class NoteSplash extends FlxSprite
 							else if (i == 2) tempShader.b = color;
 						}
 					}
-					else tempShader.copyValues(Note.globalRgbShaders[noteData % Note.colArray.length]);
+					else 
+					{
+						tempShader.copyValues(Note.globalRgbShaders[noteData % Note.colArray.length]);
+           					if (note != null && note.noteSplashData.useNoteRGB) tempShader = note.rgbShader.parent;
+					}
 
 					if (note != null)
 					{
