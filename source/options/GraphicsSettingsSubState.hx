@@ -39,19 +39,11 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			BOOL);
 		addOption(option);
 
-		var option:Option = new Option('GPU Caching',
-			"If checked, allows the GPU to be used for caching textures, decreasing RAM usage.\nDon't turn this on if you have a shitty Graphics Card.",
+		var option:Option = new Option('GPU Caching', //Name
+			"If checked, allows the GPU to be used for caching textures, decreasing RAM usage.\nDon't turn this on if you have a shitty Graphics Card.", //Description
 			'cacheOnGPU',
 			BOOL);
 		addOption(option);
-
-		#if MULTITHREADED_LOADING
-		var option:Option = new Option('Multithreaded Loading',
-			"If checked, allows the game to use your CPU's threads for the loading screen\ndisable this if you experience stutters.",
-			'multiThreading',
-			BOOL);
-		addOption(option);
-		#end
 
 		#if !html5 //Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		var option:Option = new Option('Framerate',
