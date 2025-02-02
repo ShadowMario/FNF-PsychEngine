@@ -531,7 +531,8 @@ class LoadingState extends MusicBeatState
 
 		#if MULTITHREADED_LOADING
 		//then start threads
-		_threadFunc();
+		if (ClientPrefs.data.multiThreading)
+			_threadFunc();
 		#else
 		//or a single thread if you have multithreading turned off
 		Thread.create(() -> _threadFunc());
@@ -551,6 +552,7 @@ class LoadingState extends MusicBeatState
 	static function initThread(func:Void->Dynamic, traceData:String)
 	{
 		#if MULTITHREADED_LOADING
+		if (ClientPrefs.data.multiThreading) {
 		Thread.create(() -> {
 		#end
 			try {
@@ -565,6 +567,7 @@ class LoadingState extends MusicBeatState
 			mutex.release();
 		#if MULTITHREADED_LOADING
 		});
+		}
 		#end
 	}
 
