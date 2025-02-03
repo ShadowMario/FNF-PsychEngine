@@ -431,5 +431,5 @@ class PauseSubState extends MusicBeatSubstate
 	}
 
 	function updateSkipTimeText()
-		skipTimeText.text = FlxStringUtil.formatTime(Math.max(0, Math.floor(curTime / 1000)), false) + ' / ' + FlxStringUtil.formatTime(Math.max(0, Math.floor(FlxG.sound.music.length / 1000)), false);
+		skipTimeText.text = FlxStringUtil.formatTime(Math.max(0, Math.floor((curTime / 1000) / PlayState.instance.playbackRate)), false) + ' / ' + FlxStringUtil.formatTime(Math.max(0, Math.floor((FlxG.sound.music.length / 1000) / PlayState.instance.playbackRate)), false);
 }
