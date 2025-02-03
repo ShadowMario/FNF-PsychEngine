@@ -280,15 +280,15 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Skip Time':
 					if(curTime < Conductor.songPosition)
 					{
-						PlayState.startOnTime = curTime;
+						PlayState.startOnTime = curTime * playbackRate;
 						restartSong(true);
 					}
 					else
 					{
 						if (curTime != Conductor.songPosition)
 						{
-							PlayState.instance.clearNotesBefore(curTime);
-							PlayState.instance.setSongTime(curTime);
+							PlayState.instance.clearNotesBefore(curTime * playbackRate);
+							PlayState.instance.setSongTime(curTime * playbackRate);
 						}
 						close();
 					}
