@@ -280,15 +280,15 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Skip Time':
 					if(curTime < Conductor.songPosition)
 					{
-						PlayState.startOnTime = curTime;
+						PlayState.startOnTime = curTime * PlayState.instance.playbackRate;
 						restartSong(true);
 					}
 					else
 					{
 						if (curTime != Conductor.songPosition)
 						{
-							PlayState.instance.clearNotesBefore(curTime);
-							PlayState.instance.setSongTime(curTime);
+							PlayState.instance.clearNotesBefore(curTime * PlayState.instance.playbackRate);
+							PlayState.instance.setSongTime(curTime * PlayState.instance.playbackRate);
 						}
 						close();
 					}
@@ -431,5 +431,5 @@ class PauseSubState extends MusicBeatSubstate
 	}
 
 	function updateSkipTimeText()
-		skipTimeText.text = FlxStringUtil.formatTime(Math.max(0, Math.floor(curTime / 1000)), false) + ' / ' + FlxStringUtil.formatTime(Math.max(0, Math.floor(FlxG.sound.music.length / 1000)), false);
+		skipTimeText.text = FlxStringUtil.formatTime(Math.max(0, Math.floor((curTime / 1000) / PlayState.instance.playbackRate)), false) + ' / ' + FlxStringUtil.formatTime(Math.max(0, Math.floor((FlxG.sound.music.length / 1000) / PlayState.instance.playbackRate)), false);
 }
