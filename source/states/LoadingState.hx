@@ -1,5 +1,7 @@
 package states;
 
+import lime.app.Future;
+import sys.thread.FixedThreadPool;
 import haxe.Json;
 import lime.utils.Assets;
 import openfl.display.BitmapData;
@@ -29,6 +31,7 @@ class LoadingState extends MusicBeatState
 	static var originalBitmapKeys:Map<String, String> = [];
 	static var requestedBitmaps:Map<String, BitmapData> = [];
 	static var mutex:Mutex;
+	static var threadPool:FixedThreadPool;
 
 	function new(target:FlxState, stopMusic:Bool)
 	{
@@ -248,6 +251,8 @@ class LoadingState extends MusicBeatState
 		MusicBeatState.switchState(target);
 		transitioning = true;
 		finishedLoading = true;
+		threadPool.shutdown(); // kill all workers safely
+		// threadPool = null;
 		mutex = null;
 	}
 
@@ -260,6 +265,7 @@ class LoadingState extends MusicBeatState
 		}
 		requestedBitmaps.clear();
 		originalBitmapKeys.clear();
+		// trace('we checked if loaded');
 		return (loaded >= loadMax && initialThreadCompleted);
 	}
 
@@ -310,6 +316,8 @@ class LoadingState extends MusicBeatState
 	static var dontPreloadDefaultVoices:Bool = false;
 	public static function prepareToSong()
 	{
+		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING 8 #else 1 #end); // 10 threads are enough
+
 		imagesToPrepare = [];
 		soundsToPrepare = [];
 		musicToPrepare = [];
@@ -317,7 +325,7 @@ class LoadingState extends MusicBeatState
 
 		initialThreadCompleted = false;
 		var threadsCompleted:Int = 0;
-		var threadsMax:Int = 2;
+		var threadsMax:Int = 0;
 		function completedThread()
 		{
 			threadsCompleted++;
@@ -331,7 +339,7 @@ class LoadingState extends MusicBeatState
 
 		var song:SwagSong = PlayState.SONG;
 		var folder:String = Paths.formatToSongPath(Song.loadedSongName);
-		Thread.create(() -> {
+		new Future<Bool>(() -> {
 			// LOAD NOTE IMAGE
 			var noteSkin:String = Note.defaultNoteSkin;
 			if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) noteSkin = PlayState.SONG.arrowSkin;
@@ -384,10 +392,9 @@ class LoadingState extends MusicBeatState
 				}
 			}
 			catch(e:Dynamic) {}
-			completedThread();
-		});
-
-		Thread.create(() -> {
+			return true;
+		}, true)
+		.then((_) -> new Future<Bool>(() -> {
 			if (song.stage == null || song.stage.length < 1)
 				song.stage = StageData.vanillaSongStage(folder);
 
@@ -452,20 +459,23 @@ class LoadingState extends MusicBeatState
 			if (player2 != player1)
 			{
 				threadsMax++;
-				Thread.create(() -> {
-					preloadCharacter(player2, prefixVocals);
+				threadPool.run(() -> {
+					try { preloadCharacter(player2, prefixVocals); } catch (e:Dynamic) {}
 					completedThread();
 				});
 			}
 			if (!stageData.hide_girlfriend && gfVersion != player2 && gfVersion != player1)
 			{
 				threadsMax++;
-				Thread.create(() -> {
-					preloadCharacter(gfVersion);
+				threadPool.run(() -> {
+					try { preloadCharacter(gfVersion); } catch (e:Dynamic) {}
 					completedThread();
 				});
 			}
-			completedThread();
+			return true;
+		}, true))
+		.onError((err:Dynamic) -> {
+			trace('ERROR! while preparing song: $err');
 		});
 	}
 
@@ -529,13 +539,8 @@ class LoadingState extends MusicBeatState
 		loadMax = imagesToPrepare.length + soundsToPrepare.length + musicToPrepare.length + songsToPrepare.length;
 		loaded = 0;
 
-		#if MULTITHREADED_LOADING
 		//then start threads
 		_threadFunc();
-		#else
-		//or a single thread if you have multithreading turned off
-		Thread.create(() -> _threadFunc());
-		#end
 	}
 
 	static function _threadFunc()
@@ -550,22 +555,31 @@ class LoadingState extends MusicBeatState
 
 	static function initThread(func:Void->Dynamic, traceData:String)
 	{
-		#if MULTITHREADED_LOADING
-		Thread.create(() -> {
+		// trace('scheduled $func in threadPool');
+		#if debug
+		var threadSchedule = Sys.time();
 		#end
+		threadPool.run(() -> {
+			#if debug
+			var threadStart = Sys.time();
+			trace('$traceData took ${threadStart - threadSchedule}s to start preloading');
+			#end
+
 			try {
-				if (func() != null) trace('finished preloading $traceData');
-				else trace('ERROR! fail on preloading $traceData');
+				if (func() != null) {
+					#if debug
+					var diff = Sys.time() - threadStart;
+					trace('finished preloading $traceData in ${diff}s');
+					#end
+				} else trace('ERROR! fail on preloading $traceData ');
 			}
 			catch(e:Dynamic) {
-				trace('ERROR! fail on preloading $traceData');
+				trace('ERROR! fail on preloading $traceData: $e');
 			}
-			mutex.acquire();
+			// mutex.acquire();
 			loaded++;
-			mutex.release();
-		#if MULTITHREADED_LOADING
+			// mutex.release();
 		});
-		#end
 	}
 
 	inline private static function preloadCharacter(char:String, ?prefixVocals:String)
