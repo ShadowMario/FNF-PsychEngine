@@ -316,7 +316,7 @@ class LoadingState extends MusicBeatState
 	static var dontPreloadDefaultVoices:Bool = false;
 	public static function prepareToSong()
 	{
-		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING 10 #else 1 #end); // 10 threads are enough
+		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING 8 #else 1 #end); // 10 threads are enough
 
 		imagesToPrepare = [];
 		soundsToPrepare = [];
