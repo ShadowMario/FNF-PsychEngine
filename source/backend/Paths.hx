@@ -80,6 +80,61 @@ class Paths
 		#if !html5 openfl.Assets.cache.clear("songs"); #end
 	}
 
+	public static function freeGraphicsFromMemory()
+	{
+		var protectedGfx:Array<FlxGraphic> = [];
+		function checkForGraphics(spr:Dynamic)
+		{
+			try
+			{
+				var grp:Array<Dynamic> = Reflect.getProperty(spr, 'members');
+				if(grp != null)
+				{
+					//trace('is actually a group');
+					for (member in grp)
+					{
+						checkForGraphics(member);
+					}
+					return;
+				}
+			}
+
+			//trace('check...');
+			try
+			{
+				var gfx:FlxGraphic = Reflect.getProperty(spr, 'graphic');
+				if(gfx != null)
+				{
+					protectedGfx.push(gfx);
+					//trace('gfx added to the list successfully!');
+				}
+			}
+			//catch(haxe.Exception) {}
+		}
+
+		for (member in FlxG.state.members)
+			checkForGraphics(member);
+
+		if(FlxG.state.subState != null)
+			for (member in FlxG.state.subState.members)
+				checkForGraphics(member);
+
+		for (key in currentTrackedAssets.keys())
+		{
+			// if it is not currently contained within the used local assets
+			if (!dumpExclusions.contains(key))
+			{
+				var graphic:FlxGraphic = currentTrackedAssets.get(key);
+				if(!protectedGfx.contains(graphic))
+				{
+					destroyGraphic(graphic); // get rid of the graphic
+					currentTrackedAssets.remove(key); // and remove the key from local cache map
+					//trace('deleted $key');
+				}
+			}
+		}
+	}
+
 	inline static function destroyGraphic(graphic:FlxGraphic)
 	{
 		// free some gpu memory
@@ -196,7 +251,7 @@ class Paths
 
 			if (bitmap == null)
 			{
-				trace('oh no its returning null NOOOO ($file)');
+				trace('Bitmap not found: $file | key: $key');
 				return null;
 			}
 		}
