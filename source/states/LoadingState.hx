@@ -251,7 +251,7 @@ class LoadingState extends MusicBeatState
 		MusicBeatState.switchState(target);
 		transitioning = true;
 		finishedLoading = true;
-		threadPool.shutdown(); // kill all workers safely
+		if (threadPool != null) threadPool.shutdown(); // kill all workers safely
 		// threadPool = null;
 		mutex = null;
 	}
