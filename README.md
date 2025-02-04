@@ -41,7 +41,7 @@ _____________________________________
 
 ## Attractive animated dialogue boxes:
 
-![](https://user-images.githubusercontent.com/44785097/127706669-71cd5cdb-5c2a-4ecc-871b-98a276ae8070.gif)
+![](https://github.com/Lasercar/NewVeryCoolPsychic/assets/64717068/69556d96-27a7-4e30-bf86-acab005cd099)
 
 
 ## Mod Support
