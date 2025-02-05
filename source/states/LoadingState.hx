@@ -23,6 +23,12 @@ import sys.thread.Mutex;
 import objects.Note;
 import objects.NoteSplash;
 
+#if cpp
+@:headerCode('
+#include <iostream>
+#include <thread>
+')
+#end
 class LoadingState extends MusicBeatState
 {
 	public static var loaded:Int = 0;
@@ -328,9 +334,7 @@ class LoadingState extends MusicBeatState
 	static var dontPreloadDefaultVoices:Bool = false;
 	static function _startPool()
 	{
-		if(threadPool != null) return;
-		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING 8 #else 1 #end); // 10 threads are enough
-	}
+		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING #if cpp getCPUThreadsCount() #else 8 #end #else 1 #end);
 
 	public static function prepareToSong()
 	{
@@ -731,4 +735,15 @@ class LoadingState extends MusicBeatState
 
 		return null;
 	}
+	
+	#if cpp
+	@:functionCode('
+		return std::thread::hardware_concurrency();
+    	')
+	@:noCompletion
+    	public static function getCPUThreadsCount():Int
+    	{
+        	return -1;
+    	}
+    	#end
 }
