@@ -23,6 +23,12 @@ import sys.thread.Mutex;
 import objects.Note;
 import objects.NoteSplash;
 
+#if cpp
+@:headerCode('
+#include <iostream>
+#include <thread>
+')
+#end
 class LoadingState extends MusicBeatState
 {
 	public static var loaded:Int = 0;
