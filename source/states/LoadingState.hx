@@ -335,6 +335,7 @@ class LoadingState extends MusicBeatState
 	static function _startPool()
 	{
 		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING #if cpp getCPUThreadsCount() #else 8 #end #else 1 #end);
+	}
 
 	public static function prepareToSong()
 	{
