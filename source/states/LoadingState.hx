@@ -316,7 +316,7 @@ class LoadingState extends MusicBeatState
 	static var dontPreloadDefaultVoices:Bool = false;
 	public static function prepareToSong()
 	{
-		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING 8 #else 1 #end); // 10 threads are enough
+		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING #if cpp getCPUThreadsCount() #else 8 #end #else 1 #end);
 
 		imagesToPrepare = [];
 		soundsToPrepare = [];
@@ -706,4 +706,15 @@ class LoadingState extends MusicBeatState
 
 		return null;
 	}
+	
+	#if cpp
+	@:functionCode('
+		return std::thread::hardware_concurrency();
+    	')
+	@:noCompletion
+    	public static function getCPUThreadsCount():Int
+    	{
+        	return -1;
+    	}
+    	#end
 }
