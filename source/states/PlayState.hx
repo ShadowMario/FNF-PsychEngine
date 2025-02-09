@@ -3689,7 +3689,7 @@ class PlayState extends MusicBeatState
 				}
 				gameFroze = true;
 
-				Sys.sleep(0.5);
+				Sys.sleep(0.15);
 			}
 		});
 
