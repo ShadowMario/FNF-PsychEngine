@@ -679,7 +679,7 @@ class PlayState extends MusicBeatState
 		Conductor.offset = Reflect.hasField(PlayState.SONG, 'offset') ? (PlayState.SONG.offset / value) : 0;
 		Conductor.safeZoneOffset = (ClientPrefs.data.safeFrames / 60) * 1000 * value;
 		#if VIDEOS_ALLOWED
-		if(videoCutscene != null) videoCutscene.videoSprite.bitmap.rate = value;
+		if(videoCutscene != null && videoCutscene.videoSprite != null) videoCutscene.videoSprite.bitmap.rate = value;
 		#end
 		setOnScripts('playbackRate', playbackRate);
 		#else
@@ -845,8 +845,8 @@ class PlayState extends MusicBeatState
 
 		if (foundFile)
 		{
-			videoCutscene = new VideoSprite(fileName, forMidSong, canSkip, loop, false);
-			videoCutscene.videoSprite.bitmap.rate = playbackRate;
+			videoCutscene = new VideoSprite(fileName, forMidSong, canSkip, loop);
+			if(forMidSong) videoCutscene.videoSprite.bitmap.rate = playbackRate;
 
 			// Finish callback
 			if (!forMidSong)
@@ -1581,9 +1581,6 @@ class PlayState extends MusicBeatState
 			}
 			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = false);
 			FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = false);
-			#if VIDEOS_ALLOWED
-			if(videoCutscene != null) videoCutscene.pause();
-			#end
 		}
 
 		super.openSubState(SubState);
@@ -1603,9 +1600,6 @@ class PlayState extends MusicBeatState
 			}
 			FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = true);
 			FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = true);
-			#if VIDEOS_ALLOWED
-			if(videoCutscene != null) videoCutscene.resume();
-			#end
 
 			paused = false;
 			callOnScripts('onResume');
@@ -1613,32 +1607,25 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	#if DISCORD_ALLOWED
 	override public function onFocus():Void
 	{
-		if (!paused)
+		if (!paused && health > 0)
 		{
-			if (health > 0) resetRPC(Conductor.songPosition > 0.0);
-			#if VIDEOS_ALLOWED
-			if (videoCutscene != null) videoCutscene.resume();
-			#end
+			resetRPC(Conductor.songPosition > 0.0);
 		}
 		super.onFocus();
 	}
 
 	override public function onFocusLost():Void
 	{
-		if (!paused)
+		if (!paused && health > 0 && autoUpdateRPC)
 		{
-			#if DISCORD_ALLOWED
-			if (health > 0 && autoUpdateRPC) DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
-			#end
-
-			#if VIDEOS_ALLOWED
-			if (videoCutscene != null) videoCutscene.pause();
-			#end
+			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		}
 		super.onFocusLost();
 	}
+	#end
 
 	// Updating Discord Rich Presence.
 	public var autoUpdateRPC:Bool = true; //performance setting for custom RPC things
