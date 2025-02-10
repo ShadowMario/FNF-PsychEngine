@@ -1631,6 +1631,8 @@ class PlayState extends MusicBeatState
 			if (videoCutscene != null) videoCutscene.resume();
 			#end
 		}
+		shutdownThread = false;
+		runSongSyncThread();
 		super.onFocus();
 	}
 
@@ -1646,6 +1648,8 @@ class PlayState extends MusicBeatState
 			if (videoCutscene != null) videoCutscene.pause();
 			#end
 		}
+
+		shutdownThread = true;
 		super.onFocusLost();
 	}
 
@@ -3663,7 +3667,7 @@ class PlayState extends MusicBeatState
 
 	function checkForResync()
 	{
-		if (paused) return;
+		if (endingSong || paused || shutdownThread) return;
 
 		if (requiresSyncing)
 		{
@@ -3689,10 +3693,11 @@ class PlayState extends MusicBeatState
 				}
 				gameFroze = true;
 
-				Sys.sleep(0.15);
+				Sys.sleep(0.25);
 			}
 		});
 
-		if (!FlxG.signals.preUpdate.has(checkForResync))	FlxG.signals.preUpdate.add(checkForResync);
+		if (!FlxG.signals.preUpdate.has(checkForResync))
+			FlxG.signals.preUpdate.add(checkForResync);
 	}
 }
