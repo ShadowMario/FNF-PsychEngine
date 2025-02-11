@@ -23,6 +23,13 @@ import sys.thread.Mutex;
 import objects.Note;
 import objects.NoteSplash;
 
+#if HSCRIPT_ALLOWED
+import psychlua.HScript;
+import crowplexus.iris.Iris;
+import crowplexus.hscript.Expr.Error as IrisError;
+import crowplexus.hscript.Printer;
+#end
+
 #if cpp
 @:headerCode('
 #include <iostream>
@@ -54,11 +61,12 @@ class LoadingState extends MusicBeatState
 	var stopMusic:Bool = false;
 	var dontUpdate:Bool = false;
 
+	var barGroup:FlxSpriteGroup;
 	var bar:FlxSprite;
 	var barWidth:Int = 0;
 	var intendedPercent:Float = 0;
 	var curPercent:Float = 0;
-	var canChangeState:Bool = true;
+	var stateChangeDelay:Float = 0;
 
 	#if PSYCH_WATERMARKS
 	var logo:FlxSprite;
@@ -76,73 +84,111 @@ class LoadingState extends MusicBeatState
 	var funkay:FlxSprite;
 	#end
 
+	#if HSCRIPT_ALLOWED
+	var hscript:HScript;
+	#end
 	override function create()
 	{
-		#if !SHOW_LOADING_SCREEN
-		while(true)
-		#end
+		persistentUpdate = true;
+		barGroup = new FlxSpriteGroup();
+		add(barGroup);
+
+		var barBack:FlxSprite = new FlxSprite(0, 660).makeGraphic(1, 1, FlxColor.BLACK);
+		barBack.scale.set(FlxG.width - 300, 25);
+		barBack.updateHitbox();
+		barBack.screenCenter(X);
+		barGroup.add(barBack);
+
+		bar = new FlxSprite(barBack.x + 5, barBack.y + 5).makeGraphic(1, 1, FlxColor.WHITE);
+		bar.scale.set(0, 15);
+		bar.updateHitbox();
+		barGroup.add(bar);
+		barWidth = Std.int(barBack.width - 10);
+
+		#if HSCRIPT_ALLOWED
+		if(Mods.currentModDirectory != null && Mods.currentModDirectory.trim().length > 0)
 		{
-			if (checkLoaded())
+			var scriptPath:String = 'mods/${Mods.currentModDirectory}/data/LoadingScreen.hx'; //mods/My-Mod/data/LoadingScreen.hx
+			if(FileSystem.exists(scriptPath))
 			{
-				dontUpdate = true;
-				super.create();
-				onLoad();
-				return;
+				try
+				{
+					hscript = new HScript(null, scriptPath);
+					hscript.set('getLoaded', function() return loaded);
+					hscript.set('getLoadMax', function() return loadMax);
+					hscript.set('barBack', barBack);
+					hscript.set('bar', bar);
+	
+					if(hscript.exists('onCreate'))
+					{
+						hscript.call('onCreate');
+						trace('initialized hscript interp successfully: $scriptPath');
+						return super.create();
+					}
+					else
+					{
+						trace('"$scriptPath" contains no \"onCreate" function, stopping script.');
+					}
+				}
+				catch(e:IrisError)
+				{
+					var pos:HScriptInfos = cast {fileName: scriptPath, showLine: false};
+					Iris.error(Printer.errorToString(e, false), pos);
+					var hscript:HScript = cast (Iris.instances.get(scriptPath), HScript);
+				}
+				if(hscript != null) hscript.destroy();
+				hscript = null;
 			}
-			#if !SHOW_LOADING_SCREEN
-			Sys.sleep(0.001);
-			#end
 		}
+		#end
 
 		#if PSYCH_WATERMARKS // PSYCH LOADING SCREEN
 		var bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.setGraphicSize(Std.int(FlxG.width));
 		bg.color = 0xFFD16FFF;
 		bg.updateHitbox();
-		add(bg);
+		addBehindBar(bg);
 	
 		loadingText = new FlxText(520, 600, 400, Language.getPhrase('now_loading', 'Now Loading', ['...']), 32);
 		loadingText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, LEFT, OUTLINE_FAST, FlxColor.BLACK);
 		loadingText.borderSize = 2;
-		add(loadingText);
+		addBehindBar(loadingText);
 	
 		logo = new FlxSprite(0, 0).loadGraphic(Paths.image('loading_screen/icon'));
+		logo.antialiasing = ClientPrefs.data.antialiasing;
 		logo.scale.set(0.75, 0.75);
 		logo.updateHitbox();
-		logo.antialiasing = ClientPrefs.data.antialiasing;
 		logo.screenCenter();
 		logo.x -= 50;
 		logo.y -= 40;
-		add(logo);
+		addBehindBar(logo);
 
 		#else // BASE GAME LOADING SCREEN
 		var bg = new FlxSprite().makeGraphic(1, 1, 0xFFCAFF4D);
 		bg.scale.set(FlxG.width, FlxG.height);
 		bg.updateHitbox();
 		bg.screenCenter();
-		add(bg);
+		addBehindBar(bg);
 
 		funkay = new FlxSprite(0, 0).loadGraphic(Paths.image('funkay'));
 		funkay.antialiasing = ClientPrefs.data.antialiasing;
 		funkay.setGraphicSize(0, FlxG.height);
 		funkay.updateHitbox();
-		add(funkay);
+		addBehindBar(funkay);
 		#end
-
-		var bg:FlxSprite = new FlxSprite(0, 660).makeGraphic(1, 1, FlxColor.BLACK);
-		bg.scale.set(FlxG.width - 300, 25);
-		bg.updateHitbox();
-		bg.screenCenter(X);
-		add(bg);
-
-		bar = new FlxSprite(bg.x + 5, bg.y + 5).makeGraphic(1, 1, FlxColor.WHITE);
-		bar.scale.set(0, 15);
-		bar.updateHitbox();
-		add(bar);
-		barWidth = Std.int(bg.width - 10);
-
-		persistentUpdate = true;
 		super.create();
+
+		if (stateChangeDelay <= 0 && checkLoaded())
+		{
+			dontUpdate = true;
+			onLoad();
+		}
+	}
+
+	function addBehindBar(obj:flixel.FlxBasic)
+	{
+		insert(members.indexOf(barGroup), obj);
 	}
 
 	var transitioning:Bool = false;
@@ -153,11 +199,15 @@ class LoadingState extends MusicBeatState
 
 		if (!transitioning)
 		{
-			if (canChangeState && !finishedLoading && checkLoaded())
+			if (!finishedLoading && checkLoaded())
 			{
-				transitioning = true;
-				onLoad();
-				return;
+				if(stateChangeDelay <= 0)
+				{
+					transitioning = true;
+					onLoad();
+					return;
+				}
+				else stateChangeDelay = Math.max(0, stateChangeDelay - elapsed);
 			}
 			intendedPercent = loaded / loadMax;
 		}
@@ -170,6 +220,14 @@ class LoadingState extends MusicBeatState
 			bar.scale.x = barWidth * curPercent;
 			bar.updateHitbox();
 		}
+		
+		#if HSCRIPT_ALLOWED
+		if(hscript != null)
+		{
+			if(hscript.exists('onUpdate')) hscript.call('onUpdate', [elapsed]);
+			return;
+		}
+		#end
 
 		#if PSYCH_WATERMARKS // PSYCH LOADING SCREEN
 		timePassed += elapsed;
@@ -202,7 +260,7 @@ class LoadingState extends MusicBeatState
 				FlxG.camera.fade(0xAAFFFFFF, 0.5, true);
 				logo.visible = false;
 				spawnedPessy = true;
-				canChangeState = false;
+				stateChangeDelay = 5;
 				FlxG.sound.play(Paths.sound('secret'));
 
 				pessy = new FlxSprite(700, 140);
@@ -211,21 +269,22 @@ class LoadingState extends MusicBeatState
 				pessy.animation.addByPrefix('spin', 'spin', 24, true);
 				pessy.antialiasing = ClientPrefs.data.antialiasing;
 				pessy.flipX = (logo.offset.x > 0);
-				pessy.x = FlxG.width + 200;
-				pessy.velocity.x = -1100;
+				pessy.visible = false;
 
 				new FlxTimer().start(0.01, function(tmr:FlxTimer) {
+					pessy.x = FlxG.width + 200;
+					pessy.velocity.x = -1100;
 					if(pessy.flipX)
 					{
 						pessy.x = -pessy.width - 200;
 						pessy.velocity.x *= -1;
 					}
 		
+					pessy.visible = true;
 					pessy.animation.play('run', true);
 					#if ACHIEVEMENTS_ALLOWED Achievements.unlock('pessy_easter_egg'); #end
 					
 					insert(members.indexOf(loadingText), pessy);
-					new FlxTimer().start(5, function(tmr:FlxTimer) canChangeState = true);
 				});
 			}
 		}
@@ -241,6 +300,19 @@ class LoadingState extends MusicBeatState
 		}
 		#end
 	}
+
+	#if HSCRIPT_ALLOWED
+	override function destroy()
+	{
+		if(hscript != null)
+		{
+			if(hscript.exists('onDestroy')) hscript.call('onDestroy');
+			hscript.destroy();
+		}
+		hscript = null;
+		super.destroy();
+	}
+	#end
 	
 	var finishedLoading:Bool = false;
 	function onLoad()
@@ -297,6 +369,10 @@ class LoadingState extends MusicBeatState
 	static var isIntrusive:Bool = false;
 	static function getNextState(target:FlxState, stopMusic = false, intrusive:Bool = true):FlxState
 	{
+		#if !SHOW_LOADING_SCREEN
+		intrusive = false;
+		#end
+
 		LoadingState.isIntrusive = intrusive;
 		_startPool();
 		loadNextDirectory();
