@@ -2125,7 +2125,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		if(curSec > 0)
 		{
 			prevGridBg.y = cachedSectionRow[curSec-1] * GRID_SIZE * curZoom;
-			prevGridBg.rows = Math.round(4 * PlayState.SONG.notes[curSec-1].sectionBeats * curZoom);
+			prevGridBg.rows = 4 * PlayState.SONG.notes[curSec-1].sectionBeats * curZoom;
 			prevGridBg.visible = showPreviousSection;
 			hei += prevGridBg.height;
 			eventLockOverlay.y = prevGridBg.y;
@@ -2135,14 +2135,14 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		if(curSec < PlayState.SONG.notes.length - 1)
 		{
 			nextGridBg.y = cachedSectionRow[curSec+1] * GRID_SIZE * curZoom;
-			nextGridBg.rows = Math.round(4 * PlayState.SONG.notes[curSec+1].sectionBeats * curZoom);
+			nextGridBg.rows = 4 * PlayState.SONG.notes[curSec+1].sectionBeats * curZoom;
 			nextGridBg.visible = showNextSection;
 			hei += nextGridBg.height;
 		}
 		else nextGridBg.visible = false;
 
 		gridBg.y = cachedSectionRow[curSec] * GRID_SIZE * curZoom;
-		gridBg.rows = Math.round(4 * PlayState.SONG.notes[curSec].sectionBeats * curZoom);
+		gridBg.rows = 4 * PlayState.SONG.notes[curSec].sectionBeats * curZoom;
 		hei += gridBg.height;
 
 		if(!prevGridBg.visible) eventLockOverlay.y = gridBg.y;
@@ -2881,9 +2881,10 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			}
 		};
 
-		beatsPerSecStepper = new PsychUINumericStepper(objX + 150, objY, 1, 4, 1, 7, 2);
+		beatsPerSecStepper = new PsychUINumericStepper(objX + 150, objY, 1, 4, 1, 16, 2);
 		beatsPerSecStepper.onValueChange = function()
 		{
+			beatsPerSecStepper.value = Math.round(beatsPerSecStepper.value * 4) / 4;
 			var sec = getCurChartSection();
 			if(sec != null)
 			{

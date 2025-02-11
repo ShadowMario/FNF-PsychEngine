@@ -415,6 +415,19 @@ class LoadingState extends MusicBeatState
 
 	public static function prepareToSong()
 	{
+		if(PlayState.SONG == null)
+		{
+			imagesToPrepare = [];
+			soundsToPrepare = [];
+			musicToPrepare = [];
+			songsToPrepare = [];
+			loaded = 0;
+			loadMax = 0;
+			initialThreadCompleted = true;
+			isIntrusive = false;
+			return;
+		}
+
 		_startPool();
 		imagesToPrepare = [];
 		soundsToPrepare = [];

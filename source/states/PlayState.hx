@@ -1610,20 +1610,20 @@ class PlayState extends MusicBeatState
 	#if DISCORD_ALLOWED
 	override public function onFocus():Void
 	{
+		super.onFocus();
 		if (!paused && health > 0)
 		{
 			resetRPC(Conductor.songPosition > 0.0);
 		}
-		super.onFocus();
 	}
 
 	override public function onFocusLost():Void
 	{
+		super.onFocusLost();
 		if (!paused && health > 0 && autoUpdateRPC)
 		{
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		}
-		super.onFocusLost();
 	}
 	#end
 
