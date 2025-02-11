@@ -9,7 +9,7 @@ import states.TitleState;
 class OutdatedSubState extends MusicBeatSubstate
 {
 	public static var updateVersion:String = CoolUtil.checkForUpdates();
-	public static var leftState:Bool = false;
+	var leftState:Bool = false;
 
 	var bg:FlxSprite;
 	var warnText:FlxText;
