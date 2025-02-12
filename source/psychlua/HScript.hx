@@ -535,9 +535,14 @@ class CustomInterp extends crowplexus.hscript.Interp
 			return v;
 		}
 
-		if(parentInstance != null && Type.getInstanceFields(Type.getClass(parentInstance)).contains(id)) {
-			var v = Reflect.getProperty(parentInstance, id);
-			return v;
+		if(parentInstance != null) {
+			
+			try
+			{
+				var v = Reflect.getProperty(parentInstance, id);
+				if(v != null) return v;
+			}
+			catch(e:haxe.Exception) {}
 		}
 
 		error(EUnknownVariable(id));
