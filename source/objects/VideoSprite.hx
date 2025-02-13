@@ -80,8 +80,10 @@ class VideoSprite extends FlxSpriteGroup {
 			cover.destroy();
 		}
 
-		if(finishCallback != null)
+		if(finishCallback != null) {
 			finishCallback();
+			finishCallback = null;
+		}
 		onSkip = null;
 
 		if(FlxG.state != null)

@@ -3170,6 +3170,7 @@ class PlayState extends MusicBeatState
 		#if VIDEOS_ALLOWED
 		if(videoCutscene != null)
 		{
+			videoCutscene.finishCallback = null;
 			videoCutscene.destroy();
 			videoCutscene = null;
 		}
