@@ -101,7 +101,7 @@ class VideoSprite extends FlxSpriteGroup {
 			if(finishCallback != null)
 				finishCallback();
 			
-			super.destroy();
+			destroy();
 		}
 	}
 
