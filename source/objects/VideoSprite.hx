@@ -46,7 +46,7 @@ class VideoSprite extends FlxSpriteGroup {
 		if(canSkip) this.canSkip = true;
 
 		// callbacks
-		if(!shouldLoop) videoSprite.bitmap.onEndReached.add(destroy);
+		if(!shouldLoop) videoSprite.bitmap.onEndReached.add(finishVideo);
 
 		videoSprite.bitmap.onFormatSetup.add(function()
 		{
@@ -79,9 +79,8 @@ class VideoSprite extends FlxSpriteGroup {
 			remove(cover);
 			cover.destroy();
 		}
-
-		if(finishCallback != null)
-			finishCallback();
+		
+		finishCallback = null;
 		onSkip = null;
 
 		if(FlxG.state != null)
@@ -94,6 +93,16 @@ class VideoSprite extends FlxSpriteGroup {
 		}
 		super.destroy();
 		alreadyDestroyed = true;
+	}
+	function finishVideo()
+	{
+		if (!alreadyDestroyed)
+		{
+			if(finishCallback != null)
+				finishCallback();
+			
+			destroy();
+		}
 	}
 
 	override function update(elapsed:Float)
