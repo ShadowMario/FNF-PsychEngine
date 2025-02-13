@@ -2,56 +2,58 @@
 
 function onCreate()
 {
-	// triggered when the hscript file is started, some variables weren't created yet
+	// Triggered when the hscript file is started, some variables weren't created yet
 }
 
 function onCreatePost()
 {
-	// end of "create"
+	// End of "create"
 }
 
 function onDestroy()
 {
-	// triggered when the haxe file is ended (Song fade out finished)
+	// Triggered when the hscript file is ended
 }
 
 
 // Gameplay/Song interactions
 function onSectionHit()
 {
-	// triggered after it goes to the next section
+	// Triggered after it goes to the next section
 }
 
 function onBeatHit()
 {
-	// triggered 4 times per section
+	// Triggered 4 times per section
 }
 
 function onStepHit()
 {
-	// triggered 16 times per section
+	// Triggered 16 times per section
 }
 
 function onUpdate(elapsed:Float)
 {
-	// start of "update", some variables weren't updated yet
+	// Start of "update", some variables weren't updated yet
+	// Also gets called while in the game over screen
 }
 
 function onUpdatePost(elapsed:Float)
 {
-	// end of "update"
+	// End of "update"
+	// Also gets called while in the game over screen
 }
 
 function onStartCountdown()
 {
-	// countdown started, duh
+	// Countdown started, duh
 	// return Function_Stop if you want to stop the countdown from happening (Can be used to trigger dialogues and stuff! You can trigger the countdown with startCountdown())
 	return Function_Continue;
 }
 
 function onCountdownStarted()
 {
-	// called AFTER countdown started, if you want to stop it from starting, refer to the previous function (onStartCountdown)
+	// Called AFTER countdown started, if you want to stop it from starting, refer to the previous function (onStartCountdown)
 }
 
 function onCountdownTick(tick:Countdown, counter:Int)
@@ -59,15 +61,15 @@ function onCountdownTick(tick:Countdown, counter:Int)
 	switch(tick)
 	{
 		case Countdown.THREE:
-			//counter equals to 0
+			//Counter equals to 0
 		case Countdown.TWO:
-			//counter equals to 1
+			//Counter equals to 1
 		case Countdown.ONE:
-			//counter equals to 2
+			//Counter equals to 2
 		case Countdown.GO:
-			//counter equals to 3
+			//Counter equals to 3
 		case Countdown.START:
-			//counter equals to 4, this has no visual indication or anything, it's pretty much at nearly the exact time the song starts playing
+			//Counter equals to 4, this has no visual indication or anything, it's pretty much at nearly the exact time the song starts playing
 	}
 }
 
@@ -83,7 +85,7 @@ function onSongStart()
 
 function onEndSong()
 {
-	// song ended/starting transition (Will be delayed if you're unlocking an achievement)
+	// Song ended/starting transition (Will be delayed if you're unlocking an achievement)
 	// return Function_Stop to stop the song from ending for playing a cutscene or something.
 	return Function_Continue;
 }
@@ -109,6 +111,11 @@ function onGameOver()
 	return Function_Continue;
 }
 
+function onGameOverStart()
+{
+	// Called when you have entered the game over screen and "onGameOver" wasn't stopped
+}
+
 function onGameOverConfirm(retry:Bool)
 {
 	// Called when you Press Enter/Esc on Game Over
@@ -119,29 +126,44 @@ function onGameOverConfirm(retry:Bool)
 // Dialogue (When a dialogue is finished, it calls startCountdown again)
 function onNextDialogue(line:Int)
 {
-	// triggered when the next dialogue line starts, dialogue line starts with 1
+	// Triggered when the next dialogue line starts, dialogue line starts at 0 (first line), although it won't be triggered on line 0
 }
 
 function onSkipDialogue(line:Int)
 {
-	// triggered when you press Enter and skip a dialogue line that was still being typed, dialogue line starts with 1
+	// Triggered when you press Enter and skip a dialogue line that was still being typed, dialogue line starts at 0 (first line)
 }
 
 
 // Key Press/Release
+function onKeyPressPre(key:Int)
+{
+	// Called before the note key press calculations
+	// "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
+}
+
+function onKeyReleasePre(key:Int)
+{
+	// Called before the note key release calculations
+	// "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
+}
+
 function onKeyPress(key:Int)
 {
-	// key can be: 0 - left, 1 - down, 2 - up, 3 - right
+	// Called after the note key press calculations
+	// "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
 }
 
 function onKeyRelease(key:Int)
 {
-	// key can be: 0 - left, 1 - down, 2 - up, 3 - right
+	// Called after the note key release calculations
+	// "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
 }
 
 function onGhostTap(key:Int)
 {
-	// key can be: 0 - left, 1 - down, 2 - up, 3 - right
+	// Player pressed a button, but there was no note to hit and "Ghost Tapping" is enabled (ghost tap)
+	// "key" can be: 0 - left, 1 - down, 2 - up, 3 - right
 }
 
 
@@ -178,6 +200,20 @@ function noteMiss(note:Note)
 
 
 // Other function hooks
+function preUpdateScore(miss:Bool)
+{
+	// Called before the score text updates
+	// "miss" will be true if you missed
+	// return Function_Stop if you want to stop the score text from updating
+	return Function_Continue;
+}
+
+function onUpdateScore(miss:Bool)
+{
+	// Called after the score text updates
+	// "miss" will be true if you missed
+}
+
 function onRecalculateRating()
 {
 	// return Function_Stop if you want to do your own rating calculation,
@@ -188,13 +224,19 @@ function onRecalculateRating()
 
 function onMoveCamera(focus:String)
 {
+	// Called when the camera focuses to a character
+
 	if (focus == 'boyfriend')
 	{
-		// called when the camera focus on boyfriend
+		// Called when the camera focuses on boyfriend
 	}
 	else if (focus == 'dad')
 	{
-		// called when the camera focus on dad
+		// Called when the camera focuses on dad
+	}
+	else if (focus == 'gf')
+	{
+		// Called when the camera focuses on girlfriend
 	}
 }
 
@@ -202,8 +244,7 @@ function onMoveCamera(focus:String)
 // Event notes hooks
 function onEvent(name:String, value1:String, value2:String, strumTime:Float)
 {
-	// event note triggered
-	// triggerEvent() does not call this function!!
+	// Event note triggered
 
 	// print('Event triggered: ', name, value1, value2, strumTime);
 }
@@ -213,7 +254,7 @@ function onEventPushed(name:String, value1:String, value2:String, strumTime:Floa
 	// Called for every event note, recommended to precache assets
 }
 
-function eventEarlyTrigger(name:String)
+function eventEarlyTrigger(name:String, value1:String, value2:String, strumTime:Float)
 {
 	/*
 	Here's a port of the Kill Henchmen early trigger:
@@ -231,26 +272,26 @@ function eventEarlyTrigger(name:String)
 // Custom Substates
 function onCustomSubstateCreate(name:String)
 {
-	// name is defined on "openCustomSubstate(name)"
+	// "name" is defined on "openCustomSubstate(name)"
 }
 
 function onCustomSubstateCreatePost(name:String)
 {
-	// name is defined on "openCustomSubstate(name)"
+	// "name" is defined on "openCustomSubstate(name)"
 }
 
 function onCustomSubstateUpdate(name:String, elapsed:Float)
 {
-	// name is defined on "openCustomSubstate(name)"
+	// "name" is defined on "openCustomSubstate(name)"
 }
 
 function onCustomSubstateUpdatePost(name:String, elapsed:Float)
 {
-	// name is defined on "openCustomSubstate(name)"
+	// "name" is defined on "openCustomSubstate(name)"
 }
 
 function onCustomSubstateDestroy(name:String)
 {
-	// name is defined on "openCustomSubstate(name)"
-	// called when you use "closeCustomSubstate()"
+	// "name" is defined on "openCustomSubstate(name)"
+	// Called when you use "closeCustomSubstate()"
 }
