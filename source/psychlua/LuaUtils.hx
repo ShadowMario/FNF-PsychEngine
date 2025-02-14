@@ -71,7 +71,7 @@ class LuaUtils
 			return value;
 		}
 
-		if(MusicBeatState.getVariables().exists(variable))
+		if(instance is MusicBeatState && MusicBeatState.getVariables().exists(variable))
 		{
 			MusicBeatState.getVariables().set(variable, value);
 			return value;
@@ -108,7 +108,7 @@ class LuaUtils
 			return instance.get(variable);
 		}
 
-		if(MusicBeatState.getVariables().exists(variable))
+		if(instance is MusicBeatState && MusicBeatState.getVariables().exists(variable))
 		{
 			var retVal:Dynamic = MusicBeatState.getVariables().get(variable);
 			if(retVal != null)
