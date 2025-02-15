@@ -39,7 +39,7 @@ class ShaderFunctions
 
 			if(leObj != null) {
 				var arr:Array<String> = funk.runtimeShaders.get(shader);
-				leObj.shader = new FlxRuntimeShader(arr[0], arr[1]);
+				leObj.shader = new shaders.ErrorHandledShader.ErrorHandledRuntimeShader(shader, arr[0], arr[1]);
 				return true;
 			}
 			#else

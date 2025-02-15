@@ -170,6 +170,7 @@ class HScript extends Iris
 		set('CustomSubstate', CustomSubstate);
 		#if (!flash && sys)
 		set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);
+		set('ErrorHandledRuntimeShader', shaders.ErrorHandledShader.ErrorHandledRuntimeShader);
 		#end
 		set('ShaderFilter', openfl.filters.ShaderFilter);
 		set('StringTools', StringTools);
@@ -512,7 +513,20 @@ class CustomFlxColor {
 
 class CustomInterp extends crowplexus.hscript.Interp
 {
-	public var parentInstance:Dynamic;
+	public var parentInstance(default, set):Dynamic = [];
+	private var _instanceFields:Array<String>;
+	function set_parentInstance(inst:Dynamic):Dynamic
+	{
+		parentInstance = inst;
+		if(parentInstance == null)
+		{
+			_instanceFields = [];
+			return inst;
+		}
+		_instanceFields = Type.getInstanceFields(Type.getClass(inst));
+		return inst;
+	}
+
 	public function new()
 	{
 		super();
@@ -534,7 +548,7 @@ class CustomInterp extends crowplexus.hscript.Interp
 			return v;
 		}
 
-		if(parentInstance != null && Type.getInstanceFields(Type.getClass(parentInstance)).contains(id)) {
+		if(parentInstance != null && _instanceFields.contains(id)) {
 			var v = Reflect.getProperty(parentInstance, id);
 			return v;
 		}
