@@ -9,7 +9,7 @@ class MetaNote extends Note
 	public static var noteTypeTexts:Map<Int, FlxText> = [];
 	public var isEvent:Bool = false;
 	public var songData:Array<Dynamic>;
-	public var sustainSprite:FlxSprite;
+	public var sustainSprite:EditorSustain;
 	public var chartY:Float = 0;
 	public var chartNoteData:Int = 0;
 
@@ -20,7 +20,12 @@ class MetaNote extends Note
 		this.strumTime = time;
 		this.chartNoteData = data;
 	}
-
+	
+	public override function reloadNote(tex:String = '', postfix:String = '') {
+		super.reloadNote(tex, postfix);
+		if (sustainSprite != null)
+			sustainSprite.reloadNote(tex, postfix);
+	}
 	public function changeNoteData(v:Int)
 	{
 		this.chartNoteData = v; //despite being so arbitrary its sadly needed to fix a bug on moving notes
@@ -44,6 +49,8 @@ class MetaNote extends Note
 			setGraphicSize(0, ChartingState.GRID_SIZE);
 
 		updateHitbox();
+		if (sustainSprite != null)
+			sustainSprite.changeNoteData(this.noteData);
 	}
 
 	public function setStrumTime(v:Float)
@@ -63,10 +70,10 @@ class MetaNote extends Note
 		{
 			if(sustainSprite == null)
 			{
-				sustainSprite = new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
+				sustainSprite = new EditorSustain(noteData);//new FlxSprite().makeGraphic(1, 1, FlxColor.WHITE);
 				sustainSprite.scrollFactor.x = 0;
 			}
-			sustainSprite.setGraphicSize(8, Math.max(ChartingState.GRID_SIZE/4, (Math.round((v * ChartingState.GRID_SIZE + ChartingState.GRID_SIZE) / stepCrochet) * zoom) - ChartingState.GRID_SIZE/2));
+			sustainSprite.sustainHeight = Math.max(ChartingState.GRID_SIZE/4, (Math.round((v * ChartingState.GRID_SIZE + ChartingState.GRID_SIZE) / stepCrochet) * zoom) - ChartingState.GRID_SIZE/2);
 			sustainSprite.updateHitbox();
 		}
 	}
@@ -112,7 +119,11 @@ class MetaNote extends Note
 	{
 		if(sustainSprite != null && sustainSprite.exists && sustainSprite.visible && sustainLength > 0)
 		{
-			sustainSprite.x = this.x + this.width/2 - sustainSprite.width/2;
+			if (sustainSprite.shader != shader) sustainSprite.shader = shader;
+			sustainSprite.setColorTransform(colorTransform.redMultiplier, sustainSprite.colorTransform.blueMultiplier, colorTransform.redMultiplier);
+			sustainSprite.scale.copyFrom(this.scale);
+			sustainSprite.updateHitbox();
+			sustainSprite.x = this.x + (this.width - sustainSprite.width)/2;
 			sustainSprite.y = this.y + this.height/2;
 			sustainSprite.alpha = this.alpha;
 			sustainSprite.draw();
@@ -132,6 +143,66 @@ class MetaNote extends Note
 	{
 		sustainSprite = FlxDestroyUtil.destroy(sustainSprite);
 		super.destroy();
+	}
+}
+
+class EditorSustain extends Note {
+	var sustainTile:FlxSprite;
+	public var sustainHeight:Float = 0;
+	
+	public function new(data:Int) {
+		sustainTile = new FlxSprite();
+		sustainTile.scrollFactor.x = 0;
+		
+		super(0, data, null, true, true);
+		
+		animation.play(Note.colArray[noteData] + 'holdend');
+		scale.set(scale.x, scale.x);
+		updateHitbox();
+		flipY = false;
+	}
+	override function update(elapsed:Float) {
+		sustainTile.update(elapsed);
+		super.update(elapsed);
+	}
+	override function draw() {
+		if (!visible) return;
+		
+		if (sustainTile.shader != shader) sustainTile.shader = shader;
+		sustainTile.setColorTransform(colorTransform.redMultiplier, colorTransform.blueMultiplier, colorTransform.redMultiplier);
+		sustainTile.scale.x = this.scale.x;
+		sustainTile.scale.y = sustainHeight;
+		sustainTile.updateHitbox();
+		sustainTile.alpha = this.alpha;
+		sustainTile.setPosition(this.x, this.y - sustainHeight);
+		sustainTile.draw();
+		
+		y += sustainHeight;
+		super.draw();
+		y -= sustainHeight;
+	}
+	
+	public function reloadSustainTile() {
+		sustainTile.frames = frames;
+		sustainTile.antialiasing = antialiasing;
+		sustainTile.animation.copyFrom(animation);
+		sustainTile.animation.play(Note.colArray[this.noteData % Note.colArray.length] + 'hold');
+		sustainTile.clipRect = new flixel.math.FlxRect(0, 1, sustainTile.frameWidth, 1);
+	}
+	public function changeNoteData(v:Int) {
+		this.noteData = v;
+		
+		if (!PlayState.isPixelStage)
+			loadNoteAnims();
+		else
+			loadPixelNoteAnims();
+		
+		reloadSustainTile();
+		animation.play(Note.colArray[this.noteData % Note.colArray.length] + 'holdend');
+	}
+	public override function reloadNote(tex:String = '', postfix:String = '') {
+		super.reloadNote(tex, postfix);
+		reloadSustainTile();
 	}
 }
 
