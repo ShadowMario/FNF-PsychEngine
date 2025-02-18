@@ -516,39 +516,28 @@ class CustomFlxColor {
 class CustomInterp extends crowplexus.hscript.Interp
 {
 	public var parentInstance(default, set):Dynamic = [];
-	private var _instanceFields:Array<String>;
+	var _instanceFields:Array<String>;
 	function set_parentInstance(inst:Dynamic):Dynamic
 	{
-		parentInstance = inst;
-		if(parentInstance == null)
-		{
-			_instanceFields = [];
-			return inst;
-		}
-		_instanceFields = Type.getInstanceFields(Type.getClass(inst));
-		return inst;
+		_instanceFields = inst == null ? [] : Type.getInstanceFields(Type.getClass(inst));
+		return parentInstance = inst;
 	}
 
-	public function new()
+	override function resolve(variable:String):Dynamic
 	{
-		super();
-	}
+		if (locals.exists(variable))
+			return locals.get(variable).r;
 
-	override function resolve(id:String):Dynamic
-	{
-		if (locals.exists(id))
-			return locals.get(id).r;
+		if (variables.exists(variable))
+			return variables.get(variable);
 
-		if (variables.exists(id))
-			return variables.get(id);
+		if (imports.exists(variable))
+			return imports.get(variable);
 
-		if (imports.exists(id))
-			return imports.get(id);
+		if (parentInstance != null && _instanceFields.contains(variable))
+			return Reflect.getProperty(parentInstance, variable);
 
-		if (parentInstance != null && _instanceFields.contains(id))
-			return Reflect.getProperty(parentInstance, id);
-
-		return error(EUnknownVariable(id));
+		return error(EUnknownVariable(variable));
 	}
 
 	override function assign(e1:Expr, e2:Expr):Dynamic
@@ -563,12 +552,17 @@ class CustomInterp extends crowplexus.hscript.Interp
 					if (!local.const)
 						local.r = value;
 					else
-						warn(ECustom('Cannot reassign final, for constant expression -> $variable'));
+						warn(ECustom('$variable cannot be reassigned as it is a constant expression.'));
 				}
 				else if (parentInstance != null && _instanceFields.contains(variable))
 					Reflect.setProperty(parentInstance, variable, value);
 				else
+				{
+					if (!variables.exists(variable))
+						error(EUnknownVariable(variable));
+
 					setVar(variable, value);
+				}
 
 			case EField(variable, field, stinky):
 				var variable:Dynamic = expr(variable);
@@ -605,12 +599,17 @@ class CustomInterp extends crowplexus.hscript.Interp
 					if (!local.const)
 						local.r = value;
 					else
-						warn(ECustom('Cannot reassign final, for constant expression -> $variable'));
+						warn(ECustom('$variable cannot be reassigned as it is a constant expression.'));
 				}
 				else if (parentInstance != null && _instanceFields.contains(variable))
 					Reflect.setProperty(parentInstance, variable, value);
 				else
+				{
+					if (!variables.exists(variable))
+						error(EUnknownVariable(variable));
+
 					setVar(variable, value);
+				}
 
 			case EField(variable, field, stinky):
 				var variable:Dynamic = expr(variable);
