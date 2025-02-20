@@ -454,7 +454,7 @@ class HScript extends Iris
 				if (parentLua.lastCalledFunction != '') pos.funcName = parentLua.lastCalledFunction;
 			}
 			#end
-			Iris.error('$funcToRun: $e', pos);
+			Iris.error('$e', pos);
 		}
 		return null;
 	}
