@@ -1,6 +1,10 @@
 # Friday Night Funkin' - Psych Engine
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
+## Updated HScript
+
+This fork slightly changes the logic for what Psych Engine HScript used. Before you can get variables without "game.", and now you can also set variables without it as well.
+
 ## Installation:
 
 Refer to [the Build Instructions](/docs/BUILDING.md)
