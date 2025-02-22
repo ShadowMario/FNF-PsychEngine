@@ -89,6 +89,13 @@ class Main extends Sprite
 		// this shouldn't be needed for other systems
 		// Credit to YoshiCrafter29 for finding this function
 		untyped __cpp__("SetProcessDPIAware();");
+
+		var display = lime.system.System.getDisplay(0);
+		if (display != null) {
+			var dpiScale:Float = display.dpi / 96;
+			Application.current.window.width = Std.int(game.width * dpiScale);
+			Application.current.window.height = Std.int(game.height * dpiScale);
+		}
 		#end
 
 		// Credits to MAJigsaw77 (he's the og author for this code)
