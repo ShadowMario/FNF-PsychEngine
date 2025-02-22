@@ -356,7 +356,7 @@ class HScript extends Iris
 				final retVal:IrisCall = funk.hscript.call(funcToRun, funcArgs);
 				if (retVal != null)
 				{
-					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
+					return (LuaUtils.isLuaSupported(retVal.returnValue)) ? retVal.returnValue : null;
 				}
 				else if (funk.hscript.returnValue != null)
 				{
@@ -372,7 +372,7 @@ class HScript extends Iris
 				final retVal:IrisCall = funk.hscript.call(funcToRun, funcArgs);
 				if (retVal != null)
 				{
-					return (retVal.returnValue == null || LuaUtils.isOfTypes(retVal.returnValue, [Bool, Int, Float, String, Array])) ? retVal.returnValue : null;
+					return (LuaUtils.isLuaSupported(retVal.returnValue)) ? retVal.returnValue : null;
 				}
 			}
 			else
