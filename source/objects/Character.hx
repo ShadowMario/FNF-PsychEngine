@@ -145,8 +145,9 @@ class Character extends FlxSprite
 	{
 		isAnimateAtlas = false;
 
+		var path:String = json.assetPath == null? json.image : json.assetPath;
 		#if flxanimate
-		var animToFind:String = Paths.getPath('images/' + json.image + '/Animation.json', TEXT);
+		var animToFind:String = Paths.getPath('images/' + path + '/Animation.json', TEXT);
 		if (#if MODS_ALLOWED FileSystem.exists(animToFind) || #end Assets.exists(animToFind))
 			isAnimateAtlas = true;
 		#end
@@ -156,7 +157,7 @@ class Character extends FlxSprite
 
 		if(!isAnimateAtlas)
 		{
-			frames = Paths.getMultiAtlas(json.image.split(','));
+			frames = Paths.getMultiAtlas(path.split(','));
 		}
 		#if flxanimate
 		else
@@ -165,42 +166,110 @@ class Character extends FlxSprite
 			atlas.showPivot = false;
 			try
 			{
-				Paths.loadAnimateAtlas(atlas, json.image);
+				Paths.loadAnimateAtlas(atlas, path);
 			}
 			catch(e:haxe.Exception)
 			{
-				FlxG.log.warn('Could not load atlas ${json.image}: $e');
+				FlxG.log.warn('Could not load atlas ${path}: $e');
 				trace(e.stack);
 			}
 		}
 		#end
 
-		imageFile = json.image;
-		jsonScale = json.scale;
-		if(json.scale != 1) {
-			scale.set(jsonScale, jsonScale);
-			updateHitbox();
+		if(json.assetPath == null) {
+			imageFile = json.image;
+			jsonScale = json.scale;
+			if(json.scale != 1) {
+				scale.set(jsonScale, jsonScale);
+				updateHitbox();
+			}
+
+			// positioning
+			positionArray = json.position;
+			cameraPosition = json.camera_position;
+
+			// data
+			healthIcon = json.healthicon;
+			singDuration = json.sing_duration;
+			flipX = (json.flip_x != isPlayer);
+			healthColorArray = (json.healthbar_colors != null && json.healthbar_colors.length > 2) ? json.healthbar_colors : [161, 161, 161];
+			vocalsFile = json.vocals_file != null ? json.vocals_file : '';
+			originalFlipX = (json.flip_x == true);
+			editorIsPlayer = json._editor_isPlayer;
+
+			// antialiasing
+			noAntialiasing = (json.no_antialiasing == true);
+			pixelPerfectRender = noAntialiasing;
+			antialiasing = ClientPrefs.data.antialiasing ? !noAntialiasing : false;
+
+			// animations
+			animationsArray = json.animations;
+		} else{
+			imageFile = json.assetPath;
+
+			if(json.scale != null) {
+				jsonScale = json.scale;
+				if(json.scale != 1) {
+					scale.set(jsonScale, jsonScale);
+					updateHitbox();
+				}
+			}
+
+			// positioning
+			if(json.offsets != null)
+				positionArray = json.offsets;
+			if(json.cameraOffsets != null)
+				cameraPosition = json.cameraOffsets;
+
+			// data
+			if(json.healthIcon != null)
+				healthIcon = json.healthIcon.id != null ? json.healthIcon.id : curCharacter;
+			else
+				healthIcon = curCharacter;
+
+			if(json.singTime != null)
+				singDuration = json.singTime;
+			else
+				singDuration = 8.0;
+
+			if(json.flipX != null)
+				flipX = (json.flipX != isPlayer);
+
+			//place holder icon to grab the color.
+			var icon:objects.HealthIcon = new objects.HealthIcon(healthIcon, false, false);
+			var coolColor:FlxColor = FlxColor.fromInt(CoolUtil.dominantColor(icon));
+			icon.destroy();
+			icon = null;
+			healthColorArray[0] = coolColor.red;
+			healthColorArray[1] = coolColor.green;
+			healthColorArray[2] = coolColor.blue;
+
+			vocalsFile = '';
+			originalFlipX = (json.flipX == true);
+
+			// antialiasing
+			noAntialiasing = json.isPixel != null ? json.isPixel : false;
+			pixelPerfectRender = noAntialiasing;
+			antialiasing = ClientPrefs.data.antialiasing ? !noAntialiasing : false;
+
+			// animations
+			// animations
+			var base_animationsArray:Array<Dynamic> = []; 
+			base_animationsArray = json.animations;
+			if(base_animationsArray != null && base_animationsArray.length > 0) {
+				for (anim in base_animationsArray) {
+					var animFormat:AnimArray = {
+						anim: anim.name,
+						name: anim.prefix,
+						fps: anim.fps != null ? anim.fps : 24,
+						loop: anim.loop != null ? !!anim.loop : false,
+						indices: anim.indices != null ? anim.indices : [],
+						offsets: anim.offsets != null ? anim.offsets : [0,0]
+					};
+					animationsArray.push(animFormat);
+				}
+			}
 		}
-
-		// positioning
-		positionArray = json.position;
-		cameraPosition = json.camera_position;
-
-		// data
-		healthIcon = json.healthicon;
-		singDuration = json.sing_duration;
-		flipX = (json.flip_x != isPlayer);
-		healthColorArray = (json.healthbar_colors != null && json.healthbar_colors.length > 2) ? json.healthbar_colors : [161, 161, 161];
-		vocalsFile = json.vocals_file != null ? json.vocals_file : '';
-		originalFlipX = (json.flip_x == true);
-		editorIsPlayer = json._editor_isPlayer;
-
-		// antialiasing
-		noAntialiasing = (json.no_antialiasing == true);
-		antialiasing = ClientPrefs.data.antialiasing ? !noAntialiasing : false;
-
-		// animations
-		animationsArray = json.animations;
 		if(animationsArray != null && animationsArray.length > 0) {
 			for (anim in animationsArray) {
 				var animAnim:String = '' + anim.anim;
