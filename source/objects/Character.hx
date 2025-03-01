@@ -145,7 +145,7 @@ class Character extends FlxSprite
 	{
 		isAnimateAtlas = false;
 
-		var path:String = json.assetPath == null? json.image : json.assetPath;
+		var path:String = json.assetPath == null? json.image : StringTools.replace(json.assetPath, 'shared:', '');
 		#if flxanimate
 		var animToFind:String = Paths.getPath('images/' + path + '/Animation.json', TEXT);
 		if (#if MODS_ALLOWED FileSystem.exists(animToFind) || #end Assets.exists(animToFind))
@@ -204,7 +204,7 @@ class Character extends FlxSprite
 			// animations
 			animationsArray = json.animations;
 		} else{
-			imageFile = json.assetPath;
+			imageFile = StringTools.replace(json.assetPath, 'shared:', '');
 
 			if(json.scale != null) {
 				jsonScale = json.scale;
