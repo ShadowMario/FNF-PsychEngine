@@ -199,7 +199,6 @@ class Character extends FlxSprite
 
 			// antialiasing
 			noAntialiasing = (json.no_antialiasing == true);
-			pixelPerfectRender = noAntialiasing;
 			antialiasing = ClientPrefs.data.antialiasing ? !noAntialiasing : false;
 
 			// animations
@@ -249,7 +248,6 @@ class Character extends FlxSprite
 
 			// antialiasing
 			noAntialiasing = json.isPixel != null ? json.isPixel : false;
-			pixelPerfectRender = noAntialiasing;
 			antialiasing = ClientPrefs.data.antialiasing ? !noAntialiasing : false;
 
 			// animations
