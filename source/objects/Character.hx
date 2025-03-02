@@ -157,6 +157,8 @@ class Character extends FlxSprite
 
 		if(!isAnimateAtlas)
 		{
+			if(json.assetPath != null)
+				path = convertMultiSparrow(json.animations, path);
 			frames = Paths.getMultiAtlas(path.split(','));
 		}
 		#if flxanimate
@@ -205,6 +207,7 @@ class Character extends FlxSprite
 			animationsArray = json.animations;
 		} else{
 			imageFile = StringTools.replace(json.assetPath, 'shared:', '');
+			imageFile = convertMultiSparrow(json.animations, imageFile);
 
 			if(json.scale != null) {
 				jsonScale = json.scale;
@@ -301,6 +304,16 @@ class Character extends FlxSprite
 		if(isAnimateAtlas) copyAtlasValues();
 		#end
 		//trace('Loaded file to character ' + curCharacter);
+	}
+
+	function convertMultiSparrow(animations:Null<Array<Dynamic>>, str:String):String {
+		if(animations != null && animations.length > 0) {
+			for (anim in animations) {
+				if(anim.assetPath != null && anim.assetPath != '')
+					str += ',${StringTools.replace(anim.assetPath, 'shared:', '')}';
+			}
+		}
+		return str;
 	}
 
 	override function update(elapsed:Float)
