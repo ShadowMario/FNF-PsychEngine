@@ -15,6 +15,9 @@ import lime.system.System;
 #include <dwmapi.h>
 #include <winuser.h>
 
+const DWMWINDOWATTRIBUTE darkModeAttribute = (DWMWINDOWATTRIBUTE)20;
+const DWMWINDOWATTRIBUTE darkModeAttributeFallback = (DWMWINDOWATTRIBUTE)19; // Pre-20H1
+
 struct HandleData {
 	DWORD pid = 0;
 	HWND handle = 0;
@@ -31,6 +34,16 @@ BOOL CALLBACK findByPID(HWND handle, LPARAM lParam) {
 
 	((HandleData*)lParam)->handle = handle;
 	return FALSE;
+}
+
+HWND curHandle = 0;
+void getHandle() {
+	if (curHandle == (HWND)0) {
+		HandleData data;
+		data.pid = GetCurrentProcessId();
+		EnumWindows(findByPID, (LPARAM)&data);
+		curHandle = data.handle;
+	}
 }
 ')
 #end
@@ -62,25 +75,22 @@ class Native
 		registeredDPIAware = true;
 	}
 
-	public static function enableDarkMode():Void
+	/**
+	 * Enables or disables dark mode support for the title bar.
+	 */
+	public static function setWindowDarkMode(enable:Bool = true):Void
 	{
 		#if (cpp && windows)
 		untyped __cpp__('
-			const BOOL darkMode = TRUE;
-			const DWMWINDOWATTRIBUTE darkModeAttribute = (DWMWINDOWATTRIBUTE)20;
-			const DWMWINDOWATTRIBUTE darkModeAttributeFallback = (DWMWINDOWATTRIBUTE)19; // Pre-20H1
+			const BOOL darkMode = enable ? TRUE : FALSE;
 
-			HandleData data;
-			data.pid = GetCurrentProcessId();
-
-			EnumWindows(findByPID, (LPARAM)&data);
-
-			if (data.handle != (HWND)0) {
-				if (S_OK != DwmSetWindowAttribute(data.handle, darkModeAttribute, (LPCVOID)&darkMode, (DWORD)sizeof(darkMode))) {
-				DwmSetWindowAttribute(data.handle, darkModeAttributeFallback, (LPCVOID)&darkMode, (DWORD)sizeof(darkMode));
+			getHandle();
+			if (curHandle != (HWND)0) {
+				if (S_OK != DwmSetWindowAttribute(curHandle, darkModeAttribute, (LPCVOID)&darkMode, (DWORD)sizeof(darkMode))) {
+					DwmSetWindowAttribute(curHandle, darkModeAttributeFallback, (LPCVOID)&darkMode, (DWORD)sizeof(darkMode));
 				}
 
-				UpdateWindow(data.handle);
+				UpdateWindow(curHandle);
 			}
 		');
 		#end

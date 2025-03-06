@@ -70,7 +70,7 @@ class Main extends Sprite
 	{
 		super();
 
-		backend.Native.enableDarkMode();
+		backend.Native.setWindowDarkMode(true);
 		backend.Native.registerDPIAware(game.width, game.height);
 
 		// Credits to MAJigsaw77 (he's the og author for this code)
