@@ -48,7 +48,7 @@ import backend.Highscore;
 // // // // // // // // //
 class Main extends Sprite
 {
-	var game = {
+	private static final game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
 		initialState: TitleState, // initial game state
@@ -70,8 +70,10 @@ class Main extends Sprite
 	{
 		super();
 
-		backend.Native.setWindowDarkMode(true);
-		backend.Native.registerDPIAware(game.width, game.height);
+		#if (cpp && windows)
+		backend.Native.setWindowDarkMode(true, true);
+		backend.Native.fixScaling();
+		#end
 
 		// Credits to MAJigsaw77 (he's the og author for this code)
 		#if android
