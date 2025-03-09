@@ -144,13 +144,9 @@ class Native
 	public static function setWindowColors(?bar:FlxColor, ?text:FlxColor, ?border:FlxColor):Void
 	{
 		#if (cpp && windows)
-		var intBar:Int = 0xffffffff;
-		var intText:Int = 0xffffffff;
-		var intBorder:Int = 0xffffffff;
-		if (Std.isOfType(bar, Int)) intBar = cast FlxColor.fromRGB(bar.blue, bar.green, bar.red, 0);
-		if (Std.isOfType(text, Int)) intText = cast FlxColor.fromRGB(text.blue, text.green, text.red, 0);
-		if (Std.isOfType(border, Int)) intBorder = cast FlxColor.fromRGB(border.blue, border.green, border.red, 0);
-
+		final intBar:Int = Std.isOfType(bar, Int) ? cast FlxColor.fromRGB(bar.blue, bar.green, bar.red, 0) : 0xffffffff;
+		final intText:Int = Std.isOfType(text, Int) ? cast FlxColor.fromRGB(text.blue, text.green, text.red, 0) : 0xffffffff;
+		final intBorder:Int = Std.isOfType(border, Int) ? cast FlxColor.fromRGB(border.blue, border.green, border.red, 0) : 0xffffffff;
 		untyped __cpp__('
 			COLORREF targetBar = (COLORREF)intBar;
 			COLORREF targetText = (COLORREF)intText;
