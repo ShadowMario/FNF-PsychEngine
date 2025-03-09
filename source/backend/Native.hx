@@ -4,6 +4,8 @@ import lime.app.Application;
 import lime.system.Display;
 import lime.system.System;
 
+import flixel.util.FlxColor;
+
 #if (cpp && windows)
 @:buildXml('
 <target id="haxe">
@@ -104,6 +106,7 @@ class Native
 
 	/**
 	 * Enables or disables dark mode support for the title bar.
+	 * Only works on Windows.
 	 * 
 	 * @param enable Whether to enable or disable dark mode support.
 	 * @param instant Whether to skip the transition tween.
@@ -111,53 +114,94 @@ class Native
 	public static function setWindowDarkMode(enable:Bool = true, instant:Bool = false):Void
 	{
 		#if (cpp && windows)
+		var success:Bool = false;
 		untyped __cpp__('
-			const BOOL darkMode = enable ? TRUE : FALSE;
-
 			getHandle();
 			if (curHandle != (HWND)0) {
-				if (S_OK != DwmSetWindowAttribute(curHandle, darkModeAttribute, (LPCVOID)&darkMode, (DWORD)sizeof(darkMode))) {
-					DwmSetWindowAttribute(curHandle, darkModeAttributeFallback, (LPCVOID)&darkMode, (DWORD)sizeof(darkMode));
+				const BOOL darkMode = enable ? TRUE : FALSE;
+				if (
+					S_OK == DwmSetWindowAttribute(curHandle, darkModeAttribute, (LPCVOID)&darkMode, (DWORD)sizeof(darkMode)) ||
+					S_OK == DwmSetWindowAttribute(curHandle, darkModeAttributeFallback, (LPCVOID)&darkMode, (DWORD)sizeof(darkMode))
+				) {
+					success = true;
 				}
 
 				UpdateWindow(curHandle);
 			}
 		');
-		
-		if (instant)
+
+		if (instant && success)
 		{
-			setWindowColors(0xff000000);
-			setWindowColors();
+			final curBarColor:Null<FlxColor> = windowBarColor;
+			windowBarColor = FlxColor.BLACK;
+			windowBarColor = curBarColor;
 		}
 		#end
 	}
 
 	/**
-	 * Sets window colors.
-	 * 
-	 * If any of the parameters are not provided, the corresponding color is reset to the system default.
-	 * 
-	 * @param bar The color to use for the title bar.
-	 * @param text The color to use for the title bar text.
-	 * @param border The color to use for the window border.
+	 * The color of the window title bar. If `null`, the default is used.
+	 * Only works on Windows.
 	 */
-	public static function setWindowColors(?bar:FlxColor, ?text:FlxColor, ?border:FlxColor):Void
+	public static var windowBarColor(default, set):Null<FlxColor> = null;  
+	public static function set_windowBarColor(value:Null<FlxColor>):Null<FlxColor>
 	{
 		#if (cpp && windows)
-		final intBar:Int = Std.isOfType(bar, Int) ? cast FlxColor.fromRGB(bar.blue, bar.green, bar.red, 0) : 0xffffffff;
-		final intText:Int = Std.isOfType(text, Int) ? cast FlxColor.fromRGB(text.blue, text.green, text.red, 0) : 0xffffffff;
-		final intBorder:Int = Std.isOfType(border, Int) ? cast FlxColor.fromRGB(border.blue, border.green, border.red, 0) : 0xffffffff;
+		final intColor:Int = Std.isOfType(value, Int) ? cast FlxColor.fromRGB(value.blue, value.green, value.red, 0) : 0xffffffff;
 		untyped __cpp__('
-			COLORREF targetBar = (COLORREF)intBar;
-			COLORREF targetText = (COLORREF)intText;
-			COLORREF targetBorder = (COLORREF)intBorder;
-
 			getHandle();
-			DwmSetWindowAttribute(curHandle, DWMWINDOWATTRIBUTE::DWMWA_CAPTION_COLOR, (LPCVOID)&targetBar, (DWORD)sizeof(targetBar));
-			DwmSetWindowAttribute(curHandle, DWMWINDOWATTRIBUTE::DWMWA_TEXT_COLOR, (LPCVOID)&targetText, (DWORD)sizeof(targetText));
-			DwmSetWindowAttribute(curHandle, DWMWINDOWATTRIBUTE::DWMWA_BORDER_COLOR, (LPCVOID)&targetBorder, (DWORD)sizeof(targetBorder));
-			UpdateWindow(curHandle);
+			if (curHandle != (HWND)0) {
+				const COLORREF targetColor = (COLORREF)intColor;
+				DwmSetWindowAttribute(curHandle, DWMWINDOWATTRIBUTE::DWMWA_CAPTION_COLOR, (LPCVOID)&targetColor, (DWORD)sizeof(targetColor));
+				UpdateWindow(curHandle);
+			}
 		');
 		#end
+	
+		return windowBarColor = value;
+	}
+
+	/**
+	 * The color of the window title bar text. If `null`, the default is used.
+	 * Only works on Windows.
+	 */
+	public static var windowTextColor(default, set):Null<FlxColor> = null;
+	public static function set_windowTextColor(value:Null<FlxColor>):Null<FlxColor>
+	{
+		#if (cpp && windows)
+		final intColor:Int = Std.isOfType(value, Int) ? cast FlxColor.fromRGB(value.blue, value.green, value.red, 0) : 0xffffffff;
+		untyped __cpp__('
+			getHandle();
+			if (curHandle != (HWND)0) {
+				const COLORREF targetColor = (COLORREF)intColor;
+				DwmSetWindowAttribute(curHandle, DWMWINDOWATTRIBUTE::DWMWA_TEXT_COLOR, (LPCVOID)&targetColor, (DWORD)sizeof(targetColor));
+				UpdateWindow(curHandle);
+			}
+		');
+		#end
+
+		return windowTextColor = value;
+	}
+
+	/**
+	 * The color of the window border. If `null`, the default is used.
+	 * Only works on Windows.
+	 */
+	public static var windowBorderColor(default, set):Null<FlxColor> = null;
+	public static function set_windowBorderColor(value:Null<FlxColor>):Null<FlxColor>
+	{
+		#if (cpp && windows)
+		final intColor:Int = Std.isOfType(value, Int) ? cast FlxColor.fromRGB(value.blue, value.green, value.red, 0) : 0xffffffff;
+		untyped __cpp__('
+			getHandle();
+			if (curHandle != (HWND)0) {
+				const COLORREF targetColor = (COLORREF)intColor;
+				DwmSetWindowAttribute(curHandle, DWMWINDOWATTRIBUTE::DWMWA_BORDER_COLOR, (LPCVOID)&targetColor, (DWORD)sizeof(targetColor));
+				UpdateWindow(curHandle);
+			}
+		');
+		#end
+	
+		return windowBorderColor = value;
 	}
 }

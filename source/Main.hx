@@ -71,8 +71,8 @@ class Main extends Sprite
 		super();
 
 		#if (cpp && windows)
-		backend.Native.setWindowDarkMode(true, true);
 		backend.Native.fixScaling();
+		backend.Native.setWindowDarkMode(true, true);
 		#end
 
 		// Credits to MAJigsaw77 (he's the og author for this code)
