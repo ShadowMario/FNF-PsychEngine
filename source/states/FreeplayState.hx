@@ -312,7 +312,10 @@ class FreeplayState extends MusicBeatState
 				player.playingMusic = false;
 				player.switchPlayMusic();
 
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				var currentHour:Int = Date.now().getHours();
+				var isNight:Bool = (currentHour < 6 || currentHour >= 18); // Night from 6 PM to 6 AM
+				var song:String = isNight ? 'chillMenu' : 'freakyMenu';
+				FlxG.sound.playMusic(Paths.music(song), 0);
 				FlxTween.tween(FlxG.sound.music, {volume: 1}, 1);
 			}
 			else 
@@ -603,7 +606,13 @@ class FreeplayState extends MusicBeatState
 
 		FlxG.autoPause = ClientPrefs.data.autoPause;
 		if (!FlxG.sound.music.playing && !stopMusicPlay)
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		{
+			var currentHour:Int = Date.now().getHours();
+			var isNight:Bool = (currentHour < 6 || currentHour >= 18); // Night from 6 PM to 6 AM
+  
+			var song:String = isNight ? 'chillMenu' : 'freakyMenu';
+			FlxG.sound.playMusic(Paths.music(song));
+		}
 	}	
 }
 

@@ -2452,7 +2452,11 @@ class PlayState extends MusicBeatState
 				if (storyPlaylist.length <= 0)
 				{
 					Mods.loadTopMod();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					var currentHour:Int = Date.now().getHours();
+					var isNight:Bool = (currentHour < 6 || currentHour >= 18); // Night from 6 PM to 6 AM
+		  
+					var song:String = isNight ? 'chillMenu' : 'freakyMenu';
+					FlxG.sound.playMusic(Paths.music(song));
 					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 
 					canResync = false;
@@ -2495,7 +2499,13 @@ class PlayState extends MusicBeatState
 
 				canResync = false;
 				MusicBeatState.switchState(new FreeplayState());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				
+				var currentHour:Int = Date.now().getHours();
+				var isNight:Bool = (currentHour < 6 || currentHour >= 18); // Night from 6 PM to 6 AM
+	  
+				var song:String = isNight ? 'chillMenu' : 'freakyMenu';
+				FlxG.sound.playMusic(Paths.music(song));
+
 				changedDifficulty = false;
 			}
 			transitioning = true;
