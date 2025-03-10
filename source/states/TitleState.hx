@@ -2,6 +2,7 @@ package states;
 
 import backend.WeekData;
 
+import flash.system.System;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
@@ -120,8 +121,13 @@ class TitleState extends MusicBeatState
 	function startIntro()
 	{
 		persistentUpdate = true;
-		if (!initialized && FlxG.sound.music == null)
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+		if (!initialized && FlxG.sound.music == null) 
+		{
+			var currentHour:Int = Date.now().getHours();
+			var isNight:Bool = (currentHour < 6 || currentHour >= 18); // Night from 6 PM to 6 AM
+			var song:String = isNight ? 'chillMenu' : 'freakyMenu';
+			FlxG.sound.playMusic(Paths.music(song), 0);
+		}
 
 		loadJsonData();
 		#if TITLE_SCREEN_EASTER_EGG easterEggData(); #end
@@ -327,6 +333,7 @@ class TitleState extends MusicBeatState
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
+		var pressedEscape:Bool = FlxG.keys.justPressed.BACKSPACE || controls.BACK;
 
 		#if mobile
 		for (touch in FlxG.touches.list)
@@ -392,6 +399,12 @@ class TitleState extends MusicBeatState
 				});
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
+
+			if(pressedEscape)
+			{
+				System.exit(0);
+			}
+
 			#if TITLE_SCREEN_EASTER_EGG
 			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
 			{
@@ -524,7 +537,10 @@ class TitleState extends MusicBeatState
 			{
 				case 1:
 					//FlxG.sound.music.stop();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+					var currentHour:Int = Date.now().getHours();
+					var isNight:Bool = (currentHour < 6 || currentHour >= 18); // Night from 6 PM to 6 AM
+					var song:String = isNight ? 'chillMenu' : 'freakyMenu';
+					FlxG.sound.playMusic(Paths.music(song), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					createCoolText(['Psych Engine by'], 40);
@@ -592,7 +608,10 @@ class TitleState extends MusicBeatState
 						FlxG.camera.flash(FlxColor.WHITE, 2);
 						skippedIntro = true;
 
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+						var currentHour:Int = Date.now().getHours();
+						var isNight:Bool = (currentHour < 6 || currentHour >= 18); // Night from 6 PM to 6 AM
+						var song:String = isNight ? 'chillMenu' : 'freakyMenu';
+						FlxG.sound.playMusic(Paths.music(song), 0);
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						return;
 				}
@@ -614,7 +633,11 @@ class TitleState extends MusicBeatState
 					remove(credGroup);
 					FlxG.camera.flash(FlxColor.WHITE, 3);
 					sound.onComplete = function() {
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+						var currentHour:Int = Date.now().getHours();
+						var isNight:Bool = (currentHour < 6 || currentHour >= 18); // Night from 6 PM to 6 AM
+						var song:String = isNight ? 'chillMenu' : 'freakyMenu';
+						FlxG.sound.playMusic(Paths.music(song), 0);
+
 						FlxG.sound.music.fadeIn(4, 0, 0.7);
 						transitioning = false;
 						#if ACHIEVEMENTS_ALLOWED
