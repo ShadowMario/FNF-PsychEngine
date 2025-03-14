@@ -126,7 +126,11 @@ class Song
 		if(folder == null) folder = jsonInput;
 		PlayState.SONG = getChart(jsonInput, folder);
 		loadedSongName = folder;
-		chartPath = _lastPath.replace('/', '\\');
+		chartPath = _lastPath;
+		#if windows
+		// prevent any saving errors by fixing the path on Windows (being the only OS to ever use backslashes instead of forward slashes for paths)
+		chartPath = chartPath.replace('/', '\\');
+		#end
 		StageData.loadDirectory(PlayState.SONG);
 		return PlayState.SONG;
 	}
