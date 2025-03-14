@@ -18,6 +18,7 @@ Same goes for *Lua Scripts*, comment out or delete the line with `LUA_ALLOWED`, 
 
 ## Softcoding (.lua/.hx)
 For this you can head over to [the wiki](https://shadowmario.github.io/psychengine.lua)
+
 There you can learn how to use the 212 PlayState funcions in your mod!
 
 ## Credits:
