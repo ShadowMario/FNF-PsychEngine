@@ -1,4 +1,5 @@
-# Friday Night Funkin' - Psych Engine
+![PsychionalEngineLogo](docs/img/PsychEngineLogoTweak.png)
+
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 
 ## Installation:
@@ -15,9 +16,14 @@ To start you off, disabling *Video Cutscenes* should be simple, simply delete th
 
 Same goes for *Lua Scripts*, comment out or delete the line with `LUA_ALLOWED`, this and other customization options are all available within the `Project.xml` file.
 
+## Softcoding (.lua/.hx)
+For this you can head over to [the wiki](https://shadowmario.github.io/psychengine.lua)
+
+There you can learn how to use the 212 PlayState funcions in your mod!
+
 ## Credits:
-* Shadow Mario - Head Developer, Programmer.
-* Riveren - Main Artist.
+* Shadow Mario - Main Programmer and Head of Psych Engine.
+* Riveren - Main Artist/Animator of Psych Engine.
 
 ### Special Thanks
 * bbpanzu - Ex-Team Member (Programmer).
@@ -35,7 +41,8 @@ Same goes for *Lua Scripts*, comment out or delete the line with `LUA_ALLOWED`, 
 * CheemsAndFriends - Creator of FlxAnimate.
 * Ezhalt - Pessy's Easter Egg Jingle.
 * MaliciousBunny - Video for the Final Update.
-_____________________________________
+
+***
 
 # Features
 
@@ -43,10 +50,14 @@ _____________________________________
 
 ![Animated Dialogue Boxes](docs/img/dialogue.gif)
 
+## New Main Menu
+* A brand new menu that makes your experience even better!
+![Main Menu](docs/img/MainMenu.png)
 
 ## Mod Support
 * Probably one of the main points of this engine, you can code in .lua files outside of the source code, making your own weeks without even messing with the source!
 * Comes with a Mod Organizing/Disabling Menu.
+![Mod Support](docs/img/ModsMenu.png)
 
 
 ## Atleast one change to every week:
@@ -98,10 +109,12 @@ _____________________________________
 
 ## Awards/Achievements
 * The engine comes with 16 example achievements that you can mess with and learn how it works (Check Achievements.hx and search for "checkForAchievement" on PlayState.hx)
+![Achievements](docs/img/Achievements.png)
 
 ## Options menu:
 * You can change Note colors, Delay and Combo Offset, Controls and Preferences there.
  * On Preferences you can toggle Downscroll, Middlescroll, Anti-Aliasing, Framerate, Low Quality, Note Splashes, Flashing Lights, etc.
+![Options](docs/img/Options.png)
 
 ## Other gameplay features:
 * When the enemy hits a note, their strum note also glows.
@@ -110,3 +123,6 @@ _____________________________________
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
 * You can listen to a song or adjust Scroll Speed/Damage taken/etc. on Freeplay by pressing Space.
 * You can enable "Combo Stacking" in Gameplay Options. This causes the combo sprites to just be one sprite with an animation rather than sprites spawning each note hit.
+
+
+#### Psych Engine by ShadowMario, Friday Night Funkin' by ninjamuffin99
