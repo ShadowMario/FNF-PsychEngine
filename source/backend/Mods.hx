@@ -97,13 +97,6 @@ class Mods
 		if(FileSystem.exists(path + fileToFind))
 			foldersToCheck.push(path + fileToFind);
 
-		if(Paths.currentLevel != null && Paths.currentLevel != path)
-		{
-			var pth:String = Paths.getFolderPath(fileToFind, Paths.currentLevel);
-			if(FileSystem.exists(pth))
-				foldersToCheck.push(pth);
-		}
-
 		#if MODS_ALLOWED
 		if(mods)
 		{
