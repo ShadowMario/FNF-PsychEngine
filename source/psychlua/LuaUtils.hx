@@ -264,6 +264,9 @@ class LuaUtils
 		}
 		return false;
 	}
+	public static function isLuaSupported(value:Any):Bool {
+		return (value == null || isOfTypes(value, [Bool, Int, Float, String, Array]) || Type.typeof(value) == ValueType.TObject);
+	}
 	
 	public static function getTargetInstance()
 	{
