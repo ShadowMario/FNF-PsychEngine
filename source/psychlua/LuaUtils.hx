@@ -2,6 +2,7 @@ package psychlua;
 
 import backend.WeekData;
 import objects.Character;
+import backend.StageData;
 
 import openfl.display.BlendMode;
 import Type.ValueType;
@@ -272,7 +273,9 @@ class LuaUtils
 
 	public static inline function getLowestCharacterGroup():FlxSpriteGroup
 	{
-		var group:FlxSpriteGroup = PlayState.instance.gfGroup;
+		var stageData:StageFile = StageData.getStageFile(PlayState.SONG.stage);
+		var group:FlxSpriteGroup = (stageData.hide_girlfriend ? PlayState.instance.boyfriendGroup : PlayState.instance.gfGroup);
+
 		var pos:Int = PlayState.instance.members.indexOf(group);
 
 		var newPos:Int = PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup);
