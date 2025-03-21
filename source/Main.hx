@@ -45,24 +45,11 @@ import backend.Highscore;
 @:cppInclude('./external/gamemode_client.h')
 @:cppFileCode('#define GAMEMODE_AUTO')
 #end
-#if windows
-@:buildXml('
-<target id="haxe">
-	<lib name="wininet.lib" if="windows" />
-	<lib name="dwmapi.lib" if="windows" />
-</target>
-')
-@:cppFileCode('
-#include <windows.h>
-#include <winuser.h>
-#pragma comment(lib, "Shell32.lib")
-extern "C" HRESULT WINAPI SetCurrentProcessExplicitAppUserModelID(PCWSTR AppID);
-')
-#end
+
 // // // // // // // // //
 class Main extends Sprite
 {
-	var game = {
+	public static final game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
 		initialState: TitleState, // initial game state
@@ -84,21 +71,8 @@ class Main extends Sprite
 	{
 		super();
 
-		#if windows
-		// DPI Scaling fix for windows 
-		// this shouldn't be needed for other systems
-		// Credit to YoshiCrafter29 for finding this function
-		untyped __cpp__("SetProcessDPIAware();");
-
-		var display = lime.system.System.getDisplay(0);
-		if (display != null) {
-			var dpiScale:Float = display.dpi / 96;
-			Application.current.window.width = Std.int(game.width * dpiScale);
-			Application.current.window.height = Std.int(game.height * dpiScale);
-
-			Application.current.window.x = Std.int((Application.current.window.display.bounds.width - Application.current.window.width) / 2);
-			Application.current.window.y = Std.int((Application.current.window.display.bounds.height - Application.current.window.height) / 2);
-		}
+		#if (cpp && windows)
+		backend.Native.fixScaling();
 		#end
 
 		// Credits to MAJigsaw77 (he's the og author for this code)
