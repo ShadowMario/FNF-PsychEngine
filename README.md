@@ -34,7 +34,6 @@ There you can learn how to use the 212 PlayState funcions in your mod!
 * SqirraRNG - Crash Handler and Base code for Chart Editor's Waveform.
 * EliteMasterEric - Runtime Shaders support and Other PRs.
 * MAJigsaw77 - .MP4 Video Loader Library (hxvlc).
-* Tahir Toprak Karabekiroglu - Note Splash Editor and Other PRs.
 * iFlicky - Composer of Psync, Tea Time and some sound effects.
 * KadeDev - Fixed some issues on Chart Editor and Other PRs.
 * superpowers04 - LUA JIT Fork.

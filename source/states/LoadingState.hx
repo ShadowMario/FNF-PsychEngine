@@ -410,7 +410,13 @@ class LoadingState extends MusicBeatState
 	static var dontPreloadDefaultVoices:Bool = false;
 	static function _startPool()
 	{
-		threadPool = new FixedThreadPool(#if MULTITHREADED_LOADING #if cpp getCPUThreadsCount() #else 8 #end #else 1 #end);
+		#if MULTITHREADED_LOADING
+		// Due to the Main thread and Discord thread, we decrease it by 2.
+		var threadCount:Int = Std.int(Math.max(1, getCPUThreadsCount() - #if DISCORD_ALLOWED 2 #else 1 #end));
+		#else
+		var threadCount:Int = 1;
+		#end
+		threadPool = new FixedThreadPool(threadCount);
 	}
 
 	public static function prepareToSong()
