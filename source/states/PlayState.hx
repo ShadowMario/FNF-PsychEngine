@@ -1256,8 +1256,8 @@ class PlayState extends MusicBeatState
 
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
-		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(timeBar, {alpha: 1}, 0.5 / playbackRate, {ease: FlxEase.circOut});
+		FlxTween.tween(timeTxt, {alpha: 1}, 0.5 / playbackRate, {ease: FlxEase.circOut});
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence (with Time Left)
@@ -1746,7 +1746,7 @@ class PlayState extends MusicBeatState
 			var songCalc:Float = (songLength - curTime);
 			if(ClientPrefs.data.timeBarType == 'Time Elapsed') songCalc = curTime;
 
-			var secondsTotal:Int = Math.floor(songCalc / 1000);
+			var secondsTotal:Int = Math.floor((songCalc / 1000) / playbackRate);
 			if(secondsTotal < 0) secondsTotal = 0;
 
 			if(ClientPrefs.data.timeBarType != 'Song Name')
