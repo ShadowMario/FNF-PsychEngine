@@ -24,7 +24,7 @@
 	"healthicon": "pico",
 	"flip_x": true,
 	"healthbar_colors": [183, 216, 85],
-	"camera_position": [0, 0],
+	"camera_position": [140, -90],
 	"sing_duration": 4,
 	"scale": 1,
 	"_editor_isPlayer": true
