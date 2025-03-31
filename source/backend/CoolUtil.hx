@@ -180,4 +180,46 @@ class CoolUtil
 				text.borderStyle = NONE;
 		}
 	}
+
+	/**
+	 * Format seconds as minutes and/or hours with a colon, an optionally with milliseconds too.
+	 *
+	 * @param	Seconds		The number of seconds (for example, time remaining, time spent, etc).
+	 * @param	ShowMS		Whether to show milliseconds after a "." as well.  Default value is false.
+	 * @return	A nicely formatted String, like "14:03" or "1:43:39".
+	 */
+	public static function formatTime(Seconds:Float, ShowMS:Bool = false):String{
+		var timeString:String = "";
+		var timeSeconds:Int = Std.int(Seconds) % 60;
+		var timeMinutes:Int = Std.int((Std.int(Seconds) / 60) % 60);
+		var timeHours:Int = Std.int(Std.int(Seconds) / 3600);
+
+		if(timeHours != 0){
+			if(timeHours < 10){
+				timeString += "0";
+			}
+			timeString += timeHours + ":";
+		}
+
+		if(timeMinutes < 10){
+			timeString += "0";
+		}
+		timeString += timeMinutes + ":";
+		
+		if(timeSeconds < 10){
+			timeString += "0";
+		}
+		timeString += timeSeconds;
+
+		if (ShowMS){
+			timeString += ".";
+			timeSeconds = Std.int((Seconds - Std.int(Seconds)) * 100);
+			if (timeSeconds < 10){
+				timeString += "0";
+			}
+			timeString += timeSeconds;
+		}
+
+		return timeString;
+	}
 }

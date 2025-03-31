@@ -343,7 +343,7 @@ class MusicPlayer extends FlxGroup
 
 	function updateTimeTxt()
 	{
-		var text = FlxStringUtil.formatTime(FlxG.sound.music.time / 1000, false) + ' / ' + FlxStringUtil.formatTime(FlxG.sound.music.length / 1000, false);
+		var text = CoolUtil.formatTime(FlxG.sound.music.time / 1000, false) + ' / ' + CoolUtil.formatTime(FlxG.sound.music.length / 1000, false);
 		timeTxt.text = '< ' + text + ' >';
 	}
 

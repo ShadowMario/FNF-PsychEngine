@@ -1427,8 +1427,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		if(Conductor.songPosition != lastTime || forceDataUpdate)
 		{
-			var curTime:String = FlxStringUtil.formatTime(Conductor.songPosition / 1000, true);
-			var songLength:String = (FlxG.sound.music != null) ? FlxStringUtil.formatTime(FlxG.sound.music.length / 1000, true) : '???';
+			var curTime:String = CoolUtil.formatTime(Conductor.songPosition / 1000, true);
+			var songLength:String = (FlxG.sound.music != null) ? CoolUtil.formatTime(FlxG.sound.music.length / 1000, true) : '???';
 			var str:String =  '$curTime / $songLength' +
 							  '\n\nSection: $curSec' +
 							  '\nBeat: $curBeat' +
@@ -4351,8 +4351,8 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					state.add(timeTxt);
 					function updateTime()
 					{
-						var tm:String = FlxStringUtil.formatTime(curTime / 1000, true);
-						var ln:String = FlxStringUtil.formatTime(FlxG.sound.music.length / 1000, true);
+						var tm:String = CoolUtil.formatTime(curTime / 1000, true);
+						var ln:String = CoolUtil.formatTime(FlxG.sound.music.length / 1000, true);
 						timeTxt.text = '$tm / $ln';
 					}
 					updateTime();
